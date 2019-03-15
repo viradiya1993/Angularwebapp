@@ -27,7 +27,7 @@
 *.msi
 *.msm
 *.msp
-
+node_modules/
 # ---> JEnv
 # JEnv local Java version configuration file
 .java-version

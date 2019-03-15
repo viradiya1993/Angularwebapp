@@ -1,37 +1,39 @@
-# ---> Archives
-# It's better to unpack these files and commit the raw source because
-# git has its own built in compression methods.
-*.7z
-*.jar
-*.rar
-*.zip
-*.gz
-*.tgz
-*.bzip
-*.bz2
-*.xz
-*.lzma
-*.cab
+# See http://help.github.com/ignore-files/ for more about ignoring files.
 
-# Packing-only formats
-*.iso
-*.tar
+# compiled output
+/dist
+/tmp
+/out-tsc
 
-# Package management formats
-*.dmg
-*.xpi
-*.gem
-*.egg
-*.deb
-*.rpm
-*.msi
-*.msm
-*.msp
-node_modules/
-# ---> JEnv
-# JEnv local Java version configuration file
-.java-version
+# dependencies
+/node_modules
 
-# Used by previous versions of JEnv
-.jenv-version
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
+
+# System Files
+.DS_Store
+Thumbs.db

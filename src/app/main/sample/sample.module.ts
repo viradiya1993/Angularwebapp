@@ -3,15 +3,14 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { FuseSharedModule } from '@fuse/shared.module';
-
+import { AuthGuard } from '../../_guards';
 import { SampleComponent } from './sample.component';
 
-const routes = [
-    {
-        path: 'sample',
-        component: SampleComponent
-    }
-];
+const routes = [{
+    path: 'sample',
+    component: SampleComponent,
+    canActivate: [AuthGuard]
+}];
 
 @NgModule({
     declarations: [

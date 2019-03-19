@@ -9,10 +9,13 @@
         <div class="title" [@animate]="{value:'*',params:{delay:'50ms',y:'25px'}}">
             Welcome to the SILQ!
         </div>
-
         <div class="description" [@animate]="{value:'*',params:{delay:'100ms',y:'25px'}}">
             In order to use cloud please ensure you have synced your database to the cloud using the cloud sync option within your desktop application. Fore more information now how to do this, please click on one of the below
         </div>
+        <div class="description-footer" [@animate]="{value:'*',params:{delay:'100ms',y:'25px'}}">
+            Need help? Call us on 1300 5566 89. Email us at support@silq.com.au
+        </div>
+
 
     </div>
 
@@ -27,7 +30,6 @@
             <div class="title">LOGIN TO YOUR ACCOUNT</div>
 
             <form name="loginForm" [formGroup]="loginForm" novalidate>
-
                 <mat-form-field appearance="outline">
                     <mat-label>Email</mat-label>
                     <input matInput formControlName="email">
@@ -60,7 +62,7 @@
                   </a>
                 </div>
 
-                <button mat-raised-button color="accent" class="submit-button" aria-label="LOGIN" [disabled]="loginForm.invalid">
+                <button mat-raised-button color="accent" type="button" (click)="loginUser()" class="submit-button" aria-label="LOGIN" [disabled]="loginForm.invalid">
                   LOGIN
               </button>
             </form>
@@ -77,6 +79,9 @@
         <mat-divider></mat-divider>
         <div class="logo-footer" [@animate]="{value:'*',params:{scale:'0.2'}}">
             <img src="assets/images/logos/151-54.png">
+        </div>
+        <div class="copy-right-footer" [@animate]="{value:'*',params:{scale:'0.2'}}">
+            @2018 Silqware Pty Ltd All Rights Reserved
         </div>
     </div>
 </div>

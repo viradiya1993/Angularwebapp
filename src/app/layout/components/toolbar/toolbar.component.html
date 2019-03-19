@@ -1,48 +1,493 @@
 <mat-toolbar class="p-0 mat-elevation-z1">
-
     <div fxFlex fxFill fxLayout="row" fxLayoutAlign="start center">
-
         <div fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
-
             <button mat-icon-button class="navbar-toggle-button" *ngIf="!hiddenNavbar && !rightNavbar" (click)="toggleSidebarOpen('navbar')" fxHide.gt-md>
-                <mat-icon class="secondary-text">menu</mat-icon>
-            </button>
-
+              <mat-icon class="secondary-text">menu</mat-icon>
+              </button>
             <div class="toolbar-separator" *ngIf="!hiddenNavbar && !rightNavbar" fxHide.gt-md></div>
-
             <div fxLayout="row" fxLayoutAlign="start center" *ngIf="horizontalNavbar">
                 <div class="logo ml-16">
                     <img class="logo-icon" src="assets/images/logos/silq-logo.svg">
                 </div>
             </div>
+            <mat-tab-group>
+                <mat-tab label="MATTERS">
+                    <section class="ribbon-container">
+                        <mat-card>
+                            <mat-card-content>
+                                <section class="group-section-tab">
+                                    <!-- <span class="action-section">Action</span> -->
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button">
+                                   <section class="large-button-container">
+                                      <mat-icon class="main-icon">
+                                          <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                        </mat-icon>
+                                      <div class="main-text">
+                                         <span>New Matters</span>
+                                      </div>
+                                   </section>
+                                </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button">
+                                   <section class="large-button-container">
+                                      <mat-icon class="main-icon">
+                                            <img src="assets/icons/web_app/icon_contact_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                      </mat-icon>
+                                      <div class="main-text">
+                                         <span>Edit Matters</span>
+                                      </div>
+                                   </section>
+                                </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button">
+                                   <section class="large-button-container">
+                                      <mat-icon class="main-icon">
+                                            <img src="assets/icons/web_app/icon_contact_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                      </mat-icon>
+                                      <div class="main-text">
+                                         <span>Delete Matters</span>
+                                      </div>
+                                   </section>
+                                </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" disabled>
+                                   <section class="large-button-container">
+                                      <mat-icon class="main-icon">
+                                            <img src="assets/icons/web_app/icon_contact_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                      </mat-icon>
+                                      <div class="main-text">
+                                         <span>Duplicate Matters</span>
+                                      </div>
+                                   </section>
+                                </button>
+                                    </section>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                                <section class="group-section-tab">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button">
+                                   <section class="large-button-container">
+                                      <mat-icon class="main-icon">
+                                            <img src="assets/icons/web_app/icon_invoice_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                      </mat-icon>
+                                      <div class="main-text">
+                                         <span>Time & Billing</span>
+                                      </div>
+                                   </section>
+                                </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button">
+                                   <section class="large-button-container">
+                                      <mat-icon class="main-icon">
+                                            <img src="assets/icons/web_app/icon_authorities_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                      </mat-icon>
+                                      <div class="main-text">
+                                         <span>Legal Details</span>
+                                      </div>
+                                   </section>
+                                </button>
+                                    </section>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                                <section class="group-section-tab">
+                                    <section class="ribbon-section">
+                                        <mat-nav-list>
+                                            <a mat-list-item>
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_time_cost_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>New Time Extry</span>
+                                            </a>
+                                            <a mat-list-item>
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_time_cost_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>New Timer</span>
+                                            </a>
+                                        </mat-nav-list>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <mat-nav-list>
+                                            <a mat-list-item>
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_client_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>Client Details</span>
+                                            </a>
+                                            <a mat-list-item>
+                                                <mat-icon>person_add</mat-icon>
+                                                <span>Corres Details</span>
+                                            </a>
+                                        </mat-nav-list>
+                                    </section>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                            </mat-card-content>
+                        </mat-card>
+                    </section>
+                </mat-tab>
+                <!-- goto tab menu start -->
+                <mat-tab label="GO TO">
+                    <section class="ribbon-container">
+                        <mat-card>
+                            <mat-card-content>
+                                <section class="group-section-tab">
+                                    <!-- <span class="action-section">Action</span> -->
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button">
+                                           <section class="large-button-container">
+                                              <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                              <div class="main-text">
+                                                 <span>Matters</span>
+                                              </div>
+                                           </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button">
+                                           <section class="large-button-container">
+                                              <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                              </mat-icon>
+                                              <div class="main-text">
+                                                 <span>Contacts</span>
+                                              </div>
+                                           </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button">
+                                           <section class="large-button-container">
+                                              <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_time_cost_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                              </mat-icon>
+                                              <div class="main-text">
+                                                 <span>Time Extry</span>
+                                              </div>
+                                           </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button">
+                                           <section class="large-button-container">
+                                              <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_diary_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                              </mat-icon>
+                                              <div class="main-text">
+                                                 <span>Diary</span>
+                                              </div>
+                                           </section>
+                                        </button>
+                                    </section>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                            </mat-card-content>
+                        </mat-card>
+                    </section>
+                </mat-tab>
+                <!-- goto tab menu end -->
+                <!-- report tab menu start -->
+                <mat-tab label="REPORTS">
+                    <section class="ribbon-container">
+                        <mat-card>
+                            <mat-card-content>
+                                <section class="group-section-tab">
+                                    <section class="ribbon-section">
+                                        <mat-nav-list>
+                                            <a mat-list-item>
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>Aged Debtors</span>
+                                            </a>
+                                            <a mat-list-item>
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>Unbilled Work</span>
+                                            </a>
+                                        </mat-nav-list>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <mat-nav-list>
+                                            <a mat-list-item>
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>Aged Matter Summary</span>
+                                            </a>
+                                            <a mat-list-item>
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>Aged Trade Creditord</span>
+                                            </a>
+                                        </mat-nav-list>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <mat-nav-list>
+                                            <a mat-list-item>
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>Invoices Issued</span>
+                                            </a>
+                                            <a mat-list-item>
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>Client Summary</span>
+                                            </a>
+                                        </mat-nav-list>
+                                    </section>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                                <section class="group-section-tab">
+                                    <section class="ribbon-section">
+                                        <mat-nav-list>
+                                            <a mat-list-item>
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>report 1</span>
+                                            </a>
+                                            <a mat-list-item>
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>report 2</span>
+                                            </a>
+                                        </mat-nav-list>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <mat-nav-list>
+                                            <a mat-list-item>
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>report 3</span>
+                                            </a>
+                                            <a mat-list-item>
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>report 4</span>
+                                            </a>
+                                        </mat-nav-list>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <mat-nav-list>
+                                            <a mat-list-item>
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>report 5</span>
+                                            </a>
+                                            <a mat-list-item>
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>report 6</span>
+                                            </a>
+                                        </mat-nav-list>
+                                    </section>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                                <section class="group-section-tab">
+                                    <section class="ribbon-section">
+                                        <mat-nav-list>
+                                            <a mat-list-item>
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>report 7</span>
+                                            </a>
+                                            <a mat-list-item>
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>report 8</span>
+                                            </a>
+                                        </mat-nav-list>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <mat-nav-list>
+                                            <a mat-list-item>
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>report 9</span>
+                                            </a>
+                                            <a mat-list-item>
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>report 10</span>
+                                            </a>
+                                        </mat-nav-list>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <mat-nav-list>
+                                            <a mat-list-item>
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>report 11</span>
+                                            </a>
+                                            <a mat-list-item>
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>report 12</span>
+                                            </a>
+                                        </mat-nav-list>
+                                    </section>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                            </mat-card-content>
+                        </mat-card>
+                    </section>
+                </mat-tab>
+                <!-- report tab menu end -->
+                <!-- help tab menu start -->
+                <mat-tab label="HELP">
+                    <section class="ribbon-container">
+                        <mat-card>
+                            <mat-card-content>
+                                <section class="group-section-tab">
+                                    <!-- <span class="action-section">Action</span> -->
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button">
+                                                   <section class="large-button-container">
+                                                      <mat-icon class="main-icon">
+                                                            <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                      </mat-icon>
+                                                      <div class="main-text">
+                                                         <span>help 1</span>
+                                                      </div>
+                                                   </section>
+                                                </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button">
+                                                   <section class="large-button-container">
+                                                      <mat-icon class="main-icon">
+                                                            <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                      </mat-icon>
+                                                      <div class="main-text">
+                                                         <span>help 2</span>
+                                                      </div>
+                                                   </section>
+                                                </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button">
+                                                       <section class="large-button-container">
+                                                          <mat-icon class="main-icon">
+                                                                <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                          </mat-icon>
+                                                          <div class="main-text">
+                                                             <span>help 3</span>
+                                                          </div>
+                                                       </section>
+                                                    </button>
+                                    </section>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                                <section class="group-section-tab">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button">
+                                                       <section class="large-button-container">
+                                                          <mat-icon class="main-icon">
+                                                                <img src="assets/images/logos/sm-silq.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                          </mat-icon>
+                                                          <div class="main-text">
+                                                             <span>section 2</span>
+                                                          </div>
+                                                       </section>
+                                                    </button>
+                                    </section>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                                <section class="group-section-tab">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button">
+                                                           <section class="large-button-container">
+                                                              <mat-icon class="main-icon">
+                                                                    <img src="assets/images/logos/sm-silq.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                              </mat-icon>
+                                                              <div class="main-text">
+                                                                 <span>section 2</span>
+                                                              </div>
+                                                           </section>
+                                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button">
+                                                               <section class="large-button-container">
+                                                                  <mat-icon class="main-icon">
+                                                                        <img src="assets/images/logos/sm-silq.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                                  </mat-icon>
+                                                                  <div class="main-text">
+                                                                     <span>section 2</span>
+                                                                  </div>
+                                                               </section>
+                                                            </button>
+                                    </section>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                            </mat-card-content>
+                        </mat-card>
+                    </section>
+                </mat-tab>
+                <!-- <mat-tab label="REPORTS"></mat-tab>
+                <mat-tab label="REPORTS"></mat-tab>
+                <mat-tab label="REPORTS"></mat-tab>
+                <mat-tab label="REPORTS"></mat-tab>
+                <mat-tab label="REPORTS"></mat-tab>
+                <mat-tab label="REPORTS"></mat-tab>
+                <mat-tab label="REPORTS"></mat-tab>
+                <mat-tab label="REPORTS"></mat-tab>
+                <mat-tab label="REPORTS"></mat-tab>
+                <mat-tab label="REPORTS"></mat-tab>
+                <mat-tab label="REPORTS"></mat-tab>
+                <mat-tab label="REPORTS"></mat-tab> -->
+                <!-- help tab menu end -->
+            </mat-tab-group>
+            <!-- <mat-divider></mat-divider> -->
             <!-- <div class="px-8 px-md-16">
-                <fuse-shortcuts [navigation]="navigation"></fuse-shortcuts>
-            </div> -->
+                 <fuse-shortcuts [navigation]="navigation"></fuse-shortcuts>
+                 </div> -->
         </div>
         <div class="" fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="start center">
             <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
-                <div fxLayout="row" fxLayoutAlign="center center">
+                 <div fxLayout="row" fxLayoutAlign="center center">
                     <img class="avatar mr-0 mr-sm-16" src="assets/images/avatars/Velazquez.jpg">
                     <span class="username mr-12" fxHide fxShow.gt-sm>Charlie Adams</span>
                     <mat-icon class="s-16" fxHide.xs>keyboard_arrow_down</mat-icon>
-                </div>
-            </button>
+                 </div>
+              </button>
             <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
                 <button mat-menu-item>
-                    <mat-icon>account_circle</mat-icon>
-                    <span>My Profile</span>
-                </button>
+                 <mat-icon>account_circle</mat-icon>
+                 <span>My Profile</span>
+              </button>
                 <button mat-menu-item class="">
-                    <mat-icon>mail</mat-icon>
-                    <span>Inbox</span>
-                </button>
-                <button mat-menu-item class="">
-                    <mat-icon>exit_to_app</mat-icon>
-                    <span>Logout</span>
-                </button>
+                 <mat-icon>mail</mat-icon>
+                 <span>Inbox</span>
+              </button>
+                <button mat-menu-item class="" (click)="logOutUser()">
+                 <mat-icon>exit_to_app</mat-icon>
+                 <span>Logout</span>
+              </button>
             </mat-menu>
         </div>
-
     </div>
-
 </mat-toolbar>

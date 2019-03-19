@@ -1,30 +1,24 @@
 @import "src/@fuse/scss/fuse";
-
 toolbar {
     position: relative;
     display: flex;
     flex: 0 0 auto;
     z-index: 4;
-
     &.below {
         z-index: 2;
     }
-
     .mat-toolbar {
         position: relative;
         background: inherit !important;
         color: inherit !important;
     }
-
     .logo {
         display: flex;
         align-items: center;
-
         .logo-icon {
             width: 38px;
         }
     }
-
     .user-button,
     fuse-search-bar,
     .language-button,
@@ -32,23 +26,113 @@ toolbar {
     .quick-panel-toggle-button {
         min-width: 64px;
         height: 64px;
-
         @include media-breakpoint('xs') {
             height: 56px;
         }
     }
-
     .navbar-toggle-button {
         min-width: 56px;
         height: 56px;
     }
-
     .toolbar-separator {
         height: 64px;
         width: 1px;
-
         @include media-breakpoint('xs') {
             height: 56px;
         }
+    }
+    //menu css start
+    .basic-container {
+        padding: 5px;
+    }
+    .version-info {
+        font-size: 8pt;
+        float: right;
+    }
+    $large-buitton-height: 120px;
+    .group-section-tab {
+        display: flex;
+    }
+    section.group-section-tab.action-section {
+        align-items: center;
+        padding-top: 10px;
+    }
+    .ribbon-container {
+        .mat-card {
+            padding: 0px;
+            margin: 5px;
+        }
+        .mat-card-content {
+            display: flex;
+            padding: 0px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        .mat-card-footer {
+            margin: auto;
+            text-align: center;
+            background: #f5f5f5;
+        }
+        .large-button {
+            height: $large-buitton-height;
+            .large-button-container {
+                display: flex;
+                flex-direction: column;
+                .main-icon {
+                    flex: 80%;
+                    font-size: 50px;
+                    width: 50px;
+                    height: 50px;
+                    margin: auto;
+                    ;
+                }
+                .main-text {
+                    display: inline-flex;
+                    margin: auto;
+                    .drop-down-icon {
+                        margin: auto;
+                    }
+                }
+            }
+        }
+        .mat-nav-list {
+            .mat-icon {
+                padding-right: 5px;
+            }
+            .mat-list-item {
+                height: 36px !important;
+            }
+        }
+    }
+    .large-button-panel {
+        margin-top: $large-buitton-height;
+        min-width: 300px !important;
+        max-width: 600px !important;
+        .mat-menu-item {
+            .pull-right {
+                float: right;
+                padding-left: 15px;
+            }
+            .hint {
+                color: #999;
+            }
+        }
+    }
+    .mat-toolbar-row,
+    .mat-toolbar-single-row {
+        height: auto !important;
+    }
+    body.theme-default .mat-card {
+        background: #f5f5f5 !important;
+        color: rgba(0, 0, 0, 0.87);
+    }
+    body.theme-default .mat-card:not([class*='mat-elevation-z']) {
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+    }
+    section.ribbon-container.ng-star-inserted mat-card {
+        box-shadow: none !important;
+        background: whitesmoke !important;
     }
 }

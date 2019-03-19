@@ -178,3 +178,22 @@ app-login #login #login-form-wrapper #login-form button.google {
 app-login #login #login-form-wrapper #login-form button.facebook {
     background-color: #5f3694;
 }
+
+app-login #login #login-intro .description-footer {
+    padding-top: 330px;
+    font-size: 14px;
+    max-width: 600px;
+}
+
+.logo img.ng-tns-c18-2 {
+    height: 105px;
+}
+
+.mat-divider {
+    border-top-width: 3px !important;
+}
+
+.copy-right-footer.ng-trigger.ng-trigger-animate {
+    padding: 30px 0px 0px 64px;
+    color: #9f9f9f;
+}

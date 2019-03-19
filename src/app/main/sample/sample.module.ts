@@ -7,9 +7,7 @@ import { AuthGuard } from '../../_guards';
 import { SampleComponent } from './sample.component';
 
 const routes = [{
-    path: 'sample',
-    component: SampleComponent,
-    canActivate: [AuthGuard]
+    path: 'sample', component: SampleComponent, canActivate: [AuthGuard]
 }];
 
 @NgModule({

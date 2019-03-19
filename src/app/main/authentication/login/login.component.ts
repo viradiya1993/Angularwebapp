@@ -16,7 +16,7 @@ import { first } from 'rxjs/operators';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  returnUrl: string;
+
 
   constructor(
     private _fuseConfigService: FuseConfigService,
@@ -49,26 +49,19 @@ export class LoginComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.authenticationService.notLogin();
   }
   // convenience getter for easy access to form fields
   get f() {
     return this.loginForm.controls;
   }
-  loginUser(event) {
-    console.log(event);
-    // stop here if form is invalid
-    if (this.loginForm.invalid) {
-      return;
-    }
-    console.log(this.f.username.value);
-    console.log(this.f.password.value);
-    
-    this.authenticationService.login(this.f.username.value, this.f.password.value).pipe(first()).subscribe(
-      data => {
-        // this.router.navigate(['sample']);
+  loginUser() {
+    this.authenticationService.login(this.f.email.value, this.f.password.value)
+      .pipe(first()).subscribe(data => {
+        console.log(data);
+        this.router.navigate(['sample']);
       }, error => {
-        console.log('errro');
+        console.log(error);
       });
   }
 

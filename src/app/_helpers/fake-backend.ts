@@ -9,7 +9,8 @@ import { User } from '../_models';
 export class FakeBackendInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const users: User[] = [
-            { id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User' }
+            { id: 1, username: 'kalpesh@gmail.com', password: '123', firstName: 'Admin', lastName: 'User' },
+            { id: 1, username: 'admin@silq.com', password: '123', firstName: 'silq', lastName: 'Admin' }
         ];
 
         const authHeader = request.headers.get('Authorization');
@@ -17,7 +18,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         // wrap in delayed observable to simulate server api call
         return of(null).pipe(mergeMap(() => {
-
             // authenticate - public
             if (request.url.endsWith('/users/authenticate') && request.method === 'POST') {
                 const user = users.find(x => x.username === request.body.username && x.password === request.body.password);

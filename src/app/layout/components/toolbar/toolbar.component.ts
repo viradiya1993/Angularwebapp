@@ -8,20 +8,19 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
+import { AuthenticationService } from '../../../_services';
 
 @Component({
-    selector     : 'toolbar',
-    templateUrl  : './toolbar.component.html',
-    styleUrls    : ['./toolbar.component.scss'],
+    selector: 'toolbar',
+    templateUrl: './toolbar.component.html',
+    styleUrls: ['./toolbar.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 
-export class ToolbarComponent implements OnInit, OnDestroy
-{
+export class ToolbarComponent implements OnInit, OnDestroy {
     horizontalNavbar: boolean;
     rightNavbar: boolean;
     hiddenNavbar: boolean;
-    languages: any;
     navigation: any;
     selectedLanguage: any;
     userStatusOptions: any[];
@@ -39,48 +38,35 @@ export class ToolbarComponent implements OnInit, OnDestroy
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
-        private _translateService: TranslateService
-    )
-    {
+        private _translateService: TranslateService,
+        private authenticationService: AuthenticationService,
+    ) {
         // Set the defaults
         this.userStatusOptions = [
             {
                 'title': 'Online',
-                'icon' : 'icon-checkbox-marked-circle',
+                'icon': 'icon-checkbox-marked-circle',
                 'color': '#4CAF50'
             },
             {
                 'title': 'Away',
-                'icon' : 'icon-clock',
+                'icon': 'icon-clock',
                 'color': '#FFC107'
             },
             {
                 'title': 'Do not Disturb',
-                'icon' : 'icon-minus-circle',
+                'icon': 'icon-minus-circle',
                 'color': '#F44336'
             },
             {
                 'title': 'Invisible',
-                'icon' : 'icon-checkbox-blank-circle-outline',
+                'icon': 'icon-checkbox-blank-circle-outline',
                 'color': '#BDBDBD'
             },
             {
                 'title': 'Offline',
-                'icon' : 'icon-checkbox-blank-circle-outline',
+                'icon': 'icon-checkbox-blank-circle-outline',
                 'color': '#616161'
-            }
-        ];
-
-        this.languages = [
-            {
-                id   : 'en',
-                title: 'English',
-                flag : 'us'
-            },
-            {
-                id   : 'tr',
-                title: 'Turkish',
-                flag : 'tr'
             }
         ];
 
@@ -97,8 +83,7 @@ export class ToolbarComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         // Subscribe to the config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
@@ -107,16 +92,12 @@ export class ToolbarComponent implements OnInit, OnDestroy
                 this.rightNavbar = settings.layout.navbar.position === 'right';
                 this.hiddenNavbar = settings.layout.navbar.hidden === true;
             });
-
-        // Set the selected language from default languages
-        this.selectedLanguage = _.find(this.languages, {'id': this._translateService.currentLang});
     }
 
     /**
      * On destroy
      */
-    ngOnDestroy(): void
-    {
+    ngOnDestroy(): void {
         // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
@@ -131,33 +112,10 @@ export class ToolbarComponent implements OnInit, OnDestroy
      *
      * @param key
      */
-    toggleSidebarOpen(key): void
-    {
+    toggleSidebarOpen(key): void {
         this._fuseSidebarService.getSidebar(key).toggleOpen();
     }
-
-    /**
-     * Search
-     *
-     * @param value
-     */
-    search(value): void
-    {
-        // Do your search here...
-        console.log(value);
-    }
-
-    /**
-     * Set the language
-     *
-     * @param lang
-     */
-    setLanguage(lang): void
-    {
-        // Set the selected language for the toolbar
-        this.selectedLanguage = lang;
-
-        // Use the selected language for translations
-        this._translateService.use(lang.id);
+    logOutUser() {
+        this.authenticationService.logout();
     }
 }

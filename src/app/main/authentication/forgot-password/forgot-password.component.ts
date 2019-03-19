@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FuseConfigService } from '@fuse/services/config.service';
 
 import { fuseAnimations } from '@fuse/animations';
-
+import { AuthenticationService } from '../../../_services';
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
@@ -16,7 +16,8 @@ export class ForgotPasswordComponent implements OnInit {
   forgotPasswordForm: FormGroup;
   constructor(
     private _fuseConfigService: FuseConfigService,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private authenticationService: AuthenticationService,
   ) {
     // Configure the layout
     this._fuseConfigService.config = {
@@ -38,6 +39,7 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.authenticationService.notLogin();
     this.forgotPasswordForm = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]]
     });

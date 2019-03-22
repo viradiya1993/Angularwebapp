@@ -34,7 +34,7 @@ export class AuthenticationService {
     notLogin(){
         const currentUser = this.currentUserValue;
         if (currentUser) {
-            this.router.navigate(['sample']);
+            this.router.navigate(['matters']);
             return false;
         }
         // not logged in so return true

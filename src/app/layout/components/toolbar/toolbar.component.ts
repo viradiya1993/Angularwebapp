@@ -9,6 +9,7 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
 import { AuthenticationService } from '../../../_services';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'toolbar',
@@ -19,11 +20,12 @@ import { AuthenticationService } from '../../../_services';
 
 export class ToolbarComponent implements OnInit, OnDestroy {
     horizontalNavbar: boolean;
+    isContact: boolean;
+    isMatters: boolean;
     rightNavbar: boolean;
     hiddenNavbar: boolean;
     navigation: any;
     selectedLanguage: any;
-    userStatusOptions: any[];
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -40,40 +42,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private _fuseSidebarService: FuseSidebarService,
         private _translateService: TranslateService,
         private authenticationService: AuthenticationService,
+        private route: ActivatedRoute,
+        private router: Router,
     ) {
-        // Set the defaults
-        this.userStatusOptions = [
-            {
-                'title': 'Online',
-                'icon': 'icon-checkbox-marked-circle',
-                'color': '#4CAF50'
-            },
-            {
-                'title': 'Away',
-                'icon': 'icon-clock',
-                'color': '#FFC107'
-            },
-            {
-                'title': 'Do not Disturb',
-                'icon': 'icon-minus-circle',
-                'color': '#F44336'
-            },
-            {
-                'title': 'Invisible',
-                'icon': 'icon-checkbox-blank-circle-outline',
-                'color': '#BDBDBD'
-            },
-            {
-                'title': 'Offline',
-                'icon': 'icon-checkbox-blank-circle-outline',
-                'color': '#616161'
-            }
-        ];
 
         this.navigation = navigation;
-
         // Set the private defaults
         this._unsubscribeAll = new Subject();
+        this.router.events.subscribe((res) => {
+            this.navBarSetting(this.router.url);
+        })
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -117,5 +95,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     logOutUser() {
         this.authenticationService.logout();
+    }
+    navBarSetting(value) {
+        if (value == '/matters') {
+            this.isMatters = true;
+            this.isContact = false;
+        } else if (value == '/contact') {
+            this.isContact = true;
+            this.isMatters = false;
+        }
     }
 }

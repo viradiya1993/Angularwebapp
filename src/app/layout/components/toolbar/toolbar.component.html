@@ -11,7 +11,7 @@
                 </div>
             </div>
             <mat-tab-group>
-                <mat-tab label="MATTERS">
+                <mat-tab label="MATTERS" *ngIf="isMatters">
                     <section class="ribbon-container">
                         <mat-card>
                             <mat-card-content>
@@ -124,6 +124,30 @@
                                                 <span>Corres Details</span>
                                             </a>
                                         </mat-nav-list>
+                                    </section>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                            </mat-card-content>
+                        </mat-card>
+                    </section>
+                </mat-tab>
+                <mat-tab label="CONTACT" *ngIf="isContact">
+                    <section class="ribbon-container">
+                        <mat-card>
+                            <mat-card-content>
+                                <section class="group-section-tab">
+                                    <!-- <span class="action-section">Action</span> -->
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button">
+                                   <section class="large-button-container">
+                                      <mat-icon class="main-icon">
+                                          <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                        </mat-icon>
+                                      <div class="main-text">
+                                         <span>New Contact</span>
+                                      </div>
+                                   </section>
+                                </button>
                                     </section>
                                 </section>
                                 <mat-divider vertical></mat-divider>

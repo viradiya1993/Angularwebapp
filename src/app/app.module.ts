@@ -14,12 +14,17 @@ import { FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule } from
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 
 import { fuseConfig } from 'app/fuse-config';
+//remove when apply api
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { FakeDbService } from 'app/fake-db/fake-db.service';
+//done api
 
 import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
-import { SampleModule } from 'app/main/sample/sample.module';
+import { PagesModule } from 'app/main/pages/pages.module';
 
 import { fakeBackendProvider } from './_helpers';
+
 
 const appRoutes: Routes = [{
     path: '', loadChildren: './main/authentication/authentication.module#AuthenticationModule'
@@ -36,7 +41,11 @@ const appRoutes: Routes = [{
         RouterModule.forRoot(appRoutes, { useHash: true }),
 
         TranslateModule.forRoot(),
-
+        //remove when apply api
+        InMemoryWebApiModule.forRoot(FakeDbService, {
+            delay: 0,
+            passThruUnknownUrl: true
+        }),
         // Material moment date module
         MatMomentDateModule,
 
@@ -53,7 +62,7 @@ const appRoutes: Routes = [{
 
         // App modules
         LayoutModule,
-        SampleModule
+        PagesModule
     ],
     bootstrap: [
         AppComponent

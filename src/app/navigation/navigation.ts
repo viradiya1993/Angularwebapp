@@ -8,29 +8,21 @@ export const navigation: FuseNavigation[] = [
         type: 'group',
         children: [
             {
-                id: 'sample',
-                title: 'Sample',
-                translate: 'NAV.SAMPLE.TITLE',
+                id: 'matters',
+                title: 'Matters',
+                translate: 'NAV.MATTERS.TITLE',
                 type: 'item',
-                icon: 'email',
-                url: '/sample',
+                icon: 'icon_matter_d.ico',
+                url: 'matters',
             },
             {
-                id: 'calendar',
-                title: 'Calendar',
-                translate: 'NAV.CALENDAR.TITLE',
+                id: 'contact',
+                title: 'Contact',
+                translate: 'NAV.CONTACT.TITLE',
                 type: 'item',
-                icon: 'today',
-                url: '/login'
-            },
-            {
-                id: 'calendar',
-                title: 'Calendar',
-                translate: 'NAV.CALENDAR.TITLE',
-                type: 'item',
-                icon: 'today',
-                url: '/forgot-password'
-            },
+                icon: 'icon_contact_d.ico',
+                url: 'contact'
+            }
         ]
     }
 ];

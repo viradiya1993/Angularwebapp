@@ -8,11 +8,17 @@ import { fuseAnimations } from '@fuse/animations';
   animations: fuseAnimations
 })
 export class MattersComponent implements OnInit {
-
+  mattersDetail: any;
   constructor() { }
 
   ngOnInit() {
   }
 
-  
+  matterBack(event: any) {
+    this.mattersDetail = event;
+  }
+  matterClose(event: any) {
+    this.mattersDetail = '';
+  }
+
 }

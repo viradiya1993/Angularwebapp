@@ -3,50 +3,52 @@
     <div class="content">
         <!-- CENTER -->
         <div class="center p-24" fusePerfectScrollbar>
-            <!-- select bar  -->
-            <mat-form-field class="example">
-                <mat-label>Active Motters</mat-label>
-                <mat-select>
-                    <mat-option value="red">one</mat-option>
-                    <mat-option value="green">Two</mat-option>
-                    <mat-option value="blue">Three</mat-option>
-                </mat-select>
-            </mat-form-field>
+            <div class="matter-serach-div">
+                <!-- select bar  -->
+                <mat-form-field class="example">
+                    <mat-label>Active Motters</mat-label>
+                    <mat-select>
+                        <mat-option value="red">one</mat-option>
+                        <mat-option value="green">Two</mat-option>
+                        <mat-option value="blue">Three</mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-            <!-- select bar  -->
-            <mat-form-field class="example">
-                <mat-label>Invoiced</mat-label>
-                <mat-select>
-                    <mat-option value="red">one</mat-option>
-                    <mat-option value="green">Two</mat-option>
-                    <mat-option value="blue">Three</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <!-- select bar  -->
-            <mat-form-field class="example">
-                <mat-label>Free Earner/Owner</mat-label>
-                <mat-select>
-                    <mat-option value="red">one</mat-option>
-                    <mat-option value="green">Two</mat-option>
-                    <mat-option value="blue">Three</mat-option>
-                </mat-select>
-            </mat-form-field>
+                <!-- select bar  -->
+                <mat-form-field class="example">
+                    <mat-label>Invoiced</mat-label>
+                    <mat-select>
+                        <mat-option value="red">one</mat-option>
+                        <mat-option value="green">Two</mat-option>
+                        <mat-option value="blue">Three</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <!-- select bar  -->
+                <mat-form-field class="example">
+                    <mat-label>Free Earner/Owner</mat-label>
+                    <mat-select>
+                        <mat-option value="red">one</mat-option>
+                        <mat-option value="green">Two</mat-option>
+                        <mat-option value="blue">Three</mat-option>
+                    </mat-select>
+                </mat-form-field>
 
 
-            <mat-form-field class="search">
-                <input matInput placeholder="Search">
-                <mat-icon matSuffix>search</mat-icon>
-            </mat-form-field>
+                <mat-form-field class="search">
+                    <input matInput placeholder="Search">
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+            </div>
             <!-- CONTENT -->
             <div class="content">
-                <app-matters-list></app-matters-list>
+                <app-matters-list (matterDetail)="matterBack($event)"></app-matters-list>
             </div>
             <!-- / CONTENT -->
         </div>
         <!-- sidebar  -->
         <!-- *ngIf="isSortDetail" -->
-        <fuse-sidebar class="sidebar final-sidebar" name="final-sidebar" position="right" lockedOpen="gt-md">
-            <app-matters-sort-detail></app-matters-sort-detail>
+        <fuse-sidebar *ngIf="mattersDetail" class="sidebar final-sidebar" name="final-sidebar" position="right" lockedOpen="gt-md">
+            <app-matters-sort-detail [mattersDetailData]="mattersDetail" (matterCloseD)="matterClose($event)"></app-matters-sort-detail>
         </fuse-sidebar>
         <!-- / CENTER -->
     </div>

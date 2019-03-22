@@ -9,45 +9,34 @@
     <div class="content p-24" fusePerfectScrollbar>
         <div class="file-details" [@animate]="{value:'*',params:{delay:'200ms'}}">
             <div class="title">Info</div>
+            <div class="button-div">
+                <button class="button primary" mat-raised-button (click)="closeDetail($event)"><mat-icon>clear</mat-icon></button>
+            </div>
+
             <table>
-                <tr class="type">
-                    <th>Type</th>
-                    <td>XYZ</td>
+                <tr class="jobTitle">
+                    <th>JobTitle</th>
+                    <td>{{mattersDetailData?.jobTitle}}</td>
                 </tr>
-
-                <tr class="size">
-                    <th>Size</th>
-                    <td>35</td>
+                <tr class="name">
+                    <th>Name</th>
+                    <td>{{mattersDetailData?.lastName}} {{mattersDetailData?.lastName}}</td>
                 </tr>
-
-                <tr class="location">
-                    <th>Location</th>
-                    <td>AHMEDABAD</td>
+                <tr class="email">
+                    <th>Email</th>
+                    <td>{{mattersDetailData?.email}}</td>
                 </tr>
-
-                <tr class="owner">
-                    <th>Owner</th>
-                    <td>Moon</td>
+                <tr class="company">
+                    <th>Company</th>
+                    <td>{{mattersDetailData?.company}}</td>
                 </tr>
-
-                <tr class="modified">
-                    <th>Modified</th>
-                    <td>Yes</td>
-                </tr>
-
-                <tr class="opened">
-                    <th>Opened</th>
-                    <td>no</td>
-                </tr>
-
-                <tr class="created">
-                    <th>Created</th>
-                    <td>yes</td>
+                <tr class="phone">
+                    <th>Phone</th>
+                    <td>{{mattersDetailData?.phone}}</td>
                 </tr>
             </table>
         </div>
         <br/>
-
         <button class="button primary" mat-raised-button>Edit</button>
 
     </div>

@@ -1,14 +1,6 @@
 <!-- {{ mattersData | json}} -->
 <mat-table #table [dataSource]="mattersData" [@animateStagger]="{value:'50'}">
 
-    <!-- Avatar Column -->
-    <ng-container matColumnDef="avatar">
-        <mat-header-cell *matHeaderCellDef fxShow.gt-md></mat-header-cell>
-        <mat-cell *matCellDef="let matter" fxShow.gt-md>
-            <img class="avatar" *ngIf="matter.avatar" [alt]="matter.name" [src]="matter.avatar" />
-        </mat-cell>
-    </ng-container>
-
     <!-- Name Column -->
     <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef fxShow.gt-md>Name</mat-header-cell>
@@ -58,7 +50,7 @@
     </ng-container>
 
     <!-- Buttons Column -->
-    <ng-container matColumnDef="buttons">
+    <!-- <ng-container matColumnDef="buttons">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let matter">
             <div fxFlex="row" fxLayoutAlign="end center">
@@ -73,6 +65,19 @@
                 </mat-menu>
             </div>
         </mat-cell>
+    </ng-container> -->
+    <ng-container matColumnDef="buttons">
+        <mat-header-cell *matHeaderCellDef><button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More">
+                <mat-icon class="secondary-text">more_vert</mat-icon>
+            </button>
+            <mat-menu #moreMenu="matMenu">
+                <button mat-menu-item aria-label="remove" (click)="deleteContact(contact)">
+                    <mat-icon>delete</mat-icon>
+                    <span>Remove</span>
+                </button>
+            </mat-menu>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let matter"></mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let matter; columns: displayedColumns;" class="matter" (click)="editmatter(matter)" matRipple [@animate]="{value:'*',params:{y:'100%'}}">

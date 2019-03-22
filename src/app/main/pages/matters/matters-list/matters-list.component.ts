@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output, TemplateRef, ViewChild, ViewEncapsulation, EventEmitter } from '@angular/core';
 
 import { fuseAnimations } from '@fuse/animations';
 
@@ -14,9 +14,10 @@ import { MattersService } from '../matters.service';
 export class MattersListComponent implements OnInit, OnDestroy {
 
   mattersData: any;
-  displayedColumns = ['avatar', 'name', 'email', 'phone', 'jobTitle', 'buttons'];
+  displayedColumns = ['name', 'email', 'phone', 'jobTitle', 'buttons'];
   // Private
 
+  @Output() matterDetail: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private _mattersService: MattersService, ) { }
 
@@ -28,10 +29,10 @@ export class MattersListComponent implements OnInit, OnDestroy {
       // console.log(response);
     });
   }
-  ngOnDestroy(): void {
-  }
+  ngOnDestroy(): void { }
+
   editmatter(matters) {
-    console.log(matters);
+    this.matterDetail.emit(matters);
   }
 
 }

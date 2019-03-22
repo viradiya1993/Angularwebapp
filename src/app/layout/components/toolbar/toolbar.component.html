@@ -1,4 +1,4 @@
-<mat-toolbar class="p-0 mat-elevation-z1">
+<mat-toolbar class="p-0 mat-elevation-z1 top_header">
     <div fxFlex fxFill fxLayout="row" fxLayoutAlign="start center">
         <div fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
             <button mat-icon-button class="navbar-toggle-button" *ngIf="!hiddenNavbar && !rightNavbar" (click)="toggleSidebarOpen('navbar')" fxHide.gt-md>
@@ -15,7 +15,7 @@
                     <section class="ribbon-container">
                         <mat-card>
                             <mat-card-content>
-                                <section class="group-section-tab">
+                                <section class="group-section-tab action_tab">
                                     <!-- <span class="action-section">Action</span> -->
                                     <section class="ribbon-section">
                                         <button mat-button class="large-button">
@@ -24,7 +24,7 @@
                                           <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                         </mat-icon>
                                       <div class="main-text">
-                                         <span>New Matters</span>
+                                         <span>New<br> Matters</span>
                                       </div>
                                    </section>
                                 </button>
@@ -36,7 +36,7 @@
                                             <img src="assets/icons/web_app/icon_contact_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                       </mat-icon>
                                       <div class="main-text">
-                                         <span>Edit Matters</span>
+                                         <span>Edit<br> Matters</span>
                                       </div>
                                    </section>
                                 </button>
@@ -48,7 +48,7 @@
                                             <img src="assets/icons/web_app/icon_contact_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                       </mat-icon>
                                       <div class="main-text">
-                                         <span>Delete Matters</span>
+                                         <span>Delete<br> Matters</span>
                                       </div>
                                    </section>
                                 </button>
@@ -60,14 +60,15 @@
                                             <img src="assets/icons/web_app/icon_contact_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                       </mat-icon>
                                       <div class="main-text">
-                                         <span>Duplicate Matters</span>
+                                         <span>Duplicate<br> Matters</span>
                                       </div>
                                    </section>
                                 </button>
                                     </section>
+                                    <div class="light_label_txt">Action</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
-                                <section class="group-section-tab">
+                                <section class="group-section-tab details_tab">
                                     <section class="ribbon-section">
                                         <button mat-button class="large-button">
                                    <section class="large-button-container">
@@ -75,7 +76,7 @@
                                             <img src="assets/icons/web_app/icon_invoice_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                       </mat-icon>
                                       <div class="main-text">
-                                         <span>Time & Billing</span>
+                                         <span>Time &<br> Billing</span>
                                       </div>
                                    </section>
                                 </button>
@@ -87,14 +88,15 @@
                                             <img src="assets/icons/web_app/icon_authorities_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                       </mat-icon>
                                       <div class="main-text">
-                                         <span>Legal Details</span>
+                                         <span>Legal<br> Details</span>
                                       </div>
                                    </section>
                                 </button>
                                     </section>
+                                    <div class="light_label_txt">Details</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
-                                <section class="group-section-tab">
+                                <section class="group-section-tab extras_tab">
                                     <section class="ribbon-section">
                                         <mat-nav-list>
                                             <a mat-list-item>
@@ -125,6 +127,7 @@
                                             </a>
                                         </mat-nav-list>
                                     </section>
+                                    <div class="light_label_txt">Extras</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
                             </mat-card-content>

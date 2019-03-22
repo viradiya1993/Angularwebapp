@@ -136,3 +136,30 @@ toolbar {
         background: whitesmoke !important;
     }
 }
+
+toolbar .mat-toolbar.top_header {
+    background-color: #fff !important;
+}
+toolbar section.ribbon-container.ng-star-inserted mat-card {
+    background: #fff !important;
+}
+
+.light_label_txt {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    color: #ccc;
+    font-size: 12px;
+}
+.group-section-tab {
+    position: relative;
+}
+.group-section-tab .ribbon-section {
+    padding-bottom: 35px;
+}
+toolbar .ribbon-container .large-button {
+    height: auto;
+    padding: 5px 12px;
+}

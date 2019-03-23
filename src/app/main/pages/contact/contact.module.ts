@@ -15,12 +15,9 @@ import { ContactsContactListComponent } from './contact-list/contact-list.compon
 import { FinalSidebarComponent } from './final-sidebar/final-sidebar.component';
 
 import { MatButtonModule, MatSelectModule, MatCardModule, MatSlideToggleModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule } from '@angular/material';
-const routes = [{
-  path: 'contact', component: ContactComponent, canActivate: [AuthGuard]
-  // ,  resolve: {
-  //   contacts: ContactsService
-  // }
-}];
+const routes = [
+  { path: 'contact', component: ContactComponent, canActivate: [AuthGuard] }
+];
 
 @NgModule({
   declarations: [

@@ -1,3 +1,196 @@
-<p>
-  matters-detail works!
-</p>
+<div id="matters_detail_div" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- HEADER -->
+        <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+
+            <!-- APP TITLE -->
+            <div fxLayout="row" fxLayoutAlign="start center">
+
+                <button mat-icon-button class="mr-16" [routerLink]="'/matters'">
+                  <mat-icon>arrow_back</mat-icon>
+              </button>
+
+                <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    <div class="h2">
+                        Matter Detail for {{currentMatter.id}}
+                    </div>
+                    <div class="subtitle secondary-text">
+                        <span>from</span>
+                        <span> {{currentMatter.name}} {{currentMatter.lastName}}</span>
+                    </div>
+                </div>
+            </div>
+            <!-- / APP TITLE -->
+        </div>
+        <!-- / HEADER -->
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+            <!-- CONTENT -->
+            <div class="content">
+                <mat-tab-group fxLayout="column" fxFlex>
+                    <mat-tab label="Matter Information">
+                        <div class="order-details tab-content p-24" fusePerfectScrollbar>
+                            <div class="section pb-48">
+                                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                                    <mat-icon class="m-0 mr-16 secondary-text">account_circle</mat-icon>
+                                    <div class="h2 secondary-text">Customer</div>
+                                </div>
+                                <div class="customer mb-32">
+                                    <table class="simple">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th>Company</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div fxLayout="row" fxLayoutAlign="start center">
+                                                        <!-- <img class="avatar" [src]="currentMatter.avatar"> -->
+                                                        <span class="name text-truncate">
+                                                            {{currentMatter.name}} 
+                                                            {{currentMatter.lastName}}
+                                                      </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <span class="email text-truncate">{{currentMatter.email}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="phone text-truncate">{{currentMatter.phone}}</span>
+                                                </td>
+                                                <td>
+                                                    <span class="company text-truncate">{{currentMatter.company}}
+                                                  </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="section pb-48">
+                                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                                    <mat-icon class="m-0 mr-16 secondary-text">access_time</mat-icon>
+                                    <div class="h2 secondary-text">Order Status</div>
+                                </div>
+                            </div>
+
+                            <div class="section pb-48">
+
+                                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                                    <mat-icon class="m-0 mr-16 secondary-text">attach_money</mat-icon>
+                                    <div class="h2 secondary-text">Payment</div>
+                                </div>
+
+                                <table class="simple">
+                                    <thead>
+                                        <tr>
+                                            <th>TransactionID</th>
+                                            <th>Payment Method</th>
+                                            <th>Amount</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <span class="text-truncate">#454 </span>
+                                            </td>
+                                            <td>
+                                                <span class="text-truncate">cart</span>
+                                            </td>
+                                            <td>
+                                                <span class="text-truncate">8500$</span>
+                                            </td>
+                                            <td>
+                                                <span class="text-truncate"></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                            <div class="section pb-48">
+
+                                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
+                                    <mat-icon class="m-0 mr-16 secondary-text">local_shipping</mat-icon>
+                                    <div class="h2 secondary-text">Shipping</div>
+                                </div>
+
+                                <table class="simple">
+                                    <thead>
+                                        <tr>
+                                            <th>Tracking Code</th>
+                                            <th>Carrier</th>
+                                            <th>Weight</th>
+                                            <th>Fee</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="tracking-code">#001</td>
+                                            <td>TNT</td>
+                                            <td>10.44</td>
+                                            <td>10.44</td>
+                                            <td> 2018/04/10 07:03:52 </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab label="Matter Contacts">
+                        <div class="products tab-content p-24" fusePerfectScrollbar>
+                            <table class="simple">
+                                <thead>
+                                    <tr>
+                                        <th class="w-80">ID</th>
+                                        <th class="w-120">Image</th>
+                                        <th>Name</th>
+                                        <th class="w-120">Price</th>
+                                        <th class="w-80">Quantity</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="product-row">
+                                        <td>#djf </td>
+                                        <td>
+                                            <!-- <img class="product-image" [src]="currentMatter.avatar"> -->
+                                        </td>
+                                        <td>
+                                            demo
+                                        </td>
+                                        <td>
+                                            $454
+                                        </td>
+                                        <td>
+                                            10
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+            <!-- / CONTENT -->
+        </div>
+        <!-- / CONTENT CARD -->
+    </div>
+    <!-- / CENTER -->
+</div>

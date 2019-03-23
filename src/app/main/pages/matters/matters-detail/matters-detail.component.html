@@ -38,119 +38,77 @@
                     <mat-tab label="Matter Information">
                         <div class="order-details tab-content p-24" fusePerfectScrollbar>
                             <div class="section pb-48">
-                                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
-                                    <mat-icon class="m-0 mr-16 secondary-text">account_circle</mat-icon>
-                                    <div class="h2 secondary-text">Customer</div>
-                                </div>
                                 <div class="customer mb-32">
                                     <table class="simple">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Phone</th>
-                                                <th>Company</th>
-                                            </tr>
-                                        </thead>
                                         <tbody>
                                             <tr>
+                                                <td> <span class=" text-truncate text-truncate-label">Matter No</span></td>
                                                 <td>
-                                                    <div fxLayout="row" fxLayoutAlign="start center">
-                                                        <!-- <img class="avatar" [src]="currentMatter.avatar"> -->
-                                                        <span class="name text-truncate">
-                                                            {{currentMatter.name}} 
-                                                            {{currentMatter.lastName}}
-                                                      </span>
-                                                    </div>
+                                                    <span class=" text-truncate">17-0001</span>
                                                 </td>
+                                            </tr>
+                                            <tr>
+                                                <td> <span class=" text-truncate text-truncate-label">Matter Desc</span></td>
                                                 <td>
-                                                    <span class="email text-truncate">{{currentMatter.email}}</span>
+                                                    <span class=" text-truncate">sdfsfsd</span>
                                                 </td>
-                                                <td>
-                                                    <span class="phone text-truncate">{{currentMatter.phone}}</span>
-                                                </td>
-                                                <td>
-                                                    <span class="company text-truncate">{{currentMatter.company}}
-                                                  </span>
-                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td> <span class=" text-truncate text-truncate-label">Client</span></td>
+                                                <td> <span class=" text-truncate">AAA Insurance</span> </td>
+                                            </tr>
+                                            <tr>
+                                                <td> <span class=" text-truncate text-truncate-label">Reference</span></td>
+                                                <td> <span class=" text-truncate"></span> </td>
+                                            </tr>
+                                            <tr>
+                                                <td> <span class=" text-truncate text-truncate-label">Billing Method</span></td>
+                                                <td> <span class=" text-truncate"></span> </td>
+                                            </tr>
+                                            <tr>
+                                                <td> <span class=" text-truncate text-truncate-label">GST Type</span></td>
+                                                <td> <span class=" text-truncate"></span> </td>
+                                            </tr>
+                                            <tr>
+                                                <td> <span class=" text-truncate text-truncate-label">Rate per Hour</span></td>
+                                                <td> <span class=" text-truncate"></span> </td>
+                                            </tr>
+                                            <tr>
+                                                <td> <span class=" text-truncate text-truncate-label">Rate per Day</span></td>
+                                                <td> <span class=" text-truncate"></span> </td>
+                                            </tr>
+                                            <tr>
+                                                <td> <span class=" text-truncate text-truncate-label">Estimate From</span></td>
+                                                <td> <span class=" text-truncate"></span> </td>
+                                            </tr>
+                                            <tr>
+                                                <td> <span class=" text-truncate text-truncate-label">Fee Agreement Date</span></td>
+                                                <td> <span class=" text-truncate"></span> </td>
+                                            </tr>
+                                            <tr>
+                                                <td> <span class=" text-truncate text-truncate-label">Unbilled Amount</span></td>
+                                                <td> <span class=" text-truncate"></span> </td>
+                                            </tr>
+                                            <tr>
+                                                <td> <span class=" text-truncate text-truncate-label">Invoiced Amount</span></td>
+                                                <td> <span class=" text-truncate"></span> </td>
+                                            </tr>
+                                            <tr>
+                                                <td> <span class=" text-truncate text-truncate-label">Received Amount</span></td>
+                                                <td> <span class=" text-truncate"></span> </td>
+                                            </tr>
+                                            <tr>
+                                                <td> <span class=" text-truncate text-truncate-label">Outstanding Amount</span></td>
+                                                <td> <span class=" text-truncate"></span> </td>
+                                            </tr>
+                                            <tr>
+                                                <td> <span class=" text-truncate text-truncate-label">Total Amount</span></td>
+                                                <td> <span class=" text-truncate"></span> </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-
-                            <div class="section pb-48">
-                                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
-                                    <mat-icon class="m-0 mr-16 secondary-text">access_time</mat-icon>
-                                    <div class="h2 secondary-text">Order Status</div>
-                                </div>
-                            </div>
-
-                            <div class="section pb-48">
-
-                                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
-                                    <mat-icon class="m-0 mr-16 secondary-text">attach_money</mat-icon>
-                                    <div class="h2 secondary-text">Payment</div>
-                                </div>
-
-                                <table class="simple">
-                                    <thead>
-                                        <tr>
-                                            <th>TransactionID</th>
-                                            <th>Payment Method</th>
-                                            <th>Amount</th>
-                                            <th>Date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <span class="text-truncate">#454 </span>
-                                            </td>
-                                            <td>
-                                                <span class="text-truncate">cart</span>
-                                            </td>
-                                            <td>
-                                                <span class="text-truncate">8500$</span>
-                                            </td>
-                                            <td>
-                                                <span class="text-truncate"></span>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-
-                            <div class="section pb-48">
-
-                                <div class="pb-16" fxLayout="row" fxLayoutAlign="start center">
-                                    <mat-icon class="m-0 mr-16 secondary-text">local_shipping</mat-icon>
-                                    <div class="h2 secondary-text">Shipping</div>
-                                </div>
-
-                                <table class="simple">
-                                    <thead>
-                                        <tr>
-                                            <th>Tracking Code</th>
-                                            <th>Carrier</th>
-                                            <th>Weight</th>
-                                            <th>Fee</th>
-                                            <th>Date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="tracking-code">#001</td>
-                                            <td>TNT</td>
-                                            <td>10.44</td>
-                                            <td>10.44</td>
-                                            <td> 2018/04/10 07:03:52 </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
                         </div>
                     </mat-tab>
 

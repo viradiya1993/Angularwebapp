@@ -14,12 +14,12 @@ import { MattersService } from '../matters.service';
 export class MattersListComponent implements OnInit, OnDestroy {
 
   mattersData: any;
-  displayedColumns = ['name', 'email', 'phone', 'jobTitle', 'buttons'];
+  displayedColumns = ['buttons', 'name', 'email', 'phone', 'jobTitle'];
   // Private
 
   @Output() matterDetail: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private _mattersService: MattersService, ) { }
+  constructor(private _mattersService: MattersService) { }
 
 
 

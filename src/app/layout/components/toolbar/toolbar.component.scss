@@ -163,3 +163,35 @@ toolbar .ribbon-container .large-button {
     height: auto;
     padding: 5px 12px;
 }
+.matbar_header {
+    align-items: initial !important;
+}
+.user_dropdown {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+body.theme-default .matbar_header .mat-tab-header {
+    border-bottom: none !important;
+}
+.matbar_header:after {
+    position: absolute;
+    content: "";
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    top: 48px;
+    left: 0;
+    width: 100%;
+}
+toolbar .user_dropdown .user-button {
+    height: 48px;
+}
+toolbar .top_header .ribbon-container .large-button .large-button-container .main-text {
+    font-size: 13px;
+}
+.top_header .mat-list-item span {
+    font-size: 14px;
+}
+.top_header .mat-tab-label {
+    min-width: 180px;
+    color: rgba(0, 0, 0, 1);
+}

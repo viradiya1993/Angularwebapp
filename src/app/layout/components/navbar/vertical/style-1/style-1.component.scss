@@ -197,3 +197,28 @@ navbar {
         }
     }
 }
+
+
+navbar navbar-vertical-style-1 .navbar-top.sidebar_main_div {
+    min-height: auto;
+    max-height: 100%;
+    display: inline-block;
+}
+navbar navbar-vertical-style-1 .navbar-top.sidebar_main_div .buttons {
+    display: inline-block;
+    align-items: center;
+    text-align: right;
+    float: left;
+    width: 100%;
+}
+navbar navbar-vertical-style-1 .navbar-top.sidebar_main_div .logo {
+    display: inline-block;
+    align-items: center;
+    width: 100%;
+    float: left;
+    padding: 40px 0;
+}
+navbar navbar-vertical-style-1 .navbar-top.sidebar_main_div .logo .logo-icon {
+    width: 100%;
+    height: auto;
+}

@@ -1,6 +1,6 @@
 <mat-toolbar class="p-0 mat-elevation-z1 top_header">
     <div fxFlex fxFill fxLayout="row" fxLayoutAlign="start center">
-        <div fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center" class="matbar_header">
             <button mat-icon-button class="navbar-toggle-button" *ngIf="!hiddenNavbar && !rightNavbar" (click)="toggleSidebarOpen('navbar')" fxHide.gt-md>
               <mat-icon class="secondary-text">menu</mat-icon>
               </button>
@@ -11,7 +11,7 @@
                 </div>
             </div>
             <mat-tab-group>
-                <mat-tab label="MATTERS" *ngIf="isMatters">
+                <mat-tab label="MATTERS">
                     <section class="ribbon-container">
                         <mat-card>
                             <mat-card-content>
@@ -128,30 +128,6 @@
                                         </mat-nav-list>
                                     </section>
                                     <div class="light_label_txt">Extras</div>
-                                </section>
-                                <mat-divider vertical></mat-divider>
-                            </mat-card-content>
-                        </mat-card>
-                    </section>
-                </mat-tab>
-                <mat-tab label="CONTACT" *ngIf="isContact">
-                    <section class="ribbon-container">
-                        <mat-card>
-                            <mat-card-content>
-                                <section class="group-section-tab">
-                                    <!-- <span class="action-section">Action</span> -->
-                                    <section class="ribbon-section">
-                                        <button mat-button class="large-button">
-                                   <section class="large-button-container">
-                                      <mat-icon class="main-icon">
-                                          <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                        </mat-icon>
-                                      <div class="main-text">
-                                         <span>New Contact</span>
-                                      </div>
-                                   </section>
-                                </button>
-                                    </section>
                                 </section>
                                 <mat-divider vertical></mat-divider>
                             </mat-card-content>
@@ -493,7 +469,7 @@
                  <fuse-shortcuts [navigation]="navigation"></fuse-shortcuts>
                  </div> -->
         </div>
-        <div class="" fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="start center" class="user_dropdown">
             <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
                  <div fxLayout="row" fxLayoutAlign="center center">
                     <img class="avatar mr-0 mr-sm-16" src="assets/images/avatars/Velazquez.jpg">

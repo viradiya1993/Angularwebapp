@@ -9,10 +9,7 @@ import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
 import { AuthGuard } from '../../../_guards';
 
 import { ContactComponent } from './contact.component';
-import { ContactsService } from './contacts.service';
 
-import { ContactsContactListComponent } from './contact-list/contact-list.component';
-import { FinalSidebarComponent } from './final-sidebar/final-sidebar.component';
 
 import { MatButtonModule, MatSelectModule, MatCardModule, MatSlideToggleModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule } from '@angular/material';
 const routes = [
@@ -21,9 +18,7 @@ const routes = [
 
 @NgModule({
   declarations: [
-    ContactComponent,
-    ContactsContactListComponent,
-    FinalSidebarComponent,
+    ContactComponent
   ],
   imports: [
     CommonModule,

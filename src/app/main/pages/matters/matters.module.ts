@@ -11,16 +11,19 @@ import { MattersComponent } from './matters.component';
 import { MatButtonModule, MatCheckboxModule, MatSlideToggleModule, MatCardModule, MatSelectModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule } from '@angular/material';
 import { MattersListComponent } from './matters-list/matters-list.component';
 import { MattersSortDetailComponent } from './matters-sort-detail/matters-sort-detail.component';
+import { MattersDetailComponent } from './matters-detail/matters-detail.component';
 
 const routes = [
-  { path: '', component: MattersComponent, canActivate: [AuthGuard] }
+  { path: '', component: MattersComponent, canActivate: [AuthGuard] },
+  { path: ':id/details', component: MattersDetailComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
   declarations: [
     MattersComponent,
     MattersListComponent,
-    MattersSortDetailComponent
+    MattersSortDetailComponent,
+    MattersDetailComponent
   ],
   imports: [
     CommonModule,

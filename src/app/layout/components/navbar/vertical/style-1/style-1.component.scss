@@ -198,11 +198,15 @@ navbar {
     }
 }
 
-
+navbar navbar-vertical-style-1 {
+    display: inline-block !important;
+}
 navbar navbar-vertical-style-1 .navbar-top.sidebar_main_div {
     min-height: auto;
     max-height: 100%;
     display: inline-block;
+    height: 245px;
+    float: left;
 }
 navbar navbar-vertical-style-1 .navbar-top.sidebar_main_div .buttons {
     display: inline-block;
@@ -221,4 +225,15 @@ navbar navbar-vertical-style-1 .navbar-top.sidebar_main_div .logo {
 navbar navbar-vertical-style-1 .navbar-top.sidebar_main_div .logo .logo-icon {
     width: 100%;
     height: auto;
+}
+navbar navbar-vertical-style-1 .navbar-scroll-container.sidebar_btm_div {
+    display: inline-block;
+    float: left;
+    width: 100%;
+}
+body.theme-default fuse-sidebar {
+    background: #2D323E;
+}
+body.theme-default .accent {
+    background-color: #4d2184 !important;
 }

@@ -3,7 +3,7 @@ app-login {
     #login {
         width: 100%;
         overflow: hidden;
-        background: url('/assets/images/backgrounds/bg.jpg') no-repeat;
+        // background: url('/assets/images/backgrounds/bg.jpg') no-repeat;
         background-size: cover;
         #login-intro {
             padding: 128px;
@@ -23,6 +23,7 @@ app-login {
                 padding-top: 16px;
                 font-size: 14px;
                 max-width: 600px;
+                line-height: 25px;
             }
         }
         #login-form-wrapper {
@@ -164,9 +165,9 @@ body.theme-default app-login #login #login-form-wrapper {
     background: white;
 }
 
-app-login #login {
-    background: none;
-}
+// app-login #login {
+//     background: none;
+// }
 body.theme-default app-login #login #login-intro {
     color: white;
     width: 100%;

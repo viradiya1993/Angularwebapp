@@ -1,0 +1,59 @@
+<div id="mattertrust" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
+    <div fxLayoutAlign="center" class="content">
+        <div class="center p-24" fusePerfectScrollbar>
+            <div class="content">
+                <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
+                    <ng-container matColumnDef="class">
+                        <mat-header-cell *matHeaderCellDef>Class</mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="cashbook">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Cashbook</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="id">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Id</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="trans_date">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Trans Date</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="amount">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Amount</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="payor">
+                        <mat-header-cell *matHeaderCellDef> Payor/Payee </mat-header-cell>
+                        <mat-cell *matCellDef="let row">
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="type">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Type</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="cheque_no">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Cheque No</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="reason">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Reason</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
+                        </mat-cell>
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </mat-row>
+                </mat-table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

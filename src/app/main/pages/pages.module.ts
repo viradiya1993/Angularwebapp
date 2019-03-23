@@ -4,15 +4,15 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ContactModule } from './contact/contact.module';
 import { MattersModule } from './matters/matters.module';
-import { TimeBillingComponent } from './time-billing/time-billing.component';
-import { LegalDetailsComponent } from './legal-details/legal-details.component';
 const appRoutes: Routes = [
-  {  path: 'matters', loadChildren: './matters/matters.module#MattersModule'}
+  { path: 'matters', loadChildren: './matters/matters.module#MattersModule' },
+  { path: 'time-billing', loadChildren: './time-billing/time-billing.module#TimeBillingModule' },
+  { path: 'legal-details', loadChildren: './legal-details/legal-details.module#LegalDetailsModule' }
 ];
 
 
 @NgModule({
-  declarations: [TimeBillingComponent, LegalDetailsComponent],
+  declarations: [],
   imports: [
     CommonModule,
     RouterModule.forChild(appRoutes),

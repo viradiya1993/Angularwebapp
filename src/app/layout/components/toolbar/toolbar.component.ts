@@ -20,8 +20,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 export class ToolbarComponent implements OnInit, OnDestroy {
     horizontalNavbar: boolean;
-    isContact: boolean;
-    isMatters: boolean;
+    isTabShow: number;
     rightNavbar: boolean;
     hiddenNavbar: boolean;
     navigation: any;
@@ -97,12 +96,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.authenticationService.logout();
     }
     navBarSetting(value) {
-        if (value == '/matters') {
-            this.isMatters = true;
-            this.isContact = false;
-        } else if (value == '/contact') {
-            this.isContact = true;
-            this.isMatters = false;
-        }
+        // console.log(value);
+        if (value == '/matters')
+            this.isTabShow = 1;
+        else if (value == '/contact')
+            this.isTabShow = 2;
+        else if (value == '/time-billing' || value == '/time-billing/estimate' || value == '/time-billing/work-in-progress'
+            || value == '/time-billing/matter-invoices' || value == '/time-billing/receipts-credits' || value == '/time-billing/matter-trust')
+            this.isTabShow = 3;
+        else if (value == '/legal-details' || value == '/legal-details/chronology' || value == '/legal-details/authorities')
+            this.isTabShow = 4;
     }
+
 }

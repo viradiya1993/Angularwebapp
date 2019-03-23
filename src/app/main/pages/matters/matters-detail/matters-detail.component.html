@@ -114,34 +114,72 @@
 
                     <mat-tab label="Matter Contacts">
                         <div class="products tab-content p-24" fusePerfectScrollbar>
-                            <table class="simple">
-                                <thead>
-                                    <tr>
-                                        <th class="w-80">ID</th>
-                                        <th class="w-120">Image</th>
-                                        <th>Name</th>
-                                        <th class="w-120">Price</th>
-                                        <th class="w-80">Quantity</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="product-row">
-                                        <td>#djf </td>
-                                        <td>
-                                            <!-- <img class="product-image" [src]="currentMatter.avatar"> -->
-                                        </td>
-                                        <td>
-                                            demo
-                                        </td>
-                                        <td>
-                                            $454
-                                        </td>
-                                        <td>
-                                            10
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="content">
+                                <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
+                                    <ng-container matColumnDef="service">
+                                        <mat-header-cell *matHeaderCellDef>Service</mat-header-cell>
+                                        <mat-cell *matCellDef="let row">
+
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="quantity_from_10">
+                                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Quantity From 10</mat-header-cell>
+                                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
+
+                                        </mat-cell>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="price_from">
+                                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Price From</mat-header-cell>
+                                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+
+                                        </mat-cell>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="price_from_inc">
+                                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Price From Inc</mat-header-cell>
+                                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="quantity_to">
+                                        <mat-header-cell *matHeaderCellDef> Quantity To </mat-header-cell>
+                                        <mat-cell *matCellDef="let row">
+
+                                        </mat-cell>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="price_to">
+                                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Price To</mat-header-cell>
+                                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
+
+                                        </mat-cell>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="price_toinc">
+                                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Price To Inc</mat-header-cell>
+                                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+
+                                        </mat-cell>
+                                    </ng-container>
+
+
+
+                                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                    <mat-row *matRowDef="let row; columns: displayedColumns;">
+                                    </mat-row>
+
+
+                                </mat-table>
+
+                                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                            </div>
                         </div>
                     </mat-tab>
                 </mat-tab-group>

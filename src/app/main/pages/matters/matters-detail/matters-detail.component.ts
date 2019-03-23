@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-
+import { Component, OnDestroy, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { ActivatedRoute } from '@angular/router';
@@ -15,6 +15,9 @@ import { MattersService } from '../matters.service';
   animations: fuseAnimations
 })
 export class MattersDetailComponent implements OnInit {
+  displayedColumns: string[] = ['service', 'quantity_from_10', 'price_from', 'price_from_inc', 'quantity_to', 'price_to', 'price_toinc'];
+  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   currentMatterId: any;
   currentMatter: any;
   constructor(
@@ -24,6 +27,7 @@ export class MattersDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.dataSource.paginator = this.paginator;
     this.route.url.subscribe(v =>
       this.currentMatterId = v[0].path
     );
@@ -44,3 +48,16 @@ export class MattersDetailComponent implements OnInit {
   }
 
 }
+export interface PeriodicElement {
+  service: string;
+  quantity_from_10: number;
+  price_from: number;
+  price_from_inc: number;
+  quantity_to: number;
+  price_to: number;
+  price_toinc: number;
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+
+];

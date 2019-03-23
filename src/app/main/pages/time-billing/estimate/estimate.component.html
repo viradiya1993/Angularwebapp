@@ -1,13 +1,8 @@
 <div id="estimate" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
     <div fxLayoutAlign="center" class="content">
-
         <div class="center p-24" fusePerfectScrollbar>
             <div class="content">
-
-
                 <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
-
-
                     <ng-container matColumnDef="service">
                         <mat-header-cell *matHeaderCellDef>Service</mat-header-cell>
                         <mat-cell *matCellDef="let row">

@@ -12,9 +12,9 @@ import { MatButtonModule, MatCheckboxModule, MatSlideToggleModule, MatCardModule
 import { MattersListComponent } from './matters-list/matters-list.component';
 import { MattersSortDetailComponent } from './matters-sort-detail/matters-sort-detail.component';
 
-const routes = [{
-  path: '', component: MattersComponent, canActivate: [AuthGuard]
-}];
+const routes = [
+  { path: '', component: MattersComponent, canActivate: [AuthGuard] }
+];
 
 @NgModule({
   declarations: [

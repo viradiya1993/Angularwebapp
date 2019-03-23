@@ -4,9 +4,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ContactModule } from './contact/contact.module';
 import { MattersModule } from './matters/matters.module';
-const appRoutes: Routes = [{
-  path: 'matters', loadChildren: './matters/matters.module#MattersModule'
-}];
+const appRoutes: Routes = [
+  {  path: 'matters', loadChildren: './matters/matters.module#MattersModule'}
+];
 
 
 @NgModule({

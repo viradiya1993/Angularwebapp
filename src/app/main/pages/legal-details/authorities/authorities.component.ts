@@ -10,7 +10,7 @@ import { fuseAnimations } from '@fuse/animations';
   animations: fuseAnimations
 })
 export class AuthoritiesComponent implements OnInit {
-  displayedColumns: string[] = ['topic', 'authority', 'citation', 'reference', 'web_address', 'comment','button'];
+  displayedColumns: string[] = ['topic', 'authority', 'citation', 'reference', 'web_address', 'comment'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -31,15 +31,10 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {topic:1, authority: 'xyz', citation: 1.0079, reference:'moon',web_address:'xyz',comment:'xyz'},
-  {topic:2, authority: 'xyz', citation: 1.0079, reference:'moon',web_address:'xyz',comment:'xyz'},
-  {topic:3, authority: 'xyz', citation: 1.0079, reference:'moon',web_address:'xyz',comment:'xyz'},
-  {topic:4, authority: 'xyz', citation: 1.0079, reference:'moon',web_address:'xyz',comment:'xyz'},
-  {topic:5, authority: 'xyz', citation: 1.0079, reference:'moon',web_address:'xyz',comment:'xyz'},
-  {topic:6, authority: 'xyz', citation: 1.0079, reference:'moon',web_address:'xyz',comment:'xyz'},
-  {topic:7, authority: 'xyz', citation: 1.0079, reference:'moon',web_address:'xyz',comment:'xyz'},
-  {topic:8, authority: 'xyz', citation: 1.0079, reference:'moon',web_address:'xyz',comment:'xyz'},
-  {topic:9, authority: 'xyz', citation: 1.0079, reference:'moon',web_address:'xyz',comment:'xyz'},
-  {topic:10, authority: 'xyz', citation: 1.0079, reference:'moon',web_address:'xyz',comment:'xyz'},
-  {topic:11, authority: 'xyz', citation: 1.0079, reference:'moon',web_address:'xyz',comment:'xyz'},
+  {topic:1, authority: 'xyz', citation: 1.0079, reference:'www.google.com',web_address:'xyz',comment:'not done yet'},
+  {topic:2, authority: 'xyz', citation: 1.0079, reference:'www.google.com',web_address:'xyz',comment:'not done yet'},
+  {topic:3, authority: 'xyz', citation: 1.0079, reference:'www.google.com',web_address:'xyz',comment:'not done yet'},
+  {topic:4, authority: 'xyz', citation: 1.0079, reference:'www.google.com',web_address:'xyz',comment:'not done yet'},
+  {topic:5, authority: 'xyz', citation: 1.0079, reference:'www.google.com',web_address:'xyz',comment:'not done yet'},
+  {topic:6, authority: 'xyz', citation: 1.0079, reference:'www.google.com',web_address:'xyz',comment:'not done yet'},
 ];

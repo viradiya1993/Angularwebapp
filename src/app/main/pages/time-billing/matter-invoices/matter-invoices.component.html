@@ -2,6 +2,11 @@
     <div fxLayoutAlign="center" class="content">
         <div class="center p-24" fusePerfectScrollbar>
             <div class="content">
+                    <div class="btn top_right_action">
+                            <button mat-icon-button (click)="openDialog()" aria-label="More">
+                            <mat-icon class="secondary-text">more_vert</mat-icon>
+                            </button>
+                        </div>
                 <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
                     <ng-container matColumnDef="invoice_no">
                         <mat-header-cell *matHeaderCellDef>Invoice No</mat-header-cell>
@@ -11,26 +16,26 @@
 
                     <ng-container matColumnDef="date">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Date</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.date}}
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.date |date}}
                         </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="total">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Total</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.total}}
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.total |currency }}
                         </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="gst">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>GST</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.gst}}
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.gst |currency}}
                         </mat-cell>
                     </ng-container>
 
 
                     <ng-container matColumnDef="paid">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Paid</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.paid}}
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.paid |currency}}
                         </mat-cell>
                     </ng-container>
 
@@ -47,7 +52,7 @@
                         </mat-cell>
                     </ng-container>
 
-                    <ng-container matColumnDef="button">
+                    <!-- <ng-container matColumnDef="button">
                         <mat-header-cell *matHeaderCellDef><button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More">
                             <mat-icon class="secondary-text">more_vert</mat-icon>
                         </button>
@@ -60,7 +65,7 @@
                         </mat-menu> </mat-header-cell>
                         
                         <mat-cell *matCellDef="let row"></mat-cell>
-                    </ng-container>
+                    </ng-container> -->
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: displayedColumns;">
                     </mat-row>

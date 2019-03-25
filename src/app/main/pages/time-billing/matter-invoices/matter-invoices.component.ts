@@ -11,7 +11,7 @@ import { fuseAnimations } from '@fuse/animations';
 })
 export class MatterInvoicesComponent implements OnInit {
 
-  displayedColumns: string[] = ['invoice_no', 'date', 'total', 'gst', 'paid', 'outstanding', 'written_off','button'];
+  displayedColumns: string[] = ['invoice_no', 'date', 'total', 'gst', 'paid', 'outstanding', 'written_off'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor() { }
@@ -24,7 +24,7 @@ export class MatterInvoicesComponent implements OnInit {
 }
 export interface PeriodicElement {
   invoice_no: number;
-  date: number;
+  date: Date;
   total: number;
   gst: number;
 
@@ -35,17 +35,11 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 2, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 3, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 4, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 5, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 6, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 7, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 8, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 9, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 10, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 11, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  
+  { invoice_no: 35, date:new Date('2/1/2014'), total: 321.0079, gst: 50.30, paid: 212, outstanding: 89, written_off: 45 },
+  { invoice_no: 32, date: new Date('2/1/2014'), total: 5581.0079, gst: 12.30, paid: 212, outstanding: 89, written_off: 45 },
+  { invoice_no: 35, date: new Date('2/1/2014'), total: 3211.0079, gst: 60.32, paid: 212, outstanding: 89, written_off: 45 },
+  { invoice_no: 35, date: new Date('2/1/2014'), total: 1231.0079, gst: 40.25, paid: 212, outstanding: 89, written_off: 45 },
+  { invoice_no: 35, date: new Date('2/1/2014'), total: 1569.0079, gst: 78.32, paid: 212, outstanding: 89, written_off: 45 },
+  { invoice_no: 35, date: new Date('2/1/2014'), total: 158.0079, gst: 12.01, paid: 212, outstanding: 89, written_off: 45 }
 
 ];

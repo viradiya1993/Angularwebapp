@@ -11,7 +11,7 @@ import { fuseAnimations } from '@fuse/animations';
 })
 export class WorkInProgressComponent implements OnInit {
 
-  displayedColumns: string[] = ['date', 'type', 'quantity', 'price', 'description', 'invoice_no', 'price_in_gst', 'buttons'];
+  displayedColumns: string[] = ['date', 'type', 'quantity', 'price', 'description', 'invoice_no', 'price_in_gst', 'button'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -26,7 +26,7 @@ export class WorkInProgressComponent implements OnInit {
 
 export interface PeriodicElement {
   date: number;
-  type: number;
+  type: string;
   quantity: number;
   price: number;
   description: string;
@@ -36,5 +36,10 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-
+  {date:25122018,type:'XYZ',quantity:1200,price:2500,description:'abcdefghijkl',invoice_no:5,price_in_gst:88},
+  {date:16122018,type:'XYZ',quantity:1200,price:2500,description:'abcdefghijkl',invoice_no:5,price_in_gst:88},
+  {date:18112018,type:'XYZ',quantity:1200,price:2500,description:'abcdefghijkl',invoice_no:5,price_in_gst:88},
+  {date:13102018,type:'XYZ',quantity:1200,price:2500,description:'abcdefghijkl',invoice_no:5,price_in_gst:88},
+  {date:26092018,type:'XYZ',quantity:1200,price:2500,description:'abcdefghijkl',invoice_no:5,price_in_gst:88},
+  {date:29062018,type:'XYZ',quantity:1200,price:2500,description:'abcdefghijkl',invoice_no:5,price_in_gst:88},
 ];

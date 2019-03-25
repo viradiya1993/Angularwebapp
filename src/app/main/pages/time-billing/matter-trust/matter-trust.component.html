@@ -5,48 +5,62 @@
                 <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
                     <ng-container matColumnDef="class">
                         <mat-header-cell *matHeaderCellDef>Class</mat-header-cell>
-                        <mat-cell *matCellDef="let row">
+                        <mat-cell *matCellDef="let row">{{row.class}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="cashbook">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Cashbook</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.cashbook}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="id">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Id</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.id}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="trans_date">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Trans Date</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.trans_date}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="amount">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Amount</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.amount}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="payor">
                         <mat-header-cell *matHeaderCellDef> Payor/Payee </mat-header-cell>
-                        <mat-cell *matCellDef="let row">
+                        <mat-cell *matCellDef="let row">{{row.payor}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="type">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Type</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.type}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="cheque_no">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Cheque No</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.cheque_no}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="reason">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Reason</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.reason}}
                         </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="button">
+                        <mat-header-cell *matHeaderCellDef><button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More">
+                            <mat-icon class="secondary-text">more_vert</mat-icon>
+                        </button>
+                
+                        <mat-menu #moreMenu="matMenu">
+                            <button mat-menu-item aria-label="remove" (click)="deleteContact(row)">
+                                <mat-icon>delete</mat-icon>
+                                <span>Remove</span>
+                            </button>
+                        </mat-menu> </mat-header-cell>
+                        
+                        <mat-cell *matCellDef="let row"></mat-cell>
                     </ng-container>
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: displayedColumns;">

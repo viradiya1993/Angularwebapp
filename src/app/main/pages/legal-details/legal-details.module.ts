@@ -21,7 +21,7 @@ const routes = [
       { path: 'chronology', component: ChronologyComponent },
       { path: 'authorities', component: AuthoritiesComponent },
       { path: 'file-notes', component: FileNotesComponent },
-      { path: 'safecustody', component: SafecustodyComponent }
+      { path: 'safe-custody', component: SafecustodyComponent }
     ], canActivate: [AuthGuard]
   }
 ];

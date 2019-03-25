@@ -69,6 +69,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 this.rightNavbar = settings.layout.navbar.position === 'right';
                 this.hiddenNavbar = settings.layout.navbar.hidden === true;
             });
+
     }
 
     /**
@@ -96,14 +97,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.authenticationService.logout();
     }
     navBarSetting(value) {
-        if (value == '/matters')
+        let x = value.split("/");
+        if (x[1] == "matters" || x[1] == "")
             this.isTabShow = 1;
-        else if (value == '/contact')
+        else if (x[1] == "contact")
             this.isTabShow = 2;
-        else if (value == '/time-billing' || value == '/time-billing/estimate' || value == '/time-billing/work-in-progress'
-            || value == '/time-billing/matter-invoices' || value == '/time-billing/receipts-credits' || value == '/time-billing/matter-trust')
+        else if (x[1] == "time-billing")
             this.isTabShow = 3;
-        else if (value == '/legal-details' || value == '/legal-details/chronology' || value == '/legal-details/authorities' || value == '/legal-details/file-notes')
+        else if (x[1] == "legal-details")
             this.isTabShow = 4;
         else
             this.isTabShow = 0;

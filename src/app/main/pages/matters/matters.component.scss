@@ -52,4 +52,30 @@
         width: 45% !important;
         padding: 20px !important;
     }
+    
+}
+// .sticky_search_div .mat-form-field-wrapper {
+//     padding-bottom: 0 !important;
+// }
+
+
+.sticky_search_div {
+    position: fixed;
+    top: 145px;
+    width: 100%;
+    background-color: #f5f5f5;
+    z-index: 9999;
+    left: 0;
+    padding-left: 300px;
+}
+.fix_div_padding {
+    padding-top: 95px;
+}
+.list_sidebar_padding {
+    padding-top: 92px;
+    background-color: #fff;
+    border-left: 1px solid #ccc;
+}
+.list_sidebar_padding h3.one {
+    margin: 0;
 }

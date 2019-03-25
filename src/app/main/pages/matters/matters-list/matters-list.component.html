@@ -3,6 +3,8 @@
     <mat-icon class="secondary-text">more_vert</mat-icon>
     </button>
 </div>
+
+<div class="one">
 <mat-table #table [dataSource]="mattersData" [@animateStagger]="{value:'50'}">
     <!-- Name Column -->
     <ng-container matColumnDef="matter_num">
@@ -73,4 +75,5 @@
     <mat-row *matRowDef="let matter; columns: displayedColumns;" class="matter" (click)="editmatter(matter)" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
     </mat-row>
 </mat-table>
-<!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

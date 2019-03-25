@@ -31,10 +31,10 @@ app-chronology {
     .content {
         overflow: hidden;
         // margin-top: 10px;
-        .btn{
-            margin-left: 96%;
-            margin-top: 120px;
-
+        
+        .example {
+            width: 18%;
+            padding: 10px;
        
             .sidebar {
                 &:not(.locked-open) {
@@ -42,9 +42,9 @@ app-chronology {
                 }
             }
         }
-        }
+        
     }
-
+}
 
 .search {
     width: 45% !important;

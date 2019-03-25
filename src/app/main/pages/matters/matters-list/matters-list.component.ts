@@ -44,7 +44,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': ['name', 'email', 'phone', 'jobTitle'], 'type': 'matters' };
+    dialogConfig.data = { 'data': ['matter_num', 'matter', 'unbilled', 'invoiced','received','unpaid','total_value'], 'type': 'matters' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click

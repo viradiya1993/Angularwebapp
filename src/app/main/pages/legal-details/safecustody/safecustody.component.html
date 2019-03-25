@@ -1,49 +1,49 @@
 <div id="safecustody" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
-  <div fxLayoutAlign="center" class="content">
-      <div class="center p-24" fusePerfectScrollbar>
-          <div class="content">
-                <div class="btn top_right_action">
-                        <button mat-icon-button (click)="openDialog()" aria-label="More">
+    <div fxLayoutAlign="center" class="content">
+        <div class="center p-24" fusePerfectScrollbar>
+            <div class="content">
+                <div class="btn top_right_action_billing">
+                    <button mat-icon-button (click)="openDialog()" aria-label="More">
                         <mat-icon class="secondary-text">more_vert</mat-icon>
                         </button>
-                    </div>
-              <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
-                  <ng-container matColumnDef="packet_number">
-                      <mat-header-cell *matHeaderCellDef>Packet Number</mat-header-cell>
-                      <mat-cell *matCellDef="let row">{{row.packet_number}}
-                      </mat-cell>
-                  </ng-container>
-                  <ng-container matColumnDef="packet_description">
-                      <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Packet Description</mat-header-cell>
-                      <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.packet_description}}
-                      </mat-cell>
-                  </ng-container>
-                  <ng-container matColumnDef="document">
-                      <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Document</mat-header-cell>
-                      <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.document}}
-                      </mat-cell>
-                  </ng-container>
-                  <ng-container matColumnDef="status">
-                    <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
-                    <mat-cell *matCellDef="let row">{{row.status}}
-                    </mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="document_name">
-                    <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Document Name</mat-header-cell>
-                    <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.document_name}}
-                    </mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="description">
-                    <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Description</mat-header-cell>
-                    <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.description}}
-                    </mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="review_date">
-                  <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Review Date</mat-header-cell>
-                  <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.review_date |date}}
-                  </mat-cell>
-              </ng-container>
-                  <!-- <ng-container matColumnDef="button">
+                </div>
+                <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
+                    <ng-container matColumnDef="packet_number">
+                        <mat-header-cell *matHeaderCellDef>Packet Number</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.packet_number}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="packet_description">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Packet Description</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.packet_description}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="document">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Document</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.document}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="status">
+                        <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.status}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="document_name">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Document Name</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.document_name}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="description">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Description</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.description}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="review_date">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Review Date</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.review_date |date}}
+                        </mat-cell>
+                    </ng-container>
+                    <!-- <ng-container matColumnDef="button">
                     <mat-header-cell *matHeaderCellDef><button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More">
                         <mat-icon class="secondary-text">more_vert</mat-icon>
                     </button>

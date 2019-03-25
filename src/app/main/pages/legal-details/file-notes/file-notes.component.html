@@ -1,29 +1,29 @@
 <div id="filenotes" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
-  <div fxLayoutAlign="center" class="content">
-      <div class="center p-24" fusePerfectScrollbar>
-          <div class="content">
-                <div class="btn top_right_action">
-                        <button mat-icon-button (click)="openDialog()" aria-label="More">
+    <div fxLayoutAlign="center" class="content">
+        <div class="center p-24" fusePerfectScrollbar>
+            <div class="content">
+                <div class="btn top_right_action_billing">
+                    <button mat-icon-button (click)="openDialog()" aria-label="More">
                         <mat-icon class="secondary-text">more_vert</mat-icon>
                         </button>
-                    </div>
-              <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
-                  <ng-container matColumnDef="date">
-                      <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
-                      <mat-cell *matCellDef="let row">{{row.date | date}}
-                      </mat-cell>
-                  </ng-container>
-                  <ng-container matColumnDef="time">
-                      <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Time</mat-header-cell>
-                      <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.time}}
-                      </mat-cell>
-                  </ng-container>
-                  <ng-container matColumnDef="note">
-                      <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Note</mat-header-cell>
-                      <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.note}}
-                      </mat-cell>
-                  </ng-container>
-                  <!-- <ng-container matColumnDef="button">
+                </div>
+                <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
+                    <ng-container matColumnDef="date">
+                        <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.date | date}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="time">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Time</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.time}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="note">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Note</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.note}}
+                        </mat-cell>
+                    </ng-container>
+                    <!-- <ng-container matColumnDef="button">
                     <mat-header-cell *matHeaderCellDef><button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More">
                         <mat-icon class="secondary-text">more_vert</mat-icon>
                     </button>

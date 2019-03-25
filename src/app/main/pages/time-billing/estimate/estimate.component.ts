@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
+import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.component';
+
 
 @Component({
   selector: 'app-estimate',
@@ -14,10 +16,29 @@ export class EstimateComponent implements OnInit {
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor() { }
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
+  }
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '50%';
+    dialogConfig.data = { 'data': ['service', 'quantity_from_10', 'price_from', 'price_from_inc', 'quantity_to', 'price_to', 'price_toinc'], 'type': 'estimate' };
+    //open pop-up
+    const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
+    //Save button click
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log(result);
+    // });
+    dialogRef.afterClosed().subscribe(data =>
+      this.tableSetting(data)
+    );
+  }
+  tableSetting(data: any) {
+    if (data !== false) {
+      this.displayedColumns = data;
+    }
   }
 
 }

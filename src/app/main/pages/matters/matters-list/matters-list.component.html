@@ -5,53 +5,72 @@
 </div>
 <mat-table #table [dataSource]="mattersData" [@animateStagger]="{value:'50'}">
     <!-- Name Column -->
-    <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef fxShow.gt-md>Name</mat-header-cell>
+    <ng-container matColumnDef="matter_num">
+        <mat-header-cell *matHeaderCellDef fxShow.gt-md>Matter Num</mat-header-cell>
         <mat-cell *matCellDef="let matter" fxShow.gt-md>
-            <p class="text-truncate font-weight-600">{{matter.name}} {{matter.lastName}}</p>
+            <p class="text-truncate font-weight-600">{{matter.matter_num}}</p>
         </mat-cell>
     </ng-container>
 
     <!-- Email Column -->
-    <ng-container matColumnDef="email">
-        <mat-header-cell *matHeaderCellDef fxShow.gt-md>Email</mat-header-cell>
+    <ng-container matColumnDef="matter">
+        <mat-header-cell *matHeaderCellDef fxShow.gt-md>Matter</mat-header-cell>
         <mat-cell *matCellDef="let matter" fxShow.gt-md>
             <p class="email text-truncate">
-                {{matter.email}}
+                {{matter.matter}}
             </p>
         </mat-cell>
     </ng-container>
 
     <!-- Phone Column -->
-    <ng-container matColumnDef="phone">
-        <mat-header-cell *matHeaderCellDef fxShow.gt-md>Phone</mat-header-cell>
+    <ng-container matColumnDef="unbilled">
+        <mat-header-cell *matHeaderCellDef fxShow.gt-md>Unbilled</mat-header-cell>
         <mat-cell *matCellDef="let matter" fxShow.gt-md>
             <p class="phone text-truncate">
-                {{matter.phone}}
+                {{matter.unbilled}}
             </p>
         </mat-cell>
     </ng-container>
 
     <!-- Job Title Column -->
-    <ng-container matColumnDef="jobTitle">
-        <mat-header-cell *matHeaderCellDef fxShow.gt-md>Job title</mat-header-cell>
+    <ng-container matColumnDef="invoiced">
+        <mat-header-cell *matHeaderCellDef fxShow.gt-md>Invoiced</mat-header-cell>
         <mat-cell *matCellDef="let matter" fxShow.gt-md>
             <p class="job-title text-truncate">
-                {{matter.jobTitle}}
+                {{matter.invoiced}}
             </p>
         </mat-cell>
     </ng-container>
 
     <!-- Company Column -->
-    <ng-container matColumnDef="company">
-        <mat-header-cell *matHeaderCellDef fxShow.gt-md>Company</mat-header-cell>
+    <ng-container matColumnDef="received">
+        <mat-header-cell *matHeaderCellDef fxShow.gt-md>Received</mat-header-cell>
         <mat-cell *matCellDef="let matter" fxShow.gt-md>
             <p class="company text-truncate">
-                {{matter.company}}
+                {{matter.received}}
             </p>
         </mat-cell>
     </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <ng-container matColumnDef="unpaid">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Unpaid</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="company text-truncate">
+                    {{matter.unpaid}}
+                </p>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="total_value">
+                <mat-header-cell *matHeaderCellDef fxShow.gt-md>Total Value</mat-header-cell>
+                <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                    <p class="company text-truncate">
+                        {{matter.total_value}}
+                    </p>
+                </mat-cell>
+            </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+    <!-- sticky: true" -->
     <mat-row *matRowDef="let matter; columns: displayedColumns;" class="matter" (click)="editmatter(matter)" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
     </mat-row>
 </mat-table>
+<!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->

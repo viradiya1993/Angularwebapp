@@ -10,7 +10,7 @@ import { fuseAnimations } from '@fuse/animations';
   animations: fuseAnimations
 })
 export class SafecustodyComponent implements OnInit {
-  displayedColumns: string[] = ['packet_number', 'packet_description', 'document','status','document_name','description','review_date','button'];
+  displayedColumns: string[] = ['packet_number', 'packet_description', 'document','status','document_name','description','review_date'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 

@@ -11,7 +11,7 @@ import { fuseAnimations } from '@fuse/animations';
 })
 export class WorkInProgressComponent implements OnInit {
 
-  displayedColumns: string[] = ['date', 'type', 'quantity', 'price', 'description', 'invoice_no', 'price_in_gst', 'button'];
+  displayedColumns: string[] = ['date', 'type', 'quantity', 'price', 'description', 'invoice_no', 'price_in_gst'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 

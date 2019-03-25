@@ -2,6 +2,12 @@
     <div fxLayoutAlign="center" class="content">
         <div class="center p-24" fusePerfectScrollbar>
             <div class="content">
+
+                    <div class="btn top_right_action">
+                            <button mat-icon-button (click)="openDialog()" aria-label="More">
+                            <mat-icon class="secondary-text">more_vert</mat-icon>
+                            </button>
+                        </div>
                 <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
                     <ng-container matColumnDef="topic">
                         <mat-header-cell *matHeaderCellDef>Topic</mat-header-cell>
@@ -33,7 +39,7 @@
                         <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.comment}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="button">
+                    <!-- <ng-container matColumnDef="button">
                         <mat-header-cell *matHeaderCellDef><button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More">
                             <mat-icon class="secondary-text">more_vert</mat-icon>
                         </button>
@@ -46,7 +52,7 @@
                         </mat-menu> </mat-header-cell>
                         
                         <mat-cell *matCellDef="let row"></mat-cell>
-                    </ng-container>
+                    </ng-container> -->
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: displayedColumns;">
                     </mat-row>

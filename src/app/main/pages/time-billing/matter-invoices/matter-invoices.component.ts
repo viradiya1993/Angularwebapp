@@ -11,7 +11,7 @@ import { fuseAnimations } from '@fuse/animations';
 })
 export class MatterInvoicesComponent implements OnInit {
 
-  displayedColumns: string[] = ['invoice_no', 'date', 'total', 'gst', 'paid', 'outstanding', 'written_off','button'];
+  displayedColumns: string[] = ['invoice_no', 'date', 'total', 'gst', 'paid', 'outstanding', 'written_off'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor() { }

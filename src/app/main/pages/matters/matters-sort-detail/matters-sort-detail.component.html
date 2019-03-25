@@ -14,30 +14,39 @@
             </div>
 
             <table>
-                <tr class="jobTitle">
-                    <th>JobTitle</th>
-                    <td>{{mattersDetailData?.jobTitle}}</td>
+                <tr class="matter_num">
+                    <th>Matter Num</th>
+                    <td>{{mattersDetailData?.matter_num}}</td>
                 </tr>
-                <tr class="name">
-                    <th>Name</th>
-                    <td>{{mattersDetailData?.lastName}} {{mattersDetailData?.lastName}}</td>
+                <tr class="matter">
+                    <th>Matter</th>
+                    <td>{{mattersDetailData?.matter}}</td>
                 </tr>
-                <tr class="email">
-                    <th>Email</th>
-                    <td>{{mattersDetailData?.email}}</td>
+                <tr class="unbilled">
+                    <th>Unbilled</th>
+                    <td>{{mattersDetailData?.unbilled}}</td>
                 </tr>
-                <tr class="company">
-                    <th>Company</th>
-                    <td>{{mattersDetailData?.company}}</td>
+                <tr class="invoiced">
+                    <th>Invoiced</th>
+                    <td>{{mattersDetailData?.invoiced}}</td>
                 </tr>
-                <tr class="phone">
-                    <th>Phone</th>
-                    <td>{{mattersDetailData?.phone}}</td>
+                <tr class="received">
+                    <th>Received</th>
+                    <td>{{mattersDetailData?.received}}</td>
                 </tr>
+                <tr class="unpaid">
+                        <th>Unpaid</th>
+                        <td>{{mattersDetailData?.unpaid}}</td>
+                    </tr>
+
+                    <tr class="total_value">
+                            <th>Total Value</th>
+                            <td>{{mattersDetailData?.total_value}}</td>
+                        </tr>
             </table>
         </div>
         <br/>
-        <a class="button primary" mat-raised-button routerLink="{{mattersDetailData.id}}/details">
+        <a class="button primary" mat-raised-button routerLink="{{mattersDetailData.matter_num}}/details">
             <mat-icon>visibility</mat-icon> View</a>
     </div>
 </mat-card>

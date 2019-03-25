@@ -11,7 +11,7 @@ import { fuseAnimations } from '@fuse/animations';
   animations: fuseAnimations
 })
 export class FileNotesComponent implements OnInit {
-  displayedColumns: string[] = ['date', 'time', 'note','button'];
+  displayedColumns: string[] = ['date', 'time', 'note'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 

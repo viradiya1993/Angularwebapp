@@ -11,7 +11,7 @@ import { fuseAnimations } from '@fuse/animations';
 })
 export class ReceiptsCreditsComponent implements OnInit {
 
-  displayedColumns: string[] = ['receipt_no', 'date', 'total', 'gst', 'allocation', 'note','button'];
+  displayedColumns: string[] = ['receipt_no', 'date', 'total', 'gst', 'allocation', 'note'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 

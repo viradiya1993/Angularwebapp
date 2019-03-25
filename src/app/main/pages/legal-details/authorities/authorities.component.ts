@@ -10,7 +10,7 @@ import { fuseAnimations } from '@fuse/animations';
   animations: fuseAnimations
 })
 export class AuthoritiesComponent implements OnInit {
-  displayedColumns: string[] = ['topic', 'authority', 'citation', 'reference', 'web_address', 'comment','button'];
+  displayedColumns: string[] = ['topic', 'authority', 'citation', 'reference', 'web_address', 'comment'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 

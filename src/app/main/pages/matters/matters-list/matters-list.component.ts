@@ -1,8 +1,7 @@
-import { Component, OnDestroy, OnInit, Output, ViewEncapsulation, EventEmitter, Pipe, PipeTransform, Inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output, ViewEncapsulation, EventEmitter } from '@angular/core';
 
 import { fuseAnimations } from '@fuse/animations';
-import { MatDialog, MatDialogRef, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material';
-import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag } from '@angular/cdk/drag-drop';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 
 import { MattersService } from '../matters.service';
 import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.component';
@@ -27,10 +26,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
 
 
   ngOnInit(): void {
-    this._mattersService.getMatters().subscribe(response => {
-      this.mattersData = response;
-      // console.log(response);
-    });
+    this.getMatterList();
   }
   ngOnDestroy(): void { }
 
@@ -39,16 +35,29 @@ export class MattersListComponent implements OnInit, OnDestroy {
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
-    // dialogConfig.disableClose = true;
-    // dialogConfig.autoFocus = true;
     dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': this.displayedColumns, 'type': 'matters' };
+    dialogConfig.data = { 'data': ['name', 'email', 'phone', 'jobTitle', 'buttons'], 'type': 'matters' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log(result);
+    // });
+    dialogRef.afterClosed().subscribe(data =>
+      this.tableSetting(data)
+    );
+  }
+  getMatterList() {
+    this._mattersService.getMatters().subscribe(response => {
+      this.mattersData = response;
     });
   }
+  tableSetting(data: any) {
+    if (data !== false) {
+      this.displayedColumns = data;
+      this.getMatterList();
+    }
+  }
+
 
 }

@@ -26,12 +26,10 @@ export class SortingDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.property);
   }
 
   //when checkbox click here
   onChange(event, data) {
-    //console.log(event);        
     if (event.checked == true) {
       if (this.all.indexOf(data) == -1) {
         this.all.push(data);
@@ -73,7 +71,11 @@ export class SortingDialogComponent implements OnInit {
 
   //dialog content close event
   ondialogcloseClick(): void {
-    this.dialogRef.close(true);
+    this.dialogRef.close(false);
+  }
+  //dialog content close event with save
+  ondialogSaveClick(): void {
+    this.dialogRef.close(this.all);
   }
 
 }

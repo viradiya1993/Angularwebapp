@@ -1,5 +1,6 @@
 <div>
-    <h2 mat-dialog-title>Choose Which colums You see
+    <h2 mat-dialog-title>
+        Configure Fields
         <mat-icon (click)="ondialogcloseClick()">close</mat-icon>
     </h2>
 </div>
@@ -22,14 +23,6 @@
                     </div>
                 </div>
             </div>
-            <!-- <mat-form-field>
-            <mat-select placeholder="Toppings" [formControl]="toppings" multiple>
-              <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
-            </mat-select>
-          </mat-form-field> -->
-            <div>
-                <!-- <h3>Don`t see the Property you`re looking for? <a href="#">Create a Property</a></h3> -->
-            </div>
         </form>
         <mat-divider vertical></mat-divider>
         <div class="form-errors-model p-24">
@@ -46,8 +39,7 @@
     </div>
     <!-- {{property | json}} -->
     <mat-dialog-actions align="end">
-        <a class="deleteall" name="deleteall" (click)="deleteall(i,$event)">Delete All Columns</a>
-        <button mat-raised-button color="primary" mat-button [mat-dialog-close]="true" cdkFocusInitial>Save</button>
-        <button class="cancel" mat-button mat-dialog-close matBadgeColor="accent">Cancel</button>
+        <button mat-raised-button color="primary" mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="ondialogSaveClick()">Save</button>
+        <button class="cancel" mat-button [mat-dialog-close]="true" matBadgeColor="accent" (click)="ondialogcloseClick()">Cancel</button>
     </mat-dialog-actions>
 </mat-dialog-content>

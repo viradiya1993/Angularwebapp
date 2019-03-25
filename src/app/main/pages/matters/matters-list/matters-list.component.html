@@ -67,15 +67,10 @@
         </mat-cell>
     </ng-container> -->
     <ng-container matColumnDef="buttons">
-        <mat-header-cell *matHeaderCellDef><button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More">
+        <mat-header-cell *matHeaderCellDef>
+            <button mat-icon-button (click)="openDialog()" aria-label="More">
                 <mat-icon class="secondary-text">more_vert</mat-icon>
             </button>
-            <mat-menu #moreMenu="matMenu">
-                <button mat-menu-item aria-label="remove" (click)="openDialog()">
-                    <mat-icon>delete</mat-icon>
-                    <span>Remove</span>
-                </button>
-            </mat-menu>
         </mat-header-cell>
         <mat-cell *matCellDef="let matter"></mat-cell>
     </ng-container>

@@ -24,10 +24,10 @@ export class MatterTrustComponent implements OnInit {
 
 }
 export interface PeriodicElement {
-  class: number;
+  class: string;
   cashbook: number;
   id: number;
-  trans_date: number;
+  trans_date: Date;
 
   amount: number;
   payor: number;
@@ -38,11 +38,11 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {class:1,cashbook:32,id:21,trans_date:55,amount:2500,payor:9,type:'xyz',cheque_no:10,reason:'abcdef'},
-  {class:2,cashbook:32,id:21,trans_date:55,amount:2500,payor:9,type:'xyz',cheque_no:10,reason:'abcdef'},
-  {class:3,cashbook:32,id:21,trans_date:55,amount:2500,payor:9,type:'xyz',cheque_no:10,reason:'abcdef'},
-  {class:4,cashbook:32,id:21,trans_date:55,amount:2500,payor:9,type:'xyz',cheque_no:10,reason:'abcdef'},
-  {class:5,cashbook:32,id:21,trans_date:55,amount:2500,payor:9,type:'xyz',cheque_no:10,reason:'abcdef'},
-  {class:6,cashbook:32,id:21,trans_date:55,amount:2500,payor:9,type:'xyz',cheque_no:10,reason:'abcdef'},
+  {class:'receipt',cashbook:32,id:21,trans_date:new Date('2/1/2014'),amount:2500.30,payor:9,type:'xyz',cheque_no:10,reason:'abcdef'},
+  {class:'receipt',cashbook:32,id:21,trans_date:new Date('2/1/2014'),amount:2500.90,payor:9,type:'xyz',cheque_no:1,reason:'abcdef'},
+  {class:'receipt',cashbook:32,id:21,trans_date:new Date('2/1/2014'),amount:2500.256,payor:9,type:'xyz',cheque_no:3,reason:'abcdef'},
+  {class:'receipt',cashbook:32,id:21,trans_date:new Date('2/1/2014'),amount:2500.300,payor:9,type:'xyz',cheque_no:56,reason:'abcdef'},
+  {class:'receipt',cashbook:32,id:21,trans_date:new Date('2/1/2014'),amount:2500.30,payor:9,type:'xyz',cheque_no:10,reason:'abcdef'},
+  {class:'receipt',cashbook:32,id:21,trans_date:new Date('2/1/2014'),amount:2500.001,payor:9,type:'xyz',cheque_no:11,reason:'abcdef'},
 
 ];

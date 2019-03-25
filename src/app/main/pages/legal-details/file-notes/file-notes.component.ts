@@ -22,23 +22,19 @@ export class FileNotesComponent implements OnInit {
   }
 }
 export interface PeriodicElement {
-  date: number;
+  date: Date;
   time: number;
   note: string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
 
-  {date:211012,time:1530,note:'moon'},
-  {date:221012,time:1530,note:'moon'},
-  {date:231012,time:1530,note:'moon'},
-  {date:241012,time:1530,note:'moon'},
-  {date:251012,time:1530,note:'moon'},
-  {date:261012,time:1530,note:'moon'},
-  {date:271012,time:1530,note:'moon'},
-  {date:281012,time:1530,note:'moon'},
-  {date:291012,time:1530,note:'moon'},
-  {date:301012,time:1530,note:'moon'},
-  {date:311012,time:1530,note:'moon'}
+  {date:new Date('2/1/2014'),time:11.30,note:'work in progress '},
+  {date:new Date('2/12/2014'),time:15.30,note:'work in progress '},
+  {date:new Date('6/13/2014'),time:15.30,note:'work in progress '},
+  {date:new Date('5/13/2014'),time:14.56,note:' work in progress'},
+  {date:new Date('1/13/2014'),time:13.30,note:' work in progress'},
+  {date:new Date('1/11/2014'),time:23.30,note:'work in progress '},
+  
 ];
 

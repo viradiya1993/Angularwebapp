@@ -28,17 +28,17 @@ export interface PeriodicElement {
   status: string;
   document_name: string;
   description: string;
-  review_date: number;
+  review_date: Date;
 }
 
 
 const ELEMENT_DATA: PeriodicElement[] = [
 
-   {packet_number:111,packet_description:'dummy data',document:2521,status:'not done yet',document_name:'xyz',description:'abcdefgh',review_date:25122018},
-   {packet_number:112,packet_description:'dummy data',document:2521,status:'not done yet',document_name:'xyz',description:'abcdefgh',review_date:25122018},
-   {packet_number:113,packet_description:'dummy data',document:2521,status:'not done yet',document_name:'xyz',description:'abcdefgh',review_date:25122018},
-   {packet_number:114,packet_description:'dummy data',document:2521,status:'not done yet',document_name:'xyz',description:'abcdefgh',review_date:25122018},
-   {packet_number:115,packet_description:'dummy data',document:2521,status:'not done yet',document_name:'xyz',description:'abcdefgh',review_date:25122018},
-   {packet_number:116,packet_description:'dummy data',document:2521,status:'not done yet',document_name:'xyz',description:'abcdefgh',review_date:25122018},
+   {packet_number:11112,packet_description:'in process ',document:2521,status:'not done yet',document_name:'xyz',description:'abcdefgh',review_date:new Date('2/1/2014')},
+   {packet_number:12362,packet_description:'in process',document:2521,status:' done ',document_name:'xyz ',description:'abcdefgh ',review_date:new Date('2/1/2014')},
+   {packet_number:15634,packet_description:'in process ',document:2521,status:'not done yet',document_name:'xyz',description:'abcdefgh ',review_date:new Date('2/1/2014')},
+   {packet_number:11411,packet_description:'in process',document:2521,status:'not done yet',document_name:'xyz',description:'abcdefgh ',review_date:new Date('2/1/2014')},
+   {packet_number:12153,packet_description:'in process',document:2521,status:'done',document_name:' xyz',description:' abcdefgh',review_date:new Date('2/1/2014')},
+   {packet_number:12316,packet_description:'in process',document:2521,status:'not done yet',document_name:'xyz',description:' abcdefgh',review_date:new Date('2/1/2014')},
 ];
 

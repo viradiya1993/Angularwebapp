@@ -25,7 +25,7 @@ export class WorkInProgressComponent implements OnInit {
 }
 
 export interface PeriodicElement {
-  date: number;
+  date: Date;
   type: string;
   quantity: number;
   price: number;
@@ -36,10 +36,10 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {date:25122018,type:'XYZ',quantity:1200,price:2500,description:'abcdefghijkl',invoice_no:5,price_in_gst:88},
-  {date:16122018,type:'XYZ',quantity:1200,price:2500,description:'abcdefghijkl',invoice_no:5,price_in_gst:88},
-  {date:18112018,type:'XYZ',quantity:1200,price:2500,description:'abcdefghijkl',invoice_no:5,price_in_gst:88},
-  {date:13102018,type:'XYZ',quantity:1200,price:2500,description:'abcdefghijkl',invoice_no:5,price_in_gst:88},
-  {date:26092018,type:'XYZ',quantity:1200,price:2500,description:'abcdefghijkl',invoice_no:5,price_in_gst:88},
-  {date:29062018,type:'XYZ',quantity:1200,price:2500,description:'abcdefghijkl',invoice_no:5,price_in_gst:88},
+  {date:new Date('2/1/2014'),type:'XYZ',quantity:100,price:250.30,description:'not done yet',invoice_no:5,price_in_gst:885.30},
+  {date:new Date('2/1/2014'),type:'XYZ',quantity:120,price:278.301,description:'not done yet',invoice_no:5,price_in_gst:88.30},
+  {date:new Date('2/1/2014'),type:'XYZ',quantity:130,price:2500.301,description:'not done yet',invoice_no:5,price_in_gst:60.30},
+  {date:new Date('2/1/2014'),type:'XYZ',quantity:140,price:2500.301,description:'not done yet',invoice_no:5,price_in_gst:78.30},
+  {date:new Date('2/1/2014'),type:'XYZ',quantity:150,price:2500.201,description:'not done yet',invoice_no:5,price_in_gst:45.30},
+  {date:new Date('2/1/2014'),type:'XYZ',quantity:160,price:2500.0012,description:'not done yet',invoice_no:5,price_in_gst:550.30},
 ];

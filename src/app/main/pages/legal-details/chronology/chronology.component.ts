@@ -25,7 +25,7 @@ export class ChronologyComponent implements OnInit {
 
 }
 export interface PeriodicElement {
-  date: number;
+  date: Date;
   topic: string;
   reference: string;
   event_agreed: string;
@@ -37,12 +37,12 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {date:22122008,topic:'silq',reference:'xyz',event_agreed:'yes',brief_page_no:10,comment:'abcd',privileged:10,witnesses:5,text:12},
-  {date:23122008,topic:'silq',reference:'xyz',event_agreed:'yes',brief_page_no:10,comment:'abcd',privileged:10,witnesses:5,text:12},
-  {date:24122008,topic:'silq',reference:'xyz',event_agreed:'yes',brief_page_no:10,comment:'abcd',privileged:10,witnesses:5,text:12},
-  {date:25122008,topic:'silq',reference:'xyz',event_agreed:'yes',brief_page_no:10,comment:'abcd',privileged:10,witnesses:5,text:12},
-  {date:26122008,topic:'silq',reference:'xyz',event_agreed:'yes',brief_page_no:10,comment:'abcd',privileged:10,witnesses:5,text:12},
-  {date:27122008,topic:'silq',reference:'xyz',event_agreed:'yes',brief_page_no:10,comment:'abcd',privileged:10,witnesses:5,text:12},
-  {date:28122008,topic:'silq',reference:'xyz',event_agreed:'yes',brief_page_no:10,comment:'abcd',privileged:10,witnesses:5,text:12},
+  {date:new Date('2/1/2014'),topic:'silq',reference:'www.google.com',event_agreed:'yes',brief_page_no:10,comment:'not done yet',privileged:10,witnesses:5,text:12},
+  {date:new Date('2/1/2014'),topic:'silq',reference:'www.google.com',event_agreed:'yes',brief_page_no:10,comment:'not done yet',privileged:10,witnesses:5,text:12},
+  {date:new Date('2/1/2014'),topic:'silq',reference:'www.google.com',event_agreed:'yes',brief_page_no:10,comment:'not done yet',privileged:10,witnesses:5,text:12},
+  {date:new Date('2/1/2014'),topic:'silq',reference:'www.google.com',event_agreed:'yes',brief_page_no:10,comment:'not done yet',privileged:10,witnesses:5,text:12},
+  {date:new Date('2/1/2014'),topic:'silq',reference:'www.google.com',event_agreed:'yes',brief_page_no:10,comment:'not done yet',privileged:10,witnesses:5,text:12},
+  {date:new Date('2/1/2014'),topic:'silq',reference:'www.google.com',event_agreed:'yes',brief_page_no:10,comment:'not done yet',privileged:10,witnesses:5,text:12},
+  {date:new Date('2/1/2014'),topic:'silq',reference:'www.google.com',event_agreed:'yes',brief_page_no:10,comment:'not done yet',privileged:10,witnesses:5,text:12},
 
 ];

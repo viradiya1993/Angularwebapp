@@ -11,26 +11,26 @@
 
                     <ng-container matColumnDef="date">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Date</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.date}}
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.date |date}}
                         </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="total">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Total</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.total}}
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.total |currency }}
                         </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="gst">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>GST</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.gst}}
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.gst |currency}}
                         </mat-cell>
                     </ng-container>
 
 
                     <ng-container matColumnDef="paid">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Paid</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.paid}}
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.paid |currency}}
                         </mat-cell>
                     </ng-container>
 

@@ -35,7 +35,7 @@
                 </ng-container>
                 <ng-container matColumnDef="review_date">
                   <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Review Date</mat-header-cell>
-                  <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.review_date}}
+                  <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.review_date |date}}
                   </mat-cell>
               </ng-container>
                   <ng-container matColumnDef="button">

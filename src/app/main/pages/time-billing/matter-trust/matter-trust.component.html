@@ -2,11 +2,11 @@
     <div fxLayoutAlign="center" class="content">
         <div class="center p-24" fusePerfectScrollbar>
             <div class="content">
-                    <div class="btn top_right_action">
-                            <button mat-icon-button (click)="openDialog()" aria-label="More">
+                <div class="btn top_right_action_billing">
+                    <button mat-icon-button (click)="openDialog()" aria-label="More">
                             <mat-icon class="secondary-text">more_vert</mat-icon>
                             </button>
-                        </div>
+                </div>
                 <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
                     <ng-container matColumnDef="class">
                         <mat-header-cell *matHeaderCellDef>Class</mat-header-cell>

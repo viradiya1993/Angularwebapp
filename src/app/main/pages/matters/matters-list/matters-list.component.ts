@@ -16,10 +16,10 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
   animations: fuseAnimations
 })
 export class MattersListComponent implements OnInit, OnDestroy {
-  displayedColumns = ['matter_num', 'matter', 'unbilled', 'invoiced','received','unpaid','total_value'];
+  displayedColumns = ['matter_num', 'matter', 'unbilled', 'invoiced', 'received', 'unpaid', 'total_value'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  
+
 
   mattersData: any;
   //displayedColumns = ['name', 'email', 'phone', 'jobTitle'];
@@ -27,7 +27,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
 
   @Output() matterDetail: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private _mattersService: MattersService, public dialog: MatDialog) { }
+  constructor(private _mattersService: MattersService, private dialog: MatDialog) { }
 
 
 
@@ -79,39 +79,39 @@ export interface PeriodicElement {
   received: number;
   unpaid: number;
   total_value: number;
- 
-  
+
+
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {matter_num:20140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:21140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:220140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:23140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:24140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:25140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:26140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:27140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:28140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:20140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:21140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:220140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:23140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:24140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:25140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:26140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:27140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:28140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:20140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:21140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:220140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:23140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:24140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:25140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:26140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:27140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  {matter_num:28140008, matter: 'your family law matter', unbilled: 102.30,invoiced:45.30,received:500.30,unpaid:366.01,total_value:568.30},
-  
+  { matter_num: 20140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 21140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 220140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 23140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 24140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 25140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 26140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 27140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 28140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 20140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 21140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 220140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 23140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 24140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 25140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 26140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 27140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 28140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 20140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 21140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 220140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 23140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 24140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 25140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 26140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 27140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+  { matter_num: 28140008, matter: 'your family law matter', unbilled: 102.30, invoiced: 45.30, received: 500.30, unpaid: 366.01, total_value: 568.30 },
+
 ];
 
 

@@ -1,8 +1,11 @@
-import { Component, OnDestroy, OnInit, Output, TemplateRef, ViewChild, ViewEncapsulation, EventEmitter } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output, ViewEncapsulation, EventEmitter, Pipe, PipeTransform, Inject } from '@angular/core';
 
 import { fuseAnimations } from '@fuse/animations';
+import { MatDialog, MatDialogRef, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material';
+import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag } from '@angular/cdk/drag-drop';
 
 import { MattersService } from '../matters.service';
+import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.component';
 
 @Component({
   selector: 'app-matters-list',
@@ -14,12 +17,12 @@ import { MattersService } from '../matters.service';
 export class MattersListComponent implements OnInit, OnDestroy {
 
   mattersData: any;
-  displayedColumns = ['buttons', 'name', 'email', 'phone', 'jobTitle'];
+  displayedColumns = ['name', 'email', 'phone', 'jobTitle', 'buttons'];
   // Private
 
   @Output() matterDetail: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private _mattersService: MattersService) { }
+  constructor(private _mattersService: MattersService, public dialog: MatDialog) { }
 
 
 
@@ -34,6 +37,18 @@ export class MattersListComponent implements OnInit, OnDestroy {
   editmatter(matters) {
     this.matterDetail.emit(matters);
   }
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+    // dialogConfig.disableClose = true;
+    // dialogConfig.autoFocus = true;
+    dialogConfig.width = '50%';
+    dialogConfig.data = { 'data': this.displayedColumns, 'type': 'matters' };
+    //open pop-up
+    const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
+    //Save button click
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
+  }
 
 }
-

@@ -3,7 +3,7 @@
     <div class="content">
         <!-- CENTER -->
         <div class="center" fusePerfectScrollbar>
-            <div class="matter-serach-div">
+            <div class="matter-serach-div sticky_search_div">
                 <!-- select bar  -->
                 <mat-form-field class="example" appearance="outline">
                     <mat-label>Active Motters</mat-label>
@@ -40,7 +40,19 @@
                 </mat-form-field>
             </div>
             <!-- CONTENT -->
-            <div class="content">
+            <div class="content fix_div_padding">
+                    <div class="btn top_right_action">                    
+                        <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More">
+                            <mat-icon class="secondary-text">more_vert</mat-icon>
+                        </button>
+                
+                        <mat-menu #moreMenu="matMenu">
+                            <button mat-menu-item aria-label="remove" (click)="deleteContact(row)">
+                                <mat-icon>delete</mat-icon>
+                                <span>Remove</span>
+                            </button>
+                        </mat-menu>
+                    </div>
                 <app-matters-list (matterDetail)="matterBack($event)"></app-matters-list>
             </div>
             <!-- / CONTENT -->
@@ -48,7 +60,7 @@
         <!-- sidebar  -->
         <!-- *ngIf="isSortDetail" -->
         <fuse-sidebar *ngIf="mattersDetail" class="sidebar final-sidebar" name="final-sidebar" position="right" lockedOpen="gt-md">
-            <app-matters-sort-detail [mattersDetailData]="mattersDetail" (matterCloseD)="matterClose($event)"></app-matters-sort-detail>
+            <app-matters-sort-detail class="list_sidebar_padding" [mattersDetailData]="mattersDetail" (matterCloseD)="matterClose($event)"></app-matters-sort-detail>
         </fuse-sidebar>
         <!-- / CENTER -->
     </div>

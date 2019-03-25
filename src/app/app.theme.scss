@@ -123,3 +123,25 @@ body.theme-pink-dark {
     $palettes: ( primary: $pink-dark-theme-primary-palette, accent: $pink-dark-theme-accent-palette, warn: $pink-dark-theme-warn-palette);
     @include fuse-color-classes($palettes);
 }
+
+
+.sticky_search_div .mat-form-field-wrapper {
+    padding-bottom: 0 !important;
+}
+.sticky_search_div .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.5em 0 0.5em 0;
+}
+.sticky_search_div .mat-form-field-appearance-outline .mat-form-field-label {
+    top: 1.34375em;
+    margin-top: -0.25em;
+}
+.top_right_action {
+    position: relative;
+    right: 0;
+    top: 0;
+}
+.top_right_action button {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+}

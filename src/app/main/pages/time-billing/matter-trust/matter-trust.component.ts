@@ -12,7 +12,7 @@ import { fuseAnimations } from '@fuse/animations';
 export class MatterTrustComponent implements OnInit {
 
 
-  displayedColumns: string[] = ['class', 'cashbook', 'id', 'trans_date', 'amount', 'payor', 'type', 'cheque_no', 'reason'];
+  displayedColumns: string[] = ['class', 'cashbook', 'id', 'trans_date', 'amount', 'payor', 'type', 'cheque_no', 'reason','button'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -31,13 +31,18 @@ export interface PeriodicElement {
 
   amount: number;
   payor: number;
-  type: number;
+  type: string;
   cheque_no: number;
-  reason: number;
+  reason: string;
 
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-
+  {class:1,cashbook:32,id:21,trans_date:55,amount:2500,payor:9,type:'xyz',cheque_no:10,reason:'abcdef'},
+  {class:2,cashbook:32,id:21,trans_date:55,amount:2500,payor:9,type:'xyz',cheque_no:10,reason:'abcdef'},
+  {class:3,cashbook:32,id:21,trans_date:55,amount:2500,payor:9,type:'xyz',cheque_no:10,reason:'abcdef'},
+  {class:4,cashbook:32,id:21,trans_date:55,amount:2500,payor:9,type:'xyz',cheque_no:10,reason:'abcdef'},
+  {class:5,cashbook:32,id:21,trans_date:55,amount:2500,payor:9,type:'xyz',cheque_no:10,reason:'abcdef'},
+  {class:6,cashbook:32,id:21,trans_date:55,amount:2500,payor:9,type:'xyz',cheque_no:10,reason:'abcdef'},
 
 ];

@@ -10,7 +10,7 @@ import { fuseAnimations } from '@fuse/animations';
   animations: fuseAnimations
 })
 export class AuthoritiesComponent implements OnInit {
-  displayedColumns: string[] = ['topic', 'authority', 'citation', 'reference', 'web_address', 'comment'];
+  displayedColumns: string[] = ['topic', 'authority', 'citation', 'reference', 'web_address', 'comment','button'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -22,15 +22,24 @@ export class AuthoritiesComponent implements OnInit {
 
 }
 export interface PeriodicElement {
-  topic: string;
+  topic: number;
   authority: string;
-  citation: string;
+  citation: number;
   reference: string;
   web_address: string;
   comment: string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  // {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-
+  {topic:1, authority: 'xyz', citation: 1.0079, reference:'moon',web_address:'xyz',comment:'xyz'},
+  {topic:2, authority: 'xyz', citation: 1.0079, reference:'moon',web_address:'xyz',comment:'xyz'},
+  {topic:3, authority: 'xyz', citation: 1.0079, reference:'moon',web_address:'xyz',comment:'xyz'},
+  {topic:4, authority: 'xyz', citation: 1.0079, reference:'moon',web_address:'xyz',comment:'xyz'},
+  {topic:5, authority: 'xyz', citation: 1.0079, reference:'moon',web_address:'xyz',comment:'xyz'},
+  {topic:6, authority: 'xyz', citation: 1.0079, reference:'moon',web_address:'xyz',comment:'xyz'},
+  {topic:7, authority: 'xyz', citation: 1.0079, reference:'moon',web_address:'xyz',comment:'xyz'},
+  {topic:8, authority: 'xyz', citation: 1.0079, reference:'moon',web_address:'xyz',comment:'xyz'},
+  {topic:9, authority: 'xyz', citation: 1.0079, reference:'moon',web_address:'xyz',comment:'xyz'},
+  {topic:10, authority: 'xyz', citation: 1.0079, reference:'moon',web_address:'xyz',comment:'xyz'},
+  {topic:11, authority: 'xyz', citation: 1.0079, reference:'moon',web_address:'xyz',comment:'xyz'},
 ];

@@ -11,7 +11,7 @@ import { fuseAnimations } from '@fuse/animations';
 })
 export class ReceiptsCreditsComponent implements OnInit {
 
-  displayedColumns: string[] = ['receipt_no', 'date', 'total', 'gst', 'allocation', 'note'];
+  displayedColumns: string[] = ['receipt_no', 'date', 'total', 'gst', 'allocation', 'note','button'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -35,6 +35,11 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  // {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
+   {receipt_no: 1, date:22122018, total: 5500.0524, gst: 30,allocation:'xyz',note:'abcdefgh'},
+   {receipt_no: 2, date:22122018, total: 5500.0524, gst: 30,allocation:'xyz',note:'abcdefgh'},
+   {receipt_no: 3, date:22122018, total: 5500.0524, gst: 30,allocation:'xyz',note:'abcdefgh'},
+   {receipt_no: 4, date:22122018, total: 5500.0524, gst: 30,allocation:'xyz',note:'abcdefgh'},
+   {receipt_no: 5, date:22122018, total: 5500.0524, gst: 30,allocation:'xyz',note:'abcdefgh'},
+   {receipt_no: 6, date:22122018, total: 5500.0524, gst: 30,allocation:'xyz',note:'abcdefgh'},
 
 ];

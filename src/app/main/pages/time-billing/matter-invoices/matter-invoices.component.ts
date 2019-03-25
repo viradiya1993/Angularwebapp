@@ -11,7 +11,7 @@ import { fuseAnimations } from '@fuse/animations';
 })
 export class MatterInvoicesComponent implements OnInit {
 
-  displayedColumns: string[] = ['invoice_no', 'date', 'total', 'gst', 'paid', 'outstanding', 'written_off'];
+  displayedColumns: string[] = ['invoice_no', 'date', 'total', 'gst', 'paid', 'outstanding', 'written_off','button'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor() { }
@@ -36,26 +36,16 @@ export interface PeriodicElement {
 
 const ELEMENT_DATA: PeriodicElement[] = [
   { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 1, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
+  { invoice_no: 2, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
+  { invoice_no: 3, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
+  { invoice_no: 4, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
+  { invoice_no: 5, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
+  { invoice_no: 6, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
+  { invoice_no: 7, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
+  { invoice_no: 8, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
+  { invoice_no: 9, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
+  { invoice_no: 10, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
+  { invoice_no: 11, date: 1012, total: 1.0079, gst: 12, paid: 212, outstanding: 89, written_off: 45 },
+  
 
 ];

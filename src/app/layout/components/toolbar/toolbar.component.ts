@@ -104,7 +104,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         else if (value == '/time-billing' || value == '/time-billing/estimate' || value == '/time-billing/work-in-progress'
             || value == '/time-billing/matter-invoices' || value == '/time-billing/receipts-credits' || value == '/time-billing/matter-trust')
             this.isTabShow = 3;
-        else if (value == '/legal-details' || value == '/legal-details/chronology' || value == '/legal-details/authorities')
+        else if (value == '/legal-details' || value == '/legal-details/chronology' || value == '/legal-details/authorities' ||  value == '/legal-details/file-notes')
             this.isTabShow = 4;
     }
 

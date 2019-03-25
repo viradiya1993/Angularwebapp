@@ -5,46 +5,61 @@
                 <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
                     <ng-container matColumnDef="invoice_no">
                         <mat-header-cell *matHeaderCellDef>Invoice No</mat-header-cell>
-                        <mat-cell *matCellDef="let row">
+                        <mat-cell *matCellDef="let row">{{row.invoice_no}}
                         </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="date">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Date</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.date}}
                         </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="total">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Total</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.total}}
                         </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="gst">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>GST</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.gst}}
                         </mat-cell>
                     </ng-container>
 
 
                     <ng-container matColumnDef="paid">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Paid</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.paid}}
                         </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="outstanding">
                         <mat-header-cell *matHeaderCellDef> Outstanding </mat-header-cell>
-                        <mat-cell *matCellDef="let row">
+                        <mat-cell *matCellDef="let row">{{row.outstanding}}
 
                         </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="written_off">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Written Off</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.written_off}}
                         </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="button">
+                        <mat-header-cell *matHeaderCellDef><button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More">
+                            <mat-icon class="secondary-text">more_vert</mat-icon>
+                        </button>
+                
+                        <mat-menu #moreMenu="matMenu">
+                            <button mat-menu-item aria-label="remove" (click)="deleteContact(row)">
+                                <mat-icon>delete</mat-icon>
+                                <span>Remove</span>
+                            </button>
+                        </mat-menu> </mat-header-cell>
+                        
+                        <mat-cell *matCellDef="let row"></mat-cell>
                     </ng-container>
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: displayedColumns;">

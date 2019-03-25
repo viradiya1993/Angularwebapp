@@ -5,14 +5,14 @@
                 <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
                     <ng-container matColumnDef="service">
                         <mat-header-cell *matHeaderCellDef>Service</mat-header-cell>
-                        <mat-cell *matCellDef="let row">
+                        <mat-cell *matCellDef="let row">{{row.service}}
 
                         </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="quantity_from_10">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Quantity From 10</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.quantity_from_10}}
 
                         </mat-cell>
                     </ng-container>
@@ -20,7 +20,7 @@
 
                     <ng-container matColumnDef="price_from">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Price From</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.price_from}}
 
                         </mat-cell>
                     </ng-container>
@@ -28,14 +28,14 @@
 
                     <ng-container matColumnDef="price_from_inc">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Price From Inc</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.price_from_inc}}
 
                         </mat-cell>
                     </ng-container>
 
                     <ng-container matColumnDef="quantity_to">
                         <mat-header-cell *matHeaderCellDef> Quantity To </mat-header-cell>
-                        <mat-cell *matCellDef="let row">
+                        <mat-cell *matCellDef="let row">{{row.quantity_to}}
 
                         </mat-cell>
                     </ng-container>
@@ -43,7 +43,7 @@
 
                     <ng-container matColumnDef="price_to">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Price To</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.price_to}}
 
                         </mat-cell>
                     </ng-container>
@@ -51,12 +51,25 @@
 
                     <ng-container matColumnDef="price_toinc">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Price To Inc</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.price_toinc}}
 
                         </mat-cell>
                     </ng-container>
 
-
+                    <ng-container matColumnDef="button">
+                        <mat-header-cell *matHeaderCellDef><button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More">
+                            <mat-icon class="secondary-text">more_vert</mat-icon>
+                        </button>
+                
+                        <mat-menu #moreMenu="matMenu">
+                            <button mat-menu-item aria-label="remove" (click)="deleteContact(row)">
+                                <mat-icon>delete</mat-icon>
+                                <span>Remove</span>
+                            </button>
+                        </mat-menu> </mat-header-cell>
+                        
+                        <mat-cell *matCellDef="let row"></mat-cell>
+                    </ng-container>
 
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: displayedColumns;">

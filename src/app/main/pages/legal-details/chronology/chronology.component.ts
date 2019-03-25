@@ -12,7 +12,7 @@ import { fuseAnimations } from '@fuse/animations';
 })
 export class ChronologyComponent implements OnInit {
 
-  displayedColumns: string[] = ['date', 'topic', 'reference', 'event_agreed', 'brief_page_no', 'comment', 'privileged', 'witnesses', 'text'];
+  displayedColumns: string[] = ['date', 'topic', 'reference', 'event_agreed', 'brief_page_no', 'comment', 'privileged', 'witnesses', 'text','button'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -27,15 +27,22 @@ export class ChronologyComponent implements OnInit {
 export interface PeriodicElement {
   date: number;
   topic: string;
-  reference: number;
-  event_agreed: number;
+  reference: string;
+  event_agreed: string;
   brief_page_no: number;
-  comment: number;
+  comment: string;
   privileged: number;
   witnesses: number;
   text: number;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
+  {date:22122008,topic:'silq',reference:'xyz',event_agreed:'yes',brief_page_no:10,comment:'abcd',privileged:10,witnesses:5,text:12},
+  {date:23122008,topic:'silq',reference:'xyz',event_agreed:'yes',brief_page_no:10,comment:'abcd',privileged:10,witnesses:5,text:12},
+  {date:24122008,topic:'silq',reference:'xyz',event_agreed:'yes',brief_page_no:10,comment:'abcd',privileged:10,witnesses:5,text:12},
+  {date:25122008,topic:'silq',reference:'xyz',event_agreed:'yes',brief_page_no:10,comment:'abcd',privileged:10,witnesses:5,text:12},
+  {date:26122008,topic:'silq',reference:'xyz',event_agreed:'yes',brief_page_no:10,comment:'abcd',privileged:10,witnesses:5,text:12},
+  {date:27122008,topic:'silq',reference:'xyz',event_agreed:'yes',brief_page_no:10,comment:'abcd',privileged:10,witnesses:5,text:12},
+  {date:28122008,topic:'silq',reference:'xyz',event_agreed:'yes',brief_page_no:10,comment:'abcd',privileged:10,witnesses:5,text:12},
 
 ];

@@ -41,18 +41,6 @@
             </div>
             <!-- CONTENT -->
             <div class="content fix_div_padding">
-                    <div class="btn top_right_action">                    
-                        <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More">
-                            <mat-icon class="secondary-text">more_vert</mat-icon>
-                        </button>
-                
-                        <mat-menu #moreMenu="matMenu">
-                            <button mat-menu-item aria-label="remove" (click)="deleteContact(row)">
-                                <mat-icon>delete</mat-icon>
-                                <span>Remove</span>
-                            </button>
-                        </mat-menu>
-                    </div>
                 <app-matters-list (matterDetail)="matterBack($event)"></app-matters-list>
             </div>
             <!-- / CONTENT -->

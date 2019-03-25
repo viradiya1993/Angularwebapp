@@ -1,6 +1,9 @@
-<!-- {{ mattersData | json}} -->
+<div class="btn top_right_action">
+    <button mat-icon-button (click)="openDialog()" aria-label="More">
+    <mat-icon class="secondary-text">more_vert</mat-icon>
+    </button>
+</div>
 <mat-table #table [dataSource]="mattersData" [@animateStagger]="{value:'50'}">
-
     <!-- Name Column -->
     <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef fxShow.gt-md>Name</mat-header-cell>
@@ -47,32 +50,6 @@
                 {{matter.company}}
             </p>
         </mat-cell>
-    </ng-container>
-
-    <!-- Buttons Column -->
-    <!-- <ng-container matColumnDef="buttons">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-        <mat-cell *matCellDef="let matter">
-            <div fxFlex="row" fxLayoutAlign="end center">
-                <button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More" (click)="$event.stopPropagation();">
-                    <mat-icon class="secondary-text">more_vert</mat-icon>
-                </button>
-                <mat-menu #moreMenu="matMenu">
-                    <button mat-menu-item aria-label="remove" (click)="deletematter(matter)">
-                        <mat-icon>delete</mat-icon>
-                        <span>Remove</span>
-                    </button>
-                </mat-menu>
-            </div>
-        </mat-cell>
-    </ng-container> -->
-    <ng-container matColumnDef="buttons">
-        <mat-header-cell *matHeaderCellDef>
-            <button mat-icon-button (click)="openDialog()" aria-label="More">
-                <mat-icon class="secondary-text">more_vert</mat-icon>
-            </button>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let matter"></mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let matter; columns: displayedColumns;" class="matter" (click)="editmatter(matter)" matRipple [@animate]="{value:'*',params:{y:'100%'}}">

@@ -16,7 +16,7 @@ import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.c
 export class MattersListComponent implements OnInit, OnDestroy {
 
   mattersData: any;
-  displayedColumns = ['name', 'email', 'phone', 'jobTitle', 'buttons'];
+  displayedColumns = ['name', 'email', 'phone', 'jobTitle'];
   // Private
 
   @Output() matterDetail: EventEmitter<any> = new EventEmitter<any>();
@@ -36,7 +36,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': ['name', 'email', 'phone', 'jobTitle', 'buttons'], 'type': 'matters' };
+    dialogConfig.data = { 'data': ['name', 'email', 'phone', 'jobTitle'], 'type': 'matters' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click

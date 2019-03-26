@@ -11,7 +11,7 @@ import { AuthGuard } from '../../../_guards';
 import { ContactComponent } from './contact.component';
 
 
-import { MatDialogModule,MatTabsModule,MatPaginatorModule,MatButtonModule, MatSelectModule, MatCardModule, MatSlideToggleModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule } from '@angular/material';
+import { MatDialogModule, MatTabsModule, MatPaginatorModule, MatButtonModule, MatSelectModule, MatCardModule, MatSlideToggleModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule } from '@angular/material';
 import { ContactDialogComponent } from './contact-dialog/contact-dialog.component';
 
 import { PersonComponent } from './contact-dialog/person/person.component';
@@ -20,10 +20,11 @@ import { AddressComponent } from './contact-dialog/address/address.component';
 import { IdComponent } from './contact-dialog/id/id.component';
 import { OtherComponent } from './contact-dialog/other/other.component';
 
-import { FormsModule }    from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CompanyComponent } from './contact-dialog/company/company.component';
 import { MattersComponent } from './contact-dialog/matters/matters.component';
-import {ScrollDispatchModule} from '@angular/cdk/scrolling';
+import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { ContactCorresDetailsComponent } from './contact-corres-details/contact-corres-details.component';
 
 
 const routes = [
@@ -35,12 +36,13 @@ const routes = [
     ContactComponent,
     ContactDialogComponent,
     PersonComponent,
-        PhComponent,
-        AddressComponent,
-        IdComponent,
-        OtherComponent,
-        CompanyComponent,
-        MattersComponent,
+    PhComponent,
+    AddressComponent,
+    IdComponent,
+    OtherComponent,
+    CompanyComponent,
+    MattersComponent,
+    ContactCorresDetailsComponent,
 
   ],
   imports: [
@@ -73,6 +75,6 @@ const routes = [
   exports: [
     ContactComponent
   ],
-  entryComponents: [ContactDialogComponent]
+  entryComponents: [ContactDialogComponent, ContactCorresDetailsComponent]
 })
 export class ContactModule { }

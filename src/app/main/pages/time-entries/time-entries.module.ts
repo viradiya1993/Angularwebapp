@@ -10,7 +10,14 @@ import { AuthGuard } from '../../../_guards';
 
 import { TimeEntriesComponent } from './../time-entries/time-entries.component';
 
-import { MatDialogModule,MatTabsModule,MatPaginatorModule,MatButtonModule, MatSelectModule, MatCardModule, MatSlideToggleModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule } from '@angular/material';
+import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
+// import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule } from 'saturn-datepicker';
+// import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter'
+
+
+
+
+import {MatDialogModule,MatTabsModule,MatPaginatorModule,MatButtonModule, MatSelectModule, MatCardModule, MatSlideToggleModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule } from '@angular/material';
 const routes = [
     { path: '', component: TimeEntriesComponent, canActivate: [AuthGuard] }
   ];
@@ -18,6 +25,7 @@ const routes = [
   @NgModule({
     declarations: [
         TimeEntriesComponent,
+        // SatDatepickerModule,
     ],
     imports: [
       CommonModule,
@@ -43,8 +51,14 @@ const routes = [
   
       FuseSharedModule,
       FuseConfirmDialogModule,
-      FuseSidebarModule
+      FuseSidebarModule,
+      SatDatepickerModule, SatNativeDateModule
     ],
+    providers: [
+        // {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+        // {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+    ],
+
     exports: [
         TimeEntriesComponent
     ],

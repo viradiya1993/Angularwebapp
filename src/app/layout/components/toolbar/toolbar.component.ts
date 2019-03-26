@@ -10,6 +10,8 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { navigation } from 'app/navigation/navigation';
 import { AuthenticationService } from '../../../_services';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ContactDialogComponent } from './../../../main/pages/contact/contact-dialog/contact-dialog.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
     selector: 'toolbar',
@@ -44,6 +46,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private authenticationService: AuthenticationService,
         private route: ActivatedRoute,
         private router: Router,
+        public dialog: MatDialog,
     ) {
 
         this.navigation = navigation;
@@ -72,6 +75,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             });
 
     }
+
+    // for new contact dialog
+
+    openDialog() {
+        const dialogRef = this.dialog.open(ContactDialogComponent);
+    
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+         
+        });
+      }
 
     /**
      * On destroy

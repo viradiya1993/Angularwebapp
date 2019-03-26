@@ -1,0 +1,156 @@
+<div class=" one  mb-24" fxLayout="column" >
+
+<div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+
+    <mat-form-field appearance="outline" fxFlex="100">
+        <mat-label>Address</mat-label>
+        <textarea matInput ></textarea>
+    </mat-form-field>
+
+</div>
+<div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+    <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-label>SubUrb</mat-label>
+        <input matInput >
+        <mat-icon matSuffix class="secondary-text"></mat-icon>
+    </mat-form-field>
+
+</div>
+
+
+<div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+    <mat-form-field appearance="outline" fxFlex="33">
+        <mat-label>State</mat-label>
+        <input matInput >
+        <mat-icon matSuffix class="secondary-text">location_city</mat-icon>
+      
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlex="34" class="px-8">
+        <mat-label>Postal Code</mat-label>
+        <input matInput #postalCode value="94043">
+        <mat-icon matSuffix class="secondary-text">markunread_mailbox</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlex="33">
+        <mat-label>Country</mat-label>
+        <mat-select required>
+            <mat-option [value]="'United States of America'">
+                United States of America
+            </mat-option>
+            <mat-option [value]="'United Kingdom'">
+                United Kingdom
+            </mat-option>
+            <mat-option [value]="'Russia'">
+                Russia
+            </mat-option>
+            <mat-option [value]="'China'">
+                China
+            </mat-option>
+            <mat-option [value]="'Japan'">
+                Japan
+            </mat-option>
+            <mat-option [value]="'Turkey'">
+                Turkey
+            </mat-option>
+        </mat-select>
+        <mat-icon matSuffix class="secondary-text">outlined_flag</mat-icon>
+    </mat-form-field>
+
+</div>
+
+
+<div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+  
+ <mat-checkbox  (change)="triggerSomeEvent()" class="">Street Address is Postal adress</mat-checkbox>
+
+</div>
+
+
+
+<div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+
+    <mat-form-field  appearance="outline" fxFlex="100">
+        <mat-label>Address</mat-label>
+        <textarea [disabled]="isDisabled" matInput ></textarea>
+    </mat-form-field>
+
+</div>
+<div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+    <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-label>SubUrb</mat-label>
+        <input [disabled]="isDisabled" matInput >
+        <mat-icon matSuffix class="secondary-text"></mat-icon>
+    </mat-form-field>
+
+</div>
+
+
+<div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+    <mat-form-field appearance="outline" fxFlex="33">
+        <mat-label>State</mat-label>
+        <input [disabled]="isDisabled" matInput>
+        <mat-icon matSuffix class="secondary-text">location_city</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlex="34" class="px-8">
+        <mat-label>Postal Code</mat-label>
+        <input [disabled]="isDisabled" matInput #postalCode value="94043">
+        <mat-icon matSuffix class="secondary-text">markunread_mailbox</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlex="33">
+        <mat-label>Country</mat-label>
+        <mat-select [disabled]="isDisabled">
+            <mat-option [value]="'United States of America'">
+                United States of America
+            </mat-option>
+            <mat-option [value]="'United Kingdom'">
+                United Kingdom
+            </mat-option>
+            <mat-option [value]="'Russia'">
+                Russia
+            </mat-option>
+            <mat-option [value]="'China'">
+                China
+            </mat-option>
+            <mat-option [value]="'Japan'">
+                Japan
+            </mat-option>
+            <mat-option [value]="'Turkey'">
+                Turkey
+            </mat-option>
+        </mat-select>
+        <mat-icon matSuffix class="secondary-text">outlined_flag</mat-icon>
+        <mat-error>Country is required!</mat-error>
+    </mat-form-field>
+
+</div>
+
+
+<div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-label>DX</mat-label>
+        <input matInput>
+        <mat-icon matSuffix class="secondary-text"></mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+        <mat-label>Suburb</mat-label>
+        <input matInput >
+        <mat-icon matSuffix class="secondary-text"></mat-icon>
+        
+    </mat-form-field>
+
+</div>
+
+
+
+</div>

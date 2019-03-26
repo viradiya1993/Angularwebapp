@@ -1,0 +1,83 @@
+<div class=" one  mb-24" fxLayout="column" >
+
+<div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+  <mat-form-field class="example" fxFlex="49" class="pr-4">
+    <mat-label>Gender</mat-label>
+    <mat-select>
+      <mat-option value="red">Male</mat-option>
+      <mat-option value="green">Female</mat-option>
+      <mat-option value="blue">Unknown</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+
+<mat-form-field class="example" fxFlex="49" class="pr-4">
+  <input matInput [matDatepicker]="picker" placeholder="Date of birth">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+
+
+<mat-checkbox class="checkbox">reminder</mat-checkbox>
+
+</div>
+
+<div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-label>Town Of Birth</mat-label>
+        <input   matInput  >
+        <mat-icon matSuffix class="secondary-text">location_city</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-label>Town of Country</mat-label>
+        <input   matInput  >
+        <mat-icon matSuffix class="secondary-text">outlined_flag</mat-icon>
+    </mat-form-field>
+  
+  </div>
+
+
+  <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+          <mat-label>Date of Death</mat-label>
+          <input   matInput  >
+          <mat-icon matSuffix class="secondary-text"></mat-icon>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+          <mat-label>Cause of Death</mat-label>
+          <input   matInput  >
+          <mat-icon matSuffix class="secondary-text"></mat-icon>
+      </mat-form-field>
+    
+    </div>
+  
+  
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+            <mat-label>Marital Status</mat-label>
+            <input   matInput  >
+            <mat-icon matSuffix class="secondary-text"></mat-icon>
+        </mat-form-field>
+    
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+            <mat-label>Spouse</mat-label>
+            <input   matInput  >
+            <mat-icon matSuffix class="secondary-text"></mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+            <mat-label>Number of Dependants</mat-label>
+            <input type="number"   matInput  >
+            <mat-icon matSuffix class="secondary-text"></mat-icon>
+        </mat-form-field>
+      
+      </div>
+
+
+</div>

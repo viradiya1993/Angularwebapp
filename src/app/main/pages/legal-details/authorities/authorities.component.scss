@@ -1,4 +1,10 @@
 @import "src/@fuse/scss/fuse";
+
+app-authorities {
+    width: 100%;
+    
+}
+
 #authorities {
     .header {
         .search-wrapper {
@@ -44,6 +50,3 @@
     padding: 20px !important;
 }
 
-app-authorities {
-    width: 100%;
-}

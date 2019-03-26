@@ -8,6 +8,7 @@
                             <mat-icon class="secondary-text">more_vert</mat-icon>
                             </button>
                 </div>
+                
                 <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
                     <ng-container matColumnDef="topic">
                         <mat-header-cell *matHeaderCellDef>Topic</mat-header-cell>

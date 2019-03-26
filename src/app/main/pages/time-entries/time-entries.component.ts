@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from '../../sorting-dialog/sorting-dialog.component';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 
 @Component({
@@ -12,11 +13,17 @@ import { SortingDialogComponent } from '../../sorting-dialog/sorting-dialog.comp
   animations: fuseAnimations
 })
 export class TimeEntriesComponent implements OnInit {
-  displayedColumns: string[] = ['service', 'quantity_from_10', 'price_from', 'price_from_inc', 'quantity_to', 'price_to', 'price_toinc'];
+  form: FormGroup;
+
+  displayedColumns: string[] = ['date', 'matter', 'description', 'quantity', 'price_ex', 'price_inc', 'invoice_no'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog,fb: FormBuilder) {
+    this.form = fb.group({
+      date: [{begin: new Date(2018, 7, 5), end: new Date(2018, 7, 25)}]
+    });
+   }
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
@@ -24,7 +31,7 @@ export class TimeEntriesComponent implements OnInit {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': ['service', 'quantity_from_10', 'price_from', 'price_from_inc', 'quantity_to', 'price_to', 'price_toinc'], 'type': 'estimate' };
+    dialogConfig.data = { 'data': ['date', 'matter', 'description', 'quantity', 'price_ex', 'price_inc', 'invoice_no'], 'type': 'estimate' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
@@ -43,11 +50,20 @@ export class TimeEntriesComponent implements OnInit {
 
 }
 export interface PeriodicElement {
-  service: string;
-  quantity_from_10: number;
-  price_from: number;
-  price_from_inc: number;
-  quantity_to: number;
-  price_to: number;
-  price_toinc: number;
-}const ELEMENT_DATA: PeriodicElement[] = [];
+  date: Date;
+  matter: string;
+  description:string;
+  quantity: number;
+  price_ex: number;
+  price_inc: number;
+  invoice_no: number;
+}const ELEMENT_DATA: PeriodicElement[] = [
+  {date: new Date('2/1/2014'),matter:'not yet',description:'not done yet',quantity:200.30,price_ex:123.032,price_inc:89.30,invoice_no:3012010},
+  {date: new Date('2/1/2014'),matter:'not yet',description:'not done yet',quantity:200.30,price_ex:123.032,price_inc:89.30,invoice_no:3012010},
+  {date: new Date('2/1/2014'),matter:'not yet',description:'not done yet',quantity:200.30,price_ex:123.032,price_inc:89.30,invoice_no:3012010},
+  {date: new Date('2/1/2014'),matter:'not yet',description:'not done yet',quantity:200.30,price_ex:123.032,price_inc:89.30,invoice_no:3012010},
+  {date: new Date('2/1/2014'),matter:'not yet',description:'not done yet',quantity:200.30,price_ex:123.032,price_inc:89.30,invoice_no:3012010},
+  {date: new Date('2/1/2014'),matter:'not yet',description:'not done yet',quantity:200.30,price_ex:123.032,price_inc:89.30,invoice_no:3012010},
+  {date: new Date('2/1/2014'),matter:'not yet',description:'not done yet',quantity:200.30,price_ex:123.032,price_inc:89.30,invoice_no:3012010},
+  
+];

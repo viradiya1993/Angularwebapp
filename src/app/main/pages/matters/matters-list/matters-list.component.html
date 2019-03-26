@@ -72,7 +72,7 @@
                     </p>
                 </mat-cell>
             </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+    <mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumns; sticky: true;"></mat-header-row>
     <!-- sticky: true" -->
     <mat-row *matRowDef="let matter; columns: displayedColumns;" class="matter" (click)="editmatter(matter)" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
     </mat-row>

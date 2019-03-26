@@ -25,6 +25,7 @@ import { CompanyComponent } from './contact-dialog/company/company.component';
 import { MattersComponent } from './contact-dialog/matters/matters.component';
 import {ScrollDispatchModule} from '@angular/cdk/scrolling';
 
+
 const routes = [
   { path: 'contact', component: ContactComponent, canActivate: [AuthGuard] }
 ];
@@ -40,6 +41,7 @@ const routes = [
         OtherComponent,
         CompanyComponent,
         MattersComponent,
+
   ],
   imports: [
     CommonModule,

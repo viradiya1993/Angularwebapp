@@ -12,7 +12,7 @@ import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.c
   animations: fuseAnimations
 })
 export class ContactComponent implements OnInit {
-  displayedColumns: string[] = ['topic', 'authority', 'citation', 'reference', 'web_address', 'comment'];
+  displayedColumns: string[] = ['contact', 'company', 'phone', 'address', 'suburb', 'state'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -26,7 +26,7 @@ export class ContactComponent implements OnInit {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': ['topic', 'authority', 'citation', 'reference', 'web_address', 'comment'], 'type': 'authorities' };
+    dialogConfig.data = { 'data': ['contact', 'company', 'phone', 'address', 'suburb', 'state'], 'type': 'contact' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
@@ -46,19 +46,19 @@ export class ContactComponent implements OnInit {
 }
 
 export interface PeriodicElement {
-  topic: number;
-  authority: string;
-  citation: number;
-  reference: string;
-  web_address: string;
-  comment: string;
+  contact: string;
+  company: string;
+  phone: number;
+  address: string;
+  suburb: string;
+  state: string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { topic: 1, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 2, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 3, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 4, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 5, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 6, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
+  { contact: 'AAA insurance', company: 'Toree and Fallow', phone: 68952153234558, address: '3/344 George Street', suburb: 'SYDENY', state: 'NSW' },
+  { contact: 'BCA insurance', company: 'Toree and Fallow', phone: 2302153234558, address: '3/344 George Street', suburb: 'SYDENY', state: 'NSW' },
+  { contact: 'Cannan Goight', company: 'Toree and Fallow', phone: 21532345581111,     address: '3/344 George Street', suburb: 'SYDENY', state: 'NSW' },
+  { contact: 'AAA insurance', company: 'Toree and Fallow', phone: 68952153234558, address: '3/344 George Street', suburb: 'SYDENY', state: 'NSW' },
+  { contact: 'AAA insurance', company: 'Toree and Fallow', phone: 68952153234558, address: '3/344 George Street', suburb: 'SYDENY', state: 'NSW' },
+  { contact: 'AAA insurance', company: 'Toree and Fallow', phone: 68952153234558, address: '3/344 George Street', suburb: 'SYDENY', state: 'NSW' },
 ];

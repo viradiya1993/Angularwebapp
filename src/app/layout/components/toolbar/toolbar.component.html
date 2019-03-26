@@ -168,7 +168,7 @@
                                 </button>
                                     </section>
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button">
+                                        <button mat-button class="large-button" (click)="deleteContact()" >
                                    <section class="large-button-container">
                                       <mat-icon class="main-icon">
                                             <img src="assets/icons/web_app/icon_contact_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -395,7 +395,7 @@
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab">
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button">
+                                        <button mat-button class="large-button" [routerLink]="'/time-entries'">
                                                <section class="large-button-container">
                                                   <mat-icon class="main-icon">
                                                         <img src="assets/icons/web_app/icon_time_cost_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">

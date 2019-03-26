@@ -136,6 +136,7 @@
                     </section>
                 </mat-tab>
                 <!-- mattter tab menu end -->
+
                 <!-- contacts tab menu start -->
                 <mat-tab label="CONTACT" *ngIf="isTabShow===2">
                     <section class="ribbon-container">
@@ -143,7 +144,7 @@
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button">
+                                        <button mat-button class="large-button" (click)="openDialog()">
                                    <section class="large-button-container">
                                       <mat-icon class="main-icon">
                                           <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -155,7 +156,7 @@
                                 </button>
                                     </section>
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button">
+                                        <button mat-button class="large-button" (click)="openDialog()">
                                    <section class="large-button-container">
                                       <mat-icon class="main-icon">
                                             <img src="assets/icons/web_app/icon_contact_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -285,7 +286,7 @@
                 </mat-tab>
                 <!-- legal tab menu end -->
                 <!-- Time and Billing tab menu start -->
-                <mat-tab label="TIME ANS BILLING" *ngIf="isTabShow===3">
+                <mat-tab label="TIME AND BILLING" *ngIf="isTabShow===3">
                     <section class="ribbon-container">
                         <mat-card>
                             <mat-card-content>

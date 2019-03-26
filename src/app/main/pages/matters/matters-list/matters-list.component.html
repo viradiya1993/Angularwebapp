@@ -1,11 +1,13 @@
+
+
 <div class="btn top_right_action">
     <button mat-icon-button (click)="openDialog()" aria-label="More">
     <mat-icon class="secondary-text">more_vert</mat-icon>
     </button>
 </div>
-
+<!-- <div class="center p-24" fusePerfectScrollbar> -->
 <div class="one">
-<mat-table #table [dataSource]="mattersData" [@animateStagger]="{value:'50'}">
+<mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
     <!-- Name Column -->
     <ng-container matColumnDef="matter_num">
         <mat-header-cell *matHeaderCellDef fxShow.gt-md>Matter Num</mat-header-cell>
@@ -29,7 +31,7 @@
         <mat-header-cell *matHeaderCellDef fxShow.gt-md>Unbilled</mat-header-cell>
         <mat-cell *matCellDef="let matter" fxShow.gt-md>
             <p class="phone text-truncate">
-                {{matter.unbilled}}
+                {{matter.unbilled |currency}}
             </p>
         </mat-cell>
     </ng-container>
@@ -39,7 +41,7 @@
         <mat-header-cell *matHeaderCellDef fxShow.gt-md>Invoiced</mat-header-cell>
         <mat-cell *matCellDef="let matter" fxShow.gt-md>
             <p class="job-title text-truncate">
-                {{matter.invoiced}}
+                {{matter.invoiced |currency}}
             </p>
         </mat-cell>
     </ng-container>
@@ -49,7 +51,7 @@
         <mat-header-cell *matHeaderCellDef fxShow.gt-md>Received</mat-header-cell>
         <mat-cell *matCellDef="let matter" fxShow.gt-md>
             <p class="company text-truncate">
-                {{matter.received}}
+                {{matter.received |currency}}
             </p>
         </mat-cell>
     </ng-container>
@@ -58,7 +60,7 @@
             <mat-header-cell *matHeaderCellDef fxShow.gt-md>Unpaid</mat-header-cell>
             <mat-cell *matCellDef="let matter" fxShow.gt-md>
                 <p class="company text-truncate">
-                    {{matter.unpaid}}
+                    {{matter.unpaid |currency}}
                 </p>
             </mat-cell>
         </ng-container>
@@ -66,7 +68,7 @@
                 <mat-header-cell *matHeaderCellDef fxShow.gt-md>Total Value</mat-header-cell>
                 <mat-cell *matCellDef="let matter" fxShow.gt-md>
                     <p class="company text-truncate">
-                        {{matter.total_value}}
+                        {{matter.total_value |currency}}
                     </p>
                 </mat-cell>
             </ng-container>
@@ -77,3 +79,4 @@
 </mat-table>
 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
+<!-- </div> -->

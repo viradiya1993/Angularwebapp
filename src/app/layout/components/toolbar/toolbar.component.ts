@@ -10,6 +10,7 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { navigation } from 'app/navigation/navigation';
 import { AuthenticationService } from '../../../_services';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatTabChangeEvent } from '@angular/material';
 
 @Component({
     selector: 'toolbar',
@@ -104,18 +105,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.selectedTab = 0;
         } else if (x[1] == "contact") {
             this.isTabShow = 2;
-            this.selectedTab = 1;
+            this.selectedTab = 0;
         } else if (x[1] == "time-billing") {
             this.isTabShow = 3;
-            this.selectedTab = 3;
+            this.selectedTab = 0;
         } else if (x[1] == "legal-details") {
             this.isTabShow = 4;
-            this.selectedTab = 2;
+            this.selectedTab = 0;
         } else {
             this.isTabShow = 0;
             this.selectedTab = 0;
         }
-        console.log(this.selectedTab);
 
     }
 

@@ -35,18 +35,18 @@
                     <td>{{mattersDetailData?.received}}</td>
                 </tr>
                 <tr class="unpaid">
-                        <th>Unpaid</th>
-                        <td>{{mattersDetailData?.unpaid}}</td>
-                    </tr>
+                    <th>Unpaid</th>
+                    <td>{{mattersDetailData?.unpaid}}</td>
+                </tr>
 
-                    <tr class="total_value">
-                            <th>Total Value</th>
-                            <td>{{mattersDetailData?.total_value}}</td>
-                        </tr>
+                <tr class="total_value">
+                    <th>Total Value</th>
+                    <td>{{mattersDetailData?.total_value}}</td>
+                </tr>
             </table>
         </div>
         <br/>
-        <a class="button primary" mat-raised-button routerLink="matters/{{mattersDetailData.matter_num}}/details">
+        <a class="button primary" mat-raised-button routerLink="{{mattersDetailData.matter_num}}/details">
             <mat-icon>visibility</mat-icon> View</a>
     </div>
 </mat-card>

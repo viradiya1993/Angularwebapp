@@ -3,7 +3,7 @@ import { Component, OnDestroy, OnInit, Output, ViewEncapsulation, EventEmitter, 
 import { fuseAnimations } from '@fuse/animations';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 
-import { MattersService } from '../matters.service';
+//import { MattersService } from '../matters.service';
 import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.component';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 
@@ -27,9 +27,9 @@ export class MattersListComponent implements OnInit, OnDestroy {
 
   @Output() matterDetail: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private _mattersService: MattersService, private dialog: MatDialog) { }
+  //constructor(private _mattersService: MattersService, private dialog: MatDialog) { }
 
-
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
 

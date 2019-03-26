@@ -634,17 +634,28 @@
               </button>
             <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
                 <button mat-menu-item>
-                 <mat-icon>account_circle</mat-icon>
-                 <span>My Profile</span>
+                 <span>Profile</span>
               </button>
                 <button mat-menu-item class="">
-                 <mat-icon>mail</mat-icon>
-                 <span>Inbox</span>
+                 <span>Preferences</span>
               </button>
+
+                <button mat-menu-item class="">
+                 <span>Setting</span>
+                </button>
+
+                <button mat-menu-item class="">
+                        <span>Change Password</span>
+                </button>
+                 <button mat-menu-item class="">
+                        <span>Integration</span>
+                </button>      
+           
+                <hr/>
                 <button mat-menu-item class="" (click)="logOutUser()">
-                 <mat-icon>exit_to_app</mat-icon>
-                 <span>Logout</span>
+                 <span><strong>Logout</strong></span>
               </button>
+
             </mat-menu>
         </div>
     </div>

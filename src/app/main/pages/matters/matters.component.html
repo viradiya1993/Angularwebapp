@@ -2,7 +2,8 @@
 
     <div class="content">
         <!-- CENTER -->
-        <div class="center" fusePerfectScrollbar>
+        <div class="center p-24">
+
             <div class="matter-serach-div sticky_search_div">
                 <!-- select bar  -->
                 <mat-form-field class="example" appearance="outline">
@@ -32,17 +33,17 @@
                         <mat-option value="blue">Three</mat-option>
                     </mat-select>
                 </mat-form-field>
-
-
                 <mat-form-field class="search" appearance="outline">
                     <input matInput placeholder="Search">
                     <mat-icon matSuffix>search</mat-icon>
                 </mat-form-field>
             </div>
             <!-- CONTENT -->
+
             <div class="content fix_div_padding">
                 <app-matters-list (matterDetail)="matterBack($event)"></app-matters-list>
             </div>
+            
             <!-- / CONTENT -->
         </div>
         <!-- sidebar  -->

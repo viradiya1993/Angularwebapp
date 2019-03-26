@@ -2,15 +2,21 @@
     display: flex;
     flex: 0 0 auto;
     z-index: 3;
-
+    height: 30px;
     .mat-toolbar {
         background: inherit;
         color: inherit;
         box-shadow: 0px -1px 1px -1px rgba(0, 0, 0, 0.2), 0px 0px 1px 0px rgba(0, 0, 0, 0.14), 0px -1px 3px 0px rgba(0, 0, 0, 0.12);
     }
-
     &.above {
         position: relative;
         z-index: 99;
     }
+}
+
+mat-toolbar .footer_text {
+    font-size: 11px;
+    padding-bottom: 30px;
+    position: absolute;
+    padding-left: 80%;
 }

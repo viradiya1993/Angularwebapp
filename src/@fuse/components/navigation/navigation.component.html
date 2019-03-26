@@ -6,20 +6,25 @@
             <div class="info">Search To Add Favourite</div>
             <div>
                 <mat-form-field class="example-full-width">
-                <input matInput placeholder="Search page here"  (click)="changeIcon()" [(ngModel)]="searchpage" name="searchpage">
-                <mat-icon matSuffix class="disabled-text" (click)="clearSearch()">{{icon}}</mat-icon>      
+                    <input matInput placeholder="Search page here" (click)="changeIcon()" [(ngModel)]="searchpage" name="searchpage">
+                    <mat-icon matSuffix class="disabled-text" (click)="clearSearch()">{{icon}}</mat-icon>
                 </mat-form-field>
             </div>
             <div class="listdata" *ngIf="( page | filterByName:searchpage) as result">
-                <mat-list role="list" *ngFor="let pages of result"> 
-                    <mat-list-item role="listitem" (click)="onChange(pages.title)"><mat-icon class="listingicon">{{pages.title}}</mat-icon>{{pages.title}}<mat-icon class="star">{{pages.star}}</mat-icon></mat-list-item>
+                <mat-list role="list" *ngFor="let pages of result">
+                    <mat-list-item role="listitem" (click)="onChange(pages.title)">
+                        <mat-icon class="listingicon">{{pages.title}}</mat-icon>{{pages.title}}
+                        <mat-icon class="star">{{pages.star}}</mat-icon>
+                    </mat-list-item>
                 </mat-list>
-            </div>   
-        </form> 
+            </div>
+        </form>
         <p class="name">Favourite </p>
-        <ng-container *ngFor="let favopages of pagesall">    
+        <span *ngIf='pagesall'>
+        <ng-container *ngFor="let favopages of pagesall">
             <fuse-nav-vertical-item *ngIf="favopages.type=='item'" [item]="favopages"></fuse-nav-vertical-item>
-         </ng-container>
+        </ng-container>
+    </span>
     </ng-container>
     <!-- / Vertical Navigation Layout -->
 </div>

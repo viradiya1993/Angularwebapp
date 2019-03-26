@@ -14,6 +14,8 @@ export class SortingDialogComponent implements OnInit {
   property: any[] = [];
   filterName: string;
   modelType: string;
+  searchporoperty: string;
+  noReturnPredicate: string;
   namesFiltered = [];
   // drag and dropcode:
   all = [];

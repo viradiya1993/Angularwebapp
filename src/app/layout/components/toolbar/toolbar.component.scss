@@ -142,6 +142,7 @@ toolbar {
 toolbar .mat-toolbar.top_header {
     background-color: #fff !important;
 }
+
 toolbar section.ribbon-container.ng-star-inserted mat-card {
     background: #fff !important;
 }
@@ -155,27 +156,34 @@ toolbar section.ribbon-container.ng-star-inserted mat-card {
     color: #ccc;
     font-size: 12px;
 }
+
 .group-section-tab {
     position: relative;
 }
+
 .group-section-tab .ribbon-section {
     padding-bottom: 28px;
 }
+
 toolbar .ribbon-container .large-button {
     height: auto;
     padding: 5px 12px;
 }
+
 .matbar_header {
     align-items: initial !important;
 }
+
 .user_dropdown {
     position: absolute;
     right: 0;
     top: 0;
 }
+
 body.theme-default .matbar_header .mat-tab-header {
     border-bottom: none !important;
 }
+
 .matbar_header:after {
     position: absolute;
     content: "";
@@ -184,22 +192,27 @@ body.theme-default .matbar_header .mat-tab-header {
     left: 0;
     width: 100%;
 }
+
 .matbar_header .avatar {
     width: 32px;
     min-width: 32px;
     height: 32px;
     line-height: 32px;
 }
+
 toolbar .user_dropdown .user-button {
     height: 40px;
 }
+
 toolbar .top_header .ribbon-container .large-button .large-button-container .main-text {
     font-size: 13px;
     padding-top: 5px;
 }
+
 .top_header .mat-list-item span {
     font-size: 14px;
 }
+
 .top_header .mat-tab-label {
     min-width: 180px;
     color: rgba(0, 0, 0, 1);

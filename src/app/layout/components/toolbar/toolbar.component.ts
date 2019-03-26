@@ -10,6 +10,8 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { navigation } from 'app/navigation/navigation';
 import { AuthenticationService } from '../../../_services';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ContactDialogComponent } from './../../../main/pages/contact/contact-dialog/contact-dialog.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
     selector: 'toolbar',
@@ -20,7 +22,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 export class ToolbarComponent implements OnInit, OnDestroy {
     horizontalNavbar: boolean;
-    isTabShow: number;
+    isTabShow: number = 1;
+    selectedTab: number = 0;
     rightNavbar: boolean;
     hiddenNavbar: boolean;
     navigation: any;
@@ -43,6 +46,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private authenticationService: AuthenticationService,
         private route: ActivatedRoute,
         private router: Router,
+        public dialog: MatDialog,
     ) {
 
         this.navigation = navigation;
@@ -69,7 +73,19 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 this.rightNavbar = settings.layout.navbar.position === 'right';
                 this.hiddenNavbar = settings.layout.navbar.hidden === true;
             });
+
     }
+
+    // for new contact dialog
+
+    openDialog() {
+        const dialogRef = this.dialog.open(ContactDialogComponent);
+    
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+         
+        });
+      }
 
     /**
      * On destroy
@@ -96,16 +112,24 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.authenticationService.logout();
     }
     navBarSetting(value) {
-        // console.log(value);
-        if (value == '/matters')
+        let x = value.split("/");
+        if (x[1] == "matters" || x[1] == "") {
             this.isTabShow = 1;
-        else if (value == '/contact')
+            this.selectedTab = 0;
+        } else if (x[1] == "contact") {
             this.isTabShow = 2;
-        else if (value == '/time-billing' || value == '/time-billing/estimate' || value == '/time-billing/work-in-progress'
-            || value == '/time-billing/matter-invoices' || value == '/time-billing/receipts-credits' || value == '/time-billing/matter-trust')
+            this.selectedTab = 0;
+        } else if (x[1] == "time-billing") {
             this.isTabShow = 3;
-        else if (value == '/legal-details' || value == '/legal-details/chronology' || value == '/legal-details/authorities')
+            this.selectedTab = 0;
+        } else if (x[1] == "legal-details") {
             this.isTabShow = 4;
+            this.selectedTab = 0;
+        } else {
+            this.isTabShow = 0;
+            this.selectedTab = 0;
+        }
+
     }
 
 }

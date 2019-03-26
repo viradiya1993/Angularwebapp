@@ -11,18 +11,22 @@ import { MatButtonModule, MatPaginatorModule, MatCheckboxModule, MatTabsModule, 
 import { LegalDetailsComponent } from './legal-details.component';
 import { ChronologyComponent } from './chronology/chronology.component';
 import { AuthoritiesComponent } from './authorities/authorities.component';
+import { FileNotesComponent } from './file-notes/file-notes.component';
+import { SafecustodyComponent } from './safecustody/safecustody.component';
 
 const routes = [
   { path: '', redirectTo: '/legal-details/chronology', pathMatch: 'full', canActivate: [AuthGuard] },
   {
     path: '', component: LegalDetailsComponent, children: [
       { path: 'chronology', component: ChronologyComponent },
-      { path: 'authorities', component: AuthoritiesComponent }
+      { path: 'authorities', component: AuthoritiesComponent },
+      { path: 'file-notes', component: FileNotesComponent },
+      { path: 'safe-custody', component: SafecustodyComponent }
     ], canActivate: [AuthGuard]
   }
 ];
 @NgModule({
-  declarations: [LegalDetailsComponent, ChronologyComponent, AuthoritiesComponent],
+  declarations: [LegalDetailsComponent, ChronologyComponent, AuthoritiesComponent, FileNotesComponent, SafecustodyComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

@@ -2,39 +2,58 @@
     <div fxLayoutAlign="center" class="content">
         <div class="center p-24" fusePerfectScrollbar>
             <div class="content">
+                <div class="btn top_right_action_billing">
+                    <button mat-icon-button (click)="openDialog()" aria-label="More">
+                            <mat-icon class="secondary-text">more_vert</mat-icon>
+                            </button>
+                </div>
                 <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
                     <ng-container matColumnDef="receipt_no">
                         <mat-header-cell *matHeaderCellDef>Receipt No</mat-header-cell>
-                        <mat-cell *matCellDef="let row">
+                        <mat-cell *matCellDef="let row">{{row.receipt_no}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="date">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Date</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.date |date}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="total">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Total</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.total | currency }}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="gst">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>GST</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.gst |currency}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="allocation">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Allocation</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.allocation |currency}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="note">
                         <mat-header-cell *matHeaderCellDef> Note </mat-header-cell>
-                        <mat-cell *matCellDef="let row">
+                        <mat-cell *matCellDef="let row">{{row.note}}
                         </mat-cell>
                     </ng-container>
+                    <!-- <ng-container matColumnDef="button">
+                        <mat-header-cell *matHeaderCellDef><button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More">
+                            <mat-icon class="secondary-text">more_vert</mat-icon>
+                        </button>
+                
+                        <mat-menu #moreMenu="matMenu">
+                            <button mat-menu-item aria-label="remove" (click)="deleteContact(row)">
+                                <mat-icon>delete</mat-icon>
+                                <span>Remove</span>
+                            </button>
+                        </mat-menu> </mat-header-cell>
+                        
+                        <mat-cell *matCellDef="let row"></mat-cell>
+                    </ng-container> -->
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                    <mat-row *matRowDef="let row; columns: displayedColumns;">
+                    <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                     </mat-row>
                 </mat-table>
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

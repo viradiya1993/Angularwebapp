@@ -3,6 +3,8 @@ app-matters-list {
     display: flex;
     flex: 1 1 auto;
     width: 100%;
+    .one{
+        width: 100%;
     .mat-table {
         width: 100%;
         background: transparent;
@@ -33,6 +35,7 @@ app-matters-list {
             }
         }
     }
+}
 }
 
 #add-contact-button {

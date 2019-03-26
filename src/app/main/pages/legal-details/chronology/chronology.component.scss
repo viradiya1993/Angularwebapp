@@ -31,13 +31,9 @@ app-chronology {
     .content {
         overflow: hidden;
         // margin-top: 10px;
-        .example {
-            width: 18%;
-            padding: 10px;
-            .sidebar {
-                &:not(.locked-open) {
-                    background: white;
-                }
+        .sidebar {
+            &:not(.locked-open) {
+                background: white;
             }
         }
     }
@@ -47,3 +43,6 @@ app-chronology {
     width: 45% !important;
     padding: 20px !important;
 }
+
+// .icon{
+//    // }

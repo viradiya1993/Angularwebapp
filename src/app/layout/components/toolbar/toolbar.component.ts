@@ -21,6 +21,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class ToolbarComponent implements OnInit, OnDestroy {
     horizontalNavbar: boolean;
     isTabShow: number = 1;
+    selectedTab: number = 0;
     rightNavbar: boolean;
     hiddenNavbar: boolean;
     navigation: any;
@@ -98,16 +99,24 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     navBarSetting(value) {
         let x = value.split("/");
-        if (x[1] == "matters" || x[1] == "")
+        if (x[1] == "matters" || x[1] == "") {
             this.isTabShow = 1;
-        else if (x[1] == "contact")
+            this.selectedTab = 0;
+        } else if (x[1] == "contact") {
             this.isTabShow = 2;
-        else if (x[1] == "time-billing")
+            this.selectedTab = 1;
+        } else if (x[1] == "time-billing") {
             this.isTabShow = 3;
-        else if (x[1] == "legal-details")
+            this.selectedTab = 3;
+        } else if (x[1] == "legal-details") {
             this.isTabShow = 4;
-        else
+            this.selectedTab = 2;
+        } else {
             this.isTabShow = 0;
+            this.selectedTab = 0;
+        }
+        console.log(this.selectedTab);
+
     }
 
 }

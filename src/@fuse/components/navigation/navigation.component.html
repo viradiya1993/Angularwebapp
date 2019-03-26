@@ -2,11 +2,24 @@
 
     <!-- Vertical Navigation Layout -->
     <ng-container *ngIf="layout === 'vertical'">
-
-        <ng-container *ngFor="let item of navigation">
-            <fuse-nav-vertical-group *ngIf="item.type=='group'" [item]="item"></fuse-nav-vertical-group>
-        </ng-container>
-
+        <form class="example-form">
+            <div class="info">Search To Add Favourite</div>
+            <div>
+                <mat-form-field class="example-full-width">
+                <input matInput placeholder="Search page here"  (click)="changeIcon()" [(ngModel)]="searchpage" name="searchpage">
+                <mat-icon matSuffix class="disabled-text" (click)="clearSearch()">{{icon}}</mat-icon>      
+                </mat-form-field>
+            </div>
+            <div class="listdata" *ngIf="( page | filterByName:searchpage) as result">
+                <mat-list role="list" *ngFor="let pages of result"> 
+                    <mat-list-item role="listitem" (click)="onChange(pages.title)"><mat-icon class="listingicon">{{pages.title}}</mat-icon>{{pages.title}}<mat-icon class="star">{{pages.star}}</mat-icon></mat-list-item>
+                </mat-list>
+            </div>   
+        </form> 
+        <p class="name">Favourite </p>
+        <ng-container *ngFor="let favopages of pagesall">    
+            <fuse-nav-vertical-item *ngIf="favopages.type=='item'" [item]="favopages"></fuse-nav-vertical-item>
+         </ng-container>
     </ng-container>
     <!-- / Vertical Navigation Layout -->
 </div>

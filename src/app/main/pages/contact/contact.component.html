@@ -9,34 +9,34 @@
                                 </button>
                     </div>
                     <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
-                        <ng-container matColumnDef="topic">
-                            <mat-header-cell *matHeaderCellDef>Topic</mat-header-cell>
-                            <mat-cell *matCellDef="let row">{{row.topic}}
+                        <ng-container matColumnDef="contact">
+                            <mat-header-cell *matHeaderCellDef>Contact</mat-header-cell>
+                            <mat-cell *matCellDef="let row">{{row.contact}}
                             </mat-cell>
                         </ng-container>
-                        <ng-container matColumnDef="authority">
-                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Authority</mat-header-cell>
-                            <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.authority}}
+                        <ng-container matColumnDef="company">
+                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Company</mat-header-cell>
+                            <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.company}}
                             </mat-cell>
                         </ng-container>
-                        <ng-container matColumnDef="citation">
-                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Citation</mat-header-cell>
-                            <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.citation}}
+                        <ng-container matColumnDef="phone">
+                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>phone</mat-header-cell>
+                            <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.phone}}
                             </mat-cell>
                         </ng-container>
-                        <ng-container matColumnDef="reference">
-                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Reference</mat-header-cell>
-                            <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.reference}}
+                        <ng-container matColumnDef="address">
+                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Address</mat-header-cell>
+                            <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.address}}
                             </mat-cell>
                         </ng-container>
-                        <ng-container matColumnDef="web_address">
-                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Web Address</mat-header-cell>
-                            <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.web_address}}
+                        <ng-container matColumnDef="suburb">
+                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Suburb</mat-header-cell>
+                            <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.suburb}}
                             </mat-cell>
                         </ng-container>
-                        <ng-container matColumnDef="comment">
-                            <mat-header-cell *matHeaderCellDef> Comment </mat-header-cell>
-                            <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.comment}}
+                        <ng-container matColumnDef="state">
+                            <mat-header-cell *matHeaderCellDef> State </mat-header-cell>
+                            <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.state}}
                             </mat-cell>
                         </ng-container>
                         <!-- <ng-container matColumnDef="button">

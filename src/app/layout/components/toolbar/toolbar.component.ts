@@ -11,7 +11,8 @@ import { navigation } from 'app/navigation/navigation';
 import { AuthenticationService } from '../../../_services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ContactDialogComponent } from './../../../main/pages/contact/contact-dialog/contact-dialog.component';
-import {MatDialog} from '@angular/material';
+import {MatDialog,MatDialogRef} from '@angular/material';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
     selector: 'toolbar',
@@ -28,6 +29,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     hiddenNavbar: boolean;
     navigation: any;
     selectedLanguage: any;
+    confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -38,6 +41,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
      * @param {FuseConfigService} _fuseConfigService
      * @param {FuseSidebarService} _fuseSidebarService
      * @param {TranslateService} _translateService
+     * 
+     * 
      */
     constructor(
         private _fuseConfigService: FuseConfigService,
@@ -47,6 +52,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private router: Router,
         public dialog: MatDialog,
+        public _matDialog: MatDialog
     ) {
 
         this.navigation = navigation;
@@ -84,6 +90,20 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
           console.log(`Dialog result: ${result}`);
          
+        });
+      }
+
+      deleteContact(contact): void
+      {
+          this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+              disableClose: false
+          });
+          
+          
+          this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            this.confirmDialogRef = null;
         });
       }
 

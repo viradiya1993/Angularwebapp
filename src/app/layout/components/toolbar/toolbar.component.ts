@@ -106,6 +106,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 3;
         else if (x[1] == "legal-details")
             this.isTabShow = 4;
+        else if (x[1] == "diary")
+            this.isTabShow = 5;
         else
             this.isTabShow = 0;
     }

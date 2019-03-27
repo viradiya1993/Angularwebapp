@@ -147,9 +147,15 @@ body.theme-pink-dark {
 }
 
 .top_right_action {
-    position: relative;
-    left: 100%;
-    top: 0;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+}
+.top_right_action.matter_right_action {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 999;
 }
 
 // .top_right_action_billing {
@@ -164,23 +170,26 @@ body.theme-pink-dark {
 }
 
 .top_right_action_chronology {
-    position: relative;
-    left: 0%;
-    top: 50px;
+    position: absolute;
+    right: 30px;
+    top: 30px;
 }
 
-.top_right_action button {
-    position: fixed;
-    right: 10px;
-    top: 8px;
-    z-index: 999;
-}
+// .top_right_action button {
+//     position: fixed;
+//     right: 10px;
+//     top: 8px;
+//     z-index: 999;
+// }
 .list_sidebar_padding h3.one {
     margin: 0 !important;
 }
 .sticky_search_div .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
     -webkit-transform: translateY(-1.19375em) scale(0.75) !important;
     transform: translateY(-1.19375em) scale(0.75) !important;
+}
+app-matters-list {
+    position: relative;
 }
 
 

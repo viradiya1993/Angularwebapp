@@ -1,6 +1,6 @@
 
 
-<div class="btn top_right_action">
+<div class="btn top_right_action matter_right_action">
     <button mat-icon-button (click)="openDialog()" aria-label="More">
     <mat-icon class="secondary-text">more_vert</mat-icon>
     </button>
@@ -72,10 +72,12 @@
                     </p>
                 </mat-cell>
             </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns;"></mat-header-row>
+    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
     <!-- sticky: true" -->
-    <mat-row *matRowDef="let matter; columns: displayedColumns;" class="matter" (click)="editmatter(matter)" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
-    </mat-row>
+    <div class="tbl_body_scroll">
+        <mat-row *matRowDef="let matter; columns: displayedColumns;" class="matter" (click)="editmatter(matter)" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+        </mat-row>
+    </div>
 </mat-table>
 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>

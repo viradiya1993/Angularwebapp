@@ -2,7 +2,7 @@
 
     <div class="content">
         <!-- CENTER -->
-        <div class="center p-24">
+        <div class="center p-24 list_tbl_main">
             <div class="matter-serach-div sticky_search_div">
                 <!-- select bar  -->
                 <mat-form-field class="example" appearance="outline">
@@ -47,7 +47,7 @@
         </div>
         <!-- sidebar  -->
         <!-- *ngIf="isSortDetail" -->
-        <fuse-sidebar *ngIf="mattersDetail" class="sidebar final-sidebar" name="final-sidebar" position="right" lockedOpen="gt-md">
+        <fuse-sidebar *ngIf="mattersDetail" class="sidebar final-sidebar list_sidebar_right_child" name="final-sidebar" position="right" lockedOpen="gt-md">
             <app-matters-sort-detail class="list_sidebar_padding" [mattersDetailData]="mattersDetail" (matterCloseD)="matterClose($event)"></app-matters-sort-detail>
         </fuse-sidebar>
         <!-- / CENTER -->

@@ -238,3 +238,31 @@ body.theme-default fuse-sidebar {
 body.theme-default .accent {
     background-color: #4d2184 !important;
 }
+
+fuse-sidebar.navbar-fuse-sidebar.folded:not(.unfolded) navbar navbar-vertical-style-1 .navbar-top {
+    width: 100%;
+    height: 105px;
+}
+.fold_sidebar_logo {
+    display: none;
+}
+fuse-sidebar.navbar-fuse-sidebar.folded:not(.unfolded) navbar navbar-vertical-style-1 .navbar-top .fold_sidebar_logo {
+    display: inline-block
+}
+fuse-sidebar.navbar-fuse-sidebar.folded:not(.unfolded) navbar navbar-vertical-style-1 .navbar-top .unfold_sidebar_logo {
+    display: none
+}
+fuse-sidebar.navbar-fuse-sidebar.folded:not(.unfolded) fuse-navigation > .nav {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 20px;
+}
+fuse-sidebar.navbar-fuse-sidebar.folded:not(.unfolded) #fevrite_form {
+    display: none
+}
+fuse-sidebar.navbar-fuse-sidebar.folded:not(.unfolded) .name {
+    display: none;
+}
+fuse-sidebar.navbar-fuse-sidebar.folded:not(.unfolded) navbar navbar-vertical-style-1 .navbar-top.sidebar_main_div .logo {
+    padding: 25px 0;
+}

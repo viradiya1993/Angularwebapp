@@ -205,7 +205,8 @@ navbar navbar-vertical-style-1 .navbar-top.sidebar_main_div {
     min-height: auto;
     max-height: 100%;
     display: inline-block;
-    height: 245px;
+    // height: 245px;
+    height: 160px;
     float: left;
 }
 navbar navbar-vertical-style-1 .navbar-top.sidebar_main_div .buttons {
@@ -220,7 +221,7 @@ navbar navbar-vertical-style-1 .navbar-top.sidebar_main_div .logo {
     align-items: center;
     width: 100%;
     float: left;
-    padding: 40px 0;
+    padding: 15px 0;
     text-align: center;
 }
 navbar navbar-vertical-style-1 .navbar-top.sidebar_main_div .logo .logo-icon {
@@ -265,4 +266,8 @@ fuse-sidebar.navbar-fuse-sidebar.folded:not(.unfolded) .name {
 }
 fuse-sidebar.navbar-fuse-sidebar.folded:not(.unfolded) navbar navbar-vertical-style-1 .navbar-top.sidebar_main_div .logo {
     padding: 25px 0;
+}
+#fevrite_form .info {
+    font-size: 12px;
+    opacity: 0.8;
 }

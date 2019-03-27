@@ -7,38 +7,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactDialogComponent implements OnInit {
 
-  common:Common[];
-  nameSelected:number;
+  common: Common[];
+  nameSelected: number;
   value: number;
 
   ngOnInit() {
-    
-   this.common =[
-     
-    {Id:1,Name:"Person"},
-    {Id:2,Name:"Company"},
-    {Id:3,Name:"Party"},
-    {Id:4,Name:"Payee/Payor"},
-  
-  ];
 
-   this.nameSelected=1;
-  
- 
+    this.common = [
+
+      { Id: 1, Name: "Person" },
+      { Id: 2, Name: "Company" },
+      { Id: 3, Name: "Party" },
+      { Id: 4, Name: "Payee/Payor" },
+
+    ];
+
+    this.nameSelected = 1;
+
+
 
   }
 
-  onClick(value){
+  onClick(value) {
 
     console.log(value);
-  
+
 
 
   }
 
 }
-export class Common
-{
-    public Id:Number;
-    public Name:string;
+export class Common {
+  public Id: Number;
+  public Name: string;
 }

@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector   : 'footer',
+    selector: 'footer',
     templateUrl: './footer.component.html',
-    styleUrls  : ['./footer.component.scss']
+    styleUrls: ['./footer.component.scss']
 })
-export class FooterComponent
-{
+export class FooterComponent {
     /**
      * Constructor
      */
-    constructor()
-    {
+    currentYear: any;
+    constructor() {
+        this.currentYear = new Date().getFullYear();
     }
 }

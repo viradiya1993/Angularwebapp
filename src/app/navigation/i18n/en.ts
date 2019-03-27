@@ -9,6 +9,15 @@ export const locale = {
             'CONTACT': {
                 'TITLE': 'Contact'
             },
+            'Dashboard'        : {
+                'TITLE': 'Dashboard',
+            },
+            'Chat'        : {
+                'TITLE': 'Chat',
+            },
+            'Book'        : {
+                'TITLE': 'Book',
+            },
         }
     }
 };

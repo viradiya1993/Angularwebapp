@@ -32,7 +32,6 @@ export class MattersListComponent implements OnInit, OnDestroy {
   constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
-
     this.dataSource.paginator = this.paginator;
     this.getMatterList();
   }

@@ -14,6 +14,8 @@ import { ContactDialogComponent } from './../../../main/pages/contact/contact-di
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { ContactCorresDetailsComponent } from 'app/main/pages/contact/contact-corres-details/contact-corres-details.component';
+import { TimeEntryDialogComponent } from 'app/main/pages/time-entries/time-entry-dialog/time-entry-dialog.component';
+
 
 @Component({
     selector: 'toolbar',
@@ -90,6 +92,18 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         });
     }
+
+     //time entry dialog
+     addNewTimeEntry(){
+        const dialogRef = this.dialog.open(TimeEntryDialogComponent,{
+        width:'50%'    
+        });
+        
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+
+        });
+    }
     // for new Corres Details dialog
     openCorresDialog() {
         const dialogConfig = new MatDialogConfig();
@@ -100,6 +114,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         });
     }
+
+   
 
     deleteContact(contact): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {

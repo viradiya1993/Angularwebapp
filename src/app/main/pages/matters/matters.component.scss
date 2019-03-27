@@ -68,6 +68,9 @@
     left: 0;
     padding-left: 300px;
 }
+#matters .p-24.list_tbl_main {
+    margin-top: 95px;
+}
 .p-24.list_tbl_main {
     margin-top: 110px;
     padding-top: 0 !important;
@@ -76,13 +79,15 @@
 //     margin-top: 70px;
 // }
 .list_sidebar_padding {
-    // padding-top: 92px;
-    background-color: #fff;
-    border-left: 1px solid #ccc;
+    // background-color: #fff;
+    // border-left: 1px solid #ccc;
 }
 .list_sidebar_padding h3.one {
     margin: 0;
 }
 .list_sidebar_right_child {
     margin-top: 110px;
+}
+#matters .list_sidebar_right_child {
+    margin-top: 95px;
 }

@@ -1,17 +1,18 @@
+<div class="sort_main_sidebar">
 <!-- SIDEBAR HEADER -->
 <div class="header p-24 side_header" fxLayout="column" fxLayoutAlign="space-between">
     <h3 class="one"><strong class="x">Matter Details</strong></h3>
+    <div class="button-div">
+        <button class="button primary" mat-raised-button (click)="closeDetail($event)"><mat-icon>clear</mat-icon></button>
+    </div>
 </div>
 <!-- / SIDEBAR HEADER -->
 
 <!-- SIDEBAR CONTENT -->
 <mat-card class="two">
-    <div class="content p-24" fusePerfectScrollbar>
+    <div class="content" fusePerfectScrollbar>
         <div class="file-details" [@animate]="{value:'*',params:{delay:'200ms'}}">
-            <div class="title">Info</div>
-            <div class="button-div">
-                <button class="button primary" mat-raised-button (click)="closeDetail($event)"><mat-icon>clear</mat-icon></button>
-            </div>
+            <!-- <div class="title">Info</div> -->
 
             <table>
                 <tr class="matter_num">
@@ -46,9 +47,12 @@
             </table>
         </div>
         <br/>
-        <a class="button primary" mat-raised-button routerLink="{{mattersDetailData.matter_num}}/details">
+        <div  class="sidebar_right_view_btn_div">
+            <a class="button primary details_view_btn" mat-raised-button routerLink="{{mattersDetailData.matter_num}}/details">
             <mat-icon>visibility</mat-icon> View</a>
+        </div>
     </div>
 </mat-card>
 
 <!-- / SIDEBAR CONTENT -->
+</div>

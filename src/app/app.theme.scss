@@ -22,7 +22,9 @@ $typography: mat-typography-config( $font-family: 'Muli, Helvetica Neue, Arial, 
 @import "src/app/layout/components/toolbar/toolbar.theme";
 @import "src/app/main/authentication/login/login-2.theme.scss";
 @import "src/app/main/authentication/forgot-password/forgot-password-2.theme.scss";
-@import "src/app/main//pages/diary/calendar.theme";
+@import "src/app/main/pages/diary/calendar.theme.scss";
+@import "src/app/main/errors/not-found/error-404.theme.scss";
+@import "src/app/main/errors/internal-error/error-500.theme.scss";
 // @import "src/app/main/pages/contact/contacts.theme.scss";
 // Define a mixin for easier access
 @mixin components-theme($theme) {
@@ -31,6 +33,8 @@ $typography: mat-typography-config( $font-family: 'Muli, Helvetica Neue, Arial, 
     @include login-2-theme($theme);
     @include forgot-password-2-theme($theme);
     @include calendar-theme($theme);
+    @include error-404-theme($theme);
+    @include error-500-theme($theme);
     // @include contacts-theme($theme);
 }
 

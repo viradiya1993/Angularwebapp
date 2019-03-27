@@ -1,47 +1,46 @@
 <div class="popup_main_div">
-<div class="popup_title_div">
-    <h2 mat-dialog-title>
-        Configure Fields
-        <mat-icon (click)="ondialogcloseClick()">close</mat-icon>
-    </h2>
-</div>
-<mat-dialog-content class="mat-typography">
-    <div class="popup_body">
-        <form class="p-24 mr-24 remove_left_right_padding" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
-            <div>
-                <mat-form-field appearance="outline" fxFlex="100">
-                    <mat-label>Search</mat-label>
-                    <!-- <input matInput formControlName="search"  placeholder="search poroperty" [(ngModel)]="filterName"> -->
-                    <input [(ngModel)]="searchporoperty" matInput placeholder="search poroperty" name="searchporoperty">
-                    <mat-icon matSuffix class="disabled-text">search</mat-icon>
-                </mat-form-field>
-            </div>
-            <div class="information">
-                <mat-label>Contact Information</mat-label>
-                <div class="checkbox">
-                    <div class="add_popup_padding" *ngFor="let name of property | filterByName:searchporoperty">
-                        <mat-checkbox value="{{ name.checked }}" [checked]="name.checked" name='name.value' [ngModelOptions]="{standalone: true}" [(ngModel)]="name.checked" class="example-margin" (change)="onChange($event,name.value)">{{name.value}} </mat-checkbox>
+    <div class="popup_title_div">
+        <h2 mat-dialog-title>
+            Configure Fields
+            <mat-icon (click)="ondialogcloseClick()">close</mat-icon>
+        </h2>
+    </div>
+    <mat-dialog-content class="mat-typography">
+        <div class="popup_body">
+            <form class="p-24 mr-24 remove_left_right_padding" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
+                <div>
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>Search</mat-label>
+                        <!-- <input matInput formControlName="search"  placeholder="search poroperty" [(ngModel)]="filterName"> -->
+                        <input [(ngModel)]="searchporoperty" matInput placeholder="search poroperty" name="searchporoperty">
+                        <mat-icon matSuffix class="disabled-text">search</mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="information">
+                    <mat-label>Contact Information</mat-label>
+                    <div class="checkbox">
+                        <div class="add_popup_padding" *ngFor="let name of property | filterByName:searchporoperty">
+                            <mat-checkbox value="{{ name.checked }}" [checked]="name.checked" name='name.value' [ngModelOptions]="{standalone: true}" [(ngModel)]="name.checked" class="example-margin" (change)="onChange($event,name.value)">{{name.value}} </mat-checkbox>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
-        <mat-divider vertical></mat-divider>
-        <div class="form-errors-model p-24">
-            <div class="example-container">
-                <h2>Selected Columns ({{all.length }})</h2>
-                <div id="all" cdkDropList [cdkDropListData]="all" cdkDropListConnectedTo="even" class="example-list popup_scroll_div" (cdkDropListDropped)="drop($event)" [cdkDropListEnterPredicate]="noReturnPredicate">
-                    <div class="example-box" *ngFor="let number of all" [cdkDragData]="number" cdkDrag>
-                        <mat-icon class="detail">more_vert</mat-icon>{{number}}
-                        <mat-icon class="close" (click)="remove(number,$event)">close</mat-icon>
+            </form>
+            <mat-divider vertical></mat-divider>
+            <div class="form-errors-model p-24">
+                <div class="example-container">
+                    <h2>Selected Columns ({{all.length }})</h2>
+                    <div id="all" cdkDropList [cdkDropListData]="all" cdkDropListConnectedTo="even" class="example-list popup_scroll_div" (cdkDropListDropped)="drop($event)" [cdkDropListEnterPredicate]="noReturnPredicate">
+                        <div class="example-box" *ngFor="let number of all" [cdkDragData]="number" cdkDrag>
+                            <mat-icon class="detail">more_vert</mat-icon>{{number}}
+                            <mat-icon class="close" (click)="remove(number,$event)">close</mat-icon>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- {{property | json}} -->
-</mat-dialog-content>
-<mat-dialog-actions align="end" class="popup_ftr">
-    <button mat-raised-button color="primary" mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="ondialogSaveClick()">Save</button>
-    <button class="cancel" mat-button [mat-dialog-close]="true" matBadgeColor="accent" (click)="ondialogcloseClick()">Cancel</button>
-</mat-dialog-actions>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end" class="popup_ftr">
+        <button mat-raised-button color="primary" mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="ondialogSaveClick()">Save</button>
+        <button class="cancel" mat-button [mat-dialog-close]="true" matBadgeColor="accent" (click)="ondialogcloseClick()">Cancel</button>
+    </mat-dialog-actions>
 </div>

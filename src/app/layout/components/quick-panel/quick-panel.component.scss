@@ -14,3 +14,30 @@ quick-panel {
 body.theme-default fuse-sidebar {
     background: #fafafa;
 }
+.time_entry_list .mat-button {
+    min-width: 30px;
+    padding: 0;
+    height: 30px !important;
+    line-height: 30px;
+    color: #fff !important;
+}
+.time_entry_list .mat-button i.material-icons {
+    color: #fff;
+    font-size: 20px;
+}
+.time_entry_list .mat-button.play_btn {
+    margin-right: 5px;
+}
+.time_entry_sidebar .mat-subheader {
+    font-size: 22px;
+    color: #000 !important;
+    text-align: center !important;
+    width: 100%;
+}
+.time_entry_sidebar .mat-subheader span {
+    text-align: center !important;
+    width: 100%;
+}
+.mat-list-base .mat-list-item .mat-line {
+    font-weight: bold;
+}

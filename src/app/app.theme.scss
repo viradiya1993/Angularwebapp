@@ -156,7 +156,15 @@ body.theme-pink-dark {
 }
 
 .top_right_action button {
-    position: absolute;
+    position: fixed;
     right: 10px;
     top: 8px;
+    z-index: 999;
+}
+.list_sidebar_padding h3.one {
+    margin: 0 !important;
+}
+.sticky_search_div .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    -webkit-transform: translateY(-1.19375em) scale(0.75) !important;
+    transform: translateY(-1.19375em) scale(0.75) !important;
 }

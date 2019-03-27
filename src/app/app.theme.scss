@@ -124,6 +124,9 @@ body.theme-pink-dark {
     @include fuse-color-classes($palettes);
 }
 
+
+/***** Moon css ******/
+
 .sticky_search_div .mat-form-field-wrapper {
     padding-bottom: 0 !important;
 }
@@ -143,10 +146,15 @@ body.theme-pink-dark {
     top: 0;
 }
 
+// .top_right_action_billing {
+//     position: relative;
+//     left: 96%;
+//     top: 50px;
+// }
 .top_right_action_billing {
-    position: relative;
-    left: 96%;
-    top: 50px;
+    position: absolute;
+    right: 30px;
+    top: 30px;
 }
 
 .top_right_action_chronology {
@@ -176,3 +184,18 @@ body.theme-pink-dark {
 //     top: 0;
 //     z-index: 1000;
 // }
+
+
+.mat-select-panel {
+    top: -8px;
+    position: relative;
+}
+.mat-option {
+    cursor: pointer;
+}
+
+/****** popup cmn css *****/
+
+body.theme-default .mat-dialog-container {
+    padding: 0;
+}

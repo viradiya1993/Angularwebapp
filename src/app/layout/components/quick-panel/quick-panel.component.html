@@ -1,0 +1,14 @@
+<div fxLayout="column" fxFlex fusePerfectScrollbar>
+    <mat-list>
+        <h3 matSubheader>
+            <span>Timers</span>
+        </h3>
+        <mat-list-item *ngFor="let event of events">
+            <h3 matLine>{{event.title}}</h3>
+            <p matLine class="secondary-text">{{event.detail}}</p>
+            <button mat-raised-button color="primary" mat-button cdkFocusInitial>Start</button>
+            <button mat-raised-button color="primary" mat-button cdkFocusInitial>Stop</button>
+        </mat-list-item>
+    </mat-list>
+    <mat-divider cdkFocusRegionEnd></mat-divider>
+</div>

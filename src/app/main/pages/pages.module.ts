@@ -22,7 +22,8 @@ const appRoutes: Routes = [
     RouterModule.forChild(appRoutes),
     ContactModule,
     MattersModule,
-    TimeEntriesModule
+    TimeEntriesModule,
+    DiaryModule
   ]
 })
 export class PagesModule { }

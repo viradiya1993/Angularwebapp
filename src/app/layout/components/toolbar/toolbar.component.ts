@@ -150,6 +150,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 4;
         } else if (x[1] == "diary") {
             this.isTabShow = 5;
+        } else if (x[1] == "time-entries") {
+            this.isTabShow = 6;
         } else {
             this.isTabShow = 0;
         }

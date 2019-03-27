@@ -1,16 +1,29 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+
+
+import { MatButtonModule, MatDatepickerModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatSlideToggleModule, MatToolbarModule, MatTooltipModule } from '@angular/material';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { CalendarModule as AngularCalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 import { FuseSharedModule } from '@fuse/shared.module';
-import { AuthGuard } from '../../../_guards';
+import { FuseConfirmDialogModule } from '@fuse/components';
 
 import { DiaryComponent } from './diary.component';
+import { AuthGuard } from 'app/_guards';
 import { EventFormComponent } from './event-form/event-form.component';
-import { MatIconModule } from '@angular/material';
+import { DiaryService } from './diary.service';
+
 
 const routes = [
-  { path: '', component: DiaryComponent, canActivate: [AuthGuard] }
+  {
+    path: '',
+    component: DiaryComponent,
+    children: [], resolve: {
+      chat: DiaryService
+    }, canActivate: [AuthGuard]
+  }
 ];
 
 @NgModule({
@@ -19,15 +32,35 @@ const routes = [
     EventFormComponent
   ],
   imports: [
-    CommonModule,
     RouterModule.forChild(routes),
-    FuseSharedModule,
 
-    //Material element
-    MatIconModule
+    MatButtonModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatSlideToggleModule,
+    MatToolbarModule,
+    MatTooltipModule,
+
+    AngularCalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory
+    }),
+    ColorPickerModule,
+
+    FuseSharedModule,
+    FuseConfirmDialogModule
   ],
   exports: [
     DiaryComponent
+  ],
+  providers: [
+    DiaryService
+  ],
+  entryComponents: [
+    EventFormComponent
   ]
 })
 export class DiaryModule { }

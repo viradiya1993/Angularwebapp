@@ -31,16 +31,21 @@ import { fakeBackendProvider } from './_helpers';
 //sorting colume Dialog
 import { SortingDialogComponent, filterNames } from './main/sorting-dialog/sorting-dialog.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { NotFoundComponent } from './main/errors/not-found/not-found.component';
+import { InternalErrorComponent } from './main/errors/internal-error/internal-error.component';
 //end
-const appRoutes: Routes = [{
-    path: '', loadChildren: './main/authentication/authentication.module#AuthenticationModule'
-}];
+const appRoutes: Routes = [
+    { path: '', loadChildren: './main/authentication/authentication.module#AuthenticationModule' },
+    { path: '**', component: NotFoundComponent }
+];
 
 @NgModule({
     declarations: [
         AppComponent,
         SortingDialogComponent,
         filterNames,
+        NotFoundComponent,
+        InternalErrorComponent,
     ],
     entryComponents: [
         SortingDialogComponent

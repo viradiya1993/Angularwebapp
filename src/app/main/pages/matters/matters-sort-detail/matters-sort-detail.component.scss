@@ -33,7 +33,7 @@
                     tr {
                         th,
                         td {
-                            padding: 16px 0;
+                            padding: 8px 0;
                         }
                         th {}
                         td {}
@@ -61,4 +61,36 @@
 
 .button {
     margin-left: 50px;
+}
+
+.p-24.side_header {
+    padding: 15px !important;
+    text-align: center;
+    display: inline-block !important;
+    width: 100%;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.list_sidebar_padding h3.one {
+    margin: 0 !important;
+    float: right;
+    width: 50%;
+}
+.side_header .button[_ngcontent-c28] {
+    margin-left: 0;
+    padding: 0 !important;
+    min-width: 30px;
+    min-height: 30px;
+    line-height: 30px;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+}
+.sidebar_right_view_btn_div {
+    text-align: center;
+}
+.details_view_btn {
+    margin-left: 0 !important;
 }

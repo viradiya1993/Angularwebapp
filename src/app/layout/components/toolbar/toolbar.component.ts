@@ -14,6 +14,7 @@ import { ContactDialogComponent } from './../../../main/pages/contact/contact-di
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { ContactCorresDetailsComponent } from 'app/main/pages/contact/contact-corres-details/contact-corres-details.component';
+import { ReportsComponent } from 'app/main/reports/reports.component';
 
 @Component({
     selector: 'toolbar',
@@ -98,6 +99,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialog result: ${result}`);
 
+        });
+    }
+
+    //Reportpopup open
+    Reportpopup() {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.width = '40%';
+        const dialogRef = this.dialog.open(ReportsComponent, dialogConfig);
+        dialogRef.afterClosed().subscribe(result => {
+            //console.log(`ReportsComponent result: ${result}`);
         });
     }
 

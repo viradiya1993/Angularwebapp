@@ -30,7 +30,12 @@ import { PagesModule } from 'app/main/pages/pages.module';
 import { fakeBackendProvider } from './_helpers';
 //sorting colume Dialog
 import { SortingDialogComponent, filterNames } from './main/sorting-dialog/sorting-dialog.component';
+import { ReportsComponent } from './main/reports/reports.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+
+//Datepicker
+import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
+
 //end
 const appRoutes: Routes = [{
     path: '', loadChildren: './main/authentication/authentication.module#AuthenticationModule'
@@ -41,9 +46,12 @@ const appRoutes: Routes = [{
         AppComponent,
         SortingDialogComponent,
         filterNames,
+        ReportsComponent
+        
     ],
     entryComponents: [
-        SortingDialogComponent
+        SortingDialogComponent,
+        ReportsComponent
     ],
     imports: [
         BrowserModule,
@@ -83,6 +91,9 @@ const appRoutes: Routes = [{
         FuseThemeOptionsModule,
         MatTabsModule,
 
+        //Datepicker
+        SatDatepickerModule,
+        SatNativeDateModule,
 
         // App modules
         LayoutModule,

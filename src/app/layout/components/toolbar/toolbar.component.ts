@@ -16,6 +16,7 @@ import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/conf
 import { ContactCorresDetailsComponent } from 'app/main/pages/contact/contact-corres-details/contact-corres-details.component';
 import { TimeEntryDialogComponent } from 'app/main/pages/time-entries/time-entry-dialog/time-entry-dialog.component';
 
+import { ReportsComponent } from 'app/main/reports/reports.component';
 
 @Component({
     selector: 'toolbar',
@@ -120,6 +121,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
    
+    //Reportpopup open
+    Reportpopup() {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.width = '40%';
+        const dialogRef = this.dialog.open(ReportsComponent, dialogConfig);
+        dialogRef.afterClosed().subscribe(result => {
+            //console.log(`ReportsComponent result: ${result}`);
+        });
+    }
 
     deleteContact(contact): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {

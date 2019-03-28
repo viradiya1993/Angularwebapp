@@ -73,11 +73,13 @@
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
+
 .list_sidebar_padding h3.one {
     margin: 0 !important;
     float: right;
     width: 50%;
 }
+
 .side_header .button[_ngcontent-c28] {
     margin-left: 0;
     padding: 0 !important;
@@ -88,9 +90,22 @@
     right: 15px;
     top: 10px;
 }
+
 .sidebar_right_view_btn_div {
     text-align: center;
 }
+
 .details_view_btn {
+    margin-left: 0 !important;
+}
+
+.sort_main_sidebar button.button.primary {
+    position: absolute;
+    top: 11px !important;
+    right: 5px;
+    min-width: 30px !important;
+    padding: 0 !important;
+    height: 30px !important;
+    line-height: 30px !important;
     margin-left: 0 !important;
 }

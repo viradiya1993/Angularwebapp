@@ -1,4 +1,4 @@
-<mat-toolbar class="p-0 mat-elevation-z1 top_header">
+<mat-toolbar class="p-0 mat-elevation-z1 top_header" id="tool_baar_main">
     <div fxFlex fxFill fxLayout="row" fxLayoutAlign="start center">
         <div fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center" class="matbar_header">
             <button mat-icon-button class="navbar-toggle-button" *ngIf="!hiddenNavbar && !rightNavbar" (click)="toggleSidebarOpen('navbar')" fxHide.gt-md>
@@ -13,7 +13,7 @@
             <mat-tab-group [selectedIndex]="0">
                 <!-- matters tab start -->
                 <mat-tab label="MATTERS" *ngIf="isTabShow===1">
-                    <section class="ribbon-container">
+                    <section class="ribbon-container matter_tab_main">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
@@ -143,7 +143,7 @@
 
                 <!-- contacts tab menu start -->
                 <mat-tab label="CONTACT" *ngIf="isTabShow===2">
-                    <section class="ribbon-container">
+                    <section class="ribbon-container contact_tab_main">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
@@ -206,7 +206,7 @@
 
                 <!-- Time and Billing tab menu start -->
                 <mat-tab label="TIME AND BILLING" *ngIf="isTabShow===3">
-                    <section class="ribbon-container">
+                    <section class="ribbon-container time_billing_tab_main">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab details_tab">
@@ -291,7 +291,7 @@
 
                 <!-- legal tab menu start -->
                 <mat-tab label="LEGAL DETAILS" *ngIf="isTabShow===4">
-                    <section class="ribbon-container">
+                    <section class="ribbon-container legal_details_tab_main">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab details_tab">
@@ -376,7 +376,7 @@
 
                 <!-- Diary tab menu start -->
                 <mat-tab label="DIARY" *ngIf="isTabShow===5">
-                    <section class="ribbon-container">
+                    <section class="ribbon-container diary_tab_main">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab details_tab">
@@ -478,7 +478,7 @@
                 <!-- Diary tab menu end -->
                 <!-- time-entries tab menu start -->
                 <mat-tab label="TIME ENTRIES" *ngIf="isTabShow===6">
-                    <section class="ribbon-container">
+                    <section class="ribbon-container time_entry_tab_main">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab details_tab">
@@ -564,7 +564,7 @@
                 <!-- time-entries tab menu end -->
                 <!-- goto tab menu start -->
                 <mat-tab label="GO TO">
-                    <section class="ribbon-container">
+                    <section class="ribbon-container goto_tab_main">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab">
@@ -604,7 +604,7 @@
                                                         <img src="assets/icons/web_app/icon_time_cost_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                   </mat-icon>
                                                   <div class="main-text">
-                                                     <span>Time Entries</span>
+                                                     <span>Time <br>Entries</span>
                                                   </div>
                                                </section>
                                             </button>
@@ -636,7 +636,7 @@
 
                 <!-- report tab menu start -->
                 <mat-tab label="REPORTS">
-                    <section class="ribbon-container">
+                    <section class="ribbon-container reports_tab_main">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab">
@@ -800,7 +800,7 @@
 
                 <!-- help tab menu start -->
                 <mat-tab label="HELP">
-                    <section class="ribbon-container">
+                    <section class="ribbon-container help_tab_main">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab">

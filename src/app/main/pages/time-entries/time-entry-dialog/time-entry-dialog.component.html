@@ -1,23 +1,16 @@
 <div class="popup_main_div">
     <h2 mat-dialog-title>Add New Time Entry
         <button class="btn" mat-icon-button (click)="ondialogcloseClick()" aria-label="Close dialog">
-        <mat-icon>close</mat-icon>
-    </button>
+            <mat-icon>close</mat-icon>
+        </button>
     </h2>
     <div mat-dialog-content class="mat-typography main">
-
-
         <div class=" one  mb-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
-            <!-- p-24 -->
+           
             <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
-
-
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-
                     <div class=" one  mb-24" fxLayout="column">
-
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-
                             <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline">
                                 <mat-label>Matter</mat-label>
                                 <mat-select>
@@ -33,16 +26,7 @@
                                     <mat-option value="volvo">Sundry</mat-option>
                                 </mat-select>
                             </mat-form-field>
-
                         </div>
-
-
-
-
-                        <!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-      
-  </div> -->
-
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                                 <input matInput [matDatepicker]="picker" placeholder="Choose a date">
@@ -50,18 +34,9 @@
                                 <mat-datepicker #picker></mat-datepicker>
                             </mat-form-field>
 
-                            <material-timepicker fxFlex="50" color="accent" label="Hour 4" appearance="outline" [userTime]="exportTime"></material-timepicker>
-
+                            <material-timepicker fxFlex="50" color="accent" label="Time Picker" appearance="outline"
+                                [userTime]="exportTime"></material-timepicker>
                         </div>
-
-
-                        <!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-  </div> -->
-
-                        <!-- <div fxLayout="row"   fxLayoutAlign="start center" fxFlex="1 0 auto">
-    <material-timepicker fxFlex="100" color="accent" label="Hour 4" appearance="outline" [userTime]="exportTime"></material-timepicker>
-</div> -->
-
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                             <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
                                 <mat-label>Fee Earner</mat-label>
@@ -71,7 +46,6 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
-
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                             <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline">
                                 <mat-label>Quantity Type</mat-label>
@@ -80,19 +54,12 @@
                                     <mat-option value="volvo">Hours</mat-option>
                                 </mat-select>
                             </mat-form-field>
-
                             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                                 <mat-label>Quantity</mat-label>
                                 <input matInput>
                                 <mat-icon matSuffix class="secondary-text">quantity</mat-icon>
                             </mat-form-field>
-
                         </div>
-
-                        <!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
- 
-</div> -->
-
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                                 <mat-label>Price (Ex GST)</mat-label>
@@ -104,13 +71,7 @@
                                 <input matInput>
                                 <mat-icon matSuffix class="secondary-text">currency</mat-icon>
                             </mat-form-field>
-
                         </div>
-
-                        <!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-  
-</div> -->
-
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                             <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
                                 <mat-label>Select Text</mat-label>
@@ -120,43 +81,23 @@
                                 </mat-select>
                             </mat-form-field>
                         </div>
-
                         <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-
-
                             <mat-form-field appearance="outline" fxFlex="50">
                                 <mat-label>Invoice Text</mat-label>
                                 <textarea matInput></textarea>
                             </mat-form-field>
-
                             <mat-form-field appearance="outline" fxFlex="50">
                                 <mat-label>Comment</mat-label>
                                 <textarea matInput></textarea>
                             </mat-form-field>
-
                         </div>
-
-
                     </div>
-
-
-
-
-
-
                 </div>
-
             </form>
         </div>
-
-
-
     </div>
-
-
     <mat-dialog-actions align="end" class="popup_ftr">
         <button mat-raised-button mat-dialog-close color="accent">Save</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Don't Save</button>
     </mat-dialog-actions>
-
 </div>

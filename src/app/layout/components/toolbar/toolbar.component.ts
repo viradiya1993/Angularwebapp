@@ -84,6 +84,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     }
 
+    //for binding
+    
+    
+
     // for new contact dialog
     openDialog() {
         const dialogRef = this.dialog.open(ContactDialogComponent);

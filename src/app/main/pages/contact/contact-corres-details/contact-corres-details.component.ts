@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatDialog, MatDialogRef } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 
 
@@ -14,10 +14,13 @@ export class ContactCorresDetailsComponent implements OnInit {
   displayedColumns: string[] = ['contact', 'type'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog,public dialogRef: MatDialogRef<ContactCorresDetailsComponent>) { }
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
+  }
+  ondialogcloseClick(): void {
+    this.dialogRef.close(false);
   }
   editContact(event) {
     console.log(event);

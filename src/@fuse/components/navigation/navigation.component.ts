@@ -21,7 +21,12 @@ export class FuseNavigationComponent implements OnInit {
 
   page: any[] = [
     { id: 'matters', title: 'Matters', type: 'item', icon: 'icon_matter_d.ico', url: 'matters', star: '' },
-    { id: 'contact', title: 'Contact', type: 'item', icon: 'icon_contact_d.ico', url: 'contact', star: '' }
+    { id: 'contact', title: 'Contact', type: 'item', icon: 'icon_contact_d.ico', url: 'contact', star: '' },
+    //{ id: 'time_entries', title: 'Timen entries', type: 'item', icon: 'icon_time_cost_new_d.ico', url: 'time-entries', star: '' },
+    { id: 'diary', title: 'Diary', type: 'item', icon: 'icon_diary_d.ico', url: 'diary', star: '' },
+    // { id: 'legal_details', title: 'Legal details', type: 'item', icon: 'icon_authorities_d.ico', url: 'legal-details', star: '' },
+    // { id: 'time_billing', title: 'Time billing', type: 'item', icon: 'icon_invoice_d.ico', url: 'time-billing', star: '' },
+   
   ];
   filterName: string;
   searchpage: string;

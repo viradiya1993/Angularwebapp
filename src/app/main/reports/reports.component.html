@@ -1,10 +1,12 @@
 <div class="popup_main_div">
     <h2 mat-dialog-title class="popup_title_div">Unbilled Work
-        <mat-icon class="close_icon">close</mat-icon>
+            <button class="btn" mat-icon-button (click)="ondialogcloseClick()" aria-label="Close dialog">
+                    <mat-icon>close</mat-icon>
+            </button>
     </h2>
     <div mat-dialog-content class="mat-typography">
         <div class="popup_body">
-            <form class="p-24 mr-24 remove_left_right_padding" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
+            <form class=" remove_left_right_padding" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <div class=" one  mb-24" fxLayout="column">
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">

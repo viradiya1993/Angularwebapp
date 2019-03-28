@@ -151,6 +151,7 @@ body.theme-pink-dark {
     right: 30px;
     top: 30px;
 }
+
 .top_right_action.matter_right_action {
     position: absolute;
     right: 10px;
@@ -158,15 +159,16 @@ body.theme-pink-dark {
     z-index: 999;
 }
 
-// .top_right_action_billing {
-//     position: relative;
-//     left: 96%;
-//     top: 50px;
-// }
 .top_right_action_billing {
     position: absolute;
     right: 30px;
     top: 30px;
+}
+
+.top_right_action_billing_one {
+    position: absolute;
+    right: 35px;
+    top: 94px;
 }
 
 .top_right_action_chronology {
@@ -184,14 +186,15 @@ body.theme-pink-dark {
 .list_sidebar_padding h3.one {
     margin: 0 !important;
 }
+
 .sticky_search_div .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
     -webkit-transform: translateY(-1.19375em) scale(0.75) !important;
     transform: translateY(-1.19375em) scale(0.75) !important;
 }
+
 app-matters-list {
     position: relative;
 }
-
 
 // .top_right_action {
 //     position: sticky;
@@ -199,34 +202,39 @@ app-matters-list {
 //     top: 0;
 //     z-index: 1000;
 // }
-
-
 .mat-select-panel {
     top: -8px;
     position: relative;
 }
+
 .mat-option {
     cursor: pointer;
 }
+
 
 /****** popup cmn css *****/
 
 body.theme-default .mat-dialog-container {
     padding: 0;
 }
+
 .popup_main_div .mat-form-field-appearance-outline .mat-form-field-infix {
     padding: 0.5em 0 0.5em 0;
 }
+
 .popup_main_div .mat-form-field-appearance-outline .mat-form-field-label {
     top: 1.34375em;
 }
+
 .popup_main_div .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
     -webkit-transform: translateY(-1.09375em) scale(0.75);
     transform: translateY(-1.09375em) scale(0.75);
 }
+
 .mat-menu-panel {
     min-width: 180px !important;
 }
+
 .mat-menu-panel .mat-menu-item {
     height: 40px;
     line-height: 40px;

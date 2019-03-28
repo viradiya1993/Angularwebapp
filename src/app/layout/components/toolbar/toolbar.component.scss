@@ -210,7 +210,7 @@ toolbar .top_header .ribbon-container .large-button .large-button-container .mai
 }
 
 .top_header .mat-list-item span {
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .top_header .mat-tab-label {
@@ -226,11 +226,14 @@ toolbar .top_header .ribbon-container .large-button .large-button-container .mai
 img.menu-disabled {
     opacity: 0.5;
 }
+
 toolbar .toolbar-separator.top_seprator {
     height: 40px;
 }
+
 toolbar .chat-panel-toggle-button.header_height_btn {
-    height: 40px;;
+    height: 40px;
+    ;
 }
 
 toolbar .goto_tab_main .group-section-tab {

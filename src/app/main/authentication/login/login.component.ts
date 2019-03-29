@@ -1,10 +1,12 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { AuthenticationService } from '../../../_services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { HttpClientModule, HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { Headers, RequestOptions } from '@angular/http';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +26,7 @@ export class LoginComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
     private router: Router,
+    private http: HttpClient
   ) {
     // Configure the layout
     this._fuseConfigService.config = {
@@ -56,13 +59,12 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls;
   }
   loginUser() {
-    this.authenticationService.login(this.f.email.value, this.f.password.value)
-      .pipe(first()).subscribe(data => {
-        console.log(data);
-        this.router.navigate(['matters']);
-      }, error => {
-        console.log(error);
-      });
+    this.authenticationService.login(this.f.email.value, this.f.password.value).subscribe(data => {
+      console.log(data);
+      this.router.navigate(['matters']);
+    }, error => {
+      console.log(error);
+    });
   }
 
 }

@@ -8,7 +8,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
   styleUrls: ['./sorting-dialog.component.scss']
 })
 export class SortingDialogComponent implements OnInit {
-
+  checkboxdata : any;
   //For Dropdown and check box value  
   //property = ["annual revenue","associated company","associated deals","become a customer date","become a lead date","become a marketing qualified lead date","for testing"];    
   property: any[] = [];
@@ -22,16 +22,37 @@ export class SortingDialogComponent implements OnInit {
   even = [];
   constructor(public dialogRef: MatDialogRef<SortingDialogComponent>, @Inject(MAT_DIALOG_DATA) data) {
     this.modelType = data.type;
-    data.data.forEach(items => {
+    data.data.forEach(items => {      
       this.property.push({ 'value': items, 'checked': false });
     });
   }
-
   ngOnInit(): void {
+    this.checkboxdata= JSON.parse(localStorage.getItem(this.modelType)); 
+    //console.log(this.checkboxdata);   
+    //Save Button Click After
+    if(this.checkboxdata){
+        this.checkboxdata.forEach(items => { 
+          this.property.forEach(itemsdata => {
+            if(itemsdata.value==items && itemsdata.checked == false){
+              itemsdata.checked=true;
+              if (this.all.indexOf(items) == -1) {
+                this.all.push(items);
+              }
+            }            
+          });
+        });
+      }
+     else{
+      this.property.forEach(itemsdata => {
+        itemsdata.checked=true;
+        if (this.all.indexOf(itemsdata.value) == -1) {
+          this.all.push(itemsdata.value);
+        }
+      });
+     }  
   }
-
   //when checkbox click here
-  onChange(event, data) {
+  onChange(event, data) { 
     if (event.checked == true) {
       if (this.all.indexOf(data) == -1) {
         this.all.push(data);
@@ -40,7 +61,7 @@ export class SortingDialogComponent implements OnInit {
       if (this.all.indexOf(data) != -1) {
         this.all.splice(this.all.indexOf(data), 1);
       }
-    }
+    }   
   }
   //data drag and drop
   drop(event: CdkDragDrop<string[]>) {
@@ -52,7 +73,7 @@ export class SortingDialogComponent implements OnInit {
   }
   //data close icon click after delete
   public indeterminate: boolean = false;
-  remove(item, event) {
+  remove(item, event) {       
     this.all.splice(this.all.indexOf(item), 1);
     this.property.forEach(items => {
       if (items.checked == true) {
@@ -61,9 +82,10 @@ export class SortingDialogComponent implements OnInit {
         }
       }
     });
+     
   }
   //Delete all columns click after delete all data 
-  deleteall(item, event) {
+  deleteall(item, event) {    
     const checked = event.target.checked;
     this.property.forEach(item => {
       item.checked = false

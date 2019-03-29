@@ -24,13 +24,16 @@ export class FileNotesComponent implements OnInit {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': ['date', 'topic', 'reference', 'event_agreed', 'brief_page_no', 'comment', 'privileged', 'witnesses', 'text'], 'type': 'authorities' };
+    dialogConfig.data = { 'data': ['date', 'time', 'note'], 'type': 'file-notes' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log(result);
-    // });
+    dialogRef.afterClosed().subscribe(result => {
+      //console.log(result);
+      if(result){
+        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result)); 
+       }
+    });
     dialogRef.afterClosed().subscribe(data =>
       this.tableSetting(data)
     );

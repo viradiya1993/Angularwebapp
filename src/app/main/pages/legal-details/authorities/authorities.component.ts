@@ -27,9 +27,13 @@ export class AuthoritiesComponent implements OnInit {
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log(result);
-    // });
+    
+    dialogRef.afterClosed().subscribe(result => {
+      //console.log(result);
+      if(result){
+        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result)); 
+       }
+    });
     dialogRef.afterClosed().subscribe(data =>
       this.tableSetting(data)
     );

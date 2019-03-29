@@ -37,6 +37,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.dataSource.paginator = this.paginator;
     this.getMatterList();
+   // localStorage.setItem("checked",'[]');
   }
   ngOnDestroy(): void { }
 
@@ -50,11 +51,14 @@ export class MattersListComponent implements OnInit, OnDestroy {
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log(result);
-    // });
+
+    dialogRef.afterClosed().subscribe(result => {
+     if(result){
+      localStorage.setItem(dialogConfig.data.type, JSON.stringify(result)); 
+     }
+    });
     dialogRef.afterClosed().subscribe(data =>
-      this.tableSetting(data)
+      this.tableSetting(data)     
     );
   }
   getMatterList() {
@@ -64,7 +68,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
     });
     this.mattersData = ELEMENT_DATA;
   }
-  tableSetting(data: any) {
+  tableSetting(data: any) {    
     if (data !== false) {
       this.displayedColumns = data;
       this.getMatterList();

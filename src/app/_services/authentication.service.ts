@@ -22,7 +22,9 @@ export class AuthenticationService {
     }
 
     login(username: string, password: string) {
-        let data = { "SessionToken": "", "user": "a@b.c", "password": "a", "formatting": "JSON", "EmailAddress": "" };
+        let data = { "SessionToken": "", "user": "", "password": "a", "formatting": "JSON", "EmailAddress": "" };
+        data.user = username;
+        data.password = password;
         const httpOptions = {
             headers: new HttpHeaders().set("Content-Type", "application/json").set("apikey", "SNGMTUEEB2AJBFC9")
         };

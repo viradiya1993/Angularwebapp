@@ -6,6 +6,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material';
 //import { MattersService } from '../matters.service';
 import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.component';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MattersService } from '../matters.service';
 
 
 @Component({
@@ -16,6 +17,7 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
   animations: fuseAnimations
 })
 export class MattersListComponent implements OnInit, OnDestroy {
+  [x: string]: any;
   displayedColumns = ['matter_num', 'matter', 'unbilled', 'invoiced', 'received', 'unpaid', 'total_value'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -27,9 +29,10 @@ export class MattersListComponent implements OnInit, OnDestroy {
 
   @Output() matterDetail: EventEmitter<any> = new EventEmitter<any>();
 
+
   //constructor(private _mattersService: MattersService, private dialog: MatDialog) { }
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private _mattersService: MattersService) { }
 
   ngOnInit(): void {
     this.dataSource.paginator = this.paginator;
@@ -44,7 +47,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': ['matter_num', 'matter', 'unbilled', 'invoiced','received','unpaid','total_value'], 'type': 'matters' };
+    dialogConfig.data = { 'data': ['matter_num', 'matter', 'unbilled', 'invoiced', 'received', 'unpaid', 'total_value'], 'type': 'matters' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
@@ -59,9 +62,10 @@ export class MattersListComponent implements OnInit, OnDestroy {
     );
   }
   getMatterList() {
-    // this._mattersService.getMatters().subscribe(response => {
-    //   this.mattersData = response;
-    // });
+    this._mattersService.getMatters().subscribe(response => {
+      console.log(response);
+      // this.mattersData = response;
+    });
     this.mattersData = ELEMENT_DATA;
   }
   tableSetting(data: any) {    

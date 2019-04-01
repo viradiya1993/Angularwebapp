@@ -94,5 +94,21 @@
 }
 
 #matters .list_sidebar_right_child {
-    margin-top: 110px;
+    margin-top: 95px;
+}
+
+.reports_tab_main {
+    width: 160%;
+    /* max-width: 100%; */
+    // white-space: nowrap;
+    overflow: auto;
+}
+toolbar .reports_tab_main .group-section-tab {
+    display: inline-block;
+    float: left;
+    /* white-space: nowrap; */
+    /* overflow: auto; */
+}
+.reports_tab_main .group-section-tab .ribbon-section {
+    float: left;
 }

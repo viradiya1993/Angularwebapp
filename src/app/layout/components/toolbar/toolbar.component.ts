@@ -32,6 +32,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     hiddenNavbar: boolean;
     navigation: any;
     selectedLanguage: any;
+    selectedIndex: number;
     currentUser: any;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
 
@@ -86,8 +87,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     //for binding
-    
-    
+
+
 
     // for new contact dialog
     openDialog() {
@@ -98,12 +99,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
 
-     //time entry dialog
-     addNewTimeEntry(){
-        const dialogRef = this.dialog.open(TimeEntryDialogComponent,{
-        width:'50%'    
+    //time entry dialog
+    addNewTimeEntry() {
+        const dialogRef = this.dialog.open(TimeEntryDialogComponent, {
+            width: '50%'
         });
-        
+
         dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialog result: ${result}`);
 
@@ -120,7 +121,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
 
-   
+
     //Reportpopup open
     Reportpopup() {
         const dialogConfig = new MatDialogConfig();
@@ -168,7 +169,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     logOutUser() {
         this.authenticationService.logout();
     }
-    navBarSetting(value) {
+    navBarSetting(value: any) {
         let x = value.split("/");
         if (x[1] == "matters" || x[1] == "") {
             this.isTabShow = 1;
@@ -185,5 +186,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else {
             this.isTabShow = 0;
         }
+
     }
+    setTab(event: any) {
+        this.selectedIndex = 0;
+        setTimeout(() => {
+            this.selectedIndex = undefined;
+        }, 500);
+    }
+
 }

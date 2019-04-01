@@ -49,7 +49,7 @@
         </div>
         <!-- sidebar  -->
         <!-- *ngIf="isSortDetail" -->
-        <fuse-sidebar *ngIf="mattersDetail" class="sidebar final-sidebar list_sidebar_right_child" name="final-sidebar" position="right" lockedOpen="gt-md">
+        <fuse-sidebar *ngIf="mattersDetail" [ngStyle]="{'height': detailHeight}" id="1" id="list_sidebar_right_child_detail" class="sidebar final-sidebar list_sidebar_right_child" name="final-sidebar" position="right" lockedOpen="gt-md">
             <app-matters-sort-detail class="list_sidebar_padding" [mattersDetailData]="mattersDetail" (matterCloseD)="matterClose($event)"></app-matters-sort-detail>
         </fuse-sidebar>
         <!-- / CENTER -->

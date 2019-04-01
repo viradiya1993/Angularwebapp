@@ -30,10 +30,10 @@
                 </form>
             </div>
             <div class="content fix_div_padding">
-                <div class="btn top_right_action_billing one">
+                <div class="btn top_right_action_billing_one one">
                     <button mat-icon-button (click)="openDialog()" aria-label="More">
                         <mat-icon class="secondary-text">more_vert</mat-icon>
-                    </button>
+                        </button>
                 </div>
                 <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
                     <ng-container matColumnDef="date">
@@ -72,8 +72,7 @@
                         </mat-cell>
                     </ng-container>
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                    <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple
-                        [@animate]="{value:'*',params:{y:'100%'}}">
+                    <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                     </mat-row>
                 </mat-table>
                 <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

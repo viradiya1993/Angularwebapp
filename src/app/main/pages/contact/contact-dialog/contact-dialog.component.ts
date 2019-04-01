@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-contact-dialog',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./contact-dialog.component.scss']
 })
 export class ContactDialogComponent implements OnInit {
+
+  constructor(public dialogRef: MatDialogRef<ContactDialogComponent>) { }
 
   common: Common[];
   nameSelected: number;
@@ -26,6 +29,10 @@ export class ContactDialogComponent implements OnInit {
 
 
 
+  }
+
+  ondialogcloseClick(): void {
+    this.dialogRef.close(false);
   }
 
   onClick(value) {

@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 import { User } from '../_models';
+import { RequestOptions } from '@angular/http';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -21,15 +22,19 @@ export class AuthenticationService {
     }
 
     login(username: string, password: string) {
-        return this.http.post<any>(`/users/authenticate`, { username, password }).pipe(map(user => {
-            // login successful if there's a jwt token in the response
-            if (user && user.token) {
+        let data = { "SessionToken": "", "user": "a@b.c", "password": "a", "formatting": "JSON", "EmailAddress": "" };
+        const httpOptions = {
+            headers: new HttpHeaders().set("Content-Type", "application/json").set("apikey", "SNGMTUEEB2AJBFC9")
+        };
+        return this.http.post<any>(`https://api.silq.com.au/login`, data, httpOptions).pipe(map(user => {
+            if (user && user.SessionToken) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);
             }
             return user;
         }));
+
     }
     notLogin() {
         const currentUser = this.currentUserValue;

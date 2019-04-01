@@ -22,9 +22,7 @@ export class AuthenticationService {
     }
 
     login(username: string, password: string) {
-        let data = { "SessionToken": "", "user": "", "password": "a", "formatting": "JSON", "EmailAddress": "" };
-        data.user = username;
-        data.password = password;
+        let data = { user: username, password: password, formatting: 'JSON', EmailAddress: "", SessionToken: "" };
         const httpOptions = {
             headers: new HttpHeaders().set("Content-Type", "application/json").set("apikey", "SNGMTUEEB2AJBFC9")
         };
@@ -36,7 +34,6 @@ export class AuthenticationService {
             }
             return user;
         }));
-
     }
     notLogin() {
         const currentUser = this.currentUserValue;

@@ -59,12 +59,29 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls;
   }
   loginUser() {
-    this.authenticationService.login(this.f.email.value, this.f.password.value).subscribe(data => {
-      console.log(data);
-      this.router.navigate(['matters']);
+    const httpOptions = {
+      headers: new HttpHeaders().set("Content-Type", "application/json").set("apikey", "SNGMTUEEB2AJBFC9")
+    };
+    let detail = {
+      user: this.f.email.value,
+      password: this.f.password.value,
+      formatting: 'JSON',
+      EmailAddress: "",
+      SessionToken: ""
+    };
+    //Api Call
+    let obj = this.http.post(`https://api.silq.com.au/login`, detail, httpOptions)
+    obj.subscribe((res: any) => {
+      console.log(res);
     }, error => {
       console.log(error);
     });
+    // this.authenticationService.login(this.f.email.value, this.f.password.value).subscribe(data => {
+    //   console.log(data);
+    //   this.router.navigate(['matters']);
+    // }, error => {
+    //   console.log(error);
+    // });
   }
 
 }

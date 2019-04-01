@@ -68,6 +68,7 @@ export class LoginComponent implements OnInit {
     //   }, error => {
     //     console.log(error);
     //   });
+    
     const httpOptions = {
       headers: new HttpHeaders().set("Content-Type", "application/json").set("apikey", "SNGMTUEEB2AJBFC9")
     };
@@ -77,8 +78,7 @@ export class LoginComponent implements OnInit {
       formatting:'JSON',
       EmailAddress:"",
       SessionToken:""
-    };
-   
+    };   
 
    //Api Call
     let obj=this.http.post(this.Loginapi,detail,httpOptions)
@@ -86,22 +86,7 @@ export class LoginComponent implements OnInit {
         console.log(res.login_response);        
         },error => {
           console.log(error);
-        });    
-
-        // let data = { "SessionToken": "", "user": "", "password": "a", "formatting": "JSON", "EmailAddress": "" };
-        // data.user = username;
-        // data.password = password;
-        // const httpOptions = {
-        //     headers: new HttpHeaders().set("Content-Type", "application/json").set("apikey", "SNGMTUEEB2AJBFC9")
-        // };
-        // return this.http.post<any>(`https://api.silq.com.au/login`, data, httpOptions).pipe(map(user => {
-        //     if (user && user.SessionToken) {
-        //         // store user details and jwt token in local storage to keep user logged in between page refreshes
-        //         localStorage.setItem('currentUser', JSON.stringify(user));
-        //         this.currentUserSubject.next(user);
-        //     }
-        //     return user;
-        // }));
+        });           
   }
 
 }

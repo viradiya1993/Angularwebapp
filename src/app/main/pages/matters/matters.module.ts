@@ -50,7 +50,7 @@ const routes = [
     MatTabsModule,
     MatPaginatorModule,
     MatDividerModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   exports: [
     MattersComponent

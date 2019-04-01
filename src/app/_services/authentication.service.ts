@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 import { User } from '../_models';
-import { RequestOptions } from '@angular/http';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
+    private httpOptions = { headers: new HttpHeaders().set("Content-Type", "application/json").set("apikey", environment.APIKEY) };
 
     constructor(private http: HttpClient, private router: Router) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
@@ -21,15 +22,11 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
-    login(username: string, password: string) {
-        let Loginapi = "https://api.silq.com.au/login";
+    login(uesrname: string, password: string) {
         let detail = {
-            user: username, password: password, formatting: 'JSON', EmailAddress: "", SessionToken: ""
+            user: uesrname, password: password, formatting: 'JSON', EmailAddress: "", SessionToken: ""
         };
-        const httpOptions = {
-            headers: new HttpHeaders().set("Content-Type", "application/json").set("apikey", "SNGMTUEEB2AJBFC9")
-        };
-        return this.http.post<any>(Loginapi, detail, httpOptions).pipe(map(user => {
+        return this.http.post<any>(environment.APIEndpoint + 'login', detail, this.httpOptions).pipe(map(user => {
             console.log(user);
             if (user && user.SessionToken) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -48,7 +45,6 @@ export class AuthenticationService {
         // not logged in so return true
         return true;
     }
-
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');

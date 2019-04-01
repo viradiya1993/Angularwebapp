@@ -5,7 +5,7 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { AuthenticationService } from '../../../_services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -64,11 +64,5 @@ export class LoginComponent implements OnInit {
     }, error => {
       console.log(error);
     });
-    // this.authenticationService.login(this.f.email.value, this.f.password.value).subscribe(data => {
-    //   console.log(data);
-    //   this.router.navigate(['matters']);
-    // }, error => {
-    //   console.log(error);
-    // });
   }
 }

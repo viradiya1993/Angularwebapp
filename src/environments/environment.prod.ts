@@ -1,4 +1,5 @@
 export const environment = {
     production: true,
-    hmr       : false
+    hmr: false,
+    APIEndpoint: 'https://api.silq.com.au'
 };

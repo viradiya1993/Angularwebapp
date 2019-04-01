@@ -6,6 +6,8 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { fuseAnimations } from '@fuse/animations';
 import { AuthenticationService } from '../../../_services';
 import { first } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-forgot-password',
@@ -21,6 +23,7 @@ export class ForgotPasswordComponent implements OnInit {
     private _fuseConfigService: FuseConfigService,
     private _formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
+    private toastr: ToastrService,
   ) {
     // Configure the layout
     this._fuseConfigService.config = {
@@ -55,9 +58,9 @@ export class ForgotPasswordComponent implements OnInit {
 
   forgetpassword(){
     this.authenticationService.forgetpassword(this.formdata.email.value).pipe(first()).subscribe(data => {
-       
+      // console.log(data);
     }, error => {
-      console.log(error);
+      this.toastr.error(error);
     });
   }
 }

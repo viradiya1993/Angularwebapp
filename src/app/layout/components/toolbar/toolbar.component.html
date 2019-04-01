@@ -901,26 +901,26 @@
             <button mat-button [matMenuTriggerFor]="userMenu" class="user-button header_height_btn">
                  <div fxLayout="row" fxLayoutAlign="center center">
                     <img class="avatar mr-0 mr-sm-16" src="assets/images/avatars/Velazquez.jpg">
-                    <span class="username mr-12" fxHide fxShow.gt-sm>{{currentUser?.firstName}} {{currentUser?.lastName}}</span>
+                    <span class="username mr-12" fxHide fxShow.gt-sm>{{currentUser.login_response?.UserName}}</span>
                     <mat-icon class="s-16" fxHide.xs>keyboard_arrow_down</mat-icon>
                  </div>
               </button>
             <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
-                <button mat-menu-item>
+                <button mat-menu-item disabled>
                  <span>Profile</span>
               </button>
-                <button mat-menu-item class="">
+                <button mat-menu-item class="" disabled>
                  <span>Preferences</span>
               </button>
 
-                <button mat-menu-item class="">
+                <button mat-menu-item class="" disabled>
                  <span>Setting</span>
                 </button>
 
-                <button mat-menu-item class="">
+                <button mat-menu-item class="" disabled>
                         <span>Change Password</span>
                 </button>
-                <button mat-menu-item class="">
+                <button mat-menu-item class="" disabled>
                         <span>Integration</span>
                 </button>
 

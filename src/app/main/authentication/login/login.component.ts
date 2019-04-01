@@ -31,20 +31,7 @@ export class LoginComponent implements OnInit {
   ) {
     // Configure the layout
     this._fuseConfigService.config = {
-      layout: {
-        navbar: {
-          hidden: true
-        },
-        toolbar: {
-          hidden: true
-        },
-        footer: {
-          hidden: true
-        },
-        sidepanel: {
-          hidden: true
-        }
-      }
+      layout: { navbar: { hidden: true }, toolbar: { hidden: true }, footer: { hidden: true }, sidepanel: { hidden: true } }
     };
   }
   //For my Api
@@ -61,12 +48,14 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls;
   }
   loginUser() {
-    this.authenticationService.login(this.f.email.value, this.f.password.value).pipe(first()).subscribe(data => {
-    console.log(data);
+    this.authenticationService.login(this.f.email.value, this.f.password.value);
     this.router.navigate(['matters']);
-  }, error => {
-    console.log(error);
-  });
-
+    // this.authenticationService.login(this.f.email.value, this.f.password.value).pipe(first()).subscribe(data => {
+    //   if (data) {
+    //     this.router.navigate(['matters']);
+    //   }
+    // }, error => {
+    //   this.toastr.error(error);
+    // });
   }
 }

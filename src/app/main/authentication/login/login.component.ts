@@ -5,8 +5,7 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { AuthenticationService } from '../../../_services';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
-import { HttpClientModule, HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { Headers, RequestOptions } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +13,6 @@ import { Headers, RequestOptions } from '@angular/http';
   styleUrls: ['./login.component.scss'],
   encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
-
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
@@ -26,7 +24,7 @@ export class LoginComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
   ) {
     // Configure the layout
     this._fuseConfigService.config = {
@@ -46,7 +44,8 @@ export class LoginComponent implements OnInit {
       }
     };
   }
-
+  //For my Api
+  Loginapi = "https://api.silq.com.au/login";
   ngOnInit() {
     this.loginForm = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -59,20 +58,9 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls;
   }
   loginUser() {
-    const httpOptions = {
-      headers: new HttpHeaders().set("Content-Type", "application/json").set("apikey", "SNGMTUEEB2AJBFC9")
-    };
-    let detail = {
-      user: this.f.email.value,
-      password: this.f.password.value,
-      formatting: 'JSON',
-      EmailAddress: "",
-      SessionToken: ""
-    };
-    //Api Call
-    let obj = this.http.post(`https://api.silq.com.au/login`, detail, httpOptions)
-    obj.subscribe((res: any) => {
-      console.log(res);
+    this.authenticationService.login(this.f.email.value, this.f.password.value).pipe(first()).subscribe(data => {
+      console.log(data);
+      this.router.navigate(['matters']);
     }, error => {
       console.log(error);
     });
@@ -83,5 +71,4 @@ export class LoginComponent implements OnInit {
     //   console.log(error);
     // });
   }
-
 }

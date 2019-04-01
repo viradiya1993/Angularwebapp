@@ -22,11 +22,15 @@ export class AuthenticationService {
     }
 
     login(username: string, password: string) {
-        let data = { user: username, password: password, formatting: 'JSON', EmailAddress: "", SessionToken: "" };
+        let Loginapi = "https://api.silq.com.au/login";
+        let detail = {
+            user: username, password: password, formatting: 'JSON', EmailAddress: "", SessionToken: ""
+        };
         const httpOptions = {
             headers: new HttpHeaders().set("Content-Type", "application/json").set("apikey", "SNGMTUEEB2AJBFC9")
         };
-        return this.http.post<any>(`https://api.silq.com.au/login`, data, httpOptions).pipe(map(user => {
+        return this.http.post<any>(Loginapi, detail, httpOptions).pipe(map(user => {
+            console.log(user);
             if (user && user.SessionToken) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('currentUser', JSON.stringify(user));

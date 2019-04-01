@@ -62,4 +62,21 @@ export class AuthenticationService {
         this.currentUserSubject.next(null);
         this.router.navigate(['login']);
     }
+   
+    forgetpassword(email: string){        
+        return this.http.post<any>(environment.APIEndpoint + 'Login?Request=ForgottenPassword&EmailAddress='+email,'').pipe(map(loginResponse => {
+            console.log(loginResponse);
+            if (loginResponse && loginResponse.login_response) {
+                let responseType = loginResponse.login_response.Response;
+                if (responseType == 'OK') {
+                    this.toastr.success('successfully mail send');
+                }
+                else {
+                    this.toastr.error(responseType);
+                    console.log(loginResponse);
+                    return false;
+                }
+            }
+        }));
+    }
 }

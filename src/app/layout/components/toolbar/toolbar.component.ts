@@ -56,7 +56,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private router: Router,
         public dialog: MatDialog,
         public _matDialog: MatDialog
-    ) {
+            ) {
         this.navigation = navigation;
         // Set the private defaults
         this._unsubscribeAll = new Subject();

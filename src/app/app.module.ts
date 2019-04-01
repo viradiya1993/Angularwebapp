@@ -37,6 +37,7 @@ import { InternalErrorComponent } from './main/errors/internal-error/internal-er
 
 //Datepicker
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
+import { ToastrModule } from 'ngx-toastr';
 
 //end
 const appRoutes: Routes = [
@@ -102,7 +103,9 @@ const appRoutes: Routes = [
 
         // App modules
         LayoutModule,
-        PagesModule
+        PagesModule,
+
+        ToastrModule.forRoot() // ToastrModule added
     ],
     exports: [
         SortingDialogComponent

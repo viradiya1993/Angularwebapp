@@ -240,18 +240,26 @@ body.theme-default .mat-dialog-container {
     line-height: 40px;
 }
 
+// .reports_tab_main {
+//     width: 160%;
+//     overflow: auto;
+// }
+// toolbar .reports_tab_main .group-section-tab {
+//     display: inline-block;
+//     float: left;
+// }
+// .reports_tab_main .group-section-tab .ribbon-section {
+//     float: left;
+// }
+
 .reports_tab_main {
-    width: 160%;
-    /* max-width: 100%; */
-    // white-space: nowrap;
+    width: 70%;
+}
+.reports_tab_main .mat-card {
+    width: 100%;
+}
+toolbar .ribbon-container.reports_tab_main .mat-card-content {
+    display: flex;
     overflow: auto;
-}
-toolbar .reports_tab_main .group-section-tab {
-    display: inline-block;
-    float: left;
-    /* white-space: nowrap; */
-    /* overflow: auto; */
-}
-.reports_tab_main .group-section-tab .ribbon-section {
-    float: left;
+    width: 100%;
 }

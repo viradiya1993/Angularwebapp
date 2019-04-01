@@ -62,13 +62,11 @@ export class LoginComponent implements OnInit {
   }
   loginUser() {
     this.authenticationService.login(this.f.email.value, this.f.password.value).pipe(first()).subscribe(data => {
-      console.log(data);
-      this.router.navigate(['matters']);
-    //   this.toastr.success('success');
-    // this.toastr.error('error');
-    // this.toastr.warning('warning');
-    }, error => {
-      console.log(error);
-    });
+    console.log(data);
+    this.router.navigate(['matters']);
+  }, error => {
+    console.log(error);
+  });
+
   }
 }

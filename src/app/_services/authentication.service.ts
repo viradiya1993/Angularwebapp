@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 
 import { User } from '../_models';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -13,7 +14,7 @@ export class AuthenticationService {
     public currentUser: Observable<User>;
     private httpOptions = { headers: new HttpHeaders().set("Content-Type", "application/json").set("apikey", environment.APIKEY) };
 
-    constructor(private http: HttpClient, private router: Router) {
+    constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
     }
@@ -26,14 +27,24 @@ export class AuthenticationService {
         let detail = {
             user: uesrname, password: password, formatting: 'JSON', EmailAddress: "", SessionToken: ""
         };
-        return this.http.post<any>(environment.APIEndpoint + 'login', detail, this.httpOptions).pipe(map(user => {
-            console.log(user);
-            if (user && user.SessionToken) {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                this.currentUserSubject.next(user);
+        return this.http.post<any>(environment.APIEndpoint + 'login', detail, this.httpOptions).pipe(map(loginResponse => {
+            console.log(loginResponse);
+            if (loginResponse && loginResponse.login_response) {
+                let responseType = loginResponse.login_response.Response;
+                if (responseType == 'OK') {
+                    localStorage.setItem('currentUser', JSON.stringify(loginResponse));
+                    this.currentUserSubject.next(loginResponse);
+                    this.toastr.success('success');
+                    return true;
+                } else if (responseType == 'error - login failure') {
+                    this.toastr.error(responseType);
+                    return false;
+                } else {
+                    this.toastr.error(responseType);
+                    console.log(loginResponse);
+                    return false;
+                }
             }
-            return user;
         }));
     }
     notLogin() {

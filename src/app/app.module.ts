@@ -27,7 +27,7 @@ import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
 import { PagesModule } from 'app/main/pages/pages.module';
 
-import { fakeBackendProvider } from './_helpers';
+
 //sorting colume Dialog
 import { SortingDialogComponent, filterNames } from './main/sorting-dialog/sorting-dialog.component';
 import { ReportsComponent } from './main/reports/reports.component';
@@ -115,8 +115,7 @@ const appRoutes: Routes = [
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-        fakeBackendProvider
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
     ],
 })
 export class AppModule {

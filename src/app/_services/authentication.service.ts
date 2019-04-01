@@ -27,7 +27,7 @@ export class AuthenticationService {
             user: uesrname, password: password, formatting: 'JSON', EmailAddress: "", SessionToken: ""
         };
         return this.http.post<any>(environment.APIEndpoint + 'login', detail, this.httpOptions).pipe(map(user => {
-            console.log(user);
+           // console.log(user);
             if (user && user.SessionToken) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('currentUser', JSON.stringify(user));
@@ -50,5 +50,13 @@ export class AuthenticationService {
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
         this.router.navigate(['login']);
+    } 
+
+    //Forget Password 
+    forgetpassword(email: string){
+        return this.http.post<any>(environment.APIEndpoint + 'Login?Request=ForgottenPassword&EmailAddress='+email,'').pipe(map(email => {
+            return email;           
+        }));
     }
 }
+

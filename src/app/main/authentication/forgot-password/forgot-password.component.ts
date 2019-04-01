@@ -5,6 +5,8 @@ import { FuseConfigService } from '@fuse/services/config.service';
 
 import { fuseAnimations } from '@fuse/animations';
 import { AuthenticationService } from '../../../_services';
+import { first } from 'rxjs/operators';
+
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.component.html',
@@ -14,6 +16,7 @@ import { AuthenticationService } from '../../../_services';
 })
 export class ForgotPasswordComponent implements OnInit {
   forgotPasswordForm: FormGroup;
+  
   constructor(
     private _fuseConfigService: FuseConfigService,
     private _formBuilder: FormBuilder,
@@ -43,6 +46,18 @@ export class ForgotPasswordComponent implements OnInit {
     this.forgotPasswordForm = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]]
     });
+    
+  }
+  // convenience getter for easy access to form fields
+  get formdata(){    
+    return this.forgotPasswordForm.controls; 
   }
 
+  forgetpassword(){
+    this.authenticationService.forgetpassword(this.formdata.email.value).pipe(first()).subscribe(data => {
+       
+    }, error => {
+      console.log(error);
+    });
+  }
 }

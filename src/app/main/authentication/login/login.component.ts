@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
     };
   }
   //For my Api
-  Loginapi = "https://api.silq.com.au/login";
+  //Loginapi = "https://api.silq.com.au/login";
   ngOnInit() {
     this.loginForm = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]],

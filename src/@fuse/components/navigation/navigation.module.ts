@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MatIconModule, MatRippleModule } from '@angular/material';
+import { MatIconModule, MatRippleModule, MatFormFieldModule } from '@angular/material';
 
 import { TranslateModule } from '@ngx-translate/core';
 
-import { FuseNavigationComponent,filterNames } from './navigation.component';
+import { FuseNavigationComponent, filterNames } from './navigation.component';
 import { FuseNavVerticalItemComponent } from './vertical/item/item.component';
 import { FuseNavVerticalCollapsableComponent } from './vertical/collapsable/collapsable.component';
 import { FuseNavVerticalGroupComponent } from './vertical/group/group.component';
@@ -20,7 +20,7 @@ import { FuseSharedModule } from '@fuse/shared.module';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
-    imports     : [
+    imports: [
         CommonModule,
         RouterModule,
 
@@ -34,9 +34,11 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
         MatCheckboxModule,
         FuseSharedModule,
         MatAutocompleteModule,
-        
+        MatFormFieldModule
+
+
     ],
-    exports     : [
+    exports: [
         FuseNavigationComponent,
         filterNames
     ],
@@ -50,6 +52,5 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
         filterNames
     ]
 })
-export class FuseNavigationModule
-{
+export class FuseNavigationModule {
 }

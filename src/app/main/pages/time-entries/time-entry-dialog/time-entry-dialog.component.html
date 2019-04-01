@@ -3,11 +3,10 @@
         <button class="btn" mat-icon-button (click)="ondialogcloseClick()" aria-label="Close dialog">
             <mat-icon>close</mat-icon>
         </button>
-        <mat-icon (click)="ondialogcloseClick()">close</mat-icon>
     </h2>
     <div mat-dialog-content class="mat-typography main">
         <div class=" one  mb-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
-           
+
             <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <div class=" one  mb-24" fxLayout="column">
@@ -35,8 +34,7 @@
                                 <mat-datepicker #picker></mat-datepicker>
                             </mat-form-field>
 
-                            <material-timepicker fxFlex="50" color="accent" label="Time Picker" appearance="outline"
-                                [userTime]="exportTime"></material-timepicker>
+                            <material-timepicker fxFlex="50" color="accent" label="Time Picker" appearance="outline"></material-timepicker>
                         </div>
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                             <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">

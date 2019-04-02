@@ -18,7 +18,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ForgotPasswordComponent implements OnInit {
   forgotPasswordForm: FormGroup;
-  
+  isspiner: boolean = false;
+
   constructor(
     private _fuseConfigService: FuseConfigService,
     private _formBuilder: FormBuilder,
@@ -27,20 +28,7 @@ export class ForgotPasswordComponent implements OnInit {
   ) {
     // Configure the layout
     this._fuseConfigService.config = {
-      layout: {
-        navbar: {
-          hidden: true
-        },
-        toolbar: {
-          hidden: true
-        },
-        footer: {
-          hidden: true
-        },
-        sidepanel: {
-          hidden: true
-        }
-      }
+      layout: { navbar: { hidden: true }, toolbar: { hidden: true }, footer: { hidden: true }, sidepanel: { hidden: true } }
     };
   }
 
@@ -49,17 +37,19 @@ export class ForgotPasswordComponent implements OnInit {
     this.forgotPasswordForm = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]]
     });
-    
+
   }
   // convenience getter for easy access to form fields
-  get formdata(){    
-    return this.forgotPasswordForm.controls; 
+  get formdata() {
+    return this.forgotPasswordForm.controls;
   }
 
-  forgetpassword(){
+  forgetpassword() {
+    this.isspiner = true;
     this.authenticationService.forgetpassword(this.formdata.email.value).pipe(first()).subscribe(data => {
-      // console.log(data);
+      this.isspiner = false;
     }, error => {
+      this.isspiner = false;
       this.toastr.error(error);
     });
   }

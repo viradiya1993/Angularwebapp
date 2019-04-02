@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule, MatDividerModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatDividerModule, MatProgressSpinnerModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
 import { FuseSharedModule } from '@fuse/shared.module';
 
 import { LoginRoutingModule } from './login-routing.module';
@@ -20,6 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatIconModule,
     MatInputModule,
     MatDividerModule,
+    MatProgressSpinnerModule,
 
     FuseSharedModule,
     HttpClientModule

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule, MatDividerModule, MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatDividerModule, MatFormFieldModule, MatProgressSpinnerModule, MatIconModule, MatInputModule } from '@angular/material';
 
 import { FuseSharedModule } from '@fuse/shared.module';
 
@@ -20,7 +20,8 @@ import { ForgotPasswordComponent } from 'app/main/authentication/forgot-password
     MatIconModule,
     MatInputModule,
     FuseSharedModule,
-    MatDividerModule
+    MatDividerModule,
+    MatProgressSpinnerModule,
   ]
 })
 export class ForgotPasswordModule { }

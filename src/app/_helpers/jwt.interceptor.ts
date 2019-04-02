@@ -17,11 +17,12 @@ export class JwtInterceptor implements HttpInterceptor {
                     Authorization: `Bearer ${currentUser.token}`
                 }
             });
-        } else {
-            request = request.clone({
-                // setHeaders: { apikey: `SNGMTUEEB2AJBFC9` }
-            });
         }
+        //  else {
+        //     request = request.clone({
+        //         // setHeaders: { apikey: `SNGMTUEEB2AJBFC9` }
+        //     });
+        // }
         return next.handle(request);
     }
 }

@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { isNull } from '@angular/compiler/src/output/output_ast';
+import * as $ from 'jquery';
 
 @Injectable({ providedIn: 'root' })
 export class AppPermissionsService {
@@ -98,6 +100,12 @@ export class AppPermissionsService {
     }
   }
   setObj(Obj: any, type: any) {
-    this.Permissions[this.PermissionsCons[type]] = Obj;
+    let subPermissions = {};
+    Obj.forEach(function (value) {
+      subPermissions[value.NAME] = value.VALUE;
+    });
+    if (Object.keys(subPermissions).length != 0) {
+      this.Permissions[this.PermissionsCons[type]] = subPermissions;
+    }
   }
 }

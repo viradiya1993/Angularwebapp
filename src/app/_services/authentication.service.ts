@@ -12,8 +12,6 @@ import { ToastrService } from 'ngx-toastr';
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
-    // private httpOptions = { headers: new HttpHeaders().set("Content-Type", "application/json") };
-    // .set("apikey", environment.APIKEY)
 
 
     constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) {
@@ -68,13 +66,11 @@ export class AuthenticationService {
 
     forgetpassword(email: string) {
         return this.http.post<any>(environment.APIEndpoint + 'Login?Request=ForgottenPassword&EmailAddress=' + email, '').pipe(map(loginResponse => {
-            console.log(loginResponse);
             if (loginResponse && loginResponse.login_response) {
                 let responseType = loginResponse.login_response.Response;
                 if (responseType == 'OK') {
-                    this.toastr.success('successfully mail send');
-                }
-                else {
+                    this.toastr.success('We send forgot password link to your mail.');
+                } else {
                     this.toastr.error(responseType);
                     console.log(loginResponse);
                     return false;

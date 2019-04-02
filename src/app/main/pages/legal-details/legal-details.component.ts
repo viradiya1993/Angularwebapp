@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ChronologyService } from 'app/_services/chronology.service';
+
 
 @Component({
   selector: 'app-legal-details',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LegalDetailsComponent implements OnInit {
 
-  constructor() { }
+  val;
+  constructor(private chronology_service: ChronologyService) { }
 
   ngOnInit() {
+  //get chronology
+    this.chronology_service.getData().subscribe(res => {
+      this.val = res;
+      // this.filterData = res;
+      console.log(this.val);
+    },
+    err => {
+      console.log('Error occured');
+    }
+  );
+
   }
 
 }

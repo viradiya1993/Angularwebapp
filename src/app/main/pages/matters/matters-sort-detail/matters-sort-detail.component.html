@@ -1,58 +1,58 @@
 <div class="sort_main_sidebar">
-<!-- SIDEBAR HEADER -->
-<div class="header p-24 side_header" fxLayout="column" fxLayoutAlign="space-between">
-    <h3 class="one"><strong class="x">Matter Details</strong></h3>
-    <div class="button-div">
-        <button class="button primary" mat-raised-button (click)="closeDetail($event)"><mat-icon>clear</mat-icon></button>
-    </div>
-</div>
-<!-- / SIDEBAR HEADER -->
-
-<!-- SIDEBAR CONTENT -->
-<mat-card class="two">
-    <div class="content" fusePerfectScrollbar>
-        <div class="file-details" [@animate]="{value:'*',params:{delay:'200ms'}}">
-            <!-- <div class="title">Info</div> -->
-
-            <table>
-                <tr class="matter_num">
-                    <th>Matter Num</th>
-                    <td>{{mattersDetailData?.matter_num}}</td>
-                </tr>
-                <tr class="matter">
-                    <th>Matter</th>
-                    <td>{{mattersDetailData?.matter}}</td>
-                </tr>
-                <tr class="unbilled">
-                    <th>Unbilled</th>
-                    <td>{{mattersDetailData?.unbilled}}</td>
-                </tr>
-                <tr class="invoiced">
-                    <th>Invoiced</th>
-                    <td>{{mattersDetailData?.invoiced}}</td>
-                </tr>
-                <tr class="received">
-                    <th>Received</th>
-                    <td>{{mattersDetailData?.received}}</td>
-                </tr>
-                <tr class="unpaid">
-                    <th>Unpaid</th>
-                    <td>{{mattersDetailData?.unpaid}}</td>
-                </tr>
-
-                <tr class="total_value">
-                    <th>Total Value</th>
-                    <td>{{mattersDetailData?.total_value}}</td>
-                </tr>
-            </table>
-        </div>
-        <br/>
-        <div  class="sidebar_right_view_btn_div">
-            <a class="button primary details_view_btn" mat-raised-button routerLink="{{mattersDetailData.matter_num}}/details">
-            <mat-icon>visibility</mat-icon> View</a>
+    <!-- SIDEBAR HEADER -->
+    <div class="header p-24 side_header" fxLayout="column" fxLayoutAlign="space-between">
+        <h3 class="one"><strong class="x">Matter Details</strong></h3>
+        <div class="button-div">
+            <button class="button primary" mat-raised-button (click)="closeDetail($event)"><mat-icon>clear</mat-icon></button>
         </div>
     </div>
-</mat-card>
+    <!-- / SIDEBAR HEADER -->
 
-<!-- / SIDEBAR CONTENT -->
+    <!-- SIDEBAR CONTENT -->
+    <mat-card class="two">
+        <div class="content" fusePerfectScrollbar>
+            <div class="file-details" [@animate]="{value:'*',params:{delay:'200ms'}}">
+                <!-- <div class="title">Info</div> -->
+
+                <table>
+                    <tr class="matter_num">
+                        <th>Matter Num</th>
+                        <td>{{mattersDetailData?.SHORTNAME}}</td>
+                    </tr>
+                    <tr class="matter">
+                        <th>Matter</th>
+                        <td>{{mattersDetailData?.MATTER}}</td>
+                    </tr>
+                    <tr class="unbilled">
+                        <th>Unbilled</th>
+                        <td>{{mattersDetailData?.UNBILLED | currency}}</td>
+                    </tr>
+                    <tr class="invoiced">
+                        <th>Invoiced</th>
+                        <td>{{mattersDetailData?.invoiced}}</td>
+                    </tr>
+                    <tr class="received">
+                        <th>Received</th>
+                        <td>{{mattersDetailData?.INVOICED |currency}}</td>
+                    </tr>
+                    <tr class="unpaid">
+                        <th>Unpaid</th>
+                        <td>{{mattersDetailData?.UNPAID |currency}}</td>
+                    </tr>
+
+                    <tr class="total_value">
+                        <th>Total Value</th>
+                        <td>{{mattersDetailData?.TOTALVALUE |currency}}</td>
+                    </tr>
+                </table>
+            </div>
+            <br/>
+            <div class="sidebar_right_view_btn_div">
+                <a class="button primary details_view_btn" mat-raised-button routerLink="{{mattersDetailData.MATTERGUID}}/details">
+                    <mat-icon>visibility</mat-icon> View</a>
+            </div>
+        </div>
+    </mat-card>
+
+    <!-- / SIDEBAR CONTENT -->
 </div>

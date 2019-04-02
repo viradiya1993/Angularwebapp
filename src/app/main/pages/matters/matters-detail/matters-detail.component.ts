@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 
-import { MattersService } from '../matters.service';
+import { MattersService } from '../../../../_services';
 
 @Component({
   selector: 'app-matters-detail',

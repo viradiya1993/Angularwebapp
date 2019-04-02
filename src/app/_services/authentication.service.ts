@@ -41,7 +41,7 @@ export class AuthenticationService {
                     return false;
                 } else {
                     this.toastr.error(responseType);
-                    return false;   
+                    return false;
                 }
             }
         }));
@@ -57,10 +57,17 @@ export class AuthenticationService {
     }
     logout() {
         // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
-        localStorage.removeItem('app_permissions');
-        this.currentUserSubject.next(null);
-        this.router.navigate(['login']);
+        this.http.post(environment.APIEndpoint + 'login?request=Logout', null).subscribe(loginResponse => {
+            // console.log(loginResponse);
+            this.toastr.success('success');
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('app_permissions');
+            this.currentUserSubject.next(null);
+            this.router.navigate(['login']);
+        }, error => {
+            console.log(error);
+            this.toastr.error(error);
+        });
     }
 
 

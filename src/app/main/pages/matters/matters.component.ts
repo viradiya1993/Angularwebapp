@@ -15,7 +15,7 @@ export class MattersComponent implements OnInit {
 
   ngOnInit() { }
 
-  matterBack(event: any) {  
+  matterBack(event: any) {
     this.mattersDetail = event;
     let windowHeight = $(window).height();
     let toolBaarMain = $('#tool_baar_main').height();

@@ -1,5 +1,3 @@
-
-
 <div class="btn top_right_action matter_right_action">
     <button mat-icon-button (click)="openDialog()" aria-label="More">
     <mat-icon class="secondary-text">more_vert</mat-icon>
@@ -7,78 +5,78 @@
 </div>
 <!-- <div class="center p-24" fusePerfectScrollbar> -->
 <div class="one">
-<mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
-    <!-- Name Column -->
-    <ng-container matColumnDef="matter_num">
-        <mat-header-cell *matHeaderCellDef fxShow.gt-md>Matter Num</mat-header-cell>
-        <mat-cell *matCellDef="let matter" fxShow.gt-md>
-            <p class="text-truncate font-weight-600">{{matter.matter_num}}</p>
-        </mat-cell>
-    </ng-container>
+    <mat-table #table [dataSource]="mattersData" [@animateStagger]="{value:'50'}">
+        <!-- Name Column -->
+        <ng-container matColumnDef="matter_num">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Matter Num</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="text-truncate font-weight-600">{{matter.SHORTNAME}}</p>
+            </mat-cell>
+        </ng-container>
 
-    <!-- Email Column -->
-    <ng-container matColumnDef="matter">
-        <mat-header-cell *matHeaderCellDef fxShow.gt-md>Matter</mat-header-cell>
-        <mat-cell *matCellDef="let matter" fxShow.gt-md>
-            <p class="email text-truncate">
-                {{matter.matter}}
-            </p>
-        </mat-cell>
-    </ng-container>
+        <!-- Email Column -->
+        <ng-container matColumnDef="matter">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Matter</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="email text-truncate">
+                    {{matter.MATTER}}
+                </p>
+            </mat-cell>
+        </ng-container>
 
-    <!-- Phone Column -->
-    <ng-container matColumnDef="unbilled">
-        <mat-header-cell *matHeaderCellDef fxShow.gt-md>Unbilled</mat-header-cell>
-        <mat-cell *matCellDef="let matter" fxShow.gt-md>
-            <p class="phone text-truncate">
-                {{matter.unbilled |currency}}
-            </p>
-        </mat-cell>
-    </ng-container>
+        <!-- Phone Column -->
+        <ng-container matColumnDef="unbilled">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Unbilled</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="phone text-truncate">
+                    {{matter.UNBILLED |currency}}
+                </p>
+            </mat-cell>
+        </ng-container>
 
-    <!-- Job Title Column -->
-    <ng-container matColumnDef="invoiced">
-        <mat-header-cell *matHeaderCellDef fxShow.gt-md>Invoiced</mat-header-cell>
-        <mat-cell *matCellDef="let matter" fxShow.gt-md>
-            <p class="job-title text-truncate">
-                {{matter.invoiced |currency}}
-            </p>
-        </mat-cell>
-    </ng-container>
+        <!-- Job Title Column -->
+        <ng-container matColumnDef="invoiced">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Invoiced</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="job-title text-truncate">
+                    {{matter.INVOICED |currency}}
+                </p>
+            </mat-cell>
+        </ng-container>
 
-    <!-- Company Column -->
-    <ng-container matColumnDef="received">
-        <mat-header-cell *matHeaderCellDef fxShow.gt-md>Received</mat-header-cell>
-        <mat-cell *matCellDef="let matter" fxShow.gt-md>
-            <p class="company text-truncate">
-                {{matter.received |currency}}
-            </p>
-        </mat-cell>
-    </ng-container>
+        <!-- Company Column -->
+        <ng-container matColumnDef="received">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Received</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="company text-truncate">
+                    {{matter.RECEIVED |currency}}
+                </p>
+            </mat-cell>
+        </ng-container>
 
-    <ng-container matColumnDef="unpaid">
+        <ng-container matColumnDef="unpaid">
             <mat-header-cell *matHeaderCellDef fxShow.gt-md>Unpaid</mat-header-cell>
             <mat-cell *matCellDef="let matter" fxShow.gt-md>
                 <p class="company text-truncate">
-                    {{matter.unpaid |currency}}
+                    {{matter.UNPAID |currency}}
                 </p>
             </mat-cell>
         </ng-container>
         <ng-container matColumnDef="total_value">
-                <mat-header-cell *matHeaderCellDef fxShow.gt-md>Total Value</mat-header-cell>
-                <mat-cell *matCellDef="let matter" fxShow.gt-md>
-                    <p class="company text-truncate">
-                        {{matter.total_value |currency}}
-                    </p>
-                </mat-cell>
-            </ng-container>
-    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-    <!-- sticky: true" -->
-    <div class="tbl_body_scroll">
-        <mat-row *matRowDef="let matter; columns: displayedColumns;" class="matter" (click)="editmatter(matter)" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
-        </mat-row>
-    </div>
-</mat-table>
-<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Total Value</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="company text-truncate">
+                    {{matter.TOTALVALUE |currency}}
+                </p>
+            </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <!-- sticky: true" -->
+        <div class="tbl_body_scroll">
+            <mat-row *matRowDef="let matter; columns: displayedColumns;" class="matter" (click)="editmatter(matter)" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+            </mat-row>
+        </div>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
 <!-- </div> -->

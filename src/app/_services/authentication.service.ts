@@ -12,8 +12,6 @@ import { ToastrService } from 'ngx-toastr';
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
-    // private httpOptions = { headers: new HttpHeaders().set("Content-Type", "application/json") };
-    // .set("apikey", environment.APIKEY)
 
 
     constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) {

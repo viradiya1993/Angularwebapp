@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls;
   }
   loginUser() {
+    console.log('here');
     this.authenticationService.login(this.f.email.value, this.f.password.value).pipe(first()).subscribe(data => {
       if (data) {
         this._AppPermissionsService.applictionSetting(JSON.parse(localStorage.getItem('Login_response')));

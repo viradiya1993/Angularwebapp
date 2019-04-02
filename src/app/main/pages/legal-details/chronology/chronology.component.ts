@@ -29,7 +29,8 @@ export class ChronologyComponent implements OnInit {
     this.chronology_service.getData().subscribe(res => {
       this.val = res;
       // this.filterData = res;
-      console.log(this.val);  
+    
+      console.log(this.val);
     },
     err => {
       console.log('Error occured');

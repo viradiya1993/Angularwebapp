@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation, Output, EventEmitter,Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
@@ -16,6 +16,7 @@ import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/conf
 import { ContactCorresDetailsComponent } from 'app/main/pages/contact/contact-corres-details/contact-corres-details.component';
 import { TimeEntryDialogComponent } from 'app/main/pages/time-entries/time-entry-dialog/time-entry-dialog.component';
 
+
 import { ReportsComponent } from 'app/main/reports/reports.component';
 
 @Component({
@@ -24,7 +25,7 @@ import { ReportsComponent } from 'app/main/reports/reports.component';
     styleUrls: ['./toolbar.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
-
+@Injectable()
 export class ToolbarComponent implements OnInit, OnDestroy {
     horizontalNavbar: boolean;
     isTabShow: number = 1;
@@ -60,13 +61,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.navigation = navigation;
         // Set the private defaults
         this._unsubscribeAll = new Subject();
-        this.router.events.subscribe((res) => {
+        this.router.events.subscribe((res) => {            
             this.navBarSetting(this.router.url);
         });
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
     }
-
+   
+    
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
@@ -170,7 +172,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.authenticationService.logout();
     }
     navBarSetting(value: any) {
-        let x = value.split("/");
+        let x = value.split("/");       
         if (x[1] == "matters" || x[1] == "") {
             this.isTabShow = 1;
         } else if (x[1] == "contact") {
@@ -179,7 +181,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 3;
         } else if (x[1] == "legal-details") {
             this.isTabShow = 4;
-        } else if (x[1] == "diary") {
+        } else if (x[1] == "diary" || x[1] =='diary?calander=day' || x[1] =='diary?calander=week' || x[1] =='diary?calander=month') {
             this.isTabShow = 5;
         } else if (x[1] == "time-entries") {
             this.isTabShow = 6;
@@ -193,6 +195,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         setTimeout(() => {
             this.selectedIndex = undefined;
         }, 500);
+    }
+
+    //For Dairy Comoponent
+    @Output() dairyDetail : EventEmitter <string> = new EventEmitter<string>();
+
+    calander(data : string){        
+       // this.dairyDetail.emit(data);       
     }
 
 }

@@ -71,19 +71,19 @@
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab details_tab">
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/time-billing'">
-                                   <section class="large-button-container">
-                                      <mat-icon class="main-icon">
-                                            <img src="assets/icons/web_app/icon_invoice_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                      </mat-icon>
-                                      <div class="main-text">
-                                         <span>Time &<br> Billing</span>
-                                      </div>
-                                   </section>
+                                 <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/time-billing'">
+                                    <section class="large-button-container">
+                                        <mat-icon class="main-icon">
+                                                <img src="assets/icons/web_app/icon_invoice_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                        </mat-icon>
+                                        <div class="main-text">
+                                            <span>Time &<br> Billing</span>
+                                        </div>
+                                    </section>
                                 </button>
                                     </section>
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/legal-details'">
+                                <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/legal-details'">
                                    <section class="large-button-container">
                                       <mat-icon class="main-icon">
                                             <img src="assets/icons/web_app/icon_authorities_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -433,37 +433,40 @@
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab extras_tab">
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_diary_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text">
-                                                    <span>Day <br> View</span>
-                                                </div>
-                                            </section>
+                                        <button mat-button class="large-button"  [routerLink]="'/diary'" [queryParams]="{ calander: 'day' }">                                         
+                                            <section class="large-button-container">                                                                                                    
+                                                    <mat-icon class="main-icon">
+                                                        <img src="assets/icons/web_app/icon_diary_d.ico" aria-label="Today" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                    <div class="main-text">
+                                                        <span>Day <br> View</span>
+                                                        <!-- (click)="calander('day')" -->
+                                                    </div>                                                                                           
+                                            </section>                                                                                                    
                                         </button>
                                     </section>
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button">
+                                        <button mat-button class="large-button" [routerLink]="diary" [queryParams]="{ calander: 'week' }">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_diary_week_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <div class="main-text">
-                                                    <span>Week <br> View</span>
+                                                    <span >Week <br> View</span>
+                                                    <!-- (click)="calander('week')" -->
                                                 </div>
                                             </section>
                                         </button>
                                     </section>
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button">
+                                        <button mat-button class="large-button" [routerLink]="diary" [queryParams]="{ calander: 'month' }">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_diary_month_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <div class="main-text">
                                                     <span>Month <br> View</span>
+                                                    <!-- (click)="calander('month')" -->
                                                 </div>
                                             </section>
                                         </button>
@@ -901,7 +904,7 @@
             <button mat-button [matMenuTriggerFor]="userMenu" class="user-button header_height_btn">
                  <div fxLayout="row" fxLayoutAlign="center center">
                     <img class="avatar mr-0 mr-sm-16" src="assets/images/avatars/Velazquez.jpg">
-                    <span class="username mr-12" fxHide fxShow.gt-sm>{{currentUser.login_response?.UserName}}</span>
+                    <!-- <span class="username mr-12" fxHide fxShow.gt-sm>{{currentUser.login_response?.UserName}}</span> -->
                     <mat-icon class="s-16" fxHide.xs>keyboard_arrow_down</mat-icon>
                  </div>
               </button>

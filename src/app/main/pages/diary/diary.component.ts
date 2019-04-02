@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { Subject } from 'rxjs';
@@ -11,7 +11,8 @@ import { fuseAnimations } from '@fuse/animations';
 import { DiaryService } from './diary.service';
 import { DiaryEventModel } from './event.model';
 import { EventFormComponent } from './event-form/event-form.component';
-
+import { ActivatedRoute } from '@angular/router';
+//import { ToolbarComponent } from '../../../layout/components/toolbar/toolbar.component';
 
 
 @Component({
@@ -19,10 +20,13 @@ import { EventFormComponent } from './event-form/event-form.component';
     templateUrl: './diary.component.html',
     styleUrls: ['./diary.component.scss'],
     encapsulation: ViewEncapsulation.None,
-    animations: fuseAnimations
+    animations: fuseAnimations,
+    //providers: [ToolbarComponent]
 })
 export class DiaryComponent implements OnInit {
+   // view: string="week";
 
+    
     actions: CalendarEventAction[];
     activeDayIsOpen: boolean;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
@@ -33,16 +37,27 @@ export class DiaryComponent implements OnInit {
     view: string;
     viewDate: Date;
 
+    
     constructor(
         private _matDialog: MatDialog,
-        private _calendarService: DiaryService
+        private _calendarService: DiaryService,
+        private route: ActivatedRoute
     ) {
-        // Set the defaults
-        this.view = 'month';
+        this.route.queryParams.subscribe(params => {
+            if(params['calander']){
+                this.view=params['calander'];
+            }
+            else{
+                this.view = 'month';
+            }            
+        });
+       // Set the defaults      
+        //this.view = 'day';
+       //console.log(this.view);
         this.viewDate = new Date();
         this.activeDayIsOpen = true;
         this.selectedDay = { date: startOfDay(new Date()) };
-
+        
         this.actions = [
             {
                 label: '<i class="material-icons s-16">edit</i>',
@@ -65,10 +80,13 @@ export class DiaryComponent implements OnInit {
     }
 
     ngOnInit(): void {
+       
         /**
            * Watch re-render-refresh for updating db
            */
+         
         this.refresh.subscribe(updateDB => {
+           
             if (updateDB) {
                 this._calendarService.updateEvents(this.events);
             }
@@ -83,7 +101,7 @@ export class DiaryComponent implements OnInit {
        * Set events
        */
     setEvents(): void {
-        this.events = this._calendarService.events.map(item => {
+        this.events = this._calendarService.events.map(item => {            
             item.actions = this.actions;
             return new DiaryEventModel(item);
         });
@@ -94,10 +112,10 @@ export class DiaryComponent implements OnInit {
      * @param {any} header
      * @param {any} body
      */
-    beforeMonthViewRender({ header, body }): void {
-        /**
-         * Get the selected day
-         */
+     beforeMonthViewRender({ header, body }): void {
+    //     /**
+    //      * Get the selected day
+    //      */
         const _selectedDay = body.find((_day) => {
             return _day.date.getTime() === this.selectedDay.date.getTime();
         });
@@ -117,7 +135,8 @@ export class DiaryComponent implements OnInit {
      *
      * @param {MonthViewDay} day
      */
-    dayClicked(day: CalendarMonthViewDay): void {
+    dayClicked(day: CalendarMonthViewDay): void {       
+        
         const date: Date = day.date;
         const events: CalendarEvent[] = day.events;
 

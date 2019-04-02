@@ -18,6 +18,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  isspiner: boolean = false;
 
 
   constructor(
@@ -48,13 +49,17 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls;
   }
   loginUser() {
-    console.log('here');
+    this.isspiner = true;
     this.authenticationService.login(this.f.email.value, this.f.password.value).pipe(first()).subscribe(data => {
       if (data) {
+        this.isspiner = false;
         this._AppPermissionsService.applictionSetting(JSON.parse(localStorage.getItem('Login_response')));
         this.router.navigate(['matters']);
+      } else {
+        this.isspiner = false;
       }
     }, error => {
+      this.isspiner = false;
       this.toastr.error(error);
     });
   }

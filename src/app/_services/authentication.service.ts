@@ -33,6 +33,7 @@ export class AuthenticationService {
                 let LoggedInStatus = loginResponse.login_response.LoggedInStatus;
                 if (responseType == 'OK' && LoggedInStatus) {
                     localStorage.setItem('Login_response', JSON.stringify(loginResponse));
+                    localStorage.setItem('session_token', loginResponse.SessionToken);
                     this.currentUserSubject.next(loginResponse.login_response);
                     this.toastr.success('success');
                     return true;
@@ -57,13 +58,15 @@ export class AuthenticationService {
     }
     logout() {
         // remove user from local storage to log user out
-        this.http.post(environment.APIEndpoint + 'login?request=Logout', null).subscribe(loginResponse => {
-            // console.log(loginResponse);
-            this.toastr.success('success');
-            localStorage.removeItem('currentUser');
-            localStorage.removeItem('app_permissions');
-            this.currentUserSubject.next(null);
-            this.router.navigate(['login']);
+        this.http.get(environment.APIEndpoint + 'Login?request=Logout').subscribe(loginResponse => {
+            if (loginResponse) {
+                this.toastr.success('success');
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('app_permissions');
+                localStorage.removeItem('session_token');
+                this.currentUserSubject.next(null);
+                this.router.navigate(['login']);
+            }
         }, error => {
             console.log(error);
             this.toastr.error(error);

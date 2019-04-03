@@ -11,14 +11,15 @@ export class JwtInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // add authorization header with jwt token if available
         let currentUser = this.authenticationService.currentUserValue;
-        if (currentUser && currentUser.SessionToken) {
+        let SessionToken = localStorage.getItem('session_token');
+        if (currentUser && SessionToken) {
             if (request.method.toLowerCase() === 'post') {
                 if (request.body instanceof FormData) {
                     request = request.clone({
                         setHeaders: {
                             // apikey: `SNGMTUEEB2AJBFC9`
                         },
-                        body: request.body.append('SessionToken', currentUser.SessionToken)
+                        body: request.body.append('SessionToken', localStorage.getItem('session_token'))
                     })
                 }
             } else if (request.method.toLowerCase() === 'get') {
@@ -26,7 +27,7 @@ export class JwtInterceptor implements HttpInterceptor {
                     setHeaders: {
                         // apikey: `SNGMTUEEB2AJBFC9`
                     },
-                    params: request.params.set('SessionToken', currentUser.SessionToken)
+                    params: request.params.set('SessionToken', localStorage.getItem('session_token'))
                 });
             }
         } else {

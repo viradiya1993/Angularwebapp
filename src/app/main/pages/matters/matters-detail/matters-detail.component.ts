@@ -35,6 +35,7 @@ export class MattersDetailComponent implements OnInit {
     );
     // currentMatterId
     this._mattersService.getMattersDetail(this.currentMatterId).subscribe(response => {
+      localStorage.setItem('session_token', response.Matter.SessionToken);
       if (response.Matter.response != "error - not logged in") {
         this.currentMatter = response.Matter.DataSet[0];
       } else {
@@ -44,6 +45,7 @@ export class MattersDetailComponent implements OnInit {
       this.toastr.error(error);
     });
     this._mattersService.getMattersContact(this.currentMatterId).subscribe(response => {
+      localStorage.setItem('session_token', response.MatterContact.SessionToken);
       if (response.MatterContact.response != "error - not logged in") {
         this.MatterContact = new MatTableDataSource(response.MatterContact.DataSet);
         this.MatterContact.paginator = this.paginator;

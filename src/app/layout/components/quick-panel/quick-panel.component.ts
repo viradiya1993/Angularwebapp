@@ -10,44 +10,23 @@ import { takeUntil } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class QuickPanelComponent implements OnInit, OnDestroy {
-    events: any[];
-
-    // Private
+    events: any[] = [
+        { 'title': 'Group Meeting', 'detail': '00:00:00' },
+        { 'title': 'Public Beta Release', 'detail': '00:00:00' },
+        { 'title': 'Dinner with David', 'detail': '00:00:00' },
+        { 'title': 'Q&A Session', 'detail': '00:00:00' }
+    ];
     private _unsubscribeAll: Subject<any>;
 
-    /**
-     * Constructor
-     *
-     * @param {HttpClient} _httpClient
-     */
     constructor(
         private _httpClient: HttpClient
     ) {
-        // Set the private defaults
         this._unsubscribeAll = new Subject();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
+    ngOnInit(): void { }
 
-    /**
-     * On init
-     */
-    ngOnInit(): void {
-        // Subscribe to the events
-        this._httpClient.get('api/quick-panel-events')
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((response: any) => {
-                this.events = response;
-            });
-    }
-
-    /**
-     * On destroy
-     */
     ngOnDestroy(): void {
-        // Unsubscribe from all subscriptions
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }

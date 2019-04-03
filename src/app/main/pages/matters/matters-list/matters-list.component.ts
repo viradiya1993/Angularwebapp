@@ -60,6 +60,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   }
   getMatterList() {
     this._mattersService.getMatters().subscribe(response => {
+      localStorage.setItem('session_token', response.Matter.SessionToken);
       if (response.Matter.response != "error - not logged in") {
         this.mattersData = new MatTableDataSource(response.Matter.DataSet);
         this.mattersData.paginator = this.paginator;

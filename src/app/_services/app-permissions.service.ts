@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { isNull } from '@angular/compiler/src/output/output_ast';
-import * as $ from 'jquery';
+
 
 @Injectable({ providedIn: 'root' })
 export class AppPermissionsService {
@@ -60,6 +59,7 @@ export class AppPermissionsService {
         ShowWIPGraph: loginResponse.ShowWIPGraph,
       };
       localStorage.setItem('currentUser', JSON.stringify(LoginData));
+      localStorage.setItem('session_token', loginResponse.SessionToken);
       this.appPermissions(loginResponse);
       localStorage.removeItem('Login_response');
     }

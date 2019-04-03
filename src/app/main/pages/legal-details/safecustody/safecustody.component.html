@@ -7,42 +7,33 @@
                         <mat-icon class="secondary-text">more_vert</mat-icon>
                         </button>
                 </div>
-                <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
-                    <ng-container matColumnDef="packet_number">
-                        <mat-header-cell *matHeaderCellDef>Packet Number</mat-header-cell>
-                        <mat-cell *matCellDef="let row">{{row.packet_number}}
+                <mat-table #table [dataSource]="safeCustody_table" [@animateStagger]="{value:'50'}">
+                    <ng-container matColumnDef="PACKETNUMBER">
+                        <mat-header-cell *matHeaderCellDef>PACKETNUMBER</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.PACKETNUMBER}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="packet_description">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Packet Description</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.packet_description}}
+                    <ng-container matColumnDef="SAFECUSTODYGUID">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>SAFECUSTODYGUID</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.SAFECUSTODYGUID}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="document">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Document</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.document}}
+                    <ng-container matColumnDef="MATTERGUID">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>MATTERGUID</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.MATTERGUID}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="status">
-                        <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
-                        <mat-cell *matCellDef="let row">{{row.status}}
+                    <ng-container matColumnDef="STATUS">
+                        <mat-header-cell *matHeaderCellDef>STATUS</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.STATUS}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="document_name">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Document Name</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.document_name}}
+                    <ng-container matColumnDef="SHORTNAME">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>SHORTNAME</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.SHORTNAME}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="description">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Description</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.description}}
-                        </mat-cell>
-                    </ng-container>
-                    <ng-container matColumnDef="review_date">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Review Date</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.review_date |date}}
-                        </mat-cell>
-                    </ng-container>
+
                     <!-- <ng-container matColumnDef="button">
                     <mat-header-cell *matHeaderCellDef><button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More">
                         <mat-icon class="secondary-text">more_vert</mat-icon>

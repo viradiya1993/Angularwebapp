@@ -9,35 +9,60 @@
                             </button>
                 </div>
                 
-                <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
-                    <ng-container matColumnDef="topic">
-                        <mat-header-cell *matHeaderCellDef>Topic</mat-header-cell>
-                        <mat-cell *matCellDef="let row">{{row.topic}}
+                <mat-table #table [dataSource]="authorities_table" [@animateStagger]="{value:'50'}">
+                    <ng-container matColumnDef="MATTERAUTHORITYGUID">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>MATTERAUTHORITYGUID</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.MATTERAUTHORITYGUID}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="authority">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Authority</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.authority}}
+                    <ng-container matColumnDef="MATTERGUID">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>MATTERGUID</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.MATTERGUID}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="citation">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Citation</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.citation}}
+                    <ng-container matColumnDef="AUTHORITYGUID">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>AUTHORITYGUID</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.AUTHORITYGUID}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="reference">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Reference</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.reference}}
+                    <ng-container matColumnDef="AUTHORITY">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>AUTHORITY</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.AUTHORITY}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="web_address">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Web Address</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.web_address}}
+                    <ng-container matColumnDef="CITATION">
+                        <mat-header-cell *matHeaderCellDef> CITATION </mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.CITATION}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="comment">
-                        <mat-header-cell *matHeaderCellDef> Comment </mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.comment}}
+                    <ng-container matColumnDef="WEBADDRESS">
+                        <mat-header-cell *matHeaderCellDef>WEBADDRESS</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.WEBADDRESS}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="TOPIC">
+                        <mat-header-cell *matHeaderCellDef>TOPIC</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.TOPIC}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="REFERENCE">
+                        <mat-header-cell *matHeaderCellDef>REFERENCE</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.REFERENCE}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="COMMENT">
+                        <mat-header-cell *matHeaderCellDef>COMMENT</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.COMMENT}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="SHORTNAME">
+                        <mat-header-cell *matHeaderCellDef>SHORTNAME</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.SHORTNAME}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="CLIENTNAME">
+                        <mat-header-cell *matHeaderCellDef>CLIENTNAME</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.CLIENTNAME}}
                         </mat-cell>
                     </ng-container>
                     <!-- <ng-container matColumnDef="button">

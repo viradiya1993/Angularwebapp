@@ -12,21 +12,21 @@ import { AuthoritiesService } from './../../../../_services';
   animations: fuseAnimations
 })
 export class AuthoritiesComponent implements OnInit {
-  displayedColumns: string[] = ['topic', 'authority', 'citation', 'reference', 'web_address', 'comment'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['MATTERAUTHORITYGUID', 'MATTERGUID', 'AUTHORITYGUID', 'AUTHORITY', 'CITATION', 'WEBADDRESS',
+  'TOPIC', 'REFERENCE', 'COMMENT', 'SHORTNAME', 'CLIENTNAME'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private dialog: MatDialog,private authorities_service: AuthoritiesService) { }
-  val;
+  authorities_table;
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-
       //get autorites
-      this.authorities_service.getData().subscribe(res => {
-        this.val = res;
+      this.authorities_service.getData().subscribe(response => {
+        localStorage.setItem('session_token', response.SessionToken);
+        // this.authorities_table = res;
         // this.filterData = res;
-      
-        console.log(this.val);
+        console.log(response);
+        this.authorities_table = new MatTableDataSource<PeriodicElement>(response.MatterAuthority.DataSet);
+        this.authorities_table.paginator = this.paginator;
       },
       err => {
         console.log('Error occured');
@@ -36,7 +36,8 @@ export class AuthoritiesComponent implements OnInit {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': ['topic', 'authority', 'citation', 'reference', 'web_address', 'comment'], 'type': 'authorities' };
+    dialogConfig.data = { 'data': ['MATTERAUTHORITYGUID', 'MATTERGUID', 'AUTHORITYGUID', 'AUTHORITY', 'CITATION', 'WEBADDRESS',
+    'TOPIC', 'REFERENCE', 'COMMENT', 'SHORTNAME', 'CLIENTNAME'], 'type': 'authorities' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
@@ -58,6 +59,8 @@ export class AuthoritiesComponent implements OnInit {
   }
 
 }
+
+//no need of this 
 export interface PeriodicElement {
   topic: number;
   authority: string;
@@ -67,29 +70,3 @@ export interface PeriodicElement {
   comment: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { topic: 1, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 2, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 3, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 4, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 5, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 6, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 1, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 2, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 3, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 4, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 5, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 6, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 1, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 2, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 3, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 4, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 5, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 6, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 1, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 2, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 3, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 4, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 5, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-  { topic: 6, authority: 'xyz', citation: 1.0079, reference: 'www.google.com', web_address: 'xyz', comment: 'not done yet' },
-];

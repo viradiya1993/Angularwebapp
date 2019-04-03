@@ -9,66 +9,103 @@
                             </button>
                 </div>
 
-                <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
-                    <ng-container matColumnDef="date">
-                        <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
-                        <mat-cell *matCellDef="let row">{{row.date | date}}
+                <mat-table #table [dataSource]="chronology_table" [@animateStagger]="{value:'50'}">
+                    <ng-container matColumnDef="MATTERGUID">
+                        <mat-header-cell *matHeaderCellDef>MATTERGUID</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.MATTERGUID }}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="topic">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Topic</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.topic}}
+                    <ng-container matColumnDef="CHRONOLOGYGUID">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>CHRONOLOGYGUID</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.CHRONOLOGYGUID}}
+                        </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="DATEFROM">
+                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>DATEFROM</mat-header-cell>
+                            <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.DATEFROM}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="DATETO">
+                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>DATETO</mat-header-cell>
+                            <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.DATETO}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="TIMEFROM">
+                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>TIMEFROM</mat-header-cell>
+                            <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.TIMEFROM}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="TIMETO">
+                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>TIMETO</mat-header-cell>
+                            <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.TIMETO}}
+                            </mat-cell>
+                        </ng-container>
+                    
+                    <ng-container matColumnDef="FORMAT">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>FORMAT</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.FORMAT}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="reference">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Reference</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.reference}}
+                    <ng-container matColumnDef="FORMATTEDDATE">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>FORMATTEDDATE</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.FORMATTEDDATE}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="event_agreed">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Event Agreed</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.event_agreed}}
+                    <ng-container matColumnDef="TOPIC">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>TOPIC</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.TOPIC}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="brief_page_no">
-                        <mat-header-cell *matHeaderCellDef> Brief Page No </mat-header-cell>
-                        <mat-cell *matCellDef="let row">{{row.brief_page_no}}
+                    <ng-container matColumnDef="PRIVILEGED">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>PRIVILEGED</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.PRIVILEGED}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="comment">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Comment</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.comment}}
+                    <ng-container matColumnDef="BRIEFPAGENO">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>BRIEFPAGENO</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.BRIEFPAGENO}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="privileged">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Privileged</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.privileged}}
+                    <ng-container matColumnDef="REFERENCE">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>REFERENCE</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.REFERENCE}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="witnesses">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Witnesses</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.witnesses}}
+                    <ng-container matColumnDef="COMMENT">
+                        <mat-header-cell *matHeaderCellDef>COMMENT </mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.COMMENT}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="text">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Text</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.text}}
+                    <ng-container matColumnDef="WITNESSES">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>WITNESSES</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.WITNESSES}}
                         </mat-cell>
                     </ng-container>
-                    <!-- <ng-container matColumnDef="button">
-                        <mat-header-cell *matHeaderCellDef><button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More">
-                            <mat-icon class="secondary-text">more_vert</mat-icon>
-                        </button>
-                
-                        <mat-menu #moreMenu="matMenu">
-                            <button mat-menu-item aria-label="remove" (click)="deleteContact(row)">
-                                <mat-icon>delete</mat-icon>
-                                <span>Remove</span>
-                            </button>
-                        </mat-menu> </mat-header-cell>
-                        
-                        <mat-cell *matCellDef="let row"></mat-cell>
-                    </ng-container> -->
+                    <ng-container matColumnDef="EVENTAGREED">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>EVENTAGREED</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.EVENTAGREED}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="DOCUMENTNAME">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>DOCUMENTNAME</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.DOCUMENTNAME}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="ADDITIONALTEXT">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>ADDITIONALTEXT</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.ADDITIONALTEXT}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="SHORTNAME">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>SHORTNAME</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.SHORTNAME}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="CLIENTNAME">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>CLIENTNAME</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.CLIENTNAME}}
+                        </mat-cell>
+                    </ng-container>
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                     </mat-row>

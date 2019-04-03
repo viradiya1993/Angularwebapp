@@ -13,21 +13,24 @@ import { FileNotesService } from './../../../../_services';
   animations: fuseAnimations
 })
 export class FileNotesComponent implements OnInit {
-  displayedColumns: string[] = ['date', 'time', 'note'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['FILENOTEGUID', 'MATTERGUID', 'USERNAME'];
+  
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private dialog: MatDialog,private fileNotes_service: FileNotesService) { }
-  val;
+  filenotes_table;
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-
+    
       //get autorites
-      this.fileNotes_service.getData().subscribe(res => {
-        this.val = res;
+      this.fileNotes_service.getData().subscribe(response => {
+        localStorage.setItem('session_token', JSON.stringify(response.SessionToken));
+        this.filenotes_table = response;
         // this.filterData = res;
       
-        console.log(this.val);
+        console.log(response);
+        //this.filenotes_table = new MatTableDataSource<PeriodicElement>(res);
+        //this.filenotes_table.paginator = this.paginator;
+
       },
       err => {
         console.log('Error occured');
@@ -37,7 +40,7 @@ export class FileNotesComponent implements OnInit {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': ['date', 'time', 'note'], 'type': 'file-notes' };
+    dialogConfig.data = { 'data': ['FILENOTEGUID', 'MATTERGUID', 'USERNAME'], 'type': 'file-notes' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click

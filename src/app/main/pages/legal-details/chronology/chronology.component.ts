@@ -16,21 +16,23 @@ import { ChronologyService } from './../../../../_services';
 })
 export class ChronologyComponent implements OnInit {
 
-  displayedColumns: string[] = ['date', 'topic', 'reference', 'event_agreed', 'brief_page_no', 'comment', 'privileged', 'witnesses', 'text'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['MATTERGUID', 'CHRONOLOGYGUID','DATEFROM','DATETO','TIMEFROM','TIMETO','FORMAT', 'FORMATTEDDATE',
+   'TOPIC','BRIEFPAGENO','REFERENCE','COMMENT','WITNESSES','EVENTAGREED','DOCUMENTNAME','ADDITIONALTEXT','SHORTNAME','CLIENTNAME'];
+  //dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  val;
+  chronology_table;
 
   constructor(private dialog: MatDialog,private chronology_service: ChronologyService) { }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
     //get chronology
-    this.chronology_service.getData().subscribe(res => {
-      this.val = res;
+    this.chronology_service.getData().subscribe(response => {
+      localStorage.setItem('session_token', response.SessionToken);
+      //this.chronology_table = res;
       // this.filterData = res;
-    
-      console.log(this.val);
+          console.log(response);
+      this.chronology_table = new MatTableDataSource<PeriodicElement>(response.Chronology.DataSet);
+      this.chronology_table.paginator = this.paginator;
     },
     err => {
       console.log('Error occured');
@@ -40,7 +42,8 @@ export class ChronologyComponent implements OnInit {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': ['date', 'topic', 'reference', 'event_agreed', 'brief_page_no', 'comment', 'privileged', 'witnesses', 'text'], 'type': 'chronology' };
+    dialogConfig.data = { 'data': ['MATTERGUID', 'CHRONOLOGYGUID','DATEFROM','DATETO','TIMEFROM','TIMETO','FORMAT', 'FORMATTEDDATE',
+    'TOPIC','BRIEFPAGENO','REFERENCE','COMMENT','WITNESSES','EVENTAGREED','DOCUMENTNAME','ADDITIONALTEXT','SHORTNAME','CLIENTNAME'], 'type': 'chronology' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
@@ -75,12 +78,5 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { date: new Date('2/1/2014'), topic: 'silq', reference: 'www.google.com', event_agreed: 'yes', brief_page_no: 10, comment: 'not done yet', privileged: 10, witnesses: 5, text: 12 },
-  { date: new Date('2/1/2014'), topic: 'silq', reference: 'www.google.com', event_agreed: 'yes', brief_page_no: 10, comment: 'not done yet', privileged: 10, witnesses: 5, text: 12 },
-  { date: new Date('2/1/2014'), topic: 'silq', reference: 'www.google.com', event_agreed: 'yes', brief_page_no: 10, comment: 'not done yet', privileged: 10, witnesses: 5, text: 12 },
-  { date: new Date('2/1/2014'), topic: 'silq', reference: 'www.google.com', event_agreed: 'yes', brief_page_no: 10, comment: 'not done yet', privileged: 10, witnesses: 5, text: 12 },
-  { date: new Date('2/1/2014'), topic: 'silq', reference: 'www.google.com', event_agreed: 'yes', brief_page_no: 10, comment: 'not done yet', privileged: 10, witnesses: 5, text: 12 },
-  { date: new Date('2/1/2014'), topic: 'silq', reference: 'www.google.com', event_agreed: 'yes', brief_page_no: 10, comment: 'not done yet', privileged: 10, witnesses: 5, text: 12 },
-  { date: new Date('2/1/2014'), topic: 'silq', reference: 'www.google.com', event_agreed: 'yes', brief_page_no: 10, comment: 'not done yet', privileged: 10, witnesses: 5, text: 12 },
 
 ];

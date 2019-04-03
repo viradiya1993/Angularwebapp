@@ -10,6 +10,6 @@ export class AuthoritiesService {
   constructor(private http: HttpClient) { }
 
   getData(){
-    return this.http.get<any>(environment.APIEndpoint + 'GetMatterAuthority');
+    return this.http.post<any>(environment.APIEndpoint + 'GetMatterAuthority',{'MatterGuid':'MATAAAAAAAAAAA25'});
   }
 }

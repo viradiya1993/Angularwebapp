@@ -12,21 +12,24 @@ import { SafeCustodyService } from './../../../../_services';
   animations: fuseAnimations
 })
 export class SafecustodyComponent implements OnInit {
-  displayedColumns: string[] = ['packet_number', 'packet_description', 'document', 'status', 'document_name', 'description', 'review_date'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['PACKETNUMBER', 'SAFECUSTODYGUID', 'MATTERGUID', 'STATUS', 'SHORTNAME'];
+  
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private dialog: MatDialog,private safeCustody_service: SafeCustodyService) { }
-  val;
+  safeCustody_table;
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-
      //get autorites  
-     this.safeCustody_service.getData().subscribe(res => {
-      this.val = res;
+      
+     this.safeCustody_service.getData().subscribe(response => {
+      localStorage.setItem('session_token', response.SessionToken);
+      
+      //this.safeCustody_table = res;
       // this.filterData = res;
     
-      console.log(this.val);
+      console.log(response);
+      this.safeCustody_table = new MatTableDataSource<PeriodicElement>(response.SafeCustody.DataSet);
+      this.safeCustody_table.paginator = this.paginator;
     },
     err => {
       console.log('Error occured');
@@ -36,7 +39,7 @@ export class SafecustodyComponent implements OnInit {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': ['packet_number', 'packet_description', 'document', 'status', 'document_name', 'description', 'review_date'], 'type': 'safecustody' };
+    dialogConfig.data = { 'data': ['PACKETNUMBER', 'SAFECUSTODYGUID', 'MATTERGUID', 'STATUS', 'SHORTNAME'], 'type': 'safecustody' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
@@ -68,13 +71,5 @@ export interface PeriodicElement {
 }
 
 
-const ELEMENT_DATA: PeriodicElement[] = [
 
-  { packet_number: 11112, packet_description: 'in process ', document: 2521, status: 'not done yet', document_name: 'xyz', description: 'abcdefgh', review_date: new Date('2/1/2014') },
-  { packet_number: 12362, packet_description: 'in process', document: 2521, status: ' done ', document_name: 'xyz ', description: 'abcdefgh ', review_date: new Date('2/1/2014') },
-  { packet_number: 15634, packet_description: 'in process ', document: 2521, status: 'not done yet', document_name: 'xyz', description: 'abcdefgh ', review_date: new Date('2/1/2014') },
-  { packet_number: 11411, packet_description: 'in process', document: 2521, status: 'not done yet', document_name: 'xyz', description: 'abcdefgh ', review_date: new Date('2/1/2014') },
-  { packet_number: 12153, packet_description: 'in process', document: 2521, status: 'done', document_name: ' xyz', description: ' abcdefgh', review_date: new Date('2/1/2014') },
-  { packet_number: 12316, packet_description: 'in process', document: 2521, status: 'not done yet', document_name: 'xyz', description: ' abcdefgh', review_date: new Date('2/1/2014') },
-];
 

@@ -14,7 +14,7 @@ export class QuickPanelComponent implements OnInit, OnDestroy {
         { 'title': 'Group Meeting', 'detail': '00:00:00' },
         { 'title': 'Public Beta Release', 'detail': '00:00:00' },
         { 'title': 'Dinner with David', 'detail': '00:00:00' },
-        { 'title': 'Q&A Session', 'detail': '00:00:00' }
+        
     ];
     private _unsubscribeAll: Subject<any>;
 
@@ -24,7 +24,10 @@ export class QuickPanelComponent implements OnInit, OnDestroy {
         this._unsubscribeAll = new Subject();
     }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {
+        console.log('her');
+        this.events.push({ 'title': 'Q&A Session', 'detail': '00:00:00' });
+    }
 
     ngOnDestroy(): void {
         this._unsubscribeAll.next();

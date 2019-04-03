@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation, Output, EventEmitter,Injectable } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation, Output, EventEmitter, Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
@@ -57,18 +57,18 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private router: Router,
         public dialog: MatDialog,
         public _matDialog: MatDialog
-            ) {
+    ) {
         this.navigation = navigation;
         // Set the private defaults
         this._unsubscribeAll = new Subject();
-        this.router.events.subscribe((res) => {            
+        this.router.events.subscribe((res) => {
             this.navBarSetting(this.router.url);
         });
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
     }
-   
-    
+
+
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
@@ -172,7 +172,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.authenticationService.logout();
     }
     navBarSetting(value: any) {
-        let x = value.split("/");       
+        let x = value.split("/");
         if (x[1] == "matters" || x[1] == "") {
             this.isTabShow = 1;
         } else if (x[1] == "contact") {
@@ -181,7 +181,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 3;
         } else if (x[1] == "legal-details") {
             this.isTabShow = 4;
-        } else if (x[1] == "diary" || x[1] =='diary?calander=day' || x[1] =='diary?calander=week' || x[1] =='diary?calander=month') {
+        } else if (x[1] == "diary" || x[1] == 'diary?calander=day' || x[1] == 'diary?calander=week' || x[1] == 'diary?calander=month') {
             this.isTabShow = 5;
         } else if (x[1] == "time-entries") {
             this.isTabShow = 6;
@@ -198,10 +198,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     //For Dairy Comoponent
-    @Output() dairyDetail : EventEmitter <string> = new EventEmitter<string>();
+    @Output() dairyDetail: EventEmitter<string> = new EventEmitter<string>();
 
-    calander(data : string){        
-       // this.dairyDetail.emit(data);       
+    calander(data: string) {
+        // this.dairyDetail.emit(data);       
     }
 
 }

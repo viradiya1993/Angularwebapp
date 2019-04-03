@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
+import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 @Component({
   selector: 'app-matters-sort-detail',
@@ -10,7 +11,9 @@ import { fuseAnimations } from '@fuse/animations';
 export class MattersSortDetailComponent implements OnInit {
   @Input() mattersDetailData;
   @Output() matterCloseD: EventEmitter<any> = new EventEmitter<any>();
-  constructor() { }
+  constructor(
+    private _fuseSidebarService: FuseSidebarService,
+  ) { }
 
   ngOnInit() {
   }
@@ -19,6 +22,7 @@ export class MattersSortDetailComponent implements OnInit {
     this.matterCloseD.emit(event);
   }
   addTimeEnrt(matterId) {
+    console.log(this._fuseSidebarService.getSidebar('quickPanel').toggleOpen());
     console.log(matterId);
   }
 }

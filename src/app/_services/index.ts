@@ -6,3 +6,4 @@ export * from './chronology.service';
 export * from './authorities.service';
 export * from './file-notes.service';
 export * from './safe-custody.service';
+export * from './matters.service';

@@ -3,9 +3,9 @@
     <!-- HEADER -->
     <div class="header p-16 p-sm-24" [ngClass]="viewDate | date:'MMM'">
 
-        <div class="header-content" fxLayout="column" fxLayoutAlign="space-between">
+        <div class="header-content diary_header_full" fxLayout="column" fxLayoutAlign="space-between">
 
-            <div class="header-top" fxLayout="row" fxLayoutAlign="space-between center" fxLayout.xs="column">
+            <div class="header-top diary_header_top" fxLayout="row" fxLayoutAlign="space-between center" fxLayout.xs="column">
 
                 <div class="logo mb-16 mb-sm-0" fxLayout="row" fxLayoutAlign="start center">
                     <mat-icon class="logo-icon" [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
@@ -43,9 +43,9 @@
             <!-- / TOOLBAR -->
 
             <!-- HEADER BOTTOM -->
-            <div class="header-bottom" fxLayout="row" fxLayoutAlign="center center" [@animate]="{value:'*',params:{delay:'150ms'}}">
+            <div class="header-bottom diary_header_bottom" fxLayout="row" fxLayoutAlign="center center" [@animate]="{value:'*',params:{delay:'150ms'}}">
 
-                <button mat-icon-button class="arrow" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="selectedDay = {date:$event}" aria-label="Previous">
+                <button mat-icon-button class="arrow left_diary_icon" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="selectedDay = {date:$event}" aria-label="Previous">
                     <mat-icon>chevron_left</mat-icon>
                 </button>
 

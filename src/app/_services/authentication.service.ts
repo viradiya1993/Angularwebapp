@@ -33,7 +33,8 @@ export class AuthenticationService {
                 let LoggedInStatus = loginResponse.login_response.LoggedInStatus;
                 if (responseType == 'OK' && LoggedInStatus) {
                     localStorage.setItem('Login_response', JSON.stringify(loginResponse));
-                    this.currentUserSubject.next(loginResponse);
+                    localStorage.setItem('session_token', loginResponse.SessionToken);
+                    this.currentUserSubject.next(loginResponse.login_response);
                     this.toastr.success('success');
                     return true;
                 } else if (responseType == 'error - login failure') {
@@ -41,7 +42,7 @@ export class AuthenticationService {
                     return false;
                 } else {
                     this.toastr.error(responseType);
-                    return false;   
+                    return false;
                 }
             }
         }));
@@ -57,10 +58,19 @@ export class AuthenticationService {
     }
     logout() {
         // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
-        localStorage.removeItem('app_permissions');
-        this.currentUserSubject.next(null);
-        this.router.navigate(['login']);
+        this.http.get(environment.APIEndpoint + 'Login?request=Logout').subscribe(loginResponse => {
+            if (loginResponse) {
+                this.toastr.success('success');
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('app_permissions');
+                localStorage.removeItem('session_token');
+                this.currentUserSubject.next(null);
+                this.router.navigate(['login']);
+            }
+        }, error => {
+            console.log(error);
+            this.toastr.error(error);
+        });
     }
 
 

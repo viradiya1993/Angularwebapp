@@ -5,7 +5,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 
-import { MattersService } from '../matters.service';
+import { MattersService } from '../../../../_services';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-matters-detail',
@@ -15,49 +17,44 @@ import { MattersService } from '../matters.service';
   animations: fuseAnimations
 })
 export class MattersDetailComponent implements OnInit {
-  displayedColumns: string[] = ['service', 'quantity_from_10', 'price_from', 'price_from_inc', 'quantity_to', 'price_to', 'price_toinc'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['Name', 'Type', 'Mobile', 'Phone_no', 'Email'];
+  MatterContact: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   currentMatterId: any;
   currentMatter: any;
   constructor(
     private route: ActivatedRoute,
     private _mattersService: MattersService,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
     this.route.url.subscribe(v =>
       this.currentMatterId = v[0].path
     );
-    this.currentMatter = {
-      'id': '5725a680b3249760ea21de52',
-      'name': 'Abbott',
-      'lastName': 'Keitch',
-      'avatar': 'assets/images/avatars/Abbott.jpg',
-      'nickname': 'Royalguard',
-      'company': 'Saois',
-      'jobTitle': 'Digital Archivist',
-      'email': 'abbott@withinpixels.com',
-      'phone': '+1-202-555-0175',
-      'address': '933 8th Street Stamford, CT 06902',
-      'birthday': '',
-      'notes': ''
-    };
+    // currentMatterId
+    this._mattersService.getMattersDetail(this.currentMatterId).subscribe(response => {
+      localStorage.setItem('session_token', response.Matter.SessionToken);
+      if (response.Matter.response != "error - not logged in") {
+        this.currentMatter = response.Matter.DataSet[0];
+      } else {
+        this.toastr.error(response.Matter.response);
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
+    this._mattersService.getMattersContact(this.currentMatterId).subscribe(response => {
+      localStorage.setItem('session_token', response.MatterContact.SessionToken);
+      if (response.MatterContact.response != "error - not logged in") {
+        this.MatterContact = new MatTableDataSource(response.MatterContact.DataSet);
+        this.MatterContact.paginator = this.paginator;
+      } else {
+        this.toastr.error(response.MatterContact.response);
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
   }
-
-}
-export interface PeriodicElement {
-  service: string;
-  quantity_from_10: number;
-  price_from: number;
-  price_from_inc: number;
-  quantity_to: number;
-  price_to: number;
-  price_toinc: number;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-
-];

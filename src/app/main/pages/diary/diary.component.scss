@@ -152,9 +152,9 @@
 
 #calendar {
     .header {
-        height: 200px;
-        min-height: 200px;
-        max-height: 200px;
+        height: 80px;
+        min-height: 80px;
+        max-height: 80px;
         position: relative;
         background-size: 100% auto;
         background-position: 0 50%;
@@ -259,4 +259,32 @@
     .content {
         padding: 24px;
     }
+}
+
+.diary_header_full {
+    float: left;
+    width: 100%;
+    display: inline-block !important;
+}
+
+.diary_header_top {
+    width: 35%;
+    float: left;
+    display: inline-block !important;
+}
+
+.diary_header_bottom {
+    float: left;
+    width: 50%;
+    display: inline-block !important;
+}
+
+.diary_header_bottom button.left_diary_icon {
+    float: left;
+}
+
+#calendar .header .header-content .header-bottom.diary_header_bottom .title {
+    float: left;
+    height: 40px;
+    line-height: 40px;
 }

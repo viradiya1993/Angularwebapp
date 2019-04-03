@@ -21,7 +21,6 @@ export class ContactComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
-    //localStorage.setItem("checked",'[]');
   }
 
   openDialog() {

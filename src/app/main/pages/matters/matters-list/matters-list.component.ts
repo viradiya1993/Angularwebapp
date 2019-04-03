@@ -21,14 +21,11 @@ export class MattersListComponent implements OnInit, OnDestroy {
   [x: string]: any;
   displayedColumns = ['matter_num', 'matter', 'unbilled', 'invoiced', 'received', 'unpaid', 'total_value'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  mattersData: any = new MatTableDataSource(this.mattersData);
-  //displayedColumns = ['name', 'email', 'phone', 'jobTitle'];
-  // Private
+  mattersData: any;
+
 
   @Output() matterDetail: EventEmitter<any> = new EventEmitter<any>();
 
-
-  //constructor(private _mattersService: MattersService, private dialog: MatDialog) { }
 
   constructor(
     private dialog: MatDialog,
@@ -37,7 +34,6 @@ export class MattersListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.mattersData.paginator = this.paginator;
     this.getMatterList();
   }
   ngOnDestroy(): void { }
@@ -64,11 +60,14 @@ export class MattersListComponent implements OnInit, OnDestroy {
   }
   getMatterList() {
     this._mattersService.getMatters().subscribe(response => {
-      if (response.Matter.response == "error - not logged in") {
-        this.toastr.error(response.Matter.response);
+      if (response.Matter.response != "error - not logged in") {
+        this.mattersData = new MatTableDataSource(response.Matter.DataSet);
+        this.mattersData.paginator = this.paginator;
       } else {
-        this.mattersData = response.Matter.DataSet;
+        this.toastr.error(response.Matter.response);
       }
+    }, error => {
+      this.toastr.error(error);
     });
   }
   tableSetting(data: any) {

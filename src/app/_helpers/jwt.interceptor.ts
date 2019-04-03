@@ -15,18 +15,26 @@ export class JwtInterceptor implements HttpInterceptor {
             if (request.method.toLowerCase() === 'post') {
                 if (request.body instanceof FormData) {
                     request = request.clone({
-                        setHeaders: { Authorization: `Bearer ${currentUser.token}` },
+                        setHeaders: {
+                            // apikey: `SNGMTUEEB2AJBFC9`
+                        },
                         body: request.body.append('SessionToken', currentUser.SessionToken)
                     })
                 }
             } else if (request.method.toLowerCase() === 'get') {
                 request = request.clone({
-                    setHeaders: { Authorization: `Bearer ${currentUser.token}` },
+                    setHeaders: {
+                        // apikey: `SNGMTUEEB2AJBFC9`
+                    },
                     params: request.params.set('SessionToken', currentUser.SessionToken)
                 });
             }
         } else {
-            request = request.clone({ setHeaders: { Authorization: `Bearer ` } });
+            request = request.clone({
+                setHeaders: {
+                    // apikey: `SNGMTUEEB2AJBFC9`
+                }
+            });
         }
         return next.handle(request);
     }

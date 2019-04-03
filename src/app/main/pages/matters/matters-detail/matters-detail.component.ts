@@ -19,7 +19,6 @@ import { ToastrService } from 'ngx-toastr';
 export class MattersDetailComponent implements OnInit {
   displayedColumns: string[] = ['Name', 'Type', 'Mobile', 'Phone_no', 'Email'];
   MatterContact: any;
-  dataSource = new MatTableDataSource(this.MatterContact);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   currentMatterId: any;
   currentMatter: any;
@@ -31,24 +30,28 @@ export class MattersDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
     this.route.url.subscribe(v =>
       this.currentMatterId = v[0].path
     );
     // currentMatterId
     this._mattersService.getMattersDetail(this.currentMatterId).subscribe(response => {
-      if (response.Matter.response == "error - not logged in") {
-        this.toastr.error(response.Matter.response);
-      } else {
+      if (response.Matter.response != "error - not logged in") {
         this.currentMatter = response.Matter.DataSet[0];
+      } else {
+        this.toastr.error(response.Matter.response);
       }
+    }, error => {
+      this.toastr.error(error);
     });
     this._mattersService.getMattersContact(this.currentMatterId).subscribe(response => {
-      if (response.MatterContact.response == "error - not logged in") {
-        this.toastr.error(response.MatterContact.response);
+      if (response.MatterContact.response != "error - not logged in") {
+        this.MatterContact = new MatTableDataSource(response.MatterContact.DataSet);
+        this.MatterContact.paginator = this.paginator;
       } else {
-        this.MatterContact = response.MatterContact.DataSet;
+        this.toastr.error(response.MatterContact.response);
       }
+    }, error => {
+      this.toastr.error(error);
     });
   }
 }

@@ -70,7 +70,6 @@ export class MattersListComponent implements OnInit, OnDestroy {
         this.mattersData = response.Matter.DataSet;
       }
     });
-
   }
   tableSetting(data: any) {
     if (data !== false) {

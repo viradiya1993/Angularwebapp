@@ -33,7 +33,7 @@ export class AuthenticationService {
                 let LoggedInStatus = loginResponse.login_response.LoggedInStatus;
                 if (responseType == 'OK' && LoggedInStatus) {
                     localStorage.setItem('Login_response', JSON.stringify(loginResponse));
-                    this.currentUserSubject.next(loginResponse);
+                    this.currentUserSubject.next(loginResponse.login_response);
                     this.toastr.success('success');
                     return true;
                 } else if (responseType == 'error - login failure') {

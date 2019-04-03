@@ -6,6 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 
 import { MattersService } from '../../../../_services';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-matters-detail',
@@ -15,15 +17,17 @@ import { MattersService } from '../../../../_services';
   animations: fuseAnimations
 })
 export class MattersDetailComponent implements OnInit {
-  displayedColumns: string[] = ['service', 'quantity_from_10', 'price_from', 'price_from_inc', 'quantity_to', 'price_to', 'price_toinc'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['Name', 'Type', 'Mobile', 'Phone_no', 'Email'];
+  MatterContact: any;
+  dataSource = new MatTableDataSource(this.MatterContact);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   currentMatterId: any;
   currentMatter: any;
   constructor(
     private route: ActivatedRoute,
     private _mattersService: MattersService,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -31,33 +35,21 @@ export class MattersDetailComponent implements OnInit {
     this.route.url.subscribe(v =>
       this.currentMatterId = v[0].path
     );
-    this.currentMatter = {
-      'id': '5725a680b3249760ea21de52',
-      'name': 'Abbott',
-      'lastName': 'Keitch',
-      'avatar': 'assets/images/avatars/Abbott.jpg',
-      'nickname': 'Royalguard',
-      'company': 'Saois',
-      'jobTitle': 'Digital Archivist',
-      'email': 'abbott@withinpixels.com',
-      'phone': '+1-202-555-0175',
-      'address': '933 8th Street Stamford, CT 06902',
-      'birthday': '',
-      'notes': ''
-    };
+    // currentMatterId
+    this._mattersService.getMattersDetail(this.currentMatterId).subscribe(response => {
+      if (response.Matter.response == "error - not logged in") {
+        this.toastr.error(response.Matter.response);
+      } else {
+        this.currentMatter = response.Matter.DataSet[0];
+      }
+    });
+    this._mattersService.getMattersContact(this.currentMatterId).subscribe(response => {
+      if (response.MatterContact.response == "error - not logged in") {
+        this.toastr.error(response.MatterContact.response);
+      } else {
+        this.MatterContact = response.MatterContact.DataSet;
+      }
+    });
   }
-
-}
-export interface PeriodicElement {
-  service: string;
-  quantity_from_10: number;
-  price_from: number;
-  price_from_inc: number;
-  quantity_to: number;
-  price_to: number;
-  price_toinc: number;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-
-];

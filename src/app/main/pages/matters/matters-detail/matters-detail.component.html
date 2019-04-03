@@ -19,11 +19,11 @@
 
                 <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
                     <div class="h2">
-                        Matter Detail for {{currentMatter.id}}
+                        Matter Detail for {{currentMatter?.MATTERGUID}}
                     </div>
                     <div class="subtitle secondary-text">
                         <span>from</span>
-                        <span> {{currentMatter.name}} {{currentMatter.lastName}}</span>
+                        <span> {{currentMatter?.MATTER}}</span>
                     </div>
                 </div>
             </div>
@@ -44,66 +44,66 @@
                                             <tr>
                                                 <td> <span class=" text-truncate text-truncate-label">Matter No</span></td>
                                                 <td>
-                                                    <span class=" text-truncate">17-0001</span>
+                                                    <span class=" text-truncate">{{currentMatter?.SHORTNAME}}</span>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td> <span class=" text-truncate text-truncate-label">Matter Desc</span></td>
                                                 <td>
-                                                    <span class=" text-truncate">sdfsfsd</span>
+                                                    <span class=" text-truncate">{{currentMatter?.MATTER}}</span>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td> <span class=" text-truncate text-truncate-label">Client</span></td>
-                                                <td> <span class=" text-truncate">AAA Insurance</span> </td>
+                                                <td> <span class=" text-truncate">{{currentMatter?.CLIENT}}</span> </td>
                                             </tr>
                                             <tr>
                                                 <td> <span class=" text-truncate text-truncate-label">Reference</span></td>
-                                                <td> <span class=" text-truncate"></span> </td>
+                                                <td> <span class=" text-truncate">{{currentMatter?.REFERENCE}}</span> </td>
                                             </tr>
                                             <tr>
                                                 <td> <span class=" text-truncate text-truncate-label">Billing Method</span></td>
-                                                <td> <span class=" text-truncate"></span> </td>
+                                                <td> <span class=" text-truncate">{{currentMatter?.BILLINGMETHOD}}</span> </td>
                                             </tr>
                                             <tr>
                                                 <td> <span class=" text-truncate text-truncate-label">GST Type</span></td>
-                                                <td> <span class=" text-truncate"></span> </td>
+                                                <td> <span class=" text-truncate">{{currentMatter?.GSTTYPE}}</span> </td>
                                             </tr>
                                             <tr>
                                                 <td> <span class=" text-truncate text-truncate-label">Rate per Hour</span></td>
-                                                <td> <span class=" text-truncate"></span> </td>
+                                                <td> <span class=" text-truncate">{{currentMatter?.RATEPERHOUR|currency}}</span> </td>
                                             </tr>
                                             <tr>
                                                 <td> <span class=" text-truncate text-truncate-label">Rate per Day</span></td>
-                                                <td> <span class=" text-truncate"></span> </td>
+                                                <td> <span class=" text-truncate">{{currentMatter?.RATEPERDAY |currency}}</span> </td>
                                             </tr>
                                             <tr>
                                                 <td> <span class=" text-truncate text-truncate-label">Estimate From</span></td>
-                                                <td> <span class=" text-truncate"></span> </td>
+                                                <td> <span class=" text-truncate">{{currentMatter?.ESTIMATE}}</span> </td>
                                             </tr>
                                             <tr>
                                                 <td> <span class=" text-truncate text-truncate-label">Fee Agreement Date</span></td>
-                                                <td> <span class=" text-truncate"></span> </td>
+                                                <td> <span class=" text-truncate">{{currentMatter?.FEEAGREEMENTDATE}}</span> </td>
                                             </tr>
                                             <tr>
                                                 <td> <span class=" text-truncate text-truncate-label">Unbilled Amount</span></td>
-                                                <td> <span class=" text-truncate"></span> </td>
+                                                <td> <span class=" text-truncate">{{currentMatter?.UNBILLED|currency}}</span> </td>
                                             </tr>
                                             <tr>
                                                 <td> <span class=" text-truncate text-truncate-label">Invoiced Amount</span></td>
-                                                <td> <span class=" text-truncate"></span> </td>
+                                                <td> <span class=" text-truncate">{{currentMatter?.INVOICED |currency}}</span> </td>
                                             </tr>
                                             <tr>
                                                 <td> <span class=" text-truncate text-truncate-label">Received Amount</span></td>
-                                                <td> <span class=" text-truncate"></span> </td>
+                                                <td> <span class=" text-truncate">{{currentMatter?.RECEIVED | currency}}</span> </td>
                                             </tr>
                                             <tr>
                                                 <td> <span class=" text-truncate text-truncate-label">Outstanding Amount</span></td>
-                                                <td> <span class=" text-truncate"></span> </td>
+                                                <td> <span class=" text-truncate">{{currentMatter?.OUTSTANDING|currency}}</span> </td>
                                             </tr>
                                             <tr>
                                                 <td> <span class=" text-truncate text-truncate-label">Total Amount</span></td>
-                                                <td> <span class=" text-truncate"></span> </td>
+                                                <td> <span class=" text-truncate">{{currentMatter?.TOTALVALUE |currency}}</span> </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -115,66 +115,57 @@
                     <mat-tab label="Matter Contacts">
                         <div class="products tab-content p-24" fusePerfectScrollbar>
                             <div class="content">
-                                <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
-                                    <ng-container matColumnDef="service">
-                                        <mat-header-cell *matHeaderCellDef>Service</mat-header-cell>
+                                <mat-table #table [dataSource]="MatterContact" [@animateStagger]="{value:'50'}">
+                                    <ng-container matColumnDef="Name">
+                                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Name</mat-header-cell>
+                                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                                            <p class="company text-truncate">
+                                                {{row.CONTACTNAME}}
+                                            </p>
+                                        </mat-cell>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="Type">
+                                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Type</mat-header-cell>
+                                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                                            <p class="company text-truncate">
+                                                {{row.TYPENAME}}
+                                            </p>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="Mobile">
+                                        <mat-header-cell *matHeaderCellDef>Mobile</mat-header-cell>
                                         <mat-cell *matCellDef="let row">
-
+                                            <p class="company text-truncate">
+                                                {{row.MOBILE}}
+                                            </p>
                                         </mat-cell>
                                     </ng-container>
 
-                                    <ng-container matColumnDef="quantity_from_10">
-                                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Quantity From 10</mat-header-cell>
+
+                                    <ng-container matColumnDef="Phone_no">
+                                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Phone_no</mat-header-cell>
                                         <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
-
+                                            <p class="company text-truncate">
+                                                {{row.PHONE}}
+                                            </p>
                                         </mat-cell>
                                     </ng-container>
 
 
-                                    <ng-container matColumnDef="price_from">
-                                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Price From</mat-header-cell>
+                                    <ng-container matColumnDef="Email">
+                                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Email</mat-header-cell>
                                         <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
-
+                                            <p class="company text-truncate">
+                                                {{row.EMAIL}}
+                                            </p>
                                         </mat-cell>
                                     </ng-container>
-
-
-                                    <ng-container matColumnDef="price_from_inc">
-                                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Price From Inc</mat-header-cell>
-                                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
-
-                                        </mat-cell>
-                                    </ng-container>
-
-                                    <ng-container matColumnDef="quantity_to">
-                                        <mat-header-cell *matHeaderCellDef> Quantity To </mat-header-cell>
-                                        <mat-cell *matCellDef="let row">
-
-                                        </mat-cell>
-                                    </ng-container>
-
-
-                                    <ng-container matColumnDef="price_to">
-                                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Price To</mat-header-cell>
-                                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
-
-                                        </mat-cell>
-                                    </ng-container>
-
-
-                                    <ng-container matColumnDef="price_toinc">
-                                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Price To Inc</mat-header-cell>
-                                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
-
-                                        </mat-cell>
-                                    </ng-container>
-
-
-
                                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                                     <mat-row *matRowDef="let row; columns: displayedColumns;">
                                     </mat-row>
-
 
                                 </mat-table>
 

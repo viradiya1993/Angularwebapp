@@ -11,4 +11,10 @@ export class MattersService {
   getMatters() {
     return this.httpClient.get<any>(environment.APIEndpoint + 'GetMatter');
   }
+  getMattersDetail(MatterGuid) {
+    return this.httpClient.get<any>(environment.APIEndpoint + 'GetMatter?MatterGuid=' + MatterGuid);
+  }
+  getMattersContact(MatterGuid) {
+    return this.httpClient.get<any>(environment.APIEndpoint + 'GetMatterContact?MatterGuid=' + MatterGuid);
+  }
 }

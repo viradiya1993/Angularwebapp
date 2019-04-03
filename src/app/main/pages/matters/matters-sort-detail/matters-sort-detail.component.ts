@@ -18,5 +18,7 @@ export class MattersSortDetailComponent implements OnInit {
   closeDetail(event) {
     this.matterCloseD.emit(event);
   }
-
+  addTimeEnrt(matterId) {
+    console.log(matterId);
+  }
 }

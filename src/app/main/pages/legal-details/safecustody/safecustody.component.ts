@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
+import { SafeCustodyService } from './../../../../_services';
 
 @Component({
   selector: 'app-safecustody',
@@ -15,10 +16,22 @@ export class SafecustodyComponent implements OnInit {
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog) { }
-
+  constructor(private dialog: MatDialog,private safeCustody_service: SafeCustodyService) { }
+  val;
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
+
+     //get autorites  
+     this.safeCustody_service.getData().subscribe(res => {
+      this.val = res;
+      // this.filterData = res;
+    
+      console.log(this.val);
+    },
+    err => {
+      console.log('Error occured');
+    }
+  );
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();

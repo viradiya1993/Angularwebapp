@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
+import { ReceiptsCreditsService } from '../../../../_services';
+import { isSuccess } from 'angular-in-memory-web-api';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-receipts-credits',
@@ -11,22 +14,35 @@ import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.c
   animations: fuseAnimations
 })
 export class ReceiptsCreditsComponent implements OnInit {
+  
+  displayedColumns: string[] = ['Income Code','Income Guid','Income Class','Income Type','Firmguid','Short Name','Client Name','Allocation','Income Date','Payee','Amount','Gst','Total','Bank AccountGuid','Income AccountGuid','Note'];
+  
+  @ViewChild(MatPaginator) paginator: MatPaginator;  
 
-  displayedColumns: string[] = ['receipt_no', 'date', 'total', 'gst', 'allocation', 'note'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  constructor(private dialog: MatDialog,private ReceiptsCredits: ReceiptsCreditsService, private toastr: ToastrService) { }
 
-
-  constructor(private dialog: MatDialog) { }
-
-  ngOnInit() {
-
-    this.dataSource.paginator = this.paginator;
-  }
+  ReceiptsCreditsdata;  
+  ngOnInit() {  
+    //API Data fetch
+    this.ReceiptsCredits.ReceiptsCreditsData().subscribe(res => {
+       if(res.Receipts.response !="error - not logged in"){
+        //console.log(res.Receipts.DataSet);
+        localStorage.setItem('session_token', res.Receipts.SessionToken);
+        this.ReceiptsCreditsdata = new MatTableDataSource(res.Receipts.DataSet)     
+        this.ReceiptsCreditsdata.paginator = this.paginator
+      }else{
+        this.toastr.error(res.Receipts.response );
+      }
+    },
+    err => {
+      this.toastr.error(err);
+    });
+    
+  } 
   openDialog() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': ['receipt_no', 'date', 'total', 'gst', 'allocation', 'note'], 'type': 'receipts-credits' };
+    dialogConfig.width = '50%';   
+    dialogConfig.data = { 'data': ['Income Code','Income Guid','Income Class','Income Type','Firmguid','Short Name','Client Name','Allocation','Income Date','Payee','Amount','Gst','Total','Bank AccountGuid','Income AccountGuid','Note'], 'type': 'receipts-credits' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
@@ -48,21 +64,4 @@ export class ReceiptsCreditsComponent implements OnInit {
 
 }
 
-export interface PeriodicElement {
-  receipt_no: number;
-  date: Date;
-  total: number;
-  gst: number;
-  allocation: number;
-  note: string;
-}
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { receipt_no: 1, date: new Date('2/1/2014'), total: 5500.0524, gst: 30, allocation: 100.30, note: 'not done yet' },
-  { receipt_no: 2, date: new Date('2/1/2014'), total: 5500.0524, gst: 30, allocation: 12.30, note: 'not done yet' },
-  { receipt_no: 3, date: new Date('2/1/2014'), total: 5500.0524, gst: 30, allocation: 123.30, note: 'not done yet' },
-  { receipt_no: 4, date: new Date('2/1/2014'), total: 5500.0524, gst: 30, allocation: 112.30, note: 'not done yet' },
-  { receipt_no: 5, date: new Date('2/1/2014'), total: 5500.0524, gst: 30, allocation: 56.30, note: 'not done yet' },
-  { receipt_no: 6, date: new Date('2/1/2014'), total: 5500.0524, gst: 30, allocation: 52.03, note: 'not done yet' },
-
-];

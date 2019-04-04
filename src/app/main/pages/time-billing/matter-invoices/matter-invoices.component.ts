@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialogConfig, MatDialog } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.component';
+import { MatterInvoicesService } from '../../../../_services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-matter-invoices',
@@ -12,19 +14,33 @@ import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.c
 })
 export class MatterInvoicesComponent implements OnInit {
 
-  displayedColumns: string[] = ['invoice_no', 'date', 'total', 'gst', 'paid', 'outstanding', 'written_off'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['Invoice Guid', 'Invoice ReversalGuid', 'Matter Guid', 'Short Name', 'Client Name', 'Parent InvoiceGuid', 'Invoice Code','Invoice Date','Due Date','Printed Date','Invoice Total','Gst','Agency Total','Agency Gst','Amount PaidexGst','Amount PaidincGst','Amount WrittenoffexGst','Amount WrittenoffincGst','Amount OutstandingexGst','Amount OutstandingincGst','Disbursement AmountexGst','Disbursement AmountincGst','Foreign currencyid','Foreign currencyrate','Foreign currencyamount','Foreign currencyGst','Comment'];
+  
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog,private MatterInvoices: MatterInvoicesService,private toastr: ToastrService) { }
 
+  MatterInvoicesdata;
   ngOnInit() {
-
-    this.dataSource.paginator = this.paginator;
+    //this.dataSource.paginator = this.paginator;
+    this.MatterInvoices.MatterInvoicesData().subscribe(res => {      
+      if(res.Invoice.response !="error - not logged in"){
+        //console.log(res.Invoice.DataSet);        
+        localStorage.setItem('session_token',res.Invoice.SessionToken);
+       this.MatterInvoicesdata = new MatTableDataSource(res.Invoice.DataSet)     
+       this.MatterInvoicesdata.paginator = this.paginator
+     }else{
+       this.toastr.error(res.Invoice.response);
+     }
+   },
+   err => {
+     this.toastr.error(err);
+   });
+   
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': ['invoice_no', 'date', 'total', 'gst', 'paid', 'outstanding', 'written_off'], 'type': 'matter_invoices' };
+    dialogConfig.data = { 'data': ['Invoice Guid', 'Invoice ReversalGuid', 'Matter Guid', 'Short Name', 'Client Name', 'Parent InvoiceGuid', 'Invoice Code','Invoice Date','Due Date','Printed Date','Invoice Total','Gst','Agency Total','Agency Gst','Amount PaidexGst','Amount PaidincGst','Amount WrittenoffexGst','Amount WrittenoffincGst','Amount OutstandingexGst','Amount OutstandingincGst','Disbursement AmountexGst','Disbursement AmountincGst','Foreign currencyid','Foreign currencyrate','Foreign currencyamount','Foreign currencyGst','Comment'], 'type': 'matter_invoices' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
@@ -45,24 +61,3 @@ export class MatterInvoicesComponent implements OnInit {
   }
 
 }
-export interface PeriodicElement {
-  invoice_no: number;
-  date: Date;
-  total: number;
-  gst: number;
-
-  paid: number;
-  outstanding: number;
-  written_off: number;
-
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { invoice_no: 35, date: new Date('2/1/2014'), total: 321.0079, gst: 50.30, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 32, date: new Date('2/1/2014'), total: 5581.0079, gst: 12.30, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 35, date: new Date('2/1/2014'), total: 3211.0079, gst: 60.32, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 35, date: new Date('2/1/2014'), total: 1231.0079, gst: 40.25, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 35, date: new Date('2/1/2014'), total: 1569.0079, gst: 78.32, paid: 212, outstanding: 89, written_off: 45 },
-  { invoice_no: 35, date: new Date('2/1/2014'), total: 158.0079, gst: 12.01, paid: 212, outstanding: 89, written_off: 45 }
-
-];

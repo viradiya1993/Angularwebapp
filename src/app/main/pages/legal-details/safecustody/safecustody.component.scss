@@ -56,3 +56,6 @@ app-safecustody {
 mat-table.mat-table.ng-trigger.ng-trigger-animateStagger {
     width: 300%;
 }
+.progTitle::first-letter {
+    text-transform: uppercase;
+}

@@ -13,7 +13,9 @@ import { ToastrService } from 'ngx-toastr';
   animations: fuseAnimations
 })
 export class SafecustodyComponent implements OnInit {
-  displayedColumns: string[] = ['PACKETNUMBER', 'SAFECUSTODYGUID', 'MATTERGUID', 'STATUS', 'SHORTNAME'];
+  displayedColumns: string[] =  ['SAFECUSTODYGUID', 'SAFECUSTODYPACKETGUID', 'MATTERGUID', 'CONTACTGUID', 'DOCUMENTTYPE',
+  'SAFECUSTODYDESCRIPTION', 'DOCUMENTNAME', 'STATUS', 'REMINDER', 'REMINDERDATE',
+  'REMINDERTIME', 'AdditionalText', 'SHORTNAME', 'CONTACTNAME', 'PACKETNUMBER'];
   
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -44,7 +46,9 @@ export class SafecustodyComponent implements OnInit {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': ['PACKETNUMBER', 'SAFECUSTODYGUID', 'MATTERGUID', 'STATUS', 'SHORTNAME'], 'type': 'safecustody' };
+    dialogConfig.data = { 'data': ['SAFECUSTODYGUID', 'SAFECUSTODYPACKETGUID', 'MATTERGUID', 'CONTACTGUID', 'DOCUMENTTYPE',
+    'SAFECUSTODYDESCRIPTION', 'DOCUMENTNAME', 'STATUS', 'REMINDER', 'REMINDERDATE',
+    'REMINDERTIME', 'AdditionalText', 'SHORTNAME', 'CONTACTNAME', 'PACKETNUMBER'], 'type': 'safecustody' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click

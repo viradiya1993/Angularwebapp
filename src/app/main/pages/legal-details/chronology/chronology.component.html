@@ -11,98 +11,98 @@
                 <div class="example-containerdata">
                 <mat-table #table [dataSource]="chronology_table" [@animateStagger]="{value:'50'}">
                     <ng-container matColumnDef="MATTERGUID">
-                        <mat-header-cell *matHeaderCellDef>MATTERGUID</mat-header-cell>
+                        <mat-header-cell  class="header_title" *matHeaderCellDef>matter guid</mat-header-cell>
                         <mat-cell *matCellDef="let row">{{row.MATTERGUID }}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="CHRONOLOGYGUID">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>CHRONOLOGYGUID</mat-header-cell>
+                        <mat-header-cell  class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>chonology guid</mat-header-cell>
                         <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.CHRONOLOGYGUID}}
                         </mat-cell>
                         </ng-container>
                         <ng-container matColumnDef="DATEFROM">
-                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>DATEFROM</mat-header-cell>
+                            <mat-header-cell  class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>date from</mat-header-cell>
                             <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.DATEFROM}}
                             </mat-cell>
                         </ng-container>
                         <ng-container matColumnDef="DATETO">
-                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>DATETO</mat-header-cell>
+                            <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>date to</mat-header-cell>
                             <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.DATETO}}
                             </mat-cell>
                         </ng-container>
                         <ng-container matColumnDef="TIMEFROM">
-                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>TIMEFROM</mat-header-cell>
+                            <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>time from</mat-header-cell>
                             <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.TIMEFROM}}
                             </mat-cell>
                         </ng-container>
                         <ng-container matColumnDef="TIMETO">
-                            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>TIMETO</mat-header-cell>
+                            <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>time to</mat-header-cell>
                             <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.TIMETO}}
                             </mat-cell>
                         </ng-container>
                     
                     <ng-container matColumnDef="FORMAT">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>FORMAT</mat-header-cell>
+                        <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>formate</mat-header-cell>
                         <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.FORMAT}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="FORMATTEDDATE">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>FORMATTEDDATE</mat-header-cell>
+                        <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>formate date</mat-header-cell>
                         <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.FORMATTEDDATE}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="TOPIC">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>TOPIC</mat-header-cell>
+                        <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>topic</mat-header-cell>
                         <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.TOPIC}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="PRIVILEGED">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>PRIVILEGED</mat-header-cell>
+                        <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>privileged</mat-header-cell>
                         <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.PRIVILEGED}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="BRIEFPAGENO">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>BRIEFPAGENO</mat-header-cell>
+                        <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>Brief page no</mat-header-cell>
                         <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.BRIEFPAGENO}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="REFERENCE">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>REFERENCE</mat-header-cell>
+                        <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>reference</mat-header-cell>
                         <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.REFERENCE}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="COMMENT">
-                        <mat-header-cell *matHeaderCellDef>COMMENT </mat-header-cell>
+                        <mat-header-cell class="header_title" *matHeaderCellDef>comment </mat-header-cell>
                         <mat-cell *matCellDef="let row">{{row.COMMENT}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="WITNESSES">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>WITNESSES</mat-header-cell>
+                        <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-sm>wintness</mat-header-cell>
                         <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.WITNESSES}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="EVENTAGREED">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>EVENTAGREED</mat-header-cell>
+                        <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-sm>event greed</mat-header-cell>
                         <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.EVENTAGREED}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="DOCUMENTNAME">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>DOCUMENTNAME</mat-header-cell>
+                        <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-sm>document name</mat-header-cell>
                         <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.DOCUMENTNAME}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="ADDITIONALTEXT">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>ADDITIONALTEXT</mat-header-cell>
+                        <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-sm>additional text</mat-header-cell>
                         <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.ADDITIONALTEXT}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="SHORTNAME">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>SHORTNAME</mat-header-cell>
+                        <mat-header-cell class="header_title" class="header_title" *matHeaderCellDef fxHide fxShow.gt-sm>short name</mat-header-cell>
                         <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.SHORTNAME}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="CLIENTNAME">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>CLIENTNAME</mat-header-cell>
+                        <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-sm>client name</mat-header-cell>
                         <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.CLIENTNAME}}
                         </mat-cell>
                     </ng-container>

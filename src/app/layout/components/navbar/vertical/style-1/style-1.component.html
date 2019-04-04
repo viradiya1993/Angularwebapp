@@ -14,10 +14,17 @@
             <mat-icon class="secondary-text">arrow_back</mat-icon>
         </button>
     </div>
-    <div class="logo">
+    <div class="logo barrister" *ngIf="defultTheme">
         <img class="logo-icon unfold_sidebar_logo" src="assets/images/logos/silq-logo.png">
         <img class="logo-icon fold_sidebar_logo" src="assets/images/logos/sm-silq-small.png">
     </div>
+
+    <!-- user 2 -->
+
+    <div class="logo solicitor" *ngIf="greenTheme">
+            <img class="logo-icon unfold_sidebar_logo" src="assets/images/logos/silq-logo-user2.png">
+            <img class="logo-icon fold_sidebar_logo" src="assets/images/logos/sm-silq-small-user2.png">
+        </div>
 </div>
 <div class="navbar-scroll-container sidebar_btm_div" [ngClass]="fuseConfig.layout.navbar.primaryBackground" fusePerfectScrollbar [fusePerfectScrollbarOptions]="{suppressScrollX: true}">
 

@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialogConfig, MatDialog } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
+import { ToastrService } from 'ngx-toastr';
+import { WorkInProgressService } from '../../../../_services';
 
 @Component({
   selector: 'app-work-in-progress',
@@ -12,20 +14,30 @@ import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.c
 })
 export class WorkInProgressComponent implements OnInit {
 
-  displayedColumns: string[] = ['date', 'type', 'quantity', 'price', 'description', 'invoice_no', 'price_in_gst'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['Workitem Guid', 'Matter Guid', 'Invoice Guid', 'Invoice Order', 'Item Type', 'Item Date', 'Item Time','Fee Earner','Fee Type','Quantity','Quantity Type','Formatted Quantity','Price','Gst','Gst Type','Priceinc Gst','Gst Charged','Price Charged','Priceinc Gstcharged','Additional Text','Comment','Short Name','Invoice Code','Client Name'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  constructor(private dialog: MatDialog,private WorkInProgress: WorkInProgressService, private toastr: ToastrService) { }
 
-  constructor(private dialog: MatDialog) { }
-
-  ngOnInit() {
-
-    this.dataSource.paginator = this.paginator;
+  WorkInProgressdata
+  ngOnInit() {    
+    this.WorkInProgress.WorkInProgressData().subscribe(res => {
+      //console.log(res.WorkItems.DataSet);
+      if(res.WorkItems.response !="error - not logged in"){       
+       localStorage.setItem('session_token', res.WorkItems.SessionToken);
+       this.WorkInProgressdata = new MatTableDataSource(res.WorkItems.DataSet)     
+       this.WorkInProgressdata.paginator = this.paginator
+     }else{
+       this.toastr.error(res.WorkItems.response );
+     }
+   },
+   err => {
+     this.toastr.error(err);
+   });   
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': ['date', 'type', 'quantity', 'price', 'description', 'invoice_no', 'price_in_gst'], 'type': 'work-in-progress' };
+    dialogConfig.data = { 'data': ['Workitem Guid', 'Matter Guid', 'Invoice Guid', 'Invoice Order', 'Item Type', 'Item Date', 'Item Time','Fee Earner','Fee Type','Quantity','Quantity Type','Formatted Quantity','Price','Gst','Gst Type','Priceinc Gst','Gst Charged','Price Charged','Priceinc Gstcharged','Additional Text','Comment','Short Name','Invoice Code','Client Name'], 'type': 'work-in-progress' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click

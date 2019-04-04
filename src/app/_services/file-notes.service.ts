@@ -10,7 +10,7 @@ export class FileNotesService {
   constructor(private http: HttpClient) { }
 
   getData() {
-    return this.http.get<any>(environment.APIEndpoint + 'GetMatterFileNote');
+    return this.http.get<any>(environment.APIEndpoint + 'GetMatterFileNote?MatterGUID=MATAAAAAAAAAAA11');
 
        }
 }

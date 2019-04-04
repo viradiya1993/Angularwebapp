@@ -3,6 +3,7 @@ import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@a
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { SafeCustodyService } from './../../../../_services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-safecustody',
@@ -16,23 +17,27 @@ export class SafecustodyComponent implements OnInit {
   
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog,private safeCustody_service: SafeCustodyService) { }
+  constructor(private dialog: MatDialog,private safeCustody_service: SafeCustodyService,private toastr: ToastrService) { }
   safeCustody_table;
   ngOnInit() {
      //get autorites  
       
      this.safeCustody_service.getData().subscribe(response => {
       localStorage.setItem('session_token', response.SessionToken);
-      
-      //this.safeCustody_table = res;
-      // this.filterData = res;
-    
       console.log(response);
-      this.safeCustody_table = new MatTableDataSource<PeriodicElement>(response.SafeCustody.DataSet);
-      this.safeCustody_table.paginator = this.paginator;
+        
+      if (response.SafeCustody.response != "error - not logged in") {
+        console.log(response.SafeCustody.DataSet);
+        this.safeCustody_table = new MatTableDataSource(response.SafeCustody.DataSet);
+        this.safeCustody_table.paginator = this.paginator;
+      } else {
+        this.toastr.error(response.SafeCustody.response);
+      }
+      // this.safeCustody_table = new MatTableDataSource<PeriodicElement>(response.SafeCustody.DataSet);
+      // this.safeCustody_table.paginator = this.paginator;
     },
-    err => {
-      console.log('Error occured');
+    error => {
+      this.toastr.error(error);
     }
   );
   }

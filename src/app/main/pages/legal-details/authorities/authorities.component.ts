@@ -21,7 +21,7 @@ export class AuthoritiesComponent implements OnInit {
   ngOnInit() {
       //get autorites
       this.authorities_service.getData().subscribe(response => {
-        localStorage.setItem('session_token', response.SessionToken);
+        localStorage.setItem('session_token', response.MatterAuthority.SessionToken);
         // this.authorities_table = res;
         // this.filterData = res;
         console.log(response);

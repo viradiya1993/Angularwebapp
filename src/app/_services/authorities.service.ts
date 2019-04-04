@@ -10,6 +10,6 @@ export class AuthoritiesService {
   constructor(private http: HttpClient) { }
 
   getData(){
-    return this.http.post<any>(environment.APIEndpoint + 'GetMatterAuthority',{'MatterGuid':'MATAAAAAAAAAAA25'});
+    return this.http.post<any>(environment.APIEndpoint + 'GetMatterAuthority',{'MatterGuid':'MATAAAAAAAAAAA25','SessionToken': localStorage.getItem('session_token')});
   }
 }

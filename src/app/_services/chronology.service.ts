@@ -12,7 +12,7 @@ export class ChronologyService {
 
 
   getData() {
-    return this.http.get<any>(environment.APIEndpoint + 'GetMatterChronology');
+    return this.http.get<any>(environment.APIEndpoint + 'GetMatterChronology?MatterGuid=MATAAAAAAAAAAA25');
 
             }
 }

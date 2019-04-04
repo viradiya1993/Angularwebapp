@@ -7,6 +7,7 @@
                         <mat-icon class="secondary-text">more_vert</mat-icon>
                         </button>
                 </div>
+                <div class="example-containerdata">
                 <mat-table #table [dataSource]="safeCustody_table" [@animateStagger]="{value:'50'}">
                     <ng-container matColumnDef="PACKETNUMBER">
                         <mat-header-cell *matHeaderCellDef>PACKETNUMBER</mat-header-cell>
@@ -52,6 +53,7 @@
                   <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                   </mat-row>
               </mat-table>
+            </div>
               <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
           </div>
       </div>

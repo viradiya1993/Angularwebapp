@@ -3,6 +3,7 @@ import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@a
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { FileNotesService } from './../../../../_services';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -13,34 +14,40 @@ import { FileNotesService } from './../../../../_services';
   animations: fuseAnimations
 })
 export class FileNotesComponent implements OnInit {
-  displayedColumns: string[] = ['FILENOTEGUID', 'MATTERGUID', 'USERNAME'];
+  displayedColumns: string[] = ['FILENOTEGUID', 'MATTERGUID', 'USERNAME','Date', 'Time', 'Note','SHORTNAME','CONTACTNAME'];
   
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog,private fileNotes_service: FileNotesService) { }
+  constructor(private dialog: MatDialog,private fileNotes_service: FileNotesService,private toastr: ToastrService) { }
   filenotes_table;
   ngOnInit() {
     
       //get autorites
       this.fileNotes_service.getData().subscribe(response => {
-        localStorage.setItem('session_token', JSON.stringify(response.SessionToken));
-        this.filenotes_table = response;
-        // this.filterData = res;
+        localStorage.setItem('session_token',response.FileNote.SessionToken);
+        //this.filenotes_table = response;
+         this.filenotes_table = response.FileNote.DataSet;
       
-        console.log(response);
-        //this.filenotes_table = new MatTableDataSource<PeriodicElement>(res);
+        console.log( this.filenotes_table);
+        if (response.filenotes_table.response != "error - not logged in") {
+          this.filenotes_table = new MatTableDataSource(response.Chronology.DataSet);
+          this.filenotes_table.paginator = this.paginator;
+        } else {
+          this.toastr.error(response.FileNote.response);
+        }
+        //this.filenotes_table = new MatTableDataSource<PeriodicElement>(response.FileNote.DataSet);
         //this.filenotes_table.paginator = this.paginator;
 
       },
-      err => {
-        console.log('Error occured');
+      error => {
+        this.toastr.error(error);
       }
     );
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': ['FILENOTEGUID', 'MATTERGUID', 'USERNAME'], 'type': 'file-notes' };
+    dialogConfig.data = { 'data': ['FILENOTEGUID', 'MATTERGUID', 'USERNAME','Date', 'Time', 'Note','SHORTNAME','CONTACTNAME'], 'type': 'file-notes' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click

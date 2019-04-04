@@ -3,6 +3,7 @@ import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@a
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { ChronologyService } from './../../../../_services';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -22,20 +23,23 @@ export class ChronologyComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   chronology_table;
 
-  constructor(private dialog: MatDialog,private chronology_service: ChronologyService) { }
+  constructor(private dialog: MatDialog,private chronology_service: ChronologyService,private toastr: ToastrService) { }
 
   ngOnInit() {
     //get chronology
     this.chronology_service.getData().subscribe(response => {
-      localStorage.setItem('session_token', response.SessionToken);
+      localStorage.setItem('session_token', response.Chronology.SessionToken);
       //this.chronology_table = res;
-      // this.filterData = res;
           console.log(response);
-      this.chronology_table = new MatTableDataSource<PeriodicElement>(response.Chronology.DataSet);
-      this.chronology_table.paginator = this.paginator;
+           if (response.Chronology.response != "error - not logged in") {
+            this.chronology_table = new MatTableDataSource(response.Chronology.DataSet);
+            this.chronology_table.paginator = this.paginator;
+          } else {
+            this.toastr.error(response.Chronology.response);
+          }
     },
-    err => {
-      console.log('Error occured');
+    error => {
+      this.toastr.error(error);
     }
   );
   }

@@ -16,17 +16,14 @@ import { ToastrService } from 'ngx-toastr';
 export class ReceiptsCreditsComponent implements OnInit {
   
   displayedColumns: string[] = ['Income Code','Income Guid','Income Class','Income Type','Firmguid','Short Name','Client Name','Allocation','Income Date','Payee','Amount','Gst','Total','Bank AccountGuid','Income AccountGuid','Note'];
-  
   @ViewChild(MatPaginator) paginator: MatPaginator;  
-
   constructor(private dialog: MatDialog,private ReceiptsCredits: ReceiptsCreditsService, private toastr: ToastrService) { }
 
   ReceiptsCreditsdata;  
   ngOnInit() {  
     //API Data fetch
     this.ReceiptsCredits.ReceiptsCreditsData().subscribe(res => {
-       if(res.Receipts.response !="error - not logged in"){
-        //console.log(res.Receipts.DataSet);
+       if(res.Receipts.response !="error - not logged in"){       
         localStorage.setItem('session_token', res.Receipts.SessionToken);
         this.ReceiptsCreditsdata = new MatTableDataSource(res.Receipts.DataSet)     
         this.ReceiptsCreditsdata.paginator = this.paginator
@@ -36,8 +33,7 @@ export class ReceiptsCreditsComponent implements OnInit {
     },
     err => {
       this.toastr.error(err);
-    });
-    
+    });    
   } 
   openDialog() {
     const dialogConfig = new MatDialogConfig();
@@ -61,7 +57,6 @@ export class ReceiptsCreditsComponent implements OnInit {
       this.displayedColumns = data;
     }
   }
-
 }
 
 

@@ -21,12 +21,10 @@ export class MatterTrustComponent implements OnInit {
   constructor(private dialog: MatDialog,private MatterTrust: MatterTrustService,private toastr: ToastrService) { }
  
   MatterTrustdata;
-  ngOnInit() {
-    //this.dataSource.paginator = this.paginator;
+  ngOnInit() {    
     //API Data fetch
     this.MatterTrust.MatterTrustData().subscribe(res => { 
-       if(res.TrustTransaction.response !="error - not logged in"){
-       // console.log(res.TrustTransaction.DataSet);        
+       if(res.TrustTransaction.response !="error - not logged in"){         
         localStorage.setItem('session_token',res.TrustTransaction.SessionToken);
         this.MatterTrustdata = new MatTableDataSource(res.TrustTransaction.DataSet)     
         this.MatterTrustdata.paginator = this.paginator
@@ -36,8 +34,7 @@ export class MatterTrustComponent implements OnInit {
     },
     err => {
       this.toastr.error(err);
-    });
-    
+    });    
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();

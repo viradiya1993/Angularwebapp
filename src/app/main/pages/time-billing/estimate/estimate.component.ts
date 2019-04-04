@@ -19,11 +19,9 @@ export class EstimateComponent implements OnInit {
 
   constructor(private dialog: MatDialog,private Estimate: EstimateService,private toastr: ToastrService) { }
   Estimatedata;
-  ngOnInit() {
-    //this.dataSource.paginator = this.paginator;
+  ngOnInit() {   
     this.Estimate.MatterEstimatesData().subscribe(res => {     
-     if(res.EstimateItem.response !="error - not logged in"){
-      // console.log(res.EstimateItem.DataSet);
+     if(res.EstimateItem.response !="error - not logged in"){      
        localStorage.setItem('session_token', res.EstimateItem.SessionToken);
        this.Estimatedata = new MatTableDataSource(res.EstimateItem.DataSet)     
        this.Estimatedata.paginator = this.paginator
@@ -33,8 +31,7 @@ export class EstimateComponent implements OnInit {
    },
    err => {
      this.toastr.error(err);
-   });
-  
+   });  
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
@@ -58,5 +55,4 @@ export class EstimateComponent implements OnInit {
       this.displayedColumns = data;
     }
   }
-
 }

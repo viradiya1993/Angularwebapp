@@ -15,16 +15,13 @@ import { ToastrService } from 'ngx-toastr';
 export class MatterInvoicesComponent implements OnInit {
 
   displayedColumns: string[] = ['Invoice Guid', 'Invoice ReversalGuid', 'Matter Guid', 'Short Name', 'Client Name', 'Parent InvoiceGuid', 'Invoice Code','Invoice Date','Due Date','Printed Date','Invoice Total','Gst','Agency Total','Agency Gst','Amount PaidexGst','Amount PaidincGst','Amount WrittenoffexGst','Amount WrittenoffincGst','Amount OutstandingexGst','Amount OutstandingincGst','Disbursement AmountexGst','Disbursement AmountincGst','Foreign currencyid','Foreign currencyrate','Foreign currencyamount','Foreign currencyGst','Comment'];
-  
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private dialog: MatDialog,private MatterInvoices: MatterInvoicesService,private toastr: ToastrService) { }
 
   MatterInvoicesdata;
-  ngOnInit() {
-    //this.dataSource.paginator = this.paginator;
+  ngOnInit() {   
     this.MatterInvoices.MatterInvoicesData().subscribe(res => {      
-      if(res.Invoice.response !="error - not logged in"){
-        //console.log(res.Invoice.DataSet);        
+      if(res.Invoice.response !="error - not logged in"){              
         localStorage.setItem('session_token',res.Invoice.SessionToken);
        this.MatterInvoicesdata = new MatTableDataSource(res.Invoice.DataSet)     
        this.MatterInvoicesdata.paginator = this.paginator
@@ -34,8 +31,7 @@ export class MatterInvoicesComponent implements OnInit {
    },
    err => {
      this.toastr.error(err);
-   });
-   
+   });   
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
@@ -59,5 +55,4 @@ export class MatterInvoicesComponent implements OnInit {
       this.displayedColumns = data;
     }
   }
-
 }

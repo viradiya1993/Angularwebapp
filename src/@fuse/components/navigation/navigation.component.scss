@@ -73,6 +73,8 @@ mat-icon.icons.mat-icon.material-icons.mat-icon-no-color {
 mat-icon.listingicon.mat-icon.material-icons.mat-icon-no-color {
     margin-bottom: 5px;
 }
+
+// user 1
 body.theme-default .mat-form-field-appearance-legacy .mat-form-field-label,mat-form-field.example-full-width.mat-form-field.mat-focused  .mat-form-field-label {
     color: #fff;
     font-size: 15px;
@@ -80,6 +82,16 @@ body.theme-default .mat-form-field-appearance-legacy .mat-form-field-label,mat-f
 body.theme-default .mat-form-field-appearance-legacy .mat-form-field-underline,mat-form-field.example-full-width.mat-form-field.mat-focused .mat-form-field-underline .mat-form-field-ripple{
     background-color: #fff;
 }
+
+//user 2
+body.theme-yellow-light .mat-form-field-appearance-legacy .mat-form-field-label,mat-form-field.example-full-width.mat-form-field.mat-focused  .mat-form-field-label {
+    color: #fff;
+    font-size: 15px;
+}
+body.theme-yellow-light .mat-form-field-appearance-legacy .mat-form-field-underline,mat-form-field.example-full-width.mat-form-field.mat-focused .mat-form-field-underline .mat-form-field-ripple{
+    background-color: #fff;
+}
+
 .info {
     margin-bottom: 16px;
 }

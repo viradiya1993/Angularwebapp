@@ -2,7 +2,8 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-import { ChronologyService } from './../../../../_services/chronology.service';
+import { ChronologyService } from './../../../../_services';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -16,30 +17,37 @@ import { ChronologyService } from './../../../../_services/chronology.service';
 })
 export class ChronologyComponent implements OnInit {
 
-  displayedColumns: string[] = ['date', 'topic', 'reference', 'event_agreed', 'brief_page_no', 'comment', 'privileged', 'witnesses', 'text'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['MATTERGUID', 'CHRONOLOGYGUID','DATEFROM','DATETO','TIMEFROM','TIMETO','FORMAT', 'FORMATTEDDATE',
+   'TOPIC','BRIEFPAGENO','REFERENCE','COMMENT','WITNESSES','EVENTAGREED','DOCUMENTNAME','ADDITIONALTEXT','SHORTNAME','CLIENTNAME'];
+  //dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  val;
+  chronology_table;
 
-  constructor(private dialog: MatDialog,private chronology_service: ChronologyService) { }
+  constructor(private dialog: MatDialog,private chronology_service: ChronologyService,private toastr: ToastrService) { }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
     //get chronology
-    this.chronology_service.getData().subscribe(res => {
-      this.val = res;
-      // this.filterData = res;
-      console.log(this.val);  
+    this.chronology_service.getData().subscribe(response => {
+      localStorage.setItem('session_token', response.Chronology.SessionToken);
+      //this.chronology_table = res;
+          console.log(response);
+           if (response.Chronology.response != "error - not logged in") {
+            this.chronology_table = new MatTableDataSource(response.Chronology.DataSet);
+            this.chronology_table.paginator = this.paginator;
+          } else {
+            this.toastr.error(response.Chronology.response);
+          }
     },
-    err => {
-      console.log('Error occured');
+    error => {
+      this.toastr.error(error);
     }
   );
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': ['date', 'topic', 'reference', 'event_agreed', 'brief_page_no', 'comment', 'privileged', 'witnesses', 'text'], 'type': 'chronology' };
+    dialogConfig.data = { 'data': ['MATTERGUID', 'CHRONOLOGYGUID','DATEFROM','DATETO','TIMEFROM','TIMETO','FORMAT', 'FORMATTEDDATE',
+    'TOPIC','BRIEFPAGENO','REFERENCE','COMMENT','WITNESSES','EVENTAGREED','DOCUMENTNAME','ADDITIONALTEXT','SHORTNAME','CLIENTNAME'], 'type': 'chronology' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
@@ -74,12 +82,5 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { date: new Date('2/1/2014'), topic: 'silq', reference: 'www.google.com', event_agreed: 'yes', brief_page_no: 10, comment: 'not done yet', privileged: 10, witnesses: 5, text: 12 },
-  { date: new Date('2/1/2014'), topic: 'silq', reference: 'www.google.com', event_agreed: 'yes', brief_page_no: 10, comment: 'not done yet', privileged: 10, witnesses: 5, text: 12 },
-  { date: new Date('2/1/2014'), topic: 'silq', reference: 'www.google.com', event_agreed: 'yes', brief_page_no: 10, comment: 'not done yet', privileged: 10, witnesses: 5, text: 12 },
-  { date: new Date('2/1/2014'), topic: 'silq', reference: 'www.google.com', event_agreed: 'yes', brief_page_no: 10, comment: 'not done yet', privileged: 10, witnesses: 5, text: 12 },
-  { date: new Date('2/1/2014'), topic: 'silq', reference: 'www.google.com', event_agreed: 'yes', brief_page_no: 10, comment: 'not done yet', privileged: 10, witnesses: 5, text: 12 },
-  { date: new Date('2/1/2014'), topic: 'silq', reference: 'www.google.com', event_agreed: 'yes', brief_page_no: 10, comment: 'not done yet', privileged: 10, witnesses: 5, text: 12 },
-  { date: new Date('2/1/2014'), topic: 'silq', reference: 'www.google.com', event_agreed: 'yes', brief_page_no: 10, comment: 'not done yet', privileged: 10, witnesses: 5, text: 12 },
 
 ];

@@ -9,20 +9,11 @@ import { ChronologyService } from 'app/_services/chronology.service';
 })
 export class LegalDetailsComponent implements OnInit {
 
-  val;
-  constructor(private chronology_service: ChronologyService) { }
+ 
+  constructor() { }
 
   ngOnInit() {
   //get chronology
-    this.chronology_service.getData().subscribe(res => {
-      this.val = res;
-      // this.filterData = res;
-      console.log(this.val);
-    },
-    err => {
-      console.log('Error occured');
-    }
-  );
 
   }
 

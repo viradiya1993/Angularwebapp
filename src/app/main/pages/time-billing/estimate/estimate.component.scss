@@ -48,20 +48,12 @@ app-estimate {
     width: 100%;
 }
 
-// table {
-//     width: 100%;
-//   }
-//   .mat-elevation-z8.one {
-//     margin-top: 15px;
-//     width: 100%;
-// }
-// .search{
-// }
-// .content {
-//     overflow: hidden;
-//     // margin-top: 10px;
-//     .example{
-//      width: 18%;   
-//     padding: 10px;
-// }
-// }
+//For Scoller add css
+.example-containerdata {
+    height: 50%;
+    overflow: auto;
+  }
+.mat-table.mat-table.ng-trigger.ng-trigger-animateStagger {
+    width: 300%;
+}
+

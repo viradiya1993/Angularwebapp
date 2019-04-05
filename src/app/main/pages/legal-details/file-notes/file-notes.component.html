@@ -7,40 +7,54 @@
                         <mat-icon class="secondary-text">more_vert</mat-icon>
                         </button>
                 </div>
-                <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
-                    <ng-container matColumnDef="date">
-                        <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
-                        <mat-cell *matCellDef="let row">{{row.date | date}}
+                <div class="example-containerdata">
+                <mat-table #table [dataSource]="filenotes_table" [@animateStagger]="{value:'50'}">
+                    <ng-container matColumnDef="FILENOTEGUID">
+                        <mat-header-cell class="header_title" *matHeaderCellDef>file note guid</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.FILENOTEGUID}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="time">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Time</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.time}}
+                    <ng-container matColumnDef="MATTERGUID">
+                        <mat-header-cell  class="header_title" *matHeaderCellDef fxHide fxShow.gt-sm>matter guid</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.MATTERGUID}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="note">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Note</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.note}}
+                    <ng-container matColumnDef="USERNAME">
+                        <mat-header-cell  class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>username</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.USERNAME}}
                         </mat-cell>
                     </ng-container>
-                    <!-- <ng-container matColumnDef="button">
-                    <mat-header-cell *matHeaderCellDef><button mat-icon-button [matMenuTriggerFor]="moreMenu" aria-label="More">
-                        <mat-icon class="secondary-text">more_vert</mat-icon>
-                    </button>
-            
-                    <mat-menu #moreMenu="matMenu">
-                        <button mat-menu-item aria-label="remove" (click)="deleteContact(row)">
-                            <mat-icon>delete</mat-icon>
-                            <span>Remove</span>
-                        </button>
-                    </mat-menu> </mat-header-cell>
-                    
-                    <mat-cell *matCellDef="let row"></mat-cell>
-                </ng-container> -->
+                    <ng-container matColumnDef="Date">
+                        <mat-header-cell  class="header_title" *matHeaderCellDef>date</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.Date}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="Time">
+                        <mat-header-cell  class="header_title" *matHeaderCellDef fxHide fxShow.gt-sm>time</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.Time}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="Note">
+                        <mat-header-cell  class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>note</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.Note}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="SHORTNAME">
+                        <mat-header-cell  class="header_title" *matHeaderCellDef>short name</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.SHORTNAME}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="CONTACTNAME">
+                        <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-sm>contact name</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.CONTACTNAME}}
+                        </mat-cell>
+                    </ng-container>
+                   
                   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                   <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                   </mat-row>
               </mat-table>
+            </div>
               <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
           </div>
       </div>

@@ -31,9 +31,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     horizontalNavbar: boolean; isTabShow: number = 0; rightNavbar: boolean; hiddenNavbar: boolean; navigation: any; selectedLanguage: any; selectedIndex: number;
     currentUser: any; confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     //timer setting
+    timerId: any;
     TotalTimer: number = 0;
-    prevMatterArray = [];
-    timerDataOBJ: any[] = [];
+    prevMatterArray: any[] = [];
+    timerInterval: any;
+    currentTimer: any = 0;
+    currentTimerHMS: any;
 
 
     // Private
@@ -51,6 +54,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.navBarSetting(this.router.url);
         });
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (this.currentUser)
+            this.timerId = 'timer_' + this.currentUser.UserGuid;
     }
 
 
@@ -68,56 +73,104 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.rightNavbar = settings.layout.navbar.position === 'right';
             this.hiddenNavbar = settings.layout.navbar.hidden === true;
         });
-        this.displayMattterList();
         this.updateTimerCounter();
+        this.displayMattterList();
     }
 
     //for binding
 
     /* ---------------------------------------------------------------------------start of timer add-------------------------------------------------------------------------  */
     toggleSidebarOpen(key) {
-        let activeMatters = JSON.parse(localStorage.getItem('set_active_matters'));
-        /*When add first matter in local storage. Matter array null for first time*/
-        // if (!localStorage.getItem("matter_array")) {
-        //     this.matter_array.push(activeMatters.SHORTNAME);
-        //     localStorage.setItem("matter_array", JSON.stringify(this.matter_array));
-        //     this.updateTimerCounter();
-        //     this.toastr.success("Timer is added for selected matter");
-        // } else {
-        //     this.prevMatterArray = JSON.parse(localStorage.getItem("matter_array"));
-        //     if (this.prevMatterArray.indexOf(activeMatters.SHORTNAME) == -1) {
-        //         if (this.prevMatterArray.length > 4) {
-        //             this.toastr.error("Only 5 timers are allowed, Please stop any one timer to add this selected matter in timer list.");
-        //             return false;
-        //         } else {
-        //             this.prevMatterArray.push(activeMatters.SHORTNAME);
-        //             localStorage.setItem("matter_array", JSON.stringify(this.prevMatterArray));
-        //             this.updateTimerCounter();
-        //         }
-        //     }
-        // }
-        this.displayMattterList(activeMatters.SHORTNAME);
+        this.updateTimerCounter();
+        this.displayMattterList();
         /*Keep open timer box once timer added*/
         this._fuseSidebarService.getSidebar(key).toggleOpen();
     }
 
-    displayMattterList(matter = false) {
-        this.timerDataOBJ = [];
-        if (localStorage.getItem("matter_array")) {
-            this.prevMatterArray = JSON.parse(localStorage.getItem("matter_array"));
-            console.log(this.prevMatterArray);
+    displayMattterList() {
+        this.prevMatterArray = [];
+        if (localStorage.getItem(this.timerId)) {
+            let timerObj = JSON.parse(localStorage.getItem(this.timerId));
+            timerObj.forEach(items => {
+                this.prevMatterArray.push({ 'matter_id': items.matter_id, 'time': this.secondsToHms(items.time), 'isStart': items.isStart });
+                if (localStorage.getItem('start_' + items.matter_id) && items.isStart) {
+                    this.stopTimer();
+                    this.currentTimer = localStorage.getItem('start_' + items.matter_id);
+                    this.startTimer(items.matter_id);
+                }
+            });
         }
-
     }
     updateTimerCounter() {
-        this.prevMatterArray = JSON.parse(localStorage.getItem("matter_array"));
+        this.prevMatterArray = JSON.parse(localStorage.getItem(this.timerId));
         if (this.prevMatterArray)
             this.TotalTimer = this.prevMatterArray.length;
     }
-    /*Timer start*/
 
-
-
+    /*convert Secound to HMS*/
+    secondsToHms(d) {
+        d = Number(d);
+        var hours = Math.floor(d / 3600) < 10 ? ("00" + Math.floor(d / 3600)).slice(-2) : Math.floor(d / 3600);
+        var minutes = ("00" + Math.floor((d % 3600) / 60)).slice(-2);
+        var seconds = ("00" + (d % 3600) % 60).slice(-2);
+        return hours + ":" + minutes + ":" + seconds;
+    }
+    stopMatterBack(matterId: any) {
+        let tempArray: any[] = []
+        let timerObj = JSON.parse(localStorage.getItem(this.timerId));
+        timerObj.forEach(items => {
+            if (items.matter_id === matterId) {
+                items.isStart = false;
+                items.time = this.currentTimer;
+                tempArray.push(items);
+                this.stopTimer();
+                localStorage.removeItem('start_' + items.matter_id);
+            } else {
+                tempArray.push(items);
+            }
+        });
+        this.currentTimer = 0;
+        localStorage.setItem(this.timerId, JSON.stringify(tempArray));
+        this.prevMatterArray = tempArray;
+        this.displayMattterList();
+    }
+    startMatterBack(matterId: any) {
+        let tempArray: any[] = []
+        let timerObj = JSON.parse(localStorage.getItem(this.timerId));
+        timerObj.forEach(items => {
+            if (items.isStart) {
+                items.isStart = false;
+                items.time = this.currentTimer;
+                tempArray.push(items);
+                localStorage.removeItem('start_' + items.matter_id);
+                this.stopTimer();
+            } else if (items.matter_id === matterId) {
+                this.currentTimer = 0;
+                items.isStart = true;
+                tempArray.push(items);
+                localStorage.setItem('start_' + items.matter_id, items.time);
+                this.currentTimer = items.time;
+                this.startTimer(items.matter_id);
+            } else {
+                tempArray.push(items);
+            }
+        });
+        localStorage.setItem(this.timerId, JSON.stringify(tempArray));
+        this.prevMatterArray = tempArray;
+        this.displayMattterList();
+    }
+    startTimer(matterId: any) {
+        if (localStorage.getItem('start_' + matterId)) {
+            this.timerInterval = setInterval(() => {
+                this.currentTimer++;
+                this.currentTimerHMS = this.secondsToHms(this.currentTimer);
+                localStorage.setItem('start_' + matterId, this.currentTimer);
+            }, 1000);
+        }
+    }
+    stopTimer() {
+        clearTimeout(this.timerInterval);
+    }
 
     /* ---------------------------------------------------------------------end of timer add--------------------------------------------------------------------------  */
     // for new contact dialog

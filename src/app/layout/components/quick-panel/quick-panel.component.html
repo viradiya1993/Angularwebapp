@@ -4,14 +4,17 @@
             <span>Timers</span>
         </h3>
         <mat-divider cdkFocusRegionEnd></mat-divider>
-        <mat-list-item *ngFor="let event of events" class="time_entry_list">
-            <h3 matLine>{{event.matter_hh}}:{{event.matter_mm}}:{{event.matter_ss}}</h3>
-            <p matLine class="secondary-text">{{event.title}}</p>
-            <button mat-raised-button color="primary" *ngIf="event.start_hidden" mat-button class="play_btn"><i class="material-icons">play_arrow</i></button>
-            <button mat-raised-button color="primary" *ngIf="event.pause_hidden" mat-button class="pause_btn"><i class="material-icons">pause</i></button>
-            <button mat-raised-button color="primary" mat-button class="pause_btn"><i class="material-icons">stop</i></button>
-            <mat-divider cdkFocusRegionEnd></mat-divider>
-        </mat-list-item>
+        <span *ngIf="eventsData">
+            <mat-list-item *ngFor="let event of eventsData" class="time_entry_list">
+                <h3 matLine *ngIf="event.isStart">{{currentTimerHMS}}</h3>
+                <h3 matLine *ngIf="!event.isStart">{{event.time}}</h3>
+                <p matLine class="secondary-text">{{event.matter_id}}</p>
+                <button mat-raised-button color="primary" *ngIf="!event.isStart" (click)="startTimer(event.matter_id)" mat-button class="play_btn"><i class="material-icons">play_arrow</i></button>
+                <button mat-raised-button color="primary" *ngIf="event.isStart" (click)="stopTimer(event.matter_id)" mat-button class="pause_btn"><i class="material-icons">pause</i></button>
+                <button mat-raised-button color="primary" mat-button class="pause_btn"><i class="material-icons">stop</i></button>
+                <mat-divider cdkFocusRegionEnd></mat-divider>
+            </mat-list-item>
+       </span>
         <!-- <mat-list-item class="time_entry_list">
             <h3 matLine>00:00:00</h3>
             <p matLine class="secondary-text">Group Meeting</p>

@@ -18,6 +18,7 @@ import { TimeEntryDialogComponent } from 'app/main/pages/time-entries/time-entry
 
 
 import { ReportsComponent } from 'app/main/reports/reports.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'toolbar',
@@ -27,36 +28,21 @@ import { ReportsComponent } from 'app/main/reports/reports.component';
 })
 @Injectable()
 export class ToolbarComponent implements OnInit, OnDestroy {
-    horizontalNavbar: boolean;
-    isTabShow: number = 1;
-    rightNavbar: boolean;
-    hiddenNavbar: boolean;
-    navigation: any;
-    selectedLanguage: any;
-    selectedIndex: number;
-    currentUser: any;
-    confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+    horizontalNavbar: boolean; isTabShow: number = 0; rightNavbar: boolean; hiddenNavbar: boolean; navigation: any; selectedLanguage: any; selectedIndex: number;
+    currentUser: any; confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+    //timer setting
+    TotalTimer: number = 0;
+    prevMatterArray = [];
+    timerDataOBJ: any[] = [];
 
 
     // Private
     private _unsubscribeAll: Subject<any>;
 
-    /**
-     * Constructor
-     *
-     * @param {FuseConfigService} _fuseConfigService
-     * @param {FuseSidebarService} _fuseSidebarService
-     * @param {TranslateService} _translateService
-     * 
-     * 
-     */
     constructor(
-        private _fuseConfigService: FuseConfigService,
-        private _fuseSidebarService: FuseSidebarService,
-        private authenticationService: AuthenticationService,
-        private router: Router,
-        public dialog: MatDialog,
-        public _matDialog: MatDialog
+        private _fuseConfigService: FuseConfigService, private _fuseSidebarService: FuseSidebarService,
+        private authenticationService: AuthenticationService, private router: Router, public dialog: MatDialog,
+        public _matDialog: MatDialog, private toastr: ToastrService
     ) {
         this.navigation = navigation;
         // Set the private defaults
@@ -65,7 +51,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.navBarSetting(this.router.url);
         });
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
     }
 
 
@@ -78,20 +63,63 @@ export class ToolbarComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         // Subscribe to the config changes
-        this._fuseConfigService.config
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((settings) => {
-                this.horizontalNavbar = settings.layout.navbar.position === 'top';
-                this.rightNavbar = settings.layout.navbar.position === 'right';
-                this.hiddenNavbar = settings.layout.navbar.hidden === true;
-            });
-
+        this._fuseConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe((settings) => {
+            this.horizontalNavbar = settings.layout.navbar.position === 'top';
+            this.rightNavbar = settings.layout.navbar.position === 'right';
+            this.hiddenNavbar = settings.layout.navbar.hidden === true;
+        });
+        this.displayMattterList();
+        this.updateTimerCounter();
     }
 
     //for binding
 
+    /* ---------------------------------------------------------------------------start of timer add-------------------------------------------------------------------------  */
+    toggleSidebarOpen(key) {
+        let activeMatters = JSON.parse(localStorage.getItem('set_active_matters'));
+        /*When add first matter in local storage. Matter array null for first time*/
+        // if (!localStorage.getItem("matter_array")) {
+        //     this.matter_array.push(activeMatters.SHORTNAME);
+        //     localStorage.setItem("matter_array", JSON.stringify(this.matter_array));
+        //     this.updateTimerCounter();
+        //     this.toastr.success("Timer is added for selected matter");
+        // } else {
+        //     this.prevMatterArray = JSON.parse(localStorage.getItem("matter_array"));
+        //     if (this.prevMatterArray.indexOf(activeMatters.SHORTNAME) == -1) {
+        //         if (this.prevMatterArray.length > 4) {
+        //             this.toastr.error("Only 5 timers are allowed, Please stop any one timer to add this selected matter in timer list.");
+        //             return false;
+        //         } else {
+        //             this.prevMatterArray.push(activeMatters.SHORTNAME);
+        //             localStorage.setItem("matter_array", JSON.stringify(this.prevMatterArray));
+        //             this.updateTimerCounter();
+        //         }
+        //     }
+        // }
+        this.displayMattterList(activeMatters.SHORTNAME);
+        /*Keep open timer box once timer added*/
+        this._fuseSidebarService.getSidebar(key).toggleOpen();
+    }
+
+    displayMattterList(matter = false) {
+        this.timerDataOBJ = [];
+        if (localStorage.getItem("matter_array")) {
+            this.prevMatterArray = JSON.parse(localStorage.getItem("matter_array"));
+            console.log(this.prevMatterArray);
+        }
+
+    }
+    updateTimerCounter() {
+        this.prevMatterArray = JSON.parse(localStorage.getItem("matter_array"));
+        if (this.prevMatterArray)
+            this.TotalTimer = this.prevMatterArray.length;
+    }
+    /*Timer start*/
 
 
+
+
+    /* ---------------------------------------------------------------------end of timer add--------------------------------------------------------------------------  */
     // for new contact dialog
     openDialog() {
         const dialogRef = this.dialog.open(ContactDialogComponent);
@@ -160,14 +188,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * Toggle sidebar open
-     *
-     * @param key
-     */
-    toggleSidebarOpen(key): void {
-        this._fuseSidebarService.getSidebar(key).toggleOpen();
-    }
+
     logOutUser() {
         this.authenticationService.logout();
     }
@@ -195,13 +216,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         setTimeout(() => {
             this.selectedIndex = undefined;
         }, 500);
-    }
-
-    //For Dairy Comoponent
-    @Output() dairyDetail: EventEmitter<string> = new EventEmitter<string>();
-
-    calander(data: string) {
-        // this.dairyDetail.emit(data);       
     }
 
 }

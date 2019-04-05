@@ -1,3 +1,6 @@
+<fuse-sidebar name="quickPanel" position="right" class="quick-panel time_entry_sidebar">
+    <quick-panel [events]="timerDataOBJ"></quick-panel>
+</fuse-sidebar>
 <mat-toolbar class="p-0 mat-elevation-z1 top_header" id="tool_baar_main">
     <div fxFlex fxFill fxLayout="row" fxLayoutAlign="start center">
         <div fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center" class="matbar_header">
@@ -71,7 +74,7 @@
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab details_tab">
                                     <section class="ribbon-section">
-                                 <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/time-billing'">
+                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/time-billing'">
                                     <section class="large-button-container">
                                         <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_invoice_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -83,7 +86,7 @@
                                 </button>
                                     </section>
                                     <section class="ribbon-section">
-                                <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/legal-details'">
+                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/legal-details'">
                                    <section class="large-button-container">
                                       <mat-icon class="main-icon">
                                             <img src="assets/icons/web_app/icon_authorities_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -433,14 +436,13 @@
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab extras_tab">
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button"  [routerLink]="'/diary'" [queryParams]="{ calander: 'day' }">                                         
+                                        <button mat-button class="large-button" [routerLink]="'/diary'" [queryParams]="{ calander: 'day' }">                                         
                                             <section class="large-button-container">                                                                                                    
                                                     <mat-icon class="main-icon">
                                                         <img src="assets/icons/web_app/icon_diary_d.ico" aria-label="Today" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                     </mat-icon>
                                                     <div class="main-text">
                                                         <span>Day <br> View</span>
-                                                        <!-- (click)="calander('day')" -->
                                                     </div>                                                                                           
                                             </section>                                                                                                    
                                         </button>
@@ -453,7 +455,6 @@
                                                 </mat-icon>
                                                 <div class="main-text">
                                                     <span >Week <br> View</span>
-                                                    <!-- (click)="calander('week')" -->
                                                 </div>
                                             </section>
                                         </button>
@@ -466,7 +467,6 @@
                                                 </mat-icon>
                                                 <div class="main-text">
                                                     <span>Month <br> View</span>
-                                                    <!-- (click)="calander('month')" -->
                                                 </div>
                                             </section>
                                         </button>
@@ -897,9 +897,9 @@
         </div>
         <div fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="start center" class="user_dropdown">
 
-            <button mat-icon-button class="chat-panel-toggle-button header_height_btn" (click)="toggleSidebarOpen('quickPanel')" aria-label="Toggle chat panel">
-                    <mat-icon class="secondary-text">timer</mat-icon>
-            </button>
+            <button mat-icon-button class="chat-panel-toggle-button header_height_btn" id="sidebar_open_button" (click)="toggleSidebarOpen('quickPanel')" aria-label="Toggle chat panel">
+                    <mat-icon class="secondary-text" matBadge="{{TotalTimer}}" matBadgeColor="warn">timer</mat-icon>
+           </button>
             <div class="toolbar-separator top_seprator"></div>
             <button mat-button [matMenuTriggerFor]="userMenu" class="user-button header_height_btn">
                  <div fxLayout="row" fxLayoutAlign="center center">

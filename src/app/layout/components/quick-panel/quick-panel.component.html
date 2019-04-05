@@ -5,10 +5,10 @@
         </h3>
         <mat-divider cdkFocusRegionEnd></mat-divider>
         <mat-list-item *ngFor="let event of events" class="time_entry_list">
-            <h3 matLine>{{event.detail}}</h3>
+            <h3 matLine>{{event.matter_hh}}:{{event.matter_mm}}:{{event.matter_ss}}</h3>
             <p matLine class="secondary-text">{{event.title}}</p>
-            <button mat-raised-button color="primary" mat-button class="play_btn"><i class="material-icons">play_arrow</i></button>
-            <button mat-raised-button color="primary" mat-button class="pause_btn"><i class="material-icons">pause</i></button>
+            <button mat-raised-button color="primary" *ngIf="event.start_hidden" mat-button class="play_btn"><i class="material-icons">play_arrow</i></button>
+            <button mat-raised-button color="primary" *ngIf="event.pause_hidden" mat-button class="pause_btn"><i class="material-icons">pause</i></button>
             <button mat-raised-button color="primary" mat-button class="pause_btn"><i class="material-icons">stop</i></button>
             <mat-divider cdkFocusRegionEnd></mat-divider>
         </mat-list-item>
@@ -28,6 +28,5 @@
             <button mat-raised-button color="primary" mat-button class="pause_btn"><i class="material-icons">stop</i></button>
             <mat-divider cdkFocusRegionEnd></mat-divider>
         </mat-list-item> -->
-
     </mat-list>
 </div>

@@ -18,10 +18,6 @@ import { FuseProgressBarModule, FuseSidebarModule, FuseThemeOptionsModule } from
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 
 import { fuseConfig } from 'app/fuse-config';
-//remove when apply api
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { FakeDbService } from 'app/fake-db/fake-db.service';
-//done api
 
 import { AppComponent } from 'app/app.component';
 import { LayoutModule } from 'app/layout/layout.module';
@@ -38,7 +34,7 @@ import { InternalErrorComponent } from './main/errors/internal-error/internal-er
 //Datepicker
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { ToastrModule } from 'ngx-toastr';
-
+import {DatePipe} from '@angular/common';
 //end
 const appRoutes: Routes = [
     { path: '', loadChildren: './main/authentication/authentication.module#AuthenticationModule' },
@@ -66,11 +62,7 @@ const appRoutes: Routes = [
         RouterModule.forRoot(appRoutes, { useHash: true }),
 
         TranslateModule.forRoot(),
-        //remove when apply api
-        InMemoryWebApiModule.forRoot(FakeDbService, {
-            delay: 0,
-            passThruUnknownUrl: true
-        }),
+      
         // Material moment date module
         MatMomentDateModule,
 
@@ -115,7 +107,8 @@ const appRoutes: Routes = [
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        DatePipe,
     ],
 })
 export class AppModule {

@@ -5,11 +5,11 @@ import { HttpClient} from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class DiaryDataService {
+export class ReportlistService {
 
   constructor(private http: HttpClient) { }
 
-  DiaryData(){
-    return this.http.get<any>(environment.APIEndpoint + 'GetAppointment');
+  allreportlist() {
+    return this.http.get<any>(environment.APIEndpoint + 'ReportList');
   }
 }

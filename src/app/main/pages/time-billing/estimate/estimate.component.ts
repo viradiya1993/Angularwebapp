@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.component';
-import { EstimateService } from '../../../../_services';
+import { EstimateService,GetallcolumnsFilterService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -17,9 +17,10 @@ export class EstimateComponent implements OnInit {
  
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog,private Estimate: EstimateService,private toastr: ToastrService) { }
+  constructor(private dialog: MatDialog,private Estimate: EstimateService,private GetallcolumnsFilter: GetallcolumnsFilterService,private toastr: ToastrService) { }
   Estimatedata;
-  ngOnInit() {   
+  ngOnInit() {  
+    //Table Data Listing:
     this.Estimate.MatterEstimatesData().subscribe(res => {     
      if(res.EstimateItem.response !="error - not logged in"){      
        localStorage.setItem('session_token', res.EstimateItem.SessionToken);
@@ -32,6 +33,14 @@ export class EstimateComponent implements OnInit {
    err => {
      this.toastr.error(err);
    });  
+
+   //Get All Columns:
+   this.GetallcolumnsFilter.Getallcolumns('matter','estimates').subscribe(response => { 
+      console.log(response);
+   },
+  err => {
+      this.toastr.error(err);
+    }); 
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();

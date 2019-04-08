@@ -187,6 +187,24 @@ body.theme-default app-login #login #login-intro {
     background-position: center center;
 }
 
+
+//user 2
+body.theme-yellow-light app-login #login #login-form-wrapper {
+    background: white;
+}
+
+// app-login #login {
+//     background: none;
+// }
+body.theme-yellow-light app-login #login #login-intro {
+    color: white;
+    width: 100%;
+    overflow: hidden;
+    background: url(assets/images/backgrounds/bg.jpg) no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
 .logo-footer.ng-trigger.ng-trigger-animate {
     padding: 13px 0px 0px 116px;
 }

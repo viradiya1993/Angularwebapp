@@ -17,6 +17,8 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
     fuseConfig: any;
     navigation: any;
+    greenTheme: boolean;
+    defultTheme: boolean;
 
     // Private
     private _fusePerfectScrollbar: FusePerfectScrollbarDirective;
@@ -38,6 +40,10 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
     ) {
         // Set the private defaults
         this._unsubscribeAll = new Subject();
+        if (localStorage.getItem('theme_type') == "theme-yellow-light")
+            this.greenTheme = true;
+        else
+            this.defultTheme = true;
     }
 
     // -----------------------------------------------------------------------------------------------------

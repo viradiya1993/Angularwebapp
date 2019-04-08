@@ -2,6 +2,8 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
+import { SafeCustodyService } from './../../../../_services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-safecustody',
@@ -11,19 +13,42 @@ import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.c
   animations: fuseAnimations
 })
 export class SafecustodyComponent implements OnInit {
-  displayedColumns: string[] = ['packet_number', 'packet_description', 'document', 'status', 'document_name', 'description', 'review_date'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] =  ['SAFECUSTODYGUID', 'SAFECUSTODYPACKETGUID', 'MATTERGUID', 'CONTACTGUID', 'DOCUMENTTYPE',
+  'SAFECUSTODYDESCRIPTION', 'DOCUMENTNAME', 'STATUS', 'REMINDER', 'REMINDERDATE',
+  'REMINDERTIME', 'AdditionalText', 'SHORTNAME', 'CONTACTNAME', 'PACKETNUMBER'];
+  
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog) { }
-
+  constructor(private dialog: MatDialog,private safeCustody_service: SafeCustodyService,private toastr: ToastrService) { }
+  safeCustody_table;
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
+     //get autorites  
+      
+     this.safeCustody_service.getData().subscribe(response => {
+      localStorage.setItem('session_token', response.SessionToken);
+      console.log(response);
+        
+      if (response.SafeCustody.response != "error - not logged in") {
+        console.log(response.SafeCustody.DataSet);
+        this.safeCustody_table = new MatTableDataSource(response.SafeCustody.DataSet);
+        this.safeCustody_table.paginator = this.paginator;
+      } else {
+        this.toastr.error(response.SafeCustody.response);
+      }
+      // this.safeCustody_table = new MatTableDataSource<PeriodicElement>(response.SafeCustody.DataSet);
+      // this.safeCustody_table.paginator = this.paginator;
+    },
+    error => {
+      this.toastr.error(error);
+    }
+  );
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': ['packet_number', 'packet_description', 'document', 'status', 'document_name', 'description', 'review_date'], 'type': 'safecustody' };
+    dialogConfig.data = { 'data': ['SAFECUSTODYGUID', 'SAFECUSTODYPACKETGUID', 'MATTERGUID', 'CONTACTGUID', 'DOCUMENTTYPE',
+    'SAFECUSTODYDESCRIPTION', 'DOCUMENTNAME', 'STATUS', 'REMINDER', 'REMINDERDATE',
+    'REMINDERTIME', 'AdditionalText', 'SHORTNAME', 'CONTACTNAME', 'PACKETNUMBER'], 'type': 'safecustody' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
@@ -55,13 +80,5 @@ export interface PeriodicElement {
 }
 
 
-const ELEMENT_DATA: PeriodicElement[] = [
 
-  { packet_number: 11112, packet_description: 'in process ', document: 2521, status: 'not done yet', document_name: 'xyz', description: 'abcdefgh', review_date: new Date('2/1/2014') },
-  { packet_number: 12362, packet_description: 'in process', document: 2521, status: ' done ', document_name: 'xyz ', description: 'abcdefgh ', review_date: new Date('2/1/2014') },
-  { packet_number: 15634, packet_description: 'in process ', document: 2521, status: 'not done yet', document_name: 'xyz', description: 'abcdefgh ', review_date: new Date('2/1/2014') },
-  { packet_number: 11411, packet_description: 'in process', document: 2521, status: 'not done yet', document_name: 'xyz', description: 'abcdefgh ', review_date: new Date('2/1/2014') },
-  { packet_number: 12153, packet_description: 'in process', document: 2521, status: 'done', document_name: ' xyz', description: ' abcdefgh', review_date: new Date('2/1/2014') },
-  { packet_number: 12316, packet_description: 'in process', document: 2521, status: 'not done yet', document_name: 'xyz', description: ' abcdefgh', review_date: new Date('2/1/2014') },
-];
 

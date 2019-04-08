@@ -11,7 +11,14 @@ import * as $ from 'jquery';
 export class MattersComponent implements OnInit {
   mattersDetail: any;
   detailHeight: any;
-  constructor() { }
+  constructor() {
+    let theme_type = localStorage.getItem('theme_type');
+    if (theme_type != "theme-default") {
+      $('body').addClass('theme-yellow-light').removeClass("theme-default");
+    } else {
+      $('body').addClass('theme-default').removeClass("theme-yellow-light");
+    }
+  }
 
   ngOnInit() { }
 

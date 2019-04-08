@@ -27,7 +27,7 @@ export class AuthenticationService {
         let detail = {
             user: uesrname, password: password, formatting: 'JSON', EmailAddress: "", SessionToken: ""
         };
-        return this.http.post<any>(environment.APIEndpoint + 'login', detail).pipe(map(loginResponse => {
+        return this.http.post<any>(environment.APIEndpoint + 'login', detail).pipe(map(loginResponse => {            
             if (loginResponse && loginResponse.login_response) {
                 let responseType = loginResponse.login_response.Response;
                 let LoggedInStatus = loginResponse.login_response.LoggedInStatus;

@@ -8,15 +8,13 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
-import { AuthenticationService } from '../../../_services';
+import { AuthenticationService,ReportlistService } from '../../../_services';
 import { Router } from '@angular/router';
 import { ContactDialogComponent } from './../../../main/pages/contact/contact-dialog/contact-dialog.component';
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { ContactCorresDetailsComponent } from 'app/main/pages/contact/contact-corres-details/contact-corres-details.component';
 import { TimeEntryDialogComponent } from 'app/main/pages/time-entries/time-entry-dialog/time-entry-dialog.component';
-
-
 import { ReportsComponent } from 'app/main/reports/reports.component';
 import { ToastrService } from 'ngx-toastr';
 
@@ -43,10 +41,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any>;
 
     constructor(
-        private _fuseConfigService: FuseConfigService, private _fuseSidebarService: FuseSidebarService,
-        private authenticationService: AuthenticationService, private router: Router, public dialog: MatDialog,
-        public _matDialog: MatDialog, private toastr: ToastrService
-    ) {
+        private _fuseConfigService: FuseConfigService,
+        private _fuseSidebarService: FuseSidebarService,
+        private authenticationService: AuthenticationService,
+        private router: Router,
+        public dialog: MatDialog,
+        public _matDialog: MatDialog,
+        private reportlistService: ReportlistService,
+        private toastr: ToastrService
+            ) {
         this.navigation = navigation;
         // Set the private defaults
         this._unsubscribeAll = new Subject();
@@ -68,13 +71,35 @@ export class ToolbarComponent implements OnInit, OnDestroy {
      */
     ngOnInit(): void {
         // Subscribe to the config changes
-        this._fuseConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe((settings) => {
+    this._fuseConfigService.config
+        .pipe(takeUntil(this._unsubscribeAll))
+        .subscribe((settings) => {
             this.horizontalNavbar = settings.layout.navbar.position === 'top';
             this.rightNavbar = settings.layout.navbar.position === 'right';
             this.hiddenNavbar = settings.layout.navbar.hidden === true;
         });
-        this.updateTimerCounter();
-        this.displayMattterList();
+
+    //Report Listing
+    let ReportListName:any[]=[];
+    this.reportlistService.allreportlist().subscribe(res => { 
+        if(res.Report_List_response.response !="error - not logged in"){ 
+            res.Report_List_response.DataSet.forEach(element => {
+                if(element.REPORTGROUP=='Management'){
+                   let  Management={
+                    REPORTID:element.REPORTID,
+                   }
+                }   
+                ReportListName.push();           
+            });
+            console.log(ReportListName);
+        }else{
+        this.toastr.error(res.EstimateItem.response);
+        }
+        },
+        err => {
+        this.toastr.error(err);
+        });       
+
     }
 
     //for binding
@@ -187,6 +212,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
             console.log(result);
 
+            console.log(`Dialog result: ${result}`);
         });
     }
 

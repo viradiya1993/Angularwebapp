@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation, Output, EventEmitter,Injectable } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation, Output, EventEmitter, Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
@@ -26,29 +26,20 @@ import { ToastrService } from 'ngx-toastr';
 })
 @Injectable()
 export class ToolbarComponent implements OnInit, OnDestroy {
-    horizontalNavbar: boolean;
-    isTabShow: number = 1;
-    rightNavbar: boolean;
-    hiddenNavbar: boolean;
-    navigation: any;
-    selectedLanguage: any;
-    selectedIndex: number;
-    currentUser: any;
-    confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+    horizontalNavbar: boolean; isTabShow: number = 0; rightNavbar: boolean; hiddenNavbar: boolean; navigation: any; selectedLanguage: any; selectedIndex: number;
+    currentUser: any; confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+    //timer setting
+    timerId: any;
+    TotalTimer: number = 0;
+    prevMatterArray: any[] = [];
+    timerInterval: any;
+    currentTimer: any = 0;
+    currentTimerHMS: any;
 
 
     // Private
     private _unsubscribeAll: Subject<any>;
 
-    /**
-     * Constructor
-     *
-     * @param {FuseConfigService} _fuseConfigService
-     * @param {FuseSidebarService} _fuseSidebarService
-     * @param {TranslateService} _translateService
-     * 
-     * 
-     */
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
@@ -62,14 +53,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.navigation = navigation;
         // Set the private defaults
         this._unsubscribeAll = new Subject();
-        this.router.events.subscribe((res) => {            
+        this.router.events.subscribe((res) => {
             this.navBarSetting(this.router.url);
         });
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
+        if (this.currentUser)
+            this.timerId = 'timer_' + this.currentUser.UserGuid;
     }
-   
-    
+
+
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
@@ -112,8 +104,100 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     //for binding
 
+    /* ---------------------------------------------------------------------------start of timer add-------------------------------------------------------------------------  */
+    toggleSidebarOpen(key) {
+        this.updateTimerCounter();
+        this.displayMattterList();
+        /*Keep open timer box once timer added*/
+        this._fuseSidebarService.getSidebar(key).toggleOpen();
+    }
 
+    displayMattterList() {
+        this.prevMatterArray = [];
+        if (localStorage.getItem(this.timerId)) {
+            let timerObj = JSON.parse(localStorage.getItem(this.timerId));
+            timerObj.forEach(items => {
+                this.prevMatterArray.push({ 'matter_id': items.matter_id, 'time': this.secondsToHms(items.time), 'isStart': items.isStart });
+                if (localStorage.getItem('start_' + items.matter_id) && items.isStart) {
+                    this.stopTimer();
+                    this.currentTimer = localStorage.getItem('start_' + items.matter_id);
+                    this.startTimer(items.matter_id);
+                }
+            });
+        }
+    }
+    updateTimerCounter() {
+        this.prevMatterArray = JSON.parse(localStorage.getItem(this.timerId));
+        if (this.prevMatterArray)
+            this.TotalTimer = this.prevMatterArray.length;
+    }
 
+    /*convert Secound to HMS*/
+    secondsToHms(d) {
+        d = Number(d);
+        var hours = Math.floor(d / 3600) < 10 ? ("00" + Math.floor(d / 3600)).slice(-2) : Math.floor(d / 3600);
+        var minutes = ("00" + Math.floor((d % 3600) / 60)).slice(-2);
+        var seconds = ("00" + (d % 3600) % 60).slice(-2);
+        return hours + ":" + minutes + ":" + seconds;
+    }
+    stopMatterBack(matterId: any) {
+        let tempArray: any[] = []
+        let timerObj = JSON.parse(localStorage.getItem(this.timerId));
+        timerObj.forEach(items => {
+            if (items.matter_id === matterId) {
+                items.isStart = false;
+                items.time = this.currentTimer;
+                tempArray.push(items);
+                this.stopTimer();
+                localStorage.removeItem('start_' + items.matter_id);
+            } else {
+                tempArray.push(items);
+            }
+        });
+        this.currentTimer = 0;
+        localStorage.setItem(this.timerId, JSON.stringify(tempArray));
+        this.prevMatterArray = tempArray;
+        this.displayMattterList();
+    }
+    startMatterBack(matterId: any) {
+        let tempArray: any[] = []
+        let timerObj = JSON.parse(localStorage.getItem(this.timerId));
+        timerObj.forEach(items => {
+            if (items.isStart) {
+                items.isStart = false;
+                items.time = this.currentTimer;
+                tempArray.push(items);
+                localStorage.removeItem('start_' + items.matter_id);
+                this.stopTimer();
+            } else if (items.matter_id === matterId) {
+                this.currentTimer = 0;
+                items.isStart = true;
+                tempArray.push(items);
+                localStorage.setItem('start_' + items.matter_id, items.time);
+                this.currentTimer = items.time;
+                this.startTimer(items.matter_id);
+            } else {
+                tempArray.push(items);
+            }
+        });
+        localStorage.setItem(this.timerId, JSON.stringify(tempArray));
+        this.prevMatterArray = tempArray;
+        this.displayMattterList();
+    }
+    startTimer(matterId: any) {
+        if (localStorage.getItem('start_' + matterId)) {
+            this.timerInterval = setInterval(() => {
+                this.currentTimer++;
+                this.currentTimerHMS = this.secondsToHms(this.currentTimer);
+                localStorage.setItem('start_' + matterId, this.currentTimer);
+            }, 1000);
+        }
+    }
+    stopTimer() {
+        clearTimeout(this.timerInterval);
+    }
+
+    /* ---------------------------------------------------------------------end of timer add--------------------------------------------------------------------------  */
     // for new contact dialog
     openDialog() {
         const dialogRef = this.dialog.open(ContactDialogComponent);
@@ -181,19 +265,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
 
-    /**
-     * Toggle sidebar open
-     *
-     * @param key
-     */
-    toggleSidebarOpen(key): void {
-        this._fuseSidebarService.getSidebar(key).toggleOpen();
-    }
+
     logOutUser() {
         this.authenticationService.logout();
     }
     navBarSetting(value: any) {
-        let x = value.split("/");       
+        let x = value.split("/");
         if (x[1] == "matters" || x[1] == "") {
             this.isTabShow = 1;
         } else if (x[1] == "contact") {
@@ -202,7 +279,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 3;
         } else if (x[1] == "legal-details") {
             this.isTabShow = 4;
-        } else if (x[1] == "diary" || x[1] =='diary?calander=day' || x[1] =='diary?calander=week' || x[1] =='diary?calander=month') {
+        } else if (x[1] == "diary" || x[1] == 'diary?calander=day' || x[1] == 'diary?calander=week' || x[1] == 'diary?calander=month') {
             this.isTabShow = 5;
         } else if (x[1] == "time-entries") {
             this.isTabShow = 6;
@@ -216,13 +293,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         setTimeout(() => {
             this.selectedIndex = undefined;
         }, 500);
-    }
-
-    //For Dairy Comoponent
-    @Output() dairyDetail : EventEmitter <string> = new EventEmitter<string>();
-
-    calander(data : string){        
-       // this.dairyDetail.emit(data);       
     }
 
 }

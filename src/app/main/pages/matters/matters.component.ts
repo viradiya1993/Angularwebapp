@@ -24,6 +24,7 @@ export class MattersComponent implements OnInit {
 
   matterBack(event: any) {
     this.mattersDetail = event;
+    localStorage.setItem('set_active_matters', JSON.stringify(this.mattersDetail));
     let windowHeight = $(window).height();
     let toolBaarMain = $('#tool_baar_main').height();
     let serchHeight = $('.sticky_search_div').height();

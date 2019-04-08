@@ -2,21 +2,15 @@ import { Injectable } from '@angular/core';
 
 import { FuseSidebarComponent } from './sidebar.component';
 
-@Injectable({
-    providedIn: 'root'
-})
-export class FuseSidebarService
-{
+@Injectable({ providedIn: 'root' })
+export class FuseSidebarService {
     // Private
     private _registry: { [key: string]: FuseSidebarComponent } = {};
 
     /**
      * Constructor
      */
-    constructor()
-    {
-
-    }
+    constructor() { }
 
     /**
      * Add the sidebar to the registry
@@ -24,11 +18,9 @@ export class FuseSidebarService
      * @param key
      * @param sidebar
      */
-    register(key, sidebar): void
-    {
+    register(key, sidebar): void {
         // Check if the key already being used
-        if ( this._registry[key] )
-        {
+        if (this._registry[key]) {
             console.error(`The sidebar with the key '${key}' already exists. Either unregister it first or use a unique key.`);
 
             return;
@@ -43,11 +35,9 @@ export class FuseSidebarService
      *
      * @param key
      */
-    unregister(key): void
-    {
+    unregister(key): void {
         // Check if the sidebar exists
-        if ( !this._registry[key] )
-        {
+        if (!this._registry[key]) {
             console.warn(`The sidebar with the key '${key}' doesn't exist in the registry.`);
         }
 
@@ -61,16 +51,12 @@ export class FuseSidebarService
      * @param key
      * @returns {FuseSidebarComponent}
      */
-    getSidebar(key): FuseSidebarComponent
-    {
+    getSidebar(key): FuseSidebarComponent {
         // Check if the sidebar exists
-        if ( !this._registry[key] )
-        {
+        if (!this._registry[key]) {
             console.warn(`The sidebar with the key '${key}' doesn't exist in the registry.`);
-
             return;
         }
-
         // Return the sidebar
         return this._registry[key];
     }

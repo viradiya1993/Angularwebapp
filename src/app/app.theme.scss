@@ -241,7 +241,6 @@ body.theme-default .mat-dialog-container {
 }
 
 
-
 /****** popup cmn css user 2 *****/
 
 body.theme-yellow-light .mat-dialog-container {
@@ -281,20 +280,35 @@ body.theme-yellow-light .mat-dialog-container {
 // .reports_tab_main .group-section-tab .ribbon-section {
 //     float: left;
 // }
-
 .reports_tab_main {
     width: 70%;
 }
+
 .reports_tab_main .mat-card {
     width: 100%;
 }
+
 toolbar .ribbon-container.reports_tab_main .mat-card-content {
     display: flex;
     overflow: auto;
     width: 100%;
 }
-    //for camel case
-    .header_title{text-transform: capitalize;
-    }
 
-    
+//for camel case
+.header_title {
+    text-transform: capitalize;
+}
+
+.w-timepicker-dialog {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: calc(100% + 0px) !important;
+}
+
+.mat-form-field .mat-icon {
+    cursor: pointer !important;
+}
+
+.time_entry_picker .mat-form-field-appearance-outline .mat-form-field-suffix {
+    top: 0;
+}

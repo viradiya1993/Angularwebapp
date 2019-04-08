@@ -10,7 +10,7 @@ import { NavbarModule } from 'app/layout/components/navbar/navbar.module';
 import { ToolbarModule } from 'app/layout/components/toolbar/toolbar.module';
 
 import { VerticalLayout1Component } from 'app/layout/vertical/layout-1/layout-1.component';
-import { QuickPanelModule } from 'app/layout/components/quick-panel/quick-panel.module';
+
 
 @NgModule({
     declarations: [
@@ -25,8 +25,7 @@ import { QuickPanelModule } from 'app/layout/components/quick-panel/quick-panel.
         ContentModule,
         FooterModule,
         NavbarModule,
-        ToolbarModule,
-        QuickPanelModule
+        ToolbarModule
     ],
     exports: [
         VerticalLayout1Component

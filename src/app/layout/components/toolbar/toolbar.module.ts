@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MatButtonModule, MatIconModule, MatMenuModule, MatCardModule, MatListModule, MatToolbarModule, MatTabsModule } from '@angular/material';
+import { MatButtonModule, MatIconModule, MatMenuModule, MatCardModule, MatListModule, MatToolbarModule, MatTabsModule, MatBadgeModule } from '@angular/material';
 
-import { FuseSearchBarModule, FuseShortcutsModule } from '@fuse/components';
+import { FuseSearchBarModule, FuseShortcutsModule, FuseSidebarModule } from '@fuse/components';
 import { FuseSharedModule } from '@fuse/shared.module';
+import { QuickPanelModule } from 'app/layout/components/quick-panel/quick-panel.module';
 
 
 import { ToolbarComponent } from 'app/layout/components/toolbar/toolbar.component';
@@ -21,10 +22,13 @@ import { ToolbarComponent } from 'app/layout/components/toolbar/toolbar.componen
         MatTabsModule,
         MatListModule,
         MatCardModule,
+        MatBadgeModule,
 
         FuseSharedModule,
         FuseSearchBarModule,
-        FuseShortcutsModule
+        FuseSidebarModule,
+        FuseShortcutsModule,
+        QuickPanelModule
     ],
     exports: [
         ToolbarComponent

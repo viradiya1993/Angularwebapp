@@ -1,7 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnDestroy, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'quick-panel',
@@ -10,24 +8,28 @@ import { takeUntil } from 'rxjs/operators';
     encapsulation: ViewEncapsulation.None
 })
 export class QuickPanelComponent implements OnInit, OnDestroy {
-    events: any[] = [
-        { 'title': 'Group Meeting', 'detail': '00:00:00' },
-        { 'title': 'Public Beta Release', 'detail': '00:00:00' },
-        { 'title': 'Dinner with David', 'detail': '00:00:00' },
-        { 'title': 'Q&A Session', 'detail': '00:00:00' }
-    ];
     private _unsubscribeAll: Subject<any>;
-
-    constructor(
-        private _httpClient: HttpClient
-    ) {
+    @Input() eventsData: any;
+    @Input() currentTimerHMS: any;
+    @Output() StopMatterId: EventEmitter<any> = new EventEmitter<any>();
+    @Output() StartMatterId: EventEmitter<any> = new EventEmitter<any>();
+    constructor() {
         this._unsubscribeAll = new Subject();
     }
 
-    ngOnInit(): void { }
 
+    ngOnInit(): void {
+        this.eventsData.push({ 'matter_id': 'demo', 'time': 0, 'isStart': true });
+    }
     ngOnDestroy(): void {
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
+    }
+    startTimer(MatterId: any) {
+        this.StartMatterId.emit(MatterId);
+    }
+
+    stopTimer(MatterId: any) {
+        this.StopMatterId.emit(MatterId);
     }
 }

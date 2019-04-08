@@ -11,5 +11,8 @@ export class TimersService {
   getTimeEnrtyData(Data) {
     return this.httpClient.post<any>(environment.APIEndpoint + 'GetWorkItems', Data);
   }
+  GetUsers(Data) {
+    return this.httpClient.post<any>(environment.APIEndpoint + 'GetUsers', Data);
+  }
 
 }

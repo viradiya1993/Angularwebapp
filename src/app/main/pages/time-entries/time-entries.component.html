@@ -2,19 +2,18 @@
     <div class="content">
         <div class="center p-24 list_tbl_main">
             <div class="matter-serach-div sticky_search_div">
-                <form [formGroup]="form">
-                    <mat-form-field class="example" appearance="outline">
+                <form [formGroup]="TimeEnrtyForm">
+                    <mat-form-field class="example" appearance="outline" *ngIf="isShowDrop">
                         <mat-label>DLP</mat-label>
-                        <mat-select (selectionChange)="dlpChange($event.value)">
+                        <mat-select (selectionChange)="dlpChange($event.value)" formControlName="dlpdrop">
                             <mat-option value="all">All</mat-option>
                             <mat-option value="">None</mat-option>
-                            <mat-option value="blue">CSP</mat-option>
-                            <mat-option value="blue">T</mat-option>
+                            <mat-option *ngFor="let TimerDrop of TimerDropData" value="{{TimerDrop.USERID}}">{{TimerDrop.USERID}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="example" appearance="outline">
                         <mat-label>Uninvoiced Work</mat-label>
-                        <mat-select (selectionChange)="uninvoicedWorkChange($event.value)">
+                        <mat-select (selectionChange)="uninvoicedWorkChange($event.value)" formControlName="uninvoicedWork">
                             <mat-option value="No">Uninvoiced Work</mat-option>
                             <mat-option value="Yes">invoiced Work</mat-option>
                             <mat-option value="-2">Written Off Work</mat-option>
@@ -22,7 +21,7 @@
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="">
-                        <input matInput placeholder="Choose a date" [satDatepicker]="picker2" formControlName="date">
+                        <input matInput placeholder="Choose a date" [satDatepicker]="picker2" formControlName="date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)">
                         <sat-datepicker #picker2 [rangeMode]="true">
                         </sat-datepicker>
                         <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>

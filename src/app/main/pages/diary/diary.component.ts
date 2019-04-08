@@ -1,19 +1,12 @@
 import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material';
 import { Subject } from 'rxjs';
 import { startOfDay, isSameDay, isSameMonth } from 'date-fns';
-import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarMonthViewDay } from 'angular-calendar';
-
-import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import { CalendarEvent,CalendarEventTimesChangedEvent, CalendarMonthViewDay } from 'angular-calendar';
 import { fuseAnimations } from '@fuse/animations';
-
 import { DiaryService } from './diary.service';
 import { DiaryEventModel } from './event.model';
-import { EventFormComponent } from './event-form/event-form.component';
 import { ActivatedRoute } from '@angular/router';
-//import { ToolbarComponent } from '../../../layout/components/toolbar/toolbar.component';
-
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: 'app-diary',
@@ -21,15 +14,10 @@ import { ActivatedRoute } from '@angular/router';
     styleUrls: ['./diary.component.scss'],
     encapsulation: ViewEncapsulation.None,
     animations: fuseAnimations,
-    //providers: [ToolbarComponent]
 })
 export class DiaryComponent implements OnInit {
-   // view: string="week";
-
-    
-    actions: CalendarEventAction[];
-    activeDayIsOpen: boolean;
-    confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+     
+    activeDayIsOpen: boolean;  
     dialogRef: any;
     events: CalendarEvent[];
     refresh: Subject<any> = new Subject();
@@ -37,11 +25,10 @@ export class DiaryComponent implements OnInit {
     view: string;
     viewDate: Date;
 
-    
     constructor(
-        private _matDialog: MatDialog,
         private _calendarService: DiaryService,
-        private route: ActivatedRoute
+        private route: ActivatedRoute,
+        private _httpClient: HttpClient,
     ) {
         this.route.queryParams.subscribe(params => {
             if(params['calander']){
@@ -51,61 +38,28 @@ export class DiaryComponent implements OnInit {
                 this.view = 'month';
             }            
         });
-       // Set the defaults      
-        //this.view = 'day';
-       //console.log(this.view);
+       // Set the defaults        
         this.viewDate = new Date();
         this.activeDayIsOpen = true;
         this.selectedDay = { date: startOfDay(new Date()) };
-        
-        this.actions = [
-            {
-                label: '<i class="material-icons s-16">edit</i>',
-                onClick: ({ event }: { event: CalendarEvent }): void => {
-                    this.editEvent('edit', event);
-                }
-            },
-            {
-                label: '<i class="material-icons s-16">delete</i>',
-                onClick: ({ event }: { event: CalendarEvent }): void => {
-                    this.deleteEvent(event);
-                }
-            }
-        ];
 
         /**
          * Get events from service/server
          */
         this.setEvents();
     }
-
-    ngOnInit(): void {
-       
-        /**
-           * Watch re-render-refresh for updating db
-           */
-         
-        this.refresh.subscribe(updateDB => {
-           
-            if (updateDB) {
-                this._calendarService.updateEvents(this.events);
-            }
-        });
-
-        this._calendarService.onEventsUpdated.subscribe(events => {
-            this.setEvents();
-            this.refresh.next();
-        });
+    ngOnInit(): void {    
+        
     }
     /**
        * Set events
        */
     setEvents(): void {
-        this.events = this._calendarService.events.map(item => {            
-            item.actions = this.actions;
+        this.events = this._calendarService.events.map(item => {
             return new DiaryEventModel(item);
         });
     }
+
     /**
      * Before View Renderer
      *
@@ -116,7 +70,7 @@ export class DiaryComponent implements OnInit {
     //     /**
     //      * Get the selected day
     //      */
-        const _selectedDay = body.find((_day) => {
+        const _selectedDay = body.find((_day) => {            
             return _day.date.getTime() === this.selectedDay.date.getTime();
         });
 
@@ -127,16 +81,13 @@ export class DiaryComponent implements OnInit {
              */
             _selectedDay.cssClass = 'cal-selected';
         }
-
     }
-
     /**
      * Day clicked
      *
      * @param {MonthViewDay} day
      */
-    dayClicked(day: CalendarMonthViewDay): void {       
-        
+    dayClicked(day: CalendarMonthViewDay): void { 
         const date: Date = day.date;
         const events: CalendarEvent[] = day.events;
 
@@ -152,7 +103,6 @@ export class DiaryComponent implements OnInit {
         this.selectedDay = day;
         this.refresh.next();
     }
-
     /**
      * Event times changed
      * Event dropped or resized
@@ -166,97 +116,5 @@ export class DiaryComponent implements OnInit {
         event.end = newEnd;
         // console.warn('Dropped or resized', event);
         this.refresh.next(true);
-    }
-
-    /**
-     * Delete Event
-     *
-     * @param event
-     */
-    deleteEvent(event): void {
-        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-            disableClose: false
-        });
-
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-
-        this.confirmDialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                const eventIndex = this.events.indexOf(event);
-                this.events.splice(eventIndex, 1);
-                this.refresh.next(true);
-            }
-            this.confirmDialogRef = null;
-        });
-
-    }
-
-    /**
-     * Edit Event
-     *
-     * @param {string} action
-     * @param {CalendarEvent} event
-     */
-    editEvent(action: string, event: CalendarEvent): void {
-        const eventIndex = this.events.indexOf(event);
-
-        this.dialogRef = this._matDialog.open(EventFormComponent, {
-            panelClass: 'event-form-dialog',
-            data: {
-                event: event,
-                action: action
-            }
-        });
-
-        this.dialogRef.afterClosed()
-            .subscribe(response => {
-                if (!response) {
-                    return;
-                }
-                const actionType: string = response[0];
-                const formData: FormGroup = response[1];
-                switch (actionType) {
-                    /**
-                     * Save
-                     */
-                    case 'save':
-
-                        this.events[eventIndex] = Object.assign(this.events[eventIndex], formData.getRawValue());
-                        this.refresh.next(true);
-
-                        break;
-                    /**
-                     * Delete
-                     */
-                    case 'delete':
-
-                        this.deleteEvent(event);
-
-                        break;
-                }
-            });
-    }
-
-    /**
-     * Add Event
-     */
-    addEvent(): void {
-        this.dialogRef = this._matDialog.open(EventFormComponent, {
-            panelClass: 'event-form-dialog',
-            data: {
-                action: 'new',
-                date: this.selectedDay.date
-            }
-        });
-        this.dialogRef.afterClosed()
-            .subscribe((response: FormGroup) => {
-                if (!response) {
-                    return;
-                }
-                const newEvent = response.getRawValue();
-                newEvent.actions = this.actions;
-                this.events.push(newEvent);
-                this.refresh.next(true);
-            });
     }
 }

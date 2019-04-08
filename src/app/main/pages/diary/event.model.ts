@@ -29,7 +29,7 @@ export class DiaryEventModel
      * @param data
      */
     constructor(data?)
-    {
+    {        
         data = data || {};
         this.start = new Date(data.start) || startOfDay(new Date());
         this.end = new Date(data.end) || endOfDay(new Date());

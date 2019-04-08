@@ -5,7 +5,8 @@
 export const environment = {
     production: false,
     hmr: false,
-    APIEndpoint: 'https://api.silq.com.au/',
+   // APIEndpoint: 'https://api.silq.com.au/',
+    APIEndpoint: 'https://api2.silq.com.au/',
     APIKEY: 'SNGMTUEEB2AJBFC9',
 };
 

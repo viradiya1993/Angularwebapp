@@ -17,4 +17,5 @@ export * from './contact.service';
 export * from './diary-data.service';
 export * from './timers.service';
 
-
+//add contact
+export * from './add-contact.service';

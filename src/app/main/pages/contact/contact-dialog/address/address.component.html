@@ -1,11 +1,23 @@
-<div class=" one " fxLayout="column" >
+<div class=" one " [formGroup]="loginForm" fxLayout="column" >
 
 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
 
-    <mat-form-field appearance="outline" fxFlex="100">
-        <mat-label>Address</mat-label>
-        <textarea matInput ></textarea>
+    <mat-form-field appearance="outline" fxFlex="33">
+        <mat-label>Address1</mat-label>
+        <input name="ADDRESS1" [formControlName]="'ADDRESS1'" matInput >
+    </mat-form-field>
+
+    
+    <mat-form-field appearance="outline" fxFlex="34">
+        <mat-label  >Address2</mat-label>
+        <input name="ADDRESS2" [formControlName]="'ADDRESS2'" matInput >
+    </mat-form-field>
+
+    
+    <mat-form-field appearance="outline" fxFlex="33">
+        <mat-label >Address3</mat-label>
+        <input  name="ADDRESS3" [formControlName]="'ADDRESS3'" matInput >
     </mat-form-field>
 
 </div>
@@ -13,7 +25,7 @@
 
     <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
         <mat-label>Suburb</mat-label>
-        <input matInput >
+        <input name="SUBURB" [formControlName]="'SUBURB'" matInput >
         <mat-icon matSuffix class="secondary-text"></mat-icon>
     </mat-form-field>
 
@@ -24,38 +36,21 @@
 
     <mat-form-field appearance="outline" fxFlex="33">
         <mat-label>State</mat-label>
-        <input matInput >
+        <input  name="STATE" [formControlName]="'STATE'" matInput >
         <mat-icon matSuffix class="secondary-text">location_city</mat-icon>
       
     </mat-form-field>
 
     <mat-form-field appearance="outline" fxFlex="34" class="px-8">
         <mat-label>Postal Code</mat-label>
-        <input matInput #postalCode value="94043">
+        <input  name="POSTCODE" [formControlName]="'POSTCODE'" matInput #postalCode value="94043">
         <mat-icon matSuffix class="secondary-text">markunread_mailbox</mat-icon>
     </mat-form-field>
 
     <mat-form-field appearance="outline" fxFlex="33">
         <mat-label>Country</mat-label>
-        <mat-select required>
-            <mat-option [value]="'United States of America'">
-                United States of America
-            </mat-option>
-            <mat-option [value]="'United Kingdom'">
-                United Kingdom
-            </mat-option>
-            <mat-option [value]="'Russia'">
-                Russia
-            </mat-option>
-            <mat-option [value]="'China'">
-                China
-            </mat-option>
-            <mat-option [value]="'Japan'">
-                Japan
-            </mat-option>
-            <mat-option [value]="'Turkey'">
-                Turkey
-            </mat-option>
+        <mat-select  name="COUNTRY" [formControlName]="'COUNTRY'" required>
+            <mat-option [value]="val.Name" *ngFor="let val of common">{{val.Name}}</mat-option>
         </mat-select>
         <mat-icon matSuffix class="secondary-text">outlined_flag</mat-icon>
     </mat-form-field>
@@ -65,7 +60,7 @@
 
 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
   
- <mat-checkbox  (change)="triggerSomeEvent()" class="">Street Address is Postal adress</mat-checkbox>
+ <mat-checkbox name="SAMEASSTREET"  #chk [formControlName]="'SAMEASSTREET'"  (change)="triggerSomeEvent(loginForm)" class=" ">Street Address is Postal adress</mat-checkbox>
 
 </div>
 
@@ -74,9 +69,17 @@
 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
 
-    <mat-form-field  appearance="outline" fxFlex="100">
-        <mat-label>Address</mat-label>
-        <textarea [disabled]="isDisabled" matInput ></textarea>
+    <mat-form-field  appearance="outline" fxFlex="33">
+        <mat-label>Address1</mat-label>
+        <input name="POSTALADDRESS1" [formControlName]="'POSTALADDRESS1'"  matInput >
+    </mat-form-field>
+    <mat-form-field  appearance="outline" fxFlex="33">
+        <mat-label>Address2</mat-label>
+        <input name="POSTALADDRESS2" [formControlName]="'POSTALADDRESS2'"  matInput >
+    </mat-form-field>
+    <mat-form-field  appearance="outline" fxFlex="33">
+        <mat-label>Address3</mat-label>
+        <input name="POSTALADDRESS3" [formControlName]="'POSTALADDRESS3'"  matInput >
     </mat-form-field>
 
 </div>
@@ -84,7 +87,7 @@
 
     <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
         <mat-label>Suburb</mat-label>
-        <input [disabled]="isDisabled" matInput >
+        <input name="POSTALSUBURB" [formControlName]="'POSTALSUBURB'"  matInput >
         <mat-icon matSuffix class="secondary-text"></mat-icon>
     </mat-form-field>
 
@@ -94,38 +97,21 @@
 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
     <mat-form-field appearance="outline" fxFlex="33">
-        <mat-label>State</mat-label>
-        <input [disabled]="isDisabled" matInput>
+        <mat-label>State {{isChecked}}</mat-label>
+        <input name="POSTALSTATE" [formControlName]="'POSTALSTATE'" matInput>
         <mat-icon matSuffix class="secondary-text">location_city</mat-icon>
     </mat-form-field>
 
     <mat-form-field appearance="outline" fxFlex="34" class="px-8">
         <mat-label>Postal Code</mat-label>
-        <input [disabled]="isDisabled" matInput #postalCode value="94043">
+        <input name="POSTALPOSTCODE" [formControlName]="'POSTALPOSTCODE'"  matInput #postalCode value="94043">
         <mat-icon matSuffix class="secondary-text">markunread_mailbox</mat-icon>
     </mat-form-field>
 
     <mat-form-field appearance="outline" fxFlex="33">
         <mat-label>Country</mat-label>
-        <mat-select [disabled]="isDisabled">
-            <mat-option [value]="'United States of America'">
-                United States of America
-            </mat-option>
-            <mat-option [value]="'United Kingdom'">
-                United Kingdom
-            </mat-option>
-            <mat-option [value]="'Russia'">
-                Russia
-            </mat-option>
-            <mat-option [value]="'China'">
-                China
-            </mat-option>
-            <mat-option [value]="'Japan'">
-                Japan
-            </mat-option>
-            <mat-option [value]="'Turkey'">
-                Turkey
-            </mat-option>
+        <mat-select name="POSTALCOUNTRY" [formControlName]="'POSTALCOUNTRY'">
+            <mat-option [value]="val.Name" *ngFor="let val of common">{{val.Name}}</mat-option>
         </mat-select>
         <mat-icon matSuffix class="secondary-text">outlined_flag</mat-icon>
         <mat-error>Country is required!</mat-error>
@@ -138,13 +124,13 @@
 
     <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
         <mat-label>DX</mat-label>
-        <input matInput>
+        <input name="DX" [formControlName]="'DX'"  matInput>
         <mat-icon matSuffix class="secondary-text"></mat-icon>
     </mat-form-field>
 
     <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
         <mat-label>Suburb</mat-label>
-        <input matInput >
+        <input name="DXSUBURB" [formControlName]="'DXSUBURB'" matInput >
         <mat-icon matSuffix class="secondary-text"></mat-icon>
         
     </mat-form-field>

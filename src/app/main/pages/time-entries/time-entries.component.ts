@@ -2,7 +2,9 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from '../../sorting-dialog/sorting-dialog.component';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { TimersService } from '../../../_services';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -16,19 +18,42 @@ export class TimeEntriesComponent implements OnInit {
   form: FormGroup;
 
   displayedColumns: string[] = ['date', 'matter', 'description', 'quantity', 'price_ex', 'price_inc', 'invoice_no'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  TimerData;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog,fb: FormBuilder) {
+  constructor(private dialog: MatDialog, fb: FormBuilder, private toastr: ToastrService, private Timersservice: TimersService) {
     this.form = fb.group({
-      date: [{begin: new Date(2018, 7, 5), end: new Date(2018, 7, 25)}]
+      date: [{ begin: new Date(2018, 7, 5), end: new Date(2018, 7, 25) }]
     });
-   }
+  }
 
   ngOnInit() {
-    // getTimeEnrtyData
-    this.dataSource.paginator = this.paginator;
+    this.LoadData({ 'SessionToken': localStorage.getItem('session_token') });
   }
+  LoadData(Data) {
+    this.Timersservice.getTimeEnrtyData(Data).subscribe(res => {
+      if (res.WorkItems.response != "error - not logged in") {
+        localStorage.setItem('session_token', res.WorkItems.SessionToken);
+        this.TimerData = new MatTableDataSource(res.WorkItems.DataSet)
+        this.TimerData.paginator = this.paginator
+      } else {
+        this.toastr.error(res.WorkItems.response);
+      }
+    }, err => {
+      this.toastr.error(err);
+    });
+  }
+  uninvoicedWorkChange(dart) {
+    if (!localStorage.getItem('time_entries_filter')) {
+      let filterVal = { 'FeeEarner': '', 'ItemType': dart, 'ItemDateStart': '', 'ItemDateEnd': '' };
+      localStorage.setItem('time_entries_filter', JSON.stringify(filterVal));
+    }
+    console.log(dart);
+  }
+  dlpChange(dart) {
+    console.log(dart);
+  }
+
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
@@ -50,21 +75,3 @@ export class TimeEntriesComponent implements OnInit {
   }
 
 }
-export interface PeriodicElement {
-  date: Date;
-  matter: string;
-  description:string;
-  quantity: number;
-  price_ex: number;
-  price_inc: number;
-  invoice_no: number;
-}const ELEMENT_DATA: PeriodicElement[] = [
-  {date: new Date('2/1/2014'),matter:'not yet',description:'not done yet',quantity:200.30,price_ex:123.032,price_inc:89.30,invoice_no:3012010},
-  {date: new Date('2/1/2014'),matter:'not yet',description:'not done yet',quantity:200.30,price_ex:123.032,price_inc:89.30,invoice_no:3012010},
-  {date: new Date('2/1/2014'),matter:'not yet',description:'not done yet',quantity:200.30,price_ex:123.032,price_inc:89.30,invoice_no:3012010},
-  {date: new Date('2/1/2014'),matter:'not yet',description:'not done yet',quantity:200.30,price_ex:123.032,price_inc:89.30,invoice_no:3012010},
-  {date: new Date('2/1/2014'),matter:'not yet',description:'not done yet',quantity:200.30,price_ex:123.032,price_inc:89.30,invoice_no:3012010},
-  {date: new Date('2/1/2014'),matter:'not yet',description:'not done yet',quantity:200.30,price_ex:123.032,price_inc:89.30,invoice_no:3012010},
-  {date: new Date('2/1/2014'),matter:'not yet',description:'not done yet',quantity:200.30,price_ex:123.032,price_inc:89.30,invoice_no:3012010},
-  
-];

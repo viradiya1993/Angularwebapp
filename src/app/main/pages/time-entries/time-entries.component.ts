@@ -26,6 +26,7 @@ export class TimeEntriesComponent implements OnInit {
    }
 
   ngOnInit() {
+    // getTimeEnrtyData
     this.dataSource.paginator = this.paginator;
   }
   openDialog() {

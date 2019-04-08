@@ -9,7 +9,7 @@ export class TimersService {
     private httpClient: HttpClient
   ) { }
   getTimeEnrtyData() {
-    return this.httpClient.get<any>(environment.APIEndpoint + 'GetMatter');
+    return this.httpClient.get<any>(environment.APIEndpoint + 'GetWorkItems');
   }
 
 }

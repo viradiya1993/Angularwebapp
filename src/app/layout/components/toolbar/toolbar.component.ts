@@ -93,12 +93,39 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
 
     // for new contact dialog
-    openDialog() {
-        const dialogRef = this.dialog.open(ContactDialogComponent);
+    AddContactsDialog() {
+        const dialogRef = this.dialog.open(ContactDialogComponent,{
+
+            panelClass: 'contact-dialog',
+            data      : {
+                action: 'new'
+            }
+        });
         dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
+            
+
+            console.log(result);
 
         });
+    }
+
+    //edit Contact
+    EditContactsDialog(){
+        
+        const dialogRef = this.dialog.open(ContactDialogComponent,{
+
+            panelClass: 'contact-dialog',
+            data      : {
+                action: 'edit'
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            
+
+            console.log(result);
+
+        });
+
     }
 
     //time entry dialog

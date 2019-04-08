@@ -1,5 +1,5 @@
 <div class="popup_main_div">
-    <h2 mat-dialog-title>Update Contact
+    <h2 mat-dialog-title>{{dialogTitle}}
             <button class="btn" mat-icon-button (click)="ondialogcloseClick()" aria-label="Close dialog">
                     <mat-icon>close</mat-icon>
             </button>
@@ -7,42 +7,42 @@
     <div mat-dialog-content class="mat-typography main">
         <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
             <!-- p-24 -->
-            <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
+            <form name="loginForm" [formGroup]="loginForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline">
-                        <mat-select #value name="selected" [(ngModel)]="nameSelected" (click)="onClick(value)">
-                            <mat-option [value]="val.Id" *ngFor="let val of common">{{val.Name}}</mat-option>
+                        <mat-select  formControlName="CONTACTTYPE" #value name="selected" [(ngModel)]="nameSelected" (click)="onClick(value)">
+                            <mat-option [value]="val.Name" *ngFor="let val of common">{{val.Name}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <mat-checkbox>Contact is Active</mat-checkbox>
+                    <mat-checkbox formControlName="isContactActive" >Contact is Active</mat-checkbox>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
                         <mat-label>Name</mat-label>
-                        <input matInput>
+                        <input  formControlName="CONTACTNAME" matInput>
                         <!-- <mat-icon matSuffix class="secondary-text">account_circle</mat-icon> -->
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-tab-group mat-align-tabs="start">
-                        <mat-tab *ngIf="nameSelected===1 ||nameSelected===3 ||nameSelected===4" label="Person">
-                            <app-person></app-person>
+                        <mat-tab *ngIf="nameSelected==='Person' ||nameSelected==='Party' ||nameSelected==='Payee/Payor'" label="Person">
+                            <app-person [loginForm]="loginForm"></app-person>
                         </mat-tab>
-                        <mat-tab *ngIf="nameSelected===2" label="Company">
+                        <mat-tab *ngIf="nameSelected==='Company'" label="Company">
                             <app-company></app-company>
                         </mat-tab>
                         <mat-tab label="Ph/Web">
-                            <app-ph></app-ph>
+                            <app-ph [loginForm]="loginForm"></app-ph>
                         </mat-tab>
                         <mat-tab label="Addr.">
-                            <app-address></app-address>
+                            <app-address  [loginForm]="loginForm"></app-address>
                         </mat-tab>
                         <mat-tab label="ID">
-                            <app-id></app-id>
+                            <app-id [loginForm]="loginForm"></app-id>
                         </mat-tab>
                         <mat-tab label="Other">
-                            <app-other></app-other>
+                            <app-other [loginForm]="loginForm"></app-other>
                         </mat-tab>
                         <!-- <mat-tab label="Rates">Content 3</mat-tab>
                 <mat-tab label="Matters"><app-matters></app-matters></mat-tab> -->
@@ -54,7 +54,7 @@
 
 
     <mat-dialog-actions align="end" class="popup_ftr">
-        <button mat-raised-button mat-dialog-close color="accent">Save</button>
+        <button mat-raised-button mat-dialog-close color="accent"  (click)="ondialogSaveClick()" >Save</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Don't Save</button>
     </mat-dialog-actions>
 

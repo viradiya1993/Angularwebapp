@@ -15,4 +15,5 @@ export * from './estimate.service';
 export * from './work-in-progress.service';
 export * from './contact.service';
 
-
+//add contact
+export * from './add-contact.service';

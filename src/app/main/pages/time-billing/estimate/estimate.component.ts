@@ -36,7 +36,7 @@ export class EstimateComponent implements OnInit {
 
    //Get All Columns:
    this.GetallcolumnsFilter.Getallcolumns('matter','estimates').subscribe(response => { 
-      console.log(response);
+     // console.log(response);
    },
   err => {
       this.toastr.error(err);

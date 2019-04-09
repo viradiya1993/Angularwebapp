@@ -69,38 +69,38 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /**
      * On init
      */
+     
     ngOnInit(): void {
+        this.updateTimerCounter();
+        this.displayMattterList();
         // Subscribe to the config changes
-    this._fuseConfigService.config
-        .pipe(takeUntil(this._unsubscribeAll))
-        .subscribe((settings) => {
-            this.horizontalNavbar = settings.layout.navbar.position === 'top';
-            this.rightNavbar = settings.layout.navbar.position === 'right';
-            this.hiddenNavbar = settings.layout.navbar.hidden === true;
-        });
-
-    //Report Listing
-    let ReportListName:any[]=[];
-    this.reportlistService.allreportlist().subscribe(res => { 
-        if(res.Report_List_response.response !="error - not logged in"){ 
-            res.Report_List_response.DataSet.forEach(element => {
-                if(element.REPORTGROUP=='Management'){
-                   let  Management={
-                    REPORTID:element.REPORTID,
-                   }
-                }   
-                ReportListName.push();           
+        this._fuseConfigService.config
+            .pipe(takeUntil(this._unsubscribeAll))
+            .subscribe((settings) => {
+                this.horizontalNavbar = settings.layout.navbar.position === 'top';
+                this.rightNavbar = settings.layout.navbar.position === 'right';
+                this.hiddenNavbar = settings.layout.navbar.hidden === true;
             });
-            console.log(ReportListName);
-        }else{
-        this.toastr.error(res.EstimateItem.response);
+        //Report Listing
+       
+        let ReportListName=[];
+        this.reportlistService.allreportlist().subscribe(res => { 
+            if(res.Report_List_response.response !="error - not logged in"){ 
+                res.Report_List_response.DataSet.forEach(element => {
+                    if(!ReportListName[element.REPORTGROUP]){                        
+                        ReportListName.push(element.REPORTGROUP);                       
+                    } 
+                   // ReportListName[element.REPORTGROUP].push(element);
+                });
+                console.log(ReportListName);
+            }else{
+            this.toastr.error(res.EstimateItem.response);
+            }
+            },
+            err => {
+            this.toastr.error(err);
+            });             
         }
-        },
-        err => {
-        this.toastr.error(err);
-        });       
-
-    }
 
     //for binding
 

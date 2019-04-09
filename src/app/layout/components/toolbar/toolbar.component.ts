@@ -198,6 +198,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     stopTimer() {
         clearTimeout(this.timerInterval);
     }
+    endMatterBack(matterId: any) {
+        console.log(matterId);
+    }
 
     /* ---------------------------------------------------------------------end of timer add--------------------------------------------------------------------------  */
     // for new contact dialog

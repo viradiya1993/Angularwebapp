@@ -12,6 +12,7 @@ export class QuickPanelComponent implements OnInit, OnDestroy {
     @Input() eventsData: any;
     @Input() currentTimerHMS: any;
     @Output() StopMatterId: EventEmitter<any> = new EventEmitter<any>();
+    @Output() EndMatterId: EventEmitter<any> = new EventEmitter<any>();
     @Output() StartMatterId: EventEmitter<any> = new EventEmitter<any>();
     constructor() {
         this._unsubscribeAll = new Subject();
@@ -31,5 +32,8 @@ export class QuickPanelComponent implements OnInit, OnDestroy {
 
     stopTimer(MatterId: any) {
         this.StopMatterId.emit(MatterId);
+    }
+    endTimer(MatterId: any) {
+        this.EndMatterId.emit(MatterId);
     }
 }

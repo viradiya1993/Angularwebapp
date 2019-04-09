@@ -3,24 +3,22 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/c
 import { Observable } from 'rxjs';
 
 import { AuthenticationService } from '../_services';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
     constructor(private authenticationService: AuthenticationService) { }
-
+    SessionToken: any;
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // add authorization header with jwt token if available
         let currentUser = this.authenticationService.currentUserValue;
         let SessionToken = localStorage.getItem('session_token');
         if (currentUser && SessionToken) {
             if (request.method.toLowerCase() === 'post') {
-                if (request.body instanceof FormData) {
-                    request = request.clone({
-                        setHeaders: {
-                            // apikey: `SNGMTUEEB2AJBFC9`
-                        },
-                        body: request.body.append('SessionToken', localStorage.getItem('session_token'))
-                    })
+                if (typeof request.body == 'object') {
+                    request.body.SessionToken = localStorage.getItem('session_token');
+                    request.body.apikey = environment.APIKEY;
+                    request.body;
                 }
             } else if (request.method.toLowerCase() === 'get') {
                 request = request.clone({
@@ -31,11 +29,10 @@ export class JwtInterceptor implements HttpInterceptor {
                 });
             }
         } else {
-            request = request.clone({
-                setHeaders: {
-                    // apikey: `SNGMTUEEB2AJBFC9`
-                }
-            });
+            if (typeof request.body == 'object') {
+                request.body.apikey = environment.APIKEY;
+                request.body;
+            }
         }
         return next.handle(request);
     }

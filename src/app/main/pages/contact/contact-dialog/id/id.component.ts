@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-id',
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class IdComponent implements OnInit {
 
   constructor() { }
-
+  @Input() loginForm: FormGroup;
   ngOnInit() {
   }
 

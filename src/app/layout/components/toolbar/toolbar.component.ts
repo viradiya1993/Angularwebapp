@@ -1,24 +1,24 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation, Output, EventEmitter, Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
 
 import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
-import { AuthenticationService } from '../../../_services';
+import { AuthenticationService, ReportlistService } from '../../../_services';
 import { Router } from '@angular/router';
 import { ContactDialogComponent } from './../../../main/pages/contact/contact-dialog/contact-dialog.component';
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { ContactCorresDetailsComponent } from 'app/main/pages/contact/contact-corres-details/contact-corres-details.component';
 import { TimeEntryDialogComponent } from 'app/main/pages/time-entries/time-entry-dialog/time-entry-dialog.component';
-
-
+import { ContactService } from '../../../_services';
 import { ReportsComponent } from 'app/main/reports/reports.component';
 import { ToastrService } from 'ngx-toastr';
+
+
 
 @Component({
     selector: 'toolbar',
@@ -37,15 +37,23 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     timerInterval: any;
     currentTimer: any = 0;
     currentTimerHMS: any;
+    ReportListObj: any[] = []
+    getContactData: any;
 
 
     // Private
     private _unsubscribeAll: Subject<any>;
 
     constructor(
-        private _fuseConfigService: FuseConfigService, private _fuseSidebarService: FuseSidebarService,
-        private authenticationService: AuthenticationService, private router: Router, public dialog: MatDialog,
-        public _matDialog: MatDialog, private toastr: ToastrService
+        private _fuseConfigService: FuseConfigService,
+        private _fuseSidebarService: FuseSidebarService,
+        private authenticationService: AuthenticationService,
+        private router: Router,
+        public dialog: MatDialog,
+        public _matDialog: MatDialog,
+        private reportlistService: ReportlistService,
+        private toastr: ToastrService,
+        public _getContact: ContactService,
     ) {
         this.navigation = navigation;
         // Set the private defaults
@@ -66,15 +74,39 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /**
      * On init
      */
+
     ngOnInit(): void {
+        this.updateTimerCounter();
+        this.displayMattterList();
         // Subscribe to the config changes
         this._fuseConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe((settings) => {
             this.horizontalNavbar = settings.layout.navbar.position === 'top';
             this.rightNavbar = settings.layout.navbar.position === 'right';
             this.hiddenNavbar = settings.layout.navbar.hidden === true;
         });
-        this.updateTimerCounter();
-        this.displayMattterList();
+        //Report Listing
+
+
+        this.reportlistService.allreportlist({}).subscribe(res => {
+            if (res.Report_List_response.response != "error - not logged in") {
+                res.Report_List_response.DataSet.forEach(element => {
+                    if (!this.ReportListObj[element.REPORTGROUP]) {
+                        let temp = [];
+                        temp.push(element);
+                        this.ReportListObj[element.REPORTGROUP] = temp;
+                    } else {
+                        let demo = this.ReportListObj[element.REPORTGROUP]; ``
+                        demo.push(element);
+                        this.ReportListObj[element.REPORTGROUP] = demo;
+                    }
+                });
+            } else {
+                this.toastr.error(res.EstimateItem.response);
+            }
+        },
+            err => {
+                this.toastr.error(err);
+            });
     }
 
     //for binding
@@ -171,15 +203,68 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     stopTimer() {
         clearTimeout(this.timerInterval);
     }
+    endMatterBack(matterId: any) {
+        console.log(matterId);
+        this.addNewTimeEntry();
+    }
 
     /* ---------------------------------------------------------------------end of timer add--------------------------------------------------------------------------  */
     // for new contact dialog
-    openDialog() {
-        const dialogRef = this.dialog.open(ContactDialogComponent);
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
+    AddContactsDialog() {
+        const dialogRef = this.dialog.open(ContactDialogComponent, {
 
+            panelClass: 'contact-dialog',
+            data: {
+                action: 'new'
+            }
         });
+        dialogRef.afterClosed().subscribe(result => {
+
+
+            console.log(result);
+
+            console.log(`Dialog result: ${result}`);
+        });
+    }
+
+    //edit Contact diloage
+
+    EditContactsDialog() {
+
+        //get value from localstrorage
+        let getContactGuId = localStorage.getItem('contactGuid');
+        this._getContact.getContact(getContactGuId).subscribe(res => {
+            this.getContactData = res.Contact.DataSet[0];
+            console.log(this.getContactData);
+            const dialogRef = this.dialog.open(ContactDialogComponent, {
+
+                data: {
+                    contact: this.getContactData,
+                    action: 'edit'
+                }
+            });
+            dialogRef.afterClosed().subscribe(result => {
+
+
+                console.log(result);
+
+            });
+        });
+        //const dialogRef = this.dialog.open(ContactDialogComponent, this.getContactData);
+        //    console.log(this.getContactData);
+        //         const dialogRef = this.dialog.open(ContactDialogComponent,{
+
+        //             data      : {
+        //                 contact:this.getContactData,
+        //                 action : 'edit'
+        //             }
+        //         });
+        //         dialogRef.afterClosed().subscribe(result => {
+
+
+        //             console.log(result);
+
+        //         });
     }
 
     //time entry dialog
@@ -187,9 +272,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this.dialog.open(TimeEntryDialogComponent, {
             width: '50%'
         });
-
         dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
+            console.log(`addNewTimeEntry result: ${result}`);
 
         });
     }
@@ -200,13 +284,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this.dialog.open(ContactCorresDetailsComponent, dialogConfig);
         dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialog result: ${result}`);
-
         });
     }
 
 
     //Reportpopup open
-    Reportpopup() {
+    Reportpopup(ReportData) {
+        console.log(ReportData);
         const dialogConfig = new MatDialogConfig();
         dialogConfig.width = '40%';
         const dialogRef = this.dialog.open(ReportsComponent, dialogConfig);

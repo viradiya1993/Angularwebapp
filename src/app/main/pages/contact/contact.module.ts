@@ -9,6 +9,7 @@ import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
 import { AuthGuard } from '../../../_guards';
 
 import { ContactComponent } from './contact.component';
+import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 
 
 import { MatDialogModule, MatTabsModule, MatPaginatorModule, MatButtonModule, MatSelectModule, MatCardModule, MatSlideToggleModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule } from '@angular/material';
@@ -70,7 +71,9 @@ const routes = [
 
     FuseSharedModule,
     FuseConfirmDialogModule,
-    FuseSidebarModule
+    FuseSidebarModule,
+    SatDatepickerModule,
+    SatNativeDateModule
   ],
   exports: [
     ContactComponent

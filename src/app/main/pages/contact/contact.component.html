@@ -110,7 +110,7 @@
                                 <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.TOWNOFBIRTH}}</mat-cell>
                             </ng-container>  
                             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                            <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editContact(row.CONTACTGUID)" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                             </mat-row>
                         </mat-table>
                     </div>

@@ -72,7 +72,13 @@ export class AuthenticationService {
             this.toastr.error(error);
         });
     }
-
+    ForcLogout() {
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('app_permissions');
+        localStorage.removeItem('session_token');
+        this.currentUserSubject.next(null);
+        this.router.navigate(['login']);
+    }
 
     forgetpassword(email: string) {
         return this.http.post<any>(environment.APIEndpoint + 'Login?Request=ForgottenPassword&EmailAddress=' + email, '').pipe(map(loginResponse => {

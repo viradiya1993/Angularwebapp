@@ -2,27 +2,26 @@
     <div class="content">
         <div class="center p-24 list_tbl_main">
             <div class="matter-serach-div sticky_search_div">
-                <form [formGroup]="form">
-                    <mat-form-field class="example" appearance="outline">
+                <form [formGroup]="TimeEnrtyForm">
+                    <mat-form-field class="example" appearance="outline" *ngIf="isShowDrop">
                         <mat-label>DLP</mat-label>
-                        <mat-select>
-                            <mat-option value="red">All</mat-option>
-                            <mat-option value="green">None</mat-option>
-                            <mat-option value="blue">CSP</mat-option>
-                            <mat-option value="blue">T</mat-option>
+                        <mat-select (selectionChange)="dlpChange($event.value)" formControlName="dlpdrop">
+                            <mat-option value="all">All</mat-option>
+                            <mat-option value="">None</mat-option>
+                            <mat-option *ngFor="let TimerDrop of TimerDropData" value="{{TimerDrop.USERID}}">{{TimerDrop.USERID}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="example" appearance="outline">
                         <mat-label>Uninvoiced Work</mat-label>
-                        <mat-select>
-                            <mat-option value="red">Uninvoiced Work</mat-option>
-                            <mat-option value="green">invoiced Work</mat-option>
-                            <mat-option value="blue">Written Off Work</mat-option>
-                            <mat-option value="blue">All Work</mat-option>
+                        <mat-select (selectionChange)="uninvoicedWorkChange($event.value)" formControlName="uninvoicedWork">
+                            <mat-option value="No">Uninvoiced Work</mat-option>
+                            <mat-option value="Yes">invoiced Work</mat-option>
+                            <mat-option value="-2">Written Off Work</mat-option>
+                            <mat-option value="-1">All Work</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="">
-                        <input matInput placeholder="Choose a date" [satDatepicker]="picker2" formControlName="date">
+                        <input matInput placeholder="Choose a date" [satDatepicker]="picker2" formControlName="date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)">
                         <sat-datepicker #picker2 [rangeMode]="true">
                         </sat-datepicker>
                         <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
@@ -35,40 +34,41 @@
                         <mat-icon class="secondary-text">more_vert</mat-icon>
                         </button>
                 </div>
-                <mat-table #table [dataSource]="dataSource" [@animateStagger]="{value:'50'}">
+                <mat-table #table [dataSource]="TimerData" [@animateStagger]="{value:'50'}">
                     <ng-container matColumnDef="date">
                         <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
-                        <mat-cell *matCellDef="let row">{{row.date |date}}
+                        <mat-cell *matCellDef="let row">{{row.ITEMDATE}}
+                            <!-- <mat-cell *matCellDef="let row">{{row.ITEMDATE |date}} -->
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="matter">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Matter</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.matter}}
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.SHORTNAME}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="description">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Description</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.description}}
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.ADDITIONALTEXT}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="quantity">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Quantity</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.quantity}}
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.FORMATTEDQUANTITY}}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="price_ex">
                         <mat-header-cell *matHeaderCellDef> Price Ex</mat-header-cell>
-                        <mat-cell *matCellDef="let row">{{row.price_ex |currency }}
+                        <mat-cell *matCellDef="let row">{{row.PRICE |currency }}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="price_inc">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Price Inc</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.price_inc |currency }}
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.PRICEINCGST |currency }}
                         </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="invoice_no">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Invoice No</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.invoice_no }}
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.INVOICECODE }}
                         </mat-cell>
                     </ng-container>
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

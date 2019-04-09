@@ -14,8 +14,11 @@ import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { ContactCorresDetailsComponent } from 'app/main/pages/contact/contact-corres-details/contact-corres-details.component';
 import { TimeEntryDialogComponent } from 'app/main/pages/time-entries/time-entry-dialog/time-entry-dialog.component';
+import { ContactService } from '../../../_services';
 import { ReportsComponent } from 'app/main/reports/reports.component';
 import { ToastrService } from 'ngx-toastr';
+
+
 
 @Component({
     selector: 'toolbar',
@@ -35,6 +38,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     currentTimer: any = 0;
     currentTimerHMS: any;
     ReportListObj: any[] = []
+    getContactData: any;
 
 
     // Private
@@ -49,6 +53,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         public _matDialog: MatDialog,
         private reportlistService: ReportlistService,
         private toastr: ToastrService,
+        public _getContact: ContactService,
     ) {
         this.navigation = navigation;
         // Set the private defaults
@@ -222,23 +227,44 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
 
-    //edit Contact
+    //edit Contact diloage
+
     EditContactsDialog() {
 
-        const dialogRef = this.dialog.open(ContactDialogComponent, {
+        //get value from localstrorage
+        let getContactGuId = localStorage.getItem('contactGuid');
+        this._getContact.getContact(getContactGuId).subscribe(res => {
+            this.getContactData = res.Contact.DataSet[0];
+            console.log(this.getContactData);
+            const dialogRef = this.dialog.open(ContactDialogComponent, {
 
-            panelClass: 'contact-dialog',
-            data: {
-                action: 'edit'
-            }
+                data: {
+                    contact: this.getContactData,
+                    action: 'edit'
+                }
+            });
+            dialogRef.afterClosed().subscribe(result => {
+
+
+                console.log(result);
+
+            });
         });
-        dialogRef.afterClosed().subscribe(result => {
+        //const dialogRef = this.dialog.open(ContactDialogComponent, this.getContactData);
+        //    console.log(this.getContactData);
+        //         const dialogRef = this.dialog.open(ContactDialogComponent,{
+
+        //             data      : {
+        //                 contact:this.getContactData,
+        //                 action : 'edit'
+        //             }
+        //         });
+        //         dialogRef.afterClosed().subscribe(result => {
 
 
-            console.log(result);
+        //             console.log(result);
 
-        });
-
+        //         });
     }
 
     //time entry dialog

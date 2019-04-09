@@ -16,9 +16,12 @@ export class ContactComponent implements OnInit {
   displayedColumns: string[] = ['Contact Guid', 'Company Contactguid', 'Contact Type', 'User Guid', 'Useparent Address', 'Contact Name','Salutation','Position','Name Title','Given Names','Middle Names','Family Name','Name Letters','Knownby Othername','Otherfamily Name','Thergiven Names','Reason For Change','Marital Status','Spouse','Numberof Dependants','Occupation','Gender','Dateof Birth','Birthday Reminder','Townof Birth'];  
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  getContactDta:any;
+  
   constructor(private dialog: MatDialog,private Contact: ContactService,private toastr: ToastrService) { }
   Contactdata;
   ngOnInit() {
+    
     //First 25 record Dispay here 
     this.Contact.ContactData().subscribe(res => {       
       if(res.Contact.response !="error - not logged in"){      
@@ -33,6 +36,15 @@ export class ContactComponent implements OnInit {
       this.toastr.error(err);
     });  
   }
+  //for edit popup
+  editContact(val){
+
+    localStorage.setItem('contactGuid', val);
+  //  this.Contact.getContact(val).subscribe(res => { 
+  //    this.getContactDta=res;
+  //    console.log(res);      
+  // });
+}
 
   openDialog() {
     const dialogConfig = new MatDialogConfig();

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation, Output, EventEmitter,Injectable } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation, Output, EventEmitter,Injectable, Inject } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
@@ -15,9 +15,11 @@ import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { ContactCorresDetailsComponent } from 'app/main/pages/contact/contact-corres-details/contact-corres-details.component';
 import { TimeEntryDialogComponent } from 'app/main/pages/time-entries/time-entry-dialog/time-entry-dialog.component';
-
+import { ContactService } from '../../../_services';
 
 import { ReportsComponent } from 'app/main/reports/reports.component';
+
+
 
 @Component({
     selector: 'toolbar',
@@ -35,6 +37,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     selectedLanguage: any;
     selectedIndex: number;
     currentUser: any;
+    getContactData:any;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
 
 
@@ -56,7 +59,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private authenticationService: AuthenticationService,
         private router: Router,
         public dialog: MatDialog,
-        public _matDialog: MatDialog
+        public _matDialog: MatDialog,
+        public _getContact:ContactService,
+       
             ) {
         this.navigation = navigation;
         // Set the private defaults
@@ -65,7 +70,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.navBarSetting(this.router.url);
         });
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
+       
     }
    
     
@@ -109,23 +114,44 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
 
-    //edit Contact
-    EditContactsDialog(){
+    //edit Contact diloage
+    
+        EditContactsDialog(){
+          
+        //get value from localstrorage
+        let getContactGuId = localStorage.getItem('contactGuid');
+            this._getContact.getContact(getContactGuId).subscribe(res => { 
+            this.getContactData=res.Contact.DataSet[0];
+            console.log(this.getContactData);
+                const dialogRef = this.dialog.open(ContactDialogComponent,{
+                
+                    data      : {
+                        contact:this.getContactData,
+                        action : 'edit'
+                    }
+                });
+                dialogRef.afterClosed().subscribe(result => {
+                    
         
-        const dialogRef = this.dialog.open(ContactDialogComponent,{
-
-            panelClass: 'contact-dialog',
-            data      : {
-                action: 'edit'
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            
-
-            console.log(result);
-
-        });
-
+                    console.log(result);
+        
+                });
+           });
+           //const dialogRef = this.dialog.open(ContactDialogComponent, this.getContactData);
+        //    console.log(this.getContactData);
+        //         const dialogRef = this.dialog.open(ContactDialogComponent,{
+                
+        //             data      : {
+        //                 contact:this.getContactData,
+        //                 action : 'edit'
+        //             }
+        //         });
+        //         dialogRef.afterClosed().subscribe(result => {
+                    
+        
+        //             console.log(result);
+        
+        //         });
     }
 
     //time entry dialog

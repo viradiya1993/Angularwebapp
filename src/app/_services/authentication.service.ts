@@ -27,7 +27,7 @@ export class AuthenticationService {
         let detail = {
             user: uesrname, password: password, formatting: 'JSON', EmailAddress: "", SessionToken: ""
         };
-        return this.http.post<any>(environment.APIEndpoint + 'login', detail).pipe(map(loginResponse => {            
+        return this.http.post<any>(environment.APIEndpoint + 'login', detail).pipe(map(loginResponse => {
             if (loginResponse && loginResponse.login_response) {
                 let responseType = loginResponse.login_response.Response;
                 let LoggedInStatus = loginResponse.login_response.LoggedInStatus;
@@ -72,7 +72,13 @@ export class AuthenticationService {
             this.toastr.error(error);
         });
     }
-
+    ForcLogout() {
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('app_permissions');
+        localStorage.removeItem('session_token');
+        this.currentUserSubject.next(null);
+        this.router.navigate(['login']);
+    }
 
     forgetpassword(email: string) {
         return this.http.post<any>(environment.APIEndpoint + 'Login?Request=ForgottenPassword&EmailAddress=' + email, '').pipe(map(loginResponse => {

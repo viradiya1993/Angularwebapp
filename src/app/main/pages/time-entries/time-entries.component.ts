@@ -36,6 +36,7 @@ export class TimeEntriesComponent implements OnInit {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.isShowDrop = currentUser.ProductType == "Barrister" ? false : true;
     if (this.lastFilter) {
+      this.lastFilter = { 'FeeEarner': '', 'ItemType': '', 'ItemDateStart': '', 'ItemDateEnd': '' };
       let Sd = new Date(this.lastFilter.ItemDateStart);
       let ed = new Date(this.lastFilter.ItemDateEnd);
       this.TimeEnrtyForm = fb.group({

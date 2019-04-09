@@ -33,6 +33,7 @@ export class MattersComponent implements OnInit {
     this.getDropValue();
     this.lastFilter = JSON.parse(localStorage.getItem('matter_filter'));
     if (this.lastFilter) {
+      this.lastFilter = { 'Active': '', 'SearchString': '', 'FeeEarner': '' };
       this.matterFilterForm = fb.group({
         MatterFilter: [this.lastFilter.Active],
         UserFilter: [this.lastFilter.FeeEarner],

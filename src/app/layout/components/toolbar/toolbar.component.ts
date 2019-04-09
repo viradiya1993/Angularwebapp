@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation, Output, EventEmitter, Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
 import * as _ from 'lodash';
 
 import { FuseConfigService } from '@fuse/services/config.service';
@@ -35,6 +34,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     timerInterval: any;
     currentTimer: any = 0;
     currentTimerHMS: any;
+    ReportListObj: any[] = []
 
 
     // Private
@@ -48,7 +48,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         public dialog: MatDialog,
         public _matDialog: MatDialog,
         private reportlistService: ReportlistService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
     ) {
         this.navigation = navigation;
         // Set the private defaults
@@ -74,25 +74,27 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.updateTimerCounter();
         this.displayMattterList();
         // Subscribe to the config changes
-        this._fuseConfigService.config
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((settings) => {
-                this.horizontalNavbar = settings.layout.navbar.position === 'top';
-                this.rightNavbar = settings.layout.navbar.position === 'right';
-                this.hiddenNavbar = settings.layout.navbar.hidden === true;
-            });
+        this._fuseConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe((settings) => {
+            this.horizontalNavbar = settings.layout.navbar.position === 'top';
+            this.rightNavbar = settings.layout.navbar.position === 'right';
+            this.hiddenNavbar = settings.layout.navbar.hidden === true;
+        });
         //Report Listing
 
-        let ReportListName = [];
-        this.reportlistService.allreportlist().subscribe(res => {
+
+        this.reportlistService.allreportlist({}).subscribe(res => {
             if (res.Report_List_response.response != "error - not logged in") {
                 res.Report_List_response.DataSet.forEach(element => {
-                    if (!ReportListName[element.REPORTGROUP]) {
-                        ReportListName.push(element.REPORTGROUP);
+                    if (!this.ReportListObj[element.REPORTGROUP]) {
+                        let temp = [];
+                        temp.push(element);
+                        this.ReportListObj[element.REPORTGROUP] = temp;
+                    } else {
+                        let demo = this.ReportListObj[element.REPORTGROUP]; ``
+                        demo.push(element);
+                        this.ReportListObj[element.REPORTGROUP] = demo;
                     }
-                    // ReportListName[element.REPORTGROUP].push(element);
                 });
-                console.log(ReportListName);
             } else {
                 this.toastr.error(res.EstimateItem.response);
             }
@@ -259,7 +261,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
 
     //Reportpopup open
-    Reportpopup() {
+    Reportpopup(ReportData) {
+        console.log(ReportData);
         const dialogConfig = new MatDialogConfig();
         dialogConfig.width = '40%';
         const dialogRef = this.dialog.open(ReportsComponent, dialogConfig);

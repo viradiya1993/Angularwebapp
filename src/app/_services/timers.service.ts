@@ -9,6 +9,9 @@ export class TimersService {
     private httpClient: HttpClient
   ) { }
   getTimeEnrtyData(Data) {
+    if (Data == null) {
+      Data = {};
+    }
     return this.httpClient.post<any>(environment.APIEndpoint + 'GetWorkItems', Data);
   }
   GetUsers(Data) {

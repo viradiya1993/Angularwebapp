@@ -21,7 +21,7 @@ export class MattersComponent implements OnInit {
   lastFilter: any;
 
 
-  constructor(private Timersservice: TimersService, fb: FormBuilder) {
+  constructor(private Timersservice: TimersService, private fb: FormBuilder) {
     let theme_type = localStorage.getItem('theme_type');
     if (theme_type != "theme-default") {
       $('body').addClass('theme-yellow-light').removeClass("theme-default");
@@ -32,14 +32,11 @@ export class MattersComponent implements OnInit {
     this.isShowDrop = currentUser.ProductType == "Barrister" ? false : true;
     this.getDropValue();
     this.lastFilter = JSON.parse(localStorage.getItem('matter_filter'));
+    this.matterFilterForm = this.fb.group({ MatterFilter: [''], UserFilter: [''], searchFilter: [''], InvoiceFilter: [''], });
     if (this.lastFilter) {
-      this.lastFilter = { 'Active': '', 'SearchString': '', 'FeeEarner': '' };
-      this.matterFilterForm = fb.group({
-        MatterFilter: [this.lastFilter.Active],
-        UserFilter: [this.lastFilter.FeeEarner],
-        InvoiceFilter: [],
-        searchFilter: [],
-      });
+      this.matterFilterForm.controls['MatterFilter'].setValue(this.lastFilter.Active);
+      this.matterFilterForm.controls['UserFilter'].setValue(this.lastFilter.FeeEarner);
+      this.matterFilterForm.controls['searchFilter'].setValue(this.lastFilter.SearchString);
     }
   }
   MatterChange(value) {

@@ -8,6 +8,9 @@ export class MattersService {
     private httpClient: HttpClient
   ) { }
   getMatters(data) {
+    if (data == null) {
+      data = {};
+    }
     return this.httpClient.post<any>(environment.APIEndpoint + 'GetMatter', data);
   }
   getMattersDetail(MatterGuid) {

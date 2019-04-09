@@ -69,7 +69,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /**
      * On init
      */
+
     ngOnInit(): void {
+        this.updateTimerCounter();
+        this.displayMattterList();
         // Subscribe to the config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))
@@ -78,18 +81,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 this.rightNavbar = settings.layout.navbar.position === 'right';
                 this.hiddenNavbar = settings.layout.navbar.hidden === true;
             });
-
         //Report Listing
-        let ReportListName: any[] = [];
+
+        let ReportListName = [];
         this.reportlistService.allreportlist().subscribe(res => {
             if (res.Report_List_response.response != "error - not logged in") {
                 res.Report_List_response.DataSet.forEach(element => {
-                    if (element.REPORTGROUP == 'Management') {
-                        let Management = {
-                            REPORTID: element.REPORTID,
-                        }
+                    if (!ReportListName[element.REPORTGROUP]) {
+                        ReportListName.push(element.REPORTGROUP);
                     }
-                    ReportListName.push();
+                    // ReportListName[element.REPORTGROUP].push(element);
                 });
                 console.log(ReportListName);
             } else {
@@ -99,7 +100,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             err => {
                 this.toastr.error(err);
             });
-
     }
 
     //for binding

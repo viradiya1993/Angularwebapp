@@ -5,39 +5,42 @@
         <div class="center p-24 list_tbl_main">
             <div class="matter-serach-div sticky_search_div">
                 <!-- select bar  -->
-                <mat-form-field class="example" appearance="outline">
-                    <mat-label>Active Matters</mat-label>
-                    <mat-select>
-                        <mat-option value="all_matters">All Matters</mat-option>
-                        <mat-option value="active_matters">Active Matters</mat-option>
-                        <mat-option value="inactive_matters">Inactive Matters</mat-option>
-                        <mat-option value="recently_inactive">Recently Inactive</mat-option>
-                        <mat-option value="near_estimate">Near Estimate</mat-option>
-                    </mat-select>
-                </mat-form-field>
+                <form [formGroup]="matterFilterForm" (ngSubmit)="return">
+                    <mat-form-field class="example" appearance="outline">
+                        <mat-label>Active Matters</mat-label>
+                        <mat-select formControlName="MatterFilter" (selectionChange)="MatterChange($event.value)">
+                            <mat-option value="">All Matters</mat-option>
+                            <mat-option value="1">Active Matters</mat-option>
+                            <mat-option value="0">Inactive Matters</mat-option>
+                            <mat-option value="recently_inactive">Recently Inactive</mat-option>
+                            <mat-option value="near_estimate">Near Estimate</mat-option>
+                        </mat-select>
+                    </mat-form-field>
 
-                <!-- select bar  -->
-                <mat-form-field class="example" appearance="outline">
-                    <mat-label>Invoiced</mat-label>
-                    <mat-select>
-                        <mat-option value="red">one</mat-option>
-                        <mat-option value="green">Two</mat-option>
-                        <mat-option value="blue">Three</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <!-- select bar  -->
-                <mat-form-field class="example" appearance="outline">
-                    <mat-label>Free Earner/Owner</mat-label>
-                    <mat-select>
-                        <mat-option value="red">one</mat-option>
-                        <mat-option value="green">Two</mat-option>
-                        <mat-option value="blue">Three</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field class="search" appearance="outline">
-                    <input matInput placeholder="Search">
-                    <mat-icon matSuffix>search</mat-icon>
-                </mat-form-field>
+                    <!-- select bar  -->
+                    <mat-form-field class="example" appearance="outline">
+                        <mat-label>Invoiced</mat-label>
+                        <mat-select formControlName="InvoiceFilter" (selectionChange)="MatterChange($event.value)">
+                            <mat-option value="1">Uninvoiced Work</mat-option>
+                            <mat-option value="0">un Uninvoiced Work</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <!-- select bar  -->
+                    <!-- <mat-form-field class="example" appearance="outline" *ngIf="isShowDrop"> -->
+                    <mat-form-field class="example" appearance="outline">
+                        <mat-label>Free Earner/Owner</mat-label>
+                        <mat-select (selectionChange)="MatterUserChange($event.value)" formControlName="UserFilter">
+                            <mat-option value="all">All</mat-option>
+                            <mat-option value="">None</mat-option>
+                            <mat-option *ngFor="let MatterDrop of MatterDropData" value="{{MatterDrop.USERID}}">{{MatterDrop.USERID}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="search" appearance="outline">
+                        <!-- <input matInput placeholder="Search" (keyup.enter)="onSearch();" [(ngModel)]="searchFilter" formControlName="searchFilter"> -->
+                        <input matInput placeholder="Search" (keydown)="onSearch($event,$event.target)" formControlName="searchFilter">
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+                </form>
             </div>
             <!-- CONTENT -->
 

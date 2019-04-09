@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { ReportfilterService } from '../../_services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-reports',
@@ -11,22 +13,34 @@ export class ReportsComponent implements OnInit {
   Datelistname:string;
   selectedowner:string;
   selectedsortorder:string;
-  constructor(public dialogRef: MatDialogRef<ReportsComponent>){}
+  constructor(public dialogRef: MatDialogRef<ReportsComponent>,private Reportfilter: ReportfilterService,private toastr: ToastrService){}
   
   ngOnInit() {
      this.Datelistname='Last Month';
      this.selectedowner = 'All';
      this.selectedsortorder = 'Matter Number';
+
+     //API Call
+     this.Reportfilter.ReportfilterData('ReportAgedTradeCreditors').subscribe(response => {
+       console.log(response.Report_List_response.DateRangeList);
+      // Dropdowndaterange
+      //localStorage.setItem('session_token', response.Chronology.SessionToken);      
+          
+    },
+    error => {
+      this.toastr.error(error);
+    }
+  );
   }
    //Dropdown Data
    Dropdowndaterange=[
-    {name:'Last Month'},
-    {name:'Current Month'},
-    {name:'Last Quarter'},
-    {name:'Current Quarter'},
-    {name:'Last Financial Year'},
-    {name:'Current Financial Year'},
-    {name:'Date Range'},
+    // {name:'Last Month'},
+    // {name:'Current Month'},
+    // {name:'Last Quarter'},
+    // {name:'Current Quarter'},
+    // {name:'Last Financial Year'},
+    // {name:'Current Financial Year'},
+    // {name:'Date Range'},
   ];
     
   //Select owner Dropdown

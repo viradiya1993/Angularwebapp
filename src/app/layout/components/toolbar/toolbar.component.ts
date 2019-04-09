@@ -200,6 +200,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     endMatterBack(matterId: any) {
         console.log(matterId);
+        this.addNewTimeEntry();
     }
 
     /* ---------------------------------------------------------------------end of timer add--------------------------------------------------------------------------  */
@@ -245,9 +246,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this.dialog.open(TimeEntryDialogComponent, {
             width: '50%'
         });
-
         dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
+            console.log(`addNewTimeEntry result: ${result}`);
 
         });
     }
@@ -258,7 +258,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this.dialog.open(ContactCorresDetailsComponent, dialogConfig);
         dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialog result: ${result}`);
-
         });
     }
 

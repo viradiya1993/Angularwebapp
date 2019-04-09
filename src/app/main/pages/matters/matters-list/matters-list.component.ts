@@ -22,7 +22,6 @@ export class MattersListComponent implements OnInit, OnDestroy {
   displayedColumns = ['matter_num', 'matter', 'unbilled', 'invoiced', 'received', 'unpaid', 'total_value'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   mattersData: any;
-  lastFilter = {};
 
 
   @Output() matterDetail: EventEmitter<any> = new EventEmitter<any>();
@@ -32,13 +31,10 @@ export class MattersListComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private _mattersService: MattersService,
     private toastr: ToastrService
-  ) {
-    if (JSON.parse(localStorage.getItem('matter_filter')))
-      this.lastFilter = JSON.parse(localStorage.getItem('matter_filter'));
-  }
+  ) { }
 
   ngOnInit(): void {
-    this.getMatterList(this.lastFilter);
+    this.getMatterList();
   }
   ngOnDestroy(): void { }
 
@@ -62,8 +58,8 @@ export class MattersListComponent implements OnInit, OnDestroy {
       this.tableSetting(data)
     );
   }
-  getMatterList(data) {
-    this._mattersService.getMatters(data).subscribe(response => {
+  getMatterList() {
+    this._mattersService.getMatters().subscribe(response => {
       localStorage.setItem('session_token', response.Matter.SessionToken);
       if (response.Matter.response != "error - not logged in") {
         this.mattersData = new MatTableDataSource(response.Matter.DataSet);
@@ -78,7 +74,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   tableSetting(data: any) {
     if (data !== false) {
       this.displayedColumns = data;
-      this.getMatterList(this.lastFilter);
+      this.getMatterList();
     }
   }
 }

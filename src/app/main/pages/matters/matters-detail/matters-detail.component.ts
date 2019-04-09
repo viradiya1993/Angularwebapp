@@ -31,7 +31,7 @@ export class MattersDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.url.subscribe(v =>
-      this.currentMatterId = v[0].path     
+      this.currentMatterId = v[0].path
     );
     // currentMatterId
     this._mattersService.getMattersDetail(this.currentMatterId).subscribe(response => {

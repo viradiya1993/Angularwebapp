@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
@@ -24,7 +24,7 @@ export class AuthoritiesComponent implements OnInit {
         localStorage.setItem('session_token', response.MatterAuthority.SessionToken);
         // this.authorities_table = res;
         // this.filterData = res;
-       // console.log(response);
+        console.log(response);
         this.authorities_table = new MatTableDataSource<PeriodicElement>(response.MatterAuthority.DataSet);
         this.authorities_table.paginator = this.paginator;
       },
@@ -33,8 +33,6 @@ export class AuthoritiesComponent implements OnInit {
       }
     );
   }
-  //
-  
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';

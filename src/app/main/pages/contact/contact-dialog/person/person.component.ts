@@ -1,9 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 //import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-
 
 
 @Component({
@@ -13,33 +11,67 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 })
 export class PersonComponent implements OnInit {
 
-  @Input() loginForm: FormGroup;
+
+  //form: FormGroup;
+
+  
 
   // Private
   private _unsubscribeAll: Subject<any>;
 
-
+  /**
+   * Constructor
+   *
+   * @param {FormBuilder} _formBuilder
+   */
   constructor(
-    // private _formBuilder: FormBuilder
-    
+     // private _formBuilder: FormBuilder
   )
   {
-   
+      // Set the private defaults
+      this._unsubscribeAll = new Subject();
   }
 
-  
+  // -----------------------------------------------------------------------------------------------------
+  // @ Lifecycle hooks
+  // -----------------------------------------------------------------------------------------------------
+
   /**
    * On init
    */
   ngOnInit(): void
   {
-      // console.log(this.loginForm);debugger;
-      // this.loginForm = this._formBuilder.group({
-     
-      
-      //   company: ['', Validators.required]      });
+      // Reactive Form
+      // this.form = this._formBuilder.group({
+      //     company   : [
+      //         {
+      //             value   : 'Google',
+      //             disabled: true
+      //         }, Validators.required
+      //     ],
+      //     firstName : ['', Validators.required],
+      //     lastName  : ['', Validators.required],
+      //     address   : ['', Validators.required],
+      //     address2  : ['', Validators.required],
+      //     city      : ['', Validators.required],
+      //     state     : ['', Validators.required],
+      //     postalCode: ['', [Validators.required, Validators.maxLength(5)]],
+      //     country   : ['', Validators.required]
+      // });
+
       
   }
+
+  /**
+   * On destroy
+   */
+  ngOnDestroy(): void
+  {
+      // Unsubscribe from all subscriptions
+      this._unsubscribeAll.next();
+      this._unsubscribeAll.complete();
+  }
+  
 
   
 

@@ -1,74 +1,62 @@
-<div id="matters_detail_div" class="page-layout carded fullwidth inner-scroll">
-    <div class="top-bg accent"></div>
-    <!-- CENTER -->
-    <div class="center">      
-        <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
-            <div fxLayout="row" fxLayoutAlign="start center">
-                <button mat-icon-button class="mr-16" [routerLink]="''">
-                  <mat-icon>arrow_back</mat-icon>
-                 </button>
-                <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
-                    <div class="h2">
-                        File-Notes Detail for 
-                    </div>
-                    <div class="subtitle secondary-text">
-                        <span>from </span>
-                        <span></span>
-                    </div>
+<div id="filenotes" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
+    <div fxLayoutAlign="center" class="content">
+        <div class="center p-24" fusePerfectScrollbar>
+            <div class="content">
+                <div class="btn top_right_action_billing">
+                    <button mat-icon-button (click)="openDialog()" aria-label="More">
+                        <mat-icon class="secondary-text">more_vert</mat-icon>
+                        </button>
                 </div>
+                <div class="example-containerdata">
+                <mat-table #table [dataSource]="filenotes_table" [@animateStagger]="{value:'50'}">
+                    <ng-container matColumnDef="FILENOTEGUID">
+                        <mat-header-cell class="header_title" *matHeaderCellDef>file note guid</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.FILENOTEGUID}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="MATTERGUID">
+                        <mat-header-cell  class="header_title" *matHeaderCellDef fxHide fxShow.gt-sm>matter guid</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.MATTERGUID}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="USERNAME">
+                        <mat-header-cell  class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>username</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.USERNAME}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="Date">
+                        <mat-header-cell  class="header_title" *matHeaderCellDef>date</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.Date}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="Time">
+                        <mat-header-cell  class="header_title" *matHeaderCellDef fxHide fxShow.gt-sm>time</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.Time}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="Note">
+                        <mat-header-cell  class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>note</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.Note}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="SHORTNAME">
+                        <mat-header-cell  class="header_title" *matHeaderCellDef>short name</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.SHORTNAME}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="CONTACTNAME">
+                        <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-sm>contact name</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.CONTACTNAME}}
+                        </mat-cell>
+                    </ng-container>
+                   
+                  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                  <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                  </mat-row>
+              </mat-table>
             </div>
-        </div>       
-        <div id="filenotes" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
-            <div fxLayoutAlign="center" class="content">
-                <div class="center p-24" fusePerfectScrollbar>
-                    <div class="content">
-                        <div class="btn top_right_action_billing">
-                            <button mat-icon-button (click)="openDialog()" aria-label="More">
-                                <mat-icon class="secondary-text">more_vert</mat-icon>
-                            </button>
-                        </div>
-                        <div class="example-containerdata">
-                        <mat-table #table [dataSource]="filenotes_table" [@animateStagger]="{value:'50'}">
-                            <ng-container matColumnDef="FILENOTEGUID">
-                                <mat-header-cell class="header_title" *matHeaderCellDef>file note guid</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.FILENOTEGUID}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="MATTERGUID">
-                                <mat-header-cell  class="header_title" *matHeaderCellDef fxHide fxShow.gt-sm>matter guid</mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.MATTERGUID}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="USERNAME">
-                                <mat-header-cell  class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>username</mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.USERNAME}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="Date">
-                                <mat-header-cell  class="header_title" *matHeaderCellDef>date</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.Date}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="Time">
-                                <mat-header-cell  class="header_title" *matHeaderCellDef fxHide fxShow.gt-sm>time</mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.Time}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="Note">
-                                <mat-header-cell  class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>note</mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.Note}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="SHORTNAME">
-                                <mat-header-cell  class="header_title" *matHeaderCellDef>short name</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.SHORTNAME}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="CONTACTNAME">
-                                <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-sm>contact name</mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.CONTACTNAME}}</mat-cell>
-                            </ng-container>
-                          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                          <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}"></mat-row>
-                      </mat-table>
-                    </div>
-                      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-                  </div>
-              </div>
+              <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
           </div>
-        </div>
-    </div>
+      </div>
+  </div>
 </div>

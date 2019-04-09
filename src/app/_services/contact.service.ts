@@ -12,9 +12,4 @@ export class ContactService {
   ContactData(){
     return this.http.get<any>(environment.APIEndpoint + 'GetContact');
   }
-
-  //get data for popup
-  getContact(val){
-    return this.http.get<any>(environment.APIEndpoint + 'GetContact?ContactGUID='+val);
-  }
 }

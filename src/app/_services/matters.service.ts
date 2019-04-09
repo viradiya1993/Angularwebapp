@@ -4,14 +4,12 @@ import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class MattersService {
+
   constructor(
     private httpClient: HttpClient
   ) { }
-  getMatters(data) {
-    if (data == null) {
-      data = {};
-    }
-    return this.httpClient.post<any>(environment.APIEndpoint + 'GetMatter', data);
+  getMatters() {
+    return this.httpClient.get<any>(environment.APIEndpoint + 'GetMatter');
   }
   getMattersDetail(MatterGuid) {
     return this.httpClient.get<any>(environment.APIEndpoint + 'GetMatter?MatterGuid=' + MatterGuid);

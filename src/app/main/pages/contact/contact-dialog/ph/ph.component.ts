@@ -1,5 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-ph',
@@ -9,7 +8,6 @@ import { FormGroup } from '@angular/forms';
 export class PhComponent implements OnInit {
 
   constructor() { }
-  @Input() loginForm: FormGroup;
 
   ngOnInit() {
   }

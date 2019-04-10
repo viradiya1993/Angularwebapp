@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation, Output, EventEmitter, Injectable } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation, Output, EventEmitter, Injectable, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import * as _ from 'lodash';
@@ -13,10 +13,10 @@ import { ContactDialogComponent } from './../../../main/pages/contact/contact-di
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { ContactCorresDetailsComponent } from 'app/main/pages/contact/contact-corres-details/contact-corres-details.component';
-import { TimeEntryDialogComponent } from 'app/main/pages/time-entries/time-entry-dialog/time-entry-dialog.component';
 import { ContactService } from '../../../_services';
 import { ReportsComponent } from 'app/main/reports/reports.component';
 import { ToastrService } from 'ngx-toastr';
+import { TimeEntriesComponent } from 'app/main/pages/time-entries/time-entries.component';
 
 
 
@@ -28,6 +28,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 @Injectable()
 export class ToolbarComponent implements OnInit, OnDestroy {
+    @ViewChild(TimeEntriesComponent) TimeEntrieschild: TimeEntriesComponent;
     horizontalNavbar: boolean; isTabShow: number = 0; rightNavbar: boolean; hiddenNavbar: boolean; navigation: any; selectedLanguage: any; selectedIndex: number;
     currentUser: any; confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     //timer setting
@@ -95,7 +96,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                         temp.push(element);
                         this.ReportListObj[element.REPORTGROUP] = temp;
                     } else {
-                        let demo = this.ReportListObj[element.REPORTGROUP]; ``
+                        let demo = this.ReportListObj[element.REPORTGROUP];
                         demo.push(element);
                         this.ReportListObj[element.REPORTGROUP] = demo;
                     }
@@ -205,7 +206,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     endMatterBack(matterId: any) {
         console.log(matterId);
-        this.addNewTimeEntry();
+        this.TimeEntrieschild.addNewTimeEntry(matterId);
+    }
+    addNewTimeEntry() {
+        this.TimeEntrieschild.addNewTimeEntry('');
     }
 
     /* ---------------------------------------------------------------------end of timer add--------------------------------------------------------------------------  */
@@ -265,17 +269,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         //             console.log(result);
 
         //         });
-    }
-
-    //time entry dialog
-    addNewTimeEntry() {
-        const dialogRef = this.dialog.open(TimeEntryDialogComponent, {
-            width: '50%'
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(`addNewTimeEntry result: ${result}`);
-
-        });
     }
     // for new Corres Details dialog
     openCorresDialog() {

@@ -14,38 +14,39 @@ import { WorkInProgressService } from '../../../../_services';
 })
 export class WorkInProgressComponent implements OnInit {
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
-  displayedColumns: string[] = ['Workitem Guid', 'Matter Guid', 'Invoice Guid', 'Invoice Order', 'Item Type', 'Item Date', 'Item Time','Fee Earner','Fee Type','Quantity','Quantity Type','Formatted Quantity','Price','Gst','Gst Type','Priceinc Gst','Gst Charged','Price Charged','Priceinc Gstcharged','Additional Text','Comment','Short Name','Invoice Code','Client Name'];
+  displayedColumns: string[] = ['Workitem Guid', 'Matter Guid', 'Invoice Guid', 'Invoice Order', 'Item Type', 'Item Date', 'Item Time', 'Fee Earner', 'Fee Type', 'Quantity', 'Quantity Type', 'Formatted Quantity', 'Price', 'Gst', 'Gst Type', 'Priceinc Gst', 'Gst Charged', 'Price Charged', 'Priceinc Gstcharged', 'Additional Text', 'Comment', 'Short Name', 'Invoice Code', 'Client Name'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(private dialog: MatDialog,private WorkInProgress: WorkInProgressService, private toastr: ToastrService) { }
+  constructor(private dialog: MatDialog, private WorkInProgress: WorkInProgressService, private toastr: ToastrService) { }
 
   WorkInProgressdata
-  ngOnInit() {    
-    this.WorkInProgress.WorkInProgressData().subscribe(res => {
+  ngOnInit() {
+    let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
+    this.WorkInProgress.WorkInProgressData(potData).subscribe(res => {
       //console.log(res.WorkItems.DataSet);
-      if(res.WorkItems.response !="error - not logged in"){       
-       localStorage.setItem('session_token', res.WorkItems.SessionToken);
-       this.WorkInProgressdata = new MatTableDataSource(res.WorkItems.DataSet)     
-       this.WorkInProgressdata.paginator = this.paginator
-     }else{
-       this.toastr.error(res.WorkItems.response );
-     }
-   },
-   err => {
-     this.toastr.error(err);
-   });   
+      if (res.WorkItems.response != "error - not logged in") {
+        localStorage.setItem('session_token', res.WorkItems.SessionToken);
+        this.WorkInProgressdata = new MatTableDataSource(res.WorkItems.DataSet)
+        this.WorkInProgressdata.paginator = this.paginator
+      } else {
+        this.toastr.error(res.WorkItems.response);
+      }
+    },
+      err => {
+        this.toastr.error(err);
+      });
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': ['Workitem Guid', 'Matter Guid', 'Invoice Guid', 'Invoice Order', 'Item Type', 'Item Date', 'Item Time','Fee Earner','Fee Type','Quantity','Quantity Type','Formatted Quantity','Price','Gst','Gst Type','Priceinc Gst','Gst Charged','Price Charged','Priceinc Gstcharged','Additional Text','Comment','Short Name','Invoice Code','Client Name'], 'type': 'work-in-progress' };
+    dialogConfig.data = { 'data': ['Workitem Guid', 'Matter Guid', 'Invoice Guid', 'Invoice Order', 'Item Type', 'Item Date', 'Item Time', 'Fee Earner', 'Fee Type', 'Quantity', 'Quantity Type', 'Formatted Quantity', 'Price', 'Gst', 'Gst Type', 'Priceinc Gst', 'Gst Charged', 'Price Charged', 'Priceinc Gstcharged', 'Additional Text', 'Comment', 'Short Name', 'Invoice Code', 'Client Name'], 'type': 'work-in-progress' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
     dialogRef.afterClosed().subscribe(result => {
       //console.log(result);
-      if(result){
-        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result)); 
-       }
+      if (result) {
+        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result));
+      }
     });
     dialogRef.afterClosed().subscribe(data =>
       this.tableSetting(data)

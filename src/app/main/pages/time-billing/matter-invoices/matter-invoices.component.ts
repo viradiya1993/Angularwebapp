@@ -20,7 +20,8 @@ export class MatterInvoicesComponent implements OnInit {
 
   MatterInvoicesdata;
   ngOnInit() {   
-    this.MatterInvoices.MatterInvoicesData().subscribe(res => {      
+    let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
+    this.MatterInvoices.MatterInvoicesData(potData).subscribe(res => {      
       if(res.Invoice.response !="error - not logged in"){              
         localStorage.setItem('session_token',res.Invoice.SessionToken);
        this.MatterInvoicesdata = new MatTableDataSource(res.Invoice.DataSet)     

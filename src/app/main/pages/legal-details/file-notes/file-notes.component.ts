@@ -24,7 +24,8 @@ export class FileNotesComponent implements OnInit {
   ngOnInit() {
     
       //get autorites
-      this.fileNotes_service.getData().subscribe(response => {
+      let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
+      this.fileNotes_service.getData(potData).subscribe(response => {
         localStorage.setItem('session_token',response.FileNote.SessionToken);
         //this.filenotes_table = response;
          this.filenotes_table = response.FileNote.DataSet;

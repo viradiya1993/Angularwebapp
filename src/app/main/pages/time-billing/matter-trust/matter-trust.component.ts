@@ -23,7 +23,8 @@ export class MatterTrustComponent implements OnInit {
   MatterTrustdata;
   ngOnInit() {    
     //API Data fetch
-    this.MatterTrust.MatterTrustData().subscribe(res => { 
+    let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
+    this.MatterTrust.MatterTrustData(potData).subscribe(res => { 
        if(res.TrustTransaction.response !="error - not logged in"){         
         localStorage.setItem('session_token',res.TrustTransaction.SessionToken);
         this.MatterTrustdata = new MatTableDataSource(res.TrustTransaction.DataSet)     

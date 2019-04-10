@@ -14,38 +14,39 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ReceiptsCreditsComponent implements OnInit {
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
-  displayedColumns: string[] = ['Income Code','Income Guid','Income Class','Income Type','Firmguid','Short Name','Client Name','Allocation','Income Date','Payee','Amount','Gst','Total','Bank AccountGuid','Income AccountGuid','Note'];
-  @ViewChild(MatPaginator) paginator: MatPaginator;  
-  constructor(private dialog: MatDialog,private ReceiptsCredits: ReceiptsCreditsService, private toastr: ToastrService) { }
+  displayedColumns: string[] = ['Income Code', 'Income Guid', 'Income Class', 'Income Type', 'Firmguid', 'Short Name', 'Client Name', 'Allocation', 'Income Date', 'Payee', 'Amount', 'Gst', 'Total', 'Bank AccountGuid', 'Income AccountGuid', 'Note'];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  constructor(private dialog: MatDialog, private ReceiptsCredits: ReceiptsCreditsService, private toastr: ToastrService) { }
 
-  ReceiptsCreditsdata;  
-  ngOnInit() {  
+  ReceiptsCreditsdata;
+  ngOnInit() {
     //API Data fetch
-    this.ReceiptsCredits.ReceiptsCreditsData().subscribe(res => {
-       if(res.Receipts.response !="error - not logged in"){       
+    let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
+    this.ReceiptsCredits.ReceiptsCreditsData(potData).subscribe(res => {
+      if (res.Receipts.response != "error - not logged in") {
         localStorage.setItem('session_token', res.Receipts.SessionToken);
-        this.ReceiptsCreditsdata = new MatTableDataSource(res.Receipts.DataSet)     
+        this.ReceiptsCreditsdata = new MatTableDataSource(res.Receipts.DataSet)
         this.ReceiptsCreditsdata.paginator = this.paginator
-      }else{
-        this.toastr.error(res.Receipts.response );
+      } else {
+        this.toastr.error(res.Receipts.response);
       }
     },
-    err => {
-      this.toastr.error(err);
-    });    
-  } 
+      err => {
+        this.toastr.error(err);
+      });
+  }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '50%';   
-    dialogConfig.data = { 'data': ['Income Code','Income Guid','Income Class','Income Type','Firmguid','Short Name','Client Name','Allocation','Income Date','Payee','Amount','Gst','Total','Bank AccountGuid','Income AccountGuid','Note'], 'type': 'receipts-credits' };
+    dialogConfig.width = '50%';
+    dialogConfig.data = { 'data': ['Income Code', 'Income Guid', 'Income Class', 'Income Type', 'Firmguid', 'Short Name', 'Client Name', 'Allocation', 'Income Date', 'Payee', 'Amount', 'Gst', 'Total', 'Bank AccountGuid', 'Income AccountGuid', 'Note'], 'type': 'receipts-credits' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
     dialogRef.afterClosed().subscribe(result => {
       //console.log(result);
-      if(result){
-        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result)); 
-       }
+      if (result) {
+        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result));
+      }
     });
     dialogRef.afterClosed().subscribe(data =>
       this.tableSetting(data)

@@ -14,21 +14,21 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class SafecustodyComponent implements OnInit {
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
-  displayedColumns: string[] =  ['SAFECUSTODYGUID', 'SAFECUSTODYPACKETGUID', 'MATTERGUID', 'CONTACTGUID', 'DOCUMENTTYPE',
-  'SAFECUSTODYDESCRIPTION', 'DOCUMENTNAME', 'STATUS', 'REMINDER', 'REMINDERDATE',
-  'REMINDERTIME', 'AdditionalText', 'SHORTNAME', 'CONTACTNAME', 'PACKETNUMBER'];
-  
+  displayedColumns: string[] = ['SAFECUSTODYGUID', 'SAFECUSTODYPACKETGUID', 'MATTERGUID', 'CONTACTGUID', 'DOCUMENTTYPE',
+    'SAFECUSTODYDESCRIPTION', 'DOCUMENTNAME', 'STATUS', 'REMINDER', 'REMINDERDATE',
+    'REMINDERTIME', 'AdditionalText', 'SHORTNAME', 'CONTACTNAME', 'PACKETNUMBER'];
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog,private safeCustody_service: SafeCustodyService,private toastr: ToastrService) { }
+  constructor(private dialog: MatDialog, private safeCustody_service: SafeCustodyService, private toastr: ToastrService) { }
   safeCustody_table;
   ngOnInit() {
-     //get autorites  
-      
-     this.safeCustody_service.getData().subscribe(response => {
+    //get autorites  
+    let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
+    this.safeCustody_service.getData(potData).subscribe(response => {
       localStorage.setItem('session_token', response.SessionToken);
       console.log(response);
-        
+
       if (response.SafeCustody.response != "error - not logged in") {
         console.log(response.SafeCustody.DataSet);
         this.safeCustody_table = new MatTableDataSource(response.SafeCustody.DataSet);
@@ -39,25 +39,27 @@ export class SafecustodyComponent implements OnInit {
       // this.safeCustody_table = new MatTableDataSource<PeriodicElement>(response.SafeCustody.DataSet);
       // this.safeCustody_table.paginator = this.paginator;
     },
-    error => {
-      this.toastr.error(error);
-    }
-  );
+      error => {
+        this.toastr.error(error);
+      }
+    );
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': ['SAFECUSTODYGUID', 'SAFECUSTODYPACKETGUID', 'MATTERGUID', 'CONTACTGUID', 'DOCUMENTTYPE',
-    'SAFECUSTODYDESCRIPTION', 'DOCUMENTNAME', 'STATUS', 'REMINDER', 'REMINDERDATE',
-    'REMINDERTIME', 'AdditionalText', 'SHORTNAME', 'CONTACTNAME', 'PACKETNUMBER'], 'type': 'safecustody' };
+    dialogConfig.data = {
+      'data': ['SAFECUSTODYGUID', 'SAFECUSTODYPACKETGUID', 'MATTERGUID', 'CONTACTGUID', 'DOCUMENTTYPE',
+        'SAFECUSTODYDESCRIPTION', 'DOCUMENTNAME', 'STATUS', 'REMINDER', 'REMINDERDATE',
+        'REMINDERTIME', 'AdditionalText', 'SHORTNAME', 'CONTACTNAME', 'PACKETNUMBER'], 'type': 'safecustody'
+    };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
     dialogRef.afterClosed().subscribe(result => {
       //console.log(result);
-      if(result){
-        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result)); 
-       }
+      if (result) {
+        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result));
+      }
     });
     dialogRef.afterClosed().subscribe(data =>
       this.tableSetting(data)

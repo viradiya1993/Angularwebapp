@@ -21,7 +21,8 @@ export class EstimateComponent implements OnInit {
   Estimatedata;
   ngOnInit() {
     //Table Data Listing:
-    this.Estimate.MatterEstimatesData().subscribe(res => {
+    let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
+    this.Estimate.MatterEstimatesData(potData).subscribe(res => {
       if (res.EstimateItem.response != "error - not logged in") {
         localStorage.setItem('session_token', res.EstimateItem.SessionToken);
         this.Estimatedata = new MatTableDataSource(res.EstimateItem.DataSet)

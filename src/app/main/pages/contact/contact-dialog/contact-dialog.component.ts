@@ -44,20 +44,12 @@ export class ContactDialogComponent implements OnInit {
 
 
     this.loginForm = this._formBuilder.group({
-<<<<<<< HEAD
      
       CONTACTGUID: ['', Validators.required],
       ContactName: ['', Validators.required],
       CONTACTTYPE: ['', Validators.required],
       ACTIVE: ['', Validators.required],
       
-=======
-
-      ContactName: ['', Validators.required],
-      CONTACTTYPE: ['', Validators.required],
-      isContactActive: ['', Validators.required],
-
->>>>>>> origin/web8
       //person
       COMPANYNAME: ['', Validators.required],
       POSITION: ['', Validators.required],

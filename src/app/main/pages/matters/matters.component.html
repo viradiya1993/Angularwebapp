@@ -5,7 +5,7 @@
         <div class="center p-24 list_tbl_main">
             <div class="matter-serach-div sticky_search_div">
                 <!-- select bar  -->
-                <form [formGroup]="matterFilterForm" (ngSubmit)="return">
+                <form [formGroup]="matterFilterForm">
                     <mat-form-field class="example" appearance="outline">
                         <mat-label>Active Matters</mat-label>
                         <mat-select formControlName="MatterFilter" (selectionChange)="MatterChange($event.value)">

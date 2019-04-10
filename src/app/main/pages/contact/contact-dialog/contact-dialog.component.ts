@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr';
 import { AddContactService } from './../../../../_services';
 import { ToolbarComponent } from 'app/layout/components/toolbar/toolbar.component';
-import {MAT_DIALOG_DATA} from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-contact-dialog',
@@ -14,31 +14,27 @@ import {MAT_DIALOG_DATA} from '@angular/material';
 export class ContactDialogComponent implements OnInit {
 
   action: string;
-    //contact: string;
-    dialogTitle: string;
+  //contact: string;
+  dialogTitle: string;
 
 
-  constructor(public dialogRef: MatDialogRef<ContactDialogComponent>,private _formBuilder: FormBuilder
-    , private toastr: ToastrService,private addcontact: AddContactService,@Inject(MAT_DIALOG_DATA) public _data: any) 
-    
-    {   // Set the defaults
-      //this.action = _data.action;
-      this.action = _data.action;
-      //  console.log(_data.contact.DATEOFBIRTH);
+  constructor(public dialogRef: MatDialogRef<ContactDialogComponent>, private _formBuilder: FormBuilder
+    , private toastr: ToastrService, private addcontact: AddContactService, @Inject(MAT_DIALOG_DATA) public _data: any) {   // Set the defaults
+    //this.action = _data.action;
+    this.action = _data.action;
+    //  console.log(_data.contact.DATEOFBIRTH);
 
-      if ( this.action === 'edit' )
-      {
-          this.dialogTitle = 'Edit Contact';
-          
-      }
-      else
-      {
-          this.dialogTitle = 'New Contact';
-          //this.contact = new Contact({});
-      }
-    
-    
+    if (this.action === 'edit') {
+      this.dialogTitle = 'Edit Contact';
+
     }
+    else {
+      this.dialogTitle = 'New Contact';
+      //this.contact = new Contact({});
+    }
+
+
+  }
 
   common: Common[];
   nameSelected: string;
@@ -46,14 +42,22 @@ export class ContactDialogComponent implements OnInit {
   loginForm: FormGroup;
   ngOnInit() {
 
-   
+
     this.loginForm = this._formBuilder.group({
+<<<<<<< HEAD
      
       CONTACTGUID: ['', Validators.required],
       ContactName: ['', Validators.required],
       CONTACTTYPE: ['', Validators.required],
       ACTIVE: ['', Validators.required],
       
+=======
+
+      ContactName: ['', Validators.required],
+      CONTACTTYPE: ['', Validators.required],
+      isContactActive: ['', Validators.required],
+
+>>>>>>> origin/web8
       //person
       COMPANYNAME: ['', Validators.required],
       POSITION: ['', Validators.required],
@@ -121,7 +125,7 @@ export class ContactDialogComponent implements OnInit {
       NATIONALIDENTITYCOUNTRY: ['', Validators.required],
       FAMILYCOURTLAWYERNO: ['', Validators.required],
       NOTES: ['', Validators.required],
-      
+
 
     });
     this.common = [
@@ -132,12 +136,11 @@ export class ContactDialogComponent implements OnInit {
       { Id: 4, Name: "Payee/Payor" },
 
     ];
-    
-    if ( this.action !== 'edit' )
-    {
-     this.nameSelected = "Person";
-    }else{
-      this.nameSelected =this._data.contact.CONTACTTYPE ;
+
+    if (this.action !== 'edit') {
+      this.nameSelected = "Person";
+    } else {
+      this.nameSelected = this._data.contact.CONTACTTYPE;
     }
 
       if ( this.action === 'edit' )
@@ -207,20 +210,20 @@ export class ContactDialogComponent implements OnInit {
       this.loginForm.controls['WEBADDRESS'].setValue(this._data.contact.WEBADDRESS);
       this.loginForm.controls['SKYPEUSERNAME'].setValue(this._data.contact.SKYPEUSERNAME);
 
-     //id
+      //id
 
-     this.loginForm.controls['PRACTICINGCERTIFICATENO'].setValue(this._data.contact.PRACTICINGCERTIFICATENO);
-     this.loginForm.controls['ACN'].setValue(this._data.contact.ACN);
-     this.loginForm.controls['ABN'].setValue(this._data.contact.ABN);
-     this.loginForm.controls['TFN'].setValue(this._data.contact.TFN);
-     this.loginForm.controls['LICENCENO'].setValue(this._data.contact.LICENCENO);
-     this.loginForm.controls['LICENCECOUNTRY'].setValue(this._data.contact.LICENCECOUNTRY);
-     this.loginForm.controls['NATIONALIDENTITYNO'].setValue(this._data.contact.NATIONALIDENTITYNO);
-     this.loginForm.controls['NATIONALIDENTITYCOUNTRY'].setValue(this._data.contact.NATIONALIDENTITYCOUNTRY);
-     this.loginForm.controls['FAMILYCOURTLAWYERNO'].setValue(this._data.contact.FAMILYCOURTLAWYERNO);
-     this.loginForm.controls['NOTES'].setValue(this._data.contact.NOTES);
+      this.loginForm.controls['PRACTICINGCERTIFICATENO'].setValue(this._data.contact.PRACTICINGCERTIFICATENO);
+      this.loginForm.controls['ACN'].setValue(this._data.contact.ACN);
+      this.loginForm.controls['ABN'].setValue(this._data.contact.ABN);
+      this.loginForm.controls['TFN'].setValue(this._data.contact.TFN);
+      this.loginForm.controls['LICENCENO'].setValue(this._data.contact.LICENCENO);
+      this.loginForm.controls['LICENCECOUNTRY'].setValue(this._data.contact.LICENCECOUNTRY);
+      this.loginForm.controls['NATIONALIDENTITYNO'].setValue(this._data.contact.NATIONALIDENTITYNO);
+      this.loginForm.controls['NATIONALIDENTITYCOUNTRY'].setValue(this._data.contact.NATIONALIDENTITYCOUNTRY);
+      this.loginForm.controls['FAMILYCOURTLAWYERNO'].setValue(this._data.contact.FAMILYCOURTLAWYERNO);
+      this.loginForm.controls['NOTES'].setValue(this._data.contact.NOTES);
 
-      }
+    }
 
   }
 
@@ -251,11 +254,10 @@ export class ContactDialogComponent implements OnInit {
     // if(this.f.DATEOFDEATH.value==null){
     //   this.toastr.error("please enter date using calender");
     // }
-    if(this.f.ContactName.value==""){
-      this.toastr.error("please enter Contact Name"); 
+    if (this.f.ContactName.value == "") {
+      this.toastr.error("please enter Contact Name");
     }
 
-    
 
     let details={
       CONTACTGUID:this.f.CONTACTGUID.value,
@@ -263,73 +265,73 @@ export class ContactDialogComponent implements OnInit {
       CONTACTTYPE:this.f.CONTACTTYPE.value,
       ACTIVE:this.f.ACTIVE.value,
       //person
-      COMPANYNAME:this.f.COMPANYNAME.value,
-      POSITION:this.f.POSITION.value,
-      GIVENNAMES:this.f.GIVENNAMES.value,
-      NAMETITLE:this.f.NAMETITLE.value,
-      MIDDLENAMES:this.f.MIDDLENAMES.value,
-      NAMELETTERS:this.f.NAMELETTERS.value,
-      FAMILYNAME:this.f.FAMILYNAME.value,
-      KNOWNBYOTHERNAME:this.f.KNOWNBYOTHERNAME.value,
-      OTHERFAMILYNAME:this.f.OTHERFAMILYNAME.value,
-      OTHERGIVENNAMES:this.f.OTHERGIVENNAMES.value,
-      REASONFORCHANGE:this.f.REASONFORCHANGE.value,
+      COMPANYNAME: this.f.COMPANYNAME.value,
+      POSITION: this.f.POSITION.value,
+      GIVENNAMES: this.f.GIVENNAMES.value,
+      NAMETITLE: this.f.NAMETITLE.value,
+      MIDDLENAMES: this.f.MIDDLENAMES.value,
+      NAMELETTERS: this.f.NAMELETTERS.value,
+      FAMILYNAME: this.f.FAMILYNAME.value,
+      KNOWNBYOTHERNAME: this.f.KNOWNBYOTHERNAME.value,
+      OTHERFAMILYNAME: this.f.OTHERFAMILYNAME.value,
+      OTHERGIVENNAMES: this.f.OTHERGIVENNAMES.value,
+      REASONFORCHANGE: this.f.REASONFORCHANGE.value,
 
       //others
-      GENDER:this.f.GENDER.value,
-      DATEOFBIRTH:this.f.DATEOFBIRTH.value._i,
-      MARITALSTATUS:this.f.MARITALSTATUS.value,
-      SPOUSE:this.f.SPOUSE.value,
-      NUMBEROFDEPENDANTS:this.f.NUMBEROFDEPENDANTS.value,
-      BIRTHDAYREMINDER:this.f.BIRTHDAYREMINDER.value,
-      TOWNOFBIRTH:this.f.TOWNOFBIRTH.value,
-      COUNTRYOFBIRTH:this.f.COUNTRYOFBIRTH.value,
-      DATEOFDEATH:this.f.DATEOFDEATH.value._i,
-      CAUSEOFDEATH:this.f.CAUSEOFDEATH.value,
+      GENDER: this.f.GENDER.value,
+      DATEOFBIRTH: this.f.DATEOFBIRTH.value._i,
+      MARITALSTATUS: this.f.MARITALSTATUS.value,
+      SPOUSE: this.f.SPOUSE.value,
+      NUMBEROFDEPENDANTS: this.f.NUMBEROFDEPENDANTS.value,
+      BIRTHDAYREMINDER: this.f.BIRTHDAYREMINDER.value,
+      TOWNOFBIRTH: this.f.TOWNOFBIRTH.value,
+      COUNTRYOFBIRTH: this.f.COUNTRYOFBIRTH.value,
+      DATEOFDEATH: this.f.DATEOFDEATH.value._i,
+      CAUSEOFDEATH: this.f.CAUSEOFDEATH.value,
 
       //address
-      ADDRESS1:this.f.ADDRESS1.value,
-      ADDRESS2:this.f.ADDRESS2.value,
-      ADDRESS3:this.f.ADDRESS3.value,
-      SUBURB:this.f.SUBURB.value,
-      STATE:this.f.STATE.value,
-      POSTCODE:this.f.POSTCODE.value,
-      COUNTRY:this.f.COUNTRY.value,
-      SAMEASSTREET:this.f.SAMEASSTREET.value,
-      POSTALADDRESS1:this.f.POSTALADDRESS1.value,
-      POSTALADDRESS2:this.f.POSTALADDRESS2.value,
-      POSTALADDRESS3:this.f.POSTALADDRESS3.value,
-      POSTALSUBURB:this.f.POSTALSUBURB.value,
-      POSTALSTATE:this.f.POSTALSTATE.value,
-      POSTALPOSTCODE:this.f.POSTALPOSTCODE.value,
-      POSTALCOUNTRY:this.f.POSTALCOUNTRY.value,
-      DX:this.f.DX.value,
-      DXSUBURB:this.f.DXSUBURB.value,
-      
+      ADDRESS1: this.f.ADDRESS1.value,
+      ADDRESS2: this.f.ADDRESS2.value,
+      ADDRESS3: this.f.ADDRESS3.value,
+      SUBURB: this.f.SUBURB.value,
+      STATE: this.f.STATE.value,
+      POSTCODE: this.f.POSTCODE.value,
+      COUNTRY: this.f.COUNTRY.value,
+      SAMEASSTREET: this.f.SAMEASSTREET.value,
+      POSTALADDRESS1: this.f.POSTALADDRESS1.value,
+      POSTALADDRESS2: this.f.POSTALADDRESS2.value,
+      POSTALADDRESS3: this.f.POSTALADDRESS3.value,
+      POSTALSUBURB: this.f.POSTALSUBURB.value,
+      POSTALSTATE: this.f.POSTALSTATE.value,
+      POSTALPOSTCODE: this.f.POSTALPOSTCODE.value,
+      POSTALCOUNTRY: this.f.POSTALCOUNTRY.value,
+      DX: this.f.DX.value,
+      DXSUBURB: this.f.DXSUBURB.value,
+
       //ph/web
-      PHONE:this.f.PHONE.value,
-      PHONE2:this.f.PHONE2.value,
-      FAX:this.f.FAX.value,
-      FAX2:this.f.FAX2.value,
-      MOBILE:this.f.MOBILE.value,
-      EMAIL:this.f.EMAIL.value,
-      EMAIL2:this.f.EMAIL2.value,
-      ELECTRONICSERVICEEMAIL:this.f.ELECTRONICSERVICEEMAIL.value,
-      WEBADDRESS:this.f.WEBADDRESS.value,
-      SKYPEUSERNAME:this.f.SKYPEUSERNAME.value,
+      PHONE: this.f.PHONE.value,
+      PHONE2: this.f.PHONE2.value,
+      FAX: this.f.FAX.value,
+      FAX2: this.f.FAX2.value,
+      MOBILE: this.f.MOBILE.value,
+      EMAIL: this.f.EMAIL.value,
+      EMAIL2: this.f.EMAIL2.value,
+      ELECTRONICSERVICEEMAIL: this.f.ELECTRONICSERVICEEMAIL.value,
+      WEBADDRESS: this.f.WEBADDRESS.value,
+      SKYPEUSERNAME: this.f.SKYPEUSERNAME.value,
 
       //id
-      PRACTICINGCERTIFICATENO:this.f.PRACTICINGCERTIFICATENO.value,
-      ACN:this.f.ACN.value,
-      ABN:this.f.ABN.value,
-      TFN:this.f.TFN.value,
-      LICENCENO:this.f.LICENCENO.value,
-      LICENCECOUNTRY:this.f.LICENCECOUNTRY.value,
-      NATIONALIDENTITYNO:this.f.NATIONALIDENTITYNO.value,
-      NATIONALIDENTITYCOUNTRY:this.f.NATIONALIDENTITYCOUNTRY.value,
-      FAMILYCOURTLAWYERNO:this.f.FAMILYCOURTLAWYERNO.value,
-      NOTES:this.f.NOTES.value,
-      
+      PRACTICINGCERTIFICATENO: this.f.PRACTICINGCERTIFICATENO.value,
+      ACN: this.f.ACN.value,
+      ABN: this.f.ABN.value,
+      TFN: this.f.TFN.value,
+      LICENCENO: this.f.LICENCENO.value,
+      LICENCECOUNTRY: this.f.LICENCECOUNTRY.value,
+      NATIONALIDENTITYNO: this.f.NATIONALIDENTITYNO.value,
+      NATIONALIDENTITYCOUNTRY: this.f.NATIONALIDENTITYCOUNTRY.value,
+      FAMILYCOURTLAWYERNO: this.f.FAMILYCOURTLAWYERNO.value,
+      NOTES: this.f.NOTES.value,
+
 
     }
 
@@ -345,7 +347,7 @@ export class ContactDialogComponent implements OnInit {
     }
     //this.dialogRef.close(details);
 
-    
+
   }
 
 }

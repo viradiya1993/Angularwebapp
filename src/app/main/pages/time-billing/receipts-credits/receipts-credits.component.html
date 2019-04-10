@@ -4,15 +4,15 @@
     <div class="center">
         <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
             <div fxLayout="row" fxLayoutAlign="start center">
-                <button mat-icon-button class="mr-16" [routerLink]="''">
+                <button mat-icon-button class="mr-16" [routerLink]="'/matters'">
                   <mat-icon>arrow_back</mat-icon>
                  </button>
                 <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
                     <div class="h2">
-                        Receipts & Credits Detail for {{currentMatter?.MATTERGUID}}
+                        Receipts & Credits Detail for Matter({{currentMatter?.SHORTNAME}})
                     </div>
                     <div class="subtitle secondary-text">
-                        <span>from</span>
+                        <span>Client</span>
                         <span> {{currentMatter?.MATTER}}</span>
                     </div>
                 </div>
@@ -20,7 +20,7 @@
         </div>
         <div id="receipts" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
             <div fxLayoutAlign="center" class="content">
-                <div class="center p-24" fusePerfectScrollbar>
+                <div class="center" fusePerfectScrollbar>
                     <div class="content">
                         <div class="btn top_right_action_billing">
                             <button mat-icon-button (click)="openDialog()" aria-label="More">

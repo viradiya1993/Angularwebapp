@@ -12,43 +12,46 @@ import { AuthoritiesService } from './../../../../_services';
   animations: fuseAnimations
 })
 export class AuthoritiesComponent implements OnInit {
+  currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   displayedColumns: string[] = ['MATTERAUTHORITYGUID', 'MATTERGUID', 'AUTHORITYGUID', 'AUTHORITY', 'CITATION', 'WEBADDRESS',
-  'TOPIC', 'REFERENCE', 'COMMENT', 'SHORTNAME', 'CLIENTNAME'];
+    'TOPIC', 'REFERENCE', 'COMMENT', 'SHORTNAME', 'CLIENTNAME'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog,private authorities_service: AuthoritiesService) { }
+  constructor(private dialog: MatDialog, private authorities_service: AuthoritiesService) { }
   authorities_table;
   ngOnInit() {
-      //get autorites
-      this.authorities_service.getData().subscribe(response => {
-        localStorage.setItem('session_token', response.MatterAuthority.SessionToken);
-        // this.authorities_table = res;
-        // this.filterData = res;
-       // console.log(response);
-        this.authorities_table = new MatTableDataSource<PeriodicElement>(response.MatterAuthority.DataSet);
-        this.authorities_table.paginator = this.paginator;
-      },
+    //get autorites
+    this.authorities_service.getData().subscribe(response => {
+      localStorage.setItem('session_token', response.MatterAuthority.SessionToken);
+      // this.authorities_table = res;
+      // this.filterData = res;
+      // console.log(response);
+      this.authorities_table = new MatTableDataSource<PeriodicElement>(response.MatterAuthority.DataSet);
+      this.authorities_table.paginator = this.paginator;
+    },
       err => {
         console.log('Error occured');
       }
     );
   }
   //
-  
+
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': ['MATTERAUTHORITYGUID', 'MATTERGUID', 'AUTHORITYGUID', 'AUTHORITY', 'CITATION', 'WEBADDRESS',
-    'TOPIC', 'REFERENCE', 'COMMENT', 'SHORTNAME', 'CLIENTNAME'], 'type': 'authorities' };
+    dialogConfig.data = {
+      'data': ['MATTERAUTHORITYGUID', 'MATTERGUID', 'AUTHORITYGUID', 'AUTHORITY', 'CITATION', 'WEBADDRESS',
+        'TOPIC', 'REFERENCE', 'COMMENT', 'SHORTNAME', 'CLIENTNAME'], 'type': 'authorities'
+    };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
-    
+
     dialogRef.afterClosed().subscribe(result => {
       //console.log(result);
-      if(result){
-        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result)); 
-       }
+      if (result) {
+        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result));
+      }
     });
     dialogRef.afterClosed().subscribe(data =>
       this.tableSetting(data)

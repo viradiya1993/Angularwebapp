@@ -16,7 +16,7 @@ import { ToastrService } from 'ngx-toastr';
   animations: fuseAnimations
 })
 export class ChronologyComponent implements OnInit {
-
+  currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   displayedColumns: string[] = ['MATTERGUID', 'CHRONOLOGYGUID','DATEFROM','DATETO','TIMEFROM','TIMETO','FORMAT', 'FORMATTEDDATE',
    'TOPIC','BRIEFPAGENO','REFERENCE','COMMENT','WITNESSES','EVENTAGREED','DOCUMENTNAME','ADDITIONALTEXT','SHORTNAME','CLIENTNAME'];
   //dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);

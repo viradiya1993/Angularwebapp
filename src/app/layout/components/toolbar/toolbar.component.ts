@@ -17,6 +17,7 @@ import { ContactService } from '../../../_services';
 import { ReportsComponent } from 'app/main/reports/reports.component';
 import { ToastrService } from 'ngx-toastr';
 import { TimeEntriesComponent } from 'app/main/pages/time-entries/time-entries.component';
+import { TimeEntryDialogComponent } from 'app/main/pages/time-entries/time-entry-dialog/time-entry-dialog.component';
 
 
 
@@ -89,7 +90,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
 
         this.reportlistService.allreportlist({}).subscribe(res => {
-            if (res.Report_List_response.response != "error - not logged in") {
+            if (res.Report_List_response.Respose != "error - not logged in") {
                 res.Report_List_response.DataSet.forEach(element => {
                     if (!this.ReportListObj[element.REPORTGROUP]) {
                         let temp = [];
@@ -206,12 +207,19 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     endMatterBack(matterId: any) {
         console.log(matterId);
-        this.TimeEntrieschild.addNewTimeEntry(matterId);
+        this.addNewTimeEntry(matterId);
     }
-    addNewTimeEntry() {
-        this.TimeEntrieschild.addNewTimeEntry('');
-    }
+    //*----**************************************time enrt add start***************************************
+    public addNewTimeEntry(Data: any) {
+        const dialogRef = this.dialog.open(TimeEntryDialogComponent, {
+            width: '50%'
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`addNewTimeEntry result: ${result}`);
 
+        });
+    }
+    //*----**************************************time enrt add end***************************************
     /* ---------------------------------------------------------------------end of timer add--------------------------------------------------------------------------  */
     // for new contact dialog
     AddContactsDialog() {
@@ -324,6 +332,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     navBarSetting(value: any) {
         let x = value.split("/");
+        console.log(x[1]);
         if (x[1] == "matters" || x[1] == "") {
             this.isTabShow = 1;
         } else if (x[1] == "contact") {

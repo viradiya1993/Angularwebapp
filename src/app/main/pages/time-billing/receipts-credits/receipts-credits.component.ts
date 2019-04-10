@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
   animations: fuseAnimations
 })
 export class ReceiptsCreditsComponent implements OnInit {
-  
+  currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   displayedColumns: string[] = ['Income Code','Income Guid','Income Class','Income Type','Firmguid','Short Name','Client Name','Allocation','Income Date','Payee','Amount','Gst','Total','Bank AccountGuid','Income AccountGuid','Note'];
   @ViewChild(MatPaginator) paginator: MatPaginator;  
   constructor(private dialog: MatDialog,private ReceiptsCredits: ReceiptsCreditsService, private toastr: ToastrService) { }

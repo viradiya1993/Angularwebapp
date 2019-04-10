@@ -1,7 +1,7 @@
 <div id="matters_detail_div" class="page-layout carded fullwidth inner-scroll">
     <div class="top-bg accent"></div>
     <!-- CENTER -->
-    <div class="center">      
+    <div class="center">
         <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
             <div fxLayout="row" fxLayoutAlign="start center">
                 <button mat-icon-button class="mr-16" [routerLink]="''">
@@ -9,18 +9,18 @@
                  </button>
                 <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
                     <div class="h2">
-                        Matter Trust Detail for 
+                        Matter Trust Detail for {{currentMatter?.MATTERGUID}}
                     </div>
                     <div class="subtitle secondary-text">
-                        <span>from </span>
-                        <span></span>
+                        <span>from</span>
+                        <span> {{currentMatter?.MATTER}}</span>
                     </div>
                 </div>
             </div>
-        </div>       
+        </div>
         <div id="mattertrust" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
             <div fxLayoutAlign="center" class="content">
-                
+
                 <div class="center p-24" fusePerfectScrollbar>
                     <div class="content">
                         <div class="btn top_right_action_billing">
@@ -109,7 +109,7 @@
                                     <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm class="header_title">purpose</mat-header-cell>
                                     <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.PURPOSE}}
                                     </mat-cell>
-                                </ng-container>                   
+                                </ng-container>
                                 <ng-container matColumnDef="Contact Name">
                                     <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm class="header_title">contact name</mat-header-cell>
                                     <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.CONTACTNAME}}
@@ -134,7 +134,7 @@
                                     <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm class="header_title">cashbook code</mat-header-cell>
                                     <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.CASHBOOKCODE}}
                                     </mat-cell>
-                                </ng-container>                  
+                                </ng-container>
                                 <ng-container matColumnDef="Transaction Date">
                                     <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm class="header_title">transaction date</mat-header-cell>
                                     <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.TRANSACTIONDATE}}
@@ -149,12 +149,12 @@
                                     <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm class="header_title">cheque no</mat-header-cell>
                                     <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.CHEQUENO}}
                                     </mat-cell>
-                                </ng-container>                   
+                                </ng-container>
                                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                                 <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                 </mat-row>
                             </mat-table>
-                         </div>
+                        </div>
                         <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
                     </div>
                 </div>

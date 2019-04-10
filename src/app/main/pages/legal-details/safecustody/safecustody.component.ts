@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
   animations: fuseAnimations
 })
 export class SafecustodyComponent implements OnInit {
+  currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   displayedColumns: string[] =  ['SAFECUSTODYGUID', 'SAFECUSTODYPACKETGUID', 'MATTERGUID', 'CONTACTGUID', 'DOCUMENTTYPE',
   'SAFECUSTODYDESCRIPTION', 'DOCUMENTNAME', 'STATUS', 'REMINDER', 'REMINDERDATE',
   'REMINDERTIME', 'AdditionalText', 'SHORTNAME', 'CONTACTNAME', 'PACKETNUMBER'];

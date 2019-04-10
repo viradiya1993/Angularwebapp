@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
   animations: fuseAnimations
 })
 export class MatterTrustComponent implements OnInit {
-  
+  currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   displayedColumns: string[] = ['Trust Transaction ItemGuid', 'Trust Transaction Guid', 'Entered Date', 'Entered Time', 'Amount', 'Item Type', 'Account Guid', 'Matter Guid', 'Short Name','Matter Description','Client Guid','Client Name','Bankbsb','Bank Account Number','Ledger Balance','Purpose','Contact Name','Transaction Class','Transaction Type','Cashbook','Cashbook Code','Transaction Date','Payor','Cheque No'];
   
   @ViewChild(MatPaginator) paginator: MatPaginator;

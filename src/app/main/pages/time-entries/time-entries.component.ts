@@ -6,7 +6,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { TimersService } from '../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common'
-import { TimeEntryDialogComponent } from './time-entry-dialog/time-entry-dialog.component';
 
 
 @Component({
@@ -133,29 +132,5 @@ export class TimeEntriesComponent implements OnInit {
       this.displayedColumns = data;
     }
   }
-  //*----**************************************time enrt add start***************************************
-  addNewTimeEntry(Data: any) {
-    let GetMatterList = { "GetAssociatedDataSets": 'yes', 'Active': 1 };
-    this.Timersservice.matterListFetch(GetMatterList).subscribe(res => {
-      console.log(res);
-      // if (res.WorkItems.response != "error - not logged in") {
-      //   localStorage.setItem('session_token', res.WorkItems.SessionToken);
-      //   this.TimerData = new MatTableDataSource(res.WorkItems.DataSet)
-      //   this.TimerData.paginator = this.paginator
-      // } else {
-      //   this.toastr.error(res.WorkItems.response);
-      // }
-    }, err => {
-      this.toastr.error(err);
-    });
-    const dialogRef = this.dialog.open(TimeEntryDialogComponent, {
-      width: '50%'
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`addNewTimeEntry result: ${result}`);
-
-    });
-  }
-  //*----**************************************time enrt add end***************************************
 
 }

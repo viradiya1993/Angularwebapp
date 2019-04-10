@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
   animations: fuseAnimations
 })
 export class MatterInvoicesComponent implements OnInit {
-
+  currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   displayedColumns: string[] = ['Invoice Guid', 'Invoice ReversalGuid', 'Matter Guid', 'Short Name', 'Client Name', 'Parent InvoiceGuid', 'Invoice Code','Invoice Date','Due Date','Printed Date','Invoice Total','Gst','Agency Total','Agency Gst','Amount PaidexGst','Amount PaidincGst','Amount WrittenoffexGst','Amount WrittenoffincGst','Amount OutstandingexGst','Amount OutstandingincGst','Disbursement AmountexGst','Disbursement AmountincGst','Foreign currencyid','Foreign currencyrate','Foreign currencyamount','Foreign currencyGst','Comment'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private dialog: MatDialog,private MatterInvoices: MatterInvoicesService,private toastr: ToastrService) { }

@@ -13,7 +13,7 @@ import { WorkInProgressService } from '../../../../_services';
   animations: fuseAnimations
 })
 export class WorkInProgressComponent implements OnInit {
-
+  currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   displayedColumns: string[] = ['Workitem Guid', 'Matter Guid', 'Invoice Guid', 'Invoice Order', 'Item Type', 'Item Date', 'Item Time','Fee Earner','Fee Type','Quantity','Quantity Type','Formatted Quantity','Price','Gst','Gst Type','Priceinc Gst','Gst Charged','Price Charged','Priceinc Gstcharged','Additional Text','Comment','Short Name','Invoice Code','Client Name'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private dialog: MatDialog,private WorkInProgress: WorkInProgressService, private toastr: ToastrService) { }

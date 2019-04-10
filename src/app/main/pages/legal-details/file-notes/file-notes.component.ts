@@ -14,6 +14,7 @@ import { ToastrService } from 'ngx-toastr';
   animations: fuseAnimations
 })
 export class FileNotesComponent implements OnInit {
+  currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   displayedColumns: string[] = ['FILENOTEGUID', 'MATTERGUID', 'USERNAME','Date', 'Time', 'Note','SHORTNAME','CONTACTNAME'];
   
   @ViewChild(MatPaginator) paginator: MatPaginator;

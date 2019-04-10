@@ -49,9 +49,10 @@ export class ContactDialogComponent implements OnInit {
    
     this.loginForm = this._formBuilder.group({
      
+      CONTACTGUID: ['', Validators.required],
       ContactName: ['', Validators.required],
       CONTACTTYPE: ['', Validators.required],
-      isContactActive: ['', Validators.required],
+      ACTIVE: ['', Validators.required],
       
       //person
       COMPANYNAME: ['', Validators.required],
@@ -141,10 +142,14 @@ export class ContactDialogComponent implements OnInit {
 
       if ( this.action === 'edit' )
       {
-    // this.loginForm.controls['CONTACTNAME'].setValue(this._data.contact.CONTACTNAME);
+
+     this.loginForm.controls['CONTACTGUID'].setValue(this._data.contact.CONTACTGUID);
+     this.loginForm.controls['ContactName'].setValue(this._data.contact.CONTACTNAME);
      this.loginForm.controls['CONTACTTYPE'].setValue(this._data.contact.CONTACTTYPE);
      this.loginForm.controls['COMPANYNAME'].setValue(this._data.contact.COMPANYNAME);
      this.loginForm.controls['POSITION'].setValue(this._data.contact.POSITION);
+
+     this.loginForm.controls['ACTIVE'].setValue(this._data.contact.POSITION);
 
      this.loginForm.controls['GIVENNAMES'].setValue(this._data.contact.GIVENNAMES);
      this.loginForm.controls['NAMETITLE'].setValue(this._data.contact.NAMETITLE);
@@ -238,7 +243,7 @@ export class ContactDialogComponent implements OnInit {
   }
   ondialogSaveClick(): void {
     //call insert api 
-    console.log(this.f.DATEOFBIRTH.value);
+    // console.log(this.f.DATEOFBIRTH.value);
     
     // if(this.f.DATEOFBIRTH.value==null){
     // this.toastr.error("please enter date using calender");
@@ -253,9 +258,10 @@ export class ContactDialogComponent implements OnInit {
     
 
     let details={
+      CONTACTGUID:this.f.CONTACTGUID.value,
       ContactName:this.f.ContactName.value,
       CONTACTTYPE:this.f.CONTACTTYPE.value,
-      isContactActive:this.f.isContactActive.value,
+      ACTIVE:this.f.ACTIVE.value,
       //person
       COMPANYNAME:this.f.COMPANYNAME.value,
       POSITION:this.f.POSITION.value,
@@ -326,8 +332,17 @@ export class ContactDialogComponent implements OnInit {
       
 
     }
+
+    if(this.action !== 'edit'){
+      console.log("fjsdlfldsljfj");
     this.addcontact.AddContactData(details);
     console.log(details);
+    }
+    else{
+      console.log("22222222222fjsdlfldsljfj");
+      //let getContactGuId = localStorage.getItem('contactGuid');
+      this.addcontact.UpdateContact(details);
+    }
     //this.dialogRef.close(details);
 
     

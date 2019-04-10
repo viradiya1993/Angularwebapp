@@ -89,7 +89,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
 
         this.reportlistService.allreportlist({}).subscribe(res => {
-            if (res.Report_List_response.response != "error - not logged in") {
+            if (res.Report_List_response.Respose != "error - not logged in") {
                 res.Report_List_response.DataSet.forEach(element => {
                     if (!this.ReportListObj[element.REPORTGROUP]) {
                         let temp = [];
@@ -238,7 +238,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         //get value from localstrorage
         let getContactGuId = localStorage.getItem('contactGuid');
         this._getContact.getContact(getContactGuId).subscribe(res => {
-            this.getContactData = res.Contact.DataSet[0];
+            this.getContactData = res.CONTACT.DATASET[0];
             console.log(this.getContactData);
             const dialogRef = this.dialog.open(ContactDialogComponent, {
 
@@ -294,7 +294,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     deleteContact(contact): void {
 
-       
+
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false
         });
@@ -303,10 +303,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
 
         this.confirmDialogRef.afterClosed().subscribe(result => {
-            
-            let getContactGuId = localStorage.getItem('contactGuid');
 
-            this._getContact.deleteContact(getContactGuId);
+            let getContactGuId = localStorage.getItem('contactGuid');
+            let abc = {
+                CONTACTGUID: getContactGuId,
+                FormAction: "delete"
+            }
+
+            this._getContact.deleteContact(abc);
             this.confirmDialogRef = null;
         });
     }
@@ -327,6 +331,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     logOutUser() {
         this.authenticationService.logout();
+        localStorage.removeItem('contactGuid');
     }
     navBarSetting(value: any) {
         let x = value.split("/");

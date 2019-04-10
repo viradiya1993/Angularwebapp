@@ -16,6 +16,9 @@ export class ContactDialogComponent implements OnInit {
   action: string;
   //contact: string;
   dialogTitle: string;
+  FormAction: string;
+  abc: string;
+  contactguid: string;
 
 
   constructor(public dialogRef: MatDialogRef<ContactDialogComponent>, private _formBuilder: FormBuilder
@@ -36,6 +39,8 @@ export class ContactDialogComponent implements OnInit {
 
   }
 
+
+
   common: Common[];
   nameSelected: string;
   value: number;
@@ -45,7 +50,7 @@ export class ContactDialogComponent implements OnInit {
 
     this.loginForm = this._formBuilder.group({
      
-      CONTACTGUID: ['', Validators.required],
+      //CONTACTGUID: ['', Validators.required],
       ContactName: ['', Validators.required],
       CONTACTTYPE: ['', Validators.required],
       ACTIVE: ['', Validators.required],
@@ -138,7 +143,7 @@ export class ContactDialogComponent implements OnInit {
       if ( this.action === 'edit' )
       {
 
-     this.loginForm.controls['CONTACTGUID'].setValue(this._data.contact.CONTACTGUID);
+     //this.loginForm.controls['CONTACTGUID'].setValue(this._data.contact.CONTACTGUID);
      this.loginForm.controls['ContactName'].setValue(this._data.contact.CONTACTNAME);
      this.loginForm.controls['CONTACTTYPE'].setValue(this._data.contact.CONTACTTYPE);
      this.loginForm.controls['COMPANYNAME'].setValue(this._data.contact.COMPANYNAME);
@@ -250,9 +255,25 @@ export class ContactDialogComponent implements OnInit {
       this.toastr.error("please enter Contact Name");
     }
 
+    if (this.action !== 'edit') {
+      this.FormAction= "insert";
+    } else {
+      this.FormAction= "update";
+    }
 
+    //for edit contactGuid
+
+    if (this.action !== 'edit') {
+      this.contactguid= " ";
+    } else {
+      this.contactguid=this._data.contact.CONTACTGUID ;
+    }
+    //let abc ={ FormAction: "insert"}
     let details={
-      CONTACTGUID:this.f.CONTACTGUID.value,
+
+      CONTACTGUID:this.contactguid,
+      FormAction: this.FormAction,
+      //CONTACTGUID:this.f.CONTACTGUID.value,
       ContactName:this.f.ContactName.value,
       CONTACTTYPE:this.f.CONTACTTYPE.value,
       ACTIVE:this.f.ACTIVE.value,
@@ -328,12 +349,10 @@ export class ContactDialogComponent implements OnInit {
     }
 
     if(this.action !== 'edit'){
-      console.log("fjsdlfldsljfj");
     this.addcontact.AddContactData(details);
     console.log(details);
     }
     else{
-      console.log("22222222222fjsdlfldsljfj");
       //let getContactGuId = localStorage.getItem('contactGuid');
       this.addcontact.UpdateContact(details);
     }

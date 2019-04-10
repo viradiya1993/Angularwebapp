@@ -21,7 +21,8 @@ export class ContactService {
   //for delete contact
 
   deleteContact(getContactGuId){
-    this.http.post(environment.APIEndpoint + 'SetContact?FormAction=delete&ContactGUID='+getContactGuId,getContactGuId)
+    console.log(getContactGuId);
+    this.http.post(environment.APIEndpoint + 'SetContact?FormAction=delete',getContactGuId)
     .subscribe(res => console.log(res));
   }
 }

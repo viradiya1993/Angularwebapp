@@ -22,12 +22,12 @@ export class ContactComponent implements OnInit {
     
     //First 25 record Dispay here 
     this.Contact.ContactData().subscribe(res => {
-      if (res.Contact.response != "error - not logged in") {
-        localStorage.setItem('session_token', res.Contact.SessionToken);
-        this.Contactdata = new MatTableDataSource(res.Contact.DataSet)
+      if (res.CONTACT.RESPONSE != "error - not logged in") {
+        localStorage.setItem('session_token', res.CONTACT.SESSIONTOKEN);
+        this.Contactdata = new MatTableDataSource(res.CONTACT.DATASET)
         this.Contactdata.paginator = this.paginator
       } else {
-        this.toastr.error(res.Contact.response);
+        this.toastr.error(res.CONTACT.RESPONSE);
       }
     },
       err => {

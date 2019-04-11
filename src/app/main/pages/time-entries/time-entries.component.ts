@@ -27,7 +27,7 @@ export class TimeEntriesComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    fb: FormBuilder,
+    private fb: FormBuilder,
     private toastr: ToastrService,
     private Timersservice: TimersService,
     public datepipe: DatePipe
@@ -35,15 +35,13 @@ export class TimeEntriesComponent implements OnInit {
     this.lastFilter = JSON.parse(localStorage.getItem('time_entries_filter'));
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.isShowDrop = currentUser.ProductType == "Barrister" ? false : true;
+    this.TimeEnrtyForm = this.fb.group({ date: [''], uninvoicedWork: [''], dlpdrop: [''], });
     if (this.lastFilter) {
-      this.lastFilter = { 'FeeEarner': '', 'ItemType': '', 'ItemDateStart': '', 'ItemDateEnd': '' };
       let Sd = new Date(this.lastFilter.ItemDateStart);
       let ed = new Date(this.lastFilter.ItemDateEnd);
-      this.TimeEnrtyForm = fb.group({
-        date: [{ begin: Sd, end: ed }],
-        uninvoicedWork: [this.lastFilter.ItemType],
-        dlpdrop: [this.lastFilter.FeeEarner],
-      });
+      this.TimeEnrtyForm.controls['date'].setValue({ begin: Sd, end: ed });
+      this.TimeEnrtyForm.controls['uninvoicedWork'].setValue(this.lastFilter.ItemType);
+      this.TimeEnrtyForm.controls['dlpdrop'].setValue(this.lastFilter.FeeEarner);
     }
   }
 

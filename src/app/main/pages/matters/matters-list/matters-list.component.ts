@@ -10,6 +10,7 @@ import { MattersService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 
 
+
 @Component({
   selector: 'app-matters-list',
   templateUrl: './matters-list.component.html',
@@ -19,11 +20,14 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class MattersListComponent implements OnInit, OnDestroy {
   [x: string]: any;
+  highlightedRows: any;
+  theme_type = localStorage.getItem('theme_type');
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : 'green';
   displayedColumns = ['matter_num', 'matter', 'unbilled', 'invoiced', 'received', 'unpaid', 'total_value'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   mattersData: any;
+  isLoadingResults: boolean = true;
   lastFilter = {};
-
 
   @Output() matterDetail: EventEmitter<any> = new EventEmitter<any>();
 
@@ -33,8 +37,10 @@ export class MattersListComponent implements OnInit, OnDestroy {
     private _mattersService: MattersService,
     private toastr: ToastrService
   ) {
-    if (JSON.parse(localStorage.getItem('matter_filter')))
+    if (JSON.parse(localStorage.getItem('matter_filter'))) {
       this.lastFilter = JSON.parse(localStorage.getItem('matter_filter'));
+    }
+    // this.highlightedRows = JSON.parse(localStorage.getItem('set_active_matters')).MATTERGUID
   }
 
   ngOnInit(): void {
@@ -63,13 +69,19 @@ export class MattersListComponent implements OnInit, OnDestroy {
     );
   }
   getMatterList(data) {
+    this.isLoadingResults = true;
     this._mattersService.getMatters(data).subscribe(response => {
-      localStorage.setItem('session_token', response.Matter.SessionToken);
-      if (response.Matter.response != "error - not logged in") {
-        this.mattersData = new MatTableDataSource(response.Matter.DataSet);
+      localStorage.setItem('session_token', response.MATTER.SESSIONTOKEN);
+      if (response.MATTER.RESPONSE != "error - not logged in") {
+        if (response.MATTER.DATASET[0]) {
+          this.highlightedRows = response.MATTER.DATASET[0].MATTERGUID;
+          this.matterDetail.emit(response.MATTER.DATASET[0]);
+        }
+        this.mattersData = new MatTableDataSource(response.MATTER.DATASET);
         this.mattersData.paginator = this.paginator;
+        this.isLoadingResults = false;
       } else {
-        this.toastr.error(response.Matter.response);
+        this.toastr.error(response.MATTER.RESPONSE);
       }
     }, error => {
       this.toastr.error(error);
@@ -80,6 +92,8 @@ export class MattersListComponent implements OnInit, OnDestroy {
       this.displayedColumns = data;
       this.getMatterList(this.lastFilter);
     }
+  }
+  toggleRow(value: any) {
   }
 }
 

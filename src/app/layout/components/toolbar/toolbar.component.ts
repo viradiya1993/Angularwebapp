@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation, Output, EventEmitter, Injectable } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation, Output, EventEmitter, Injectable, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import * as _ from 'lodash';
@@ -13,9 +13,13 @@ import { ContactDialogComponent } from './../../../main/pages/contact/contact-di
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { ContactCorresDetailsComponent } from 'app/main/pages/contact/contact-corres-details/contact-corres-details.component';
-import { TimeEntryDialogComponent } from 'app/main/pages/time-entries/time-entry-dialog/time-entry-dialog.component';
+import { ContactService } from '../../../_services';
 import { ReportsComponent } from 'app/main/reports/reports.component';
 import { ToastrService } from 'ngx-toastr';
+import { TimeEntriesComponent } from 'app/main/pages/time-entries/time-entries.component';
+import { TimeEntryDialogComponent } from 'app/main/pages/time-entries/time-entry-dialog/time-entry-dialog.component';
+
+
 
 @Component({
     selector: 'toolbar',
@@ -25,6 +29,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 @Injectable()
 export class ToolbarComponent implements OnInit, OnDestroy {
+    @ViewChild(TimeEntriesComponent) TimeEntrieschild: TimeEntriesComponent;
     horizontalNavbar: boolean; isTabShow: number = 0; rightNavbar: boolean; hiddenNavbar: boolean; navigation: any; selectedLanguage: any; selectedIndex: number;
     currentUser: any; confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     //timer setting
@@ -35,6 +40,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     currentTimer: any = 0;
     currentTimerHMS: any;
     ReportListObj: any[] = []
+    getContactData: any;
 
 
     // Private
@@ -49,6 +55,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         public _matDialog: MatDialog,
         private reportlistService: ReportlistService,
         private toastr: ToastrService,
+        public _getContact: ContactService,
     ) {
         this.navigation = navigation;
         // Set the private defaults
@@ -83,20 +90,20 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
 
         this.reportlistService.allreportlist({}).subscribe(res => {
-            if (res.Report_List_response.response != "error - not logged in") {
+            if (res.Report_List_response.Respose != "error - not logged in") {
                 res.Report_List_response.DataSet.forEach(element => {
                     if (!this.ReportListObj[element.REPORTGROUP]) {
                         let temp = [];
                         temp.push(element);
                         this.ReportListObj[element.REPORTGROUP] = temp;
                     } else {
-                        let demo = this.ReportListObj[element.REPORTGROUP]; ``
+                        let demo = this.ReportListObj[element.REPORTGROUP];
                         demo.push(element);
                         this.ReportListObj[element.REPORTGROUP] = demo;
                     }
                 });
             } else {
-                this.toastr.error(res.EstimateItem.response);
+                this.toastr.error(res.EstimateItem.Respose);
             }
         },
             err => {
@@ -200,8 +207,19 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     endMatterBack(matterId: any) {
         console.log(matterId);
+        this.addNewTimeEntry(matterId);
     }
+    //*----**************************************time enrt add start***************************************
+    public addNewTimeEntry(Data: any) {
+        const dialogRef = this.dialog.open(TimeEntryDialogComponent, {
+            width: '50%'
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`addNewTimeEntry result: ${result}`);
 
+        });
+    }
+    //*----**************************************time enrt add end***************************************
     /* ---------------------------------------------------------------------end of timer add--------------------------------------------------------------------------  */
     // for new contact dialog
     AddContactsDialog() {
@@ -221,35 +239,44 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
 
-    //edit Contact
+    //edit Contact diloage
+
     EditContactsDialog() {
 
-        const dialogRef = this.dialog.open(ContactDialogComponent, {
+        //get value from localstrorage
+        let getContactGuId = localStorage.getItem('contactGuid');
+        this._getContact.getContact(getContactGuId).subscribe(res => {
+            this.getContactData = res.Contact.DataSet[0];
+            console.log(this.getContactData);
+            const dialogRef = this.dialog.open(ContactDialogComponent, {
 
-            panelClass: 'contact-dialog',
-            data: {
-                action: 'edit'
-            }
+                data: {
+                    contact: this.getContactData,
+                    action: 'edit'
+                }
+            });
+            dialogRef.afterClosed().subscribe(result => {
+
+
+                console.log(result);
+
+            });
         });
-        dialogRef.afterClosed().subscribe(result => {
+        //const dialogRef = this.dialog.open(ContactDialogComponent, this.getContactData);
+        //    console.log(this.getContactData);
+        //         const dialogRef = this.dialog.open(ContactDialogComponent,{
+
+        //             data      : {
+        //                 contact:this.getContactData,
+        //                 action : 'edit'
+        //             }
+        //         });
+        //         dialogRef.afterClosed().subscribe(result => {
 
 
-            console.log(result);
+        //             console.log(result);
 
-        });
-
-    }
-
-    //time entry dialog
-    addNewTimeEntry() {
-        const dialogRef = this.dialog.open(TimeEntryDialogComponent, {
-            width: '50%'
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
-
-        });
+        //         });
     }
     // for new Corres Details dialog
     openCorresDialog() {
@@ -258,7 +285,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this.dialog.open(ContactCorresDetailsComponent, dialogConfig);
         dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialog result: ${result}`);
-
         });
     }
 
@@ -310,6 +336,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     navBarSetting(value: any) {
         let x = value.split("/");
+        console.log(x[1]);
         if (x[1] == "matters" || x[1] == "") {
             this.isTabShow = 1;
         } else if (x[1] == "contact") {

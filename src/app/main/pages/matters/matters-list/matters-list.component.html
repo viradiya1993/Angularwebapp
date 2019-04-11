@@ -5,6 +5,13 @@
 </div>
 <!-- <div class="center p-24" fusePerfectScrollbar> -->
 <div class="one">
+    <div class="example-loading-shade" *ngIf="isLoadingResults">
+        <!-- <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached"> -->
+        <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+        <!-- <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+            GitHub's API rate limit has been reached. It will be reset in one minute.
+        </div> -->
+    </div>
     <mat-table #table [dataSource]="mattersData" [@animateStagger]="{value:'50'}">
         <!-- Name Column -->
         <ng-container matColumnDef="matter_num">
@@ -73,7 +80,7 @@
         <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
         <!-- sticky: true" -->
         <div class="tbl_body_scroll">
-            <mat-row *matRowDef="let matter; columns: displayedColumns;" class="matter" (click)="editmatter(matter)" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+            <mat-row *matRowDef="let matter; columns: displayedColumns;let element;" class="matter" (click)="editmatter(matter);highlightedRows=matter.MATTERGUID" [style.background]="highlightedRows == matter.MATTERGUID ? selectedColore : ''" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
             </mat-row>
         </div>
     </mat-table>

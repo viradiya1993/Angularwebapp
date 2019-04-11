@@ -1,23 +1,23 @@
 <div id="matters_detail_div" class="page-layout carded fullwidth inner-scroll">
     <div class="top-bg accent"></div>
     <!-- CENTER -->
-    <div class="center">      
+    <div class="center">
         <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
             <div fxLayout="row" fxLayoutAlign="start center">
-                <button mat-icon-button class="mr-16" [routerLink]="''">
+                <button mat-icon-button class="mr-16" [routerLink]="'/matters'">
                   <mat-icon>arrow_back</mat-icon>
                  </button>
                 <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
                     <div class="h2">
-                        Authorities Detail for 
+                        Authorities Detail for Matter({{currentMatter?.SHORTNAME}})
                     </div>
                     <div class="subtitle secondary-text">
-                        <span>from </span>
-                        <span></span>
+                        <span>Client</span>
+                        <span> {{currentMatter?.MATTER}}</span>
                     </div>
                 </div>
             </div>
-        </div>       
+        </div>
         <div id="authorities" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
             <div fxLayoutAlign="center" class="content">
                 <div class="center" fusePerfectScrollbar>
@@ -28,72 +28,72 @@
                             </button>
                         </div>
                         <div class="example-containerdata">
-                        <mat-table #table [dataSource]="authorities_table" [@animateStagger]="{value:'50'}">
-                            <ng-container matColumnDef="MATTERAUTHORITYGUID">
-                                <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-sm>matter authority guid</mat-header-cell>
-                                <mat-cell *matCellDef="let authorities" fxHide fxShow.gt-sm>{{authorities.MATTERAUTHORITYGUID}}
-                                </mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="MATTERGUID">
-                                <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>matter guid</mat-header-cell>
-                                <mat-cell *matCellDef="let authorities" fxHide fxShow.gt-md>{{authorities.MATTERGUID}}
-                                </mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="AUTHORITYGUID">
-                                <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>authority guid</mat-header-cell>
-                                <mat-cell *matCellDef="let authorities" fxHide fxShow.gt-md>{{authorities.AUTHORITYGUID}}
-                                </mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="AUTHORITY">
-                                <mat-header-cell class="header_title" class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>authority</mat-header-cell>
-                                <mat-cell *matCellDef="let authorities" fxHide fxShow.gt-md>{{authorities.AUTHORITY}}
-                                </mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="CITATION">
-                                <mat-header-cell class="header_title" *matHeaderCellDef>citation </mat-header-cell>
-                                <mat-cell *matCellDef="let authorities" fxHide fxShow.gt-md>{{authorities.CITATION}}
-                                </mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="WEBADDRESS">
-                                <mat-header-cell class="header_title" *matHeaderCellDef>web address</mat-header-cell>
-                                <mat-cell *matCellDef="let authorities">{{authorities.WEBADDRESS}}
-                                </mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="TOPIC">
-                                <mat-header-cell class="header_title" *matHeaderCellDef>topic</mat-header-cell>
-                                <mat-cell *matCellDef="let authorities">{{authorities.TOPIC}}
-                                </mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="REFERENCE">
-                                <mat-header-cell class="header_title" *matHeaderCellDef>reference</mat-header-cell>
-                                <mat-cell *matCellDef="let authorities">{{authorities.REFERENCE}}
-                                </mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="COMMENT">
-                                <mat-header-cell class="header_title" *matHeaderCellDef>comment</mat-header-cell>
-                                <mat-cell *matCellDef="let authorities">{{authorities.COMMENT}}
-                                </mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="SHORTNAME">
-                                <mat-header-cell class="header_title" *matHeaderCellDef>short name</mat-header-cell>
-                                <mat-cell *matCellDef="let authorities">{{authorities.SHORTNAME}}
-                                </mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="CLIENTNAME">
-                                <mat-header-cell class="header_title" *matHeaderCellDef>client name</mat-header-cell>
-                                <mat-cell *matCellDef="let authorities">{{authorities.CLIENTNAME}}
-                                </mat-cell>
-                            </ng-container>
-                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                            <!-- sticky: true" -->                   
-                            <mat-row *matRowDef="let authorities; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
-                            </mat-row>                   
-                        </mat-table>
+                            <mat-table #table [dataSource]="authorities_table" [@animateStagger]="{value:'50'}">
+                                <ng-container matColumnDef="MATTERAUTHORITYGUID">
+                                    <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-sm>matter authority guid</mat-header-cell>
+                                    <mat-cell *matCellDef="let authorities" fxHide fxShow.gt-sm>{{authorities.MATTERAUTHORITYGUID}}
+                                    </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="MATTERGUID">
+                                    <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>matter guid</mat-header-cell>
+                                    <mat-cell *matCellDef="let authorities" fxHide fxShow.gt-md>{{authorities.MATTERGUID}}
+                                    </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="AUTHORITYGUID">
+                                    <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>authority guid</mat-header-cell>
+                                    <mat-cell *matCellDef="let authorities" fxHide fxShow.gt-md>{{authorities.AUTHORITYGUID}}
+                                    </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="AUTHORITY">
+                                    <mat-header-cell class="header_title" class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>authority</mat-header-cell>
+                                    <mat-cell *matCellDef="let authorities" fxHide fxShow.gt-md>{{authorities.AUTHORITY}}
+                                    </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="CITATION">
+                                    <mat-header-cell class="header_title" *matHeaderCellDef>citation </mat-header-cell>
+                                    <mat-cell *matCellDef="let authorities" fxHide fxShow.gt-md>{{authorities.CITATION}}
+                                    </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="WEBADDRESS">
+                                    <mat-header-cell class="header_title" *matHeaderCellDef>web address</mat-header-cell>
+                                    <mat-cell *matCellDef="let authorities">{{authorities.WEBADDRESS}}
+                                    </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="TOPIC">
+                                    <mat-header-cell class="header_title" *matHeaderCellDef>topic</mat-header-cell>
+                                    <mat-cell *matCellDef="let authorities">{{authorities.TOPIC}}
+                                    </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="REFERENCE">
+                                    <mat-header-cell class="header_title" *matHeaderCellDef>reference</mat-header-cell>
+                                    <mat-cell *matCellDef="let authorities">{{authorities.REFERENCE}}
+                                    </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="COMMENT">
+                                    <mat-header-cell class="header_title" *matHeaderCellDef>comment</mat-header-cell>
+                                    <mat-cell *matCellDef="let authorities">{{authorities.COMMENT}}
+                                    </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="SHORTNAME">
+                                    <mat-header-cell class="header_title" *matHeaderCellDef>short name</mat-header-cell>
+                                    <mat-cell *matCellDef="let authorities">{{authorities.SHORTNAME}}
+                                    </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="CLIENTNAME">
+                                    <mat-header-cell class="header_title" *matHeaderCellDef>client name</mat-header-cell>
+                                    <mat-cell *matCellDef="let authorities">{{authorities.CLIENTNAME}}
+                                    </mat-cell>
+                                </ng-container>
+                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                <!-- sticky: true" -->
+                                <mat-row *matRowDef="let authorities; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                </mat-row>
+                            </mat-table>
                         </div>
                         <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
                     </div>
                 </div>
-            </div>            
+            </div>
         </div>
     </div>
 </div>

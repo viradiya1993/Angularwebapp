@@ -19,6 +19,7 @@ export class ContactComponent implements OnInit {
   constructor(private dialog: MatDialog, private Contact: ContactService, private toastr: ToastrService, private authenticationService: AuthenticationService, ) { }
   Contactdata;
   ngOnInit() {
+    
     //First 25 record Dispay here 
     this.Contact.ContactData().subscribe(res => {
       if (res.Contact.response != "error - not logged in") {
@@ -33,6 +34,15 @@ export class ContactComponent implements OnInit {
         this.toastr.error(err);
       });
   }
+  //for edit popup
+  editContact(val){
+
+    localStorage.setItem('contactGuid', val);
+  //  this.Contact.getContact(val).subscribe(res => { 
+  //    this.getContactDta=res;
+  //    console.log(res);      
+  // });
+}
 
   openDialog() {
     const dialogConfig = new MatDialogConfig();

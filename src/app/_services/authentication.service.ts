@@ -28,22 +28,22 @@ export class AuthenticationService {
             user: uesrname, password: password, formatting: 'JSON', EmailAddress: "", SessionToken: ""
         };
         return this.http.post<any>(environment.APIEndpoint + 'login', detail).pipe(map(loginResponse => {
-            if (loginResponse && loginResponse.login_response) {
-                let responseType = loginResponse.login_response.Response;
-                let LoggedInStatus = loginResponse.login_response.LoggedInStatus;
-                if (responseType == 'OK' && LoggedInStatus) {
+            if (loginResponse && loginResponse.CODE == 200 && loginResponse.STATUS == "success") {
+                let LoggedInStatus = loginResponse.DATA.LOGGEDINSTATUS;
+                if (LoggedInStatus) {
                     localStorage.setItem('Login_response', JSON.stringify(loginResponse));
-                    localStorage.setItem('session_token', loginResponse.SessionToken);
-                    this.currentUserSubject.next(loginResponse.login_response);
+                    localStorage.setItem('session_token', loginResponse.DATA.SESSIONTOKEN);
+                    this.currentUserSubject.next(loginResponse.DATA);
                     this.toastr.success('success');
                     return true;
-                } else if (responseType == 'error - login failure') {
-                    this.toastr.error(responseType);
-                    return false;
-                } else {
-                    this.toastr.error(responseType);
-                    return false;
                 }
+                //  else if (responseType == 'error - login failure') {
+                //     this.toastr.error(responseType);
+                //     return false;
+                // } else {
+                //     this.toastr.error(responseType);
+                //     return false;
+                // }
             }
         }));
     }

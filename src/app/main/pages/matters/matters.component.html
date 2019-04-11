@@ -5,15 +5,15 @@
         <div class="center p-24 list_tbl_main">
             <div class="matter-serach-div sticky_search_div">
                 <!-- select bar  -->
-                <form [formGroup]="matterFilterForm" (ngSubmit)="return">
+                <form [formGroup]="matterFilterForm">
                     <mat-form-field class="example" appearance="outline">
                         <mat-label>Active Matters</mat-label>
                         <mat-select formControlName="MatterFilter" (selectionChange)="MatterChange($event.value)">
                             <mat-option value="">All Matters</mat-option>
-                            <mat-option value="1">Active Matters</mat-option>
-                            <mat-option value="0">Inactive Matters</mat-option>
-                            <mat-option value="recently_inactive">Recently Inactive</mat-option>
-                            <mat-option value="near_estimate">Near Estimate</mat-option>
+                            <mat-option value="active">Active Matters</mat-option>
+                            <mat-option value="inactive">Inactive Matters</mat-option>
+                            <mat-option value="recent inactive">Recently Inactive</mat-option>
+                            <mat-option value="near estimate">Near Estimate</mat-option>
                         </mat-select>
                     </mat-form-field>
 
@@ -26,8 +26,8 @@
                         </mat-select>
                     </mat-form-field>
                     <!-- select bar  -->
-                    <!-- <mat-form-field class="example" appearance="outline" *ngIf="isShowDrop"> -->
-                    <mat-form-field class="example" appearance="outline">
+
+                    <mat-form-field class="example" appearance="outline" *ngIf="isShowDrop">
                         <mat-label>Free Earner/Owner</mat-label>
                         <mat-select (selectionChange)="MatterUserChange($event.value)" formControlName="UserFilter">
                             <mat-option value="all">All</mat-option>

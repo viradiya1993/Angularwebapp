@@ -27,6 +27,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   mattersData: any;
   lastFilter = {};
+  isLoadingResults: any = false;
 
   @Output() matterDetail: EventEmitter<any> = new EventEmitter<any>();
 
@@ -68,6 +69,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
     );
   }
   getMatterList(data) {
+    this.isLoadingResults = true;
     this._mattersService.getMatters(data).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA[0]) {

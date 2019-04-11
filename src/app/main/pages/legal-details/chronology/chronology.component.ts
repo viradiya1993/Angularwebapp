@@ -16,46 +16,49 @@ import { ToastrService } from 'ngx-toastr';
   animations: fuseAnimations
 })
 export class ChronologyComponent implements OnInit {
-
-  displayedColumns: string[] = ['MATTERGUID', 'CHRONOLOGYGUID','DATEFROM','DATETO','TIMEFROM','TIMETO','FORMAT', 'FORMATTEDDATE',
-   'TOPIC','BRIEFPAGENO','REFERENCE','COMMENT','WITNESSES','EVENTAGREED','DOCUMENTNAME','ADDITIONALTEXT','SHORTNAME','CLIENTNAME'];
+  currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
+  displayedColumns: string[] = ['MATTERGUID', 'CHRONOLOGYGUID', 'DATEFROM', 'DATETO', 'TIMEFROM', 'TIMETO', 'FORMAT', 'FORMATTEDDATE',
+    'TOPIC', 'BRIEFPAGENO', 'REFERENCE', 'COMMENT', 'WITNESSES', 'EVENTAGREED', 'DOCUMENTNAME', 'ADDITIONALTEXT', 'SHORTNAME', 'CLIENTNAME'];
   //dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   chronology_table;
 
-  constructor(private dialog: MatDialog,private chronology_service: ChronologyService,private toastr: ToastrService) { }
+  constructor(private dialog: MatDialog, private chronology_service: ChronologyService, private toastr: ToastrService) { }
 
   ngOnInit() {
     //get chronology
-    this.chronology_service.getData().subscribe(response => {
+    let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
+    this.chronology_service.getData(potData).subscribe(response => {
       localStorage.setItem('session_token', response.Chronology.SessionToken);
       //this.chronology_table = res;
-          console.log(response);
-           if (response.Chronology.response != "error - not logged in") {
-            this.chronology_table = new MatTableDataSource(response.Chronology.DataSet);
-            this.chronology_table.paginator = this.paginator;
-          } else {
-            this.toastr.error(response.Chronology.response);
-          }
+      console.log(response);
+      if (response.Chronology.response != "error - not logged in") {
+        this.chronology_table = new MatTableDataSource(response.Chronology.DataSet);
+        this.chronology_table.paginator = this.paginator;
+      } else {
+        this.toastr.error(response.Chronology.response);
+      }
     },
-    error => {
-      this.toastr.error(error);
-    }
-  );
+      error => {
+        this.toastr.error(error);
+      }
+    );
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': ['MATTERGUID', 'CHRONOLOGYGUID','DATEFROM','DATETO','TIMEFROM','TIMETO','FORMAT', 'FORMATTEDDATE',
-    'TOPIC','BRIEFPAGENO','REFERENCE','COMMENT','WITNESSES','EVENTAGREED','DOCUMENTNAME','ADDITIONALTEXT','SHORTNAME','CLIENTNAME'], 'type': 'chronology' };
+    dialogConfig.data = {
+      'data': ['MATTERGUID', 'CHRONOLOGYGUID', 'DATEFROM', 'DATETO', 'TIMEFROM', 'TIMETO', 'FORMAT', 'FORMATTEDDATE',
+        'TOPIC', 'BRIEFPAGENO', 'REFERENCE', 'COMMENT', 'WITNESSES', 'EVENTAGREED', 'DOCUMENTNAME', 'ADDITIONALTEXT', 'SHORTNAME', 'CLIENTNAME'], 'type': 'chronology'
+    };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
     dialogRef.afterClosed().subscribe(result => {
       //console.log(result);
-      if(result){
-        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result)); 
-       }
+      if (result) {
+        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result));
+      }
     });
     dialogRef.afterClosed().subscribe(data =>
       this.tableSetting(data)

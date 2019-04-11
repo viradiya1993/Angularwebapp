@@ -46,6 +46,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     // Private
     private _unsubscribeAll: Subject<any>;
 
+
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
@@ -239,9 +240,35 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
 
-    //edit Contact diloage
 
-    EditContactsDialog() {
+     //client details from matter
+     ClientDetailsDialog(){
+        let getMatterContactGuId= JSON.parse(localStorage.getItem('set_active_matters'));
+       // let getMatterContactGuId= localStorage.getItem('set_active_matters');
+       let getmatguid=getMatterContactGuId.CONTACTGUID;
+       
+    //    this._getContact.getContact(getmatguid).subscribe(res => {
+    //     this.getContactData = res.CONTACT.DATASET[0];
+    //     console.log(this.getContactData);
+    //     const dialogRef = this.dialog.open(ContactDialogComponent, {
+
+    //         data: {
+    //             contact: this.getContactData,-   
+    //             action: 'edit'
+    //         }
+    //     });
+    //     dialogRef.afterClosed().subscribe(result => {
+
+
+    //         console.log(result);
+
+    //     });
+    // });
+        // console.log(this.getmatguid);
+     }
+
+    //edit Contact diloage
+     EditContactsDialog() {
 
         //get value from localstrorage
         let getContactGuId = localStorage.getItem('contactGuid');
@@ -262,6 +289,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
             });
         });
+
+       
         //const dialogRef = this.dialog.open(ContactDialogComponent, this.getContactData);
         //    console.log(this.getContactData);
         //         const dialogRef = this.dialog.open(ContactDialogComponent,{

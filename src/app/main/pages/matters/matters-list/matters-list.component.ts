@@ -49,7 +49,6 @@ export class MattersListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void { }
 
   editmatter(matters) {
-    console.log(matters);
     this.matterDetail.emit(matters);
   }
   openDialog() {

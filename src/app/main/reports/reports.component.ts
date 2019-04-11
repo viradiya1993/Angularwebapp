@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDatepickerInputEvent } from '@angular/material';
 import { ReportfilterService } from '../../_services';
 import { ToastrService } from 'ngx-toastr';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-reports',
@@ -9,70 +11,94 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./reports.component.scss']
 })
 export class ReportsComponent implements OnInit { 
-
-  Datelistname:string;
-  selectedowner:string;
-  selectedsortorder:string;
-  constructor(public dialogRef: MatDialogRef<ReportsComponent>,private Reportfilter: ReportfilterService,private toastr: ToastrService){}
+  ReportForm: FormGroup;
+  title:string;
+  responseData:string;
+  abc: any;
   
-  ngOnInit() {
-     this.Datelistname='Last Month';
-     this.selectedowner = 'All';
-     this.selectedsortorder = 'Matter Number';
+  constructor(public dialogRef: MatDialogRef<ReportsComponent>,private _formBuilder: FormBuilder,public datepipe: DatePipe,private Reportfilter: ReportfilterService,private toastr: ToastrService,@Inject(MAT_DIALOG_DATA) public data: any){
+   // this.title =data.REPORTNAME;
 
-     //API Call
-     this.Reportfilter.ReportfilterData('ReportAgedTradeCreditors').subscribe(response => {
-       console.log(response.Report_List_response.DateRangeList);
-      // Dropdowndaterange
-      //localStorage.setItem('session_token', response.Chronology.SessionToken);      
-          
+    //API Call
+    this.Reportfilter.ReportfilterData(this.data.REPORTID).subscribe(response => {
+     
+      if(response.Report_List_response.Response =='OK'){
+        this.responseData=response.Report_List_response; 
+        this.title=columnsnamereplace(this.responseData);
+      }else{
+        this.toastr.error(response.Report_List_response.Response);
+      }
     },
     error => {
       this.toastr.error(error);
-    }
-  );
+    })
   }
-   //Dropdown Data
-   Dropdowndaterange=[
-    // {name:'Last Month'},
-    // {name:'Current Month'},
-    // {name:'Last Quarter'},
-    // {name:'Current Quarter'},
-    // {name:'Last Financial Year'},
-    // {name:'Current Financial Year'},
-    // {name:'Date Range'},
-  ];
-    
-  //Select owner Dropdown
-  SelectOwner=[
-    {name:'All'},
-    {name:'None'},
-    {name:'Diana parkison'},
-    {name:'Claudine Suzie Parkinson'},
-    {name:'Test'},   
-  ]
-  //Select sort order
-  Selectsortorder=[
-    {name:'Matter Number'},
-    {name:'Matter Name'},
-    {name:'Client Name'},
-    {name:'Amount'},  
-    {name:'Free Earner-Matter'},
-    {name:'Free Earner-Client'},  
-    {name:'Owner-Matter'},  
-    {name:'Owner-Client'},
-    {name:'Primary-FE-Matter'},  
-    {name:'Primary-FE-Client'},   
-  ]
-  //checkBox Data
-  checkboxdata = [
-    { label: 'Show Detail', checked: false },
-    { label: 'Active Matters Only', checked: false },
-    { label: 'Inc. Pro Bono/Spec Matters', checked: false },          
-    ];
+  
+  ngOnInit() {
+    this.ReportForm = this._formBuilder.group({
+      DATERANGE: ['', [Validators.required]],
+      FEEEARNERNAME: ['', [Validators.required]],
+      LIST1TEXT: ['', [Validators.required]],
+      LIST2TEXT: ['', [Validators.required]],
+      DATE: ['', []], 
+      OPTIONTEXT1: ['', [Validators.required]], 
+      OPTIONTEXT2: ['', [Validators.required]], 
+      OPTIONTEXT3: ['', [Validators.required]],     
+    });
+  }
 
-    //dialog Close
-    ondialogcloseClick(): void {    
-      this.dialogRef.close(true);
+  choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    var  begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
+    var end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');      
+    let filterVal = { 'ReportDateStart': begin, 'DateEnd': end };
+    localStorage.setItem('ReportDaterange',JSON.stringify(filterVal));
+  }
+  get f() {
+    return this.ReportForm.controls;
+  }
+  ReportSubmit(){
+    let date=JSON.parse(localStorage.getItem("ReportDaterange"));
+    let filterVal = { 'ReportDateStart': '', 'DateEnd': '' };  
+    localStorage.setItem('ReportDaterange',JSON.stringify(filterVal));
+    
+    var ReportData={
+      ReportId:this.data.REPORTID,
+      dateRangeList:this.f.DATERANGE.value,
+      DateFrom:date.ReportDateStart,
+      DateTo:date.DateEnd,
+      FeeEarnerGuid:this.f.FEEEARNERNAME.value,
+      List1Selection:this.f.LIST1TEXT.value,
+      List2Selection:this.f.LIST2TEXT.value,
+     
+      OptionValue1:valuechange(this.f.OPTIONTEXT1.value),
+      OptionValue2:valuechange(this.f.OPTIONTEXT2.value),
+      OptionValue3:valuechange(this.f.OPTIONTEXT3.value),
+   }
+
+   this.Reportfilter.ReportgenerateData(ReportData).subscribe(reportData => {
+    console.log(reportData);
+   })
+  }
+  //dialog Close
+  ondialogcloseClick(): void {    
+    this.dialogRef.close(true);
+  }
+}
+function columnsnamereplace(responseData){
+  let str=JSON.stringify(responseData);
+      str = str.replace(/\"loc:ReportTitle\":/g, "\"ReportTitle\":");
+  let StringData=JSON.parse(str);
+  return StringData.ReportTitle;
+}
+//checkbox value 0 & 1 set
+function valuechange(check){
+  
+  if(check){
+    if(check==true){
+      return '0';
     }
+  }else{
+    return '1';
+  }
+    
 }

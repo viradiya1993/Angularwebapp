@@ -17,31 +17,27 @@ export class SafecustodyComponent implements OnInit {
   displayedColumns: string[] = ['SAFECUSTODYGUID', 'SAFECUSTODYPACKETGUID', 'MATTERGUID', 'CONTACTGUID', 'DOCUMENTTYPE',
     'SAFECUSTODYDESCRIPTION', 'DOCUMENTNAME', 'STATUS', 'REMINDER', 'REMINDERDATE',
     'REMINDERTIME', 'AdditionalText', 'SHORTNAME', 'CONTACTNAME', 'PACKETNUMBER'];
-
+  isLoadingResults: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private dialog: MatDialog, private safeCustody_service: SafeCustodyService, private toastr: ToastrService) { }
   safeCustody_table;
   ngOnInit() {
+    this.isLoadingResults = true;
     //get autorites  
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
     this.safeCustody_service.getData(potData).subscribe(response => {
       localStorage.setItem('session_token', response.SessionToken);
-      console.log(response);
-
       if (response.SafeCustody.response != "error - not logged in") {
-        console.log(response.SafeCustody.DataSet);
         this.safeCustody_table = new MatTableDataSource(response.SafeCustody.DataSet);
         this.safeCustody_table.paginator = this.paginator;
       } else {
         this.toastr.error(response.SafeCustody.response);
       }
-      // this.safeCustody_table = new MatTableDataSource<PeriodicElement>(response.SafeCustody.DataSet);
-      // this.safeCustody_table.paginator = this.paginator;
-    },
-      error => {
-        this.toastr.error(error);
-      }
+      this.isLoadingResults = false;
+    }, error => {
+      this.toastr.error(error);
+    }
     );
   }
   openDialog() {

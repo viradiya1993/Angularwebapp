@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { AuthGuard } from '../../../_guards';
 
-import { MatButtonModule, MatPaginatorModule, MatCheckboxModule, MatTabsModule, MatExpansionModule, MatSlideToggleModule, MatCardModule, MatSelectModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule } from '@angular/material';
+import { MatButtonModule, MatPaginatorModule, MatProgressSpinnerModule, MatCheckboxModule, MatTabsModule, MatExpansionModule, MatSlideToggleModule, MatCardModule, MatSelectModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule } from '@angular/material';
 
 import { TimeBillingComponent } from './time-billing.component';
 import { EstimateComponent } from './estimate/estimate.component';
@@ -40,7 +40,7 @@ const routes = [
     MatCheckboxModule,
     MatDatepickerModule,
     MatFormFieldModule,
-    MatIconModule,
+    MatIconModule, MatProgressSpinnerModule,
     MatInputModule,
     MatMenuModule,
     MatRippleModule,

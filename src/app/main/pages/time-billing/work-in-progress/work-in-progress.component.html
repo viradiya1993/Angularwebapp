@@ -28,6 +28,9 @@
                             </button>
                         </div>
                         <div class="example-containerdata">
+                            <div class="example-loading-shade" *ngIf="isLoadingResults">
+                                <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+                            </div>
                             <mat-table #table [dataSource]="WorkInProgressdata" [@animateStagger]="{value:'50'}">
                                 <ng-container matColumnDef="Workitem Guid">
                                     <mat-header-cell *matHeaderCellDef class="header_title">workitem guid</mat-header-cell>

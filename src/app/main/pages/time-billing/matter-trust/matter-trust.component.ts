@@ -14,41 +14,44 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class MatterTrustComponent implements OnInit {
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
-  displayedColumns: string[] = ['Trust Transaction ItemGuid', 'Trust Transaction Guid', 'Entered Date', 'Entered Time', 'Amount', 'Item Type', 'Account Guid', 'Matter Guid', 'Short Name','Matter Description','Client Guid','Client Name','Bankbsb','Bank Account Number','Ledger Balance','Purpose','Contact Name','Transaction Class','Transaction Type','Cashbook','Cashbook Code','Transaction Date','Payor','Cheque No'];
-  
+  displayedColumns: string[] = ['Trust Transaction ItemGuid', 'Trust Transaction Guid', 'Entered Date', 'Entered Time', 'Amount', 'Item Type', 'Account Guid', 'Matter Guid', 'Short Name', 'Matter Description', 'Client Guid', 'Client Name', 'Bankbsb', 'Bank Account Number', 'Ledger Balance', 'Purpose', 'Contact Name', 'Transaction Class', 'Transaction Type', 'Cashbook', 'Cashbook Code', 'Transaction Date', 'Payor', 'Cheque No'];
+  isLoadingResults: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog,private MatterTrust: MatterTrustService,private toastr: ToastrService) { }
- 
+  constructor(private dialog: MatDialog, private MatterTrust: MatterTrustService, private toastr: ToastrService) { }
+
   MatterTrustdata;
-  ngOnInit() {    
+  ngOnInit() {
     //API Data fetch
+    this.isLoadingResults = true;
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
-    this.MatterTrust.MatterTrustData(potData).subscribe(res => { 
-       if(res.TrustTransaction.response !="error - not logged in"){         
-        localStorage.setItem('session_token',res.TrustTransaction.SessionToken);
-        this.MatterTrustdata = new MatTableDataSource(res.TrustTransaction.DataSet)     
+    this.MatterTrust.MatterTrustData(potData).subscribe(res => {
+      if (res.TrustTransaction.response != "error - not logged in") {
+        localStorage.setItem('session_token', res.TrustTransaction.SessionToken);
+        this.MatterTrustdata = new MatTableDataSource(res.TrustTransaction.DataSet)
         this.MatterTrustdata.paginator = this.paginator
-      }else{
+        this.isLoadingResults = false;
+      } else {
+        this.isLoadingResults = false;
         this.toastr.error(res.TrustTransaction.response);
       }
     },
-    err => {
-      this.toastr.error(err);
-    });    
+      err => {
+        this.toastr.error(err);
+      });
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '50%';    
-    dialogConfig.data = { 'data': ['Trust Transaction ItemGuid', 'Trust Transaction Guid', 'Entered Date', 'Entered Time', 'Amount', 'Item Type', 'Account Guid', 'Matter Guid', 'Short Name','Matter Description','Client Guid','Client Name','Bankbsb','Bank Account Number','Ledger Balance','Purpose','Contact Name','Transaction Class','Transaction Type','Cashbook','Cashbook Code','Transaction Date','Payor','Cheque No'], 'type': 'matter_trust' };
+    dialogConfig.width = '50%';
+    dialogConfig.data = { 'data': ['Trust Transaction ItemGuid', 'Trust Transaction Guid', 'Entered Date', 'Entered Time', 'Amount', 'Item Type', 'Account Guid', 'Matter Guid', 'Short Name', 'Matter Description', 'Client Guid', 'Client Name', 'Bankbsb', 'Bank Account Number', 'Ledger Balance', 'Purpose', 'Contact Name', 'Transaction Class', 'Transaction Type', 'Cashbook', 'Cashbook Code', 'Transaction Date', 'Payor', 'Cheque No'], 'type': 'matter_trust' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
     dialogRef.afterClosed().subscribe(result => {
       //console.log(result);
-      if(result){
-        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result)); 
-       }
+      if (result) {
+        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result));
+      }
     });
     dialogRef.afterClosed().subscribe(data =>
       this.tableSetting(data)

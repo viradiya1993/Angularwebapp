@@ -16,10 +16,12 @@ export class WorkInProgressComponent implements OnInit {
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   displayedColumns: string[] = ['Workitem Guid', 'Matter Guid', 'Invoice Guid', 'Invoice Order', 'Item Type', 'Item Date', 'Item Time', 'Fee Earner', 'Fee Type', 'Quantity', 'Quantity Type', 'Formatted Quantity', 'Price', 'Gst', 'Gst Type', 'Priceinc Gst', 'Gst Charged', 'Price Charged', 'Priceinc Gstcharged', 'Additional Text', 'Comment', 'Short Name', 'Invoice Code', 'Client Name'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  isLoadingResults: boolean = false;
   constructor(private dialog: MatDialog, private WorkInProgress: WorkInProgressService, private toastr: ToastrService) { }
 
   WorkInProgressdata
   ngOnInit() {
+    this.isLoadingResults = true;
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
     this.WorkInProgress.WorkInProgressData(potData).subscribe(res => {
       //console.log(res.WorkItems.DataSet);
@@ -30,6 +32,7 @@ export class WorkInProgressComponent implements OnInit {
       } else {
         this.toastr.error(res.WorkItems.response);
       }
+      this.isLoadingResults = false;
     },
       err => {
         this.toastr.error(err);

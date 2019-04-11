@@ -16,23 +16,22 @@ export class AuthoritiesComponent implements OnInit {
   displayedColumns: string[] = ['MATTERAUTHORITYGUID', 'MATTERGUID', 'AUTHORITYGUID', 'AUTHORITY', 'CITATION', 'WEBADDRESS',
     'TOPIC', 'REFERENCE', 'COMMENT', 'SHORTNAME', 'CLIENTNAME'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  isLoadingResults: boolean = false;
 
   constructor(private dialog: MatDialog, private authorities_service: AuthoritiesService) { }
   authorities_table;
   ngOnInit() {
+    this.isLoadingResults = true;
     //get autorites
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
     this.authorities_service.getData(potData).subscribe(response => {
       localStorage.setItem('session_token', response.MatterAuthority.SessionToken);
-      // this.authorities_table = res;
-      // this.filterData = res;
-      // console.log(response);
       this.authorities_table = new MatTableDataSource<PeriodicElement>(response.MatterAuthority.DataSet);
       this.authorities_table.paginator = this.paginator;
-    },
-      err => {
-        console.log('Error occured');
-      }
+      this.isLoadingResults = false;
+    }, err => {
+      console.log('Error occured');
+    }
     );
   }
   //

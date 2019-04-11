@@ -19,12 +19,12 @@ export class ContactComponent implements OnInit {
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : 'green';
   displayedColumns: string[] = ['Contact Guid', 'Company Contactguid', 'Contact Type', 'User Guid', 'Useparent Address', 'Contact Name', 'Salutation', 'Position', 'Name Title', 'Given Names', 'Middle Names', 'Family Name', 'Name Letters', 'Knownby Othername', 'Otherfamily Name', 'Thergiven Names', 'Reason For Change', 'Marital Status', 'Spouse', 'Numberof Dependants', 'Occupation', 'Gender', 'Dateof Birth', 'Birthday Reminder', 'Townof Birth'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  isLoadingResults: boolean = false;
 
   constructor(private dialog: MatDialog, private Contact: ContactService, private toastr: ToastrService, private authenticationService: AuthenticationService, ) { }
   Contactdata;
   ngOnInit() {
-    
-    //First 25 record Dispay here 
+    this.isLoadingResults = true;
     this.Contact.ContactData().subscribe(res => {
       if (res.CONTACT.RESPONSE != "error - not logged in") {
         localStorage.setItem('session_token', res.CONTACT.SESSIONTOKEN);
@@ -37,20 +37,20 @@ export class ContactComponent implements OnInit {
       } else {
         this.toastr.error(res.CONTACT.RESPONSE);
       }
-    },
-      err => {
-        this.toastr.error(err);
-      });
+      this.isLoadingResults = false;
+    }, err => {
+      this.isLoadingResults = false;
+      this.toastr.error(err);
+    });
   }
   //for edit popup
-  editContact(val){
-
+  editContact(val) {
     localStorage.setItem('contactGuid', val);
-  //  this.Contact.getContact(val).subscribe(res => { 
-  //    this.getContactDta=res;
-  //    console.log(res);      
-  // });
-}
+    //  this.Contact.getContact(val).subscribe(res => { 
+    //    this.getContactDta=res;
+    //    console.log(res);      
+    // });
+  }
 
   openDialog() {
     const dialogConfig = new MatDialogConfig();

@@ -20,24 +20,25 @@ export class ChronologyComponent implements OnInit {
   displayedColumns: string[] = ['MATTERGUID', 'CHRONOLOGYGUID', 'DATEFROM', 'DATETO', 'TIMEFROM', 'TIMETO', 'FORMAT', 'FORMATTEDDATE',
     'TOPIC', 'BRIEFPAGENO', 'REFERENCE', 'COMMENT', 'WITNESSES', 'EVENTAGREED', 'DOCUMENTNAME', 'ADDITIONALTEXT', 'SHORTNAME', 'CLIENTNAME'];
   //dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  isLoadingResults: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   chronology_table;
 
   constructor(private dialog: MatDialog, private chronology_service: ChronologyService, private toastr: ToastrService) { }
 
   ngOnInit() {
+    this.isLoadingResults = true;
     //get chronology
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
     this.chronology_service.getData(potData).subscribe(response => {
       localStorage.setItem('session_token', response.Chronology.SessionToken);
-      //this.chronology_table = res;
-      console.log(response);
       if (response.Chronology.response != "error - not logged in") {
         this.chronology_table = new MatTableDataSource(response.Chronology.DataSet);
         this.chronology_table.paginator = this.paginator;
       } else {
         this.toastr.error(response.Chronology.response);
       }
+      this.isLoadingResults = false;
     },
       error => {
         this.toastr.error(error);

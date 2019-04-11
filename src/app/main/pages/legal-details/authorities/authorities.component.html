@@ -28,6 +28,9 @@
                             </button>
                         </div>
                         <div class="example-containerdata">
+                            <div class="example-loading-shade" *ngIf="isLoadingResults">
+                                <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+                            </div>
                             <mat-table #table [dataSource]="authorities_table" [@animateStagger]="{value:'50'}">
                                 <ng-container matColumnDef="MATTERAUTHORITYGUID">
                                     <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-sm>matter authority guid</mat-header-cell>

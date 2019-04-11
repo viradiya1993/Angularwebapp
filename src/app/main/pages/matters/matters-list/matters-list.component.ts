@@ -26,7 +26,6 @@ export class MattersListComponent implements OnInit, OnDestroy {
   displayedColumns = ['matter_num', 'matter', 'unbilled', 'invoiced', 'received', 'unpaid', 'total_value'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   mattersData: any;
-  isLoadingResults: boolean = true;
   lastFilter = {};
 
   @Output() matterDetail: EventEmitter<any> = new EventEmitter<any>();
@@ -69,7 +68,6 @@ export class MattersListComponent implements OnInit, OnDestroy {
     );
   }
   getMatterList(data) {
-    this.isLoadingResults = true;
     this._mattersService.getMatters(data).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA[0]) {

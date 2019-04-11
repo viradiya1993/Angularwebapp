@@ -36,11 +36,9 @@ export class MattersDetailComponent implements OnInit {
     // currentMatterId
     let postData = { 'MatterGuid': this.currentMatterId };
     this._mattersService.getMattersDetail(postData).subscribe(response => {
-      localStorage.setItem('session_token', response.Matter.SessionToken);
-      if (response.Matter.response != "error - not logged in") {
-        this.currentMatter = response.Matter.DataSet[0];
-      } else {
-        this.toastr.error(response.Matter.response);
+      if (response.CODE == 200 && response.STATUS == "success") {
+        this.currentMatter = response.DATA[0];
+        console.log(this.currentMatter);
       }
     }, error => {
       this.toastr.error(error);

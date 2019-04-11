@@ -69,16 +69,14 @@ export class MattersListComponent implements OnInit, OnDestroy {
   }
   getMatterList(data) {
     this._mattersService.getMatters(data).subscribe(response => {
-      localStorage.setItem('session_token', response.MATTER.SESSIONTOKEN);
-      if (response.MATTER.RESPONSE != "error - not logged in") {
-        if (response.MATTER.DATASET[0]) {
-          this.highlightedRows = response.MATTER.DATASET[0].MATTERGUID;
-          this.matterDetail.emit(response.MATTER.DATASET[0]);
+      if (response.CODE == 200 && response.STATUS == "success") {
+        if (response.DATA[0]) {
+          this.highlightedRows = response.DATA[0].MATTERGUID;
+          this.matterDetail.emit(response.DATA[0]);
         }
-        this.mattersData = new MatTableDataSource(response.MATTER.DATASET);
+        this.mattersData = new MatTableDataSource(response.DATA);
         this.mattersData.paginator = this.paginator;
-      } else {
-        this.toastr.error(response.MATTER.RESPONSE);
+        this.isLoadingResults = false;
       }
     }, error => {
       this.toastr.error(error);

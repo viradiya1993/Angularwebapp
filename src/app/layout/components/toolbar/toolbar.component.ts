@@ -241,34 +241,34 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
 
-     //client details from matter
-     ClientDetailsDialog(){
-        let getMatterContactGuId= JSON.parse(localStorage.getItem('set_active_matters'));
-       // let getMatterContactGuId= localStorage.getItem('set_active_matters');
-       let getmatguid=getMatterContactGuId.CONTACTGUID;
-       
-    //    this._getContact.getContact(getmatguid).subscribe(res => {
-    //     this.getContactData = res.CONTACT.DATASET[0];
-    //     console.log(this.getContactData);
-    //     const dialogRef = this.dialog.open(ContactDialogComponent, {
+    //client details from matter
+    ClientDetailsDialog() {
+        let getMatterContactGuId = JSON.parse(localStorage.getItem('set_active_matters'));
+        // let getMatterContactGuId= localStorage.getItem('set_active_matters');
+        let getmatguid = getMatterContactGuId.CONTACTGUID;
 
-    //         data: {
-    //             contact: this.getContactData,-   
-    //             action: 'edit'
-    //         }
-    //     });
-    //     dialogRef.afterClosed().subscribe(result => {
+        //    this._getContact.getContact(getmatguid).subscribe(res => {
+        //     this.getContactData = res.CONTACT.DATASET[0];
+        //     console.log(this.getContactData);
+        //     const dialogRef = this.dialog.open(ContactDialogComponent, {
+
+        //         data: {
+        //             contact: this.getContactData,-   
+        //             action: 'edit'
+        //         }
+        //     });
+        //     dialogRef.afterClosed().subscribe(result => {
 
 
-    //         console.log(result);
+        //         console.log(result);
 
-    //     });
-    // });
+        //     });
+        // });
         // console.log(this.getmatguid);
-     }
+    }
 
     //edit Contact diloage
-     EditContactsDialog() {
+    EditContactsDialog() {
 
         //get value from localstrorage
         let getContactGuId = localStorage.getItem('contactGuid');
@@ -290,7 +290,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             });
         });
 
-       
+
         //const dialogRef = this.dialog.open(ContactDialogComponent, this.getContactData);
         //    console.log(this.getContactData);
         //         const dialogRef = this.dialog.open(ContactDialogComponent,{
@@ -372,7 +372,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     navBarSetting(value: any) {
         let x = value.split("/");
-        console.log(x[1]);
+        // console.log(x[1]);
         if (x[1] == "matters" || x[1] == "") {
             this.isTabShow = 1;
         } else if (x[1] == "contact") {

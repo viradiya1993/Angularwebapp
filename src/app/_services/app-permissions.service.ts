@@ -44,25 +44,25 @@ export class AppPermissionsService {
       console.log(data.DATA);
       let loginResponse = data.DATA;
       let LoginData = {
-        SessionToken: loginResponse.SessionToken,
-        TimeStampUTC: loginResponse.TimeStampUTC,
-        TimeStamp: loginResponse.TimeStamp,
-        LoggedInStatus: loginResponse.LoggedInStatus,
-        LicenceNumber: loginResponse.LicenceNumber,
-        AllowMobileAccess: loginResponse.AllowMobileAccess,
-        UserGuid: loginResponse.UserGuid,
-        UserId: loginResponse.UserId,
-        UserName: loginResponse.UserName,
-        ProductType: loginResponse.ProductType,
-        DefaultQuantityType: loginResponse.DefaultQuantityType,
-        InitialWindow: loginResponse.InitialWindow,
-        ShowOutstanding: loginResponse.ShowOutstanding,
-        ShowWIPGraph: loginResponse.ShowWIPGraph,
+        SessionToken: loginResponse.SESSIONTOKEN,
+        TimeStampUTC: loginResponse.TIMESTAMPUTC,
+        TimeStamp: loginResponse.TIMESTAMP,
+        LoggedInStatus: loginResponse.LOGGEDINSTATUS,
+        LicenceNumber: loginResponse.LICENCENUMBER,
+        AllowMobileAccess: loginResponse.ALLOWMOBILEACCESS,
+        UserGuid: loginResponse.USERGUID,
+        UserId: loginResponse.USERID,
+        UserName: loginResponse.USERNAME,
+        ProductType: loginResponse.PRODUCTTYPE,
+        DefaultQuantityType: loginResponse.DEFAULTQUANTITYTYPE,
+        InitialWindow: loginResponse.INITIALWINDOW,
+        ShowOutstanding: loginResponse.SHOWOUTSTANDING,
+        ShowWIPGraph: loginResponse.SHOWWIPGRAPH,
       };
       localStorage.setItem('currentUser', JSON.stringify(LoginData));
-      localStorage.setItem('session_token', loginResponse.SessionToken);
-      //let theme_name = loginResponse.ProductType == "Barrister" ? "theme-yellow-light" : "theme-default";
-      let theme_name = loginResponse.ProductType == "Barrister" ? "theme-default" : "theme-yellow-light";
+      localStorage.setItem('session_token', loginResponse.SESSIONTOKEN);
+      // let theme_name = loginResponse.PRODUCTTYPE == "Barrister" ? "theme-yellow-light" : "theme-default";
+      let theme_name = loginResponse.PRODUCTTYPE == "Barrister" ? "theme-default" : "theme-yellow-light";
       localStorage.setItem('theme_type', theme_name);
       // this.appPermissions(loginResponse);
       localStorage.removeItem('Login_response');

@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { AddContactService } from './../../../../_services';
+import { AddContactService, ContactService } from './../../../../_services';
 import { ToolbarComponent } from 'app/layout/components/toolbar/toolbar.component';
 import { MAT_DIALOG_DATA } from '@angular/material';
 
@@ -19,10 +19,15 @@ export class ContactDialogComponent implements OnInit {
   FormAction: string;
   abc: string;
   contactguid: string;
+  check: any;
+  active: boolean;
+  knowbyothername: boolean;
+  birthdayreminder: boolean;
+  samesstreet: boolean;
 
 
   constructor(public dialogRef: MatDialogRef<ContactDialogComponent>, private _formBuilder: FormBuilder
-    , private toastr: ToastrService, private addcontact: AddContactService, @Inject(MAT_DIALOG_DATA) public _data: any) {   // Set the defaults
+    , private toastr: ToastrService, private Contact: ContactService, private addcontact: AddContactService, @Inject(MAT_DIALOG_DATA) public _data: any) {   // Set the defaults
     //this.action = _data.action;
     this.action = _data.action;
     //  console.log(_data.contact.DATEOFBIRTH);
@@ -47,7 +52,7 @@ export class ContactDialogComponent implements OnInit {
   loginForm: FormGroup;
   ngOnInit() {
 
-
+    
     this.loginForm = this._formBuilder.group({
      
       //CONTACTGUID: ['', Validators.required],
@@ -139,9 +144,56 @@ export class ContactDialogComponent implements OnInit {
     } else {
       this.nameSelected = this._data.contact.CONTACTTYPE;
     }
+    
+   
 
       if ( this.action === 'edit' )
       {
+
+        if(this._data.contact.ACTIVE == 1 )
+        {
+        this.active=false;
+         }
+        else{
+        this.active=true;
+        }
+
+        if(this._data.contact.KNOWNBYOTHERNAME == 1 )
+        {
+        this.knowbyothername=false;
+         }
+        else{
+        this.knowbyothername=true;
+        }
+        if(this._data.contact.BIRTHDAYREMINDER == 1 )
+        {
+        this.birthdayreminder=false;
+         }
+        else{
+        this.birthdayreminder=true;
+        }
+        if(this._data.contact.SAMEASSTREET == 1 )
+        {
+          this.loginForm.get('POSTALADDRESS1').disable();
+          this.loginForm.get('POSTALADDRESS2').disable();
+          this.loginForm.get('POSTALADDRESS3').disable();
+          this.loginForm.get('POSTALSUBURB').disable();
+          this.loginForm.get('POSTALSTATE').disable();
+          this.loginForm.get('POSTALPOSTCODE').disable();
+          this.loginForm.get('POSTALCOUNTRY').disable();
+        this.samesstreet=false;
+         }
+        else{
+          this.loginForm.get('POSTALADDRESS1').enable();
+          this.loginForm.get('POSTALADDRESS2').enable();
+          this.loginForm.get('POSTALADDRESS3').enable();
+          this.loginForm.get('POSTALSUBURB').enable();
+          this.loginForm.get('POSTALSTATE').enable();
+          this.loginForm.get('POSTALPOSTCODE').enable();
+          this.loginForm.get('POSTALCOUNTRY').enable();
+        this.samesstreet=true;
+        }
+
 
      //this.loginForm.controls['CONTACTGUID'].setValue(this._data.contact.CONTACTGUID);
      this.loginForm.controls['ContactName'].setValue(this._data.contact.CONTACTNAME);
@@ -149,14 +201,15 @@ export class ContactDialogComponent implements OnInit {
      this.loginForm.controls['COMPANYNAME'].setValue(this._data.contact.COMPANYNAME);
      this.loginForm.controls['POSITION'].setValue(this._data.contact.POSITION);
 
-     this.loginForm.controls['ACTIVE'].setValue(this._data.contact.POSITION);
+     //this.loginForm.controls['ACTIVE'].setValue(this._data.contact.ACTIVE);
+    this.loginForm.controls['ACTIVE'].setValue(this.active);
 
      this.loginForm.controls['GIVENNAMES'].setValue(this._data.contact.GIVENNAMES);
      this.loginForm.controls['NAMETITLE'].setValue(this._data.contact.NAMETITLE);
      this.loginForm.controls['MIDDLENAMES'].setValue(this._data.contact.MIDDLENAMES);
      this.loginForm.controls['NAMELETTERS'].setValue(this._data.contact.NAMELETTERS);
      this.loginForm.controls['FAMILYNAME'].setValue(this._data.contact.FAMILYNAME);
-     this.loginForm.controls['KNOWNBYOTHERNAME'].setValue(this._data.contact.KNOWNBYOTHERNAME);
+     this.loginForm.controls['KNOWNBYOTHERNAME'].setValue( this.knowbyothername);
      this.loginForm.controls['OTHERFAMILYNAME'].setValue(this._data.contact.OTHERFAMILYNAME);
      this.loginForm.controls['OTHERGIVENNAMES'].setValue(this._data.contact.OTHERGIVENNAMES);
      this.loginForm.controls['REASONFORCHANGE'].setValue(this._data.contact.REASONFORCHANGE);
@@ -169,7 +222,7 @@ export class ContactDialogComponent implements OnInit {
      this.loginForm.controls['MARITALSTATUS'].setValue(this._data.contact.MARITALSTATUS);
      this.loginForm.controls['SPOUSE'].setValue(this._data.contact.SPOUSE);
      this.loginForm.controls['NUMBEROFDEPENDANTS'].setValue(this._data.contact.NUMBEROFDEPENDANTS);
-     this.loginForm.controls['BIRTHDAYREMINDER'].setValue(this._data.contact.BIRTHDAYREMINDER);
+     this.loginForm.controls['BIRTHDAYREMINDER'].setValue(this.birthdayreminder );
      this.loginForm.controls['TOWNOFBIRTH'].setValue(this._data.contact.TOWNOFBIRTH);
      this.loginForm.controls['COUNTRYOFBIRTH'].setValue(this._data.contact.COUNTRYOFBIRTH);
      this.loginForm.controls['DATEOFDEATH'].setValue(this._data.contact.DATEOFDEATH);
@@ -184,7 +237,7 @@ export class ContactDialogComponent implements OnInit {
      this.loginForm.controls['STATE'].setValue(this._data.contact.STATE); 
      this.loginForm.controls['POSTCODE'].setValue(this._data.contact.POSTCODE); 
      this.loginForm.controls['COUNTRY'].setValue(this._data.contact.COUNTRY); 
-     this.loginForm.controls['SAMEASSTREET'].setValue(this._data.contact.SAMEASSTREET); 
+     this.loginForm.controls['SAMEASSTREET'].setValue(this.samesstreet); 
      this.loginForm.controls['POSTALADDRESS1'].setValue(this._data.contact.POSTALADDRESS1); 
      this.loginForm.controls['POSTALADDRESS2'].setValue(this._data.contact.POSTALADDRESS2); 
      this.loginForm.controls['POSTALADDRESS3'].setValue(this._data.contact.POSTALADDRESS3); 
@@ -231,9 +284,6 @@ export class ContactDialogComponent implements OnInit {
   onClick(value) {
 
     console.log(value);
-
-
-
   }
 
   // convenience getter for easy access to form fields
@@ -242,19 +292,10 @@ export class ContactDialogComponent implements OnInit {
     return this.loginForm.controls;
   }
   ondialogSaveClick(): void {
-    //call insert api 
-    // console.log(this.f.DATEOFBIRTH.value);
-    
-    // if(this.f.DATEOFBIRTH.value==null){
-    // this.toastr.error("please enter date using calender");
-    // }
-    // if(this.f.DATEOFDEATH.value==null){
-    //   this.toastr.error("please enter date using calender");
-    // }
     if (this.f.ContactName.value == "") {
       this.toastr.error("please enter Contact Name");
     }
-
+    else{
     if (this.action !== 'edit') {
       this.FormAction= "insert";
     } else {
@@ -268,6 +309,13 @@ export class ContactDialogComponent implements OnInit {
     } else {
       this.contactguid=this._data.contact.CONTACTGUID ;
     }
+
+    //for checkbox
+    if(this.f.ACTIVE.value || this.f.KNOWNBYOTHERNAME.value||this.f.BIRTHDAYREMINDER.value||this.f.SAMEASSTREET.value== true == true){
+      this.check="1";
+    }else{
+      this.check="0";
+    }
     //let abc ={ FormAction: "insert"}
     let details={
 
@@ -276,7 +324,7 @@ export class ContactDialogComponent implements OnInit {
       //CONTACTGUID:this.f.CONTACTGUID.value,
       ContactName:this.f.ContactName.value,
       CONTACTTYPE:this.f.CONTACTTYPE.value,
-      ACTIVE:this.f.ACTIVE.value,
+      ACTIVE:this.check,
       //person
       COMPANYNAME: this.f.COMPANYNAME.value,
       POSITION: this.f.POSITION.value,
@@ -285,21 +333,21 @@ export class ContactDialogComponent implements OnInit {
       MIDDLENAMES: this.f.MIDDLENAMES.value,
       NAMELETTERS: this.f.NAMELETTERS.value,
       FAMILYNAME: this.f.FAMILYNAME.value,
-      KNOWNBYOTHERNAME: this.f.KNOWNBYOTHERNAME.value,
+      KNOWNBYOTHERNAME: this.check,
       OTHERFAMILYNAME: this.f.OTHERFAMILYNAME.value,
       OTHERGIVENNAMES: this.f.OTHERGIVENNAMES.value,
       REASONFORCHANGE: this.f.REASONFORCHANGE.value,
 
       //others
       GENDER: this.f.GENDER.value,
-      DATEOFBIRTH: this.f.DATEOFBIRTH.value._i,
+      DATEOFBIRTH:localStorage.getItem('DATEOFBIRTH'),
       MARITALSTATUS: this.f.MARITALSTATUS.value,
       SPOUSE: this.f.SPOUSE.value,
       NUMBEROFDEPENDANTS: this.f.NUMBEROFDEPENDANTS.value,
-      BIRTHDAYREMINDER: this.f.BIRTHDAYREMINDER.value,
+      BIRTHDAYREMINDER: this.check,
       TOWNOFBIRTH: this.f.TOWNOFBIRTH.value,
       COUNTRYOFBIRTH: this.f.COUNTRYOFBIRTH.value,
-      DATEOFDEATH: this.f.DATEOFDEATH.value._i,
+      DATEOFDEATH: localStorage.getItem('DATEOFDEATH'),
       CAUSEOFDEATH: this.f.CAUSEOFDEATH.value,
 
       //address
@@ -310,7 +358,7 @@ export class ContactDialogComponent implements OnInit {
       STATE: this.f.STATE.value,
       POSTCODE: this.f.POSTCODE.value,
       COUNTRY: this.f.COUNTRY.value,
-      SAMEASSTREET: this.f.SAMEASSTREET.value,
+      SAMEASSTREET: this.check,
       POSTALADDRESS1: this.f.POSTALADDRESS1.value,
       POSTALADDRESS2: this.f.POSTALADDRESS2.value,
       POSTALADDRESS3: this.f.POSTALADDRESS3.value,
@@ -351,16 +399,24 @@ export class ContactDialogComponent implements OnInit {
     if(this.action !== 'edit'){
     this.addcontact.AddContactData(details);
     console.log(details);
+    
     }
     else{
       //let getContactGuId = localStorage.getItem('contactGuid');
       this.addcontact.UpdateContact(details);
+      console.log(details);
     }
     //this.dialogRef.close(details);
 
+    localStorage.removeItem('DATEOFBIRTH');
+    localStorage.removeItem('DATEOFDEATH');
+
+    //for refresh
+    //this.Contact.ContactData();
 
   }
-
+  }
+  
 }
 export class Common {
   public Id: Number;

@@ -10,11 +10,13 @@ export class ContactService {
   constructor(private http: HttpClient) { }
 
   ContactData(){
+    console.log("lsdhf");
     return this.http.get<any>(environment.APIEndpoint + 'GetContact');
   }
 
   //get data for popup
   getContact(val){
+    
     return this.http.get<any>(environment.APIEndpoint + 'GetContact?ContactGUID='+val);
   }
 

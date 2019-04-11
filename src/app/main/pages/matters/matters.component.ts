@@ -79,6 +79,7 @@ export class MattersComponent implements OnInit {
   getDropValue() {
     let d = {};
     this.Timersservice.GetUsers(d).subscribe(res => {
+      console.log(res);
       if (res.Users.response != "error - not logged in") {
         localStorage.setItem('session_token', res.Users.SessionToken);
         this.MatterDropData = res.Users.DataSet;

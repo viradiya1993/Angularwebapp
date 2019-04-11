@@ -21,8 +21,12 @@ export class ErrorInterceptor implements HttpInterceptor {
                 if (evt instanceof HttpResponse) {
                     console.log(evt);
                     if (evt.body.CODE == 200 && evt.body.STATUS == "success") {
-
-                    } 
+                        return true;
+                    } else if (evt.body.CODE == 402 && evt.body.STATUS == "error") {
+                        this.toasterService.error(evt.body.RESPONSEMESSAGE);
+                        this.authenticationService.logout();
+                        this.router.navigate(['login']);
+                    }
                     // else {
                     //     this.toasterService.error(evt.body.MESSAGE);
                     // }

@@ -41,7 +41,7 @@ export class AppPermissionsService {
   Permissions = [];
   applictionSetting(data: any) {
     if (data.DATA) {
-      console.log(data.DATA);
+      // console.log(data.DATA);
       let loginResponse = data.DATA;
       let LoginData = {
         SessionToken: loginResponse.SESSIONTOKEN,

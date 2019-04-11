@@ -22,16 +22,8 @@ export class JwtInterceptor implements HttpInterceptor {
                 }
             } else if (request.method.toLowerCase() === 'get') {
                 request = request.clone({
-                    setHeaders: {
-                        // apikey: `SNGMTUEEB2AJBFC9`
-                    },
                     params: request.params.set('SessionToken', localStorage.getItem('session_token'))
                 });
-            }
-        } else {
-            if (typeof request.body == 'object') {
-                request.body.apikey = environment.APIKEY;
-                request.body;
             }
         }
         return next.handle(request);

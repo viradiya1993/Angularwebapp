@@ -23,13 +23,11 @@ export class ErrorInterceptor implements HttpInterceptor {
                     if (evt.body.CODE == 200 && evt.body.STATUS == "success") {
                         return true;
                     } else if (evt.body.CODE == 402 && evt.body.STATUS == "error") {
-                        this.toasterService.error(evt.body.RESPONSEMESSAGE);
-                        this.authenticationService.logout();
-                        this.router.navigate(['login']);
+                        if (evt.body.RESPONSEMESSAGE)
+                            this.toasterService.error(evt.body.RESPONSEMESSAGE);
+                        else
+                            this.toasterService.error(evt.body.MESSAGE);
                     }
-                    // else {
-                    //     this.toasterService.error(evt.body.MESSAGE);
-                    // }
                 }
             }),
             catchError(err => {

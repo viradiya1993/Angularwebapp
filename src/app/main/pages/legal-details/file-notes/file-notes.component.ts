@@ -27,10 +27,8 @@ export class FileNotesComponent implements OnInit {
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
     this.fileNotes_service.getData(potData).subscribe(response => {
       localStorage.setItem('session_token', response.FileNote.SessionToken);
-      //this.filenotes_table = response;
-      this.filenotes_table = response.FileNote.DataSet;
-      if (response.filenotes_table.response != "error - not logged in") {
-        this.filenotes_table = new MatTableDataSource(response.Chronology.DataSet);
+      if (response.FileNote.response != "error - not logged in" && response.FileNote.response != "error - Matter Guid is required") {
+        this.filenotes_table = new MatTableDataSource(response.FileNote.DataSet);
         this.filenotes_table.paginator = this.paginator;
       } else {
         this.toastr.error(response.FileNote.response);

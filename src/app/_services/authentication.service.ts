@@ -58,8 +58,14 @@ export class AuthenticationService {
     }
     logout() {
         // remove user from local storage to log user out
-        this.http.get(environment.APIEndpoint + 'Login?request=Logout').subscribe(loginResponse => {
-            if (loginResponse) {
+        this.http.get<any>(environment.APIEndpoint + 'Login?request=Logout').subscribe(loginResponse => {
+            if (loginResponse.MESSAGE == "Not logged in") {
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('app_permissions');
+                localStorage.removeItem('session_token');
+                this.currentUserSubject.next(null);
+                this.router.navigate(['login']);
+            } else if (loginResponse.CODE != 402 && loginResponse.STATUS != "error") {
                 this.toastr.success('success');
                 localStorage.removeItem('currentUser');
                 localStorage.removeItem('app_permissions');
@@ -82,15 +88,9 @@ export class AuthenticationService {
 
     forgetpassword(email: string) {
         return this.http.post<any>(environment.APIEndpoint + 'Login?Request=ForgottenPassword&EmailAddress=' + email, '').pipe(map(loginResponse => {
-            if (loginResponse && loginResponse.login_response) {
-                let responseType = loginResponse.login_response.Response;
-                if (responseType == 'OK') {
-                    this.toastr.success('We send forgot password link to your mail.');
-                } else {
-                    this.toastr.error(responseType);
-                    console.log(loginResponse);
-                    return false;
-                }
+            if (loginResponse.CODE == 200 && loginResponse.STATUS == 'success') {
+                this.toastr.success('We send forgot password link to your mail.');
+                this.router.navigate(['login']);
             }
         }));
     }

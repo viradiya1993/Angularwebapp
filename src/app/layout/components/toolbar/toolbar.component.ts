@@ -103,13 +103,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                         this.ReportListObj[element.REPORTGROUP] = demo;
                     }
                 });
-            } else {
-                this.toastr.error(res.EstimateItem.Respose);
             }
-        },
-            err => {
-                this.toastr.error(err);
-            });
+        }, err => {
+            this.toastr.error(err);
+        });
     }
 
     //for binding

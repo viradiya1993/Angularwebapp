@@ -40,8 +40,9 @@ export class AppPermissionsService {
 
   Permissions = [];
   applictionSetting(data: any) {
-    if (data.login_response) {
-      let loginResponse = data.login_response;
+    if (data.DATA) {
+      console.log(data.DATA);
+      let loginResponse = data.DATA;
       let LoginData = {
         SessionToken: loginResponse.SessionToken,
         TimeStampUTC: loginResponse.TimeStampUTC,
@@ -63,7 +64,7 @@ export class AppPermissionsService {
       //let theme_name = loginResponse.ProductType == "Barrister" ? "theme-yellow-light" : "theme-default";
       let theme_name = loginResponse.ProductType == "Barrister" ? "theme-default" : "theme-yellow-light";
       localStorage.setItem('theme_type', theme_name);
-      this.appPermissions(loginResponse);
+      // this.appPermissions(loginResponse);
       localStorage.removeItem('Login_response');
     }
   }

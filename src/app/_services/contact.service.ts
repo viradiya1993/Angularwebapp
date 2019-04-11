@@ -17,7 +17,7 @@ export class ContactService {
   //get data for popup
   getContact(val){
     
-    return this.http.get<any>(environment.APIEndpoint + 'GetContact?ContactGUID='+val);
+    return this.http.post<any>(environment.APIEndpoint + 'GetContact',val);
   }
 
   //for delete contact
@@ -27,4 +27,15 @@ export class ContactService {
     this.http.post(environment.APIEndpoint + 'SetContact?FormAction=delete',getContactGuId)
     .subscribe(res => console.log(res));
   }
+
+    UpdateContact(val){
+    
+    this.http.post(environment.APIEndpoint + 'SetContact',val)
+    .subscribe(res =>{
+        this.ContactData();
+    });
+    localStorage.removeItem('contactGuid');
+
+  }
+
 }

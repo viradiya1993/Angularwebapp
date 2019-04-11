@@ -24,6 +24,9 @@ export class ContactDialogComponent implements OnInit {
   knowbyothername: boolean;
   birthdayreminder: boolean;
   samesstreet: boolean;
+  postknowbyothername: any;
+  postbirthdayreminder: string;
+  postsameasstreet: string;
 
 
   constructor(public dialogRef: MatDialogRef<ContactDialogComponent>, private _formBuilder: FormBuilder
@@ -150,7 +153,7 @@ export class ContactDialogComponent implements OnInit {
       if ( this.action === 'edit' )
       {
 
-        if(this._data.contact.ACTIVE == 1 )
+        if(this._data.contact.ACTIVE == 0 )
         {
         this.active=false;
          }
@@ -158,21 +161,21 @@ export class ContactDialogComponent implements OnInit {
         this.active=true;
         }
 
-        if(this._data.contact.KNOWNBYOTHERNAME == 1 )
+        if(this._data.contact.KNOWNBYOTHERNAME == 0 )
         {
         this.knowbyothername=false;
          }
         else{
         this.knowbyothername=true;
         }
-        if(this._data.contact.BIRTHDAYREMINDER == 1 )
+        if(this._data.contact.BIRTHDAYREMINDER == 0 )
         {
         this.birthdayreminder=false;
          }
         else{
         this.birthdayreminder=true;
         }
-        if(this._data.contact.SAMEASSTREET == 1 )
+        if(this._data.contact.SAMEASSTREET == 0 )
         {
           this.loginForm.get('POSTALADDRESS1').disable();
           this.loginForm.get('POSTALADDRESS2').disable();
@@ -311,10 +314,28 @@ export class ContactDialogComponent implements OnInit {
     }
 
     //for checkbox
-    if(this.f.ACTIVE.value || this.f.KNOWNBYOTHERNAME.value||this.f.BIRTHDAYREMINDER.value||this.f.SAMEASSTREET.value== true == true){
+    if(this.f.ACTIVE.value == true ){
       this.check="1";
     }else{
       this.check="0";
+    }
+    if(this.f.KNOWNBYOTHERNAME.value == true){
+      this.postknowbyothername="1"
+    }
+    else{
+      this.postknowbyothername="0"
+    }
+    if(this.f.BIRTHDAYREMINDER.value == true){
+      this.postbirthdayreminder="1"
+    }
+    else{
+      this.postbirthdayreminder="0"
+    }
+    if(this.f.SAMEASSTREET.value == true){
+      this.postsameasstreet="1"
+    }
+    else{
+      this.postsameasstreet="0"
     }
     //let abc ={ FormAction: "insert"}
     let details={
@@ -333,7 +354,7 @@ export class ContactDialogComponent implements OnInit {
       MIDDLENAMES: this.f.MIDDLENAMES.value,
       NAMELETTERS: this.f.NAMELETTERS.value,
       FAMILYNAME: this.f.FAMILYNAME.value,
-      KNOWNBYOTHERNAME: this.check,
+      KNOWNBYOTHERNAME: this.postknowbyothername,
       OTHERFAMILYNAME: this.f.OTHERFAMILYNAME.value,
       OTHERGIVENNAMES: this.f.OTHERGIVENNAMES.value,
       REASONFORCHANGE: this.f.REASONFORCHANGE.value,
@@ -344,7 +365,7 @@ export class ContactDialogComponent implements OnInit {
       MARITALSTATUS: this.f.MARITALSTATUS.value,
       SPOUSE: this.f.SPOUSE.value,
       NUMBEROFDEPENDANTS: this.f.NUMBEROFDEPENDANTS.value,
-      BIRTHDAYREMINDER: this.check,
+      BIRTHDAYREMINDER: this.postbirthdayreminder,
       TOWNOFBIRTH: this.f.TOWNOFBIRTH.value,
       COUNTRYOFBIRTH: this.f.COUNTRYOFBIRTH.value,
       DATEOFDEATH: localStorage.getItem('DATEOFDEATH'),
@@ -358,7 +379,7 @@ export class ContactDialogComponent implements OnInit {
       STATE: this.f.STATE.value,
       POSTCODE: this.f.POSTCODE.value,
       COUNTRY: this.f.COUNTRY.value,
-      SAMEASSTREET: this.check,
+      SAMEASSTREET: this.postsameasstreet,
       POSTALADDRESS1: this.f.POSTALADDRESS1.value,
       POSTALADDRESS2: this.f.POSTALADDRESS2.value,
       POSTALADDRESS3: this.f.POSTALADDRESS3.value,
@@ -403,10 +424,10 @@ export class ContactDialogComponent implements OnInit {
     }
     else{
       //let getContactGuId = localStorage.getItem('contactGuid');
-      this.addcontact.UpdateContact(details);
+      this.Contact.UpdateContact(details);
       console.log(details);
     }
-    //this.dialogRef.close(details);
+    this.dialogRef.close(details);
 
     localStorage.removeItem('DATEOFBIRTH');
     localStorage.removeItem('DATEOFDEATH');

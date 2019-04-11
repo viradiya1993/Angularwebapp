@@ -104,7 +104,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                     }
                 });
             } else {
-                this.toastr.error(res.EstimateItem.Respose);
+                this.toastr.error(res.EstimateItem.response);
             }
         },
             err => {
@@ -241,40 +241,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
 
-    //client details from matter
-    ClientDetailsDialog() {
-        let getMatterContactGuId = JSON.parse(localStorage.getItem('set_active_matters'));
-        // let getMatterContactGuId= localStorage.getItem('set_active_matters');
-        let getmatguid = getMatterContactGuId.CONTACTGUID;
-
-        //    this._getContact.getContact(getmatguid).subscribe(res => {
-        //     this.getContactData = res.CONTACT.DATASET[0];
-        //     console.log(this.getContactData);
-        //     const dialogRef = this.dialog.open(ContactDialogComponent, {
-
-        //         data: {
-        //             contact: this.getContactData,-   
-        //             action: 'edit'
-        //         }
-        //     });
-        //     dialogRef.afterClosed().subscribe(result => {
-
-
-        //         console.log(result);
-
-        //     });
-        // });
-        // console.log(this.getmatguid);
-    }
-
-    //edit Contact diloage
-    EditContactsDialog() {
-
-        //get value from localstrorage
-        let getContactGuId = localStorage.getItem('contactGuid');
-        this._getContact.getContact(getContactGuId).subscribe(res => {
+     //client details from matter
+     ClientDetailsDialog(){
+        let getMatterContactGuId= JSON.parse(localStorage.getItem('set_active_matters'));
+        if(getMatterContactGuId.CONTACTGUID==""){
+            
+        }
+       // let getMatterContactGuId= localStorage.getItem('set_active_matters');
+       let getmatguid=getMatterContactGuId.CONTACTGUID;
+        let contactguidforbody={CONTACTGUID: getmatguid}
+        this._getContact.getContact(contactguidforbody).subscribe(res => {
             this.getContactData = res.CONTACT.DATASET[0];
-            console.log(this.getContactData);
             const dialogRef = this.dialog.open(ContactDialogComponent, {
 
                 data: {
@@ -291,6 +268,32 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
 
 
+     }
+
+    //edit Contact diloage
+     EditContactsDialog() {
+
+        //get value from localstrorage
+        let getContactGuId = localStorage.getItem('contactGuid');
+        let contactguidforbody={CONTACTGUID: getContactGuId}
+        this._getContact.getContact(contactguidforbody).subscribe(res => {
+            this.getContactData = res.CONTACT.DATASET[0];
+            const dialogRef = this.dialog.open(ContactDialogComponent, {
+
+                data: {
+                    contact: this.getContactData,
+                    action: 'edit'
+                }
+            });
+            dialogRef.afterClosed().subscribe(result => {
+
+
+                console.log(result);
+
+            });
+        });
+
+       
         //const dialogRef = this.dialog.open(ContactDialogComponent, this.getContactData);
         //    console.log(this.getContactData);
         //         const dialogRef = this.dialog.open(ContactDialogComponent,{
@@ -308,10 +311,30 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         //         });
     }
     // for new Corres Details dialog
+
+    // Reportpopup(ReportData) {
+    //     let Reportname=ReportData.REPORTNAME;
+    //     const dialogConfig = new MatDialogConfig();
+    //     //dialogConfig.width = '40%';
+    //     const dialogRef = this.dialog.open(ReportsComponent,{
+    //         width:'40%',
+    //         data:ReportData,            
+    //     });
+        
+    //     dialogRef.afterClosed().subscribe(result => {
+    //         //console.log(`ReportsComponent result: ${result}`);
+    //     });
+    // }
     openCorresDialog() {
-        const dialogConfig = new MatDialogConfig();
-        dialogConfig.width = '50%';
-        const dialogRef = this.dialog.open(ContactCorresDetailsComponent, dialogConfig);
+        //const dialogConfig = new MatDialogConfig();
+        //dialogConfig.width = '50%';
+        let getMatterGuId= JSON.parse(localStorage.getItem('set_active_matters'));
+        let getmatguid=getMatterGuId.MATTERGUID;
+        //console.log(getmatguid);
+        const dialogRef = this.dialog.open(ContactCorresDetailsComponent,{
+                    width:'50%',
+                    data:getmatguid,   
+        });
         dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialog result: ${result}`);
         });
@@ -372,7 +395,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     navBarSetting(value: any) {
         let x = value.split("/");
-        // console.log(x[1]);
+        console.log(x[1]);
         if (x[1] == "matters" || x[1] == "") {
             this.isTabShow = 1;
         } else if (x[1] == "contact") {

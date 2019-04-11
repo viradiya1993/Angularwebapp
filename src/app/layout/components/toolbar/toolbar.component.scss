@@ -256,3 +256,10 @@ toolbar .goto_tab_main .group-section-tab {
     width: 25%;
     justify-content: center;
 }
+
+body.theme-default .mat-badge-medium.mat-badge-above .mat-badge-content {
+    top: -7px;
+}
+.mat-icon-button .mat-icon.timer_icon_header {
+    line-height: 30px;
+}

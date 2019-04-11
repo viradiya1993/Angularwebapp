@@ -20,12 +20,16 @@ export class ErrorInterceptor implements HttpInterceptor {
             tap(evt => {
                 if (evt instanceof HttpResponse) {
                     console.log(evt);
-                    // if (evt.body && evt.body.success)
-                    // this.toasterService.error(evt.body.success.message, evt.body.success.title, { positionClass: 'toast-bottom-center' });
+                    if (evt.body.CODE == 200 && evt.body.STATUS == "success") {
+
+                    } 
+                    // else {
+                    //     this.toasterService.error(evt.body.MESSAGE);
+                    // }
                 }
             }),
             catchError(err => {
-                if (err.status === 401) {
+                if (err.status === 400) {
                     // auto logout if 401 response returned from api
                     this.authenticationService.logout();
                     this.router.navigate(['login']);

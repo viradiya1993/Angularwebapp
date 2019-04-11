@@ -312,3 +312,13 @@ toolbar .ribbon-container.reports_tab_main .mat-card-content {
 .time_entry_picker .mat-form-field-appearance-outline .mat-form-field-suffix {
     top: 0;
 }
+
+body.theme-default .mat-progress-spinner circle,
+body.theme-default .mat-spinner circle {
+    stroke: #572b82 !important;
+}
+
+body.theme-yellow-light .mat-progress-spinner circle,
+body.theme-yellow-light .mat-spinner circle {
+    stroke: #43a047 !important;
+}

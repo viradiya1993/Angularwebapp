@@ -26,6 +26,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   displayedColumns = ['matter_num', 'matter', 'unbilled', 'invoiced', 'received', 'unpaid', 'total_value'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   mattersData: any;
+  isLoadingResults: boolean = true;
   lastFilter = {};
 
   @Output() matterDetail: EventEmitter<any> = new EventEmitter<any>();
@@ -68,6 +69,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
     );
   }
   getMatterList(data) {
+    this.isLoadingResults = true;
     this._mattersService.getMatters(data).subscribe(response => {
       localStorage.setItem('session_token', response.MATTER.SESSIONTOKEN);
       if (response.MATTER.RESPONSE != "error - not logged in") {
@@ -77,6 +79,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
         }
         this.mattersData = new MatTableDataSource(response.MATTER.DATASET);
         this.mattersData.paginator = this.paginator;
+        this.isLoadingResults = false;
       } else {
         this.toastr.error(response.MATTER.RESPONSE);
       }

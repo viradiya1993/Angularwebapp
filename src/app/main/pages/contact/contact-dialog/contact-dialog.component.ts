@@ -27,6 +27,7 @@ export class ContactDialogComponent implements OnInit {
   postknowbyothername: any;
   postbirthdayreminder: string;
   postsameasstreet: string;
+  isLoadingResults:boolean=false;
 
 
   constructor(public dialogRef: MatDialogRef<ContactDialogComponent>, private _formBuilder: FormBuilder
@@ -60,7 +61,7 @@ export class ContactDialogComponent implements OnInit {
   loginForm: FormGroup;
   ngOnInit() {
 
-
+    this.isLoadingResults = true;
     this.loginForm = this._formBuilder.group({
 
       //CONTACTGUID: ['', Validators.required],

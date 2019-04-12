@@ -272,7 +272,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     //edit Contact diloage
      EditContactsDialog() {
-
+        
         //get value from localstrorage
         let getContactGuId = localStorage.getItem('contactGuid');
         if(!localStorage.getItem('contactGuid')){

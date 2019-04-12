@@ -24,6 +24,9 @@ export class ErrorInterceptor implements HttpInterceptor {
                         return true;
                     } else if ((evt.body.CODE > 400 && evt.body.CODE < 499) && (evt.body.STATUS == "error" || evt.body.RESPONSE == "error")) {
                         this.toasterService.error(evt.body.MESSAGE);
+                        if (evt.body.MESSAGE == "Not logged in") {
+                            this.authenticationService.ForcLogout();
+                        }
                     }
                 }
             }),

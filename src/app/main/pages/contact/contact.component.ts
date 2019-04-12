@@ -26,11 +26,9 @@ export class ContactComponent implements OnInit {
   Contactdata;
 
   ngOnInit() {
-    //First 25 record Dispay here
+    this.isLoadingResults = true;
     let d = {};
     this.Contact.ContactData(d).subscribe(response => {
-      this.isLoadingResults = true;
-      // console.log("fdshukuf");
       if (response.CODE == 200 && (response.RESPONSE == "success" || response.STATUS == "success")) {
         this.Contactdata = new MatTableDataSource(response.DATA.CONTACTS)
         this.Contactdata.paginator = this.paginator

@@ -17,7 +17,7 @@ import { DatePipe } from '@angular/common'
 })
 export class TimeEntriesComponent implements OnInit {
   TimeEnrtyForm: FormGroup;
-
+  isLoadingResults: boolean = false;
   displayedColumns: string[] = ['date', 'matter', 'description', 'quantity', 'price_ex', 'price_inc', 'invoice_no'];
   TimerData;
   TimerDropData: any;
@@ -62,6 +62,7 @@ export class TimeEntriesComponent implements OnInit {
     return this.TimeEnrtyForm.controls;
   }
   LoadData(Data) {
+    this.isLoadingResults = true;
     this.Timersservice.getTimeEnrtyData(Data).subscribe(res => {
       if (res.WorkItems.response != "error - not logged in") {
         localStorage.setItem('session_token', res.WorkItems.SessionToken);
@@ -70,7 +71,9 @@ export class TimeEntriesComponent implements OnInit {
       } else {
         this.toastr.error(res.WorkItems.response);
       }
+      this.isLoadingResults = false;
     }, err => {
+      this.isLoadingResults = false;
       this.toastr.error(err);
     });
   }

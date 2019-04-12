@@ -39,10 +39,9 @@ export class AppPermissionsService {
   };
 
   Permissions = [];
-  applictionSetting(data: any) {
-    if (data.DATA) {
-      // console.log(data.DATA);
-      let loginResponse = data.DATA;
+  applictionSetting(loginResponse: any) {
+    console.log(loginResponse);
+    if (loginResponse) {
       let LoginData = {
         SessionToken: loginResponse.SESSIONTOKEN,
         TimeStampUTC: loginResponse.TIMESTAMPUTC,
@@ -61,7 +60,6 @@ export class AppPermissionsService {
       };
       localStorage.setItem('currentUser', JSON.stringify(LoginData));
       localStorage.setItem('session_token', loginResponse.SESSIONTOKEN);
-      // let theme_name = loginResponse.PRODUCTTYPE == "Barrister" ? "theme-yellow-light" : "theme-default";
       let theme_name = loginResponse.PRODUCTTYPE == "Barrister" ? "theme-default" : "theme-yellow-light";
       localStorage.setItem('theme_type', theme_name);
       // this.appPermissions(loginResponse);

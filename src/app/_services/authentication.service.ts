@@ -31,19 +31,12 @@ export class AuthenticationService {
             if (loginResponse && loginResponse.CODE == 200 && loginResponse.STATUS == "success") {
                 let LoggedInStatus = loginResponse.DATA.LOGGEDINSTATUS;
                 if (LoggedInStatus) {
-                    localStorage.setItem('Login_response', JSON.stringify(loginResponse));
+                    localStorage.setItem('Login_response', JSON.stringify(loginResponse.DATA));
                     localStorage.setItem('session_token', loginResponse.DATA.SESSIONTOKEN);
                     this.currentUserSubject.next(loginResponse.DATA);
                     this.toastr.success('success');
                     return true;
                 }
-                //  else if (responseType == 'error - login failure') {
-                //     this.toastr.error(responseType);
-                //     return false;
-                // } else {
-                //     this.toastr.error(responseType);
-                //     return false;
-                // }
             }
         }));
     }

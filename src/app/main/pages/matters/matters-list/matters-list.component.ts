@@ -54,6 +54,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
+    dialogConfig.disableClose = true;
     dialogConfig.data = { 'data': ['matter_num', 'matter', 'unbilled', 'invoiced', 'received', 'unpaid', 'total_value'], 'type': 'matters' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
@@ -72,11 +73,11 @@ export class MattersListComponent implements OnInit, OnDestroy {
     this.isLoadingResults = true;
     this._mattersService.getMatters(data).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        if (response.DATA[0]) {
-          this.highlightedRows = response.DATA[0].MATTERGUID;
-          this.matterDetail.emit(response.DATA[0]);
+        if (response.DATA.MATTERS[0]) {
+          this.highlightedRows = response.DATA.MATTERS[0].MATTERGUID;
+          this.matterDetail.emit(response.DATA.MATTERS[0]);
         }
-        this.mattersData = new MatTableDataSource(response.DATA);
+        this.mattersData = new MatTableDataSource(response.DATA.MATTERS);
         this.mattersData.paginator = this.paginator;
         this.isLoadingResults = false;
       }

@@ -18,6 +18,7 @@ export class JwtInterceptor implements HttpInterceptor {
                 if (typeof request.body == 'object') {
                     request.body.SessionToken = localStorage.getItem('session_token');
                     request.body.apikey = environment.APIKEY;
+                    request.body.formatting = 'JSON';
                     request.body;
                 }
             } else if (request.method.toLowerCase() === 'get') {

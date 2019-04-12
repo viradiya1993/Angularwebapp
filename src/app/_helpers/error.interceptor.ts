@@ -20,13 +20,10 @@ export class ErrorInterceptor implements HttpInterceptor {
             tap(evt => {
                 if (evt instanceof HttpResponse) {
                     console.log(evt);
-                    if (evt.body.CODE == 200 && evt.body.STATUS == "success") {
+                    if (evt.body.CODE == 200 && (evt.body.STATUS == "success" || evt.body.RESPONSE == "success")) {
                         return true;
-                    } else if (evt.body.CODE == 402 && evt.body.STATUS == "error") {
-                        if (evt.body.RESPONSEMESSAGE)
-                            this.toasterService.error(evt.body.RESPONSEMESSAGE);
-                        else
-                            this.toasterService.error(evt.body.MESSAGE);
+                    } else if ((evt.body.CODE > 400 && evt.body.CODE < 499) && (evt.body.STATUS == "error" || evt.body.RESPONSE == "error")) {
+                        this.toasterService.error(evt.body.MESSAGE);
                     }
                 }
             }),

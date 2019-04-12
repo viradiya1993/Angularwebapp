@@ -63,13 +63,10 @@ export class TimeEntriesComponent implements OnInit {
   }
   LoadData(Data) {
     this.isLoadingResults = true;
-    this.Timersservice.getTimeEnrtyData(Data).subscribe(res => {
-      if (res.WorkItems.response != "error - not logged in") {
-        localStorage.setItem('session_token', res.WorkItems.SessionToken);
-        this.TimerData = new MatTableDataSource(res.WorkItems.DataSet)
+    this.Timersservice.getTimeEnrtyData(Data).subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        this.TimerData = new MatTableDataSource(response.DATA.WORKITEMS)
         this.TimerData.paginator = this.paginator
-      } else {
-        this.toastr.error(res.WorkItems.response);
       }
       this.isLoadingResults = false;
     }, err => {

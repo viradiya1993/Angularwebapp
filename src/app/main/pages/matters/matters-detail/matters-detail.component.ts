@@ -37,8 +37,7 @@ export class MattersDetailComponent implements OnInit {
     let postData = { 'MatterGuid': this.currentMatterId };
     this._mattersService.getMattersDetail(postData).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        this.currentMatter = response.DATA[0];
-        console.log(this.currentMatter);
+        this.currentMatter = response.DATA.MATTERS[0];
       }
     }, error => {
       this.toastr.error(error);

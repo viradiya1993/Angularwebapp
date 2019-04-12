@@ -16,17 +16,19 @@ export class AddContactService {
     // return this.http.post<any>(environment.APIEndpoint + 'SetContact',);
   }
 
-
-  UpdateContact(val){
+  // UpdateContact(val){
     
-   // console.log(val);
-    //let getContactGuId = localStorage.getItem('contactGuid');
-    //console.log(getContactGuId);
-    // this.http.post(environment.APIEndpoint + 'SetContact?FormAction=update&?ContactGUID='+getContactGuId,val)
-    this.http.post(environment.APIEndpoint + 'SetContact',val)
-    .subscribe(res => console.log(res));
-    localStorage.removeItem('contactGuid');
+  //  // console.log(val);
+  //   //let getContactGuId = localStorage.getItem('contactGuid');
+  //   //console.log(getContactGuId);
+  //   // this.http.post(environment.APIEndpoint + 'SetContact?FormAction=update&?ContactGUID='+getContactGuId,val)
+  //   this.http.post(environment.APIEndpoint + 'SetContact',val)
+  //   .subscribe(res =>{
+  //      //this.ContactData();
+  //     // resolve(response);
+  //   });
+  //   localStorage.removeItem('contactGuid');
 
-  }
+  // }
 
 }

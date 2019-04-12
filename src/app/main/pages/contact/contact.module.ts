@@ -74,7 +74,8 @@ const routes = [
     FuseConfirmDialogModule,
     FuseSidebarModule,
     SatDatepickerModule,
-    SatNativeDateModule
+    SatNativeDateModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     ContactComponent

@@ -52,9 +52,6 @@ export class ContactDialogComponent implements OnInit {
 
 
   }
-
-
-
   common: Common[];
   nameSelected: string;
   value: number;

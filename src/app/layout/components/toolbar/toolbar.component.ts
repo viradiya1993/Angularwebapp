@@ -123,10 +123,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.prevMatterArray = [];
         if (localStorage.getItem(this.timerId)) {
             let timerObj = JSON.parse(localStorage.getItem(this.timerId));
+            clearTimeout(this.timerInterval);
             timerObj.forEach(items => {
                 this.prevMatterArray.push({ 'matter_id': items.matter_id, 'time': this.secondsToHms(items.time), 'isStart': items.isStart });
                 if (localStorage.getItem('start_' + items.matter_id) && items.isStart) {
-                    this.stopTimer();
                     this.currentTimer = localStorage.getItem('start_' + items.matter_id);
                     this.startTimer(items.matter_id);
                 }
@@ -148,6 +148,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         return hours + ":" + minutes + ":" + seconds;
     }
     stopMatterBack(matterId: any) {
+        clearTimeout(this.timerInterval);
         let tempArray: any[] = []
         let timerObj = JSON.parse(localStorage.getItem(this.timerId));
         timerObj.forEach(items => {
@@ -155,7 +156,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 items.isStart = false;
                 items.time = this.currentTimer;
                 tempArray.push(items);
-                this.stopTimer();
                 localStorage.removeItem('start_' + items.matter_id);
             } else {
                 tempArray.push(items);
@@ -167,17 +167,18 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.displayMattterList();
     }
     startMatterBack(matterId: any) {
+        clearTimeout(this.timerInterval);
+        this.currentTimer = 0;
         let tempArray: any[] = []
         let timerObj = JSON.parse(localStorage.getItem(this.timerId));
         timerObj.forEach(items => {
             if (items.isStart) {
                 items.isStart = false;
-                items.time = this.currentTimer;
+                items.time = localStorage.getItem('start_' + items.matter_id);
                 tempArray.push(items);
                 localStorage.removeItem('start_' + items.matter_id);
-                this.stopTimer();
             } else if (items.matter_id === matterId) {
-                this.currentTimer = 0;
+                this.currentTimerHMS = this.secondsToHms(items.time);
                 items.isStart = true;
                 tempArray.push(items);
                 localStorage.setItem('start_' + items.matter_id, items.time);
@@ -209,9 +210,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //*----**************************************time enrt add start***************************************
     public addNewTimeEntry(Data: any) {
-        const dialogRef = this.dialog.open(TimeEntryDialogComponent, {
-            width: '50%'
-        });
+        const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '50%', disableClose: true });
         dialogRef.afterClosed().subscribe(result => {
             console.log(`addNewTimeEntry result: ${result}`);
 

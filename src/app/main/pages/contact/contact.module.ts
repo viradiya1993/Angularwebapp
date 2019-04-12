@@ -26,6 +26,7 @@ import { CompanyComponent } from './contact-dialog/company/company.component';
 import { MattersComponent } from './contact-dialog/matters/matters.component';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { ContactCorresDetailsComponent } from './contact-corres-details/contact-corres-details.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'; 
 
 
 const routes = [
@@ -73,7 +74,8 @@ const routes = [
     FuseConfirmDialogModule,
     FuseSidebarModule,
     SatDatepickerModule,
-    SatNativeDateModule
+    SatNativeDateModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     ContactComponent

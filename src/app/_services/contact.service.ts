@@ -9,9 +9,9 @@ export class ContactService {
 
   constructor(private http: HttpClient) { }
 
-  ContactData(){
+  ContactData(d){
    
-    return this.http.get<any>(environment.APIEndpoint + 'GetContact');
+    return this.http.post<any>(environment.APIEndpoint + 'GetContact',d);
   }
 
   //get data for popup
@@ -33,8 +33,10 @@ export class ContactService {
     this.http.post(environment.APIEndpoint + 'SetContact',val)
     .subscribe(res =>{
       console.log(res);
+      
       // localStorage.setItem('refres',"yes");
-     // this.ContactData();
+       let d={};
+      this.ContactData(d);
       // this.http.get<any>(environment.APIEndpoint + 'GetContact');
     });
     localStorage.removeItem('contactGuid');

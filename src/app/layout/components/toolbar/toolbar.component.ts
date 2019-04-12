@@ -225,7 +225,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     // for new contact dialog
     AddContactsDialog() {
         const dialogRef = this.dialog.open(ContactDialogComponent, {
-
+            disableClose: true,
             panelClass: 'contact-dialog',
             data: {
                 action: 'new'
@@ -251,9 +251,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
        let getmatguid=getMatterContactGuId.CONTACTGUID;
         let contactguidforbody={CONTACTGUID: getmatguid}
         this._getContact.getContact(contactguidforbody).subscribe(res => {
-            this.getContactData = res.CONTACT.DATASET[0];
+            this.getContactData = res.DATA.CONTACTS[0];
             const dialogRef = this.dialog.open(ContactDialogComponent, {
-
+                disableClose: true,
                 data: {
                     contact: this.getContactData,
                     action: 'edit'
@@ -275,11 +275,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         //get value from localstrorage
         let getContactGuId = localStorage.getItem('contactGuid');
+        if(!localStorage.getItem('contactGuid')){
+            this.toastr.error("Please Select Contact");
+        }
+        else{
         let contactguidforbody={CONTACTGUID: getContactGuId}
         this._getContact.getContact(contactguidforbody).subscribe(res => {
-            this.getContactData = res.CONTACT.DATASET[0];
+            this.getContactData = res.DATA.CONTACTS[0];
             const dialogRef = this.dialog.open(ContactDialogComponent, {
-
+                disableClose: true,
                 data: {
                     contact: this.getContactData,
                     action: 'edit'
@@ -288,43 +292,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             dialogRef.afterClosed().subscribe(result => {
 
 
-                console.log(result);
-
             });
         });
-
-       
-        //const dialogRef = this.dialog.open(ContactDialogComponent, this.getContactData);
-        //    console.log(this.getContactData);
-        //         const dialogRef = this.dialog.open(ContactDialogComponent,{
-
-        //             data      : {
-        //                 contact:this.getContactData,
-        //                 action : 'edit'
-        //             }
-        //         });
-        //         dialogRef.afterClosed().subscribe(result => {
-
-
-        //             console.log(result);
-
-        //         });
     }
-    // for new Corres Details dialog
-
-    // Reportpopup(ReportData) {
-    //     let Reportname=ReportData.REPORTNAME;
-    //     const dialogConfig = new MatDialogConfig();
-    //     //dialogConfig.width = '40%';
-    //     const dialogRef = this.dialog.open(ReportsComponent,{
-    //         width:'40%',
-    //         data:ReportData,            
-    //     });
-        
-    //     dialogRef.afterClosed().subscribe(result => {
-    //         //console.log(`ReportsComponent result: ${result}`);
-    //     });
-    // }
+       
+    }
+    
     openCorresDialog() {
         //const dialogConfig = new MatDialogConfig();
         //dialogConfig.width = '50%';
@@ -332,6 +305,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         let getmatguid=getMatterGuId.MATTERGUID;
         //console.log(getmatguid);
         const dialogRef = this.dialog.open(ContactCorresDetailsComponent,{
+                    disableClose: true,
                     width:'50%',
                     data:getmatguid,   
         });

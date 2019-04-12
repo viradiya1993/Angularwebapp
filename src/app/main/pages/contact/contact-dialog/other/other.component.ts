@@ -11,6 +11,7 @@ export class OtherComponent implements OnInit {
 
   common:any;
   selectGender:any;
+  status: { Id: number; Name: string; }[];
   constructor( public datepipe: DatePipe) { }
   @Input() loginForm: FormGroup;
 
@@ -30,6 +31,15 @@ export class OtherComponent implements OnInit {
       { Id: 2, Name: "Female" },
       { Id: 3, Name: "Unknown" },
 
+    ];
+
+    this.status = [
+
+      { Id: 1, Name: "Single" },
+      { Id: 2, Name: "Married" },
+      { Id: 3, Name: "Divorced" },
+      { Id: 4, Name: "Separated" },
+      { Id: 5, Name: "De facto" },
     ];
   }
  

@@ -31,10 +31,13 @@ export class ContactDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<ContactDialogComponent>, private _formBuilder: FormBuilder
     , private toastr: ToastrService, private Contact: ContactService, private addcontact: AddContactService, @Inject(MAT_DIALOG_DATA) public _data: any) {   // Set the defaults
-    //this.action = _data.action;
+    
+      
+    // console.log(_data.contact.DATEOFBIRTH);
+    // console.log(_data.contact.DATEOFBIRTH);
     this.action = _data.action;
-  // console.log(_data.contact.DATEOFBIRTH);
-    console.log(_data);
+  
+     console.log(_data);
 
 
     if (this.action === 'edit') {
@@ -174,6 +177,7 @@ export class ContactDialogComponent implements OnInit {
         this.birthdayreminder = true;
       }
       if (this._data.contact.SAMEASSTREET == 1) {
+
         this.loginForm.get('POSTALADDRESS1').disable();
         this.loginForm.get('POSTALADDRESS2').disable();
         this.loginForm.get('POSTALADDRESS3').disable();
@@ -409,23 +413,20 @@ export class ContactDialogComponent implements OnInit {
 
       }
 
+
       if (this.action !== 'edit') {
-        console.log(details);
+ 
         this.addcontact.AddContactData(details);
-        // console.log(details);
 
       }
       else {
         //let getContactGuId = localStorage.getItem('contactGuid');
-        this.Contact.UpdateContact(details);
-       
-         console.log(details); 
+        this.Contact.UpdateContact(details); 
       }
       //this.dialogRef.close(details);
 
       localStorage.removeItem('DATEOFBIRTH');
       localStorage.removeItem('DATEOFDEATH');
-
     
 
     }

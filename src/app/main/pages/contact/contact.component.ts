@@ -19,30 +19,29 @@ export class ContactComponent implements OnInit {
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : 'green';
   displayedColumns: string[] = ['Contact Guid', 'Company Contactguid', 'Contact Type', 'User Guid', 'Useparent Address', 'Contact Name', 'Salutation', 'Position', 'Name Title', 'Given Names', 'Middle Names', 'Family Name', 'Name Letters', 'Knownby Othername', 'Otherfamily Name', 'Thergiven Names', 'Reason For Change', 'Marital Status', 'Spouse', 'Numberof Dependants', 'Occupation', 'Gender', 'Dateof Birth', 'Birthday Reminder', 'Townof Birth'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  datanull: null;
 
   constructor(private dialog: MatDialog, private Contact: ContactService, private toastr: ToastrService, private authenticationService: AuthenticationService, ) { }
   Contactdata;
 
   ngOnInit() {
-    
-    //First 25 record Dispay here 
-    this.Contact.ContactData().subscribe(res => {
-      if (res.CONTACT.RESPONSE != "error - not logged in") {
-        localStorage.setItem('session_token', res.CONTACT.SESSIONTOKEN);
-        this.Contactdata = new MatTableDataSource(res.CONTACT.DATASET)
+    //First 25 record Dispay here
+ let d={};
+    this.Contact.ContactData(d).subscribe(response => {
+      // console.log("fdshukuf");
+      if (response.CODE == 200 && (response.RESPONSE == "success"||response.STATUS == "success")) {
+        
+        this.Contactdata = new MatTableDataSource(response.DATA.CONTACTS)
         this.Contactdata.paginator = this.paginator
-        if (res.CONTACT.DATASET[0]) {
-          localStorage.setItem('contactGuid', res.CONTACT.DATASET[0].CONTACTGUID);
-          this.highlightedRows = res.CONTACT.DATASET[0].CONTACTGUID;
+        if (response.DATA.CONTACTS[0]) {
+          localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);
+          this.highlightedRows = response.DATA.CONTACTS[0].CONTACTGUID;
         }
-      } else {
-        this.toastr.error(res.CONTACT.RESPONSE);
       }
-    },
-      err => {
+    },err => {
         this.toastr.error(err);
       });
-  }
+     }
 
 
   //for edit popup

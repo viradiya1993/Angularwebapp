@@ -64,8 +64,9 @@ export class ContactCorresDetailsComponent implements OnInit {
     let matteridforcontect ={CONTACTGUID:this.getMatterGuid}
     console.log(matteridforcontect);
     this._getContact.getContact(matteridforcontect).subscribe(res => {
-      console.log(res);
+      //console.log(res);
         this.getContactData = res.CONTACT.DATASET[0];
+       
         const dialogRef = this.dialog.open(ContactDialogComponent, {
 
             data: {

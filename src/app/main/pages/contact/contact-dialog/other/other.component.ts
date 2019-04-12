@@ -32,5 +32,5 @@ export class OtherComponent implements OnInit {
 
     ];
   }
-
+ 
 }

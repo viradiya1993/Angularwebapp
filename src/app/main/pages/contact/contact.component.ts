@@ -22,6 +22,7 @@ export class ContactComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private Contact: ContactService, private toastr: ToastrService, private authenticationService: AuthenticationService, ) { }
   Contactdata;
+
   ngOnInit() {
     
     //First 25 record Dispay here 
@@ -42,6 +43,8 @@ export class ContactComponent implements OnInit {
         this.toastr.error(err);
       });
   }
+
+
   //for edit popup
   editContact(val){
 

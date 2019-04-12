@@ -10,7 +10,7 @@ export class ContactService {
   constructor(private http: HttpClient) { }
 
   ContactData(){
-    console.log("lsdhf");
+   
     return this.http.get<any>(environment.APIEndpoint + 'GetContact');
   }
 
@@ -32,7 +32,10 @@ export class ContactService {
     
     this.http.post(environment.APIEndpoint + 'SetContact',val)
     .subscribe(res =>{
-        this.ContactData();
+      console.log(res);
+      // localStorage.setItem('refres',"yes");
+     // this.ContactData();
+      // this.http.get<any>(environment.APIEndpoint + 'GetContact');
     });
     localStorage.removeItem('contactGuid');
 

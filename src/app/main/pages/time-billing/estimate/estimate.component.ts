@@ -49,6 +49,7 @@ export class EstimateComponent implements OnInit {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
+    dialogConfig.disableClose = true;
     dialogConfig.data = { 'data': ['Estimate ItemGuid', 'Estimate Guid', 'Work ItemGuid', 'Matter Guid', 'Item Type', 'Fee Earner', 'Fee Type', 'Order', 'Quantity From', 'Quantity Type From', 'Formatted Quantity From', 'Price From', 'Gst From', 'PriceInGst From', 'Quantity To', 'Quantity Typeto', 'Formatted Quantityto', 'Price To', 'Gst To', 'PriceinGst To', 'Service', 'Short Name', 'Client Name'], 'type': 'estimate' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);

@@ -39,6 +39,7 @@ export class AuthoritiesComponent implements OnInit {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
+    dialogConfig.disableClose = true;
     dialogConfig.data = {
       'data': ['MATTERAUTHORITYGUID', 'MATTERGUID', 'AUTHORITYGUID', 'AUTHORITY', 'CITATION', 'WEBADDRESS',
         'TOPIC', 'REFERENCE', 'COMMENT', 'SHORTNAME', 'CLIENTNAME'], 'type': 'authorities'

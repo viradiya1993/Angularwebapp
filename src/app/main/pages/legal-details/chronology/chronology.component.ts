@@ -48,6 +48,7 @@ export class ChronologyComponent implements OnInit {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
+    dialogConfig.disableClose = true;
     dialogConfig.data = {
       'data': ['MATTERGUID', 'CHRONOLOGYGUID', 'DATEFROM', 'DATETO', 'TIMEFROM', 'TIMETO', 'FORMAT', 'FORMATTEDDATE',
         'TOPIC', 'BRIEFPAGENO', 'REFERENCE', 'COMMENT', 'WITNESSES', 'EVENTAGREED', 'DOCUMENTNAME', 'ADDITIONALTEXT', 'SHORTNAME', 'CLIENTNAME'], 'type': 'chronology'

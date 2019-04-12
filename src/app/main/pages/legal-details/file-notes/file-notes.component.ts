@@ -42,6 +42,7 @@ export class FileNotesComponent implements OnInit {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
+    dialogConfig.disableClose = true;
     dialogConfig.data = { 'data': ['FILENOTEGUID', 'MATTERGUID', 'USERNAME', 'Date', 'Time', 'Note', 'SHORTNAME', 'CONTACTNAME'], 'type': 'file-notes' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);

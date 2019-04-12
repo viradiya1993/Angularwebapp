@@ -41,6 +41,7 @@ export class ReceiptsCreditsComponent implements OnInit {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
+    dialogConfig.disableClose = true;
     dialogConfig.data = { 'data': ['Income Code', 'Income Guid', 'Income Class', 'Income Type', 'Firmguid', 'Short Name', 'Client Name', 'Allocation', 'Income Date', 'Payee', 'Amount', 'Gst', 'Total', 'Bank AccountGuid', 'Income AccountGuid', 'Note'], 'type': 'receipts-credits' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);

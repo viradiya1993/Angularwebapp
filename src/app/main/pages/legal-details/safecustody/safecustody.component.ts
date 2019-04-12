@@ -43,6 +43,7 @@ export class SafecustodyComponent implements OnInit {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
+    dialogConfig.disableClose = true;
     dialogConfig.data = {
       'data': ['SAFECUSTODYGUID', 'SAFECUSTODYPACKETGUID', 'MATTERGUID', 'CONTACTGUID', 'DOCUMENTTYPE',
         'SAFECUSTODYDESCRIPTION', 'DOCUMENTNAME', 'STATUS', 'REMINDER', 'REMINDERDATE',

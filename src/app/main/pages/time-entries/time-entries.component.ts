@@ -116,6 +116,7 @@ export class TimeEntriesComponent implements OnInit {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
+    dialogConfig.disableClose = true;
     dialogConfig.data = { 'data': ['date', 'matter', 'description', 'quantity', 'price_ex', 'price_inc', 'invoice_no'], 'type': 'estimate' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);

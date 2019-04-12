@@ -41,6 +41,7 @@ export class MatterInvoicesComponent implements OnInit {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
+    dialogConfig.disableClose = true;
     dialogConfig.data = { 'data': ['Invoice Guid', 'Invoice ReversalGuid', 'Matter Guid', 'Short Name', 'Client Name', 'Parent InvoiceGuid', 'Invoice Code', 'Invoice Date', 'Due Date', 'Printed Date', 'Invoice Total', 'Gst', 'Agency Total', 'Agency Gst', 'Amount PaidexGst', 'Amount PaidincGst', 'Amount WrittenoffexGst', 'Amount WrittenoffincGst', 'Amount OutstandingexGst', 'Amount OutstandingincGst', 'Disbursement AmountexGst', 'Disbursement AmountincGst', 'Foreign currencyid', 'Foreign currencyrate', 'Foreign currencyamount', 'Foreign currencyGst', 'Comment'], 'type': 'matter_invoices' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);

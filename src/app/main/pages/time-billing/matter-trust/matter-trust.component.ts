@@ -43,6 +43,7 @@ export class MatterTrustComponent implements OnInit {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
+    dialogConfig.disableClose = true;
     dialogConfig.data = { 'data': ['Trust Transaction ItemGuid', 'Trust Transaction Guid', 'Entered Date', 'Entered Time', 'Amount', 'Item Type', 'Account Guid', 'Matter Guid', 'Short Name', 'Matter Description', 'Client Guid', 'Client Name', 'Bankbsb', 'Bank Account Number', 'Ledger Balance', 'Purpose', 'Contact Name', 'Transaction Class', 'Transaction Type', 'Cashbook', 'Cashbook Code', 'Transaction Date', 'Payor', 'Cheque No'], 'type': 'matter_trust' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);

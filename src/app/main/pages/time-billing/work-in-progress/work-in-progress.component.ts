@@ -24,23 +24,20 @@ export class WorkInProgressComponent implements OnInit {
     this.isLoadingResults = true;
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
     this.WorkInProgress.WorkInProgressData(potData).subscribe(res => {
-      //console.log(res.WorkItems.DataSet);
-      if (res.WorkItems.response != "error - not logged in") {
-        localStorage.setItem('session_token', res.WorkItems.SessionToken);
-        this.WorkInProgressdata = new MatTableDataSource(res.WorkItems.DataSet)
+      if (res.CODE != "error - not logged in" && (res.STATUS == "success" || res.RESPONSE == "success")) {
+        this.WorkInProgressdata = new MatTableDataSource(res.DATA.WORKITEMS)
         this.WorkInProgressdata.paginator = this.paginator
-      } else {
-        this.toastr.error(res.WorkItems.response);
       }
       this.isLoadingResults = false;
-    },
-      err => {
-        this.toastr.error(err);
-      });
+    }, err => {
+      this.isLoadingResults = false;
+      this.toastr.error(err);
+    });
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
+    dialogConfig.disableClose = true;
     dialogConfig.data = { 'data': ['Workitem Guid', 'Matter Guid', 'Invoice Guid', 'Invoice Order', 'Item Type', 'Item Date', 'Item Time', 'Fee Earner', 'Fee Type', 'Quantity', 'Quantity Type', 'Formatted Quantity', 'Price', 'Gst', 'Gst Type', 'Priceinc Gst', 'Gst Charged', 'Price Charged', 'Priceinc Gstcharged', 'Additional Text', 'Comment', 'Short Name', 'Invoice Code', 'Client Name'], 'type': 'work-in-progress' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);

@@ -119,7 +119,7 @@
                                     </section>
                                     <section class="ribbon-section">
                                         <mat-nav-list>
-                                            <a mat-list-item (click)="openDialog()">
+                                            <a mat-list-item (click)="ClientDetailsDialog()">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_client_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
@@ -646,11 +646,11 @@
                                 <section class="group-section-tab" *ngFor="let item of ReportListObj | keyvalue">
                                     <section class="ribbon-section" *ngFor="let item2 of item.value">
                                         <mat-nav-list>
-                                            <a mat-list-item>
+                                            <a mat-list-item (click)="Reportpopup(item2)">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/{{item2.ICONNAME}}" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
-                                                <span (click)="Reportpopup(item2)">{{item2.REPORTNAME}}</span>
+                                                <span>{{item2.REPORTNAME}}</span>
                                             </a>
                                         </mat-nav-list>
                                     </section>
@@ -811,7 +811,7 @@
         <div fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="start center" class="user_dropdown">
 
             <button mat-icon-button class="chat-panel-toggle-button header_height_btn" id="sidebar_open_button" (click)="toggleSidebarOpen('quickPanel')" aria-label="Toggle chat panel">
-                    <mat-icon class="secondary-text" matBadge="{{TotalTimer}}" matBadgeColor="warn">timer</mat-icon>
+                    <mat-icon class="secondary-text timer_icon_header" matBadge="{{TotalTimer}}" matBadgeColor="warn">timer</mat-icon>
            </button>
             <div class="toolbar-separator top_seprator"></div>
             <button mat-button [matMenuTriggerFor]="userMenu" class="user-button header_height_btn">

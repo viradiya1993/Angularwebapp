@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-
+import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig, MatDatepickerInputEvent } from '@angular/material';
+import { DatePipe } from '@angular/common'
 @Component({
   selector: 'app-other',
   templateUrl: './other.component.html',
@@ -10,9 +11,17 @@ export class OtherComponent implements OnInit {
 
   common:any;
   selectGender:any;
-  constructor() { }
+  constructor( public datepipe: DatePipe) { }
   @Input() loginForm: FormGroup;
 
+  choosedDateOfBirth(type: string, event: MatDatepickerInputEvent<Date>) {
+    let begin = this.datepipe.transform(event.value, 'dd/MM/yyyy');
+    localStorage.setItem('DATEOFBIRTH', begin);
+  }
+  choosedDateOfDath(type: string, event: MatDatepickerInputEvent<Date>) {
+    let begin = this.datepipe.transform(event.value, 'dd/MM/yyyy');
+    localStorage.setItem('DATEOFDEATH', begin);    
+  }
 
   ngOnInit() {
     this.common = [

@@ -35,6 +35,7 @@ export class AddressComponent implements OnInit {
    // console.log(f.value.SAMEASSTREET);
     //this.isDisabled = !this.isDisabled;
     if( f.value.SAMEASSTREET){
+      
     this.loginForm.get('POSTALADDRESS1').disable();
     this.loginForm.get('POSTALADDRESS2').disable();
     this.loginForm.get('POSTALADDRESS3').disable();

@@ -31,20 +31,19 @@ export class MattersDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.url.subscribe(v =>
-      this.currentMatterId = v[0].path     
+      this.currentMatterId = v[0].path
     );
     // currentMatterId
-    this._mattersService.getMattersDetail(this.currentMatterId).subscribe(response => {
-      localStorage.setItem('session_token', response.Matter.SessionToken);
-      if (response.Matter.response != "error - not logged in") {
-        this.currentMatter = response.Matter.DataSet[0];
-      } else {
-        this.toastr.error(response.Matter.response);
+    let postData = { 'MatterGuid': this.currentMatterId };
+    this._mattersService.getMattersDetail(postData).subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        this.currentMatter = response.DATA[0];
+        console.log(this.currentMatter);
       }
     }, error => {
       this.toastr.error(error);
     });
-    this._mattersService.getMattersContact(this.currentMatterId).subscribe(response => {
+    this._mattersService.getMattersContact(postData).subscribe(response => {
       localStorage.setItem('session_token', response.MatterContact.SessionToken);
       if (response.MatterContact.response != "error - not logged in") {
         this.MatterContact = new MatTableDataSource(response.MatterContact.DataSet);

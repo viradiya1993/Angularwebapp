@@ -15,8 +15,9 @@
                         </mat-select>
                     </mat-form-field>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <mat-checkbox formControlName="isContactActive" >Contact is Active</mat-checkbox>
+                    <mat-checkbox   formControlName="ACTIVE">Contact is Active</mat-checkbox>
                 </div>
+
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
                         <mat-label>Name</mat-label>
@@ -24,6 +25,16 @@
                         <!-- <mat-icon matSuffix class="secondary-text">account_circle</mat-icon> -->
                     </mat-form-field>
                 </div>
+                <!-- for contactGuid -->
+             
+                
+                    
+                        
+                        <!-- <input type="hidden" name="CONTACTGUID"  formControlName="CONTACTGUID" > -->
+                        <!-- <mat-icon matSuffix class="secondary-text">account_circle</mat-icon> -->
+                    
+                
+
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-tab-group mat-align-tabs="start">
                         <mat-tab *ngIf="nameSelected==='Person' ||nameSelected==='Party' ||nameSelected==='Payee/Payor'" label="Person">
@@ -54,7 +65,8 @@
 
 
     <mat-dialog-actions align="end" class="popup_ftr">
-        <button mat-raised-button mat-dialog-close color="accent"  (click)="ondialogSaveClick()" >Save</button>
+        <button mat-raised-button mat-dialog-close color="accent"  (click)="ondialogSaveClick()" *ngIf="action !== 'edit'" >Add</button>
+        <button mat-raised-button mat-dialog-close color="accent"  (click)="ondialogSaveClick()" *ngIf="action === 'edit'" >Update</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Don't Save</button>
     </mat-dialog-actions>
 

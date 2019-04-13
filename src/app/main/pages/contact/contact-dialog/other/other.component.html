@@ -11,7 +11,7 @@
 
 
 <mat-form-field appearance="outline" class="example" fxFlex="49" class="pr-4">
-  <input matInput  name="DATEOFBIRTH" [formControlName]="'DATEOFBIRTH'" [matDatepicker]="picker" placeholder="Date of birth">
+  <input (dateInput)="choosedDateOfBirth('input', $event)" (dateChange)="choosedDateOfBirth('change', $event)" matInput  name="DATEOFBIRTH" [formControlName]="'DATEOFBIRTH'" [matDatepicker]="picker" placeholder="Date of birth">
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker #picker></mat-datepicker>
 </mat-form-field>
@@ -47,7 +47,7 @@
       </mat-form-field> -->
 
       <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
-        <input matInput  name="DATEOFDEATH" [formControlName]="'DATEOFDEATH'" [matDatepicker]="picker1" placeholder="Date of Dath">
+        <input (dateInput)="choosedDateOfDath('input', $event)" (dateChange)="choosedDateOfDath('change', $event)" matInput  name="DATEOFDEATH" [formControlName]="'DATEOFDEATH'" [matDatepicker]="picker1" placeholder="Date of Dath">
         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
         <mat-datepicker #picker1></mat-datepicker>
       </mat-form-field>

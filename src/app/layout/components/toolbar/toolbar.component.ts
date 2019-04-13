@@ -20,7 +20,6 @@ import { TimeEntriesComponent } from 'app/main/pages/time-entries/time-entries.c
 import { TimeEntryDialogComponent } from 'app/main/pages/time-entries/time-entry-dialog/time-entry-dialog.component';
 
 
-
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -45,6 +44,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     // Private
     private _unsubscribeAll: Subject<any>;
+
 
     constructor(
         private _fuseConfigService: FuseConfigService,
@@ -87,29 +87,28 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.hiddenNavbar = settings.layout.navbar.hidden === true;
         });
         //Report Listing
-
-
-        this.reportlistService.allreportlist({}).subscribe(res => {
-            if (res.Report_List_response.Respose != "error - not logged in") {
-                res.Report_List_response.DataSet.forEach(element => {
-                    if (!this.ReportListObj[element.REPORTGROUP]) {
-                        let temp = [];
-                        temp.push(element);
-                        this.ReportListObj[element.REPORTGROUP] = temp;
-                    } else {
-                        let demo = this.ReportListObj[element.REPORTGROUP];
-                        demo.push(element);
-                        this.ReportListObj[element.REPORTGROUP] = demo;
-                    }
-                });
-            } else {
-                this.toastr.error(res.EstimateItem.Respose);
-            }
+        this.reportlistService.allreportlist({}).subscribe(res => {            
+                if (res.CODE==200 && res.STATUS=='success') {
+                    res.DATA.REPORTS.forEach(element => {                       
+                        if (!this.ReportListObj[element.REPORTGROUP]) {
+                            let temp = [];
+                            temp.push(element);
+                            this.ReportListObj[element.REPORTGROUP] = temp;
+                        } else {
+                            let demo = this.ReportListObj[element.REPORTGROUP];
+                            demo.push(element);
+                            this.ReportListObj[element.REPORTGROUP] = demo;
+                        }
+                    });
+                } else {
+                    this.toastr.error(res.MESSAGE);
+                }
         },
-            err => {
-                this.toastr.error(err);
-            });
+        err => {
+            this.toastr.error(err);
+        });
     }
+ 
 
     //for binding
 
@@ -239,14 +238,40 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
 
-    //edit Contact diloage
 
+    //client details from matter
+    ClientDetailsDialog() {
+        let getMatterContactGuId = JSON.parse(localStorage.getItem('set_active_matters'));
+        // let getMatterContactGuId= localStorage.getItem('set_active_matters');
+        let getmatguid = getMatterContactGuId.CONTACTGUID;
+
+        //    this._getContact.getContact(getmatguid).subscribe(res => {
+        //     this.getContactData = res.CONTACT.DATASET[0];
+        //     console.log(this.getContactData);
+        //     const dialogRef = this.dialog.open(ContactDialogComponent, {
+
+        //         data: {
+        //             contact: this.getContactData,-   
+        //             action: 'edit'
+        //         }
+        //     });
+        //     dialogRef.afterClosed().subscribe(result => {
+
+
+        //         console.log(result);
+
+        //     });
+        // });
+        // console.log(this.getmatguid);
+    }
+
+    //edit Contact diloage
     EditContactsDialog() {
 
         //get value from localstrorage
         let getContactGuId = localStorage.getItem('contactGuid');
         this._getContact.getContact(getContactGuId).subscribe(res => {
-            this.getContactData = res.Contact.DataSet[0];
+            this.getContactData = res.CONTACT.DATASET[0];
             console.log(this.getContactData);
             const dialogRef = this.dialog.open(ContactDialogComponent, {
 
@@ -262,6 +287,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
             });
         });
+
+
         //const dialogRef = this.dialog.open(ContactDialogComponent, this.getContactData);
         //    console.log(this.getContactData);
         //         const dialogRef = this.dialog.open(ContactDialogComponent,{
@@ -291,13 +318,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     //Reportpopup open
     Reportpopup(ReportData) {
-        let Reportname=ReportData.REPORTNAME;
+        //let Reportname=ReportData.REPORTNAME;        
         const dialogConfig = new MatDialogConfig();
-        //dialogConfig.width = '40%';
-        const dialogRef = this.dialog.open(ReportsComponent,{
-            width:'40%',
-            data:ReportData,            
-        });
+        dialogConfig.width = '40%';
+        const dialogRef = this.dialog.open(ReportsComponent, {
+                width:'40%',
+                data:ReportData,
+            });
         
         dialogRef.afterClosed().subscribe(result => {
             //console.log(`ReportsComponent result: ${result}`);
@@ -305,6 +332,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     deleteContact(contact): void {
+
+
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false
         });
@@ -313,6 +342,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
 
         this.confirmDialogRef.afterClosed().subscribe(result => {
+
+            let getContactGuId = localStorage.getItem('contactGuid');
+            let abc = {
+                CONTACTGUID: getContactGuId,
+                FormAction: "delete"
+            }
+
+            this._getContact.deleteContact(abc);
             this.confirmDialogRef = null;
         });
     }
@@ -333,10 +370,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     logOutUser() {
         this.authenticationService.logout();
+        localStorage.removeItem('contactGuid');
     }
     navBarSetting(value: any) {
         let x = value.split("/");
-        console.log(x[1]);
+        // console.log(x[1]);
         if (x[1] == "matters" || x[1] == "") {
             this.isTabShow = 1;
         } else if (x[1] == "contact") {

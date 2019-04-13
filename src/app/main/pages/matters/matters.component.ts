@@ -93,7 +93,7 @@ export class MattersComponent implements OnInit {
     let windowHeight = $(window).height();
     let toolBaarMain = $('#tool_baar_main').height();
     let serchHeight = $('.sticky_search_div').height();
-    this.detailHeight = windowHeight - (toolBaarMain + serchHeight) + 'px';
+    this.detailHeight = windowHeight - (toolBaarMain + serchHeight + 40) + 'px';
   }
   matterClose(event: any) {
     this.mattersDetail = '';

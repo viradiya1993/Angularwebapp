@@ -100,9 +100,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                             this.ReportListObj[element.REPORTGROUP] = demo;
                         }
                     });
-                } else {
-                    this.toastr.error(res.MESSAGE);
-                }
+                } 
         },
         err => {
             this.toastr.error(err);
@@ -317,8 +315,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
 
     //Reportpopup open
-    Reportpopup(ReportData) {
-        //let Reportname=ReportData.REPORTNAME;        
+    Reportpopup(ReportData) {           
         const dialogConfig = new MatDialogConfig();
         dialogConfig.width = '40%';
         const dialogRef = this.dialog.open(ReportsComponent, {

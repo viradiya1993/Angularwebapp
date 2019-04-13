@@ -268,28 +268,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     //edit Contact diloage
     EditContactsDialog() {
-
         //get value from localstrorage
-        let getContactGuId = localStorage.getItem('contactGuid');
         if (!localStorage.getItem('contactGuid')) {
             this.toastr.error("Please Select Contact");
-        }
-        else {
-            let contactguidforbody = { CONTACTGUID: getContactGuId }
-            this._getContact.getContact(contactguidforbody).subscribe(res => {
-                this.getContactData = res.DATA.CONTACTS[0];
-                const dialogRef = this.dialog.open(ContactDialogComponent, {
-                    disableClose: true,
-                    data: {
-                        contact: this.getContactData,
-                        action: 'edit'
-                    }
-                });
-                dialogRef.afterClosed().subscribe(result => {
-
-
-                });
+        } else {
+            const dialogRef = this.dialog.open(ContactDialogComponent, {
+                disableClose: true,
+                data: { action: 'edit' }
             });
+            dialogRef.afterClosed().subscribe(result => { });
         }
 
     }
@@ -365,7 +352,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     navBarSetting(value: any) {
         let x = value.split("/");
-        console.log(x[1]);
         if (x[1] == "matters" || x[1] == "") {
             this.isTabShow = 1;
         } else if (x[1] == "contact") {

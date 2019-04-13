@@ -20,7 +20,6 @@ import { TimeEntriesComponent } from 'app/main/pages/time-entries/time-entries.c
 import { TimeEntryDialogComponent } from 'app/main/pages/time-entries/time-entry-dialog/time-entry-dialog.component';
 
 
-
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -88,11 +87,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.hiddenNavbar = settings.layout.navbar.hidden === true;
         });
         //Report Listing
-
-
         this.reportlistService.allreportlist({}).subscribe(res => {
-            if (res.Report_List_response.Respose != "error - not logged in") {
-                res.Report_List_response.DataSet.forEach(element => {
+            if (res.CODE == 200 && res.STATUS == 'success') {
+                res.DATA.REPORTS.forEach(element => {
                     if (!this.ReportListObj[element.REPORTGROUP]) {
                         let temp = [];
                         temp.push(element);
@@ -103,11 +100,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                         this.ReportListObj[element.REPORTGROUP] = demo;
                     }
                 });
+            } else {
+                this.toastr.error(res.MESSAGE);
             }
-        }, err => {
-            this.toastr.error(err);
-        });
+        },
+            err => {
+                this.toastr.error(err);
+            });
     }
+
 
     //for binding
 
@@ -300,10 +301,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     //Reportpopup open
     Reportpopup(ReportData) {
-        console.log(ReportData);
+        //let Reportname=ReportData.REPORTNAME;        
         const dialogConfig = new MatDialogConfig();
         dialogConfig.width = '40%';
-        const dialogRef = this.dialog.open(ReportsComponent, dialogConfig);
+        const dialogRef = this.dialog.open(ReportsComponent, {
+            width: '40%',
+            data: ReportData,
+        });
+
         dialogRef.afterClosed().subscribe(result => {
             //console.log(`ReportsComponent result: ${result}`);
         });
@@ -323,7 +328,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
             let getContactGuId = localStorage.getItem('contactGuid');
             let abc = {
-                CONTACTGUID: getContactGuId,
                 FormAction: "delete"
             }
 

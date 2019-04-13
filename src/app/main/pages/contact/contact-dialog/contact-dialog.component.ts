@@ -336,11 +336,11 @@ export class ContactDialogComponent implements OnInit {
     }
 
     this.addcontact.AddContactData(details).subscribe(response => {
-      if (response.CODE == 200 && response.STATUS == "OK") {
+      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         if (this.action !== 'edit') {
-          this.toastr.success('Save');
+          this.toastr.success('Contact save successfully');
         } else {
-          this.toastr.success('Update');
+          this.toastr.success('Contact update successfully');
         }
         this.isspiner = false;
         this.dialogRef.close(false);

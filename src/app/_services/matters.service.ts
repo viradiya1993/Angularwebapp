@@ -17,8 +17,6 @@ export class MattersService {
     return this.httpClient.post<any>(environment.APIEndpoint + 'GetMatter', postData);
   }
   getMattersContact(postData) {
-    console.log(postData);  
-    console.log("fjdshfhs");
     return this.httpClient.post<any>(environment.APIEndpoint + 'GetMatterContact', postData);
   }
 }

@@ -20,17 +20,19 @@ export class ErrorInterceptor implements HttpInterceptor {
             tap(evt => {
                 if (evt instanceof HttpResponse) {
                     console.log(evt);
-                    if (evt.body.CODE == 200 && (evt.body.STATUS == "success" || evt.body.RESPONSE == "success")) {
+                    if (evt.body.CODE == 200 && (evt.body.STATUS == "success" || evt.body.RESPONSE == "success" || evt.body.STATUS == "OK")) {
                         return true;
                     } else if (evt.body.CODE == 200 && evt.body.STATUS != "success") {
                         this.toasterService.error(evt.body.STATUS);
                     } else if (evt.body.CODE == 450 && evt.body.STATUS == "error") {
                         let bodyData = evt.body.DATA.VALIDATIONS;
-                        for (let i in bodyData) {
-                            console.log(i);
-                        }
-                        // this.toasterService.error(evt.body.STATUS);
-                        // DATA VALIDATIONS
+                        let errorData = "";
+                        bodyData.forEach(function (value) {
+                            if (value.VALUEVALID == 'NO')
+                                errorData = errorData + value.ERRORDESCRIPTION;
+                        });
+                        if (errorData != '')
+                            this.toasterService.error(errorData);
                     } else if ((evt.body.CODE > 400 && evt.body.CODE < 499) && (evt.body.STATUS == "error" || evt.body.RESPONSE == "error")) {
                         this.toasterService.error(evt.body.MESSAGE);
                         if (evt.body.MESSAGE == "Not logged in") {

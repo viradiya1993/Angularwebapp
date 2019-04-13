@@ -1,10 +1,13 @@
 <div class="popup_main_div">
     <h2 mat-dialog-title>Select Matter Contact
-            <button class="btn" mat-icon-button (click)="ondialogcloseClick()" aria-label="Close dialog">
+        <button class="btn" mat-icon-button (click)="ondialogcloseClick()" aria-label="Close dialog">
                     <mat-icon>close</mat-icon>
                 </button>
     </h2>
     <div mat-dialog-content class="mat-typography main">
+        <div class="example-loading-shade" *ngIf="isLoadingResults">
+            <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+        </div>
         <div class="one">
             <mat-table #table [dataSource]="getDataForTable" [@animateStagger]="{value:'50'}">
                 <!-- Job Title Column -->
@@ -28,7 +31,7 @@
                 </ng-container>
                 <mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <!-- sticky: true" -->
-                <mat-row highlightedRows=row.MATTERGUID [style.background]="highlightedRows == row.MATTERGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" class="contact" (click)="editContact(row.PERSONGUID);highlightedRows = row.MATTERGUID" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                <mat-row [style.background]="highlightedRows == row.PERSONGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" class="contact" (click)="editContact(row.PERSONGUID);highlightedRows = row.PERSONGUID" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                 </mat-row>
             </mat-table>
             <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

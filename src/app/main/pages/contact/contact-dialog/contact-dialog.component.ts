@@ -3,7 +3,6 @@ import { MatDialogRef } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AddContactService, ContactService } from './../../../../_services';
-import { ToolbarComponent } from 'app/layout/components/toolbar/toolbar.component';
 import { MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
@@ -28,6 +27,7 @@ export class ContactDialogComponent implements OnInit {
   postbirthdayreminder: string;
   postsameasstreet: string;
   isLoadingResults: boolean = false;
+  isspiner: boolean = false;
 
   constructor(public dialogRef: MatDialogRef<ContactDialogComponent>, private _formBuilder: FormBuilder
     , private toastr: ToastrService, private Contact: ContactService, private addcontact: AddContactService,
@@ -228,7 +228,7 @@ export class ContactDialogComponent implements OnInit {
         this.loginForm.controls['NOTES'].setValue(getContactData.NOTES);
         this.isLoadingResults = false;
       });
-      
+
     }
 
 
@@ -239,7 +239,6 @@ export class ContactDialogComponent implements OnInit {
   }
 
   onClick(value) {
-
     console.log(value);
   }
 
@@ -249,11 +248,10 @@ export class ContactDialogComponent implements OnInit {
     return this.loginForm.controls;
   }
   ondialogSaveClick(): void {
-
+    this.isspiner = true;
     if (this.f.ContactName.value == "") {
       this.toastr.error("please enter Contact Name");
-    }
-    else {
+    } else {
       this.FormAction = this.action !== 'edit' ? 'insert' : 'update';
       //for edit contactGuid
       if (this.action !== 'edit') {
@@ -361,27 +359,14 @@ export class ContactDialogComponent implements OnInit {
         NATIONALIDENTITYCOUNTRY: this.f.NATIONALIDENTITYCOUNTRY.value,
         FAMILYCOURTLAWYERNO: this.f.FAMILYCOURTLAWYERNO.value,
         NOTES: this.f.NOTES.value,
-
-
       }
-
-
       if (this.action !== 'edit') {
-
         this.addcontact.AddContactData(details);
-
-      }
-      else {
-        //let getContactGuId = localStorage.getItem('contactGuid');
+      } else {
         this.Contact.UpdateContact(details);
       }
-      //this.dialogRef.close(details);
-
-      localStorage.removeItem('DATEOFBIRTH');
-      localStorage.removeItem('DATEOFDEATH');
-
-
     }
+    this.isspiner = false;
   }
 
 }

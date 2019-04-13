@@ -348,7 +348,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     logOutUser() {
         this.authenticationService.logout();
-        localStorage.removeItem('contactGuid');
     }
     navBarSetting(value: any) {
         let x = value.split("/");

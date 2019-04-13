@@ -1,8 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { TimersService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
+import * as $ from 'jquery';
 
 
 @Component({
@@ -10,7 +11,8 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './time-entry-dialog.component.html',
   styleUrls: ['./time-entry-dialog.component.scss']
 })
-export class TimeEntryDialogComponent implements OnInit {
+export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
+
   private exportTime = { hour: 7, minute: 15, meriden: 'PM', format: 24 };
 
 
@@ -34,6 +36,9 @@ export class TimeEntryDialogComponent implements OnInit {
     }, err => {
       this.toastr.error(err);
     });
+  }
+  ngAfterViewInit(): void {
+    $('#time_Control').attr('placeholder', 'Select time');
   }
   onChangeHour(event) {
     console.log('event', event);

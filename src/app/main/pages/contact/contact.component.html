@@ -1,11 +1,15 @@
 <div id="contact" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
-        <div fxLayoutAlign="center" class="content">
-            <div class="center p-24" fusePerfectScrollbar>
-                <div class="content">
-                    <div class="btn top_right_action_billing">
-                        <button mat-icon-button (click)="openDialog()" aria-label="More">
+    <div fxLayoutAlign="center" class="content">
+        <div class="center p-24" fusePerfectScrollbar>
+            <div class="content">
+                <div class="btn top_right_action_billing">
+                    <button mat-icon-button (click)="openDialog()" aria-label="More">
                             <mat-icon class="secondary-text">more_vert</mat-icon>
                         </button>
+                </div>
+                <div class="example-containerdata">
+                    <div class="example-loading-shade" *ngIf="isLoadingResults">
+                        <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                     </div>
                     <div class="example-containerdata">
                         <mat-table #table [dataSource]="Contactdata" [@animateStagger]="{value:'50'}">
@@ -14,7 +18,7 @@
                                 <mat-cell *matCellDef="let row">{{row.CONTACTGUID}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Company Contactguid">
-                                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm class="header_title">companycontact guid</mat-header-cell>
+                                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm class="header_title">company contact guid</mat-header-cell>
                                 <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.COMPANYCONTACTGUID}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Contact Type">
@@ -56,7 +60,7 @@
                             <ng-container matColumnDef="Family Name">
                                 <mat-header-cell *matHeaderCellDef class="header_title"> family name </mat-header-cell>
                                 <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.FAMILYNAME}}</mat-cell>
-                            </ng-container> 
+                            </ng-container>
                             <ng-container matColumnDef="Name Letters">
                                 <mat-header-cell *matHeaderCellDef class="header_title">name letters</mat-header-cell>
                                 <mat-cell *matCellDef="let row">{{row.NAMELETTERS}}</mat-cell>
@@ -80,7 +84,7 @@
                             <ng-container matColumnDef="Marital Status">
                                 <mat-header-cell *matHeaderCellDef class="header_title"> marital status </mat-header-cell>
                                 <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.maritalstatus}}</mat-cell>
-                            </ng-container> 
+                            </ng-container>
                             <ng-container matColumnDef="Spouse">
                                 <mat-header-cell *matHeaderCellDef class="header_title">spouse</mat-header-cell>
                                 <mat-cell *matCellDef="let row">{{row.SPOUSE}}</mat-cell>
@@ -104,13 +108,14 @@
                             <ng-container matColumnDef="Birthday Reminder">
                                 <mat-header-cell *matHeaderCellDef class="header_title"> birthday reminder </mat-header-cell>
                                 <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.BIRTHDAYREMINDER}}</mat-cell>
-                            </ng-container> 
+                            </ng-container>
                             <ng-container matColumnDef="Townof Birth">
                                 <mat-header-cell *matHeaderCellDef class="header_title"> townof birth </mat-header-cell>
                                 <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.TOWNOFBIRTH}}</mat-cell>
-                            </ng-container>  
+                            </ng-container>
                             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                            <mat-row [style.background]="highlightedRows == row.CONTACTGUID ? selectedColore : ''" highlightedRows=row.CONTACTGUID *matRowDef="let row; columns: displayedColumns;" (click)="editContact(row.CONTACTGUID);highlightedRows = row.CONTACTGUID " matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                            <mat-row [style.background]="highlightedRows == row.CONTACTGUID ? selectedColore : ''" highlightedRows=row.CONTACTGUID *matRowDef="let row; columns: displayedColumns;" (click)="editContact(row.CONTACTGUID);highlightedRows = row.CONTACTGUID " matRipple
+                                [@animate]="{value:'*',params:{y:'100%'}}">
                             </mat-row>
                         </mat-table>
                     </div>
@@ -119,3 +124,4 @@
             </div>
         </div>
     </div>
+</div>

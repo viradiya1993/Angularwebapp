@@ -16,11 +16,13 @@ export class ReceiptsCreditsComponent implements OnInit {
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   displayedColumns: string[] = ['Income Code', 'Income Guid', 'Income Class', 'Income Type', 'Firmguid', 'Short Name', 'Client Name', 'Allocation', 'Income Date', 'Payee', 'Amount', 'Gst', 'Total', 'Bank AccountGuid', 'Income AccountGuid', 'Note'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  isLoadingResults: boolean = false;
   constructor(private dialog: MatDialog, private ReceiptsCredits: ReceiptsCreditsService, private toastr: ToastrService) { }
 
   ReceiptsCreditsdata;
   ngOnInit() {
     //API Data fetch
+    this.isLoadingResults = true;
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
     this.ReceiptsCredits.ReceiptsCreditsData(potData).subscribe(res => {
       if (res.Receipts.response != "error - not logged in") {
@@ -30,6 +32,7 @@ export class ReceiptsCreditsComponent implements OnInit {
       } else {
         this.toastr.error(res.Receipts.response);
       }
+      this.isLoadingResults = false;
     },
       err => {
         this.toastr.error(err);
@@ -38,6 +41,7 @@ export class ReceiptsCreditsComponent implements OnInit {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
+    dialogConfig.disableClose = true;
     dialogConfig.data = { 'data': ['Income Code', 'Income Guid', 'Income Class', 'Income Type', 'Firmguid', 'Short Name', 'Client Name', 'Allocation', 'Income Date', 'Payee', 'Amount', 'Gst', 'Total', 'Bank AccountGuid', 'Income AccountGuid', 'Note'], 'type': 'receipts-credits' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);

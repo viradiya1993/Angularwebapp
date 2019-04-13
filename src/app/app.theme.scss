@@ -311,7 +311,6 @@
         box-shadow: none;
     }
     
-    body.theme-default .mat-progress-spinner circle,
     body.theme-default .mat-spinner circle {
         stroke: #572b82 !important;
     }
@@ -319,4 +318,17 @@
     body.theme-yellow-light .mat-progress-spinner circle,
     body.theme-yellow-light .mat-spinner circle {
         stroke: #43a047 !important;
+    }
+    
+    .example-loading-shade {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0px;
+        right: 0;
+        background: rgba(0, 0, 0, 0.15);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }

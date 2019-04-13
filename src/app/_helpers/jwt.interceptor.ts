@@ -18,20 +18,13 @@ export class JwtInterceptor implements HttpInterceptor {
                 if (typeof request.body == 'object') {
                     request.body.SessionToken = localStorage.getItem('session_token');
                     request.body.apikey = environment.APIKEY;
+                    request.body.formatting = 'JSON';
                     request.body;
                 }
             } else if (request.method.toLowerCase() === 'get') {
                 request = request.clone({
-                    setHeaders: {
-                        // apikey: `SNGMTUEEB2AJBFC9`
-                    },
                     params: request.params.set('SessionToken', localStorage.getItem('session_token'))
                 });
-            }
-        } else {
-            if (typeof request.body == 'object') {
-                request.body.apikey = environment.APIKEY;
-                request.body;
             }
         }
         return next.handle(request);

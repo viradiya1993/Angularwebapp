@@ -28,6 +28,9 @@
                             </button>
                         </div>
                         <div class="example-containerdata">
+                            <div class="example-loading-shade" *ngIf="isLoadingResults">
+                                <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+                            </div>
                             <mat-table #table [dataSource]="filenotes_table" [@animateStagger]="{value:'50'}">
                                 <ng-container matColumnDef="FILENOTEGUID">
                                     <mat-header-cell class="header_title" *matHeaderCellDef>file note guid</mat-header-cell>

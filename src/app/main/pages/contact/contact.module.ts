@@ -12,7 +12,7 @@ import { ContactComponent } from './contact.component';
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 
 
-import { MatDialogModule, MatTabsModule, MatPaginatorModule, MatButtonModule, MatSelectModule, MatCardModule, MatSlideToggleModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule } from '@angular/material';
+import { MatDialogModule, MatTabsModule, MatPaginatorModule, MatProgressSpinnerModule, MatButtonModule, MatSelectModule, MatCardModule, MatSlideToggleModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule } from '@angular/material';
 import { ContactDialogComponent } from './contact-dialog/contact-dialog.component';
 
 import { PersonComponent } from './contact-dialog/person/person.component';
@@ -64,6 +64,7 @@ const routes = [
     MatSlideToggleModule,
     MatCardModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
     MatPaginatorModule,
     ScrollDispatchModule,
     MatTabsModule,
@@ -73,7 +74,8 @@ const routes = [
     FuseConfirmDialogModule,
     FuseSidebarModule,
     SatDatepickerModule,
-    SatNativeDateModule
+    SatNativeDateModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     ContactComponent

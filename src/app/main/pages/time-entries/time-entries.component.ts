@@ -17,7 +17,7 @@ import { DatePipe } from '@angular/common'
 })
 export class TimeEntriesComponent implements OnInit {
   TimeEnrtyForm: FormGroup;
-
+  isLoadingResults: boolean = false;
   displayedColumns: string[] = ['date', 'matter', 'description', 'quantity', 'price_ex', 'price_inc', 'invoice_no'];
   TimerData;
   TimerDropData: any;
@@ -62,15 +62,15 @@ export class TimeEntriesComponent implements OnInit {
     return this.TimeEnrtyForm.controls;
   }
   LoadData(Data) {
-    this.Timersservice.getTimeEnrtyData(Data).subscribe(res => {
-      if (res.WorkItems.response != "error - not logged in") {
-        localStorage.setItem('session_token', res.WorkItems.SessionToken);
-        this.TimerData = new MatTableDataSource(res.WorkItems.DataSet)
+    this.isLoadingResults = true;
+    this.Timersservice.getTimeEnrtyData(Data).subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        this.TimerData = new MatTableDataSource(response.DATA.WORKITEMS)
         this.TimerData.paginator = this.paginator
-      } else {
-        this.toastr.error(res.WorkItems.response);
       }
+      this.isLoadingResults = false;
     }, err => {
+      this.isLoadingResults = false;
       this.toastr.error(err);
     });
   }
@@ -116,6 +116,7 @@ export class TimeEntriesComponent implements OnInit {
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
+    dialogConfig.disableClose = true;
     dialogConfig.data = { 'data': ['date', 'matter', 'description', 'quantity', 'price_ex', 'price_inc', 'invoice_no'], 'type': 'estimate' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);

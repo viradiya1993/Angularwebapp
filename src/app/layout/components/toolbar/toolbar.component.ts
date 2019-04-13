@@ -102,11 +102,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                     });
                 } 
         },
-        err => {
-            this.toastr.error(err);
-        });
+            err => {
+                this.toastr.error(err);
+            });
     }
- 
+
 
     //for binding
 
@@ -122,10 +122,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.prevMatterArray = [];
         if (localStorage.getItem(this.timerId)) {
             let timerObj = JSON.parse(localStorage.getItem(this.timerId));
+            clearTimeout(this.timerInterval);
             timerObj.forEach(items => {
                 this.prevMatterArray.push({ 'matter_id': items.matter_id, 'time': this.secondsToHms(items.time), 'isStart': items.isStart });
                 if (localStorage.getItem('start_' + items.matter_id) && items.isStart) {
-                    this.stopTimer();
                     this.currentTimer = localStorage.getItem('start_' + items.matter_id);
                     this.startTimer(items.matter_id);
                 }
@@ -147,6 +147,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         return hours + ":" + minutes + ":" + seconds;
     }
     stopMatterBack(matterId: any) {
+        clearTimeout(this.timerInterval);
         let tempArray: any[] = []
         let timerObj = JSON.parse(localStorage.getItem(this.timerId));
         timerObj.forEach(items => {
@@ -154,7 +155,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 items.isStart = false;
                 items.time = this.currentTimer;
                 tempArray.push(items);
-                this.stopTimer();
                 localStorage.removeItem('start_' + items.matter_id);
             } else {
                 tempArray.push(items);
@@ -166,17 +166,18 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.displayMattterList();
     }
     startMatterBack(matterId: any) {
+        clearTimeout(this.timerInterval);
+        this.currentTimer = 0;
         let tempArray: any[] = []
         let timerObj = JSON.parse(localStorage.getItem(this.timerId));
         timerObj.forEach(items => {
             if (items.isStart) {
                 items.isStart = false;
-                items.time = this.currentTimer;
+                items.time = localStorage.getItem('start_' + items.matter_id);
                 tempArray.push(items);
                 localStorage.removeItem('start_' + items.matter_id);
-                this.stopTimer();
             } else if (items.matter_id === matterId) {
-                this.currentTimer = 0;
+                this.currentTimerHMS = this.secondsToHms(items.time);
                 items.isStart = true;
                 tempArray.push(items);
                 localStorage.setItem('start_' + items.matter_id, items.time);
@@ -208,9 +209,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //*----**************************************time enrt add start***************************************
     public addNewTimeEntry(Data: any) {
-        const dialogRef = this.dialog.open(TimeEntryDialogComponent, {
-            width: '50%'
-        });
+        const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '50%', disableClose: true });
         dialogRef.afterClosed().subscribe(result => {
             console.log(`addNewTimeEntry result: ${result}`);
 
@@ -221,7 +220,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     // for new contact dialog
     AddContactsDialog() {
         const dialogRef = this.dialog.open(ContactDialogComponent, {
-
+            disableClose: true,
             panelClass: 'contact-dialog',
             data: {
                 action: 'new'
@@ -240,39 +239,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     //client details from matter
     ClientDetailsDialog() {
         let getMatterContactGuId = JSON.parse(localStorage.getItem('set_active_matters'));
+        if (getMatterContactGuId.CONTACTGUID == "") {
+
+        }
         // let getMatterContactGuId= localStorage.getItem('set_active_matters');
         let getmatguid = getMatterContactGuId.CONTACTGUID;
-
-        //    this._getContact.getContact(getmatguid).subscribe(res => {
-        //     this.getContactData = res.CONTACT.DATASET[0];
-        //     console.log(this.getContactData);
-        //     const dialogRef = this.dialog.open(ContactDialogComponent, {
-
-        //         data: {
-        //             contact: this.getContactData,-   
-        //             action: 'edit'
-        //         }
-        //     });
-        //     dialogRef.afterClosed().subscribe(result => {
-
-
-        //         console.log(result);
-
-        //     });
-        // });
-        // console.log(this.getmatguid);
-    }
-
-    //edit Contact diloage
-    EditContactsDialog() {
-
-        //get value from localstrorage
-        let getContactGuId = localStorage.getItem('contactGuid');
-        this._getContact.getContact(getContactGuId).subscribe(res => {
-            this.getContactData = res.CONTACT.DATASET[0];
-            console.log(this.getContactData);
+        let contactguidforbody = { CONTACTGUID: getmatguid }
+        this._getContact.getContact(contactguidforbody).subscribe(res => {
+            this.getContactData = res.DATA.CONTACTS[0];
             const dialogRef = this.dialog.open(ContactDialogComponent, {
-
+                disableClose: true,
                 data: {
                     contact: this.getContactData,
                     action: 'edit'
@@ -287,27 +263,34 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
 
 
-        //const dialogRef = this.dialog.open(ContactDialogComponent, this.getContactData);
-        //    console.log(this.getContactData);
-        //         const dialogRef = this.dialog.open(ContactDialogComponent,{
-
-        //             data      : {
-        //                 contact:this.getContactData,
-        //                 action : 'edit'
-        //             }
-        //         });
-        //         dialogRef.afterClosed().subscribe(result => {
-
-
-        //             console.log(result);
-
-        //         });
     }
-    // for new Corres Details dialog
+
+    //edit Contact diloage
+    EditContactsDialog() {
+        //get value from localstrorage
+        if (!localStorage.getItem('contactGuid')) {
+            this.toastr.error("Please Select Contact");
+        } else {
+            const dialogRef = this.dialog.open(ContactDialogComponent, {
+                disableClose: true,
+                data: { action: 'edit' }
+            });
+            dialogRef.afterClosed().subscribe(result => { });
+        }
+
+    }
+
     openCorresDialog() {
-        const dialogConfig = new MatDialogConfig();
-        dialogConfig.width = '50%';
-        const dialogRef = this.dialog.open(ContactCorresDetailsComponent, dialogConfig);
+        //const dialogConfig = new MatDialogConfig();
+        //dialogConfig.width = '50%';
+        let getMatterGuId = JSON.parse(localStorage.getItem('set_active_matters'));
+        let getmatguid = getMatterGuId.MATTERGUID;
+        //console.log(getmatguid);
+        const dialogRef = this.dialog.open(ContactCorresDetailsComponent, {
+            disableClose: true,
+            width: '50%',
+            data: getmatguid,
+        });
         dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialog result: ${result}`);
         });
@@ -319,10 +302,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.width = '40%';
         const dialogRef = this.dialog.open(ReportsComponent, {
-                width:'40%',
-                data:ReportData,
-            });
-        
+            width: '40%',
+            data: ReportData,
+        });
+
         dialogRef.afterClosed().subscribe(result => {
             //console.log(`ReportsComponent result: ${result}`);
         });
@@ -342,7 +325,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
             let getContactGuId = localStorage.getItem('contactGuid');
             let abc = {
-                CONTACTGUID: getContactGuId,
                 FormAction: "delete"
             }
 
@@ -367,11 +349,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     logOutUser() {
         this.authenticationService.logout();
-        localStorage.removeItem('contactGuid');
     }
     navBarSetting(value: any) {
         let x = value.split("/");
-        // console.log(x[1]);
         if (x[1] == "matters" || x[1] == "") {
             this.isTabShow = 1;
         } else if (x[1] == "contact") {

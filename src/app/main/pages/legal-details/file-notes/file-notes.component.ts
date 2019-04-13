@@ -15,49 +15,43 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class FileNotesComponent implements OnInit {
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
-  displayedColumns: string[] = ['FILENOTEGUID', 'MATTERGUID', 'USERNAME','Date', 'Time', 'Note','SHORTNAME','CONTACTNAME'];
-  
+  displayedColumns: string[] = ['FILENOTEGUID', 'MATTERGUID', 'USERNAME', 'Date', 'Time', 'Note', 'SHORTNAME', 'CONTACTNAME'];
+  isLoadingResults: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog,private fileNotes_service: FileNotesService,private toastr: ToastrService) { }
+  constructor(private dialog: MatDialog, private fileNotes_service: FileNotesService, private toastr: ToastrService) { }
   filenotes_table;
   ngOnInit() {
-    
-      //get autorites
-      let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
-      this.fileNotes_service.getData(potData).subscribe(response => {
-        localStorage.setItem('session_token',response.FileNote.SessionToken);
-        //this.filenotes_table = response;
-         this.filenotes_table = response.FileNote.DataSet;
-      
-        console.log( this.filenotes_table);
-        if (response.filenotes_table.response != "error - not logged in") {
-          this.filenotes_table = new MatTableDataSource(response.Chronology.DataSet);
-          this.filenotes_table.paginator = this.paginator;
-        } else {
-          this.toastr.error(response.FileNote.response);
-        }
-        //this.filenotes_table = new MatTableDataSource<PeriodicElement>(response.FileNote.DataSet);
-        //this.filenotes_table.paginator = this.paginator;
-
-      },
-      error => {
-        this.toastr.error(error);
+    this.isLoadingResults = true;
+    //get autorites
+    let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
+    this.fileNotes_service.getData(potData).subscribe(response => {
+      localStorage.setItem('session_token', response.FileNote.SessionToken);
+      if (response.FileNote.response != "error - not logged in" && response.FileNote.response != "error - Matter Guid is required") {
+        this.filenotes_table = new MatTableDataSource(response.FileNote.DataSet);
+        this.filenotes_table.paginator = this.paginator;
+      } else {
+        this.toastr.error(response.FileNote.response);
       }
-    );
+      this.isLoadingResults = false;
+    }, error => {
+      this.toastr.error(error);
+    });
+    this.isLoadingResults = false;
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
-    dialogConfig.data = { 'data': ['FILENOTEGUID', 'MATTERGUID', 'USERNAME','Date', 'Time', 'Note','SHORTNAME','CONTACTNAME'], 'type': 'file-notes' };
+    dialogConfig.disableClose = true;
+    dialogConfig.data = { 'data': ['FILENOTEGUID', 'MATTERGUID', 'USERNAME', 'Date', 'Time', 'Note', 'SHORTNAME', 'CONTACTNAME'], 'type': 'file-notes' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
     dialogRef.afterClosed().subscribe(result => {
       //console.log(result);
-      if(result){
-        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result)); 
-       }
+      if (result) {
+        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result));
+      }
     });
     dialogRef.afterClosed().subscribe(data =>
       this.tableSetting(data)

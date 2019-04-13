@@ -17,59 +17,59 @@ import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 
 
 
-import {MatDialogModule,MatTabsModule,MatPaginatorModule,MatButtonModule, MatSelectModule, MatCardModule, MatSlideToggleModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule } from '@angular/material';
+import { MatDialogModule, MatTabsModule, MatProgressSpinnerModule, MatPaginatorModule, MatButtonModule, MatSelectModule, MatCardModule, MatSlideToggleModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule } from '@angular/material';
 
 import { TimeEntryDialogComponent } from './time-entry-dialog/time-entry-dialog.component';
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 
 const routes = [
-    { path: '', component: TimeEntriesComponent, canActivate: [AuthGuard] }
-  ];
-  
-  @NgModule({
-    declarations: [
-        TimeEntriesComponent,
-        TimeEntryDialogComponent,
-        // SatDatepickerModule,
-    ],
-    imports: [
-      CommonModule,
-      RouterModule.forChild(routes),
-      FuseSharedModule,
-      //mat import
-      MatButtonModule,
-      MatCheckboxModule,
-      MatDatepickerModule,
-      MatFormFieldModule,
-      MatIconModule,
-      MatInputModule,
-      MatMenuModule,
-      MatRippleModule,
-      MatTableModule,
-      MatToolbarModule,
-      MatSlideToggleModule,
-      MatCardModule,
-      MatSelectModule,
-      MatPaginatorModule,
-      MatTabsModule,
-      MatDialogModule,
-  
-      FuseSharedModule,
-      FuseConfirmDialogModule,
-      FuseSidebarModule,
-      SatDatepickerModule, SatNativeDateModule,
-     
-      MaterialTimePickerModule
-    ],
-    providers: [
-        // {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-        // {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
-    ],
-    entryComponents: [TimeEntryDialogComponent],
+  { path: '', component: TimeEntriesComponent, canActivate: [AuthGuard] }
+];
 
-    exports: [
-        TimeEntriesComponent
-    ],
-  })
-  export class TimeEntriesModule { }
-  
+@NgModule({
+  declarations: [
+    TimeEntriesComponent,
+    TimeEntryDialogComponent,
+    // SatDatepickerModule,
+  ],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    FuseSharedModule,
+    //mat import
+    MatButtonModule,
+    MatCheckboxModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatMenuModule,
+    MatRippleModule,
+    MatTableModule,
+    MatToolbarModule,
+    MatSlideToggleModule,
+    MatCardModule,
+    MatSelectModule,
+    MatPaginatorModule,
+    MatTabsModule,
+    MatDialogModule,
+    MatProgressSpinnerModule,
+
+    FuseSharedModule,
+    FuseConfirmDialogModule,
+    FuseSidebarModule,
+    SatDatepickerModule, SatNativeDateModule,
+
+    MaterialTimePickerModule
+  ],
+  providers: [
+    // {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    // {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+  ],
+  entryComponents: [TimeEntryDialogComponent],
+
+  exports: [
+    TimeEntriesComponent
+  ],
+})
+export class TimeEntriesModule { }

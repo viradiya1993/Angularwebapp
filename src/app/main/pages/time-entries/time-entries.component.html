@@ -34,6 +34,9 @@
                         <mat-icon class="secondary-text">more_vert</mat-icon>
                         </button>
                 </div>
+                <div class="example-loading-shade" *ngIf="isLoadingResults">
+                    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+                </div>
                 <mat-table #table [dataSource]="TimerData" [@animateStagger]="{value:'50'}">
                     <ng-container matColumnDef="date">
                         <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>

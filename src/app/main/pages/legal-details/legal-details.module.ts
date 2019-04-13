@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { AuthGuard } from '../../../_guards';
 
-import { MatButtonModule, MatPaginatorModule, MatCheckboxModule, MatTabsModule, MatExpansionModule, MatSlideToggleModule, MatCardModule, MatSelectModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule } from '@angular/material';
+import { MatButtonModule, MatProgressSpinnerModule, MatPaginatorModule, MatCheckboxModule, MatTabsModule, MatExpansionModule, MatSlideToggleModule, MatCardModule, MatSelectModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule } from '@angular/material';
 
 import { LegalDetailsComponent } from './legal-details.component';
 import { ChronologyComponent } from './chronology/chronology.component';
@@ -40,6 +40,7 @@ const routes = [
     MatInputModule,
     MatMenuModule,
     MatRippleModule,
+    MatProgressSpinnerModule,
     MatTableModule,
     MatToolbarModule,
     MatSelectModule,

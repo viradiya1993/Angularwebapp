@@ -28,6 +28,9 @@
                             </button>
                         </div>
                         <div class="example-containerdata">
+                            <div class="example-loading-shade" *ngIf="isLoadingResults">
+                                <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+                            </div>
                             <mat-table #table [dataSource]="ReceiptsCreditsdata" [@animateStagger]="{value:'50'}">
                                 <ng-container matColumnDef="Income Code">
                                     <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm class="header_title">income code</mat-header-cell>

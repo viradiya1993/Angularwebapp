@@ -294,7 +294,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
 
-    deleteContact(contact): void {
+    deleteContact(): void {
 
 
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
@@ -308,7 +308,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
             let getContactGuId = localStorage.getItem('contactGuid');
             let abc = {
-                FormAction: "delete"
+                FormAction: "delete",
+                CONTACTGUID:getContactGuId
             }
 
             this._getContact.deleteContact(abc);

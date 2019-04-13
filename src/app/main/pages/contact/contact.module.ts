@@ -23,7 +23,7 @@ import { OtherComponent } from './contact-dialog/other/other.component';
 
 import { FormsModule } from '@angular/forms';
 import { CompanyComponent } from './contact-dialog/company/company.component';
-import { MattersComponent } from './contact-dialog/matters/matters.component';
+
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { ContactCorresDetailsComponent } from './contact-corres-details/contact-corres-details.component';
 
@@ -42,7 +42,7 @@ const routes = [
     IdComponent,
     OtherComponent,
     CompanyComponent,
-    MattersComponent,
+
     ContactCorresDetailsComponent,
 
   ],

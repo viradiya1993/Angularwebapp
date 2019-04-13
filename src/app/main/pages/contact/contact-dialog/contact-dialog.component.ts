@@ -253,7 +253,7 @@ export class ContactDialogComponent implements OnInit {
     //for edit contactGuid
     this.contactguid = this.action !== 'edit' ? "" : localStorage.getItem('getContact_edit');
     //for checkbox
-    this.check = this.f.ACTIVE.value == true ? "" : "0";
+    this.check = this.f.ACTIVE.value == true ? "1" : "0";
     this.postknowbyothername = this.f.KNOWNBYOTHERNAME.value == true ? "1" : "0";
     this.postbirthdayreminder = this.f.BIRTHDAYREMINDER.value == true ? "1" : "0";
     this.postsameasstreet = this.f.SAMEASSTREET.value == true ? "1" : "0";

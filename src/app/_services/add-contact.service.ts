@@ -10,8 +10,7 @@ export class AddContactService {
   constructor(private http: HttpClient) { }
 
   AddContactData(val) {
-    this.http.post(environment.APIEndpoint + 'SetContact', val)
-      .subscribe(res => console.log(res));
+    return this.http.post<any>(environment.APIEndpoint + 'SetContact', val);
   }
 
 }

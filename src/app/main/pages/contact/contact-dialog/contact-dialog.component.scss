@@ -1,11 +1,12 @@
 body.theme-default .mat-dialog-container {
     padding: 0;
 }
-//user 2
 
+//user 2
 body.theme-yellow-light .mat-dialog-container {
     padding: 0;
 }
+
 // .popup_title_div {
 //     padding: 24px;
 //     background-color: #303540;
@@ -78,7 +79,19 @@ mat-icon.close_icon.mat-icon.material-icons.mat-icon-no-color {
     float: right;
     cursor: pointer;
 }
+
 .btn {
     float: right;
 }
 
+mat-dialog-actions {
+    mat-spinner {
+        zoom: 0.2;
+        position: absolute;
+        right: 0;
+        left: 0;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+    }
+}

@@ -38,9 +38,9 @@ export class ContactDialogComponent implements OnInit {
   common: Common[];
   nameSelected: string;
   value: number;
-  loginForm: FormGroup;
+  contactForm: FormGroup;
   ngOnInit() {
-    this.loginForm = this._formBuilder.group({
+    this.contactForm = this._formBuilder.group({
       //CONTACTGUID: ['', Validators.required],
       ContactName: ['', Validators.required],
       CONTACTTYPE: ['', Validators.required],
@@ -129,103 +129,103 @@ export class ContactDialogComponent implements OnInit {
         this.birthdayreminder = getContactData.BIRTHDAYREMINDER == 0 ? false : true;
 
         if (getContactData.SAMEASSTREET == 1) {
-          this.loginForm.get('POSTALADDRESS1').disable();
-          this.loginForm.get('POSTALADDRESS2').disable();
-          this.loginForm.get('POSTALADDRESS3').disable();
-          this.loginForm.get('POSTALSUBURB').disable();
-          this.loginForm.get('POSTALSTATE').disable();
-          this.loginForm.get('POSTALPOSTCODE').disable();
-          this.loginForm.get('POSTALCOUNTRY').disable();
+          this.contactForm.get('POSTALADDRESS1').disable();
+          this.contactForm.get('POSTALADDRESS2').disable();
+          this.contactForm.get('POSTALADDRESS3').disable();
+          this.contactForm.get('POSTALSUBURB').disable();
+          this.contactForm.get('POSTALSTATE').disable();
+          this.contactForm.get('POSTALPOSTCODE').disable();
+          this.contactForm.get('POSTALCOUNTRY').disable();
           this.samesstreet = true;
         } else {
-          this.loginForm.get('POSTALADDRESS1').enable();
-          this.loginForm.get('POSTALADDRESS2').enable();
-          this.loginForm.get('POSTALADDRESS3').enable();
-          this.loginForm.get('POSTALSUBURB').enable();
-          this.loginForm.get('POSTALSTATE').enable();
-          this.loginForm.get('POSTALPOSTCODE').enable();
-          this.loginForm.get('POSTALCOUNTRY').enable();
+          this.contactForm.get('POSTALADDRESS1').enable();
+          this.contactForm.get('POSTALADDRESS2').enable();
+          this.contactForm.get('POSTALADDRESS3').enable();
+          this.contactForm.get('POSTALSUBURB').enable();
+          this.contactForm.get('POSTALSTATE').enable();
+          this.contactForm.get('POSTALPOSTCODE').enable();
+          this.contactForm.get('POSTALCOUNTRY').enable();
           this.samesstreet = false;
         }
 
 
-        //this.loginForm.controls['CONTACTGUID'].setValue(getContactData.CONTACTGUID);
-        this.loginForm.controls['ContactName'].setValue(getContactData.CONTACTNAME);
-        this.loginForm.controls['CONTACTTYPE'].setValue(getContactData.CONTACTTYPE);
-        this.loginForm.controls['COMPANYNAME'].setValue(getContactData.COMPANYNAME);
-        this.loginForm.controls['POSITION'].setValue(getContactData.POSITION);
+        //this.contactForm.controls['CONTACTGUID'].setValue(getContactData.CONTACTGUID);
+        this.contactForm.controls['ContactName'].setValue(getContactData.CONTACTNAME);
+        this.contactForm.controls['CONTACTTYPE'].setValue(getContactData.CONTACTTYPE);
+        this.contactForm.controls['COMPANYNAME'].setValue(getContactData.COMPANYNAME);
+        this.contactForm.controls['POSITION'].setValue(getContactData.POSITION);
 
-        //this.loginForm.controls['ACTIVE'].setValue(getContactData.ACTIVE);
-        this.loginForm.controls['ACTIVE'].setValue(this.active);
+        //this.contactForm.controls['ACTIVE'].setValue(getContactData.ACTIVE);
+        this.contactForm.controls['ACTIVE'].setValue(this.active);
 
-        this.loginForm.controls['GIVENNAMES'].setValue(getContactData.GIVENNAMES);
-        this.loginForm.controls['NAMETITLE'].setValue(getContactData.NAMETITLE);
-        this.loginForm.controls['MIDDLENAMES'].setValue(getContactData.MIDDLENAMES);
-        this.loginForm.controls['NAMELETTERS'].setValue(getContactData.NAMELETTERS);
-        this.loginForm.controls['FAMILYNAME'].setValue(getContactData.FAMILYNAME);
-        this.loginForm.controls['KNOWNBYOTHERNAME'].setValue(this.knowbyothername);
-        this.loginForm.controls['OTHERFAMILYNAME'].setValue(getContactData.OTHERFAMILYNAME);
-        this.loginForm.controls['OTHERGIVENNAMES'].setValue(getContactData.OTHERGIVENNAMES);
-        this.loginForm.controls['REASONFORCHANGE'].setValue(getContactData.REASONFORCHANGE);
+        this.contactForm.controls['GIVENNAMES'].setValue(getContactData.GIVENNAMES);
+        this.contactForm.controls['NAMETITLE'].setValue(getContactData.NAMETITLE);
+        this.contactForm.controls['MIDDLENAMES'].setValue(getContactData.MIDDLENAMES);
+        this.contactForm.controls['NAMELETTERS'].setValue(getContactData.NAMELETTERS);
+        this.contactForm.controls['FAMILYNAME'].setValue(getContactData.FAMILYNAME);
+        this.contactForm.controls['KNOWNBYOTHERNAME'].setValue(this.knowbyothername);
+        this.contactForm.controls['OTHERFAMILYNAME'].setValue(getContactData.OTHERFAMILYNAME);
+        this.contactForm.controls['OTHERGIVENNAMES'].setValue(getContactData.OTHERGIVENNAMES);
+        this.contactForm.controls['REASONFORCHANGE'].setValue(getContactData.REASONFORCHANGE);
 
 
         //other
-        this.loginForm.controls['GENDER'].setValue(getContactData.GENDER);
-        this.loginForm.controls['DATEOFBIRTH'].setValue(getContactData.DATEOFBIRTH);
+        this.contactForm.controls['GENDER'].setValue(getContactData.GENDER);
+        this.contactForm.controls['DATEOFBIRTH'].setValue(getContactData.DATEOFBIRTH);
 
-        this.loginForm.controls['MARITALSTATUS'].setValue(getContactData.MARITALSTATUS);
-        this.loginForm.controls['SPOUSE'].setValue(getContactData.SPOUSE);
-        this.loginForm.controls['NUMBEROFDEPENDANTS'].setValue(getContactData.NUMBEROFDEPENDANTS);
-        this.loginForm.controls['BIRTHDAYREMINDER'].setValue(this.birthdayreminder);
-        this.loginForm.controls['TOWNOFBIRTH'].setValue(getContactData.TOWNOFBIRTH);
-        this.loginForm.controls['COUNTRYOFBIRTH'].setValue(getContactData.COUNTRYOFBIRTH);
-        this.loginForm.controls['DATEOFDEATH'].setValue(getContactData.DATEOFDEATH);
-        this.loginForm.controls['CAUSEOFDEATH'].setValue(getContactData.CAUSEOFDEATH);
-        //this.loginForm.valueChanges.subscribe(newVal => console.log(newVal))
+        this.contactForm.controls['MARITALSTATUS'].setValue(getContactData.MARITALSTATUS);
+        this.contactForm.controls['SPOUSE'].setValue(getContactData.SPOUSE);
+        this.contactForm.controls['NUMBEROFDEPENDANTS'].setValue(getContactData.NUMBEROFDEPENDANTS);
+        this.contactForm.controls['BIRTHDAYREMINDER'].setValue(this.birthdayreminder);
+        this.contactForm.controls['TOWNOFBIRTH'].setValue(getContactData.TOWNOFBIRTH);
+        this.contactForm.controls['COUNTRYOFBIRTH'].setValue(getContactData.COUNTRYOFBIRTH);
+        this.contactForm.controls['DATEOFDEATH'].setValue(getContactData.DATEOFDEATH);
+        this.contactForm.controls['CAUSEOFDEATH'].setValue(getContactData.CAUSEOFDEATH);
+        //this.contactForm.valueChanges.subscribe(newVal => console.log(newVal))
 
         //address
-        this.loginForm.controls['ADDRESS1'].setValue(getContactData.ADDRESS1);
-        this.loginForm.controls['ADDRESS2'].setValue(getContactData.ADDRESS2);
-        this.loginForm.controls['ADDRESS3'].setValue(getContactData.ADDRESS3);
-        this.loginForm.controls['SUBURB'].setValue(getContactData.SUBURB);
-        this.loginForm.controls['STATE'].setValue(getContactData.STATE);
-        this.loginForm.controls['POSTCODE'].setValue(getContactData.POSTCODE);
-        this.loginForm.controls['COUNTRY'].setValue(getContactData.COUNTRY);
-        this.loginForm.controls['SAMEASSTREET'].setValue(this.samesstreet);
-        this.loginForm.controls['POSTALADDRESS1'].setValue(getContactData.POSTALADDRESS1);
-        this.loginForm.controls['POSTALADDRESS2'].setValue(getContactData.POSTALADDRESS2);
-        this.loginForm.controls['POSTALADDRESS3'].setValue(getContactData.POSTALADDRESS3);
-        this.loginForm.controls['POSTALSUBURB'].setValue(getContactData.POSTALSUBURB);
-        this.loginForm.controls['POSTALSTATE'].setValue(getContactData.POSTALSTATE);
-        this.loginForm.controls['POSTALPOSTCODE'].setValue(getContactData.POSTALPOSTCODE);
-        this.loginForm.controls['POSTALCOUNTRY'].setValue(getContactData.POSTALCOUNTRY);
-        this.loginForm.controls['DX'].setValue(getContactData.DX);
-        this.loginForm.controls['DXSUBURB'].setValue(getContactData.DXSUBURB);
+        this.contactForm.controls['ADDRESS1'].setValue(getContactData.ADDRESS1);
+        this.contactForm.controls['ADDRESS2'].setValue(getContactData.ADDRESS2);
+        this.contactForm.controls['ADDRESS3'].setValue(getContactData.ADDRESS3);
+        this.contactForm.controls['SUBURB'].setValue(getContactData.SUBURB);
+        this.contactForm.controls['STATE'].setValue(getContactData.STATE);
+        this.contactForm.controls['POSTCODE'].setValue(getContactData.POSTCODE);
+        this.contactForm.controls['COUNTRY'].setValue(getContactData.COUNTRY);
+        this.contactForm.controls['SAMEASSTREET'].setValue(this.samesstreet);
+        this.contactForm.controls['POSTALADDRESS1'].setValue(getContactData.POSTALADDRESS1);
+        this.contactForm.controls['POSTALADDRESS2'].setValue(getContactData.POSTALADDRESS2);
+        this.contactForm.controls['POSTALADDRESS3'].setValue(getContactData.POSTALADDRESS3);
+        this.contactForm.controls['POSTALSUBURB'].setValue(getContactData.POSTALSUBURB);
+        this.contactForm.controls['POSTALSTATE'].setValue(getContactData.POSTALSTATE);
+        this.contactForm.controls['POSTALPOSTCODE'].setValue(getContactData.POSTALPOSTCODE);
+        this.contactForm.controls['POSTALCOUNTRY'].setValue(getContactData.POSTALCOUNTRY);
+        this.contactForm.controls['DX'].setValue(getContactData.DX);
+        this.contactForm.controls['DXSUBURB'].setValue(getContactData.DXSUBURB);
 
         //ph/web
-        this.loginForm.controls['PHONE'].setValue(getContactData.PHONE);
-        this.loginForm.controls['PHONE2'].setValue(getContactData.PHONE2);
-        this.loginForm.controls['FAX'].setValue(getContactData.FAX);
-        this.loginForm.controls['FAX2'].setValue(getContactData.FAX2);
-        this.loginForm.controls['MOBILE'].setValue(getContactData.MOBILE);
-        this.loginForm.controls['EMAIL'].setValue(getContactData.EMAIL);
-        this.loginForm.controls['EMAIL2'].setValue(getContactData.EMAIL2);
-        this.loginForm.controls['ELECTRONICSERVICEEMAIL'].setValue(getContactData.ELECTRONICSERVICEEMAIL);
-        this.loginForm.controls['WEBADDRESS'].setValue(getContactData.WEBADDRESS);
-        this.loginForm.controls['SKYPEUSERNAME'].setValue(getContactData.SKYPEUSERNAME);
+        this.contactForm.controls['PHONE'].setValue(getContactData.PHONE);
+        this.contactForm.controls['PHONE2'].setValue(getContactData.PHONE2);
+        this.contactForm.controls['FAX'].setValue(getContactData.FAX);
+        this.contactForm.controls['FAX2'].setValue(getContactData.FAX2);
+        this.contactForm.controls['MOBILE'].setValue(getContactData.MOBILE);
+        this.contactForm.controls['EMAIL'].setValue(getContactData.EMAIL);
+        this.contactForm.controls['EMAIL2'].setValue(getContactData.EMAIL2);
+        this.contactForm.controls['ELECTRONICSERVICEEMAIL'].setValue(getContactData.ELECTRONICSERVICEEMAIL);
+        this.contactForm.controls['WEBADDRESS'].setValue(getContactData.WEBADDRESS);
+        this.contactForm.controls['SKYPEUSERNAME'].setValue(getContactData.SKYPEUSERNAME);
 
         //id
 
-        this.loginForm.controls['PRACTICINGCERTIFICATENO'].setValue(getContactData.PRACTICINGCERTIFICATENO);
-        this.loginForm.controls['ACN'].setValue(getContactData.ACN);
-        this.loginForm.controls['ABN'].setValue(getContactData.ABN);
-        this.loginForm.controls['TFN'].setValue(getContactData.TFN);
-        this.loginForm.controls['LICENCENO'].setValue(getContactData.LICENCENO);
-        this.loginForm.controls['LICENCECOUNTRY'].setValue(getContactData.LICENCECOUNTRY);
-        this.loginForm.controls['NATIONALIDENTITYNO'].setValue(getContactData.NATIONALIDENTITYNO);
-        this.loginForm.controls['NATIONALIDENTITYCOUNTRY'].setValue(getContactData.NATIONALIDENTITYCOUNTRY);
-        this.loginForm.controls['FAMILYCOURTLAWYERNO'].setValue(getContactData.FAMILYCOURTLAWYERNO);
-        this.loginForm.controls['NOTES'].setValue(getContactData.NOTES);
+        this.contactForm.controls['PRACTICINGCERTIFICATENO'].setValue(getContactData.PRACTICINGCERTIFICATENO);
+        this.contactForm.controls['ACN'].setValue(getContactData.ACN);
+        this.contactForm.controls['ABN'].setValue(getContactData.ABN);
+        this.contactForm.controls['TFN'].setValue(getContactData.TFN);
+        this.contactForm.controls['LICENCENO'].setValue(getContactData.LICENCENO);
+        this.contactForm.controls['LICENCECOUNTRY'].setValue(getContactData.LICENCECOUNTRY);
+        this.contactForm.controls['NATIONALIDENTITYNO'].setValue(getContactData.NATIONALIDENTITYNO);
+        this.contactForm.controls['NATIONALIDENTITYCOUNTRY'].setValue(getContactData.NATIONALIDENTITYCOUNTRY);
+        this.contactForm.controls['FAMILYCOURTLAWYERNO'].setValue(getContactData.FAMILYCOURTLAWYERNO);
+        this.contactForm.controls['NOTES'].setValue(getContactData.NOTES);
         this.isLoadingResults = false;
       });
 
@@ -244,131 +244,113 @@ export class ContactDialogComponent implements OnInit {
 
   // convenience getter for easy access to form fields
   get f() {
-    //console.log(this.loginForm);
-    return this.loginForm.controls;
+    //console.log(this.contactForm);
+    return this.contactForm.controls;
   }
   ondialogSaveClick(): void {
     this.isspiner = true;
-    if (this.f.ContactName.value == "") {
-      this.toastr.error("please enter Contact Name");
-    } else {
-      this.FormAction = this.action !== 'edit' ? 'insert' : 'update';
-      //for edit contactGuid
-      if (this.action !== 'edit') {
-        this.contactguid = " ";
-      } else {
-        this.contactguid = localStorage.getItem('getContact_edit');
-      }
-      //for checkbox
-      if (this.f.ACTIVE.value == true) {
-        this.check = "1";
-      } else {
-        this.check = "0";
-      }
-      if (this.f.KNOWNBYOTHERNAME.value == true) {
-        this.postknowbyothername = "1"
-      }
-      else {
-        this.postknowbyothername = "0"
-      }
-      if (this.f.BIRTHDAYREMINDER.value == true) {
-        this.postbirthdayreminder = "1"
-      }
-      else {
-        this.postbirthdayreminder = "0"
-      }
-      if (this.f.SAMEASSTREET.value == true) {
-        this.postsameasstreet = "1"
-      }
-      else {
-        this.postsameasstreet = "0"
-      }
-      //let abc ={ FormAction: "insert"}
-      let details = {
+    this.FormAction = this.action !== 'edit' ? 'insert' : 'update';
+    //for edit contactGuid
+    this.contactguid = this.action !== 'edit' ? "" : localStorage.getItem('getContact_edit');
+    //for checkbox
+    this.check = this.f.ACTIVE.value == true ? "" : "0";
+    this.postknowbyothername = this.f.KNOWNBYOTHERNAME.value == true ? "1" : "0";
+    this.postbirthdayreminder = this.f.BIRTHDAYREMINDER.value == true ? "1" : "0";
+    this.postsameasstreet = this.f.SAMEASSTREET.value == true ? "1" : "0";
+    //let abc ={ FormAction: "insert"}
+    let details = {
 
-        CONTACTGUID: this.contactguid,
-        FormAction: this.FormAction,
-        //CONTACTGUID:this.f.CONTACTGUID.value,
-        ContactName: this.f.ContactName.value,
-        CONTACTTYPE: this.f.CONTACTTYPE.value,
-        ACTIVE: this.check,
-        //person
-        COMPANYNAME: this.f.COMPANYNAME.value,
-        POSITION: this.f.POSITION.value,
-        GIVENNAMES: this.f.GIVENNAMES.value,
-        NAMETITLE: this.f.NAMETITLE.value,
-        MIDDLENAMES: this.f.MIDDLENAMES.value,
-        NAMELETTERS: this.f.NAMELETTERS.value,
-        FAMILYNAME: this.f.FAMILYNAME.value,
-        KNOWNBYOTHERNAME: this.postknowbyothername,
-        OTHERFAMILYNAME: this.f.OTHERFAMILYNAME.value,
-        OTHERGIVENNAMES: this.f.OTHERGIVENNAMES.value,
-        REASONFORCHANGE: this.f.REASONFORCHANGE.value,
+      CONTACTGUID: this.contactguid,
+      FormAction: this.FormAction,
+      //CONTACTGUID:this.f.CONTACTGUID.value,
+      ContactName: this.f.ContactName.value,
+      CONTACTTYPE: this.f.CONTACTTYPE.value,
+      ACTIVE: this.check,
+      //person
+      COMPANYNAME: this.f.COMPANYNAME.value,
+      POSITION: this.f.POSITION.value,
+      GIVENNAMES: this.f.GIVENNAMES.value,
+      NAMETITLE: this.f.NAMETITLE.value,
+      MIDDLENAMES: this.f.MIDDLENAMES.value,
+      NAMELETTERS: this.f.NAMELETTERS.value,
+      FAMILYNAME: this.f.FAMILYNAME.value,
+      KNOWNBYOTHERNAME: this.postknowbyothername,
+      OTHERFAMILYNAME: this.f.OTHERFAMILYNAME.value,
+      OTHERGIVENNAMES: this.f.OTHERGIVENNAMES.value,
+      REASONFORCHANGE: this.f.REASONFORCHANGE.value,
 
-        //others
-        GENDER: this.f.GENDER.value,
-        DATEOFBIRTH: localStorage.getItem('DATEOFBIRTH'),
-        MARITALSTATUS: this.f.MARITALSTATUS.value,
-        SPOUSE: this.f.SPOUSE.value,
-        NUMBEROFDEPENDANTS: this.f.NUMBEROFDEPENDANTS.value,
-        BIRTHDAYREMINDER: this.postbirthdayreminder,
-        TOWNOFBIRTH: this.f.TOWNOFBIRTH.value,
-        COUNTRYOFBIRTH: this.f.COUNTRYOFBIRTH.value,
-        DATEOFDEATH: localStorage.getItem('DATEOFDEATH'),
-        CAUSEOFDEATH: this.f.CAUSEOFDEATH.value,
+      //others
+      GENDER: this.f.GENDER.value,
+      DATEOFBIRTH: localStorage.getItem('DATEOFBIRTH'),
+      MARITALSTATUS: this.f.MARITALSTATUS.value,
+      SPOUSE: this.f.SPOUSE.value,
+      NUMBEROFDEPENDANTS: this.f.NUMBEROFDEPENDANTS.value,
+      BIRTHDAYREMINDER: this.postbirthdayreminder,
+      TOWNOFBIRTH: this.f.TOWNOFBIRTH.value,
+      COUNTRYOFBIRTH: this.f.COUNTRYOFBIRTH.value,
+      DATEOFDEATH: localStorage.getItem('DATEOFDEATH'),
+      CAUSEOFDEATH: this.f.CAUSEOFDEATH.value,
 
-        //address
-        ADDRESS1: this.f.ADDRESS1.value,
-        ADDRESS2: this.f.ADDRESS2.value,
-        ADDRESS3: this.f.ADDRESS3.value,
-        SUBURB: this.f.SUBURB.value,
-        STATE: this.f.STATE.value,
-        POSTCODE: this.f.POSTCODE.value,
-        COUNTRY: this.f.COUNTRY.value,
-        SAMEASSTREET: this.postsameasstreet,
-        POSTALADDRESS1: this.f.POSTALADDRESS1.value,
-        POSTALADDRESS2: this.f.POSTALADDRESS2.value,
-        POSTALADDRESS3: this.f.POSTALADDRESS3.value,
-        POSTALSUBURB: this.f.POSTALSUBURB.value,
-        POSTALSTATE: this.f.POSTALSTATE.value,
-        POSTALPOSTCODE: this.f.POSTALPOSTCODE.value,
-        POSTALCOUNTRY: this.f.POSTALCOUNTRY.value,
-        DX: this.f.DX.value,
-        DXSUBURB: this.f.DXSUBURB.value,
+      //address
+      ADDRESS1: this.f.ADDRESS1.value,
+      ADDRESS2: this.f.ADDRESS2.value,
+      ADDRESS3: this.f.ADDRESS3.value,
+      SUBURB: this.f.SUBURB.value,
+      STATE: this.f.STATE.value,
+      POSTCODE: this.f.POSTCODE.value,
+      COUNTRY: this.f.COUNTRY.value,
+      SAMEASSTREET: this.postsameasstreet,
+      POSTALADDRESS1: this.f.POSTALADDRESS1.value,
+      POSTALADDRESS2: this.f.POSTALADDRESS2.value,
+      POSTALADDRESS3: this.f.POSTALADDRESS3.value,
+      POSTALSUBURB: this.f.POSTALSUBURB.value,
+      POSTALSTATE: this.f.POSTALSTATE.value,
+      POSTALPOSTCODE: this.f.POSTALPOSTCODE.value,
+      POSTALCOUNTRY: this.f.POSTALCOUNTRY.value,
+      DX: this.f.DX.value,
+      DXSUBURB: this.f.DXSUBURB.value,
 
-        //ph/web
-        PHONE: this.f.PHONE.value,
-        PHONE2: this.f.PHONE2.value,
-        FAX: this.f.FAX.value,
-        FAX2: this.f.FAX2.value,
-        MOBILE: this.f.MOBILE.value,
-        EMAIL: this.f.EMAIL.value,
-        EMAIL2: this.f.EMAIL2.value,
-        ELECTRONICSERVICEEMAIL: this.f.ELECTRONICSERVICEEMAIL.value,
-        WEBADDRESS: this.f.WEBADDRESS.value,
-        SKYPEUSERNAME: this.f.SKYPEUSERNAME.value,
+      //ph/web
+      PHONE: this.f.PHONE.value,
+      PHONE2: this.f.PHONE2.value,
+      FAX: this.f.FAX.value,
+      FAX2: this.f.FAX2.value,
+      MOBILE: this.f.MOBILE.value,
+      EMAIL: this.f.EMAIL.value,
+      EMAIL2: this.f.EMAIL2.value,
+      ELECTRONICSERVICEEMAIL: this.f.ELECTRONICSERVICEEMAIL.value,
+      WEBADDRESS: this.f.WEBADDRESS.value,
+      SKYPEUSERNAME: this.f.SKYPEUSERNAME.value,
 
-        //id
-        PRACTICINGCERTIFICATENO: this.f.PRACTICINGCERTIFICATENO.value,
-        ACN: this.f.ACN.value,
-        ABN: this.f.ABN.value,
-        TFN: this.f.TFN.value,
-        LICENCENO: this.f.LICENCENO.value,
-        LICENCECOUNTRY: this.f.LICENCECOUNTRY.value,
-        NATIONALIDENTITYNO: this.f.NATIONALIDENTITYNO.value,
-        NATIONALIDENTITYCOUNTRY: this.f.NATIONALIDENTITYCOUNTRY.value,
-        FAMILYCOURTLAWYERNO: this.f.FAMILYCOURTLAWYERNO.value,
-        NOTES: this.f.NOTES.value,
-      }
-      if (this.action !== 'edit') {
-        this.addcontact.AddContactData(details);
-      } else {
-        this.Contact.UpdateContact(details);
-      }
+      //id
+      PRACTICINGCERTIFICATENO: this.f.PRACTICINGCERTIFICATENO.value,
+      ACN: this.f.ACN.value,
+      ABN: this.f.ABN.value,
+      TFN: this.f.TFN.value,
+      LICENCENO: this.f.LICENCENO.value,
+      LICENCECOUNTRY: this.f.LICENCECOUNTRY.value,
+      NATIONALIDENTITYNO: this.f.NATIONALIDENTITYNO.value,
+      NATIONALIDENTITYCOUNTRY: this.f.NATIONALIDENTITYCOUNTRY.value,
+      FAMILYCOURTLAWYERNO: this.f.FAMILYCOURTLAWYERNO.value,
+      NOTES: this.f.NOTES.value,
     }
-    this.isspiner = false;
-  }
 
+    this.addcontact.AddContactData(details).subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "OK") {
+        if (this.action !== 'edit') {
+          this.toastr.success('Save');
+        } else {
+          this.toastr.success('Update');
+        }
+        this.isspiner = false;
+        this.dialogRef.close(false);
+      } else {
+        this.isspiner = false;
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
+  }
 }
 export class Common {
   public Id: Number;

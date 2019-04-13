@@ -242,29 +242,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     ClientDetailsDialog() {
         let getMatterContactGuId = JSON.parse(localStorage.getItem('set_active_matters'));
         if (getMatterContactGuId.CONTACTGUID == "") {
-
+            this.toastr.error('CONTACTGUID not available');
+        } else {
+            localStorage.setItem('contactGuid', getMatterContactGuId.CONTACTGUID);
+            const dialogRef = this.dialog.open(ContactDialogComponent, { disableClose: true, data: { action: 'edit' } });
+            dialogRef.afterClosed().subscribe(result => { console.log(result); });
         }
-        // let getMatterContactGuId= localStorage.getItem('set_active_matters');
-        let getmatguid = getMatterContactGuId.CONTACTGUID;
-        let contactguidforbody = { CONTACTGUID: getmatguid }
-        this._getContact.getContact(contactguidforbody).subscribe(res => {
-            this.getContactData = res.DATA.CONTACTS[0];
-            const dialogRef = this.dialog.open(ContactDialogComponent, {
-                disableClose: true,
-                data: {
-                    contact: this.getContactData,
-                    action: 'edit'
-                }
-            });
-            dialogRef.afterClosed().subscribe(result => {
-
-
-                console.log(result);
-
-            });
-        });
-
-
     }
 
     //edit Contact diloage
@@ -273,11 +256,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         if (!localStorage.getItem('contactGuid')) {
             this.toastr.error("Please Select Contact");
         } else {
-            const dialogRef = this.dialog.open(ContactDialogComponent, {
-                disableClose: true,
-                data: { action: 'edit' }
-            });
-            dialogRef.afterClosed().subscribe(result => { });
+            const dialogRef = this.dialog.open(ContactDialogComponent, { disableClose: true, data: { action: 'edit' } });
+            dialogRef.afterClosed().subscribe(result => { console.log(result); });
         }
 
     }

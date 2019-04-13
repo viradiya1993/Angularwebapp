@@ -9,7 +9,7 @@ import { FormGroup } from '@angular/forms';
 export class PhComponent implements OnInit {
 
   constructor() { }
-  @Input() loginForm: FormGroup;
+  @Input() contactForm: FormGroup;
 
   ngOnInit() {
   }

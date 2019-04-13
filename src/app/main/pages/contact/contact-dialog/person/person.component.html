@@ -1,4 +1,4 @@
-<div class=" one " [formGroup]="loginForm" fxLayout="column">
+<div class=" one " [formGroup]="contactForm" fxLayout="column">
 
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -80,7 +80,7 @@
 
         <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
             <mat-label>Latters</mat-label>
-            <input name="NAMELETTERS" [formControlName]="'NAMELETTERS'" matInput >
+            <input name="NAMELETTERS" [formControlName]="'NAMELETTERS'" matInput>
             <mat-icon matSuffix class="secondary-text">latter</mat-icon>
 
         </mat-form-field>
@@ -90,7 +90,7 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
         <mat-card class="card">
-            <mat-checkbox class="" name="KNOWNBYOTHERNAME" [formControlName]="'KNOWNBYOTHERNAME'" (change)="triggerSomeEvent(loginForm)">Know by Other Name
+            <mat-checkbox class="" name="KNOWNBYOTHERNAME" [formControlName]="'KNOWNBYOTHERNAME'" (change)="triggerSomeEvent(contactForm)">Know by Other Name
             </mat-checkbox>
         </mat-card>
 

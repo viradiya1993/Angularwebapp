@@ -9,11 +9,11 @@ import { DatePipe } from '@angular/common'
 })
 export class OtherComponent implements OnInit {
 
-  common:any;
-  selectGender:any;
+  common: any;
+  selectGender: any;
   status: { Id: number; Name: string; }[];
-  constructor( public datepipe: DatePipe) { }
-  @Input() loginForm: FormGroup;
+  constructor(public datepipe: DatePipe) { }
+  @Input() contactForm: FormGroup;
 
   choosedDateOfBirth(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value, 'dd/MM/yyyy');
@@ -21,7 +21,7 @@ export class OtherComponent implements OnInit {
   }
   choosedDateOfDath(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value, 'dd/MM/yyyy');
-    localStorage.setItem('DATEOFDEATH', begin);    
+    localStorage.setItem('DATEOFDEATH', begin);
   }
 
   ngOnInit() {
@@ -42,5 +42,5 @@ export class OtherComponent implements OnInit {
       { Id: 5, Name: "De facto" },
     ];
   }
- 
+
 }

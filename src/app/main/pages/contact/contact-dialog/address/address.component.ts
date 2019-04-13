@@ -12,7 +12,7 @@ export class AddressComponent implements OnInit {
   country: string;
   isChecked: boolean = false;
   constructor() { }
-  @Input() loginForm: FormGroup;
+  @Input() contactForm: FormGroup;
   ngOnInit() {
 
     // this.common = [
@@ -35,50 +35,50 @@ export class AddressComponent implements OnInit {
     // console.log(f.value.SAMEASSTREET);
     //this.isDisabled = !this.isDisabled;
     if (f.value.SAMEASSTREET == true) {
-      let add1 = this.loginForm.get('ADDRESS1').value;
-      let add2 = this.loginForm.get('ADDRESS2').value;
-      let add3 = this.loginForm.get('ADDRESS3').value;
-      let suburb = this.loginForm.get('SUBURB').value;
-      let state = this.loginForm.get('STATE').value;
-      let postcode = this.loginForm.get('POSTCODE').value;
-      let country = this.loginForm.get('COUNTRY').value;
+      let add1 = this.contactForm.get('ADDRESS1').value;
+      let add2 = this.contactForm.get('ADDRESS2').value;
+      let add3 = this.contactForm.get('ADDRESS3').value;
+      let suburb = this.contactForm.get('SUBURB').value;
+      let state = this.contactForm.get('STATE').value;
+      let postcode = this.contactForm.get('POSTCODE').value;
+      let country = this.contactForm.get('COUNTRY').value;
 
       //FOR SET VALUE
-      this.loginForm.controls['POSTALADDRESS1'].setValue(add1);
-      this.loginForm.controls['POSTALADDRESS2'].setValue(add2);
-      this.loginForm.controls['POSTALADDRESS3'].setValue(add3);
-      this.loginForm.controls['POSTALSUBURB'].setValue(suburb);
-      this.loginForm.controls['POSTALSTATE'].setValue(state);
-      this.loginForm.controls['POSTALPOSTCODE'].setValue(postcode);
-      this.loginForm.controls['POSTALCOUNTRY'].setValue(country);
+      this.contactForm.controls['POSTALADDRESS1'].setValue(add1);
+      this.contactForm.controls['POSTALADDRESS2'].setValue(add2);
+      this.contactForm.controls['POSTALADDRESS3'].setValue(add3);
+      this.contactForm.controls['POSTALSUBURB'].setValue(suburb);
+      this.contactForm.controls['POSTALSTATE'].setValue(state);
+      this.contactForm.controls['POSTALPOSTCODE'].setValue(postcode);
+      this.contactForm.controls['POSTALCOUNTRY'].setValue(country);
 
-      this.loginForm.get('POSTALADDRESS1').disable();
-      this.loginForm.get('POSTALADDRESS2').disable();
-      this.loginForm.get('POSTALADDRESS3').disable();
-      this.loginForm.get('POSTALSUBURB').disable();
-      this.loginForm.get('POSTALSTATE').disable();
-      this.loginForm.get('POSTALPOSTCODE').disable();
-      this.loginForm.get('POSTALCOUNTRY').disable();
+      this.contactForm.get('POSTALADDRESS1').disable();
+      this.contactForm.get('POSTALADDRESS2').disable();
+      this.contactForm.get('POSTALADDRESS3').disable();
+      this.contactForm.get('POSTALSUBURB').disable();
+      this.contactForm.get('POSTALSTATE').disable();
+      this.contactForm.get('POSTALPOSTCODE').disable();
+      this.contactForm.get('POSTALCOUNTRY').disable();
     }
     else {
 
-      this.loginForm.controls['POSTALADDRESS1'].setValue("");
-      this.loginForm.controls['POSTALADDRESS2'].setValue("");
-      this.loginForm.controls['POSTALADDRESS3'].setValue("");
-      this.loginForm.controls['POSTALSUBURB'].setValue("");
-      this.loginForm.controls['POSTALSTATE'].setValue("");
-      this.loginForm.controls['POSTALPOSTCODE'].setValue("");
-      this.loginForm.controls['POSTALCOUNTRY'].setValue("");
+      this.contactForm.controls['POSTALADDRESS1'].setValue("");
+      this.contactForm.controls['POSTALADDRESS2'].setValue("");
+      this.contactForm.controls['POSTALADDRESS3'].setValue("");
+      this.contactForm.controls['POSTALSUBURB'].setValue("");
+      this.contactForm.controls['POSTALSTATE'].setValue("");
+      this.contactForm.controls['POSTALPOSTCODE'].setValue("");
+      this.contactForm.controls['POSTALCOUNTRY'].setValue("");
 
 
 
-      this.loginForm.get('POSTALADDRESS1').enable();
-      this.loginForm.get('POSTALADDRESS2').enable();
-      this.loginForm.get('POSTALADDRESS3').enable();
-      this.loginForm.get('POSTALSUBURB').enable();
-      this.loginForm.get('POSTALSTATE').enable();
-      this.loginForm.get('POSTALPOSTCODE').enable();
-      this.loginForm.get('POSTALCOUNTRY').enable();
+      this.contactForm.get('POSTALADDRESS1').enable();
+      this.contactForm.get('POSTALADDRESS2').enable();
+      this.contactForm.get('POSTALADDRESS3').enable();
+      this.contactForm.get('POSTALSUBURB').enable();
+      this.contactForm.get('POSTALSTATE').enable();
+      this.contactForm.get('POSTALPOSTCODE').enable();
+      this.contactForm.get('POSTALCOUNTRY').enable();
     }
 
 

@@ -9,7 +9,7 @@ import { FormGroup } from '@angular/forms';
 export class IdComponent implements OnInit {
 
   constructor() { }
-  @Input() loginForm: FormGroup;
+  @Input() contactForm: FormGroup;
   ngOnInit() {
   }
 

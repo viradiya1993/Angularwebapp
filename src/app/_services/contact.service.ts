@@ -28,15 +28,4 @@ export class ContactService {
       .subscribe(res => console.log(res));
   }
 
-  UpdateContact(val) {
-    this.http.post(environment.APIEndpoint + 'SetContact', val)
-      .subscribe(res => {
-        console.log(res);
-        // localStorage.setItem('refres',"yes");
-        let d = {};
-        this.ContactData(d);
-        // this.http.get<any>(environment.APIEndpoint + 'GetContact');
-      });
-  }
-
 }

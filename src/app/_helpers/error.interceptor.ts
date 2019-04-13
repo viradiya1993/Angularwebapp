@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { catchError, tap } from 'rxjs/operators';
 
 import { AuthenticationService } from '../_services';
@@ -22,6 +22,15 @@ export class ErrorInterceptor implements HttpInterceptor {
                     console.log(evt);
                     if (evt.body.CODE == 200 && (evt.body.STATUS == "success" || evt.body.RESPONSE == "success")) {
                         return true;
+                    } else if (evt.body.CODE == 200 && evt.body.STATUS != "success") {
+                        this.toasterService.error(evt.body.STATUS);
+                    } else if (evt.body.CODE == 450 && evt.body.STATUS == "error") {
+                        let bodyData = evt.body.DATA.VALIDATIONS;
+                        for (let i in bodyData) {
+                            console.log(i);
+                        }
+                        // this.toasterService.error(evt.body.STATUS);
+                        // DATA VALIDATIONS
                     } else if ((evt.body.CODE > 400 && evt.body.CODE < 499) && (evt.body.STATUS == "error" || evt.body.RESPONSE == "error")) {
                         this.toasterService.error(evt.body.MESSAGE);
                         if (evt.body.MESSAGE == "Not logged in") {

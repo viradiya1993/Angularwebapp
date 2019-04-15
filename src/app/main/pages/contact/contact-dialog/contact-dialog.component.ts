@@ -350,6 +350,7 @@ export class ContactDialogComponent implements OnInit {
     }, error => {
       this.toastr.error(error);
     });
+    localStorage.removeItem('getContact_edit');
   }
 }
 export class Common {

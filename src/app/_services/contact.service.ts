@@ -26,6 +26,8 @@ export class ContactService {
     console.log(getContactGuId);
     this.http.post(environment.APIEndpoint + 'SetContact', getContactGuId)
       .subscribe(res => console.log(res));
+      localStorage.removeItem('contactGuid');
+      
   }
 
 }

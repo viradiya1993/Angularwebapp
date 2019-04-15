@@ -25,12 +25,9 @@ export class ReceiptsCreditsComponent implements OnInit {
     this.isLoadingResults = true;
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
     this.ReceiptsCredits.ReceiptsCreditsData(potData).subscribe(res => {
-      if (res.Receipts.response != "error - not logged in") {
-        localStorage.setItem('session_token', res.Receipts.SessionToken);
-        this.ReceiptsCreditsdata = new MatTableDataSource(res.Receipts.DataSet)
+      if (res.CODE == 200 && res.STATUS == "success") {
+        this.ReceiptsCreditsdata = new MatTableDataSource(res.DATA.RECEIPTS)
         this.ReceiptsCreditsdata.paginator = this.paginator
-      } else {
-        this.toastr.error(res.Receipts.response);
       }
       this.isLoadingResults = false;
     },

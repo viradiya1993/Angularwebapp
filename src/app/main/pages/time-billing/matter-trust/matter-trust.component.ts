@@ -26,19 +26,15 @@ export class MatterTrustComponent implements OnInit {
     this.isLoadingResults = true;
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
     this.MatterTrust.MatterTrustData(potData).subscribe(res => {
-      if (res.TrustTransaction.response != "error - not logged in") {
-        localStorage.setItem('session_token', res.TrustTransaction.SessionToken);
-        this.MatterTrustdata = new MatTableDataSource(res.TrustTransaction.DataSet)
-        this.MatterTrustdata.paginator = this.paginator
-        this.isLoadingResults = false;
-      } else {
-        this.isLoadingResults = false;
-        this.toastr.error(res.TrustTransaction.response);
+      if (res.CODE == 200 && res.STATUS == "success") {
+        let TRUSTTRANSACTIONS = res.DATA.TRUSTTRANSACTIONS == null ? [] : res.DATA.TRUSTTRANSACTIONS;
+        this.MatterTrustdata = new MatTableDataSource(TRUSTTRANSACTIONS);
+        this.MatterTrustdata.paginator = this.paginator;
       }
-    },
-      err => {
-        this.toastr.error(err);
-      });
+      this.isLoadingResults = false;
+    }, err => {
+      this.toastr.error(err);
+    });
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();

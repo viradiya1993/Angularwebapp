@@ -26,12 +26,10 @@ export class FileNotesComponent implements OnInit {
     //get autorites
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
     this.fileNotes_service.getData(potData).subscribe(response => {
-      localStorage.setItem('session_token', response.FileNote.SessionToken);
-      if (response.FileNote.response != "error - not logged in" && response.FileNote.response != "error - Matter Guid is required") {
-        this.filenotes_table = new MatTableDataSource(response.FileNote.DataSet);
+      if (response.CODE == 200 && response.STATUS == "success") {
+        let FILENOTES = response.DATA.FILENOTES == null ? [] : response.DATA.FILENOTES;
+        this.filenotes_table = new MatTableDataSource(FILENOTES);
         this.filenotes_table.paginator = this.paginator;
-      } else {
-        this.toastr.error(response.FileNote.response);
       }
       this.isLoadingResults = false;
     }, error => {

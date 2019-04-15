@@ -25,14 +25,10 @@ export class EstimateComponent implements OnInit {
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
     this.isLoadingResults = true;
     this.Estimate.MatterEstimatesData(potData).subscribe(res => {
-      if (res.EstimateItem.response != "error - not logged in") {
-        localStorage.setItem('session_token', res.EstimateItem.SessionToken);
-        this.Estimatedata = new MatTableDataSource(res.EstimateItem.DataSet)
+      if (res.CODE == 200 && res.STATUS == "success") {
+        this.Estimatedata = new MatTableDataSource(res.DATA.ESTIMATES)
         this.Estimatedata.paginator = this.paginator
         this.isLoadingResults = false;
-      } else {
-        this.isLoadingResults = false;
-        this.toastr.error(res.EstimateItem.response);
       }
     }, err => {
       this.toastr.error(err);

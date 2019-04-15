@@ -42,6 +42,9 @@ export class TimeEntriesComponent implements OnInit {
       this.TimeEnrtyForm.controls['date'].setValue({ begin: Sd, end: ed });
       this.TimeEnrtyForm.controls['uninvoicedWork'].setValue(this.lastFilter.Invoiced);
       this.TimeEnrtyForm.controls['dlpdrop'].setValue(this.lastFilter.FeeEarner);
+    } else {
+      this.lastFilter = { 'FeeEarner': '', 'Invoiced': "", 'ItemDateStart': '', 'ItemDateEnd': '' };
+      localStorage.setItem('time_entries_filter', JSON.stringify(this.lastFilter));
     }
   }
 

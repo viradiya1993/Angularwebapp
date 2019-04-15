@@ -31,12 +31,9 @@ export class ChronologyComponent implements OnInit {
     //get chronology
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
     this.chronology_service.getData(potData).subscribe(response => {
-      localStorage.setItem('session_token', response.Chronology.SessionToken);
-      if (response.Chronology.response != "error - not logged in") {
-        this.chronology_table = new MatTableDataSource(response.Chronology.DataSet);
+      if (response.CODE == 200 && response.STATUS == "success") {
+        this.chronology_table = new MatTableDataSource(response.DATA.CHRONOLOGIES);
         this.chronology_table.paginator = this.paginator;
-      } else {
-        this.toastr.error(response.Chronology.response);
       }
       this.isLoadingResults = false;
     },

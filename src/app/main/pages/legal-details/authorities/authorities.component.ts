@@ -25,14 +25,14 @@ export class AuthoritiesComponent implements OnInit {
     //get autorites
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
     this.authorities_service.getData(potData).subscribe(response => {
-      localStorage.setItem('session_token', response.MatterAuthority.SessionToken);
-      this.authorities_table = new MatTableDataSource<PeriodicElement>(response.MatterAuthority.DataSet);
-      this.authorities_table.paginator = this.paginator;
+      if (response.CODE == 200 && response.STATUS == "success") {
+        this.authorities_table = new MatTableDataSource(response.DATA.MATTERAUTHORITIES);
+        this.authorities_table.paginator = this.paginator;
+      }
       this.isLoadingResults = false;
     }, err => {
-      console.log('Error occured');
-    }
-    );
+      console.log(err);
+    });
   }
   //
 
@@ -65,14 +65,3 @@ export class AuthoritiesComponent implements OnInit {
   }
 
 }
-
-//no need of this 
-export interface PeriodicElement {
-  topic: number;
-  authority: string;
-  citation: number;
-  reference: string;
-  web_address: string;
-  comment: string;
-}
-

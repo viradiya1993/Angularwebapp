@@ -10,6 +10,6 @@ export class MatterTrustService {
   constructor(private http: HttpClient) { }
 
   MatterTrustData(potData) {
-    return this.http.post<any>(environment.APIEndpoint + 'GetMatterTrustTransaction', potData);
+    return this.http.post<any>(environment.APIEndpoint + 'GetTrustTransaction', potData);
   }
 }

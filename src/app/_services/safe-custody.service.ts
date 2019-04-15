@@ -10,6 +10,6 @@ export class SafeCustodyService {
   constructor(private http: HttpClient) { }
 
   getData(potData) {
-    return this.http.post<any>(environment.APIEndpoint + 'GetMatterSafeCustody', potData);
+    return this.http.post<any>(environment.APIEndpoint + 'GetSafeCustody', potData);
   }
 }

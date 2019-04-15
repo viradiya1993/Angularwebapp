@@ -7,7 +7,7 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
-import { AuthenticationService, ReportlistService } from '../../../_services';
+import { AuthenticationService, ReportlistService, TimersService } from '../../../_services';
 import { Router } from '@angular/router';
 import { ContactDialogComponent } from './../../../main/pages/contact/contact-dialog/contact-dialog.component';
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
@@ -29,7 +29,7 @@ import { TimeEntryDialogComponent } from 'app/main/pages/time-entries/time-entry
 @Injectable()
 export class ToolbarComponent implements OnInit, OnDestroy {
     @ViewChild(TimeEntriesComponent) TimeEntrieschild: TimeEntriesComponent;
-    horizontalNavbar: boolean; isTabShow: number = 0; rightNavbar: boolean; hiddenNavbar: boolean; navigation: any; selectedLanguage: any; selectedIndex: number;
+    horizontalNavbar: boolean; isTabShow: number = 1; rightNavbar: boolean; hiddenNavbar: boolean; navigation: any; selectedLanguage: any; selectedIndex: number;
     currentUser: any; confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     //timer setting
     timerId: any;
@@ -56,7 +56,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         public _matDialog: MatDialog,
         private reportlistService: ReportlistService,
         private toastr: ToastrService,
-        public _getContact: ContactService,
+        public _getContact: ContactService, private TimersServiceI: TimersService,
     ) {
         this.navigation = navigation;
         // Set the private defaults
@@ -118,6 +118,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         /*Keep open timer box once timer added*/
         this._fuseSidebarService.getSidebar(key).toggleOpen();
     }
+    addTimerForMatter() {
+        this.TimersServiceI.addTimeEnrtS();
+    }
 
     displayMattterList() {
         this.prevMatterArray = [];
@@ -133,6 +136,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             });
         }
     }
+
     updateTimerCounter() {
         this.prevMatterArray = JSON.parse(localStorage.getItem(this.timerId));
         if (this.prevMatterArray)
@@ -350,7 +354,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else if (x[1] == "time-entries") {
             this.isTabShow = 6;
         } else {
-            this.isTabShow = 0;
+            this.isTabShow = 1;
         }
 
     }

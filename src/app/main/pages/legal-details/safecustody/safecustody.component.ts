@@ -27,12 +27,9 @@ export class SafecustodyComponent implements OnInit {
     //get autorites  
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
     this.safeCustody_service.getData(potData).subscribe(response => {
-      localStorage.setItem('session_token', response.SessionToken);
-      if (response.SafeCustody.response != "error - not logged in") {
-        this.safeCustody_table = new MatTableDataSource(response.SafeCustody.DataSet);
+      if (response.CODE == 200 && response.STATUS == "success") {
+        this.safeCustody_table = new MatTableDataSource(response.DATA.SAFECUSTODIES);
         this.safeCustody_table.paginator = this.paginator;
-      } else {
-        this.toastr.error(response.SafeCustody.response);
       }
       this.isLoadingResults = false;
     }, error => {

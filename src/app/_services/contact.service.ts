@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { IfStmt } from '@angular/compiler';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactService {
+  getdata: any;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private toastr: ToastrService,) { }
+
 
   ContactData(d) {
 
@@ -24,9 +28,17 @@ export class ContactService {
 
   deleteContact(getContactGuId) {
     console.log(getContactGuId);
-    this.http.post(environment.APIEndpoint + 'SetContact', getContactGuId)
-      .subscribe(res => console.log(res));
-      localStorage.removeItem('contactGuid');
+    this.http.post<any>(environment.APIEndpoint + 'SetContact', getContactGuId)
+      .subscribe(res =>
+        {
+         if(res.STATUS=="success"){
+          this.toastr.success(res.STATUS);
+         }else{
+         this.toastr.error(res.STATUS);
+         }
+         console.log(res);
+        });
+
       
   }
 

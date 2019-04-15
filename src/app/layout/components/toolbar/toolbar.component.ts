@@ -306,7 +306,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 CONTACTGUID: getContactGuId
             }
 
-            this._getContact.deleteContact(abc);
+            this._getContact.deleteContact(abc);  
             this.confirmDialogRef = null;
         });
     }

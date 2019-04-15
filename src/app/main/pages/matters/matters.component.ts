@@ -37,6 +37,7 @@ export class MattersComponent implements OnInit {
       this.matterFilterForm.controls['MatterFilter'].setValue(this.lastFilter.Active);
       this.matterFilterForm.controls['UserFilter'].setValue(this.lastFilter.FeeEarner);
       this.matterFilterForm.controls['searchFilter'].setValue(this.lastFilter.SearchString);
+      this.matterFilterForm.controls['InvoiceFilter'].setValue(this.lastFilter.UninvoicedWork);
     }
   }
   MatterChange(value) {

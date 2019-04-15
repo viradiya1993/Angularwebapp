@@ -40,7 +40,7 @@ export class MattersComponent implements OnInit {
     }
   }
   MatterChange(value) {
-    let filterVal = { 'Active': value, 'SearchString': '', 'FeeEarner': '' };
+    let filterVal = { 'Active': value, 'SearchString': '', 'FeeEarner': '', 'UninvoicedWork': '' };
     if (!localStorage.getItem('matter_filter')) {
       localStorage.setItem('matter_filter', JSON.stringify(filterVal));
     } else {
@@ -51,7 +51,7 @@ export class MattersComponent implements OnInit {
     this.child.getMatterList(filterVal);
   }
   MatterUserChange(value) {
-    let filterVal = { 'Active': '', 'SearchString': '', 'FeeEarner': value };
+    let filterVal = { 'Active': '', 'SearchString': '', 'FeeEarner': value, 'UninvoicedWork': '' };
     if (!localStorage.getItem('matter_filter')) {
       localStorage.setItem('matter_filter', JSON.stringify(filterVal));
     } else {
@@ -61,9 +61,20 @@ export class MattersComponent implements OnInit {
     }
     this.child.getMatterList(filterVal);
   }
+  MatterInvoiceChange(value) {
+    let filterVal = { 'Active': '', 'SearchString': '', 'FeeEarner': '', 'UninvoicedWork': value };
+    if (!localStorage.getItem('matter_filter')) {
+      localStorage.setItem('matter_filter', JSON.stringify(filterVal));
+    } else {
+      filterVal = JSON.parse(localStorage.getItem('matter_filter'));
+      filterVal.UninvoicedWork = value;
+      localStorage.setItem('matter_filter', JSON.stringify(filterVal));
+    }
+    this.child.getMatterList(filterVal);
+  }
   onSearch(searchFilter: any, searchFilter2: any) {
     if (searchFilter['key'] === "Enter") {
-      let filterVal = { 'Active': '', 'SearchString': searchFilter2.value, 'FeeEarner': '' };
+      let filterVal = { 'Active': '', 'SearchString': searchFilter2.value, 'FeeEarner': '', 'UninvoicedWork': '' };
       if (!localStorage.getItem('matter_filter')) {
         localStorage.setItem('matter_filter', JSON.stringify(filterVal));
       } else {

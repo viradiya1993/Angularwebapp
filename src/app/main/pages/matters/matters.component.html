@@ -21,8 +21,8 @@
                     <mat-form-field class="example" appearance="outline">
                         <mat-label>Invoiced</mat-label>
                         <mat-select formControlName="InvoiceFilter" (selectionChange)="MatterChange($event.value)">
-                            <mat-option value="1">invoiced Work</mat-option>
-                            <mat-option value="0">Uninvoiced Work</mat-option>
+                            <mat-option value="False">invoiced Work</mat-option>
+                            <mat-option value="True">Uninvoiced Work</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <!-- select bar  -->

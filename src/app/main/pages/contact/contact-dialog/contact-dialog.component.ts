@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr';
 import { AddContactService, ContactService } from './../../../../_services';
 import { MAT_DIALOG_DATA } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-contact-dialog',
@@ -29,7 +30,7 @@ export class ContactDialogComponent implements OnInit {
   isLoadingResults: boolean = false;
   isspiner: boolean = false;
 
-  constructor(public dialogRef: MatDialogRef<ContactDialogComponent>, private _formBuilder: FormBuilder
+  constructor(public dialogRef: MatDialogRef<ContactDialogComponent>, private router: Router, private _formBuilder: FormBuilder
     , private toastr: ToastrService, private Contact: ContactService, private addcontact: AddContactService,
     @Inject(MAT_DIALOG_DATA) public _data: any) {
     this.action = _data.action;
@@ -42,7 +43,7 @@ export class ContactDialogComponent implements OnInit {
   ngOnInit() {
     this.contactForm = this._formBuilder.group({
       //CONTACTGUID: ['', Validators.required],
-      ContactName: ['', Validators.required],
+      CONTACTNAME: ['', Validators.required],
       CONTACTTYPE: ['', Validators.required],
       ACTIVE: ['', Validators.required],
       //person
@@ -122,6 +123,7 @@ export class ContactDialogComponent implements OnInit {
       let contactguidforbody = { CONTACTGUID: localStorage.getItem('contactGuid') }
       this.Contact.getContact(contactguidforbody).subscribe(res => {
         let getContactData = res.DATA.CONTACTS[0];
+        console.log(getContactData.CONTACTGUID);
         localStorage.setItem('getContact_edit', getContactData.CONTACTGUID);
         this.nameSelected = getContactData.CONTACTTYPE;
         this.active = getContactData.ACTIVE == 0 ? false : true;
@@ -148,9 +150,9 @@ export class ContactDialogComponent implements OnInit {
           this.samesstreet = false;
         }
 
-
+        console.log(getContactData.COMPANYNAME);
         //this.contactForm.controls['CONTACTGUID'].setValue(getContactData.CONTACTGUID);
-        this.contactForm.controls['ContactName'].setValue(getContactData.CONTACTNAME);
+        this.contactForm.controls['CONTACTNAME'].setValue(getContactData.CONTACTNAME);
         this.contactForm.controls['CONTACTTYPE'].setValue(getContactData.CONTACTTYPE);
         this.contactForm.controls['COMPANYNAME'].setValue(getContactData.COMPANYNAME);
         this.contactForm.controls['POSITION'].setValue(getContactData.POSITION);
@@ -248,6 +250,7 @@ export class ContactDialogComponent implements OnInit {
     return this.contactForm.controls;
   }
   ondialogSaveClick(): void {
+    console.log(this.f.GENDER.value);
     this.isspiner = true;
     this.FormAction = this.action !== 'edit' ? 'insert' : 'update';
     //for edit contactGuid
@@ -263,7 +266,7 @@ export class ContactDialogComponent implements OnInit {
       CONTACTGUID: this.contactguid,
       FormAction: this.FormAction,
       //CONTACTGUID:this.f.CONTACTGUID.value,
-      ContactName: this.f.ContactName.value,
+      CONTACTNAME: this.f.CONTACTNAME.value,
       CONTACTTYPE: this.f.CONTACTTYPE.value,
       ACTIVE: this.check,
       //person
@@ -334,8 +337,9 @@ export class ContactDialogComponent implements OnInit {
       FAMILYCOURTLAWYERNO: this.f.FAMILYCOURTLAWYERNO.value,
       NOTES: this.f.NOTES.value,
     }
-
+    console.log(details);
     this.addcontact.AddContactData(details).subscribe(response => {
+    
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         if (this.action !== 'edit') {
           this.toastr.success('Contact save successfully');
@@ -350,6 +354,9 @@ export class ContactDialogComponent implements OnInit {
     }, error => {
       this.toastr.error(error);
     });
+
+    localStorage.removeItem('DATEOFBIRTH');
+    localStorage.removeItem('DATEOFDEATH');
   }
 }
 export class Common {

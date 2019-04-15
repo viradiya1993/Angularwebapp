@@ -4,6 +4,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { MattersService, ContactService } from './../../../../_services';
 import { ContactDialogComponent } from '../contact-dialog/contact-dialog.component';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -30,23 +31,31 @@ export class ContactCorresDetailsComponent implements OnInit {
     private _getMattersService: MattersService,
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<ContactCorresDetailsComponent>,
+    private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.getMatterGuid = this.data
+    console.log(this.getMatterGuid);
   }
 
   ngOnInit() {
     this.isLoadingResults = true;
     this.getin = { MatterGuid: this.getMatterGuid }
     this._getMattersService.getMattersContact(this.getin).subscribe(res => {
-      if (res.MatterContact.DataSet[0]) {
-        this.highlightedRows = res.MatterContact.DataSet[0].PERSONGUID;
-        localStorage.setItem('contactGuid', res.MatterContact.DataSet[0].PERSONGUID);
+      if (res.DATA.queue[0]) {
+        this.highlightedRows = res.DATA.queue[0].PERSONGUID;
+        localStorage.setItem('contactGuid', res.DATA.queue[0].PERSONGUID);
       }
-      if (Object.keys(res.MatterContact.DataSet).length == 1) {
+      if (Object.keys(res.DATA.queue).length == 0) {
+        this.toastr.error("Can't Find corresponding Details");
+        this.dialogRef.close(false);
+      }
+      if (Object.keys(res.DATA.queue).length == 1) {
+         this.dialogRef.close(false);
         this.selectButton();
+        
       }
-      this.getDataForTable = new MatTableDataSource(res.MatterContact.DataSet);
+      this.getDataForTable = new MatTableDataSource(res.DATA.queue);
       this.getDataForTable.paginator = this.paginator;
       this.isLoadingResults = false;
 

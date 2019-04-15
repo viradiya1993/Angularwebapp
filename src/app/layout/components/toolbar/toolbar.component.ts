@@ -255,7 +255,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     //edit Contact diloage
     EditContactsDialog() {
-        //get value from localstrorage
         if (!localStorage.getItem('contactGuid')) {
             this.toastr.error("Please Select Contact");
         } else {
@@ -266,11 +265,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     openCorresDialog() {
-        //const dialogConfig = new MatDialogConfig();
-        //dialogConfig.width = '50%';
         let getMatterGuId = JSON.parse(localStorage.getItem('set_active_matters'));
         let getmatguid = getMatterGuId.MATTERGUID;
-        //console.log(getmatguid);
         const dialogRef = this.dialog.open(ContactCorresDetailsComponent, {
             disableClose: true,
             width: '50%',
@@ -314,7 +310,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 CONTACTGUID: getContactGuId
             }
 
-            this._getContact.deleteContact(abc);
+            this._getContact.deleteContact(abc);  
             this.confirmDialogRef = null;
         });
     }

@@ -40,6 +40,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     currentTimerHMS: any;
     ReportListObj: any[] = []
     getContactData: any;
+    activeSubMenu: any = '';
 
 
     // Private
@@ -87,20 +88,20 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.hiddenNavbar = settings.layout.navbar.hidden === true;
         });
         //Report Listing
-        this.reportlistService.allreportlist({}).subscribe(res => {            
-                if (res.CODE==200 && res.STATUS=='success') {
-                    res.DATA.REPORTS.forEach(element => {                       
-                        if (!this.ReportListObj[element.REPORTGROUP]) {
-                            let temp = [];
-                            temp.push(element);
-                            this.ReportListObj[element.REPORTGROUP] = temp;
-                        } else {
-                            let demo = this.ReportListObj[element.REPORTGROUP];
-                            demo.push(element);
-                            this.ReportListObj[element.REPORTGROUP] = demo;
-                        }
-                    });
-                } 
+        this.reportlistService.allreportlist({}).subscribe(res => {
+            if (res.CODE == 200 && res.STATUS == 'success') {
+                res.DATA.REPORTS.forEach(element => {
+                    if (!this.ReportListObj[element.REPORTGROUP]) {
+                        let temp = [];
+                        temp.push(element);
+                        this.ReportListObj[element.REPORTGROUP] = temp;
+                    } else {
+                        let demo = this.ReportListObj[element.REPORTGROUP];
+                        demo.push(element);
+                        this.ReportListObj[element.REPORTGROUP] = demo;
+                    }
+                });
+            }
         },
             err => {
                 this.toastr.error(err);
@@ -278,7 +279,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
 
     //Reportpopup open
-    Reportpopup(ReportData) {           
+    Reportpopup(ReportData) {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.width = '40%';
         const dialogRef = this.dialog.open(ReportsComponent, {
@@ -306,7 +307,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             let getContactGuId = localStorage.getItem('contactGuid');
             let abc = {
                 FormAction: "delete",
-                CONTACTGUID:getContactGuId
+                CONTACTGUID: getContactGuId
             }
 
             this._getContact.deleteContact(abc);
@@ -333,6 +334,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     navBarSetting(value: any) {
         let x = value.split("/");
+        if (x[2]) {
+            this.activeSubMenu = x[2];
+        }
         if (x[1] == "matters" || x[1] == "") {
             this.isTabShow = 1;
         } else if (x[1] == "contact") {

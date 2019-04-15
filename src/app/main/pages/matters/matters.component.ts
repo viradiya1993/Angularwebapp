@@ -78,10 +78,9 @@ export class MattersComponent implements OnInit {
   ngOnInit() { }
   getDropValue() {
     let d = {};
-    this.Timersservice.GetUsers(d).subscribe(res => {
-      if (res.Users.response != "error - not logged in") {
-        localStorage.setItem('session_token', res.Users.SessionToken);
-        this.MatterDropData = res.Users.DataSet;
+    this.Timersservice.GetUsers(d).subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        this.MatterDropData = response.DATA.USERS;
       }
     }, err => {
       console.log(err);

@@ -40,7 +40,7 @@ export class TimeEntriesComponent implements OnInit {
       let Sd = new Date(this.lastFilter.ItemDateStart);
       let ed = new Date(this.lastFilter.ItemDateEnd);
       this.TimeEnrtyForm.controls['date'].setValue({ begin: Sd, end: ed });
-      this.TimeEnrtyForm.controls['uninvoicedWork'].setValue(this.lastFilter.ItemType);
+      this.TimeEnrtyForm.controls['uninvoicedWork'].setValue(this.lastFilter.Invoiced);
       this.TimeEnrtyForm.controls['dlpdrop'].setValue(this.lastFilter.FeeEarner);
     }
   }
@@ -48,13 +48,11 @@ export class TimeEntriesComponent implements OnInit {
   ngOnInit() {
     let d = {};
     this.Timersservice.GetUsers(d).subscribe(res => {
-      if (res.Users.response != "error - not logged in") {
-        localStorage.setItem('session_token', res.Users.SessionToken);
-        this.TimerDropData = res.Users.DataSet;
+      if (res.CODE == 200 && res.STATUS == "success") {
+        this.TimerDropData = res.DATA.USERS;
       }
     }, err => {
       console.log(err);
-      // this.toastr.error(err);
     });
     this.LoadData(this.lastFilter);
   }
@@ -75,18 +73,18 @@ export class TimeEntriesComponent implements OnInit {
     });
   }
   uninvoicedWorkChange(value) {
-    let filterVal = { 'FeeEarner': '', 'ItemType': value, 'ItemDateStart': '', 'ItemDateEnd': '' };
+    let filterVal = { 'FeeEarner': '', 'Invoiced': value, 'ItemDateStart': '', 'ItemDateEnd': '' };
     if (!localStorage.getItem('time_entries_filter')) {
       localStorage.setItem('time_entries_filter', JSON.stringify(filterVal));
     } else {
       filterVal = JSON.parse(localStorage.getItem('time_entries_filter'));
-      filterVal.ItemType = value;
+      filterVal.Invoiced = value;
       localStorage.setItem('time_entries_filter', JSON.stringify(filterVal));
     }
     this.LoadData(filterVal);
   }
   dlpChange(value) {
-    let filterVal = { 'FeeEarner': value, 'ItemType': '', 'ItemDateStart': '', 'ItemDateEnd': '' };
+    let filterVal = { 'FeeEarner': value, 'Invoiced': '', 'ItemDateStart': '', 'ItemDateEnd': '' };
     if (!localStorage.getItem('time_entries_filter')) {
       localStorage.setItem('time_entries_filter', JSON.stringify(filterVal));
     } else {
@@ -101,7 +99,7 @@ export class TimeEntriesComponent implements OnInit {
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
     let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');
-    let filterVal = { 'FeeEarner': '', 'ItemType': '', 'ItemDateStart': begin, 'ItemDateEnd': end };
+    let filterVal = { 'FeeEarner': '', 'Invoiced': '', 'ItemDateStart': begin, 'ItemDateEnd': end };
     if (!localStorage.getItem('time_entries_filter')) {
       localStorage.setItem('time_entries_filter', JSON.stringify(filterVal));
     } else {

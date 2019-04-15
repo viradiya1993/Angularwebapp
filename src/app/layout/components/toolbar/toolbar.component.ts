@@ -40,6 +40,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     currentTimerHMS: any;
     ReportListObj: any[] = []
     getContactData: any;
+    activeSubMenu: any = '';
 
 
     // Private
@@ -100,8 +101,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                         this.ReportListObj[element.REPORTGROUP] = demo;
                     }
                 });
-            } else {
-                this.toastr.error(res.MESSAGE);
             }
         },
             err => {
@@ -277,7 +276,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     //Reportpopup open
     Reportpopup(ReportData) {
-        //let Reportname=ReportData.REPORTNAME;        
         const dialogConfig = new MatDialogConfig();
         dialogConfig.width = '40%';
         const dialogRef = this.dialog.open(ReportsComponent, {
@@ -305,7 +303,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             let getContactGuId = localStorage.getItem('contactGuid');
             let abc = {
                 FormAction: "delete",
-                CONTACTGUID:getContactGuId
+                CONTACTGUID: getContactGuId
             }
 
             this._getContact.deleteContact(abc);
@@ -332,6 +330,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     navBarSetting(value: any) {
         let x = value.split("/");
+        if (x[2]) {
+            this.activeSubMenu = x[2];
+        }
         if (x[1] == "matters" || x[1] == "") {
             this.isTabShow = 1;
         } else if (x[1] == "contact") {

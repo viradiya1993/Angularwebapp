@@ -37,10 +37,11 @@ export class MattersComponent implements OnInit {
       this.matterFilterForm.controls['MatterFilter'].setValue(this.lastFilter.Active);
       this.matterFilterForm.controls['UserFilter'].setValue(this.lastFilter.FeeEarner);
       this.matterFilterForm.controls['searchFilter'].setValue(this.lastFilter.SearchString);
+      this.matterFilterForm.controls['InvoiceFilter'].setValue(this.lastFilter.UninvoicedWork);
     }
   }
   MatterChange(value) {
-    let filterVal = { 'Active': value, 'SearchString': '', 'FeeEarner': '' };
+    let filterVal = { 'Active': value, 'SearchString': '', 'FeeEarner': '', 'UninvoicedWork': '' };
     if (!localStorage.getItem('matter_filter')) {
       localStorage.setItem('matter_filter', JSON.stringify(filterVal));
     } else {
@@ -51,7 +52,7 @@ export class MattersComponent implements OnInit {
     this.child.getMatterList(filterVal);
   }
   MatterUserChange(value) {
-    let filterVal = { 'Active': '', 'SearchString': '', 'FeeEarner': value };
+    let filterVal = { 'Active': '', 'SearchString': '', 'FeeEarner': value, 'UninvoicedWork': '' };
     if (!localStorage.getItem('matter_filter')) {
       localStorage.setItem('matter_filter', JSON.stringify(filterVal));
     } else {
@@ -61,9 +62,20 @@ export class MattersComponent implements OnInit {
     }
     this.child.getMatterList(filterVal);
   }
+  MatterInvoiceChange(value) {
+    let filterVal = { 'Active': '', 'SearchString': '', 'FeeEarner': '', 'UninvoicedWork': value };
+    if (!localStorage.getItem('matter_filter')) {
+      localStorage.setItem('matter_filter', JSON.stringify(filterVal));
+    } else {
+      filterVal = JSON.parse(localStorage.getItem('matter_filter'));
+      filterVal.UninvoicedWork = value;
+      localStorage.setItem('matter_filter', JSON.stringify(filterVal));
+    }
+    this.child.getMatterList(filterVal);
+  }
   onSearch(searchFilter: any, searchFilter2: any) {
     if (searchFilter['key'] === "Enter") {
-      let filterVal = { 'Active': '', 'SearchString': searchFilter2.value, 'FeeEarner': '' };
+      let filterVal = { 'Active': '', 'SearchString': searchFilter2.value, 'FeeEarner': '', 'UninvoicedWork': '' };
       if (!localStorage.getItem('matter_filter')) {
         localStorage.setItem('matter_filter', JSON.stringify(filterVal));
       } else {
@@ -78,10 +90,9 @@ export class MattersComponent implements OnInit {
   ngOnInit() { }
   getDropValue() {
     let d = {};
-    this.Timersservice.GetUsers(d).subscribe(res => {
-      if (res.Users.response != "error - not logged in") {
-        localStorage.setItem('session_token', res.Users.SessionToken);
-        this.MatterDropData = res.Users.DataSet;
+    this.Timersservice.GetUsers(d).subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        this.MatterDropData = response.DATA.USERS;
       }
     }, err => {
       console.log(err);

@@ -159,8 +159,9 @@
     
     .top_right_action_billing {
         position: absolute;
-        right: 30px;
+        right: 24px;
         top: 30px;
+        background-color: #fff;
     }
     
     .top_right_action_billing_one {
@@ -173,6 +174,12 @@
         position: absolute;
         right: 30px;
         top: 30px;
+    }
+    .top_right_action_billing_position {
+        position: absolute;
+        right: 0px;
+        top: 7px;
+        background-color: #fff;
     }
     
     // .top_right_action button {
@@ -275,7 +282,7 @@
     //     float: left;
     // }
     .reports_tab_main {
-        width: 70%;
+        width: 40%;
     }
     
     .reports_tab_main .mat-card {
@@ -331,4 +338,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    app-time-billing {
+        overflow-y: auto;
+    }
+    .cmn_active_tab {
+        background-color: rgba(0, 0, 0, 0.2) !important;
     }

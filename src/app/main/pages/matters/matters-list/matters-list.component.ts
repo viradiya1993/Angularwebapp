@@ -22,7 +22,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   [x: string]: any;
   highlightedRows: any;
   theme_type = localStorage.getItem('theme_type');
-  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : 'green';
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   displayedColumns = ['matter_num', 'matter', 'unbilled', 'invoiced', 'received', 'unpaid', 'total_value'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   mattersData: any;

@@ -19,7 +19,7 @@ export class ContactCorresDetailsComponent implements OnInit {
   getMatterGuid: any;
   highlightedRows: any;
   theme_type = localStorage.getItem('theme_type');
-  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : 'green';
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   @ViewChild(MatPaginator) paginator: MatPaginator;
   getin: any;
   getDataForTable: any;

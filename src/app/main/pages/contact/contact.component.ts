@@ -16,7 +16,7 @@ export class ContactComponent implements OnInit {
 
   highlightedRows: any;
   theme_type = localStorage.getItem('theme_type');
-  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : 'green';
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   displayedColumns: string[] = ['Contact Guid', 'Company Contactguid', 'Contact Type', 'User Guid', 'Useparent Address', 'Contact Name', 'Salutation', 'Position', 'Name Title', 'Given Names', 'Middle Names', 'Family Name', 'Name Letters', 'Knownby Othername', 'Otherfamily Name', 'Thergiven Names', 'Reason For Change', 'Marital Status', 'Spouse', 'Numberof Dependants', 'Occupation', 'Gender', 'Dateof Birth', 'Birthday Reminder', 'Townof Birth'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   datanull: null;

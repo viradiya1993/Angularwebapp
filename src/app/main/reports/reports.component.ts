@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatDialogConfig
 import { ReportfilterService } from '../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-reports',
@@ -15,14 +16,20 @@ export class ReportsComponent implements OnInit {
   title:string;
   responseData:string;
   PDF_Generation:string;
+  base_url:string;
+  isLoadingResults: boolean = false;
+
   constructor(public dialog: MatDialog,public dialogRef: MatDialogRef<ReportsComponent>,private _formBuilder: FormBuilder,public datepipe: DatePipe,private Reportfilter: ReportfilterService,private toastr: ToastrService,@Inject(MAT_DIALOG_DATA) public data: any){
-      //API Call      
+      //API Call
       if(data.ReportGenerateData){   
         this.PDF_Generation=data.ReportGenerateData;
         this.title=data.ReportGenerateData.title;
+        this.base_url=environment.APIEndpoint;
       }else{ 
+        this.isLoadingResults = true;
         this.Reportfilter.ReportfilterData(this.data.REPORTID).subscribe(response => {
-           if(response.CODE==200 && response.STATUS=='success'){
+          this.isLoadingResults = false;
+           if(response.CODE==200 && response.STATUS=='success'){            
              this.responseData=response.DATA; 
              this.title=response.DATA.REPORTTITLE;          
             //option1
@@ -112,7 +119,7 @@ export class ReportsComponent implements OnInit {
         })   
       }     
   }  
-  ngOnInit() {    
+  ngOnInit() { 
     this.ReportForm = this._formBuilder.group({
       DATERANGE: ['', [Validators.required]],
       DATE: [{begin: new Date(), end: new Date()}],
@@ -155,15 +162,16 @@ export class ReportsComponent implements OnInit {
     return this.ReportForm.controls;
   }
   ReportSubmit(){ 
+    this.isLoadingResults = true;
     let date=JSON.parse(localStorage.getItem("ReportDaterange"));   
     let StartDate; if(date!=null){ StartDate=date.ReportDateStart;}else{StartDate='';}
     let DateEnd; if(date!=null){ DateEnd= date.DateEnd;}else{DateEnd='';}
       let ReportData={
-          ReportId:this.data.REPORTID,      
+          REPORTID:this.data.REPORTID,      
           DateRangeSelection:this.f.DATERANGE.value,
           DateFrom:StartDate,
           DateTo:DateEnd,
-          select_owner:this.f.FEEEARNERNAME.value,
+          FEEEARNERGUID:this.f.FEEEARNERNAME.value,
           List1Selection:this.f.LIST1TEXT.value,
           List2Selection:this.f.LIST2TEXT.value,     
           OptionValue1:valuechange(this.f.OPTIONTEXT1.value), 
@@ -177,27 +185,27 @@ export class ReportsComponent implements OnInit {
           OptionValue9:valuechange(this.f.OPTIONTEXT9.value),
           OptionValue10:valuechange(this.f.OPTIONTEXT10.value),
        }
-       keydelete(ReportData); 
-      // console.log(ReportData);
+       keydelete(ReportData);         
        //Api Report Generate 
        this.Reportfilter.ReportgenerateData(ReportData).subscribe(reportgenerateData => {
-        if(reportgenerateData.PDF_Generation.Response=="error - report not generated"){ 
+        if(reportgenerateData.PDF_Generation.CODE==200 && reportgenerateData.PDF_Generation.STATUS=="success"){         
+          this.dialogRef.close(true); 
+          this.isLoadingResults = false;
           this.toastr.success('Report generated successfully')
             let Data={"ReportGenerateData":{
                 title:this.title,
-                SessionToken:reportgenerateData.PDF_Generation.SessionToken,
-                Response:reportgenerateData.PDF_Generation.Response,
-                PdfFileName:reportgenerateData.PDF_Generation.PdfFileName
+                PdfFileName:reportgenerateData.PDF_Generation.DATA.PDFFILENAME
               }}
               //open pop-up
-            this.dialog.open(ReportsComponent,{
-              width:'40%',
-              data:Data
-            });
-        }else{
-          this.toastr.error(reportgenerateData.PDF_Generation.Response)
+            this.dialog.open(ReportsComponent,{width:'40%',data:Data});
+        }else if(reportgenerateData.PDF_Generation.CODE==415 && reportgenerateData.PDF_Generation.STATUS=="error"){          
+          this.toastr.error(reportgenerateData.PDF_Generation.MESSAGE);
+          this.dialogRef.close(true);
         }
-     })   
+     },
+     error => {
+       this.toastr.error(error);
+     })    
   }  
   //dialog Close
   ondialogcloseClick(): void {    
@@ -212,20 +220,17 @@ function valuechange(check){
       return 1;
     }else if(check==false){
       return 0;
-    }
-  } else{
+    }} else{
     return '';
-  }      
-}
+  } }
 //blank key delete in array
 function keydelete(ReportData){
   Object.keys(ReportData).forEach(function(key) {
     let value = ReportData[key];
     if (value === ""||value === null){
         delete ReportData[key];
-    }
-  });
-}
+    }});
+  }
 //Dateformat change
 function datesave(Fromdate,todate){
   let filterVal = { 'ReportDateStart': Fromdate, 'DateEnd': todate };

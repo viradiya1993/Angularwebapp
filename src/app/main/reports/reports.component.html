@@ -1,3 +1,6 @@
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+</div>
 <div class="popup_main_div" *ngIf="responseData || PDF_Generation">
     <h2 mat-dialog-title class="popup_title_div"> {{title}}
         <button class="btn" mat-icon-button (click)="ondialogcloseClick()" aria-label="Close dialog">
@@ -7,13 +10,13 @@
     <div mat-dialog-content class="mat-typography" *ngIf="responseData">
         <div class="popup_body">
             <form class=" remove_left_right_padding" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form" [formGroup]="ReportForm">
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="responseData.DateRange">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="responseData.DATERANGE">
                     <div class=" one  mb-24" fxLayout="column">
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                             <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
                                 <mat-label>Date Range List</mat-label>                               
-                                <mat-select  formControlName="DATERANGE" #values name="DATERANGE" [(value)]="responseData.DateRange[0].TEXT" (ngModelChange)="hideshowdatepicker($event)" [(ngModel)]="responseData.DateRange[0].TEXT">
-                                    <mat-option *ngFor="let Dropdowndatename of responseData.DateRange" [value]="Dropdowndatename.TEXT">{{Dropdowndatename.TEXT}}</mat-option>
+                                <mat-select  formControlName="DATERANGE" #values name="DATERANGE" [(value)]="responseData.DATERANGE[0].TEXT" (ngModelChange)="hideshowdatepicker($event)" [(ngModel)]="responseData.DATERANGE[0].TEXT">
+                                    <mat-option *ngFor="let Dropdowndatename of responseData.DATERANGE" [value]="Dropdowndatename.TEXT">{{Dropdowndatename.TEXT}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -31,37 +34,37 @@
                         </div>
                     </div>
                 </div>
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="responseData.FeeEarners">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="responseData.FEEEARNERS">
                     <div class=" one  mb-24" fxLayout="column">
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                             <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
                                 <mat-label>{{responseData.FEEEARNERPROMPT}}</mat-label>
-                                <mat-select formControlName="FEEEARNERNAME" name="FEEEARNERNAME" [(value)]="responseData.FeeEarners[0].FEEEARNERGUID" [(ngModel)]="responseData.FeeEarners[0].FEEEARNERGUID">
-                                    <mat-option *ngFor="let SelectOwnername of responseData.FeeEarners" [value]="SelectOwnername.FEEEARNERGUID">{{SelectOwnername.FEEEARNERNAME}}</mat-option>
+                                <mat-select formControlName="FEEEARNERNAME" name="FEEEARNERNAME" [(value)]="responseData.FEEEARNERS[0].FEEEARNERGUID" [(ngModel)]="responseData.FEEEARNERS[0].FEEEARNERGUID">
+                                    <mat-option *ngFor="let SelectOwnername of responseData.FEEEARNERS" [value]="SelectOwnername.FEEEARNERGUID">{{SelectOwnername.FEEEARNERNAME}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
                     </div>
                 </div> 
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="responseData.List1">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="responseData.LIST1">
                     <div class=" one  mb-24" fxLayout="column">
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                             <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
                                 <mat-label>{{responseData.LISTPROMPT1}}</mat-label>
-                                <mat-select formControlName="LIST1TEXT" name="LIST1TEXT"  [(value)]="responseData.List1[0].VALUE" [(ngModel)]="responseData.List1[0].VALUE">
-                                    <mat-option *ngFor="let Selectsortordername of responseData.List1" [value]="Selectsortordername.VALUE">{{Selectsortordername.TEXT}}</mat-option>
+                                <mat-select formControlName="LIST1TEXT" name="LIST1TEXT"  [(value)]="responseData.LIST1[0].VALUE" [(ngModel)]="responseData.LIST1[0].VALUE">
+                                    <mat-option *ngFor="let Selectsortordername of responseData.LIST1" [value]="Selectsortordername.VALUE">{{Selectsortordername.TEXT}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
                     </div>
                 </div>
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="responseData.List2">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="responseData.LIST2">
                     <div class=" one  mb-24" fxLayout="column">
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                             <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
                                 <mat-label>{{responseData.LISTPROMPT2}}</mat-label>
-                                <mat-select formControlName="LIST2TEXT" name="LIST2TEXT" [(value)]="responseData.List2[0].VALUE" [(ngModel)]="responseData.List2[0].VALUE">
-                                    <mat-option *ngFor="let List2name of responseData.List2" [value]="List2name.VALUE">{{List2name.TEXT}}</mat-option>                                    
+                                <mat-select formControlName="LIST2TEXT" name="LIST2TEXT" [(value)]="responseData.LIST2[0].VALUE" [(ngModel)]="responseData.LIST2[0].VALUE">
+                                    <mat-option *ngFor="let List2name of responseData.LIST2" [value]="List2name.VALUE">{{List2name.TEXT}}</mat-option>                                    
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -96,14 +99,14 @@
                 <div class="middle">The {{title}} report has been produced.</div>
             </div>
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="button">                        
-                <a href="http://localhost:4200/#/reports/$$$FEB1RYD9A2TDUA6U.PDF" target="_blank">
+                <a href="{{this.base_url}}{{PDF_Generation.PdfFileName}}" target="_blank">
                     <button mat-raised-button mat-dialog-close color="accent">Click here to view it</button>
                 </a>
             </div>
         </div>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
-        <button mat-raised-button mat-dialog-close color="accent" (click)="ReportSubmit()" *ngIf="responseData">OK</button>
+        <button mat-raised-button color="accent" (click)="ReportSubmit()" *ngIf="responseData">OK</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Cancel</button>
     </mat-dialog-actions>
 </div>

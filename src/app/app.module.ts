@@ -35,6 +35,7 @@ import { InternalErrorComponent } from './main/errors/internal-error/internal-er
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { ToastrModule } from 'ngx-toastr';
 import {DatePipe} from '@angular/common';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 //end
 const appRoutes: Routes = [
     { path: '', loadChildren: './main/authentication/authentication.module#AuthenticationModule' },
@@ -97,7 +98,8 @@ const appRoutes: Routes = [
         LayoutModule,
         PagesModule,
 
-        ToastrModule.forRoot() // ToastrModule added
+        ToastrModule.forRoot(), // ToastrModule added
+        MatProgressSpinnerModule
     ],
     exports: [
         SortingDialogComponent

@@ -43,12 +43,9 @@ export class MattersDetailComponent implements OnInit {
       this.toastr.error(error);
     });
     this._mattersService.getMattersContact(postData).subscribe(response => {
-      localStorage.setItem('session_token', response.MatterContact.SessionToken);
-      if (response.MatterContact.response != "error - not logged in") {
-        this.MatterContact = new MatTableDataSource(response.MatterContact.DataSet);
+      if (response.CODE == 200 && response.STATUS == "success") {
+        this.MatterContact = new MatTableDataSource(response.DATA.queue);
         this.MatterContact.paginator = this.paginator;
-      } else {
-        this.toastr.error(response.MatterContact.response);
       }
     }, error => {
       this.toastr.error(error);

@@ -303,14 +303,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
 
         this.confirmDialogRef.afterClosed().subscribe(result => {
-
-            let getContactGuId = localStorage.getItem('contactGuid');
-            let abc = {
-                FormAction: "delete",
-                CONTACTGUID: getContactGuId
-            }
-
-            this._getContact.deleteContact(abc);  
             this.confirmDialogRef = null;
         });
     }

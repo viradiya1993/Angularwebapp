@@ -24,6 +24,9 @@ export class TimeEntriesComponent implements OnInit {
   isShowDrop: boolean;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   lastFilter: any;
+  highlightedRows: any;
+  theme_type = localStorage.getItem('theme_type');
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
 
   constructor(
     private dialog: MatDialog,
@@ -66,6 +69,9 @@ export class TimeEntriesComponent implements OnInit {
     this.isLoadingResults = true;
     this.Timersservice.getTimeEnrtyData(Data).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
+        if (response.DATA.WORKITEMS[0]) {
+          this.highlightedRows = response.DATA.WORKITEMS[0].WORKITEMGUID;
+        }
         this.TimerData = new MatTableDataSource(response.DATA.WORKITEMS)
         this.TimerData.paginator = this.paginator
       }

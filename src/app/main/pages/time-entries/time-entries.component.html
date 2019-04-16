@@ -16,7 +16,7 @@
                         <mat-select (selectionChange)="uninvoicedWorkChange($event.value)" formControlName="uninvoicedWork">
                             <mat-option value="No">Uninvoiced Work</mat-option>
                             <mat-option value="Yes">invoiced Work</mat-option>
-                            <mat-option value="All">All Work</mat-option>
+                            <mat-option value="">All Work</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="">
@@ -74,10 +74,10 @@
                         </mat-cell>
                     </ng-container>
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                    <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="highlightedRows=row.WORKITEMGUID" [style.background]="highlightedRows == row.WORKITEMGUID ? selectedColore : ''" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                     </mat-row>
                 </mat-table>
-                <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                <mat-paginator [pageSizeOptions]="[10, 20,50,100]" showFirstLastButtons></mat-paginator>
             </div>
         </div>
     </div>

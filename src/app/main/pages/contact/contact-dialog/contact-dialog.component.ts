@@ -29,6 +29,8 @@ export class ContactDialogComponent implements OnInit {
   postsameasstreet: string;
   isLoadingResults: boolean = false;
   isspiner: boolean = false;
+  dateofbirth: any;
+  dateofdeath: string;
 
   constructor(public dialogRef: MatDialogRef<ContactDialogComponent>, private router: Router, private _formBuilder: FormBuilder
     , private toastr: ToastrService, private Contact: ContactService, private addcontact: AddContactService,
@@ -41,6 +43,7 @@ export class ContactDialogComponent implements OnInit {
   value: number;
   contactForm: FormGroup;
   ngOnInit() {
+    
     this.contactForm = this._formBuilder.group({
       //CONTACTGUID: ['', Validators.required],
       CONTACTNAME: ['', Validators.required],
@@ -123,12 +126,23 @@ export class ContactDialogComponent implements OnInit {
       let contactguidforbody = { CONTACTGUID: localStorage.getItem('contactGuid') }
       this.Contact.getContact(contactguidforbody).subscribe(res => {
         let getContactData = res.DATA.CONTACTS[0];
-        console.log(getContactData.CONTACTGUID);
         localStorage.setItem('getContact_edit', getContactData.CONTACTGUID);
         this.nameSelected = getContactData.CONTACTTYPE;
         this.active = getContactData.ACTIVE == 0 ? false : true;
-        this.knowbyothername = getContactData.KNOWNBYOTHERNAME == 0 ? false : true;
+        // this.knowbyothername = getContactData.KNOWNBYOTHERNAME == 0 ? true : false;
         this.birthdayreminder = getContactData.BIRTHDAYREMINDER == 0 ? false : true;
+        if(getContactData.KNOWNBYOTHERNAME == 0){
+          this.knowbyothername =false;
+          this.contactForm.get('OTHERGIVENNAMES').disable();
+          this.contactForm.get('OTHERFAMILYNAME').disable();
+          this.contactForm.get('REASONFORCHANGE').disable();
+        }
+        else{
+          this.knowbyothername=true;
+          this.contactForm.get('OTHERGIVENNAMES').enable();
+          this.contactForm.get('OTHERFAMILYNAME').enable();
+          this.contactForm.get('REASONFORCHANGE').enable();
+        }
 
         if (getContactData.SAMEASSTREET == 1) {
           this.contactForm.get('POSTALADDRESS1').disable();
@@ -159,7 +173,6 @@ export class ContactDialogComponent implements OnInit {
 
         //this.contactForm.controls['ACTIVE'].setValue(getContactData.ACTIVE);
         this.contactForm.controls['ACTIVE'].setValue(this.active);
-
         this.contactForm.controls['GIVENNAMES'].setValue(getContactData.GIVENNAMES);
         this.contactForm.controls['NAMETITLE'].setValue(getContactData.NAMETITLE);
         this.contactForm.controls['MIDDLENAMES'].setValue(getContactData.MIDDLENAMES);
@@ -174,7 +187,6 @@ export class ContactDialogComponent implements OnInit {
         //other
         this.contactForm.controls['GENDER'].setValue(getContactData.GENDER);
         this.contactForm.controls['DATEOFBIRTH'].setValue(getContactData.DATEOFBIRTH);
-
         this.contactForm.controls['MARITALSTATUS'].setValue(getContactData.MARITALSTATUS);
         this.contactForm.controls['SPOUSE'].setValue(getContactData.SPOUSE);
         this.contactForm.controls['NUMBEROFDEPENDANTS'].setValue(getContactData.NUMBEROFDEPENDANTS);
@@ -217,7 +229,6 @@ export class ContactDialogComponent implements OnInit {
         this.contactForm.controls['SKYPEUSERNAME'].setValue(getContactData.SKYPEUSERNAME);
 
         //id
-
         this.contactForm.controls['PRACTICINGCERTIFICATENO'].setValue(getContactData.PRACTICINGCERTIFICATENO);
         this.contactForm.controls['ACN'].setValue(getContactData.ACN);
         this.contactForm.controls['ABN'].setValue(getContactData.ABN);
@@ -250,7 +261,11 @@ export class ContactDialogComponent implements OnInit {
     return this.contactForm.controls;
   }
   ondialogSaveClick(): void {
-    console.log(this.f.GENDER.value);
+    console.log(this.f);
+    //for date handaling 
+    this.dateofbirth=this.f.DATEOFBIRTH.touched == false ? "" : localStorage.getItem('DATEOFBIRTH');
+    this.dateofdeath=this.f.DATEOFDEATH.touched == false ? "" : localStorage.getItem('DATEOFDEATH');
+
     this.isspiner = true;
     this.FormAction = this.action !== 'edit' ? 'insert' : 'update';
     //for edit contactGuid
@@ -262,7 +277,6 @@ export class ContactDialogComponent implements OnInit {
     this.postsameasstreet = this.f.SAMEASSTREET.value == true ? "1" : "0";
     //let abc ={ FormAction: "insert"}
     let details = {
-
       CONTACTGUID: this.contactguid,
       FormAction: this.FormAction,
       //CONTACTGUID:this.f.CONTACTGUID.value,
@@ -284,14 +298,14 @@ export class ContactDialogComponent implements OnInit {
 
       //others
       GENDER: this.f.GENDER.value,
-      DATEOFBIRTH: localStorage.getItem('DATEOFBIRTH'),
+      DATEOFBIRTH: this.dateofbirth,
       MARITALSTATUS: this.f.MARITALSTATUS.value,
       SPOUSE: this.f.SPOUSE.value,
       NUMBEROFDEPENDANTS: this.f.NUMBEROFDEPENDANTS.value,
       BIRTHDAYREMINDER: this.postbirthdayreminder,
       TOWNOFBIRTH: this.f.TOWNOFBIRTH.value,
       COUNTRYOFBIRTH: this.f.COUNTRYOFBIRTH.value,
-      DATEOFDEATH: localStorage.getItem('DATEOFDEATH'),
+      DATEOFDEATH: this.dateofdeath,
       CAUSEOFDEATH: this.f.CAUSEOFDEATH.value,
 
       //address

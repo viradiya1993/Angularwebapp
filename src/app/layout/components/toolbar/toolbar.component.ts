@@ -87,25 +87,26 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.rightNavbar = settings.layout.navbar.position === 'right';
             this.hiddenNavbar = settings.layout.navbar.hidden === true;
         });
-        //Report Listing
-        this.reportlistService.allreportlist({}).subscribe(res => {
-            if (res.CODE == 200 && res.STATUS == 'success') {
-                res.DATA.REPORTS.forEach(element => {
-                    if (!this.ReportListObj[element.REPORTGROUP]) {
-                        let temp = [];
-                        temp.push(element);
-                        this.ReportListObj[element.REPORTGROUP] = temp;
-                    } else {
-                        let demo = this.ReportListObj[element.REPORTGROUP];
-                        demo.push(element);
-                        this.ReportListObj[element.REPORTGROUP] = demo;
-                    }
-                });
-            }
-        },
-            err => {
+        if (this.currentUser) {
+            //Report Listing
+            this.reportlistService.allreportlist({}).subscribe(res => {
+                if (res.CODE == 200 && res.STATUS == 'success') {
+                    res.DATA.REPORTS.forEach(element => {
+                        if (!this.ReportListObj[element.REPORTGROUP]) {
+                            let temp = [];
+                            temp.push(element);
+                            this.ReportListObj[element.REPORTGROUP] = temp;
+                        } else {
+                            let demo = this.ReportListObj[element.REPORTGROUP];
+                            demo.push(element);
+                            this.ReportListObj[element.REPORTGROUP] = demo;
+                        }
+                    });
+                }
+            }, err => {
                 this.toastr.error(err);
             });
+        }
     }
 
 
@@ -310,7 +311,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 CONTACTGUID: getContactGuId
             }
 
-            this._getContact.deleteContact(abc);  
+            this._getContact.deleteContact(abc);
             this.confirmDialogRef = null;
         });
     }

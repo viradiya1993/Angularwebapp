@@ -22,6 +22,12 @@ export class TimersService {
     }
     return this.httpClient.post<any>(environment.APIEndpoint + 'GetUsers', Data);
   }
+  GetActivity(Data: any) {
+    if (Data == null) {
+      Data = {};
+    }
+    return this.httpClient.post<any>(environment.APIEndpoint + 'GetActivity', Data);
+  }
   matterListFetch(Data: any) {
     if (Data == null) {
       Data = {};
@@ -34,6 +40,12 @@ export class TimersService {
       Data = {};
     }
     return this.httpClient.post<any>(environment.APIEndpoint + 'GetLookups', Data);
+  }
+  SetWorkItems(Data: any) {
+    if (Data == null) {
+      Data = {};
+    }
+    return this.httpClient.post<any>(environment.APIEndpoint + 'SetWorkItems ', Data);
   }
   //time entry popup data end 
   addTimeEnrtS() {

@@ -19,9 +19,9 @@
                             <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline">
                                 <mat-label>Type</mat-label>
                                 <mat-select formControlName="ITEMTYPE" (selectionChange)="itemTypeChange($event.value)">
-                                    <mat-option value="1">Time Entry</mat-option>
-                                    <mat-option value="3">Activity</mat-option>
-                                    <mat-option value="4">Sundry</mat-option>
+                                    <mat-option value="WIP">Time Entry</mat-option>
+                                    <mat-option value="Activity">Activity</mat-option>
+                                    <mat-option value="Sundry">Sundry</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
@@ -43,14 +43,9 @@
                         </div>
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                             <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline">
-                                <mat-label>Quantity Type</mat-label>
+                                <mat-label>{{QuantityTypeLabel}}</mat-label>
                                 <mat-select formControlName="QUANTITYTYPE">
-                                    <mat-option value="X">hh:mm</mat-option>
-                                    <mat-option value="H">Hours</mat-option>
-                                    <mat-option value="M">Minutes</mat-option>
-                                    <mat-option value="D">Days</mat-option>
-                                    <mat-option value="U">Units</mat-option>
-                                    <mat-option value="F">Fixed</mat-option>
+                                    <mat-option *ngFor="let Activity of ActivityList" value="{{Activity.ACTIVITYID}}">{{Activity.DESCRIPTION}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
@@ -75,16 +70,18 @@
                             <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
                                 <mat-label>Select Text</mat-label>
                                 <mat-select>
-                                    <mat-option *ngFor="let Lookups of LookupsList" value="{{Lookups.LOOKUPGUID}}">{{Lookups.LOOKUPFULLVALUE}}</mat-option>
+                                    <mat-option *ngFor="let Lookups of LookupsList" (click)="LookupsChange(Lookups.LOOKUPFULLVALUE)" value="{{Lookups.LOOKUPGUID}}">{{Lookups.LOOKUPFULLVALUE}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
                         <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                            <mat-form-field appearance="outline" fxFlex="50">
+                            <mat-form-field appearance="outline" fxFlex="100">
                                 <mat-label>Invoice Text</mat-label>
                                 <textarea matInput formControlName="ADDITIONALTEXT"></textarea>
                             </mat-form-field>
-                            <mat-form-field appearance="outline" fxFlex="50">
+                        </div>
+                        <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field appearance="outline" fxFlex="100">
                                 <mat-label>Comment</mat-label>
                                 <textarea matInput formControlName="COMMENT"></textarea>
                             </mat-form-field>

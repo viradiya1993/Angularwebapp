@@ -19,6 +19,17 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   userList: any;
   matterList: any;
   isspiner: boolean = false;
+  ActivityList: any = [];
+  optionList: any = [
+    { 'ACTIVITYID': 'hh:mm', 'DESCRIPTION': 'hh:mm' },
+    { 'ACTIVITYID': 'Hours', 'DESCRIPTION': 'Hours' },
+    { 'ACTIVITYID': 'Minutes', 'DESCRIPTION': 'Minutes' },
+    { 'ACTIVITYID': 'Days', 'DESCRIPTION': 'Days' },
+    { 'ACTIVITYID': 'Units', 'DESCRIPTION': 'Units' },
+    { 'ACTIVITYID': 'Fixed', 'DESCRIPTION': 'Fixed' }
+  ];;
+
+  QuantityTypeLabel: any = 'Quantity Type';
 
   constructor(
     public dialogRef: MatDialogRef<TimeEntryDialogComponent>,
@@ -29,7 +40,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   ) { }
   timeEntryForm: FormGroup;
   ngOnInit() {
-
+    this.ActivityList = this.optionList;
     this.timeEntryForm = this._formBuilder.group({
       MATTERGUID: ['', Validators.required],
       ITEMTYPE: ['', Validators.required],
@@ -80,7 +91,24 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     return this.timeEntryForm.controls;
   }
   itemTypeChange(value: any) {
-    console.log(value);
+    if (value == 'Activity' || value == 'Sundry') {
+      this.QuantityTypeLabel = value == 'Activity' ? 'Activity' : 'Sundry';
+      let callType = value == 'Activity' ? 'Activity' : 'Sundries';
+      this.Timersservice.GetActivity({ "ActivityType": callType }).subscribe(res => {
+        if (res.CODE == 200 && res.STATUS == "success") {
+          this.ActivityList = res.DATA.ACTIVITIES;
+          console.log(this.ActivityList);
+        }
+      }, err => {
+        this.toastr.error(err);
+      });
+    } else {
+      this.QuantityTypeLabel = 'Quantity Type';
+      this.ActivityList = this.optionList;
+    }
+  }
+  LookupsChange(value: any) {
+    this.timeEntryForm.controls['ADDITIONALTEXT'].setValue(value);
   }
   SaveClickTimeEntry() {
     this.isspiner = true;
@@ -90,7 +118,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       "ADDITIONALTEXT": this.f.ADDITIONALTEXT.value,
       "COMMENT": this.f.COMMENT.value,
       "FEEEARNER": this.f.FEEEARNER.value,
-      // "FEETYPE": "value",
+      "FEETYPE": this.f.ITEMTYPE.value,
       // "INVOICEGUID": "value",
       // "INVOICEORDER": "value",
       "ITEMDATE": this.f.FEEEARNER.value,
@@ -106,8 +134,19 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       "QUANTITYTYPE": this.f.QUANTITYTYPE.value,
       "QUANTITY": this.f.QUANTITY.value,
     }
+    this.Timersservice.SetWorkItems(PostTimeEntryData).subscribe(res => {
+      if (res.CODE == 200 && res.STATUS == "success") {
+
+      } else {
+        if (res.CODE == 402 && res.STATUS == "error" && res.MESSAGE == "Not logged in")
+          this.dialogRef.close(false);
+      }
+      this.isspiner = false;
+    }, err => {
+      this.isspiner = false;
+      this.toastr.error(err);
+    });
     console.log(PostTimeEntryData);
-    console.log('SaveClickTimeEntry');
   }
 
 }

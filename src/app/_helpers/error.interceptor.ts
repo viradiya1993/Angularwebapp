@@ -26,13 +26,18 @@ export class ErrorInterceptor implements HttpInterceptor {
                         this.toasterService.error(evt.body.STATUS);
                     } else if (evt.body.CODE == 450 && evt.body.STATUS == "error") {
                         let bodyData = evt.body.DATA.VALIDATIONS;
-                        let errorData = "";
+                        let errorData: any = [];
+                        let warningData: any = [];
                         bodyData.forEach(function (value) {
                             if (value.VALUEVALID == 'NO')
-                                errorData = errorData + value.ERRORDESCRIPTION;
+                                errorData.push(value.ERRORDESCRIPTION);
+                            else if (value.VALUEVALID == 'WARNING')
+                                warningData.push(value.ERRORDESCRIPTION);
                         });
-                        if (errorData != '')
+                        if (Object.keys(errorData).length != 0)
                             this.toasterService.error(errorData);
+                        if (Object.keys(warningData).length != 0)
+                            this.toasterService.warning(warningData);
                     } else if ((evt.body.CODE > 400 && evt.body.CODE < 499) && (evt.body.STATUS == "error" || evt.body.RESPONSE == "error")) {
                         this.toasterService.error(evt.body.MESSAGE);
                         if (evt.body.MESSAGE == "Not logged in") {

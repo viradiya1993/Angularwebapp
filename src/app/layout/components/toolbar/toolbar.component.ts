@@ -38,7 +38,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     timerInterval: any;
     currentTimer: any = 0;
     currentTimerHMS: any;
-    ReportListObj: any[] = []
+    ReportListObj: any[] = [];
     getContactData: any;
     activeSubMenu: any = '';
 
@@ -65,8 +65,33 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.navBarSetting(this.router.url);
         });
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (this.currentUser)
+        if (this.currentUser){
             this.timerId = 'timer_' + this.currentUser.UserGuid;
+        }
+        //Report Listing
+        this.reportlistService.allreportlist({}).subscribe(res => {            
+         if(res.CODE == 200 && res.STATUS == 'success') {
+            res.DATA.REPORTS.forEach(element => {                    
+                if (!this.ReportListObj[element.REPORTGROUP]) {
+                    let temp = [];                      
+                    temp.push(element);
+                    this.ReportListObj[element.REPORTGROUP] = temp;
+                }else{
+                    let demo=this.ReportListObj[element.REPORTGROUP]
+                    demo.push(element); 
+                    this.ReportListObj[element.REPORTGROUP]=demo; 
+                }
+            });  
+              let demoTemp=this.ReportListObj;
+              let tem:any=[];
+                for (let i in demoTemp) {
+                    tem[i]=chunks(demoTemp[i]);
+                }   
+                this.ReportListObj=tem; 
+            }
+        },err => {
+            this.toastr.error(err);
+        }); 
     }
 
 
@@ -87,28 +112,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.rightNavbar = settings.layout.navbar.position === 'right';
             this.hiddenNavbar = settings.layout.navbar.hidden === true;
         });
-        //Report Listing
-        this.reportlistService.allreportlist({}).subscribe(res => {
-            if (res.CODE == 200 && res.STATUS == 'success') {
-                res.DATA.REPORTS.forEach(element => {
-                    if (!this.ReportListObj[element.REPORTGROUP]) {
-                        let temp = [];
-                        temp.push(element);
-                        this.ReportListObj[element.REPORTGROUP] = temp;
-                    } else {
-                        let demo = this.ReportListObj[element.REPORTGROUP];
-                        demo.push(element);
-                        this.ReportListObj[element.REPORTGROUP] = demo;
-                    }
-                });
-            }
-        },
-            err => {
-                this.toastr.error(err);
-            });
-    }
-
-
+    } 
+    
     //for binding
 
     /* ---------------------------------------------------------------------------start of timer add-------------------------------------------------------------------------  */
@@ -361,4 +366,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }, 500);
     }
 
+}
+//2 pair Data Convert
+function chunks(arr, size = 2) {
+    return arr.map((x, i) => i % size == 0 && arr.slice(i, i + size)).filter(x => x);
 }

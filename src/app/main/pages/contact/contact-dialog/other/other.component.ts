@@ -9,14 +9,14 @@ import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
   selector: 'app-other',
   templateUrl: './other.component.html',
   styleUrls: ['./other.component.scss'],
-  providers: [
-    {
-        provide: DateAdapter, useClass: AppDateAdapter
-    },
-    {
-        provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
-    }
-    ]
+  // providers: [
+  //   {
+  //       provide: DateAdapter, useClass: AppDateAdapter
+  //   },
+  //   {
+  //       provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
+  //   }
+  //   ]
 })
 export class OtherComponent implements OnInit {
 
@@ -36,9 +36,9 @@ export class OtherComponent implements OnInit {
   }
 
   ngOnInit() {
-    //  this.datepipe.transform(localStorage.setItem('date','25/04/2018'), 'MM/dd/yyyy');
+    console.log();
      //console.log(begin);
-   //this.contactForm.controls['DATEOFBIRTH'].setValue(new Date(localStorage.getItem('date')));
+    // this.contactForm.controls['DATEOFBIRTH'].setValue(new Date(localStorage.getItem('date')));
     this.common = [
 
       { Id: 1, Name: "Male" },

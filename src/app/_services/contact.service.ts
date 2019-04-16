@@ -20,12 +20,9 @@ export class ContactService {
 
   //get data for popup
   getContact(val) {
-
     return this.http.post<any>(environment.APIEndpoint + 'GetContact', val);
   }
-
   //for delete contact
-
   deleteContact(getContactGuId) {
     console.log(getContactGuId);
     this.http.post<any>(environment.APIEndpoint + 'SetContact', getContactGuId)
@@ -34,7 +31,7 @@ export class ContactService {
          if(res.STATUS=="success"){
           this.toastr.success(res.STATUS);
          }else{
-         this.toastr.error(res.STATUS);
+         this.toastr.error("You Can't Delete Contact Which One Is To Related to Matters");
          }
          console.log(res);
         });

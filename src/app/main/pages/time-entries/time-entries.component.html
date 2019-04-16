@@ -74,7 +74,7 @@
                         </mat-cell>
                     </ng-container>
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="highlightedRows=row.WORKITEMGUID" [style.background]="highlightedRows == row.WORKITEMGUID ? selectedColore : ''" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editTimeEntry(row.WORKITEMGUID);highlightedRows=row.WORKITEMGUID" [style.background]="highlightedRows == row.WORKITEMGUID ? selectedColore : ''" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                     </mat-row>
                 </mat-table>
                 <mat-paginator [pageSizeOptions]="[10, 20,50,100]" showFirstLastButtons></mat-paginator>

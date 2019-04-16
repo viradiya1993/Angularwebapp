@@ -65,12 +65,16 @@ export class TimeEntriesComponent implements OnInit {
   get f() {
     return this.TimeEnrtyForm.controls;
   }
+  editTimeEntry(Data: any) {
+    localStorage.setItem('edit_WORKITEMGUID', Data);
+  }
   LoadData(Data) {
     this.isLoadingResults = true;
     this.Timersservice.getTimeEnrtyData(Data).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.WORKITEMS[0]) {
           this.highlightedRows = response.DATA.WORKITEMS[0].WORKITEMGUID;
+          localStorage.setItem('edit_WORKITEMGUID', this.highlightedRows);
         }
         this.TimerData = new MatTableDataSource(response.DATA.WORKITEMS)
         this.TimerData.paginator = this.paginator

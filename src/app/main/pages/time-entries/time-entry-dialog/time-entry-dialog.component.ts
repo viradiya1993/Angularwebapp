@@ -107,20 +107,23 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     return this.timeEntryForm.controls;
   }
   itemTypeChange(value: any) {
+    this.isLoadingResults = true;
     if (value == 'Activity' || value == 'Sundry') {
       this.QuantityTypeLabel = value == 'Activity' ? 'Activity' : 'Sundry';
       let callType = value == 'Activity' ? 'Activity' : 'Sundries';
       this.Timersservice.GetActivity({ "ActivityType": callType }).subscribe(res => {
         if (res.CODE == 200 && res.STATUS == "success") {
           this.ActivityList = res.DATA.ACTIVITIES;
-          console.log(this.ActivityList);
+          this.isLoadingResults = false;
         }
       }, err => {
+        this.isLoadingResults = false;
         this.toastr.error(err);
       });
     } else {
       this.QuantityTypeLabel = 'Quantity Type';
       this.ActivityList = this.optionList;
+      this.isLoadingResults = false;
     }
   }
   LookupsChange(value: any) {

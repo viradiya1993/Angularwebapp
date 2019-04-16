@@ -34,7 +34,7 @@
                 <mat-row [style.background]="highlightedRows == row.PERSONGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" class="contact" (click)="editContact(row.PERSONGUID);highlightedRows = row.PERSONGUID" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                 </mat-row>
             </mat-table>
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" showFirstLastButtons></mat-paginator>
         </div>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">

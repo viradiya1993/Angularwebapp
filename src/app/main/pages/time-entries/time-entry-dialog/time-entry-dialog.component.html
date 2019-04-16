@@ -1,3 +1,6 @@
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+</div>
 <div class="popup_main_div">
     <h2 mat-dialog-title>Add New Time Entry
         <button class="btn" mat-icon-button (click)="ondialogcloseClick()" aria-label="Close dialog">
@@ -27,7 +30,7 @@
                         </div>
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                                <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="ITEMDATE">
+                                <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" formControlName="ITEMDATE">
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
                             </mat-form-field>

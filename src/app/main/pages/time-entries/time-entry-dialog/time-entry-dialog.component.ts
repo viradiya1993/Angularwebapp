@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDatepickerInputEvent } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { TimersService, MattersService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -19,6 +19,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   userList: any;
   matterList: any;
   isspiner: boolean = false;
+  isLoadingResults: boolean = false;
   ActivityList: any = [];
   optionList: any = [
     { 'ACTIVITYID': 'hh:mm', 'DESCRIPTION': 'hh:mm' },
@@ -27,7 +28,8 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     { 'ACTIVITYID': 'Days', 'DESCRIPTION': 'Days' },
     { 'ACTIVITYID': 'Units', 'DESCRIPTION': 'Units' },
     { 'ACTIVITYID': 'Fixed', 'DESCRIPTION': 'Fixed' }
-  ];;
+  ];
+  ITEMDATEVLAUE: any;
 
   QuantityTypeLabel: any = 'Quantity Type';
 
@@ -36,7 +38,9 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     private Timersservice: TimersService,
     private MattersService: MattersService,
     private toastr: ToastrService,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private toasterService: ToastrService,
+    public datepipe: DatePipe
   ) { }
   timeEntryForm: FormGroup;
   ngOnInit() {
@@ -53,30 +57,42 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       ADDITIONALTEXT: ['', Validators.required],
       COMMENT: ['', Validators.required],
     });
+    this.isLoadingResults = true;
     this.Timersservice.GetLookupsData({}).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.LookupsList = res.DATA.LOOKUPS;
-      } else
+      } else {
         this.LookupsList = [];
+      }
+      this.isLoadingResults = false;
     }, err => {
       this.toastr.error(err);
     });
+    this.isLoadingResults = true;
     this.Timersservice.GetUsers({}).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.userList = res.DATA.USERS;
-      } else
+      } else {
         this.userList = [];
+      }
+      this.isLoadingResults = false;
     }, err => {
       this.toastr.error(err);
     });
+    this.isLoadingResults = true;
     this.MattersService.getMatters({ "Active": "active" }).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.matterList = res.DATA.MATTERS;
-      } else
+      } else {
         this.matterList = [];
+      }
+      this.isLoadingResults = false;
     }, err => {
       this.toastr.error(err);
     });
+  }
+  choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.ITEMDATEVLAUE = this.datepipe.transform(event.value, 'dd/MM/yyyy');
   }
   ngAfterViewInit(): void {
     $('#time_Control').attr('placeholder', 'Select time');
@@ -112,7 +128,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   }
   SaveClickTimeEntry() {
     this.isspiner = true;
-    // 4
     let PostTimeEntryData = {
       "FormAction": "insert",
       "ADDITIONALTEXT": this.f.ADDITIONALTEXT.value,
@@ -121,7 +136,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       "FEETYPE": this.f.ITEMTYPE.value,
       // "INVOICEGUID": "value",
       // "INVOICEORDER": "value",
-      "ITEMDATE": this.f.FEEEARNER.value,
+      "ITEMDATE": this.ITEMDATEVLAUE,
       "ITEMTIME": "value",
       "MATTERGUID": this.f.MATTERGUID.value,
       "PRICE": this.f.PRICE.value,
@@ -136,7 +151,8 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     }
     this.Timersservice.SetWorkItems(PostTimeEntryData).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
-
+        this.toasterService.success('Time entry added successfully');
+        this.dialogRef.close(false);
       } else {
         if (res.CODE == 402 && res.STATUS == "error" && res.MESSAGE == "Not logged in")
           this.dialogRef.close(false);

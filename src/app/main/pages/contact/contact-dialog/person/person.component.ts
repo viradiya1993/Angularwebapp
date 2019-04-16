@@ -48,11 +48,14 @@ export class PersonComponent implements OnInit {
   }
   triggerSomeEvent(f) {
     console.log(f);
-    if (f.value.KNOWNBYOTHERNAME) {
+    if (f.value.KNOWNBYOTHERNAME==true) {
       this.contactForm.get('OTHERGIVENNAMES').enable();
       this.contactForm.get('OTHERFAMILYNAME').enable();
       this.contactForm.get('REASONFORCHANGE').enable();
     } else {
+      this.contactForm.controls['OTHERGIVENNAMES'].setValue("");
+      this.contactForm.controls['OTHERFAMILYNAME'].setValue("");
+      this.contactForm.controls['REASONFORCHANGE'].setValue("");
       this.contactForm.get('OTHERGIVENNAMES').disable();
       this.contactForm.get('OTHERFAMILYNAME').disable();
       this.contactForm.get('REASONFORCHANGE').disable();

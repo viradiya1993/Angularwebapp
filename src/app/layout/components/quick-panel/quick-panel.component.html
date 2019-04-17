@@ -11,7 +11,7 @@
                 <p matLine class="secondary-text">{{event.matter_id}}</p>
                 <button mat-raised-button color="primary" *ngIf="!event.isStart" (click)="startTimer(event.matter_id)" mat-button class="play_btn"><i class="material-icons">play_arrow</i></button>
                 <button mat-raised-button color="primary" *ngIf="event.isStart" (click)="stopTimer(event.matter_id)" mat-button class="pause_btn"><i class="material-icons">pause</i></button>
-                <button mat-raised-button color="primary" mat-button class="pause_btn" (click)="endTimer(event.matter_id)"><i class="material-icons">stop</i></button>
+                <button mat-raised-button color="primary" mat-button class="pause_btn" (click)="endTimer(event.matterguid)"><i class="material-icons">stop</i></button>
                 <mat-divider cdkFocusRegionEnd></mat-divider>
             </mat-list-item>
        </span>

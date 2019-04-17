@@ -32,12 +32,16 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     { 'ACTIVITYID': 'Fixed', 'DESCRIPTION': 'Fixed' }
   ];
   ITEMDATEVLAUE: any;
-  action: any;
-  dialogTitle: any;
-  buttonText: any;
+  action: any = 'Add';
+  dialogTitle: any = 'Add New Time Entry';
+  buttonText: any = 'Save';
+  calculateData: any = {
+    MatterGuid: '', Itemtype: '', QuantityType: '', Quantity: '', FeeEarner: '', activitycode: '', current_quantity: ''
+  };
   ITEMDATEModel: Date = new Date();
-
+  matterTimerData: any;
   QuantityTypeLabel: any = 'Quantity Type';
+  currentTimeMatter: any = '';
 
   constructor(
     public dialogRef: MatDialogRef<TimeEntryDialogComponent>,
@@ -49,9 +53,14 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     public datepipe: DatePipe,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
-    this.action = _data.edit;
-    this.dialogTitle = _data.edit === 'Edit' ? 'Update Time Entry' : 'Add New Time Entry';
-    this.buttonText = _data.edit === 'Edit' ? 'Update' : 'Save';
+    if (_data.edit == 'Edit' || _data.edit == 'Add') {
+      this.action = _data.edit;
+      this.dialogTitle = _data.edit === 'Edit' ? 'Update Time Entry' : 'Add New Time Entry';
+      this.buttonText = _data.edit === 'Edit' ? 'Update' : 'Save';
+    } else {
+      this.currentTimeMatter = _data.edit;
+      this.matterTimerData = _data.matterData;
+    }
   }
 
   timeEntryForm: FormGroup;
@@ -66,6 +75,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       QUANTITY: [''],
       PRICE: [''],
       PRICEINCGST: [''],
+      ITEMTIME: [''],
       ADDITIONALTEXT: ['', Validators.required],
       COMMENT: [''],
     });
@@ -104,6 +114,9 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     });
     if (this.action === 'Edit') {
       this.setTimeEntryData();
+    } else if (this.currentTimeMatter != '') {
+      console.log(this.matterTimerData);
+      this.timeEntryForm.controls['MATTERGUID'].setValue(this.currentTimeMatter);
     }
   }
   setTimeEntryData() {
@@ -114,7 +127,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
         let timeEntryData = response.DATA.WORKITEMS[0];
         this.timeEntryForm.controls['MATTERGUID'].setValue(timeEntryData.MATTERGUID);
         this.timeEntryForm.controls['ITEMTYPE'].setValue(timeEntryData.ITEMTYPE);
-        // this.timeEntryForm.controls['ITEMTIME'].setValue(timeEntryData.ITEMTIME);
+        this.timeEntryForm.controls['ITEMTIME'].setValue(timeEntryData.ITEMTIME);
         this.timeEntryForm.controls['FEEEARNER'].setValue(timeEntryData.FEEEARNER);
         this.timeEntryForm.controls['QUANTITY'].setValue(timeEntryData.QUANTITY);
         let tempDate = timeEntryData.ITEMDATE.split("/");
@@ -138,8 +151,30 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     $('#time_Control').attr('placeholder', 'Select time');
   }
-  onChangeHour(event) {
-    console.log('event', event);
+  matterChange(key: any, event: any) {
+    if (key == "MatterGuid") {
+      this.calculateData.MatterGuid = event;
+    } else if (key == "Itemtype") {
+      this.calculateData.Itemtype = event;
+    } else if (key == "FeeEarner") {
+      this.calculateData.FeeEarner = event;
+    } else if (key == "QuantityType") {
+      this.calculateData.QuantityType = event;
+    }
+    this.calculateData.Quantity = this.f.QUANTITY.value;
+    this.isLoadingResults = true;
+    this.Timersservice.calculateWorkItems(this.calculateData).subscribe(response => {
+      let CalcWorkItemCharge = response.CalcWorkItemCharge;
+      console.log(CalcWorkItemCharge);
+      this.timeEntryForm.controls['PRICE'].setValue(CalcWorkItemCharge.Price);
+      this.timeEntryForm.controls['PRICEINCGST'].setValue(CalcWorkItemCharge.PriceIncGST);
+      // if (response.CODE == 200 && response.STATUS == "success") {
+      // }
+      this.isLoadingResults = false;
+    }, err => {
+      this.isLoadingResults = false;
+      this.toastr.error(err);
+    });
   }
   ondialogcloseClick(): void {
     this.dialogRef.close(false);
@@ -181,7 +216,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       // "INVOICEGUID": "value",
       // "INVOICEORDER": "value",
       "ITEMDATE": this.ITEMDATEVLAUE,
-      "ITEMTIME": "value",
+      "ITEMTIME": this.f.ITEMTIME.value,
       "MATTERGUID": this.f.MATTERGUID.value,
       "PRICE": this.f.PRICE.value,
       // "PRICECHARGED": "value",

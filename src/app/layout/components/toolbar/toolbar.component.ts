@@ -133,7 +133,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             let timerObj = JSON.parse(localStorage.getItem(this.timerId));
             clearTimeout(this.timerInterval);
             timerObj.forEach(items => {
-                this.prevMatterArray.push({ 'matter_id': items.matter_id, 'time': this.secondsToHms(items.time), 'isStart': items.isStart });
+                this.prevMatterArray.push({ 'matter_id': items.matter_id, 'matterguid': items.matterguid, 'time': this.secondsToHms(items.time), 'isStart': items.isStart });
                 if (localStorage.getItem('start_' + items.matter_id) && items.isStart) {
                     this.currentTimer = localStorage.getItem('start_' + items.matter_id);
                     this.startTimer(items.matter_id);
@@ -214,12 +214,26 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         clearTimeout(this.timerInterval);
     }
     endMatterBack(matterId: any) {
-        console.log(matterId);
-        this.addNewTimeEntry(matterId);
+        let AllTimer = JSON.parse(localStorage.getItem(this.timerId));
+        let currentMater_name: any = '';
+        let matterData;
+        console.log(AllTimer);
+        for (var i = AllTimer.length - 1; i >= 0; --i) {
+            if (AllTimer[i].matterguid == matterId) {
+                matterData = AllTimer[i];
+                currentMater_name = AllTimer[i].matter_id;
+                AllTimer.splice(i, 1);
+            }
+        }
+        localStorage.setItem(this.timerId, AllTimer);
+        localStorage.removeItem('start_' + currentMater_name);
+        clearTimeout(this.timerInterval);
+        this.currentTimer = 0;
+        this.addNewTimeEntry(matterId, matterData);
     }
     //*----**************************************time enrt add start***************************************
-    public addNewTimeEntry(Data: any) {
-        const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '50%', disableClose: true, data: { 'edit': Data } });
+    public addNewTimeEntry(Data: any, matterData: any) {
+        const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '50%', disableClose: true, data: { 'edit': Data, 'matterData': matterData } });
         dialogRef.afterClosed().subscribe(result => {
             console.log(`addNewTimeEntry result: ${result}`);
 

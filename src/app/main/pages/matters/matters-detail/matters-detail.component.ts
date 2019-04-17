@@ -22,6 +22,7 @@ export class MattersDetailComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   currentMatterId: any;
   currentMatter: any;
+  isLoadingResults: any = false;
   constructor(
     private route: ActivatedRoute,
     private _mattersService: MattersService,
@@ -33,17 +34,20 @@ export class MattersDetailComponent implements OnInit {
     this.route.url.subscribe(v =>
       this.currentMatterId = v[0].path
     );
+    this.isLoadingResults = true;
     // currentMatterId
     let postData = { 'MatterGuid': this.currentMatterId };
     this._mattersService.getMattersDetail(postData).subscribe(response => {
-      if (response.CODE == 200 && response.STATUS == "success") {
+      this.isLoadingResults = false;
+      if (response.CODE == 200 && response.STATUS == "success") {        
         this.currentMatter = response.DATA.MATTERS[0];
       }
     }, error => {
       this.toastr.error(error);
     });
     this._mattersService.getMattersContact(postData).subscribe(response => {
-      if (response.CODE == 200 && response.STATUS == "success") {
+      this.isLoadingResults = false;
+      if (response.CODE == 200 && response.STATUS == "success") {        
         this.MatterContact = new MatTableDataSource(response.DATA.queue);
         this.MatterContact.paginator = this.paginator;
       }

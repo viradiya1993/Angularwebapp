@@ -19,6 +19,7 @@ import { ToastrService } from 'ngx-toastr';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   isspiner: boolean = false;
+  hide: boolean = true;
 
 
   constructor(

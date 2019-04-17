@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { IfStmt } from '@angular/compiler';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
@@ -10,11 +9,10 @@ import { ToastrService } from 'ngx-toastr';
 export class ContactService {
   getdata: any;
 
-  constructor(private http: HttpClient, private toastr: ToastrService,) { }
+  constructor(private http: HttpClient, private toastr: ToastrService, ) { }
 
 
   ContactData(d) {
-
     return this.http.post<any>(environment.APIEndpoint + 'GetContact', d);
   }
 
@@ -22,21 +20,9 @@ export class ContactService {
   getContact(val) {
     return this.http.post<any>(environment.APIEndpoint + 'GetContact', val);
   }
-  //for delete contact
-  deleteContact(getContactGuId) {
-    console.log(getContactGuId);
-    this.http.post<any>(environment.APIEndpoint + 'SetContact', getContactGuId)
-      .subscribe(res =>
-        {
-         if(res.STATUS=="success"){
-          this.toastr.success(res.STATUS);
-         }else{
-         this.toastr.error("You Can't Delete Contact Which One Is To Related to Matters");
-         }
-         console.log(res);
-        });
 
-      
+  AddContactData(val) {
+    return this.http.post<any>(environment.APIEndpoint + 'SetContact', val);
   }
 
 }

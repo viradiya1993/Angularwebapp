@@ -163,8 +163,6 @@ export class ContactDialogComponent implements OnInit {
           this.contactForm.get('POSTALCOUNTRY').enable();
           this.samesstreet = false;
         }
-
-        console.log(getContactData.COMPANYNAME);
         //this.contactForm.controls['CONTACTGUID'].setValue(getContactData.CONTACTGUID);
         this.contactForm.controls['CONTACTNAME'].setValue(getContactData.CONTACTNAME);
         this.contactForm.controls['CONTACTTYPE'].setValue(getContactData.CONTACTTYPE);

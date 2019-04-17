@@ -97,6 +97,22 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     }, err => {
       this.toastr.error(err);
     });
+    if (this.action === 'Edit') {
+      this.setEditData();
+    }
+  }
+  setEditData() {
+    this.isLoadingResults = true;
+    this.Timersservice.getTimeEnrtyData({ 'WorkItemGuid': localStorage.getItem('edit_WORKITEMGUID') }).subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        console.log(response.DATA);
+        // this.timeEntryForm.controls['CONTACTNAME'].setValue(1);
+      }
+      this.isLoadingResults = false;
+    }, err => {
+      this.isLoadingResults = false;
+      this.toastr.error(err);
+    });
   }
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.ITEMDATEVLAUE = this.datepipe.transform(event.value, 'dd/MM/yyyy');

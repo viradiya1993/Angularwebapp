@@ -10,7 +10,8 @@ import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-time-entry-dialog',
   templateUrl: './time-entry-dialog.component.html',
-  styleUrls: ['./time-entry-dialog.component.scss']
+  styleUrls: ['./time-entry-dialog.component.scss'],
+  providers: [DatePipe]
 })
 export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
 
@@ -21,6 +22,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   isspiner: boolean = false;
   isLoadingResults: boolean = false;
   ActivityList: any = [];
+  successMsg: any;
   optionList: any = [
     { 'ACTIVITYID': 'hh:mm', 'DESCRIPTION': 'hh:mm' },
     { 'ACTIVITYID': 'Hours', 'DESCRIPTION': 'Hours' },
@@ -32,6 +34,8 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   ITEMDATEVLAUE: any;
   action: any;
   dialogTitle: any;
+  buttonText: any;
+  ITEMDATEModel: Date = new Date();
 
   QuantityTypeLabel: any = 'Quantity Type';
 
@@ -47,6 +51,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   ) {
     this.action = _data.edit;
     this.dialogTitle = _data.edit === 'Edit' ? 'Update Time Entry' : 'Add New Time Entry';
+    this.buttonText = _data.edit === 'Edit' ? 'Update' : 'Save';
   }
 
   timeEntryForm: FormGroup;
@@ -54,15 +59,15 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.ActivityList = this.optionList;
     this.timeEntryForm = this._formBuilder.group({
       MATTERGUID: ['', Validators.required],
-      ITEMTYPE: ['', Validators.required],
-      QUANTITYTYPE: ['', Validators.required],
+      ITEMTYPE: [''],
+      QUANTITYTYPE: [''],
       ITEMDATE: ['', Validators.required],
-      FEEEARNER: ['', Validators.required],
-      QUANTITY: ['', Validators.required],
-      PRICE: ['', Validators.required],
-      PRICEINCGST: ['', Validators.required],
+      FEEEARNER: [''],
+      QUANTITY: [''],
+      PRICE: [''],
+      PRICEINCGST: [''],
       ADDITIONALTEXT: ['', Validators.required],
-      COMMENT: ['', Validators.required],
+      COMMENT: [''],
     });
     this.isLoadingResults = true;
     this.Timersservice.GetLookupsData({}).subscribe(res => {
@@ -98,15 +103,28 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.toastr.error(err);
     });
     if (this.action === 'Edit') {
-      this.setEditData();
+      this.setTimeEntryData();
     }
   }
-  setEditData() {
+  setTimeEntryData() {
     this.isLoadingResults = true;
     this.Timersservice.getTimeEnrtyData({ 'WorkItemGuid': localStorage.getItem('edit_WORKITEMGUID') }).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        console.log(response.DATA);
-        // this.timeEntryForm.controls['CONTACTNAME'].setValue(1);
+        localStorage.setItem('edit_WORKITEMGUID', response.DATA.WORKITEMS[0].WORKITEMGUID);
+        let timeEntryData = response.DATA.WORKITEMS[0];
+        this.timeEntryForm.controls['MATTERGUID'].setValue(timeEntryData.MATTERGUID);
+        this.timeEntryForm.controls['ITEMTYPE'].setValue(timeEntryData.ITEMTYPE);
+        // this.timeEntryForm.controls['ITEMTIME'].setValue(timeEntryData.ITEMTIME);
+        this.timeEntryForm.controls['FEEEARNER'].setValue(timeEntryData.FEEEARNER);
+        this.timeEntryForm.controls['QUANTITY'].setValue(timeEntryData.QUANTITY);
+        let tempDate = timeEntryData.ITEMDATE.split("/");
+        this.ITEMDATEModel = new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]);
+        this.timeEntryForm.controls['PRICEINCGST'].setValue(timeEntryData.PRICEINCGST);
+        this.timeEntryForm.controls['PRICE'].setValue(timeEntryData.PRICE);
+        this.timeEntryForm.controls['ADDITIONALTEXT'].setValue(timeEntryData.ADDITIONALTEXT);
+        this.timeEntryForm.controls['COMMENT'].setValue(timeEntryData.COMMENT);
+        this.timeEntryForm.controls['QUANTITYTYPE'].setValue(timeEntryData.QUANTITYTYPE);
+
       }
       this.isLoadingResults = false;
     }, err => {
@@ -154,7 +172,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   }
   SaveClickTimeEntry() {
     this.isspiner = true;
-    let PostTimeEntryData = {
+    let PostTimeEntryData: any = {
       "FormAction": "insert",
       "ADDITIONALTEXT": this.f.ADDITIONALTEXT.value,
       "COMMENT": this.f.COMMENT.value,
@@ -175,9 +193,15 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       "QUANTITYTYPE": this.f.QUANTITYTYPE.value,
       "QUANTITY": this.f.QUANTITY.value,
     }
+    this.successMsg = 'Time entry added successfully';
+    if (this.action == 'Edit') {
+      PostTimeEntryData.FormAction = 'update';
+      PostTimeEntryData.WorkItemGuid = localStorage.getItem('edit_WORKITEMGUID');
+      this.successMsg = 'Time entry update successfully';
+    }
     this.Timersservice.SetWorkItems(PostTimeEntryData).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
-        this.toasterService.success('Time entry added successfully');
+        this.toasterService.success(this.successMsg);
         this.dialogRef.close(false);
       } else {
         if (res.CODE == 402 && res.STATUS == "error" && res.MESSAGE == "Not logged in")

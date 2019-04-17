@@ -298,16 +298,40 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     deleteContact(): void {
-
-
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: false
         });
-
-
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-
-        this.confirmDialogRef.afterClosed().subscribe(result => {           
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                let getContactGuId = localStorage.getItem('contactGuid');
+                let postData = { FormAction: "delete", CONTACTGUID: getContactGuId }
+                this._getContact.AddContactData(postData).subscribe(res => {
+                    if (res.STATUS == "success") {
+                        this.toastr.success(res.STATUS);
+                    } else {
+                        this.toastr.error("You Can't Delete Contact Which One Is To Related to Matters");
+                    }
+                });;
+            }
+            this.confirmDialogRef = null;
+        });
+    }
+    deleteTimeEntry(): void {
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: false
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                let WORKITEMGUID = localStorage.getItem('edit_WORKITEMGUID');
+                let postData = { FormAction: "delete", WorkItemGuid: WORKITEMGUID }
+                this.TimersServiceI.SetWorkItems(postData).subscribe(res => {
+                    if (res.STATUS == "success" && res.CODE == 200) {
+                        this.toastr.success('Delete successfully');
+                    }
+                });;
+            }
             this.confirmDialogRef = null;
         });
     }

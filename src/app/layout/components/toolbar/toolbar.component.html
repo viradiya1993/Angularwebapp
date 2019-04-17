@@ -510,7 +510,7 @@
                             </button>
                                     </section>
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button">
+                                        <button mat-button class="large-button" (click)="deleteTimeEntry()">
                                    <section class="large-button-container">
                                       <mat-icon class="main-icon">
                                             <img src="assets/icons/web_app/icon_time_cost_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -522,10 +522,10 @@
                                 </button>
                                     </section>
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button">
+                                        <button mat-button class="large-button" disabled>
                                        <section class="large-button-container">
                                           <mat-icon class="main-icon">
-                                                <img src="assets/icons/web_app/icon_time_cost_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                <img class="menu-disabled" src="assets/icons/web_app/icon_time_cost_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                           </mat-icon>
                                           <div class="main-text">
                                              <span>New<br>Timer</span>
@@ -534,10 +534,10 @@
                                     </button>
                                     </section>
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button">
+                                        <button mat-button class="large-button" disabled>
                                            <section class="large-button-container">
                                               <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_time_cost_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                    <img class="menu-disabled" src="assets/icons/web_app/icon_time_cost_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                               </mat-icon>
                                               <div class="main-text">
                                                  <span>Resume<br>Timer</span>

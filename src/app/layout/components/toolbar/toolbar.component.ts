@@ -65,33 +65,33 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.navBarSetting(this.router.url);
         });
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (this.currentUser){
+        if (this.currentUser) {
             this.timerId = 'timer_' + this.currentUser.UserGuid;
         }
         //Report Listing
-        this.reportlistService.allreportlist({}).subscribe(res => {            
-         if(res.CODE == 200 && res.STATUS == 'success') {
-            res.DATA.REPORTS.forEach(element => {                    
-                if (!this.ReportListObj[element.REPORTGROUP]) {
-                    let temp = [];                      
-                    temp.push(element);
-                    this.ReportListObj[element.REPORTGROUP] = temp;
-                }else{
-                    let demo=this.ReportListObj[element.REPORTGROUP]
-                    demo.push(element); 
-                    this.ReportListObj[element.REPORTGROUP]=demo; 
-                }
-            });  
-              let demoTemp=this.ReportListObj;
-              let tem:any=[];
+        this.reportlistService.allreportlist({}).subscribe(res => {
+            if (res.CODE == 200 && res.STATUS == 'success') {
+                res.DATA.REPORTS.forEach(element => {
+                    if (!this.ReportListObj[element.REPORTGROUP]) {
+                        let temp = [];
+                        temp.push(element);
+                        this.ReportListObj[element.REPORTGROUP] = temp;
+                    } else {
+                        let demo = this.ReportListObj[element.REPORTGROUP]
+                        demo.push(element);
+                        this.ReportListObj[element.REPORTGROUP] = demo;
+                    }
+                });
+                let demoTemp = this.ReportListObj;
+                let tem: any = [];
                 for (let i in demoTemp) {
-                    tem[i]=chunks(demoTemp[i]);
-                }   
-                this.ReportListObj=tem; 
+                    tem[i] = chunks(demoTemp[i]);
+                }
+                this.ReportListObj = tem;
             }
-        },err => {
+        }, err => {
             this.toastr.error(err);
-        }); 
+        });
     }
 
 
@@ -112,8 +112,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.rightNavbar = settings.layout.navbar.position === 'right';
             this.hiddenNavbar = settings.layout.navbar.hidden === true;
         });
-    } 
-    
+    }
+
     //for binding
 
     /* ---------------------------------------------------------------------------start of timer add-------------------------------------------------------------------------  */
@@ -219,7 +219,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //*----**************************************time enrt add start***************************************
     public addNewTimeEntry(Data: any) {
-        const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '50%', disableClose: true });
+        const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '50%', disableClose: true, data: { 'edit': Data } });
         dialogRef.afterClosed().subscribe(result => {
             console.log(`addNewTimeEntry result: ${result}`);
 

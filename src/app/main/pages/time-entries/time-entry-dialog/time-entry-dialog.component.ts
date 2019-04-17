@@ -30,6 +30,8 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     { 'ACTIVITYID': 'Fixed', 'DESCRIPTION': 'Fixed' }
   ];
   ITEMDATEVLAUE: any;
+  action: any;
+  dialogTitle: any;
 
   QuantityTypeLabel: any = 'Quantity Type';
 
@@ -40,8 +42,13 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     private toastr: ToastrService,
     private _formBuilder: FormBuilder,
     private toasterService: ToastrService,
-    public datepipe: DatePipe
-  ) { }
+    public datepipe: DatePipe,
+    @Inject(MAT_DIALOG_DATA) public _data: any
+  ) {
+    this.action = _data.edit;
+    this.dialogTitle = _data.edit === 'Edit' ? 'Update Time Entry' : 'Add New Time Entry';
+  }
+
   timeEntryForm: FormGroup;
   ngOnInit() {
     this.ActivityList = this.optionList;

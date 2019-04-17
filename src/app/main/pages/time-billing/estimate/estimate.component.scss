@@ -52,8 +52,21 @@ app-estimate {
 .example-containerdata {
     height: 50%;
     overflow: auto;
-  }
-.mat-table.mat-table.ng-trigger.ng-trigger-animateStagger {
-    width: 300%;
 }
-
+.mat-table.mat-table.ng-trigger.ng-trigger-animateStagger {
+    width: 100%;
+    overflow: auto;
+}
+.more_tbl_clmn mat-footer-row {
+    display: table;
+}
+.more_tbl_clmn .mat-header-cell, .more_tbl_clmn .mat-cell {
+    display: table-cell;
+    white-space: nowrap;
+}
+.more_tbl_clmn mat-header-row {
+    line-height: 56px;
+}
+.more_tbl_clmn mat-row {
+    line-height: 48px;
+}

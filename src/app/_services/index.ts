@@ -22,3 +22,4 @@ export * from './reportlist.service';
 //add contact
 export * from './add-contact.service';
 export * from './reportfilter.service';
+export * from './get-favourite.service';

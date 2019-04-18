@@ -1,6 +1,7 @@
 import { Component, OnInit, Pipe, PipeTransform, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-sorting-dialog',
@@ -16,18 +17,22 @@ export class SortingDialogComponent implements OnInit {
   modelType: string;
   searchporoperty: string;
   noReturnPredicate: string;
+  title: string;
   namesFiltered = [];
   // drag and dropcode:
   all = [];
   even = [];
   constructor(public dialogRef: MatDialogRef<SortingDialogComponent>, @Inject(MAT_DIALOG_DATA) data) {
+   
     this.modelType = data.type;
     data.data.forEach(items => {      
       this.property.push({ 'value': items, 'checked': false });
     });
+    
   }
   ngOnInit(): void {
     this.checkboxdata= JSON.parse(localStorage.getItem(this.modelType)); 
+    if(this.checkboxdata.length==0){this.title="Select All"}else{this.title="Clear"}
     //console.log(this.checkboxdata);   
     //Save Button Click After
     if(this.checkboxdata){
@@ -52,7 +57,7 @@ export class SortingDialogComponent implements OnInit {
      }  
   }
   //when checkbox click here
-  onChange(event, data) { 
+  onChange(event, data) {      
     if (event.checked == true) {
       if (this.all.indexOf(data) == -1) {
         this.all.push(data);
@@ -62,6 +67,7 @@ export class SortingDialogComponent implements OnInit {
         this.all.splice(this.all.indexOf(data), 1);
       }
     }   
+    
   }
   //data drag and drop
   drop(event: CdkDragDrop<string[]>) {
@@ -84,13 +90,22 @@ export class SortingDialogComponent implements OnInit {
     });
      
   }
+  
   //Delete all columns click after delete all data 
-  deleteall(item, event) {    
-    const checked = event.target.checked;
+  deleteall() { 
+    if(this.all.length==0){
+    this.title="Clear"
     this.property.forEach(item => {
-      item.checked = false
-      this.all.splice(item);
-    });
+        item.checked = true
+        this.all.push(item.value);
+        });
+    }else{
+    this.property.forEach(item => {
+        item.checked = false
+        this.all.splice(item);
+        this.title="Select All";
+        });
+    }
   }
 
   //dialog content close event

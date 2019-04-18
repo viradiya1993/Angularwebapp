@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation, Output, EventEmitter, 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import * as _ from 'lodash';
+import * as $ from 'jquery';
 
 import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
@@ -149,7 +150,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     /*convert Secound to HMS*/
-    secondsToHms(d) {
+    secondsToHms(d: any) {
         d = Number(d);
         var hours = Math.floor(d / 3600) < 10 ? ("00" + Math.floor(d / 3600)).slice(-2) : Math.floor(d / 3600);
         var minutes = ("00" + Math.floor((d % 3600) / 60)).slice(-2);
@@ -215,29 +216,29 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     endMatterBack(matterId: any) {
         let AllTimer = JSON.parse(localStorage.getItem(this.timerId));
-        let currentMater_name: any = '';
-        let matterData;
-        console.log(AllTimer);
+        let matterDataTime;
         for (var i = AllTimer.length - 1; i >= 0; --i) {
             if (AllTimer[i].matterguid == matterId) {
-                matterData = AllTimer[i];
-                currentMater_name = AllTimer[i].matter_id;
+                if (localStorage.getItem('start_' + AllTimer[i].matter_id)) {
+                    clearTimeout(this.timerInterval);
+                    matterDataTime = this.secondsToHms(localStorage.getItem('start_' + AllTimer[i].matter_id));
+                    localStorage.removeItem('start_' + AllTimer[i].matter_id);
+                    this.currentTimer = 0;
+                } else {
+                    matterDataTime = this.secondsToHms(AllTimer[i].time);
+                }
                 AllTimer.splice(i, 1);
             }
         }
-        localStorage.setItem(this.timerId, AllTimer);
-        localStorage.removeItem('start_' + currentMater_name);
-        clearTimeout(this.timerInterval);
-        this.currentTimer = 0;
-        this.addNewTimeEntry(matterId, matterData);
+        localStorage.setItem(this.timerId, JSON.stringify(AllTimer));
+        $('#sidebar_open_button').click();
+        this.addNewTimeEntry(matterId, matterDataTime);
+
     }
     //*----**************************************time enrt add start***************************************
     public addNewTimeEntry(Data: any, matterData: any) {
         const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '50%', disableClose: true, data: { 'edit': Data, 'matterData': matterData } });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(`addNewTimeEntry result: ${result}`);
-
-        });
+        dialogRef.afterClosed().subscribe(result => { });
     }
     //*----**************************************time enrt add end***************************************
     /* ---------------------------------------------------------------------end of timer add--------------------------------------------------------------------------  */
@@ -250,13 +251,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 action: 'new'
             }
         });
-        dialogRef.afterClosed().subscribe(result => {
-
-
-            console.log(result);
-
-            console.log(`Dialog result: ${result}`);
-        });
+        dialogRef.afterClosed().subscribe(result => { });
     }
 
 
@@ -268,7 +263,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else {
             localStorage.setItem('contactGuid', getMatterContactGuId.CONTACTGUID);
             const dialogRef = this.dialog.open(ContactDialogComponent, { disableClose: true, data: { action: 'edit' } });
-            dialogRef.afterClosed().subscribe(result => { console.log(result); });
+            dialogRef.afterClosed().subscribe(result => { });
         }
     }
 
@@ -278,7 +273,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.toastr.error("Please Select Contact");
         } else {
             const dialogRef = this.dialog.open(ContactDialogComponent, { disableClose: true, data: { action: 'edit' } });
-            dialogRef.afterClosed().subscribe(result => { console.log(result); });
+            dialogRef.afterClosed().subscribe(result => { });
         }
 
     }
@@ -291,9 +286,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             width: '50%',
             data: getmatguid,
         });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
-        });
+        dialogRef.afterClosed().subscribe(result => { });
     }
 
 
@@ -306,9 +299,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             data: ReportData,
         });
 
-        dialogRef.afterClosed().subscribe(result => {
-            //console.log(`ReportsComponent result: ${result}`);
-        });
+        dialogRef.afterClosed().subscribe(result => { });
     }
 
     deleteContact(): void {

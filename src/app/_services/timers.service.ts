@@ -41,6 +41,12 @@ export class TimersService {
     }
     return this.httpClient.post<any>(environment.APIEndpoint + 'GetLookups', Data);
   }
+  calculateWorkItems(Data: any) {
+    if (Data == null) {
+      Data = {};
+    }
+    return this.httpClient.post<any>(environment.APIEndpoint + 'CalcWorkItemCharge ', Data);
+  }
   SetWorkItems(Data: any) {
     if (Data == null) {
       Data = {};
@@ -76,7 +82,7 @@ export class TimersService {
     /*When add first matter in local storage. Matter array null for first time*/
     if (!localStorage.getItem(timerId)) {
       let matterArry = [];
-      matterArry.push({ 'matter_id': activeMatters.SHORTNAME, 'time': 0, 'isStart': true });
+      matterArry.push({ 'matter_id': activeMatters.SHORTNAME, 'matterguid': activeMatters.MATTERGUID, 'time': 0, 'isStart': true });
       localStorage.setItem(timerId, JSON.stringify(matterArry));
       this.toastr.success("Timer is added for selected matter");
     } else {
@@ -84,13 +90,13 @@ export class TimersService {
       prevMatterArray.forEach(items => {
         let startTimer: any = localStorage.getItem('start_' + items.matter_id);
         if (startTimer) {
-          demoTimer.push({ 'matter_id': items.matter_id, 'time': startTimer, 'isStart': false });
+          demoTimer.push({ 'matter_id': items.matter_id, 'matterguid': items.matterguid, 'time': startTimer, 'isStart': false });
           localStorage.removeItem('start_' + items.matter_id);
         } else {
-          demoTimer.push({ 'matter_id': items.matter_id, 'time': items.time, 'isStart': false });
+          demoTimer.push({ 'matter_id': items.matter_id, 'matterguid': items.matterguid, 'time': items.time, 'isStart': false });
         }
       });
-      demoTimer.push({ 'matter_id': activeMatters.SHORTNAME, 'time': 0, 'isStart': true });
+      demoTimer.push({ 'matter_id': activeMatters.SHORTNAME, 'matterguid': activeMatters.MATTERGUID, 'time': 0, 'isStart': true });
       localStorage.setItem(timerId, JSON.stringify(demoTimer));
     }
     let timeD: any = 0;

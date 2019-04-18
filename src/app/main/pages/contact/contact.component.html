@@ -1,6 +1,29 @@
 <div id="contact" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
     <div fxLayoutAlign="center" class="content">
-        <div class="center p-24 more_tbl_clmn" fusePerfectScrollbar>
+        <div class="center p-24" fusePerfectScrollbar>
+            <div class="matter-serach-div sticky_search_div">
+                <form [formGroup]="">
+                    <mat-form-field class="example" appearance="outline">
+                        <!-- <mat-label>Active Matters</mat-label> -->
+                        <mat-select>
+                            <mat-option value="all contacts">All Contacts</mat-option>
+                            <mat-option value="active contacts">Active Contacts</mat-option>
+                            <mat-option value="inactive contacts">Inactive Contacts</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="example" appearance="outline">
+                        <!-- <mat-label>Has Uninvoiced Work</mat-label> -->
+                        <mat-select>
+                            <mat-option value="">All</mat-option>
+                            <mat-option value="A">A</mat-option>
+                            <mat-option value="A">B</mat-option>
+                            <mat-option value="A">C</mat-option>
+                            <mat-option value="A">D</mat-option>
+                            <mat-option value="A">E</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </form>
+            </div>
             <div class="content">
                 <div class="btn top_right_action_billing">
                     <button mat-icon-button (click)="openDialog()" aria-label="More">

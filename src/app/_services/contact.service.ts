@@ -14,7 +14,6 @@ export class ContactService {
 
 
   ContactData(d) {
-
     return this.http.post<any>(environment.APIEndpoint + 'GetContact', d);
   }
 

@@ -4,6 +4,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { ContactService, AuthenticationService } from '../../../_services';
 import { ToastrService } from 'ngx-toastr';
+import { FormGroup,FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-contact',
@@ -21,15 +22,25 @@ export class ContactComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   datanull: null;
   isLoadingResults: boolean = false;
+  ContactFiltervalue: FormGroup;
+  dropdown1:string;
+  dropdown2:string;
 
-  constructor(private dialog: MatDialog, private Contact: ContactService, private toastr: ToastrService, private authenticationService: AuthenticationService, ) { }
+  constructor(private dialog: MatDialog, private Contact: ContactService, private toastr: ToastrService,private _formBuilder: FormBuilder, private authenticationService: AuthenticationService, ) { }
   Contactdata;
 
   ngOnInit() {
-    this.isLoadingResults = true;
+    this.dropdown1='all';
+    this.dropdown2='-1';
     let d = {};
-    this.Contact.ContactData(d).subscribe(response => {
-      if (response.CODE == 200 && (response.RESPONSE == "success" || response.STATUS == "success")) {
+    this.LoadData(d);
+   let filterVal = { 'active': '', 'FirstLetter': ''};
+   localStorage.setItem('contact_Filter', JSON.stringify(filterVal));
+  }
+  LoadData(data){
+    this.isLoadingResults = true;    
+    this.Contact.ContactData(data).subscribe(response => {
+       if (response.CODE == 200 && (response.RESPONSE == "success" || response.STATUS == "success")) {
         this.Contactdata = new MatTableDataSource(response.DATA.CONTACTS)
         this.Contactdata.paginator = this.paginator
         if (response.DATA.CONTACTS[0]) {
@@ -77,4 +88,44 @@ export class ContactComponent implements OnInit {
       this.displayedColumns = data;
     }
   }
+
+  //Filter:
+  ContactChange(active){ 
+    if(active!='all'){ 
+      let filterVal = { 'active': active, 'FirstLetter': ''};    
+      if (!localStorage.getItem('contact_Filter')) {
+        localStorage.setItem('contact_Filter', JSON.stringify(filterVal));
+      } else {
+        filterVal = JSON.parse(localStorage.getItem('contact_Filter'));
+        filterVal.active = active;
+        localStorage.setItem('contact_Filter', JSON.stringify(filterVal));
+      }
+      this.LoadData(filterVal);
+    }else{ 
+     let filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
+      let filterVal = { 'active': '', 'FirstLetter': filterVals.FirstLetter};
+      localStorage.setItem('contact_Filter', JSON.stringify(filterVal))
+      this.LoadData(filterVal);
+    }
+  }
+ 
+   Contactvalue(FirstLetter){   
+     if(FirstLetter!=-1){
+          let filterVals = { 'active': '', 'FirstLetter': FirstLetter};   
+        if (!localStorage.getItem('contact_Filter')) {
+          localStorage.setItem('contact_Filter', JSON.stringify(filterVals));
+        } else {
+          filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
+          filterVals.FirstLetter = FirstLetter;
+          localStorage.setItem('contact_Filter', JSON.stringify(filterVals));
+        }
+        this.LoadData(filterVals);
+     }else{
+      let filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
+      let filterVal = { 'active': filterVals.active, 'FirstLetter':''};
+      localStorage.setItem('contact_Filter', JSON.stringify(filterVal))
+      this.LoadData(filterVal);
+     }
+  }
+  
 }

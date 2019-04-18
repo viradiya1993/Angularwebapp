@@ -28,6 +28,7 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { ContactCorresDetailsComponent } from './contact-corres-details/contact-corres-details.component';
 
 
+
 const routes = [
   { path: 'contact', component: ContactComponent, canActivate: [AuthGuard] }
 ];
@@ -44,7 +45,6 @@ const routes = [
     CompanyComponent,
 
     ContactCorresDetailsComponent,
-
   ],
   imports: [
     CommonModule,

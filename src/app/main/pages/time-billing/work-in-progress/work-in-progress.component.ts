@@ -23,7 +23,7 @@ export class WorkInProgressComponent implements OnInit {
   ngOnInit() {
     this.isLoadingResults = true;
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
-    this.WorkInProgress.WorkInProgressData(potData).subscribe(res => {
+    this.WorkInProgress.WorkInProgressData(potData).subscribe(res => {      
       if (res.CODE != "error - not logged in" && (res.STATUS == "success" || res.RESPONSE == "success")) {
         this.WorkInProgressdata = new MatTableDataSource(res.DATA.WORKITEMS)
         this.WorkInProgressdata.paginator = this.paginator

@@ -53,7 +53,27 @@ app-contact {
     overflow: auto;
   }
 .mat-table.mat-table.ng-trigger.ng-trigger-animateStagger {
-    width: 300%;
+    width: 100%;
+    overflow: auto;
+    display: table;
+}
+.more_tbl_clmn mat-footer-row {
+    display: table;
+}
+.more_tbl_clmn .mat-header-cell, .more_tbl_clmn .mat-cell {
+    display: table-cell;
+    white-space: nowrap;
+    padding: 0 20px;
+    overflow: inherit;
+}
+.more_tbl_clmn mat-header-row {
+    line-height: 56px;
+}
+.more_tbl_clmn mat-row {
+    line-height: 48px;
+}
+.more_tbl_clmn .mat-header-cell:last-child, .more_tbl_clmn .mat-cell:last-child {
+    padding-right: 70px;
 }
 
 .table tr.active td {

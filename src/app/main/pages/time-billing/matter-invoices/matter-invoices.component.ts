@@ -23,16 +23,12 @@ export class MatterInvoicesComponent implements OnInit {
   ngOnInit() {
     this.isLoadingResults = true;
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
-    this.MatterInvoices.MatterInvoicesData(potData).subscribe(res => {
-      if (res.Invoice.response != "error - not logged in") {
-        localStorage.setItem('session_token', res.Invoice.SessionToken);
-        this.MatterInvoicesdata = new MatTableDataSource(res.Invoice.DataSet)
-        this.MatterInvoicesdata.paginator = this.paginator
-        this.isLoadingResults = false;
-      } else {
-        this.isLoadingResults = false;
-        this.toastr.error(res.Invoice.response);
+    this.MatterInvoices.MatterInvoicesData(potData).subscribe(res => {      
+      if(res.CODE==200 && res.STATUS=="success"){
+          this.MatterInvoicesdata = new MatTableDataSource(res.DATA.INVOICES)
+          this.MatterInvoicesdata.paginator = this.paginator          
       }
+      this.isLoadingResults = false;
     },
       err => {
         this.toastr.error(err);

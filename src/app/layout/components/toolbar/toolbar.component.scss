@@ -189,6 +189,7 @@ toolbar .ribbon-container .large-button {
     position: absolute;
     right: 0;
     top: 0;
+    z-index: 9;
 }
 
 body.theme-default .matbar_header .mat-tab-header {
@@ -262,4 +263,8 @@ body.theme-default .mat-badge-medium.mat-badge-above .mat-badge-content {
 }
 .mat-icon-button .mat-icon.timer_icon_header {
     line-height: 30px;
+}
+
+body.theme-default .goto_tab_main .mat-divider-vertical {
+    width: auto;
 }

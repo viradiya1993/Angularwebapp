@@ -49,7 +49,7 @@ export class FuseNavigationComponent implements OnInit {
       let postdata = { 'USERGUID': guid.UserGuid };
       let Favouritelist=[{ "ID": "matters", "TITLE": "Matters", "URL": "matters", "STAR": "" },
       { "ID": "contact", "TITLE": "Contact", "URL": "contact", "STAR": "" },
-      { "ID": "time_entries", "TITLE": "Time Entries", "URL": "time-entries", "STAR": "" },
+      { "ID": "time_entries", "TITLE": "Time entries", "URL": "time-entries", "STAR": "" },
       { "ID": "diary", "TITLE": "Diary", "URL": "diary", "STAR": "" }]
       
       this.GetFavouriteService.GetFavourite(postdata).subscribe(response => {             

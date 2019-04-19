@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatDialogConfig
 import { ReportfilterService } from '../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
+import * as $ from 'jquery';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -14,13 +15,13 @@ import { environment } from '../../../environments/environment';
 export class ReportsComponent implements OnInit { 
   ReportForm: FormGroup;
   title:string;
-  responseData:string;
+  responseData:string; 
   PDF_Generation:string;
   base_url:string;
   isLoadingResults: boolean = false;
-
   constructor(public dialog: MatDialog,public dialogRef: MatDialogRef<ReportsComponent>,private _formBuilder: FormBuilder,public datepipe: DatePipe,private Reportfilter: ReportfilterService,private toastr: ToastrService,@Inject(MAT_DIALOG_DATA) public data: any){
       //API Call
+     
       if(data.ReportGenerateData){   
         this.PDF_Generation=data.ReportGenerateData;
         this.title=data.ReportGenerateData.title;
@@ -28,8 +29,8 @@ export class ReportsComponent implements OnInit {
       }else{ 
         this.isLoadingResults = true;
         this.Reportfilter.ReportfilterData(this.data.REPORTID).subscribe(response => {          
-          this.isLoadingResults = false;
-           if(response.CODE==200 && response.STATUS=='success'){ 
+          this.isLoadingResults = false;  
+           if(response.CODE==200 && response.STATUS=='success'){
              this.responseData=response.DATA; 
              this.title=response.DATA.REPORTTITLE;          
             //option1
@@ -112,6 +113,8 @@ export class ReportsComponent implements OnInit {
                 this.ReportForm.controls['OPTIONTEXT10'].setValue(true);
               }
             }           
+          }else{            
+             this.dialogRef.close(true);
           }
         },
         error => {

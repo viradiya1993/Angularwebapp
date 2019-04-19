@@ -288,3 +288,39 @@
     height: 40px;
     line-height: 40px;
 }
+
+.cal-week-view .cal-time-events .cal-event-container {
+    position: absolute;
+    z-index: 1;
+    width: 90% !important;
+}
+.cal-week-view .cal-event {
+    padding: 5px !important;
+    font-size: 12px;
+    background-color: #4d2184 !important;
+    border: 1px solid #4d2184 !important;
+    color: #fff;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 100%;
+}
+.cal-week-view .cal-event mwl-calendar-event-title .cal-event-title {
+    display: block;
+    height: 26px;
+    line-height: 26px;
+    text-decoration: none;
+}
+.cal-day-view .cal-event {
+    padding: 5px;
+    font-size: 12px;
+    background-color: #4d2184 !important;
+    border: 1px solid #4d2184 !important;
+    color: #fff;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 100%;
+}

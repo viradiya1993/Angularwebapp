@@ -293,10 +293,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     //Reportpopup open
     Reportpopup(ReportData) {
         const dialogConfig = new MatDialogConfig();
-        dialogConfig.width = '40%';
+        dialogConfig.width = '40%';        
         const dialogRef = this.dialog.open(ReportsComponent, {
             width: '40%',
             data: ReportData,
+            disableClose: true,
         });
 
         dialogRef.afterClosed().subscribe(result => { });

@@ -58,16 +58,15 @@ export class SortingDialogComponent implements OnInit {
   }
   //when checkbox click here
   onChange(event, data) {      
-    if (event.checked == true) {
+    if (event.checked == true) { 
       if (this.all.indexOf(data) == -1) {
         this.all.push(data);
       }
-    } else if (event.checked == false) {
+    } else if (event.checked == false) {      
       if (this.all.indexOf(data) != -1) {
-        this.all.splice(this.all.indexOf(data), 1);
+        this.all.splice(this.all.indexOf(data), 1);       
       }
     }   
-    
   }
   //data drag and drop
   drop(event: CdkDragDrop<string[]>) {
@@ -93,6 +92,7 @@ export class SortingDialogComponent implements OnInit {
   
   //Delete all columns click after delete all data 
   deleteall() { 
+    console.log(this.all.length);
     if(this.all.length==0){
     this.title="Clear"
     this.property.forEach(item => {
@@ -102,9 +102,9 @@ export class SortingDialogComponent implements OnInit {
     }else{
     this.property.forEach(item => {
         item.checked = false
-        this.all.splice(item);
-        this.title="Select All";
+        this.all.splice(item);        
         });
+        this.title="Select All";
     }
   }
 

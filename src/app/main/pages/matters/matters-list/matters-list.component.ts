@@ -6,7 +6,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material';
 //import { MattersService } from '../matters.service';
 import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.component';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
-import { MattersService } from '../../../../_services';
+import { MattersService, TableColumnsService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 
 
@@ -35,7 +35,8 @@ export class MattersListComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private _mattersService: MattersService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private TableColumnsService: TableColumnsService,
   ) {
     if (JSON.parse(localStorage.getItem('matter_filter'))) {
       this.lastFilter = JSON.parse(localStorage.getItem('matter_filter'));
@@ -44,6 +45,14 @@ export class MattersListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.TableColumnsService.getTableFilter('Matters').subscribe(response => {
+      console.log(response);
+      if (response.CODE == 200 && response.STATUS == "success") {
+
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
     this.getMatterList(this.lastFilter);
   }
   ngOnDestroy(): void { }

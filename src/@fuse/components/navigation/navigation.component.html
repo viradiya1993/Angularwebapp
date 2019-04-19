@@ -6,7 +6,7 @@
             <div class="info">Search To Add Favourite</div>
             <div>
                 <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Search page here" (click)="changeIcon()" [(ngModel)]="searchpage" name="searchpage">
+                    <input matInput placeholder="Search page here" [ngModelOptions]="{ standalone: true }" (click)="changeIcon()" [(ngModel)]="searchpage" name="searchpage">
                     <mat-icon matSuffix class="disabled-text" (click)="clearSearch()">{{icon}}</mat-icon>
                 </mat-form-field>
             </div>
@@ -19,15 +19,14 @@
                 </mat-list>
             </div>
         </form>
-        <p class="name">Favourite </p>         
-        
-            <ng-container *ngFor="let favopages of page">
-              <span *ngIf="favopages.STAR=='star'">
-                  {{favopages | json}}
+        <p class="name">Favourite </p>
+        {{pages|json}}
+        <ng-container *ngFor="let favopages of page">
+            <span *ngIf="favopages.STAR=='star'">
                     <fuse-nav-vertical-item *ngIf="favopages.type=='item'" [item]="favopages"></fuse-nav-vertical-item>
-              </span>                
-            </ng-container>
-       
+              </span>
+        </ng-container>
+
     </ng-container>
     <!-- / Vertical Navigation Layout -->
 </div>

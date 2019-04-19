@@ -23,3 +23,5 @@ export * from './reportlist.service';
 export * from './add-contact.service';
 export * from './reportfilter.service';
 export * from './get-favourite.service';
+export * from './table-columns.service';
+

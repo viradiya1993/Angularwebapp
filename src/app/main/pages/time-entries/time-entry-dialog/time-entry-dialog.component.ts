@@ -38,7 +38,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   calculateData: any = {
     MatterGuid: '', Itemtype: '', QuantityType: '', Quantity: '', FeeEarner: '', activitycode: '', current_quantity: ''
   };
-  ITEMDATEModel: Date = new Date();
+  ITEMDATEModel: Date;
   matterTimerData: any;
   QuantityTypeLabel: any = 'Quantity Type';
   currentTimeMatter: any = '';
@@ -115,8 +115,11 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     if (this.action === 'Edit') {
       this.setTimeEntryData();
     } else if (this.currentTimeMatter != '') {
-      console.log(this.matterTimerData);
       this.timeEntryForm.controls['MATTERGUID'].setValue(this.currentTimeMatter);
+      this.timeEntryForm.controls['QUANTITYTYPE'].setValue('hh:mm');
+      this.timeEntryForm.controls['QUANTITY'].setValue(this.matterTimerData);
+      this.timeEntryForm.controls['ITEMTYPE'].setValue('WIP');
+      this.matterChange('', '');
     }
   }
   setTimeEntryData() {
@@ -164,13 +167,12 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.calculateData.Quantity = this.f.QUANTITY.value;
     this.isLoadingResults = true;
     this.Timersservice.calculateWorkItems(this.calculateData).subscribe(response => {
-      let CalcWorkItemCharge = response.CalcWorkItemCharge;
-      console.log(CalcWorkItemCharge);
-      this.timeEntryForm.controls['PRICE'].setValue(CalcWorkItemCharge.Price);
-      this.timeEntryForm.controls['PRICEINCGST'].setValue(CalcWorkItemCharge.PriceIncGST);
-      // if (response.CODE == 200 && response.STATUS == "success") {
-      // }
-      this.isLoadingResults = false;
+      if (response.CODE == 200 && response.STATUS == "success") {
+        let CalcWorkItemCharge = response.DATA;
+        this.timeEntryForm.controls['PRICE'].setValue(CalcWorkItemCharge.PRICE);
+        this.timeEntryForm.controls['PRICEINCGST'].setValue(CalcWorkItemCharge.PRICEINCGST);
+        this.isLoadingResults = false;
+      }
     }, err => {
       this.isLoadingResults = false;
       this.toastr.error(err);
@@ -247,7 +249,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.isspiner = false;
       this.toastr.error(err);
     });
-    console.log(PostTimeEntryData);
   }
 
 }

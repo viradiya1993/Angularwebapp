@@ -46,9 +46,12 @@ export class MattersListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.TableColumnsService.getTableFilter('Matters').subscribe(response => {
-      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
-
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'matterColumns');
+        // this.displayedColumns = data.showcol;
+        // this.ColumnsObj = data.colobj;
+        //       displayedColumns = [];
+        // ColumnsObj = [];
       }
     }, error => {
       this.toastr.error(error);

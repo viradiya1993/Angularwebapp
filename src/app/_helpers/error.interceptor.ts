@@ -19,7 +19,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(
             tap(evt => {
                 if (evt instanceof HttpResponse) {
-                    console.log(evt);
+                    // console.log(evt);
                     if (evt.body.CODE == 200 && (evt.body.STATUS == "success" || evt.body.RESPONSE == "success" || evt.body.STATUS == "OK")) {
                         return true;
                     } else if (evt.body.CODE == 200 && evt.body.STATUS != "success") {

@@ -9,16 +9,15 @@
         <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
     </div>
     <mat-table #table [dataSource]="mattersData" [@animateStagger]="{value:'50'}">
-        <!-- Name Column -->
-        <ng-container matColumnDef="matter_num">
+
+        <ng-container matColumnDef="SHORTNAME">
             <mat-header-cell *matHeaderCellDef fxShow.gt-md>Matter Num</mat-header-cell>
             <mat-cell *matCellDef="let matter" fxShow.gt-md>
                 <p class="text-truncate font-weight-600">{{matter.SHORTNAME}}</p>
             </mat-cell>
         </ng-container>
 
-        <!-- Email Column -->
-        <ng-container matColumnDef="matter">
+        <ng-container matColumnDef="MATTER">
             <mat-header-cell *matHeaderCellDef fxShow.gt-md>Matter</mat-header-cell>
             <mat-cell *matCellDef="let matter" fxShow.gt-md>
                 <p class="email text-truncate">
@@ -27,8 +26,61 @@
             </mat-cell>
         </ng-container>
 
-        <!-- Phone Column -->
-        <ng-container matColumnDef="unbilled">
+        <ng-container matColumnDef="CONTACTNAME">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Contact Name</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="phone text-truncate">
+                    {{matter.CONTACTNAME}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="CONTACTFIRMNAME">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Contact Firm Name</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="phone text-truncate">
+                    {{matter.CONTACTFIRMNAME}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="MATTERTYPE">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Matter Type</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="phone text-truncate">
+                    {{matter.MATTERTYPE}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="CLIENT">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Client</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="phone text-truncate">
+                    {{matter.CLIENT}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="REFERENCE">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Reference</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="phone text-truncate">
+                    {{matter.REFERENCE}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="MATTERCLASS">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Matter Class</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="phone text-truncate">
+                    {{matter.MATTERCLASS}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="UNBILLED">
             <mat-header-cell *matHeaderCellDef fxShow.gt-md>Unbilled</mat-header-cell>
             <mat-cell *matCellDef="let matter" fxShow.gt-md>
                 <p class="phone text-truncate">
@@ -37,8 +89,7 @@
             </mat-cell>
         </ng-container>
 
-        <!-- Job Title Column -->
-        <ng-container matColumnDef="invoiced">
+        <ng-container matColumnDef="INVOICED">
             <mat-header-cell *matHeaderCellDef fxShow.gt-md>Invoiced</mat-header-cell>
             <mat-cell *matCellDef="let matter" fxShow.gt-md>
                 <p class="job-title text-truncate">
@@ -47,8 +98,7 @@
             </mat-cell>
         </ng-container>
 
-        <!-- Company Column -->
-        <ng-container matColumnDef="received">
+        <ng-container matColumnDef="RECEIVED">
             <mat-header-cell *matHeaderCellDef fxShow.gt-md>Received</mat-header-cell>
             <mat-cell *matCellDef="let matter" fxShow.gt-md>
                 <p class="company text-truncate">
@@ -57,7 +107,34 @@
             </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="unpaid">
+        <ng-container matColumnDef="WRITTENOFF">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Writte On Off</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="company text-truncate">
+                    {{matter.WRITTENOFF}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="OUTSTANDING">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Outstanding</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="company text-truncate">
+                    {{matter.OUTSTANDING |currency}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="ESTIMATE">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Estimate</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="company text-truncate">
+                    {{matter.ESTIMATE}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="UNPAID">
             <mat-header-cell *matHeaderCellDef fxShow.gt-md>Unpaid</mat-header-cell>
             <mat-cell *matCellDef="let matter" fxShow.gt-md>
                 <p class="company text-truncate">
@@ -65,7 +142,7 @@
                 </p>
             </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="total_value">
+        <ng-container matColumnDef="TOTALVALUE">
             <mat-header-cell *matHeaderCellDef fxShow.gt-md>Total Value</mat-header-cell>
             <mat-cell *matCellDef="let matter" fxShow.gt-md>
                 <p class="company text-truncate">
@@ -73,6 +150,79 @@
                 </p>
             </mat-cell>
         </ng-container>
+
+        <ng-container matColumnDef="RATEPERHOUR">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Rate Per Hour</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="company text-truncate">
+                    {{matter.RATEPERHOUR |currency}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="RATEPERDAY">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Rate Per Day</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="company text-truncate">
+                    {{matter.RATEPERDAY |currency}}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="FEEAGREEMENTDATE">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Fee Agreement Date</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="company text-truncate">
+                    {{matter.FEEAGREEMENTDATE }}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="BILLINGMETHOD">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Billing Method</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="company text-truncate">
+                    {{matter.BILLINGMETHOD }}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="GSTTYPE">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>GST Type</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="company text-truncate">
+                    {{matter.GSTTYPE }}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="CLIENTSTATUS">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Client Status</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="company text-truncate">
+                    {{matter.CLIENTSTATUS }}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="MATTERNO">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Matter No</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="company text-truncate">
+                    {{matter.MATTERNO }}
+                </p>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="ACTIVE">
+            <mat-header-cell *matHeaderCellDef fxShow.gt-md>Active</mat-header-cell>
+            <mat-cell *matCellDef="let matter" fxShow.gt-md>
+                <p class="company text-truncate">
+                    {{matter.ACTIVE }}
+                </p>
+            </mat-cell>
+        </ng-container>
+
         <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
         <!-- sticky: true" -->
         <div class="tbl_body_scroll">

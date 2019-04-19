@@ -10,8 +10,6 @@ import { Title } from '@angular/platform-browser';
 })
 export class SortingDialogComponent implements OnInit {
   checkboxdata: any = [];
-  //For Dropdown and check box value  
-  //property = ["annual revenue","associated company","associated deals","become a customer date","become a lead date","become a marketing qualified lead date","for testing"];    
   property: any[] = [];
   filterName: string;
   modelType: string;
@@ -19,16 +17,14 @@ export class SortingDialogComponent implements OnInit {
   noReturnPredicate: string;
   title: string;
   namesFiltered = [];
-  // drag and dropcode:
   all = [];
   even = [];
   constructor(public dialogRef: MatDialogRef<SortingDialogComponent>, @Inject(MAT_DIALOG_DATA) data) {
-
     this.modelType = data.type;
     data.data.forEach(items => {
-      this.property.push({ 'value': items, 'checked': false });
+      console.log(items);
+      this.property.push({ 'value': items.COLUMNNAME, 'checked': false });
     });
-
   }
   ngOnInit(): void {
     let tempData = JSON.parse(localStorage.getItem(this.modelType));
@@ -50,8 +46,7 @@ export class SortingDialogComponent implements OnInit {
           }
         });
       });
-    }
-    else {
+    } else {
       this.property.forEach(itemsdata => {
         itemsdata.checked = true;
         if (this.all.indexOf(itemsdata.value) == -1) {

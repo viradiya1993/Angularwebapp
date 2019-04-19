@@ -23,7 +23,8 @@ export class MattersListComponent implements OnInit, OnDestroy {
   highlightedRows: any;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
-  displayedColumns = ['matter_num', 'matter', 'unbilled', 'invoiced', 'received', 'unpaid', 'total_value'];
+  displayedColumns = [];
+  ColumnsObj = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   mattersData: any;
   lastFilter = {};
@@ -41,23 +42,24 @@ export class MattersListComponent implements OnInit, OnDestroy {
     if (JSON.parse(localStorage.getItem('matter_filter'))) {
       this.lastFilter = JSON.parse(localStorage.getItem('matter_filter'));
     }
-    // this.highlightedRows = JSON.parse(localStorage.getItem('set_active_matters')).MATTERGUID
+    this.getTableFilter();
   }
 
   ngOnInit(): void {
+    this.getMatterList(this.lastFilter);
+  }
+  getTableFilter() {
     this.TableColumnsService.getTableFilter('Matters').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'matterColumns');
-        // this.displayedColumns = data.showcol;
-        // this.ColumnsObj = data.colobj;
-        //       displayedColumns = [];
-        // ColumnsObj = [];
+        this.displayedColumns = data.showcol;
+        this.ColumnsObj = data.colobj;
       }
     }, error => {
       this.toastr.error(error);
     });
-    this.getMatterList(this.lastFilter);
   }
+
   ngOnDestroy(): void { }
 
   editmatter(matters) {
@@ -67,7 +69,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': ['matter_num', 'matter', 'unbilled', 'invoiced', 'received', 'unpaid', 'total_value'], 'type': 'matters' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'matters' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click

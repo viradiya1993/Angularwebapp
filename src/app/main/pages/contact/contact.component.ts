@@ -22,20 +22,43 @@ export class ContactComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   datanull: null;
   isLoadingResults: boolean = false;
-  ContactFiltervalue: FormGroup;
-  dropdown1:string;
-  dropdown2:string;
-
-  constructor(private dialog: MatDialog, private Contact: ContactService, private toastr: ToastrService,private _formBuilder: FormBuilder, private authenticationService: AuthenticationService, ) { }
+  contactFilter: FormGroup;  
+  constructor(private dialog: MatDialog, private Contact: ContactService, private toastr: ToastrService,private _formBuilder: FormBuilder, private authenticationService: AuthenticationService, ) {
+    this.contactFilter = this._formBuilder.group({
+      Filter1:[''],
+      Filter2: [''],
+    });
+   }
   Contactdata;
 
   ngOnInit() {
-    this.dropdown1='all';
-    this.dropdown2='-1';
-    let d = {};
-    this.LoadData(d);
-   let filterVal = { 'active': '', 'FirstLetter': ''};
-   localStorage.setItem('contact_Filter', JSON.stringify(filterVal));
+  
+  let filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
+  let filterVal = { 'active': filterVals.active, 'FirstLetter': filterVals.FirstLetter};
+    this.LoadData(filterVal);
+     if(filterVals.active){
+      if(filterVals.FirstLetter){
+        this.contactFilter.controls['Filter1'].setValue(filterVals.active);
+        this.contactFilter.controls['Filter2'].setValue(filterVals.FirstLetter); 
+      }else{
+        this.contactFilter.controls['Filter1'].setValue(filterVals.active);
+        this.contactFilter.controls['Filter2'].setValue('-1'); 
+      }      
+    }else if(filterVals.FirstLetter){      
+      if(filterVals.active){
+        this.contactFilter.controls['Filter1'].setValue(filterVals.active);
+        this.contactFilter.controls['Filter2'].setValue(filterVals.FirstLetter); 
+      }else{
+        this.contactFilter.controls['Filter1'].setValue('all');
+        this.contactFilter.controls['Filter2'].setValue(filterVals.FirstLetter); 
+    }
+  }else{     
+      this.contactFilter.controls['Filter1'].setValue('all');
+      this.contactFilter.controls['Filter2'].setValue('-1');
+    }   
+  }
+  get f() {
+    return this.contactFilter.controls;
   }
   LoadData(data){
     this.isLoadingResults = true;    

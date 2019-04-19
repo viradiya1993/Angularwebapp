@@ -249,7 +249,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.isspiner = false;
       this.toastr.error(err);
     });
-    console.log(PostTimeEntryData);
   }
 
 }

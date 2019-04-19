@@ -6,6 +6,7 @@ import { FuseNavigationService } from '@fuse/components/navigation/navigation.se
 import { Pipe, PipeTransform } from '@angular/core';
 import { GetFavouriteService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
+declare var $: any;
 
 @Component({
   selector: 'fuse-navigation',
@@ -19,24 +20,12 @@ export class FuseNavigationComponent implements OnInit {
   layout = 'vertical';
 
   @Input()
-  navigation: any;  
+  navigation: any;
   filterName: string;
   searchpage: string;
   //All pages array
-  pagesall = [];
   user: any;
-  page:any[]=[];
-  // page: any[] = [
-  //   { id: 'matters', title: 'Matters', type: 'item', icon: 'icon_matter_d.ico', url: 'matters', star: '' },
-  //   { id: 'contact', title: 'Contact', type: 'item', icon: 'icon_contact_d.ico', url: 'contact', star: '' },
-  //   { id: 'time_entries', title: 'Timen entries', type: 'item', icon: 'icon_time_cost_new_d.ico', url: 'time-entries', star: '' },
-  //   { id: 'diary', title: 'Diary', type: 'item', icon: 'icon_diary_d.ico', url: 'diary', star: '' },
-  //   { id: 'legal_details', title: 'Legal details', type: 'item', icon: 'icon_authorities_d.ico', url: 'legal-details', star: '' },
-  //   { id: 'time_billing', title: 'Time billing', type: 'item', icon: 'icon_invoice_d.ico', url: 'time-billing', star: '' },
-   
-  // ];
- 
-  // Private
+  page: any = [];
   private _unsubscribeAll: Subject<any>;
 
   /**
@@ -50,31 +39,26 @@ export class FuseNavigationComponent implements OnInit {
     public GetFavouriteService: GetFavouriteService,
     private toastr: ToastrService
   ) {
-    
+
     // Set the private defaults
     this._unsubscribeAll = new Subject();
-    let guid=JSON.parse(localStorage.getItem('currentUser')); 
-   if(guid){
-    let postdata = { 'USERGUID':guid.UserGuid  };   
-    this.GetFavouriteService.GetFavourite(postdata).subscribe(response => {      
-      if (response.CODE == 200 && response.STATUS == "success") {
-        //this.page=response.DATA.FAVOURITES;
-        response.DATA.FAVOURITES.forEach(items => {
-          this.page.push({"ID":items.ID, "TITLE":items.TITLE, "URL":items.URL, "STAR":items.STAR, "POSITION":items.POSITION,"type":"item","icon": "icon_matter_d.ico" });
-          
-        });
-      } 
-
-     
-      
-    }, error => {
-      this.toastr.error(error);
-    }); 
-  }
+    let guid = JSON.parse(localStorage.getItem('currentUser'));
+    if (guid) {
+      let postdata = { 'USERGUID': guid.UserGuid };
+      this.GetFavouriteService.GetFavourite(postdata).subscribe(response => {
+        if (response.CODE == 200 && response.STATUS == "success") {
+          response.DATA.FAVOURITES.forEach(items => {
+            this.page.push({ "ID": items.ID, "TITLE": items.TITLE, "URL": items.URL, "STAR": items.STAR, "POSITION": items.POSITION, "type": "item", "icon": "icon_matter_d.ico" });
+          });
+        }
+      }, error => {
+        this.toastr.error(error);
+      });
+    }
 
   }
-  
-  
+
+
   // -----------------------------------------------------------------------------------------------------
   // @ Lifecycle hooks
   // -----------------------------------------------------------------------------------------------------
@@ -84,8 +68,9 @@ export class FuseNavigationComponent implements OnInit {
    */
 
   ngOnInit(): void {
+
     // Load the navigation either from the input or from the service
-    
+
     this.navigation = this.navigation || this._fuseNavigationService.getCurrentNavigation();
 
     // Subscribe to the current navigation changes
@@ -97,7 +82,7 @@ export class FuseNavigationComponent implements OnInit {
         // Mark for check
         this._changeDetectorRef.markForCheck();
       });
-      
+
     // Subscribe to navigation item
     merge(
       this._fuseNavigationService.onNavigationItemAdded,
@@ -116,38 +101,45 @@ export class FuseNavigationComponent implements OnInit {
     //     this.onChange(items.TITLE);
     //   });
     // }
+
   }
 
 
   //For click
-  onChange(values) {   
-      this.page.forEach(items => {        
-        if (items.STAR == '') {
-          if (items.TITLE == values) {            
-            items.STAR = 'star';                        
-          } else {           
-            items.STAR = '';
-          }
-        }else{
-          if (items.TITLE == values) {  
-            items.STAR = '';                        
-          }
+  onChange(values) {
+    this.page.forEach(items => {
+      if (items.STAR == '') {
+        if (items.TITLE == values) {
+          items.STAR = 'star';
+        } else {
+          items.STAR = '';
         }
-      })
-     
-      let guid=JSON.parse(localStorage.getItem('currentUser')); 
-      if(guid){
-        let favouritedatas = { 'USERGUID':guid.UserGuid,"ACTION":"replace","FAVOURITES" :this.page }        
-         this.GetFavouriteService.setFavourite(favouritedatas).subscribe(response => { 
-            console.log(response);     
-            if (response.CODE == 200 && response.STATUS == "success") {
-             // this.toastr.error(error);    
-            } 
-          }, error => {
-            this.toastr.error(error);
-          }); 
+      } else {
+        if (items.TITLE == values) {
+          items.STAR = '';
+        }
       }
-     
+    })
+
+    let guid = JSON.parse(localStorage.getItem('currentUser'));
+    if (guid) {
+      let favouritedatas = { 'USERGUID': guid.UserGuid, "ACTION": "replace", "FAVOURITES": this.page }
+      this.GetFavouriteService.setFavourite(favouritedatas).subscribe(response => {
+        console.log(response);
+        if (response.CODE == 200 && response.STATUS == "success") {
+          // this.toastr.error(error);    
+        }
+      }, error => {
+        this.toastr.error(error);
+      });
+    }
+
+  }
+  ngAfterViewInit() {
+    setTimeout(function () {
+      $(".mat-input-element").trigger('click');
+    }, 5000);
+    this.changeIcon();
   }
   //clear textbox 
   clearSearch() {
@@ -165,7 +157,7 @@ export class FuseNavigationComponent implements OnInit {
 }
 @Pipe({ name: 'filterByName' })
 export class filterNames implements PipeTransform {
-  
+
   // For Old Code
   // transform(listOfNames: any[], nameToFilter: string): any[] { 
   //   if(!listOfNames) return [];
@@ -175,13 +167,13 @@ export class filterNames implements PipeTransform {
   //         return it.value.toLowerCase().includes(nameToFilter);
   //       });
   // } 
-  
-  transform(page: any[], nameToFilter: string): any[] {        
+
+  transform(page: any[], nameToFilter: string): any[] {
     if (!page) return [];
     if (!nameToFilter) return [];
-    nameToFilter = nameToFilter.toLowerCase();    
+    nameToFilter = nameToFilter.toLowerCase();
     return page.filter(it => {
-     //console.log(it);
+      //console.log(it);
       return it.TITLE.toLowerCase().includes(nameToFilter);
     });
   }

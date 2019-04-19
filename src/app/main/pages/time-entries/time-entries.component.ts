@@ -40,8 +40,10 @@ export class TimeEntriesComponent implements OnInit {
     this.isShowDrop = currentUser.ProductType == "Barrister" ? false : true;
     this.TimeEnrtyForm = this.fb.group({ date: [''], uninvoicedWork: [''], dlpdrop: [''], });
     if (this.lastFilter) {
-      let Sd = new Date(this.lastFilter.ItemDateStart);
-      let ed = new Date(this.lastFilter.ItemDateEnd);
+      let tempDate = this.lastFilter.ItemDateStart.split("/");
+      let tempDate2 = this.lastFilter.ItemDateEnd.split("/");
+      let Sd = new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]);
+      let ed = new Date(tempDate2[1] + '/' + tempDate2[0] + '/' + tempDate2[2]);
       this.TimeEnrtyForm.controls['date'].setValue({ begin: Sd, end: ed });
       this.TimeEnrtyForm.controls['uninvoicedWork'].setValue(this.lastFilter.Invoiced);
       this.TimeEnrtyForm.controls['dlpdrop'].setValue(this.lastFilter.FeeEarner);

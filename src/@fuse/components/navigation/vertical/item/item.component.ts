@@ -1,8 +1,6 @@
 import { ChangeDetectorRef, Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
 import { merge, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
-import { FuseNavigationItem } from '@fuse/types';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 
 @Component({
@@ -14,8 +12,7 @@ export class FuseNavVerticalItemComponent implements OnInit, OnDestroy {
     @HostBinding('class')
     classes = 'nav-item';
 
-    @Input()
-    item: FuseNavigationItem;
+    @Input() item: any;
 
     // Private
     private _unsubscribeAll: Subject<any>;

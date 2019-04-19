@@ -39,13 +39,17 @@
             </div>
         </div>
     </mat-dialog-content>
-    <mat-dialog-actions align="end" class="popup_ftr">         
-        <div class="clear">
-            <!-- <button mat-button matBadgeColor="accent" class="left" (click)="clearAll()">Clear All</button>
-            <button mat-button matBadgeColor="accent"  class="left" (click)="checkall()">Check All</button> -->
-            <button  class="cancel" mat-button  matBadgeColor="accent" (click)="deleteall()">{{title}} </button>
+    <mat-dialog-actions align="end" class="popup_ftr">
+        <div class="clear left_popup_btn">
+            <button class="cancel" mat-button matBadgeColor="accent" (click)="deleteall()">{{title}} </button>
         </div>
-        <button mat-raised-button color="primary" mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="ondialogSaveClick()">Save</button>
-        <button class="cancel" mat-button [mat-dialog-close]="true" matBadgeColor="accent" (click)="ondialogcloseClick()">Cancel</button>
+        <div class="right_popup_btn">
+            <div class="right_btn_child">
+                <button mat-raised-button color="primary" mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="ondialogSaveClick()">Save</button>
+            </div>
+            <div class="right_btn_child">
+                <button class="cancel" mat-button [mat-dialog-close]="true" matBadgeColor="accent" (click)="ondialogcloseClick()">Cancel</button>
+            </div>
+        </div>
     </mat-dialog-actions>
 </div>

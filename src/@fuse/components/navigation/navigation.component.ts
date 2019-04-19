@@ -4,6 +4,8 @@ import { takeUntil } from 'rxjs/operators';
 
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { Pipe, PipeTransform } from '@angular/core';
+import { GetFavouriteService } from 'app/_services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'fuse-navigation',
@@ -17,24 +19,23 @@ export class FuseNavigationComponent implements OnInit {
   layout = 'vertical';
 
   @Input()
-  navigation: any;
-
-  page: any[] = [
-    { id: 'matters', title: 'Matters', type: 'item', icon: 'icon_matter_d.ico', url: 'matters', star: '' },
-    { id: 'contact', title: 'Contact', type: 'item', icon: 'icon_contact_d.ico', url: 'contact', star: '' },
-    //{ id: 'time_entries', title: 'Timen entries', type: 'item', icon: 'icon_time_cost_new_d.ico', url: 'time-entries', star: '' },
-    { id: 'diary', title: 'Diary', type: 'item', icon: 'icon_diary_d.ico', url: 'diary', star: '' },
-    // { id: 'legal_details', title: 'Legal details', type: 'item', icon: 'icon_authorities_d.ico', url: 'legal-details', star: '' },
-    // { id: 'time_billing', title: 'Time billing', type: 'item', icon: 'icon_invoice_d.ico', url: 'time-billing', star: '' },
-   
-  ];
+  navigation: any;  
   filterName: string;
   searchpage: string;
   //All pages array
   pagesall = [];
   user: any;
-
-
+  page:any[]=[];
+  // page: any[] = [
+  //   { id: 'matters', title: 'Matters', type: 'item', icon: 'icon_matter_d.ico', url: 'matters', star: '' },
+  //   { id: 'contact', title: 'Contact', type: 'item', icon: 'icon_contact_d.ico', url: 'contact', star: '' },
+  //   { id: 'time_entries', title: 'Timen entries', type: 'item', icon: 'icon_time_cost_new_d.ico', url: 'time-entries', star: '' },
+  //   { id: 'diary', title: 'Diary', type: 'item', icon: 'icon_diary_d.ico', url: 'diary', star: '' },
+  //   { id: 'legal_details', title: 'Legal details', type: 'item', icon: 'icon_authorities_d.ico', url: 'legal-details', star: '' },
+  //   { id: 'time_billing', title: 'Time billing', type: 'item', icon: 'icon_invoice_d.ico', url: 'time-billing', star: '' },
+   
+  // ];
+ 
   // Private
   private _unsubscribeAll: Subject<any>;
 
@@ -45,12 +46,35 @@ export class FuseNavigationComponent implements OnInit {
    */
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
-    private _fuseNavigationService: FuseNavigationService
+    private _fuseNavigationService: FuseNavigationService,
+    public GetFavouriteService: GetFavouriteService,
+    private toastr: ToastrService
   ) {
+    
     // Set the private defaults
     this._unsubscribeAll = new Subject();
+    let guid=JSON.parse(localStorage.getItem('currentUser')); 
+   if(guid){
+    let postdata = { 'USERGUID':guid.UserGuid  };   
+    this.GetFavouriteService.GetFavourite(postdata).subscribe(response => {      
+      if (response.CODE == 200 && response.STATUS == "success") {
+        //this.page=response.DATA.FAVOURITES;
+        response.DATA.FAVOURITES.forEach(items => {
+          this.page.push({"ID":items.ID, "TITLE":items.TITLE, "URL":items.URL, "STAR":items.STAR, "POSITION":items.POSITION,"type":"item","icon": "icon_matter_d.ico" });
+          
+        });
+      } 
+
+     
+      
+    }, error => {
+      this.toastr.error(error);
+    }); 
   }
 
+  }
+  
+  
   // -----------------------------------------------------------------------------------------------------
   // @ Lifecycle hooks
   // -----------------------------------------------------------------------------------------------------
@@ -61,6 +85,7 @@ export class FuseNavigationComponent implements OnInit {
 
   ngOnInit(): void {
     // Load the navigation either from the input or from the service
+    
     this.navigation = this.navigation || this._fuseNavigationService.getCurrentNavigation();
 
     // Subscribe to the current navigation changes
@@ -72,7 +97,7 @@ export class FuseNavigationComponent implements OnInit {
         // Mark for check
         this._changeDetectorRef.markForCheck();
       });
-
+      
     // Subscribe to navigation item
     merge(
       this._fuseNavigationService.onNavigationItemAdded,
@@ -85,45 +110,44 @@ export class FuseNavigationComponent implements OnInit {
         this._changeDetectorRef.markForCheck();
       });
     //Localstorage Data Get and start Display
-    this.user = JSON.parse(localStorage.getItem('names'));
-    if (this.user) {
-      this.user.forEach(items => {
-        this.onChange(items.title);
-      });
-    }
+    // this.user = JSON.parse(localStorage.getItem('names'));
+    // if (this.user) {
+    //   this.user.forEach(items => {        
+    //     this.onChange(items.TITLE);
+    //   });
+    // }
   }
 
 
   //For click
-  onChange(values) {
-    //find length available or not
-    var index = this.pagesall.findIndex(function (item, i) {
-      return item.title === values
-    });
-    if (index == -1) {
-      //this.pagesall.push(values);         
-      this.page.forEach(items => {
-        if (items.star == '') {
-          if (items.title == values) {
-            items.star = 'star';
-            this.pagesall.push({ id: items.id, title: items.title, translate: items.translate, type: items.type, icon: items.icon, url: items.url, star: items.star });
-          } else {
-            items.star = '';
+  onChange(values) {   
+      this.page.forEach(items => {        
+        if (items.STAR == '') {
+          if (items.TITLE == values) {            
+            items.STAR = 'star';                        
+          } else {           
+            items.STAR = '';
+          }
+        }else{
+          if (items.TITLE == values) {  
+            items.STAR = '';                        
           }
         }
       })
-    }
-    else {
-      this.page.forEach(items => {
-        if (items.star == 'star') {
-          if (items.title == values) {
-            items.star = '';
-            this.pagesall.splice(index, 1);
-          }
-        }
-      })
-    }
-    localStorage.setItem("names", JSON.stringify(this.pagesall));
+     
+      let guid=JSON.parse(localStorage.getItem('currentUser')); 
+      if(guid){
+        let favouritedatas = { 'USERGUID':guid.UserGuid,"ACTION":"replace","FAVOURITES" :this.page }        
+         this.GetFavouriteService.setFavourite(favouritedatas).subscribe(response => { 
+            console.log(response);     
+            if (response.CODE == 200 && response.STATUS == "success") {
+             // this.toastr.error(error);    
+            } 
+          }, error => {
+            this.toastr.error(error);
+          }); 
+      }
+     
   }
   //clear textbox 
   clearSearch() {
@@ -141,6 +165,7 @@ export class FuseNavigationComponent implements OnInit {
 }
 @Pipe({ name: 'filterByName' })
 export class filterNames implements PipeTransform {
+  
   // For Old Code
   // transform(listOfNames: any[], nameToFilter: string): any[] { 
   //   if(!listOfNames) return [];
@@ -150,12 +175,14 @@ export class filterNames implements PipeTransform {
   //         return it.value.toLowerCase().includes(nameToFilter);
   //       });
   // } 
-  transform(page: any[], nameToFilter: string): any[] {
+  
+  transform(page: any[], nameToFilter: string): any[] {        
     if (!page) return [];
     if (!nameToFilter) return [];
-    nameToFilter = nameToFilter.toLowerCase();
+    nameToFilter = nameToFilter.toLowerCase();    
     return page.filter(it => {
-      return it.title.toLowerCase().includes(nameToFilter);
+     //console.log(it);
+      return it.TITLE.toLowerCase().includes(nameToFilter);
     });
   }
 }

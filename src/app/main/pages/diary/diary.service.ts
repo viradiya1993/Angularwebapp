@@ -58,15 +58,15 @@ export class DiaryService implements Resolve<any>
     getEvents(): Promise<any> {
         return new Promise((resolve, reject) => { 
             let tempEvent:any[]=[]; 
-            this.DiaryData.DiaryData().subscribe(res => {
-                if(res.Appointment.AppQ!=undefined){
-                    res.Appointment.AppQ.forEach(itemsdata => {
+            this.DiaryData.DiaryData().subscribe(res => {                
+                if(res.CODE==200 && res.STATUS=="success"){
+                    res.DATA.APPOINTMENTS.forEach(itemsdata => {
                     tempEvent.push({start: dateformat(changeformat(itemsdata.DATE)+' '+itemsdata.TIME),title:itemsdata.SUBJECT,allDay: false});
                     });   
                     this.events = tempEvent;
                     this.onEventsUpdated.next(this.events);
                     resolve(this.events); 
-                } 
+                }
              },
              err => {
                this.toastr.error(err);

@@ -26,6 +26,7 @@ export class FileNotesComponent implements OnInit {
     //get autorites
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
     this.fileNotes_service.getData(potData).subscribe(response => {
+      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         let FILENOTES = response.DATA.FILENOTES == null ? [] : response.DATA.FILENOTES;
         this.filenotes_table = new MatTableDataSource(FILENOTES);
@@ -34,8 +35,7 @@ export class FileNotesComponent implements OnInit {
       this.isLoadingResults = false;
     }, error => {
       this.toastr.error(error);
-    });
-    this.isLoadingResults = false;
+    });    
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();

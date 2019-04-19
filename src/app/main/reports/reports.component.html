@@ -109,4 +109,7 @@
         <button mat-raised-button color="accent" (click)="ReportSubmit()" *ngIf="responseData">OK</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Cancel</button>
     </mat-dialog-actions>
-</div>
+</div><mat-dialog-actions align="end" class="popup_ftr">
+        <button mat-raised-button color="accent" (click)="ReportSubmit()" *ngIf="responseData">OK</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Cancel</button>
+    </mat-dialog-actions>

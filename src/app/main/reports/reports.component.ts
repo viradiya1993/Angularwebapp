@@ -27,9 +27,9 @@ export class ReportsComponent implements OnInit {
         this.base_url=environment.APIEndpoint;
       }else{ 
         this.isLoadingResults = true;
-        this.Reportfilter.ReportfilterData(this.data.REPORTID).subscribe(response => {
+        this.Reportfilter.ReportfilterData(this.data.REPORTID).subscribe(response => {          
           this.isLoadingResults = false;
-           if(response.CODE==200 && response.STATUS=='success'){            
+           if(response.CODE==200 && response.STATUS=='success'){ 
              this.responseData=response.DATA; 
              this.title=response.DATA.REPORTTITLE;          
             //option1

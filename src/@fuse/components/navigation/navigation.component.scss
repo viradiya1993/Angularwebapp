@@ -98,3 +98,12 @@ body.theme-yellow-light .mat-form-field-appearance-legacy .mat-form-field-underl
 p.name.ng-star-inserted {
     font-size: 13px;
 }
+.mat-list-base .mat-list-item .mat-list-item-content {
+    text-transform: capitalize !important;
+}
+mat-icon.star.mat-icon.material-icons.mat-icon-no-color {
+    margin-left: 0;
+    float: right;
+    position: absolute;
+    right: 20px;
+}

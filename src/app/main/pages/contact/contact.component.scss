@@ -70,6 +70,7 @@ app-contact {
     white-space: nowrap;
     padding: 0 20px;
     overflow: inherit;
+    position: sticky;
 }
 
 .more_tbl_clmn mat-header-row {
@@ -93,12 +94,4 @@ app-contact {
 table tr.highlight {
     background-color: #4CAF50 !important;
     color: #ffffff;
-}
-
-.more_tbl_clmn .mat-header-cell,
-.more_tbl_clmn .mat-cell {
-    display: table-cell;
-    white-space: nowrap;
-    padding: 0 20px;
-    overflow: inherit;
 }

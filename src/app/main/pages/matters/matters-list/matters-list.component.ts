@@ -69,19 +69,22 @@ export class MattersListComponent implements OnInit, OnDestroy {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'matters' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'matter' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
-
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result));
+        this.displayedColumns = result.columObj;
+        this.ColumnsObj = result.columnameObj;
+        if (!result.columObj) {
+          this.mattersData = new MatTableDataSource([]);
+          this.mattersData.paginator = this.paginator;
+        } else {
+          this.getMatterList(this.lastFilter);
+        }
       }
     });
-    dialogRef.afterClosed().subscribe(data =>
-      this.tableSetting(data)
-    );
   }
   getMatterList(data) {
     this.isLoadingResults = true;
@@ -99,14 +102,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
       this.toastr.error(error);
     });
   }
-  tableSetting(data: any) {
-    if (data !== false) {
-      this.displayedColumns = data;
-      this.getMatterList(this.lastFilter);
-    }
-  }
-  toggleRow(value: any) {
-  }
+
 }
 
 

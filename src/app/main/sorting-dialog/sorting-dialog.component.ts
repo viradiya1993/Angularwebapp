@@ -1,7 +1,8 @@
 import { Component, OnInit, Pipe, PipeTransform, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Title } from '@angular/platform-browser';
+import { TableColumnsService } from '../../_services';
+
 
 @Component({
   selector: 'app-sorting-dialog',
@@ -19,38 +20,16 @@ export class SortingDialogComponent implements OnInit {
   namesFiltered = [];
   all = [];
   even = [];
-  constructor(public dialogRef: MatDialogRef<SortingDialogComponent>, @Inject(MAT_DIALOG_DATA) data) {
+  constructor(
+    private TableColumnsService: TableColumnsService,
+    public dialogRef: MatDialogRef<SortingDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) data
+  ) {
     this.modelType = data.type;
     this.property = data.data;
   }
   ngOnInit(): void {
     this.updateCount();
-    // let tempData = JSON.parse(localStorage.getItem(this.modelType));
-    // this.checkboxdata = tempData ? tempData : [];
-    // if (this.checkboxdata.length == 0) {
-    //   this.title = "Select All"
-    // } else {
-    //   this.title = "Clear"
-    // }
-    // if (this.checkboxdata) {
-    //   this.checkboxdata.forEach(items => {
-    //     this.property.forEach(itemsdata => {
-    //       if (itemsdata.value == items && itemsdata.checked == false) {
-    //         itemsdata.checked = true;
-    //         if (this.all.indexOf(items) == -1) {
-    //           this.all.push(items);
-    //         }
-    //       }
-    //     });
-    //   });
-    // } else {
-    //   this.property.forEach(itemsdata => {
-    //     itemsdata.checked = true;
-    //     if (this.all.indexOf(itemsdata.value) == -1) {
-    //       this.all.push(itemsdata.value);
-    //     }
-    //   });
-    // }
   }
   updateCount() {
     this.checkboxdata = 0;
@@ -63,17 +42,17 @@ export class SortingDialogComponent implements OnInit {
   }
   //when checkbox click here
   onChange(event, data) {
-    console.log(event.checked);
-    console.log(data);
-    if (event.checked == true) {
-      if (this.all.indexOf(data) == -1) {
-        this.all.push(data);
+    let tempPropertyData = [];
+    this.property.forEach(itemsdata => {
+      if (itemsdata.COLUMNNAME == data) {
+        itemsdata.HIDDEN = event.checked ? 1 : 0;
+        tempPropertyData.push(itemsdata);
+      } else {
+        tempPropertyData.push(itemsdata);
       }
-    } else if (event.checked == false) {
-      if (this.all.indexOf(data) != -1) {
-        this.all.splice(this.all.indexOf(data), 1);
-      }
-    }
+    });
+    this.property = tempPropertyData;
+    this.updateCount();
   }
   //data drag and drop
   drop(event: CdkDragDrop<string[]>) {
@@ -83,36 +62,35 @@ export class SortingDialogComponent implements OnInit {
       transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
     }
   }
-  //data close icon click after delete
-  public indeterminate: boolean = false;
+
   remove(item, event) {
-    this.all.splice(this.all.indexOf(item), 1);
-    this.property.forEach(items => {
-      if (items.checked == true) {
-        if (items.value == item) {
-          items.checked = false;
-        }
+    let tempPropertyData = [];
+    this.property.forEach(itemsdata => {
+      if (itemsdata.COLUMNNAME == item) {
+        itemsdata.HIDDEN = event.checked ? 1 : 0;
+        tempPropertyData.push(itemsdata);
+      } else {
+        tempPropertyData.push(itemsdata);
       }
     });
-
+    this.property = tempPropertyData;
+    this.updateCount();
   }
 
   //Delete all columns click after delete all data 
   deleteall() {
-    console.log(this.all.length);
-    if (this.all.length == 0) {
-      this.title = "Clear"
-      this.property.forEach(item => {
-        item.checked = true
-        this.all.push(item.value);
-      });
-    } else {
-      this.property.forEach(item => {
-        item.checked = false
-        this.all.splice(item);
-      });
-      this.title = "Select All";
-    }
+    this.title = this.checkboxdata == 0 ? "Clear" : "Select All";
+    let temCheck = this.checkboxdata == 0 ? true : false;
+    this.clearfilter(temCheck);
+    this.updateCount();
+  }
+  clearfilter(isCheck: boolean) {
+    let tempPropertyData = [];
+    this.property.forEach(itemsdata => {
+      itemsdata.HIDDEN = isCheck ? 1 : 0;
+      tempPropertyData.push(itemsdata);
+    });
+    this.property = tempPropertyData;
   }
 
   //dialog content close event
@@ -121,9 +99,27 @@ export class SortingDialogComponent implements OnInit {
   }
   //dialog content close event with save
   ondialogSaveClick(): void {
-    this.dialogRef.close(this.all);
+    let showCol = [];
+    this.property.forEach(itemsdata => {
+      if (itemsdata.HIDDEN == 1)
+        showCol.push(itemsdata.COLUMNNAME);
+    });
+    this.saveLastFilter();
+    this.dialogRef.close({ columObj: showCol, columnameObj: this.property });
   }
-
+  saveLastFilter() {
+    let dataObj = [];
+    this.property.forEach(itemsdata => {
+      dataObj.push({ COLUMNNAME: itemsdata.COLUMNID, HIDDEN: itemsdata.HIDDEN, POSITION: itemsdata.POSITION });
+    });
+    this.TableColumnsService.setTableFilter(this.modelType, dataObj).subscribe(response => {
+      console.log(response);
+      if (response.CODE == 200 && response.STATUS == "success") {
+      }
+    }, error => {
+      console.log(error);
+    });
+  }
 }
 @Pipe({ name: 'filterByName' })
 export class filterNames implements PipeTransform {

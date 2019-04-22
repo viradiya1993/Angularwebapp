@@ -27,11 +27,10 @@ export class TableColumnsService {
     });
     return { 'colobj': tempCol, 'showcol': showCol };
   }
-  //   let roles = [{ roleId: "69801", role: "ADMIN" }, { roleId: "69806", role: "SUPER_ADMIN" }, { roleId: "69805", role: "RB" }, { roleId: "69804", role: "PILOTE" }, { roleId: "69808", role: "VENDEUR" }, { roleId: "69807", role: "SUPER_RB" }]
+  setTableFilter(table: any, postData: any) {
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    let Data = { USERGUID: currentUser.UserGuid, PAGE: table, COLUMNSETTINGS: postData };
+    return this.httpClient.post<any>(environment.APIEndpoint + 'GetTableColumns', Data);
+  }
 
-  // const checkRoleExistence = roleParam => roles.some(({ role }) => role == roleParam)
-
-  // console.log(checkRoleExistence("ADMIN"));
-  // console.log(checkRoleExistence("RA"));
-  // console.log(checkRoleExistence("RB"));
 }

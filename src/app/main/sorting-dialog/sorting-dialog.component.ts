@@ -9,7 +9,7 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./sorting-dialog.component.scss']
 })
 export class SortingDialogComponent implements OnInit {
-  checkboxdata: any = [];
+  checkboxdata: number = 0;
   property: any[] = [];
   filterName: string;
   modelType: string;
@@ -21,42 +21,50 @@ export class SortingDialogComponent implements OnInit {
   even = [];
   constructor(public dialogRef: MatDialogRef<SortingDialogComponent>, @Inject(MAT_DIALOG_DATA) data) {
     this.modelType = data.type;
-    data.data.forEach(items => {
-      console.log(items);
-      this.property.push({ 'value': items.COLUMNNAME, 'checked': false });
-    });
+    this.property = data.data;
   }
   ngOnInit(): void {
-    let tempData = JSON.parse(localStorage.getItem(this.modelType));
-    this.checkboxdata = tempData ? tempData : [];
-    if (this.checkboxdata.length == 0) {
-      this.title = "Select All"
-    } else {
-      this.title = "Clear"
-    }
-
-    if (this.checkboxdata) {
-      this.checkboxdata.forEach(items => {
-        this.property.forEach(itemsdata => {
-          if (itemsdata.value == items && itemsdata.checked == false) {
-            itemsdata.checked = true;
-            if (this.all.indexOf(items) == -1) {
-              this.all.push(items);
-            }
-          }
-        });
-      });
-    } else {
-      this.property.forEach(itemsdata => {
-        itemsdata.checked = true;
-        if (this.all.indexOf(itemsdata.value) == -1) {
-          this.all.push(itemsdata.value);
-        }
-      });
-    }
+    this.updateCount();
+    // let tempData = JSON.parse(localStorage.getItem(this.modelType));
+    // this.checkboxdata = tempData ? tempData : [];
+    // if (this.checkboxdata.length == 0) {
+    //   this.title = "Select All"
+    // } else {
+    //   this.title = "Clear"
+    // }
+    // if (this.checkboxdata) {
+    //   this.checkboxdata.forEach(items => {
+    //     this.property.forEach(itemsdata => {
+    //       if (itemsdata.value == items && itemsdata.checked == false) {
+    //         itemsdata.checked = true;
+    //         if (this.all.indexOf(items) == -1) {
+    //           this.all.push(items);
+    //         }
+    //       }
+    //     });
+    //   });
+    // } else {
+    //   this.property.forEach(itemsdata => {
+    //     itemsdata.checked = true;
+    //     if (this.all.indexOf(itemsdata.value) == -1) {
+    //       this.all.push(itemsdata.value);
+    //     }
+    //   });
+    // }
+  }
+  updateCount() {
+    this.checkboxdata = 0;
+    this.property.forEach(itemsdata => {
+      if (itemsdata.HIDDEN) {
+        this.checkboxdata++;
+      }
+    });
+    this.title = this.checkboxdata == 0 ? "Select All" : "Clear";
   }
   //when checkbox click here
   onChange(event, data) {
+    console.log(event.checked);
+    console.log(data);
     if (event.checked == true) {
       if (this.all.indexOf(data) == -1) {
         this.all.push(data);

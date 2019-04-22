@@ -20,7 +20,7 @@
                     <mat-label>Contact Information</mat-label>
                     <div class="checkbox">
                         <div class="add_popup_padding" *ngFor="let name of property | filterByName:searchporoperty">
-                            <mat-checkbox value="{{ name.checked }}" [checked]="name.checked" name='name.value' [ngModelOptions]="{standalone: true}" [(ngModel)]="name.checked" class="example-margin" (change)="onChange($event,name.value)">{{name.value}} </mat-checkbox>
+                            <mat-checkbox value="{{ name.HIDDEN }}" [checked]="name.HIDDEN" name='name.value' [ngModelOptions]="{standalone: true}" [(ngModel)]="name.HIDDEN" class="example-margin" (change)="onChange($event,name.value)"><span class="font_class">{{name.COLUMNNAME | lowercase}}</span> </mat-checkbox>
                         </div>
                     </div>
                 </div>
@@ -28,24 +28,27 @@
             <mat-divider vertical></mat-divider>
             <div class="form-errors-model p-24">
                 <div class="example-container">
-                    <h2>Selected Columns ({{all.length }})</h2>
+                    <h2>Selected Columns ({{checkboxdata }})</h2>
                     <div id="all" cdkDropList [cdkDropListData]="all" cdkDropListConnectedTo="even" class="example-list popup_scroll_div" (cdkDropListDropped)="drop($event)" [cdkDropListEnterPredicate]="noReturnPredicate">
-                        <div class="example-box" *ngFor="let number of all" [cdkDragData]="number" cdkDrag>
-                            <mat-icon class="detail">more_vert</mat-icon>{{number}}
-                            <mat-icon class="close" (click)="remove(number,$event)">close</mat-icon>
-                        </div>
+                        <span *ngFor="let number of property">
+                        <div class="example-box" *ngIf="number.HIDDEN" [cdkDragData]="number" cdkDrag>                            
+                            <mat-icon class="detail">more_vert</mat-icon>
+                            <span class="font_class">
+                                 {{number.COLUMNNAME | lowercase}}
+                                </span>
+                        <mat-icon class="close" (click)="remove(number,$event)">close</mat-icon>
                     </div>
+                    </span>
                 </div>
             </div>
         </div>
-    </mat-dialog-content>
-    <mat-dialog-actions align="end" class="popup_ftr">         
-        <div class="clear">
-            <!-- <button mat-button matBadgeColor="accent" class="left" (click)="clearAll()">Clear All</button>
-            <button mat-button matBadgeColor="accent"  class="left" (click)="checkall()">Check All</button> -->
-            <button  class="cancel" mat-button  matBadgeColor="accent" (click)="deleteall()">{{title}} </button>
-        </div>
-        <button mat-raised-button color="primary" mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="ondialogSaveClick()">Save</button>
-        <button class="cancel" mat-button [mat-dialog-close]="true" matBadgeColor="accent" (click)="ondialogcloseClick()">Cancel</button>
-    </mat-dialog-actions>
+</div>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="popup_ftr">
+    <div class="clear">
+        <button class="cancel" mat-button matBadgeColor="accent" (click)="deleteall()">{{title}} </button>
+    </div>
+    <button mat-raised-button color="primary" mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="ondialogSaveClick()">Save</button>
+    <button class="cancel" mat-button [mat-dialog-close]="true" matBadgeColor="accent" (click)="ondialogcloseClick()">Cancel</button>
+</mat-dialog-actions>
 </div>

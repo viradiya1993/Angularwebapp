@@ -169,11 +169,24 @@ body.theme-yellow-light .mat-dialog-container {
     transform: translateY(-1.09375em) scale(0.75);
 }
 
-.clear {
-    //  margin-right: 62%;
-    margin-right: 72%;
+mat-dialog-actions.popup_ftr.mat-dialog-actions {
+    display: inline-block;
+    width: 100%;
 }
 
-.font_class {
-    text-transform: capitalize;
+.left_popup_btn {
+    float: left;
+    width: 50%;
+    text-align: left;
+    padding-left: 0;
+}
+
+.right_btn_child {
+    display: inline-block;
+    margin-right: 25px;
+}
+
+.right_popup_btn {
+    float: left;
+    width: 50%;
 }

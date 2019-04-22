@@ -1,7 +1,7 @@
-<div id="contact" class="page-layout simple left-sidebar inner-sidebar inner-scroll">        
-    <div fxLayoutAlign="center" class="content">          
-        <div class="center p-24 more_tbl_clmn" fusePerfectScrollbar> 
-            <div class="matter-serach-div sticky_search_div">                        
+<div id="contact" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
+    <div fxLayoutAlign="center" class="content">
+        <div class="center p-24 more_tbl_clmn" fusePerfectScrollbar>
+            <div class="matter-serach-div sticky_search_div">
                 <form [formGroup]="contactFilter">
                     <mat-form-field class="example" appearance="outline">
                         <!-- <mat-label>Active Matters</mat-label>formControlName="Filter1" -->
@@ -66,100 +66,100 @@
                                 <mat-cell *matCellDef="let row">{{row.CONTACTGUID}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Company Contactguid">
-                                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm class="header_title">company contact guid</mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.COMPANYCONTACTGUID}}</mat-cell>
+                                <mat-header-cell *matHeaderCellDef class="header_title">company contact guid</mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.COMPANYCONTACTGUID}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Contact Type">
-                                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md class="header_title">contact type</mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.CONTACTTYPE}}</mat-cell>
+                                <mat-header-cell *matHeaderCellDef class="header_title">contact type</mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.CONTACTTYPE}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="User Guid">
-                                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md class="header_title">user guid</mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.USERGUID}}</mat-cell>
+                                <mat-header-cell *matHeaderCellDef class="header_title">user guid</mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.USERGUID}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Useparent Address">
-                                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md class="header_title">useparent address</mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.USEPARENTADDRESS}}</mat-cell>
+                                <mat-header-cell *matHeaderCellDef class="header_title">useparent address</mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.USEPARENTADDRESS}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Contact Name">
                                 <mat-header-cell *matHeaderCellDef class="header_title"> contact name </mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.CONTACTNAME}}</mat-cell>
+                                <mat-cell *matCellDef="let row">{{row.CONTACTNAME}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Salutation">
                                 <mat-header-cell *matHeaderCellDef class="header_title">salutation</mat-header-cell>
                                 <mat-cell *matCellDef="let row">{{row.SALUTATION}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Position">
-                                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm class="header_title">position</mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.POSITION}}</mat-cell>
+                                <mat-header-cell *matHeaderCellDef class="header_title">position</mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.POSITION}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Name Title">
-                                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md class="header_title">name title</mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.NAMETITLE}}</mat-cell>
+                                <mat-header-cell *matHeaderCellDef class="header_title">name title</mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.NAMETITLE}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Given Names">
-                                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md class="header_title">given names</mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.GIVENNAMES}}</mat-cell>
+                                <mat-header-cell *matHeaderCellDef class="header_title">given names</mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.GIVENNAMES}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Middle Names">
-                                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md class="header_title">middle names</mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.MIDDLENAMES}}</mat-cell>
+                                <mat-header-cell *matHeaderCellDef class="header_title">middle names</mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.MIDDLENAMES}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Family Name">
                                 <mat-header-cell *matHeaderCellDef class="header_title"> family name </mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.FAMILYNAME}}</mat-cell>
+                                <mat-cell *matCellDef="let row">{{row.FAMILYNAME}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Name Letters">
                                 <mat-header-cell *matHeaderCellDef class="header_title">name letters</mat-header-cell>
                                 <mat-cell *matCellDef="let row">{{row.NAMELETTERS}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Knownby Othername">
-                                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm class="header_title">knownby othername</mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.KNOWNBYOTHERNAME}}</mat-cell>
+                                <mat-header-cell *matHeaderCellDef class="header_title">knownby othername</mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.KNOWNBYOTHERNAME}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Otherfamily Name">
-                                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md class="header_title">otherfamily name</mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.OTHERFAMILYNAME}}</mat-cell>
+                                <mat-header-cell *matHeaderCellDef class="header_title">otherfamily name</mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.OTHERFAMILYNAME}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Thergiven Names">
-                                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md class="header_title">othergiven names</mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.OTHERGIVENNAMES}}</mat-cell>
+                                <mat-header-cell *matHeaderCellDef class="header_title">othergiven names</mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.OTHERGIVENNAMES}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Reason For Change">
-                                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md class="header_title">reason for change</mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.REASONFORCHANGE}}</mat-cell>
+                                <mat-header-cell *matHeaderCellDef class="header_title">reason for change</mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.REASONFORCHANGE}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Marital Status">
                                 <mat-header-cell *matHeaderCellDef class="header_title"> marital status </mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.maritalstatus}}</mat-cell>
+                                <mat-cell *matCellDef="let row">{{row.maritalstatus}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Spouse">
                                 <mat-header-cell *matHeaderCellDef class="header_title">spouse</mat-header-cell>
                                 <mat-cell *matCellDef="let row">{{row.SPOUSE}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Numberof Dependants">
-                                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm class="header_title">numberof dependants</mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.NUMBEROFDEPENDANTS}}</mat-cell>
+                                <mat-header-cell *matHeaderCellDef class="header_title">numberof dependants</mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.NUMBEROFDEPENDANTS}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Occupation">
-                                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md class="header_title">occupation</mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.OCCUPATION}}</mat-cell>
+                                <mat-header-cell *matHeaderCellDef class="header_title">occupation</mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.OCCUPATION}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Gender">
-                                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md class="header_title">gender</mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.GENDER}}</mat-cell>
+                                <mat-header-cell *matHeaderCellDef class="header_title">gender</mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.GENDER}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Dateof Birth">
-                                <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md class="header_title">dateof birth</mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.DATEOFBIRTH}}</mat-cell>
+                                <mat-header-cell *matHeaderCellDef class="header_title">dateof birth</mat-header-cell>
+                                <mat-cell *matCellDef="let row">{{row.DATEOFBIRTH}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Birthday Reminder">
                                 <mat-header-cell *matHeaderCellDef class="header_title"> birthday reminder </mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.BIRTHDAYREMINDER}}</mat-cell>
+                                <mat-cell *matCellDef="let row">{{row.BIRTHDAYREMINDER}}</mat-cell>
                             </ng-container>
                             <ng-container matColumnDef="Townof Birth">
                                 <mat-header-cell *matHeaderCellDef class="header_title"> townof birth </mat-header-cell>
-                                <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.TOWNOFBIRTH}}</mat-cell>
+                                <mat-cell *matCellDef="let row">{{row.TOWNOFBIRTH}}</mat-cell>
                             </ng-container>
                             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                             <mat-row [style.background]="highlightedRows == row.CONTACTGUID ? selectedColore : ''" highlightedRows=row.CONTACTGUID *matRowDef="let row; columns: displayedColumns;" (click)="editContact(row.CONTACTGUID);highlightedRows = row.CONTACTGUID " matRipple

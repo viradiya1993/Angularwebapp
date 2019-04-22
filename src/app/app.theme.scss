@@ -366,9 +366,11 @@ body.theme-yellow-light .mat-dialog-container {
 // .reports_tab_main .group-section-tab .ribbon-section {
 //     float: left;
 // }
-.reports_tab_main {
-  width: 20%;
-}
+
+
+// .reports_tab_main {
+//   width: 75%;
+// }
 
 .reports_tab_main .mat-card {
   width: 100%;
@@ -376,7 +378,7 @@ body.theme-yellow-light .mat-dialog-container {
 
 toolbar .ribbon-container.reports_tab_main .mat-card-content {
   display: flex;
-  overflow: auto;
+  // overflow: auto;
   width: 100%;
 }
 

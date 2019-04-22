@@ -41,6 +41,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     currentTimerHMS: any;
     ReportListObj: any[] = [];
     getContactData: any;
+    detailwidth: any;
     activeSubMenu: any = '';
 
 
@@ -113,6 +114,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.rightNavbar = settings.layout.navbar.position === 'right';
             this.hiddenNavbar = settings.layout.navbar.hidden === true;
         });
+    }
+
+    ngAfterViewInit() {
+        const wph = $(window).width();
+        this.detailwidth= wph - 280 - 150 + 'px';
     }
 
     //for binding

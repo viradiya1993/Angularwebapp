@@ -27,6 +27,8 @@ export class FuseNavigationComponent implements OnInit {
   user: any;
   page: any = [];
   private _unsubscribeAll: Subject<any>;
+  
+
 
   /**
    *
@@ -42,14 +44,29 @@ export class FuseNavigationComponent implements OnInit {
 
     // Set the private defaults
     this._unsubscribeAll = new Subject();
-    let guid = JSON.parse(localStorage.getItem('currentUser'));
+    let guid = JSON.parse(localStorage.getItem('currentUser'));    
     if (guid) {
       let postdata = { 'USERGUID': guid.UserGuid };
-      this.GetFavouriteService.GetFavourite(postdata).subscribe(response => {
+      let Favouritelist=[{ "ID": "matters", "TITLE": "Matters", "URL": "matters", "STAR": "" },
+      { "ID": "contact", "TITLE": "Contact", "URL": "contact", "STAR": "" },
+      { "ID": "time_entries", "TITLE": "Time entries", "URL": "time-entries", "STAR": "" },
+      { "ID": "diary", "TITLE": "Diary", "URL": "diary", "STAR": "" }]
+      
+      this.GetFavouriteService.GetFavourite(postdata).subscribe(response => {             
         if (response.CODE == 200 && response.STATUS == "success") {
-          response.DATA.FAVOURITES.forEach(items => {
-            this.page.push({ "ID": items.ID, "TITLE": items.TITLE, "URL": items.URL, "STAR": items.STAR, "POSITION": items.POSITION, "type": "item", "icon": "icon_matter_d.ico" });
-          });
+          if(response.DATA.FAVOURITES==''){
+            this.GetFavouriteService.setFavourite({"FAVOURITES":Favouritelist}).subscribe(responses => {
+              if(responses.CODE == 200 && responses.STATUS == "success"){
+                Favouritelist.forEach(items => {
+                  this.page.push({ "ID": items.ID, "TITLE": items.TITLE, "URL": items.URL, "STAR": items.STAR, "type": "item", "icon": "icon_matter_d.ico" });
+                });
+              }
+            });
+          }else{
+            response.DATA.FAVOURITES.forEach(items => {
+              this.page.push({ "ID": items.ID, "TITLE": items.TITLE, "URL": items.URL, "STAR": items.STAR, "POSITION": items.POSITION, "type": "item", "icon": "icon_matter_d.ico" });
+            });
+          }
         }
       }, error => {
         this.toastr.error(error);
@@ -123,9 +140,8 @@ export class FuseNavigationComponent implements OnInit {
 
     let guid = JSON.parse(localStorage.getItem('currentUser'));
     if (guid) {
-      let favouritedatas = { 'USERGUID': guid.UserGuid, "ACTION": "replace", "FAVOURITES": this.page }
+      let favouritedatas = { "FAVOURITES": this.page }
       this.GetFavouriteService.setFavourite(favouritedatas).subscribe(response => {
-        console.log(response);
         if (response.CODE == 200 && response.STATUS == "success") {
           // this.toastr.error(error);    
         }

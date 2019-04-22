@@ -39,18 +39,30 @@ export class TimeEntriesComponent implements OnInit {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.isShowDrop = currentUser.ProductType == "Barrister" ? false : true;
     this.TimeEnrtyForm = this.fb.group({ date: [''], uninvoicedWork: [''], dlpdrop: [''], });
-    if (this.lastFilter) {
-      let tempDate = this.lastFilter.ItemDateStart.split("/");
-      let tempDate2 = this.lastFilter.ItemDateEnd.split("/");
-      let Sd = new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]);
-      let ed = new Date(tempDate2[1] + '/' + tempDate2[0] + '/' + tempDate2[2]);
-      this.TimeEnrtyForm.controls['date'].setValue({ begin: Sd, end: ed });
+    if (this.lastFilter) {   
+      if(this.lastFilter.ItemDateStart!=""&&this.lastFilter.ItemDateEnd!=""){
+        let tempDate = this.lastFilter.ItemDateStart.split("/");
+        let tempDate2 = this.lastFilter.ItemDateEnd.split("/");
+        let Sd = new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]);
+        let ed = new Date(tempDate2[1] + '/' + tempDate2[0] + '/' + tempDate2[2]);
+        this.TimeEnrtyForm.controls['date'].setValue({ begin: Sd, end: ed });
+      }else{
+        var dt = new Date();
+        dt.setMonth( dt.getMonth() + 1 );
+        this.TimeEnrtyForm.controls['date'].setValue({ begin: new Date(), end: dt });
+        this.lastFilter.ItemDateStart = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
+        this.lastFilter.ItemDateEnd= this.datepipe.transform(dt, 'dd/MM/yyyy');
+      }
       this.TimeEnrtyForm.controls['uninvoicedWork'].setValue(this.lastFilter.Invoiced);
       this.TimeEnrtyForm.controls['dlpdrop'].setValue(this.lastFilter.FeeEarner);
     } else {
-      this.lastFilter = { 'FeeEarner': '', 'Invoiced': "", 'ItemDateStart': '', 'ItemDateEnd': '' };
+        var dt = new Date();
+        dt.setMonth( dt.getMonth() + 1 );
+        this.TimeEnrtyForm.controls['date'].setValue({ begin: new Date(), end: dt });
+      this.lastFilter = { 'FeeEarner': '', 'Invoiced': "", 'ItemDateStart': this.datepipe.transform(new Date(), 'dd/MM/yyyy'), 'ItemDateEnd': this.datepipe.transform(dt, 'dd/MM/yyyy') };
       localStorage.setItem('time_entries_filter', JSON.stringify(this.lastFilter));
     }
+   
   }
 
   ngOnInit() {

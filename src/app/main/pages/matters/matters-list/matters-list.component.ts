@@ -69,7 +69,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'matter' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'Matters' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click

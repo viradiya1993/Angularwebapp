@@ -18,7 +18,6 @@ export class SortingDialogComponent implements OnInit {
   noReturnPredicate: string;
   title: string;
   namesFiltered = [];
-  all = [];
   even = [];
   constructor(
     private TableColumnsService: TableColumnsService,
@@ -112,11 +111,7 @@ export class SortingDialogComponent implements OnInit {
     this.property.forEach(itemsdata => {
       dataObj.push({ COLUMNNAME: itemsdata.COLUMNID, HIDDEN: itemsdata.HIDDEN, POSITION: itemsdata.POSITION });
     });
-    this.TableColumnsService.setTableFilter(this.modelType, dataObj).subscribe(response => {
-      console.log(response);
-      if (response.CODE == 200 && response.STATUS == "success") {
-      }
-    }, error => {
+    this.TableColumnsService.setTableFilter(this.modelType, dataObj).subscribe(response => { if (response.CODE == 200 && response.STATUS == "success") { console.log('save'); } }, error => {
       console.log(error);
     });
   }
@@ -128,7 +123,7 @@ export class filterNames implements PipeTransform {
     if (!nameToFilter) return listOfNames;
     nameToFilter = nameToFilter.toLowerCase();
     return listOfNames.filter(it => {
-      return it.value.toLowerCase().includes(nameToFilter);
+      return it.COLUMNNAME.toLowerCase().includes(nameToFilter);
     });
   }
 }

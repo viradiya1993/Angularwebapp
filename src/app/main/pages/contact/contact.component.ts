@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-import { ContactService, AuthenticationService } from '../../../_services';
+import { ContactService, AuthenticationService, TableColumnsService } from '../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
@@ -14,16 +14,16 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   animations: fuseAnimations
 })
 export class ContactComponent implements OnInit {
-
   highlightedRows: any;
+  ColumnsObj = [];
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
-  displayedColumns: string[] = ['Contact Guid', 'Company Contactguid', 'Contact Type', 'User Guid', 'Useparent Address', 'Contact Name', 'Salutation', 'Position', 'Name Title', 'Given Names', 'Middle Names', 'Family Name', 'Name Letters', 'Knownby Othername', 'Otherfamily Name', 'Thergiven Names', 'Reason For Change', 'Marital Status', 'Spouse', 'Numberof Dependants', 'Occupation', 'Gender', 'Dateof Birth', 'Birthday Reminder', 'Townof Birth'];
+  displayedColumns: string[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   datanull: null;
   isLoadingResults: boolean = false;
   contactFilter: FormGroup;
-  constructor(private dialog: MatDialog, private Contact: ContactService, private toastr: ToastrService, private _formBuilder: FormBuilder, private authenticationService: AuthenticationService, ) {
+  constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, private Contact: ContactService, private toastr: ToastrService, private _formBuilder: FormBuilder, private authenticationService: AuthenticationService, ) {
     this.contactFilter = this._formBuilder.group({
       Filter1: [''],
       Filter2: [''],
@@ -32,40 +32,50 @@ export class ContactComponent implements OnInit {
   Contactdata;
 
   ngOnInit() {
-  
-  let filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
-  
-    if(localStorage.getItem('contact_Filter')){
-      let filterVal = { 'active': filterVals.active, 'FirstLetter': filterVals.FirstLetter};
+    this.getTableFilter();
+    let filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
+
+    if (localStorage.getItem('contact_Filter')) {
+      let filterVal = { 'active': filterVals.active, 'FirstLetter': filterVals.FirstLetter };
       this.LoadData(filterVal);
-    
-      if(filterVals.active){
-        if(filterVals.FirstLetter){
+      if (filterVals.active) {
+        if (filterVals.FirstLetter) {
           this.contactFilter.controls['Filter1'].setValue(filterVals.active);
-          this.contactFilter.controls['Filter2'].setValue(filterVals.FirstLetter); 
-        }else{
+          this.contactFilter.controls['Filter2'].setValue(filterVals.FirstLetter);
+        } else {
           this.contactFilter.controls['Filter1'].setValue(filterVals.active);
-          this.contactFilter.controls['Filter2'].setValue('-1'); 
-        }      
-      }else if(filterVals.FirstLetter){      
-        if(filterVals.active){
+          this.contactFilter.controls['Filter2'].setValue('-1');
+        }
+      } else if (filterVals.FirstLetter) {
+        if (filterVals.active) {
           this.contactFilter.controls['Filter1'].setValue(filterVals.active);
-          this.contactFilter.controls['Filter2'].setValue(filterVals.FirstLetter); 
-        }else{
+          this.contactFilter.controls['Filter2'].setValue(filterVals.FirstLetter);
+        } else {
           this.contactFilter.controls['Filter1'].setValue('all');
-          this.contactFilter.controls['Filter2'].setValue(filterVals.FirstLetter); 
-      }
-    }else{     
+          this.contactFilter.controls['Filter2'].setValue(filterVals.FirstLetter);
+        }
+      } else {
         this.contactFilter.controls['Filter1'].setValue('all');
         this.contactFilter.controls['Filter2'].setValue('-1');
-      } 
-    }else{
+      }
+    } else {
       this.contactFilter.controls['Filter1'].setValue('all');
       this.contactFilter.controls['Filter2'].setValue('-1');
-      let filterVal = { 'active': '', 'FirstLetter':''};
+      let filterVal = { 'active': '', 'FirstLetter': '' };
       this.LoadData(filterVal);
     }
-      
+  }
+  getTableFilter() {
+    this.TableColumnsService.getTableFilter('Contacts').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'contactColumns');
+        console.log(data);
+        this.displayedColumns = data.showcol;
+        this.ColumnsObj = data.colobj;
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
   }
   get f() {
     return this.contactFilter.controls;
@@ -92,36 +102,31 @@ export class ContactComponent implements OnInit {
   //for edit popup
   editContact(val) {
     localStorage.setItem('contactGuid', val);
-    //  this.Contact.getContact(val).subscribe(res => { 
-    //    this.getContactDta=res;
-    //    console.log(res);      
-    // });
   }
 
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': ['Contact Guid', 'Company Contactguid', 'Contact Type', 'User Guid', 'Useparent Address', 'Contact Name', 'Salutation', 'Position', 'Name Title', 'Given Names', 'Middle Names', 'Family Name', 'Name Letters', 'Knownby Othername', 'Otherfamily Name', 'Thergiven Names', 'Reason For Change', 'Marital Status', 'Spouse', 'Numberof Dependants', 'Occupation', 'Gender', 'Dateof Birth', 'Birthday Reminder', 'Townof Birth'], 'type': 'contact' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'Contacts' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
     dialogRef.afterClosed().subscribe(result => {
-      //console.log(result);
       if (result) {
-        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result));
+        this.displayedColumns = result.columObj;
+        this.ColumnsObj = result.columnameObj;
+        if (!result.columObj) {
+          this.Contactdata = new MatTableDataSource([]);
+          this.Contactdata.paginator = this.paginator;
+        } else {
+          let filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
+          let filterVal = { 'active': filterVals.active, 'FirstLetter': filterVals.FirstLetter };
+          this.LoadData(filterVal);
+        }
       }
     });
-    dialogRef.afterClosed().subscribe(data =>
-      this.tableSetting(data)
-    );
   }
-  tableSetting(data: any) {
-    if (data !== false) {
-      this.displayedColumns = data;
-    }
-  }
-
   //Filter:
   ContactChange(active) {
     if (active != 'all') {

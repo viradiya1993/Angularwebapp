@@ -42,18 +42,19 @@
                 </div>
             </div>
         </div>
-    </mat-dialog-content>
-    <mat-dialog-actions align="end" class="popup_ftr">
-        <div class="clear left_popup_btn">
-            <button class="cancel" mat-button matBadgeColor="accent" (click)="deleteall()">{{title}} </button>
+</div>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="popup_ftr">
+    <div class="clear left_popup_btn">
+        <button class="cancel" mat-button matBadgeColor="accent" (click)="deleteall()">{{title}} </button>
+    </div>
+    <div class="right_popup_btn">
+        <div class="right_btn_child">
+            <button mat-raised-button color="primary" mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="ondialogSaveClick()">Save</button>
         </div>
-        <div class="right_popup_btn">
-            <div class="right_btn_child">
-                <button mat-raised-button color="primary" mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="ondialogSaveClick()">Save</button>
-            </div>
-            <div class="right_btn_child">
-                <button class="cancel" mat-button [mat-dialog-close]="true" matBadgeColor="accent" (click)="ondialogcloseClick()">Cancel</button>
-            </div>
+        <div class="right_btn_child">
+            <button class="cancel" mat-button [mat-dialog-close]="true" matBadgeColor="accent" (click)="ondialogcloseClick()">Cancel</button>
         </div>
-    </mat-dialog-actions>
+    </div>
+</mat-dialog-actions>
 </div>

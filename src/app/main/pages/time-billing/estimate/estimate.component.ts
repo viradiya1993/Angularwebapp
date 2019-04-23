@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.component';
-import { EstimateService, GetallcolumnsFilterService } from '../../../../_services';
+import { EstimateService, GetallcolumnsFilterService, TableColumnsService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -13,15 +13,19 @@ import { ToastrService } from 'ngx-toastr';
   animations: fuseAnimations
 })
 export class EstimateComponent implements OnInit {
-  displayedColumns: string[] = ['Estimate ItemGuid', 'Estimate Guid', 'Work ItemGuid', 'Matter Guid', 'Item Type', 'Fee Earner', 'Fee Type', 'Order', 'Quantity From', 'Quantity Type From', 'Formatted Quantity From', 'Price From', 'Gst From', 'PriceInGst From', 'Quantity To', 'Quantity Typeto', 'Formatted Quantityto', 'Price To', 'Gst To', 'PriceinGst To', 'Service', 'Short Name', 'Client Name'];
+  displayedColumns: string[];
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   @ViewChild(MatPaginator) paginator: MatPaginator;
   isLoadingResults: boolean = false;
-
-  constructor(private dialog: MatDialog, private Estimate: EstimateService, private GetallcolumnsFilter: GetallcolumnsFilterService, private toastr: ToastrService) { }
+  ColumnsObj: any = [];
+  constructor(private TableColumnsService: TableColumnsService,
+    private dialog: MatDialog, private Estimate: EstimateService, private GetallcolumnsFilter: GetallcolumnsFilterService, private toastr: ToastrService) { }
   Estimatedata;
   ngOnInit() {
-    //Table Data Listing:
+    this.getTableFilter();
+    this.loadData();
+  }
+  loadData() {
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
     this.isLoadingResults = true;
     this.Estimate.MatterEstimatesData(potData).subscribe(res => {
@@ -33,36 +37,37 @@ export class EstimateComponent implements OnInit {
     }, err => {
       this.toastr.error(err);
     });
-
-    //Get All Columns:
-    this.GetallcolumnsFilter.Getallcolumns('matter', 'estimates').subscribe(response => {
-      // console.log(response);
-    },
-      err => {
-        this.toastr.error(err);
-      });
+  }
+  getTableFilter() {
+    this.TableColumnsService.getTableFilter('MatterEstimates').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'EstimatesItemsColumns');
+        this.displayedColumns = data.showcol;
+        this.ColumnsObj = data.colobj;
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': ['Estimate ItemGuid', 'Estimate Guid', 'Work ItemGuid', 'Matter Guid', 'Item Type', 'Fee Earner', 'Fee Type', 'Order', 'Quantity From', 'Quantity Type From', 'Formatted Quantity From', 'Price From', 'Gst From', 'PriceInGst From', 'Quantity To', 'Quantity Typeto', 'Formatted Quantityto', 'Price To', 'Gst To', 'PriceinGst To', 'Service', 'Short Name', 'Client Name'], 'type': 'estimate' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'MatterEstimates' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
     dialogRef.afterClosed().subscribe(result => {
-      //console.log(result);
       if (result) {
-        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result));
+        this.displayedColumns = result.columObj;
+        this.ColumnsObj = result.columnameObj;
+        if (!result.columObj) {
+          this.Estimatedata = new MatTableDataSource([]);
+          this.Estimatedata.paginator = this.paginator;
+        } else {
+          this.loadData();
+        }
       }
     });
-    dialogRef.afterClosed().subscribe(data =>
-      this.tableSetting(data)
-    );
-  }
-  tableSetting(data: any) {
-    if (data !== false) {
-      this.displayedColumns = data;
-    }
   }
 }

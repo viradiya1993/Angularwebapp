@@ -14,7 +14,8 @@ import { WorkInProgressService, TableColumnsService } from '../../../../_service
 })
 export class WorkInProgressComponent implements OnInit {
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
-  displayedColumns: string[] = ['Workitem Guid', 'Matter Guid', 'Invoice Guid', 'Invoice Order', 'Item Type', 'Item Date', 'Item Time', 'Fee Earner', 'Fee Type', 'Quantity', 'Quantity Type', 'Formatted Quantity', 'Price', 'Gst', 'Gst Type', 'Priceinc Gst', 'Gst Charged', 'Price Charged', 'Priceinc Gstcharged', 'Additional Text', 'Comment', 'Short Name', 'Invoice Code', 'Client Name'];
+  displayedColumns: string[];
+  ColumnsObj: any = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   isLoadingResults: boolean = false;
   constructor(private dialog: MatDialog, private WorkInProgress: WorkInProgressService, private TableColumnsService: TableColumnsService, private toastr: ToastrService) {
@@ -23,6 +24,22 @@ export class WorkInProgressComponent implements OnInit {
 
   WorkInProgressdata
   ngOnInit() {
+    this.getTableFilter();
+    this.loadData();
+  }
+  getTableFilter() {
+    this.TableColumnsService.getTableFilter('WorkItems').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'workInProgressColumns');
+        console.log(data.showcol);
+        this.displayedColumns = data.showcol;
+        this.ColumnsObj = data.colobj;
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
+  }
+  loadData() {
     this.isLoadingResults = true;
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
     this.WorkInProgress.WorkInProgressData(potData).subscribe(res => {
@@ -40,25 +57,24 @@ export class WorkInProgressComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': ['Workitem Guid', 'Matter Guid', 'Invoice Guid', 'Invoice Order', 'Item Type', 'Item Date', 'Item Time', 'Fee Earner', 'Fee Type', 'Quantity', 'Quantity Type', 'Formatted Quantity', 'Price', 'Gst', 'Gst Type', 'Priceinc Gst', 'Gst Charged', 'Price Charged', 'Priceinc Gstcharged', 'Additional Text', 'Comment', 'Short Name', 'Invoice Code', 'Client Name'], 'type': 'work-in-progress' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'WorkItems' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
     dialogRef.afterClosed().subscribe(result => {
-      //console.log(result);
       if (result) {
-        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result));
+        this.displayedColumns = result.columObj;
+        this.ColumnsObj = result.columnameObj;
+        if (!result.columObj) {
+          this.WorkInProgressdata = new MatTableDataSource([]);
+          this.WorkInProgressdata.paginator = this.paginator;
+        } else {
+          this.loadData();
+        }
       }
     });
-    dialogRef.afterClosed().subscribe(data =>
-      this.tableSetting(data)
-    );
   }
-  tableSetting(data: any) {
-    if (data !== false) {
-      this.displayedColumns = data;
-    }
-  }
+
 
 }
 

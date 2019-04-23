@@ -37,42 +37,109 @@
                     <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                 </div>
                 <mat-table #table [dataSource]="TimerData" [@animateStagger]="{value:'50'}">
-                    <ng-container matColumnDef="date">
+                    <ng-container matColumnDef="MATTERGUID">
+                        <mat-header-cell *matHeaderCellDef>matter guid</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.MATTERGUID}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="INVOICEGUID">
+                        <mat-header-cell *matHeaderCellDef>invoice guid</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.INVOICEGUID}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="INVOICEORDER">
+                        <mat-header-cell *matHeaderCellDef>invoice order</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.INVOICEORDER}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="ITEMTYPE">
+                        <mat-header-cell *matHeaderCellDef>item type</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.ITEMTYPE}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="ITEMDATE">
                         <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
-                        <mat-cell *matCellDef="let row">{{row.ITEMDATE}}
-                            <!-- <mat-cell *matCellDef="let row">{{row.ITEMDATE |date}} -->
-                        </mat-cell>
+                        <mat-cell *matCellDef="let row">{{row.ITEMDATE}} </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="matter">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Matter</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.SHORTNAME}}
-                        </mat-cell>
+                    <ng-container matColumnDef="ITEMTIME">
+                        <mat-header-cell *matHeaderCellDef>time</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.ITEMTIME}} </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="description">
-                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Description</mat-header-cell>
-                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.ADDITIONALTEXT}}
-                        </mat-cell>
+                    <ng-container matColumnDef="FEEEARNER">
+                        <mat-header-cell *matHeaderCellDef>fee earner</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.FEEEARNER}} </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="quantity">
+                    <ng-container matColumnDef="FEETYPE">
+                        <mat-header-cell *matHeaderCellDef>fee type</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.FEETYPE}} </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="FORMATTEDQUANTITY">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Quantity</mat-header-cell>
                         <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.FORMATTEDQUANTITY}}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="price_ex">
+                    <ng-container matColumnDef="QUANTITYTYPE">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Quantity type</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.QUANTITYTYPE}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="PRICE">
                         <mat-header-cell *matHeaderCellDef> Price Ex</mat-header-cell>
                         <mat-cell *matCellDef="let row">{{row.PRICE |currency }}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="price_inc">
+                    <ng-container matColumnDef="GST">
+                        <mat-header-cell *matHeaderCellDef> gst</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.GST }}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="GSTTYPE">
+                        <mat-header-cell *matHeaderCellDef> type</mat-header-cell>
+                        <mat-cell *matCellDef="let row">{{row.GSTTYPE }}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="PRICEINCGST">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Price Inc</mat-header-cell>
                         <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.PRICEINCGST |currency }}
                         </mat-cell>
                     </ng-container>
-                    <ng-container matColumnDef="invoice_no">
+                    <ng-container matColumnDef="GSTCHARGED">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>gst charged</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.GSTCHARGED }}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="PRICECHARGED">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>price charged</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.PRICECHARGED }}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="PRICEINCGSTCHARGED">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>price inc gst charged</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.PRICEINCGSTCHARGED }}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="ADDITIONALTEXT">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Description</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.ADDITIONALTEXT}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="COMMENT">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>comment</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.COMMENT}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="SHORTNAME">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Matter</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.SHORTNAME}}
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="INVOICECODE">
                         <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Invoice No</mat-header-cell>
                         <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.INVOICECODE }}
                         </mat-cell>
                     </ng-container>
+                    <ng-container matColumnDef="CLIENTNAME">
+                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>client name</mat-header-cell>
+                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.CLIENTNAME }}
+                        </mat-cell>
+                    </ng-container>
+
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editTimeEntry(row.WORKITEMGUID);highlightedRows=row.WORKITEMGUID" [style.background]="highlightedRows == row.WORKITEMGUID ? selectedColore : ''" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                     </mat-row>

@@ -32,10 +32,12 @@
                                 <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                             </div>
                             <mat-table #table [dataSource]="safeCustody_table" [@animateStagger]="{value:'50'}">
+
                                 <ng-container matColumnDef="SAFECUSTODYGUID">
                                     <mat-header-cell class="header_title" *matHeaderCellDef>safe custody guid</mat-header-cell>
                                     <mat-cell *matCellDef="let row">{{row.SAFECUSTODYGUID}}</mat-cell>
                                 </ng-container>
+
                                 <ng-container matColumnDef="SAFECUSTODYPACKETGUID">
                                     <mat-header-cell class="header_title" *matHeaderCellDef>safe custody packet guid</mat-header-cell>
                                     <mat-cell *matCellDef="let row">{{row.SAFECUSTODYPACKETGUID}}</mat-cell>
@@ -52,6 +54,7 @@
                                     <mat-header-cell class="header_title" *matHeaderCellDef>document type</mat-header-cell>
                                     <mat-cell *matCellDef="let row">{{row.DOCUMENTTYPE}}</mat-cell>
                                 </ng-container>
+
                                 <ng-container matColumnDef="SAFECUSTODYDESCRIPTION">
                                     <mat-header-cell class="header_title" *matHeaderCellDef>safe custody description</mat-header-cell>
                                     <mat-cell *matCellDef="let row">{{row.SAFECUSTODYDESCRIPTION}}</mat-cell>
@@ -76,9 +79,9 @@
                                     <mat-header-cell class="header_title" *matHeaderCellDef>reminder time</mat-header-cell>
                                     <mat-cell *matCellDef="let row">{{row.REMINDERTIME}}</mat-cell>
                                 </ng-container>
-                                <ng-container matColumnDef="AdditionalText">
+                                <ng-container matColumnDef="ADDITIONALTEXT">
                                     <mat-header-cell class="header_title" *matHeaderCellDef>additional text</mat-header-cell>
-                                    <mat-cell *matCellDef="let row">{{row.AdditionalText}}</mat-cell>
+                                    <mat-cell *matCellDef="let row">{{row.ADDITIONALTEXT}}</mat-cell>
                                 </ng-container>
                                 <ng-container matColumnDef="SHORTNAME">
                                     <mat-header-cell class="header_title" *matHeaderCellDef>short name</mat-header-cell>

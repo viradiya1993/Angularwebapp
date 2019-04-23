@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialogConfig, MatDialog } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.component';
-import { MatterInvoicesService } from '../../../../_services';
+import { MatterInvoicesService, TableColumnsService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -13,48 +13,65 @@ import { ToastrService } from 'ngx-toastr';
   animations: fuseAnimations
 })
 export class MatterInvoicesComponent implements OnInit {
+  ColumnsObj: any = [];
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
-  displayedColumns: string[] = ['Invoice Guid', 'Invoice ReversalGuid', 'Matter Guid', 'Short Name', 'Client Name', 'Parent InvoiceGuid', 'Invoice Code', 'Invoice Date', 'Due Date', 'Printed Date', 'Invoice Total', 'Gst', 'Agency Total', 'Agency Gst', 'Amount PaidexGst', 'Amount PaidincGst', 'Amount WrittenoffexGst', 'Amount WrittenoffincGst', 'Amount OutstandingexGst', 'Amount OutstandingincGst', 'Disbursement AmountexGst', 'Disbursement AmountincGst', 'Foreign currencyid', 'Foreign currencyrate', 'Foreign currencyamount', 'Foreign currencyGst', 'Comment'];
+  displayedColumns: string[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   isLoadingResults: boolean = false;
-  constructor(private dialog: MatDialog, private MatterInvoices: MatterInvoicesService, private toastr: ToastrService) { }
+  constructor(private dialog: MatDialog,
+    private MatterInvoices: MatterInvoicesService,
+    private TableColumnsService: TableColumnsService,
+    private toastr: ToastrService) { }
 
   MatterInvoicesdata;
   ngOnInit() {
+    this.getTableFilter();
+    this.loadData();
+  }
+  loadData() {
     this.isLoadingResults = true;
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
-    this.MatterInvoices.MatterInvoicesData(potData).subscribe(res => {      
-      if(res.CODE==200 && res.STATUS=="success"){
-          this.MatterInvoicesdata = new MatTableDataSource(res.DATA.INVOICES)
-          this.MatterInvoicesdata.paginator = this.paginator          
+    this.MatterInvoices.MatterInvoicesData(potData).subscribe(res => {
+      if (res.CODE == 200 && res.STATUS == "success") {
+        this.MatterInvoicesdata = new MatTableDataSource(res.DATA.INVOICES)
+        this.MatterInvoicesdata.paginator = this.paginator
       }
       this.isLoadingResults = false;
-    },
-      err => {
-        this.toastr.error(err);
-      });
+    }, err => {
+      this.toastr.error(err);
+    });
+  }
+  getTableFilter() {
+    this.TableColumnsService.getTableFilter('Invoice').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'invoicesColumns');
+        console.log(data.showcol);
+        this.displayedColumns = data.showcol;
+        this.ColumnsObj = data.colobj;
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': ['Invoice Guid', 'Invoice ReversalGuid', 'Matter Guid', 'Short Name', 'Client Name', 'Parent InvoiceGuid', 'Invoice Code', 'Invoice Date', 'Due Date', 'Printed Date', 'Invoice Total', 'Gst', 'Agency Total', 'Agency Gst', 'Amount PaidexGst', 'Amount PaidincGst', 'Amount WrittenoffexGst', 'Amount WrittenoffincGst', 'Amount OutstandingexGst', 'Amount OutstandingincGst', 'Disbursement AmountexGst', 'Disbursement AmountincGst', 'Foreign currencyid', 'Foreign currencyrate', 'Foreign currencyamount', 'Foreign currencyGst', 'Comment'], 'type': 'matter_invoices' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'Invoice' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
     dialogRef.afterClosed().subscribe(result => {
-      //console.log(result);
       if (result) {
-        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result));
+        this.displayedColumns = result.columObj;
+        this.ColumnsObj = result.columnameObj;
+        if (!result.columObj) {
+          this.MatterInvoicesdata = new MatTableDataSource([]);
+          this.MatterInvoicesdata.paginator = this.paginator;
+        } else {
+          this.loadData();
+        }
       }
     });
-    dialogRef.afterClosed().subscribe(data =>
-      this.tableSetting(data)
-    );
-  }
-  tableSetting(data: any) {
-    if (data !== false) {
-      this.displayedColumns = data;
-    }
   }
 }

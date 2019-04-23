@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-import { SafeCustodyService } from './../../../../_services';
+import { SafeCustodyService, TableColumnsService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -13,16 +13,30 @@ import { ToastrService } from 'ngx-toastr';
   animations: fuseAnimations
 })
 export class SafecustodyComponent implements OnInit {
+  ColumnsObj: any = [];
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
-  displayedColumns: string[] = ['SAFECUSTODYGUID', 'SAFECUSTODYPACKETGUID', 'MATTERGUID', 'CONTACTGUID', 'DOCUMENTTYPE',
-    'SAFECUSTODYDESCRIPTION', 'DOCUMENTNAME', 'STATUS', 'REMINDER', 'REMINDERDATE',
-    'REMINDERTIME', 'AdditionalText', 'SHORTNAME', 'CONTACTNAME', 'PACKETNUMBER'];
+  displayedColumns: string[];
   isLoadingResults: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private dialog: MatDialog, private safeCustody_service: SafeCustodyService, private toastr: ToastrService) { }
+  constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, private safeCustody_service: SafeCustodyService, private toastr: ToastrService) { }
   safeCustody_table;
   ngOnInit() {
+    this.getTableFilter();
+    this.LoadData();
+  }
+  getTableFilter() {
+    this.TableColumnsService.getTableFilter('SafeCustody').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'safeCustodyColumns');
+        this.displayedColumns = data.showcol;
+        this.ColumnsObj = data.colobj;
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
+  }
+  LoadData() {
     this.isLoadingResults = true;
     //get autorites  
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
@@ -34,46 +48,28 @@ export class SafecustodyComponent implements OnInit {
       this.isLoadingResults = false;
     }, error => {
       this.toastr.error(error);
-    }
-    );
+    });
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = {
-      'data': ['SAFECUSTODYGUID', 'SAFECUSTODYPACKETGUID', 'MATTERGUID', 'CONTACTGUID', 'DOCUMENTTYPE',
-        'SAFECUSTODYDESCRIPTION', 'DOCUMENTNAME', 'STATUS', 'REMINDER', 'REMINDERDATE',
-        'REMINDERTIME', 'AdditionalText', 'SHORTNAME', 'CONTACTNAME', 'PACKETNUMBER'], 'type': 'safecustody'
-    };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'SafeCustody' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
     dialogRef.afterClosed().subscribe(result => {
-      //console.log(result);
       if (result) {
-        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result));
+        this.displayedColumns = result.columObj;
+        this.ColumnsObj = result.columnameObj;
+        if (!result.columObj) {
+          this.safeCustody_table = new MatTableDataSource([]);
+          this.safeCustody_table.paginator = this.paginator;
+        } else
+          this.LoadData();
       }
     });
-    dialogRef.afterClosed().subscribe(data =>
-      this.tableSetting(data)
-    );
   }
-  tableSetting(data: any) {
-    if (data !== false) {
-      this.displayedColumns = data;
-    }
-  }
-
-}
-export interface PeriodicElement {
-  packet_number: number;
-  packet_description: string;
-  document: number;
-  status: string;
-  document_name: string;
-  description: string;
-  review_date: Date;
 }
 
 

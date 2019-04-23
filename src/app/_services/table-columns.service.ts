@@ -19,9 +19,9 @@ export class TableColumnsService {
     let tempCol: any = [];
     let showCol: any = [];
     response.forEach(itemsdata => {
-      if ((itemsdata.HIDDEN == 1 || itemsdata.HIDDEN == 0) && tableData.includes(itemsdata.COLUMNNAME)) {
+      if ((itemsdata.HIDDEN == 1 || itemsdata.HIDDEN == 0) && tableData.includes(itemsdata.COLUMNNAME) && !showCol.includes(itemsdata.COLUMNNAME)) {
         tempCol.push(itemsdata);
-        if (itemsdata.HIDDEN == 1)
+        if (itemsdata.HIDDEN == 1 && !showCol.includes(itemsdata.COLUMNNAME))
           showCol.push(itemsdata.COLUMNNAME);
       }
     });

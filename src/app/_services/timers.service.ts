@@ -63,7 +63,6 @@ export class TimersService {
       return false;
     }
     this.prevMatterArray = JSON.parse(localStorage.getItem(timerId));
-    console.log(this.prevMatterArray);
     if (this.prevMatterArray) {
       if (this.containsObject(activeMatters.SHORTNAME)) {
         this.addNewTimer(this.prevMatterArray);
@@ -77,7 +76,6 @@ export class TimersService {
     }
   }
   addNewTimer(prevMatterArray) {
-    console.log(prevMatterArray);
     let currentUser: any = JSON.parse(localStorage.getItem('currentUser'));
     let timerId: any = 'timer_' + currentUser.UserGuid;
     let activeMatters = JSON.parse(localStorage.getItem('set_active_matters'));

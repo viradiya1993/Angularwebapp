@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-import { ChronologyService } from './../../../../_services';
+import { ChronologyService, TableColumnsService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 
 
@@ -16,17 +16,32 @@ import { ToastrService } from 'ngx-toastr';
   animations: fuseAnimations
 })
 export class ChronologyComponent implements OnInit {
+  ColumnsObj: any = [];
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
-  displayedColumns: string[] = ['MATTERGUID', 'CHRONOLOGYGUID', 'DATEFROM', 'DATETO', 'TIMEFROM', 'TIMETO', 'FORMAT', 'FORMATTEDDATE',
-    'TOPIC', 'BRIEFPAGENO', 'REFERENCE', 'COMMENT', 'WITNESSES', 'EVENTAGREED', 'DOCUMENTNAME', 'ADDITIONALTEXT', 'SHORTNAME', 'CLIENTNAME'];
+  displayedColumns: string[];
   //dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   isLoadingResults: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   chronology_table;
 
-  constructor(private dialog: MatDialog, private chronology_service: ChronologyService, private toastr: ToastrService) { }
+  constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, private chronology_service: ChronologyService, private toastr: ToastrService) { }
 
   ngOnInit() {
+    this.getTableFilter();
+    this.LoadData();
+  }
+  getTableFilter() {
+    this.TableColumnsService.getTableFilter('MatterChronology').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'chronologyColumns');
+        this.displayedColumns = data.showcol;
+        this.ColumnsObj = data.colobj;
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
+  }
+  LoadData() {
     this.isLoadingResults = true;
     //get chronology
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
@@ -36,53 +51,32 @@ export class ChronologyComponent implements OnInit {
         this.chronology_table.paginator = this.paginator;
       }
       this.isLoadingResults = false;
-    },
-      error => {
-        this.toastr.error(error);
-      }
-    );
+    }, error => {
+      this.toastr.error(error);
+    });
   }
+
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = {
-      'data': ['MATTERGUID', 'CHRONOLOGYGUID', 'DATEFROM', 'DATETO', 'TIMEFROM', 'TIMETO', 'FORMAT', 'FORMATTEDDATE',
-        'TOPIC', 'BRIEFPAGENO', 'REFERENCE', 'COMMENT', 'WITNESSES', 'EVENTAGREED', 'DOCUMENTNAME', 'ADDITIONALTEXT', 'SHORTNAME', 'CLIENTNAME'], 'type': 'chronology'
-    };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'MatterChronology' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
     dialogRef.afterClosed().subscribe(result => {
-      //console.log(result);
       if (result) {
-        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result));
+        this.displayedColumns = result.columObj;
+        this.ColumnsObj = result.columnameObj;
+        if (!result.columObj) {
+          this.chronology_table = new MatTableDataSource([]);
+          this.chronology_table.paginator = this.paginator;
+        } else {
+          this.LoadData();
+        }
       }
     });
-    dialogRef.afterClosed().subscribe(data =>
-      this.tableSetting(data)
-    );
-  }
-  tableSetting(data: any) {
-    if (data !== false) {
-      this.displayedColumns = data;
-    }
   }
 
 
 }
-export interface PeriodicElement {
-  date: Date;
-  topic: string;
-  reference: string;
-  event_agreed: string;
-  brief_page_no: number;
-  comment: string;
-  privileged: number;
-  witnesses: number;
-  text: number;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-
-];

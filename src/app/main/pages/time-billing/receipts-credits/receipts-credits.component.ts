@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-import { ReceiptsCreditsService } from '../../../../_services';
+import { ReceiptsCreditsService, TableColumnsService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -14,13 +14,21 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ReceiptsCreditsComponent implements OnInit {
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
-  displayedColumns: string[] = ['Income Code', 'Income Guid', 'Income Class', 'Income Type', 'Firmguid', 'Short Name', 'Client Name', 'Allocation', 'Income Date', 'Payee', 'Amount', 'Gst', 'Total', 'Bank AccountGuid', 'Income AccountGuid', 'Note'];
+  displayedColumns: string[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  ColumnsObj: any = [];
   isLoadingResults: boolean = false;
-  constructor(private dialog: MatDialog, private ReceiptsCredits: ReceiptsCreditsService, private toastr: ToastrService) { }
+  constructor(private dialog: MatDialog,
+    private ReceiptsCredits: ReceiptsCreditsService,
+    private TableColumnsService: TableColumnsService,
+    private toastr: ToastrService) { }
 
   ReceiptsCreditsdata;
   ngOnInit() {
+    this.getTableFilter();
+    this.LoadData();
+  }
+  LoadData() {
     //API Data fetch
     this.isLoadingResults = true;
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
@@ -35,28 +43,37 @@ export class ReceiptsCreditsComponent implements OnInit {
         this.toastr.error(err);
       });
   }
+  getTableFilter() {
+    this.TableColumnsService.getTableFilter('MatterReceipts').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'MatterReceiptsColumns');
+        this.displayedColumns = data.showcol;
+        this.ColumnsObj = data.colobj;
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
+  }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '50%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': ['Income Code', 'Income Guid', 'Income Class', 'Income Type', 'Firmguid', 'Short Name', 'Client Name', 'Allocation', 'Income Date', 'Payee', 'Amount', 'Gst', 'Total', 'Bank AccountGuid', 'Income AccountGuid', 'Note'], 'type': 'receipts-credits' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'MatterReceipts' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
     dialogRef.afterClosed().subscribe(result => {
-      //console.log(result);
       if (result) {
-        localStorage.setItem(dialogConfig.data.type, JSON.stringify(result));
+        this.displayedColumns = result.columObj;
+        this.ColumnsObj = result.columnameObj;
+        if (!result.columObj) {
+          this.ReceiptsCreditsdata = new MatTableDataSource([]);
+          this.ReceiptsCreditsdata.paginator = this.paginator;
+        } else {
+          this.LoadData();
+        }
       }
     });
-    dialogRef.afterClosed().subscribe(data =>
-      this.tableSetting(data)
-    );
-  }
-  tableSetting(data: any) {
-    if (data !== false) {
-      this.displayedColumns = data;
-    }
   }
 }
 

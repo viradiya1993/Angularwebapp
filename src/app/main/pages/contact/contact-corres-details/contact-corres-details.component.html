@@ -31,7 +31,8 @@
                 </ng-container>
                 <tr mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumns"></tr>
                 <!-- sticky: true" -->
-                <tr mat-row [style.background]="highlightedRows == row.PERSONGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" class="contact" (click)="editContact(row.PERSONGUID);highlightedRows = row.PERSONGUID" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                <tr mat-row [style.background]="highlightedRows == row.PERSONGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" [ngClass]="highlightedRows == row.PERSONGUID ? 'row-text-colore' : ''" class="contact" (click)="editContact(row.PERSONGUID);highlightedRows = row.PERSONGUID"
+                    matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                 </tr>
             </table>
             <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" showFirstLastButtons></mat-paginator>

@@ -6,6 +6,7 @@ body.theme-default .mat-dialog-container {
 body.theme-yellow-light .mat-dialog-container {
     padding: 0;
 }
+
 .btn {
     float: right;
 }
@@ -81,4 +82,8 @@ body.theme-yellow-light .mat-dialog-container {
 mat-icon.close_icon.mat-icon.material-icons.mat-icon-no-color {
     float: right;
     cursor: pointer;
+}
+
+table {
+    width: 100%;
 }

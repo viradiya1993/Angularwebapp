@@ -31,42 +31,42 @@
                             <div class="example-loading-shade" *ngIf="isLoadingResults">
                                 <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                             </div>
-                            <mat-table #table [dataSource]="filenotes_table" [@animateStagger]="{value:'50'}">
+                            <table mat-table #table [dataSource]="filenotes_table" [@animateStagger]="{value:'50'}">
                                 <ng-container matColumnDef="FILENOTEGUID">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef>file note guid</mat-header-cell>
-                                    <mat-cell *matCellDef="let row">{{row.FILENOTEGUID}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef>file note guid</th>
+                                    <td mat-cell *matCellDef="let row">{{row.FILENOTEGUID}}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="MATTERGUID">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-sm>matter guid</mat-header-cell>
-                                    <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.MATTERGUID}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef>matter guid</th>
+                                    <td mat-cell *matCellDef="let row">{{row.MATTERGUID}}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="USERNAME">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>username</mat-header-cell>
-                                    <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.USERNAME}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>username</th>
+                                    <td mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.USERNAME}}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="DATE_">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef>date</mat-header-cell>
-                                    <mat-cell *matCellDef="let row">{{row.DATE_}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef>date</th>
+                                    <td mat-cell *matCellDef="let row">{{row.DATE_}}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="TIME_">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-sm>time</mat-header-cell>
-                                    <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.TIME_}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef>time</th>
+                                    <td mat-cell *matCellDef="let row">{{row.TIME_}}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="NOTE">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>note</mat-header-cell>
-                                    <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.Note}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>note</th>
+                                    <td mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.Note}}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="SHORTNAME">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef>short name</mat-header-cell>
-                                    <mat-cell *matCellDef="let row">{{row.SHORTNAME}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef>short name</th>
+                                    <td mat-cell *matCellDef="let row">{{row.SHORTNAME}}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="CONTACTNAME">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-sm>contact name</mat-header-cell>
-                                    <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.CONTACTNAME}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef>contact name</th>
+                                    <td mat-cell *matCellDef="let row">{{row.CONTACTNAME}}</td>
                                 </ng-container>
-                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                                <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}"></mat-row>
-                            </mat-table>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr *matRowDef="let row; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}"></tr>
+                            </table>
                         </div>
                         <mat-paginator [pageSizeOptions]="[10, 20,50,100]" showFirstLastButtons></mat-paginator>
                     </div>

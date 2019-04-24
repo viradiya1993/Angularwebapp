@@ -31,74 +31,74 @@
                             <div class="example-loading-shade" *ngIf="isLoadingResults">
                                 <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                             </div>
-                            <mat-table #table [dataSource]="safeCustody_table" [@animateStagger]="{value:'50'}">
+                            <table mat-table #table [dataSource]="safeCustody_table" [@animateStagger]="{value:'50'}">
 
                                 <ng-container matColumnDef="SAFECUSTODYGUID">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef>safe custody guid</mat-header-cell>
-                                    <mat-cell *matCellDef="let row">{{row.SAFECUSTODYGUID}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef>safe custody guid</th>
+                                    <td mat-cell *matCellDef="let row">{{row.SAFECUSTODYGUID}}</td>
                                 </ng-container>
 
                                 <ng-container matColumnDef="SAFECUSTODYPACKETGUID">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef>safe custody packet guid</mat-header-cell>
-                                    <mat-cell *matCellDef="let row">{{row.SAFECUSTODYPACKETGUID}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef>safe custody packet guid</th>
+                                    <td mat-cell *matCellDef="let row">{{row.SAFECUSTODYPACKETGUID}}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="MATTERGUID">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef>matter guid</mat-header-cell>
-                                    <mat-cell *matCellDef="let row">{{row.MATTERGUID}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef>matter guid</th>
+                                    <td mat-cell *matCellDef="let row">{{row.MATTERGUID}}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="CONTACTGUID">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef>contact guid</mat-header-cell>
-                                    <mat-cell *matCellDef="let row">{{row.CONTACTGUID}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef>contact guid</th>
+                                    <td mat-cell *matCellDef="let row">{{row.CONTACTGUID}}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="DOCUMENTTYPE">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef>document type</mat-header-cell>
-                                    <mat-cell *matCellDef="let row">{{row.DOCUMENTTYPE}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef>document type</th>
+                                    <td mat-cell *matCellDef="let row">{{row.DOCUMENTTYPE}}</td>
                                 </ng-container>
 
                                 <ng-container matColumnDef="SAFECUSTODYDESCRIPTION">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef>safe custody description</mat-header-cell>
-                                    <mat-cell *matCellDef="let row">{{row.SAFECUSTODYDESCRIPTION}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef>safe custody description</th>
+                                    <td mat-cell *matCellDef="let row">{{row.SAFECUSTODYDESCRIPTION}}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="DOCUMENTNAME">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef>document name</mat-header-cell>
-                                    <mat-cell *matCellDef="let row">{{row.DOCUMENTNAME}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef>document name</th>
+                                    <td mat-cell *matCellDef="let row">{{row.DOCUMENTNAME}}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="STATUS">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef>status</mat-header-cell>
-                                    <mat-cell *matCellDef="let row">{{row.STATUS}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef>status</th>
+                                    <td mat-cell *matCellDef="let row">{{row.STATUS}}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="REMINDER">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef>reminder</mat-header-cell>
-                                    <mat-cell *matCellDef="let row">{{row.REMINDER}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef>reminder</th>
+                                    <td mat-cell *matCellDef="let row">{{row.REMINDER}}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="REMINDERDATE">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef>reminder date</mat-header-cell>
-                                    <mat-cell *matCellDef="let row">{{row.REMINDERDATE}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef>reminder date</th>
+                                    <td mat-cell *matCellDef="let row">{{row.REMINDERDATE}}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="REMINDERTIME">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef>reminder time</mat-header-cell>
-                                    <mat-cell *matCellDef="let row">{{row.REMINDERTIME}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef>reminder time</th>
+                                    <td mat-cell *matCellDef="let row">{{row.REMINDERTIME}}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="ADDITIONALTEXT">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef>additional text</mat-header-cell>
-                                    <mat-cell *matCellDef="let row">{{row.ADDITIONALTEXT}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef>additional text</th>
+                                    <td mat-cell *matCellDef="let row">{{row.ADDITIONALTEXT}}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="SHORTNAME">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef>short name</mat-header-cell>
-                                    <mat-cell *matCellDef="let row">{{row.SHORTNAME}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef>short name</th>
+                                    <td mat-cell *matCellDef="let row">{{row.SHORTNAME}}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="CONTACTNAME">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef>contact name</mat-header-cell>
-                                    <mat-cell *matCellDef="let row">{{row.CONTACTNAME}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef>contact name</th>
+                                    <td mat-cell *matCellDef="let row">{{row.CONTACTNAME}}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="PACKETNUMBER">
-                                    <mat-header-cell class="header_title" *matHeaderCellDef>packet number</mat-header-cell>
-                                    <mat-cell *matCellDef="let row">{{row.PACKETNUMBER}}</mat-cell>
+                                    <th mat-header-cell class="header_title" *matHeaderCellDef>packet number</th>
+                                    <td mat-cell *matCellDef="let row">{{row.PACKETNUMBER}}</td>
                                 </ng-container>
-                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                                <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
-                                </mat-row>
-                            </mat-table>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                </tr>
+                            </table>
                         </div>
                         <mat-paginator [pageSizeOptions]="[10, 20,50,100]" showFirstLastButtons></mat-paginator>
                     </div>

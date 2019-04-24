@@ -33,12 +33,12 @@
                             </div>
                             <table mat-table #table [dataSource]="Estimatedata" [@animateStagger]="{value:'50'}">
                                 <ng-container matColumnDef="ESTIMATEITEMGUID">
-                                    <th mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm class="header_title">estimate item guid </th>
-                                    <td mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.ESTIMATEITEMGUID}} </td>
+                                    <th mat-header-cell *matHeaderCellDef class="header_title">estimate item guid </th>
+                                    <td mat-cell *matCellDef="let row">{{row.ESTIMATEITEMGUID}} </td>
                                 </ng-container>
                                 <ng-container matColumnDef="ESTIMATEGUID">
-                                    <th mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm class="header_title"> estimate guid </th>
-                                    <td mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.ESTIMATEGUID }} </td>
+                                    <th mat-header-cell *matHeaderCellDef class="header_title"> estimate guid </th>
+                                    <td mat-cell *matCellDef="let row">{{row.ESTIMATEGUID }} </td>
                                 </ng-container>
                                 <ng-container matColumnDef="WORKITEMGUID">
                                     <th mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md class="header_title"> workitem guid </th>
@@ -57,8 +57,8 @@
                                     <td mat-cell *matCellDef="let row">{{row.FEEEARNER }} </td>
                                 </ng-container>
                                 <ng-container matColumnDef="FEETYPE">
-                                    <th mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm class="header_title">fee type </th>
-                                    <td mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.FEETYPE }}
+                                    <th mat-header-cell *matHeaderCellDef class="header_title">fee type </th>
+                                    <td mat-cell *matCellDef="let row">{{row.FEETYPE }}
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="ORDER">

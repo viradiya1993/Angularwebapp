@@ -42,7 +42,7 @@ export class TimeEntriesComponent implements OnInit {
     this.isShowDrop = currentUser.ProductType == "Barrister" ? false : true;
     this.TimeEnrtyForm = this.fb.group({ date: [''], uninvoicedWork: [''], dlpdrop: [''], });
     if (this.lastFilter) {
-      if (this.lastFilter.ItemDateStart != "" && this.lastFilter.ItemDateEnd != "") {
+      if (this.lastFilter.ItemDateStart && this.lastFilter.ItemDateEnd) {
         let tempDate = this.lastFilter.ItemDateStart.split("/");
         let tempDate2 = this.lastFilter.ItemDateEnd.split("/");
         let Sd = new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]);
@@ -83,6 +83,7 @@ export class TimeEntriesComponent implements OnInit {
     this.TableColumnsService.getTableFilter('WorkItems').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'WorkItemsColumns');
+        // console.log(data);
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
       }

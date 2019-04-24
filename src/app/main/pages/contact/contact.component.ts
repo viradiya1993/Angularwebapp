@@ -34,36 +34,24 @@ export class ContactComponent implements OnInit {
   ngOnInit() {
     this.getTableFilter();
     let filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
-
-    if (localStorage.getItem('contact_Filter')) {
-      let filterVal = { 'active': filterVals.active, 'FirstLetter': filterVals.FirstLetter };
-      this.LoadData(filterVal);
-      if (filterVals.active) {
-        if (filterVals.FirstLetter) {
-          this.contactFilter.controls['Filter1'].setValue(filterVals.active);
-          this.contactFilter.controls['Filter2'].setValue(filterVals.FirstLetter);
-        } else {
-          this.contactFilter.controls['Filter1'].setValue(filterVals.active);
-          this.contactFilter.controls['Filter2'].setValue('-1');
-        }
-      } else if (filterVals.FirstLetter) {
-        if (filterVals.active) {
-          this.contactFilter.controls['Filter1'].setValue(filterVals.active);
-          this.contactFilter.controls['Filter2'].setValue(filterVals.FirstLetter);
-        } else {
-          this.contactFilter.controls['Filter1'].setValue('all');
-          this.contactFilter.controls['Filter2'].setValue(filterVals.FirstLetter);
-        }
-      } else {
+    if (filterVals) {
+      if (!filterVals.active) {
         this.contactFilter.controls['Filter1'].setValue('all');
+      } else {
+        this.contactFilter.controls['Filter1'].setValue(filterVals.active);
+      }
+      if (!filterVals.FirstLetter) {
         this.contactFilter.controls['Filter2'].setValue('-1');
+      } else {
+        this.contactFilter.controls['Filter2'].setValue(filterVals.FirstLetter);
       }
     } else {
       this.contactFilter.controls['Filter1'].setValue('all');
       this.contactFilter.controls['Filter2'].setValue('-1');
-      let filterVal = { 'active': '', 'FirstLetter': '' };
-      this.LoadData(filterVal);
+      filterVals = { 'active': '', 'FirstLetter': '' };
+      localStorage.setItem('time_entries_filter', JSON.stringify(filterVals));
     }
+    this.LoadData(filterVals);
   }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('Contacts').subscribe(response => {

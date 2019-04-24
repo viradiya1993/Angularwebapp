@@ -46,322 +46,323 @@
                 </form>
             </div>
             <div class="content">
-                <!-- <app-contactlist></app-contactlist> -->
                 <div class="btn top_right_action_billing">
                     <button mat-icon-button (click)="openDialog()" aria-label="More">
-                            <mat-icon class="secondary-text">more_vert</mat-icon>
-                        </button>
+                                <mat-icon class="secondary-text">more_vert</mat-icon>
+                            </button>
                 </div>
                 <div class="content example-containerdata ">
                     <div class="example-loading-shade" *ngIf="isLoadingResults">
                         <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                     </div>
                     <div class="example-containerdata">
-                        <mat-table #table [dataSource]="Contactdata" [@animateStagger]="{value:'50'}">
+                        <table mat-table [dataSource]="Contactdata" [@animateStagger]="{value:'50'}">
                             <ng-container matColumnDef="COMPANYCONTACTGUID">
-                                <mat-header-cell *matHeaderCellDef class="header_title">Company Contact Guid</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.COMPANYCONTACTGUID}}</mat-cell>
+                                <th mat-header-cell *matHeaderCellDef class="header_title"> Company Contact Guid </th>
+                                <td mat-cell *matCellDef="let row"> {{row.COMPANYCONTACTGUID}} </td>
                             </ng-container>
 
                             <ng-container matColumnDef="CONTACTTYPE">
-                                <mat-header-cell *matHeaderCellDef class="header_title">contact type</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.CONTACTTYPE}}</mat-cell>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">contact type</th>
+                                <td mat-cell *matCellDef="let row"> {{row.CONTACTTYPE}} </td>
                             </ng-container>
 
                             <ng-container matColumnDef="USERGUID">
-                                <mat-header-cell *matHeaderCellDef class="header_title">user guid</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.USERGUID}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="USEPARENTADDRESS">
-                                <mat-header-cell *matHeaderCellDef class="header_title">useparent address</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.USEPARENTADDRESS}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="CONTACTNAME">
-                                <mat-header-cell *matHeaderCellDef class="header_title"> contact name </mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.CONTACTNAME}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="SALUTATION">
-                                <mat-header-cell *matHeaderCellDef class="header_title">salutation</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.SALUTATION}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="POSITION">
-                                <mat-header-cell *matHeaderCellDef class="header_title">position</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.POSITION}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="NAMETITLE">
-                                <mat-header-cell *matHeaderCellDef class="header_title">name title</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.NAMETITLE}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="GIVENNAMES">
-                                <mat-header-cell *matHeaderCellDef class="header_title">given names</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.GIVENNAMES}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="MIDDLENAMES">
-                                <mat-header-cell *matHeaderCellDef class="header_title">middle names</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.MIDDLENAMES}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="FAMILYNAME">
-                                <mat-header-cell *matHeaderCellDef class="header_title"> family name </mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.FAMILYNAME}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="NAMELETTERS">
-                                <mat-header-cell *matHeaderCellDef class="header_title">name letters</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.NAMELETTERS}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="KNOWNBYOTHERNAME">
-                                <mat-header-cell *matHeaderCellDef class="header_title">knownby othername</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.KNOWNBYOTHERNAME}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="OTHERFAMILYNAME">
-                                <mat-header-cell *matHeaderCellDef class="header_title">otherfamily name</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.OTHERFAMILYNAME}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="OTHERGIVENNAMES">
-                                <mat-header-cell *matHeaderCellDef class="header_title">othergiven names</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.OTHERGIVENNAMES}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="REASONFORCHANGE">
-                                <mat-header-cell *matHeaderCellDef class="header_title">reason for change</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.REASONFORCHANGE}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="MARITALSTATUS">
-                                <mat-header-cell *matHeaderCellDef class="header_title"> marital status </mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.maritalstatus}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="SPOUSE">
-                                <mat-header-cell *matHeaderCellDef class="header_title">spouse</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.SPOUSE}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="NUMBEROFDEPENDANTS">
-                                <mat-header-cell *matHeaderCellDef class="header_title">numberof dependants</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.NUMBEROFDEPENDANTS}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="OCCUPATION">
-                                <mat-header-cell *matHeaderCellDef class="header_title">occupation</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.OCCUPATION}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="GENDER">
-                                <mat-header-cell *matHeaderCellDef class="header_title">gender</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.GENDER}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="DATEOFBIRTH">
-                                <mat-header-cell *matHeaderCellDef class="header_title">dateof birth</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.DATEOFBIRTH}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="BIRTHDAYREMINDER">
-                                <mat-header-cell *matHeaderCellDef class="header_title"> birthday reminder </mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.BIRTHDAYREMINDER}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="TOWNOFBIRTH">
-                                <mat-header-cell *matHeaderCellDef class="header_title"> town of birth </mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.TOWNOFBIRTH}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="COUNTRYOFBIRTH">
-                                <mat-header-cell *matHeaderCellDef class="header_title">country Of Birth</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.COUNTRYOFBIRTH}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="CAUSEOFDEATH">
-                                <mat-header-cell *matHeaderCellDef class="header_title">cause Of death</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.CAUSEOFDEATH}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="ADDRESS1">
-                                <mat-header-cell *matHeaderCellDef class="header_title">address1</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.ADDRESS1}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="ADDRESS2">
-                                <mat-header-cell *matHeaderCellDef class="header_title">address2</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.ADDRESS2}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="ADDRESS3">
-                                <mat-header-cell *matHeaderCellDef class="header_title">address3</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.ADDRESS3}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="SUBURB">
-                                <mat-header-cell *matHeaderCellDef class="header_title">suburb</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.SUBURB}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="STATE">
-                                <mat-header-cell *matHeaderCellDef class="header_title">state</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.STATE}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="POSTCODE">
-                                <mat-header-cell *matHeaderCellDef class="header_title">post code</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.POSTCODE}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="COUNTRY">
-                                <mat-header-cell *matHeaderCellDef class="header_title">country</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.COUNTRY}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="SAMEASSTREET">
-                                <mat-header-cell *matHeaderCellDef class="header_title">same as street</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.SAMEASSTREET}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="POSTALADDRESS1">
-                                <mat-header-cell *matHeaderCellDef class="header_title">postal address1</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.POSTALADDRESS1}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="POSTALADDRESS2">
-                                <mat-header-cell *matHeaderCellDef class="header_title">postal address2</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.POSTALADDRESS2}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="POSTALADDRESS3">
-                                <mat-header-cell *matHeaderCellDef class="header_title">postal address3</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.POSTALADDRESS3}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="POSTALSUBURB">
-                                <mat-header-cell *matHeaderCellDef class="header_title">postal suburb</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.POSTALSUBURB}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="POSTALSTATE">
-                                <mat-header-cell *matHeaderCellDef class="header_title">postal state</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.POSTALSTATE}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="POSTALPOSTCODE">
-                                <mat-header-cell *matHeaderCellDef class="header_title">postal post code</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.POSTALPOSTCODE}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="POSTALCOUNTRY">
-                                <mat-header-cell *matHeaderCellDef class="header_title">postal country</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.POSTALCOUNTRY}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="DX">
-                                <mat-header-cell *matHeaderCellDef class="header_title">dx</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.DX}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="DXSUBURB">
-                                <mat-header-cell *matHeaderCellDef class="header_title">dx suburb</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.DXSUBURB}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="PHONE">
-                                <mat-header-cell *matHeaderCellDef class="header_title">phone</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.PHONE}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="PHONE2">
-                                <mat-header-cell *matHeaderCellDef class="header_title">phone2</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.PHONE2}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="FAX">
-                                <mat-header-cell *matHeaderCellDef class="header_title">fax</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.FAX}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="FAX2">
-                                <mat-header-cell *matHeaderCellDef class="header_title">fax2</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.FAX2}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="MOBILE">
-                                <mat-header-cell *matHeaderCellDef class="header_title">mobile</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.MOBILE}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="EMAIL">
-                                <mat-header-cell *matHeaderCellDef class="header_title">email</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.EMAIL}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="EMAIL2">
-                                <mat-header-cell *matHeaderCellDef class="header_title">email2</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.EMAIL2}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="ELECTRONICSERVICEEMAIL">
-                                <mat-header-cell *matHeaderCellDef class="header_title">electonic service email</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.ELECTRONICSERVICEEMAIL}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="WEBADDRESS">
-                                <mat-header-cell *matHeaderCellDef class="header_title">web address</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.WEBADDRESS}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="SKYPEUSERNAME">
-                                <mat-header-cell *matHeaderCellDef class="header_title">skype username</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.SKYPEUSERNAME}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="MESSENGERUSERNAME">
-                                <mat-header-cell *matHeaderCellDef class="header_title">messenger username</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.MESSENGERUSERNAME}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="ACN">
-                                <mat-header-cell *matHeaderCellDef class="header_title">acn</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.ACN}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="ABN">
-                                <mat-header-cell *matHeaderCellDef class="header_title">ABN</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.ABN}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="PRACTICINGCERTIFICATENO">
-                                <mat-header-cell *matHeaderCellDef class="header_title">practicing certificate no</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.PRACTICINGCERTIFICATENO}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="TFN">
-                                <mat-header-cell *matHeaderCellDef class="header_title">tfn</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.TFN}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="LICENCENO">
-                                <mat-header-cell *matHeaderCellDef class="header_title">licence no</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.LICENCENO}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="LICENCECOUNTRY">
-                                <mat-header-cell *matHeaderCellDef class="header_title">licence country</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.LICENCECOUNTRY}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="LICENCESCANLOCATION">
-                                <mat-header-cell *matHeaderCellDef class="header_title">licence scanlocation</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.LICENCESCANLOCATION}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="NATIONALIDENTITYNO">
-                                <mat-header-cell *matHeaderCellDef class="header_title">national identity no</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.NATIONALIDENTITYNO}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="NATIONALIDENTITYCOUNTRY">
-                                <mat-header-cell *matHeaderCellDef class="header_title">national identity country</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.NATIONALIDENTITYCOUNTRY}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="NATIDENTSCANLOCATION">
-                                <mat-header-cell *matHeaderCellDef class="header_title">natidentscan location </mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.NATIDENTSCANLOCATION}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="FAMILYCOURTLAWYERNO">
-                                <mat-header-cell *matHeaderCellDef class="header_title">family court lawyer no</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.FAMILYCOURTLAWYERNO}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="ASSOCIATIONNO">
-                                <mat-header-cell *matHeaderCellDef class="header_title">association no</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.ASSOCIATIONNO}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="GSTTYPE">
-                                <mat-header-cell *matHeaderCellDef class="header_title">gst type</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.GSTTYPE}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="DEFAULTCURRENCYID">
-                                <mat-header-cell *matHeaderCellDef class="header_title">default currency id</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.DEFAULTCURRENCYID}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="PHOTOGRAPH">
-                                <mat-header-cell *matHeaderCellDef class="header_title">photograph</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.PHOTOGRAPH}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="NOTES">
-                                <mat-header-cell *matHeaderCellDef class="header_title">notes</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.NOTES}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="ACTIVE">
-                                <mat-header-cell *matHeaderCellDef class="header_title">active</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.ACTIVE}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="SOPHISTICATEDCLIENT">
-                                <mat-header-cell *matHeaderCellDef class="header_title">sophisticated client</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.SOPHISTICATEDCLIENT}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="CLIENTSOURCE">
-                                <mat-header-cell *matHeaderCellDef class="header_title">client source</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.CLIENTSOURCE}}</mat-cell>
-                            </ng-container>
-                            <ng-container matColumnDef="COMPANYNAME">
-                                <mat-header-cell *matHeaderCellDef class="header_title">company name</mat-header-cell>
-                                <mat-cell *matCellDef="let row">{{row.COMPANYNAME}}</mat-cell>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">user guid</th>
+                                <td mat-cell *matCellDef="let row"> {{row.USERGUID}} </td>
                             </ng-container>
 
-                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                            <mat-row [style.background]="highlightedRows == row.CONTACTGUID ? selectedColore : ''" highlightedRows=row.CONTACTGUID *matRowDef="let row; columns: displayedColumns;" (click)="editContact(row.CONTACTGUID);highlightedRows = row.CONTACTGUID " matRipple
-                                [@animate]="{value:'*',params:{y:'100%'}}">
-                            </mat-row>
-                        </mat-table>
+                            <ng-container matColumnDef="USEPARENTADDRESS">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">useparent address</th>
+                                <td mat-cell *matCellDef="let row"> {{row.USEPARENTADDRESS}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="CONTACTNAME">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">contact name</th>
+                                <td mat-cell *matCellDef="let row"> {{row.CONTACTNAME}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="SALUTATION">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">salutation</th>
+                                <td mat-cell *matCellDef="let row"> {{row.SALUTATION}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="POSITION">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">position</th>
+                                <td mat-cell *matCellDef="let row"> {{row.POSITION}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="NAMETITLE">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">name title</th>
+                                <td mat-cell *matCellDef="let row"> {{row.NAMETITLE}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="GIVENNAMES">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">given names</th>
+                                <td mat-cell *matCellDef="let row"> {{row.GIVENNAMES}} </td>
+                            </ng-container>
+                            <ng-container matColumnDef="MIDDLENAMES">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">middle names</th>
+                                <td mat-cell *matCellDef="let row">{{row.MIDDLENAMES}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="FAMILYNAME">
+                                <th mat-header-cell *matHeaderCellDef class="header_title"> family name </th>
+                                <td mat-cell *matCellDef="let row">{{row.FAMILYNAME}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="NAMELETTERS">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">name letters</th>
+                                <td mat-cell *matCellDef="let row">{{row.NAMELETTERS}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="KNOWNBYOTHERNAME">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">knownby othername</th>
+                                <td mat-cell *matCellDef="let row">{{row.KNOWNBYOTHERNAME}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="OTHERFAMILYNAME">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">otherfamily name</th>
+                                <td mat-cell *matCellDef="let row">{{row.OTHERFAMILYNAME}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="OTHERGIVENNAMES">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">othergiven names</th>
+                                <td mat-cell *matCellDef="let row">{{row.OTHERGIVENNAMES}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="REASONFORCHANGE">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">reason for change</th>
+                                <td mat-cell *matCellDef="let row">{{row.REASONFORCHANGE}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="MARITALSTATUS">
+                                <th mat-header-cell *matHeaderCellDef class="header_title"> marital status </th>
+                                <td mat-cell *matCellDef="let row">{{row.maritalstatus}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="SPOUSE">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">spouse</th>
+                                <td mat-cell *matCellDef="let row">{{row.SPOUSE}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="NUMBEROFDEPENDANTS">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">numberof dependants</th>
+                                <td mat-cell *matCellDef="let row">{{row.NUMBEROFDEPENDANTS}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="OCCUPATION">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">occupation</th>
+                                <td mat-cell *matCellDef="let row">{{row.OCCUPATION}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="GENDER">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">gender</th>
+                                <td mat-cell *matCellDef="let row">{{row.GENDER}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="DATEOFBIRTH">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">dateof birth</th>
+                                <td mat-cell *matCellDef="let row">{{row.DATEOFBIRTH}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="BIRTHDAYREMINDER">
+                                <th mat-header-cell *matHeaderCellDef class="header_title"> birthday reminder </th>
+                                <td mat-cell *matCellDef="let row">{{row.BIRTHDAYREMINDER}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="TOWNOFBIRTH">
+                                <th mat-header-cell *matHeaderCellDef class="header_title"> town of birth </th>
+                                <td mat-cell *matCellDef="let row">{{row.TOWNOFBIRTH}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="COUNTRYOFBIRTH">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">country Of Birth</th>
+                                <td mat-cell *matCellDef="let row">{{row.COUNTRYOFBIRTH}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="CAUSEOFDEATH">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">cause Of death</th>
+                                <td mat-cell *matCellDef="let row">{{row.CAUSEOFDEATH}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="ADDRESS1">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">address1</th>
+                                <td mat-cell *matCellDef="let row">{{row.ADDRESS1}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="ADDRESS2">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">address2</th>
+                                <td mat-cell *matCellDef="let row">{{row.ADDRESS2}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="ADDRESS3">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">address3</th>
+                                <td mat-cell *matCellDef="let row">{{row.ADDRESS3}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="SUBURB">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">suburb</th>
+                                <td mat-cell *matCellDef="let row">{{row.SUBURB}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="STATE">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">state</th>
+                                <td mat-cell *matCellDef="let row">{{row.STATE}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="POSTCODE">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">post code</th>
+                                <td mat-cell *matCellDef="let row">{{row.POSTCODE}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="COUNTRY">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">country</th>
+                                <td mat-cell *matCellDef="let row">{{row.COUNTRY}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="SAMEASSTREET">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">same as street</th>
+                                <td mat-cell *matCellDef="let row">{{row.SAMEASSTREET}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="POSTALADDRESS1">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">postal address1</th>
+                                <td mat-cell *matCellDef="let row">{{row.POSTALADDRESS1}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="POSTALADDRESS2">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">postal address2</th>
+                                <td mat-cell *matCellDef="let row">{{row.POSTALADDRESS2}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="POSTALADDRESS3">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">postal address3</th>
+                                <td mat-cell *matCellDef="let row">{{row.POSTALADDRESS3}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="POSTALSUBURB">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">postal suburb</th>
+                                <td mat-cell *matCellDef="let row">{{row.POSTALSUBURB}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="POSTALSTATE">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">postal state</th>
+                                <td mat-cell *matCellDef="let row">{{row.POSTALSTATE}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="POSTALPOSTCODE">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">postal post code</th>
+                                <td mat-cell *matCellDef="let row">{{row.POSTALPOSTCODE}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="POSTALCOUNTRY">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">postal country</th>
+                                <td mat-cell *matCellDef="let row">{{row.POSTALCOUNTRY}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="DX">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">dx</th>
+                                <td mat-cell *matCellDef="let row">{{row.DX}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="DXSUBURB">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">dx suburb</th>
+                                <td mat-cell *matCellDef="let row">{{row.DXSUBURB}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="PHONE">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">phone</th>
+                                <td mat-cell *matCellDef="let row">{{row.PHONE}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="PHONE2">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">phone2</th>
+                                <td mat-cell *matCellDef="let row">{{row.PHONE2}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="FAX">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">fax</th>
+                                <td mat-cell *matCellDef="let row">{{row.FAX}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="FAX2">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">fax2</th>
+                                <td mat-cell *matCellDef="let row">{{row.FAX2}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="MOBILE">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">mobile</th>
+                                <td mat-cell *matCellDef="let row">{{row.MOBILE}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="EMAIL">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">email</th>
+                                <td mat-cell *matCellDef="let row">{{row.EMAIL}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="EMAIL2">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">email2</th>
+                                <td mat-cell *matCellDef="let row">{{row.EMAIL2}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="ELECTRONICSERVICEEMAIL">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">electonic service email</th>
+                                <td mat-cell *matCellDef="let row">{{row.ELECTRONICSERVICEEMAIL}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="WEBADDRESS">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">web address</th>
+                                <td mat-cell *matCellDef="let row">{{row.WEBADDRESS}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="SKYPEUSERNAME">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">skype username</th>
+                                <td mat-cell *matCellDef="let row">{{row.SKYPEUSERNAME}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="MESSENGERUSERNAME">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">messenger username</th>
+                                <td mat-cell *matCellDef="let row">{{row.MESSENGERUSERNAME}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="ACN">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">acn</th>
+                                <td mat-cell *matCellDef="let row">{{row.ACN}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="ABN">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">ABN</th>
+                                <td mat-cell *matCellDef="let row">{{row.ABN}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="PRACTICINGCERTIFICATENO">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">practicing certificate no</th>
+                                <td mat-cell *matCellDef="let row">{{row.PRACTICINGCERTIFICATENO}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="TFN">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">tfn</th>
+                                <td mat-cell *matCellDef="let row">{{row.TFN}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="LICENCENO">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">licence no</th>
+                                <td mat-cell *matCellDef="let row">{{row.LICENCENO}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="LICENCECOUNTRY">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">licence country</th>
+                                <td mat-cell *matCellDef="let row">{{row.LICENCECOUNTRY}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="LICENCESCANLOCATION">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">licence scanlocation</th>
+                                <td mat-cell *matCellDef="let row">{{row.LICENCESCANLOCATION}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="NATIONALIDENTITYNO">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">national identity no</th>
+                                <td mat-cell *matCellDef="let row">{{row.NATIONALIDENTITYNO}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="NATIONALIDENTITYCOUNTRY">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">national identity country</th>
+                                <td mat-cell *matCellDef="let row">{{row.NATIONALIDENTITYCOUNTRY}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="NATIDENTSCANLOCATION">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">natidentscan location </th>
+                                <td mat-cell *matCellDef="let row">{{row.NATIDENTSCANLOCATION}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="FAMILYCOURTLAWYERNO">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">family court lawyer no</th>
+                                <td mat-cell *matCellDef="let row">{{row.FAMILYCOURTLAWYERNO}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="ASSOCIATIONNO">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">association no</th>
+                                <td mat-cell *matCellDef="let row">{{row.ASSOCIATIONNO}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="GSTTYPE">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">gst type</th>
+                                <td mat-cell *matCellDef="let row">{{row.GSTTYPE}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="DEFAULTCURRENCYID">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">default currency id</th>
+                                <td mat-cell *matCellDef="let row">{{row.DEFAULTCURRENCYID}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="PHOTOGRAPH">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">photograph</th>
+                                <td mat-cell *matCellDef="let row">{{row.PHOTOGRAPH}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="NOTES">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">notes</th>
+                                <td mat-cell *matCellDef="let row">{{row.NOTES}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="ACTIVE">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">active</th>
+                                <td mat-cell *matCellDef="let row">{{row.ACTIVE}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="SOPHISTICATEDCLIENT">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">sophisticated client</th>
+                                <td mat-cell *matCellDef="let row">{{row.SOPHISTICATEDCLIENT}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="CLIENTSOURCE">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">client source</th>
+                                <td mat-cell *matCellDef="let row">{{row.CLIENTSOURCE}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="COMPANYNAME">
+                                <th mat-header-cell *matHeaderCellDef class="header_title">company name</th>
+                                <td mat-cell *matCellDef="let row">{{row.COMPANYNAME}}</td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr [style.background]="highlightedRows == row.CONTACTGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.CONTACTGUID ? 'row-text-colore' : ''" highlightedRows=row.CONTACTGUID mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editContact(row.CONTACTGUID);highlightedRows = row.CONTACTGUID "
+                                matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                            </tr>
+                        </table>
                     </div>
                     <mat-paginator [pageSizeOptions]="[10, 20,50,100]" showFirstLastButtons></mat-paginator>
                 </div>

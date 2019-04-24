@@ -62,3 +62,18 @@ app-matters-list {
 .green-theme {
     background: #6ba950;
 }
+.more_tbl_clmn .mat-header-cell,
+.more_tbl_clmn .mat-cell {
+    display: table-cell;
+    white-space: nowrap;
+    padding: 0 20px;
+    overflow: inherit;
+    position: sticky;
+}
+.more_tbl_clmn .mat-header-cell:last-child, .more_tbl_clmn .mat-cell:last-child {
+    padding-right: 70px;
+}
+.example-containerdata {
+    height: 50%;
+    overflow: auto;
+}

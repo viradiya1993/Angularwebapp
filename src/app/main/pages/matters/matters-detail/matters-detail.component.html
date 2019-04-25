@@ -118,60 +118,60 @@
                     <mat-tab label="Matter Contacts">
                         <div class="products tab-content p-24" fusePerfectScrollbar>
                             <div class="content">
-                                <mat-table #table [dataSource]="MatterContact" [@animateStagger]="{value:'50'}">
-                                    <ng-container matColumnDef="Name">
-                                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Name</mat-header-cell>
-                                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
-                                            <p class="company text-truncate">
-                                                {{row.CONTACTNAME}}
-                                            </p>
-                                        </mat-cell>
-                                    </ng-container>
+                                <div class="example-containerdata">
+                                    <table mat-table #table [dataSource]="MatterContact" [@animateStagger]="{value:'50'}">
+                                        <ng-container matColumnDef="Name">
+                                            <th mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Name</th>
+                                            <td mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                                                <p class="company text-truncate">
+                                                    {{row.CONTACTNAME}}
+                                                </p>
+                                            </td>
+                                        </ng-container>
 
 
-                                    <ng-container matColumnDef="Type">
-                                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Type</mat-header-cell>
-                                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
-                                            <p class="company text-truncate">
-                                                {{row.TYPENAME}}
-                                            </p>
-                                        </mat-cell>
-                                    </ng-container>
+                                        <ng-container matColumnDef="Type">
+                                            <th mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Type</th>
+                                            <td mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                                                <p class="company text-truncate">
+                                                    {{row.TYPENAME}}
+                                                </p>
+                                            </td>
+                                        </ng-container>
 
-                                    <ng-container matColumnDef="Mobile">
-                                        <mat-header-cell *matHeaderCellDef>Mobile</mat-header-cell>
-                                        <mat-cell *matCellDef="let row">
-                                            <p class="company text-truncate">
-                                                {{row.MOBILE}}
-                                            </p>
-                                        </mat-cell>
-                                    </ng-container>
-
-
-                                    <ng-container matColumnDef="Phone_no">
-                                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Phone_no</mat-header-cell>
-                                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
-                                            <p class="company text-truncate">
-                                                {{row.PHONE}}
-                                            </p>
-                                        </mat-cell>
-                                    </ng-container>
+                                        <ng-container matColumnDef="Mobile">
+                                            <th mat-header-cell *matHeaderCellDef>Mobile</th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <p class="company text-truncate">
+                                                    {{row.MOBILE}}
+                                                </p>
+                                            </td>
+                                        </ng-container>
 
 
-                                    <ng-container matColumnDef="Email">
-                                        <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Email</mat-header-cell>
-                                        <mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
-                                            <p class="company text-truncate">
-                                                {{row.EMAIL}}
-                                            </p>
-                                        </mat-cell>
-                                    </ng-container>
-                                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                                    <mat-row *matRowDef="let row; columns: displayedColumns;">
-                                    </mat-row>
+                                        <ng-container matColumnDef="Phone_no">
+                                            <th mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm>Phone_no</th>
+                                            <td mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
+                                                <p class="company text-truncate">
+                                                    {{row.PHONE}}
+                                                </p>
+                                            </td>
+                                        </ng-container>
 
-                                </mat-table>
 
+                                        <ng-container matColumnDef="Email">
+                                            <th mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md>Email</th>
+                                            <td mat-cell *matCellDef="let row" fxHide fxShow.gt-md>
+                                                <p class="company text-truncate">
+                                                    {{row.EMAIL}}
+                                                </p>
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                                        </tr>
+                                    </table>
+                                </div>
                                 <mat-paginator [pageSizeOptions]="[10, 20,50,100]" showFirstLastButtons></mat-paginator>
                             </div>
                         </div>

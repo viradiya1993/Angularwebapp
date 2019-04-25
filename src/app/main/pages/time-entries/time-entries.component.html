@@ -33,7 +33,7 @@
                         <mat-icon class="secondary-text">more_vert</mat-icon>
                         </button>
                 </div>
-                <div class="content example-containerdata ">
+                <div class="content">
                     <div class="example-loading-shade" *ngIf="isLoadingResults">
                         <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                     </div>
@@ -146,15 +146,17 @@
                                 </td>
                             </ng-container>
 
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editTimeEntry(row.WORKITEMGUID);highlightedRows=row.WORKITEMGUID" [style.background]="highlightedRows == row.WORKITEMGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.WORKITEMGUID ? 'row-text-colore' : ''"
                                 matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                             </tr>
                         </table>
                     </div>
                 </div>
-                <mat-paginator [pageSizeOptions]="[10, 20,50,100]" showFirstLastButtons></mat-paginator>
             </div>
+
+            <mat-paginator [pageSizeOptions]="[10, 20,50,100]" showFirstLastButtons></mat-paginator>
+
         </div>
     </div>
 </div>

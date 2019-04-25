@@ -49,7 +49,6 @@ app-safecustody {
 }
 
 //For Scoller add css
-
 // mat-table.mat-table.ng-trigger.ng-trigger-animateStagger {
 //     width: 300%;
 // }
@@ -60,6 +59,7 @@ app-safecustody {
 .mat-table {
     width: 100%;
 }
+
 .more_tbl_clmn .mat-header-cell,
 .more_tbl_clmn .mat-cell {
     display: table-cell;
@@ -68,10 +68,8 @@ app-safecustody {
     overflow: inherit;
     position: sticky;
 }
-.more_tbl_clmn .mat-header-cell:last-child, .more_tbl_clmn .mat-cell:last-child {
+
+.more_tbl_clmn .mat-header-cell:last-child,
+.more_tbl_clmn .mat-cell:last-child {
     padding-right: 70px;
-}
-.example-containerdata {
-    height: 50%;
-    overflow: auto;
 }

@@ -6,7 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import {
     MatButtonModule, MatPaginatorModule, MatDividerModule, MatDialogModule, MatCheckboxModule, MatTabsModule,
-    MatSelectModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule,
+    MatSelectModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule,
     MatTableModule, MatToolbarModule
 } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
@@ -34,8 +34,8 @@ import { InternalErrorComponent } from './main/errors/internal-error/internal-er
 //Datepicker
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { ToastrModule } from 'ngx-toastr';
-import {DatePipe} from '@angular/common';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { DatePipe } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 //end
 const appRoutes: Routes = [
     { path: '', loadChildren: './main/authentication/authentication.module#AuthenticationModule' },
@@ -50,7 +50,7 @@ const appRoutes: Routes = [
         NotFoundComponent,
         InternalErrorComponent,
         ReportsComponent
-        
+
     ],
     entryComponents: [
         SortingDialogComponent,
@@ -63,7 +63,7 @@ const appRoutes: Routes = [
         RouterModule.forRoot(appRoutes, { useHash: true }),
 
         TranslateModule.forRoot(),
-      
+
         // Material moment date module
         MatMomentDateModule,
 
@@ -79,7 +79,7 @@ const appRoutes: Routes = [
         MatFormFieldModule,
         MatSelectModule,
         MatMenuModule,
-        MatRippleModule,
+        // MatRippleModule,
         MatTableModule,
         MatToolbarModule,
         // Fuse modules

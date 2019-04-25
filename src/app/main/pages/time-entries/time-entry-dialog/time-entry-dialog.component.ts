@@ -1,10 +1,11 @@
 import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDatepickerInputEvent } from '@angular/material';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA, MatDatepickerInputEvent } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { TimersService, MattersService } from '../../../../_services';
+import { TimersService, MattersService, TableColumnsService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { DatePipe } from '@angular/common';
+import { TimeEntriesComponent } from '../time-entries.component';
 
 
 @Component({
@@ -45,12 +46,14 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
 
   constructor(
     public dialogRef: MatDialogRef<TimeEntryDialogComponent>,
+    public MatDialog: MatDialog,
     private Timersservice: TimersService,
     private MattersService: MattersService,
     private toastr: ToastrService,
     private _formBuilder: FormBuilder,
     private toasterService: ToastrService,
     public datepipe: DatePipe,
+    private TableColumnsService: TableColumnsService,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
     if (_data.edit == 'Edit' || _data.edit == 'Add') {
@@ -198,6 +201,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
         this.isLoadingResults = false;
         this.toastr.error(err);
       });
+      this.timeEntryForm.controls['QUANTITY'].setValue(1);
     } else {
       this.QuantityTypeLabel = 'Quantity Type';
       this.ActivityList = this.optionList;
@@ -214,7 +218,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       "ADDITIONALTEXT": this.f.ADDITIONALTEXT.value,
       "COMMENT": this.f.COMMENT.value,
       "FEEEARNER": this.f.FEEEARNER.value,
-      "FEETYPE": this.f.ITEMTYPE.value,
+      "ITEMTYPE": this.f.ITEMTYPE.value,
       // "INVOICEGUID": "value",
       // "INVOICEORDER": "value",
       "ITEMDATE": this.ITEMDATEVLAUE,
@@ -227,9 +231,15 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       // "GST": "value",
       // "GSTCHARGED": "value",
       // "GSTTYPE": "value",
-      "QUANTITYTYPE": this.f.QUANTITYTYPE.value,
       "QUANTITY": this.f.QUANTITY.value,
     }
+    if (this.f.ITEMTYPE.value == "Activity" || this.f.ITEMTYPE.value == "Sundry") {
+      PostTimeEntryData.FEETYPE = this.f.QUANTITYTYPE.value;
+      PostTimeEntryData.QUANTITYTYPE = '';
+    } else {
+      PostTimeEntryData.QUANTITYTYPE = this.f.QUANTITYTYPE.value;
+    }
+
     this.successMsg = 'Time entry added successfully';
     if (this.action == 'Edit') {
       PostTimeEntryData.FormAction = 'update';
@@ -239,6 +249,8 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.Timersservice.SetWorkItems(PostTimeEntryData).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.toasterService.success(this.successMsg);
+        let timeEntriesComponent = new TimeEntriesComponent(this.MatDialog, this._formBuilder, this.toasterService, this.Timersservice, this.datepipe, this.TableColumnsService);
+        timeEntriesComponent.LoadData(JSON.parse(localStorage.getItem('time_entries_filter')));
         this.dialogRef.close(false);
       } else {
         if (res.CODE == 402 && res.STATUS == "error" && res.MESSAGE == "Not logged in")

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-import { ContactService, AuthenticationService, TableColumnsService } from '../../../_services';
+import { ContactService, TableColumnsService } from '../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
@@ -23,7 +23,13 @@ export class ContactComponent implements OnInit {
   datanull: null;
   isLoadingResults: boolean = false;
   contactFilter: FormGroup;
-  constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, private Contact: ContactService, private toastr: ToastrService, private _formBuilder: FormBuilder, private authenticationService: AuthenticationService, ) {
+  constructor(
+    private dialog: MatDialog,
+    private TableColumnsService: TableColumnsService,
+    private Contact: ContactService,
+    private toastr: ToastrService,
+    private _formBuilder: FormBuilder
+  ) {
     this.contactFilter = this._formBuilder.group({
       Filter1: [''],
       Filter2: [''],
@@ -70,8 +76,8 @@ export class ContactComponent implements OnInit {
   LoadData(data) {
     this.isLoadingResults = true;
     this.Contact.ContactData(data).subscribe(response => {
-      if (response.CODE == 200 && (response.RESPONSE == "success" || response.STATUS == "success")) {
-        this.Contactdata = new MatTableDataSource(response.DATA.CONTACTS)
+      if (response.CODE == 200 && response.STATUS == "success") {
+        this.Contactdata = new MatTableDataSource(response.DATA.CONTACTS);
         this.Contactdata.paginator = this.paginator
         if (response.DATA.CONTACTS[0]) {
           localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);

@@ -1,10 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { AddContactService, ContactService } from './../../../../_services';
+import { AddContactService, ContactService, TableColumnsService } from './../../../../_services';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { Router } from '@angular/router';
+import { ContactComponent } from '../contact.component';
+
 
 @Component({
   selector: 'app-contact-dialog',
@@ -32,7 +34,8 @@ export class ContactDialogComponent implements OnInit {
   dateofbirth: any;
   dateofdeath: string;
 
-  constructor(public dialogRef: MatDialogRef<ContactDialogComponent>, private router: Router, private _formBuilder: FormBuilder
+
+  constructor(public MatDialog: MatDialog, private TableColumnsService: TableColumnsService, public dialogRef: MatDialogRef<ContactDialogComponent>, private router: Router, private _formBuilder: FormBuilder
     , private toastr: ToastrService, private Contact: ContactService, private addcontact: AddContactService,
     @Inject(MAT_DIALOG_DATA) public _data: any) {
     this.action = _data.action;
@@ -43,7 +46,7 @@ export class ContactDialogComponent implements OnInit {
   value: number;
   contactForm: FormGroup;
   ngOnInit() {
-    
+
     this.contactForm = this._formBuilder.group({
       //CONTACTGUID: ['', Validators.required],
       CONTACTNAME: ['', Validators.required],
@@ -131,14 +134,14 @@ export class ContactDialogComponent implements OnInit {
         this.active = getContactData.ACTIVE == 0 ? false : true;
         // this.knowbyothername = getContactData.KNOWNBYOTHERNAME == 0 ? true : false;
         this.birthdayreminder = getContactData.BIRTHDAYREMINDER == 0 ? false : true;
-        if(getContactData.KNOWNBYOTHERNAME == 0){
-          this.knowbyothername =false;
+        if (getContactData.KNOWNBYOTHERNAME == 0) {
+          this.knowbyothername = false;
           this.contactForm.get('OTHERGIVENNAMES').disable();
           this.contactForm.get('OTHERFAMILYNAME').disable();
           this.contactForm.get('REASONFORCHANGE').disable();
         }
-        else{
-          this.knowbyothername=true;
+        else {
+          this.knowbyothername = true;
           this.contactForm.get('OTHERGIVENNAMES').enable();
           this.contactForm.get('OTHERFAMILYNAME').enable();
           this.contactForm.get('REASONFORCHANGE').enable();
@@ -250,7 +253,6 @@ export class ContactDialogComponent implements OnInit {
   }
 
   onClick(value) {
-    console.log(value);
   }
 
   // convenience getter for easy access to form fields
@@ -259,10 +261,9 @@ export class ContactDialogComponent implements OnInit {
     return this.contactForm.controls;
   }
   ondialogSaveClick(): void {
-    console.log(this.f);
     //for date handaling 
-    this.dateofbirth=this.f.DATEOFBIRTH.touched == false ? "" : localStorage.getItem('DATEOFBIRTH');
-    this.dateofdeath=this.f.DATEOFDEATH.touched == false ? "" : localStorage.getItem('DATEOFDEATH');
+    this.dateofbirth = this.f.DATEOFBIRTH.touched == false ? "" : localStorage.getItem('DATEOFBIRTH');
+    this.dateofdeath = this.f.DATEOFDEATH.touched == false ? "" : localStorage.getItem('DATEOFDEATH');
 
     this.isspiner = true;
     this.FormAction = this.action !== 'edit' ? 'insert' : 'update';
@@ -349,9 +350,7 @@ export class ContactDialogComponent implements OnInit {
       FAMILYCOURTLAWYERNO: this.f.FAMILYCOURTLAWYERNO.value,
       NOTES: this.f.NOTES.value,
     }
-    console.log(details);
     this.addcontact.AddContactData(details).subscribe(response => {
-    console.log(response);
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         if (this.action !== 'edit') {
           this.toastr.success('Contact save successfully');
@@ -359,6 +358,11 @@ export class ContactDialogComponent implements OnInit {
           this.toastr.success('Contact update successfully');
         }
         this.isspiner = false;
+
+        let contactComponent = new ContactComponent(this.MatDialog, this.TableColumnsService, this.Contact, this.toastr, this._formBuilder);
+        let filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
+        contactComponent.LoadData(filterVals);
+        // ContactComponent
         this.dialogRef.close(false);
       } else {
         this.isspiner = false;

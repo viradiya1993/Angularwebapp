@@ -39,7 +39,7 @@ const routes = [
     MatIconModule,
     MatInputModule,
     MatMenuModule,
-    MatRippleModule,
+    // MatRippleModule,
     MatProgressSpinnerModule,
     MatTableModule,
     MatToolbarModule,

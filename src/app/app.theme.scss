@@ -372,3 +372,7 @@ tr.mat-ripple.mat-row.row-text-colore td {
     height: 400px;
     overflow: auto;
 }
+
+table tbody tr {
+    cursor: pointer;
+}

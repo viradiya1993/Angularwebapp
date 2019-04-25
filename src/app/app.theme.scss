@@ -162,7 +162,7 @@ body.theme-pink-dark {
 
 .top_right_action_billing {
     position: absolute;
-    right: 24px;
+    right: 35px;
     top: 104px;
     background-color: #fff;
     z-index: 101;
@@ -375,4 +375,23 @@ tr.mat-ripple.mat-row.row-text-colore td {
 
 table tbody tr {
     cursor: pointer;
+}
+body.theme-default .mat-table .mat-header-cell {
+    color: rgba(0, 0, 0, 0.54);
+    background-color: #ffffff;
+}
+.mat-row.row-text-colore td {
+    color: #fff;
+}
+
+@media screen and (min-width: 1700px) {
+    .example-containerdata {
+        height: 500px;
+        overflow: auto;
+    }
+}
+@media screen and (max-width: 1400px) {
+    .example-containerdata {
+        height: 300px;
+    }
 }

@@ -80,7 +80,7 @@ export class MattersComponent implements OnInit {
         // localStorage.setItem('matter_filter', JSON.stringify(filterVal));
       } else {
         filterVal = JSON.parse(localStorage.getItem('matter_filter'));
-        // filterVal.SearchString = searchFilter2.value;
+        filterVal.SearchString = searchFilter2.value;
         // localStorage.setItem('matter_filter', JSON.stringify(filterVal));
       }
       this.child.getMatterList(filterVal);

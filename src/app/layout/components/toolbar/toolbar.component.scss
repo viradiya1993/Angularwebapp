@@ -249,7 +249,6 @@ toolbar .toolbar-separator.top_seprator {
 
 toolbar .chat-panel-toggle-button.header_height_btn {
     height: 40px;
-    ;
 }
 
 toolbar .goto_tab_main .group-section-tab {
@@ -261,11 +260,19 @@ body.theme-default .mat-badge-medium.mat-badge-above .mat-badge-content {
     top: -7px;
 }
 
+body.theme-yellow-light .mat-badge-medium.mat-badge-above .mat-badge-content {
+    top: -7px;
+}
+
 .mat-icon-button .mat-icon.timer_icon_header {
     line-height: 30px;
 }
 
 body.theme-default .goto_tab_main .mat-divider-vertical {
+    width: auto;
+}
+
+body.theme-yellow-light .goto_tab_main .mat-divider-vertical {
     width: auto;
 }
 

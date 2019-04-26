@@ -18,11 +18,16 @@ export class TableColumnsService {
     let tableData: any = Columns[type];
     let tempCol: any = [];
     let showCol: any = [];
+    let temshowCol: any = [];
     response.forEach(itemsdata => {
-      if ((itemsdata.HIDDEN == 1 || itemsdata.HIDDEN == 0) && tableData.includes(itemsdata.COLUMNNAME) && !showCol.includes(itemsdata.COLUMNNAME)) {
-        tempCol.push(itemsdata);
-        if (itemsdata.HIDDEN == 1 && !showCol.includes(itemsdata.COLUMNNAME))
-          showCol.push(itemsdata.COLUMNNAME);
+      if ((itemsdata.HIDDEN == 1 || itemsdata.HIDDEN == 0) && tableData.includes(itemsdata.COLUMNNAME)) {
+        if (!temshowCol.includes(itemsdata.COLUMNNAME)) {
+          if (itemsdata.HIDDEN == 1 && !showCol.includes(itemsdata.COLUMNNAME)) {
+            showCol.push(itemsdata.COLUMNNAME);
+          }
+          tempCol.push(itemsdata);
+        }
+        temshowCol.push(itemsdata.COLUMNNAME);
       }
     });
     return { 'colobj': tempCol, 'showcol': showCol };

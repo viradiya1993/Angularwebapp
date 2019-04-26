@@ -47,6 +47,7 @@ export class ReceiptsCreditsComponent implements OnInit {
     this.TableColumnsService.getTableFilter('MatterReceipts').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'MatterReceiptsColumns');
+        console.log(data);
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
       }

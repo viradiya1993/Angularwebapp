@@ -105,8 +105,13 @@ export class TimeEntriesComponent implements OnInit {
           this.highlightedRows = response.DATA.WORKITEMS[0].WORKITEMGUID;
           localStorage.setItem('edit_WORKITEMGUID', this.highlightedRows);
         }
-        this.TimerData = new MatTableDataSource(response.DATA.WORKITEMS)
-        this.TimerData.paginator = this.paginator
+        try {
+          this.TimerData = new MatTableDataSource(response.DATA.WORKITEMS);
+          this.TimerData.paginator = this.paginator;
+        } catch (error) {
+          console.log(error);
+        }
+
       }
       this.isLoadingResults = false;
     }, err => {

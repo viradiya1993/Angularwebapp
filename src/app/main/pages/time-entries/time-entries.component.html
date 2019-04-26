@@ -1,6 +1,6 @@
 <div id="time_entries" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
-    <div class="content">
-        <div class="center p-24 list_tbl_main more_tbl_clmn">
+    <div class="content" fxLayoutAlign="center">
+        <div class="center p-24 more_tbl_clmn list_tbl_main" fusePerfectScrollbar>
             <div class="matter-serach-div sticky_search_div">
                 <form [formGroup]="TimeEnrtyForm">
                     <mat-form-field class="example" appearance="outline" *ngIf="isShowDrop">
@@ -152,11 +152,9 @@
                             </tr>
                         </table>
                     </div>
+                    <mat-paginator [pageSizeOptions]="[10, 20,50,100]" showFirstLastButtons></mat-paginator>
                 </div>
             </div>
-
-            <mat-paginator [pageSizeOptions]="[10, 20,50,100]" showFirstLastButtons></mat-paginator>
-
         </div>
     </div>
 </div>

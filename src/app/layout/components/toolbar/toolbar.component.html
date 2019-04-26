@@ -664,85 +664,114 @@
 
                 <!-- help tab menu start -->
                 <mat-tab label="HELP">
-                    <section class="ribbon-container help_tab_main">
+                    <section class="ribbon-container help_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab">
-                                    <!-- <span class="action-section">Action</span> -->
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button">
-                                                   <section class="large-button-container">
-                                                      <mat-icon class="main-icon">
-                                                            <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                                      </mat-icon>
-                                                      <div class="main-text">
-                                                         <span>help 1</span>
-                                                      </div>
-                                                   </section>
-                                                </button>
+                                        <mat-nav-list>
+                                            <a mat-list-item target="_blank" href="assets/icons/help/Manual1.pdf">
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/EXP_PDF.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>Customising SILQ</span>
+                                            </a>
+                                            <a mat-list-item target="_blank" href="assets/icons/help/Manual2.pdf">
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/EXP_PDF.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>Getting Getting</span>
+                                            </a>
+                                        </mat-nav-list>
                                     </section>
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button">
-                                                   <section class="large-button-container">
-                                                      <mat-icon class="main-icon">
-                                                            <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                                      </mat-icon>
-                                                      <div class="main-text">
-                                                         <span>help 2</span>
-                                                      </div>
-                                                   </section>
-                                                </button>
+                                        <mat-nav-list>
+                                            <a mat-list-item target="_blank" href="assets/icons/help/Manual3.pdf">
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/EXP_PDF.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>Financial Managment</span>
+                                            </a>
+                                            <a mat-list-item target="_blank" href="assets/icons/help/Manual4.pdf">
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/EXP_PDF.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>Advanced Accounting</span>
+                                            </a>
+                                        </mat-nav-list>
                                     </section>
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button">
-                                                       <section class="large-button-container">
-                                                          <mat-icon class="main-icon">
-                                                                <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                                          </mat-icon>
-                                                          <div class="main-text">
-                                                             <span>help 3</span>
-                                                          </div>
-                                                       </section>
-                                                    </button>
+                                        <mat-nav-list>
+                                            <a mat-list-item target="_blank" href="assets/icons/help/Manual5.pdf">
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/EXP_PDF.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>Trust Accounting</span>
+                                            </a>
+                                            <a mat-list-item target="_blank" href="assets/icons/help/Manual6.pdf">
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/EXP_PDF.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>Chronologies/Authorities/ Accounting/Safe Custody</span>
+                                            </a>
+                                        </mat-nav-list>
                                     </section>
+                                    <section class="ribbon-section">
+                                        <mat-nav-list>
+                                            <a mat-list-item target="_blank" href="assets/icons/help/Manual7.pdf">
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/EXP_PDF.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>Document Register/Templates/Couirt Forms</span>
+                                            </a>
+                                            <a mat-list-item target="_blank" href="assets/icons/help/Manual8.pdf">
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/EXP_PDF.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>Infotrack Searching</span>
+                                            </a>
+                                        </mat-nav-list>
+                                    </section>
+                                    <div class="light_label_txt">Manuals</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab">
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button">
-                                                       <section class="large-button-container">
-                                                          <mat-icon class="main-icon">
-                                                                <img src="assets/images/logos/sm-silq.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                                          </mat-icon>
-                                                          <div class="main-text">
-                                                             <span>section 2</span>
-                                                          </div>
-                                                       </section>
-                                                    </button>
+                                        <mat-nav-list>
+                                            <a mat-list-item target="_blank" href="https://www.silq.com.au/">
+                                                <span>SILQ Web Site</span>
+                                            </a>
+                                            <a mat-list-item target="_blank" href="assets/icons/help/Manual8.pdf">
+                                                <span>Call SILQ : 1300556689</span>
+                                            </a>
+                                        </mat-nav-list>
                                     </section>
+                                    <div class="light_label_txt">Help</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab">
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button">
+                                        <button mat-button class="large-button" (click)="openLicence('LI')">
                                                            <section class="large-button-container">
-                                                              <mat-icon class="main-icon">
-                                                                    <img src="assets/images/logos/sm-silq.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                              <mat-icon class="main-icon">                                                                    
+                                                                    <img src="assets/images/logos/sm-silq.ico" *ngIf="!greenTheme" class="help-class" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                                    <img src="assets/images/logos/sm-silq-small-user2.png"  *ngIf="greenTheme" class="help-class" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                               </mat-icon>
                                                               <div class="main-text">
-                                                                 <span>section 2</span>
+                                                                 <span>End User Licence<br> Agreement</span>
                                                               </div>
                                                            </section>
                                                         </button>
                                     </section>
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button">
+                                        <button mat-button class="large-button" (click)="openLicence('AU')">
                                                                <section class="large-button-container">
                                                                   <mat-icon class="main-icon">
-                                                                        <img src="assets/images/logos/sm-silq.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                                        <img src="assets/images/logos/sm-silq.ico" class="help-class" *ngIf="!greenTheme" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                                        <img src="assets/images/logos/sm-silq-small-user2.png" *ngIf="greenTheme"  class="help-class" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                                   </mat-icon>
                                                                   <div class="main-text">
-                                                                     <span>section 2</span>
+                                                                     <span>About SILQ</span>
                                                                   </div>
                                                                </section>
                                                             </button>

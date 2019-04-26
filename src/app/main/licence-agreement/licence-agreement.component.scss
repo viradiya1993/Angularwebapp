@@ -1,0 +1,192 @@
+// dilog box css
+.checkbox {
+    min-height: 250px;
+    max-height: 250px;
+    overflow: auto;
+}
+
+body.theme-default .mat-elevation-z4 {
+    box-shadow: 0px !important;
+}
+
+//user 2
+body.theme-yellow-light .mat-elevation-z4 {
+    box-shadow: 0px !important;
+}
+
+div#all {
+    overflow-y: auto;
+    // margin-top: 56px;
+    margin-top: 10px;
+    // height: 327px;
+    max-height: 325px;
+    width: 404px;
+}
+
+.checkbox {
+    line-height: 50px;
+}
+
+.example-container {
+    width: 400px;
+    max-width: 100%;
+    // margin: 0 25px 25px 0;
+    margin: 0;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.example-list {
+    //border: solid 1px #ccc;
+    min-height: 60px;
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    display: block;
+}
+
+.example-box {
+    padding: 20px 10px;
+    border-bottom: solid 1px #ccc;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    cursor: move;
+    background: white;
+    font-size: 14px;
+}
+
+.mat-dialog-content[_ngcontent-c35] {
+    display: block;
+    margin: -23px -24px;
+    padding: 0 24px;
+    max-height: 78vh;
+    overflow: -webkit-paged-x;
+    -webkit-overflow-scrolling: touch;
+}
+
+mat-icon.mat-icon.material-icons.mat-icon-no-color {
+    float: right;
+    cursor: pointer;
+}
+
+// mat-icon.close.mat-icon.material-icons.mat-icon-no-color {
+//   float: right;
+// }
+button.cancel.mat-button {
+    border: 1px solid #621da6bb;
+}
+
+a.deleteall {
+    margin-right: 17px;
+}
+
+.information {
+    // padding: 28px 23px;
+    padding: 0;
+    //border: solid 1px #ccc;
+    font-size: 18px;
+    border-radius: 4px;
+}
+
+.example-box.cdk-drag.ng-star-inserted {
+    border: 1px solid #ccc;
+    margin-top: 10px;
+    padding: 6px;
+    border-radius: 8px;
+    max-width: 96%;
+    background-color: #E8EFF5;
+}
+
+body.theme-default .mat-dialog-container {
+    padding: 0;
+}
+
+//user2
+body.theme-yellow-light .mat-dialog-container {
+    padding: 0;
+}
+
+// .popup_title_div {
+//     padding: 24px;
+//     background-color: #303540;
+// }
+.mat-dialog-title {
+    color: #fff;
+    margin-bottom: 0;
+    padding: 14px 24px;
+    background-color: #303540;
+}
+
+.mat-dialog-content {
+    margin: 0;
+    // max-height: 100%;
+}
+
+.remove_left_right_padding {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.add_popup_padding {
+    padding: 0 23px;
+    line-height: 40px;
+}
+
+.close.mat-icon {
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+}
+
+.mat-dialog-actions {
+    margin: 0;
+}
+
+.popup_body .form-errors-model {
+    padding-bottom: 0 !important;
+}
+
+.popup_ftr {
+    padding: 24px;
+    // justify-content: flex-start;
+}
+
+.popup_main_div .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.5em 0 0.5em 0;
+}
+
+.popup_main_div .mat-form-field-appearance-outline .mat-form-field-label {
+    top: 1.34375em;
+}
+
+.popup_main_div .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    -webkit-transform: translateY(-1.09375em) scale(0.75);
+    transform: translateY(-1.09375em) scale(0.75);
+}
+
+mat-dialog-actions.popup_ftr.mat-dialog-actions {
+    display: inline-block;
+    width: 100%;
+}
+
+.left_popup_btn {
+    float: left;
+    width: 50%;
+    text-align: left;
+    padding-left: 0;
+}
+
+.right_btn_child {
+    display: inline-block;
+    margin-right: 25px;
+}
+
+.right_popup_btn {
+    float: left;
+    width: 50%;
+}

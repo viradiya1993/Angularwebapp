@@ -36,6 +36,7 @@ import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { ToastrModule } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LicenceAgreementComponent } from './main/licence-agreement/licence-agreement.component';
 //end
 const appRoutes: Routes = [
     { path: '', loadChildren: './main/authentication/authentication.module#AuthenticationModule' },
@@ -49,12 +50,14 @@ const appRoutes: Routes = [
         filterNames,
         NotFoundComponent,
         InternalErrorComponent,
-        ReportsComponent
+        ReportsComponent,
+        LicenceAgreementComponent
 
     ],
     entryComponents: [
         SortingDialogComponent,
-        ReportsComponent
+        ReportsComponent,
+        LicenceAgreementComponent
     ],
     imports: [
         BrowserModule,

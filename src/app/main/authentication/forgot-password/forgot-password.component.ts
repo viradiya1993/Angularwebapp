@@ -19,13 +19,14 @@ import { ToastrService } from 'ngx-toastr';
 export class ForgotPasswordComponent implements OnInit {
   forgotPasswordForm: FormGroup;
   isspiner: boolean = false;
-
+  currentYear: any;
   constructor(
     private _fuseConfigService: FuseConfigService,
     private _formBuilder: FormBuilder,
     private authenticationService: AuthenticationService,
     private toastr: ToastrService,
   ) {
+    this.currentYear = new Date().getFullYear();
     // Configure the layout
     this._fuseConfigService.config = {
       layout: { navbar: { hidden: true }, toolbar: { hidden: true }, footer: { hidden: true }, sidepanel: { hidden: true } }

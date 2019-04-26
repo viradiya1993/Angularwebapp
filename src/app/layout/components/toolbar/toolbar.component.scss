@@ -133,7 +133,6 @@ toolbar {
         -moz-box-shadow: none;
         box-shadow: none;
     }
-
     //user 2
     body.theme-yellow-light .mat-card {
         background: #f5f5f5 !important;
@@ -261,10 +260,15 @@ toolbar .goto_tab_main .group-section-tab {
 body.theme-default .mat-badge-medium.mat-badge-above .mat-badge-content {
     top: -7px;
 }
+
 .mat-icon-button .mat-icon.timer_icon_header {
     line-height: 30px;
 }
 
 body.theme-default .goto_tab_main .mat-divider-vertical {
     width: auto;
+}
+
+img.help-class {
+    height: 30px;
 }

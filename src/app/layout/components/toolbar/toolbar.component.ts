@@ -11,6 +11,7 @@ import { navigation } from 'app/navigation/navigation';
 import { AuthenticationService, ReportlistService, TimersService } from '../../../_services';
 import { Router } from '@angular/router';
 import { ContactDialogComponent } from './../../../main/pages/contact/contact-dialog/contact-dialog.component';
+import { LicenceAgreementComponent } from '../../../main/licence-agreement/licence-agreement.component';
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { ContactCorresDetailsComponent } from 'app/main/pages/contact/contact-corres-details/contact-corres-details.component';
@@ -43,6 +44,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     getContactData: any;
     detailwidth: any;
     activeSubMenu: any = '';
+    greenTheme: any = false;
+
 
 
     // Private
@@ -61,6 +64,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         public _getContact: ContactService, private TimersServiceI: TimersService,
     ) {
         this.navigation = navigation;
+        if (localStorage.getItem('theme_type') == "theme-yellow-light")
+            this.greenTheme = true;
         // Set the private defaults
         this._unsubscribeAll = new Subject();
         this.router.events.subscribe((res) => {
@@ -260,6 +265,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => { });
     }
+    /* ---------------------------------------------------------------------help Licence start--------------------------------------------------------------------------  */
+    openLicence(Data) {
+        let w = Data == 'LI' ? '50%' : '25%';
+        const dialogRef = this.dialog.open(LicenceAgreementComponent, {
+            disableClose: true,
+            width: w,
+            data: { action: Data }
+        });
+        dialogRef.afterClosed().subscribe(result => { });
+    }
+    /* ---------------------------------------------------------------------help Licence end--------------------------------------------------------------------------  */
 
 
     //client details from matter

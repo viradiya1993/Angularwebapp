@@ -78,7 +78,7 @@ export class ContactComponent implements OnInit {
     this.Contact.ContactData(data).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Contactdata = new MatTableDataSource(response.DATA.CONTACTS);
-        this.Contactdata.paginator = this.paginator
+        this.Contactdata.paginator = this.paginator;
         if (response.DATA.CONTACTS[0]) {
           localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);
           this.highlightedRows = response.DATA.CONTACTS[0].CONTACTGUID;

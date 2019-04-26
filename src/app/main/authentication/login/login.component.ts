@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   isspiner: boolean = false;
   hide: boolean = true;
+  currentYear: any;
 
 
   constructor(
@@ -32,6 +33,7 @@ export class LoginComponent implements OnInit {
     private http: HttpClient,
     private toastr: ToastrService
   ) {
+    this.currentYear = new Date().getFullYear();
     // Configure the layout
     this._fuseConfigService.config = {
       layout: { navbar: { hidden: true }, toolbar: { hidden: true }, footer: { hidden: true }, sidepanel: { hidden: true } }

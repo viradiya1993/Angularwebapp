@@ -160,7 +160,7 @@ export class TimeEntriesComponent implements OnInit {
 
   openDialog() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '50%';
+    dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
     dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'WorkItems' };
     //open pop-up

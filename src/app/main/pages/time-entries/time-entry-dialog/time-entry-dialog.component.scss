@@ -87,7 +87,7 @@ body.theme-yellow-light .mat-dialog-container {
 }
 
 .popup_main_div mat-icon.mat-icon.material-icons {
-    float: right;
+    // float: right;
     cursor: pointer;
 }
 
@@ -100,5 +100,14 @@ mat-dialog-actions {
         margin: auto;
         top: 0;
         bottom: 0;
+    }
+}
+
+.timeentry_popup .mat-dialog-content {
+    max-height: 550px;
+}
+@media screen and (max-width: 1400px) {
+    .timeentry_popup .mat-dialog-content {
+        max-height: 450px;
     }
 }

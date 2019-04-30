@@ -124,7 +124,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     // ngAfterViewChecked() {
     ngAfterViewInit() {
         const wph = $(window).width();
-        this.detailwidth = wph - 280 - 180 + 'px';
+        this.detailwidth = wph - 280 - 5 + 'px';
     }
 
     //for binding

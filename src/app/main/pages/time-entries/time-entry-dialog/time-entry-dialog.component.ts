@@ -61,6 +61,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.dialogTitle = _data.edit === 'Edit' ? 'Update Time Entry' : 'Add New Time Entry';
       this.buttonText = _data.edit === 'Edit' ? 'Update' : 'Save';
     } else {
+      console.log(_data.edit);
       this.currentTimeMatter = _data.edit;
       this.matterTimerData = _data.matterData;
     }

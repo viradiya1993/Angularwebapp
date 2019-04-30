@@ -247,6 +247,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.addNewTimeEntry(matterId, matterDataTime);
 
     }
+    addNewTimeEntryNew() {
+        let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
+        if (matterData.ACTIVE) {
+            this.addNewTimeEntry(matterData.MATTERGUID, '');
+        } else {
+            this.toastr.error("You cannot time entry for Inactive matter. Please select active matter and try again.");
+            return false;
+        }
+
+    }
     //*----**************************************time enrt add start***************************************
     public addNewTimeEntry(Data: any, matterData: any) {
         const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '50%', disableClose: true, data: { 'edit': Data, 'matterData': matterData } });

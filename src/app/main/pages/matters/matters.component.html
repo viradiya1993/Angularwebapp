@@ -37,8 +37,8 @@
                     </mat-form-field>
                     <mat-form-field class="search" appearance="outline">
                         <!-- <input matInput placeholder="Search" (keyup.enter)="onSearch();" [(ngModel)]="searchFilter" formControlName="searchFilter"> -->
-                        <input matInput placeholder="Search" (keydown)="onSearch($event,$event.target)" formControlName="searchFilter">
-                        <mat-icon matSuffix>search</mat-icon>
+                        <input matInput placeholder="Search" (keydown)="onSearch($event)" formControlName="searchFilter">
+                        <mat-icon matSuffix (click)="onSearch('Enter')">search</mat-icon>
                     </mat-form-field>
                 </form>
             </div>

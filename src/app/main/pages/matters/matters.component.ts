@@ -73,14 +73,17 @@ export class MattersComponent implements OnInit {
     }
     this.child.getMatterList(filterVal);
   }
-  onSearch(searchFilter: any, searchFilter2: any) {
-    if (searchFilter['key'] === "Enter") {
-      let filterVal = { 'Active': '', 'SearchString': searchFilter2.value, 'FeeEarner': '', 'UninvoicedWork': '' };
+  get f() {
+    return this.matterFilterForm.controls;
+  }
+  onSearch(searchFilter: any) {
+    if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
+      let filterVal = { 'Active': '', 'SearchString': this.f.searchFilter.value, 'FeeEarner': '', 'UninvoicedWork': '' };
       if (!localStorage.getItem('matter_filter')) {
         // localStorage.setItem('matter_filter', JSON.stringify(filterVal));
       } else {
         filterVal = JSON.parse(localStorage.getItem('matter_filter'));
-        filterVal.SearchString = searchFilter2.value;
+        filterVal.SearchString = this.f.searchFilter.value;
         // localStorage.setItem('matter_filter', JSON.stringify(filterVal));
       }
       this.child.getMatterList(filterVal);

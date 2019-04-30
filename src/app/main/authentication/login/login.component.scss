@@ -156,6 +156,38 @@ app-login {
                         bottom: 0;
                     }
                 }
+                a {
+                    &.google,
+                    &.facebook {
+                        width: 70%;
+                        text-transform: none;
+                        color: #FFFFFF;
+                        font-size: 13px;
+                        @include media-breakpoint('xs') {
+                            width: 60%;
+                        }
+                        mat-icon {
+                            color: #FFFFFF;
+                            margin: 0 8px 0 0;
+                        }
+                    }
+                    &.google {
+                        background-color: #D73D32;
+                        margin-bottom: 8px;
+                    }
+                    &.facebook {
+                        background-color: rgb(63, 92, 154);
+                    }
+                    mat-spinner {
+                        zoom: 0.2;
+                        position: absolute;
+                        right: 0;
+                        left: 0;
+                        margin: auto;
+                        top: 0;
+                        bottom: 0;
+                    }
+                }
                 .register {
                     margin: 32px auto 24px auto;
                     width: 250px;
@@ -187,7 +219,6 @@ body.theme-default app-login #login #login-intro {
     background-position: center center;
 }
 
-
 //user 2
 body.theme-yellow-light app-login #login #login-form-wrapper {
     background: white;
@@ -209,14 +240,14 @@ body.theme-yellow-light app-login #login #login-intro {
     padding: 13px 0px 0px 116px;
 }
 
-app-login #login #login-form-wrapper #login-form button.google {
+app-login #login #login-form-wrapper #login-form a.google {
     background-color: #5a9440;
     margin-bottom: 8px;
     border: 1px solid #ccc;
     border-radius: 0;
 }
 
-app-login #login #login-form-wrapper #login-form button.facebook {
+app-login #login #login-form-wrapper #login-form a.facebook {
     background-color: #5f3694;
     margin-top: 12px;
     border: 1px solid #ccc;

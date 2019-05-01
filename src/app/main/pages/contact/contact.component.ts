@@ -18,7 +18,7 @@ export class ContactComponent implements OnInit {
   ColumnsObj = [];
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
-  contectTitle = this.selectedColore == "theme-default" ? 'Client' : 'Solicitor';
+  contectTitle = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   displayedColumns: string[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   datanull: null;

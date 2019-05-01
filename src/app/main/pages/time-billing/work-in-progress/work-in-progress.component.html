@@ -165,7 +165,7 @@
                                 </div>
                             </div>
                         </div>
-                        <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="pageEvent = $event; onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+                        <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
                     </div>
                 </div>
             </div>

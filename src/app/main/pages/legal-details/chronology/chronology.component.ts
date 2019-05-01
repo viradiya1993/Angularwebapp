@@ -23,6 +23,7 @@ export class ChronologyComponent implements OnInit {
   isLoadingResults: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   chronology_table;
+  pageSize: any;
 
   constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, private chronology_service: ChronologyService, private toastr: ToastrService) { }
 
@@ -54,11 +55,16 @@ export class ChronologyComponent implements OnInit {
     }, error => {
       this.toastr.error(error);
     });
+    this.pageSize = localStorage.getItem('lastPageSize');
   }
 
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
+  }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '50%';
+    dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
     dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'MatterChronology' };
     //open pop-up

@@ -26,6 +26,7 @@ export class ContactCorresDetailsComponent implements OnInit {
   getDataForTable: any;
   getContactData: any;
   isLoadingResults: boolean = false;
+  pageSize: any;
   constructor(
     public _getContact: ContactService,
     private _getMattersService: MattersService,
@@ -51,15 +52,18 @@ export class ContactCorresDetailsComponent implements OnInit {
         this.dialogRef.close(false);
       }
       if (Object.keys(res.DATA.queue).length == 1) {
-         this.dialogRef.close(false);
+        this.dialogRef.close(false);
         this.selectButton();
-        
       }
       this.getDataForTable = new MatTableDataSource(res.DATA.queue);
       this.getDataForTable.paginator = this.paginator;
       this.isLoadingResults = false;
-
+      this.pageSize = localStorage.getItem('lastPageSize');
     });
+  }
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
   }
   ondialogcloseClick(): void {
     this.dialogRef.close(false);

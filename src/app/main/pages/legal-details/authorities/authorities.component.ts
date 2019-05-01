@@ -15,6 +15,7 @@ export class AuthoritiesComponent implements OnInit {
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   ColumnsObj: any = [];
   displayedColumns: string[];
+  pageSize: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   isLoadingResults: boolean = false;
 
@@ -47,11 +48,17 @@ export class AuthoritiesComponent implements OnInit {
     }, err => {
       console.log(err);
     });
+    this.pageSize = localStorage.getItem('lastPageSize');
   }
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
+  }
+
 
   openDialog() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '50%';
+    dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
     dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'MatterAuthority' };
     //open pop-up

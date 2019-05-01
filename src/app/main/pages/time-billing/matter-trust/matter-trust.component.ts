@@ -17,6 +17,7 @@ export class MatterTrustComponent implements OnInit {
   displayedColumns: string[];
   isLoadingResults: boolean = false;
   ColumnsObj: any = [];
+  pageSize: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private dialog: MatDialog,
@@ -53,10 +54,16 @@ export class MatterTrustComponent implements OnInit {
     }, err => {
       this.toastr.error(err);
     });
+    this.pageSize = localStorage.getItem('lastPageSize');
   }
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
+  }
+
   openDialog() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '50%';
+    dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
     dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'TrustTransaction' };
     //open pop-up

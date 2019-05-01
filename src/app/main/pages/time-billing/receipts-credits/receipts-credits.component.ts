@@ -17,6 +17,7 @@ export class ReceiptsCreditsComponent implements OnInit {
   displayedColumns: string[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ColumnsObj: any = [];
+  pageSize: any;
   isLoadingResults: boolean = false;
   constructor(private dialog: MatDialog,
     private ReceiptsCredits: ReceiptsCreditsService,
@@ -42,7 +43,13 @@ export class ReceiptsCreditsComponent implements OnInit {
       err => {
         this.toastr.error(err);
       });
+    this.pageSize = localStorage.getItem('lastPageSize');
   }
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
+  }
+
   getTableFilter() {
     this.TableColumnsService.getTableFilter('MatterReceipts').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
@@ -57,7 +64,7 @@ export class ReceiptsCreditsComponent implements OnInit {
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '50%';
+    dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
     dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'MatterReceipts' };
     //open pop-up

@@ -24,6 +24,7 @@ export class ContactComponent implements OnInit {
   datanull: null;
   isLoadingResults: boolean = false;
   contactFilter: FormGroup;
+  pageSize: any;
   constructor(
     private dialog: MatDialog,
     private TableColumnsService: TableColumnsService,
@@ -60,6 +61,10 @@ export class ContactComponent implements OnInit {
     }
     this.LoadData(filterVals);
   }
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
+  }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('Contacts').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
@@ -90,6 +95,7 @@ export class ContactComponent implements OnInit {
       this.isLoadingResults = false;
       this.toastr.error(err);
     });
+    this.pageSize = localStorage.getItem('lastPageSize');
   }
 
 
@@ -100,7 +106,7 @@ export class ContactComponent implements OnInit {
 
   openDialog() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '50%';
+    dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
     dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'Contacts' };
     //open pop-up

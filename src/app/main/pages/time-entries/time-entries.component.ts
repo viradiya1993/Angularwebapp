@@ -17,6 +17,7 @@ import { DatePipe } from '@angular/common'
 })
 export class TimeEntriesComponent implements OnInit {
   TimeEnrtyForm: FormGroup;
+  pageSize: any;
   isLoadingResults: boolean = false;
   displayedColumns: string[];
   ColumnsObj = [];
@@ -111,13 +112,17 @@ export class TimeEntriesComponent implements OnInit {
         } catch (error) {
           console.log(error);
         }
-
       }
       this.isLoadingResults = false;
     }, err => {
       this.isLoadingResults = false;
       this.toastr.error(err);
     });
+    this.pageSize = localStorage.getItem('lastPageSize');
+  }
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
   }
   uninvoicedWorkChange(value) {
     let filterVal = { 'FeeEarner': '', 'Invoiced': value, 'ItemDateStart': '', 'ItemDateEnd': '' };
@@ -160,7 +165,7 @@ export class TimeEntriesComponent implements OnInit {
 
   openDialog() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '50%';
+    dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
     dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'WorkItems' };
     //open pop-up

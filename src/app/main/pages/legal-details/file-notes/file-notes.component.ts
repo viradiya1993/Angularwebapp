@@ -19,6 +19,7 @@ export class FileNotesComponent implements OnInit {
   isLoadingResults: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ColumnsObj: any[];
+  pageSize: any;
 
   constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, private fileNotes_service: FileNotesService, private toastr: ToastrService) { }
   filenotes_table;
@@ -39,6 +40,12 @@ export class FileNotesComponent implements OnInit {
     }, error => {
       this.toastr.error(error);
     });
+    this.pageSize = localStorage.getItem('lastPageSize');
+  }
+
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
   }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('MatterFileNote').subscribe(response => {
@@ -53,7 +60,7 @@ export class FileNotesComponent implements OnInit {
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '50%';
+    dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
     dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'MatterFileNote' };
     //open pop-up

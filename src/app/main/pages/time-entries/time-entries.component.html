@@ -20,9 +20,8 @@
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="">
-                        <input matInput placeholder="Choose a date" [satDatepicker]="picker2" formControlName="date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)">
-                        <sat-datepicker #picker2 [rangeMode]="true">
-                        </sat-datepicker>
+                        <input matInput placeholder="Choose a date" (click)="picker2.open();" [satDatepicker]="picker2" formControlName="date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)">
+                        <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
                         <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
                     </mat-form-field>
                 </form>
@@ -152,7 +151,7 @@
                             </tr>
                         </table>
                     </div>
-                    <mat-paginator [pageSizeOptions]="[10, 20,50,100]" showFirstLastButtons></mat-paginator>
+                    <mat-paginator [pageSize]="pageSize" (page)="pageEvent = $event; onPaginateChange($event)" [pageSizeOptions]="[10, 20,50,100]" showFirstLastButtons></mat-paginator>
                 </div>
             </div>
         </div>

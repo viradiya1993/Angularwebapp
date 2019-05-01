@@ -17,6 +17,7 @@ export class MatterInvoicesComponent implements OnInit {
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   displayedColumns: string[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  pageSize: any;
   isLoadingResults: boolean = false;
   constructor(private dialog: MatDialog,
     private MatterInvoices: MatterInvoicesService,
@@ -28,6 +29,11 @@ export class MatterInvoicesComponent implements OnInit {
     this.getTableFilter();
     this.loadData();
   }
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
+  }
+
   loadData() {
     this.isLoadingResults = true;
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
@@ -40,6 +46,7 @@ export class MatterInvoicesComponent implements OnInit {
     }, err => {
       this.toastr.error(err);
     });
+    this.pageSize = localStorage.getItem('lastPageSize');
   }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('Invoice').subscribe(response => {
@@ -55,7 +62,7 @@ export class MatterInvoicesComponent implements OnInit {
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '50%';
+    dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
     dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'Invoice' };
     //open pop-up

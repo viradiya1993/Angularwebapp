@@ -16,6 +16,7 @@ export class WorkInProgressComponent implements OnInit {
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   displayedColumns: string[];
   ColumnsObj: any = [];
+  pageSize: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   isLoadingResults: boolean = false;
   constructor(private dialog: MatDialog, private WorkInProgress: WorkInProgressService, private TableColumnsService: TableColumnsService, private toastr: ToastrService) {
@@ -52,10 +53,15 @@ export class WorkInProgressComponent implements OnInit {
       this.isLoadingResults = false;
       this.toastr.error(err);
     });
+    this.pageSize = localStorage.getItem('lastPageSize');
+  }
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '50%';
+    dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
     dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'WorkItems' };
     //open pop-up

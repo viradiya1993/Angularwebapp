@@ -29,6 +29,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   mattersData: any;
   lastFilter = {};
   isLoadingResults: any = false;
+  pageSize: any;
 
   @Output() matterDetail: EventEmitter<any> = new EventEmitter<any>();
 
@@ -47,6 +48,11 @@ export class MattersListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getMatterList(this.lastFilter);
+
+  }
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
   }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('Matters').subscribe(response => {
@@ -67,7 +73,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '50%';
+    dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
     dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'Matters' };
     //open pop-up
@@ -96,11 +102,13 @@ export class MattersListComponent implements OnInit, OnDestroy {
         }
         this.mattersData = new MatTableDataSource(response.DATA.MATTERS);
         this.mattersData.paginator = this.paginator;
+
         this.isLoadingResults = false;
       }
     }, error => {
       this.toastr.error(error);
     });
+    this.pageSize = localStorage.getItem('lastPageSize');
   }
 
 }

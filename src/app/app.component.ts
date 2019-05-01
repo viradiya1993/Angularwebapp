@@ -13,6 +13,7 @@ import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.
 
 import { navigation } from 'app/navigation/navigation';
 import { locale as navigationEnglish } from 'app/navigation/i18n/en';
+import * as $ from 'jquery';
 
 @Component({
     selector: 'app',
@@ -119,6 +120,7 @@ export class AppComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+        $('content').addClass('inner-scroll');
         // Subscribe to config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))

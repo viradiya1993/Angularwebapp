@@ -8,7 +8,7 @@ import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.c
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MattersService, TableColumnsService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
-
+import * as $ from 'jquery';
 
 
 @Component({
@@ -47,6 +47,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+        $('content').addClass('inner-scroll');
     this.getMatterList(this.lastFilter);
 
   }

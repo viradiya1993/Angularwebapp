@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ContactService } from 'app/_services/contact.service';
+import * as $ from 'jquery';
 
 
 
@@ -25,6 +26,7 @@ export class PersonComponent implements OnInit {
    * On init
    */
   ngOnInit(): void {
+        $('content').addClass('inner-scroll');
     this.contactForm.get('OTHERGIVENNAMES').disable();
     this.contactForm.get('OTHERFAMILYNAME').disable();
     this.contactForm.get('REASONFORCHANGE').disable();

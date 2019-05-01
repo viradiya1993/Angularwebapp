@@ -27,7 +27,8 @@
     .content {
         overflow: hidden;
         .example {
-            width: 18%;
+            // width: 18%;
+            width: auto;
             padding: 10px;
             .sidebar {
                 &:not(.locked-open) {

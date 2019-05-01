@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs';
+import * as $ from 'jquery';
 
 @Component({
     selector: 'quick-panel',
@@ -20,6 +21,7 @@ export class QuickPanelComponent implements OnInit, OnDestroy {
 
 
     ngOnInit(): void {
+        $('content').addClass('inner-scroll');
         this.eventsData.push({ 'matter_id': 'demo', 'time': 0, 'isStart': true });
     }
     ngOnDestroy(): void {

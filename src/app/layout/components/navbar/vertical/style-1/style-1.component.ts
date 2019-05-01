@@ -7,6 +7,7 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
 import { FusePerfectScrollbarDirective } from '@fuse/directives/fuse-perfect-scrollbar/fuse-perfect-scrollbar.directive';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
+import * as $ from 'jquery';
 
 @Component({
     selector: 'navbar-vertical-style-1',
@@ -99,6 +100,7 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+        $('content').addClass('inner-scroll');
         this._router.events
             .pipe(
                 filter((event) => event instanceof NavigationEnd),

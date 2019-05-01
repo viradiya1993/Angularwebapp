@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, HostBinding, Input, OnDestroy, OnInit } f
 import { merge, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
+import * as $ from 'jquery';
 
 @Component({
     selector: 'fuse-nav-vertical-item',
@@ -42,6 +43,7 @@ export class FuseNavVerticalItemComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+        $('content').addClass('inner-scroll');
         // Subscribe to navigation item
         merge(
             this._fuseNavigationService.onNavigationItemAdded,

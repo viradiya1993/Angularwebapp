@@ -4,6 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { FuseNavigationItem } from '@fuse/types';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
+import * as $ from 'jquery';
 
 @Component({
     selector: 'fuse-nav-vertical-group',
@@ -45,6 +46,7 @@ export class FuseNavVerticalGroupComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+        $('content').addClass('inner-scroll');
         // Subscribe to navigation item
         merge(
             this._fuseNavigationService.onNavigationItemAdded,

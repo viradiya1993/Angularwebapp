@@ -2,6 +2,7 @@ import { Component, OnInit, Pipe, PipeTransform, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { TableColumnsService } from '../../_services';
+import * as $ from 'jquery';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class SortingDialogComponent implements OnInit {
     this.property = data.data;
   }
   ngOnInit(): void {
+        $('content').addClass('inner-scroll');
     this.updateCount();
   }
   updateCount() {

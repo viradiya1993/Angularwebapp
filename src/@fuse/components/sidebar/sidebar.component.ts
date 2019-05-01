@@ -9,6 +9,7 @@ import { takeUntil } from 'rxjs/operators';
 import { FuseSidebarService } from './sidebar.service';
 import { FuseMatchMediaService } from '@fuse/services/match-media.service';
 import { FuseConfigService } from '@fuse/services/config.service';
+import * as $ from 'jquery';
 
 @Component({
     selector: 'fuse-sidebar',
@@ -200,6 +201,7 @@ export class FuseSidebarComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+        $('content').addClass('inner-scroll');
         // Subscribe to config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))

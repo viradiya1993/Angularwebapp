@@ -111,6 +111,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
      */
 
     ngOnInit(): void {
+        $('content').addClass('inner-scroll');
         this.updateTimerCounter();
         this.displayMattterList();
         // Subscribe to the config changes
@@ -259,7 +260,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //*----**************************************time enrt add start***************************************
     public addNewTimeEntry(Data: any, matterData: any) {
-        const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '50%', disableClose: true, data: { 'edit': Data, 'matterData': matterData } });
+        const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '100%', disableClose: true, data: { 'edit': Data, 'matterData': matterData } });
         dialogRef.afterClosed().subscribe(result => { });
     }
     //*----**************************************time enrt add end***************************************
@@ -316,7 +317,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         let getmatguid = getMatterGuId.MATTERGUID;
         const dialogRef = this.dialog.open(ContactCorresDetailsComponent, {
             disableClose: true,
-            width: '50%',
+            width: '100%',
             data: getmatguid,
         });
         dialogRef.afterClosed().subscribe(result => { });

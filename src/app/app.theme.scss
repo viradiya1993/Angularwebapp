@@ -406,3 +406,10 @@ body.theme-default .mat-table .mat-header-cell {
 body.theme-yellow-light .mat-table {
     background: white !important;
 }
+.cdk-overlay-pane {
+    max-width: 100% !important;
+}
+// body.theme-default .mat-dialog-container {
+//     box-shadow: none !important;
+//     background-color: transparent !important;
+// }

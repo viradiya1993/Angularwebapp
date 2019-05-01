@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { DatePipe } from '@angular/common';
 import { TimeEntriesComponent } from '../time-entries.component';
+import { map, startWith } from 'rxjs/operators';
 
 
 @Component({
@@ -15,8 +16,9 @@ import { TimeEntriesComponent } from '../time-entries.component';
   providers: [DatePipe]
 })
 export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
-
   private exportTime = { hour: 7, minute: 15, meriden: 'PM', format: 24 };
+  myControl = new FormControl();
+  filteredOptions: any;
   LookupsList: any;
   userList: any;
   matterList: any;
@@ -61,7 +63,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.dialogTitle = _data.edit === 'Edit' ? 'Update Time Entry' : 'Add New Time Entry';
       this.buttonText = _data.edit === 'Edit' ? 'Update' : 'Save';
     } else {
-      console.log(_data.edit);
       this.currentTimeMatter = _data.edit;
       this.matterTimerData = _data.matterData;
     }
@@ -69,6 +70,10 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
 
   timeEntryForm: FormGroup;
   ngOnInit() {
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
     this.ActivityList = this.optionList;
     this.timeEntryForm = this._formBuilder.group({
       MATTERGUID: ['', Validators.required],
@@ -125,6 +130,10 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.timeEntryForm.controls['ITEMTYPE'].setValue('WIP');
       this.matterChange('', '');
     }
+  }
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.filteredOptions.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
   setTimeEntryData() {
     this.isLoadingResults = true;

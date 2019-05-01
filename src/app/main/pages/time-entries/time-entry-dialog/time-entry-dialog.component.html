@@ -15,9 +15,16 @@
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                             <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline">
                                 <mat-label>Matter</mat-label>
+                                <input type="text" aria-label="Number" matInput [formControl]="myControl" formControlName="MATTERGUID" [matAutocomplete]="auto">
+                                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                    <mat-option *ngFor="let matter of matterList | async" [value]="matter.SHORTNAME">
+                                        {{matter.SHORTNAME}} : {{matter.MATTER}} : {{matter.CLIENTNAME}}
+                                    </mat-option>
+                                </mat-autocomplete>
+                                <!-- <mat-label>Matter</mat-label>
                                 <mat-select formControlName="MATTERGUID" (selectionChange)="matterChange('MatterGuid',$event.value)">
                                     <mat-option *ngFor="let matter of matterList" value="{{matter.MATTERGUID}}">{{matter.SHORTNAME}} : {{matter.MATTER}} : {{matter.CLIENTNAME}} </mat-option>
-                                </mat-select>
+                                </mat-select> -->
                             </mat-form-field>
                             <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline">
                                 <mat-label>Type</mat-label>

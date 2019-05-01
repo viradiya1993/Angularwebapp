@@ -9,8 +9,8 @@
                     <mat-form-field class="example" appearance="outline">
                         <mat-label>Active Matters</mat-label>
                         <mat-select formControlName="MatterFilter" (selectionChange)="MatterChange($event.value)">
-                            <mat-option value="">All Matters</mat-option>
                             <mat-option value="active">Active Matters</mat-option>
+                            <mat-option value="">All Matters</mat-option>
                             <mat-option value="inactive">Inactive Matters</mat-option>
                             <mat-option value="recent inactive">Recently Inactive</mat-option>
                             <mat-option value="near estimate">Near Estimate</mat-option>
@@ -21,6 +21,7 @@
                     <mat-form-field class="example" appearance="outline">
                         <mat-label>Has Uninvoiced Work</mat-label>
                         <mat-select formControlName="InvoiceFilter" (selectionChange)="MatterInvoiceChange($event.value)">
+                            <mat-option value="All">All invoiced Work</mat-option>
                             <mat-option value="No">invoiced Work</mat-option>
                             <mat-option value="Yes">Uninvoiced Work</mat-option>
                         </mat-select>

@@ -7,9 +7,7 @@
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline" class="example" fxFlex="49" class="pr-4">
-            <input (dateInput)="choosedDateOfBirth('input', $event)" (dateChange)="choosedDateOfBirth('change', $event)"
-                matInput name="DATEOFBIRTH" [formControlName]="'DATEOFBIRTH'" [matDatepicker]="picker"
-                placeholder="Date Of Birth">
+            <input (dateInput)="choosedDateOfBirth('input', $event)" (dateChange)="choosedDateOfBirth('change', $event)" matInput name="DATEOFBIRTH" [formControlName]="'DATEOFBIRTH'" [matDatepicker]="picker" placeholder="Date Of Birth">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -20,19 +18,15 @@
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Town Of Birth</mat-label>
             <input name="TOWNOFBIRTH" [formControlName]="'TOWNOFBIRTH'" matInput>
-            <mat-icon matSuffix class="secondary-text">location_city</mat-icon>
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Country Of Birth</mat-label>
             <input name="COUNTRYOFBIRTH" [formControlName]="'COUNTRYOFBIRTH'" matInput>
-            <mat-icon matSuffix class="secondary-text">outlined_flag</mat-icon>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
-            <input (dateInput)="choosedDateOfDath('input', $event)" (dateChange)="choosedDateOfDath('change', $event)"
-                matInput name="DATEOFDEATH" [formControlName]="'DATEOFDEATH'" [matDatepicker]="picker1"
-                placeholder="Date Of Death">
+            <input (dateInput)="choosedDateOfDath('input', $event)" (dateChange)="choosedDateOfDath('change', $event)" matInput name="DATEOFDEATH" [formControlName]="'DATEOFDEATH'" [matDatepicker]="picker1" placeholder="Date Of Death">
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>

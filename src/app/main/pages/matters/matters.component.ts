@@ -38,6 +38,8 @@ export class MattersComponent implements OnInit {
       this.matterFilterForm.controls['UserFilter'].setValue(this.lastFilter.FeeEarner);
       // this.matterFilterForm.controls['searchFilter'].setValue(this.lastFilter.SearchString);
       this.matterFilterForm.controls['InvoiceFilter'].setValue(this.lastFilter.UninvoicedWork);
+    } else {
+      this.matterFilterForm.controls['MatterFilter'].setValue('active');
     }
   }
   MatterChange(value) {
@@ -90,7 +92,12 @@ export class MattersComponent implements OnInit {
     }
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (!this.lastFilter) {
+      localStorage.setItem('matter_filter', JSON.stringify({ 'Active': 'active', 'SearchString': '', 'FeeEarner': '', 'UninvoicedWork': 'All' }));
+      this.child.getMatterList({ 'Active': 'active', 'SearchString': '', 'FeeEarner': '', 'UninvoicedWork': 'All' });
+    }
+  }
   getDropValue() {
     let d = {};
     this.Timersservice.GetUsers(d).subscribe(response => {
@@ -102,6 +109,7 @@ export class MattersComponent implements OnInit {
     });
   }
   matterBack(event: any) {
+    console.log(event);
     this.mattersDetail = event;
     localStorage.setItem('set_active_matters', JSON.stringify(this.mattersDetail));
     let windowHeight = $(window).height();

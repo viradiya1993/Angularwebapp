@@ -18,6 +18,7 @@ export class ContactComponent implements OnInit {
   ColumnsObj = [];
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
+  contectTitle = this.selectedColore == "theme-default" ? 'Client' : 'Solicitor';
   displayedColumns: string[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   datanull: null;
@@ -52,10 +53,10 @@ export class ContactComponent implements OnInit {
         this.contactFilter.controls['Filter2'].setValue(filterVals.FirstLetter);
       }
     } else {
-      this.contactFilter.controls['Filter1'].setValue('all');
-      this.contactFilter.controls['Filter2'].setValue('-1');
-      filterVals = { 'active': '', 'FirstLetter': '' };
-      localStorage.setItem('time_entries_filter', JSON.stringify(filterVals));
+      this.contactFilter.controls['Filter1'].setValue('1');
+      this.contactFilter.controls['Filter2'].setValue('a');
+      filterVals = { 'active': '1', 'FirstLetter': 'a' };
+      localStorage.setItem('contact_Filter', JSON.stringify(filterVals));
     }
     this.LoadData(filterVals);
   }

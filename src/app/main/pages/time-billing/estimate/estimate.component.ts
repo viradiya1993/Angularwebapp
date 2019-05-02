@@ -4,6 +4,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.component';
 import { EstimateService, GetallcolumnsFilterService, TableColumnsService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-estimate',
@@ -25,6 +26,8 @@ export class EstimateComponent implements OnInit {
   ngOnInit() {
     this.getTableFilter();
     this.loadData();
+    $('content').addClass('inner-scroll');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 150)) + 'px');
   }
   loadData() {
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };

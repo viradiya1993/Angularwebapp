@@ -390,25 +390,25 @@ body.theme-default .mat-table .mat-header-cell {
     color: #fff;
 }
 
-@media screen and (min-width: 1700px) {
-    .example-containerdata {
-        height: 500px;
-        overflow: auto;
-    }
-}
-
-@media screen and (max-width: 1400px) {
-    .example-containerdata {
-        height: 300px;
-    }
-}
-
+// @media screen and (min-width: 1700px) {
+//     .example-containerdata {
+//         height: 500px;
+//         overflow: auto;
+//     }
+// }
+// @media screen and (max-width: 1400px) {
+//     .example-containerdata {
+//         height: 300px;
+//     }
+// }
 body.theme-yellow-light .mat-table {
     background: white !important;
 }
+
 .cdk-overlay-pane {
     max-width: 100% !important;
 }
+
 body.theme-default .mat-dialog-container {
     box-shadow: none !important;
     background-color: transparent !important;

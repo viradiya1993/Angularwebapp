@@ -97,6 +97,7 @@ export class MattersComponent implements OnInit {
       localStorage.setItem('matter_filter', JSON.stringify({ 'Active': 'active', 'SearchString': '', 'FeeEarner': '', 'UninvoicedWork': 'All' }));
       this.child.getMatterList({ 'Active': 'active', 'SearchString': '', 'FeeEarner': '', 'UninvoicedWork': 'All' });
     }
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
   }
   getDropValue() {
     let d = {};
@@ -109,7 +110,6 @@ export class MattersComponent implements OnInit {
     });
   }
   matterBack(event: any) {
-    console.log(event);
     this.mattersDetail = event;
     localStorage.setItem('set_active_matters', JSON.stringify(this.mattersDetail));
     let windowHeight = $(window).height();

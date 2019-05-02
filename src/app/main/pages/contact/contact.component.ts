@@ -4,6 +4,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { ContactService, TableColumnsService } from '../../../_services';
 import { ToastrService } from 'ngx-toastr';
+import * as $ from 'jquery';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
@@ -40,6 +41,7 @@ export class ContactComponent implements OnInit {
   Contactdata;
 
   ngOnInit() {
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.getTableFilter();
     let filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
     if (filterVals) {

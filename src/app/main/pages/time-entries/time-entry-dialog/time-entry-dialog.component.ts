@@ -7,6 +7,7 @@ import * as $ from 'jquery';
 import { DatePipe } from '@angular/common';
 import { TimeEntriesComponent } from '../time-entries.component';
 import { map, startWith } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -17,8 +18,6 @@ import { map, startWith } from 'rxjs/operators';
 })
 export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   private exportTime = { hour: 7, minute: 15, meriden: 'PM', format: 24 };
-  myControl = new FormControl();
-  filteredOptions: any;
   LookupsList: any;
   userList: any;
   matterList: any;
@@ -67,13 +66,17 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.matterTimerData = _data.matterData;
     }
   }
-
   timeEntryForm: FormGroup;
+
+  myControl = new FormControl();
+  filteredOptions: Observable<any[]>;
+  private _filter(value: any): any[] {
+    console.log(value);
+    let type: any = typeof (value);
+    const filterValue = type === 'object' ? value.SHORTNAME : value;
+    return this.matterList.filter(option => option.SHORTNAME.toLowerCase().indexOf(filterValue) === 0);
+  }
   ngOnInit() {
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value))
-    );
     this.ActivityList = this.optionList;
     this.timeEntryForm = this._formBuilder.group({
       MATTERGUID: ['', Validators.required],
@@ -117,6 +120,9 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       } else {
         this.matterList = [];
       }
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''), map(value => this._filter(value))
+      );
       this.isLoadingResults = false;
     }, err => {
       this.toastr.error(err);
@@ -130,10 +136,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.timeEntryForm.controls['ITEMTYPE'].setValue('WIP');
       this.matterChange('', '');
     }
-  }
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.filteredOptions.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
   setTimeEntryData() {
     this.isLoadingResults = true;
@@ -167,7 +169,12 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     $('#time_Control').attr('placeholder', 'Select time');
   }
+  selected(event: any, value: any) {
+    console.log(event);
+    console.log(value);
+  }
   matterChange(key: any, event: any) {
+    console.log(event);
     if (key == "MatterGuid") {
       this.calculateData.MatterGuid = event;
     } else if (key == "Itemtype") {

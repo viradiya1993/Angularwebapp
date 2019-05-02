@@ -47,7 +47,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-        $('content').addClass('inner-scroll');
+    $('content').addClass('inner-scroll');
     this.getMatterList(this.lastFilter);
 
   }

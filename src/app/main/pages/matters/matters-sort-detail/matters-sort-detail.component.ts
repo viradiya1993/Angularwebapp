@@ -16,6 +16,8 @@ export class MattersSortDetailComponent implements OnInit {
   @Output() matterCloseD: EventEmitter<any> = new EventEmitter<any>();
   currentUser: any = JSON.parse(localStorage.getItem('currentUser'));
   timerId: any = 'timer_' + this.currentUser.UserGuid;
+  theme_type = localStorage.getItem('theme_type');
+  contectTitle = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   prevMatterArray: any[] = [];
   constructor(
     private _fuseSidebarService: FuseSidebarService, private toastr: ToastrService, private TimersServiceI: TimersService,

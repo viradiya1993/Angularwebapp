@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { TimersService, TableColumnsService } from '../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common'
-
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-time-entries',
@@ -69,6 +69,7 @@ export class TimeEntriesComponent implements OnInit {
   }
 
   ngOnInit() {
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.getTableFilter();
     let d = {};
     this.Timersservice.GetUsers(d).subscribe(res => {

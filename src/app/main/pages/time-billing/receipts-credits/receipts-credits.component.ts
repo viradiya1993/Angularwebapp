@@ -4,6 +4,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { ReceiptsCreditsService, TableColumnsService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-receipts-credits',
@@ -26,6 +27,8 @@ export class ReceiptsCreditsComponent implements OnInit {
 
   ReceiptsCreditsdata;
   ngOnInit() {
+    $('content').addClass('inner-scroll');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
     this.getTableFilter();
     this.LoadData();
   }

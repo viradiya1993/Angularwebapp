@@ -4,7 +4,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { FileNotesService, TableColumnsService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
-
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-file-notes',
@@ -24,6 +24,8 @@ export class FileNotesComponent implements OnInit {
   constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, private fileNotes_service: FileNotesService, private toastr: ToastrService) { }
   filenotes_table;
   ngOnInit() {
+    $('content').addClass('inner-scroll');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
     this.getTableFilter();
     this.loadData();
   }

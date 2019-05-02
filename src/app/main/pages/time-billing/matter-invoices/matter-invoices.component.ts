@@ -4,6 +4,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.component';
 import { MatterInvoicesService, TableColumnsService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-matter-invoices',
@@ -26,6 +27,8 @@ export class MatterInvoicesComponent implements OnInit {
 
   MatterInvoicesdata;
   ngOnInit() {
+    $('content').addClass('inner-scroll');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
     this.getTableFilter();
     this.loadData();
   }

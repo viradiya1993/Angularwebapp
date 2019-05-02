@@ -4,7 +4,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { MatterTrustService, TableColumnsService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
-
+import * as $ from 'jquery';
 @Component({
   selector: 'app-matter-trust',
   templateUrl: './matter-trust.component.html',
@@ -27,6 +27,8 @@ export class MatterTrustComponent implements OnInit {
 
   MatterTrustdata;
   ngOnInit() {
+    $('content').addClass('inner-scroll');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
     this.getTableFilter();
     this.loadData();
   }

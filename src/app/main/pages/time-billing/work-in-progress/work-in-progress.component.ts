@@ -4,7 +4,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { ToastrService } from 'ngx-toastr';
 import { WorkInProgressService, TableColumnsService } from '../../../../_services';
-
+import * as $ from 'jquery';
 @Component({
   selector: 'app-work-in-progress',
   templateUrl: './work-in-progress.component.html',
@@ -25,6 +25,8 @@ export class WorkInProgressComponent implements OnInit {
 
   WorkInProgressdata
   ngOnInit() {
+    $('content').addClass('inner-scroll');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
     this.getTableFilter();
     this.loadData();
   }

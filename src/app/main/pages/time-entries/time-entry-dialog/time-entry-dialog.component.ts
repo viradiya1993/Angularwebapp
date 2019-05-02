@@ -20,7 +20,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   private exportTime = { hour: 7, minute: 15, meriden: 'PM', format: 24 };
   LookupsList: any;
   userList: any;
-  matterList: any;
+  matterList: any = [];
   isspiner: boolean = false;
   isLoadingResults: boolean = false;
   ActivityList: any = [];
@@ -70,12 +70,15 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
 
   myControl = new FormControl();
   filteredOptions: Observable<any[]>;
+
+
   private _filter(value: any): any[] {
-    console.log(value);
     let type: any = typeof (value);
-    const filterValue = type === 'object' ? value.SHORTNAME : value;
-    return this.matterList.filter(option => option.SHORTNAME.toLowerCase().indexOf(filterValue) === 0);
+    const filterValue = type === 'object' ? value.name : value;
+    return this.matterList.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
   }
+
+
   ngOnInit() {
     this.ActivityList = this.optionList;
     this.timeEntryForm = this._formBuilder.group({
@@ -116,9 +119,10 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.isLoadingResults = true;
     this.MattersService.getMatters({ "Active": "active" }).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
-        this.matterList = res.DATA.MATTERS;
-      } else {
-        this.matterList = [];
+        res.DATA.MATTERS.forEach(itemsdata => {
+          itemsdata.name = itemsdata.SHORTNAME + ' : ' + itemsdata.MATTER + ' : ' + itemsdata.CLIENT;
+          this.matterList.push(itemsdata);
+        });
       }
       this.filteredOptions = this.myControl.valueChanges.pipe(
         startWith(''), map(value => this._filter(value))
@@ -130,6 +134,11 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     if (this.action === 'Edit') {
       this.setTimeEntryData();
     } else if (this.currentTimeMatter != '') {
+      //auto complate set value at the time of edit
+      const acdata = this.matterList.find(o => o.MATTERGUID === this.currentTimeMatter);
+      const index = this.matterList.indexOf(acdata);
+      this.myControl.setValue(this.matterList[index]);
+
       this.timeEntryForm.controls['MATTERGUID'].setValue(this.currentTimeMatter);
       this.timeEntryForm.controls['QUANTITYTYPE'].setValue('hh:mm');
       this.timeEntryForm.controls['QUANTITY'].setValue(this.matterTimerData);
@@ -143,6 +152,15 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       if (response.CODE == 200 && response.STATUS == "success") {
         localStorage.setItem('edit_WORKITEMGUID', response.DATA.WORKITEMS[0].WORKITEMGUID);
         let timeEntryData = response.DATA.WORKITEMS[0];
+        //auto complate set value at the time of edit
+        setTimeout(function () {
+          console.log(this.matterList);
+          const acdata = this.matterList.find(o => o.MATTERGUID === timeEntryData.MATTERGUID);
+          console.log(acdata);
+          const index = this.matterList.indexOf(acdata);
+          console.log(index);
+          this.myControl.setValue(this.matterList[index]);
+        }, 3000);
         this.timeEntryForm.controls['MATTERGUID'].setValue(timeEntryData.MATTERGUID);
         this.timeEntryForm.controls['ITEMTYPE'].setValue(timeEntryData.ITEMTYPE);
         this.timeEntryForm.controls['ITEMTIME'].setValue(timeEntryData.ITEMTIME);
@@ -169,13 +187,9 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     $('#time_Control').attr('placeholder', 'Select time');
   }
-  selected(event: any, value: any) {
-    console.log(event);
-    console.log(value);
-  }
   matterChange(key: any, event: any) {
-    console.log(event);
     if (key == "MatterGuid") {
+      this.timeEntryForm.controls['MATTERGUID'].setValue(event);
       this.calculateData.MatterGuid = event;
     } else if (key == "Itemtype") {
       this.calculateData.Itemtype = event;

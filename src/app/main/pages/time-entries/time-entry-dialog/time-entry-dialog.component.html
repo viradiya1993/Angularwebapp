@@ -17,8 +17,8 @@
                                 <mat-label>Matter</mat-label>
                                 <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
                                 <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                                    <mat-option (onSelectionChange)="selected($event, option)" *ngFor="let option of filteredOptions | async" value="{{option.SHORTNAME}} : {{option.MATTER}} : {{option.CLIENTNAME}}">
-                                        {{option.SHORTNAME}} : {{option.MATTER}} : {{option.CLIENTNAME}}
+                                    <mat-option (onSelectionChange)="matterChange('MatterGuid', option.MATTERGUID)" *ngFor="let option of filteredOptions | async" value="{{option.name}}">
+                                        {{option.name}}
                                     </mat-option>
                                 </mat-autocomplete>
                                 <!-- <mat-label>Matter</mat-label>

@@ -46,7 +46,6 @@ export class FuseNavVerticalGroupComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        $('content').addClass('inner-scroll');
         // Subscribe to navigation item
         merge(
             this._fuseNavigationService.onNavigationItemAdded,

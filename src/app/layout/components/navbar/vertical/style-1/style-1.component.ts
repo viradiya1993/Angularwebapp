@@ -100,7 +100,6 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        $('content').addClass('inner-scroll');
         this._router.events
             .pipe(
                 filter((event) => event instanceof NavigationEnd),

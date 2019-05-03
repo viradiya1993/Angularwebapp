@@ -85,8 +85,6 @@ export class FuseNavigationComponent implements OnInit {
    */
 
   ngOnInit(): void {
-        $('content').addClass('inner-scroll');
-
     // Load the navigation either from the input or from the service
 
     this.navigation = this.navigation || this._fuseNavigationService.getCurrentNavigation();

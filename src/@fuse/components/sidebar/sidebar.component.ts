@@ -201,7 +201,6 @@ export class FuseSidebarComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        $('content').addClass('inner-scroll');
         // Subscribe to config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))

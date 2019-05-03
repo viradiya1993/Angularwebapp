@@ -111,7 +111,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
      */
 
     ngOnInit(): void {
-        $('content').addClass('inner-scroll');
         this.updateTimerCounter();
         this.displayMattterList();
         // Subscribe to the config changes

@@ -29,7 +29,6 @@ export class SortingDialogComponent implements OnInit {
     this.property = data.data;
   }
   ngOnInit(): void {
-        $('content').addClass('inner-scroll');
     this.updateCount();
   }
   updateCount() {

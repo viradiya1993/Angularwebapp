@@ -21,7 +21,6 @@ export class QuickPanelComponent implements OnInit, OnDestroy {
 
 
     ngOnInit(): void {
-        $('content').addClass('inner-scroll');
         this.eventsData.push({ 'matter_id': 'demo', 'time': 0, 'isStart': true });
     }
     ngOnDestroy(): void {

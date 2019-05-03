@@ -42,7 +42,6 @@ export class VerticalLayout1Component implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
-        $('content').addClass('inner-scroll');
         // Subscribe to config changes
         this._fuseConfigService.config
             .pipe(takeUntil(this._unsubscribeAll))

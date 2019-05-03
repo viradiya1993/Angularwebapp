@@ -26,7 +26,6 @@ export class PersonComponent implements OnInit {
    * On init
    */
   ngOnInit(): void {
-        $('content').addClass('inner-scroll');
     this.contactForm.get('OTHERGIVENNAMES').disable();
     this.contactForm.get('OTHERFAMILYNAME').disable();
     this.contactForm.get('REASONFORCHANGE').disable();
@@ -49,7 +48,7 @@ export class PersonComponent implements OnInit {
 
   }
   triggerSomeEvent(f) {
-    if (f.value.KNOWNBYOTHERNAME==true) {
+    if (f.value.KNOWNBYOTHERNAME == true) {
       this.contactForm.get('OTHERGIVENNAMES').enable();
       this.contactForm.get('OTHERFAMILYNAME').enable();
       this.contactForm.get('REASONFORCHANGE').enable();
@@ -57,7 +56,7 @@ export class PersonComponent implements OnInit {
       this.contactForm.controls['OTHERGIVENNAMES'].setValue("");
       this.contactForm.controls['OTHERFAMILYNAME'].setValue("");
       this.contactForm.controls['REASONFORCHANGE'].setValue("");
-      
+
       this.contactForm.get('OTHERGIVENNAMES').disable();
       this.contactForm.get('OTHERFAMILYNAME').disable();
       this.contactForm.get('REASONFORCHANGE').disable();

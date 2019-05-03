@@ -1,6 +1,7 @@
 .one {
     width: 100%;
 }
+
 .btn {
     float: right;
 }
@@ -119,11 +120,42 @@ mat-icon.close_icon.mat-icon.material-icons.mat-icon-no-color {
     float: right;
     cursor: pointer;
 }
+
 div.middle {
     margin-left: 34%;
     margin-top: -56px;
 }
+
 .button {
     margin-top: 50px;
     margin-left: -42%;
+}
+
+.add_report_main {
+    background-color: #fff;
+    // width: 850px;
+    margin: 0 auto;
+    box-shadow: none;
+    border-radius: 4px;
+}
+
+.mat-dialog-title {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.right_popup_btn .right_btn_child:last-child {
+    margin-right: 0;
+}
+
+.popup_ftr {
+    border-top: 1px solid #ccc;
+    margin-top: 15px !important;
+    padding: 12px 24px !important;
+}
+
+@media screen and (max-width: 900px) {
+    .add_report_main {
+        width: 95%;
+    }
 }

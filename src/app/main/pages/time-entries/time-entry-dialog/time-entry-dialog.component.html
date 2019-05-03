@@ -28,7 +28,8 @@
                             </mat-form-field>
                             <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline">
                                 <mat-label>Type</mat-label>
-                                <mat-select formControlName="ITEMTYPE" (selectionChange)="itemTypeChange($event.value);matterChange('Itemtype',$event.value)">
+                                <mat-select formControlName="ITEMTYPE" (selectionChange)="itemTypeChange($event.value);">
+                                    <!-- <mat-select formControlName="ITEMTYPE"> matterChange('Itemtype',$event.value)-->
                                     <mat-option value="WIP">Time Entry</mat-option>
                                     <mat-option value="Activity">Activity</mat-option>
                                     <mat-option value="Sundry">Sundry</mat-option>

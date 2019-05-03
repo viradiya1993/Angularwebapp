@@ -38,7 +38,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   dialogTitle: any = 'Add New Time Entry';
   buttonText: any = 'Save';
   calculateData: any = {
-    MatterGuid: '', Itemtype: '', QuantityType: '', Quantity: '', FeeEarner: '', activitycode: '', current_quantity: ''
+    MatterGuid: '', QuantityType: '', Quantity: '', FeeEarner: '', FeeType: ''
   };
   ITEMDATEModel: Date;
   matterTimerData: any;
@@ -187,12 +187,39 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     if (key == "MatterGuid") {
       this.timeEntryForm.controls['MATTERGUID'].setValue(event);
       this.calculateData.MatterGuid = event;
-    } else if (key == "Itemtype") {
-      this.calculateData.Itemtype = event;
     } else if (key == "FeeEarner") {
       this.calculateData.FeeEarner = event;
     } else if (key == "QuantityType") {
-      this.calculateData.QuantityType = event;
+      switch (event) {
+        case 'hh:mm': {
+          this.calculateData.QuantityType = 'X';
+          break;
+        }
+        case 'Hours': {
+          this.calculateData.QuantityType = 'H';
+          break;
+        }
+        case 'Minutes': {
+          this.calculateData.QuantityType = 'M';
+          break;
+        }
+        case 'Days': {
+          this.calculateData.QuantityType = 'D';
+          break;
+        }
+        case 'Units': {
+          this.calculateData.QuantityType = 'U';
+          break;
+        }
+        case 'Fixed': {
+          this.calculateData.QuantityType = 'F';
+          break;
+        }
+        default: {
+          this.calculateData.QuantityType = event;
+          break;
+        }
+      }
     }
     this.calculateData.Quantity = this.f.QUANTITY.value;
     this.isLoadingResults = true;

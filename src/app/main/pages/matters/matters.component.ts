@@ -40,6 +40,7 @@ export class MattersComponent implements OnInit {
       this.matterFilterForm.controls['InvoiceFilter'].setValue(this.lastFilter.UninvoicedWork);
     } else {
       this.matterFilterForm.controls['MatterFilter'].setValue('active');
+      this.matterFilterForm.controls['InvoiceFilter'].setValue('All');
     }
   }
   MatterChange(value) {

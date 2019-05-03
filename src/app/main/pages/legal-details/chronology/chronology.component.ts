@@ -28,6 +28,7 @@ export class ChronologyComponent implements OnInit {
   constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, private chronology_service: ChronologyService, private toastr: ToastrService) { }
 
   ngOnInit() {
+    $('content').addClass('inner-scroll');
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
     this.getTableFilter();
     this.LoadData();

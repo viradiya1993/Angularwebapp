@@ -22,6 +22,7 @@ export class AuthoritiesComponent implements OnInit {
   constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, private authorities_service: AuthoritiesService) { }
   authorities_table;
   ngOnInit() {
+    $('content').addClass('inner-scroll');
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
     this.getTableFilter();
     this.LoadData();

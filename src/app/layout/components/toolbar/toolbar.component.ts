@@ -339,7 +339,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     deleteContact(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-            disableClose: false
+            disableClose: true,
+            width: '100%',
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
@@ -359,7 +360,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     deleteTimeEntry(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-            disableClose: false
+            disableClose: true,
+            width: '100%',
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {

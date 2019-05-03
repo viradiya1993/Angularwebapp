@@ -69,6 +69,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   timeEntryForm: FormGroup;
 
   myControl = new FormControl();
+  matterautoVal: any;
   filteredOptions: Observable<any[]>;
 
 
@@ -82,6 +83,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.ActivityList = this.optionList;
     this.timeEntryForm = this._formBuilder.group({
+      matterautoVal: [''],
       MATTERGUID: ['', Validators.required],
       ITEMTYPE: [''],
       QUANTITYTYPE: [''],
@@ -120,6 +122,10 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.MattersService.getMatters({ "Active": "active" }).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         res.DATA.MATTERS.forEach(itemsdata => {
+          if (this.currentTimeMatter == itemsdata.MATTERGUID) {
+            this.matterautoVal = itemsdata.SHORTNAME + ' : ' + itemsdata.MATTER + ' : ' + itemsdata.CLIENT;
+            this.timeEntryForm.controls['matterautoVal'].setValue(this.matterautoVal);
+          }
           itemsdata.name = itemsdata.SHORTNAME + ' : ' + itemsdata.MATTER + ' : ' + itemsdata.CLIENT;
           this.matterList.push(itemsdata);
         });
@@ -134,11 +140,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     if (this.action === 'Edit') {
       this.setTimeEntryData();
     } else if (this.currentTimeMatter != '') {
-      //auto complate set value at the time of edit
-      const acdata = this.matterList.find(o => o.MATTERGUID === this.currentTimeMatter);
-      const index = this.matterList.indexOf(acdata);
-      this.myControl.setValue(this.matterList[index]);
-
       this.timeEntryForm.controls['MATTERGUID'].setValue(this.currentTimeMatter);
       this.timeEntryForm.controls['QUANTITYTYPE'].setValue('hh:mm');
       this.timeEntryForm.controls['QUANTITY'].setValue(this.matterTimerData);
@@ -152,15 +153,11 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       if (response.CODE == 200 && response.STATUS == "success") {
         localStorage.setItem('edit_WORKITEMGUID', response.DATA.WORKITEMS[0].WORKITEMGUID);
         let timeEntryData = response.DATA.WORKITEMS[0];
-        //auto complate set value at the time of edit
-        setTimeout(function () {
-          console.log(this.matterList);
-          const acdata = this.matterList.find(o => o.MATTERGUID === timeEntryData.MATTERGUID);
-          console.log(acdata);
-          const index = this.matterList.indexOf(acdata);
-          console.log(index);
-          this.myControl.setValue(this.matterList[index]);
-        }, 3000);
+        this.matterList.forEach(itemsdata => {
+          if (response.DATA.WORKITEMS[0].MATTERGUID == itemsdata.MATTERGUID) {
+            this.timeEntryForm.controls['matterautoVal'].setValue(itemsdata.SHORTNAME + ' : ' + itemsdata.MATTER + ' : ' + itemsdata.CLIENT);
+          }
+        });
         this.timeEntryForm.controls['MATTERGUID'].setValue(timeEntryData.MATTERGUID);
         this.timeEntryForm.controls['ITEMTYPE'].setValue(timeEntryData.ITEMTYPE);
         this.timeEntryForm.controls['ITEMTIME'].setValue(timeEntryData.ITEMTIME);
@@ -173,7 +170,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
         this.timeEntryForm.controls['ADDITIONALTEXT'].setValue(timeEntryData.ADDITIONALTEXT);
         this.timeEntryForm.controls['COMMENT'].setValue(timeEntryData.COMMENT);
         this.timeEntryForm.controls['QUANTITYTYPE'].setValue(timeEntryData.QUANTITYTYPE);
-
       }
       this.isLoadingResults = false;
     }, err => {

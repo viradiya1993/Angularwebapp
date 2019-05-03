@@ -55,7 +55,6 @@ export class MatterInvoicesComponent implements OnInit {
     this.TableColumnsService.getTableFilter('Invoice').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'invoicesColumns');
-        console.log(data.showcol);
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
       }

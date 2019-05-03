@@ -426,3 +426,7 @@ body.theme-yellow-light .mat-dialog-container {
     box-shadow: none !important;
     background-color: transparent !important;
 }
+
+content.inner-scroll {
+    overflow: auto;
+}

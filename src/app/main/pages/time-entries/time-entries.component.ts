@@ -81,6 +81,9 @@ export class TimeEntriesComponent implements OnInit {
     });
     this.LoadData(this.lastFilter);
   }
+  refreshTab() {
+    this.LoadData(this.lastFilter);
+  }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('WorkItems').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {

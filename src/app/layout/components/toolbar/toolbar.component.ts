@@ -260,7 +260,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     //*----**************************************time enrt add start***************************************
     public addNewTimeEntry(Data: any, matterData: any) {
         const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '100%', disableClose: true, data: { 'edit': Data, 'matterData': matterData } });
-        dialogRef.afterClosed().subscribe(result => { });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result)
+                $('#refreshTimeEntryTab').click();
+        });
     }
     //*----**************************************time enrt add end***************************************
     /* ---------------------------------------------------------------------end of timer add--------------------------------------------------------------------------  */
@@ -273,7 +276,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 action: 'new'
             }
         });
-        dialogRef.afterClosed().subscribe(result => { });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result)
+                $('#refreshContactTab').click();
+        });
     }
     /* ---------------------------------------------------------------------help Licence start--------------------------------------------------------------------------  */
     openLicence(Data) {
@@ -306,7 +312,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.toastr.error("Please Select Contact");
         } else {
             const dialogRef = this.dialog.open(ContactDialogComponent, { disableClose: true, data: { action: 'edit' } });
-            dialogRef.afterClosed().subscribe(result => { });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result)
+                    $('#refreshContactTab').click();
+            });
         }
 
     }
@@ -348,6 +357,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 let postData = { FormAction: "delete", CONTACTGUID: getContactGuId }
                 this._getContact.AddContactData(postData).subscribe(res => {
                     if (res.STATUS == "success") {
+                        $('#refreshContactTab').click();
                         this.toastr.success(res.STATUS);
                     } else {
                         this.toastr.error("You Can't Delete Contact Which One Is To Related to Matters");
@@ -369,6 +379,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 let postData = { FormAction: "delete", WorkItemGuid: WORKITEMGUID }
                 this.TimersServiceI.SetWorkItems(postData).subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {
+                        $('#refreshTimeEntryTab').click();
                         this.toastr.success('Delete successfully');
                     }
                 });;

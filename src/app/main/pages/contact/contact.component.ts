@@ -81,6 +81,9 @@ export class ContactComponent implements OnInit {
   get f() {
     return this.contactFilter.controls;
   }
+  refreshContactTab() {
+    this.LoadData(JSON.parse(localStorage.getItem('contact_Filter')));
+  }
   LoadData(data) {
     this.isLoadingResults = true;
     this.Contact.ContactData(data).subscribe(response => {

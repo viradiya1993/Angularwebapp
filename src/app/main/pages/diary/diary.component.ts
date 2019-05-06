@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { Subject } from 'rxjs';
 import { startOfDay, isSameDay, isSameMonth } from 'date-fns';
-import { CalendarEvent, CalendarEventTimesChangedEvent, CalendarMonthViewDay } from 'angular-calendar';
+import { CalendarEvent, CalendarEventTimesChangedEvent, CalendarMonthViewDay, CalendarWeekViewBeforeRenderEvent } from 'angular-calendar';
 import { fuseAnimations } from '@fuse/animations';
 import { DiaryService } from './diary.service';
 import { DiaryEventModel } from './event.model';
@@ -25,6 +25,7 @@ export class DiaryComponent implements OnInit {
     selectedDay: any;
     view: string;
     viewDate: Date;
+    segmentIsValid: any;
 
     constructor(
         private _calendarService: DiaryService,
@@ -68,20 +69,24 @@ export class DiaryComponent implements OnInit {
      * @param {any} body
      */
     beforeMonthViewRender({ header, body }): void {
-        //     /**
-        //      * Get the selected day
-        //      */
+        console.log(body);
         const _selectedDay = body.find((_day) => {
             return _day.date.getTime() === this.selectedDay.date.getTime();
         });
-
         if (_selectedDay) {
-            /**
-             * Set selected day style
-             * @type {string}
-             */
             _selectedDay.cssClass = 'cal-selected';
         }
+    }
+    beforeDayViewRender({ header, body }): void {
+        let currentHours = new Date().getHours();
+        body.hourGrid.forEach(day => {
+            day['segments'].forEach(segment => {
+                if (segment.date.getHours() == currentHours) {
+                    let classdata = localStorage.getItem('theme_type') == "theme-yellow-light" ? 'green' : 'blue';
+                    segment.cssClass = 'cal-day-segment-highlight-' + classdata;
+                }
+            });
+        });
     }
     /**
      * Day clicked

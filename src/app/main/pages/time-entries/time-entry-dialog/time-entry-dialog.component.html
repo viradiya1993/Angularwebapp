@@ -108,6 +108,6 @@
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
         <button mat-raised-button color="accent" (click)="SaveClickTimeEntry()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>{{buttonText}}</button>
-        <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Don't Save</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
     </mat-dialog-actions>
 </div>

@@ -294,6 +294,7 @@
     z-index: 1;
     width: 90% !important;
 }
+
 //deful
 body.theme-default .cal-week-view .cal-event {
     padding: 5px !important;
@@ -307,12 +308,14 @@ body.theme-default .cal-week-view .cal-event {
     white-space: nowrap;
     height: 100%;
 }
+
 .cal-week-view .cal-event mwl-calendar-event-title .cal-event-title {
     display: block;
     height: 26px;
     line-height: 26px;
     text-decoration: none;
 }
+
 body.theme-default .cal-day-view .cal-event {
     padding: 5px;
     font-size: 12px;
@@ -325,13 +328,16 @@ body.theme-default .cal-day-view .cal-event {
     white-space: nowrap;
     height: 100%;
 }
+
 body.theme-default .cal-month-view .cal-open-day-events {
     background: #4d2184;
 }
+
 body.theme-default .cal-month-view .cal-day-badge {
     background: #4d2184;
     color: white;
 }
+
 body.theme-default .cal-month-view .cal-event {
     background-color: #4d2184 !important;
 }
@@ -349,6 +355,7 @@ body.theme-yellow-light .cal-week-view .cal-event {
     white-space: nowrap;
     height: 100%;
 }
+
 body.theme-yellow-light .cal-day-view .cal-event {
     padding: 5px;
     font-size: 12px;
@@ -361,13 +368,26 @@ body.theme-yellow-light .cal-day-view .cal-event {
     white-space: nowrap;
     height: 100%;
 }
+
 body.theme-yellow-light .cal-month-view .cal-open-day-events {
     background: rgb(67, 160, 71);
 }
+
 body.theme-yellow-light .cal-month-view .cal-day-badge {
     background: rgb(67, 160, 71);
     color: white;
 }
+
 body.theme-yellow-light .cal-month-view .cal-event {
     background-color: rgb(67, 160, 71) !important;
+}
+
+.cal-hour-segment.cal-day-segment-highlight-green {
+    background-color: rgb(67, 160, 71) !important;
+    color: white;
+}
+
+.cal-hour-segment.cal-day-segment-highlight-blue {
+    background-color: #4d2184 !important;
+    color: white;
 }

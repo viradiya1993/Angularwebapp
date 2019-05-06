@@ -363,14 +363,13 @@ export class ContactDialogComponent implements OnInit {
         let filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
         contactComponent.LoadData(filterVals);
         // ContactComponent
-        this.dialogRef.close(false);
+        this.dialogRef.close(true);
       } else {
         this.isspiner = false;
       }
     }, error => {
       this.toastr.error(error);
     });
-
     localStorage.removeItem('DATEOFBIRTH');
     localStorage.removeItem('DATEOFDEATH');
   }

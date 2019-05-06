@@ -5,7 +5,6 @@ import { TimersService, MattersService, TableColumnsService } from '../../../../
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { DatePipe } from '@angular/common';
-import { TimeEntriesComponent } from '../time-entries.component';
 import { map, startWith } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -303,10 +302,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.Timersservice.SetWorkItems(PostTimeEntryData).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.toasterService.success(this.successMsg);
-        this.dialogRef.close(false);
-        let timeEntriesComponent = new TimeEntriesComponent(this.MatDialog, this._formBuilder, this.toasterService, this.Timersservice, this.datepipe, this.TableColumnsService);
-        timeEntriesComponent.LoadData(JSON.parse(localStorage.getItem('time_entries_filter')));
-
+        this.dialogRef.close(true);
       } else {
         if (res.CODE == 402 && res.STATUS == "error" && res.MESSAGE == "Not logged in")
           this.dialogRef.close(false);

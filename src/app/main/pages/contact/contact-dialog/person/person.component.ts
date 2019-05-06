@@ -1,10 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-//import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ContactService } from 'app/_services/contact.service';
-import * as $ from 'jquery';
+
 
 
 

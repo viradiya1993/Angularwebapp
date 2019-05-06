@@ -18,12 +18,15 @@
                     </mat-form-field>
 
                     <!-- select bar  -->
-                    <mat-form-field class="example" appearance="outline">
+                    <mat-form-field class="example invoiceddrop" appearance="outline">
                         <mat-label>Has Uninvoiced Work</mat-label>
                         <mat-select formControlName="InvoiceFilter" (selectionChange)="MatterInvoiceChange($event.value)">
-                            <mat-option value="All">All invoiced Work</mat-option>
-                            <mat-option value="No">Invoiced Work</mat-option>
-                            <mat-option value="Yes">Uninvoiced Work</mat-option>
+                            <mat-option value="All">All</mat-option>
+                            <mat-option value="Yes">Yes</mat-option>
+                            <mat-option value="No">No</mat-option>
+                            <!-- <mat-option value="All">All invoiced Work</mat-option>
+                            <mat-option value="Yes">Invoiced Work</mat-option>
+                            <mat-option value="No">Uninvoiced Work</mat-option> -->
                         </mat-select>
                     </mat-form-field>
                     <!-- select bar  -->
@@ -37,6 +40,7 @@
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="search" appearance="outline">
+                        <mat-label>Search</mat-label>
                         <!-- <input matInput placeholder="Search" (keyup.enter)="onSearch();" [(ngModel)]="searchFilter" formControlName="searchFilter"> -->
                         <input matInput placeholder="Search" (keydown)="onSearch($event)" formControlName="searchFilter">
                         <mat-icon matSuffix (click)="onSearch('Enter')">search</mat-icon>

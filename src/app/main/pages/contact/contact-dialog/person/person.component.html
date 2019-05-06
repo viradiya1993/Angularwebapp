@@ -3,7 +3,7 @@
         <mat-form-field appearance="outline" fxFlex="100">
             <mat-label>Company Client</mat-label>
             <mat-select name="COMPANYNAME" [formControlName]="'COMPANYNAME'">
-                <mat-option [value]="val.CONTACTNAME" *ngFor="let val of getCompanyName">{{val.CONTACTNAME}}
+                <mat-option [value]="val.COMPANYCONTACTGUID" *ngFor="let val of getCompanyName">{{val.CONTACTNAME}}
                 </mat-option>
             </mat-select>
         </mat-form-field>

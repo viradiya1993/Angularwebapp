@@ -37,6 +37,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LicenceAgreementComponent } from './main/licence-agreement/licence-agreement.component';
+
 //end
 const appRoutes: Routes = [
     { path: '', loadChildren: './main/authentication/authentication.module#AuthenticationModule' },

@@ -1,12 +1,11 @@
 import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA, MatDatepickerInputEvent } from '@angular/material';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { TimersService, MattersService, TableColumnsService } from '../../../../_services';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { TimersService, MattersService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { DatePipe } from '@angular/common';
-import { map, startWith } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { MatterDialogComponent } from '../matter-dialog/matter-dialog.component';
 
 
 @Component({
@@ -53,7 +52,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     private _formBuilder: FormBuilder,
     private toasterService: ToastrService,
     public datepipe: DatePipe,
-    private TableColumnsService: TableColumnsService,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
     if (_data.edit == 'Edit' || _data.edit == 'Add') {
@@ -66,19 +64,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     }
   }
   timeEntryForm: FormGroup;
-
-  myControl = new FormControl();
   matterautoVal: any;
-  filteredOptions: Observable<any[]>;
-
-
-  private _filter(value: any): any[] {
-    let type: any = typeof (value);
-    const filterValue = type === 'object' ? value.name : value;
-    return this.matterList.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
-  }
-
-
   ngOnInit() {
     this.ActivityList = this.optionList;
     this.timeEntryForm = this._formBuilder.group({
@@ -122,16 +108,13 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       if (res.CODE == 200 && res.STATUS == "success") {
         res.DATA.MATTERS.forEach(itemsdata => {
           if (this.currentTimeMatter == itemsdata.MATTERGUID) {
-            this.matterautoVal = itemsdata.SHORTNAME + ' : ' + itemsdata.MATTER + ' : ' + itemsdata.CLIENT;
+            this.matterautoVal = itemsdata.SHORTNAME + ' : ' + itemsdata.MATTER;
             this.timeEntryForm.controls['matterautoVal'].setValue(this.matterautoVal);
           }
           itemsdata.name = itemsdata.SHORTNAME + ' : ' + itemsdata.MATTER + ' : ' + itemsdata.CLIENT;
           this.matterList.push(itemsdata);
         });
       }
-      this.filteredOptions = this.myControl.valueChanges.pipe(
-        startWith(''), map(value => this._filter(value))
-      );
       this.isLoadingResults = false;
     }, err => {
       this.toastr.error(err);
@@ -143,8 +126,18 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.timeEntryForm.controls['QUANTITYTYPE'].setValue('hh:mm');
       this.timeEntryForm.controls['QUANTITY'].setValue(this.matterTimerData);
       this.timeEntryForm.controls['ITEMTYPE'].setValue('WIP');
-      this.matterChange('', '');
+      this.matterChange('MatterGuid', this.currentTimeMatter);
     }
+  }
+  public selectMatter() {
+    const dialogRef = this.MatDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.timeEntryForm.controls['MATTERGUID'].setValue(result.MATTERGUID);
+        this.timeEntryForm.controls['matterautoVal'].setValue(result.SHORTNAME + ' : ' + result.MATTER);
+        this.matterChange('MatterGuid', result.MATTERGUID);
+      }
+    });
   }
   setTimeEntryData() {
     this.isLoadingResults = true;
@@ -154,21 +147,28 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
         let timeEntryData = response.DATA.WORKITEMS[0];
         this.matterList.forEach(itemsdata => {
           if (response.DATA.WORKITEMS[0].MATTERGUID == itemsdata.MATTERGUID) {
-            this.timeEntryForm.controls['matterautoVal'].setValue(itemsdata.SHORTNAME + ' : ' + itemsdata.MATTER + ' : ' + itemsdata.CLIENT);
+            this.timeEntryForm.controls['matterautoVal'].setValue(itemsdata.SHORTNAME + ' : ' + itemsdata.MATTER);
           }
         });
+        this.itemTypeChange(timeEntryData.ITEMTYPE);
+        if (timeEntryData.ITEMTYPE == "Activity" || timeEntryData.ITEMTYPE == "Sundry") {
+          this.timeEntryForm.controls['QUANTITYTYPE'].setValue(timeEntryData.FEETYPE);
+        } else {
+          this.timeEntryForm.controls['QUANTITYTYPE'].setValue(timeEntryData.QUANTITYTYPE);
+        }
+        this.timeEntryForm.controls['QUANTITY'].setValue(timeEntryData.QUANTITY);
         this.timeEntryForm.controls['MATTERGUID'].setValue(timeEntryData.MATTERGUID);
         this.timeEntryForm.controls['ITEMTYPE'].setValue(timeEntryData.ITEMTYPE);
         this.timeEntryForm.controls['ITEMTIME'].setValue(timeEntryData.ITEMTIME);
         this.timeEntryForm.controls['FEEEARNER'].setValue(timeEntryData.FEEEARNER);
-        this.timeEntryForm.controls['QUANTITY'].setValue(timeEntryData.QUANTITY);
+
         let tempDate = timeEntryData.ITEMDATE.split("/");
         this.ITEMDATEModel = new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]);
         this.timeEntryForm.controls['PRICEINCGST'].setValue(timeEntryData.PRICEINCGST);
         this.timeEntryForm.controls['PRICE'].setValue(timeEntryData.PRICE);
         this.timeEntryForm.controls['ADDITIONALTEXT'].setValue(timeEntryData.ADDITIONALTEXT);
         this.timeEntryForm.controls['COMMENT'].setValue(timeEntryData.COMMENT);
-        this.timeEntryForm.controls['QUANTITYTYPE'].setValue(timeEntryData.QUANTITYTYPE);
+
       }
       this.isLoadingResults = false;
     }, err => {

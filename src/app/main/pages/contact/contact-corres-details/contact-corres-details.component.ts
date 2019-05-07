@@ -36,7 +36,6 @@ export class ContactCorresDetailsComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.getMatterGuid = this.data
-    console.log(this.getMatterGuid);
   }
 
   ngOnInit() {

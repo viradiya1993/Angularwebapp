@@ -21,6 +21,7 @@ import { MatDialogModule, MatTabsModule, MatProgressSpinnerModule, MatPaginatorM
 
 import { TimeEntryDialogComponent } from './time-entry-dialog/time-entry-dialog.component';
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
+import { MatterDialogComponent } from './matter-dialog/matter-dialog.component';
 
 const routes = [
   { path: '', component: TimeEntriesComponent, canActivate: [AuthGuard] }
@@ -30,6 +31,7 @@ const routes = [
   declarations: [
     TimeEntriesComponent,
     TimeEntryDialogComponent,
+    MatterDialogComponent,
     // SatDatepickerModule,
   ],
   imports: [
@@ -67,7 +69,10 @@ const routes = [
     // {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
     // {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
   ],
-  entryComponents: [TimeEntryDialogComponent],
+  entryComponents: [
+    TimeEntryDialogComponent,
+    MatterDialogComponent
+  ],
 
   exports: [
     TimeEntriesComponent

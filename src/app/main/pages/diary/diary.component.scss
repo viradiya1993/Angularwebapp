@@ -327,6 +327,7 @@ body.theme-default .cal-day-view .cal-event {
     text-overflow: ellipsis;
     white-space: nowrap;
     height: 100%;
+    min-width: 197px !important;
 }
 
 body.theme-default .cal-month-view .cal-open-day-events {
@@ -367,6 +368,7 @@ body.theme-yellow-light .cal-day-view .cal-event {
     text-overflow: ellipsis;
     white-space: nowrap;
     height: 100%;
+    min-width: 197px !important;
 }
 
 body.theme-yellow-light .cal-month-view .cal-open-day-events {

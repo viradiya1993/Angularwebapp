@@ -37,7 +37,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LicenceAgreementComponent } from './main/licence-agreement/licence-agreement.component';
-
+import { DeviceDetectorModule } from 'ngx-device-detector';
 //end
 const appRoutes: Routes = [
     { path: '', loadChildren: './main/authentication/authentication.module#AuthenticationModule' },
@@ -67,6 +67,8 @@ const appRoutes: Routes = [
         RouterModule.forRoot(appRoutes, { useHash: true }),
 
         TranslateModule.forRoot(),
+        //vice detector
+        DeviceDetectorModule.forRoot(),
 
         // Material moment date module
         MatMomentDateModule,

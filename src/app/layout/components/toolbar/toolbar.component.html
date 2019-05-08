@@ -16,7 +16,7 @@
             <mat-tab-group [selectedIndex]="selectedIndex">{{isTabShow}}
                 <!-- matters tab start -->
                 <mat-tab label="MATTERS" *ngIf="isTabShow===1">
-                    <section class="ribbon-container matter_tab_main">
+                    <section class="ribbon-container matter_tab_main" [style.width]="detailwidth"> 
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
@@ -567,7 +567,7 @@
                 <!-- time-entries tab menu end -->
                 <!-- goto tab menu start -->
                 <mat-tab label="GO TO">
-                    <section class="ribbon-container goto_tab_main">
+                    <section class="ribbon-container goto_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab">

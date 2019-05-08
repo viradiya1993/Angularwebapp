@@ -37,6 +37,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LicenceAgreementComponent } from './main/licence-agreement/licence-agreement.component';
+import { MatterPopupComponent } from './main/pages/matters/matter-popup/matter-popup.component';
 
 //end
 const appRoutes: Routes = [
@@ -52,13 +53,15 @@ const appRoutes: Routes = [
         NotFoundComponent,
         InternalErrorComponent,
         ReportsComponent,
-        LicenceAgreementComponent
+        LicenceAgreementComponent,
+        
 
     ],
     entryComponents: [
         SortingDialogComponent,
         ReportsComponent,
-        LicenceAgreementComponent
+        LicenceAgreementComponent,
+        MatterPopupComponent
     ],
     imports: [
         BrowserModule,

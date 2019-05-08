@@ -20,6 +20,7 @@ import { ReportsComponent } from 'app/main/reports/reports.component';
 import { ToastrService } from 'ngx-toastr';
 import { TimeEntriesComponent } from 'app/main/pages/time-entries/time-entries.component';
 import { TimeEntryDialogComponent } from 'app/main/pages/time-entries/time-entry-dialog/time-entry-dialog.component';
+import { MatterPopupComponent } from 'app/main/pages/matters/matter-popup/matter-popup.component';
 
 
 @Component({
@@ -339,6 +340,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this.dialog.open(ReportsComponent, {
             width: '40%',
             data: ReportData,
+            disableClose: true,
+        });
+
+        dialogRef.afterClosed().subscribe(result => { });
+    }
+    // New matter Pop-up
+    Newmatterpopup() {
+        const dialogConfig = new MatDialogConfig();        
+        const dialogRef = this.dialog.open(MatterPopupComponent, {
+            width: '45%',            
             disableClose: true,
         });
 

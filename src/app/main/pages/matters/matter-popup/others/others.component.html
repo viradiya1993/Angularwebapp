@@ -1,0 +1,47 @@
+<div class=" one "  fxLayout="column">
+    <mat-form-field appearance="outline" class="example" fxFlex="49" class="pr-4">
+        <mat-label>Matter Type</mat-label>
+        <mat-select name="MatterType" >
+            <mat-option value="Matter Type">Matter Type</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="example" fxFlex="49" class="pr-4">
+        <mat-label>Client Source</mat-label>
+        <mat-select name="ClientSource" >
+            <mat-option value="Client Source">Client Source</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="example" fxFlex="49" class="pr-4">
+        <mat-label>Filed Of Law</mat-label>
+        <mat-select name="FiledOfLaw" >
+            <mat-option value="Filed Of Law">Filed Of Law</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="example" fxFlex="49" class="pr-4">
+        <mat-label>Industry </mat-label>
+        <mat-select name="Industry" >
+            <mat-option value="Industry">Industry</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
+            <mat-label>Referrer</mat-label>
+            <input matInput readonly  >
+            <mat-icon matSuffix (click)='selectMatter()'>
+                <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+            </mat-icon>
+    </mat-form-field>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" class="example" fxFlex="100" class="pr-4">
+            <mat-label>Archive No </mat-label>
+            <input matInput name="ArchiveNo" >            
+        </mat-form-field>       
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+            <mat-label>Archive Date </mat-label>
+            <input name="Archive Date" matInput type="number">
+            <mat-icon matSuffix class="secondary-text"></mat-icon>
+        </mat-form-field>       
+    </div>
+   
+</div>

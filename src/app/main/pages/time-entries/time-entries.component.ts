@@ -29,7 +29,7 @@ export class TimeEntriesComponent implements OnInit {
   highlightedRows: any;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
-
+  tempColobj: any;
   constructor(
     private dialog: MatDialog,
     private fb: FormBuilder,
@@ -85,10 +85,10 @@ export class TimeEntriesComponent implements OnInit {
     this.LoadData(this.lastFilter);
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('WorkItems', '').subscribe(response => {
+    this.TableColumnsService.getTableFilter('time entries', '').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'WorkItemsColumns');
-        // console.log(data);
+        this.tempColobj = data.tempColobj;
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
       }
@@ -176,6 +176,7 @@ export class TimeEntriesComponent implements OnInit {
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.tempColobj = result.tempColobj;
         this.displayedColumns = result.columObj;
         this.ColumnsObj = result.columnameObj;
         if (!result.columObj) {

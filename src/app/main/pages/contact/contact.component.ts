@@ -72,7 +72,6 @@ export class ContactComponent implements OnInit {
     this.TableColumnsService.getTableFilter('contacts', '').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'contactColumns');
-        console.log(data);
         this.tempColobj = data.tempColobj;
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
@@ -122,7 +121,6 @@ export class ContactComponent implements OnInit {
     //Save button click
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         this.tempColobj = result.tempColobj;
         this.displayedColumns = result.columObj;
         this.ColumnsObj = result.columnameObj;

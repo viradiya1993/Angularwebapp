@@ -106,7 +106,6 @@ export class SortingDialogComponent implements OnInit {
       if (itemsdata.HIDDEN == 1)
         showCol.push(itemsdata.COLUMNID);
     });
-    console.log(tempColobj);
     this.saveLastFilter();
     this.dialogRef.close({ columObj: showCol, columnameObj: this.property, tempColobj: tempColobj });
   }

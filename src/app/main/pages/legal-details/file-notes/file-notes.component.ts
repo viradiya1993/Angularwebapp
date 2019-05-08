@@ -50,7 +50,7 @@ export class FileNotesComponent implements OnInit {
     localStorage.setItem('lastPageSize', event.pageSize);
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('MatterFileNote').subscribe(response => {
+    this.TableColumnsService.getTableFilter('MatterFileNote', '').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'fileNoteColumns');
         this.displayedColumns = data.showcol;

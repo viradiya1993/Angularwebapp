@@ -8,29 +8,31 @@ import { Columns } from 'app/_tableColumns/Columns';
 export class TableColumnsService {
   constructor(private httpClient: HttpClient, private toastr: ToastrService) { }
 
-  getTableFilter(table: any) {
+  getTableFilter(table: any, List: any) {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    let Data = { "USERGUID": currentUser.UserGuid, "PAGE": table };
+    let Data = { "USERGUID": currentUser.UserGuid, "PAGE": table, 'LIST': List };
     return this.httpClient.post<any>(environment.APIEndpoint + 'GetTableColumns', Data);
 
   }
   filtertableColum(response: any, type: any) {
     let tableData: any = Columns[type];
     let tempCol: any = [];
+    let tempColobj: any = [];
     let showCol: any = [];
     let temshowCol: any = [];
     response.forEach(itemsdata => {
-      if ((itemsdata.HIDDEN == 1 || itemsdata.HIDDEN == 0) && tableData.includes(itemsdata.COLUMNNAME)) {
-        if (!temshowCol.includes(itemsdata.COLUMNNAME)) {
-          if (itemsdata.HIDDEN == 1 && !showCol.includes(itemsdata.COLUMNNAME)) {
-            showCol.push(itemsdata.COLUMNNAME);
+      if ((itemsdata.HIDDEN == 1 || itemsdata.HIDDEN == 0) && tableData.includes(itemsdata.COLUMNID)) {
+        if (!temshowCol.includes(itemsdata.COLUMNID)) {
+          if (itemsdata.HIDDEN == 1 && !showCol.includes(itemsdata.DESCRIPTION)) {
+            showCol.push(itemsdata.DESCRIPTION);
           }
+          tempColobj[itemsdata.COLUMNID] = itemsdata;
           tempCol.push(itemsdata);
         }
-        temshowCol.push(itemsdata.COLUMNNAME);
+        temshowCol.push(itemsdata.COLUMNID);
       }
     });
-    return { 'colobj': tempCol, 'showcol': showCol };
+    return { 'colobj': tempCol, 'showcol': showCol, 'tempColobj': tempColobj };
   }
   setTableFilter(table: any, postData: any) {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));

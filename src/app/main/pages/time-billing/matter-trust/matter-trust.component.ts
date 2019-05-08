@@ -33,7 +33,7 @@ export class MatterTrustComponent implements OnInit {
     this.loadData();
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('TrustTransaction').subscribe(response => {
+    this.TableColumnsService.getTableFilter('TrustTransaction', '').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'MatterTrustColumns');
         this.displayedColumns = data.showcol;

@@ -85,7 +85,7 @@ export class TimeEntriesComponent implements OnInit {
     this.LoadData(this.lastFilter);
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('WorkItems').subscribe(response => {
+    this.TableColumnsService.getTableFilter('WorkItems', '').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'WorkItemsColumns');
         // console.log(data);
@@ -171,7 +171,7 @@ export class TimeEntriesComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'WorkItems' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'time entries' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {

@@ -59,22 +59,22 @@
                     <div class="example-containerdata">
                         <table mat-table [dataSource]="Contactdata" [@animateStagger]="{value:'50'}">
                             <ng-container matColumnDef="COMPANYCONTACTGUID">
-                                <th mat-header-cell *matHeaderCellDef class="header_title"> Company Contact Guid </th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title"> {{ tempColobj['COMPANYCONTACTGUID'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row"> {{row.COMPANYCONTACTGUID}} </td>
                             </ng-container>
 
                             <ng-container matColumnDef="CONTACTTYPE">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">contact type</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row"> {{row.CONTACTTYPE}} </td>
                             </ng-container>
 
                             <ng-container matColumnDef="USERGUID">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">user guid</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">tempColobj['USERGUID'].DESCRIPTION</th>
                                 <td mat-cell *matCellDef="let row"> {{row.USERGUID}} </td>
                             </ng-container>
 
                             <ng-container matColumnDef="USEPARENTADDRESS">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">useparent address</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row"> {{row.USEPARENTADDRESS}} </td>
                             </ng-container>
                             <ng-container matColumnDef="CONTACTNAME">
@@ -83,279 +83,279 @@
                             </ng-container>
 
                             <ng-container matColumnDef="SALUTATION">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">salutation</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row"> {{row.SALUTATION}} </td>
                             </ng-container>
                             <ng-container matColumnDef="POSITION">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">position</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row"> {{row.POSITION}} </td>
                             </ng-container>
                             <ng-container matColumnDef="NAMETITLE">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">name title</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row"> {{row.NAMETITLE}} </td>
                             </ng-container>
                             <ng-container matColumnDef="GIVENNAMES">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">given names</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row"> {{row.GIVENNAMES}} </td>
                             </ng-container>
                             <ng-container matColumnDef="MIDDLENAMES">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">middle names</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.MIDDLENAMES}}</td>
                             </ng-container>
                             <ng-container matColumnDef="FAMILYNAME">
-                                <th mat-header-cell *matHeaderCellDef class="header_title"> family name </th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title"> {{ tempColobj['CONTACTTYPE'].DESCRIPTION }} </th>
                                 <td mat-cell *matCellDef="let row">{{row.FAMILYNAME}}</td>
                             </ng-container>
                             <ng-container matColumnDef="NAMELETTERS">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">name letters</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.NAMELETTERS}}</td>
                             </ng-container>
                             <ng-container matColumnDef="KNOWNBYOTHERNAME">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">knownby othername</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.KNOWNBYOTHERNAME}}</td>
                             </ng-container>
                             <ng-container matColumnDef="OTHERFAMILYNAME">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">otherfamily name</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.OTHERFAMILYNAME}}</td>
                             </ng-container>
                             <ng-container matColumnDef="OTHERGIVENNAMES">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">othergiven names</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.OTHERGIVENNAMES}}</td>
                             </ng-container>
                             <ng-container matColumnDef="REASONFORCHANGE">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">reason for change</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.REASONFORCHANGE}}</td>
                             </ng-container>
                             <ng-container matColumnDef="MARITALSTATUS">
-                                <th mat-header-cell *matHeaderCellDef class="header_title"> marital status </th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title"> {{ tempColobj['CONTACTTYPE'].DESCRIPTION }} </th>
                                 <td mat-cell *matCellDef="let row">{{row.maritalstatus}}</td>
                             </ng-container>
                             <ng-container matColumnDef="SPOUSE">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">spouse</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.SPOUSE}}</td>
                             </ng-container>
                             <ng-container matColumnDef="NUMBEROFDEPENDANTS">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">numberof dependants</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.NUMBEROFDEPENDANTS}}</td>
                             </ng-container>
                             <ng-container matColumnDef="OCCUPATION">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">occupation</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.OCCUPATION}}</td>
                             </ng-container>
                             <ng-container matColumnDef="GENDER">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">gender</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.GENDER}}</td>
                             </ng-container>
                             <ng-container matColumnDef="DATEOFBIRTH">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">dateof birth</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.DATEOFBIRTH}}</td>
                             </ng-container>
                             <ng-container matColumnDef="BIRTHDAYREMINDER">
-                                <th mat-header-cell *matHeaderCellDef class="header_title"> birthday reminder </th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title"> {{ tempColobj['CONTACTTYPE'].DESCRIPTION }} </th>
                                 <td mat-cell *matCellDef="let row">{{row.BIRTHDAYREMINDER}}</td>
                             </ng-container>
                             <ng-container matColumnDef="TOWNOFBIRTH">
-                                <th mat-header-cell *matHeaderCellDef class="header_title"> town of birth </th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title"> {{ tempColobj['CONTACTTYPE'].DESCRIPTION }} </th>
                                 <td mat-cell *matCellDef="let row">{{row.TOWNOFBIRTH}}</td>
                             </ng-container>
                             <ng-container matColumnDef="COUNTRYOFBIRTH">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">country Of Birth</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.COUNTRYOFBIRTH}}</td>
                             </ng-container>
                             <ng-container matColumnDef="CAUSEOFDEATH">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">cause Of death</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.CAUSEOFDEATH}}</td>
                             </ng-container>
                             <ng-container matColumnDef="ADDRESS1">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">address1</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.ADDRESS1}}</td>
                             </ng-container>
                             <ng-container matColumnDef="ADDRESS2">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">address2</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.ADDRESS2}}</td>
                             </ng-container>
                             <ng-container matColumnDef="ADDRESS3">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">address3</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.ADDRESS3}}</td>
                             </ng-container>
                             <ng-container matColumnDef="SUBURB">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">suburb</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.SUBURB}}</td>
                             </ng-container>
                             <ng-container matColumnDef="STATE">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">state</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.STATE}}</td>
                             </ng-container>
                             <ng-container matColumnDef="POSTCODE">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">post code</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.POSTCODE}}</td>
                             </ng-container>
                             <ng-container matColumnDef="COUNTRY">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">country</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.COUNTRY}}</td>
                             </ng-container>
                             <ng-container matColumnDef="SAMEASSTREET">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">same as street</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.SAMEASSTREET}}</td>
                             </ng-container>
                             <ng-container matColumnDef="POSTALADDRESS1">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">postal address1</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.POSTALADDRESS1}}</td>
                             </ng-container>
                             <ng-container matColumnDef="POSTALADDRESS2">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">postal address2</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.POSTALADDRESS2}}</td>
                             </ng-container>
                             <ng-container matColumnDef="POSTALADDRESS3">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">postal address3</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.POSTALADDRESS3}}</td>
                             </ng-container>
                             <ng-container matColumnDef="POSTALSUBURB">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">postal suburb</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.POSTALSUBURB}}</td>
                             </ng-container>
                             <ng-container matColumnDef="POSTALSTATE">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">postal state</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.POSTALSTATE}}</td>
                             </ng-container>
                             <ng-container matColumnDef="POSTALPOSTCODE">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">postal post code</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.POSTALPOSTCODE}}</td>
                             </ng-container>
                             <ng-container matColumnDef="POSTALCOUNTRY">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">postal country</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.POSTALCOUNTRY}}</td>
                             </ng-container>
                             <ng-container matColumnDef="DX">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">dx</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.DX}}</td>
                             </ng-container>
                             <ng-container matColumnDef="DXSUBURB">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">dx suburb</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.DXSUBURB}}</td>
                             </ng-container>
                             <ng-container matColumnDef="PHONE">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">phone</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.PHONE}}</td>
                             </ng-container>
                             <ng-container matColumnDef="PHONE2">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">phone2</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.PHONE2}}</td>
                             </ng-container>
                             <ng-container matColumnDef="FAX">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">fax</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.FAX}}</td>
                             </ng-container>
                             <ng-container matColumnDef="FAX2">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">fax2</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.FAX2}}</td>
                             </ng-container>
                             <ng-container matColumnDef="MOBILE">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">mobile</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.MOBILE}}</td>
                             </ng-container>
                             <ng-container matColumnDef="EMAIL">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">email</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.EMAIL}}</td>
                             </ng-container>
                             <ng-container matColumnDef="EMAIL2">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">email2</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.EMAIL2}}</td>
                             </ng-container>
                             <ng-container matColumnDef="ELECTRONICSERVICEEMAIL">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">electonic service email</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.ELECTRONICSERVICEEMAIL}}</td>
                             </ng-container>
                             <ng-container matColumnDef="WEBADDRESS">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">web address</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.WEBADDRESS}}</td>
                             </ng-container>
                             <ng-container matColumnDef="SKYPEUSERNAME">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">skype username</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.SKYPEUSERNAME}}</td>
                             </ng-container>
                             <ng-container matColumnDef="MESSENGERUSERNAME">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">messenger username</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.MESSENGERUSERNAME}}</td>
                             </ng-container>
                             <ng-container matColumnDef="ACN">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">acn</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.ACN}}</td>
                             </ng-container>
                             <ng-container matColumnDef="ABN">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">ABN</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.ABN}}</td>
                             </ng-container>
                             <ng-container matColumnDef="PRACTICINGCERTIFICATENO">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">practicing certificate no</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.PRACTICINGCERTIFICATENO}}</td>
                             </ng-container>
                             <ng-container matColumnDef="TFN">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">tfn</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.TFN}}</td>
                             </ng-container>
                             <ng-container matColumnDef="LICENCENO">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">licence no</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.LICENCENO}}</td>
                             </ng-container>
                             <ng-container matColumnDef="LICENCECOUNTRY">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">licence country</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.LICENCECOUNTRY}}</td>
                             </ng-container>
                             <ng-container matColumnDef="LICENCESCANLOCATION">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">licence scanlocation</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.LICENCESCANLOCATION}}</td>
                             </ng-container>
                             <ng-container matColumnDef="NATIONALIDENTITYNO">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">national identity no</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.NATIONALIDENTITYNO}}</td>
                             </ng-container>
                             <ng-container matColumnDef="NATIONALIDENTITYCOUNTRY">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">national identity country</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.NATIONALIDENTITYCOUNTRY}}</td>
                             </ng-container>
                             <ng-container matColumnDef="NATIDENTSCANLOCATION">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">natidentscan location </th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.NATIDENTSCANLOCATION}}</td>
                             </ng-container>
                             <ng-container matColumnDef="FAMILYCOURTLAWYERNO">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">family court lawyer no</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.FAMILYCOURTLAWYERNO}}</td>
                             </ng-container>
                             <ng-container matColumnDef="ASSOCIATIONNO">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">association no</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.ASSOCIATIONNO}}</td>
                             </ng-container>
                             <ng-container matColumnDef="GSTTYPE">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">gst type</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.GSTTYPE}}</td>
                             </ng-container>
                             <ng-container matColumnDef="DEFAULTCURRENCYID">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">default currency id</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.DEFAULTCURRENCYID}}</td>
                             </ng-container>
                             <ng-container matColumnDef="PHOTOGRAPH">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">photograph</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.PHOTOGRAPH}}</td>
                             </ng-container>
                             <ng-container matColumnDef="NOTES">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">notes</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.NOTES}}</td>
                             </ng-container>
                             <ng-container matColumnDef="ACTIVE">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">active</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.ACTIVE}}</td>
                             </ng-container>
                             <ng-container matColumnDef="SOPHISTICATEDCLIENT">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">sophisticated client</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.SOPHISTICATEDCLIENT}}</td>
                             </ng-container>
                             <ng-container matColumnDef="CLIENTSOURCE">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">client source</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.CLIENTSOURCE}}</td>
                             </ng-container>
                             <ng-container matColumnDef="COMPANYNAME">
-                                <th mat-header-cell *matHeaderCellDef class="header_title">company name</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTTYPE'].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">{{row.COMPANYNAME}}</td>
                             </ng-container>
 

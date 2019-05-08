@@ -28,7 +28,7 @@ export class AuthoritiesComponent implements OnInit {
     this.LoadData();
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('MatterAuthority').subscribe(response => {
+    this.TableColumnsService.getTableFilter('MatterAuthority','').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'authoritiesColumns');
         this.displayedColumns = data.showcol;

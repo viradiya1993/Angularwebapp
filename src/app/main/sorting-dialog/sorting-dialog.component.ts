@@ -44,7 +44,7 @@ export class SortingDialogComponent implements OnInit {
   onChange(event, data) {
     let tempPropertyData = [];
     this.property.forEach(itemsdata => {
-      if (itemsdata.COLUMNNAME == data) {
+      if (itemsdata.DESCRIPTION == data) {
         itemsdata.HIDDEN = event.checked ? 1 : 0;
         tempPropertyData.push(itemsdata);
       } else {
@@ -66,7 +66,7 @@ export class SortingDialogComponent implements OnInit {
   remove(item, event) {
     let tempPropertyData = [];
     this.property.forEach(itemsdata => {
-      if (itemsdata.COLUMNNAME == item) {
+      if (itemsdata.DESCRIPTION == item) {
         itemsdata.HIDDEN = event.checked ? 1 : 0;
         tempPropertyData.push(itemsdata);
       } else {
@@ -100,17 +100,20 @@ export class SortingDialogComponent implements OnInit {
   //dialog content close event with save
   ondialogSaveClick(): void {
     let showCol = [];
+    let tempColobj = [];
     this.property.forEach(itemsdata => {
+      tempColobj[itemsdata.COLUMNID] = itemsdata;
       if (itemsdata.HIDDEN == 1)
-        showCol.push(itemsdata.COLUMNNAME);
+        showCol.push(itemsdata.COLUMNID);
     });
+    console.log(tempColobj);
     this.saveLastFilter();
-    this.dialogRef.close({ columObj: showCol, columnameObj: this.property });
+    this.dialogRef.close({ columObj: showCol, columnameObj: this.property, tempColobj: tempColobj });
   }
   saveLastFilter() {
     let dataObj = [];
     this.property.forEach(itemsdata => {
-      dataObj.push({ COLUMNNAME: itemsdata.COLUMNID, HIDDEN: itemsdata.HIDDEN, POSITION: itemsdata.POSITION });
+      dataObj.push({ COLUMNNAME: itemsdata.COLUMNNAME, HIDDEN: itemsdata.HIDDEN, POSITION: itemsdata.POSITION });
     });
     this.TableColumnsService.setTableFilter(this.modelType, dataObj).subscribe(response => { if (response.CODE == 200 && response.STATUS == "success") { console.log('save'); } }, error => {
       console.log(error);
@@ -124,7 +127,7 @@ export class filterNames implements PipeTransform {
     if (!nameToFilter) return listOfNames;
     nameToFilter = nameToFilter.toLowerCase();
     return listOfNames.filter(it => {
-      return it.COLUMNNAME.toLowerCase().includes(nameToFilter);
+      return it.DESCRIPTION.toLowerCase().includes(nameToFilter);
     });
   }
 }

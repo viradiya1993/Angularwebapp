@@ -56,7 +56,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
     localStorage.setItem('lastPageSize', event.pageSize);
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('Matters').subscribe(response => {
+    this.TableColumnsService.getTableFilter('Matters', '').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'matterColumns');
         this.displayedColumns = data.showcol;
@@ -76,7 +76,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'Matters' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'matters' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click

@@ -31,7 +31,7 @@ export class WorkInProgressComponent implements OnInit {
     this.loadData();
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('WorkItems').subscribe(response => {
+    this.TableColumnsService.getTableFilter('WorkItems','').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'workInProgressColumns');
         console.log(data.showcol);

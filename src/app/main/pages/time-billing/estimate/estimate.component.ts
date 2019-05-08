@@ -49,7 +49,7 @@ export class EstimateComponent implements OnInit {
   }
 
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('MatterEstimates').subscribe(response => {
+    this.TableColumnsService.getTableFilter('MatterEstimates', '').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'EstimatesItemsColumns');
         this.displayedColumns = data.showcol;

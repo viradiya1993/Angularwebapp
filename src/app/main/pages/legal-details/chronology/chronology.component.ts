@@ -34,7 +34,7 @@ export class ChronologyComponent implements OnInit {
     this.LoadData();
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('MatterChronology').subscribe(response => {
+    this.TableColumnsService.getTableFilter('MatterChronology','').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'chronologyColumns');
         this.displayedColumns = data.showcol;

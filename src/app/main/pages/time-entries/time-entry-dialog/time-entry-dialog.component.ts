@@ -23,6 +23,8 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   isLoadingResults: boolean = false;
   ActivityList: any = [];
   successMsg: any;
+  PRICEINCGSTVAL: any;
+  PRICEVAL: any;
   optionList: any = [
     { 'ACTIVITYID': 'hh:mm', 'DESCRIPTION': 'hh:mm' },
     { 'ACTIVITYID': 'Hours', 'DESCRIPTION': 'Hours' },
@@ -128,6 +130,12 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.timeEntryForm.controls['ITEMTYPE'].setValue('WIP');
       this.matterChange('MatterGuid', this.currentTimeMatter);
     }
+  }
+  calcPE() {
+    this.PRICEINCGSTVAL = this.f.PRICE.value * 1.1;
+  }
+  calcPI() {
+    this.PRICEVAL = this.f.PRICEINCGST.value / 1.1;
   }
   public selectMatter() {
     const dialogRef = this.MatDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
@@ -272,19 +280,19 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       "COMMENT": this.f.COMMENT.value,
       "FEEEARNER": this.f.FEEEARNER.value,
       "ITEMTYPE": this.f.ITEMTYPE.value,
-      // "INVOICEGUID": "value",
-      // "INVOICEORDER": "value",
       "ITEMDATE": this.ITEMDATEVLAUE,
       "ITEMTIME": this.f.ITEMTIME.value,
       "MATTERGUID": this.f.MATTERGUID.value,
       "PRICE": this.f.PRICE.value,
+      "PRICEINCGST": this.f.PRICEINCGST.value,
+      "QUANTITY": this.f.QUANTITY.value,
+      // "INVOICEGUID": "value",
+      // "INVOICEORDER": "value",
       // "PRICECHARGED": "value",
-      // "PRICEINCGST": "value",
       // "PRICEINCGSTCHARGED": "value",
       // "GST": "value",
       // "GSTCHARGED": "value",
       // "GSTTYPE": "value",
-      "QUANTITY": this.f.QUANTITY.value,
     }
     if (this.f.ITEMTYPE.value == "Activity" || this.f.ITEMTYPE.value == "Sundry") {
       PostTimeEntryData.FEETYPE = this.f.QUANTITYTYPE.value;

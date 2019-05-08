@@ -349,7 +349,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     Newmatterpopup() {
         const dialogConfig = new MatDialogConfig();        
         const dialogRef = this.dialog.open(MatterPopupComponent, {
-            width: '45%',            
+            width: '100%',            
             disableClose: true,
         });
 

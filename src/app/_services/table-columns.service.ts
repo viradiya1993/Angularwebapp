@@ -23,8 +23,8 @@ export class TableColumnsService {
     response.forEach(itemsdata => {
       if ((itemsdata.HIDDEN == 1 || itemsdata.HIDDEN == 0) && tableData.includes(itemsdata.COLUMNID)) {
         if (!temshowCol.includes(itemsdata.COLUMNID)) {
-          if (itemsdata.HIDDEN == 1 && !showCol.includes(itemsdata.DESCRIPTION)) {
-            showCol.push(itemsdata.DESCRIPTION);
+          if (itemsdata.HIDDEN == 1 && !showCol.includes(itemsdata.COLUMNID)) {
+            showCol.push(itemsdata.COLUMNID);
           }
           tempColobj[itemsdata.COLUMNID] = itemsdata;
           tempCol.push(itemsdata);

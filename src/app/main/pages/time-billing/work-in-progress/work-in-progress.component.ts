@@ -17,6 +17,7 @@ export class WorkInProgressComponent implements OnInit {
   displayedColumns: string[];
   ColumnsObj: any = [];
   pageSize: any;
+  tempColobj: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   isLoadingResults: boolean = false;
   constructor(private dialog: MatDialog, private WorkInProgress: WorkInProgressService, private TableColumnsService: TableColumnsService, private toastr: ToastrService) {
@@ -31,12 +32,12 @@ export class WorkInProgressComponent implements OnInit {
     this.loadData();
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('WorkItems','').subscribe(response => {
+    this.TableColumnsService.getTableFilter('time and billing', 'work in progress').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'workInProgressColumns');
-        console.log(data.showcol);
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
+        this.tempColobj = data.tempColobj;
       }
     }, error => {
       this.toastr.error(error);
@@ -73,6 +74,7 @@ export class WorkInProgressComponent implements OnInit {
       if (result) {
         this.displayedColumns = result.columObj;
         this.ColumnsObj = result.columnameObj;
+        this.tempColobj = result.tempColobj;
         if (!result.columObj) {
           this.WorkInProgressdata = new MatTableDataSource([]);
           this.WorkInProgressdata.paginator = this.paginator;

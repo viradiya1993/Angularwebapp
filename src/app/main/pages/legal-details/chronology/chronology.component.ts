@@ -24,6 +24,7 @@ export class ChronologyComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   chronology_table;
   pageSize: any;
+  tempColobj: any;
 
   constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, private chronology_service: ChronologyService, private toastr: ToastrService) { }
 
@@ -34,11 +35,12 @@ export class ChronologyComponent implements OnInit {
     this.LoadData();
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('MatterChronology','').subscribe(response => {
+    this.TableColumnsService.getTableFilter('legal details', 'chronology').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'chronologyColumns');
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
+        this.tempColobj = data.tempColobj;
       }
     }, error => {
       this.toastr.error(error);
@@ -76,6 +78,7 @@ export class ChronologyComponent implements OnInit {
       if (result) {
         this.displayedColumns = result.columObj;
         this.ColumnsObj = result.columnameObj;
+        this.tempColobj = result.tempColobj;
         if (!result.columObj) {
           this.chronology_table = new MatTableDataSource([]);
           this.chronology_table.paginator = this.paginator;

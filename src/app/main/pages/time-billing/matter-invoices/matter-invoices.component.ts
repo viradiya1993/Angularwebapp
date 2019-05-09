@@ -17,6 +17,7 @@ export class MatterInvoicesComponent implements OnInit {
   ColumnsObj: any = [];
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   displayedColumns: string[];
+  tempColobj: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   pageSize: any;
   isLoadingResults: boolean = false;
@@ -52,10 +53,11 @@ export class MatterInvoicesComponent implements OnInit {
     this.pageSize = localStorage.getItem('lastPageSize');
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('Invoice', '').subscribe(response => {
+    this.TableColumnsService.getTableFilter('time and billing', 'matter invoices').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'invoicesColumns');
         this.displayedColumns = data.showcol;
+        this.tempColobj = data.tempColobj;
         this.ColumnsObj = data.colobj;
       }
     }, error => {
@@ -74,6 +76,7 @@ export class MatterInvoicesComponent implements OnInit {
       if (result) {
         this.displayedColumns = result.columObj;
         this.ColumnsObj = result.columnameObj;
+        this.tempColobj = result.tempColobj;
         if (!result.columObj) {
           this.MatterInvoicesdata = new MatTableDataSource([]);
           this.MatterInvoicesdata.paginator = this.paginator;

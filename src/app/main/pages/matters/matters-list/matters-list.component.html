@@ -11,216 +11,216 @@
     <div class="example-containerdata">
         <table mat-table #table [dataSource]="mattersData" [@animateStagger]="{value:'50'}">
             <ng-container matColumnDef="SHORTNAME">
-                <th mat-header-cell *matHeaderCellDef class="header_title">Matter Num</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['SHORTNAME'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="text-truncate font-weight-600">{{matter.SHORTNAME}}</p>
-                    <td>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="MATTER">
-                <th mat-header-cell *matHeaderCellDef class="header_title">Matter</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['MATTER'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="email text-truncate">
                         {{matter.MATTER}}
                     </p>
-                    <td>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="CONTACTNAME">
-                <th mat-header-cell *matHeaderCellDef class="header_title">Contact Name</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTNAME'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="phone text-truncate">
                         {{matter.CONTACTNAME}}
                     </p>
-                    <td>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="CONTACTFIRMNAME">
-                <th mat-header-cell *matHeaderCellDef class="header_title">Contact Firm Name</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CONTACTFIRMNAME'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="phone text-truncate">
                         {{matter.CONTACTFIRMNAME}}
                     </p>
-                    <td>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="MATTERTYPE">
-                <th mat-header-cell *matHeaderCellDef class="header_title">Matter Type</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['MATTERTYPE'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="phone text-truncate">
                         {{matter.MATTERTYPE}}
                     </p>
-                    <td>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="CLIENT">
-                <th mat-header-cell *matHeaderCellDef class="header_title">Client</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CLIENT'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="phone text-truncate">
                         {{matter.CLIENT}}
                     </p>
-                    <td>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="REFERENCE">
-                <th mat-header-cell *matHeaderCellDef class="header_title">Reference</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['REFERENCE'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="phone text-truncate">
                         {{matter.REFERENCE}}
                     </p>
-                    <td>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="MATTERCLASS">
-                <th mat-header-cell *matHeaderCellDef class="header_title">Matter Class</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['MATTERCLASS'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="phone text-truncate">
                         {{matter.MATTERCLASS}}
                     </p>
-                    <td>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="UNBILLED">
-                <th mat-header-cell *matHeaderCellDef class="header_title">Unbilled</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['UNBILLED'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="phone text-truncate">
                         {{matter.UNBILLED |currency}}
                     </p>
-                    <td>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="INVOICED">
-                <th mat-header-cell *matHeaderCellDef class="header_title">Invoiced</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['INVOICED'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="job-title text-truncate">
                         {{matter.INVOICED |currency}}
                     </p>
-                    <td>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="RECEIVED">
-                <th mat-header-cell *matHeaderCellDef class="header_title">Received</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['RECEIVED'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="company text-truncate">
                         {{matter.RECEIVED |currency}}
                     </p>
-                    <td>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="WRITTENOFF">
-                <th mat-header-cell *matHeaderCellDef class="header_title">Written Off</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['WRITTENOFF'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="company text-truncate">
                         {{matter.WRITTENOFF}}
                     </p>
-                    <td>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="OUTSTANDING">
-                <th mat-header-cell *matHeaderCellDef class="header_title">Outstanding</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['OUTSTANDING'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="company text-truncate">
                         {{matter.OUTSTANDING |currency}}
                     </p>
-                    <td>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="ESTIMATE">
-                <th mat-header-cell *matHeaderCellDef class="header_title">Estimate</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['ESTIMATE'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="company text-truncate">
                         {{matter.ESTIMATE}}
                     </p>
-                    <td>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="UNPAID">
-                <th mat-header-cell *matHeaderCellDef class="header_title">Unpaid</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['UNPAID'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="company text-truncate">
                         {{matter.UNPAID |currency}}
                     </p>
-                    <td>
+                </td>
             </ng-container>
             <ng-container matColumnDef="TOTALVALUE">
-                <th mat-header-cell *matHeaderCellDef class="header_title">Total Value</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['TOTALVALUE'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="company text-truncate">
                         {{matter.TOTALVALUE |currency}}
                     </p>
-                    <td>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="RATEPERHOUR">
-                <th mat-header-cell *matHeaderCellDef class="header_title">Rate Per Hour</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['RATEPERHOUR'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="company text-truncate">
                         {{matter.RATEPERHOUR |currency}}
                     </p>
-                    <td>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="RATEPERDAY">
-                <th mat-header-cell *matHeaderCellDef class="header_title">Rate Per Day</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['RATEPERDAY'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="company text-truncate">
                         {{matter.RATEPERDAY |currency}}
                     </p>
-                    <td>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="FEEAGREEMENTDATE">
-                <th mat-header-cell *matHeaderCellDef class="header_title">Fee Agreement Date</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['FEEAGREEMENTDATE'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="company text-truncate">
                         {{matter.FEEAGREEMENTDATE }}
                     </p>
-                    <td>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="BILLINGMETHOD">
-                <th mat-header-cell *matHeaderCellDef class="header_title">Billing Method</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['BILLINGMETHOD'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="company text-truncate">
                         {{matter.BILLINGMETHOD }}
                     </p>
-                    <td>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="GSTTYPE">
-                <th mat-header-cell *matHeaderCellDef class="header_title">GST Type</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['GSTTYPE'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="company text-truncate">
                         {{matter.GSTTYPE }}
                     </p>
-                    <td>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="CLIENTSTATUS">
-                <th mat-header-cell *matHeaderCellDef class="header_title">Client Status</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['CLIENTSTATUS'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="company text-truncate">
                         {{matter.CLIENTSTATUS }}
                     </p>
-                    <td>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="MATTERNO">
-                <th mat-header-cell *matHeaderCellDef class="header_title">Matter No</th>
+                <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['MATTERNO'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="company text-truncate">
                         {{matter.MATTERNO }}
                     </p>
-                    <td>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="ACTIVE">
-                <th class="header_title" mat-header-cell *matHeaderCellDef>Active</th>
+                <th class="header_title" mat-header-cell *matHeaderCellDef>{{ tempColobj['ACTIVE'].DESCRIPTION }}</th>
                 <td mat-cell *matCellDef="let matter">
                     <p class="company text-truncate">
                         {{matter.ACTIVE }}
                     </p>
-                    <td>
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

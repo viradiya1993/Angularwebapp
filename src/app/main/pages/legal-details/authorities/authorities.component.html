@@ -34,57 +34,57 @@
                             <div class="example-containerdata">
                                 <table mat-table #table [dataSource]="authorities_table" [@animateStagger]="{value:'50'}">
                                     <ng-container matColumnDef="MATTERAUTHORITYGUID">
-                                        <th mat-header-cell class="header_title" *matHeaderCellDef>matter authority guid</th>
+                                        <th mat-header-cell class="header_title" *matHeaderCellDef>{{ tempColobj['MATTERAUTHORITYGUID'].DESCRIPTION }}</th>
                                         <td mat-cell *matCellDef="let authorities">{{authorities.MATTERAUTHORITYGUID}}
                                         </td>
                                     </ng-container>
                                     <ng-container matColumnDef="MATTERGUID">
-                                        <th mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>matter guid</th>
+                                        <th mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>{{ tempColobj['MATTERGUID'].DESCRIPTION }}</th>
                                         <td mat-cell *matCellDef="let authorities" fxHide fxShow.gt-md>{{authorities.MATTERGUID}}
                                         </td>
                                     </ng-container>
                                     <ng-container matColumnDef="AUTHORITYGUID">
-                                        <th mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>authority guid</th>
+                                        <th mat-header-cell class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>{{ tempColobj['AUTHORITYGUID'].DESCRIPTION }}</th>
                                         <td mat-cell *matCellDef="let authorities" fxHide fxShow.gt-md>{{authorities.AUTHORITYGUID}}
                                         </td>
                                     </ng-container>
                                     <ng-container matColumnDef="AUTHORITY">
-                                        <th mat-header-cell class="header_title" class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>authority</th>
+                                        <th mat-header-cell class="header_title" class="header_title" *matHeaderCellDef fxHide fxShow.gt-md>{{ tempColobj['AUTHORITY'].DESCRIPTION }}</th>
                                         <td mat-cell *matCellDef="let authorities" fxHide fxShow.gt-md>{{authorities.AUTHORITY}}
                                         </td>
                                     </ng-container>
                                     <ng-container matColumnDef="CITATION">
-                                        <th mat-header-cell class="header_title" *matHeaderCellDef>citation </th>
+                                        <th mat-header-cell class="header_title" *matHeaderCellDef>{{ tempColobj['CITATION'].DESCRIPTION }} </th>
                                         <td mat-cell *matCellDef="let authorities" fxHide fxShow.gt-md>{{authorities.CITATION}}
                                         </td>
                                     </ng-container>
                                     <ng-container matColumnDef="WEBADDRESS">
-                                        <th mat-header-cell class="header_title" *matHeaderCellDef>web address</th>
+                                        <th mat-header-cell class="header_title" *matHeaderCellDef>{{ tempColobj['WEBADDRESS'].DESCRIPTION }}</th>
                                         <td mat-cell *matCellDef="let authorities">{{authorities.WEBADDRESS}}
                                         </td>
                                     </ng-container>
                                     <ng-container matColumnDef="TOPIC">
-                                        <th mat-header-cell class="header_title" *matHeaderCellDef>topic</th>
+                                        <th mat-header-cell class="header_title" *matHeaderCellDef>{{ tempColobj['TOPIC'].DESCRIPTION }}</th>
                                         <td mat-cell *matCellDef="let authorities">{{authorities.TOPIC}}
                                         </td>
                                     </ng-container>
                                     <ng-container matColumnDef="REFERENCE">
-                                        <th mat-header-cell class="header_title" *matHeaderCellDef>reference</th>
+                                        <th mat-header-cell class="header_title" *matHeaderCellDef>{{ tempColobj['REFERENCE'].DESCRIPTION }}</th>
                                         <td mat-cell *matCellDef="let authorities">{{authorities.REFERENCE}}
                                         </td>
                                     </ng-container>
                                     <ng-container matColumnDef="COMMENT">
-                                        <th mat-header-cell class="header_title" *matHeaderCellDef>comment</th>
+                                        <th mat-header-cell class="header_title" *matHeaderCellDef>{{ tempColobj['COMMENT'].DESCRIPTION }}</th>
                                         <td mat-cell *matCellDef="let authorities">{{authorities.COMMENT}}
                                         </td>
                                     </ng-container>
                                     <ng-container matColumnDef="SHORTNAME">
-                                        <th mat-header-cell class="header_title" *matHeaderCellDef>short name</th>
+                                        <th mat-header-cell class="header_title" *matHeaderCellDef>{{ tempColobj['SHORTNAME'].DESCRIPTION }}</th>
                                         <td mat-cell *matCellDef="let authorities">{{authorities.SHORTNAME}}
                                         </td>
                                     </ng-container>
                                     <ng-container matColumnDef="CLIENTNAME">
-                                        <th mat-header-cell class="header_title" *matHeaderCellDef>client name</th>
+                                        <th mat-header-cell class="header_title" *matHeaderCellDef>{{ tempColobj['CLIENTNAME'].DESCRIPTION }}</th>
                                         <td mat-cell *matCellDef="let authorities">{{authorities.CLIENTNAME}}
                                         </td>
                                     </ng-container>

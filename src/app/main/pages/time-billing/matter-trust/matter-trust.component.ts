@@ -18,6 +18,7 @@ export class MatterTrustComponent implements OnInit {
   isLoadingResults: boolean = false;
   ColumnsObj: any = [];
   pageSize: any;
+  tempColobj: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private dialog: MatDialog,
@@ -33,11 +34,12 @@ export class MatterTrustComponent implements OnInit {
     this.loadData();
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('TrustTransaction', '').subscribe(response => {
+    this.TableColumnsService.getTableFilter('time and billing', 'trust').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'MatterTrustColumns');
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
+        this.tempColobj = data.tempColobj;
       }
     }, error => {
       this.toastr.error(error);
@@ -75,6 +77,7 @@ export class MatterTrustComponent implements OnInit {
       if (result) {
         this.displayedColumns = result.columObj;
         this.ColumnsObj = result.columnameObj;
+        this.tempColobj = result.tempColobj;
         if (!result.columObj) {
           this.MatterTrustdata = new MatTableDataSource([]);
           this.MatterTrustdata.paginator = this.paginator;

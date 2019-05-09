@@ -28,6 +28,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   mattersData: any;
   lastFilter = {};
+  tempColobj: any;
   isLoadingResults: any = false;
   pageSize: any;
 
@@ -56,11 +57,12 @@ export class MattersListComponent implements OnInit, OnDestroy {
     localStorage.setItem('lastPageSize', event.pageSize);
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('Matters', '').subscribe(response => {
+    this.TableColumnsService.getTableFilter('matters', '').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'matterColumns');
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
+        this.tempColobj = data.tempColobj;
       }
     }, error => {
       this.toastr.error(error);
@@ -84,6 +86,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
       if (result) {
         this.displayedColumns = result.columObj;
         this.ColumnsObj = result.columnameObj;
+        this.tempColobj = result.tempColobj;
         if (!result.columObj) {
           this.mattersData = new MatTableDataSource([]);
           this.mattersData.paginator = this.paginator;

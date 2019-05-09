@@ -19,6 +19,7 @@ export class SafecustodyComponent implements OnInit {
   displayedColumns: string[];
   isLoadingResults: boolean = false;
   pageSize: any;
+  tempColobj: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, private safeCustody_service: SafeCustodyService, private toastr: ToastrService) { }
@@ -30,11 +31,12 @@ export class SafecustodyComponent implements OnInit {
     this.LoadData();
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('SafeCustody','').subscribe(response => {
+    this.TableColumnsService.getTableFilter('legal details', 'safe custody').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'safeCustodyColumns');
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
+        this.tempColobj = data.tempColobj;
       }
     }, error => {
       this.toastr.error(error);
@@ -71,6 +73,7 @@ export class SafecustodyComponent implements OnInit {
       if (result) {
         this.displayedColumns = result.columObj;
         this.ColumnsObj = result.columnameObj;
+        this.tempColobj = result.tempColobj;
         if (!result.columObj) {
           this.safeCustody_table = new MatTableDataSource([]);
           this.safeCustody_table.paginator = this.paginator;

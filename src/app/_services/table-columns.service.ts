@@ -23,7 +23,7 @@ export class TableColumnsService {
     response.forEach(itemsdata => {
       if ((itemsdata.HIDDEN == 1 || itemsdata.HIDDEN == 0) && tableData.includes(itemsdata.COLUMNID)) {
         if (!temshowCol.includes(itemsdata.COLUMNID)) {
-          if (itemsdata.HIDDEN == 1 && !showCol.includes(itemsdata.COLUMNID)) {
+          if (itemsdata.HIDDEN == 0 && !showCol.includes(itemsdata.COLUMNID)) {
             showCol.push(itemsdata.COLUMNID);
           }
           tempColobj[itemsdata.COLUMNID] = itemsdata;
@@ -34,9 +34,9 @@ export class TableColumnsService {
     });
     return { 'colobj': tempCol, 'showcol': showCol, 'tempColobj': tempColobj };
   }
-  setTableFilter(table: any, postData: any) {
+  setTableFilter(table: any, list: any, postData: any) {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    let Data = { USERGUID: currentUser.UserGuid, PAGE: table, COLUMNSETTINGS: postData, LIST: "" };
+    let Data = { USERGUID: currentUser.UserGuid, PAGE: table, COLUMNSETTINGS: postData, LIST: list };
     return this.httpClient.post<any>(environment.APIEndpoint + 'SetTableColumns', Data);
   }
   getColumename(data: any) {

@@ -113,21 +113,20 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
             );
 
         // Subscribe to the config changes
-        this._fuseConfigService.config
-            .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((config) => {
-                this.fuseConfig = config;
-            });
+        this._fuseConfigService.config.pipe(takeUntil(this._unsubscribeAll)).subscribe((config) => {
+            this.fuseConfig = config;
+        });
 
         // Get current navigation
-        this._fuseNavigationService.onNavigationChanged
-            .pipe(
-                filter(value => value !== null),
-                takeUntil(this._unsubscribeAll)
-            )
-            .subscribe(() => {
-                this.navigation = this._fuseNavigationService.getCurrentNavigation();
-            });
+        this._fuseNavigationService.onNavigationChanged.pipe(filter(value => value !== null), takeUntil(this._unsubscribeAll)).subscribe(() => {
+            this.navigation = this._fuseNavigationService.getCurrentNavigation();
+        });
+        if ($('fuse-sidebar').hasClass("folded")) {
+            $('div.sticky_search_div ').addClass('sticky_search_remove_padding');
+        }
+        // if ($('fuse-sidebar').hasClass("unfolded")) {
+        //     $('div.sticky_search_div ').removeClass('sticky_search_remove_padding');
+        // }
     }
 
     /**
@@ -147,6 +146,12 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
      * Toggle sidebar opened status
      */
     toggleSidebarOpened(): void {
+        if ($('fuse-sidebar').hasClass("folded")) {
+            $('div.sticky_search_div ').addClass('sticky_search_remove_padding');
+        }
+        // if ($('fuse-sidebar').hasClass("unfolded")) {
+        //     $('div.sticky_search_div ').removeClass('sticky_search_remove_padding');
+        // }
         this._fuseSidebarService.getSidebar('navbar').toggleOpen();
     }
 
@@ -154,6 +159,12 @@ export class NavbarVerticalStyle1Component implements OnInit, OnDestroy {
      * Toggle sidebar folded status
      */
     toggleSidebarFolded(): void {
+        if ($('fuse-sidebar').hasClass("folded")) {
+            $('div.sticky_search_div ').addClass('sticky_search_remove_padding');
+        }
+        // if ($('fuse-sidebar').hasClass("unfolded")) {
+        //     $('div.sticky_search_div ').removeClass('sticky_search_remove_padding');
+        // }
         this._fuseSidebarService.getSidebar('navbar').toggleFold();
     }
 }

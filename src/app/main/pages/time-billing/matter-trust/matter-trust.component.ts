@@ -69,7 +69,7 @@ export class MatterTrustComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'TrustTransaction' };
+    dialogConfig.data = { 'data': this.ColumnsObj,  'type': 'time and billing', 'list': 'trust' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click

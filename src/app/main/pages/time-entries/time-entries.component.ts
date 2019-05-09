@@ -171,7 +171,7 @@ export class TimeEntriesComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'time entries' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'time entries', 'list': '' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {

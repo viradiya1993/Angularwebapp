@@ -65,7 +65,7 @@ export class EstimateComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'MatterEstimates' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'time and billing', 'list': 'estimate' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click

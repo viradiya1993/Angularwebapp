@@ -70,7 +70,7 @@ export class ReceiptsCreditsComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'MatterReceipts' };
+    dialogConfig.data = { 'data': this.ColumnsObj,  'type': 'time and billing', 'list': 'receipts and credits'  };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click

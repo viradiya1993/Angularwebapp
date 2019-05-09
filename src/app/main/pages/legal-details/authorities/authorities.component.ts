@@ -64,7 +64,7 @@ export class AuthoritiesComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'MatterAuthority' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'legal details', 'list': 'authorities' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click

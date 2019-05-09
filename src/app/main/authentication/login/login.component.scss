@@ -306,3 +306,8 @@ app-login #login #login-intro .description-footer {
         padding: 30px 0 10px;
     }
 }
+@media screen and (max-width: 991px) {
+    app-login #login #login-form-wrapper #login-form a.google, app-login #login #login-form-wrapper #login-form a.facebook {
+        width: 100%;
+    }
+}

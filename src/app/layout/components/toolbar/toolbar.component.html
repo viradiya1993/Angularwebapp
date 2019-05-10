@@ -22,10 +22,10 @@
                                 <section class="group-section-tab action_tab">
                                     <!-- <span class="action-section">Action</span> -->
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button" disabled>
+                                        <button mat-button class="large-button" (click)="AddNewmatterpopup()">
                                    <section class="large-button-container">
-                                      <mat-icon class="main-icon">
-                                          <img class="menu-disabled" src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                      <mat-icon class="main-icon" >
+                                          <img class="" src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                         </mat-icon>
                                       <div class="main-text">
                                          <span>New<br> Matters</span>
@@ -34,10 +34,10 @@
                                 </button>
                                     </section>
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button" disabled>
+                                        <button mat-button class="large-button" (click)="EditNewmatterpopup()">
                                    <section class="large-button-container">
                                       <mat-icon class="main-icon">
-                                            <img class="menu-disabled" src="assets/icons/web_app/icon_contact_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            <img class="" src="assets/icons/web_app/icon_contact_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                       </mat-icon>
                                       <div class="main-text">
                                          <span>Edit<br> Matters</span>
@@ -46,10 +46,10 @@
                                 </button>
                                     </section>
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button" disabled>
+                                        <button mat-button class="large-button" (click)="DeleteNewmatterpopup()">
                                    <section class="large-button-container">
                                       <mat-icon class="main-icon">
-                                            <img class="menu-disabled" src="assets/icons/web_app/icon_contact_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            <img class="" src="assets/icons/web_app/icon_contact_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                       </mat-icon>
                                       <div class="main-text">
                                          <span>Delete<br> Matters</span>
@@ -714,6 +714,7 @@
 
                 <!-- report tab menu start -->
                 <mat-tab label="REPORTS">
+                    
                     <section class="ribbon-container reports_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>

@@ -165,13 +165,13 @@ export class ContactDialogComponent implements OnInit {
           this.contactForm.get('POSTALCOUNTRY').enable();
           this.samesstreet = false;
         }
-        //this.contactForm.controls['CONTACTGUID'].setValue(getContactData.CONTACTGUID);
+        // this.contactForm.controls['CONTACTGUID'].setValue(getContactData.CONTACTGUID);
         this.contactForm.controls['CONTACTNAME'].setValue(getContactData.CONTACTNAME);
         this.contactForm.controls['CONTACTTYPE'].setValue(getContactData.CONTACTTYPE);
         this.contactForm.controls['COMPANYNAME'].setValue(getContactData.COMPANYNAME);
         this.contactForm.controls['POSITION'].setValue(getContactData.POSITION);
 
-        //this.contactForm.controls['ACTIVE'].setValue(getContactData.ACTIVE);
+        // this.contactForm.controls['ACTIVE'].setValue(getContactData.ACTIVE);
         this.contactForm.controls['ACTIVE'].setValue(this.active);
         this.contactForm.controls['GIVENNAMES'].setValue(getContactData.GIVENNAMES);
         this.contactForm.controls['NAMETITLE'].setValue(getContactData.NAMETITLE);
@@ -266,7 +266,7 @@ export class ContactDialogComponent implements OnInit {
 
     this.isspiner = true;
     this.FormAction = this.action !== 'edit' ? 'insert' : 'update';
-    //for edit contactGuid
+    // for edit contactGuid
     this.contactguid = this.action !== 'edit' ? "" : localStorage.getItem('getContact_edit');
     //for checkbox
     this.check = this.f.ACTIVE.value == true ? "1" : "0";

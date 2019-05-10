@@ -1,0 +1,49 @@
+<div class=" one "  fxLayout="column" [formGroup]="matterdetailForm"> 
+    <label id="example-radio-group-label">Billing Method</label>    
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 40px">  
+      <mat-radio-group aria-label="Billing Method" formControlName="Radiogroup1" class="example" fxFlex="100" class="pr-4">
+          <mat-radio-button value="Gst Exclusive">GST Exclusive</mat-radio-button>
+          <mat-radio-button value="Gst Inclusive ">GST Inclusive </mat-radio-button>
+          <mat-radio-button value="Gst Free">GST Free</mat-radio-button>
+          <mat-radio-button value="Export">Export</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 40px">
+        <div fxFlex="32">
+
+        </div>
+        <div fxFlex="50" class="Check_1">
+            <mat-checkbox formControlName="Checkbox">Charge Disbursement GST</mat-checkbox>
+        </div>
+       </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 40px">
+          <mat-radio-group class="example" fxFlex="100" class="pr-4" formControlName="Radiogroup2">
+              <mat-radio-button value="Time Costed">Time Costed</mat-radio-button>
+              <mat-radio-button value="Fixed">Fixed </mat-radio-button>
+              <mat-radio-button value="Pro Bono">Pro Bono</mat-radio-button>
+              <mat-radio-button value="Speculative">Speculative</mat-radio-button>
+            </mat-radio-group>
+       </div>       
+       <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
+              <mat-label>Per Hours</mat-label>
+              <input  matInput name="PerHours"  type="number"  formControlName="PerHours">              
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+              <mat-label>Per Day</mat-label>
+              <input name="PerDay" matInput  type="number"  formControlName="PerDay">
+              <mat-icon matSuffix class="secondary-text"></mat-icon>
+          </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
+              <mat-label>Fixed Price</mat-label>
+              <input  matInput name="FixedPrice"  type="number" formControlName="FixedPrice">              
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+              <mat-label>Ex-GST</mat-label>
+              <input name="Ex-GST" matInput  type="number" formControlName="Ex_GSTs">
+              <mat-icon matSuffix class="secondary-text"></mat-icon>
+          </mat-form-field>
+      </div>
+</div>

@@ -26,6 +26,7 @@ import { CompanyComponent } from './contact-dialog/company/company.component';
 
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { ContactCorresDetailsComponent } from './contact-corres-details/contact-corres-details.component';
+import { ContactSelectDialogComponent } from './contact-select-dialog/contact-select-dialog.component';
 
 
 
@@ -45,6 +46,8 @@ const routes = [
     CompanyComponent,
 
     ContactCorresDetailsComponent,
+
+    ContactSelectDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -80,6 +83,6 @@ const routes = [
   exports: [
     ContactComponent
   ],
-  entryComponents: [ContactDialogComponent, ContactCorresDetailsComponent]
+  entryComponents: [ContactDialogComponent, ContactCorresDetailsComponent, ContactSelectDialogComponent]
 })
 export class ContactModule { }

@@ -12,7 +12,6 @@ import { MatButtonModule, MatPaginatorModule, MatDividerModule, MatDialogModule,
 import { MattersListComponent } from './matters-list/matters-list.component';
 import { MattersSortDetailComponent } from './matters-sort-detail/matters-sort-detail.component';
 import { MattersDetailComponent } from './matters-detail/matters-detail.component';
-import { MatterPopupComponent } from './matter-popup/matter-popup.component';
 import { GeneralComponent } from './matter-popup/general/general.component';
 import { ClientComponent } from './matter-popup/client/client.component';
 import { RatesComponent } from './matter-popup/rates/rates.component';
@@ -20,6 +19,7 @@ import { DetailsComponent } from './matter-popup/details/details.component';
 import { OthersComponent } from './matter-popup/others/others.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatterPopupComponent } from './matter-popup/matter-popup.component';
 
 const routes = [
   { path: '', component: MattersComponent, canActivate: [AuthGuard] },
@@ -31,8 +31,8 @@ const routes = [
     MattersComponent,
     MattersListComponent,
     MattersSortDetailComponent,
-    MattersDetailComponent,
     MatterPopupComponent,
+    MattersDetailComponent,
     GeneralComponent,
     ClientComponent,
     RatesComponent,
@@ -70,6 +70,7 @@ const routes = [
   ],
   exports: [
     MattersComponent
-  ]
+  ],
+  entryComponents: [MatterPopupComponent]
 })
 export class MattersModule { }

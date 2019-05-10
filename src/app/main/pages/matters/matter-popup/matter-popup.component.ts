@@ -11,7 +11,7 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./matter-popup.component.scss']
 })
 export class MatterPopupComponent implements OnInit {
-  Classdata: any [];
+  Classdata: any[];
   active: any;
   isLoadingResults: boolean = false;
   action: any;
@@ -20,23 +20,22 @@ export class MatterPopupComponent implements OnInit {
   FormAction: string;
   CommencementDate: string;
 
-  constructor( 
+  constructor(
     private _mattersService: MattersService,
     private toastr: ToastrService,
     private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<MatterPopupComponent>,
     public datepipe: DatePipe,
-    @Inject(MAT_DIALOG_DATA) public _data: any) { 
-      this.action = _data.action;
-      this.dialogTitle = this.action === 'edit' ? 'Edit Matter' : 'New Matter';
-    }
+    @Inject(MAT_DIALOG_DATA) public _data: any) {
+    this.action = _data.action;
+    this.dialogTitle = this.action === 'edit' ? 'Edit Matter' : 'New Matter';
+  }
 
-    
-    matterdetailForm: FormGroup;
-// tslint:disable-next-line: typedef
+
+  matterdetailForm: FormGroup;
   ngOnInit() {
     this.Classdata = [
-      { name: 'General' , value: 'General' },      
+      { name: 'General', value: 'General' },
     ];
 
     this.matterdetailForm = this._formBuilder.group({
@@ -81,17 +80,17 @@ export class MatterPopupComponent implements OnInit {
       ArchiveNo: [''],
       ArchiveDate: [new Date()]
     });
-    this.matterdetailForm.controls['ACTIVE'].setValue(true);      
+    this.matterdetailForm.controls['ACTIVE'].setValue(true);
     if (this.action === 'edit') {
-        const localMatterID = JSON.parse(localStorage.getItem('set_active_matters'));
-        // this.isLoadingResults = true;
-        let postData = { 'MatterGuid': localMatterID.MATTERGUID  };
-        this._mattersService.getMattersDetail(postData).subscribe(response => {  
-          if (response.CODE === 200 && response.STATUS === 'success') {         
-            // let currentMatter = response.DATA.MATTERS[0];
-            // this.active = currentMatter.ACTIVE === 0 ? false : true;
+      const localMatterID = JSON.parse(localStorage.getItem('set_active_matters'));
+      // this.isLoadingResults = true;
+      let postData = { 'MatterGuid': localMatterID.MATTERGUID };
+      this._mattersService.getMattersDetail(postData).subscribe(response => {
+        if (response.CODE === 200 && response.STATUS === 'success') {
+          // let currentMatter = response.DATA.MATTERS[0];
+          // this.active = currentMatter.ACTIVE === 0 ? false : true;
 
-          
+
           // this.matterdetailForm.controls['MatterNum'].setValue(currentMatter.SHORTNAME);
           // this.matterdetailForm.controls['Client'].setValue(currentMatter.CONTACTTYPE);
           // this.matterdetailForm.controls['MatterDescription'].setValue(currentMatter.MATTER);
@@ -99,12 +98,12 @@ export class MatterPopupComponent implements OnInit {
           // this.matterdetailForm.controls['PerHours'].setValue(currentMatter.RATEPERHOUR);
           // this.matterdetailForm.controls['PerDay'].setValue(currentMatter.RATEPERDAY);
           // this.isLoadingResults = false;
-          }
-        }, error => {
-          this.toastr.error(error);
-        });
+        }
+      }, error => {
+        this.toastr.error(error);
+      });
     }
-   
+
   }
   get f() {
     //console.log(this.contactForm);
@@ -113,7 +112,7 @@ export class MatterPopupComponent implements OnInit {
   ondialogSaveClick(): void {
     this.FormAction = this.action !== 'edit' ? 'insert' : 'update';
 
-    this.CommencementDate = this.f.CommencementDate.touched === false ? this.datepipe.transform(new Date(), 'dd/MM/yyyy')  : localStorage.getItem('CommencementDate');
+    this.CommencementDate = this.f.CommencementDate.touched === false ? this.datepipe.transform(new Date(), 'dd/MM/yyyy') : localStorage.getItem('CommencementDate');
 
     this.isspiner = true;
     let details = {
@@ -132,10 +131,10 @@ export class MatterPopupComponent implements OnInit {
       CompletedDate: localStorage.getItem('CompletedDate'),
       EstimateMinimum: this.f.EstimateMinimum.value,
       Ex_GST: this.f.Ex_GST.value,
-      Notes: this.f.Notes.value,      
+      Notes: this.f.Notes.value,
       MatterOwner: this.f.MatterOwner.value,
       PrimaryFeeEarner: this.f.PrimaryFeeEarner.value,
-      
+
       // client
       Clientmatter: this.f.Clientmatter.value,
 
@@ -148,7 +147,7 @@ export class MatterPopupComponent implements OnInit {
       FixedPrice: this.f.FixedPrice.value,
       Ex_GSTs: this.f.Ex_GSTs.value,
 
-     
+
       // Details
 
       // others
@@ -161,7 +160,7 @@ export class MatterPopupComponent implements OnInit {
       Referrer: this.f.Referrer.value,
     };
     console.log(details);
-   return;
+    return;
     this._mattersService.AddNewMatter(details).subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (this.action !== 'edit') {
@@ -177,7 +176,7 @@ export class MatterPopupComponent implements OnInit {
     }, error => {
       this.toastr.error(error);
     });
-    localStorage.removeItem('CostsAgreementDate'); 
+    localStorage.removeItem('CostsAgreementDate');
     localStorage.removeItem('CommencementDate');
     localStorage.removeItem('CompletedDate');
   }

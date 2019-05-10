@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { MatDatepickerInputEvent } from '@angular/material';
 
@@ -9,9 +9,10 @@ import { MatDatepickerInputEvent } from '@angular/material';
   styleUrls: ['./general.component.scss']
 })
 export class GeneralComponent implements OnInit {
-
-  constructor(public datepipe: DatePipe,) { }
   @Input() matterdetailForm: FormGroup;
+  constructor(public datepipe: DatePipe) {
+
+  }
 
   CommencementDate(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value, 'dd/MM/yyyy');
@@ -27,7 +28,7 @@ export class GeneralComponent implements OnInit {
     localStorage.setItem('CompletedDate', begin);
   }
   ngOnInit() {
-    
+
   }
 
 }

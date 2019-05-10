@@ -292,6 +292,13 @@ body.theme-default .mat-tab-header .mat-elevation-z4 {
     border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;
 }
+toolbar .ribbon-container.time_billing_tab_main .mat-nav-list .mat-list-item {
+    height: 25px !important;
+}
+toolbar .ribbon-container.reports_tab_main .mat-nav-list .mat-list-item {
+    height: 25px !important;
+}
+ 
 
 @media screen and (max-width: 1280px) {
     toolbar .navbar-toggle-button {

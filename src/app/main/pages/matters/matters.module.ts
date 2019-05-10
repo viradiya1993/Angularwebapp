@@ -11,7 +11,6 @@ import { MattersComponent } from './matters.component';
 import { MatButtonModule, MatPaginatorModule, MatDividerModule, MatDialogModule, MatCheckboxModule, MatTabsModule, MatExpansionModule, MatSlideToggleModule, MatCardModule, MatSelectModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule, MatProgressSpinnerModule } from '@angular/material';
 import { MattersListComponent } from './matters-list/matters-list.component';
 import { MattersSortDetailComponent } from './matters-sort-detail/matters-sort-detail.component';
-import { MattersDetailComponent } from './matters-detail/matters-detail.component';
 import { GeneralComponent } from './matter-popup/general/general.component';
 import { ClientComponent } from './matter-popup/client/client.component';
 import { RatesComponent } from './matter-popup/rates/rates.component';
@@ -22,8 +21,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatterPopupComponent } from './matter-popup/matter-popup.component';
 
 const routes = [
-  { path: '', component: MattersComponent, canActivate: [AuthGuard] },
-  { path: ':id/details', component: MattersDetailComponent, canActivate: [AuthGuard] }
+  { path: '', component: MattersComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
@@ -32,7 +30,6 @@ const routes = [
     MattersListComponent,
     MattersSortDetailComponent,
     MatterPopupComponent,
-    MattersDetailComponent,
     GeneralComponent,
     ClientComponent,
     RatesComponent,

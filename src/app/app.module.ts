@@ -55,8 +55,7 @@ const appRoutes: Routes = [
         InternalErrorComponent,
         ReportsComponent,
         LicenceAgreementComponent,
-
-
+        MatterPopupComponent
     ],
     entryComponents: [
         SortingDialogComponent,

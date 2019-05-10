@@ -16,7 +16,7 @@
             <mat-tab-group [selectedIndex]="selectedIndex">{{isTabShow}}
                 <!-- matters tab start -->
                 <mat-tab label="MATTERS" *ngIf="isTabShow===1">
-                    <section class="ribbon-container matter_tab_main" [style.width]="detailwidth"> 
+                    <section class="ribbon-container matter_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
@@ -286,6 +286,81 @@
                                     <div class="light_label_txt">View</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
+                                <section class="group-section-tab details_tab" *ngIf="activeSubMenu =='work-in-progress'">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="addNewTimeEntry('Add')">
+                           <section class="large-button-container">
+                              <mat-icon class="main-icon">
+                                    <img src="assets/icons/web_app/icon_time_cost_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                              </mat-icon>
+                              <div class="main-text">
+                                 <span>New Time  <br> Entry</span>
+                              </div>
+                           </section>
+                        </button></section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="addNewTimeEntry('Edit')">
+                               <section class="large-button-container">
+                                  <mat-icon class="main-icon">
+                                        <img src="assets/icons/web_app/icon_time_cost_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                  </mat-icon>
+                                  <div class="main-text">
+                                     <span>Edit <br> Entry</span>
+                                  </div>
+                               </section>
+                            </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="deleteTimeEntry()">
+                                   <section class="large-button-container">
+                                      <mat-icon class="main-icon">
+                                            <img src="assets/icons/web_app/icon_time_cost_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                      </mat-icon>
+                                      <div class="main-text">
+                                         <span>Delete <br> Entry</span>
+                                      </div>
+                                   </section>
+                                </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" disabled>
+                                       <section class="large-button-container">
+                                          <mat-icon class="main-icon">
+                                                <img class="menu-disabled" src="assets/icons/web_app/icon_time_cost_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                          </mat-icon>
+                                          <div class="main-text">
+                                             <span>New<br>Timer</span>
+                                          </div>
+                                       </section>
+                                    </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" disabled>
+                                           <section class="large-button-container">
+                                              <mat-icon class="main-icon">
+                                                    <img class="menu-disabled" src="assets/icons/web_app/icon_time_cost_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                              </mat-icon>
+                                              <div class="main-text">
+                                                 <span>Resume<br>Timer</span>
+                                              </div>
+                                           </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" disabled>
+                                               <section class="large-button-container">
+                                                  <mat-icon class="main-icon">
+                                                        <img class="menu-disabled" src="assets/icons/web_app/icon_time_cost_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                  </mat-icon>
+                                                  <div class="main-text">
+                                                     <span>Duplicate <br>Time Entry</span>
+                                                  </div>
+                                               </section>
+                                            </button>
+                                    </section>
+                                    <div class="light_label_txt">Action</div>
+                                </section>
+                                <mat-divider vertical *ngIf="activeSubMenu =='work-in-progress'"></mat-divider>
                             </mat-card-content>
                         </mat-card>
                     </section>

@@ -295,8 +295,9 @@ app-login #login #login-intro .description-footer {
 
 .mat-divider {
     border-top-width: 1px !important;
-    width: 80%;
-    margin: 0 auto;
+    // width: 80%;
+    width: auto;
+    // margin: 0 auto;
 }
 
 @media screen and (max-width: 1650px) {

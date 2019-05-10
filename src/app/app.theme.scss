@@ -169,10 +169,17 @@ body.theme-pink-dark {
 }
 .contact_right_action {
     position: absolute;
-    right: 35px;
-    top: 8px;
+    right: 25px;
+    top: 0;
     background-color: #fff;
     z-index: 101;
+    height: 55px;;
+    border-top-right-radius: 5px;
+}
+.contact_right_action .mat-icon-button {
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
 }
 
 .top_right_action_billing_one {
@@ -191,10 +198,17 @@ body.theme-pink-dark {
 
 .top_right_action_billing_position {
     position: absolute;
-    right: 11px;
-    top: 7px;
+    right: 0;
+    top: 0;
     background-color: #fff;
     z-index: 101;
+    height: 55px;
+    border-top-right-radius: 5px;
+}
+.top_right_action_billing_position .mat-icon-button {
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
 }
 
 // .top_right_action button {

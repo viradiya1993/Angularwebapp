@@ -8,7 +8,7 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
-import { AuthenticationService, ReportlistService, TimersService } from '../../../_services';
+import { AuthenticationService, ReportlistService, TimersService , MattersService} from '../../../_services';
 import { Router } from '@angular/router';
 import { ContactDialogComponent } from './../../../main/pages/contact/contact-dialog/contact-dialog.component';
 import { LicenceAgreementComponent } from '../../../main/licence-agreement/licence-agreement.component';
@@ -62,7 +62,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         public _matDialog: MatDialog,
         private reportlistService: ReportlistService,
         private toastr: ToastrService,
-        public _getContact: ContactService, private TimersServiceI: TimersService,
+        public _getContact: ContactService, 
+        private TimersServiceI: TimersService,
+        private _mattersService: MattersService,
     ) {
         this.navigation = navigation;
         if (localStorage.getItem('theme_type') == "theme-yellow-light")
@@ -346,15 +348,53 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => { });
     }
     // New matter Pop-up
-    Newmatterpopup() {
+    AddNewmatterpopup() {
         const dialogConfig = new MatDialogConfig();        
         const dialogRef = this.dialog.open(MatterPopupComponent, {
             width: '100%',            
             disableClose: true,
+            data: {
+                action: 'new'
+            }
         });
 
         dialogRef.afterClosed().subscribe(result => { });
     }
+
+    EditNewmatterpopup() {
+        const dialogConfig = new MatDialogConfig();        
+        const dialogRef = this.dialog.open(MatterPopupComponent, {
+            width: '100%',            
+            disableClose: true,
+            data: {
+                action: 'edit'
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(result => { });
+    }
+    
+    DeleteNewmatterpopup(): void {
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                let MatterGUID = localStorage.getItem('');
+                let postData = { FormAction: "delete", MatterGUID: MatterGUID }
+                this._mattersService.AddNewMatter(postData).subscribe(res => {
+                    if (res.STATUS == "success" && res.CODE == 200) {
+                        $('#refreshTimeEntryTab').click();
+                        this.toastr.success('Delete successfully');
+                    }
+                });
+            }
+            this.confirmDialogRef = null;
+        });
+    }
+
 
     deleteContact(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {

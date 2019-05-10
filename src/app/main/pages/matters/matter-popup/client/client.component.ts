@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { ContactSelectDialogComponent } from '../../../contact/contact-select-dialog/contact-select-dialog.component';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-client',
@@ -13,7 +16,11 @@ export class ClientComponent implements OnInit {
   symbol: string;
   
 
-  constructor() { }
+  constructor(
+    public MatDialog: MatDialog,
+  ) { }
+  @Input() matterdetailForm: FormGroup;
+
 
   ngOnInit() {
 
@@ -24,6 +31,17 @@ export class ClientComponent implements OnInit {
   }
   RemoveElement(){
     
+  }
+  public ContactMatter() {
+    const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true });
+    dialogRef.afterClosed().subscribe(result => {
+    //  console.log(result);
+      if (result) {
+        // this.matterdetailForm.controls['Clientmatter'].setValue(result.MATTERGUID);
+         this.matterdetailForm.controls['Clientmatter'].setValue(result.SHORTNAME + ' : ' + result.MATTER);
+        // this.matterChange('MatterGuid', result.MATTERGUID);
+      }
+    });
   }
   
 }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { post } from 'selenium-webdriver/http';
 
 @Injectable({ providedIn: 'root' })
 export class MattersService {
@@ -13,10 +14,13 @@ export class MattersService {
     }
     return this.httpClient.post<any>(environment.APIEndpoint + 'GetMatter', data);
   }
-  getMattersDetail(postData) {
+  getMattersDetail(postData) {    
     return this.httpClient.post<any>(environment.APIEndpoint + 'GetMatter', postData);
   }
   getMattersContact(postData) {
     return this.httpClient.post<any>(environment.APIEndpoint + 'GetMatterContact', postData);
   }
+  AddNewMatter(postDatas){
+    return this.httpClient.post<any>(environment.APIEndpoint + 'GetMatter', postDatas);
+  } 
 }

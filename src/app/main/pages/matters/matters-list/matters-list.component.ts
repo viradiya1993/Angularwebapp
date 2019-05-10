@@ -70,6 +70,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void { }
 
   editmatter(matters) {
+    console.log(matters);
     this.matterDetail.emit(matters);
   }
   openDialog() {
@@ -95,7 +96,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   }
   getMatterList(data) {
     this.isLoadingResults = true;
-    this._mattersService.getMatters(data).subscribe(response => {
+    this._mattersService.getMatters(data).subscribe(response => {     
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.MATTERS[0]) {
           this.highlightedRows = response.DATA.MATTERS[0].MATTERGUID;

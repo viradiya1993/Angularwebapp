@@ -38,6 +38,7 @@ import { DatePipe } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LicenceAgreementComponent } from './main/licence-agreement/licence-agreement.component';
 import { MatterPopupComponent } from './main/pages/matters/matter-popup/matter-popup.component';
+//import { ContactSelectDialogComponent } from './main/pages/contact/contact-select-dialog/contact-select-dialog.component';
 
 //end
 const appRoutes: Routes = [
@@ -61,7 +62,8 @@ const appRoutes: Routes = [
         SortingDialogComponent,
         ReportsComponent,
         LicenceAgreementComponent,
-        MatterPopupComponent
+        MatterPopupComponent,
+       // ContactSelectDialogComponent
     ],
     imports: [
         BrowserModule,

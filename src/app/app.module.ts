@@ -53,7 +53,7 @@ const appRoutes: Routes = [
         NotFoundComponent,
         InternalErrorComponent,
         ReportsComponent,
-        LicenceAgreementComponent
+        LicenceAgreementComponent,
     ],
     entryComponents: [
         SortingDialogComponent,

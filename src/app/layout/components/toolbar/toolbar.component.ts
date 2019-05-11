@@ -490,7 +490,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else if (x[1] == "diary" || x[1] == 'diary?calander=day' || x[1] == 'diary?calander=week' || x[1] == 'diary?calander=month') {
             this.isTabShow = 5;
         } else if (x[1] == "time-entries") {
-            this.isTabShow = 6;
+            this.isTabShow = 6; 
+        } else if (x[1] == "invoice") {
+            this.isTabShow = 7; 
         } else {
             this.isTabShow = 1;
         }

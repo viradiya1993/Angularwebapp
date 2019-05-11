@@ -252,6 +252,7 @@ toolbar .chat-panel-toggle-button.header_height_btn {
 }
 
 toolbar .goto_tab_main .group-section-tab {
+   
     // width: 25%;
     width: auto;
     justify-content: center;
@@ -310,4 +311,18 @@ toolbar .ribbon-container.reports_tab_main .mat-nav-list .mat-list-item {
     .sticky_search_div {
         padding-left: 15px !important;
     }
+}
+span.text_blue {
+    color: blue;
+}
+span.text_red {
+    color: red;
+}
+mat-icon.cancel_icon.mat-icon.material-icons.mat-icon-no-color {
+    width: 45px;
+    padding: 6px;
+}
+.close_text {
+    text-align: -webkit-center;
+    padding: 7px;
 }

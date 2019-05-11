@@ -50,12 +50,14 @@ export class FuseNavigationComponent implements OnInit {
       let Favouritelist=[{ "ID": "matters", "TITLE": "Matters", "URL": "matters", "STAR": "" },
       { "ID": "contact", "TITLE": "Contact", "URL": "contact", "STAR": "" },
       { "ID": "time_entries", "TITLE": "Time entries", "URL": "time-entries", "STAR": "" },
-      { "ID": "diary", "TITLE": "Diary", "URL": "diary", "STAR": "" }]
+      { "ID": "diary", "TITLE": "Diary", "URL": "diary", "STAR": "" },
+      { "ID": "invoice", "TITLE": "Invoice", "URL": "invoice", "STAR": "" }]
       
       this.GetFavouriteService.GetFavourite(postdata).subscribe(response => {             
         if (response.CODE == 200 && response.STATUS == "success") {
           if(response.DATA.FAVOURITES==''){
             this.GetFavouriteService.setFavourite({"FAVOURITES":Favouritelist}).subscribe(responses => {
+              
               if(responses.CODE == 200 && responses.STATUS == "success"){
                 Favouritelist.forEach(items => {
                   this.page.push({ "ID": items.ID, "TITLE": items.TITLE, "URL": items.URL, "STAR": items.STAR, "type": "item", "icon": "icon_matter_d.ico" });
@@ -172,17 +174,6 @@ export class FuseNavigationComponent implements OnInit {
 }
 @Pipe({ name: 'filterByName' })
 export class filterNames implements PipeTransform {
-
-  // For Old Code
-  // transform(listOfNames: any[], nameToFilter: string): any[] { 
-  //   if(!listOfNames) return [];
-  //   if(!nameToFilter) return listOfNames;    
-  //   nameToFilter = nameToFilter.toLowerCase();
-  //       return listOfNames.filter( it => {
-  //         return it.value.toLowerCase().includes(nameToFilter);
-  //       });
-  // } 
-
   transform(page: any[], nameToFilter: string): any[] {
     if (!page) return [];
     if (!nameToFilter) return [];

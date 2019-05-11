@@ -6,11 +6,14 @@ import { ContactModule } from './contact/contact.module';
 import { MattersModule } from './matters/matters.module';
 import { TimeEntriesModule } from './time-entries/time-entries.module';
 import { DiaryModule } from './diary/diary.module';
+import { InvoiceModule } from './invoice/invoice.module';
+
 const appRoutes: Routes = [
   { path: 'matters', loadChildren: './matters/matters.module#MattersModule' },
   { path: 'time-billing', loadChildren: './time-billing/time-billing.module#TimeBillingModule' },
   { path: 'legal-details', loadChildren: './legal-details/legal-details.module#LegalDetailsModule' },
   { path: 'time-entries', loadChildren: './time-entries/time-entries.module#TimeEntriesModule' },
+  { path: 'invoice', loadChildren: './invoice/invoice.module#InvoiceModule' },
   { path: 'diary', loadChildren: './diary/diary.module#DiaryModule' }
 ];
 
@@ -23,7 +26,8 @@ const appRoutes: Routes = [
     ContactModule,
     MattersModule,
     TimeEntriesModule,
-    DiaryModule
+    DiaryModule,
+    InvoiceModule,
   ]
 })
-export class PagesModule { }
+export class PagesModule { }  

@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { DatePipe } from '@angular/common';
 import { MatterDialogComponent } from '../matter-dialog/matter-dialog.component';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 
 @Component({
@@ -15,6 +16,7 @@ import { MatterDialogComponent } from '../matter-dialog/matter-dialog.component'
   providers: [DatePipe]
 })
 export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
+  confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   private exportTime = { hour: 7, minute: 15, meriden: 'PM', format: 24 };
   LookupsList: any;
   userList: any;
@@ -314,22 +316,9 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     PostTimeEntryData.VALIDATEONLY = true;
     this.Timersservice.SetWorkItems(PostTimeEntryData).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
-        let bodyData = res.DATA.VALIDATIONS;
-        let errorData: any = [];
-        let warningData: any = [];
-        bodyData.forEach(function (value) {
-          if (value.VALUEVALID == 'NO')
-            errorData.push(value.ERRORDESCRIPTION);
-          else if (value.VALUEVALID == 'WARNING')
-            warningData.push(value.ERRORDESCRIPTION);
-        });
-        if (Object.keys(errorData).length != 0)
-          this.toastr.error(errorData);
-        if (Object.keys(warningData).length != 0)
-          this.toastr.warning(warningData);
-        if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
-          this.saveTimeEntry(PostTimeEntryData);
-        this.isspiner = false;
+        this.checkValidation(res.DATA.VALIDATIONS, PostTimeEntryData);
+      } else if (res.CODE == 451 && res.STATUS == "warning") {
+        this.checkValidation(res.DATA.VALIDATIONS, PostTimeEntryData);
       } else {
         if (res.CODE == 402 && res.STATUS == "error" && res.MESSAGE == "Not logged in")
           this.dialogRef.close(false);
@@ -339,6 +328,36 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.isspiner = false;
       this.toastr.error(err);
     });
+  }
+  checkValidation(bodyData: any, PostTimeEntryData: any) {
+    let errorData: any = [];
+    let warningData: any = [];
+    bodyData.forEach(function (value) {
+      if (value.VALUEVALID == 'NO')
+        errorData.push(value.ERRORDESCRIPTION);
+      else if (value.VALUEVALID == 'WARNING')
+        warningData.push(value.ERRORDESCRIPTION);
+    });
+    if (Object.keys(errorData).length != 0)
+      this.toastr.error(errorData);
+    if (Object.keys(warningData).length != 0) {
+      this.toastr.warning(warningData);
+      this.confirmDialogRef = this.MatDialog.open(FuseConfirmDialogComponent, {
+        disableClose: true,
+        width: '100%',
+      });
+      this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Save?';
+      this.confirmDialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.isspiner = true;
+          this.saveTimeEntry(PostTimeEntryData);
+        }
+        this.confirmDialogRef = null;
+      });
+    }
+    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+      this.saveTimeEntry(PostTimeEntryData);
+    this.isspiner = false;
   }
   saveTimeEntry(PostTimeEntryData: any) {
     PostTimeEntryData.VALIDATEONLY = false;

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MattersService,  } from './../../../../_services';
+import { MattersService, } from './../../../../_services';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
@@ -23,16 +23,16 @@ export class ContactSelectDialogComponent implements OnInit {
   isLoadingResults: boolean;
   SelectcontactForm: FormGroup;
   pageSize: any;
-  
+
   constructor(
     private mattersService: MattersService,
     private toastr: ToastrService,
     private fb: FormBuilder,
-    ) { 
-      this.SelectcontactForm = this.fb.group({ Show: [''], Clientmatter: [''], ActiveContacts: [''], Filter: [''], });
+  ) {
+    this.SelectcontactForm = this.fb.group({ Show: [''], Clientmatter: [''], ActiveContacts: [''], Filter: [''], });
   }
-  
- 
+
+
   ngOnInit() {
     let d = {};
     this.isLoadingResults = true;
@@ -55,11 +55,11 @@ export class ContactSelectDialogComponent implements OnInit {
     return this.SelectcontactForm.controls;
   }
   selectMatterId(Row: any) {
-    this.currentMatterData = Row;    
+    this.currentMatterData = Row;
   }
 
-  // onPaginateChange(event) {
-  //   this.pageSize = event.pageSize;
-  //   localStorage.setItem('lastPageSize', event.pageSize);
-  // }
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
+  }
 }

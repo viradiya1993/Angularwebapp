@@ -115,7 +115,11 @@ export class SortingDialogComponent implements OnInit {
     this.property.forEach(itemsdata => {
       dataObj.push({ COLUMNNAME: itemsdata.COLUMNNAME, HIDDEN: itemsdata.HIDDEN, POSITION: itemsdata.POSITION });
     });
-    this.TableColumnsService.setTableFilter(this.modelType, this.list, dataObj).subscribe(response => { if (response.CODE == 200 && response.STATUS == "success") { console.log('save'); } }, error => {
+    this.TableColumnsService.setTableFilter(this.modelType, this.list, dataObj).subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        console.log('save');
+      }
+    }, error => {
       console.log(error);
     });
   }

@@ -33,7 +33,8 @@ import { MatterPopupComponent } from 'app/main/pages/matters/matter-popup/matter
 export class ToolbarComponent implements OnInit, OnDestroy {
     @ViewChild(TimeEntriesComponent) TimeEntrieschild: TimeEntriesComponent;
     horizontalNavbar: boolean; isTabShow: number = 1; rightNavbar: boolean; hiddenNavbar: boolean; navigation: any; selectedLanguage: any; selectedIndex: number;
-    currentUser: any; confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+    currentUser: any; 
+    confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     //timer setting
     timerId: any;
     TotalTimer: number = 0;

@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AddContactService, ContactService, TableColumnsService } from './../../../../_services';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { Router } from '@angular/router';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./contact-dialog.component.scss']
 })
 export class ContactDialogComponent implements OnInit {
-
+  confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   action: string;
   //contact: string;
   dialogTitle: string;
@@ -34,9 +35,18 @@ export class ContactDialogComponent implements OnInit {
   dateofdeath: string;
 
 
-  constructor(public MatDialog: MatDialog, private TableColumnsService: TableColumnsService, public dialogRef: MatDialogRef<ContactDialogComponent>, private router: Router, private _formBuilder: FormBuilder
-    , private toastr: ToastrService, private Contact: ContactService, private addcontact: AddContactService,
-    @Inject(MAT_DIALOG_DATA) public _data: any) {
+  constructor(
+    public MatDialog: MatDialog,
+    private TableColumnsService: TableColumnsService,
+    public dialogRef: MatDialogRef<ContactDialogComponent>,
+    private router: Router,
+    private _formBuilder: FormBuilder,
+    private toastr: ToastrService,
+    private Contact: ContactService,
+    private addcontact: AddContactService,
+    public _matDialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public _data: any
+  ) {
     this.action = _data.action;
     this.dialogTitle = this.action === 'edit' ? 'Edit Contact' : 'New Contact';
   }
@@ -353,22 +363,9 @@ export class ContactDialogComponent implements OnInit {
     details.VALIDATEONLY = true;
     this.addcontact.AddContactData(details).subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        let bodyData = response.DATA.VALIDATIONS;
-        let errorData: any = [];
-        let warningData: any = [];
-        bodyData.forEach(function (value) {
-          if (value.VALUEVALID == 'NO')
-            errorData.push(value.ERRORDESCRIPTION);
-          else if (value.VALUEVALID == 'WARNING')
-            warningData.push(value.ERRORDESCRIPTION);
-        });
-        if (Object.keys(errorData).length != 0)
-          this.toastr.error(errorData);
-        if (Object.keys(warningData).length != 0)
-          this.toastr.warning(warningData);
-        if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
-          this.saveContectData(details);
-        this.isspiner = false;
+        this.checkValidation(response.DATA.VALIDATIONS, details);
+      } else if (response.CODE == 451 && response.STATUS == "warning") {
+        this.checkValidation(response.DATA.VALIDATIONS, details);
       } else {
         if (response.CODE == 402 && response.STATUS == "error" && response.MESSAGE == "Not logged in")
           this.dialogRef.close(false);
@@ -377,6 +374,36 @@ export class ContactDialogComponent implements OnInit {
     }, error => {
       this.toastr.error(error);
     });
+  }
+  checkValidation(bodyData: any, details: any) {
+    let errorData: any = [];
+    let warningData: any = [];
+    bodyData.forEach(function (value) {
+      if (value.VALUEVALID == 'NO')
+        errorData.push(value.ERRORDESCRIPTION);
+      else if (value.VALUEVALID == 'WARNING')
+        warningData.push(value.ERRORDESCRIPTION);
+    });
+    if (Object.keys(errorData).length != 0)
+      this.toastr.error(errorData);
+    if (Object.keys(warningData).length != 0) {
+      this.toastr.warning(warningData);
+      this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+        disableClose: true,
+        width: '100%',
+      });
+      this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Save?';
+      this.confirmDialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.isspiner = true;
+          this.saveContectData(details);
+        }
+        this.confirmDialogRef = null;
+      });
+    }
+    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+      this.saveContectData(details);
+    this.isspiner = false;
   }
   saveContectData(data: any) {
     data.VALIDATEONLY = false;

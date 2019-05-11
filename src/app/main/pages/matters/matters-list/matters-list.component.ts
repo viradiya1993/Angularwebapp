@@ -78,7 +78,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'matters' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'matters', 'list': '' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
@@ -98,7 +98,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   }
   getMatterList(data) {
     this.isLoadingResults = true;
-    this._mattersService.getMatters(data).subscribe(response => {     
+    this._mattersService.getMatters(data).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.MATTERS[0]) {
           this.highlightedRows = response.DATA.MATTERS[0].MATTERGUID;

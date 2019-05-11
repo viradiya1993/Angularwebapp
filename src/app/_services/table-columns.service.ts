@@ -36,7 +36,7 @@ export class TableColumnsService {
   }
   setTableFilter(table: any, list: any, postData: any) {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    let Data = { USERGUID: currentUser.UserGuid, PAGE: table, COLUMNSETTINGS: postData, LIST: list };
+    let Data = { 'USERGUID': currentUser.UserGuid, 'PAGE': table, 'LIST': list, 'COLUMNSETTINGS': postData };
     return this.httpClient.post<any>(environment.APIEndpoint + 'SetTableColumns', Data);
   }
   getColumename(data: any) {

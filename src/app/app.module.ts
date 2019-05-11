@@ -37,8 +37,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LicenceAgreementComponent } from './main/licence-agreement/licence-agreement.component';
+import { DeviceDetectorModule } from 'ngx-device-detector';
 import { MatterPopupComponent } from './main/pages/matters/matter-popup/matter-popup.component';
-//import { ContactSelectDialogComponent } from './main/pages/contact/contact-select-dialog/contact-select-dialog.component';
 
 //end
 const appRoutes: Routes = [
@@ -55,15 +55,12 @@ const appRoutes: Routes = [
         InternalErrorComponent,
         ReportsComponent,
         LicenceAgreementComponent,
-        
-
     ],
     entryComponents: [
         SortingDialogComponent,
         ReportsComponent,
         LicenceAgreementComponent,
         MatterPopupComponent,
-       // ContactSelectDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -72,6 +69,8 @@ const appRoutes: Routes = [
         RouterModule.forRoot(appRoutes, { useHash: true }),
 
         TranslateModule.forRoot(),
+        //vice detector
+        DeviceDetectorModule.forRoot(),
 
         // Material moment date module
         MatMomentDateModule,

@@ -16,7 +16,7 @@
             <mat-tab-group [selectedIndex]="selectedIndex">{{isTabShow}}
                 <!-- matters tab start -->
                 <mat-tab label="MATTERS" *ngIf="isTabShow===1">
-                    <section class="ribbon-container matter_tab_main">
+                    <section class="ribbon-container matter_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
@@ -286,6 +286,81 @@
                                     <div class="light_label_txt">View</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
+                                <section class="group-section-tab details_tab" *ngIf="activeSubMenu =='work-in-progress'">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="addNewTimeEntry('Add')">
+                           <section class="large-button-container">
+                              <mat-icon class="main-icon">
+                                    <img src="assets/icons/web_app/icon_time_cost_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                              </mat-icon>
+                              <div class="main-text">
+                                 <span>New Time  <br> Entry</span>
+                              </div>
+                           </section>
+                        </button></section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="addNewTimeEntry('Edit')">
+                               <section class="large-button-container">
+                                  <mat-icon class="main-icon">
+                                        <img src="assets/icons/web_app/icon_time_cost_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                  </mat-icon>
+                                  <div class="main-text">
+                                     <span>Edit <br> Entry</span>
+                                  </div>
+                               </section>
+                            </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="deleteTimeEntry()">
+                                   <section class="large-button-container">
+                                      <mat-icon class="main-icon">
+                                            <img src="assets/icons/web_app/icon_time_cost_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                      </mat-icon>
+                                      <div class="main-text">
+                                         <span>Delete <br> Entry</span>
+                                      </div>
+                                   </section>
+                                </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" disabled>
+                                       <section class="large-button-container">
+                                          <mat-icon class="main-icon">
+                                                <img class="menu-disabled" src="assets/icons/web_app/icon_time_cost_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                          </mat-icon>
+                                          <div class="main-text">
+                                             <span>New<br>Timer</span>
+                                          </div>
+                                       </section>
+                                    </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" disabled>
+                                           <section class="large-button-container">
+                                              <mat-icon class="main-icon">
+                                                    <img class="menu-disabled" src="assets/icons/web_app/icon_time_cost_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                              </mat-icon>
+                                              <div class="main-text">
+                                                 <span>Resume<br>Timer</span>
+                                              </div>
+                                           </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" disabled>
+                                               <section class="large-button-container">
+                                                  <mat-icon class="main-icon">
+                                                        <img class="menu-disabled" src="assets/icons/web_app/icon_time_cost_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                  </mat-icon>
+                                                  <div class="main-text">
+                                                     <span>Duplicate <br>Time Entry</span>
+                                                  </div>
+                                               </section>
+                                            </button>
+                                    </section>
+                                    <div class="light_label_txt">Action</div>
+                                </section>
+                                <mat-divider vertical *ngIf="activeSubMenu =='work-in-progress'"></mat-divider>
                             </mat-card-content>
                         </mat-card>
                     </section>
@@ -559,36 +634,78 @@
                                     </section>
                                     <div class="light_label_txt">Action</div>                                    
                                 </section>
-                                <mat-divider vertical></mat-divider>
-                                <section class="group-section-tab extras_tab">
+                                <mat-divider vertical></mat-divider>                               
+                            </mat-card-content>
+                        </mat-card>
+                    </section>
+                </mat-tab>
+                <!-- time-entries tab menu end -->
+
+                <!-- Invoice tab menu -->
+                <mat-tab label="INVOICE" *ngIf="isTabShow===7">
+                    <section class="ribbon-container contact_tab_main">
+                        <mat-card>
+                            <mat-card-content>
+                                <section class="group-section-tab action_tab">
                                     <section class="ribbon-section">
-                                        <mat-nav-list>
-                                                <!-- (click)="addNewTimeEntryNew('')" -->
-                                            <a mat-list-item >
-                                                <mat-icon>
-                                                    <img src="assets/icons/web_app/icon_invoice_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                        <button mat-button class="large-button">
+                                            <section class="large-button-container">
+                                            <mat-icon class="main-icon"> 
+                                                <img class="" src="assets/icons/web_app/icon_invoice_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Create<br> Invoice</span>
+                                                </div>
+                                            </section>
+                                         </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" >
+                                            <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                <img class="" src="assets/icons/web_app/icon_invoice_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Invoice<br> Details</span>
+                                                </div>
+                                            </section>
+                                            </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" >
+                                            <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                <img class="" src="assets/icons/web_app/icon_invoice_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Delete<br> Invoice</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                            <button mat-button class="large-button" >
+                                                <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img class="" src="assets/icons/web_app/icon_receipt_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
-                                                <span>Invoices</span>
-                                            </a>
-                                            <a mat-list-item disabled>
-                                                <mat-icon>
-                                                    <img class="menu-disabled" src="assets/icons/web_app/icon_time_cost_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <span>Recived Money</span>
-                                            </a>                                           
-                                        </mat-nav-list>
-                                    </section>                                 
-                                    <div class="light_label_txt">Invoice</div>
+                                                    <div class="main-text">
+                                                        <span>New<br> Receipt</span>
+                                                    </div>
+                                                </section>
+                                            </button>
+                                        </section>
+                                    <div class="light_label_txt">Action</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
                             </mat-card-content>
                         </mat-card>
                     </section>
                 </mat-tab>
-                <!-- time-entries tab menu end -->
+                <!-- End Invoice tab menu -->
                 <!-- goto tab menu start -->
                 <mat-tab label="GO TO">
-                    <section class="ribbon-container goto_tab_main">
+                    <section class="ribbon-container goto_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab">
@@ -634,6 +751,26 @@
                                             </button>
                                     </section>
                                     <div class="light_label_txt">Time and Billing</div>
+                                        <section class="group-section-tab extras_tab">
+                                                <section class="ribbon-section">
+                                                    <mat-nav-list>
+                                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/invoice'">
+                                                            <mat-icon>
+                                                                <img src="assets/icons/web_app/icon_invoice_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                            </mat-icon>
+                                                            <span>Invoices</span>  
+                                                        </button>                                                       
+                                                    </mat-nav-list>
+                                                    <!-- <mat-nav-list>
+                                                            <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/time-entries'">
+                                                                <mat-icon>
+                                                                    <img src="assets/icons/web_app/icon_invoice_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                                </mat-icon>
+                                                                <span>Invoices</span>  
+                                                            </button>                                                       
+                                                    </mat-nav-list> -->
+                                                </section> 
+                                        </section>
                                 </section>
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab">

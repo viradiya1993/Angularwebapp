@@ -223,24 +223,27 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
           break;
         }
         default: {
-          this.calculateData.QuantityType = event;
+          this.calculateData.FeeType = event;
+          this.calculateData.QuantityType = 'F';
           break;
         }
       }
     }
     this.calculateData.Quantity = this.f.QUANTITY.value;
-    this.isLoadingResults = true;
-    this.Timersservice.calculateWorkItems(this.calculateData).subscribe(response => {
-      if (response.CODE == 200 && response.STATUS == "success") {
-        let CalcWorkItemCharge = response.DATA;
-        this.timeEntryForm.controls['PRICE'].setValue(CalcWorkItemCharge.PRICE);
-        this.timeEntryForm.controls['PRICEINCGST'].setValue(CalcWorkItemCharge.PRICEINCGST);
+    if (this.calculateData.MatterGuid != '' && this.calculateData.Quantity != '' && (this.calculateData.QuantityType != '' || this.calculateData.FeeType != '')) {
+      this.isLoadingResults = true;
+      this.Timersservice.calculateWorkItems(this.calculateData).subscribe(response => {
+        if (response.CODE == 200 && response.STATUS == "success") {
+          let CalcWorkItemCharge = response.DATA;
+          this.timeEntryForm.controls['PRICE'].setValue(CalcWorkItemCharge.PRICE);
+          this.timeEntryForm.controls['PRICEINCGST'].setValue(CalcWorkItemCharge.PRICEINCGST);
+          this.isLoadingResults = false;
+        }
+      }, err => {
         this.isLoadingResults = false;
-      }
-    }, err => {
-      this.isLoadingResults = false;
-      this.toastr.error(err);
-    });
+        this.toastr.error(err);
+      });
+    }
   }
   ondialogcloseClick(): void {
     this.dialogRef.close(false);
@@ -293,6 +296,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       // "GST": "value",
       // "GSTCHARGED": "value",
       // "GSTTYPE": "value",
+      "VALIDATEONLY": false
     }
     if (this.f.ITEMTYPE.value == "Activity" || this.f.ITEMTYPE.value == "Sundry") {
       PostTimeEntryData.FEETYPE = this.f.QUANTITYTYPE.value;
@@ -307,6 +311,37 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       PostTimeEntryData.WorkItemGuid = localStorage.getItem('edit_WORKITEMGUID');
       this.successMsg = 'Time entry update successfully';
     }
+    PostTimeEntryData.VALIDATEONLY = true;
+    this.Timersservice.SetWorkItems(PostTimeEntryData).subscribe(res => {
+      if (res.CODE == 200 && res.STATUS == "success") {
+        let bodyData = res.DATA.VALIDATIONS;
+        let errorData: any = [];
+        let warningData: any = [];
+        bodyData.forEach(function (value) {
+          if (value.VALUEVALID == 'NO')
+            errorData.push(value.ERRORDESCRIPTION);
+          else if (value.VALUEVALID == 'WARNING')
+            warningData.push(value.ERRORDESCRIPTION);
+        });
+        if (Object.keys(errorData).length != 0)
+          this.toastr.error(errorData);
+        if (Object.keys(warningData).length != 0)
+          this.toastr.warning(warningData);
+        if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+          this.saveTimeEntry(PostTimeEntryData);
+        this.isspiner = false;
+      } else {
+        if (res.CODE == 402 && res.STATUS == "error" && res.MESSAGE == "Not logged in")
+          this.dialogRef.close(false);
+      }
+      this.isspiner = false;
+    }, err => {
+      this.isspiner = false;
+      this.toastr.error(err);
+    });
+  }
+  saveTimeEntry(PostTimeEntryData: any) {
+    PostTimeEntryData.VALIDATEONLY = false;
     this.Timersservice.SetWorkItems(PostTimeEntryData).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.toasterService.success(this.successMsg);

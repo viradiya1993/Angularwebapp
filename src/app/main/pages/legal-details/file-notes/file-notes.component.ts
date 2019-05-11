@@ -20,6 +20,7 @@ export class FileNotesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ColumnsObj: any[];
   pageSize: any;
+  tempColobj: any;
 
   constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, private fileNotes_service: FileNotesService, private toastr: ToastrService) { }
   filenotes_table;
@@ -50,10 +51,11 @@ export class FileNotesComponent implements OnInit {
     localStorage.setItem('lastPageSize', event.pageSize);
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('MatterFileNote').subscribe(response => {
+    this.TableColumnsService.getTableFilter('legal details', 'file notes').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'fileNoteColumns');
         this.displayedColumns = data.showcol;
+        this.tempColobj = data.tempColobj;
         this.ColumnsObj = data.colobj;
       }
     }, error => {
@@ -64,7 +66,7 @@ export class FileNotesComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'MatterFileNote' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'legal details', 'list': 'file notes' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
@@ -72,6 +74,7 @@ export class FileNotesComponent implements OnInit {
       if (result) {
         this.displayedColumns = result.columObj;
         this.ColumnsObj = result.columnameObj;
+        this.tempColobj = result.tempColobj;
         if (!result.columObj) {
           this.filenotes_table = new MatTableDataSource([]);
           this.filenotes_table.paginator = this.paginator;

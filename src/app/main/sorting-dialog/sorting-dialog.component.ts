@@ -2,7 +2,6 @@ import { Component, OnInit, Pipe, PipeTransform, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { TableColumnsService } from '../../_services';
-import * as $ from 'jquery';
 
 
 @Component({
@@ -15,6 +14,7 @@ export class SortingDialogComponent implements OnInit {
   property: any[] = [];
   filterName: string;
   modelType: string;
+  list: string;
   searchporoperty: string;
   noReturnPredicate: string;
   title: string;
@@ -26,6 +26,7 @@ export class SortingDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data
   ) {
     this.modelType = data.type;
+    this.list = data.list;
     this.property = data.data;
   }
   ngOnInit(): void {
@@ -34,7 +35,7 @@ export class SortingDialogComponent implements OnInit {
   updateCount() {
     this.checkboxdata = 0;
     this.property.forEach(itemsdata => {
-      if (itemsdata.HIDDEN) {
+      if (!itemsdata.HIDDEN) {
         this.checkboxdata++;
       }
     });
@@ -44,8 +45,8 @@ export class SortingDialogComponent implements OnInit {
   onChange(event, data) {
     let tempPropertyData = [];
     this.property.forEach(itemsdata => {
-      if (itemsdata.COLUMNNAME == data) {
-        itemsdata.HIDDEN = event.checked ? 1 : 0;
+      if (itemsdata.DESCRIPTION == data) {
+        itemsdata.HIDDEN = event.checked ? 0 : 1;
         tempPropertyData.push(itemsdata);
       } else {
         tempPropertyData.push(itemsdata);
@@ -66,8 +67,8 @@ export class SortingDialogComponent implements OnInit {
   remove(item, event) {
     let tempPropertyData = [];
     this.property.forEach(itemsdata => {
-      if (itemsdata.COLUMNNAME == item) {
-        itemsdata.HIDDEN = event.checked ? 1 : 0;
+      if (itemsdata.DESCRIPTION == item) {
+        itemsdata.HIDDEN = event.checked ? 0 : 1;
         tempPropertyData.push(itemsdata);
       } else {
         tempPropertyData.push(itemsdata);
@@ -87,7 +88,7 @@ export class SortingDialogComponent implements OnInit {
   clearfilter(isCheck: boolean) {
     let tempPropertyData = [];
     this.property.forEach(itemsdata => {
-      itemsdata.HIDDEN = isCheck ? 1 : 0;
+      itemsdata.HIDDEN = isCheck ? 0 : 1;
       tempPropertyData.push(itemsdata);
     });
     this.property = tempPropertyData;
@@ -100,19 +101,21 @@ export class SortingDialogComponent implements OnInit {
   //dialog content close event with save
   ondialogSaveClick(): void {
     let showCol = [];
+    let tempColobj = [];
     this.property.forEach(itemsdata => {
-      if (itemsdata.HIDDEN == 1)
-        showCol.push(itemsdata.COLUMNNAME);
+      tempColobj[itemsdata.COLUMNID] = itemsdata;
+      if (itemsdata.HIDDEN == 0)
+        showCol.push(itemsdata.COLUMNID);
     });
     this.saveLastFilter();
-    this.dialogRef.close({ columObj: showCol, columnameObj: this.property });
+    this.dialogRef.close({ columObj: showCol, columnameObj: this.property, tempColobj: tempColobj });
   }
   saveLastFilter() {
     let dataObj = [];
     this.property.forEach(itemsdata => {
-      dataObj.push({ COLUMNNAME: itemsdata.COLUMNID, HIDDEN: itemsdata.HIDDEN, POSITION: itemsdata.POSITION });
+      dataObj.push({ COLUMNNAME: itemsdata.COLUMNNAME, HIDDEN: itemsdata.HIDDEN, POSITION: itemsdata.POSITION });
     });
-    this.TableColumnsService.setTableFilter(this.modelType, dataObj).subscribe(response => { if (response.CODE == 200 && response.STATUS == "success") { console.log('save'); } }, error => {
+    this.TableColumnsService.setTableFilter(this.modelType, this.list, dataObj).subscribe(response => { if (response.CODE == 200 && response.STATUS == "success") { console.log('save'); } }, error => {
       console.log(error);
     });
   }
@@ -124,7 +127,7 @@ export class filterNames implements PipeTransform {
     if (!nameToFilter) return listOfNames;
     nameToFilter = nameToFilter.toLowerCase();
     return listOfNames.filter(it => {
-      return it.COLUMNNAME.toLowerCase().includes(nameToFilter);
+      return it.DESCRIPTION.toLowerCase().includes(nameToFilter);
     });
   }
 }

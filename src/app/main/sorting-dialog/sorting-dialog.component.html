@@ -20,7 +20,7 @@
                     <mat-label>Contact Information</mat-label>
                     <div class="checkbox">
                         <div class="add_popup_padding" *ngFor="let name of property | filterByName:searchporoperty">
-                            <mat-checkbox value="{{ name.HIDDEN }}" [checked]="name.HIDDEN" name='name.COLUMNNAME' [ngModelOptions]="{standalone: true}" [(ngModel)]="name.HIDDEN" class="example-margin" (change)="onChange($event,name.COLUMNNAME)"><span class="font_class">{{name.COLUMNNAME | lowercase}}</span> </mat-checkbox>
+                            <mat-checkbox value="{{ name.HIDDEN }}" [checked]="!name.HIDDEN" name='name.DESCRIPTION' [ngModelOptions]="{standalone: true}" [(ngModel)]="!name.HIDDEN" class="example-margin" (change)="onChange($event,name.DESCRIPTION)"><span class="font_class">{{name.DESCRIPTION | lowercase}}</span> </mat-checkbox>
                         </div>
                     </div>
                 </div>
@@ -31,12 +31,12 @@
                     <h2>Selected Columns ({{checkboxdata }})</h2>
                     <div id="all" cdkDropList [cdkDropListData]="property" cdkDropListConnectedTo="even" class="example-list popup_scroll_div" (cdkDropListDropped)="drop($event)" [cdkDropListEnterPredicate]="noReturnPredicate">
                         <span *ngFor="let number of property">
-                        <div class="example-box" *ngIf="number.HIDDEN" [cdkDragData]="number" cdkDrag>                            
+                        <div class="example-box" *ngIf="!number.HIDDEN" [cdkDragData]="number" cdkDrag>                            
                             <mat-icon class="detail">more_vert</mat-icon>
                             <span class="font_class">
-                                 {{number.COLUMNNAME | lowercase}}
+                                 {{number.DESCRIPTION | lowercase}}
                                 </span>
-                        <mat-icon class="close" (click)="remove(number.COLUMNNAME,$event)">close</mat-icon>
+                        <mat-icon class="close" (click)="remove(number.DESCRIPTION,$event)">close</mat-icon>
                     </div>
                     </span>
                 </div>

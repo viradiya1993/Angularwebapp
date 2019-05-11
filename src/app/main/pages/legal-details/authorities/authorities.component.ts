@@ -16,6 +16,7 @@ export class AuthoritiesComponent implements OnInit {
   ColumnsObj: any = [];
   displayedColumns: string[];
   pageSize: any;
+  tempColobj: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   isLoadingResults: boolean = false;
 
@@ -28,11 +29,12 @@ export class AuthoritiesComponent implements OnInit {
     this.LoadData();
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('MatterAuthority').subscribe(response => {
+    this.TableColumnsService.getTableFilter('legal details', 'authorities').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'authoritiesColumns');
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
+        this.tempColobj = data.tempColobj;
       }
     }, error => {
       console.log(error);
@@ -62,7 +64,7 @@ export class AuthoritiesComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'MatterAuthority' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'legal details', 'list': 'authorities' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
@@ -71,6 +73,7 @@ export class AuthoritiesComponent implements OnInit {
       if (result) {
         this.displayedColumns = result.columObj;
         this.ColumnsObj = result.columnameObj;
+        this.tempColobj = result.tempColobj;
         if (!result.columObj) {
           this.authorities_table = new MatTableDataSource([]);
           this.authorities_table.paginator = this.paginator;

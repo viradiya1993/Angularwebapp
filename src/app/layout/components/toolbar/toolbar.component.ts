@@ -128,7 +128,25 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     ngAfterViewInit() {
         const wph = $(window).width();
         this.detailwidth = wph - 280 - 5 + 'px';
+
+        if ($(window).width() >= 992 && $(window).width() < 1280) {
+
+            const wph = $(window).width();
+            this.detailwidth = wph - 65 + 'px';
+
+            const nvh = 56;
+            $('.mat-tab-header').css({ 'width': wph - nvh - 280 + 'px' });
+        } else if ($(window).width() <= 991) {
+
+            const wph = $(window).width();
+            this.detailwidth = wph - 65 + 'px';
+
+            const nvh = 56;
+            $('.mat-tab-header').css({ 'width': wph - nvh - 160 + 'px' });
+        }
     }
+
+    
 
     //for binding
 
@@ -472,7 +490,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else if (x[1] == "diary" || x[1] == 'diary?calander=day' || x[1] == 'diary?calander=week' || x[1] == 'diary?calander=month') {
             this.isTabShow = 5;
         } else if (x[1] == "time-entries") {
-            this.isTabShow = 6;
+            this.isTabShow = 6; 
+        } else if (x[1] == "invoice") {
+            this.isTabShow = 7; 
         } else {
             this.isTabShow = 1;
         }

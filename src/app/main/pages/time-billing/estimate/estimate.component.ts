@@ -16,6 +16,7 @@ import * as $ from 'jquery';
 export class EstimateComponent implements OnInit {
   displayedColumns: string[];
   pageSize: any;
+  tempColobj: any;
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   @ViewChild(MatPaginator) paginator: MatPaginator;
   isLoadingResults: boolean = false;
@@ -49,10 +50,11 @@ export class EstimateComponent implements OnInit {
   }
 
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('MatterEstimates').subscribe(response => {
+    this.TableColumnsService.getTableFilter('time and billing', 'estimate').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'EstimatesItemsColumns');
         this.displayedColumns = data.showcol;
+        this.tempColobj = data.tempColobj;
         this.ColumnsObj = data.colobj;
       }
     }, error => {
@@ -63,7 +65,7 @@ export class EstimateComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'MatterEstimates' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'time and billing', 'list': 'estimate' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
@@ -71,6 +73,7 @@ export class EstimateComponent implements OnInit {
       if (result) {
         this.displayedColumns = result.columObj;
         this.ColumnsObj = result.columnameObj;
+        this.tempColobj = result.tempColobj;
         if (!result.columObj) {
           this.Estimatedata = new MatTableDataSource([]);
           this.Estimatedata.paginator = this.paginator;

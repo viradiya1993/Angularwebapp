@@ -1,5 +1,5 @@
 @import "src/@fuse/scss/fuse";
-#contact {
+#Invoice {
     .header {
         .search-wrapper {
             width: 100%;
@@ -26,9 +26,8 @@
     }
     .content {
         overflow: hidden;
-        // margin-top: 10px;
         .example {
-            width: 18%;
+            width: 13%;
             padding: 10px;
             .sidebar {
                 &:not(.locked-open) {
@@ -36,34 +35,39 @@
                 }
             }
         }
+        .matter-serach-div {
+            // position: fixed;
+            // width: 600px;
+            // height: 200px;
+            // left: 50%;
+            // top: 0%;
+            // margin-left: -300px;
+        }
+    }
+    .mat-form-field.mat-form-field-type-mat-select .mat-form-field-infix {
+        display: inline-flex;
+        width: 300px !important;
+    }
+    .search {
+        width: 45% !important;
+        padding: 20px !important;
     }
 }
 
-.search {
-    width: 45% !important;
-    padding: 20px !important;
-}
-
-app-contact {
-    width: 100%;
-}
-
-.sticky_search_div {
+// .sticky_search_div .mat-form-field-wrapper {
+//     padding-bottom: 0 !important;
+// }
+#Invoice .sticky_search_div {
     position: fixed;
-    top: 163px;
+    top: 167px;
     width: 100%;
     background-color: #f5f5f5;
     z-index: 9999;
     left: 0;
     padding-left: 300px;
 }
-.sticky_search_remove_padding {
+#Invoice .sticky_search_remove_padding {
     padding-left: 80px;
-}
-
-#contact .p-24.list_tbl_main {
-    // margin-top: 110px;
-    margin-top: 85px;
 }
 
 .p-24.list_tbl_main {
@@ -71,14 +75,29 @@ app-contact {
     padding-top: 0 !important;
 }
 
-.mat-table.mat-table.ng-trigger.ng-trigger-animateStagger {
-    width: 100%;
-    overflow: auto;
-    display: table;
+// .fix_div_padding {
+//     margin-top: 70px;
+// }
+.list_sidebar_padding {
+    // padding-top: 92px;
+    background-color: #fff;
+    border-left: 1px solid #ccc;
 }
 
-.more_tbl_clmn mat-footer-row {
-    display: table;
+.list_sidebar_padding h3.one {
+    margin: 0;
+}
+
+.list_sidebar_right_child {
+    margin-top: 110px;
+}
+
+#Invoice .list_tbl_main {
+    margin-top: 85px;
+    padding-top: 0 !important;
+}
+.mat-table {
+    width: 100%;
 }
 
 .more_tbl_clmn .mat-header-cell,
@@ -90,29 +109,11 @@ app-contact {
     position: sticky;
 }
 
-.more_tbl_clmn mat-header-row {
-    line-height: 56px;
-}
-
-.more_tbl_clmn mat-row {
-    line-height: 48px;
-}
-
 .more_tbl_clmn .mat-header-cell:last-child,
 .more_tbl_clmn .mat-cell:last-child {
     padding-right: 70px;
 }
 
-.table tr.active td {
-    background-color: #123456 !important;
-    color: white;
-}
-
-table tr.highlight {
-    background-color: #4CAF50 !important;
-    color: #ffffff;
-}
-
-button#refreshContactTab {
+button#refreshTimeEntryTab {
     display: none;
 }

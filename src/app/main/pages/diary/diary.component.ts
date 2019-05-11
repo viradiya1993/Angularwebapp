@@ -69,7 +69,6 @@ export class DiaryComponent implements OnInit {
      * @param {any} body
      */
     beforeMonthViewRender({ header, body }): void {
-        console.log(body);
         const _selectedDay = body.find((_day) => {
             return _day.date.getTime() === this.selectedDay.date.getTime();
         });

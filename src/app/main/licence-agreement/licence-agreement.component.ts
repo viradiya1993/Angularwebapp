@@ -15,13 +15,14 @@ export class LicenceAgreementComponent implements OnInit {
     public dialogRef: MatDialogRef<LicenceAgreementComponent>,
     @Inject(MAT_DIALOG_DATA) data
   ) {
-    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.ProductType = currentUser.ProductType;
-    this.isLicence = data.action == 'LI' ? true : false;
-    this.currentYear = new Date().getFullYear();
-    if (localStorage.getItem('theme_type') == "theme-yellow-light")
-      this.defultTheme = true;
-
+    this.isLicence = data.action;
+    if (data.action != 'MD') {
+      let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      this.ProductType = currentUser.ProductType;
+      this.currentYear = new Date().getFullYear();
+      if (localStorage.getItem('theme_type') == "theme-yellow-light")
+        this.defultTheme = true;
+    }
   }
 
   ngOnInit() {

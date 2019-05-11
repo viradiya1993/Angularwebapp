@@ -21,6 +21,7 @@ export class ContactComponent implements OnInit {
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   contectTitle = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   displayedColumns: string[];
+  tempColobj: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   datanull: null;
   isLoadingResults: boolean = false;
@@ -68,9 +69,10 @@ export class ContactComponent implements OnInit {
     localStorage.setItem('lastPageSize', event.pageSize);
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('Contacts').subscribe(response => {
+    this.TableColumnsService.getTableFilter('contacts', '').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'contactColumns');
+        this.tempColobj = data.tempColobj;
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
       }
@@ -113,12 +115,13 @@ export class ContactComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'Contacts' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'contacts' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.tempColobj = result.tempColobj;
         this.displayedColumns = result.columObj;
         this.ColumnsObj = result.columnameObj;
         if (!result.columObj) {

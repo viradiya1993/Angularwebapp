@@ -19,6 +19,7 @@ export class ReceiptsCreditsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ColumnsObj: any = [];
   pageSize: any;
+  tempColobj: any;
   isLoadingResults: boolean = false;
   constructor(private dialog: MatDialog,
     private ReceiptsCredits: ReceiptsCreditsService,
@@ -54,11 +55,12 @@ export class ReceiptsCreditsComponent implements OnInit {
   }
 
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('MatterReceipts').subscribe(response => {
+    this.TableColumnsService.getTableFilter('time and billing', 'receipts and credits').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'MatterReceiptsColumns');
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
+        this.tempColobj = data.tempColobj;
       }
     }, error => {
       this.toastr.error(error);
@@ -68,7 +70,7 @@ export class ReceiptsCreditsComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'MatterReceipts' };
+    dialogConfig.data = { 'data': this.ColumnsObj,  'type': 'time and billing', 'list': 'receipts and credits'  };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
@@ -76,6 +78,7 @@ export class ReceiptsCreditsComponent implements OnInit {
       if (result) {
         this.displayedColumns = result.columObj;
         this.ColumnsObj = result.columnameObj;
+        this.tempColobj = result.tempColobj;
         if (!result.columObj) {
           this.ReceiptsCreditsdata = new MatTableDataSource([]);
           this.ReceiptsCreditsdata.paginator = this.paginator;

@@ -252,8 +252,11 @@ toolbar .chat-panel-toggle-button.header_height_btn {
 }
 
 toolbar .goto_tab_main .group-section-tab {
-    width: 34%;
+   
+    // width: 25%;
+    width: auto;
     justify-content: center;
+    padding: 0 25px;
 }
 
 body.theme-default .mat-badge-medium.mat-badge-above .mat-badge-content {
@@ -280,14 +283,39 @@ img.help-class {
     height: 30px;
 }
 
-// @media screen and (max-width: 1280px) {
-//     toolbar .navbar-toggle-button {
-//         height: 40px;
-//     }
-//     toolbar .toolbar-separator {
-//         height: 40px;
-//     }
-//     .sticky_search_div {
-//         padding-left: 15px !important;
-//     }
-// }
+body.theme-default .mat-tab-header .mat-elevation-z4 {
+    box-shadow: none;
+}
+.mat-tab-header-pagination-before {
+    border-right: 1px solid #ccc;
+}
+.mat-tab-header-pagination-after {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+
+@media screen and (max-width: 1280px) {
+    toolbar .navbar-toggle-button {
+        height: 40px;
+    }
+    toolbar .toolbar-separator {
+        height: 40px;
+    }
+    .sticky_search_div {
+        padding-left: 15px !important;
+    }
+}
+span.text_blue {
+    color: blue;
+}
+span.text_red {
+    color: red;
+}
+mat-icon.cancel_icon.mat-icon.material-icons.mat-icon-no-color {
+    width: 45px;
+    padding: 6px;
+}
+.close_text {
+    text-align: -webkit-center;
+    padding: 7px;
+}

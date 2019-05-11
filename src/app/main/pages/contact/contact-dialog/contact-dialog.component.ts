@@ -5,7 +5,6 @@ import { ToastrService } from 'ngx-toastr';
 import { AddContactService, ContactService, TableColumnsService } from './../../../../_services';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { Router } from '@angular/router';
-import { ContactComponent } from '../contact.component';
 
 
 @Component({
@@ -349,8 +348,39 @@ export class ContactDialogComponent implements OnInit {
       NATIONALIDENTITYCOUNTRY: this.f.NATIONALIDENTITYCOUNTRY.value,
       FAMILYCOURTLAWYERNO: this.f.FAMILYCOURTLAWYERNO.value,
       NOTES: this.f.NOTES.value,
+      VALIDATEONLY: false
     }
+    details.VALIDATEONLY = true;
     this.addcontact.AddContactData(details).subscribe(response => {
+      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        let bodyData = response.DATA.VALIDATIONS;
+        let errorData: any = [];
+        let warningData: any = [];
+        bodyData.forEach(function (value) {
+          if (value.VALUEVALID == 'NO')
+            errorData.push(value.ERRORDESCRIPTION);
+          else if (value.VALUEVALID == 'WARNING')
+            warningData.push(value.ERRORDESCRIPTION);
+        });
+        if (Object.keys(errorData).length != 0)
+          this.toastr.error(errorData);
+        if (Object.keys(warningData).length != 0)
+          this.toastr.warning(warningData);
+        if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+          this.saveContectData(details);
+        this.isspiner = false;
+      } else {
+        if (response.CODE == 402 && response.STATUS == "error" && response.MESSAGE == "Not logged in")
+          this.dialogRef.close(false);
+        this.isspiner = false;
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
+  }
+  saveContectData(data: any) {
+    data.VALIDATEONLY = false;
+    this.addcontact.AddContactData(data).subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         if (this.action !== 'edit') {
           this.toastr.success('Contact save successfully');
@@ -358,11 +388,6 @@ export class ContactDialogComponent implements OnInit {
           this.toastr.success('Contact update successfully');
         }
         this.isspiner = false;
-
-        let contactComponent = new ContactComponent(this.MatDialog, this.TableColumnsService, this.Contact, this.toastr, this._formBuilder);
-        let filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
-        contactComponent.LoadData(filterVals);
-        // ContactComponent
         this.dialogRef.close(true);
       } else {
         this.isspiner = false;
@@ -374,6 +399,7 @@ export class ContactDialogComponent implements OnInit {
     localStorage.removeItem('DATEOFDEATH');
   }
 }
+
 export class Common {
   public Id: Number;
   public Name: string;

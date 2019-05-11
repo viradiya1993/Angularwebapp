@@ -13,7 +13,9 @@ import { FuseTranslationLoaderService } from '@fuse/services/translation-loader.
 
 import { navigation } from 'app/navigation/navigation';
 import { locale as navigationEnglish } from 'app/navigation/i18n/en';
-import * as $ from 'jquery';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import { LicenceAgreementComponent } from './main/licence-agreement/licence-agreement.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
     selector: 'app',
@@ -23,6 +25,7 @@ import * as $ from 'jquery';
 export class AppComponent implements OnInit, OnDestroy {
     fuseConfig: any;
     navigation: any;
+    deviceInfo = null;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -47,7 +50,9 @@ export class AppComponent implements OnInit, OnDestroy {
         private _fuseSplashScreenService: FuseSplashScreenService,
         private _fuseTranslationLoaderService: FuseTranslationLoaderService,
         private _translateService: TranslateService,
-        private _platform: Platform
+        private _platform: Platform,
+        private deviceService: DeviceDetectorService,
+        public dialog: MatDialog,
     ) {
         // Get default navigation
         this.navigation = navigation;
@@ -110,8 +115,28 @@ export class AppComponent implements OnInit, OnDestroy {
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
+        this.epicFunction();
     }
+    //device detail
+    epicFunction() {
+        // this.deviceInfo = this.deviceService.getDeviceInfo();
+        const isMobile = this.deviceService.isMobile();
+        if (isMobile) {
+            const dialogRef = this.dialog.open(LicenceAgreementComponent, {
+                disableClose: true,
+                width: '100%',
+                data: { action: 'MD' }
+            });
+            dialogRef.afterClosed().subscribe(result => { });
+        }
 
+        // const isTablet = this.deviceService.isTablet();
+        // const isDesktopDevice = this.deviceService.isDesktop();
+        // console.log(this.deviceInfo);
+        // console.log(isMobile);  // returns if the device is a mobile device (android / iPhone / windows-phone etc)
+        // console.log(isTablet);  // returns if the device us a tablet (iPad etc)
+        // console.log(isDesktopDevice); // returns if the app is running on a Desktop browser.
+    }
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------

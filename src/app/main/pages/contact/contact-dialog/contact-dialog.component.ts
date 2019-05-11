@@ -387,10 +387,10 @@ export class ContactDialogComponent implements OnInit {
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
-      this.toastr.warning(warningData);
       this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
         disableClose: true,
         width: '100%',
+        data: warningData
       });
       this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Save?';
       this.confirmDialogRef.afterClosed().subscribe(result => {

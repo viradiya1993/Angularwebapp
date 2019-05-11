@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { MatButtonModule, MatDialogModule } from '@angular/material';
-
+import { CommonModule } from '@angular/common';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
@@ -9,13 +9,13 @@ import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/conf
     ],
     imports: [
         MatDialogModule,
-        MatButtonModule
+        MatButtonModule,
+        CommonModule
     ],
     entryComponents: [
         FuseConfirmDialogComponent
     ],
 })
-export class FuseConfirmDialogModule
-{
-    
+export class FuseConfirmDialogModule {
+
 }

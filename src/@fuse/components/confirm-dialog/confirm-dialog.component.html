@@ -1,6 +1,13 @@
 <div class="popup_main_div delete_main_popup">
     <h1 matDialogTitle>Confirm</h1>
-    <div mat-dialog-content>{{confirmMessage}}</div>
+    <div mat-dialog-content>
+        {{confirmMessage}}
+        <div class="border_div" *ngIf="confirmData">
+            <ul>
+                <li class="list_ui" *ngFor='let item of confirmData'>{{item}}</li>
+            </ul>
+        </div>
+    </div>
     <div mat-dialog-actions class="popup_ftr">
         <div class="right_btn_child">
             <button mat-raised-button class="mat-button mat-raised-button mat-primary" type="button" (click)="dialogRef.close(true)">Confirm</button>

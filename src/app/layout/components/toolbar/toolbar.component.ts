@@ -8,7 +8,7 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
-import { AuthenticationService, ReportlistService, TimersService , MattersService} from '../../../_services';
+import { AuthenticationService, ReportlistService, TimersService, MattersService } from '../../../_services';
 import { Router } from '@angular/router';
 import { ContactDialogComponent } from './../../../main/pages/contact/contact-dialog/contact-dialog.component';
 import { LicenceAgreementComponent } from '../../../main/licence-agreement/licence-agreement.component';
@@ -21,6 +21,8 @@ import { ToastrService } from 'ngx-toastr';
 import { TimeEntriesComponent } from 'app/main/pages/time-entries/time-entries.component';
 import { TimeEntryDialogComponent } from 'app/main/pages/time-entries/time-entry-dialog/time-entry-dialog.component';
 import { MatterPopupComponent } from 'app/main/pages/matters/matter-popup/matter-popup.component';
+import { MatterDialogComponent } from 'app/main/pages/time-entries/matter-dialog/matter-dialog.component';
+import { ReceiptDilogComponent } from 'app/main/pages/invoice/receipt-dilog/receipt-dilog.component';
 
 
 @Component({
@@ -33,7 +35,7 @@ import { MatterPopupComponent } from 'app/main/pages/matters/matter-popup/matter
 export class ToolbarComponent implements OnInit, OnDestroy {
     @ViewChild(TimeEntriesComponent) TimeEntrieschild: TimeEntriesComponent;
     horizontalNavbar: boolean; isTabShow: number = 1; rightNavbar: boolean; hiddenNavbar: boolean; navigation: any; selectedLanguage: any; selectedIndex: number;
-    currentUser: any; 
+    currentUser: any;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     //timer setting
     timerId: any;
@@ -63,7 +65,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         public _matDialog: MatDialog,
         private reportlistService: ReportlistService,
         private toastr: ToastrService,
-        public _getContact: ContactService, 
+        public _getContact: ContactService,
         private TimersServiceI: TimersService,
         private _mattersService: MattersService,
     ) {
@@ -147,7 +149,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }
     }
 
-    
+
 
     //for binding
 
@@ -368,9 +370,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     // New matter Pop-up
     AddNewmatterpopup() {
-        const dialogConfig = new MatDialogConfig();        
+        const dialogConfig = new MatDialogConfig();
         const dialogRef = this.dialog.open(MatterPopupComponent, {
-            width: '100%',            
+            width: '100%',
             disableClose: true,
             data: {
                 action: 'new'
@@ -381,9 +383,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     EditNewmatterpopup() {
-        const dialogConfig = new MatDialogConfig();        
+        const dialogConfig = new MatDialogConfig();
         const dialogRef = this.dialog.open(MatterPopupComponent, {
-            width: '100%',            
+            width: '100%',
             disableClose: true,
             data: {
                 action: 'edit'
@@ -392,7 +394,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         dialogRef.afterClosed().subscribe(result => { });
     }
-    
+
     DeleteNewmatterpopup(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
@@ -491,9 +493,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else if (x[1] == "diary" || x[1] == 'diary?calander=day' || x[1] == 'diary?calander=week' || x[1] == 'diary?calander=month') {
             this.isTabShow = 5;
         } else if (x[1] == "time-entries") {
-            this.isTabShow = 6; 
+            this.isTabShow = 6;
         } else if (x[1] == "invoice") {
-            this.isTabShow = 7; 
+            this.isTabShow = 7;
         } else {
             this.isTabShow = 1;
         }
@@ -504,6 +506,22 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         setTimeout(() => {
             this.selectedIndex = undefined;
         }, 500);
+    }
+    createInvoice() {
+        const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                console.log(result);
+            }
+        });
+    }
+    createReceipt() {
+        const dialogRef = this._matDialog.open(ReceiptDilogComponent, { width: '100%', disableClose: true, data: null });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                console.log(result);
+            }
+        });
     }
 
 }

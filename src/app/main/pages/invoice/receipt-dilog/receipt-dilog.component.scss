@@ -30,11 +30,10 @@ body.theme-yellow-light .mat-dialog-container {
     padding-bottom: 0 !important;
 }
 
-.add_popup_padding {
-    padding: 0 23px;
-    line-height: 40px;
-}
-
+// .add_popup_padding {
+//     padding: 0 23px;
+//     line-height: 40px;
+// }
 .close.mat-icon {
     font-size: 16px;
     line-height: 24px;
@@ -75,10 +74,31 @@ body.theme-yellow-light .mat-dialog-container {
     top: 0;
 }
 
-.delete_main_popup {
+mat-icon.close_icon.mat-icon.material-icons.mat-icon-no-color {
+    float: right;
+    cursor: pointer;
+}
+
+.btn {
+    float: right;
+}
+
+mat-dialog-actions {
+    mat-spinner {
+        zoom: 0.2;
+        position: absolute;
+        right: 0;
+        left: 0;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+    }
+}
+
+.add_edit_receipt_main {
     background-color: #fff;
     // width: 50%;
-    width: 400px;
+    width: 850px;
     margin: 0 auto;
     // box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
     // -webkit-box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
@@ -99,35 +119,14 @@ body.theme-yellow-light .mat-dialog-container {
     border-top: 1px solid #ccc;
     margin-top: 15px !important;
     padding: 12px 24px !important;
-    display: inline-block;
-    width: 100%;
-    text-align: right;
 }
 
-.right_btn_child {
-    display: inline-block;
-    margin-right: 20px;
-}
-
-button.cancel.mat-button {
-    border: 1px solid #621da6bb;
-}
-
-.right_btn_child.cancel_confirm {
-    margin-right: 0;
-}
-
-@media screen and (max-width: 400px) {
-    .delete_main_popup {
+@media screen and (max-width: 900px) {
+    .add_edit_receipt_main {
         width: 95%;
     }
 }
 
-.border_div {
-    border: 1px solid #a7a49b;
-    padding: 10px;
-}
-
-.list_ui {
-    text-decoration: none;
+table.mat-table {
+    width: 100;
 }

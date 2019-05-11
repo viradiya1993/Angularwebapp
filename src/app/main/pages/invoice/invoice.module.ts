@@ -10,6 +10,7 @@ import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
 import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, MatDatepickerModule, MatInputModule, MatMenuModule, MatTableModule, MatToolbarModule, MatSlideToggleModule, MatCardModule, MatSelectModule, MatPaginatorModule, MatAutocompleteModule, MatTabsModule, MatProgressSpinnerModule, MatDialogModule } from '@angular/material';
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
+import { ReceiptDilogComponent } from './receipt-dilog/receipt-dilog.component';
 
 
 const routes = [
@@ -19,7 +20,11 @@ const routes = [
 @NgModule({
   declarations: [
     InvoiceComponent,
+    ReceiptDilogComponent,
   ],
+  entryComponents: [
+    ReceiptDilogComponent
+],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

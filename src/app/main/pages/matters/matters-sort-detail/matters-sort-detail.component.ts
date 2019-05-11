@@ -5,6 +5,8 @@ import * as $ from 'jquery';
 import { ToastrService } from 'ngx-toastr';
 import { isValid } from 'date-fns';
 import { TimersService } from '../../../../_services'
+import { MatterPopupComponent } from '../matter-popup/matter-popup.component';
+import { MatDialogConfig, MatDialog } from '@angular/material';
 @Component({
   selector: 'app-matters-sort-detail',
   templateUrl: './matters-sort-detail.component.html',
@@ -20,7 +22,7 @@ export class MattersSortDetailComponent implements OnInit {
   contectTitle = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   prevMatterArray: any[] = [];
   constructor(
-    private _fuseSidebarService: FuseSidebarService, private toastr: ToastrService, private TimersServiceI: TimersService,
+    private _fuseSidebarService: FuseSidebarService, private toastr: ToastrService, private TimersServiceI: TimersService, public dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -31,6 +33,18 @@ export class MattersSortDetailComponent implements OnInit {
   }
   addTimeEnrt() {
     this.TimersServiceI.addTimeEnrtS();
+  }
+  AddNewmatterpopup() {
+    const dialogConfig = new MatDialogConfig();
+    const dialogRef = this.dialog.open(MatterPopupComponent, {
+      width: '100%',
+      disableClose: true,
+      data: {
+        action: 'new'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => { });
   }
 
 

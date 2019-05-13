@@ -4,26 +4,23 @@
 <div class="popup_main_div add_edit_contact_main">
     <h2 mat-dialog-title>{{dialogTitle}}
         <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
-            <mat-icon>close</mat-icon>
-        </button>
+                <mat-icon>close</mat-icon>
+            </button>
     </h2>
     <div mat-dialog-content class="mat-typography main">
         <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
             <form name="matterdetailForm" id="matterdetailForm" [formGroup]="matterdetailForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
+                    <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline">
                         <mat-label>Class</mat-label>
                         <mat-select #value name="selected" formControlName="Client" (ngModelChange)="Classtype($event)">
                             <mat-option *ngFor="let Classoption of Classdata" value="{{Classoption.value}}">{{Classoption.name}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-                </div>
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
+                    <mat-form-field appearance="outline" class="example" fxFlex="40" class="pr-4">
                         <mat-label>Matter Num</mat-label>
                         <input name="MatterNum" matInput formControlName="MatterNum">
                     </mat-form-field>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <mat-checkbox formControlName="ACTIVE">Active Matter</mat-checkbox>
                 </div>
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">

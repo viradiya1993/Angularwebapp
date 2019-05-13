@@ -1,32 +1,35 @@
 <!-- [formGroup]="matterdetailForm" -->
-<div class=" one "  fxLayout="column" [formGroup]="matterdetailForm">
+<div class=" one " fxLayout="column" [formGroup]="matterdetailForm">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="100">
-          <mat-label>Client</mat-label>
-          <input matInput readonly formControlName="Clientmatter">
-          <mat-icon matSuffix (click)='ContactMatter()'>
-              <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-          </mat-icon> 
+            <mat-label>Client</mat-label>
+            <input matInput readonly formControlName="Clientmatter">
+            <mat-icon matSuffix (click)='ContactMatter()'>
+                <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+            </mat-icon>
         </mat-form-field>
     </div>
-    <div fxFlex="20">
+    <div fxFlex="100">
+        correspondents and parties
         <button type="button" (click)="addElement()"><mat-icon >add</mat-icon></button>
-    </div>    
+    </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <!-- <button (click)="addElement()" type="button">Add element</button> -->
         <mat-card>
-            <div class="customer mb-32" >
+            <div class="customer mb-32">
                 <table class="simple">
-                        <tr *ngFor="let item of ELEMENT_DATA">                        
-                            <td>{{item.position}}</td>
-                            <td>{{item.name}}</td>
-                            <td>{{item.weight}}</td>
-                            <td>{{item.symbol}}</td>
-                            <td><mat-icon (click)="RemoveElement()">close</mat-icon></td>
-                        </tr>   
-                        <br>  
-                 </table>
+                    <tr *ngFor="let item of ELEMENT_DATA">
+                        <td>{{item.position}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.weight}}</td>
+                        <td>{{item.symbol}}</td>
+                        <td>
+                            <mat-icon (click)="RemoveElement()">close</mat-icon>
+                        </td>
+                    </tr>
+                    <br>
+                </table>
             </div>
-       </mat-card>
+        </mat-card>
     </div>
 </div>

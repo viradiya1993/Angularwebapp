@@ -91,29 +91,26 @@
                                         matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                     </tr>
                                 </table>
+                                <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
                             </div>
-                            <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
-                            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                <div class="comment_text" fxFlex="100">
-                                    <mat-form-field appearance="outline">
-                                        <mat-label>Comment</mat-label>
-                                        <textarea name="Notes" matInput></textarea>
-                                    </mat-form-field>
-                                </div>
-                                <div class="total_text">
-                                    <mat-form-field appearance="outline" fxFlex="30">
-                                        <mat-label>Invoice Total</mat-label>
-                                        <input matInput>
-                                    </mat-form-field>
-                                    <mat-form-field appearance="outline" fxFlex="30">
-                                        <mat-label>GST</mat-label>
-                                        <input matInput>
-                                    </mat-form-field>
-                                    <mat-form-field appearance="outline" fxFlex="30">
-                                        <mat-label>Total</mat-label>
-                                        <input matInput>
-                                    </mat-form-field>
-                                </div>
+                            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
+                                    <mat-label>Comment</mat-label>
+                                    <textarea name="Notes" matInput></textarea>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" fxFlex="30" class="example" class="pr-4">
+                                    <mat-label>Invoice Total</mat-label>
+                                    <input matInput>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="30" class="example" class="pr-4">
+                                    <mat-label>GST</mat-label>
+                                    <input matInput>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="30" class="example" class="pr-4">
+                                    <mat-label>Total</mat-label>
+                                    <input matInput>
+                                </mat-form-field>
                             </div>
                         </mat-tab>
                         <mat-tab label="Receipts">

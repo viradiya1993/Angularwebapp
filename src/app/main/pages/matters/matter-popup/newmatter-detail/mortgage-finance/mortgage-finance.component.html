@@ -1,0 +1,50 @@
+<div class=" one "  fxLayout="column" [formGroup]="matterdetailForm"> 
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Principal Advanced</mat-label>
+          <input matInput type="number" formControlName="PrincipalAdvanced">         
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Interest Rate</mat-label>
+          <input matInput type="number" formControlName="InterestRate">         
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Commencement Date</mat-label>
+            <input (dateInput)="CommencementDate('input', $event)" formControlName="CommencementDate1" (dateChange)="CommencementDate('change', $event)" matInput name="CommencementDate"  [matDatepicker]="CommencementDate">
+            <mat-datepicker-toggle matSuffix [for]="CommencementDate"></mat-datepicker-toggle>
+            <mat-datepicker #CommencementDate></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Expirty Date</mat-label>
+            <input (dateInput)="ExpirtyDate('input', $event)" formControlName="ExpirtyDate" (dateChange)="ExpirtyDate('change', $event)" matInput name="ExpirtyDate"  [matDatepicker]="ExpirtyDate">
+            <mat-datepicker-toggle matSuffix [for]="ExpirtyDate"></mat-datepicker-toggle>
+            <mat-datepicker #ExpirtyDate></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Disacharge Date</mat-label>
+            <input (dateInput)="DisachargeDate('input', $event)"  formControlName="DisachargeDate" (dateChange)="DisachargeDate('change', $event)" matInput name="DisachargeDate"  [matDatepicker]="DisachargeDate">
+            <mat-datepicker-toggle matSuffix [for]="DisachargeDate"></mat-datepicker-toggle>
+            <mat-datepicker #DisachargeDate></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Folio Identifier</mat-label>
+          <input matInput formControlName="FolioIdentifier">         
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Security Property</mat-label>
+            <textarea name="SecurityProperty" formControlName="SecurityProperty" matInput></textarea>                       
+        </mat-form-field>
+    </div>    
+</div>

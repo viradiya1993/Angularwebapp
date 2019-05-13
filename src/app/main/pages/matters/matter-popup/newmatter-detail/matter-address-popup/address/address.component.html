@@ -1,0 +1,54 @@
+<div class=" one "  fxLayout="column"> 
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Building Name</mat-label>
+          <input matInput>         
+        </mat-form-field>
+    </div>   
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
+            <mat-label>Unit No.</mat-label>
+            <input  matInput name="Unit No">              
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
+            <mat-label>Street No</mat-label>
+            <input  matInput name="StreetNo">              
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="10" class="pr-4">
+            <mat-label>To</mat-label>
+            <input  matInput name="To">              
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="30" class="pr-4">
+            <mat-label>Street</mat-label>
+            <input name="Street" matInput>
+        </mat-form-field>
+        <mat-form-field  fxFlex="20" class="pr-4" appearance="outline">
+            <mat-label>Street Type</mat-label>
+            <mat-select #value name="selected" >
+                <mat-option>1</mat-option>
+            </mat-select>
+        </mat-form-field>        
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline"  fxFlex="30" class="pr-4">
+            <mat-label>Suburb</mat-label>
+            <input  matInput name="Suburb">              
+        </mat-form-field>        
+        <mat-form-field  fxFlex="50" class="pr-4" appearance="outline">
+            <mat-label>State</mat-label>
+            <mat-select #value name="selected" >
+                <mat-option>1</mat-option>
+            </mat-select>
+        </mat-form-field> 
+        <mat-form-field appearance="outline"  fxFlex="20" class="pr-4">
+            <mat-label>Post Code</mat-label>
+            <input  matInput name="PostCode">              
+        </mat-form-field>        
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+            <mat-label>Nature Of Building</mat-label>
+            <input  matInput name="NatureOfBulding">              
+        </mat-form-field> 
+    </div>
+</div>

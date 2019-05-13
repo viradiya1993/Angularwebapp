@@ -13,8 +13,8 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
                         <mat-label>Class</mat-label>
-                        <mat-select #value name="selected" formControlName="Client">
-                            <mat-option *ngFor="let Classoption of Classdata" value="Classoption.value">{{Classoption.name}}</mat-option>
+                        <mat-select #value name="selected" formControlName="Client" (ngModelChange)="Classtype($event)">
+                            <mat-option *ngFor="let Classoption of Classdata" value="{{Classoption.value}}">{{Classoption.name}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -44,6 +44,22 @@
                             <app-rates [matterdetailForm]="matterdetailForm"></app-rates>
                         </mat-tab>
                         <mat-tab label="Details">
+                            <app-commercial *ngIf="classtype=='Commercial'" [matterdetailForm]="matterdetailForm"></app-commercial>
+                            <app-compensation *ngIf="classtype=='Compensation' || classtype=='Employement' || classtype=='Medical Negligence' || classtype=='Public Liability' || classtype=='Total and Permanent D' || classtype=='Working injuries Damage' || classtype=='Workers Compensatoior' "
+                                [matterdetailForm]="matterdetailForm"></app-compensation>
+                            <app-compulsory-acquisition *ngIf="classtype=='Compulsory Acquisition'" [matterdetailForm]="matterdetailForm"></app-compulsory-acquisition>
+                            <app-criminal *ngIf="classtype=='Criminal'" [matterdetailForm]="matterdetailForm"></app-criminal>
+                            <app-family *ngIf="classtype=='Family law'" [matterdetailForm]="matterdetailForm"></app-family>
+                            <app-immigration *ngIf="classtype=='Immigration'" [matterdetailForm]="matterdetailForm"></app-immigration>
+                            <app-leasing *ngIf="classtype=='Leasing'" [matterdetailForm]="matterdetailForm"></app-leasing>
+                            <app-litigation *ngIf="classtype=='Litigation'" [matterdetailForm]="matterdetailForm"></app-litigation>
+                            <app-maritime *ngIf="classtype=='Maritime'" [matterdetailForm]="matterdetailForm"></app-maritime>
+                            <app-mortgage-finance *ngIf="classtype=='Mortgage Finance'" [matterdetailForm]="matterdetailForm"></app-mortgage-finance>
+                            <app-property-purchase *ngIf="classtype=='Property Purchase'" [matterdetailForm]="matterdetailForm"></app-property-purchase>
+                            <app-property *ngIf="classtype=='Property Sale'" [matterdetailForm]="matterdetailForm"></app-property>
+                            <app-strata *ngIf="classtype=='Strata'" [matterdetailForm]="matterdetailForm"></app-strata>
+                            <app-trademark-ip *ngIf="classtype=='Trademark/IP'" [matterdetailForm]="matterdetailForm"></app-trademark-ip>
+                            <app-wills-estate *ngIf="classtype=='Wills and estate'" [matterdetailForm]="matterdetailForm"></app-wills-estate>
                         </mat-tab>
                         <mat-tab label="Others">
                             <app-others [matterdetailForm]="matterdetailForm"></app-others>

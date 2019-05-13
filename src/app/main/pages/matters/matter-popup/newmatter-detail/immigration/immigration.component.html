@@ -1,0 +1,52 @@
+<div class=" one "  fxLayout="column" [formGroup]="matterdetailForm"> 
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Visa Type</mat-label>
+          <input matInput formControlName="VisaType">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Assets</mat-label>
+          <input matInput type="number" formControlName="Assets">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Visa Status</mat-label>
+          <input matInput formControlName="VisaStatus">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Anticipated Entry</mat-label>
+            <input (dateInput)="AnticipatedEntry('input', $event)" formControlName="AnticipatedEntry" (dateChange)="AnticipatedEntry('change', $event)" matInput name="AnticipatedEntry"  [matDatepicker]="AnticipatedEntry">
+            <mat-datepicker-toggle matSuffix [for]="AnticipatedEntry"></mat-datepicker-toggle>
+            <mat-datepicker #AnticipatedEntry></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Lodgement Date</mat-label>
+            <input (dateInput)="LodgementDate('input', $event)" formControlName="LodgementDate" (dateChange)="LodgementDate('change', $event)" matInput name="LodgementDate"  [matDatepicker]="LodgementDate">
+            <mat-datepicker-toggle matSuffix [for]="LodgementDate"></mat-datepicker-toggle>
+            <mat-datepicker #LodgementDate></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Visa Expiry Date</mat-label>
+            <input (dateInput)="VisaExpiryDate('input', $event)" formControlName="VisaExpiryDate" (dateChange)="VisaExpiryDate('change', $event)" matInput name="VisaExpiryDate"  [matDatepicker]="VisaExpiryDate">
+            <mat-datepicker-toggle matSuffix [for]="VisaExpiryDate"></mat-datepicker-toggle>
+            <mat-datepicker #VisaExpiryDate></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Decision Due Date</mat-label>
+            <input (dateInput)="DecisionDueDate('input', $event)" formControlName="DecisionDueDate" (dateChange)="DecisionDueDate('change', $event)" matInput name="DecisionDueDate"  [matDatepicker]="DecisionDueDate">
+            <mat-datepicker-toggle matSuffix [for]="DecisionDueDate"></mat-datepicker-toggle>
+            <mat-datepicker #DecisionDueDate></mat-datepicker>
+        </mat-form-field>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<!-- [formGroup]="matterdetailForm" -->
+<div class=" one "  fxLayout="column" [formGroup]="matterdetailForm">    
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Address</mat-label>
+          <input matInput readonly formControlName="Address">
+          <mat-icon matSuffix (click)='ContactMatter()'>
+              <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+          </mat-icon>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Client Valuation</mat-label>
+          <input matInput type="number" formControlName="ClientValuation">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Auth. Valuation</mat-label>
+          <input matInput type="number" formControlName="AuthValuation">
+        </mat-form-field>
+    </div>
+   
+  </div>

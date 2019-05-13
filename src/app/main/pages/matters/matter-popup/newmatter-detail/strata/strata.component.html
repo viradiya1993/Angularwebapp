@@ -1,0 +1,60 @@
+<div class=" one "  fxLayout="column" [formGroup]="matterdetailForm"> 
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Strata Plan Number</mat-label>
+          <input matInput formControlName="StrataPlanNumber">         
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Expiration Date</mat-label>
+            <input (dateInput)="ExpirationDate('input', $event)" formControlName="ExpirationDate" (dateChange)="ExpirationDate('change', $event)" matInput name="ExpirationDate"  [matDatepicker]="ExpirationDate">
+            <mat-datepicker-toggle matSuffix [for]="ExpirationDate"></mat-datepicker-toggle>
+            <mat-datepicker #ExpirationDate></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Lot Number</mat-label>
+          <input matInput formControlName="LotNumber">         
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>By Low Type</mat-label>
+          <input matInput formControlName="ByLowType">         
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>By Low No</mat-label>
+          <input matInput formControlName="ByLowNo">         
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Resolution Date</mat-label>
+            <input (dateInput)="ResolutionDate('input', $event)" formControlName="ResolutionDate" (dateChange)="ResolutionDate('change', $event)" matInput name="ResolutionDate"  [matDatepicker]="ResolutionDate">
+            <mat-datepicker-toggle matSuffix [for]="ResolutionDate"></mat-datepicker-toggle>
+            <mat-datepicker #ResolutionDate></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Folio Identifier</mat-label>
+          <input matInput formControlName="FolioIdentifier1">         
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Aggr. of Entitlement</mat-label>
+          <input matInput formControlName="AggrofEntitlement">         
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Total Units</mat-label>
+          <input matInput formControlName="TotalUnits">         
+        </mat-form-field>
+    </div>
+</div>

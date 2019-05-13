@@ -1,0 +1,60 @@
+<div class=" one "  fxLayout="column" [formGroup]="matterdetailForm"> 
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Address</mat-label>
+          <input matInput readonly formControlName="Address2">
+          <mat-icon matSuffix (click)='Matteraddress()'>
+              <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+          </mat-icon>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <section class="example-section">
+            <mat-checkbox formControlName="LeaseReceived">Lease Received</mat-checkbox>
+        </section>
+    </div>   
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Date Executed </mat-label>
+            <input (dateInput)="DateExecuted('input', $event)" formControlName="DateExecuted" (dateChange)="DateExecuted('change', $event)" matInput name="DateExecuted"  [matDatepicker]="DateExecuted">
+            <mat-datepicker-toggle matSuffix [for]="DateExecuted"></mat-datepicker-toggle>
+            <mat-datepicker #DateExecuted></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Valid Until</mat-label>
+            <input (dateInput)="ValidUntil('input', $event)" formControlName="ValidUntil" (dateChange)="ValidUntil('change', $event)" matInput name="ValidUntil"  [matDatepicker]="ValidUntil">
+            <mat-datepicker-toggle matSuffix [for]="ValidUntil"></mat-datepicker-toggle>
+            <mat-datepicker #ValidUntil></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Option Date</mat-label>
+            <input (dateInput)="OptionDate('input', $event)"  formControlName="OptionDate" (dateChange)="OptionDate('change', $event)" matInput name="OptionDate"  [matDatepicker]="OptionDate">
+            <mat-datepicker-toggle matSuffix [for]="OptionDate"></mat-datepicker-toggle>
+            <mat-datepicker #OptionDate></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Term</mat-label>
+            <input matInput formControlName="Term">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Disclosure Date</mat-label>
+            <input (dateInput)="DisclosureDate('input', $event)" formControlName="DisclosureDate" (dateChange)="DisclosureDate('change', $event)" matInput name="DisclosureDate"  [matDatepicker]="DisclosureDate">
+            <mat-datepicker-toggle matSuffix [for]="DisclosureDate"></mat-datepicker-toggle>
+            <mat-datepicker #DisclosureDate></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Registered Number</mat-label>
+            <input matInput formControlName="RegisteredNumber">
+        </mat-form-field>
+    </div>
+</div>

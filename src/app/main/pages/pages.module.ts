@@ -7,6 +7,7 @@ import { MattersModule } from './matters/matters.module';
 import { TimeEntriesModule } from './time-entries/time-entries.module';
 import { DiaryModule } from './diary/diary.module';
 import { InvoiceModule } from './invoice/invoice.module';
+import { SpendMoneyModule } from './spend-money/spend-money.module';
 
 const appRoutes: Routes = [
   { path: 'matters', loadChildren: './matters/matters.module#MattersModule' },
@@ -14,6 +15,7 @@ const appRoutes: Routes = [
   { path: 'legal-details', loadChildren: './legal-details/legal-details.module#LegalDetailsModule' },
   { path: 'time-entries', loadChildren: './time-entries/time-entries.module#TimeEntriesModule' },
   { path: 'invoice', loadChildren: './invoice/invoice.module#InvoiceModule' },
+  { path: 'spend-money', loadChildren: './spend-money/spend-money.module#SpendMoneyModule' },
   { path: 'diary', loadChildren: './diary/diary.module#DiaryModule' }
 ];
 
@@ -28,6 +30,7 @@ const appRoutes: Routes = [
     TimeEntriesModule,
     DiaryModule,
     InvoiceModule,
+    SpendMoneyModule,
   ]
 })
 export class PagesModule { }  

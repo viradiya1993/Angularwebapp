@@ -44,50 +44,179 @@
                 <div class="one">
                     <mat-tab-group>
                         <mat-tab label="Time Entries" class="time-entries">
+                                <div class="example-containerdata">
+                                    <table mat-table #table [dataSource]="invoiceData" [@animateStagger]="{value:'50'}">
+                                        <ng-container matColumnDef="Invoice">
+                                            <th mat-header-cell *matHeaderCellDef>Invoice</th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <p class="job-title text-truncate">
+                                                    {{row.Invoice}}
+                                                </p>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="Total">
+                                            <th mat-header-cell *matHeaderCellDef>Total</th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <p class="company text-truncate">
+                                                    {{row.Total }}
+                                                </p>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="Outstanding">
+                                            <th mat-header-cell *matHeaderCellDef>Total</th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <p class="company text-truncate">
+                                                    {{row.Outstanding }}
+                                                </p>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="Allocated">
+                                            <th mat-header-cell *matHeaderCellDef>Total</th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <p class="company text-truncate">
+                                                    {{row.Allocated }}
+                                                </p>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="Matter">
+                                            <th mat-header-cell *matHeaderCellDef>Matter</th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <p class="company text-truncate">
+                                                    {{row.Matter }}
+                                                </p>
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                        <tr mat-row [style.background]="highlightedRows == row.PERSONGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" [ngClass]="highlightedRows == row.PERSONGUID ? 'row-text-colore' : ''" class="contact" (click)="editContact(row.PERSONGUID);highlightedRows = row.PERSONGUID"
+                                            matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                        </tr>
+                                    </table>
+                                </div>
+                           <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+                            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                <div class="comment_text" fxFlex="100">
+                                    <mat-form-field appearance="outline" >
+                                        <mat-label>Comment</mat-label>
+                                        <textarea name="Notes" matInput ></textarea>
+                                    </mat-form-field>
+                                </div>
+                                <div class="total_text" >
+                                    <mat-form-field appearance="outline" fxFlex="30">
+                                        <mat-label>Invoice Total</mat-label>
+                                        <input matInput>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" fxFlex="30">
+                                        <mat-label>GST</mat-label>
+                                        <input matInput>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" fxFlex="30">
+                                        <mat-label>Total</mat-label>
+                                        <input matInput>
+                                    </mat-form-field> 
+                                </div> 
+                            </div> 
+                        </mat-tab>
+                        <mat-tab label="Receipts">
+                                <div class="example-containerdata">
+                                    <table mat-table #table [dataSource]="ReceiptsData" [@animateStagger]="{value:'50'}">
+                                        <ng-container matColumnDef="Receipt">
+                                            <th mat-header-cell *matHeaderCellDef>Receipt</th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <p class="job-title text-truncate">
+                                                    {{row.Receipt}}
+                                                </p>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="Received">
+                                            <th mat-header-cell *matHeaderCellDef>Received</th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <p class="company text-truncate">
+                                                    {{row.Received }}
+                                                </p>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="type">
+                                            <th mat-header-cell *matHeaderCellDef>Type</th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <p class="company text-truncate">
+                                                    {{row.type }}
+                                                </p>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="amount">
+                                            <th mat-header-cell *matHeaderCellDef>Amount</th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <p class="company text-truncate">
+                                                    {{row.amount }}
+                                                </p>
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+
+                                        <tr mat-row [style.background]="highlightedRows == row.PERSONGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" [ngClass]="highlightedRows == row.PERSONGUID ? 'row-text-colore' : ''" class="contact" (click)="editContact(row.PERSONGUID);highlightedRows = row.PERSONGUID"
+                                            matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                        </tr>
+                                    </table>
+                                </div>
+                                <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+                               <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
+                                        <mat-label>Invoice Total</mat-label>
+                                        <input  matInput name="InvoiceTotal">              
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                                        <mat-label>Outstanding</mat-label>
+                                        <input name="Outstanding" matInput>
+                                    </mat-form-field>
+                                </div>  
+                                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <button mat-raised-button>Write Off Outstanding Balance</button>
+                                </div> 
+                        </mat-tab>
+                        <mat-tab label="Interset Chatges">
                             <div class="example-containerdata">
-                                <table mat-table #table [dataSource]="invoiceData" [@animateStagger]="{value:'50'}">
-                                    <ng-container matColumnDef="Invoice">
+                                <table mat-table #table [dataSource]="IntersetChatgesData" [@animateStagger]="{value:'50'}">
+                                    <ng-container matColumnDef="invoice">
                                         <th mat-header-cell *matHeaderCellDef>Invoice</th>
                                         <td mat-cell *matCellDef="let row">
                                             <p class="job-title text-truncate">
-                                                {{row.Invoice}}
+                                                {{row.invoice}}
                                             </p>
                                         </td>
                                     </ng-container>
-                                    <ng-container matColumnDef="Total">
+                                    <ng-container matColumnDef="date">
+                                        <th mat-header-cell *matHeaderCellDef>Date</th>
+                                        <td mat-cell *matCellDef="let row">
+                                            <p class="company text-truncate">
+                                                {{row.date }}
+                                            </p>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="total">
                                         <th mat-header-cell *matHeaderCellDef>Total</th>
                                         <td mat-cell *matCellDef="let row">
                                             <p class="company text-truncate">
-                                                {{row.Total }}
+                                                {{row.total }}
                                             </p>
                                         </td>
                                     </ng-container>
                                     <ng-container matColumnDef="Outstanding">
-                                        <th mat-header-cell *matHeaderCellDef>Total</th>
+                                        <th mat-header-cell *matHeaderCellDef>Outstanding</th>
                                         <td mat-cell *matCellDef="let row">
                                             <p class="company text-truncate">
                                                 {{row.Outstanding }}
                                             </p>
                                         </td>
                                     </ng-container>
-                                    <ng-container matColumnDef="Allocated">
-                                        <th mat-header-cell *matHeaderCellDef>Total</th>
-                                        <td mat-cell *matCellDef="let row">
-                                            <p class="company text-truncate">
-                                                {{row.Allocated }}
-                                            </p>
-                                        </td>
-                                    </ng-container>
-                                    <ng-container matColumnDef="Matter">
-                                        <th mat-header-cell *matHeaderCellDef>Matter</th>
-                                        <td mat-cell *matCellDef="let row">
-                                            <p class="company text-truncate">
-                                                {{row.Matter }}
-                                            </p>
-                                        </td>
-                                    </ng-container>
+                                    <ng-container matColumnDef="comment">
+                                            <th mat-header-cell *matHeaderCellDef>Comment</th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <p class="company text-truncate">
+                                                    {{row.comment }}
+                                                </p>
+                                            </td>
+                                        </ng-container>
                                     <tr mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-
                                     <tr mat-row [style.background]="highlightedRows == row.PERSONGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" [ngClass]="highlightedRows == row.PERSONGUID ? 'row-text-colore' : ''" class="contact" (click)="editContact(row.PERSONGUID);highlightedRows = row.PERSONGUID"
                                         matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                     </tr>
@@ -95,8 +224,6 @@
                             </div>
                             <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
                         </mat-tab>
-                        <mat-tab label="Receipts"> Content 2 </mat-tab>
-                        <mat-tab label="Interset Chatges"> Content 3 </mat-tab>
                     </mat-tab-group>
                 </div>
             </form>

@@ -13,8 +13,12 @@ import { fuseAnimations } from '@fuse/animations';
 export class InvoiceDetailComponent implements OnInit {
   invoiceDetailForm: FormGroup;
   invoiceData: any;
+  IntersetChatgesData: any;
+  ReceiptsData: any;
   paginator: any;
-
+  displayedColumnsTime: string[] = ['Date', 'FE', 'Text', 'Charge', 'GST'];
+  displayedColumnsRecipt: string[] = ['Receipt', 'Received', 'Type', 'Amount'];
+  displayedColumnsInterest: string[] = ['Invoice', 'Date', 'Total', 'Outstanding', 'Comment'];
   constructor(
     private _formBuilder: FormBuilder
   ) { }

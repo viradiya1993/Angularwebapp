@@ -1,0 +1,48 @@
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+</div>
+<div class="popup_main_div correspond_dailog_main">
+    <h2 mat-dialog-title>Correspond Details
+        <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+    </h2>
+    <div mat-dialog-content class="mat-typography main">
+        <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+            <form name="correspondForm" id="correspondForm" [formGroup]="correspondForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field class="example" fxFlex="33" class="pr-4" appearance="outline">
+                        <mat-label>Contact Type</mat-label>
+                        <mat-select #value name="selected" formControlName="ContactType">
+                            <mat-option value="s">ss</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
+                        <mat-label>Contact Name</mat-label>
+                        <input matInput readonly formControlName="ContactName">
+                        <mat-icon matSuffix (click)="selectMatter();">
+                            <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                        </mat-icon>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
+                        <mat-label>Solicitor Name</mat-label>
+                        <input matInput readonly formControlName="SolicitorName">
+                        <mat-icon matSuffix (click)="selectFeeEarner();">
+                            <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                        </mat-icon>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" class="example" fxFlex="99" class="pr-4">
+                        <mat-label>Reference</mat-label>
+                        <input matInput formControlName="Reference">
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+    </div>
+    <mat-dialog-actions align="end" class="popup_ftr">
+        <button mat-raised-button color="accent" [disabled]="isspiner" [mat-dialog-close]="true"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don`t Save</button>
+    </mat-dialog-actions>
+</div>

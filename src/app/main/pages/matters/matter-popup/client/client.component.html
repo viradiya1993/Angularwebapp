@@ -11,10 +11,9 @@
     </div>
     <div fxFlex="100">
         correspondents and parties
-        <button type="button" (click)="addElement()"><mat-icon >add</mat-icon></button>
+        <button mat-raised-button color="accent" (click)="Addcorres_party()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>add corres./Party</button>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <!-- <button (click)="addElement()" type="button">Add element</button> -->
         <mat-card>
             <div class="customer mb-32">
                 <table class="simple">

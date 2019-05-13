@@ -41,6 +41,7 @@ import { TitleComponent } from './matter-popup/newmatter-detail/matter-address-p
 import { CouncilComponent } from './matter-popup/newmatter-detail/matter-address-popup/council/council.component';
 import { CrownAllotmentComponent } from './matter-popup/newmatter-detail/matter-address-popup/crown-allotment/crown-allotment.component';
 
+
 const routes = [
   { path: '', component: MattersComponent, canActivate: [AuthGuard] }
 ];
@@ -106,6 +107,7 @@ const routes = [
     MatDialogModule,
     MatGridListModule,
     MatRadioModule,
+    MatGridListModule,
   ],
   exports: [
     MattersComponent

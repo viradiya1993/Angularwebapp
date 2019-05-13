@@ -35,6 +35,7 @@
             <img *ngIf="item.TITLE=='Diary'" src="assets/icons/web_app/icon_diary_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
             <img *ngIf="item.TITLE=='Invoice'" src="assets/icons/web_app/icon_invoice_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
             <img *ngIf="item.TITLE=='Spend money'" src="assets/icons/web_app/icon_expenses_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+            <img *ngIf="item.TITLE=='Receive money'" src="assets/icons/web_app/icon_receipt_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
         </mat-icon>
         <span class="nav-link-title">{{item.TITLE}}</span>
         <span class="nav-link-badge" *ngIf="item.badge" [translate]="item.badge.translate" [ngStyle]="{'background-color': item.badge.bg,'color': item.badge.fg}">

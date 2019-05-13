@@ -16,6 +16,7 @@ const appRoutes: Routes = [
   { path: 'time-entries', loadChildren: './time-entries/time-entries.module#TimeEntriesModule' },
   { path: 'invoice', loadChildren: './invoice/invoice.module#InvoiceModule' },
   { path: 'spend-money', loadChildren: './spend-money/spend-money.module#SpendMoneyModule' },
+  { path: 'receive-money', loadChildren: './receive-money/receive-money.module#ReceiveMoneyModule' },
   { path: 'diary', loadChildren: './diary/diary.module#DiaryModule' }
 ];
 

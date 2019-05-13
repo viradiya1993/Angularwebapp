@@ -520,6 +520,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 7;
         }  else if (x[1] == "spend-money") {
             this.isTabShow = 8;
+        }else if (x[1] == "receive-money") {
+            this.isTabShow = 9;
         } else {
             this.isTabShow = 1;
         }

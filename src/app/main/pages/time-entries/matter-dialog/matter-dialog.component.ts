@@ -31,7 +31,7 @@ export class MatterDialogComponent implements OnInit {
     private dialog: MatDialog,
     private mattersService: MattersService,
     private toastr: ToastrService,
-    private Timersservice: TimersService,
+    private Timersservice: TimersService
   ) {
     this.matterFilterForm = this.fb.group({ MatterFilter: [''], UserFilter: [''], searchFilter: [''], InvoiceFilter: [''], });
   }

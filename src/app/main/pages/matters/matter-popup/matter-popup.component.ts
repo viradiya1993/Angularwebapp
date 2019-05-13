@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MattersService } from '../../../../_services';
+import { MattersService, TimersService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
@@ -27,7 +27,8 @@ export class MatterPopupComponent implements OnInit {
     private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<MatterPopupComponent>,
     public datepipe: DatePipe,
-    @Inject(MAT_DIALOG_DATA) public _data: any) {
+    @Inject(MAT_DIALOG_DATA) public _data: any
+  ) {
     this.action = _data.action;
     this.dialogTitle = this.action === 'edit' ? 'Edit Matter' : 'New Matter';
   }
@@ -35,6 +36,7 @@ export class MatterPopupComponent implements OnInit {
 
   matterdetailForm: FormGroup;
   ngOnInit() {
+    this.isLoadingResults = true;
     this.Classdata = [
       { name: 'Internal', value: 'Internal' },
       { name: 'General', value: 'General' },
@@ -71,23 +73,19 @@ export class MatterPopupComponent implements OnInit {
       MatterNum: [''],
       ACTIVE: [''],
       MatterDescription: [''],
-
       // general
-
       ClientReference: [''],
-      CommencementDate: [new Date()],
+      CommencementDate: [],
       OtherRef: [''],
-      CostsAgreementDate: [new Date()],
-      CompletedDate: [new Date()],
+      CostsAgreementDate: [],
+      CompletedDate: [],
       EstimateMinimum: [''],
       MatterOwner: [''],
       PrimaryFeeEarner: [''],
       Ex_GST: [''],
       Notes: [''],
-
       // client
       Clientmatter: [''],
-
       // rates
       Radiogroup1: [''],
       Checkbox: [''],
@@ -96,13 +94,11 @@ export class MatterPopupComponent implements OnInit {
       PerDay: [''],
       FixedPrice: [''],
       Ex_GSTs: [''],
-
       // Details
       // commercial
       ClassofShares: [''],
       NumberofShares: [''],
       Consideration: [''],
-
       // compensation
       AccidentDate: [''],
       NoticeofInjury: [''],
@@ -118,14 +114,11 @@ export class MatterPopupComponent implements OnInit {
       Investigation: [''],
       SettlementDate: [''],
       HearingDates: [''],
-
       // compulsory-acquisition
       Address: [''],
       ClientValuation: [''],
       AuthValuation: [''],
-
       // criminal
-
       BriefServiceDate: [''],
       CommittalDate: [''],
       ReplyDate: [''],
@@ -277,15 +270,14 @@ export class MatterPopupComponent implements OnInit {
       Industry: [''],
       Referrer: [''],
       ArchiveNo: [''],
-      ArchiveDate: [new Date()]
+      ArchiveDate: []
     });
-
     let postDatas = { 'LookupType': 'Matter Class' };
     this._mattersService.getMattersClasstype(postDatas).subscribe(responses => {
-      console.log(responses.DATA);
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         let currentMatter = responses.DATA.LOOKUPS;
       }
+      this.isLoadingResults = false;
     });
 
 

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { MatDatepickerInputEvent } from '@angular/material';
+import { TimersService } from 'app/_services';
 
 @Component({
   selector: 'app-general',
@@ -10,7 +11,7 @@ import { MatDatepickerInputEvent } from '@angular/material';
 })
 export class GeneralComponent implements OnInit {
   @Input() matterdetailForm: FormGroup;
-  constructor(public datepipe: DatePipe) {
+  constructor(public datepipe: DatePipe, private Timersservice: TimersService) {
 
   }
 
@@ -29,6 +30,27 @@ export class GeneralComponent implements OnInit {
   }
   ngOnInit() {
 
+  }
+  selectMatter() {
+    let d = { 'Active': 'yes' };
+    this.Timersservice.GetUsers(d).subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        console.log(response.DATA);
+      }
+    }, err => {
+      console.log(err);
+    });
+  }
+
+  selectFeeEarner() {
+    let d = { 'Active': 'yes' };
+    this.Timersservice.GetUsers(d).subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        console.log(response.DATA);
+      }
+    }, err => {
+      console.log(err);
+    });
   }
 
 }

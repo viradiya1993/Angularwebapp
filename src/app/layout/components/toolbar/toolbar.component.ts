@@ -507,7 +507,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }, 500);
     }
 
-    //Invoice related funtion like create update delete view
+    // ****************************************** START Invoice related funtion like create update delete view*********************************************
     createInvoice() {
         const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
@@ -516,7 +516,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-
 
     createReceipt() {
         const dialogRef = this._matDialog.open(ReceiptDilogComponent, { width: '100%', disableClose: true, data: null });
@@ -534,6 +533,27 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
+    deleteInvoice(): void {
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // let WORKITEMGUID = localStorage.getItem('edit_WORKITEMGUID');
+                // let postData = { FormAction: "delete", WorkItemGuid: WORKITEMGUID }
+                // this.TimersServiceI.SetWorkItems(postData).subscribe(res => {
+                //     if (res.STATUS == "success" && res.CODE == 200) {
+                //         $('#refreshTimeEntryTab').click();
+                //         this.toastr.success('Delete successfully');
+                //     }
+                // });
+            }
+            this.confirmDialogRef = null;
+        });
+    }
+        // ******************************************END Invoice related funtion like create update delete view*********************************************
 
 }
 //2 pair Data Convert

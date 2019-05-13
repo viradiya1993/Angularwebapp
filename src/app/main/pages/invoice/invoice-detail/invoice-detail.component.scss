@@ -95,7 +95,7 @@ mat-dialog-actions {
     }
 }
 
-.add_edit_receipt_main {
+.view_invoice_main {
     background-color: #fff;
     // width: 50%;
     width: 850px;
@@ -104,6 +104,12 @@ mat-dialog-actions {
     // -webkit-box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
     box-shadow: none;
     border-radius: 4px;
+}
+
+@media screen and (max-width: 900px) {
+    .view_invoice_main {
+        width: 95%;
+    }
 }
 
 .mat-dialog-title {
@@ -121,17 +127,11 @@ mat-dialog-actions {
     padding: 12px 24px !important;
 }
 
-@media screen and (max-width: 900px) {
-    .add_edit_receipt_main {
-        width: 95%;
-    }
-}
-
 table.mat-table {
     width: 100%;
 }
 
-.invoice_receipt_main_div .example-containerdata {
-    height: 250px;
+.time-entries.example-containerdata {
+    height: 300px;
     overflow: auto;
 }

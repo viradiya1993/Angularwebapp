@@ -23,6 +23,7 @@ import { TimeEntryDialogComponent } from 'app/main/pages/time-entries/time-entry
 import { MatterPopupComponent } from 'app/main/pages/matters/matter-popup/matter-popup.component';
 import { MatterDialogComponent } from 'app/main/pages/time-entries/matter-dialog/matter-dialog.component';
 import { ReceiptDilogComponent } from 'app/main/pages/invoice/receipt-dilog/receipt-dilog.component';
+import { InvoiceDetailComponent } from 'app/main/pages/invoice/invoice-detail/invoice-detail.component';
 
 
 @Component({
@@ -507,6 +508,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.selectedIndex = undefined;
         }, 500);
     }
+
+    //Invoice related funtion like create update delete view
     createInvoice() {
         const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
@@ -515,8 +518,18 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
+
+
     createReceipt() {
         const dialogRef = this._matDialog.open(ReceiptDilogComponent, { width: '100%', disableClose: true, data: null });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                console.log(result);
+            }
+        });
+    }
+    InvoiceDetail() {
+        const dialogRef = this._matDialog.open(InvoiceDetailComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 console.log(result);

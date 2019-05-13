@@ -75,6 +75,7 @@
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    Unallocated
                     <mat-form-field appearance="outline" class="example" fxFlex="60" class="pr-4">
                         <mat-label>Unallocated</mat-label>
                         <input matInput placeholder="Unallocated" formControlName="Unallocated">
@@ -85,7 +86,7 @@
                     <button mat-raised-button color="accent"><mat-spinner *ngIf="isspiner"></mat-spinner>Clear Allocations</button>
                     <button mat-raised-button color="accent"><mat-spinner *ngIf="isspiner"></mat-spinner>Auto Allocate</button>
                 </div>
-                <div class="one">
+                <div class="one invoice_receipt_main_div">
                     <div class="example-containerdata">
                         <table mat-table #table [dataSource]="PrepareReceiptData" [@animateStagger]="{value:'50'}">
                             <ng-container matColumnDef="Invoice">

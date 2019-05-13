@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialogRef, MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatDialogRef, MatPaginator, MatDialog, MatTableDataSource } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { fuseAnimations } from '@fuse/animations';
+import { ContactSelectDialogComponent } from '../../contact/contact-select-dialog/contact-select-dialog.component';
 
 @Component({
   selector: 'app-receipt-dilog',
@@ -18,6 +19,7 @@ export class ReceiptDilogComponent implements OnInit {
     private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<ReceiptDilogComponent>,
     public datepipe: DatePipe,
+    public MatDialog: MatDialog,
   ) {
 
   }
@@ -43,6 +45,15 @@ export class ReceiptDilogComponent implements OnInit {
       Show: [''],
       Unallocated: [''],
       Amount: [''],
+    });
+  }
+  selectClient() {
+    const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result) {
+        this.PrepareReceiptForm.controls['client'].setValue('');
+      }
     });
   }
 

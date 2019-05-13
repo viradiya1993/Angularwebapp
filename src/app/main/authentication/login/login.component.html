@@ -29,7 +29,7 @@
 
             <div class="title">LOGIN TO YOUR ACCOUNT</div>
 
-            <form name="loginForm" [formGroup]="loginForm" novalidate>
+            <form name="loginForm" [formGroup]="loginForm" novalidate action="" (submit)="loginUser()" method="POST" autocomplete="off">
                 <mat-form-field appearance="outline">
                     <mat-label>Email</mat-label>
                     <input matInput formControlName="email">
@@ -63,7 +63,7 @@
                   </a>
                 </div>
 
-                <button mat-raised-button color="accent" [disabled]="isspiner" type="button" (click)="loginUser()" class="submit-button" aria-label="LOGIN" [disabled]="loginForm.invalid">
+                <button mat-raised-button color="accent" [disabled]="isspiner" type="submit" (click)="loginUser()" class="submit-button" aria-label="LOGIN" [disabled]="loginForm.invalid">
                     <mat-spinner *ngIf="isspiner"></mat-spinner> LOGIN
               </button>
             </form>

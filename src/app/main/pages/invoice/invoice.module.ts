@@ -11,20 +11,23 @@ import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, 
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 import { ReceiptDilogComponent } from './receipt-dilog/receipt-dilog.component';
+import { InvoiceDetailComponent } from './invoice-detail/invoice-detail.component';
 
 
 const routes = [
   { path: '', component: InvoiceComponent, canActivate: [AuthGuard] },
-  
+
 ];
 @NgModule({
   declarations: [
     InvoiceComponent,
     ReceiptDilogComponent,
+    InvoiceDetailComponent,
   ],
   entryComponents: [
-    ReceiptDilogComponent
-],
+    ReceiptDilogComponent,
+    InvoiceDetailComponent
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

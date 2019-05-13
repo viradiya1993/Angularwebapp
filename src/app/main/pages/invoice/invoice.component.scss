@@ -117,3 +117,18 @@
 button#refreshTimeEntryTab {
     display: none;
 }
+
+@media screen and (max-width: 1200px) {
+    #Invoice .sticky_search_div.responsive_auto .example {
+        width: 15%;
+    }
+}
+@media screen and (max-width: 991px) {
+    #Invoice .sticky_search_div.responsive_auto {
+        overflow: auto;
+        white-space: nowrap;
+    }
+    #Invoice .sticky_search_div.responsive_auto .example {
+        width: 20%;
+    }
+}

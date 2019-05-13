@@ -312,6 +312,15 @@ toolbar .ribbon-container.reports_tab_main .mat-nav-list .mat-list-item {
         padding-left: 15px !important;
     }
 }
+@media screen and (max-width: 991px) {
+    toolbar .ribbon-container .mat-card {
+        margin: 5px 0;
+    }
+    toolbar .ribbon-container .mat-card-content {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
 span.text_blue {
     color: blue;
 }

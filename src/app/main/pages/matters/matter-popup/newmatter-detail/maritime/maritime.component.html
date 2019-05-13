@@ -1,0 +1,68 @@
+<div class=" one "  fxLayout="column" [formGroup]="matterdetailForm"> 
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Vessel Name</mat-label>
+          <input matInput formControlName="VesselName" >         
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label> Flag </mat-label>
+          <input matInput formControlName="Flag">         
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label> Vessel Type</mat-label>
+          <input matInput formControlName="VesselType">         
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label> Tonnage</mat-label>
+          <input matInput formControlName="Tonnage">         
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label> Master</mat-label>
+          <input matInput formControlName="Master">         
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label> Location</mat-label>
+          <input matInput formControlName="Location">         
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Incident Date</mat-label>
+            <input (dateInput)="IncidentDate('input', $event)" formControlName="IncidentDate" (dateChange)="IncidentDate('change', $event)" matInput name="IncidentDate"  [matDatepicker]="IncidentDate">
+            <mat-datepicker-toggle matSuffix [for]="IncidentDate"></mat-datepicker-toggle>
+            <mat-datepicker #IncidentDate></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label> Purchase Price</mat-label>
+          <input matInput type="number" formControlName="CourtMatter2">         
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Exchange Date</mat-label>
+            <input (dateInput)="ExchangeDate('input', $event)" formControlName="ExchangeDate" (dateChange)="ExchangeDate('change', $event)" matInput name="ExchangeDate"  [matDatepicker]="ExchangeDate">
+            <mat-datepicker-toggle matSuffix [for]="ExchangeDate"></mat-datepicker-toggle>
+            <mat-datepicker #ExchangeDate></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Settlement Date</mat-label>
+            <input (dateInput)="SettlementDate('input', $event)" formControlName="SettlementDate1" (dateChange)="SettlementDate('change', $event)" matInput name="SettlementDate"  [matDatepicker]="SettlementDate">
+            <mat-datepicker-toggle matSuffix [for]="SettlementDate"></mat-datepicker-toggle>
+            <mat-datepicker #SettlementDate></mat-datepicker>
+        </mat-form-field>
+    </div>
+</div>

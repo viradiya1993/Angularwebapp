@@ -1,0 +1,94 @@
+<!-- [formGroup]="matterdetailForm" -->
+<div class=" one "  fxLayout="column" [formGroup]="matterdetailForm">
+  <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Accident Date</mat-label>
+          <input (dateInput)="AccidentDate('input', $event)" formControlName="AccidentDate" (dateChange)="AccidentDate('change', $event)" matInput name="AccidentDate"  [matDatepicker]="AccidentDate">
+          <mat-datepicker-toggle matSuffix [for]="AccidentDate"></mat-datepicker-toggle>
+          <mat-datepicker #AccidentDate></mat-datepicker>
+      </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100">
+        <mat-label>Notice of Injury</mat-label>
+        <input matInput type="number" formControlName="NoticeofInjury">
+      </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Expiry Date</mat-label>
+          <input (dateInput)="ExpiryDate('input', $event)" formControlName="ExpiryDate" (dateChange)="ExpiryDate('change', $event)" matInput name="ExpiryDate"  [matDatepicker]="ExpiryDate">
+          <mat-datepicker-toggle matSuffix [for]="ExpiryDate"></mat-datepicker-toggle>
+          <mat-datepicker #ExpiryDate></mat-datepicker>
+      </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100">
+        <mat-label>Place of Injury</mat-label>
+        <input matInput formControlName="PlaceofInjury" >
+      </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+    <mat-form-field appearance="outline" fxFlex="100">
+      <mat-label>Injury Desc</mat-label>
+      <input matInput   type="number" formControlName="InjuryDesc">
+    </mat-form-field>
+</div>
+<div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+  <mat-form-field appearance="outline" fxFlex="100">
+    <mat-label>Cause of Injury</mat-label>
+    <input matInput formControlName="CauseofInjury" >
+  </mat-form-field>
+</div>
+<div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+  <mat-form-field appearance="outline" fxFlex="100">
+    <mat-label>Lit. Funder</mat-label>
+    <input matInput formControlName="LitFunder">
+  </mat-form-field>
+</div>
+<div fxLayout="row" fxLayoutAlign="start center"   fxFlex="1 0 auto">
+    <section class="example-section">
+      <mat-checkbox formControlName="TransferredClient">Transferred From Other Client</mat-checkbox>
+    </section>
+</div>
+<div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+  <mat-form-field appearance="outline" fxFlex="100">
+    <mat-label>Client Name</mat-label>
+    <input matInput formControlName="ClientName">
+  </mat-form-field>
+</div>
+<div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+  <mat-form-field appearance="outline" fxFlex="100">
+    <mat-label>Est. Award</mat-label>
+    <input matInput type="number" formControlName="EstAward">
+  </mat-form-field>
+</div>
+<div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+  <mat-form-field appearance="outline" fxFlex="100">
+    <mat-label>Claim Number</mat-label>
+    <input matInput formControlName="ClaimNumber">
+  </mat-form-field>
+</div>
+<div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+    <mat-form-field appearance="outline" fxFlex="100">
+        <mat-label>Investigation Date</mat-label>
+        <input (dateInput)="Investigation('input', $event)" formControlName="Investigation" (dateChange)="Investigation('change', $event)" matInput name="Investigation"  [matDatepicker]="Investigation">
+        <mat-datepicker-toggle matSuffix [for]="Investigation"></mat-datepicker-toggle>
+        <mat-datepicker #Investigation></mat-datepicker>
+    </mat-form-field>
+</div>
+<div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+    <mat-form-field appearance="outline" fxFlex="100">
+        <mat-label>Settlement Date</mat-label>
+        <input (dateInput)="SettlementDate('input', $event)" formControlName="SettlementDate" (dateChange)="SettlementDate('change', $event)" matInput name="SettlementDate"  [matDatepicker]="SettlementDate">
+        <mat-datepicker-toggle matSuffix [for]="SettlementDate"></mat-datepicker-toggle>
+        <mat-datepicker #SettlementDate></mat-datepicker>
+    </mat-form-field>
+</div>
+<div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+  <mat-form-field appearance="outline" fxFlex="100">
+    <mat-label>Hearing Dates</mat-label>
+    <input matInput formControlName="HearingDates">
+  </mat-form-field>
+</div>
+</div>

@@ -1,0 +1,63 @@
+<div class=" one "  fxLayout="column" [formGroup]="matterdetailForm"> 
+    
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Date of Will</mat-label>
+            <input (dateInput)="DateofWill('input', $event)" formControlName="DateofWill" (dateChange)="DateofWill('change', $event)" matInput name="DateofWill"  [matDatepicker]="DateofWill">
+            <mat-datepicker-toggle matSuffix [for]="DateofWill"></mat-datepicker-toggle>
+            <mat-datepicker #DateofWill></mat-datepicker>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Gross Value</mat-label>
+          <input matInput type="number" formControlName="GrossValue">         
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Net Value</mat-label>
+          <input matInput type="number" formControlName="NetValue">         
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Name Of Trust</mat-label>
+          <input matInput formControlName="NameOfTrust">         
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Name Of Super fund</mat-label>
+          <input matInput formControlName="NameOfuperfund">         
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Court Matter #</mat-label>
+          <input matInput formControlName="CourtMatter">         
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label># Of Codicils</mat-label>
+          <input matInput type="number" formControlName="OfCodicils">         
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+          <mat-label>Date/s of Codicil/s</mat-label>
+          <input matInput formControlName="DateCodicil">         
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label> Date of Grant of Representation</mat-label>
+            <input (dateInput)="DateGrantRepresentation('input', $event)" formControlName="DateGrantRepresentation" (dateChange)="DateGrantRepresentation('change', $event)" matInput name="DateGrantRepresentation"  [matDatepicker]="DateGrantRepresentation">
+            <mat-datepicker-toggle matSuffix [for]="DateGrantRepresentation"></mat-datepicker-toggle>
+            <mat-datepicker #DateGrantRepresentation></mat-datepicker>
+        </mat-form-field>
+    </div>
+   
+</div>

@@ -1,0 +1,22 @@
+<!-- [formGroup]="matterdetailForm" -->
+<div class=" one "  fxLayout="column" [formGroup]="matterdetailForm">
+  <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="100">
+        <mat-label>Class of Shares</mat-label>
+        <input matInput formControlName="ClassofShares">
+      </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+    <mat-form-field appearance="outline" fxFlex="100">
+      <mat-label>Number of Shares</mat-label>
+      <input matInput   type="number" formControlName="NumberofShares">
+    </mat-form-field>
+</div>
+<div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+  <mat-form-field appearance="outline" fxFlex="100">
+    <mat-label>Consideration</mat-label>
+    <input matInput formControlName="Consideration">
+  </mat-form-field>
+</div>
+ 
+</div>

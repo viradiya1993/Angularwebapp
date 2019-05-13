@@ -74,14 +74,14 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="unallocated_div">
                     Unallocated
                     <mat-form-field appearance="outline" class="example" fxFlex="60" class="pr-4">
                         <mat-label>Unallocated</mat-label>
                         <input matInput placeholder="Unallocated" formControlName="Unallocated">
                     </mat-form-field>
                 </div>
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="allocate_btn_div">
                     Invoices To allocate Against
                     <button mat-raised-button color="accent"><mat-spinner *ngIf="isspiner"></mat-spinner>Clear Allocations</button>
                     <button mat-raised-button color="accent"><mat-spinner *ngIf="isspiner"></mat-spinner>Auto Allocate</button>
@@ -139,7 +139,7 @@
                     <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
                 </div>
 
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="total_amount_div">
                     Enter the amount to allocate to the selected invoice and press tab
                     <mat-form-field appearance="outline" class="example" fxFlex="60" class="pr-4">
                         <mat-label>Amount</mat-label>

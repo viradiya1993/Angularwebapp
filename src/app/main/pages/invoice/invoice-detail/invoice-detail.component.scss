@@ -135,3 +135,13 @@ table.mat-table {
     height: 300px;
     overflow: auto;
 }
+
+.view_invoice_table tbody {
+    min-height: 250px;
+    display: inline-block;
+}
+.view_invoice_main .mat-icon-button {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+}

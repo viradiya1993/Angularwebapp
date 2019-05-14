@@ -84,3 +84,36 @@
             </div>
         </div>
     </div>
+</div>
+<div class="content">
+    <div class="example-loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+    <div class="example-containerdata">
+        <table mat-table #table [dataSource]="Spendmoneydata" [@animateStagger]="{value:'50'}">
+            <ng-container matColumnDef="INVOICEREVERSALGUID">
+                <th mat-header-cell *matHeaderCellDef fxHide fxShow.gt-sm class="header_title">{{ tempColobj['INVOICEREVERSALGUID'].DESCRIPTION }}</th>
+                <td mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>{{row.INVOICEREVERSALGUID}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="MATTERGUID">
+                <th mat-header-cell *matHeaderCellDef fxHide fxShow.gt-md class="header_title">{{ tempColobj['MATTERGUID'].DESCRIPTION }}</th>
+                <td mat-cell *matCellDef="let row" fxHide fxShow.gt-md>{{row.MATTERGUID }}
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row [style.background]="highlightedRows == row.INVOICEGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" [ngClass]="highlightedRows == row.INVOICEGUID ? 'row-text-colore' : ''" class="contact" (click)="selectMatterId(row);highlightedRows = row.INVOICEGUID"
+                matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+            </tr>
+        </table>
+    </div>
+</div>
+<mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+</div>
+</div>
+</div>
+<!-- <mat-paginator [pageSize]="pageSize" (page)="onPaginateChange($event)" [pageSizeOptions]="[10, 20,50,100]" showFirstLastButtons></mat-paginator>  -->
+</div>
+</div>
+</div>
+</div>

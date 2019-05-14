@@ -133,3 +133,19 @@ mat-dialog-actions {
   .example-margin {
     margin: 0 10px;
   }
+  .spen_money_update tbody {
+    min-height: 250px;
+    display: inline-block;
+}
+.spen_money_update .mat-icon-button {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+}
+// .example-containerdata {
+//     height: 300px;
+//     overflow: auto;
+// }
+table.mat-table {
+    width: 100%;
+}

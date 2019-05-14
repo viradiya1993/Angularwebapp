@@ -16,13 +16,13 @@ export class SpendMoneyComponent implements OnInit {
 
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   isLoadingResults: boolean = false;
-  displayedColumns: string[];
+  displayedColumns: [];
   ColumnsObj: any = [];
   tempColobj: any;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   highlightedRows: any;
-
+  //displayedColumns: string[] = ['class', 'amount', 'Gst', 'note'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   currentMatterData: any;

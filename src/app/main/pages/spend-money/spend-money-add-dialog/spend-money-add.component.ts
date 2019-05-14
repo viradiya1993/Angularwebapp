@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -7,6 +7,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   selector: 'app-spend-money-add',
   templateUrl: './spend-money-add.component.html',
   styleUrls: ['./spend-money-add.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
 export class SpendMoneyAddComponent implements OnInit {
@@ -14,6 +15,7 @@ export class SpendMoneyAddComponent implements OnInit {
   dialogTitle: string;
   isLoadingResults:boolean;
   spendmoneyForm: FormGroup;
+  displayedColumnsTime: string[] = ['class', 'amount', 'Gst', 'note'];
 
   constructor(public dialogRef: MatDialogRef<SpendMoneyAddComponent>, @Inject(MAT_DIALOG_DATA) public _data: any, private _formBuilder: FormBuilder,) { 
     this.action = _data.action;
@@ -47,6 +49,13 @@ export class SpendMoneyAddComponent implements OnInit {
     });
     if (this.action === 'edit') {
       this.spendmoneyForm.controls['Class'].disable();
+      this.spendmoneyForm.controls['Matter'].disable();
+      this.spendmoneyForm.controls['AmountIncGST'].disable();
+      this.spendmoneyForm.controls['GSTType'].disable();
+      this.spendmoneyForm.controls['GST1'].disable();
+      this.spendmoneyForm.controls['AmountExGST'].disable();
+      this.spendmoneyForm.controls['Expenseac'].disable();
+      this.spendmoneyForm.controls['Note'].disable();
     }
   }
 }

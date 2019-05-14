@@ -16,6 +16,8 @@ export class InvoiceDetailComponent implements OnInit {
   IntersetChatgesData: any;
   ReceiptsData: any;
   paginator: any;
+  isspiner: boolean;
+  isLoadingResults: boolean;
   displayedColumnsTime: string[] = ['Date', 'FE', 'Text', 'Charge', 'GST'];
   displayedColumnsRecipt: string[] = ['Receipt', 'Received', 'Type', 'Amount'];
   displayedColumnsInterest: string[] = ['Invoice', 'Date', 'Total', 'Outstanding', 'Comment'];
@@ -34,6 +36,9 @@ export class InvoiceDetailComponent implements OnInit {
       InvoiceDate: [''],
       DueDate: [''],
     });
+  }
+  SaveReceipt() {
+
   }
 
 }

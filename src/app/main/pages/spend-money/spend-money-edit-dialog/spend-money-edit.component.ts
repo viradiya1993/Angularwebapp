@@ -1,14 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { fuseAnimations } from '@fuse/animations';
 
 @Component({
   selector: 'app-spend-money-edit',
   templateUrl: './spend-money-edit.component.html',
-  styleUrls: ['./spend-money-edit.component.scss']
+  styleUrls: ['./spend-money-edit.component.scss'],
+  animations: fuseAnimations
 })
 export class SpendMoneyEditComponent implements OnInit {
 
   constructor() { }
-
+  isspiner: boolean;
+  displayedColumns: string[] = [];
+  getDataForTable: any = [];
+  isLoadingResults: any;
   ngOnInit() {
   }
 

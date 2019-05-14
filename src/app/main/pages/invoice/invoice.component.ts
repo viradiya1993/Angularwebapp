@@ -80,9 +80,6 @@ export class InvoiceComponent implements OnInit {
   selectMatterId(Row: any) {
     this.currentMatterData = Row;
   }
-  choosedDate() {
-
-  }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
@@ -104,5 +101,11 @@ export class InvoiceComponent implements OnInit {
         }
       }
     });
+  }
+  choosedDate(s, ss) {
+
+  }
+  onSearch(scss) {
+
   }
 } 

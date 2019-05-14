@@ -91,7 +91,7 @@
                                         matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                     </tr>
                                 </table>
-                                <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+                                <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" showFirstLastButtons></mat-paginator>
                             </div>
                             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                 <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
@@ -155,7 +155,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+                            <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" showFirstLastButtons></mat-paginator>
                             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                 <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
                                     <mat-label>Invoice Total</mat-label>
@@ -219,7 +219,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+                            <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" showFirstLastButtons></mat-paginator>
                         </mat-tab>
                     </mat-tab-group>
                 </div>

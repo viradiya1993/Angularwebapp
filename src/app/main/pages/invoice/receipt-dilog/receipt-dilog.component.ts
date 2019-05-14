@@ -26,6 +26,9 @@ export class ReceiptDilogComponent implements OnInit {
   displayedColumns: string[] = ['Invoice', 'Total', 'Outstanding', 'Allocated', 'Matter'];
   PrepareReceiptForm: FormGroup;
   PrepareReceiptData: any;
+  isspiner: boolean;
+  isLoadingResults: boolean;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit() {
     this.PrepareReceiptData = new MatTableDataSource([]);
@@ -46,6 +49,9 @@ export class ReceiptDilogComponent implements OnInit {
       Unallocated: [''],
       Amount: [''],
     });
+  }
+  SaveReceipt() {
+
   }
   selectClient() {
     const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true });

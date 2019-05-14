@@ -20,7 +20,10 @@ export class TableColumnsService {
     let tempColobj: any = [];
     let showCol: any = [];
     let temshowCol: any = [];
-    response.forEach(itemsdata => {
+    let finalList = response.sort(function (a, b) {
+      return a.POSITION - b.POSITION;
+    });
+    finalList.forEach(itemsdata => {
       if ((itemsdata.HIDDEN == 1 || itemsdata.HIDDEN == 0) && tableData.includes(itemsdata.COLUMNID)) {
         if (!temshowCol.includes(itemsdata.COLUMNID)) {
           if (itemsdata.HIDDEN == 0 && !showCol.includes(itemsdata.COLUMNID)) {

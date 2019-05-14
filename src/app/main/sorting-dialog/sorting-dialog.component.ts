@@ -118,9 +118,7 @@ export class SortingDialogComponent implements OnInit {
       POSITIONData++;
     });
     this.TableColumnsService.setTableFilter(this.modelType, this.list, dataObj).subscribe(response => {
-      if (response.CODE == 200 && response.STATUS == "success") {
-        console.log('save');
-      }
+      if (response.CODE == 200 && response.STATUS == "success") { }
     }, error => {
       console.log(error);
     });

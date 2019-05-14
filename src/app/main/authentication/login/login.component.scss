@@ -311,4 +311,13 @@ app-login #login #login-intro .description-footer {
     app-login #login #login-form-wrapper #login-form a.google, app-login #login #login-form-wrapper #login-form a.facebook {
         width: 100%;
     }
+    body.theme-default app-login #login #login-intro {
+        position: relative;
+    }
+    app-login #login #login-intro .description-footer {
+        word-break: break-word;
+        width: 100%;
+        left: 0;
+        padding-left: 64px;
+    }
 }

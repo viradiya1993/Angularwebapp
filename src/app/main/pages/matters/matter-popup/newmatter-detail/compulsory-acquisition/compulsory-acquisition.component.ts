@@ -13,5 +13,8 @@ export class CompulsoryAcquisitionComponent implements OnInit {
   @Input() matterdetailForm: FormGroup;
   ngOnInit() {
   }
+  ContactMatter(){
+    
+  }
 
 }

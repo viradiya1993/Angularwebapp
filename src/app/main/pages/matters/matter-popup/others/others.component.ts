@@ -15,13 +15,16 @@ export class OthersComponent implements OnInit {
   ) { }
 
   @Input() matterdetailForm: FormGroup;
-  
+
   ngOnInit() {
   }
-  public ContactMatter() {
+  ContactMatter() {
     const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
-      
+
     });
+  }
+  ArchiveDate(s: any, ss: any) {
+
   }
 }

@@ -112,8 +112,10 @@ export class SortingDialogComponent implements OnInit {
   }
   saveLastFilter() {
     let dataObj = [];
+    let POSITIONData = 1;
     this.property.forEach(itemsdata => {
-      dataObj.push({ COLUMNNAME: itemsdata.COLUMNNAME, HIDDEN: itemsdata.HIDDEN, POSITION: itemsdata.POSITION });
+      dataObj.push({ COLUMNNAME: itemsdata.COLUMNNAME, HIDDEN: itemsdata.HIDDEN, POSITION: POSITIONData });
+      POSITIONData++;
     });
     this.TableColumnsService.setTableFilter(this.modelType, this.list, dataObj).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {

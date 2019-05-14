@@ -17,14 +17,15 @@ export class InvoiceComponent implements OnInit {
   isLoadingResults: boolean = false;
   displayedColumns: string[];
   ColumnsObj: any = [];
-  tempColobj: any; 
+  tempColobj: any;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   highlightedRows: any;
-  
+  pageSize: any;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   currentMatterData: any;
-  
+
 
   constructor(
     private _MatterInvoicesService: MatterInvoicesService,
@@ -41,7 +42,7 @@ export class InvoiceComponent implements OnInit {
   }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('time and billing', 'matter invoices').subscribe(response => {
-    //  console.log(response);
+      //  console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'invoicesColumns');
         this.displayedColumns = data.showcol;
@@ -51,11 +52,16 @@ export class InvoiceComponent implements OnInit {
     }, error => {
       this.toastr.error(error);
     });
+
+  }
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
   }
 
   loadData() {
     this.isLoadingResults = true;
-    let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };   
+    let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
     this._MatterInvoicesService.MatterInvoicesData(potData).subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (response.DATA.INVOICES[0]) {
@@ -64,16 +70,19 @@ export class InvoiceComponent implements OnInit {
         }
         this.MatterInvoicesdata = new MatTableDataSource(response.DATA.INVOICES)
         this.MatterInvoicesdata.paginator = this.paginator;
-      } 
+      }
       this.isLoadingResults = false;
     }, error => {
       this.toastr.error(error);
     });
+    this.pageSize = localStorage.getItem('lastPageSize');
   }
   selectMatterId(Row: any) {
-    this.currentMatterData = Row;    
+    this.currentMatterData = Row;
   }
+  choosedDate() {
 
+  }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';

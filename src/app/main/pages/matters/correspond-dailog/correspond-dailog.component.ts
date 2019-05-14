@@ -10,6 +10,8 @@ export class CorrespondDailogComponent implements OnInit {
 
   constructor(private _formBuilder: FormBuilder, ) { }
   correspondForm: FormGroup;
+  isLoadingResults: boolean;
+  isspiner: boolean;
   ngOnInit() {
     this.correspondForm = this._formBuilder.group({
       ContactType: [''],
@@ -17,6 +19,12 @@ export class CorrespondDailogComponent implements OnInit {
       SolicitorName: [''],
       Reference: ['']
     });
+  }
+  selectMatter() {
+
+  }
+  selectFeeEarner() {
+
   }
 
 }

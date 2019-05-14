@@ -15,6 +15,7 @@ export class ClientComponent implements OnInit {
   position: number;
   weight: number;
   symbol: string;
+  isspiner:boolean;
 
 
   constructor(

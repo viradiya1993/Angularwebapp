@@ -428,9 +428,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
      dialogRef.afterClosed().subscribe(result => { });
     }
     // Edit matter Pop-up
-    Editspendmoneypopupp() {
+    Editspendmoneypopup() {
     const dialogConfig = new MatDialogConfig();
-    const dialogRef = this.dialog.open(SpendMoneyEditComponent, {
+    const dialogRef = this.dialog.open(SpendMoneyAddComponent, {
         width: '100%',
         disableClose: true,
         data: {
@@ -439,6 +439,30 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     });
      dialogRef.afterClosed().subscribe(result => { });
     }
+
+    // Delete matter Pop-up
+    Deletespendmoneypopup(): void {
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            // if (result) {
+            //     let MatterGUID = localStorage.getItem('');
+            //     let postData = { FormAction: "delete", MatterGUID: MatterGUID }
+            //     this._mattersService.AddNewMatter(postData).subscribe(res => {
+            //         if (res.STATUS == "success" && res.CODE == 200) {
+            //             $('#refreshTimeEntryTab').click();
+            //             this.toastr.success('Delete successfully');
+            //         }
+            //     });
+            // }
+           // this.confirmDialogRef = null;
+        });
+    }
+
+
     deleteContact(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,

@@ -8,30 +8,38 @@
         </button>
     </h2>
     <div mat-dialog-content class="mat-typography main">
-        <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <div class=" one " fxLayout="column" fxLayoutAlign="start" >
             <form  fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
               <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                  <mat-form-field appearance="outline" class="example" fxFlex="33.33" class="pr-4">
+                  <mat-form-field appearance="outline" class="example" fxFlex="20" class="pr-4">
                     <mat-label>Date Incurred</mat-label>
                     <input matInput [matDatepicker]="DateIncurred">
                     <mat-datepicker-toggle matSuffix [for]="DateIncurred"></mat-datepicker-toggle>
                     <mat-datepicker #DateIncurred></mat-datepicker>           
                   </mat-form-field>
-                  <mat-form-field class="example" fxFlex="33.33" class="pr-4" appearance="outline">
+                  <mat-form-field class="example" fxFlex="20" class="pr-4" appearance="outline">
                     <mat-label>Paid</mat-label>
                     <mat-select #value name="selected">
                         <mat-option>1</mat-option>
                     </mat-select>
                   </mat-form-field>
-                  <mat-form-field appearance="outline" fxFlex="33.33" class="pr-4">
+                  <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
                     <mat-label>Date Paid</mat-label>
                     <input matInput [matDatepicker]="DatePaid">
                     <mat-datepicker-toggle matSuffix [for]="DatePaid"></mat-datepicker-toggle>
                     <mat-datepicker #DatePaid></mat-datepicker> 
                   </mat-form-field>
+                   <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
+                    <mat-label>Amount</mat-label>
+                    <input matInput>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
+                      <mat-label>GST</mat-label>
+                      <input matInput>
+                   </mat-form-field>
               </div>
               <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                  <mat-form-field appearance="outline" fxFlex="">
+                  <mat-form-field appearance="outline" fxFlex="40">
                     <mat-label>Bank a/c</mat-label>
                     <input matInput readonly>
                     <mat-icon matSuffix >
@@ -39,7 +47,7 @@
                     </mat-icon>
                   </mat-form-field>
                   <mat-form-field appearance="outline" fxFlex="60">
-                    <mat-label>Note</mat-label>
+                    <mat-label>Notes</mat-label>
                     <input matInput readonly>
                     <mat-icon matSuffix >
                         <img src="assets/icons/web_app/icon_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -47,24 +55,24 @@
                   </mat-form-field>
               </div>
               <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
+                <mat-form-field class="example" fxFlex="25" class="pr-4" appearance="outline">
                     <mat-label>Type</mat-label>
                     <mat-select #value name="selected">
                       <mat-option>1</mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field appearance="outline" fxFlex="40">
+                <mat-form-field appearance="outline" fxFlex="25">
                   <mat-label>Cheque No</mat-label>
                   <input matInput>
                 </mat-form-field>
-                <mat-form-field appearance="outline" fxFlex="60">
+                <mat-form-field appearance="outline" fxFlex="25">
                   <mat-label>Payee</mat-label>
                   <input matInput readonly>
                   <mat-icon matSuffix >
                       <img src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                   </mat-icon>
                 </mat-form-field>
-                <mat-form-field appearance="outline" fxFlex="40">
+                <mat-form-field appearance="outline" fxFlex="25">
                     <mat-label>Invoice #/Source Ref</mat-label>
                     <input matInput>
                 </mat-form-field>
@@ -74,53 +82,80 @@
                     <mat-checkbox class="example-margin">Multi Line Expense</mat-checkbox>
                   </section>
               </div>
+              <div class="example-containerdata">
+                  <table mat-table #table [dataSource]="getDataForTable" [@animateStagger]="{value:'50'}">
+                      <ng-container matColumnDef="matternumber">
+                          <th mat-header-cell *matHeaderCellDef>matternumber</th>
+                          <td mat-cell *matCellDef="let row">
+                              <p class="job-title text-truncate">
+                                  {{row.SHORTNAME }}
+                              </p>
+                          </td>
+                      </ng-container>
+                      <ng-container matColumnDef="matter">
+                          <th mat-header-cell *matHeaderCellDef>matter</th>
+                          <td mat-cell *matCellDef="let row">
+                              <p class="company text-truncate">
+                                  {{row.MATTER }}
+                              </p>
+                          </td>
+                      </ng-container>
+                      <ng-container matColumnDef="client">
+                          <th mat-header-cell *matHeaderCellDef>client</th>
+                          <td mat-cell *matCellDef="let row">
+                              <p class="company text-truncate">
+                                  {{row.CLIENT }}
+                              </p>
+                          </td>
+                      </ng-container>
+                      <tr mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                      <tr mat-row [style.background]="highlightedRows == row.MATTERGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" [ngClass]="highlightedRows == row.MATTERGUID ? 'row-text-colore' : ''" class="contact" (click)="selectMatterId(row);highlightedRows = row.MATTERGUID"
+                          matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                      </tr>
+                  </table>
+              </div>
+              <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+         
               <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                   <mat-form-field class="example" fxFlex="33.33" class="pr-4" appearance="outline">
                       <mat-label>Class</mat-label>
-                      <mat-select #value name="selected">
+                      <mat-select #value name="selected" [disabled]='true'>
                         <mat-option>1</mat-option>
                       </mat-select>
                   </mat-form-field>
                   <mat-form-field appearance="outline" fxFlex="33.33">
                     <mat-label>Matter</mat-label>
-                    <input matInput readonly>
-                    <mat-icon matSuffix >
-                      <img src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                    <input matInput readonly [disabled]='true'>
+                    <mat-icon matSuffix>
+                      <img src="assets/icons/web_app/icon_matter_d.ico"  alt="" matTooltip="Twitter" matTooltipPosition="above">
                     </mat-icon>
                   </mat-form-field>
                   <mat-form-field appearance="outline" fxFlex="33.33">
                       <mat-label>Amount Inc GST</mat-label>
-                      <input matInput type="number">
+                      <input matInput type="number" [disabled]='true'>
                   </mat-form-field>
                </div>
                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                   <mat-form-field class="example" fxFlex="25" class="pr-4" appearance="outline">
                       <mat-label>GST Type</mat-label>
-                      <mat-select #value name="selected">
+                      <mat-select #value name="selected" [disabled]='true'>
                           <mat-option>1</mat-option>
                     </mat-select>
                   </mat-form-field>
                   <mat-form-field appearance="outline" fxFlex="25">
                       <mat-label>GST</mat-label>
-                      <input matInput type="number">
-                  </mat-form-field>
-                  <mat-form-field appearance="outline" fxFlex="25">
-                      <mat-label>Amount Ex GST</mat-label>
-                        <input matInput type="number">
+                      <input matInput type="number" [disabled]='true'>
                   </mat-form-field>
                   <mat-form-field appearance="outline" fxFlex="25">
                       <mat-label>Expense a/c</mat-label>
-                      <input matInput readonly>
+                      <input matInput readonly [disabled]='true'>
                     <mat-icon matSuffix >
-                      <img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                      <img src="assets/icons/web_app/icon_accounts_small_d.ico"  alt="" matTooltip="Twitter" matTooltipPosition="above">
                     </mat-icon>
                   </mat-form-field>
                   <mat-form-field appearance="outline" fxFlex="25">
-                      <mat-label>Expense a/c</mat-label>
-                      <input matInput readonly>
-                    <mat-icon matSuffix >
-                      <img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                    </mat-icon>
+                      <mat-label>Note</mat-label>
+                      <input matInput [disabled]='true'>
                   </mat-form-field>
                </div>
             </form>
@@ -131,4 +166,3 @@
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don`t Save</button>
     </mat-dialog-actions>
   </div>
-  <!-- </form> -->

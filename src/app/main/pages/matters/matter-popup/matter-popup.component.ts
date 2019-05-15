@@ -37,46 +37,13 @@ export class MatterPopupComponent implements OnInit {
   matterdetailForm: FormGroup;
   ngOnInit() {
     this.isLoadingResults = true;
-    this.Classdata = [
-      { name: 'Internal', value: 'Internal' },
-      { name: 'General', value: 'General' },
-      { name: 'Advice', value: 'Advice' },
-      { name: 'Commercial', value: 'Commercial' },
-      { name: 'Compensation', value: 'Compensation' },
-      { name: 'Compulsory Acquisition', value: 'Compulsory Acquisition' },
-      { name: 'Criminal', value: 'Criminal' },
-      { name: 'Employement', value: 'Employement' },
-      { name: 'Expert Process', value: 'Expert Process' },
-      { name: 'Family law', value: 'Family law' },
-      { name: 'Immigration', value: 'Immigration' },
-      { name: 'Leasing', value: 'Leasing' },
-      { name: 'Litigation', value: 'Litigation' },
-      { name: 'Maritime', value: 'Maritime' },
-      { name: 'Mediation', value: 'Mediation' },
-      { name: 'Medical Negligence', value: 'Medical Negligence' },
-      { name: 'Motor Vahical Accident', value: 'Motor Vahical Accident' },
-      { name: 'Mortgage Finance', value: 'Mortgage Finance' },
-      { name: 'Property Purchase', value: 'Property Purchase' },
-      { name: 'Property Sale', value: 'Property Sale' },
-      { name: 'Public Liability', value: 'Public Liability' },
-      { name: 'Strata', value: 'Strata' },
-      { name: 'Total and Permanent D', value: 'Total and Permanent D' },
-      { name: 'Training', value: 'Training ' },
-      { name: 'Trademark/IP', value: 'Trademark/IP' },
-      { name: 'Wills and estate', value: 'Wills and estate' },
-      { name: 'Workers Compensatoior', value: 'Workers Compensatoior' },
-      { name: 'Working injuries Damage', value: 'Working injuries Damage' },
-    ];
     this.matterFormBuild();
-    let postDatas = { 'LookupType': 'Matter Class' };
-    this._mattersService.getMattersClasstype(postDatas).subscribe(responses => {
+    this._mattersService.getMattersClasstype({ 'LookupType': 'Matter Class' }).subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
-        console.log(responses.DATA.LOOKUPS);
+        this.Classdata = responses.DATA.LOOKUPS;
       }
       this.isLoadingResults = false;
     });
-
-
     this.matterdetailForm.controls['ACTIVE'].setValue(true);
     if (this.action === 'edit') {
       const localMatterID = JSON.parse(localStorage.getItem('set_active_matters'));
@@ -86,8 +53,6 @@ export class MatterPopupComponent implements OnInit {
         if (response.CODE === 200 && response.STATUS === 'success') {
           // let currentMatter = response.DATA.MATTERS[0];
           // this.active = currentMatter.ACTIVE === 0 ? false : true;
-
-
           // this.matterdetailForm.controls['MatterNum'].setValue(currentMatter.SHORTNAME);
           // this.matterdetailForm.controls['Client'].setValue(currentMatter.CONTACTTYPE);
           // this.matterdetailForm.controls['MatterDescription'].setValue(currentMatter.MATTER);
@@ -105,21 +70,23 @@ export class MatterPopupComponent implements OnInit {
   matterFormBuild() {
     this.matterdetailForm = this._formBuilder.group({
       MATTERCLASS: [''],
-
-      MatterNum: [''],
       ACTIVE: [''],
+      SHORTNAME: [''],
+
       MatterDescription: [''],
       // general
-      ClientReference: [''],
-      CommencementDate: [],
-      OtherRef: [''],
+      NOTES: [''],
+      COMMENCEMENTDATE: [''],
+      REFERENCE: [''],
+      OTHERREFERENCE: [''],
+      COMPLETEDDATE: [],
+      PRIMARYFEEEARNERGUID: [''],
+      OWNERGUID: [''],
+
       CostsAgreementDate: [],
-      CompletedDate: [],
       EstimateMinimum: [''],
-      MatterOwner: [''],
-      PrimaryFeeEarner: [''],
       Ex_GST: [''],
-      Notes: [''],
+
       // client
       Clientmatter: [''],
       // rates
@@ -300,13 +267,13 @@ export class MatterPopupComponent implements OnInit {
       DateGrantRepresentation: [''],
 
       // others
-      MatterType: [''],
-      ClientSource: [''],
-      FiledOfLaw: [''],
-      Industry: [''],
-      Referrer: [''],
-      ArchiveNo: [''],
-      ArchiveDate: []
+      MATTERTYPE: [''],
+      CLIENTSOURCE: [''],
+      FIELDOFLAW: [''],
+      INDUSTRY: [''],
+      REFERRERGUID: [''],
+      ARCHIVENO: [''],
+      ARCHIVEDATE: ['']
     });
   }
   get f() {
@@ -361,7 +328,7 @@ export class MatterPopupComponent implements OnInit {
       MatterType: this.f.MatterType.value,
       ClientSource: this.f.ClientSource.value,
       FiledOfLaw: this.f.FiledOfLaw.value,
-      Industry: this.f.Industry.value,
+      INDUSTRY: this.f.INDUSTRY.value,
       ArchiveNo: this.f.ArchiveNo.value,
       ArchiveDate: this.f.ArchiveDate.value,
       Referrer: this.f.Referrer.value,

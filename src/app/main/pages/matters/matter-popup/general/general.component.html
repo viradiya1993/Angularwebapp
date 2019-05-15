@@ -2,18 +2,18 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Client Reference</mat-label>
-            <input name="ClientReference" formControlName="ClientReference" matInput>
+            <input name="ClientReference" formControlName="REFERENCE" matInput>
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Other Ref</mat-label>
-            <input name="OtherRef" matInput formControlName="OtherRef">
+            <input matInput formControlName="OTHERREFERENCE">
             <mat-icon matSuffix class="secondary-text"></mat-icon>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
             <mat-label>Commencement Date</mat-label>
-            <input (dateInput)="CommencementDate('input', $event)" formControlName="CommencementDate" (dateChange)="CommencementDate('change', $event)" matInput name="CommencementDate" [matDatepicker]="picker1">
+            <input (dateInput)="CommencementDate('input', $event)" formControlName="COMMENCEMENTDATE" (dateChange)="CommencementDate('change', $event)" matInput [matDatepicker]="picker1">
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
@@ -25,7 +25,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline" class="example" fxFlex="34" class="pr-4">
             <mat-label>Completed Date</mat-label>
-            <input (dateInput)="CompletedDate('input', $event)" formControlName="CompletedDate" (dateChange)="CompletedDate('change', $event)" matInput name="CompletedDate" [matDatepicker]="picker3">
+            <input (dateInput)="CompletedDate('input', $event)" formControlName="COMPLETEDDATE" (dateChange)="CompletedDate('change', $event)" matInput name="CompletedDate" [matDatepicker]="picker3">
             <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
             <mat-datepicker #picker3></mat-datepicker>
         </mat-form-field>
@@ -33,14 +33,14 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
             <mat-label>Matter Owner</mat-label>
-            <input matInput readonly formControlName="MatterOwner">
+            <input matInput readonly formControlName="OWNERGUID">
             <mat-icon matSuffix (click)="selectMatter();">
                 <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
             </mat-icon>
         </mat-form-field>
         <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
             <mat-label>Primary Fee Earner</mat-label>
-            <input matInput readonly formControlName="PrimaryFeeEarner">
+            <input matInput readonly formControlName="PRIMARYFEEEARNERGUID">
             <mat-icon matSuffix (click)="selectFeeEarner();">
                 <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
             </mat-icon>
@@ -60,7 +60,7 @@
     <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="100">
             <mat-label>Notes</mat-label>
-            <textarea name="Notes" matInput formControlName="Notes"></textarea>
+            <textarea matInput formControlName="NOTES"></textarea>
         </mat-form-field>
     </div>
 </div>

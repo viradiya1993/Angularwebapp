@@ -28,7 +28,7 @@ export class ClientComponent implements OnInit {
 
   }
   Addcorres_party() {
-    const dialogRef = this.MatDialog.open(CorrespondDailogComponent, { width: '50%', disableClose: true });
+    const dialogRef = this.MatDialog.open(CorrespondDailogComponent, { width: '100%', disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.ELEMENT_DATA.push({ position: 1, name: 'Client', weight: 1.0079, symbol: 'H' });

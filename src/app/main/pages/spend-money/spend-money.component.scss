@@ -58,20 +58,20 @@
 //     padding-bottom: 0 !important;
 // }
 #Spendmoney .sticky_search_div {
-    position: fixed;
-    top: 167px;
+    // position: fixed;
+    // top: 167px;
+    // padding-left: 300px;
     width: 100%;
     background-color: #f5f5f5;
     z-index: 9999;
     left: 0;
-    padding-left: 300px;
 }
-#Spendmoney .sticky_search_remove_padding {
-    padding-left: 80px;
-}
+// #Spendmoney .sticky_search_remove_padding {
+//     padding-left: 80px;
+// }
 
 .p-24.list_tbl_main {
-    margin-top: 110px;
+    //margin-top: 110px;
     padding-top: 0 !important;
 }
 
@@ -116,6 +116,13 @@
 
 button#refreshTimeEntryTab {
     display: none;
+}
+
+#Spendmoney .content .example {
+    padding: 20px 10px;
+}
+#Spendmoney .content {
+    position: relative;
 }
 
 @media screen and (max-width: 1200px) {

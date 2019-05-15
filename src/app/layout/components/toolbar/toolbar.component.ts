@@ -151,6 +151,26 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             const nvh = 56;
             $('.mat-tab-header').css({ 'width': wph - nvh - 160 + 'px' });
         }
+
+        $ (window).resize(function(){
+
+            if ($(window).width() >= 992 && $(window).width() < 1280) {
+
+                const wph = $(window).width();
+                this.detailwidth = wph - 65 + 'px';
+
+                const nvh = 56;
+                $('.mat-tab-header').css({ 'width': wph - nvh - 280 + 'px' });
+            } else if ($(window).width() <= 991) {
+
+                const wph = $(window).width();
+                this.detailwidth = wph - 65 + 'px';
+
+                const nvh = 56;
+                $('.mat-tab-header').css({ 'width': wph - nvh - 160 + 'px' });
+            }
+        });
+
     }
 
 

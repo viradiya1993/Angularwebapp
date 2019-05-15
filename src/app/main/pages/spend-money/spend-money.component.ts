@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import { MatTableDataSource, MatPaginator, MatDialogConfig, MatDialog } from '@angular/material';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-spend-money',
@@ -41,6 +42,7 @@ export class SpendMoneyComponent implements OnInit {
   }
 
   ngOnInit() {
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.getTableFilter();
     this.loadData();
   }

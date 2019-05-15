@@ -49,26 +49,29 @@ app-contact {
 }
 
 .sticky_search_div {
-    position: fixed;
-    top: 163px;
+    // position: fixed;
+    // top: 163px;
+    // padding-left: 300px;
     width: 100%;
     background-color: #f5f5f5;
     z-index: 9999;
     left: 0;
-    padding-left: 300px;
 }
-.sticky_search_remove_padding {
-    padding-left: 80px;
-}
+// .sticky_search_remove_padding {
+//     padding-left: 80px;
+// }
 
-#contact .p-24.list_tbl_main {
-    // margin-top: 110px;
-    margin-top: 85px;
-}
+// #contact .p-24.list_tbl_main {
+//     margin-top: 85px;
+//     overflow: hidden;
+// }
 
 .p-24.list_tbl_main {
-    margin-top: 110px;
+    //margin-top: 110px;
     padding-top: 0 !important;
+}
+#contact .content {
+    position: relative;
 }
 
 .mat-table.mat-table.ng-trigger.ng-trigger-animateStagger {
@@ -115,4 +118,8 @@ table tr.highlight {
 
 button#refreshContactTab {
     display: none;
+}
+
+#contact .content .example {
+    padding: 20px 10px;
 }

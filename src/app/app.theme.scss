@@ -169,7 +169,7 @@ body.theme-pink-dark {
 }
 .contact_right_action {
     position: absolute;
-    right: 25px;
+    right: 0;
     top: 0;
     background-color: #fff;
     z-index: 101;
@@ -184,10 +184,18 @@ body.theme-pink-dark {
 
 .top_right_action_billing_one {
     position: absolute;
-    right: 36px;
-    top: 6px;
+    right: 0;
+    top: 0;
     background-color: #fff;
     z-index: 101;
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+}
+.top_right_action_billing_one button {
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
 }
 
 .top_right_action_chronology {
@@ -451,6 +459,16 @@ body.theme-yellow-light .mat-dialog-container {
 content.inner-scroll {
     overflow: auto;
 }
-.sticky_search_div {
-    overflow: hidden !important;
+// .sticky_search_div {
+//     overflow: hidden !important;
+// }
+
+mat-spinner.mat-progress-spinner {
+    zoom: 0 !important;
+    height: 20px !important;
+    width: 20px !important;
+}
+.mat-progress-spinner svg {
+    height: 20px !important;
+    width: 20px !important;
 }

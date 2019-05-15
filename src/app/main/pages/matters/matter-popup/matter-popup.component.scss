@@ -123,3 +123,7 @@ mat-dialog-actions {
         width: 95%;
     }
 }
+
+.min_height .mat-tab-body.mat-tab-body-active {
+    min-height: 200px;
+}

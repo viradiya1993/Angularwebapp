@@ -314,7 +314,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         let w = Data == 'LI' ? '50%' : '25%';
         const dialogRef = this.dialog.open(LicenceAgreementComponent, {
             disableClose: true,
-            width: w,
+            //width: w,
             data: { action: Data }
         });
         dialogRef.afterClosed().subscribe(result => { });

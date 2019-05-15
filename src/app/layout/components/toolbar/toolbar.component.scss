@@ -298,9 +298,16 @@ body.theme-default .mat-tab-header .mat-elevation-z4 {
 toolbar .ribbon-container.time_billing_tab_main .mat-nav-list .mat-list-item {
     height: 25px !important;
 }
+toolbar .ribbon-container.legal_details_tab_main .mat-nav-list .mat-list-item {
+    height: 25px !important;
+} 
 
 toolbar .ribbon-container.reports_tab_main .mat-nav-list .mat-list-item {
     height: 25px !important;
+}
+toolbar .ribbon-container.legal_details_tab_main .mat-nav-list .mat-button {
+    line-height: 25px;
+    padding: 0 12px;
 }
 
 @media screen and (max-width: 1280px) {
@@ -344,5 +351,20 @@ mat-icon.cancel_icon.mat-icon.material-icons.mat-icon-no-color {
 }
 
 toolbar .ribbon-container .time-entry-section .mat-nav-list .mat-list-item {
-    height: 24px !important;
+    height: 25px !important;
+}
+.help_tab_main {
+    overflow: auto !important;
+}
+.goto_tab_main {
+    overflow: auto !important;
+}
+.reports_tab_main {
+    overflow: auto !important;
+}
+.matter_tab_main {
+    overflow: auto !important;
+}
+.matter_tab_main {
+    overflow: auto !important;
 }

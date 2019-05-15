@@ -67,9 +67,45 @@ export class MatterPopupComponent implements OnInit {
       { name: 'Workers Compensatoior', value: 'Workers Compensatoior' },
       { name: 'Working injuries Damage', value: 'Working injuries Damage' },
     ];
+    this.matterFormBuild();
+    let postDatas = { 'LookupType': 'Matter Class' };
+    this._mattersService.getMattersClasstype(postDatas).subscribe(responses => {
+      if (responses.CODE === 200 && responses.STATUS === 'success') {
+        console.log(responses.DATA.LOOKUPS);
+      }
+      this.isLoadingResults = false;
+    });
 
+
+    this.matterdetailForm.controls['ACTIVE'].setValue(true);
+    if (this.action === 'edit') {
+      const localMatterID = JSON.parse(localStorage.getItem('set_active_matters'));
+      // this.isLoadingResults = true;
+      let postData = { 'MatterGuid': localMatterID.MATTERGUID };
+      this._mattersService.getMattersDetail(postData).subscribe(response => {
+        if (response.CODE === 200 && response.STATUS === 'success') {
+          // let currentMatter = response.DATA.MATTERS[0];
+          // this.active = currentMatter.ACTIVE === 0 ? false : true;
+
+
+          // this.matterdetailForm.controls['MatterNum'].setValue(currentMatter.SHORTNAME);
+          // this.matterdetailForm.controls['Client'].setValue(currentMatter.CONTACTTYPE);
+          // this.matterdetailForm.controls['MatterDescription'].setValue(currentMatter.MATTER);
+          // this.matterdetailForm.controls['ClientReference'].setValue(currentMatter.REFERENCE);
+          // this.matterdetailForm.controls['PerHours'].setValue(currentMatter.RATEPERHOUR);
+          // this.matterdetailForm.controls['PerDay'].setValue(currentMatter.RATEPERDAY);
+          // this.isLoadingResults = false;
+        }
+      }, error => {
+        this.toastr.error(error);
+      });
+    }
+
+  }
+  matterFormBuild() {
     this.matterdetailForm = this._formBuilder.group({
-      Client: [''],
+      MATTERCLASS: [''],
+
       MatterNum: [''],
       ACTIVE: [''],
       MatterDescription: [''],
@@ -272,39 +308,6 @@ export class MatterPopupComponent implements OnInit {
       ArchiveNo: [''],
       ArchiveDate: []
     });
-    let postDatas = { 'LookupType': 'Matter Class' };
-    this._mattersService.getMattersClasstype(postDatas).subscribe(responses => {
-      if (responses.CODE === 200 && responses.STATUS === 'success') {
-        let currentMatter = responses.DATA.LOOKUPS;
-      }
-      this.isLoadingResults = false;
-    });
-
-
-    this.matterdetailForm.controls['ACTIVE'].setValue(true);
-    if (this.action === 'edit') {
-      const localMatterID = JSON.parse(localStorage.getItem('set_active_matters'));
-      // this.isLoadingResults = true;
-      let postData = { 'MatterGuid': localMatterID.MATTERGUID };
-      this._mattersService.getMattersDetail(postData).subscribe(response => {
-        if (response.CODE === 200 && response.STATUS === 'success') {
-          // let currentMatter = response.DATA.MATTERS[0];
-          // this.active = currentMatter.ACTIVE === 0 ? false : true;
-
-
-          // this.matterdetailForm.controls['MatterNum'].setValue(currentMatter.SHORTNAME);
-          // this.matterdetailForm.controls['Client'].setValue(currentMatter.CONTACTTYPE);
-          // this.matterdetailForm.controls['MatterDescription'].setValue(currentMatter.MATTER);
-          // this.matterdetailForm.controls['ClientReference'].setValue(currentMatter.REFERENCE);
-          // this.matterdetailForm.controls['PerHours'].setValue(currentMatter.RATEPERHOUR);
-          // this.matterdetailForm.controls['PerDay'].setValue(currentMatter.RATEPERDAY);
-          // this.isLoadingResults = false;
-        }
-      }, error => {
-        this.toastr.error(error);
-      });
-    }
-
   }
   get f() {
     //console.log(this.contactForm);

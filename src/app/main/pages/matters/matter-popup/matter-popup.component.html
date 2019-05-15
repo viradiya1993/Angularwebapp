@@ -13,7 +13,7 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline">
                         <mat-label>Class</mat-label>
-                        <mat-select #value name="selected" formControlName="Client" (ngModelChange)="Classtype($event)">
+                        <mat-select #value name="selected" formControlName="MATTERCLASS" (ngModelChange)="Classtype($event)">
                             <mat-option *ngFor="let Classoption of Classdata" value="{{Classoption.value}}">{{Classoption.name}}</mat-option>
                         </mat-select>
                     </mat-form-field>

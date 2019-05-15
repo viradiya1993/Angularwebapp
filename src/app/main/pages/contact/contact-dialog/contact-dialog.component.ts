@@ -33,8 +33,7 @@ export class ContactDialogComponent implements OnInit {
   isspiner: boolean = false;
   dateofbirth: any;
   dateofdeath: string;
-
-
+  
   constructor(
     public MatDialog: MatDialog,
     private TableColumnsService: TableColumnsService,
@@ -47,7 +46,7 @@ export class ContactDialogComponent implements OnInit {
     public _matDialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
-    this.action = _data.action;
+    this.action = _data.action;    
     this.dialogTitle = this.action === 'edit' ? 'Edit Contact' : 'New Contact';
   }
   common: Common[];

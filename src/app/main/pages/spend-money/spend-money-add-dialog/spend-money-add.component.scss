@@ -149,3 +149,20 @@ mat-dialog-actions {
 table.mat-table {
     width: 100%;
 }
+button.matternews {
+    background: none;
+    border: none;
+    // float: right;
+    // height: 0px;
+    // top: 5px;
+    // bottom: -29px;
+    width:150%;
+    cursor: pointer;
+}
+.menu-disabled {
+    opacity: 0.5;
+}
+.left_popup_btn {    
+    width: 75%;
+    text-align: left;
+}

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { MatterInvoicesService, TableColumnsService } from 'app/_services';
+import { SpendmoneyService, TableColumnsService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import { MatTableDataSource, MatPaginator, MatDialogConfig, MatDialog } from '@angular/material';
@@ -17,30 +17,27 @@ export class SpendMoneyComponent implements OnInit {
 
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   isLoadingResults: boolean = false;
-  displayedColumns: [];
   ColumnsObj: any = [];
   tempColobj: any;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   highlightedRows: any;
-  //displayedColumns: string[] = ['class', 'amount', 'Gst', 'note'];
+  displayedColumns: string [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   currentMatterData: any;
-
-
   Spendmoneydata: any;
+  pageSize: any;
 
   constructor(
     private TableColumnsService: TableColumnsService,
-    private _MatterInvoicesService: MatterInvoicesService,
+    private SpendmoneyService: SpendmoneyService,
     private toastr: ToastrService,
     private _formBuilder: FormBuilder,
     private dialog: MatDialog,
   ) {
 
   }
-
   ngOnInit() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.getTableFilter();
@@ -61,10 +58,14 @@ export class SpendMoneyComponent implements OnInit {
       this.toastr.error(error);
     });
   }
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
+  }
   loadData() {
     // this.isLoadingResults = true;
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
-    this._MatterInvoicesService.MatterInvoicesData(potData).subscribe(response => {
+    this.SpendmoneyService.SpendmoneyListData(potData).subscribe(response => {
       // if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
       //   if (response.DATA.INVOICES[0]) {
       //     this.highlightedRows = response.DATA.INVOICES[0].INVOICEGUID;
@@ -77,6 +78,7 @@ export class SpendMoneyComponent implements OnInit {
     }, error => {
       this.toastr.error(error);
     });
+    this.pageSize = localStorage.getItem('lastPageSize');
   }
   selectMatterId(Row: any) {
     this.currentMatterData = Row;
@@ -102,5 +104,8 @@ export class SpendMoneyComponent implements OnInit {
       //   }
       // }
     });
+  }
+  onSearch(s){
+
   }
 }

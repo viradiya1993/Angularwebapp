@@ -1,9 +1,10 @@
 import { Component, OnInit, Inject, AfterViewInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatDialogRef, MatDialog, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatPaginator, MatTableDataSource, MatDialogConfig } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MattersService, TimersService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
+import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.component';
 
 @Component({
   selector: 'app-matter-dialog',
@@ -94,5 +95,29 @@ export class MatterDialogComponent implements OnInit {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
   }
+   // New matter Pop-up
+   AddNewmatterpopup() {
+    const dialogConfig = new MatDialogConfig();
+    const dialogRef = this.dialog.open(MatterPopupComponent, {
+        width: '100%',
+        disableClose: true,
+        data: {
+            action: 'new'
+        }
+    });
 
+    dialogRef.afterClosed().subscribe(result => { });
+  }
+  // Edit matter Pop-up
+  EditNewmatterpopup() {
+    const dialogConfig = new MatDialogConfig();
+    const dialogRef = this.dialog.open(MatterPopupComponent, {
+        width: '100%',
+        disableClose: true,
+        data: {
+            action: 'edit'
+        }
+    });
+    dialogRef.afterClosed().subscribe(result => { });
+  }
 }

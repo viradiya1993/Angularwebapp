@@ -29,7 +29,6 @@ import { ContactCorresDetailsComponent } from './contact-corres-details/contact-
 import { ContactSelectDialogComponent } from './contact-select-dialog/contact-select-dialog.component';
 
 
-
 const routes = [
   { path: 'contact', component: ContactComponent, canActivate: [AuthGuard] }
 ];
@@ -48,6 +47,8 @@ const routes = [
     ContactCorresDetailsComponent,
 
     ContactSelectDialogComponent,
+
+  
   ],
   imports: [
     CommonModule,

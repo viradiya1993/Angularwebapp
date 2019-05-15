@@ -1,6 +1,6 @@
 <div class=" one " [formGroup]="contactForm" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+        <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
             <mat-label>Company Client</mat-label>
             <mat-select name="COMPANYNAME" [formControlName]="'COMPANYNAME'">
                 <mat-option [value]="val.COMPANYCONTACTGUID" *ngFor="let val of getCompanyName">{{val.CONTACTNAME}}

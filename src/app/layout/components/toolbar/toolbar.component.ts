@@ -25,7 +25,7 @@ import { MatterDialogComponent } from 'app/main/pages/time-entries/matter-dialog
 import { ReceiptDilogComponent } from 'app/main/pages/invoice/receipt-dilog/receipt-dilog.component'; 
 import { InvoiceDetailComponent } from 'app/main/pages/invoice/invoice-detail/invoice-detail.component';
 import { SpendMoneyAddComponent } from 'app/main/pages/spend-money/spend-money-add-dialog/spend-money-add.component';
-import { SpendMoneyEditComponent } from 'app/main/pages/spend-money/spend-money-edit-dialog/spend-money-edit.component';
+
 
 
 @Component({
@@ -402,6 +402,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
+                return false;
                 let MatterGUID = localStorage.getItem('');
                 let postData = { FormAction: "delete", MatterGUID: MatterGUID }
                 this._mattersService.AddNewMatter(postData).subscribe(res => {

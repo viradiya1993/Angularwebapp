@@ -11,7 +11,7 @@ import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, 
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 import { SpendMoneyAddComponent } from './spend-money-add-dialog/spend-money-add.component';
-import { SpendMoneyEditComponent } from './spend-money-edit-dialog/spend-money-edit.component';
+
 
 const routes = [
   { path: '', component: SpendMoneyComponent, canActivate: [AuthGuard] },
@@ -20,12 +20,10 @@ const routes = [
 @NgModule({  
   declarations: [
     SpendMoneyComponent,
-    SpendMoneyAddComponent,
-    SpendMoneyEditComponent,
+    SpendMoneyAddComponent,    
   ],
   entryComponents: [
     SpendMoneyAddComponent,
-    SpendMoneyEditComponent
   ],
   imports: [
     CommonModule,
@@ -62,7 +60,7 @@ const routes = [
     MatCheckboxModule
   ],
   exports: [
-    SpendMoneyComponent, SpendMoneyAddComponent, SpendMoneyEditComponent
+    SpendMoneyComponent, SpendMoneyAddComponent
   ]
 })
 export class SpendMoneyModule { }

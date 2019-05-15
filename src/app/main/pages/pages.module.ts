@@ -8,6 +8,7 @@ import { TimeEntriesModule } from './time-entries/time-entries.module';
 import { DiaryModule } from './diary/diary.module';
 import { InvoiceModule } from './invoice/invoice.module';
 import { SpendMoneyModule } from './spend-money/spend-money.module';
+import { ReceiveMoneyModule } from './receive-money/receive-money.module';
 
 const appRoutes: Routes = [
   { path: 'matters', loadChildren: './matters/matters.module#MattersModule' },
@@ -32,6 +33,7 @@ const appRoutes: Routes = [
     DiaryModule,
     InvoiceModule,
     SpendMoneyModule,
+    ReceiveMoneyModule
   ]
 })
 export class PagesModule { }  

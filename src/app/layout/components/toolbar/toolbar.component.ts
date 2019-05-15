@@ -22,10 +22,11 @@ import { TimeEntriesComponent } from 'app/main/pages/time-entries/time-entries.c
 import { TimeEntryDialogComponent } from 'app/main/pages/time-entries/time-entry-dialog/time-entry-dialog.component';
 import { MatterPopupComponent } from 'app/main/pages/matters/matter-popup/matter-popup.component';
 import { MatterDialogComponent } from 'app/main/pages/time-entries/matter-dialog/matter-dialog.component';
-import { ReceiptDilogComponent } from 'app/main/pages/invoice/receipt-dilog/receipt-dilog.component'; 
+import { ReceiptDilogComponent } from 'app/main/pages/invoice/receipt-dilog/receipt-dilog.component';
 import { InvoiceDetailComponent } from 'app/main/pages/invoice/invoice-detail/invoice-detail.component';
 import { SpendMoneyAddComponent } from 'app/main/pages/spend-money/spend-money-add-dialog/spend-money-add.component';
 import { SpendMoneyEditComponent } from 'app/main/pages/spend-money/spend-money-edit-dialog/spend-money-edit.component';
+import { GeneralReceiptDilogComponent } from 'app/main/pages/receive-money/general-receipt-dilog/general-receipt-dilog.component';
 
 
 @Component({
@@ -380,7 +381,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         dialogRef.afterClosed().subscribe(result => { });
     }
- // Edit matter Pop-up
+    // Edit matter Pop-up
     EditNewmatterpopup() {
         const dialogConfig = new MatDialogConfig();
         const dialogRef = this.dialog.open(MatterPopupComponent, {
@@ -393,7 +394,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         dialogRef.afterClosed().subscribe(result => { });
     }
- // Delete matter Pop-up
+    // Delete matter Pop-up
     DeleteNewmatterpopup(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
@@ -415,29 +416,29 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
 
-  // Add Spend Money Pop-up
-  Addspendmoneypopup() {
-    const dialogConfig = new MatDialogConfig();
-    const dialogRef = this.dialog.open(SpendMoneyAddComponent, {
-        width: '100%',
-        disableClose: true,
-        data: {
-            action: 'new'
-        }
-    });
-     dialogRef.afterClosed().subscribe(result => { });
+    // Add Spend Money Pop-up
+    Addspendmoneypopup() {
+        const dialogConfig = new MatDialogConfig();
+        const dialogRef = this.dialog.open(SpendMoneyAddComponent, {
+            width: '100%',
+            disableClose: true,
+            data: {
+                action: 'new'
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => { });
     }
     // Edit matter Pop-up
     Editspendmoneypopup() {
-    const dialogConfig = new MatDialogConfig();
-    const dialogRef = this.dialog.open(SpendMoneyAddComponent, {
-        width: '100%',
-        disableClose: true,
-        data: {
-            action: 'edit'
-        }
-    });
-     dialogRef.afterClosed().subscribe(result => { });
+        const dialogConfig = new MatDialogConfig();
+        const dialogRef = this.dialog.open(SpendMoneyAddComponent, {
+            width: '100%',
+            disableClose: true,
+            data: {
+                action: 'edit'
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => { });
     }
 
     // Delete matter Pop-up
@@ -458,7 +459,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             //         }
             //     });
             // }
-           // this.confirmDialogRef = null;
+            // this.confirmDialogRef = null;
         });
     }
 
@@ -542,9 +543,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 6;
         } else if (x[1] == "invoice") {
             this.isTabShow = 7;
-        }  else if (x[1] == "spend-money") {
+        } else if (x[1] == "spend-money") {
             this.isTabShow = 8;
-        }else if (x[1] == "receive-money") {
+        } else if (x[1] == "receive-money") {
             this.isTabShow = 9;
         } else {
             this.isTabShow = 1;
@@ -604,7 +605,35 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef = null;
         });
     }
-        // ******************************************END Invoice related funtion like create update delete view*********************************************
+    deleteReceiceMoany(): void {
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // let WORKITEMGUID = localStorage.getItem('edit_WORKITEMGUID');
+                // let postData = { FormAction: "delete", WorkItemGuid: WORKITEMGUID }
+                // this.TimersServiceI.SetWorkItems(postData).subscribe(res => {
+                //     if (res.STATUS == "success" && res.CODE == 200) {
+                //         $('#refreshTimeEntryTab').click();
+                //         this.toastr.success('Delete successfully');
+                //     }
+                // });
+            }
+            this.confirmDialogRef = null;
+        });
+    }
+    NewGeneralReceipt(): void {
+        const dialogRef = this._matDialog.open(GeneralReceiptDilogComponent, { width: '100%', disableClose: true, data: null });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                console.log(result);
+            }
+        });
+    }
+    // ******************************************END Invoice related funtion like create update delete view*********************************************
 
 }
 //2 pair Data Convert

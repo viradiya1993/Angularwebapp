@@ -42,7 +42,7 @@ export class ReceiveMoneyComponent implements OnInit {
       ReceiptsTotalEx: [''],
     });
     this.getTableFilter();
-    this.LoadData({});
+    // this.LoadData({});
   }
 
   getTableFilter() {
@@ -102,7 +102,7 @@ export class ReceiveMoneyComponent implements OnInit {
           this.receiveMoneydata = new MatTableDataSource([]);
           this.receiveMoneydata.paginator = this.paginator;
         } else {
-          this.LoadData(JSON.parse(localStorage.getItem('time_entries_filter')));
+          // this.LoadData(JSON.parse(localStorage.getItem('time_entries_filter')));
         }
       }
     });

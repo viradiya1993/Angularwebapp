@@ -6,6 +6,8 @@ import { DatePipe } from '@angular/common';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig, MatDatepickerInputEvent } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
+import * as $ from 'jquery';
+
 @Component({
   selector: 'app-receive-money',
   templateUrl: './receive-money.component.html',
@@ -32,6 +34,7 @@ export class ReceiveMoneyComponent implements OnInit {
   ) { }
   receiveMoneyForm: FormGroup;
   ngOnInit() {
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.receiveMoneyForm = this.fb.group({
       ShowWhat: [''],
       DateRange: [''],

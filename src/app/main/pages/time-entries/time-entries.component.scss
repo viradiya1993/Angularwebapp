@@ -58,20 +58,20 @@
 //     padding-bottom: 0 !important;
 // }
 #time_entries .sticky_search_div {
-    position: fixed;
-    top: 167px;
+    // position: fixed;
+    // top: 167px;
+    // padding-left: 300px;
     width: 100%;
     background-color: #f5f5f5;
     z-index: 9999;
     left: 0;
-    padding-left: 300px;
 }
-#time_entries .sticky_search_remove_padding {
-    padding-left: 80px;
-}
+// #time_entries .sticky_search_remove_padding {
+//     padding-left: 80px;
+// }
 
-.p-24.list_tbl_main {
-    margin-top: 110px;
+#time_entries .list_tbl_main {
+    //margin-top: 85px;
     padding-top: 0 !important;
 }
 
@@ -92,28 +92,16 @@
     margin-top: 110px;
 }
 
-#time_entries .list_tbl_main {
-    margin-top: 85px;
-    padding-top: 0 !important;
+#time_entries .content {
+    position: relative;
 }
 
-// .sticky_search_div {
-//     position: fixed;
-//     top: 145px;
-//     width: 100%;
-//     background-color: #f5f5f5;
-//     z-index: 9999;
-//     left: 0;
-//     padding-left: 300px;
-// }
-// .fix_div_padding {
-//     padding-top: 95px;
-// }
 // .list_sidebar_padding {
 //     padding-top: 92px;
 //     background-color: #fff;
 //     border-left: 1px solid #ccc;
 // }
+
 // .list_sidebar_padding h3.one {
 //     margin: 0;
 // }
@@ -137,4 +125,8 @@
 
 button#refreshTimeEntryTab {
     display: none;
+}
+
+#time_entries .content .example {
+    padding: 20px 10px;
 }

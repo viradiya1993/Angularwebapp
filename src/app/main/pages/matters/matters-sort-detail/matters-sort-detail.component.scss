@@ -118,3 +118,10 @@
         right: 40px;
     }
 }
+@media screen and (max-height: 600px) {
+    .sidebar_right_view_btn_div {
+        position: static;
+        bottom: 0;
+        right: 0;
+    }
+}

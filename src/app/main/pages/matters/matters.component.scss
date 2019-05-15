@@ -59,26 +59,25 @@
 //     padding-bottom: 0 !important;
 // }
 .sticky_search_div {
-    position: fixed;
-    top: 163px;
+    // position: fixed;
+    // top: 163px;
+    // padding-left: 300px;
     width: 100%;
     background-color: #f5f5f5;
     z-index: 9999;
     left: 0;
-    padding-left: 300px;
 }
-.sticky_search_remove_padding {
-    padding-left: 80px;
-}
+// .sticky_search_remove_padding {
+//     padding-left: 80px;
+// }
 
-#matters .p-24.list_tbl_main {
-    // margin-top: 110px;
-    margin-top: 95px;
-    overflow: hidden;
-}
+// #matters .p-24.list_tbl_main {
+//     margin-top: 95px;
+//     overflow: hidden;
+// }
 
 .p-24.list_tbl_main {
-    margin-top: 110px;
+    // margin-top: 110px;
     padding-top: 0 !important;
 }
 

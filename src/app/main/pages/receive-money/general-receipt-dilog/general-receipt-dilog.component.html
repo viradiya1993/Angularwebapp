@@ -60,10 +60,10 @@
                         <mat-label>Bank A/C</mat-label>
                         <input matInput formControlName="bank_ac">
                     </mat-form-field>
-                    <!-- <mat-form-field appearance="outline" class="example" fxFlex="20" class="pr-4">
+                    <mat-form-field appearance="outline" class="example" fxFlex="20" class="pr-4">
                         <mat-label>Income A/C</mat-label>
                         <input matInput formControlName="income_ac">
-                    </mat-form-field> -->
+                    </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" class="example" fxFlex="100" class="pr-4">
@@ -75,7 +75,7 @@
         </div>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
-        <button mat-raised-button color="accent" (click)="SaveReceipt()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
+        <button mat-raised-button color="accent" (click)="SaveGeneralReceipt()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don`t Save</button>
     </mat-dialog-actions>
 </div>

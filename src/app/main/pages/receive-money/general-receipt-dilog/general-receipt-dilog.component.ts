@@ -39,6 +39,12 @@ export class GeneralReceiptDilogComponent implements OnInit {
       notes: [''],
     });
   }
+  choosedDate(s, ss) {
+
+  }
+  SaveGeneralReceipt() {
+
+  }
 
 
 }

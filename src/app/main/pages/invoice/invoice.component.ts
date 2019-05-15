@@ -36,6 +36,7 @@ export class InvoiceComponent implements OnInit {
   ) { }
   MatterInvoicesdata;
   ngOnInit() {
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.getTableFilter();
     this.loadData();
 

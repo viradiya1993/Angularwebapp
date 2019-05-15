@@ -463,7 +463,7 @@ content.inner-scroll {
 //     overflow: hidden !important;
 // }
 
-app-login #login #login-form-wrapper #login-form button mat-spinner {
+mat-spinner.mat-progress-spinner {
     zoom: 0 !important;
     height: 20px !important;
     width: 20px !important;

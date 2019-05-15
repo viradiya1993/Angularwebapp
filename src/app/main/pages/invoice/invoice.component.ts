@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { MatterInvoicesService, TableColumnsService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
+import * as $ from 'jquery';
 import { MatTableDataSource, MatPaginator, MatDialogConfig, MatDialog } from '@angular/material';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 

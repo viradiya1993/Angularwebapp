@@ -44,33 +44,32 @@
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <!-- <mat-form-field appearance="outline" class="example" fxFlex="20" class="pr-4">
+                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="20">
                         <mat-label>Amount</mat-label>
                         <input matInput formControlName="amount">
                     </mat-form-field>
-                    <mat-form-field appearance="outline" class="example" fxFlex="20" class="pr-4">
+                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="20">
                         <mat-label>GST Type</mat-label>
                         <input matInput formControlName="gsttype">
-                    </mat-form-field> -->
-                    <mat-form-field appearance="outline" class="example" fxFlex="20" class="pr-4">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="20">
                         <mat-label>GST</mat-label>
                         <input matInput formControlName="gst">
                     </mat-form-field>
-                    <mat-form-field appearance="outline" class="example" fxFlex="20" class="pr-4">
+                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="20">
                         <mat-label>Bank A/C</mat-label>
                         <input matInput formControlName="bank_ac">
                     </mat-form-field>
-                    <mat-form-field appearance="outline" class="example" fxFlex="20" class="pr-4">
+                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="20">
                         <mat-label>Income A/C</mat-label>
                         <input matInput formControlName="income_ac">
                     </mat-form-field>
                 </div>
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" class="example" fxFlex="100" class="pr-4">
-                        <mat-label>Notes</mat-label>
-                        <textarea matInput formControlName="notes"></textarea>
-                    </mat-form-field>
-                </div>
+                <mat-form-field appearance="outline" class="example pr-4" fxFlex="100">
+                    <mat-label>Notes</mat-label>
+                    <textarea matInput formControlName="notes"></textarea>
+                </mat-form-field>
+
             </form>
         </div>
     </div>
@@ -79,4 +78,3 @@
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don`t Save</button>
     </mat-dialog-actions>
 </div>
-<!-- </form> -->

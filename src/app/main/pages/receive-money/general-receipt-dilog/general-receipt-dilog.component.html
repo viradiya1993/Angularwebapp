@@ -1,0 +1,82 @@
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+</div>
+<div class="popup_main_div add_general_receipt_main">
+    <h2 mat-dialog-title>
+        General Receipt
+        <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
+          <mat-icon>close</mat-icon>
+      </button>
+    </h2>
+    <div mat-dialog-content class="mat-typography main">
+        <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+            <form name="generalReceiptForm" id="generalReceiptForm" [formGroup]="generalReceiptForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" class="example" fxFlex="25" class="pr-4">
+                        <mat-label>Date</mat-label>
+                        <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" formControlName="date">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="example" fxFlex="25" class="pr-4">
+                        <mat-label>Class</mat-label>
+                        <mat-select formControlName="classType">
+                            <mat-option value="WIP">Time Entry</mat-option>
+                            <mat-option value="Activity">Activity</mat-option>
+                            <mat-option value="Sundry">Sundry</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="example" fxFlex="25" class="pr-4">
+                        <mat-label>Type</mat-label>
+                        <mat-select formControlName="type">
+                            <mat-option value="WIP">Time Entry</mat-option>
+                            <mat-option value="Activity">Activity</mat-option>
+                            <mat-option value="Sundry">Sundry</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="example" fxFlex="25" class="pr-4">
+                        <mat-label>Payor</mat-label>
+                        <mat-select formControlName="payor">
+                            <mat-option value="WIP">Time Entry</mat-option>
+                            <mat-option value="Activity">Activity</mat-option>
+                            <mat-option value="Sundry">Sundry</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" class="example" fxFlex="20" class="pr-4">
+                        <mat-label>Amount</mat-label>
+                        <input matInput formControlName="amount">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="example" fxFlex="20" class="pr-4">
+                        <mat-label>GST Type</mat-label>
+                        <input matInput formControlName="gsttype">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="example" fxFlex="20" class="pr-4">
+                        <mat-label>GST</mat-label>
+                        <input matInput formControlName="gst">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="example" fxFlex="20" class="pr-4">
+                        <mat-label>Bank A/C</mat-label>
+                        <input matInput formControlName="bank_ac">
+                    </mat-form-field>
+                    <!-- <mat-form-field appearance="outline" class="example" fxFlex="20" class="pr-4">
+                        <mat-label>Income A/C</mat-label>
+                        <input matInput formControlName="income_ac">
+                    </mat-form-field> -->
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" class="example" fxFlex="100" class="pr-4">
+                        <mat-label>Notes</mat-label>
+                        <textarea matInput formControlName="notes"></textarea>
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+    </div>
+    <mat-dialog-actions align="end" class="popup_ftr">
+        <button mat-raised-button color="accent" (click)="SaveReceipt()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don`t Save</button>
+    </mat-dialog-actions>
+</div>
+<!-- </form> -->

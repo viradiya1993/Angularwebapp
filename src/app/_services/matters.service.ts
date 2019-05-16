@@ -14,16 +14,16 @@ export class MattersService {
     }
     return this.httpClient.post<any>(environment.APIEndpoint + 'GetMatter', data);
   }
-  getMattersDetail(postData) {    
+  getMattersDetail(postData) {
     return this.httpClient.post<any>(environment.APIEndpoint + 'GetMatter', postData);
   }
   getMattersContact(postData) {
     return this.httpClient.post<any>(environment.APIEndpoint + 'GetMatterContact', postData);
   }
-  AddNewMatter(postDatas){
-    return this.httpClient.post<any>(environment.APIEndpoint + 'GetMatter', postDatas);
-  } 
-  getMattersClasstype(getdata){
+  AddNewMatter(postDatas) {
+    return this.httpClient.post<any>(environment.APIEndpoint + 'SetMatter', postDatas);
+  }
+  getMattersClasstype(getdata) {
     return this.httpClient.post<any>(environment.APIEndpoint + 'GetLookups', getdata);
   }
 }

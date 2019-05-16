@@ -281,230 +281,211 @@ export class MatterPopupComponent implements OnInit {
       MATTERCLASS: this.f.MATTERCLASS.value,
       ACTIVE: this.f.ACTIVE.value == true ? 1 : 0,
       SHORTNAME: this.f.SHORTNAME.value,
-
       MatterDescription: this.f.MatterDescription.value,
+
       // // general
-      NOTES: this.f.NOTES.value,
-      COMMENCEMENTDATE: this.f.COMMENCEMENTDATE.value,
-      REFERENCE: this.f.REFERENCE.value,
-      OTHERREFERENCE: this.f.OTHERREFERENCE.value,
-      COMPLETEDDATE: this.f.COMPLETEDDATE.value,
-      PRIMARYFEEEARNERGUID: this.f.PRIMARYFEEEARNERGUID.value,
-      OWNERGUID: this.f.OWNERGUID.value,
+      // NOTES: this.f.NOTES.value,
+      // COMMENCEMENTDATE: this.f.COMMENCEMENTDATE.value,
+      // REFERENCE: this.f.REFERENCE.value,
+      // OTHERREFERENCE: this.f.OTHERREFERENCE.value,
+      // COMPLETEDDATE: this.f.COMPLETEDDATE.value,
+      // PRIMARYFEEEARNERGUID: this.f.PRIMARYFEEEARNERGUID.value,
+      // OWNERGUID: this.f.OWNERGUID.value,
 
-      CostsAgreementDate: this.f.CostsAgreementDate.value,
-      EstimateMinimum: this.f.EstimateMinimum.value,
-      Ex_GST: this.f.Ex_GST.value,
+      // CostsAgreementDate: this.f.CostsAgreementDate.value,
+      // EstimateMinimum: this.f.EstimateMinimum.value,
+      // Ex_GST: this.f.Ex_GST.value,
 
-      // client
-      Clientmatter: this.f.Clientmatter.value,
-      // rates
-      BILLINGMETHOD: this.f.BILLINGMETHOD.value,
-      ONCHARGEDISBURSEMENTGST: this.f.ONCHARGEDISBURSEMENTGST.value,
-      GSTTYPE: this.f.GSTTYPE.value,
-      RATEPERHOUR: this.f.RATEPERHOUR.value,
-      RATEPERDAY: this.f.RATEPERDAY.value,
-      FIXEDRATEEXGST: this.f.FIXEDRATEEXGST.value,
-      FIXEDRATEINCGST: this.f.FIXEDRATEINCGST.value,
-      // Details -> commercial
-      CLASSOFSHARES: this.f.CLASSOFSHARES.value,
-      NUMBEROFSHARES: this.f.NUMBEROFSHARES.value,
-      CONSIDERATION: this.f.CONSIDERATION.value,
-      //Details -> compensation
-      ACCIDENTDATE: this.f.ACCIDENTDATE.value,
-      PLACEOFINJURY: this.f.PLACEOFINJURY.value,
-      INJURYDESCRIPTION: this.f.INJURYDESCRIPTION.value,
-      LITIGATIONFUNDER: this.f.LITIGATIONFUNDER.value,
-      TRANSFERREDFROMOTHERSOLICITOR: this.f.TRANSFERREDFROMOTHERSOLICITOR.value,
-      CLIENTNAME: this.f.CLIENTNAME.value,
-      ESTIMATEDAWARD: this.f.ESTIMATEDAWARD.value,
-      CLAIMNUMBER: this.f.CLAIMNUMBER.value,
-      INVESTIGATIONDATE: this.f.INVESTIGATIONDATE.value,
-      SETTLEMENTDATE: this.f.SETTLEMENTDATE.value,
-      EXPERTHEARINGDATE: this.f.EXPERTHEARINGDATE.value,
-      DATEOFNOTICEOFINJURY: this.f.DATEOFNOTICEOFINJURY.value,
+      // // client
+      // Clientmatter: this.f.Clientmatter.value,
+      // // rates
+      // BILLINGMETHOD: this.f.BILLINGMETHOD.value,
+      // ONCHARGEDISBURSEMENTGST: this.f.ONCHARGEDISBURSEMENTGST.value,
+      // GSTTYPE: this.f.GSTTYPE.value,
+      // RATEPERHOUR: this.f.RATEPERHOUR.value,
+      // RATEPERDAY: this.f.RATEPERDAY.value,
+      // FIXEDRATEEXGST: this.f.FIXEDRATEEXGST.value,
+      // FIXEDRATEINCGST: this.f.FIXEDRATEINCGST.value,
+      // // Details -> commercial
+      // CLASSOFSHARES: this.f.CLASSOFSHARES.value,
+      // NUMBEROFSHARES: this.f.NUMBEROFSHARES.value,
+      // CONSIDERATION: this.f.CONSIDERATION.value,
+      // //Details -> compensation
+      // ACCIDENTDATE: this.f.ACCIDENTDATE.value,
+      // PLACEOFINJURY: this.f.PLACEOFINJURY.value,
+      // INJURYDESCRIPTION: this.f.INJURYDESCRIPTION.value,
+      // LITIGATIONFUNDER: this.f.LITIGATIONFUNDER.value,
+      // TRANSFERREDFROMOTHERSOLICITOR: this.f.TRANSFERREDFROMOTHERSOLICITOR.value,
+      // CLIENTNAME: this.f.CLIENTNAME.value,
+      // ESTIMATEDAWARD: this.f.ESTIMATEDAWARD.value,
+      // CLAIMNUMBER: this.f.CLAIMNUMBER.value,
+      // INVESTIGATIONDATE: this.f.INVESTIGATIONDATE.value,
+      // SETTLEMENTDATE: this.f.SETTLEMENTDATE.value,
+      // EXPERTHEARINGDATE: this.f.EXPERTHEARINGDATE.value,
+      // DATEOFNOTICEOFINJURY: this.f.DATEOFNOTICEOFINJURY.value,
 
-      ExpiryDate: this.f.ExpiryDate.value,
-      CauseofInjury: this.f.CauseofInjury.value,
-      // Details ->compulsory-acquisition
-      Address: this.f.Address.value,
-      CLIENTVALUATION: this.f.CLIENTVALUATION.value,
-      AUTHORITYVALUATION: this.f.AUTHORITYVALUATION.value,
-      //Details -> criminal
-      BRIEFSERVICEDATE: this.f.BRIEFSERVICEDATE.value,
-      COMMITTALDATE: this.f.COMMITTALDATE.value,
-      REPLYDATE: this.f.REPLYDATE.value,
-      JUVENILE: this.f.JUVENILE.value,
-      WAIVEROFCOMMITTAL: this.f.WAIVEROFCOMMITTAL.value,
-      BAILDATE: this.f.BAILDATE.value,
-      BAILRESTRICTIONS: this.f.BAILRESTRICTIONS.value,
-      OUTCOME: this.f.OUTCOME.value,
-      SENTENCINGDATE: this.f.SENTENCINGDATE.value,
-      SENTENCE: this.f.SENTENCE.value,
-      S91APPLICATION: this.f.S91APPLICATION.value,
-      S93APPLICATION: this.f.S93APPLICATION.value,
-      COURT: this.f.COURT.value,
-      DIVISION: this.f.DIVISION.value,
-      REGISTRY: this.f.REGISTRY.value,
-      CourtMatter: this.f.CourtMatter.value,
-      List: this.f.List.value,
+      // ExpiryDate: this.f.ExpiryDate.value,
+      // CauseofInjury: this.f.CauseofInjury.value,
+      // // Details ->compulsory-acquisition
+      // Address: this.f.Address.value,
+      // CLIENTVALUATION: this.f.CLIENTVALUATION.value,
+      // AUTHORITYVALUATION: this.f.AUTHORITYVALUATION.value,
+      // //Details -> criminal
+      // BRIEFSERVICEDATE: this.f.BRIEFSERVICEDATE.value,
+      // COMMITTALDATE: this.f.COMMITTALDATE.value,
+      // REPLYDATE: this.f.REPLYDATE.value,
+      // JUVENILE: this.f.JUVENILE.value,
+      // WAIVEROFCOMMITTAL: this.f.WAIVEROFCOMMITTAL.value,
+      // BAILDATE: this.f.BAILDATE.value,
+      // BAILRESTRICTIONS: this.f.BAILRESTRICTIONS.value,
+      // OUTCOME: this.f.OUTCOME.value,
+      // SENTENCINGDATE: this.f.SENTENCINGDATE.value,
+      // SENTENCE: this.f.SENTENCE.value,
+      // S91APPLICATION: this.f.S91APPLICATION.value,
+      // S93APPLICATION: this.f.S93APPLICATION.value,
+      // COURT: this.f.COURT.value,
+      // DIVISION: this.f.DIVISION.value,
+      // REGISTRY: this.f.REGISTRY.value,
+      // CourtMatter: this.f.CourtMatter.value,
+      // List: this.f.List.value,
 
-      // Details ->family
-      COHABITATIONDATE: this.f.COHABITATIONDATE.value,
-      MARRIAGEDATE: this.f.MARRIAGEDATE.value,
-      MARRIAGEPLACE: this.f.MARRIAGEPLACE.value,
-      MARRIAGECOUNTRY: this.f.MARRIAGECOUNTRY.value,
-      SEPARATIONDATE: this.f.SEPARATIONDATE.value,
-      DATEFILEDFORDIVORCE: this.f.DATEFILEDFORDIVORCE.value,
-      DIVORCEDATE: this.f.DIVORCEDATE.value,
-      DIVORCEPLACE: this.f.DIVORCEPLACE.value,
-      DIVORCECOUNTRY: this.f.DIVORCECOUNTRY.value,
-      NUMDEPENDANTS: this.f.NUMDEPENDANTS.value,
-      FAMILYCOURTCLIENTID: this.f.FAMILYCOURTCLIENTID.value,
-      ExpiryDate1: this.f.ExpiryDate1.value,
+      // // Details ->family
+      // COHABITATIONDATE: this.f.COHABITATIONDATE.value,
+      // MARRIAGEDATE: this.f.MARRIAGEDATE.value,
+      // MARRIAGEPLACE: this.f.MARRIAGEPLACE.value,
+      // MARRIAGECOUNTRY: this.f.MARRIAGECOUNTRY.value,
+      // SEPARATIONDATE: this.f.SEPARATIONDATE.value,
+      // DATEFILEDFORDIVORCE: this.f.DATEFILEDFORDIVORCE.value,
+      // DIVORCEDATE: this.f.DIVORCEDATE.value,
+      // DIVORCEPLACE: this.f.DIVORCEPLACE.value,
+      // DIVORCECOUNTRY: this.f.DIVORCECOUNTRY.value,
+      // NUMDEPENDANTS: this.f.NUMDEPENDANTS.value,
+      // FAMILYCOURTCLIENTID: this.f.FAMILYCOURTCLIENTID.value,
+      // ExpiryDate1: this.f.ExpiryDate1.value,
 
-      //Details -> immigration
-      VISATYPE: this.f.VISATYPE.value,
-      VALUEOFASSETS: this.f.VALUEOFASSETS.value,
-      VISASTATUS: this.f.VISASTATUS.value,
-      ANTICIPATEDDATEOFENTRY: this.f.ANTICIPATEDDATEOFENTRY.value,
-      LODGEMENTDATE: this.f.LODGEMENTDATE.value,
-      VISAEXPIRYDATE: this.f.VISAEXPIRYDATE.value,
-      DECISIONDUEDATE: this.f.DECISIONDUEDATE.value,
+      // //Details -> immigration
+      // VISATYPE: this.f.VISATYPE.value,
+      // VALUEOFASSETS: this.f.VALUEOFASSETS.value,
+      // VISASTATUS: this.f.VISASTATUS.value,
+      // ANTICIPATEDDATEOFENTRY: this.f.ANTICIPATEDDATEOFENTRY.value,
+      // LODGEMENTDATE: this.f.LODGEMENTDATE.value,
+      // VISAEXPIRYDATE: this.f.VISAEXPIRYDATE.value,
+      // DECISIONDUEDATE: this.f.DECISIONDUEDATE.value,
 
-      //Details -> leasing
-      Address2: this.f.Address2.value,
-      LEASERECEIVED: this.f.LEASERECEIVED.value,
-      DATEEXECUTED: this.f.DATEEXECUTED.value,
-      VALIDUNTIL: this.f.VALIDUNTIL.value,
-      OPTIONDATE: this.f.OPTIONDATE.value,
-      Term: this.f.Term.value,
-      DISCLOSUREDATE: this.f.DISCLOSUREDATE.value,
-      REGISTEREDINFILEMAN: this.f.REGISTEREDINFILEMAN.value,
+      // //Details -> leasing
+      // Address2: this.f.Address2.value,
+      // LEASERECEIVED: this.f.LEASERECEIVED.value,
+      // DATEEXECUTED: this.f.DATEEXECUTED.value,
+      // VALIDUNTIL: this.f.VALIDUNTIL.value,
+      // OPTIONDATE: this.f.OPTIONDATE.value,
+      // Term: this.f.Term.value,
+      // DISCLOSUREDATE: this.f.DISCLOSUREDATE.value,
+      // REGISTEREDINFILEMAN: this.f.REGISTEREDINFILEMAN.value,
 
-      //Details -> litigation
-      MATTERTITLEBELOW: this.f.MATTERTITLEBELOW.value,
-      COURTBELOW: this.f.COURTBELOW.value,
-      CASENUMBERBELOW: this.f.CASENUMBERBELOW.value,
-      DATEOFHEARINGS: this.f.DATEOFHEARINGS.value,
-      MATERIALDATE: this.f.MATERIALDATE.value,
-      DECISION: this.f.DECISION.value,
-      CourtMatter1: this.f.CourtMatter1.value,
-      List1: this.f.List1.value,
-      ClientType1: this.f.ClientType1.value,
-      CostEstimateSuccesful: this.f.CostEstimateSuccesful.value,
-      IncGST: this.f.IncGST.value,
-      CostEstimateUnsuccesful: this.f.CostEstimateUnsuccesful.value,
-      IncGST2: this.f.IncGST2.value,
+      // //Details -> litigation
+      // MATTERTITLEBELOW: this.f.MATTERTITLEBELOW.value,
+      // COURTBELOW: this.f.COURTBELOW.value,
+      // CASENUMBERBELOW: this.f.CASENUMBERBELOW.value,
+      // DATEOFHEARINGS: this.f.DATEOFHEARINGS.value,
+      // MATERIALDATE: this.f.MATERIALDATE.value,
+      // DECISION: this.f.DECISION.value,
+      // CourtMatter1: this.f.CourtMatter1.value,
+      // List1: this.f.List1.value,
+      // ClientType1: this.f.ClientType1.value,
+      // CostEstimateSuccesful: this.f.CostEstimateSuccesful.value,
+      // IncGST: this.f.IncGST.value,
+      // CostEstimateUnsuccesful: this.f.CostEstimateUnsuccesful.value,
+      // IncGST2: this.f.IncGST2.value,
 
-      //Details -> maritime
-      VESSELNAME: this.f.VESSELNAME.value,
-      VESSELFLAG: this.f.VESSELFLAG.value,
-      VESSELTYPE: this.f.VESSELTYPE.value,
-      TONNAGE: this.f.TONNAGE.value,
-      VESSELMASTER: this.f.VESSELMASTER.value,
-      VESSELLOCATION: this.f.VESSELLOCATION.value,
-      INCIDENTDATE: this.f.INCIDENTDATE.value,
-      EXCHANGEDATE: this.f.EXCHANGEDATE.value,
-      CourtMatter2: this.f.CourtMatter2.value,
+      // //Details -> maritime
+      // VESSELNAME: this.f.VESSELNAME.value,
+      // VESSELFLAG: this.f.VESSELFLAG.value,
+      // VESSELTYPE: this.f.VESSELTYPE.value,
+      // TONNAGE: this.f.TONNAGE.value,
+      // VESSELMASTER: this.f.VESSELMASTER.value,
+      // VESSELLOCATION: this.f.VESSELLOCATION.value,
+      // INCIDENTDATE: this.f.INCIDENTDATE.value,
+      // EXCHANGEDATE: this.f.EXCHANGEDATE.value,
+      // CourtMatter2: this.f.CourtMatter2.value,
 
-      //Details -> mortgage-finance
-      PRINCIPALADVANCED: this.f.PRINCIPALADVANCED.value,
-      INTERESTRATE: this.f.INTERESTRATE.value,
-      FOLIOIDENTIFIER: this.f.FOLIOIDENTIFIER.value,
-      DISCHARGEDATE: this.f.DISCHARGEDATE.value,
-      SECURITYPROPERTY: this.f.SECURITYPROPERTY.value,
-      ExpirtyDate: this.f.ExpirtyDate.value,
+      // //Details -> mortgage-finance
+      // PRINCIPALADVANCED: this.f.PRINCIPALADVANCED.value,
+      // INTERESTRATE: this.f.INTERESTRATE.value,
+      // FOLIOIDENTIFIER: this.f.FOLIOIDENTIFIER.value,
+      // DISCHARGEDATE: this.f.DISCHARGEDATE.value,
+      // SECURITYPROPERTY: this.f.SECURITYPROPERTY.value,
+      // ExpirtyDate: this.f.ExpirtyDate.value,
 
-      // Details ->property-purchase
-      Status: this.f.Status.value,
-      Address3: this.f.Address3.value,
-      PURCHASEPRICE: this.f.PURCHASEPRICE.value,
-      DEPOSITAMOUNT: this.f.DEPOSITAMOUNT.value,
-      STAMPDUTYDATE: this.f.STAMPDUTYDATE.value,
-      DEPOSITBONDAMOUNT: this.f.DEPOSITBONDAMOUNT.value,
-      STAMPDUTYAMOUNT: this.f.STAMPDUTYAMOUNT.value,
-      DATEPAID: this.f.DATEPAID.value,
-      BANKREFERENCE: this.f.BANKREFERENCE.value,
-      INITIALDEPOSIT: this.f.INITIALDEPOSIT.value,
-      BALANCEDEPOSIT: this.f.BALANCEDEPOSIT.value,
-      BALANCEDEPOSITDATE: this.f.BALANCEDEPOSITDATE.value,
-      BUILDINGREPORTCOMPLETED: this.f.BUILDINGREPORTCOMPLETED.value,
-      PESTREPORTCOMPLETED: this.f.PESTREPORTCOMPLETED.value,
-      SPECIALCONDITIONS: this.f.SPECIALCONDITIONS.value,
+      // // Details ->property-purchase
+      // Status: this.f.Status.value,
+      // Address3: this.f.Address3.value,
+      // PURCHASEPRICE: this.f.PURCHASEPRICE.value,
+      // DEPOSITAMOUNT: this.f.DEPOSITAMOUNT.value,
+      // STAMPDUTYDATE: this.f.STAMPDUTYDATE.value,
+      // DEPOSITBONDAMOUNT: this.f.DEPOSITBONDAMOUNT.value,
+      // STAMPDUTYAMOUNT: this.f.STAMPDUTYAMOUNT.value,
+      // DATEPAID: this.f.DATEPAID.value,
+      // BANKREFERENCE: this.f.BANKREFERENCE.value,
+      // INITIALDEPOSIT: this.f.INITIALDEPOSIT.value,
+      // BALANCEDEPOSIT: this.f.BALANCEDEPOSIT.value,
+      // BALANCEDEPOSITDATE: this.f.BALANCEDEPOSITDATE.value,
+      // BUILDINGREPORTCOMPLETED: this.f.BUILDINGREPORTCOMPLETED.value,
+      // PESTREPORTCOMPLETED: this.f.PESTREPORTCOMPLETED.value,
+      // SPECIALCONDITIONS: this.f.SPECIALCONDITIONS.value,
 
-      //Details -> property-sale 
-      Address4: this.f.Address4.value,
-      ADJUSTMENTDATE: this.f.ADJUSTMENTDATE.value,
-      Status1: this.f.Status1.value,
+      // //Details -> property-sale 
+      // Address4: this.f.Address4.value,
+      // ADJUSTMENTDATE: this.f.ADJUSTMENTDATE.value,
+      // Status1: this.f.Status1.value,
 
-      //Details -> strata
-      STRATAPLANNUMBER: this.f.STRATAPLANNUMBER.value,
-      EXPIRATIONDATE: this.f.EXPIRATIONDATE.value,
-      LOTNUMBER: this.f.LOTNUMBER.value,
-      BYLAWTYPE: this.f.BYLAWTYPE.value,
-      BYLAWNO: this.f.BYLAWNO.value,
-      SPECIALRESOLUTIONDATE: this.f.SPECIALRESOLUTIONDATE.value,
-      AGGREGATIONOFENTITLEMENT: this.f.AGGREGATIONOFENTITLEMENT.value,
-      TOTALUNITS: this.f.TOTALUNITS.value,
+      // //Details -> strata
+      // STRATAPLANNUMBER: this.f.STRATAPLANNUMBER.value,
+      // EXPIRATIONDATE: this.f.EXPIRATIONDATE.value,
+      // LOTNUMBER: this.f.LOTNUMBER.value,
+      // BYLAWTYPE: this.f.BYLAWTYPE.value,
+      // BYLAWNO: this.f.BYLAWNO.value,
+      // SPECIALRESOLUTIONDATE: this.f.SPECIALRESOLUTIONDATE.value,
+      // AGGREGATIONOFENTITLEMENT: this.f.AGGREGATIONOFENTITLEMENT.value,
+      // TOTALUNITS: this.f.TOTALUNITS.value,
 
-      //Details -> trademark-ip
-      ApplicationNumber: this.f.ApplicationNumber.value,
+      // //Details -> trademark-ip
+      // ApplicationNumber: this.f.ApplicationNumber.value,
 
-      //Details -> wills-estate
-      DATEOFWILL: this.f.DATEOFWILL.value,
-      ESTATEGROSSVALUE: this.f.ESTATEGROSSVALUE.value,
-      ESTATENETVALUE: this.f.ESTATENETVALUE.value,
-      NAMEOFTRUST: this.f.NAMEOFTRUST.value,
-      NAMEOFSUPERANNUATION: this.f.NAMEOFSUPERANNUATION.value,
-      NUMBEROFCODICILS: this.f.NUMBEROFCODICILS.value,
-      DATEOFCODICILS: this.f.DATEOFCODICILS.value,
-      DateGrantRepresentation: this.f.DateGrantRepresentation.value,
+      // //Details -> wills-estate
+      // DATEOFWILL: this.f.DATEOFWILL.value,
+      // ESTATEGROSSVALUE: this.f.ESTATEGROSSVALUE.value,
+      // ESTATENETVALUE: this.f.ESTATENETVALUE.value,
+      // NAMEOFTRUST: this.f.NAMEOFTRUST.value,
+      // NAMEOFSUPERANNUATION: this.f.NAMEOFSUPERANNUATION.value,
+      // NUMBEROFCODICILS: this.f.NUMBEROFCODICILS.value,
+      // DATEOFCODICILS: this.f.DATEOFCODICILS.value,
+      // DateGrantRepresentation: this.f.DateGrantRepresentation.value,
 
-      // others
-      MATTERTYPE: this.f.MATTERTYPE.value,
-      CLIENTSOURCE: this.f.CLIENTSOURCE.value,
-      FIELDOFLAW: this.f.FIELDOFLAW.value,
-      INDUSTRY: this.f.INDUSTRY.value,
-      REFERRERGUID: this.f.REFERRERGUID.value,
-      REFERRERGUIDTEXT: this.f.REFERRERGUIDTEXT.value,
-      ARCHIVENO: this.f.ARCHIVENO.value,
-      ARCHIVEDATE: this.f.ARCHIVEDATE.value
+      // // others
+      // MATTERTYPE: this.f.MATTERTYPE.value,
+      // CLIENTSOURCE: this.f.CLIENTSOURCE.value,
+      // FIELDOFLAW: this.f.FIELDOFLAW.value,
+      // INDUSTRY: this.f.INDUSTRY.value,
+      // REFERRERGUID: this.f.REFERRERGUID.value,
+      // REFERRERGUIDTEXT: this.f.REFERRERGUIDTEXT.value,
+      // ARCHIVENO: this.f.ARCHIVENO.value,
+      // ARCHIVEDATE: this.f.ARCHIVEDATE.value
     };
-    this.isspiner = false;
     console.log(details);
-    // details.VALIDATEONLY = true;
-    // this.addcontact.AddContactData(details).subscribe(response => {
-    //   if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-    //     this.checkValidation(response.DATA.VALIDATIONS, details);
-    //   } else if (response.CODE == 451 && response.STATUS == "warning") {
-    //     this.checkValidation(response.DATA.VALIDATIONS, details);
-    //   } else {
-    //     if (response.CODE == 402 && response.STATUS == "error" && response.MESSAGE == "Not logged in")
-    //       this.dialogRef.close(false);
-    //     this.isspiner = false;
-    //   }
-    // }, error => {
-    //   this.toastr.error(error);
-    // });
-    // this._mattersService.AddNewMatter(details).subscribe(response => {
-    //   if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
-    //     if (this.action !== 'edit') {
-    //       this.toastr.success('Matter save successfully');
-    //     } else {
-    //       this.toastr.success('Matter update successfully');
-    //     }
-    //     this.isspiner = false;
-    //     this.dialogRef.close(true);
-    //   } else {
-    //     this.isspiner = false;
-    //   }
-    // }, error => {
-    //   this.toastr.error(error);
-    // });
-    // localStorage.removeItem('CostsAgreementDate');
-    // localStorage.removeItem('CommencementDate');
-    // localStorage.removeItem('CompletedDate');
+    details.VALIDATEONLY = true;
+    this._mattersService.AddNewMatter(details).subscribe(response => {
+      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        this.checkValidation(response.DATA.VALIDATIONS, details);
+      } else if (response.CODE == 451 && response.STATUS == "warning") {
+        this.checkValidation(response.DATA.VALIDATIONS, details);
+      } else {
+        if (response.CODE == 402 && response.STATUS == "error" && response.MESSAGE == "Not logged in")
+          this.dialogRef.close(false);
+        this.isspiner = false;
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
   }
   checkValidation(bodyData: any, details: any) {
     let errorData: any = [];
@@ -539,22 +520,20 @@ export class MatterPopupComponent implements OnInit {
   saveMatterData(data: any) {
     data.VALIDATEONLY = false;
     console.log(data);
-    //   this.addcontact.AddContactData(data).subscribe(response => {
-    //     if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-    //       if (this.action !== 'edit') {
-    //         this.toastr.success('Contact save successfully');
-    //       } else {
-    //         this.toastr.success('Contact update successfully');
-    //       }
-    //       this.isspiner = false;
-    //       this.dialogRef.close(true);
-    //     } else {
-    //       this.isspiner = false;
-    //     }
-    //   }, error => {
-    //     this.toastr.error(error);
-    //   });
-    //   localStorage.removeItem('DATEOFBIRTH');
-    //   localStorage.removeItem('DATEOFDEATH');
+    this._mattersService.AddNewMatter(data).subscribe(response => {
+      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        if (this.action !== 'edit') {
+          this.toastr.success('Matter save successfully');
+        } else {
+          this.toastr.success('Matter update successfully');
+        }
+        this.isspiner = false;
+        this.dialogRef.close(true);
+      } else {
+        this.isspiner = false;
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
   }
 }

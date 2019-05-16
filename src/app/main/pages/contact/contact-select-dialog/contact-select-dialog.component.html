@@ -71,9 +71,7 @@
                     highlightedRows=row.CONTACTGUID mat-row *matRowDef="let row; columns: displayedColumns;" 
                     (click)="editContact(row.CONTACTGUID);highlightedRows = row.CONTACTGUID "
                     matRipple [@animate]="{value:'*',params:{y:'100%'}}">
-                    </tr>
-
-                    
+                    </tr>                   
                 </table>
             </div>
             <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)"

@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-strata',
@@ -8,10 +10,16 @@ import { FormGroup } from '@angular/forms';
 })
 export class StrataComponent implements OnInit {
 
-  constructor() { }
+  constructor(private datepipe: DatePipe) { }
 
   @Input() matterdetailForm: FormGroup;
   ngOnInit() {
   }
 
+  ExpirationDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.matterdetailForm.controls['EXPIRATIONDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
+  ResolutionDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.matterdetailForm.controls['SPECIALRESOLUTIONDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
 }

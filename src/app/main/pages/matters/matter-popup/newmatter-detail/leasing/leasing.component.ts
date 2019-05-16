@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDatepickerInputEvent } from '@angular/material';
 import { MatterAddressPopupComponent } from '../matter-address-popup/matter-address-popup.component';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -12,20 +13,32 @@ import { MatterAddressPopupComponent } from '../matter-address-popup/matter-addr
 })
 export class LeasingComponent implements OnInit {
 
-  constructor(public MatDialog: MatDialog,) { }
+  constructor(public MatDialog: MatDialog, private datepipe: DatePipe) { }
 
   @Input() matterdetailForm: FormGroup;
   ngOnInit() {
   }
-  public Matteraddress() {
+  Matteraddress() {
     const dialogRef = this.MatDialog.open(MatterAddressPopupComponent, { width: '100%', disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
-    //  console.log(result);
+      //  console.log(result);
       if (result) {
         // this.matterdetailForm.controls['Clientmatter'].setValue(result.MATTERGUID);
-         //this.matterdetailForm.controls['Clientmatter'].setValue(result.SHORTNAME + ' : ' + result.MATTER);
+        //this.matterdetailForm.controls['Clientmatter'].setValue(result.SHORTNAME + ' : ' + result.MATTER);
         // this.matterChange('MatterGuid', result.MATTERGUID);
       }
     });
+  }
+  DateExecuted(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.matterdetailForm.controls['DATEEXECUTED'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
+  ValidUntil(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.matterdetailForm.controls['VALIDUNTIL'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
+  OptionDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.matterdetailForm.controls['OPTIONDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
+  DisclosureDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.matterdetailForm.controls['DISCLOSUREDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
 }

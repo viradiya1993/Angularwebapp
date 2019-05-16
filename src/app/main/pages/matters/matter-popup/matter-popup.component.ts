@@ -2,8 +2,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MattersService, TimersService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
 import { DatePipe } from '@angular/common';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-matter-popup',
@@ -11,6 +12,7 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./matter-popup.component.scss']
 })
 export class MatterPopupComponent implements OnInit {
+  confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   Classdata: any[];
   active: any;
   isLoadingResults: boolean = false;
@@ -27,6 +29,7 @@ export class MatterPopupComponent implements OnInit {
     private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<MatterPopupComponent>,
     public datepipe: DatePipe,
+    public _matDialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
     this.action = _data.action;
@@ -90,180 +93,166 @@ export class MatterPopupComponent implements OnInit {
       // client
       Clientmatter: [''],
       // rates
-      Radiogroup1: [''],
-      Checkbox: [''],
-      Radiogroup2: [''],
-      PerHours: [''],
-      PerDay: [''],
-      FixedPrice: [''],
-      Ex_GSTs: [''],
-      // Details
-      // commercial
-      ClassofShares: [''],
-      NumberofShares: [''],
-      Consideration: [''],
-      // compensation
-      AccidentDate: [''],
-      NoticeofInjury: [''],
+      BILLINGMETHOD: [''],
+      ONCHARGEDISBURSEMENTGST: [''],
+      GSTTYPE: [''],
+      RATEPERHOUR: [''],
+      RATEPERDAY: [''],
+      FIXEDRATEEXGST: [''],
+      FIXEDRATEINCGST: [''],
+      // Details -> commercial
+      CLASSOFSHARES: [''],
+      NUMBEROFSHARES: [''],
+      CONSIDERATION: [''],
+      //Details -> compensation
+      ACCIDENTDATE: [''],
+      PLACEOFINJURY: [''],
+      INJURYDESCRIPTION: [''],
+      LITIGATIONFUNDER: [''],
+      TRANSFERREDFROMOTHERSOLICITOR: [''],
+      CLIENTNAME: [''],
+      ESTIMATEDAWARD: [''],
+      CLAIMNUMBER: [''],
+      INVESTIGATIONDATE: [''],
+      SETTLEMENTDATE: [''],
+      EXPERTHEARINGDATE: [''],
+      DATEOFNOTICEOFINJURY: [''],
+
       ExpiryDate: [''],
-      PlaceofInjury: [''],
-      InjuryDesc: [''],
       CauseofInjury: [''],
-      LitFunder: [''],
-      TransferredClient: [''],
-      ClientName: [''],
-      EstAward: [''],
-      ClaimNumber: [''],
-      Investigation: [''],
-      SettlementDate: [''],
-      HearingDates: [''],
-      // compulsory-acquisition
+      // Details ->compulsory-acquisition
       Address: [''],
-      ClientValuation: [''],
-      AuthValuation: [''],
-      // criminal
-      BriefServiceDate: [''],
-      CommittalDate: [''],
-      ReplyDate: [''],
-      Juvenile: [''],
-      WaiverofCommital: [''],
-      BailDate: [''],
-      BailRestrictions: [''],
-      Outcome: [''],
-      SentencingDate: [''],
-      Sentence: [''],
-      S91Application: [''],
-      S93Application: [''],
+      CLIENTVALUATION: [''],
+      AUTHORITYVALUATION: [''],
+      //Details -> criminal
+      BRIEFSERVICEDATE: [''],
+      COMMITTALDATE: [''],
+      REPLYDATE: [''],
+      JUVENILE: [''],
+      WAIVEROFCOMMITTAL: [''],
+      BAILDATE: [''],
+      BAILRESTRICTIONS: [''],
+      OUTCOME: [''],
+      SENTENCINGDATE: [''],
+      SENTENCE: [''],
+      S91APPLICATION: [''],
+      S93APPLICATION: [''],
+      COURT: [''],
+      DIVISION: [''],
+      REGISTRY: [''],
       CourtMatter: [''],
-      Court: [''],
-      Division: [''],
       List: [''],
-      Registry: [''],
 
-      // family
-      CohabitationDate: [''],
-      MarriageDate: [''],
-      MarriagePlace: [''],
-      MarriageCountry: [''],
-      SeparationDate: [''],
-      DateFiledForDivor: [''],
-      DivorceDate: [''],
-      DivorcePlace: [''],
-      DivorceCountry: [''],
-      NumDependants: [''],
-      CliendId: [''],
+      // Details ->family
+      COHABITATIONDATE: [''],
+      MARRIAGEDATE: [''],
+      MARRIAGEPLACE: [''],
+      MARRIAGECOUNTRY: [''],
+      SEPARATIONDATE: [''],
+      DATEFILEDFORDIVORCE: [''],
+      DIVORCEDATE: [''],
+      DIVORCEPLACE: [''],
+      DIVORCECOUNTRY: [''],
+      NUMDEPENDANTS: [''],
+      FAMILYCOURTCLIENTID: [''],
       ExpiryDate1: [''],
-      HearingDate: [''],
 
-      // immigration
-      VisaType: [''],
-      Assets: [''],
-      VisaStatus: [''],
-      AnticipatedEntry: [''],
-      LodgementDate: [''],
-      VisaExpiryDate: [''],
-      DecisionDueDate: [''],
+      //Details -> immigration
+      VISATYPE: [''],
+      VALUEOFASSETS: [''],
+      VISASTATUS: [''],
+      ANTICIPATEDDATEOFENTRY: [''],
+      LODGEMENTDATE: [''],
+      VISAEXPIRYDATE: [''],
+      DECISIONDUEDATE: [''],
 
-      // leasing
+      //Details -> leasing
       Address2: [''],
-      DateExecuted: [''],
-      LeaseReceived: [''],
-      ValidUntil: [''],
-      OptionDate: [''],
+      LEASERECEIVED: [''],
+      DATEEXECUTED: [''],
+      VALIDUNTIL: [''],
+      OPTIONDATE: [''],
       Term: [''],
-      DisclosureDate: [''],
-      RegisteredNumber: [''],
+      DISCLOSUREDATE: [''],
+      REGISTEREDINFILEMAN: [''],
 
-      // litigation
+      //Details -> litigation
+      MATTERTITLEBELOW: [''],
+      COURTBELOW: [''],
+      CASENUMBERBELOW: [''],
+      DATEOFHEARINGS: [''],
+      MATERIALDATE: [''],
+      DECISION: [''],
       CourtMatter1: [''],
-      Court1: [''],
-      Division1: [''],
       List1: [''],
-      Registry1: [''],
       ClientType1: [''],
-      MatterTitleBelow: [''],
-      CourtBelow1: [''],
-      CaseBelow: [''],
-      DateOfHearings: [''],
-      MaterialDate: [''],
-      DecisionOf: [''],
       CostEstimateSuccesful: [''],
       IncGST: [''],
       CostEstimateUnsuccesful: [''],
       IncGST2: [''],
 
-      // maritime
-      VesselName: [''],
-      Flag: [''],
-      VesselType: [''],
-      Tonnage: [''],
-      Master: [''],
-      Location: [''],
-      IncidentDate: [''],
+      //Details -> maritime
+      VESSELNAME: [''],
+      VESSELFLAG: [''],
+      VESSELTYPE: [''],
+      TONNAGE: [''],
+      VESSELMASTER: [''],
+      VESSELLOCATION: [''],
+      INCIDENTDATE: [''],
+      EXCHANGEDATE: [''],
       CourtMatter2: [''],
-      ExchangeDate: [''],
-      SettlementDate1: [''],
 
-      // mortgage-finance
-      PrincipalAdvanced: [''],
-      InterestRate: [''],
-      CommencementDate1: [''],
+      //Details -> mortgage-finance
+      PRINCIPALADVANCED: [''],
+      INTERESTRATE: [''],
+      FOLIOIDENTIFIER: [''],
+      DISCHARGEDATE: [''],
+      SECURITYPROPERTY: [''],
       ExpirtyDate: [''],
-      DisachargeDate: [''],
-      FolioIdentifier: [''],
-      SecurityProperty: [''],
 
-      // property-purchase
-      Address3: [''],
-      PurchasePrice: [''],
-      ExchangeDate2: [''],
-      Deposit: [''],
-      StampDutyDue: [''],
-      DepositBond: [''],
-      SettlementDate2: [''],
-      StampDuty: [''],
-      DatePaid: [''],
-      BankRef: [''],
-      InitialDeposit: [''],
-      BalanceDeposit1: [''],
-      BalanceDeposit2: [''],
-      BuildingReport: [''],
-      PetReport: [''],
-      SpecialConditions: [''],
+      // Details ->property-purchase
       Status: [''],
+      Address3: [''],
+      PURCHASEPRICE: [''],
+      DEPOSITAMOUNT: [''],
+      STAMPDUTYDATE: [''],
+      DEPOSITBONDAMOUNT: [''],
+      STAMPDUTYAMOUNT: [''],
+      DATEPAID: [''],
+      BANKREFERENCE: [''],
+      INITIALDEPOSIT: [''],
+      BALANCEDEPOSIT: [''],
+      BALANCEDEPOSITDATE: [''],
+      BUILDINGREPORTCOMPLETED: [''],
+      PESTREPORTCOMPLETED: [''],
+      SPECIALCONDITIONS: [''],
 
-      // property-sale 
+      //Details -> property-sale 
       Address4: [''],
-      PurchasePrice1: [''],
-      ExchangeDate1: [''],
-      SettlementDate3: [''],
-      AdjustMentDate: [''],
-      DatePaid1: [''],
-      BankRef1: [''],
+      ADJUSTMENTDATE: [''],
       Status1: [''],
 
-      // strata
-      StrataPlanNumber: [''],
-      ExpirationDate: [''],
-      LotNumber: [''],
-      ByLowType: [''],
-      ByLowNo: [''],
-      ResolutionDate: [''],
-      FolioIdentifier1: [''],
-      AggrofEntitlement: [''],
-      TotalUnits: [''],
+      //Details -> strata
+      STRATAPLANNUMBER: [''],
+      EXPIRATIONDATE: [''],
+      LOTNUMBER: [''],
+      BYLAWTYPE: [''],
+      BYLAWNO: [''],
+      SPECIALRESOLUTIONDATE: [''],
+      AGGREGATIONOFENTITLEMENT: [''],
+      TOTALUNITS: [''],
 
-      // trademark-ip
+      //Details -> trademark-ip
       ApplicationNumber: [''],
 
-      // wills-estate
-      DateofWill: [''],
-      GrossValue: [''],
-      NetValue: [''],
-      NameOfTrust: [''],
-      NameOfuperfund: [''],
-      OfCodicils: [''],
-      DateCodicil: [''],
+      //Details -> wills-estate
+      DATEOFWILL: [''],
+      ESTATEGROSSVALUE: [''],
+      ESTATENETVALUE: [''],
+      NAMEOFTRUST: [''],
+      NAMEOFSUPERANNUATION: [''],
+      NUMBEROFCODICILS: [''],
+      DATEOFCODICILS: [''],
       DateGrantRepresentation: [''],
 
       // others
@@ -272,6 +261,7 @@ export class MatterPopupComponent implements OnInit {
       FIELDOFLAW: [''],
       INDUSTRY: [''],
       REFERRERGUID: [''],
+      REFERRERGUIDTEXT: [''],
       ARCHIVENO: [''],
       ARCHIVEDATE: ['']
     });
@@ -285,73 +275,286 @@ export class MatterPopupComponent implements OnInit {
   }
   ondialogSaveClick(): void {
     this.FormAction = this.action !== 'edit' ? 'insert' : 'update';
-
-    this.CommencementDate = this.f.CommencementDate.touched === false ? this.datepipe.transform(new Date(), 'dd/MM/yyyy') : localStorage.getItem('CommencementDate');
-
     this.isspiner = true;
-    let details = {
+    let details: any = {
       FormAction: this.FormAction,
-      Client: this.f.Client.value,
-      MatterNum: this.f.MatterNum.value,
-      ACTIVE: this.f.ACTIVE.value,
+      MATTERCLASS: this.f.MATTERCLASS.value,
+      ACTIVE: this.f.ACTIVE.value == true ? 1 : 0,
+      SHORTNAME: this.f.SHORTNAME.value,
+
       MatterDescription: this.f.MatterDescription.value,
+      // // general
+      NOTES: this.f.NOTES.value,
+      COMMENCEMENTDATE: this.f.COMMENCEMENTDATE.value,
+      REFERENCE: this.f.REFERENCE.value,
+      OTHERREFERENCE: this.f.OTHERREFERENCE.value,
+      COMPLETEDDATE: this.f.COMPLETEDDATE.value,
+      PRIMARYFEEEARNERGUID: this.f.PRIMARYFEEEARNERGUID.value,
+      OWNERGUID: this.f.OWNERGUID.value,
 
-      // general
-
-      ClientReference: this.f.ClientReference.value,
-      CommencementDate: this.CommencementDate,
-      OtherRef: this.f.OtherRef.value,
-      CostsAgreementDate: localStorage.getItem('CostsAgreementDate'),
-      CompletedDate: localStorage.getItem('CompletedDate'),
+      CostsAgreementDate: this.f.CostsAgreementDate.value,
       EstimateMinimum: this.f.EstimateMinimum.value,
       Ex_GST: this.f.Ex_GST.value,
-      Notes: this.f.Notes.value,
-      MatterOwner: this.f.MatterOwner.value,
-      PrimaryFeeEarner: this.f.PrimaryFeeEarner.value,
 
       // client
       Clientmatter: this.f.Clientmatter.value,
-
       // rates
-      Radiogroup1: this.f.Radiogroup1.value,
-      Checkbox: this.f.Checkbox.value,
-      Radiogroup2: this.f.Radiogroup2.value,
-      PerHours: this.f.PerHours.value,
-      PerDay: this.f.PerDay.value,
-      FixedPrice: this.f.FixedPrice.value,
-      Ex_GSTs: this.f.Ex_GSTs.value,
+      BILLINGMETHOD: this.f.BILLINGMETHOD.value,
+      ONCHARGEDISBURSEMENTGST: this.f.ONCHARGEDISBURSEMENTGST.value,
+      GSTTYPE: this.f.GSTTYPE.value,
+      RATEPERHOUR: this.f.RATEPERHOUR.value,
+      RATEPERDAY: this.f.RATEPERDAY.value,
+      FIXEDRATEEXGST: this.f.FIXEDRATEEXGST.value,
+      FIXEDRATEINCGST: this.f.FIXEDRATEINCGST.value,
+      // Details -> commercial
+      CLASSOFSHARES: this.f.CLASSOFSHARES.value,
+      NUMBEROFSHARES: this.f.NUMBEROFSHARES.value,
+      CONSIDERATION: this.f.CONSIDERATION.value,
+      //Details -> compensation
+      ACCIDENTDATE: this.f.ACCIDENTDATE.value,
+      PLACEOFINJURY: this.f.PLACEOFINJURY.value,
+      INJURYDESCRIPTION: this.f.INJURYDESCRIPTION.value,
+      LITIGATIONFUNDER: this.f.LITIGATIONFUNDER.value,
+      TRANSFERREDFROMOTHERSOLICITOR: this.f.TRANSFERREDFROMOTHERSOLICITOR.value,
+      CLIENTNAME: this.f.CLIENTNAME.value,
+      ESTIMATEDAWARD: this.f.ESTIMATEDAWARD.value,
+      CLAIMNUMBER: this.f.CLAIMNUMBER.value,
+      INVESTIGATIONDATE: this.f.INVESTIGATIONDATE.value,
+      SETTLEMENTDATE: this.f.SETTLEMENTDATE.value,
+      EXPERTHEARINGDATE: this.f.EXPERTHEARINGDATE.value,
+      DATEOFNOTICEOFINJURY: this.f.DATEOFNOTICEOFINJURY.value,
 
+      ExpiryDate: this.f.ExpiryDate.value,
+      CauseofInjury: this.f.CauseofInjury.value,
+      // Details ->compulsory-acquisition
+      Address: this.f.Address.value,
+      CLIENTVALUATION: this.f.CLIENTVALUATION.value,
+      AUTHORITYVALUATION: this.f.AUTHORITYVALUATION.value,
+      //Details -> criminal
+      BRIEFSERVICEDATE: this.f.BRIEFSERVICEDATE.value,
+      COMMITTALDATE: this.f.COMMITTALDATE.value,
+      REPLYDATE: this.f.REPLYDATE.value,
+      JUVENILE: this.f.JUVENILE.value,
+      WAIVEROFCOMMITTAL: this.f.WAIVEROFCOMMITTAL.value,
+      BAILDATE: this.f.BAILDATE.value,
+      BAILRESTRICTIONS: this.f.BAILRESTRICTIONS.value,
+      OUTCOME: this.f.OUTCOME.value,
+      SENTENCINGDATE: this.f.SENTENCINGDATE.value,
+      SENTENCE: this.f.SENTENCE.value,
+      S91APPLICATION: this.f.S91APPLICATION.value,
+      S93APPLICATION: this.f.S93APPLICATION.value,
+      COURT: this.f.COURT.value,
+      DIVISION: this.f.DIVISION.value,
+      REGISTRY: this.f.REGISTRY.value,
+      CourtMatter: this.f.CourtMatter.value,
+      List: this.f.List.value,
 
-      // Details
+      // Details ->family
+      COHABITATIONDATE: this.f.COHABITATIONDATE.value,
+      MARRIAGEDATE: this.f.MARRIAGEDATE.value,
+      MARRIAGEPLACE: this.f.MARRIAGEPLACE.value,
+      MARRIAGECOUNTRY: this.f.MARRIAGECOUNTRY.value,
+      SEPARATIONDATE: this.f.SEPARATIONDATE.value,
+      DATEFILEDFORDIVORCE: this.f.DATEFILEDFORDIVORCE.value,
+      DIVORCEDATE: this.f.DIVORCEDATE.value,
+      DIVORCEPLACE: this.f.DIVORCEPLACE.value,
+      DIVORCECOUNTRY: this.f.DIVORCECOUNTRY.value,
+      NUMDEPENDANTS: this.f.NUMDEPENDANTS.value,
+      FAMILYCOURTCLIENTID: this.f.FAMILYCOURTCLIENTID.value,
+      ExpiryDate1: this.f.ExpiryDate1.value,
+
+      //Details -> immigration
+      VISATYPE: this.f.VISATYPE.value,
+      VALUEOFASSETS: this.f.VALUEOFASSETS.value,
+      VISASTATUS: this.f.VISASTATUS.value,
+      ANTICIPATEDDATEOFENTRY: this.f.ANTICIPATEDDATEOFENTRY.value,
+      LODGEMENTDATE: this.f.LODGEMENTDATE.value,
+      VISAEXPIRYDATE: this.f.VISAEXPIRYDATE.value,
+      DECISIONDUEDATE: this.f.DECISIONDUEDATE.value,
+
+      //Details -> leasing
+      Address2: this.f.Address2.value,
+      LEASERECEIVED: this.f.LEASERECEIVED.value,
+      DATEEXECUTED: this.f.DATEEXECUTED.value,
+      VALIDUNTIL: this.f.VALIDUNTIL.value,
+      OPTIONDATE: this.f.OPTIONDATE.value,
+      Term: this.f.Term.value,
+      DISCLOSUREDATE: this.f.DISCLOSUREDATE.value,
+      REGISTEREDINFILEMAN: this.f.REGISTEREDINFILEMAN.value,
+
+      //Details -> litigation
+      MATTERTITLEBELOW: this.f.MATTERTITLEBELOW.value,
+      COURTBELOW: this.f.COURTBELOW.value,
+      CASENUMBERBELOW: this.f.CASENUMBERBELOW.value,
+      DATEOFHEARINGS: this.f.DATEOFHEARINGS.value,
+      MATERIALDATE: this.f.MATERIALDATE.value,
+      DECISION: this.f.DECISION.value,
+      CourtMatter1: this.f.CourtMatter1.value,
+      List1: this.f.List1.value,
+      ClientType1: this.f.ClientType1.value,
+      CostEstimateSuccesful: this.f.CostEstimateSuccesful.value,
+      IncGST: this.f.IncGST.value,
+      CostEstimateUnsuccesful: this.f.CostEstimateUnsuccesful.value,
+      IncGST2: this.f.IncGST2.value,
+
+      //Details -> maritime
+      VESSELNAME: this.f.VESSELNAME.value,
+      VESSELFLAG: this.f.VESSELFLAG.value,
+      VESSELTYPE: this.f.VESSELTYPE.value,
+      TONNAGE: this.f.TONNAGE.value,
+      VESSELMASTER: this.f.VESSELMASTER.value,
+      VESSELLOCATION: this.f.VESSELLOCATION.value,
+      INCIDENTDATE: this.f.INCIDENTDATE.value,
+      EXCHANGEDATE: this.f.EXCHANGEDATE.value,
+      CourtMatter2: this.f.CourtMatter2.value,
+
+      //Details -> mortgage-finance
+      PRINCIPALADVANCED: this.f.PRINCIPALADVANCED.value,
+      INTERESTRATE: this.f.INTERESTRATE.value,
+      FOLIOIDENTIFIER: this.f.FOLIOIDENTIFIER.value,
+      DISCHARGEDATE: this.f.DISCHARGEDATE.value,
+      SECURITYPROPERTY: this.f.SECURITYPROPERTY.value,
+      ExpirtyDate: this.f.ExpirtyDate.value,
+
+      // Details ->property-purchase
+      Status: this.f.Status.value,
+      Address3: this.f.Address3.value,
+      PURCHASEPRICE: this.f.PURCHASEPRICE.value,
+      DEPOSITAMOUNT: this.f.DEPOSITAMOUNT.value,
+      STAMPDUTYDATE: this.f.STAMPDUTYDATE.value,
+      DEPOSITBONDAMOUNT: this.f.DEPOSITBONDAMOUNT.value,
+      STAMPDUTYAMOUNT: this.f.STAMPDUTYAMOUNT.value,
+      DATEPAID: this.f.DATEPAID.value,
+      BANKREFERENCE: this.f.BANKREFERENCE.value,
+      INITIALDEPOSIT: this.f.INITIALDEPOSIT.value,
+      BALANCEDEPOSIT: this.f.BALANCEDEPOSIT.value,
+      BALANCEDEPOSITDATE: this.f.BALANCEDEPOSITDATE.value,
+      BUILDINGREPORTCOMPLETED: this.f.BUILDINGREPORTCOMPLETED.value,
+      PESTREPORTCOMPLETED: this.f.PESTREPORTCOMPLETED.value,
+      SPECIALCONDITIONS: this.f.SPECIALCONDITIONS.value,
+
+      //Details -> property-sale 
+      Address4: this.f.Address4.value,
+      ADJUSTMENTDATE: this.f.ADJUSTMENTDATE.value,
+      Status1: this.f.Status1.value,
+
+      //Details -> strata
+      STRATAPLANNUMBER: this.f.STRATAPLANNUMBER.value,
+      EXPIRATIONDATE: this.f.EXPIRATIONDATE.value,
+      LOTNUMBER: this.f.LOTNUMBER.value,
+      BYLAWTYPE: this.f.BYLAWTYPE.value,
+      BYLAWNO: this.f.BYLAWNO.value,
+      SPECIALRESOLUTIONDATE: this.f.SPECIALRESOLUTIONDATE.value,
+      AGGREGATIONOFENTITLEMENT: this.f.AGGREGATIONOFENTITLEMENT.value,
+      TOTALUNITS: this.f.TOTALUNITS.value,
+
+      //Details -> trademark-ip
+      ApplicationNumber: this.f.ApplicationNumber.value,
+
+      //Details -> wills-estate
+      DATEOFWILL: this.f.DATEOFWILL.value,
+      ESTATEGROSSVALUE: this.f.ESTATEGROSSVALUE.value,
+      ESTATENETVALUE: this.f.ESTATENETVALUE.value,
+      NAMEOFTRUST: this.f.NAMEOFTRUST.value,
+      NAMEOFSUPERANNUATION: this.f.NAMEOFSUPERANNUATION.value,
+      NUMBEROFCODICILS: this.f.NUMBEROFCODICILS.value,
+      DATEOFCODICILS: this.f.DATEOFCODICILS.value,
+      DateGrantRepresentation: this.f.DateGrantRepresentation.value,
 
       // others
-      MatterType: this.f.MatterType.value,
-      ClientSource: this.f.ClientSource.value,
-      FiledOfLaw: this.f.FiledOfLaw.value,
+      MATTERTYPE: this.f.MATTERTYPE.value,
+      CLIENTSOURCE: this.f.CLIENTSOURCE.value,
+      FIELDOFLAW: this.f.FIELDOFLAW.value,
       INDUSTRY: this.f.INDUSTRY.value,
-      ArchiveNo: this.f.ArchiveNo.value,
-      ArchiveDate: this.f.ArchiveDate.value,
-      Referrer: this.f.Referrer.value,
+      REFERRERGUID: this.f.REFERRERGUID.value,
+      REFERRERGUIDTEXT: this.f.REFERRERGUIDTEXT.value,
+      ARCHIVENO: this.f.ARCHIVENO.value,
+      ARCHIVEDATE: this.f.ARCHIVEDATE.value
     };
+    this.isspiner = false;
     console.log(details);
-    return;
-    this._mattersService.AddNewMatter(details).subscribe(response => {
-      if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
-        if (this.action !== 'edit') {
-          this.toastr.success('Matter save successfully');
-        } else {
-          this.toastr.success('Matter update successfully');
-        }
-        this.isspiner = false;
-        this.dialogRef.close(true);
-      } else {
-        this.isspiner = false;
-      }
-    }, error => {
-      this.toastr.error(error);
+    // details.VALIDATEONLY = true;
+    // this.addcontact.AddContactData(details).subscribe(response => {
+    //   if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+    //     this.checkValidation(response.DATA.VALIDATIONS, details);
+    //   } else if (response.CODE == 451 && response.STATUS == "warning") {
+    //     this.checkValidation(response.DATA.VALIDATIONS, details);
+    //   } else {
+    //     if (response.CODE == 402 && response.STATUS == "error" && response.MESSAGE == "Not logged in")
+    //       this.dialogRef.close(false);
+    //     this.isspiner = false;
+    //   }
+    // }, error => {
+    //   this.toastr.error(error);
+    // });
+    // this._mattersService.AddNewMatter(details).subscribe(response => {
+    //   if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
+    //     if (this.action !== 'edit') {
+    //       this.toastr.success('Matter save successfully');
+    //     } else {
+    //       this.toastr.success('Matter update successfully');
+    //     }
+    //     this.isspiner = false;
+    //     this.dialogRef.close(true);
+    //   } else {
+    //     this.isspiner = false;
+    //   }
+    // }, error => {
+    //   this.toastr.error(error);
+    // });
+    // localStorage.removeItem('CostsAgreementDate');
+    // localStorage.removeItem('CommencementDate');
+    // localStorage.removeItem('CompletedDate');
+  }
+  checkValidation(bodyData: any, details: any) {
+    let errorData: any = [];
+    let warningData: any = [];
+    bodyData.forEach(function (value) {
+      if (value.VALUEVALID == 'NO')
+        errorData.push(value.ERRORDESCRIPTION);
+      else if (value.VALUEVALID == 'WARNING')
+        warningData.push(value.ERRORDESCRIPTION);
     });
-    localStorage.removeItem('CostsAgreementDate');
-    localStorage.removeItem('CommencementDate');
-    localStorage.removeItem('CompletedDate');
+    if (Object.keys(errorData).length != 0)
+      this.toastr.error(errorData);
+    if (Object.keys(warningData).length != 0) {
+      this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+        disableClose: true,
+        width: '100%',
+        data: warningData
+      });
+      this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Save?';
+      this.confirmDialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.isspiner = true;
+          this.saveMatterData(details);
+        }
+        this.confirmDialogRef = null;
+      });
+    }
+    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+      this.saveMatterData(details);
+    this.isspiner = false;
+  }
+  saveMatterData(data: any) {
+    data.VALIDATEONLY = false;
+    console.log(data);
+    //   this.addcontact.AddContactData(data).subscribe(response => {
+    //     if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+    //       if (this.action !== 'edit') {
+    //         this.toastr.success('Contact save successfully');
+    //       } else {
+    //         this.toastr.success('Contact update successfully');
+    //       }
+    //       this.isspiner = false;
+    //       this.dialogRef.close(true);
+    //     } else {
+    //       this.isspiner = false;
+    //     }
+    //   }, error => {
+    //     this.toastr.error(error);
+    //   });
+    //   localStorage.removeItem('DATEOFBIRTH');
+    //   localStorage.removeItem('DATEOFDEATH');
   }
 }

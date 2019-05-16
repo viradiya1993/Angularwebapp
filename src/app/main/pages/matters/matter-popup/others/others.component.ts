@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDatepickerInputEvent } from '@angular/material';
 import { ContactSelectDialogComponent } from '../../../contact/contact-select-dialog/contact-select-dialog.component';
 import { FormGroup } from '@angular/forms';
 import { MattersService } from 'app/_services';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-others',
@@ -18,6 +19,7 @@ export class OthersComponent implements OnInit {
   constructor(
     public MatDialog: MatDialog,
     private _mattersService: MattersService,
+    public datepipe: DatePipe
   ) {
   }
 
@@ -48,9 +50,11 @@ export class OthersComponent implements OnInit {
   ContactMatter() {
     const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
+      this.matterdetailForm.controls['REFERRERGUID'].setValue(result.CONTACTGUID);
+      this.matterdetailForm.controls['REFERRERGUIDTEXT'].setValue(result.CONTACTNAME + ' - ' + result.SUBURB);
     });
   }
-  ArchiveDate(s: any, ss: any) {
-
+  ArchiveDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.matterdetailForm.controls['ARCHIVENO'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
 }

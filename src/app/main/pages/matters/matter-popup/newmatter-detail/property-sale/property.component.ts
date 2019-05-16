@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDatepickerInputEvent } from '@angular/material';
 import { MatterAddressPopupComponent } from '../matter-address-popup/matter-address-popup.component';
+import { DatePipe } from '@angular/common';
+import { MattersService } from 'app/_services';
 
 
 
@@ -11,21 +13,38 @@ import { MatterAddressPopupComponent } from '../matter-address-popup/matter-addr
   styleUrls: ['./property.component.scss']
 })
 export class PropertyComponent implements OnInit {
-
-  constructor(public MatDialog: MatDialog,) { }
+  statusData: any;
+  constructor(public MatDialog: MatDialog, private datepipe: DatePipe, private _mattersService: MattersService, ) { }
 
   @Input() matterdetailForm: FormGroup;
   ngOnInit() {
+    this._mattersService.getMattersClasstype({ 'LookupType': 'status' }).subscribe(responses => {
+      if (responses.CODE === 200 && responses.STATUS === 'success') {
+        this.statusData = responses.DATA.LOOKUPS;
+      }
+    });
   }
   public Matteraddress() {
     const dialogRef = this.MatDialog.open(MatterAddressPopupComponent, { width: '100%', disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
-    //  console.log(result);
+      //  console.log(result);
       if (result) {
         // this.matterdetailForm.controls['Clientmatter'].setValue(result.MATTERGUID);
-         //this.matterdetailForm.controls['Clientmatter'].setValue(result.SHORTNAME + ' : ' + result.MATTER);
+        //this.matterdetailForm.controls['Clientmatter'].setValue(result.SHORTNAME + ' : ' + result.MATTER);
         // this.matterChange('MatterGuid', result.MATTERGUID);
       }
     });
+  }
+  ExchangeDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.matterdetailForm.controls['EXCHANGEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
+  SettlementDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.matterdetailForm.controls['SETTLEMENTDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
+  AdjustMentDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.matterdetailForm.controls['ADJUSTMENTDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
+  DatePaid(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.matterdetailForm.controls['DATEPAID'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
 }

@@ -1,109 +1,98 @@
-<div class=" one "  fxLayout="column" [formGroup]="matterdetailForm"> 
+<div class=" one " fxLayout="column" [formGroup]="matterdetailForm">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="100">
-          <mat-label>Address</mat-label>
-          <input matInput readonly formControlName="Address3">
-          <mat-icon matSuffix (click)='Matteraddress()'>
-              <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-          </mat-icon>
+            <mat-label>Address</mat-label>
+            <input matInput readonly formControlName="Address3">
+            <mat-icon matSuffix (click)='Matteraddress()'>
+                <img src="assets/icons/web_app/adr1.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+            </mat-icon>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
+        <mat-form-field appearance="outline" class="example pr-4" fxFlex="33">
             <mat-label>Purchase Price</mat-label>
-            <input  matInput type="number" formControlName="PurchasePrice">              
+            <input matInput type="number" formControlName="PURCHASEPRICE">
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" class="pr-4" fxFlex="33">
             <mat-label>Exchange Date</mat-label>
-            <input (dateInput)="ExchangeDate('input', $event)" formControlName="ExchangeDate2" (dateChange)="ExchangeDate('change', $event)" matInput name="ExchangeDate"  [matDatepicker]="ExchangeDate">
+            <input (dateInput)="ExchangeDate('input', $event)" formControlName="EXCHANGEDATE" (dateChange)="ExchangeDate('change', $event)" matInput name="ExchangeDate" [matDatepicker]="ExchangeDate">
             <mat-datepicker-toggle matSuffix [for]="ExchangeDate"></mat-datepicker-toggle>
             <mat-datepicker #ExchangeDate></mat-datepicker>
         </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
+        <mat-form-field appearance="outline" class="example pr-4" fxFlex="34">
             <mat-label>Deposit</mat-label>
-            <input  matInput type="number" formControlName="Deposit">              
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
-            <mat-label>Stamp Duty Due</mat-label>
-            <input  matInput type="number" formControlName="StampDutyDue">              
+            <input matInput type="number" formControlName="DEPOSITAMOUNT">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
-            <mat-label>Deposit Bond</mat-label>
-            <input  matInput type="number" formControlName="DepositBond">              
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+            <mat-label>Stamp Duty Due</mat-label>
+            <input matInput type="number" formControlName="STAMPDUTYDATE">
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+            <mat-label>Deposit Bond</mat-label>
+            <input matInput type="number" formControlName="DEPOSITBONDAMOUNT">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
             <mat-label>Settlement Date</mat-label>
-            <input (dateInput)="SettlementDate('input', $event)" formControlName="SettlementDate2" (dateChange)="SettlementDate('change', $event)" matInput name="SettlementDate"  [matDatepicker]="SettlementDate">
+            <input (dateInput)="SettlementDate('input', $event)" formControlName="SETTLEMENTDATE" (dateChange)="SettlementDate('change', $event)" matInput name="SettlementDate" [matDatepicker]="SettlementDate">
             <mat-datepicker-toggle matSuffix [for]="SettlementDate"></mat-datepicker-toggle>
             <mat-datepicker #SettlementDate></mat-datepicker>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Stamp Duty</mat-label>
-            <input  matInput type="number" formControlName="StampDuty">              
+            <input matInput type="number" formControlName="STAMPDUTYAMOUNT">
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Date Paid</mat-label>
-            <input (dateInput)="DatePaid('input', $event)" formControlName="DatePaid" (dateChange)="DatePaid('change', $event)" matInput name="DatePaid"  [matDatepicker]="DatePaid">
+            <input (dateInput)="DatePaid('input', $event)" formControlName="DATEPAID" (dateChange)="DatePaid('change', $event)" matInput name="DatePaid" [matDatepicker]="DatePaid">
             <mat-datepicker-toggle matSuffix [for]="DatePaid"></mat-datepicker-toggle>
             <mat-datepicker #DatePaid></mat-datepicker>
         </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <div fxFlex="50">
-                
-        </div>
-        <div fxFlex="50">
-            <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
-                <mat-label>Bank Ref</mat-label>
-                <input  matInput formControlName="BankRef" > 
-            </mat-form-field>
-        </div>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-      <div fxFlex="50">
-          <mat-form-field appearance="outline" class="example" fxFlex="100"  class="pr-4">
-              <mat-label>Initial Deposit</mat-label>
-              <input  matInput type="number" formControlName="InitialDeposit">        
-          </mat-form-field>
-      </div>
-      <div fxFlex="50">
-      </div>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
-            <mat-label>Balance Deposit</mat-label>
-            <input  matInput type="number" formControlName="BalanceDeposit1">        
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+            <mat-label>Bank Ref</mat-label>
+            <input matInput formControlName="BANKREFERENCE">
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+            <mat-label>Initial Deposit</mat-label>
+            <input matInput type="number" formControlName="INITIALDEPOSIT">
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Balance Deposit</mat-label>
-            <input  matInput type="number" formControlName="BalanceDeposit2">  
+            <input matInput type="number" formControlName="BALANCEDEPOSIT">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+            <mat-label>Balance Deposit Date</mat-label>
+            <input (dateInput)="BalanceDepositDate('input', $event)" formControlName="BALANCEDEPOSITDATE" (dateChange)="BalanceDepositDate('change', $event)" matInput [matDatepicker]="BalanceDepositDate">
+            <mat-datepicker-toggle matSuffix [for]="BalanceDepositDate"></mat-datepicker-toggle>
+            <mat-datepicker #BalanceDepositDate></mat-datepicker>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <section class="example-section">
-            <mat-checkbox class="example-margin" formControlName="BuildingReport">Building Report Completed</mat-checkbox>
-            <mat-checkbox class="example-margin" formControlName="PetReport">Pet Report Completed</mat-checkbox>
+            <mat-checkbox class="example-margin" formControlName="BUILDINGREPORTCOMPLETED">Building Report Completed</mat-checkbox>
+            <mat-checkbox class="example-margin" formControlName="PESTREPORTCOMPLETED">Pet Report Completed</mat-checkbox>
         </section>
     </div>
-
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-            <mat-form-field appearance="outline" fxFlex="100">
-                <mat-label>Special Conditions </mat-label>
-                <textarea name="SecurityProperty" formControlName="SpecialConditions" matInput></textarea>                       
-            </mat-form-field>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-            <mat-form-field appearance="outline" fxFlex="50">
-              <mat-label> Status</mat-label>
-              <mat-select #value name="selected" formControlName="Status">
-                  <mat-option>1</mat-option>
-              </mat-select>
-            </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Special Conditions </mat-label>
+            <textarea name="SecurityProperty" formControlName="SPECIALCONDITIONS" matInput></textarea>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="50">
+            <mat-label> Status</mat-label>
+            <mat-select #value formControlName="Status">
+                <mat-option>1</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
 </div>

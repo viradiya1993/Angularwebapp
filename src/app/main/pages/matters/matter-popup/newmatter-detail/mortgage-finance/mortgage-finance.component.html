@@ -1,50 +1,47 @@
-<div class=" one "  fxLayout="column" [formGroup]="matterdetailForm"> 
+<div class=" one " fxLayout="column" [formGroup]="matterdetailForm">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
-          <mat-label>Principal Advanced</mat-label>
-          <input matInput type="number" formControlName="PrincipalAdvanced">         
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+            <mat-label>Principal Advanced</mat-label>
+            <input matInput type="number" formControlName="PRINCIPALADVANCED">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+            <mat-label>Interest Rate</mat-label>
+            <input matInput type="number" formControlName="INTERESTRATE">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+            <mat-label>Folio Identifier</mat-label>
+            <input matInput formControlName="FOLIOIDENTIFIER">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
-          <mat-label>Interest Rate</mat-label>
-          <input matInput type="number" formControlName="InterestRate">         
-        </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
             <mat-label>Commencement Date</mat-label>
-            <input (dateInput)="CommencementDate('input', $event)" formControlName="CommencementDate1" (dateChange)="CommencementDate('change', $event)" matInput name="CommencementDate"  [matDatepicker]="CommencementDate">
+            <input (dateInput)="CommencementDate('input', $event)" formControlName="COMMENCEMENTDATE" (dateChange)="CommencementDate('change', $event)" matInput [matDatepicker]="CommencementDate">
             <mat-datepicker-toggle matSuffix [for]="CommencementDate"></mat-datepicker-toggle>
             <mat-datepicker #CommencementDate></mat-datepicker>
         </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Expirty Date</mat-label>
-            <input (dateInput)="ExpirtyDate('input', $event)" formControlName="ExpirtyDate" (dateChange)="ExpirtyDate('change', $event)" matInput name="ExpirtyDate"  [matDatepicker]="ExpirtyDate">
+            <input (dateInput)="ExpirtyDate('input', $event)" formControlName="ExpirtyDate" (dateChange)="ExpirtyDate('change', $event)" matInput [matDatepicker]="ExpirtyDate">
             <mat-datepicker-toggle matSuffix [for]="ExpirtyDate"></mat-datepicker-toggle>
             <mat-datepicker #ExpirtyDate></mat-datepicker>
         </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Disacharge Date</mat-label>
-            <input (dateInput)="DisachargeDate('input', $event)"  formControlName="DisachargeDate" (dateChange)="DisachargeDate('change', $event)" matInput name="DisachargeDate"  [matDatepicker]="DisachargeDate">
+            <input (dateInput)="DisachargeDate('input', $event)" formControlName="DISCHARGEDATE" (dateChange)="DisachargeDate('change', $event)" matInput [matDatepicker]="DisachargeDate">
             <mat-datepicker-toggle matSuffix [for]="DisachargeDate"></mat-datepicker-toggle>
             <mat-datepicker #DisachargeDate></mat-datepicker>
         </mat-form-field>
     </div>
+
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
-          <mat-label>Folio Identifier</mat-label>
-          <input matInput formControlName="FolioIdentifier">         
+        <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+            <mat-label>Security Property</mat-label>
+            <textarea name="SecurityProperty" formControlName="SECURITYPROPERTY" matInput></textarea>
         </mat-form-field>
     </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
-            <mat-label>Security Property</mat-label>
-            <textarea name="SecurityProperty" formControlName="SecurityProperty" matInput></textarea>                       
-        </mat-form-field>
-    </div>    
 </div>

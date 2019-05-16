@@ -36,15 +36,10 @@ export class OtherComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log();
-     //console.log(begin);
-    // this.contactForm.controls['DATEOFBIRTH'].setValue(new Date(localStorage.getItem('date')));
     this.common = [
-
       { Id: 1, Name: "Male" },
       { Id: 2, Name: "Female" },
       { Id: 3, Name: "Unknown" },
-
     ];
 
     this.status = [

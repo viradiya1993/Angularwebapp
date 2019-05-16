@@ -1,112 +1,102 @@
 <!-- [formGroup]="matterdetailForm" -->
-<div class=" one "  fxLayout="column" [formGroup]="matterdetailForm">    
+<div class=" one " fxLayout="column" [formGroup]="matterdetailForm">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Brief Service Date</mat-label>
-            <input (dateInput)="BriefServiceDate('input', $event)" formControlName="BriefServiceDate" (dateChange)="BriefServiceDate('change', $event)" matInput name="BriefServiceDate"  [matDatepicker]="BriefServiceDate">
+            <input (dateInput)="BriefServiceDate('input', $event)" formControlName="BRIEFSERVICEDATE" (dateChange)="BriefServiceDate('change', $event)" matInput [matDatepicker]="BriefServiceDate">
             <mat-datepicker-toggle matSuffix [for]="BriefServiceDate"></mat-datepicker-toggle>
             <mat-datepicker #BriefServiceDate></mat-datepicker>
         </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Committal Date</mat-label>
-            <input (dateInput)="CommittalDate('input', $event)" formControlName="CommittalDate" (dateChange)="CommittalDate('change', $event)" matInput name="CommittalDate"  [matDatepicker]="CommittalDate">
+            <input (dateInput)="CommittalDate('input', $event)" formControlName="COMMITTALDATE" (dateChange)="CommittalDate('change', $event)" matInput [matDatepicker]="CommittalDate">
             <mat-datepicker-toggle matSuffix [for]="CommittalDate"></mat-datepicker-toggle>
             <mat-datepicker #CommittalDate></mat-datepicker>
         </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
             <mat-label>Reply Date</mat-label>
-            <input (dateInput)="ReplyDate('input', $event)" formControlName="ReplyDate" (dateChange)="ReplyDate('change', $event)" matInput name="ReplyDate"  [matDatepicker]="ReplyDate">
+            <input (dateInput)="ReplyDate('input', $event)" formControlName="REPLYDATE" (dateChange)="ReplyDate('change', $event)" matInput name="ReplyDate" [matDatepicker]="ReplyDate">
             <mat-datepicker-toggle matSuffix [for]="ReplyDate"></mat-datepicker-toggle>
             <mat-datepicker #ReplyDate></mat-datepicker>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <section class="example-section">
-            <mat-checkbox class="example-margin" formControlName="Juvenile">Juvenile</mat-checkbox>
-            <mat-checkbox class="example-margin" formControlName="WaiverofCommital">Waiver of Commital</mat-checkbox>
+            <mat-checkbox class="example-margin" formControlName="JUVENILE">Juvenile</mat-checkbox>
+            <mat-checkbox class="example-margin" formControlName="WAIVEROFCOMMITTAL">Waiver of Commital</mat-checkbox>
         </section>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Bail Date</mat-label>
-            <input (dateInput)="BailDate('input', $event)"  formControlName="BailDate" (dateChange)="BailDate('change', $event)" matInput name="BailDate"  [matDatepicker]="BailDate">
+            <input (dateInput)="BailDate('input', $event)" formControlName="BAILDATE" (dateChange)="BailDate('change', $event)" matInput [matDatepicker]="BailDate">
             <mat-datepicker-toggle matSuffix [for]="BailDate"></mat-datepicker-toggle>
             <mat-datepicker #BailDate></mat-datepicker>
         </mat-form-field>
-    </div>    
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
-          <mat-label>Bail  Restrictions</mat-label>
-          <input matInput formControlName="BailRestrictions" >
-        </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
-          <mat-label>Outcome</mat-label>
-          <input matInput formControlName="Outcome">
-        </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Sentencing Date</mat-label>
-            <input (dateInput)="SentencingDate('input', $event)" formControlName="SentencingDate" (dateChange)="SentencingDate('change', $event)" matInput name="SentencingDate"  [matDatepicker]="SentencingDate">
+            <input (dateInput)="SentencingDate('input', $event)" formControlName="SENTENCINGDATE" (dateChange)="SentencingDate('change', $event)" matInput name="SentencingDate" [matDatepicker]="SentencingDate">
             <mat-datepicker-toggle matSuffix [for]="SentencingDate"></mat-datepicker-toggle>
             <mat-datepicker #SentencingDate></mat-datepicker>
         </mat-form-field>
-    </div>  
+    </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
-          <mat-label>Sentence</mat-label>
-          <input matInput formControlName="Sentence">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+            <mat-label>Bail Restrictions</mat-label>
+            <input matInput formControlName="BAILRESTRICTIONS">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+            <mat-label>Outcome</mat-label>
+            <input matInput formControlName="OUTCOME">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+            <mat-label>Sentence</mat-label>
+            <input matInput formControlName="SENTENCE">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <section class="example-section">
-            <mat-checkbox class="example-margin" formControlName="S91Application">S91 Application</mat-checkbox>
-            <mat-checkbox class="example-margin" formControlName="S93Application">S93 Application</mat-checkbox>
+            <mat-checkbox class="example-margin" formControlName="S91APPLICATION">S91 Application</mat-checkbox>
+            <mat-checkbox class="example-margin" formControlName="S93APPLICATION">S93 Application</mat-checkbox>
         </section>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
-          <mat-label>Court Matter #</mat-label>
-          <input matInput formControlName="CourtMatter">
+        <mat-form-field appearance="outline" fxFlex="60" class="pr-4">
+            <mat-label>Court Matter #</mat-label>
+            <input matInput formControlName="CourtMatter">
+        </mat-form-field>
+
+        <mat-form-field class="example" fxFlex="40" class="pr-4" appearance="outline">
+            <mat-label>Court</mat-label>
+            <mat-select #value name="selected" formControlName="COURT">
+                <mat-option *ngFor="let optionval of CourtData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
+            </mat-select>
         </mat-form-field>
     </div>
-
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
-            <mat-label>Court</mat-label>
-            <mat-select #value name="selected" formControlName="Court">
-                <mat-option>1</mat-option>
-            </mat-select>
-        </mat-form-field>                    
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
+        <mat-form-field class="example" fxFlex="33" class="pr-4" appearance="outline">
             <mat-label>Division</mat-label>
-            <mat-select #value name="selected" formControlName="Division">
-                <mat-option >1</mat-option>
+            <mat-select #value name="selected" formControlName="DIVISION">
+                <mat-option *ngFor="let optionval of DivisionData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
-        </mat-form-field>                    
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
+        </mat-form-field>
+
+        <mat-form-field class="example" fxFlex="33" class="pr-4" appearance="outline">
             <mat-label>List</mat-label>
             <mat-select #value name="selected" formControlName="List">
-                <mat-option>1</mat-option>
+                <mat-option *ngFor="let optionval of ListData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
-        </mat-form-field>                    
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
+        </mat-form-field>
+
+        <mat-form-field class="example" fxFlex="34" class="pr-4" appearance="outline">
             <mat-label>Registry</mat-label>
-            <mat-select #value name="selected" formControlName="Registry">
-                <mat-option >1</mat-option>
+            <mat-select #value name="selected" formControlName="REGISTRY">
+                <mat-option *ngFor="let optionval of RegistryData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
-        </mat-form-field>                    
+        </mat-form-field>
     </div>
-  </div>
+</div>

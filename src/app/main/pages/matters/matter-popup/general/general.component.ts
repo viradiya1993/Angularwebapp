@@ -16,22 +16,22 @@ export class GeneralComponent implements OnInit {
   }
 
   CommencementDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    let begin = this.datepipe.transform(event.value, 'dd/MM/yyyy');
-    localStorage.setItem('CommencementDate', begin);
+    console.log(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+    this.matterdetailForm.controls['COMMENCEMENTDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
 
   CostsAgreementDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    let begin = this.datepipe.transform(event.value, 'dd/MM/yyyy');
-    localStorage.setItem('CostsAgreementDate', begin);
+    console.log(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+    this.matterdetailForm.controls['CostsAgreementDate'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
   CompletedDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    let begin = this.datepipe.transform(event.value, 'dd/MM/yyyy');
-    localStorage.setItem('CompletedDate', begin);
+    console.log(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+    this.matterdetailForm.controls['COMPLETEDDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
   selectMatter() {
+    alert('Access to this part of the application has been restricted');
+    return;
     let d = { 'Active': 'yes' };
     this.Timersservice.GetUsers(d).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
@@ -43,6 +43,8 @@ export class GeneralComponent implements OnInit {
   }
 
   selectFeeEarner() {
+    alert('Access to this part of the application has been restricted');
+    return;
     let d = { 'Active': 'yes' };
     this.Timersservice.GetUsers(d).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {

@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-immigration',
@@ -8,9 +10,20 @@ import { FormGroup } from '@angular/forms';
 })
 export class ImmigrationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private datepipe: DatePipe) { }
   @Input() matterdetailForm: FormGroup;
   ngOnInit() {
   }
-
+  AnticipatedEntry(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.matterdetailForm.controls['ANTICIPATEDDATEOFENTRY'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
+  LodgementDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.matterdetailForm.controls['LODGEMENTDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
+  VisaExpiryDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.matterdetailForm.controls['VISAEXPIRYDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
+  DecisionDueDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.matterdetailForm.controls['DECISIONDUEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
 }

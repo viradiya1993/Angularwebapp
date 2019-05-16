@@ -1,112 +1,105 @@
-<div class=" one "  fxLayout="column" [formGroup]="matterdetailForm"> 
+<div class=" one " fxLayout="column" [formGroup]="matterdetailForm">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
-          <mat-label>Court Matter #</mat-label>
-          <input matInput  formControlName="CourtMatter1">         
+        <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+            <mat-label>Court Matter #</mat-label>
+            <input matInput formControlName="CourtMatter1">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
+        <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
             <mat-label>Court</mat-label>
-            <mat-select #value name="selected" formControlName="Court1">
-                <mat-option>1</mat-option>
+            <mat-select #value name="selected" formControlName="COURT">
+                <mat-option *ngFor="let optionval of CourtData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
-        </mat-form-field> 
-    </div> 
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
+        </mat-form-field>
+
+        <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
             <mat-label>Division</mat-label>
-            <mat-select #value name="selected" formControlName="Division1">
-                <mat-option>1</mat-option>
+            <mat-select #value name="selected" formControlName="DIVISION">
+                <mat-option *ngFor="let optionval of DivisionData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
-        </mat-form-field> 
-    </div> 
+        </mat-form-field>
+    </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
+        <mat-form-field class="example pr-4" fxFlex="33" appearance="outline">
             <mat-label>List</mat-label>
             <mat-select #value name="selected" formControlName="List1">
-                <mat-option>1</mat-option>
+                <mat-option *ngFor="let optionval of ListData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
-        </mat-form-field> 
-    </div> 
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
+        </mat-form-field>
+
+        <mat-form-field class="example" fxFlex="33" class="pr-4" appearance="outline">
             <mat-label>Registry</mat-label>
-            <mat-select #value name="selected" formControlName="Registry1">
-                <mat-option>1</mat-option>
+            <mat-select #value name="selected" formControlName="REGISTRY">
+                <mat-option *ngFor="let optionval of RegistryData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
-        </mat-form-field> 
-    </div> 
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
+        </mat-form-field>
+
+        <mat-form-field class="example" fxFlex="34" class="pr-4" appearance="outline">
             <mat-label>Client Type</mat-label>
             <mat-select #value name="selected" formControlName="ClientType1">
-                <mat-option>1</mat-option>
+                <mat-option *ngFor="let optionval of ClientTypeData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
-        </mat-form-field> 
-    </div>    
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
-          <mat-label> Matter Title Below </mat-label>
-          <input matInput formControlName="MatterTitleBelow">         
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
+        <mat-form-field appearance="outline" fxFlex="33">
+            <mat-label> Matter Title Below </mat-label>
+            <input matInput formControlName="MATTERTITLEBELOW">
+        </mat-form-field>
+
+        <mat-form-field class="example pr-4" fxFlex="33" appearance="outline">
             <mat-label> Court Below </mat-label>
-            <mat-select #value name="selected" formControlName="CourtBelow1">
-                <mat-option>1</mat-option>
+            <mat-select #value name="selected" formControlName="COURTBELOW">
+                <mat-option *ngFor="let optionval of CourtBelowData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
-        </mat-form-field> 
-    </div>    
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
-          <mat-label> Case # Below </mat-label>
-          <input matInput formControlName="CaseBelow">         
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="34">
+            <mat-label> Case # Below </mat-label>
+            <input matInput formControlName="CASENUMBERBELOW">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Date Of Hearings</mat-label>
-            <input (dateInput)="DateOfHearings('input', $event)" formControlName="DateOfHearings" (dateChange)="DateOfHearings('change', $event)" matInput name="DateOfHearings"  [matDatepicker]="DateOfHearings">
+            <input (dateInput)="DateOfHearings('input', $event)" formControlName="DATEOFHEARINGS" (dateChange)="DateOfHearings('change', $event)" matInput [matDatepicker]="DateOfHearings">
             <mat-datepicker-toggle matSuffix [for]="DateOfHearings"></mat-datepicker-toggle>
             <mat-datepicker #DateOfHearings></mat-datepicker>
         </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Material Date</mat-label>
-            <input (dateInput)="MaterialDate('input', $event)" formControlName="MaterialDate" (dateChange)="MaterialDate('change', $event)" matInput name="MaterialDate"  [matDatepicker]="MaterialDate">
+            <input (dateInput)="MaterialDate('input', $event)" formControlName="MATERIALDATE" (dateChange)="MaterialDate('change', $event)" matInput [matDatepicker]="MaterialDate">
             <mat-datepicker-toggle matSuffix [for]="MaterialDate"></mat-datepicker-toggle>
             <mat-datepicker #MaterialDate></mat-datepicker>
         </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
-          <mat-label>Decision Of</mat-label>
-          <input matInput formControlName="DecisionOf" >         
+
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+            <mat-label>Decision Of</mat-label>
+            <input matInput formControlName="DECISION">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
             <mat-label>Cost Estimate If Succesful</mat-label>
-            <input  matInput name="CostEstimateSuccesful"  type="number" formControlName="CostEstimateSuccesful">              
+            <input matInput name="CostEstimateSuccesful" type="number" formControlName="CostEstimateSuccesful">
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Inc-GST</mat-label>
-            <input name="Inc-GST" matInput  type="number" formControlName="IncGST">
+            <input name="Inc-GST" matInput type="number" formControlName="IncGST">
             <mat-icon matSuffix class="secondary-text"></mat-icon>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
             <mat-label>Cost Estimate If Unsuccesful</mat-label>
-            <input  matInput name="CostEstimateUnsuccesful"  type="number" formControlName="CostEstimateUnsuccesful">              
+            <input matInput name="CostEstimateUnsuccesful" type="number" formControlName="CostEstimateUnsuccesful">
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Inc-GST</mat-label>
-            <input name="Inc-GST2" matInput  type="number" formControlName="IncGST2">
+            <input name="Inc-GST2" matInput type="number" formControlName="IncGST2">
             <mat-icon matSuffix class="secondary-text"></mat-icon>
         </mat-form-field>
-    </div>    
+    </div>
 </div>

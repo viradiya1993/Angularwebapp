@@ -12,8 +12,7 @@
             <div class="center p-24 list_tbl_main more_tbl_clmn">
                 <div class="matter-serach-div sticky_search_div">
                     <!-- select bar  -->
-                    <form name="SelectContact" id="SelectContact" fxLayout="column" fxLayoutAlign="start"
-                        fxFlex="1 0 auto" name="form" [formGroup]="SelectcontactForm">
+                    <form name="SelectContact" id="SelectContact" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form" [formGroup]="SelectcontactForm">
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                             <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
                                 <mat-label>Show</mat-label>
@@ -55,38 +54,34 @@
                                 {{row.CONTACTNAME }}
                             </p>
                         </td>
-                    </ng-container>                    
-                    <ng-container matColumnDef="SUBURB">                        
+                    </ng-container>
+                    <ng-container matColumnDef="SUBURB">
                         <th mat-header-cell *matHeaderCellDef> Suburb</th>
                         <td mat-cell *matCellDef="let row">
                             <p class="company text-truncate">
                                 {{row.SUBURB}}
                             </p>
                         </td>
-                    </ng-container>                    
+                    </ng-container>
                     <tr mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumns; sticky: true"></tr>
 
-                    <tr [style.background]="highlightedRows == row.CONTACTGUID ? selectedColore : ''" 
-                    [ngClass]="highlightedRows == row.CONTACTGUID ? 'row-text-colore' : ''" 
-                    highlightedRows=row.CONTACTGUID mat-row *matRowDef="let row; columns: displayedColumns;" 
-                    (click)="editContact(row.CONTACTGUID);highlightedRows = row.CONTACTGUID "
-                    matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                    <tr [style.background]="highlightedRows == row.CONTACTGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.CONTACTGUID ? 'row-text-colore' : ''" highlightedRows=row.CONTACTGUID mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editContact(row);highlightedRows = row.CONTACTGUID "
+                        matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                     </tr>
 
-                    
+
                 </table>
             </div>
-            <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)"
-                showFirstLastButtons></mat-paginator>            
+            <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
         </div>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
         <div class="left_popup_btn">
             <button mat-raised-button color="accent" (click)="AddContactsDialog()">New Contact</button>
-            <button mat-raised-button color="accent" (click)="EditContactsDialog()">Edit Contact</button>  
+            <button mat-raised-button color="accent" (click)="EditContactsDialog()">Edit Contact</button>
             <button mat-raised-button color="accent" (click)="deleteContact()">Delete Contact</button>
         </div>
         <button mat-raised-button [mat-dialog-close]="currentMatterData" color="accent">Select</button>
-        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button> 
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
     </mat-dialog-actions>
 </div>

@@ -38,6 +38,7 @@ export class ClientComponent implements OnInit {
   ContactMatter() {
     const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
       if (result) {
         this.matterdetailForm.controls['Clientmatter'].setValue(result.CONTACTGUID);
         this.matterdetailForm.controls['Clientmattertext'].setValue(result.CONTACTNAME + ' - ' + result.SUBURB);

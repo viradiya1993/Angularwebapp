@@ -65,11 +65,10 @@
                     </ng-container>
                     <tr mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumns; sticky: true"></tr>
 
-                    <tr [style.background]="highlightedRows == row.CONTACTGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.CONTACTGUID ? 'row-text-colore' : ''" highlightedRows=row.CONTACTGUID mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editContact(row);highlightedRows = row.CONTACTGUID "
+
+                    <tr [style.background]="highlightedRows == row.CONTACTGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.CONTACTGUID ? 'row-text-colore' : ''" highlightedRows=row.CONTACTGUID mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editContact(row.CONTACTGUID);highlightedRows = row.CONTACTGUID "
                         matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                     </tr>
-
-
                 </table>
             </div>
             <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>

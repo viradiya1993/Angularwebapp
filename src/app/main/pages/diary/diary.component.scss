@@ -393,3 +393,7 @@ body.theme-yellow-light .cal-month-view .cal-event {
     background-color: #4d2184 !important;
     color: white;
 }
+
+#calendar .content {
+    overflow: auto;
+}

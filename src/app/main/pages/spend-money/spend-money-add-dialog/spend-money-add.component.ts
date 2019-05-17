@@ -74,9 +74,9 @@ export class SpendMoneyAddComponent implements OnInit {
     });
 
   if (this.action === 'edit') {
-      this.size = 20;
+      this.size = 20;      
+      $('#expac').addClass('menu-disabled');
       this.expac = true;
-      $('#expac').addClass('menu-disabled')
       this.spendmoneyForm.controls['Class'].disable();
       this.spendmoneyForm.controls['Matter'].disable();
       this.spendmoneyForm.controls['AmountIncGST'].disable();      
@@ -120,13 +120,14 @@ export class SpendMoneyAddComponent implements OnInit {
         this.spendmoneyForm.controls['AmountExGST'].disable();
         this.spendmoneyForm.controls['GSTType'].enable();
         this.spendmoneyForm.controls['GST1'].enable();
-      }else if(this.action === 'edit'){
+      }else if (this.action === 'edit'){
         this.hide = true;
+        this.expac = false;
         $("#mattersnew").addClass("menu-disabled");
-       // this.spendmoneyForm.controls['Class'].enable();
+        // this.spendmoneyForm.controls['Class'].enable();
         this.spendmoneyForm.controls['Matter'].disable();
         // this.spendmoneyForm.controls['GSTType'].enable();
-       // this.spendmoneyForm.controls['GST1'].enable();     
+        // this.spendmoneyForm.controls['GST1'].enable();     
       }
     }else if (Classvalue === 'matter Expence') {
       this.hide = false;
@@ -139,6 +140,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['GST1'].disable();
       this.spendmoneyForm.controls['AmountIncGST'].enable();
       this.spendmoneyForm.controls['Note'].enable();
+      this.spendmoneyForm.controls['Expenseac'].enable();
     }else if (Classvalue === 'capital'){
       this.hide = true;
       this.expac = false;
@@ -235,7 +237,7 @@ export class SpendMoneyAddComponent implements OnInit {
     //this.Classtype(this.classtype);
   }
   Editspendmoney(){   
-    this.Classtype('matter Expence');
+    this.Classtype('capital');
   }
   deletespendmoney(){
    

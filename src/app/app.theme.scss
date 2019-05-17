@@ -154,10 +154,18 @@ body.theme-pink-dark {
 
 .top_right_action.matter_right_action {
     position: absolute;
-    right: 10px;
-    top: 8px;
+    right: 0;
+    top: 0;
     z-index: 999;
     background-color: #fff;
+    height: 55px;
+    width: 55px;
+    line-height: 55px;
+}
+.top_right_action.matter_right_action button {
+    height: 55px;
+    width: 55px;
+    line-height: 55px;
 }
 
 .top_right_action_billing {

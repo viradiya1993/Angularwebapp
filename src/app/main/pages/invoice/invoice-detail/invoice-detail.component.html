@@ -28,14 +28,14 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
                         <mat-label>Invoice Date</mat-label>
-                        <input matInput placeholder="Choose a date" readonly [satDatepicker]="picker2">
+                        <input matInput readonly [satDatepicker]="picker2">
                         <!-- (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" -->
                         <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
                         <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
                         <mat-label>Due Date</mat-label>
-                        <input matInput placeholder="Choose a date" readonly [satDatepicker]="picker1">
+                        <input matInput readonly [satDatepicker]="picker1">
                         <!-- (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" -->
                         <sat-datepicker #picker1 [rangeMode]="true"> </sat-datepicker>
                         <sat-datepicker-toggle matSuffix [for]="picker1"></sat-datepicker-toggle>

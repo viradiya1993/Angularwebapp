@@ -139,12 +139,27 @@
                                     <div class="light_label_txt">Extras</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
+                                <section class="group-section-tab action_tab">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/create-document'">
+                                            <section class="large-button-container">
+                                            <mat-icon class="main-icon"> 
+                                                <img class="" src="assets/icons/web_app/icon_letters_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Generate <br> Document</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <div class="light_label_txt">Details</div>
+                                </section>
+                                <mat-divider vertical></mat-divider>
                             </mat-card-content>
                         </mat-card>
                     </section>
                 </mat-tab>
                 <!-- mattter tab menu end -->
-
                 <!-- contacts tab menu start -->
                 <mat-tab label="CONTACT" *ngIf="isTabShow===2">
                     <section class="ribbon-container contact_tab_main">
@@ -202,12 +217,27 @@
                                     <div class="light_label_txt">Action</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
+                                <section class="group-section-tab action_tab">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/create-document'">
+                                            <section class="large-button-container">
+                                            <mat-icon class="main-icon"> 
+                                                <img class="" src="assets/icons/web_app/icon_letters_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Generate <br> Document</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <div class="light_label_txt">Details</div>
+                                </section>
+                                <mat-divider vertical></mat-divider>
                             </mat-card-content>
                         </mat-card>
                     </section>
                 </mat-tab>
                 <!-- contacts tab menu end -->
-
                 <!-- Time and Billing tab menu start -->
                 <mat-tab label="TIME AND BILLING" *ngIf="isTabShow===3">
                     <section class="ribbon-container time_billing_tab_main">
@@ -358,12 +388,27 @@
                                     <div class="light_label_txt">Action</div>
                                 </section>
                                 <mat-divider vertical *ngIf="activeSubMenu =='work-in-progress'"></mat-divider>
+                                <section class="group-section-tab action_tab" *ngIf="activeSubMenu=='matter-invoices' || activeSubMenu=='receipts-credits'">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/create-document'">
+                                            <section class="large-button-container">
+                                            <mat-icon class="main-icon"> 
+                                                <img class="" src="assets/icons/web_app/icon_letters_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Generate <br> Document</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <div class="light_label_txt">Details</div>
+                                </section>
+                                <mat-divider vertical></mat-divider>
                             </mat-card-content>
                         </mat-card>
                     </section>
                 </mat-tab>
                 <!-- Time and Billing tab menu end -->
-
                 <!-- legal tab menu start -->
                 <mat-tab label="LEGAL DETAILS" *ngIf="isTabShow===4">
                     <section class="ribbon-container legal_details_tab_main">
@@ -444,7 +489,6 @@
                     </section>
                 </mat-tab>
                 <!-- legal tab menu end -->
-
                 <!-- Diary tab menu start -->
                 <mat-tab label="DIARY" *ngIf="isTabShow===5">
                     <section class="ribbon-container diary_tab_main">
@@ -690,7 +734,7 @@
                                     </section>
                                     <div class="light_label_txt">Action</div>
                                 </section>
-                                <mat-divider vertical></mat-divider>
+                                <mat-divider vertical></mat-divider>                               
                             </mat-card-content>
                         </mat-card>
                     </section>
@@ -802,12 +846,51 @@
                                     </section>
                                     <div class="light_label_txt">Action</div>
                                 </section>
+                                <mat-divider vertical></mat-divider>                              
+                            </mat-card-content>
+                        </mat-card>
+                    </section>
+                </mat-tab>
+                 <!-- Start Create Document menu -->
+                <mat-tab label="Create Document" *ngIf="isTabShow===10">
+                    <section class="ribbon-container contact_tab_main">
+                        <mat-card>
+                            <mat-card-content>
+                                <section class="group-section-tab action_tab">
+                                    <section class="ribbon-section">                                        
+                                        <mat-nav-list>
+                                            <a mat-list-item [routerLink]="'/create-document'" [ngClass]="activedocument =='create-document'?'cmn_active_tab':''">
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_letters_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>Templates</span>
+                                            </a>
+                                        </mat-nav-list>
+                                    </section>
+                                    <div class="light_label_txt">View</div>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                                <section class="group-section-tab action_tab">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button">
+                                            <section class="large-button-container">
+                                            <mat-icon class="main-icon"> 
+                                                <img class="" src="assets/icons/web_app/icon_letters_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Generate <br> Document</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <div class="light_label_txt">Generate</div>
+                                </section>
                                 <mat-divider vertical></mat-divider>
                             </mat-card-content>
                         </mat-card>
                     </section>
                 </mat-tab>
-                <!-- End Receive Money Tab menu -->
+                <!-- End  Start Create Document menu  -->
                 <!-- goto tab menu start -->
                 <mat-tab label="GO TO">
                     <section class="ribbon-container goto_tab_main" [style.width]="detailwidth">

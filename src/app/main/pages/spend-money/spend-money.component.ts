@@ -43,7 +43,7 @@ export class SpendMoneyComponent implements OnInit {
     this.getTableFilter();
     this.loadData();
   }
-  choosedDate(a, s) {
+  DateRange(a, s) {
 
   }
   getTableFilter() {

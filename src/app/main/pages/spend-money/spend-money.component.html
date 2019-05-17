@@ -23,7 +23,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="17.33">
                         <mat-label>Date Range</mat-label>
-                        <input matInput placeholder="Choose a date" [satDatepicker]="picker2" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)">
+                        <input matInput [satDatepicker]="picker2" (dateInput)="DateRange('input', $event)" (dateChange)="DateRange('change', $event)">
                         <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
                         <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
                     </mat-form-field>

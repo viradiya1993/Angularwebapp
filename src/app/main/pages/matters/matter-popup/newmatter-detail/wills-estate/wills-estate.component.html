@@ -30,7 +30,7 @@
 
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Court Matter #</mat-label>
-            <input matInput formControlName="CourtMatter">
+            <input matInput formControlName="MatterNo">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -46,7 +46,7 @@
 
         <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
             <mat-label> Date of Grant of Representation</mat-label>
-            <input (dateInput)="DateGrantRepresentationClick('input', $event)" formControlName="DateGrantRepresentationtext" (dateChange)="DateGrantRepresentationClick('change', $event)" matInput name="DateGrantRepresentation" [matDatepicker]="DateGrantRepresentation">
+            <input (dateInput)="DateGrantRepresentationClick('input', $event)" formControlName="DateOfGrantOfReptext" (dateChange)="DateGrantRepresentationClick('change', $event)" matInput name="DateGrantRepresentation" [matDatepicker]="DateGrantRepresentation">
             <mat-datepicker-toggle matSuffix [for]="DateGrantRepresentation"></mat-datepicker-toggle>
             <mat-datepicker #DateGrantRepresentation></mat-datepicker>
         </mat-form-field>

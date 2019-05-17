@@ -18,7 +18,7 @@ export class PropertyComponent implements OnInit {
 
   @Input() matterdetailForm: FormGroup;
   ngOnInit() {
-    this._mattersService.getMattersClasstype({ 'LookupType': 'status' }).subscribe(responses => {
+    this._mattersService.getMattersClasstype({ 'LookupType': 'Client Status' }).subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.statusData = responses.DATA.LOOKUPS;
       }

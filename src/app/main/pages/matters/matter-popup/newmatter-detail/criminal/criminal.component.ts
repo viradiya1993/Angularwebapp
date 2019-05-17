@@ -35,7 +35,7 @@ export class CriminalComponent implements OnInit {
         this.RegistryData = responses.DATA.LOOKUPS;
       }
     });
-    this._mattersService.getMattersClasstype({ 'LookupType': 'list' }).subscribe(responses => {
+    this._mattersService.getMattersClasstype({ 'LookupType': 'Court List' }).subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.ListData = responses.DATA.LOOKUPS;
       }

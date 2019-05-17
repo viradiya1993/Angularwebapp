@@ -23,7 +23,7 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field class="example pr-4" fxFlex="33" appearance="outline">
             <mat-label>List</mat-label>
-            <mat-select #value name="selected" formControlName="List1">
+            <mat-select #value name="selected" formControlName="CourtList">
                 <mat-option *ngFor="let optionval of ListData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
         </mat-form-field>
@@ -37,7 +37,7 @@
 
         <mat-form-field class="example" fxFlex="34" class="pr-4" appearance="outline">
             <mat-label>Client Type</mat-label>
-            <mat-select #value name="selected" formControlName="ClientType1">
+            <mat-select #value formControlName="ClientType">
                 <mat-option *ngFor="let optionval of ClientTypeData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
         </mat-form-field>
@@ -83,22 +83,22 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
             <mat-label>Cost Estimate If Succesful</mat-label>
-            <input matInput name="CostEstimateSuccesful" type="number" formControlName="CostEstimateSuccesful">
+            <input matInput name="CostEstimateSuccesful" type="number" formControlName="COSTESTIMATEIFWINEXGST">
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Inc-GST</mat-label>
-            <input name="Inc-GST" matInput type="number" formControlName="IncGST">
+            <input name="Inc-GST" matInput type="number" formControlName="CostEstimateIfWinIncGST">
             <mat-icon matSuffix class="secondary-text"></mat-icon>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
             <mat-label>Cost Estimate If Unsuccesful</mat-label>
-            <input matInput name="CostEstimateUnsuccesful" type="number" formControlName="CostEstimateUnsuccesful">
+            <input matInput name="CostEstimateUnsuccesful" type="number" formControlName="CostEstimateIfFailExGST">
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Inc-GST</mat-label>
-            <input name="Inc-GST2" matInput type="number" formControlName="IncGST2">
+            <input name="Inc-GST2" matInput type="number" formControlName="CostEstimateIfFailIncGST">
             <mat-icon matSuffix class="secondary-text"></mat-icon>
         </mat-form-field>
     </div>

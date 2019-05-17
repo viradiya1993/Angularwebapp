@@ -20,7 +20,7 @@ export class CompensationComponent implements OnInit {
     this.matterdetailForm.controls['ACCIDENTDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
   ExpiryDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.matterdetailForm.controls['ExpiryDate'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+    this.matterdetailForm.controls['ExpirationDate'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
   InvestigationClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['INVESTIGATIONDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));

@@ -67,7 +67,7 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="60" class="pr-4">
             <mat-label>Court Matter #</mat-label>
-            <input matInput formControlName="CourtMatter">
+            <input matInput formControlName="MatterNo">
         </mat-form-field>
 
         <mat-form-field class="example" fxFlex="40" class="pr-4" appearance="outline">
@@ -87,7 +87,7 @@
 
         <mat-form-field class="example" fxFlex="33" class="pr-4" appearance="outline">
             <mat-label>List</mat-label>
-            <mat-select #value name="selected" formControlName="List">
+            <mat-select #value name="selected" formControlName="CourtList">
                 <mat-option *ngFor="let optionval of ListData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
         </mat-form-field>

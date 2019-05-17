@@ -58,7 +58,7 @@ export class MatterPopupComponent implements OnInit {
           // this.active = currentMatter.ACTIVE === 0 ? false : true;
           // this.matterdetailForm.controls['MatterNum'].setValue(currentMatter.SHORTNAME);
           // this.matterdetailForm.controls['Client'].setValue(currentMatter.CONTACTTYPE);
-          // this.matterdetailForm.controls['MatterDescription'].setValue(currentMatter.MATTER);
+          // this.matterdetailForm.controls['MATTER'].setValue(currentMatter.MATTER);
           // this.matterdetailForm.controls['ClientReference'].setValue(currentMatter.REFERENCE);
           // this.matterdetailForm.controls['PerHours'].setValue(currentMatter.RATEPERHOUR);
           // this.matterdetailForm.controls['PerDay'].setValue(currentMatter.RATEPERDAY);
@@ -72,11 +72,11 @@ export class MatterPopupComponent implements OnInit {
   }
   matterFormBuild() {
     this.matterdetailForm = this._formBuilder.group({
+      MATTERGUID: [''],
       MATTERCLASS: [''],
       ACTIVE: [''],
       SHORTNAME: [''],
-
-      MatterDescription: [''],
+      MATTER: [''],
       // general
       NOTES: [''],
       COMMENCEMENTDATE: [''],
@@ -87,13 +87,13 @@ export class MatterPopupComponent implements OnInit {
       COMPLETEDDATETEXT: [''],
       PRIMARYFEEEARNERGUID: [''],
       OWNERGUID: [''],
-
-      CostsAgreementDate: [],
-      EstimateMinimum: [''],
-      Ex_GST: [''],
+      FeeAgreementDate: [],
+      FeeAgreementDateText: [],
+      EstimateFromTotalExGST: [''],
+      EstimateFromTotalIncGST: [''],
 
       // client
-      Clientmatter: [''],
+      FirmGuid: [''],
       Clientmattertext: [''],
 
       // rates
@@ -125,10 +125,9 @@ export class MatterPopupComponent implements OnInit {
       EXPERTHEARINGDATE: [''],
       DATEOFNOTICEOFINJURY: [''],
       DATEOFNOTICEOFINJURYTEXT: [''],
-
-      ExpiryDate: [''],
-      ExpiryDatetext: [''],
-      CauseofInjury: [''],
+      ExpirationDate: [''],
+      ExpirationDatetext: [''],
+      HowDidInjuryOccur: [''],
       // Details ->compulsory-acquisition
       Address: [''],
       CLIENTVALUATION: [''],
@@ -154,8 +153,8 @@ export class MatterPopupComponent implements OnInit {
       COURT: [''],
       DIVISION: [''],
       REGISTRY: [''],
-      CourtMatter: [''],
-      List: [''],
+      MatterNo: [''],
+      CourtList: [''],
 
       // Details ->family
       COHABITATIONDATE: [''],
@@ -173,7 +172,7 @@ export class MatterPopupComponent implements OnInit {
       DIVORCECOUNTRY: [''],
       NUMDEPENDANTS: [''],
       FAMILYCOURTCLIENTID: [''],
-      ExpiryDate1: [''],
+      ExpirationDatetextF: [''],
       EXPERTHEARINGDATETEXTF: [''],
 
       //Details -> immigration
@@ -198,7 +197,7 @@ export class MatterPopupComponent implements OnInit {
       VALIDUNTILTEXT: [''],
       OPTIONDATE: [''],
       OPTIONDATETEXT: [''],
-      Term: [''],
+      OptionDescription: [''],
       DISCLOSUREDATE: [''],
       DISCLOSUREDATETEXT: [''],
       REGISTEREDINFILEMAN: [''],
@@ -213,12 +212,11 @@ export class MatterPopupComponent implements OnInit {
       MATERIALDATETEXT: [''],
       DECISION: [''],
       CourtMatter1: [''],
-      List1: [''],
-      ClientType1: [''],
-      CostEstimateSuccesful: [''],
-      IncGST: [''],
-      CostEstimateUnsuccesful: [''],
-      IncGST2: [''],
+      ClientType: [''],
+      COSTESTIMATEIFWINEXGST: [''],
+      CostEstimateIfWinIncGST: [''],
+      CostEstimateIfFailExGST: [''],
+      CostEstimateIfFailIncGST: [''],
 
       //Details -> maritime
       VESSELNAME: [''],
@@ -243,10 +241,10 @@ export class MatterPopupComponent implements OnInit {
       DISCHARGEDATE: [''],
       DISCHARGEDATETEXTM: [''],
       SECURITYPROPERTY: [''],
-      ExpirtyDate: [''],
+      ExpirationDateTxtM: [''],
 
       // Details ->property-purchase
-      Status: [''],
+      ClientStatus: [''],
       Address3: [''],
       PURCHASEPRICE: [''],
       DEPOSITAMOUNT: [''],
@@ -271,7 +269,6 @@ export class MatterPopupComponent implements OnInit {
       ADJUSTMENTDATE: [''],
       ADJUSTMENTDATETEXTPS: [''],
       DATEPAIDTEXTPS: [''],
-      Status1: [''],
       EXCHANGEDATETEXTPS: [''],
       SETTLEMENTDATETEXTPS: [''],
 
@@ -288,7 +285,7 @@ export class MatterPopupComponent implements OnInit {
       TOTALUNITS: [''],
 
       //Details -> trademark-ip
-      ApplicationNumber: [''],
+      FolioIdentifier: [''],
 
       //Details -> wills-estate
       DATEOFWILL: [''],
@@ -299,8 +296,8 @@ export class MatterPopupComponent implements OnInit {
       NAMEOFSUPERANNUATION: [''],
       NUMBEROFCODICILS: [''],
       DATEOFCODICILS: [''],
-      DateGrantRepresentation: [''],
-      DateGrantRepresentationtext: [''],
+      DateOfGrantOfRep: [''],
+      DateOfGrantOfReptext: [''],
 
       // others
       MATTERTYPE: [''],
@@ -325,11 +322,10 @@ export class MatterPopupComponent implements OnInit {
     this.FormAction = this.action !== 'edit' ? 'insert' : 'update';
     this.isspiner = true;
     let details: any = {
-      FormAction: this.FormAction,
       MATTERCLASS: this.f.MATTERCLASS.value,
       ACTIVE: this.f.ACTIVE.value == true ? 1 : 0,
       SHORTNAME: this.f.SHORTNAME.value,
-      MatterDescription: this.f.MatterDescription.value,
+      MATTER: this.f.MATTER.value,
 
       // general
       NOTES: this.f.NOTES.value,
@@ -339,13 +335,12 @@ export class MatterPopupComponent implements OnInit {
       COMPLETEDDATE: this.f.COMPLETEDDATE.value,
       PRIMARYFEEEARNERGUID: this.f.PRIMARYFEEEARNERGUID.value,
       OWNERGUID: this.f.OWNERGUID.value,
-
-      CostsAgreementDate: this.f.CostsAgreementDate.value,
-      EstimateMinimum: this.f.EstimateMinimum.value,
-      Ex_GST: this.f.Ex_GST.value,
+      FeeAgreementDate: this.f.FeeAgreementDate.value,
+      EstimateFromTotalExGST: this.f.EstimateFromTotalExGST.value,
+      EstimateFromTotalIncGST: this.f.EstimateFromTotalIncGST.value,
 
       // client
-      Clientmatter: this.f.Clientmatter.value,
+      FirmGuid: this.f.FirmGuid.value,
       // rates
       BILLINGMETHOD: this.f.BILLINGMETHOD.value,
       ONCHARGEDISBURSEMENTGST: this.f.ONCHARGEDISBURSEMENTGST.value == true ? 1 : 0,
@@ -383,8 +378,8 @@ export class MatterPopupComponent implements OnInit {
       details.CLIENTNAME = this.f.CLIENTNAME.value;
       details.ESTIMATEDAWARD = this.f.ESTIMATEDAWARD.value;
       details.CLAIMNUMBER = this.f.CLAIMNUMBER.value;
-      details.ExpiryDate = this.f.ExpiryDate.value;
-      details.CauseofInjury = this.f.CauseofInjury.value;
+      details.ExpirationDate = this.f.ExpirationDate.value;
+      details.HowDidInjuryOccur = this.f.HowDidInjuryOccur.value;
     } else if (this.classtype == 'Compulsory Acquisition') {
       // Details ->compulsory-acquisition
       details.Address = this.f.Address.value;
@@ -407,8 +402,8 @@ export class MatterPopupComponent implements OnInit {
       details.COURT = this.f.COURT.value;
       details.DIVISION = this.f.DIVISION.value;
       details.REGISTRY = this.f.REGISTRY.value;
-      details.CourtMatter = this.f.CourtMatter.value;
-      details.List = this.f.List.value;
+      details.MatterNo = this.f.MatterNo.value;
+      details.CourtList = this.f.CourtList.value;
     } else if (this.classtype == 10) {
       // Details ->family
       details.COHABITATIONDATE = this.f.COHABITATIONDATE.value;
@@ -423,8 +418,8 @@ export class MatterPopupComponent implements OnInit {
       details.NUMDEPENDANTS = this.f.NUMDEPENDANTS.value;
       details.FAMILYCOURTCLIENTID = this.f.FAMILYCOURTCLIENTID.value;
       details.EXPERTHEARINGDATE = this.f.EXPERTHEARINGDATE.value;
-      details.CourtMatter = this.f.CourtMatter.value;
-      details.ExpiryDate1 = this.f.ExpiryDate1.value;
+      details.MatterNo = this.f.MatterNo.value;
+      details.ExpirationDate = this.f.ExpirationDate.value;
     } else if (this.classtype == 'Immigration') {
       //Details -> immigration
       details.VISATYPE = this.f.VISATYPE.value;
@@ -441,7 +436,7 @@ export class MatterPopupComponent implements OnInit {
       details.DATEEXECUTED = this.f.DATEEXECUTED.value;
       details.VALIDUNTIL = this.f.VALIDUNTIL.value;
       details.OPTIONDATE = this.f.OPTIONDATE.value;
-      details.Term = this.f.Term.value;
+      details.OptionDescription = this.f.OptionDescription.value;
       details.DISCLOSUREDATE = this.f.DISCLOSUREDATE.value;
       details.REGISTEREDINFILEMAN = this.f.REGISTEREDINFILEMAN.value;
     } else if (this.classtype == 2) {
@@ -449,19 +444,19 @@ export class MatterPopupComponent implements OnInit {
       details.CourtMatter1 = this.f.CourtMatter1.value;
       details.COURT = this.f.COURT.value;
       details.DIVISION = this.f.DIVISION.value;
-      details.List1 = this.f.List1.value;
+      details.CourtList = this.f.CourtList.value;
       details.REGISTRY = this.f.REGISTRY.value;
-      details.ClientType1 = this.f.ClientType1.value;
+      details.ClientType = this.f.ClientType.value;
       details.MATTERTITLEBELOW = this.f.MATTERTITLEBELOW.value;
       details.COURTBELOW = this.f.COURTBELOW.value;
       details.CASENUMBERBELOW = this.f.CASENUMBERBELOW.value;
       details.DATEOFHEARINGS = this.f.DATEOFHEARINGS.value;
       details.MATERIALDATE = this.f.MATERIALDATE.value;
       details.DECISION = this.f.DECISION.value;
-      details.CostEstimateSuccesful = this.f.CostEstimateSuccesful.value;
-      details.IncGST = this.f.IncGST.value;
-      details.CostEstimateUnsuccesful = this.f.CostEstimateUnsuccesful.value;
-      details.IncGST2 = this.f.IncGST2.value;
+      details.COSTESTIMATEIFWINEXGST = this.f.COSTESTIMATEIFWINEXGST.value;
+      details.CostEstimateIfWinIncGST = this.f.CostEstimateIfWinIncGST.value;
+      details.CostEstimateIfFailExGST = this.f.CostEstimateIfFailExGST.value;
+      details.CostEstimateIfFailIncGST = this.f.CostEstimateIfFailIncGST.value;
     } else if (this.classtype == 'Maritime') {
       //Details -> maritime
       details.VESSELNAME = this.f.VESSELNAME.value;
@@ -482,7 +477,7 @@ export class MatterPopupComponent implements OnInit {
       details.DISCHARGEDATE = this.f.DISCHARGEDATE.value;
       details.SECURITYPROPERTY = this.f.SECURITYPROPERTY.value;
       details.COMMENCEMENTDATE = this.f.COMMENCEMENTDATE.value;
-      details.ExpirtyDate = this.f.ExpirtyDate.value;
+      details.ExpirationDate = this.f.ExpirationDate.value;
     }
     else if (this.classtype == 'Property Purchase') {
       // Details ->property-purchase
@@ -502,7 +497,7 @@ export class MatterPopupComponent implements OnInit {
       details.SPECIALCONDITIONS = this.f.SPECIALCONDITIONS.value;
       details.BUILDINGREPORTCOMPLETED = this.f.BUILDINGREPORTCOMPLETED.value == true ? 1 : 0;
       details.PESTREPORTCOMPLETED = this.f.PESTREPORTCOMPLETED.value == true ? 1 : 0;
-      details.Status = this.f.Status.value;
+      details.ClientStatus = this.f.ClientStatus.value;
     } else if (this.classtype == 'Property Sale') {
       //Details -> property-sale 
       details.Address4 = this.f.Address4.value;
@@ -512,7 +507,7 @@ export class MatterPopupComponent implements OnInit {
       details.ADJUSTMENTDATE = this.f.ADJUSTMENTDATE.value;
       details.DATEPAID = this.f.DATEPAID.value;
       details.BANKREFERENCE = this.f.BANKREFERENCE.value;
-      details.Status1 = this.f.Status1.value;
+      details.ClientStatus = this.f.ClientStatus.value;
     } else if (this.classtype == 'Strata') {
       //Details -> strata
       details.STRATAPLANNUMBER = this.f.STRATAPLANNUMBER.value;
@@ -526,7 +521,7 @@ export class MatterPopupComponent implements OnInit {
       details.TOTALUNITS = this.f.TOTALUNITS.value;
     } else if (this.classtype == 'Trademark/IP') {
       //Details -> trademark-ip
-      details.ApplicationNumber = this.f.ApplicationNumber.value;
+      details.FolioIdentifier = this.f.FolioIdentifier.value;
     } else if (this.classtype == 7) {
       //Details -> wills-estate
       details.DATEOFWILL = this.f.DATEOFWILL.value;
@@ -536,15 +531,16 @@ export class MatterPopupComponent implements OnInit {
       details.NAMEOFSUPERANNUATION = this.f.NAMEOFSUPERANNUATION.value;
       details.NUMBEROFCODICILS = this.f.NUMBEROFCODICILS.value;
       details.DATEOFCODICILS = this.f.DATEOFCODICILS.value;
-      details.DateGrantRepresentation = this.f.DateGrantRepresentation.value;
-      details.CourtMatter = this.f.CourtMatter.value;
+      details.DateOfGrantOfRep = this.f.DateOfGrantOfRep.value;
+      details.MatterNo = this.f.MatterNo.value;
     }
-    details.VALIDATEONLY = true;
-    this._mattersService.AddNewMatter(details).subscribe(response => {
+    let matterPostData: any = { FormAction: this.FormAction, VALIDATEONLY: true, Data: details };
+    console.log(matterPostData);
+    this._mattersService.AddNewMatter(matterPostData).subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        this.checkValidation(response.DATA.VALIDATIONS, details);
+        this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
       } else if (response.CODE == 451 && response.STATUS == "warning") {
-        this.checkValidation(response.DATA.VALIDATIONS, details);
+        this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
       } else {
         if (response.CODE == 402 && response.STATUS == "error" && response.MESSAGE == "Not logged in")
           this.dialogRef.close(false);
@@ -586,7 +582,6 @@ export class MatterPopupComponent implements OnInit {
   }
   saveMatterData(data: any) {
     data.VALIDATEONLY = false;
-    console.log(data);
     this._mattersService.AddNewMatter(data).subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         if (this.action !== 'edit') {

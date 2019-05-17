@@ -19,7 +19,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
             <mat-label>Costs Agreement Date</mat-label>
-            <input (dateInput)="CostsAgreementDate('input', $event)" formControlName="CostsAgreementDate" (dateChange)="CostsAgreementDate('change', $event)" matInput name="CostsAgreementDate" [matDatepicker]="picker2">
+            <input (dateInput)="CostsAgreementDate('input', $event)" formControlName="FeeAgreementDateText" (dateChange)="CostsAgreementDate('change', $event)" matInput name="CostsAgreementDate" [matDatepicker]="picker2">
             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
@@ -49,11 +49,11 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
             <mat-label>Estimate Minimum </mat-label>
-            <input matInput name="EstimateMinimum" type="number" formControlName="EstimateMinimum">
+            <input matInput type="number" formControlName="EstimateFromTotalExGST">
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Ex-GST</mat-label>
-            <input name="Ex-GST" matInput type="number" formControlName="Ex_GST">
+            <input name="Ex-GST" matInput type="number" formControlName="EstimateFromTotalIncGST">
             <mat-icon matSuffix class="secondary-text"></mat-icon>
         </mat-form-field>
     </div>

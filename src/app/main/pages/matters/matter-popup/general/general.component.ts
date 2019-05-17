@@ -20,7 +20,7 @@ export class GeneralComponent implements OnInit {
   }
 
   CostsAgreementDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.matterdetailForm.controls['CostsAgreementDate'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+    this.matterdetailForm.controls['FeeAgreementDate'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
   CompletedDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['COMPLETEDDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));

@@ -25,7 +25,7 @@
 
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Expirty Date</mat-label>
-            <input (dateInput)="ExpirtyDateClick('input', $event)" formControlName="ExpirtyDatetextm" (dateChange)="ExpirtyDateClick('change', $event)" matInput [matDatepicker]="ExpirtyDate">
+            <input (dateInput)="ExpirtyDateClick('input', $event)" formControlName="ExpirationDateTxtM" (dateChange)="ExpirtyDateClick('change', $event)" matInput [matDatepicker]="ExpirtyDate">
             <mat-datepicker-toggle matSuffix [for]="ExpirtyDate"></mat-datepicker-toggle>
             <mat-datepicker #ExpirtyDate></mat-datepicker>
         </mat-form-field>

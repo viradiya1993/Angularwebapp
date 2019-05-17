@@ -22,7 +22,7 @@ export class MortgageFinanceComponent implements OnInit {
     this.matterdetailForm.controls['DISCHARGEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
   ExpirtyDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.matterdetailForm.controls['ExpirtyDate'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+    this.matterdetailForm.controls['ExpirationDate'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
 
 }

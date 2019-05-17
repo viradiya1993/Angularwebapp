@@ -63,7 +63,7 @@
 
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Court Matter #</mat-label>
-            <input matInput formControlName="CourtMatter">
+            <input matInput formControlName="MatterNo">
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
@@ -74,7 +74,7 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Expiry Date</mat-label>
-            <input (dateInput)="ExpiryDateClick('input', $event)" formControlName="ExpiryDate1" (dateChange)="ExpiryDateClick('change', $event)" matInput name="ExpiryDate" [matDatepicker]="ExpiryDate">
+            <input (dateInput)="ExpiryDateClick('input', $event)" formControlName="ExpirationDatetextF" (dateChange)="ExpiryDateClick('change', $event)" matInput name="ExpiryDate" [matDatepicker]="ExpiryDate">
             <mat-datepicker-toggle matSuffix [for]="ExpiryDate"></mat-datepicker-toggle>
             <mat-datepicker #ExpiryDate></mat-datepicker>
         </mat-form-field>

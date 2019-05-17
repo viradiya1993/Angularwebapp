@@ -10,7 +10,7 @@
 
         <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
             <mat-label>Expiry Date</mat-label>
-            <input (dateInput)="ExpiryDateClick('input', $event)" formControlName="ExpiryDatetext" (dateChange)="ExpiryDateClick('change', $event)" matInput [matDatepicker]="ExpiryDate">
+            <input (dateInput)="ExpiryDateClick('input', $event)" formControlName="ExpirationDatetext" (dateChange)="ExpiryDateClick('change', $event)" matInput [matDatepicker]="ExpiryDate">
             <mat-datepicker-toggle matSuffix [for]="ExpiryDate"></mat-datepicker-toggle>
             <mat-datepicker #ExpiryDate></mat-datepicker>
         </mat-form-field>
@@ -35,7 +35,7 @@
 
         <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
             <mat-label>Cause of Injury</mat-label>
-            <input matInput formControlName="CauseofInjury">
+            <input matInput formControlName="HowDidInjuryOccur">
         </mat-form-field>
 
     </div>

@@ -55,8 +55,8 @@
                             <app-property-purchase *ngIf="classtype=='Property Purchase'" [matterdetailForm]="matterdetailForm"></app-property-purchase>
                             <app-property *ngIf="classtype=='Property Sale'" [matterdetailForm]="matterdetailForm"></app-property>
                             <app-strata *ngIf="classtype=='Strata'" [matterdetailForm]="matterdetailForm"></app-strata>
-                            <app-trademark-ip *ngIf="classtype=='Trademark/IP'" [matterdetailForm]="matterdetailForm"></app-trademark-ip>
                             <app-wills-estate *ngIf="classtype=='7'" [matterdetailForm]="matterdetailForm"></app-wills-estate>
+                            <app-trademark-ip *ngIf="classtype=='Trademark/IP'" [matterdetailForm]="matterdetailForm"></app-trademark-ip>
                         </mat-tab>
                         <mat-tab label="Others">
                             <app-others [matterdetailForm]="matterdetailForm"></app-others>

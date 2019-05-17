@@ -14,16 +14,16 @@ export class ImmigrationComponent implements OnInit {
   @Input() matterdetailForm: FormGroup;
   ngOnInit() {
   }
-  AnticipatedEntry(type: string, event: MatDatepickerInputEvent<Date>) {
+  AnticipatedEntryClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['ANTICIPATEDDATEOFENTRY'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  LodgementDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  LodgementDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['LODGEMENTDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  VisaExpiryDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  VisaExpiryDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['VISAEXPIRYDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  DecisionDueDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  DecisionDueDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['DECISIONDUEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
 }

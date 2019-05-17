@@ -1,96 +1,87 @@
 <div class=" one " fxLayout="column" [formGroup]="matterdetailForm">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Cohabitation Date</mat-label>
-            <input (dateInput)="CohabitationDate('input', $event)" formControlName="COHABITATIONDATE" (dateChange)="CohabitationDate('change', $event)" matInput [matDatepicker]="CohabitationDate">
+            <input (dateInput)="CohabitationDateClick('input', $event)" formControlName="COHABITATIONDATETEXT" (dateChange)="CohabitationDateClick('change', $event)" matInput [matDatepicker]="CohabitationDate">
             <mat-datepicker-toggle matSuffix [for]="CohabitationDate"></mat-datepicker-toggle>
             <mat-datepicker #CohabitationDate></mat-datepicker>
         </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Marriage Date</mat-label>
-            <input (dateInput)="MarriageDate('input', $event)" formControlName="MARRIAGEDATE" (dateChange)="MarriageDate('change', $event)" matInput [matDatepicker]="MarriageDate">
+            <input (dateInput)="MarriageDateClick('input', $event)" formControlName="MARRIAGEDATETEXT" (dateChange)="MarriageDateClick('change', $event)" matInput [matDatepicker]="MarriageDate">
             <mat-datepicker-toggle matSuffix [for]="MarriageDate"></mat-datepicker-toggle>
             <mat-datepicker #MarriageDate></mat-datepicker>
         </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
             <mat-label>Marriage Place</mat-label>
             <input matInput formControlName="MARRIAGEPLACE">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Marriage Country</mat-label>
             <input matInput formControlName="MARRIAGECOUNTRY">
         </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Separation Date</mat-label>
-            <input (dateInput)="SeparationDate('input', $event)" formControlName="SEPARATIONDATE" (dateChange)="SeparationDate('change', $event)" matInput [matDatepicker]="SeparationDate">
+            <input (dateInput)="SeparationDateClick('input', $event)" formControlName="SEPARATIONDATETEXT" (dateChange)="SeparationDateClick('change', $event)" matInput [matDatepicker]="SeparationDate">
             <mat-datepicker-toggle matSuffix [for]="SeparationDate"></mat-datepicker-toggle>
             <mat-datepicker #SeparationDate></mat-datepicker>
         </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
             <mat-label>Date Filed For Divor</mat-label>
             <input matInput type="number" formControlName="DATEFILEDFORDIVORCE">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Divorce Date</mat-label>
-            <input (dateInput)="DivorceDate('input', $event)" formControlName="DIVORCEDATE" (dateChange)="DivorceDate('change', $event)" matInput [matDatepicker]="DivorceDate">
+            <input (dateInput)="DivorceDateClick('input', $event)" formControlName="DIVORCEDATETEXT" (dateChange)="DivorceDateClick('change', $event)" matInput [matDatepicker]="DivorceDate">
             <mat-datepicker-toggle matSuffix [for]="DivorceDate"></mat-datepicker-toggle>
             <mat-datepicker #DivorceDate></mat-datepicker>
         </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
             <mat-label>Divorce Place</mat-label>
             <input matInput formControlName="DIVORCEPLACE">
         </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Divorce Country</mat-label>
             <input matInput formControlName="DIVORCECOUNTRY">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Num Dependants</mat-label>
             <input matInput type="number" formControlName="NUMDEPENDANTS">
         </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Court Matter #</mat-label>
             <input matInput formControlName="CourtMatter">
         </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
             <mat-label>Cliend Id</mat-label>
             <input matInput formControlName="FAMILYCOURTCLIENTID">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Expiry Date</mat-label>
-            <input (dateInput)="ExpiryDate('input', $event)" formControlName="ExpiryDate1" (dateChange)="ExpiryDate('change', $event)" matInput name="ExpiryDate" [matDatepicker]="ExpiryDate">
+            <input (dateInput)="ExpiryDateClick('input', $event)" formControlName="ExpiryDate1" (dateChange)="ExpiryDateClick('change', $event)" matInput name="ExpiryDate" [matDatepicker]="ExpiryDate">
             <mat-datepicker-toggle matSuffix [for]="ExpiryDate"></mat-datepicker-toggle>
             <mat-datepicker #ExpiryDate></mat-datepicker>
         </mat-form-field>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Hearing Date</mat-label>
-            <input (dateInput)="HearingDate('input', $event)" formControlName="EXPERTHEARINGDATE" (dateChange)="HearingDate('change', $event)" matInput [matDatepicker]="HearingDate">
+            <input (dateInput)="HearingDateClick('input', $event)" formControlName="EXPERTHEARINGDATETEXTF" (dateChange)="HearingDateClick('change', $event)" matInput [matDatepicker]="HearingDate">
             <mat-datepicker-toggle matSuffix [for]="HearingDate"></mat-datepicker-toggle>
             <mat-datepicker #HearingDate></mat-datepicker>
         </mat-form-field>

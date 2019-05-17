@@ -7,7 +7,7 @@
 
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Expiration Date</mat-label>
-            <input (dateInput)="ExpirationDate('input', $event)" formControlName="EXPIRATIONDATE" (dateChange)="ExpirationDate('change', $event)" matInput name="ExpirationDate" [matDatepicker]="ExpirationDate">
+            <input (dateInput)="ExpirationDateClick('input', $event)" formControlName="EXPIRATIONDATETEXT" (dateChange)="ExpirationDateClick('change', $event)" matInput name="ExpirationDate" [matDatepicker]="ExpirationDate">
             <mat-datepicker-toggle matSuffix [for]="ExpirationDate"></mat-datepicker-toggle>
             <mat-datepicker #ExpirationDate></mat-datepicker>
         </mat-form-field>
@@ -30,7 +30,7 @@
 
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Resolution Date</mat-label>
-            <input (dateInput)="ResolutionDate('input', $event)" formControlName="SPECIALRESOLUTIONDATE" (dateChange)="ResolutionDate('change', $event)" matInput name="ResolutionDate" [matDatepicker]="ResolutionDate">
+            <input (dateInput)="ResolutionDateClick('input', $event)" formControlName="SPECIALRESOLUTIONDATETEXT" (dateChange)="ResolutionDateClick('change', $event)" matInput name="ResolutionDate" [matDatepicker]="ResolutionDate">
             <mat-datepicker-toggle matSuffix [for]="ResolutionDate"></mat-datepicker-toggle>
             <mat-datepicker #ResolutionDate></mat-datepicker>
         </mat-form-field>

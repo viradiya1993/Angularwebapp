@@ -16,21 +16,21 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Date Executed </mat-label>
-            <input (dateInput)="DateExecuted('input', $event)" formControlName="DATEEXECUTED" (dateChange)="DateExecuted('change', $event)" matInput [matDatepicker]="DateExecuted">
+            <input (dateInput)="DateExecutedClick('input', $event)" formControlName="DATEEXECUTEDTEXT" (dateChange)="DateExecutedClick('change', $event)" matInput [matDatepicker]="DateExecuted">
             <mat-datepicker-toggle matSuffix [for]="DateExecuted"></mat-datepicker-toggle>
             <mat-datepicker #DateExecuted></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Valid Until</mat-label>
-            <input (dateInput)="ValidUntil('input', $event)" formControlName="VALIDUNTIL" (dateChange)="ValidUntil('change', $event)" matInput [matDatepicker]="ValidUntil">
+            <input (dateInput)="ValidUntilClick('input', $event)" formControlName="VALIDUNTILTEXT" (dateChange)="ValidUntilClick('change', $event)" matInput [matDatepicker]="ValidUntil">
             <mat-datepicker-toggle matSuffix [for]="ValidUntil"></mat-datepicker-toggle>
             <mat-datepicker #ValidUntil></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
             <mat-label>Option Date</mat-label>
-            <input (dateInput)="OptionDate('input', $event)" formControlName="OPTIONDATE" (dateChange)="OptionDate('change', $event)" matInput [matDatepicker]="OptionDate">
+            <input (dateInput)="OptionDateClick('input', $event)" formControlName="OPTIONDATETEXT" (dateChange)="OptionDateClick('change', $event)" matInput [matDatepicker]="OptionDate">
             <mat-datepicker-toggle matSuffix [for]="OptionDate"></mat-datepicker-toggle>
             <mat-datepicker #OptionDate></mat-datepicker>
         </mat-form-field>
@@ -43,7 +43,7 @@
 
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Disclosure Date</mat-label>
-            <input (dateInput)="DisclosureDate('input', $event)" formControlName="DISCLOSUREDATE" (dateChange)="DisclosureDate('change', $event)" matInput [matDatepicker]="DisclosureDate">
+            <input (dateInput)="DisclosureDateClick('input', $event)" formControlName="DISCLOSUREDATETEXT" (dateChange)="DisclosureDateClick('change', $event)" matInput [matDatepicker]="DisclosureDate">
             <mat-datepicker-toggle matSuffix [for]="DisclosureDate"></mat-datepicker-toggle>
             <mat-datepicker #DisclosureDate></mat-datepicker>
         </mat-form-field>

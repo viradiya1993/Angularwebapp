@@ -2,7 +2,7 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Date of Will</mat-label>
-            <input (dateInput)="DateofWill('input', $event)" formControlName="DATEOFWILL" (dateChange)="DateofWill('change', $event)" matInput name="DateofWill" [matDatepicker]="DateofWill">
+            <input (dateInput)="DateofWillClick('input', $event)" formControlName="DATEOFWILLTEXT" (dateChange)="DateofWillClick('change', $event)" matInput name="DateofWill" [matDatepicker]="DateofWill">
             <mat-datepicker-toggle matSuffix [for]="DateofWill"></mat-datepicker-toggle>
             <mat-datepicker #DateofWill></mat-datepicker>
         </mat-form-field>
@@ -46,7 +46,7 @@
 
         <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
             <mat-label> Date of Grant of Representation</mat-label>
-            <input (dateInput)="DateGrantRepresentation('input', $event)" formControlName="DateGrantRepresentation" (dateChange)="DateGrantRepresentation('change', $event)" matInput name="DateGrantRepresentation" [matDatepicker]="DateGrantRepresentation">
+            <input (dateInput)="DateGrantRepresentationClick('input', $event)" formControlName="DateGrantRepresentationtext" (dateChange)="DateGrantRepresentationClick('change', $event)" matInput name="DateGrantRepresentation" [matDatepicker]="DateGrantRepresentation">
             <mat-datepicker-toggle matSuffix [for]="DateGrantRepresentation"></mat-datepicker-toggle>
             <mat-datepicker #DateGrantRepresentation></mat-datepicker>
         </mat-form-field>

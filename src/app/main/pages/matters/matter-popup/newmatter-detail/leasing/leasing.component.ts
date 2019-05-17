@@ -29,16 +29,16 @@ export class LeasingComponent implements OnInit {
       }
     });
   }
-  DateExecuted(type: string, event: MatDatepickerInputEvent<Date>) {
+  DateExecutedClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['DATEEXECUTED'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  ValidUntil(type: string, event: MatDatepickerInputEvent<Date>) {
+  ValidUntilClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['VALIDUNTIL'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  OptionDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  OptionDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['OPTIONDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  DisclosureDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  DisclosureDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['DISCLOSUREDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
 }

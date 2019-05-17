@@ -17,19 +17,22 @@ export class FamilyComponent implements OnInit {
   ngOnInit() {
   }
 
-  CohabitationDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  CohabitationDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['COHABITATIONDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  MarriageDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  MarriageDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['MARRIAGEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  SeparationDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  SeparationDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['SEPARATIONDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  DivorceDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  DivorceDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['DIVORCEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  HearingDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  HearingDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['EXPERTHEARINGDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
+  ExpiryDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.matterdetailForm.controls['ExpiryDate1'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
 }

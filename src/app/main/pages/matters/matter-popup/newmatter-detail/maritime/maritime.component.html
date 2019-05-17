@@ -41,21 +41,21 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Incident Date</mat-label>
-            <input (dateInput)="IncidentDate('input', $event)" formControlName="INCIDENTDATE" (dateChange)="IncidentDate('change', $event)" matInput [matDatepicker]="IncidentDate">
+            <input (dateInput)="IncidentDatecClick('input', $event)" formControlName="INCIDENTDATETEXTM" (dateChange)="IncidentDatecClick('change', $event)" matInput [matDatepicker]="IncidentDate">
             <mat-datepicker-toggle matSuffix [for]="IncidentDate"></mat-datepicker-toggle>
             <mat-datepicker #IncidentDate></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Exchange Date</mat-label>
-            <input (dateInput)="ExchangeDate('input', $event)" formControlName="EXCHANGEDATE" (dateChange)="ExchangeDate('change', $event)" matInput [matDatepicker]="ExchangeDate">
+            <input (dateInput)="ExchangeDateClick('input', $event)" formControlName="EXCHANGEDATETEXTM" (dateChange)="ExchangeDateClick('change', $event)" matInput [matDatepicker]="ExchangeDate">
             <mat-datepicker-toggle matSuffix [for]="ExchangeDate"></mat-datepicker-toggle>
             <mat-datepicker #ExchangeDate></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
             <mat-label>Settlement Date</mat-label>
-            <input (dateInput)="SettlementDate('input', $event)" formControlName="SETTLEMENTDATE" (dateChange)="SettlementDate('change', $event)" matInput name="SettlementDate" [matDatepicker]="SettlementDate">
+            <input (dateInput)="SettlementDateClick('input', $event)" formControlName="SETTLEMENTDATETEXTM" (dateChange)="SettlementDateClick('change', $event)" matInput name="SettlementDate" [matDatepicker]="SettlementDate">
             <mat-datepicker-toggle matSuffix [for]="SettlementDate"></mat-datepicker-toggle>
             <mat-datepicker #SettlementDate></mat-datepicker>
         </mat-form-field>

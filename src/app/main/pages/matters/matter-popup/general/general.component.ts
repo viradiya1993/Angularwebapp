@@ -16,16 +16,13 @@ export class GeneralComponent implements OnInit {
   }
 
   CommencementDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    console.log(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
     this.matterdetailForm.controls['COMMENCEMENTDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
 
   CostsAgreementDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    console.log(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
     this.matterdetailForm.controls['CostsAgreementDate'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
   CompletedDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    console.log(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
     this.matterdetailForm.controls['COMPLETEDDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
   ngOnInit() { }

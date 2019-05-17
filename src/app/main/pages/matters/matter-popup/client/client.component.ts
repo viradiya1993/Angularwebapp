@@ -15,7 +15,7 @@ export class ClientComponent implements OnInit {
   position: number;
   weight: number;
   symbol: string;
-  isspiner:boolean;
+  isspiner: boolean;
 
 
   constructor(
@@ -34,15 +34,13 @@ export class ClientComponent implements OnInit {
         this.ELEMENT_DATA.push({ position: 1, name: 'Client', weight: 1.0079, symbol: 'H' });
       }
     });
-  } 
+  }
   ContactMatter() {
     const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
-      //  console.log(result);
       if (result) {
-        // this.matterdetailForm.controls['Clientmatter'].setValue(result.MATTERGUID);
-        this.matterdetailForm.controls['Clientmatter'].setValue(result.SHORTNAME + ' : ' + result.MATTER);
-        // this.matterChange('MatterGuid', result.MATTERGUID);
+        this.matterdetailForm.controls['Clientmatter'].setValue(result.CONTACTGUID);
+        this.matterdetailForm.controls['Clientmattertext'].setValue(result.CONTACTNAME + ' - ' + result.SUBURB);
       }
     });
   }

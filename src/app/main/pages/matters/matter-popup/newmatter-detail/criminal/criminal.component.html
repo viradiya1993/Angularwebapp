@@ -3,21 +3,21 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Brief Service Date</mat-label>
-            <input (dateInput)="BriefServiceDate('input', $event)" formControlName="BRIEFSERVICEDATE" (dateChange)="BriefServiceDate('change', $event)" matInput [matDatepicker]="BriefServiceDate">
+            <input (dateInput)="BriefServiceDateClick('input', $event)" formControlName="BRIEFSERVICEDATETEXT" (dateChange)="BriefServiceDateClick('change', $event)" matInput [matDatepicker]="BriefServiceDate">
             <mat-datepicker-toggle matSuffix [for]="BriefServiceDate"></mat-datepicker-toggle>
             <mat-datepicker #BriefServiceDate></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Committal Date</mat-label>
-            <input (dateInput)="CommittalDate('input', $event)" formControlName="COMMITTALDATE" (dateChange)="CommittalDate('change', $event)" matInput [matDatepicker]="CommittalDate">
+            <input (dateInput)="CommittalDateClick('input', $event)" formControlName="COMMITTALDATETEXT" (dateChange)="CommittalDateClick('change', $event)" matInput [matDatepicker]="CommittalDate">
             <mat-datepicker-toggle matSuffix [for]="CommittalDate"></mat-datepicker-toggle>
             <mat-datepicker #CommittalDate></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
             <mat-label>Reply Date</mat-label>
-            <input (dateInput)="ReplyDate('input', $event)" formControlName="REPLYDATE" (dateChange)="ReplyDate('change', $event)" matInput name="ReplyDate" [matDatepicker]="ReplyDate">
+            <input (dateInput)="ReplyDateClick('input', $event)" formControlName="REPLYDATETEXT" (dateChange)="ReplyDateClick('change', $event)" matInput name="ReplyDate" [matDatepicker]="ReplyDate">
             <mat-datepicker-toggle matSuffix [for]="ReplyDate"></mat-datepicker-toggle>
             <mat-datepicker #ReplyDate></mat-datepicker>
         </mat-form-field>
@@ -31,13 +31,13 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Bail Date</mat-label>
-            <input (dateInput)="BailDate('input', $event)" formControlName="BAILDATE" (dateChange)="BailDate('change', $event)" matInput [matDatepicker]="BailDate">
+            <input (dateInput)="BailDateClick('input', $event)" formControlName="BAILDATETEXT" (dateChange)="BailDateClick('change', $event)" matInput [matDatepicker]="BailDate">
             <mat-datepicker-toggle matSuffix [for]="BailDate"></mat-datepicker-toggle>
             <mat-datepicker #BailDate></mat-datepicker>
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Sentencing Date</mat-label>
-            <input (dateInput)="SentencingDate('input', $event)" formControlName="SENTENCINGDATE" (dateChange)="SentencingDate('change', $event)" matInput name="SentencingDate" [matDatepicker]="SentencingDate">
+            <input (dateInput)="SentencingDateClick('input', $event)" formControlName="SENTENCINGDATETEXT" (dateChange)="SentencingDateClick('change', $event)" matInput name="SentencingDate" [matDatepicker]="SentencingDate">
             <mat-datepicker-toggle matSuffix [for]="SentencingDate"></mat-datepicker-toggle>
             <mat-datepicker #SentencingDate></mat-datepicker>
         </mat-form-field>

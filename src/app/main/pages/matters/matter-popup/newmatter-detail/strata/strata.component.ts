@@ -16,10 +16,10 @@ export class StrataComponent implements OnInit {
   ngOnInit() {
   }
 
-  ExpirationDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  ExpirationDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['EXPIRATIONDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  ResolutionDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  ResolutionDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['SPECIALRESOLUTIONDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
 }

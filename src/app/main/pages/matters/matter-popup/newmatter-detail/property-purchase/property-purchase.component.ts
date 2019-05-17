@@ -27,16 +27,16 @@ export class PropertyPurchaseComponent implements OnInit {
       }
     });
   }
-  ExchangeDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  ExchangeDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['EXCHANGEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  SettlementDate2(type: string, event: MatDatepickerInputEvent<Date>) {
+  SettlementDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['SETTLEMENTDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  DatePaid(type: string, event: MatDatepickerInputEvent<Date>) {
+  DatePaidClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['DATEPAID'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  BalanceDepositDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  BalanceDepositDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['BALANCEDEPOSITDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
 

@@ -43,19 +43,19 @@ export class CriminalComponent implements OnInit {
   }
 
 
-  BriefServiceDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  BriefServiceDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['BRIEFSERVICEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  CommittalDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  CommittalDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['COMMITTALDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  ReplyDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  ReplyDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['REPLYDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  BailDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  BailDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['BAILDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  SentencingDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  SentencingDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['SENTENCINGDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
 }

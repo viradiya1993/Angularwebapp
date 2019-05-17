@@ -51,10 +51,10 @@ export class LitigationComponent implements OnInit {
       }
     });
   }
-  DateOfHearings(type: string, event: MatDatepickerInputEvent<Date>) {
+  DateOfHearingsClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['DATEOFHEARINGS'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  MaterialDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  MaterialDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['MATERIALDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
 

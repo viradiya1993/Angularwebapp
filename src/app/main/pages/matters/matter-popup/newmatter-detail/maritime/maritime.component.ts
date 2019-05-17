@@ -14,13 +14,13 @@ export class MaritimeComponent implements OnInit {
   @Input() matterdetailForm: FormGroup;
   ngOnInit() {
   }
-  SettlementDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  SettlementDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['SETTLEMENTDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  ExchangeDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  ExchangeDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['EXCHANGEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  IncidentDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  IncidentDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['INCIDENTDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
 

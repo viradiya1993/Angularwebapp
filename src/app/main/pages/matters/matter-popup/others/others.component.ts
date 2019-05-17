@@ -55,6 +55,7 @@ export class OthersComponent implements OnInit {
     });
   }
   ArchiveDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.matterdetailForm.controls['ARCHIVENO'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+    console.log(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+    this.matterdetailForm.controls['ARCHIVEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
 }

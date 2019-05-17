@@ -15,10 +15,10 @@ export class WillsEstateComponent implements OnInit {
   @Input() matterdetailForm: FormGroup;
   ngOnInit() {
   }
-  DateofWill(type: string, event: MatDatepickerInputEvent<Date>) {
+  DateofWillClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['DATEOFWILL'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  DateGrantRepresentation(type: string, event: MatDatepickerInputEvent<Date>) {
+  DateGrantRepresentationClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['DateGrantRepresentation'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
 

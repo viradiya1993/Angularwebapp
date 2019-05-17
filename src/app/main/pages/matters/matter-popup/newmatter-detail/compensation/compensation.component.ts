@@ -16,20 +16,21 @@ export class CompensationComponent implements OnInit {
 
   ngOnInit() {
   }
-  AccidentDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  AccidentDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['ACCIDENTDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  ExpiryDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.matterdetailForm.controls['ACCIDENTDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  ExpiryDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.matterdetailForm.controls['ExpiryDate'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  Investigation(type: string, event: MatDatepickerInputEvent<Date>) {
+  InvestigationClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['INVESTIGATIONDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  SettlementDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  SettlementDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['SETTLEMENTDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  // SettlementDate(type: string, event: MatDatepickerInputEvent<Date>) {
-  //   this.matterdetailForm.controls['SETTLEMENTDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
-  // }
+  NoticeofInjuryClick(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.matterdetailForm.controls['DATEOFNOTICEOFINJURY'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
+
 
 }

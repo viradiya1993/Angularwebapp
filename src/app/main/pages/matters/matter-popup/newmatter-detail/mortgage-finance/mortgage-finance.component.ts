@@ -15,13 +15,13 @@ export class MortgageFinanceComponent implements OnInit {
   @Input() matterdetailForm: FormGroup;
   ngOnInit() {
   }
-  CommencementDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  CommencementDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['COMMENCEMENTDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  DisachargeDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  DisachargeDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['DISCHARGEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  ExpirtyDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  ExpirtyDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['ExpirtyDate'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
 

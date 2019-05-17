@@ -35,16 +35,16 @@ export class PropertyComponent implements OnInit {
       }
     });
   }
-  ExchangeDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  ExchangeDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['EXCHANGEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  SettlementDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  SettlementDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['SETTLEMENTDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  AdjustMentDate(type: string, event: MatDatepickerInputEvent<Date>) {
+  AdjustMentDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['ADJUSTMENTDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  DatePaid(type: string, event: MatDatepickerInputEvent<Date>) {
+  DatePaidClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['DATEPAID'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
 }

@@ -15,7 +15,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline" class="pr-4" fxFlex="33">
             <mat-label>Exchange Date</mat-label>
-            <input (dateInput)="ExchangeDate('input', $event)" formControlName="EXCHANGEDATE" (dateChange)="ExchangeDate('change', $event)" matInput name="ExchangeDate" [matDatepicker]="ExchangeDate">
+            <input (dateInput)="ExchangeDateClick('input', $event)" formControlName="EXCHANGEDATETEXTPP" (dateChange)="ExchangeDateClick('change', $event)" matInput name="ExchangeDate" [matDatepicker]="ExchangeDate">
             <mat-datepicker-toggle matSuffix [for]="ExchangeDate"></mat-datepicker-toggle>
             <mat-datepicker #ExchangeDate></mat-datepicker>
         </mat-form-field>
@@ -36,7 +36,7 @@
 
         <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
             <mat-label>Settlement Date</mat-label>
-            <input (dateInput)="SettlementDate('input', $event)" formControlName="SETTLEMENTDATE" (dateChange)="SettlementDate('change', $event)" matInput name="SettlementDate" [matDatepicker]="SettlementDate">
+            <input (dateInput)="SettlementDateClick('input', $event)" formControlName="SETTLEMENTDATETEXTPP" (dateChange)="SettlementDateClick('change', $event)" matInput name="SettlementDate" [matDatepicker]="SettlementDate">
             <mat-datepicker-toggle matSuffix [for]="SettlementDate"></mat-datepicker-toggle>
             <mat-datepicker #SettlementDate></mat-datepicker>
         </mat-form-field>
@@ -48,7 +48,7 @@
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Date Paid</mat-label>
-            <input (dateInput)="DatePaid('input', $event)" formControlName="DATEPAID" (dateChange)="DatePaid('change', $event)" matInput name="DatePaid" [matDatepicker]="DatePaid">
+            <input (dateInput)="DatePaidClick('input', $event)" formControlName="DATEPAIDTEXTPP" (dateChange)="DatePaidClick('change', $event)" matInput name="DatePaid" [matDatepicker]="DatePaid">
             <mat-datepicker-toggle matSuffix [for]="DatePaid"></mat-datepicker-toggle>
             <mat-datepicker #DatePaid></mat-datepicker>
         </mat-form-field>
@@ -70,7 +70,7 @@
 
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Balance Deposit Date</mat-label>
-            <input (dateInput)="BalanceDepositDate('input', $event)" formControlName="BALANCEDEPOSITDATE" (dateChange)="BalanceDepositDate('change', $event)" matInput [matDatepicker]="BalanceDepositDate">
+            <input (dateInput)="BalanceDepositDateClick('input', $event)" formControlName="BALANCEDEPOSITDATETEXTPP" (dateChange)="BalanceDepositDateClick('change', $event)" matInput [matDatepicker]="BalanceDepositDate">
             <mat-datepicker-toggle matSuffix [for]="BalanceDepositDate"></mat-datepicker-toggle>
             <mat-datepicker #BalanceDepositDate></mat-datepicker>
         </mat-form-field>

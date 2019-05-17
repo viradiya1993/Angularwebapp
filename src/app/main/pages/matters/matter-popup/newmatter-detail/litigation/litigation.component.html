@@ -43,7 +43,7 @@
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label> Matter Title Below </mat-label>
             <input matInput formControlName="MATTERTITLEBELOW">
         </mat-form-field>
@@ -63,14 +63,14 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Date Of Hearings</mat-label>
-            <input (dateInput)="DateOfHearings('input', $event)" formControlName="DATEOFHEARINGS" (dateChange)="DateOfHearings('change', $event)" matInput [matDatepicker]="DateOfHearings">
+            <input (dateInput)="DateOfHearingsClick('input', $event)" formControlName="DATEOFHEARINGSTEXT" (dateChange)="DateOfHearingsClick('change', $event)" matInput [matDatepicker]="DateOfHearings">
             <mat-datepicker-toggle matSuffix [for]="DateOfHearings"></mat-datepicker-toggle>
             <mat-datepicker #DateOfHearings></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Material Date</mat-label>
-            <input (dateInput)="MaterialDate('input', $event)" formControlName="MATERIALDATE" (dateChange)="MaterialDate('change', $event)" matInput [matDatepicker]="MaterialDate">
+            <input (dateInput)="MaterialDateClick('input', $event)" formControlName="MATERIALDATETEXT" (dateChange)="MaterialDateClick('change', $event)" matInput [matDatepicker]="MaterialDate">
             <mat-datepicker-toggle matSuffix [for]="MaterialDate"></mat-datepicker-toggle>
             <mat-datepicker #MaterialDate></mat-datepicker>
         </mat-form-field>

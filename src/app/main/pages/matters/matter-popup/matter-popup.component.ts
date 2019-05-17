@@ -322,6 +322,7 @@ export class MatterPopupComponent implements OnInit {
     this.FormAction = this.action !== 'edit' ? 'insert' : 'update';
     this.isspiner = true;
     let details: any = {
+      MATTERGUID: this.f.MATTERGUID.value,
       MATTERCLASS: this.f.MATTERCLASS.value,
       ACTIVE: this.f.ACTIVE.value == true ? 1 : 0,
       SHORTNAME: this.f.SHORTNAME.value,

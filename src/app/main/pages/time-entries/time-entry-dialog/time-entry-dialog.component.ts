@@ -280,7 +280,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   }
   SaveClickTimeEntry() {
     this.isspiner = true;
-    let PostTimeEntryData: any = {
+    let PostData: any = {
       "FormAction": "insert",
       "ADDITIONALTEXT": this.f.ADDITIONALTEXT.value,
       "COMMENT": this.f.COMMENT.value,
@@ -299,27 +299,22 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       // "GST": "value",
       // "GSTCHARGED": "value",
       // "GSTTYPE": "value",
-      "VALIDATEONLY": false
     }
     if (this.f.ITEMTYPE.value == "Activity" || this.f.ITEMTYPE.value == "Sundry") {
-      PostTimeEntryData.FEETYPE = this.f.QUANTITYTYPE.value;
-      PostTimeEntryData.QUANTITYTYPE = '';
+      PostData.FEETYPE = this.f.QUANTITYTYPE.value;
+      PostData.QUANTITYTYPE = '';
     } else {
-      PostTimeEntryData.QUANTITYTYPE = this.f.QUANTITYTYPE.value;
+      PostData.QUANTITYTYPE = this.f.QUANTITYTYPE.value;
     }
 
     this.successMsg = 'Time entry added successfully';
+    let FormAction = this.action == 'Edit' ? 'update' : 'insert';
     if (this.action == 'Edit') {
-      // this.actiontype ='update';
-      PostTimeEntryData.FormAction = 'update';
-      PostTimeEntryData.WorkItemGuid = localStorage.getItem('edit_WORKITEMGUID');
+      PostData.WorkItemGuid = localStorage.getItem('edit_WORKITEMGUID');
       this.successMsg = 'Time entry update successfully';
     }
-    PostTimeEntryData.VALIDATEONLY = true;
-    // let PostTimeEntryData = { FormAction : this.actiontype == 'update' ? 'update' : 'insert' , ValidateOnly : true, Data : PostTimeEntryDatanew };
-    // console.log(PostTimeEntryData);
+    let PostTimeEntryData: any = { FormAction: FormAction, VALIDATEONLY: true, Data: PostData };
     this.Timersservice.SetWorkItems(PostTimeEntryData).subscribe(res => {
-    //  console.log(res);
       if (res.CODE == 200 && res.STATUS == "success") {
         this.checkValidation(res.DATA.VALIDATIONS, PostTimeEntryData);
       } else if (res.CODE == 451 && res.STATUS == "warning") {
@@ -343,7 +338,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       else if (value.VALUEVALID == 'WARNING')
         warningData.push(value.ERRORDESCRIPTION);
     });
-    
+
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {

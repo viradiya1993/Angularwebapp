@@ -10,7 +10,8 @@ export class RatesComponent implements OnInit {
 
   constructor() { }
   @Input() matterdetailForm: FormGroup;
-  ngOnInit() {
-  }
+  @Input() BILLINGMETHODVALI: any;
+  @Input() GSTTYPEVALI: any;
+  ngOnInit() { }
 
 }

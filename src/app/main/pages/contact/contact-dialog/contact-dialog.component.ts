@@ -33,7 +33,7 @@ export class ContactDialogComponent implements OnInit {
   isspiner: boolean = false;
   dateofbirth: any;
   dateofdeath: string;
-  
+
   constructor(
     public MatDialog: MatDialog,
     private TableColumnsService: TableColumnsService,
@@ -46,7 +46,7 @@ export class ContactDialogComponent implements OnInit {
     public _matDialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
-    this.action = _data.action;    
+    this.action = _data.action;
     this.dialogTitle = this.action === 'edit' ? 'Edit Contact' : 'New Contact';
   }
   common: Common[];
@@ -284,7 +284,7 @@ export class ContactDialogComponent implements OnInit {
     this.postsameasstreet = this.f.SAMEASSTREET.value == true ? "1" : "0";
     //let abc ={ FormAction: "insert"}
     let detailsdata = {
-      CONTACTGUID: this.contactguid,      
+      CONTACTGUID: this.contactguid,
       //CONTACTGUID:this.f.CONTACTGUID.value,
       CONTACTNAME: this.f.CONTACTNAME.value,
       CONTACTTYPE: this.f.CONTACTTYPE.value,
@@ -355,12 +355,9 @@ export class ContactDialogComponent implements OnInit {
       NATIONALIDENTITYNO: this.f.NATIONALIDENTITYNO.value,
       NATIONALIDENTITYCOUNTRY: this.f.NATIONALIDENTITYCOUNTRY.value,
       FAMILYCOURTLAWYERNO: this.f.FAMILYCOURTLAWYERNO.value,
-      NOTES: this.f.NOTES.value,
-      VALIDATEONLY: false
+      NOTES: this.f.NOTES.value
     }
-    let details = { FormAction : this.FormAction, ValidateOnly : true, Data : detailsdata };
-   
-   // detailsdata.VALIDATEONLY = true;
+    let details = { FormAction: this.FormAction, VALIDATEONLY: true, Data: detailsdata };
     this.addcontact.AddContactData(details).subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, details);

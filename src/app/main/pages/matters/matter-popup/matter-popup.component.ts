@@ -80,13 +80,22 @@ export class MatterPopupComponent implements OnInit {
           this.matterdetailForm.controls['RATEPERDAY'].setValue(matterData.BILLINGGROUP.RATEPERDAY);
           this.matterdetailForm.controls['FIXEDRATEEXGST'].setValue(matterData.BILLINGGROUP.FIXEDRATEEXGST);
           this.matterdetailForm.controls['FIXEDRATEINCGST'].setValue(matterData.BILLINGGROUP.FIXEDRATEINCGST);
+          //other
+          this.matterdetailForm.controls['MATTERTYPE'].setValue(matterData.LEGALDETAILS.MATTERTYPE);
+          this.matterdetailForm.controls['CLIENTSOURCE'].setValue(matterData.MARKETINGGROUP.CLIENTSOURCE);
+          this.matterdetailForm.controls['FIELDOFLAW'].setValue(matterData.MARKETINGGROUP.FIELDOFLAW);
+          this.matterdetailForm.controls['INDUSTRY'].setValue(matterData.MARKETINGGROUP.INDUSTRY);
+          this.matterdetailForm.controls['REFERRERGUIDTEXT'].setValue(matterData.MARKETINGGROUP.REFERRERGUID);
+          this.matterdetailForm.controls['ARCHIVENO'].setValue(matterData.ARCHIVENO);
+          this.matterdetailForm.controls['ARCHIVEDATETEXT'].setValue(matterData.ARCHIVEDATE);
 
-          // if (this.classtype == 'Commercial') {
-          //   // Details -> commercial
-          //   details.CLASSOFSHARES = this.f.CLASSOFSHARES.value;
-          //   details.NUMBEROFSHARES = this.f.NUMBEROFSHARES.value;
-          //   details.CONSIDERATION = this.f.CONSIDERATION.value;
-          // } else if (this.classtype == 'Compensation') {
+          // if (matterData.MATTERCLASS == 'Commercial') {
+              // Details -> commercial
+            // this.matterdetailForm.controls['CLASSOFSHARES'].setValue(matterData.ARCHIVEDATE);
+            // this.matterdetailForm.controls['NUMBEROFSHARES'].setValue(matterData.ARCHIVEDATE);
+            // this.matterdetailForm.controls['CONSIDERATION'].setValue(matterData.ARCHIVEDATE);
+  
+          // } else if (matterData.MATTERCLASS == 'Compensation') {
           //   //Details -> compensation
           //   details.ACCIDENTDATE = this.f.ACCIDENTDATE.value;
           //   details.INVESTIGATIONDATE = this.f.INVESTIGATIONDATE.value;
@@ -102,12 +111,12 @@ export class MatterPopupComponent implements OnInit {
           //   details.CLAIMNUMBER = this.f.CLAIMNUMBER.value;
           //   details.ExpirationDate = this.f.ExpirationDate.value;
           //   details.HowDidInjuryOccur = this.f.HowDidInjuryOccur.value;
-          // } else if (this.classtype == 'Compulsory Acquisition') {
+          // } else if (matterData.MATTERCLASS == 'Compulsory Acquisition') {
           //   // Details ->compulsory-acquisition
           //   details.Address = this.f.Address.value;
           //   details.CLIENTVALUATION = this.f.CLIENTVALUATION.value;
           //   details.AUTHORITYVALUATION = this.f.AUTHORITYVALUATION.value;
-          // } else if (this.classtype == 18) {
+          // } else if (matterData.MATTERCLASS == 18) {
           //   //Details -> criminal
           //   details.BRIEFSERVICEDATE = this.f.BRIEFSERVICEDATE.value;
           //   details.COMMITTALDATE = this.f.COMMITTALDATE.value;
@@ -126,7 +135,7 @@ export class MatterPopupComponent implements OnInit {
           //   details.REGISTRY = this.f.REGISTRY.value;
           //   details.MatterNo = this.f.MatterNo.value;
           //   details.CourtList = this.f.CourtList.value;
-          // } else if (this.classtype == 10) {
+          // } else if (matterData.MATTERCLASS == 10) {
           //   // Details ->family
           //   details.COHABITATIONDATE = this.f.COHABITATIONDATE.value;
           //   details.MARRIAGEDATE = this.f.MARRIAGEDATE.value;
@@ -142,7 +151,7 @@ export class MatterPopupComponent implements OnInit {
           //   details.EXPERTHEARINGDATE = this.f.EXPERTHEARINGDATE.value;
           //   details.MatterNo = this.f.MatterNo.value;
           //   details.ExpirationDate = this.f.ExpirationDate.value;
-          // } else if (this.classtype == 'Immigration') {
+          // } else if (matterData.MATTERCLASS == 'Immigration') {
           //   //Details -> immigration
           //   details.VISATYPE = this.f.VISATYPE.value;
           //   details.VALUEOFASSETS = this.f.VALUEOFASSETS.value;
@@ -151,7 +160,7 @@ export class MatterPopupComponent implements OnInit {
           //   details.LODGEMENTDATE = this.f.LODGEMENTDATE.value;
           //   details.VISAEXPIRYDATE = this.f.VISAEXPIRYDATE.value;
           //   details.DECISIONDUEDATE = this.f.DECISIONDUEDATE.value;
-          // } else if (this.classtype == 'Leasing') {
+          // } else if (matterData.MATTERCLASS == 'Leasing') {
           //   //Details -> leasing
           //   details.Address2 = this.f.Address2.value;
           //   details.LEASERECEIVED = this.f.LEASERECEIVED.value == true ? 1 : 0;
@@ -161,7 +170,7 @@ export class MatterPopupComponent implements OnInit {
           //   details.OptionDescription = this.f.OptionDescription.value;
           //   details.DISCLOSUREDATE = this.f.DISCLOSUREDATE.value;
           //   details.REGISTEREDINFILEMAN = this.f.REGISTEREDINFILEMAN.value;
-          // } else if (this.classtype == 2) {
+          // } else if (matterData.MATTERCLASS == 2) {
           //   //Details -> litigation
           //   details.CourtMatter1 = this.f.CourtMatter1.value;
           //   details.COURT = this.f.COURT.value;
@@ -179,7 +188,7 @@ export class MatterPopupComponent implements OnInit {
           //   details.CostEstimateIfWinIncGST = this.f.CostEstimateIfWinIncGST.value;
           //   details.CostEstimateIfFailExGST = this.f.CostEstimateIfFailExGST.value;
           //   details.CostEstimateIfFailIncGST = this.f.CostEstimateIfFailIncGST.value;
-          // } else if (this.classtype == 'Maritime') {
+          // } else if (matterData.MATTERCLASS == 'Maritime') {
           //   //Details -> maritime
           //   details.VESSELNAME = this.f.VESSELNAME.value;
           //   details.VESSELFLAG = this.f.VESSELFLAG.value;
@@ -191,7 +200,7 @@ export class MatterPopupComponent implements OnInit {
           //   details.INCIDENTDATE = this.f.INCIDENTDATE.value;
           //   details.EXCHANGEDATE = this.f.EXCHANGEDATE.value;
           //   details.SETTLEMENTDATE = this.f.SETTLEMENTDATE.value;
-          // } else if (this.classtype == 'Mortgage Finance') {
+          // } else if (matterData.MATTERCLASS == 'Mortgage Finance') {
           //   //Details -> mortgage-finance
           //   details.PRINCIPALADVANCED = this.f.PRINCIPALADVANCED.value;
           //   details.INTERESTRATE = this.f.INTERESTRATE.value;
@@ -201,7 +210,7 @@ export class MatterPopupComponent implements OnInit {
           //   details.COMMENCEMENTDATE = this.f.COMMENCEMENTDATE.value;
           //   details.ExpirationDate = this.f.ExpirationDate.value;
           // }
-          // else if (this.classtype == 'Property Purchase') {
+          // else if (matterData.MATTERCLASS == 'Property Purchase') {
           //   // Details ->property-purchase
           //   details.Address3 = this.f.Address3.value;
           //   details.PURCHASEPRICE = this.f.PURCHASEPRICE.value;
@@ -220,7 +229,7 @@ export class MatterPopupComponent implements OnInit {
           //   details.BUILDINGREPORTCOMPLETED = this.f.BUILDINGREPORTCOMPLETED.value == true ? 1 : 0;
           //   details.PESTREPORTCOMPLETED = this.f.PESTREPORTCOMPLETED.value == true ? 1 : 0;
           //   details.ClientStatus = this.f.ClientStatus.value;
-          // } else if (this.classtype == 'Property Sale') {
+          // } else if (matterData.MATTERCLASS== 'Property Sale') {
           //   //Details -> property-sale 
           //   details.Address4 = this.f.Address4.value;
           //   details.PURCHASEPRICE = this.f.PURCHASEPRICE.value;
@@ -230,7 +239,7 @@ export class MatterPopupComponent implements OnInit {
           //   details.DATEPAID = this.f.DATEPAID.value;
           //   details.BANKREFERENCE = this.f.BANKREFERENCE.value;
           //   details.ClientStatus = this.f.ClientStatus.value;
-          // } else if (this.classtype == 'Strata') {
+          // } else if (matterData.MATTERCLASS == 'Strata') {
           //   //Details -> strata
           //   details.STRATAPLANNUMBER = this.f.STRATAPLANNUMBER.value;
           //   details.EXPIRATIONDATE = this.f.EXPIRATIONDATE.value;
@@ -244,7 +253,7 @@ export class MatterPopupComponent implements OnInit {
           // } else if (this.classtype == 'Trademark/IP') {
           //   //Details -> trademark-ip
           //   details.FolioIdentifier = this.f.FolioIdentifier.value;
-          // } else if (this.classtype == 7) {
+          // } else if (matterData.MATTERCLASS == 7) {
           //   //Details -> wills-estate
           //   details.DATEOFWILL = this.f.DATEOFWILL.value;
           //   details.ESTATEGROSSVALUE = this.f.ESTATEGROSSVALUE.value;

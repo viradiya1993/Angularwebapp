@@ -38,7 +38,7 @@
                             <app-client [matterdetailForm]="matterdetailForm"></app-client>
                         </mat-tab>
                         <mat-tab label="Rates">
-                            <app-rates [matterdetailForm]="matterdetailForm"></app-rates>
+                            <app-rates [matterdetailForm]="matterdetailForm" [GSTTYPEVALI]="GSTTYPEVAL" [BILLINGMETHODVALI]="BILLINGMETHODVAL"></app-rates>
                         </mat-tab>
                         <mat-tab label="Details">
                             <app-commercial *ngIf="classtype=='Commercial'" [matterdetailForm]="matterdetailForm"></app-commercial>

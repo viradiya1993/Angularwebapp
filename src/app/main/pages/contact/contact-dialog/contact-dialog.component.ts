@@ -283,9 +283,8 @@ export class ContactDialogComponent implements OnInit {
     this.postbirthdayreminder = this.f.BIRTHDAYREMINDER.value == true ? "1" : "0";
     this.postsameasstreet = this.f.SAMEASSTREET.value == true ? "1" : "0";
     //let abc ={ FormAction: "insert"}
-    let details = {
-      CONTACTGUID: this.contactguid,
-      FormAction: this.FormAction,
+    let detailsdata = {
+      CONTACTGUID: this.contactguid,      
       //CONTACTGUID:this.f.CONTACTGUID.value,
       CONTACTNAME: this.f.CONTACTNAME.value,
       CONTACTTYPE: this.f.CONTACTTYPE.value,
@@ -359,7 +358,9 @@ export class ContactDialogComponent implements OnInit {
       NOTES: this.f.NOTES.value,
       VALIDATEONLY: false
     }
-    details.VALIDATEONLY = true;
+    let details = { FormAction : this.FormAction, ValidateOnly : true, Data : detailsdata };
+   
+   // detailsdata.VALIDATEONLY = true;
     this.addcontact.AddContactData(details).subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, details);

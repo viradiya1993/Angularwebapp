@@ -58,6 +58,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     // Private
     private _unsubscribeAll: Subject<any>;
+    activedocument: any;
 
 
     constructor(
@@ -566,6 +567,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 8;
         } else if (x[1] == "receive-money") {
             this.isTabShow = 9;
+        } else if (x[1] == "create-document") {
+            this.activedocument = x[1];
+            this.isTabShow = 10;
         } else {
             this.isTabShow = 1;
         }

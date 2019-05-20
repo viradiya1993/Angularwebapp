@@ -12,7 +12,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example">
                         <mat-label>Date Range</mat-label>
-                        <input matInput placeholder="Choose a date" [satDatepicker]="picker2" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)">
+                        <input matInput [satDatepicker]="picker2" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)">
                         <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
                         <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
                     </mat-form-field>
@@ -41,14 +41,14 @@
                         <mat-icon class="secondary-text">more_vert</mat-icon>
                      </button>
                 </div> -->
-                <div id="matter_invoice" class="page-layout simple left-sidebar inner-sidebar">
+                <div id="Invoice" class="page-layout simple left-sidebar inner-sidebar">
                     <div fxLayoutAlign="center" class="content">
                         <div class="center more_tbl_clmn" fusePerfectScrollbar>
                             <div class="content">
                                 <div class="btn top_right_action_billing_position">
                                     <button mat-icon-button (click)="openDialog()" aria-label="More">
-                                            <mat-icon class="secondary-text">more_vert</mat-icon>
-                                        </button>
+                                        <mat-icon class="secondary-text">more_vert</mat-icon>
+                                    </button>
                                 </div>
                                 <div class="content">
                                     <div class="example-loading-shade" *ngIf="isLoadingResults">
@@ -196,9 +196,9 @@
                                                 matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                             </tr>
                                         </table>
-                                    </div>
-                                </div>
+                                    </div>                               
                                 <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+                            </div>
                             </div>
                         </div>
                     </div>

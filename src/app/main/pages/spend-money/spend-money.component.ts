@@ -43,11 +43,11 @@ export class SpendMoneyComponent implements OnInit {
     this.getTableFilter();
     this.loadData();
   }
-  choosedDate(a, s) {
+  DateRange(a, s) {
 
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('time and billing', 'matter invoices').subscribe(response => {
+    this.TableColumnsService.getTableFilter('time and billing', '').subscribe(response => {
       if (response.CODE === 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'invoicesColumns');
         this.displayedColumns = data.showcol;
@@ -87,7 +87,7 @@ export class SpendMoneyComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'time and billing', 'list': 'matter invoices' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'time and billing', 'list': '' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click

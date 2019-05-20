@@ -46,6 +46,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   matterTimerData: any;
   QuantityTypeLabel: any = 'Quantity Type';
   currentTimeMatter: any = '';
+  actiontype: string;
 
   constructor(
     public dialogRef: MatDialogRef<TimeEntryDialogComponent>,
@@ -309,12 +310,16 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
 
     this.successMsg = 'Time entry added successfully';
     if (this.action == 'Edit') {
+      // this.actiontype ='update';
       PostTimeEntryData.FormAction = 'update';
       PostTimeEntryData.WorkItemGuid = localStorage.getItem('edit_WORKITEMGUID');
       this.successMsg = 'Time entry update successfully';
     }
     PostTimeEntryData.VALIDATEONLY = true;
+    // let PostTimeEntryData = { FormAction : this.actiontype == 'update' ? 'update' : 'insert' , ValidateOnly : true, Data : PostTimeEntryDatanew };
+    // console.log(PostTimeEntryData);
     this.Timersservice.SetWorkItems(PostTimeEntryData).subscribe(res => {
+    //  console.log(res);
       if (res.CODE == 200 && res.STATUS == "success") {
         this.checkValidation(res.DATA.VALIDATIONS, PostTimeEntryData);
       } else if (res.CODE == 451 && res.STATUS == "warning") {
@@ -338,6 +343,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       else if (value.VALUEVALID == 'WARNING')
         warningData.push(value.ERRORDESCRIPTION);
     });
+    
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {

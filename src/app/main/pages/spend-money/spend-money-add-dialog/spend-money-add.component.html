@@ -13,7 +13,7 @@
               <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                   <mat-form-field appearance="outline" class="example" fxFlex="{{size}}" class="pr-4">
                     <mat-label>Date Incurred</mat-label>
-                    <input matInput [matDatepicker]="DateIncurred" formControlName="DateIncurred" >
+                    <input matInput [matDatepicker]="DateIncurred" formControlName="DateIncurred">
                     <mat-datepicker-toggle matSuffix  [for]="DateIncurred"></mat-datepicker-toggle>
                     <mat-datepicker #DateIncurred></mat-datepicker>           
                   </mat-form-field>
@@ -218,8 +218,8 @@
           <button mat-raised-button color="accent" *ngIf="action === 'edit'" (click)="Editspendmoney()">Edit</button>  
           <button mat-raised-button color="accent" *ngIf="action === 'edit'" (click)="deletespendmoney()">Delete</button>
       </div>
-      <button mat-raised-button color="accent" (click)="ondialogSaveClick()" [disabled]="isspiner" *ngIf="action !== 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Add</button>
-      <button mat-raised-button color="accent" (click)="ondialogSaveClick()" [disabled]="isspiner" *ngIf="action === 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Update</button>
+      <button mat-raised-button color="accent" [disabled]="isspiner" *ngIf="action !== 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Add</button>
+      <button mat-raised-button color="accent" [disabled]="isspiner" *ngIf="action === 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Update</button>
       <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don`t Save</button>
     </mat-dialog-actions>
   </div>

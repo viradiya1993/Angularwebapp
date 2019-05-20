@@ -4,6 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+
 import {
     MatButtonModule, MatPaginatorModule, MatDividerModule, MatDialogModule, MatCheckboxModule, MatTabsModule,
     MatSelectModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule,
@@ -105,7 +106,8 @@ const appRoutes: Routes = [
         PagesModule,
 
         ToastrModule.forRoot(), // ToastrModule added
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+       
     ],
     exports: [
         SortingDialogComponent

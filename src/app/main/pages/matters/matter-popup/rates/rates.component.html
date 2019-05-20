@@ -1,7 +1,7 @@
 <div class=" one " fxLayout="column" [formGroup]="matterdetailForm">
     <label id="example-radio-group-label">Billing Method</label>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 40px">
-        <mat-radio-group aria-label="Billing Method" formControlName="GSTTYPE" class="example" fxFlex="100" class="pr-4">
+        <mat-radio-group aria-label="Billing Method" formControlName="GSTTYPE" [(ngModel)]="GSTTYPEVAL" class="example" fxFlex="100" class="pr-4">
             <mat-radio-button value="Gst Exclusive">GST Exclusive</mat-radio-button>
             <mat-radio-button value="Gst Inclusive">GST Inclusive </mat-radio-button>
             <mat-radio-button value="Gst Free">GST Free</mat-radio-button>
@@ -17,7 +17,7 @@
         </div>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 40px">
-        <mat-radio-group class="example" fxFlex="100" class="pr-4" formControlName="BILLINGMETHOD">
+        <mat-radio-group fxFlex="100" class="pr-4" [(ngModel)]="BILLINGMETHODVAL" formControlName="BILLINGMETHOD">
             <mat-radio-button value="Time Costed">Time Costed</mat-radio-button>
             <mat-radio-button value="Fixed">Fixed </mat-radio-button>
             <mat-radio-button value="Pro Bono">Pro Bono</mat-radio-button>

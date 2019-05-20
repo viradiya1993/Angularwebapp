@@ -152,7 +152,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             $('.mat-tab-header').css({ 'width': wph - nvh - 160 + 'px' });
         }
 
-        $ (window).resize(function(){
+        $(window).resize(function () {
 
             if ($(window).width() >= 992 && $(window).width() < 1280) {
 
@@ -404,14 +404,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     // Edit matter Pop-up
     EditNewmatterpopup() {
         const dialogConfig = new MatDialogConfig();
+        let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
         const dialogRef = this.dialog.open(MatterPopupComponent, {
             width: '100%',
             disableClose: true,
-            data: {
-                action: 'edit'
-            }
+            data: { action: 'edit', 'matterGuid': mattersData.MATTERGUID }
         });
-
         dialogRef.afterClosed().subscribe(result => { });
     }
     // Delete matter Pop-up

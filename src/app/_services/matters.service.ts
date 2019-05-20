@@ -16,6 +16,7 @@ export class MattersService {
   }
   getMattersDetail(postData) {
     return this.httpClient.post<any>(environment.APIEndpoint + 'GetMatter', postData);
+    // return this.httpClient.post<any>(environment.APIEndpoint + 'GetMatter?GetAllFields', postData);
   }
   getMattersContact(postData) {
     return this.httpClient.post<any>(environment.APIEndpoint + 'GetMatterContact', postData);

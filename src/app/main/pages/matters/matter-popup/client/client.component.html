@@ -17,13 +17,12 @@
         <mat-card>
             <div class="customer mb-32">
                 <table class="simple">
-                    <tr *ngFor="let item of ELEMENT_DATA">
-                        <td>{{item.position}}</td>
-                        <td>{{item.name}}</td>
-                        <td>{{item.weight}}</td>
-                        <td>{{item.symbol}}</td>
+                    <tr *ngFor="let item of Correspond">
+                        <td>{{item.type}}</td>
+                        <td>{{item.Text}}</td>
                         <td>
-                            <mat-icon (click)="RemoveElement()">close</mat-icon>
+                            <mat-icon (click)="editElement()" class="pr-4">edit</mat-icon>
+                            <mat-icon (click)="deleteElement()" class="pr-4">delete</mat-icon>
                         </td>
                     </tr>
                     <br>

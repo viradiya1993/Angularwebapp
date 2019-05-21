@@ -41,7 +41,7 @@ export class OthersComponent implements OnInit {
         this.Industry = responses.DATA.LOOKUPS;
       }
     });
-    this._mattersService.getMattersClasstype({ 'LookupType': 'Filed Of Law' }).subscribe(responses => {
+    this._mattersService.getMattersClasstype({ 'LookupType': 'Field Of Law' }).subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.FiledOfLaw = responses.DATA.LOOKUPS;
       }
@@ -50,12 +50,13 @@ export class OthersComponent implements OnInit {
   ContactMatter() {
     const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
-      this.matterdetailForm.controls['REFERRERGUID'].setValue(result.CONTACTGUID);
-      this.matterdetailForm.controls['REFERRERGUIDTEXT'].setValue(result.CONTACTNAME + ' - ' + result.SUBURB);
+      if (result) {
+        this.matterdetailForm.controls['REFERRERGUID'].setValue(result.CONTACTGUID);
+        this.matterdetailForm.controls['REFERRERGUIDTEXT'].setValue(result.CONTACTNAME + ' - ' + result.SUBURB);
+      }
     });
   }
   ArchiveDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    console.log(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
     this.matterdetailForm.controls['ARCHIVEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
 }

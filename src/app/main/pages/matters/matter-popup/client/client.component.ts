@@ -10,7 +10,7 @@ import { CorrespondDailogComponent } from '../../correspond-dailog/correspond-da
   styleUrls: ['./client.component.scss']
 })
 export class ClientComponent implements OnInit {
-  ELEMENT_DATA = [];
+  Correspond = [];
   name: string;
   position: number;
   weight: number;
@@ -18,20 +18,15 @@ export class ClientComponent implements OnInit {
   isspiner: boolean;
 
 
-  constructor(
-    public MatDialog: MatDialog,
-  ) { }
+  constructor(public MatDialog: MatDialog, ) { }
   @Input() matterdetailForm: FormGroup;
 
-
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
   Addcorres_party() {
     const dialogRef = this.MatDialog.open(CorrespondDailogComponent, { width: '100%', disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.ELEMENT_DATA.push({ position: 1, name: 'Client', weight: 1.0079, symbol: 'H' });
+        this.Correspond.push(result);
       }
     });
   }
@@ -43,6 +38,12 @@ export class ClientComponent implements OnInit {
         this.matterdetailForm.controls['Clientmattertext'].setValue(result.CONTACTNAME + ' - ' + result.SUBURB);
       }
     });
+  }
+  editElement() {
+    alert('editElement');
+  }
+  deleteElement() {
+    alert('deleteElement');
   }
 
 }

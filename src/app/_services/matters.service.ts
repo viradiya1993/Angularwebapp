@@ -24,6 +24,9 @@ export class MattersService {
   AddNewMatter(postDatas) {
     return this.httpClient.post<any>(environment.APIEndpoint + 'SetMatter', postDatas);
   }
+  AddMatterContact(postDatas) {
+    return this.httpClient.post<any>(environment.APIEndpoint + 'SetMatterContact', postDatas);
+  }
   getMattersClasstype(getdata) {
     return this.httpClient.post<any>(environment.APIEndpoint + 'GetLookups', getdata);
   }

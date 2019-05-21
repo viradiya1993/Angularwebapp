@@ -13,21 +13,42 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field class="example" fxFlex="33" class="pr-4" appearance="outline">
                         <mat-label>Contact Type</mat-label>
-                        <mat-select #value name="selected" formControlName="ContactType">
-                            <mat-option value="s">ss</mat-option>
+                        <mat-select #value name="selected" formControlName="TYPE">
+                            <mat-option value="General">General</mat-option>
+                            <mat-option value="Plaintiff">Plaintiff</mat-option>
+                            <mat-option value="Defendant">Defendant</mat-option>
+                            <mat-option value="Claimant">Claimant</mat-option>
+                            <mat-option value="Cross Defendant">Cross Defendant</mat-option>
+                            <mat-option value="Applicant">Applicant</mat-option>
+                            <mat-option value="Respondant">Respondant</mat-option>
+                            <mat-option value="Cross Applicant">Cross Applicant</mat-option>
+                            <mat-option value="Cross Respondant">Cross Respondant</mat-option>
+                            <mat-option value="Appelant">Appelant</mat-option>
+                            <mat-option value="Cross Appelant">Cross Appelant</mat-option>
+                            <mat-option value="Executor">Executor</mat-option>
+                            <mat-option value="Beneficiary">Beneficiary</mat-option>
+                            <mat-option value="Related People">Related People</mat-option>
+                            <mat-option value="Purchaser">Purchaser</mat-option>
+                            <mat-option value="Purchaser Solicitor">Purchaser Solicitor</mat-option>
+                            <mat-option value="Vendor">Vendor</mat-option>
+                            <mat-option value="Vendor Solicitor">Vendor Solicitor</mat-option>
+                            <mat-option value="Bank">Bank</mat-option>
+                            <mat-option value="Broker">Broker</mat-option>
+                            <mat-option value="Agent">Agent</mat-option>
+                            <mat-option value="Strata Manager">Strata Manager</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
                         <mat-label>Contact Name</mat-label>
-                        <input matInput readonly formControlName="ContactName">
-                        <mat-icon matSuffix (click)="selectMatter();">
+                        <input matInput readonly formControlName="PERSONGUIDTEXT">
+                        <mat-icon matSuffix (click)="selectContact();">
                             <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                         </mat-icon>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
                         <mat-label>Solicitor Name</mat-label>
-                        <input matInput readonly formControlName="SolicitorName">
-                        <mat-icon matSuffix (click)="selectFeeEarner();">
+                        <input matInput readonly formControlName="SOLICITORGUIDTEXT">
+                        <mat-icon matSuffix (click)="selectSolicitor();">
                             <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                         </mat-icon>
                     </mat-form-field>
@@ -35,14 +56,14 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" class="example" fxFlex="99" class="pr-4">
                         <mat-label>Reference</mat-label>
-                        <input matInput formControlName="Reference">
+                        <input matInput formControlName="REFERENCE">
                     </mat-form-field>
                 </div>
             </form>
         </div>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
-        <button mat-raised-button color="accent" [disabled]="isspiner" [mat-dialog-close]="true"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
+        <button mat-raised-button color="accent" [disabled]="isspiner" (click)="saveCorrespomndDetail();"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don`t Save</button>
     </mat-dialog-actions>
 </div>

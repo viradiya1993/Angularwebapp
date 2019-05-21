@@ -26,6 +26,7 @@ export class ContactSelectDialogComponent implements OnInit {
   SelectcontactForm: FormGroup;
   pageSize: any;
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+  filterVals: any = { 'Active': '', 'FirstLetter': '', 'ContactType': '' };
 
 
   constructor(
@@ -35,17 +36,31 @@ export class ContactSelectDialogComponent implements OnInit {
     public _matDialog: MatDialog,
     public _getContact: ContactService,
   ) {
-    this.SelectcontactForm = this.fb.group({ Show: [''], Clientmatter: [''], ActiveContacts: [''], Filter: [''], });
+    this.SelectcontactForm = this.fb.group({ ContactType: [''], startsWith: [''], ActiveContacts: [''], Filter: [''], });
   }
   ngOnInit() {
-    // All data fetching.not apply filter.
-    let d = {};
+    this.loadContectData(this.filterVals);
+  }
+  Contactvalue(value) {
+    this.filterVals.FirstLetter = value != -1 ? value : '';
+    this.loadContectData(this.filterVals);
+  }
+  ActiveContactsChange() {
+    this.filterVals.Active = this.f.ActiveContacts.value ? 'Yes' : 'No';
+    this.loadContectData(this.filterVals);
+  }
+  ContactTypeChange(value) {
+    this.filterVals.ContactType = value;
+    this.loadContectData(this.filterVals);
+  }
+  loadContectData(postData) {
     this.isLoadingResults = true;
-    this._getContact.ContactData(d).subscribe(response => {
+    this._getContact.ContactData(postData).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Contactdata = new MatTableDataSource(response.DATA.CONTACTS);
         this.Contactdata.paginator = this.paginator;
         if (response.DATA.CONTACTS[0]) {
+          this.currentMatterData = response.DATA.CONTACTS[0];
           localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);
           this.highlightedRows = response.DATA.CONTACTS[0].CONTACTGUID;
         }

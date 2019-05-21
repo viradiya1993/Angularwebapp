@@ -29,15 +29,14 @@ export class CorrespondDailogComponent implements OnInit {
       PERSONGUIDTEXT: [''],
       SOLICITORGUID: [''],
       SOLICITORGUIDTEXT: [''],
-      REFERENCE: ['']
+      REFERENCE: [''],
+      MATTERGUID: [''],
       //       MATTERCONTACTGUID - STRING(16)
-      // MATTERGUID - STRING(16)
       // PERSONGUID - STRING(16)
       // SOLICITORGUID - STRING(16)
       // RELATEDPERSONGUID - STRING(16)
       // ORDER - NUMBER
       // TYPE - LOOKUP -> ContactRole
-      // REFERENCE - STRING(50)
       // RELATIONSHIP - STRING(50)
       // SHAREOFESTATE - NUMBER
     });
@@ -50,6 +49,7 @@ export class CorrespondDailogComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log(result);
+        this.correspondForm.controls['MATTERGUID'].setValue(result.MATTERGUID);
         this.correspondForm.controls['PERSONGUID'].setValue(result.CONTACTGUID);
         this.correspondForm.controls['PERSONGUIDTEXT'].setValue(result.CONTACTNAME);
       }
@@ -72,6 +72,7 @@ export class CorrespondDailogComponent implements OnInit {
       SOLICITORGUID: this.f.SOLICITORGUID.value,
       REFERENCE: this.f.REFERENCE.value,
       PERSONGUID: this.f.PERSONGUID.value,
+      MATTERGUID: this.f.MATTERGUID.value,
     }
     let matterPostData: any = { FormAction: 'insert', VALIDATEONLY: true, Data: details };
     this._mattersService.AddMatterContact(matterPostData).subscribe(response => {
@@ -79,7 +80,9 @@ export class CorrespondDailogComponent implements OnInit {
       let detailData = { 'type': this.f.TYPE.value, 'Text': this.f.PERSONGUIDTEXT.value + ' - ' + this.f.SOLICITORGUIDTEXT.value };
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, matterPostData, detailData);
-      } else if (response.CODE == 451 && response.STATUS == "warning") {
+      } else if (response.CODE == 451 || response.STATUS == "warning") {
+        this.checkValidation(response.DATA.VALIDATIONS, matterPostData, detailData);
+      } else if (response.CODE == 450 || response.STATUS == "error") {
         this.checkValidation(response.DATA.VALIDATIONS, matterPostData, detailData);
       } else {
         if (response.CODE == 402 && response.STATUS == "error" && response.MESSAGE == "Not logged in")
@@ -95,21 +98,17 @@ export class CorrespondDailogComponent implements OnInit {
     let errorData: any = [];
     let warningData: any = [];
     bodyData.forEach(function (value) {
-      if (value.VALUEVALID == 'NO')
+      if (value.VALUEVALID == 'NO' || value.VALUEVALID == 'No')
         errorData.push(value.ERRORDESCRIPTION);
       else if (value.VALUEVALID == 'WARNING')
         warningData.push(value.ERRORDESCRIPTION);
     });
-    console.log(errorData);
-    console.log(warningData);
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
-    if (Object.keys(warningData).length != 0) {
+    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
       this.isspiner = true;
       this.saveCorData(details, detailData);
     }
-    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
-      this.saveCorData(details, detailData);
     this.isspiner = false;
   }
   saveCorData(matterPostData, detailData) {

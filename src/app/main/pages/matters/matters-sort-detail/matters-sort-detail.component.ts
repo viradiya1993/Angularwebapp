@@ -36,14 +36,12 @@ export class MattersSortDetailComponent implements OnInit {
   }
   AddNewmatterpopup() {
     const dialogConfig = new MatDialogConfig();
+    let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
     const dialogRef = this.dialog.open(MatterPopupComponent, {
       width: '100%',
       disableClose: true,
-      data: {
-        action: 'new'
-      }
+      data: { action: 'edit', 'matterGuid': mattersData.MATTERGUID }
     });
-
     dialogRef.afterClosed().subscribe(result => { });
   }
 

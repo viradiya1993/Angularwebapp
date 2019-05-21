@@ -120,8 +120,6 @@ export class AppComponent implements OnInit, OnDestroy {
     //device detail
     epicFunction() {
         this.deviceInfo = this.deviceService.getDeviceInfo();
-        console.log(this.deviceInfo);
-        console.log(this.deviceService.isMobile());
         const isMobile = this.deviceService.isMobile();
         if (isMobile) {
             const dialogRef = this.dialog.open(LicenceAgreementComponent, {

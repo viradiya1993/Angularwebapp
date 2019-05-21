@@ -422,9 +422,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
-                return false;
-                let MatterGUID = localStorage.getItem('');
-                let postData = { FormAction: "delete", MatterGUID: MatterGUID }
+                let MatterData: any = JSON.parse(localStorage.getItem('set_active_matters'));
+                let postData = { FormAction: "delete", data: { MATTERGUID: MatterData.MATTERGUID } }
                 this._mattersService.AddNewMatter(postData).subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {
                         $('#refreshTimeEntryTab').click();
@@ -448,7 +447,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => { });
     }
-    // Edit matter Pop-up
+    // Edit spendmoney Pop-up
     Editspendmoneypopup() {
         const dialogConfig = new MatDialogConfig();
         const dialogRef = this.dialog.open(SpendMoneyAddComponent, {
@@ -493,7 +492,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
                 let getContactGuId = localStorage.getItem('contactGuid');
-                let postData = { FormAction: "delete", CONTACTGUID: getContactGuId }
+                let postData = { FormAction: "delete", data: { CONTACTGUID: getContactGuId } }
                 this._getContact.AddContactData(postData).subscribe(res => {
                     if (res.STATUS == "success") {
                         $('#refreshContactTab').click();
@@ -515,7 +514,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
                 let WORKITEMGUID = localStorage.getItem('edit_WORKITEMGUID');
-                let postData = { FormAction: "delete", WorkItemGuid: WORKITEMGUID }
+                let postData = { FormAction: "delete", data: { WorkItemGuid: WORKITEMGUID } }
                 this.TimersServiceI.SetWorkItems(postData).subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {
                         $('#refreshTimeEntryTab').click();

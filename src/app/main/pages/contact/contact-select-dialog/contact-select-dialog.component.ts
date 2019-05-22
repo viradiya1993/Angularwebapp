@@ -45,7 +45,7 @@ export class ContactSelectDialogComponent implements OnInit {
     this.filterVals.FirstLetter = value != -1 ? value : '';
     this.loadContectData(this.filterVals);
   }
-  ActiveContactsChange() {
+  ActiveContactsChange(data) {
     this.filterVals.Active = this.f.ActiveContacts.value == 'all' ? "" : this.f.ActiveContacts.value;
     this.loadContectData(this.filterVals);
   }

@@ -17,7 +17,8 @@
                             <mat-form-field class="example" fxFlex="30" class="pr-4" appearance="outline">
                                 <mat-label>Contact Type</mat-label>
                                 <mat-select #value name="selected" (selectionChange)="ContactTypeChange($event.value)" formControlName="ContactType">
-                                    <mat-option value="Person">Person</mat-option>
+                                    <mat-option value="all">All Contacts</mat-option>
+                                    <mat-option value="Person">People</mat-option>
                                     <mat-option value="Company">Company</mat-option>
                                     <mat-option value="Party">Party</mat-option>
                                     <mat-option value="Payee">Payee</mat-option>
@@ -28,7 +29,7 @@
                             <mat-form-field class="example" fxFlex="20" class="pr-4" appearance="outline">
                                 <mat-label>Starts With</mat-label>
                                 <mat-select (selectionChange)="Contactvalue($event.value)" formControlName="startsWith">
-                                    <mat-option value="-1">All</mat-option>
+                                    <mat-option value="-1">All Contacts</mat-option>
                                     <mat-option value="a">A</mat-option>
                                     <mat-option value="b">B</mat-option>
                                     <mat-option value="c">C</mat-option>
@@ -57,11 +58,16 @@
                                     <mat-option value="z">Z</mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <mat-checkbox class="check_box" formControlName="ActiveContacts" (change)="ActiveContactsChange()">Active Contacts </mat-checkbox>
+                            <mat-form-field class="example pr-4" appearance="outline">
+                                <mat-select (selectionChange)="ActiveContactsChange($event.value)" formControlName="ActiveContacts">
+                                    <mat-option value="all">All Contacts</mat-option>
+                                    <mat-option value="1">Active Contacts</mat-option>
+                                    <mat-option value="0">Inactive Contacts</mat-option>
+                                </mat-select>
+                            </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
                                 <mat-label>Filter</mat-label>
-                                <input name="Filter" matInput formControlName="Filter">
-                                <mat-icon matSuffix class="secondary-text"></mat-icon>
+                                <input matInput formControlName="SEARCH" (keydown)="onSearch($event)">
                             </mat-form-field>
                         </div>
                     </form>
@@ -105,4 +111,4 @@
         <button mat-raised-button [mat-dialog-close]="currentMatterData" color="accent">Select</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
     </mat-dialog-actions>
-</div>
+</div>>

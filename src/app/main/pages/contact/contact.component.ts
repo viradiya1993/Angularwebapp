@@ -37,6 +37,8 @@ export class ContactComponent implements OnInit {
     this.contactFilter = this._formBuilder.group({
       Filter1: [''],
       Filter2: [''],
+      ContactType: [''],
+      search: [''],
     });
   }
   Contactdata;
@@ -56,10 +58,11 @@ export class ContactComponent implements OnInit {
       } else {
         this.contactFilter.controls['Filter2'].setValue(filterVals.FirstLetter);
       }
+      this.contactFilter.controls['ContactType'].setValue(filterVals.ContactType);
     } else {
       this.contactFilter.controls['Filter1'].setValue('1');
       this.contactFilter.controls['Filter2'].setValue('a');
-      filterVals = { 'active': '1', 'FirstLetter': 'a' };
+      filterVals = { 'active': '1', 'FirstLetter': 'a', 'SEARCH': '', 'ContactType': '' };
       localStorage.setItem('contact_Filter', JSON.stringify(filterVals));
     }
     this.LoadData(filterVals);
@@ -138,7 +141,7 @@ export class ContactComponent implements OnInit {
   //Filter:
   ContactChange(active) {
     if (active != 'all') {
-      let filterVal = { 'active': active, 'FirstLetter': '' };
+      let filterVal: any = { 'active': active, 'FirstLetter': '' };
       if (!localStorage.getItem('contact_Filter')) {
         localStorage.setItem('contact_Filter', JSON.stringify(filterVal));
       } else {
@@ -146,18 +149,20 @@ export class ContactComponent implements OnInit {
         filterVal.active = active;
         localStorage.setItem('contact_Filter', JSON.stringify(filterVal));
       }
+      filterVal.SEARCH = this.f.search.value;
       this.LoadData(filterVal);
     } else {
-      let filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
+      let filterVals: any = JSON.parse(localStorage.getItem('contact_Filter'));
       let filterVal = { 'active': '', 'FirstLetter': filterVals.FirstLetter };
-      localStorage.setItem('contact_Filter', JSON.stringify(filterVal))
+      localStorage.setItem('contact_Filter', JSON.stringify(filterVal));
+      filterVals.SEARCH = this.f.search.value;
       this.LoadData(filterVal);
     }
   }
 
   Contactvalue(FirstLetter) {
     if (FirstLetter != -1) {
-      let filterVals = { 'active': '', 'FirstLetter': FirstLetter };
+      let filterVals: any = { 'active': '', 'FirstLetter': FirstLetter };
       if (!localStorage.getItem('contact_Filter')) {
         localStorage.setItem('contact_Filter', JSON.stringify(filterVals));
       } else {
@@ -165,13 +170,35 @@ export class ContactComponent implements OnInit {
         filterVals.FirstLetter = FirstLetter;
         localStorage.setItem('contact_Filter', JSON.stringify(filterVals));
       }
+      filterVals.SEARCH = this.f.search.value;
       this.LoadData(filterVals);
     } else {
-      let filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
+      let filterVals: any = JSON.parse(localStorage.getItem('contact_Filter'));
       let filterVal = { 'active': filterVals.active, 'FirstLetter': '' };
-      localStorage.setItem('contact_Filter', JSON.stringify(filterVal))
+      localStorage.setItem('contact_Filter', JSON.stringify(filterVal));
+      filterVals.SEARCH = this.f.search.value;
       this.LoadData(filterVal);
     }
   }
-
+  onSearch(searchFilter: any) {
+    console.log(searchFilter);
+    if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
+      let filterVal: any = JSON.parse(localStorage.getItem('contact_Filter'));
+      filterVal.SEARCH = this.f.search.value;
+      this.LoadData(filterVal);
+    }
+  }
+  ContactTypeChange(value) {
+    let filterVal: any = JSON.parse(localStorage.getItem('contact_Filter'));
+    if (!filterVal) {
+      filterVal = { 'active': '', 'FirstLetter': '', 'SEARCH': this.f.search.value, 'ContactType': value == "all" ? "" : value };
+    } else {
+      filterVal.ContactType = value == "all" ? "" : value;
+      filterVal.SEARCH = this.f.search.value;
+    }
+    localStorage.setItem('contact_Filter', JSON.stringify(filterVal));
+    this.LoadData(filterVal);
+  }
 }
+
+

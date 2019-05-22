@@ -213,6 +213,18 @@ mat-dialog-actions.popup_ftr.mat-dialog-actions {
     margin-top: 15px !important;
     padding: 12px 24px !important;
 }
+.configuer_field_main .popup_body .form-errors-model {
+    width: 58%;
+}
+.configuer_field_main .remove_left_right_padding {
+    width: 42%;
+}
+.configuer_field_main .example-container {
+    width: 100%;
+}
+.configuer_field_main .example-list {
+    width: 100% !important;
+}
 @media screen and (max-width: 800px) {
     .configuer_field_main {
         width: 95%;

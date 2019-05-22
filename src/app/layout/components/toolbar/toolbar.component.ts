@@ -426,7 +426,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 let postData = { FormAction: "delete", data: { MATTERGUID: MatterData.MATTERGUID } }
                 this._mattersService.AddNewMatter(postData).subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {
-                        $('#refreshTimeEntryTab').click();
+                        $('#refreshMatterTab').click();
                         this.toastr.success('Delete successfully');
                     }
                 });

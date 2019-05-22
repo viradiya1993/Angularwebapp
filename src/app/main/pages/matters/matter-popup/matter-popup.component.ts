@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-matter-popup',
@@ -23,6 +24,7 @@ export class MatterPopupComponent implements OnInit {
   classtype: any;
   BILLINGMETHODVAL: any = '';
   GSTTYPEVAL: any = '';
+  userType: any = '';
 
   constructor(
     private _mattersService: MattersService,
@@ -42,6 +44,8 @@ export class MatterPopupComponent implements OnInit {
   matterdetailForm: FormGroup;
   ngOnInit() {
     this.isLoadingResults = true;
+    let UserData = JSON.parse(localStorage.getItem('currentUser')).ProductType;
+    this.userType = UserData == 'Barrister' ? 0 : 1;
     this.matterFormBuild();
     this._mattersService.getMattersClasstype({ 'LookupType': 'Matter Class' }).subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
@@ -54,24 +58,12 @@ export class MatterPopupComponent implements OnInit {
       this._mattersService.getMattersDetail({ 'MatterGuid': this._data.matterGuid, 'GETALLFIELDS': true }).subscribe(response => {
         if (response.CODE === 200 && response.STATUS === 'success') {
           let matterData = response.DATA.MATTERS[0];
-          console.log(matterData);
           this.classtype = matterData.MATTERCLASS;
           this.matterdetailForm.controls['MATTERGUID'].setValue(matterData.MATTERGUID);
           this.matterdetailForm.controls['ACTIVE'].setValue(matterData.ACTIVE_ == 1 ? true : false);
           this.matterdetailForm.controls['MATTERCLASS'].setValue(matterData.MATTERCLASS);
           this.matterdetailForm.controls['SHORTNAME'].setValue(matterData.SHORTNAME);
           this.matterdetailForm.controls['MATTER'].setValue(matterData.MATTER);
-          // General
-          this.matterdetailForm.controls['REFERENCE'].setValue(matterData.REFERENCE);
-          this.matterdetailForm.controls['OTHERREFERENCE'].setValue(matterData.OTHERREFERENCE);
-          this.matterdetailForm.controls['COMMENCEMENTDATETEXT'].setValue(matterData.COMMENCEMENTDATE);
-          this.matterdetailForm.controls['FeeAgreementDateText'].setValue(matterData.FeeAgreementDate);
-          this.matterdetailForm.controls['COMPLETEDDATETEXT'].setValue(matterData.COMPLETEDDATE);
-          this.matterdetailForm.controls['OWNERGUID'].setValue(matterData.OWNERGUID);
-          this.matterdetailForm.controls['PRIMARYFEEEARNERGUID'].setValue(matterData.PRIMARYFEEEARNERGUID);
-          this.matterdetailForm.controls['EstimateFromTotalExGST'].setValue(matterData.EstimateFromTotalExGST);
-          this.matterdetailForm.controls['EstimateFromTotalIncGST'].setValue(matterData.EstimateFromTotalIncGST);
-          this.matterdetailForm.controls['NOTES'].setValue(matterData.NOTES);
           //Rates
           this.matterdetailForm.controls['GSTTYPE'].setValue(matterData.BILLINGGROUP.GSTTYPE);
           this.GSTTYPEVAL = matterData.BILLINGGROUP.GSTTYPE;
@@ -89,16 +81,38 @@ export class MatterPopupComponent implements OnInit {
           this.matterdetailForm.controls['INDUSTRY'].setValue(matterData.MARKETINGGROUP.INDUSTRY);
           this.matterdetailForm.controls['REFERRERGUIDTEXT'].setValue(matterData.MARKETINGGROUP.REFERRERGUID);
           this.matterdetailForm.controls['ARCHIVENO'].setValue(matterData.ARCHIVENO);
-          this.matterdetailForm.controls['ARCHIVEDATETEXT'].setValue(matterData.ARCHIVEDATE);
-
-          if (matterData.MATTERCLASS == 'Commercial') {            // Details -> commercial
+          let archivedate = matterData.ARCHIVEDATE.split("/");
+          this.matterdetailForm.controls['ARCHIVEDATETEXT'].setValue(new Date(archivedate[1] + '/' + archivedate[0] + '/' + archivedate[2]));
+          this.matterdetailForm.controls['ARCHIVEDATE'].setValue(matterData.ARCHIVEDATE);
+          if (this.userType) { // General
+            if (matterData.DATEGROUP.COMPLETEDDATE) {
+              let COMPLETEDDATE1 = matterData.DATEGROUP.COMPLETEDDATE.split("/");
+              this.matterdetailForm.controls['COMPLETEDDATETEXT'].setValue(new Date(COMPLETEDDATE1[1] + '/' + COMPLETEDDATE1[0] + '/' + COMPLETEDDATE1[2]));
+              this.matterdetailForm.controls['COMPLETEDDATE'].setValue(matterData.DATEGROUP.COMPLETEDDATE);
+            }
+            if (matterData.LEASINGGROUP.COMMENCEMENTDATE) {
+              let COMMENCEMENTDATE1 = matterData.LEASINGGROUP.COMMENCEMENTDATE.split("/");
+              this.matterdetailForm.controls['COMMENCEMENTDATETEXT'].setValue(new Date(COMMENCEMENTDATE1[1] + '/' + COMMENCEMENTDATE1[0] + '/' + COMMENCEMENTDATE1[2]));
+              this.matterdetailForm.controls['COMMENCEMENTDATE'].setValue(matterData.LEASINGGROUP.COMMENCEMENTDATE);
+            }
+            if (matterData.DATEGROUP.FEEAGREEMENTDATE) {
+              let FeeAgreementDate1 = matterData.DATEGROUP.FEEAGREEMENTDATE.split("/");
+              this.matterdetailForm.controls['FeeAgreementDateText'].setValue(new Date(FeeAgreementDate1[1] + '/' + FeeAgreementDate1[0] + '/' + FeeAgreementDate1[2]));
+              this.matterdetailForm.controls['FEEAGREEMENTDATE'].setValue(matterData.DATEGROUP.FEEAGREEMENTDATE);
+            }
+            this.matterdetailForm.controls['REFERENCE'].setValue(matterData.REFERENCE);
+            this.matterdetailForm.controls['OTHERREFERENCE'].setValue(matterData.OTHERREFERENCE);
+            this.matterdetailForm.controls['OWNERGUID'].setValue(matterData.OWNERGUID);
+            this.matterdetailForm.controls['PRIMARYFEEEARNERGUID'].setValue(matterData.PRIMARYFEEEARNERGUID);
+            this.matterdetailForm.controls['EstimateFromTotalExGST'].setValue(matterData.EstimateFromTotalExGST);
+            this.matterdetailForm.controls['EstimateFromTotalIncGST'].setValue(matterData.EstimateFromTotalIncGST);
+            this.matterdetailForm.controls['NOTES'].setValue(matterData.NOTES);
+          }
+          if (matterData.MATTERCLASS == 19) {            // Details -> commercial
             this.matterdetailForm.controls['CLASSOFSHARES'].setValue(matterData.COMMERCIALGROUP.CLASSOFSHARES);
             this.matterdetailForm.controls['NUMBEROFSHARES'].setValue(matterData.COMMERCIALGROUP.NUMBEROFSHARES);
             this.matterdetailForm.controls['CONSIDERATION'].setValue(matterData.COMMERCIALGROUP.CONSIDERATION);
-          } else if (matterData.MATTERCLASS == 'Compensation') {            //Details -> compensation
-            this.matterdetailForm.controls['ACCIDENTDATETEXT'].setValue(matterData.COMPENSATIONGROUP.ACCIDENTDATE);
-            this.matterdetailForm.controls['ExpirationDatetext'].setValue(matterData.STRATAGROUP.EXPIRATIONDATE);
-            this.matterdetailForm.controls['DATEOFNOTICEOFINJURYTEXT'].setValue(matterData.COMPENSATIONGROUP.DATEOFNOTICEOFINJURY);
+          } else if (matterData.MATTERCLASS == 8 || matterData.MATTERCLASS == 26 || matterData.MATTERCLASS == 21 || matterData.MATTERCLASS == 22 || matterData.MATTERCLASS == 25 || matterData.MATTERCLASS == 23 || matterData.MATTERCLASS == 23) {            //Details -> compensation
             this.matterdetailForm.controls['PLACEOFINJURY'].setValue(matterData.COMPENSATIONGROUP.PLACEOFINJURY);
             this.matterdetailForm.controls['INJURYDESCRIPTION'].setValue(matterData.COMPENSATIONGROUP.INJURYDESCRIPTION);
             this.matterdetailForm.controls['HowDidInjuryOccur'].setValue(matterData.COMPENSATIONGROUP.HOWDIDINJURYOCCUR);
@@ -106,22 +120,66 @@ export class MatterPopupComponent implements OnInit {
             this.matterdetailForm.controls['CLIENTNAME'].setValue(matterData.LEGALDETAILS.CLIENTNAME);
             this.matterdetailForm.controls['ESTIMATEDAWARD'].setValue(matterData.COMPENSATIONGROUP.ESTIMATEDAWARD);
             this.matterdetailForm.controls['CLAIMNUMBER'].setValue(matterData.COMPENSATIONGROUP.CLAIMNUMBER);
-            this.matterdetailForm.controls['INVESTIGATIONDATETEXT'].setValue(matterData.COMPENSATIONGROUP.INVESTIGATIONDATE);
-            this.matterdetailForm.controls['SETTLEMENTDATETEXT'].setValue(matterData.CONVEYANCINGGROUP.SETTLEMENTDATE);
             this.matterdetailForm.controls['EXPERTHEARINGDATE'].setValue(matterData.EXPERTPROCESSGROUP.EXPERTHEARINGDATE);
-          } else if (matterData.MATTERCLASS == 'Compulsory Acquisition') {   // Details ->compulsory-acquisition
+            if (matterData.COMPENSATIONGROUP.ACCIDENTDATE) {
+              let ACCIDENTDATE1 = matterData.COMPENSATIONGROUP.ACCIDENTDATE.split("/");
+              this.matterdetailForm.controls['ACCIDENTDATETEXT'].setValue(new Date(ACCIDENTDATE1[1] + '/' + ACCIDENTDATE1[0] + '/' + ACCIDENTDATE1[2]));
+              this.matterdetailForm.controls['ACCIDENTDATE'].setValue(matterData.COMPENSATIONGROUP.ACCIDENTDATE);
+            }
+            if (matterData.STRATAGROUP.EXPIRATIONDATE) {
+              let ExpirationDate1 = matterData.STRATAGROUP.EXPIRATIONDATE.split("/");
+              this.matterdetailForm.controls['ExpirationDatetext'].setValue(new Date(ExpirationDate1[1] + '/' + ExpirationDate1[0] + '/' + ExpirationDate1[2]));
+              this.matterdetailForm.controls['ExpirationDate'].setValue(matterData.STRATAGROUP.EXPIRATIONDATE);
+            }
+            if (matterData.COMPENSATIONGROUP.DATEOFNOTICEOFINJURY) {
+              let DATEOFNOTICEOFINJURY1 = matterData.COMPENSATIONGROUP.DATEOFNOTICEOFINJURY.split("/");
+              this.matterdetailForm.controls['DATEOFNOTICEOFINJURYTEXT'].setValue(new Date(DATEOFNOTICEOFINJURY1[1] + '/' + DATEOFNOTICEOFINJURY1[0] + '/' + DATEOFNOTICEOFINJURY1[2]));
+              this.matterdetailForm.controls['DATEOFNOTICEOFINJURY'].setValue(matterData.COMPENSATIONGROUP.DATEOFNOTICEOFINJURY);
+            }
+            if (matterData.COMPENSATIONGROUP.INVESTIGATIONDATE) {
+              let INVESTIGATIONDATE1 = matterData.COMPENSATIONGROUP.INVESTIGATIONDATE.split("/");
+              this.matterdetailForm.controls['INVESTIGATIONDATETEXT'].setValue(new Date(INVESTIGATIONDATE1[1] + '/' + INVESTIGATIONDATE1[0] + '/' + INVESTIGATIONDATE1[2]));
+              this.matterdetailForm.controls['INVESTIGATIONDATE'].setValue(matterData.COMPENSATIONGROUP.INVESTIGATIONDATE);
+            }
+            if (matterData.CONVEYANCINGGROUP.SETTLEMENTDATE) {
+              let SETTLEMENTDATE1 = matterData.CONVEYANCINGGROUP.SETTLEMENTDATE.split("/");
+              this.matterdetailForm.controls['SETTLEMENTDATETEXT'].setValue(new Date(SETTLEMENTDATE1[1] + '/' + SETTLEMENTDATE1[0] + '/' + SETTLEMENTDATE1[2]));
+              this.matterdetailForm.controls['SETTLEMENTDATE'].setValue(matterData.CONVEYANCINGGROUP.SETTLEMENTDATE);
+            }
+
+          } else if (matterData.MATTERCLASS == 9) {   // Details ->compulsory-acquisition
             this.matterdetailForm.controls['CLIENTVALUATION'].setValue(matterData.COMPULSORYACQUISITIONGROUP.CLIENTVALUATION);
             this.matterdetailForm.controls['AUTHORITYVALUATION'].setValue(matterData.COMPULSORYACQUISITIONGROUP.AUTHORITYVALUATION);
           } else if (matterData.MATTERCLASS == 18) {            //Details -> criminal
-            this.matterdetailForm.controls['BRIEFSERVICEDATE'].setValue(matterData.CRIMINALGROUP.BRIEFSERVICEDATE);
-            this.matterdetailForm.controls['COMMITTALDATE'].setValue(matterData.CRIMINALGROUP.COMMITTALDATE);
-            this.matterdetailForm.controls['REPLYDATE'].setValue(matterData.CRIMINALGROUP.REPLYDATE);
+            if (matterData.CRIMINALGROUP.BRIEFSERVICEDATE) {
+              let BRIEFSERVICEDATE1 = matterData.CRIMINALGROUP.BRIEFSERVICEDATE.split("/");
+              this.matterdetailForm.controls['BRIEFSERVICEDATETEXT'].setValue(new Date(BRIEFSERVICEDATE1[1] + '/' + BRIEFSERVICEDATE1[0] + '/' + BRIEFSERVICEDATE1[2]));
+              this.matterdetailForm.controls['BRIEFSERVICEDATE'].setValue(matterData.CRIMINALGROUP.BRIEFSERVICEDATE);
+            }
+            if (matterData.CRIMINALGROUP.COMMITTALDATE) {
+              let COMMITTALDATE1 = matterData.CRIMINALGROUP.COMMITTALDATE.split("/");
+              this.matterdetailForm.controls['COMMITTALDATETEXT'].setValue(new Date(COMMITTALDATE1[1] + '/' + COMMITTALDATE1[0] + '/' + COMMITTALDATE1[2]));
+              this.matterdetailForm.controls['COMMITTALDATE'].setValue(matterData.CRIMINALGROUP.COMMITTALDATE);
+            }
+            if (matterData.CRIMINALGROUP.BAILDATE) {
+              let BAILDATE1 = matterData.CRIMINALGROUP.BAILDATE.split("/");
+              this.matterdetailForm.controls['BAILDATETEXT'].setValue(new Date(BAILDATE1[1] + '/' + BAILDATE1[0] + '/' + BAILDATE1[2]));
+              this.matterdetailForm.controls['BAILDATE'].setValue(matterData.CRIMINALGROUP.BAILDATE);
+            }
+            if (matterData.CRIMINALGROUP.REPLYDATE) {
+              let REPLYDATE1 = matterData.CRIMINALGROUP.REPLYDATE.split("/");
+              this.matterdetailForm.controls['REPLYDATETEXT'].setValue(new Date(REPLYDATE1[1] + '/' + REPLYDATE1[0] + '/' + REPLYDATE1[2]));
+              this.matterdetailForm.controls['REPLYDATE'].setValue(matterData.CRIMINALGROUP.REPLYDATE);
+            }
+            if (matterData.CRIMINALGROUP.SENTENCINGDATE) {
+              let SENTENCINGDATE1 = matterData.CRIMINALGROUP.SENTENCINGDATE.split("/");
+              this.matterdetailForm.controls['SENTENCINGDATETEXT'].setValue(new Date(SENTENCINGDATE1[1] + '/' + SENTENCINGDATE1[0] + '/' + SENTENCINGDATE1[2]));
+              this.matterdetailForm.controls['SENTENCINGDATE'].setValue(matterData.CRIMINALGROUP.SENTENCINGDATE);
+            }
             this.matterdetailForm.controls['JUVENILE'].setValue(matterData.CRIMINALGROUP.JUVENILE ? true : false);
             this.matterdetailForm.controls['WAIVEROFCOMMITTAL'].setValue(matterData.CRIMINALGROUP.WAIVEROFCOMMITTAL ? true : false);
-            this.matterdetailForm.controls['BAILDATE'].setValue(matterData.CRIMINALGROUP.BAILDATE);
             this.matterdetailForm.controls['BAILRESTRICTIONS'].setValue(matterData.CRIMINALGROUP.BAILRESTRICTIONS);
             this.matterdetailForm.controls['OUTCOME'].setValue(matterData.CRIMINALGROUP.OUTCOME);
-            this.matterdetailForm.controls['SENTENCINGDATE'].setValue(matterData.CRIMINALGROUP.SENTENCINGDATE);
             this.matterdetailForm.controls['SENTENCE'].setValue(matterData.CRIMINALGROUP.SENTENCE);
             this.matterdetailForm.controls['S91APPLICATION'].setValue(matterData.CRIMINALGROUP.S91APPLICATION ? true : false);
             this.matterdetailForm.controls['S93APPLICATION'].setValue(matterData.CRIMINALGROUP.S93APPLICATION ? true : false);
@@ -131,36 +189,93 @@ export class MatterPopupComponent implements OnInit {
             this.matterdetailForm.controls['MatterNo'].setValue(matterData.COMPULSORYACQUISITIONGROUP.MATTERNO);
             this.matterdetailForm.controls['CourtList'].setValue(matterData.COMPULSORYACQUISITIONGROUP.COURTLIST);
           } else if (matterData.MATTERCLASS == 10) {            // Details ->family
-            this.matterdetailForm.controls['COHABITATIONDATE'].setValue(matterData.FAMILYLAWGROUP.COHABITATIONDATE);
-            this.matterdetailForm.controls['MARRIAGEDATE'].setValue(matterData.FAMILYLAWGROUP.MARRIAGEDATE);
             this.matterdetailForm.controls['MARRIAGEPLACE'].setValue(matterData.FAMILYLAWGROUP.MARRIAGEPLACE);
             this.matterdetailForm.controls['MARRIAGECOUNTRY'].setValue(matterData.FAMILYLAWGROUP.MARRIAGECOUNTRY);
-            this.matterdetailForm.controls['SEPARATIONDATE'].setValue(matterData.FAMILYLAWGROUP.SEPARATIONDATE);
             this.matterdetailForm.controls['DATEFILEDFORDIVORCE'].setValue(matterData.FAMILYLAWGROUP.DATEFILEDFORDIVORCE);
-            this.matterdetailForm.controls['DIVORCEDATE'].setValue(matterData.FAMILYLAWGROUP.DIVORCEDATE);
             this.matterdetailForm.controls['DIVORCEPLACE'].setValue(matterData.FAMILYLAWGROUP.DIVORCEPLACE);
             this.matterdetailForm.controls['DIVORCECOUNTRY'].setValue(matterData.FAMILYLAWGROUP.DIVORCECOUNTRY);
             this.matterdetailForm.controls['NUMDEPENDANTS'].setValue(matterData.FAMILYLAWGROUP.NUMDEPENDANTS);
             this.matterdetailForm.controls['FAMILYCOURTCLIENTID'].setValue(matterData.FAMILYLAWGROUP.FAMILYCOURTCLIENTID);
-            this.matterdetailForm.controls['EXPERTHEARINGDATE'].setValue(matterData.EXPERTPROCESSGROUP.EXPERTHEARINGDATE);
             this.matterdetailForm.controls['MatterNo'].setValue(matterData.COMPULSORYACQUISITIONGROUP.MATTERNO);
-            this.matterdetailForm.controls['ExpirationDate'].setValue(matterData.STRATAGROUP.ExpirationDate);
-          } else if (matterData.MATTERCLASS == 'Immigration') {             //Details -> immigration
+            if (matterData.FAMILYLAWGROUP.COHABITATIONDATE) {
+              let COHABITATIONDATE1 = matterData.FAMILYLAWGROUP.COHABITATIONDATE.split("/");
+              this.matterdetailForm.controls['COHABITATIONDATETEXT'].setValue(new Date(COHABITATIONDATE1[1] + '/' + COHABITATIONDATE1[0] + '/' + COHABITATIONDATE1[2]));
+              this.matterdetailForm.controls['COHABITATIONDATE'].setValue(matterData.FAMILYLAWGROUP.COHABITATIONDATE);
+            }
+            if (matterData.FAMILYLAWGROUP.MARRIAGEDATE) {
+              let MARRIAGEDATE1 = matterData.FAMILYLAWGROUP.MARRIAGEDATE.split("/");
+              this.matterdetailForm.controls['MARRIAGEDATETEXT'].setValue(new Date(MARRIAGEDATE1[1] + '/' + MARRIAGEDATE1[0] + '/' + MARRIAGEDATE1[2]));
+              this.matterdetailForm.controls['MARRIAGEDATE'].setValue(matterData.FAMILYLAWGROUP.MARRIAGEDATE);
+            }
+            if (matterData.FAMILYLAWGROUP.SEPARATIONDATE) {
+              let SEPARATIONDATE1 = matterData.FAMILYLAWGROUP.SEPARATIONDATE.split("/");
+              this.matterdetailForm.controls['SEPARATIONDATETEXT'].setValue(new Date(SEPARATIONDATE1[1] + '/' + SEPARATIONDATE1[0] + '/' + SEPARATIONDATE1[2]));
+              this.matterdetailForm.controls['SEPARATIONDATE'].setValue(matterData.FAMILYLAWGROUP.SEPARATIONDATE);
+            }
+            if (matterData.FAMILYLAWGROUP.DIVORCEDATE) {
+              let DIVORCEDATE1 = matterData.FAMILYLAWGROUP.DIVORCEDATE.split("/");
+              this.matterdetailForm.controls['DIVORCEDATETEXT'].setValue(new Date(DIVORCEDATE1[1] + '/' + DIVORCEDATE1[0] + '/' + DIVORCEDATE1[2]));
+              this.matterdetailForm.controls['DIVORCEDATE'].setValue(matterData.FAMILYLAWGROUP.DIVORCEDATE);
+            }
+            if (matterData.EXPERTPROCESSGROUP.EXPERTHEARINGDATE) {
+              let EXPERTHEARINGDATE1 = matterData.EXPERTPROCESSGROUP.EXPERTHEARINGDATE.split("/");
+              this.matterdetailForm.controls['EXPERTHEARINGDATETEXTF'].setValue(new Date(EXPERTHEARINGDATE1[1] + '/' + EXPERTHEARINGDATE1[0] + '/' + EXPERTHEARINGDATE1[2]));
+              this.matterdetailForm.controls['EXPERTHEARINGDATE'].setValue(matterData.EXPERTPROCESSGROUP.EXPERTHEARINGDATE);
+            }
+            if (matterData.STRATAGROUP.ExpirationDate) {
+              let ExpirationDate1 = matterData.STRATAGROUP.ExpirationDate.split("/");
+              this.matterdetailForm.controls['ExpirationDatetextF'].setValue(new Date(ExpirationDate1[1] + '/' + ExpirationDate1[0] + '/' + ExpirationDate1[2]));
+              this.matterdetailForm.controls['ExpirationDate'].setValue(matterData.STRATAGROUP.ExpirationDate);
+            }
+
+          } else if (matterData.MATTERCLASS == 6) {             //Details -> immigration
             this.matterdetailForm.controls['VISATYPE'].setValue(matterData.VISAGROUP.VISATYPE);
             this.matterdetailForm.controls['VALUEOFASSETS'].setValue(matterData.VISAGROUP.VALUEOFASSETS);
             this.matterdetailForm.controls['VISASTATUS'].setValue(matterData.VISAGROUP.VISASTATUS);
-            this.matterdetailForm.controls['ANTICIPATEDDATEOFENTRY'].setValue(matterData.VISAGROUP.ANTICIPATEDDATEOFENTRY);
-            this.matterdetailForm.controls['LODGEMENTDATE'].setValue(matterData.VISAGROUP.LODGEMENTDATE);
-            this.matterdetailForm.controls['VISAEXPIRYDATE'].setValue(matterData.VISAGROUP.VISAEXPIRYDATE);
-            this.matterdetailForm.controls['DECISIONDUEDATE'].setValue(matterData.VISAGROUP.DECISIONDUEDATE);
-          } else if (matterData.MATTERCLASS == 'Leasing') { //Details -> leasing
+            if (matterData.VISAGROUP.ANTICIPATEDDATEOFENTRY) {
+              let ANTICIPATEDDATEOFENTRY1 = matterData.VISAGROUP.ANTICIPATEDDATEOFENTRY.split("/");
+              this.matterdetailForm.controls['ANTICIPATEDDATEOFENTRYTEXT'].setValue(new Date(ANTICIPATEDDATEOFENTRY1[1] + '/' + ANTICIPATEDDATEOFENTRY1[0] + '/' + ANTICIPATEDDATEOFENTRY1[2]));
+              this.matterdetailForm.controls['ANTICIPATEDDATEOFENTRY'].setValue(matterData.VISAGROUP.ANTICIPATEDDATEOFENTRY);
+            }
+            if (matterData.VISAGROUP.LODGEMENTDATE) {
+              let LODGEMENTDATE1 = matterData.VISAGROUP.LODGEMENTDATE.split("/");
+              this.matterdetailForm.controls['LODGEMENTDATETEXT'].setValue(new Date(LODGEMENTDATE1[1] + '/' + LODGEMENTDATE1[0] + '/' + LODGEMENTDATE1[2]));
+              this.matterdetailForm.controls['LODGEMENTDATE'].setValue(matterData.VISAGROUP.LODGEMENTDATE);
+            }
+            if (matterData.VISAGROUP.VISAEXPIRYDATE) {
+              let VISAEXPIRYDATE1 = matterData.VISAGROUP.VISAEXPIRYDATE.split("/");
+              this.matterdetailForm.controls['VISAEXPIRYDATETEXT'].setValue(new Date(VISAEXPIRYDATE1[1] + '/' + VISAEXPIRYDATE1[0] + '/' + VISAEXPIRYDATE1[2]));
+              this.matterdetailForm.controls['VISAEXPIRYDATE'].setValue(matterData.VISAGROUP.VISAEXPIRYDATE);
+            }
+            if (matterData.VISAGROUP.DECISIONDUEDATE) {
+              let DECISIONDUEDATE1 = matterData.VISAGROUP.DECISIONDUEDATE.split("/");
+              this.matterdetailForm.controls['DECISIONDUEDATETEXT'].setValue(new Date(DECISIONDUEDATE1[1] + '/' + DECISIONDUEDATE1[0] + '/' + DECISIONDUEDATE1[2]));
+              this.matterdetailForm.controls['DECISIONDUEDATE'].setValue(matterData.VISAGROUP.DECISIONDUEDATE);
+            }
+          } else if (matterData.MATTERCLASS == 11) { //Details -> leasing
             // this.matterdetailForm.controls['Address2'].setValue(matterData..Address2);
             this.matterdetailForm.controls['LEASERECEIVED'].setValue(matterData.LEASINGGROUP.LEASERECEIVED);
-            this.matterdetailForm.controls['DATEEXECUTED'].setValue(matterData.LEASINGGROUP.DATEEXECUTED);
-            this.matterdetailForm.controls['VALIDUNTIL'].setValue(matterData.LEASINGGROUP.VALIDUNTIL);
-            this.matterdetailForm.controls['OPTIONDATE'].setValue(matterData.LEASINGGROUP.OPTIONDATE);
             this.matterdetailForm.controls['OptionDescription'].setValue(matterData.LEASINGGROUP.OptionDescription);
-            this.matterdetailForm.controls['DISCLOSUREDATE'].setValue(matterData.LEASINGGROUP.DISCLOSUREDATE);
+            if (matterData.LEASINGGROUP.DATEEXECUTED) {
+              let DATEEXECUTED1 = matterData.LEASINGGROUP.DATEEXECUTED.split("/");
+              this.matterdetailForm.controls['DATEEXECUTEDTEXT'].setValue(new Date(DATEEXECUTED1[1] + '/' + DATEEXECUTED1[0] + '/' + DATEEXECUTED1[2]));
+              this.matterdetailForm.controls['DATEEXECUTED'].setValue(matterData.LEASINGGROUP.DATEEXECUTED);
+            }
+            if (matterData.LEASINGGROUP.VALIDUNTIL) {
+              let VALIDUNTIL1 = matterData.LEASINGGROUP.VALIDUNTIL.split("/");
+              this.matterdetailForm.controls['VALIDUNTILTEXT'].setValue(new Date(VALIDUNTIL1[1] + '/' + VALIDUNTIL1[0] + '/' + VALIDUNTIL1[2]));
+              this.matterdetailForm.controls['VALIDUNTIL'].setValue(matterData.LEASINGGROUP.VALIDUNTIL);
+            }
+            if (matterData.LEASINGGROUP.OPTIONDATE) {
+              let OPTIONDATE1 = matterData.LEASINGGROUP.OPTIONDATE.split("/");
+              this.matterdetailForm.controls['OPTIONDATETEXT'].setValue(new Date(OPTIONDATE1[1] + '/' + OPTIONDATE1[0] + '/' + OPTIONDATE1[2]));
+              this.matterdetailForm.controls['OPTIONDATE'].setValue(matterData.LEASINGGROUP.OPTIONDATE);
+            }
+            if (matterData.LEASINGGROUP.DISCLOSUREDATE) {
+              let DISCLOSUREDATE1 = matterData.LEASINGGROUP.DISCLOSUREDATE.split("/");
+              this.matterdetailForm.controls['DISCLOSUREDATETEXT'].setValue(new Date(DISCLOSUREDATE1[1] + '/' + DISCLOSUREDATE1[0] + '/' + DISCLOSUREDATE1[2]));
+              this.matterdetailForm.controls['DISCLOSUREDATE'].setValue(matterData.LEASINGGROUP.DISCLOSUREDATE);
+            }
             // this.matterdetailForm.controls['REGISTEREDINFILEMAN'].setValue(matterData.LEASINGGROUP.REGISTEREDINFILEMAN);
           } else if (matterData.MATTERCLASS == 2) {              // Details -> litigation
             this.matterdetailForm.controls['MatterNo'].setValue(matterData.LEGALDETAILS.MatterNo);
@@ -172,14 +287,22 @@ export class MatterPopupComponent implements OnInit {
             this.matterdetailForm.controls['MATTERTITLEBELOW'].setValue(matterData.LEGALDETAILS.MATTERTITLEBELOW);
             this.matterdetailForm.controls['COURTBELOW'].setValue(matterData.LEGALDETAILS.COURTBELOW);
             this.matterdetailForm.controls['CASENUMBERBELOW'].setValue(matterData.LEGALDETAILS.CASENUMBERBELOW);
-            this.matterdetailForm.controls['DATEOFHEARINGS'].setValue(matterData.LEGALDETAILS.DATEOFHEARINGS);
-            this.matterdetailForm.controls['MATERIALDATE'].setValue(matterData.LEGALDETAILS.MATERIALDATE);
             this.matterdetailForm.controls['DECISION'].setValue(matterData.VISAGROUP.DECISION);
             this.matterdetailForm.controls['COSTESTIMATEIFWINEXGST'].setValue(matterData.SUMMARYTOTALS.COSTESTIMATEIFWINEXGST);
             this.matterdetailForm.controls['CostEstimateIfWinIncGST'].setValue(matterData.SUMMARYTOTALS.COSTESTIMATEIFWININCGST);
             this.matterdetailForm.controls['CostEstimateIfFailExGST'].setValue(matterData.SUMMARYTOTALS.COSTESTIMATEIFFAILEXGST);
             this.matterdetailForm.controls['CostEstimateIfFailIncGST'].setValue(matterData.SUMMARYTOTALS.COSTESTIMATEIFFAILINCGST);
-          } else if (matterData.MATTERCLASS == 'Maritime') {            //Details -> maritime
+            if (matterData.LEGALDETAILS.DATEOFHEARINGS) {
+              let DATEOFHEARINGS1 = matterData.LEGALDETAILS.DATEOFHEARINGS.split("/");
+              this.matterdetailForm.controls['DATEOFHEARINGSTEXT'].setValue(new Date(DATEOFHEARINGS1[1] + '/' + DATEOFHEARINGS1[0] + '/' + DATEOFHEARINGS1[2]));
+              this.matterdetailForm.controls['DATEOFHEARINGS'].setValue(matterData.LEGALDETAILS.DATEOFHEARINGS);
+            }
+            if (matterData.LEGALDETAILS.MATERIALDATE) {
+              let MATERIALDATE1 = matterData.LEGALDETAILS.MATERIALDATE.split("/");
+              this.matterdetailForm.controls['MATERIALDATETEXT'].setValue(new Date(MATERIALDATE1[1] + '/' + MATERIALDATE1[0] + '/' + MATERIALDATE1[2]));
+              this.matterdetailForm.controls['MATERIALDATE'].setValue(matterData.LEGALDETAILS.MATERIALDATE);
+            }
+          } else if (matterData.MATTERCLASS == 20) {            //Details -> maritime
             this.matterdetailForm.controls['VESSELNAME'].setValue(matterData.VESSELGROUP.VESSELNAME);
             this.matterdetailForm.controls['VESSELFLAG'].setValue(matterData.VESSELGROUP.VESSELFLAG);
             this.matterdetailForm.controls['VESSELTYPE'].setValue(matterData.VESSELGROUP.VESSELTYPE);
@@ -187,66 +310,140 @@ export class MatterPopupComponent implements OnInit {
             this.matterdetailForm.controls['VESSELMASTER'].setValue(matterData.VESSELGROUP.VESSELMASTER);
             this.matterdetailForm.controls['VESSELLOCATION'].setValue(matterData.VESSELGROUP.VESSELLOCATION);
             this.matterdetailForm.controls['PURCHASEPRICE'].setValue(matterData.CONVEYANCINGGROUP.PURCHASEPRICE);
-            this.matterdetailForm.controls['INCIDENTDATE'].setValue(matterData.VESSELGROUP.INCIDENTDATE);
-            this.matterdetailForm.controls['EXCHANGEDATE'].setValue(matterData.CONVEYANCINGGROUP.EXCHANGEDATE);
-            this.matterdetailForm.controls['SETTLEMENTDATE'].setValue(matterData.CONVEYANCINGGROUP.SETTLEMENTDATE);
-          } else if (matterData.MATTERCLASS == 'Mortgage Finance') {            //Details -> mortgage-finance
+            if (matterData.VESSELGROUP.INCIDENTDATE) {
+              let INCIDENTDATE1 = matterData.VESSELGROUP.INCIDENTDATE.split("/");
+              this.matterdetailForm.controls['INCIDENTDATETEXTM'].setValue(new Date(INCIDENTDATE1[1] + '/' + INCIDENTDATE1[0] + '/' + INCIDENTDATE1[2]));
+              this.matterdetailForm.controls['INCIDENTDATE'].setValue(matterData.VESSELGROUP.INCIDENTDATE);
+            }
+            if (matterData.CONVEYANCINGGROUP.EXCHANGEDATE) {
+              let EXCHANGEDATE1 = matterData.CONVEYANCINGGROUP.EXCHANGEDATE.split("/");
+              this.matterdetailForm.controls['EXCHANGEDATETEXTM'].setValue(new Date(EXCHANGEDATE1[1] + '/' + EXCHANGEDATE1[0] + '/' + EXCHANGEDATE1[2]));
+              this.matterdetailForm.controls['EXCHANGEDATE'].setValue(matterData.CONVEYANCINGGROUP.EXCHANGEDATE);
+            }
+            if (matterData.CONVEYANCINGGROUP.SETTLEMENTDATE) {
+              let SETTLEMENTDATE1 = matterData.CONVEYANCINGGROUP.SETTLEMENTDATE.split("/");
+              this.matterdetailForm.controls['SETTLEMENTDATETEXTM'].setValue(new Date(SETTLEMENTDATE1[1] + '/' + SETTLEMENTDATE1[0] + '/' + SETTLEMENTDATE1[2]));
+              this.matterdetailForm.controls['SETTLEMENTDATE'].setValue(matterData.CONVEYANCINGGROUP.SETTLEMENTDATE);
+            }
+          } else if (matterData.MATTERCLASS == 12) {            //Details -> mortgage-finance
             this.matterdetailForm.controls['PRINCIPALADVANCED'].setValue(matterData.MORTGAGEGROUP.PRINCIPALADVANCED);
             this.matterdetailForm.controls['INTERESTRATE'].setValue(matterData.MORTGAGEGROUP.INTERESTRATE);
             this.matterdetailForm.controls['FOLIOIDENTIFIER'].setValue(matterData.STRATAGROUP.FOLIOIDENTIFIER);
-            this.matterdetailForm.controls['DISCHARGEDATE'].setValue(matterData.MORTGAGEGROUP.DISCHARGEDATE);
             this.matterdetailForm.controls['SECURITYPROPERTY'].setValue(matterData.MORTGAGEGROUP.SECURITYPROPERTY);
-            this.matterdetailForm.controls['COMMENCEMENTDATE'].setValue(matterData.LEASINGGROUP.COMMENCEMENTDATE);
-            this.matterdetailForm.controls['ExpirationDate'].setValue(matterData.STRATAGROUP.EXPIRATIONDATE);
-          } else if (matterData.MATTERCLASS == 'Property Purchase') {          // Details ->property-purchase
+            if (matterData.MORTGAGEGROUP.DISCHARGEDATE) {
+              let dcd1 = matterData.MORTGAGEGROUP.DISCHARGEDATE.split("/");
+              this.matterdetailForm.controls['DISCHARGEDATETEXTM'].setValue(new Date(dcd1[1] + '/' + dcd1[0] + '/' + dcd1[2]));
+              this.matterdetailForm.controls['DISCHARGEDATE'].setValue(matterData.MORTGAGEGROUP.DISCHARGEDATE);
+            }
+            if (matterData.LEASINGGROUP.COMMENCEMENTDATE) {
+              let cd1 = matterData.LEASINGGROUP.COMMENCEMENTDATE.split("/");
+              this.matterdetailForm.controls['COMMENCEMENTDATETEXTM'].setValue(new Date(cd1[1] + '/' + cd1[0] + '/' + cd1[2]));
+              this.matterdetailForm.controls['COMMENCEMENTDATE'].setValue(matterData.LEASINGGROUP.COMMENCEMENTDATE);
+            }
+            if (matterData.STRATAGROUP.EXPIRATIONDATE) {
+              let ed2 = matterData.STRATAGROUP.EXPIRATIONDATE.split("/");
+              this.matterdetailForm.controls['ExpirationDateTxtM'].setValue(new Date(ed2[1] + '/' + ed2[0] + '/' + ed2[2]));
+              this.matterdetailForm.controls['ExpirationDate'].setValue(matterData.STRATAGROUP.EXPIRATIONDATE);
+            }
+          } else if (matterData.MATTERCLASS == 4) {          // Details ->property-purchase
+            if (matterData.CONVEYANCINGGROUP.SETTLEMENTDATE) {
+              let std1 = matterData.CONVEYANCINGGROUP.SETTLEMENTDATE.split("/");
+              this.matterdetailForm.controls['SETTLEMENTDATETEXTPP'].setValue(new Date(std1[1] + '/' + std1[0] + '/' + std1[2]));
+              this.matterdetailForm.controls['SETTLEMENTDATE'].setValue(matterData.CONVEYANCINGGROUP.SETTLEMENTDATE);
+            }
+            if (matterData.CONVEYANCINGGROUP.DATEPAID) {
+              let pd1 = matterData.CONVEYANCINGGROUP.DATEPAID.split("/");
+              this.matterdetailForm.controls['DATEPAIDTEXTPP'].setValue(new Date(pd1[1] + '/' + pd1[0] + '/' + pd1[2]));
+              this.matterdetailForm.controls['DATEPAID'].setValue(matterData.CONVEYANCINGGROUP.DATEPAID);
+            }
+            if (matterData.CONVEYANCINGGROUP.BALANCEDEPOSITDATE) {
+              let btd1 = matterData.CONVEYANCINGGROUP.BALANCEDEPOSITDATE.split("/");
+              this.matterdetailForm.controls['BALANCEDEPOSITDATETEXTPP'].setValue(new Date(btd1[1] + '/' + btd1[0] + '/' + btd1[2]));
+              this.matterdetailForm.controls['BALANCEDEPOSITDATE'].setValue(matterData.CONVEYANCINGGROUP.BALANCEDEPOSITDATE);
+            }
+            if (matterData.CONVEYANCINGGROUP.EXCHANGEDATE) {
+              let ed1 = matterData.CONVEYANCINGGROUP.EXCHANGEDATE.split("/");
+              this.matterdetailForm.controls['EXCHANGEDATETEXTPP'].setValue(new Date(ed1[1] + '/' + ed1[0] + '/' + ed1[2]));
+              this.matterdetailForm.controls['EXCHANGEDATE'].setValue(matterData.CONVEYANCINGGROUP.EXCHANGEDATE);
+            }
+
+            this.matterdetailForm.controls['STAMPDUTYDATE'].setValue(matterData.CONVEYANCINGGROUP.STAMPDUTYDATE);
             this.matterdetailForm.controls['PURCHASEPRICE'].setValue(matterData.CONVEYANCINGGROUP.PURCHASEPRICE);
             this.matterdetailForm.controls['DEPOSITAMOUNT'].setValue(matterData.CONVEYANCINGGROUP.DEPOSITAMOUNT);
-            this.matterdetailForm.controls['STAMPDUTYDATE'].setValue(matterData.CONVEYANCINGGROUP.STAMPDUTYDATE);
-            this.matterdetailForm.controls['SETTLEMENTDATE'].setValue(matterData.CONVEYANCINGGROUP.SETTLEMENTDATE);
-            this.matterdetailForm.controls['EXCHANGEDATE'].setValue(matterData.CONVEYANCINGGROUP.EXCHANGEDATE);
             this.matterdetailForm.controls['DEPOSITBONDAMOUNT'].setValue(matterData.CONVEYANCINGGROUP.DEPOSITBONDAMOUNT);
             this.matterdetailForm.controls['STAMPDUTYAMOUNT'].setValue(matterData.CONVEYANCINGGROUP.STAMPDUTYAMOUNT);
-            this.matterdetailForm.controls['DATEPAID'].setValue(matterData.CONVEYANCINGGROUP.DATEPAID);
             this.matterdetailForm.controls['BANKREFERENCE'].setValue(matterData.CONVEYANCINGGROUP.BANKREFERENCE);
             this.matterdetailForm.controls['INITIALDEPOSIT'].setValue(matterData.CONVEYANCINGGROUP.INITIALDEPOSIT);
             this.matterdetailForm.controls['BALANCEDEPOSIT'].setValue(matterData.CONVEYANCINGGROUP.BALANCEDEPOSIT);
-            this.matterdetailForm.controls['BALANCEDEPOSITDATE'].setValue(matterData.CONVEYANCINGGROUP.BALANCEDEPOSITDATE);
             this.matterdetailForm.controls['SPECIALCONDITIONS'].setValue(matterData.CONVEYANCINGGROUP.SPECIALCONDITIONS);
             this.matterdetailForm.controls['BUILDINGREPORTCOMPLETED'].setValue(matterData.CONVEYANCINGGROUP.BUILDINGREPORTCOMPLETED);
             this.matterdetailForm.controls['PESTREPORTCOMPLETED'].setValue(matterData.CONVEYANCINGGROUP.PESTREPORTCOMPLETED);
             this.matterdetailForm.controls['ClientStatus'].setValue(matterData.LEGALDETAILS.CLIENTSTATUS);
             // Address3 = Address3;
-          } else if (matterData.MATTERCLASS == 'Property Sale') {   //Details -> property-sale 
+          } else if (matterData.MATTERCLASS == 3) {   //Details -> property-sale 
             this.matterdetailForm.controls['PURCHASEPRICE'].setValue(matterData.CONVEYANCINGGROUP.CLIENTSTATUS);
-            this.matterdetailForm.controls['EXCHANGEDATE'].setValue(matterData.CONVEYANCINGGROUP.EXCHANGEDATE);
-            this.matterdetailForm.controls['SETTLEMENTDATE'].setValue(matterData.CONVEYANCINGGROUP.SETTLEMENTDATE);
-            this.matterdetailForm.controls['ADJUSTMENTDATE'].setValue(matterData.CONVEYANCINGGROUP.ADJUSTMENTDATE);
-            this.matterdetailForm.controls['DATEPAID'].setValue(matterData.CONVEYANCINGGROUP.DATEPAID);
+            if (matterData.CONVEYANCINGGROUP.EXCHANGEDATE) {
+              let tempdps1 = matterData.CONVEYANCINGGROUP.EXCHANGEDATE.split("/");
+              this.matterdetailForm.controls['EXCHANGEDATETEXTPS'].setValue(new Date(tempdps1[1] + '/' + tempdps1[0] + '/' + tempdps1[2]));
+              this.matterdetailForm.controls['EXCHANGEDATE'].setValue(matterData.CONVEYANCINGGROUP.EXCHANGEDATE);
+            }
+            if (matterData.CONVEYANCINGGROUP.SETTLEMENTDATE) {
+              let tempdps2 = matterData.CONVEYANCINGGROUP.SETTLEMENTDATE.split("/");
+              this.matterdetailForm.controls['SETTLEMENTDATETEXTPS'].setValue(new Date(tempdps2[1] + '/' + tempdps2[0] + '/' + tempdps2[2]));
+              this.matterdetailForm.controls['SETTLEMENTDATE'].setValue(matterData.CONVEYANCINGGROUP.SETTLEMENTDATE);
+            }
+            if (matterData.CONVEYANCINGGROUP.ADJUSTMENTDATE) {
+              let tempdps3 = matterData.CONVEYANCINGGROUP.ADJUSTMENTDATE.split("/");
+              this.matterdetailForm.controls['ADJUSTMENTDATETEXTPS'].setValue(new Date(tempdps3[1] + '/' + tempdps3[0] + '/' + tempdps3[2]));
+              this.matterdetailForm.controls['ADJUSTMENTDATE'].setValue(matterData.CONVEYANCINGGROUP.ADJUSTMENTDATE);
+            }
+            if (matterData.CONVEYANCINGGROUP.DATEPAID) {
+              let tempdps = matterData.CONVEYANCINGGROUP.DATEPAID.split("/");
+              this.matterdetailForm.controls['DATEPAIDTEXTPS'].setValue(new Date(tempdps[1] + '/' + tempdps[0] + '/' + tempdps[2]));
+              this.matterdetailForm.controls['DATEPAID'].setValue(matterData.CONVEYANCINGGROUP.DATEPAID);
+            }
+
             this.matterdetailForm.controls['BANKREFERENCE'].setValue(matterData.CONVEYANCINGGROUP.BANKREFERENCE);
             this.matterdetailForm.controls['ClientStatus'].setValue(matterData.LEGALDETAILS.CLIENTSTATUS);
             // details.Address4 = this.f.Address4.value;
-          } else if (matterData.MATTERCLASS == 'Strata') {//Details -> strata
+          } else if (matterData.MATTERCLASS == 5) {//Details -> strata
             this.matterdetailForm.controls['STRATAPLANNUMBER'].setValue(matterData.STRATAGROUP.STRATAPLANNUMBER);
-            this.matterdetailForm.controls['EXPIRATIONDATE'].setValue(matterData.STRATAGROUP.EXPIRATIONDATE);
+            if (matterData.STRATAGROUP.EXPIRATIONDATE) {
+              let tempexd = matterData.STRATAGROUP.EXPIRATIONDATE.split("/");
+              this.matterdetailForm.controls['EXPIRATIONDATE'].setValue(matterData.STRATAGROUP.EXPIRATIONDATE);
+              this.matterdetailForm.controls['EXPIRATIONDATETEXT'].setValue(new Date(tempexd[1] + '/' + tempexd[0] + '/' + tempexd[2]));
+            }
             this.matterdetailForm.controls['LOTNUMBER'].setValue(matterData.STRATAGROUP.LOTNUMBER);
             this.matterdetailForm.controls['BYLAWTYPE'].setValue(matterData.STRATAGROUP.BYLAWTYPE);
             this.matterdetailForm.controls['BYLAWNO'].setValue(matterData.STRATAGROUP.BYLAWNO);
-            this.matterdetailForm.controls['SPECIALRESOLUTIONDATE'].setValue(matterData.STRATAGROUP.SPECIALRESOLUTIONDATE);
+            if (matterData.STRATAGROUP.SPECIALRESOLUTIONDATE) {
+              this.matterdetailForm.controls['SPECIALRESOLUTIONDATE'].setValue(matterData.STRATAGROUP.SPECIALRESOLUTIONDATE);
+              let tempsd = matterData.STRATAGROUP.SPECIALRESOLUTIONDATE.split("/");
+              this.matterdetailForm.controls['SPECIALRESOLUTIONDATETEXT'].setValue(new Date(tempsd[1] + '/' + tempsd[0] + '/' + tempsd[2]));
+            }
             this.matterdetailForm.controls['FOLIOIDENTIFIER'].setValue(matterData.STRATAGROUP.FOLIOIDENTIFIER);
             this.matterdetailForm.controls['AGGREGATIONOFENTITLEMENT'].setValue(matterData.STRATAGROUP.AGGREGATIONOFENTITLEMENT);
             this.matterdetailForm.controls['TOTALUNITS'].setValue(matterData.STRATAGROUP.TOTALUNITS);
           }
-          else if (this.classtype == 'Trademark/IP') { //Details -> trademark-ip
+          else if (this.classtype == 14) { //Details -> trademark-ip
             this.matterdetailForm.controls['FolioIdentifier'].setValue(matterData.STRATAGROUP.FOLIOIDENTIFIER);
-          } else if (matterData.MATTERCLASS == 7) {
-            this.matterdetailForm.controls['DATEOFWILL'].setValue(matterData.ESTATEGROUP.DATEOFWILL);
+          } else if (matterData.MATTERCLASS == 7) {//Details -> wills-estate
+            if (matterData.ESTATEGROUP.DATEOFWILL) {
+              let dateofwill = matterData.ESTATEGROUP.DATEOFWILL.split("/");
+              this.matterdetailForm.controls['DATEOFWILLTEXT'].setValue(new Date(dateofwill[1] + '/' + dateofwill[0] + '/' + dateofwill[2]));
+              this.matterdetailForm.controls['DATEOFWILL'].setValue(matterData.ESTATEGROUP.DATEOFWILL);
+            }
             this.matterdetailForm.controls['ESTATEGROSSVALUE'].setValue(matterData.ESTATEGROUP.ESTATEGROSSVALUE);
             this.matterdetailForm.controls['ESTATENETVALUE'].setValue(matterData.ESTATEGROUP.ESTATENETVALUE);
             this.matterdetailForm.controls['NAMEOFTRUST'].setValue(matterData.ESTATEGROUP.NAMEOFTRUST);
             this.matterdetailForm.controls['NAMEOFSUPERANNUATION'].setValue(matterData.ESTATEGROUP.NAMEOFSUPERANNUATION);
             this.matterdetailForm.controls['NUMBEROFCODICILS'].setValue(matterData.ESTATEGROUP.NUMBEROFCODICILS);
             this.matterdetailForm.controls['DATEOFCODICILS'].setValue(matterData.ESTATEGROUP.DATEOFCODICILS);
-            this.matterdetailForm.controls['DateOfGrantOfRep'].setValue(matterData.ESTATEGROUP.DATEOFGRANTOFREP);
+            if (matterData.ESTATEGROUP.DATEOFGRANTOFREP) {
+              let DateOfGrantOfReptexttem = matterData.ESTATEGROUP.DATEOFGRANTOFREP.split("/");
+              this.matterdetailForm.controls['DateOfGrantOfReptext'].setValue(new Date(DateOfGrantOfReptexttem[1] + '/' + DateOfGrantOfReptexttem[0] + '/' + DateOfGrantOfReptexttem[2]));
+              this.matterdetailForm.controls['DateOfGrantOfRep'].setValue(matterData.ESTATEGROUP.DATEOFGRANTOFREP);
+            }
             this.matterdetailForm.controls['MatterNo'].setValue(matterData.LEGALDETAILS.MATTERNO);
           }
           this.isLoadingResults = false;
@@ -275,7 +472,7 @@ export class MatterPopupComponent implements OnInit {
       COMPLETEDDATETEXT: [''],
       PRIMARYFEEEARNERGUID: [''],
       OWNERGUID: [''],
-      FeeAgreementDate: [],
+      FEEAGREEMENTDATE: [],
       FeeAgreementDateText: [],
       EstimateFromTotalExGST: [''],
       EstimateFromTotalIncGST: [''],
@@ -514,19 +711,6 @@ export class MatterPopupComponent implements OnInit {
       ACTIVE: this.f.ACTIVE.value == true ? 1 : 0,
       SHORTNAME: this.f.SHORTNAME.value,
       MATTER: this.f.MATTER.value,
-
-      // general
-      NOTES: this.f.NOTES.value,
-      COMMENCEMENTDATE: this.f.COMMENCEMENTDATE.value,
-      REFERENCE: this.f.REFERENCE.value,
-      OTHERREFERENCE: this.f.OTHERREFERENCE.value,
-      COMPLETEDDATE: this.f.COMPLETEDDATE.value,
-      PRIMARYFEEEARNERGUID: this.f.PRIMARYFEEEARNERGUID.value,
-      OWNERGUID: this.f.OWNERGUID.value,
-      FeeAgreementDate: this.f.FeeAgreementDate.value,
-      EstimateFromTotalExGST: this.f.EstimateFromTotalExGST.value,
-      EstimateFromTotalIncGST: this.f.EstimateFromTotalIncGST.value,
-
       // client
       FirmGuid: this.f.FirmGuid.value,
       // rates
@@ -547,12 +731,25 @@ export class MatterPopupComponent implements OnInit {
       ARCHIVEDATE: this.f.ARCHIVEDATE.value,
 
     };
-    if (this.classtype == 'Commercial') {
+    if (this.userType) {
+      // general
+      details.NOTES = this.f.NOTES.value;
+      details.COMMENCEMENTDATE = this.f.COMMENCEMENTDATE.value;
+      details.REFERENCE = this.f.REFERENCE.value;
+      details.OTHERREFERENCE = this.f.OTHERREFERENCE.value;
+      details.COMPLETEDDATE = this.f.COMPLETEDDATE.value;
+      details.PRIMARYFEEEARNERGUID = this.f.PRIMARYFEEEARNERGUID.value;
+      details.OWNERGUID = this.f.OWNERGUID.value;
+      details.FEEAGREEMENTDATE = this.f.FEEAGREEMENTDATE.value;
+      details.EstimateFromTotalExGST = this.f.EstimateFromTotalExGST.value;
+      details.EstimateFromTotalIncGST = this.f.EstimateFromTotalIncGST.value;
+    }
+    if (this.classtype == 19) {
       // Details -> commercial
       details.CLASSOFSHARES = this.f.CLASSOFSHARES.value;
       details.NUMBEROFSHARES = this.f.NUMBEROFSHARES.value;
       details.CONSIDERATION = this.f.CONSIDERATION.value;
-    } else if (this.classtype == 'Compensation') {
+    } else if (this.classtype == 8 || this.classtype == 26 || this.classtype == 21 || this.classtype == 22 || this.classtype == 23 || this.classtype == 24 || this.classtype == 25) {
       //Details -> compensation
       details.ACCIDENTDATE = this.f.ACCIDENTDATE.value;
       details.INVESTIGATIONDATE = this.f.INVESTIGATIONDATE.value;
@@ -568,7 +765,7 @@ export class MatterPopupComponent implements OnInit {
       details.CLAIMNUMBER = this.f.CLAIMNUMBER.value;
       details.ExpirationDate = this.f.ExpirationDate.value;
       details.HowDidInjuryOccur = this.f.HowDidInjuryOccur.value;
-    } else if (this.classtype == 'Compulsory Acquisition') {
+    } else if (this.classtype == 9) {
       // Details ->compulsory-acquisition
       details.Address = this.f.Address.value;
       details.CLIENTVALUATION = this.f.CLIENTVALUATION.value;
@@ -608,7 +805,7 @@ export class MatterPopupComponent implements OnInit {
       details.EXPERTHEARINGDATE = this.f.EXPERTHEARINGDATE.value;
       details.MatterNo = this.f.MatterNo.value;
       details.ExpirationDate = this.f.ExpirationDate.value;
-    } else if (this.classtype == 'Immigration') {
+    } else if (this.classtype == 6) {
       //Details -> immigration
       details.VISATYPE = this.f.VISATYPE.value;
       details.VALUEOFASSETS = this.f.VALUEOFASSETS.value;
@@ -617,7 +814,7 @@ export class MatterPopupComponent implements OnInit {
       details.LODGEMENTDATE = this.f.LODGEMENTDATE.value;
       details.VISAEXPIRYDATE = this.f.VISAEXPIRYDATE.value;
       details.DECISIONDUEDATE = this.f.DECISIONDUEDATE.value;
-    } else if (this.classtype == 'Leasing') {
+    } else if (this.classtype == 11) {
       //Details -> leasing
       details.Address2 = this.f.Address2.value;
       details.LEASERECEIVED = this.f.LEASERECEIVED.value == true ? 1 : 0;
@@ -645,7 +842,7 @@ export class MatterPopupComponent implements OnInit {
       details.CostEstimateIfWinIncGST = this.f.CostEstimateIfWinIncGST.value;
       details.CostEstimateIfFailExGST = this.f.CostEstimateIfFailExGST.value;
       details.CostEstimateIfFailIncGST = this.f.CostEstimateIfFailIncGST.value;
-    } else if (this.classtype == 'Maritime') {
+    } else if (this.classtype == 20) {
       //Details -> maritime
       details.VESSELNAME = this.f.VESSELNAME.value;
       details.VESSELFLAG = this.f.VESSELFLAG.value;
@@ -657,7 +854,7 @@ export class MatterPopupComponent implements OnInit {
       details.INCIDENTDATE = this.f.INCIDENTDATE.value;
       details.EXCHANGEDATE = this.f.EXCHANGEDATE.value;
       details.SETTLEMENTDATE = this.f.SETTLEMENTDATE.value;
-    } else if (this.classtype == 'Mortgage Finance') {
+    } else if (this.classtype == 12) {
       //Details -> mortgage-finance
       details.PRINCIPALADVANCED = this.f.PRINCIPALADVANCED.value;
       details.INTERESTRATE = this.f.INTERESTRATE.value;
@@ -667,7 +864,7 @@ export class MatterPopupComponent implements OnInit {
       details.COMMENCEMENTDATE = this.f.COMMENCEMENTDATE.value;
       details.ExpirationDate = this.f.ExpirationDate.value;
     }
-    else if (this.classtype == 'Property Purchase') {
+    else if (this.classtype == 4) {
       // Details ->property-purchase
       details.Address3 = this.f.Address3.value;
       details.PURCHASEPRICE = this.f.PURCHASEPRICE.value;
@@ -686,7 +883,7 @@ export class MatterPopupComponent implements OnInit {
       details.BUILDINGREPORTCOMPLETED = this.f.BUILDINGREPORTCOMPLETED.value == true ? 1 : 0;
       details.PESTREPORTCOMPLETED = this.f.PESTREPORTCOMPLETED.value == true ? 1 : 0;
       details.ClientStatus = this.f.ClientStatus.value;
-    } else if (this.classtype == 'Property Sale') {
+    } else if (this.classtype == 3) {
       //Details -> property-sale 
       details.Address4 = this.f.Address4.value;
       details.PURCHASEPRICE = this.f.PURCHASEPRICE.value;
@@ -696,7 +893,7 @@ export class MatterPopupComponent implements OnInit {
       details.DATEPAID = this.f.DATEPAID.value;
       details.BANKREFERENCE = this.f.BANKREFERENCE.value;
       details.ClientStatus = this.f.ClientStatus.value;
-    } else if (this.classtype == 'Strata') {
+    } else if (this.classtype == 5) {
       //Details -> strata
       details.STRATAPLANNUMBER = this.f.STRATAPLANNUMBER.value;
       details.EXPIRATIONDATE = this.f.EXPIRATIONDATE.value;
@@ -707,7 +904,7 @@ export class MatterPopupComponent implements OnInit {
       details.FOLIOIDENTIFIER = this.f.FOLIOIDENTIFIER.value;
       details.AGGREGATIONOFENTITLEMENT = this.f.AGGREGATIONOFENTITLEMENT.value;
       details.TOTALUNITS = this.f.TOTALUNITS.value;
-    } else if (this.classtype == 'Trademark/IP') {
+    } else if (this.classtype == 14) {
       //Details -> trademark-ip
       details.FolioIdentifier = this.f.FolioIdentifier.value;
     } else if (this.classtype == 7) {
@@ -777,6 +974,7 @@ export class MatterPopupComponent implements OnInit {
           this.toastr.success('Matter update successfully');
         }
         this.isspiner = false;
+        $('#refreshMatterTab').click();
         this.dialogRef.close(true);
       } else {
         this.isspiner = false;

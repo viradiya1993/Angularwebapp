@@ -50,7 +50,9 @@ export class MattersListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     $('content').addClass('inner-scroll');
     this.getMatterList(this.lastFilter);
-
+  }
+  refreshMatterTab() {
+    this.getMatterList(this.lastFilter);
   }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;

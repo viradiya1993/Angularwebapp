@@ -76,3 +76,7 @@ app-matters-list {
 .more_tbl_clmn .mat-cell:last-child {
     padding-right: 70px;
 }
+
+button#refreshMatterTab {
+    display: none;
+}

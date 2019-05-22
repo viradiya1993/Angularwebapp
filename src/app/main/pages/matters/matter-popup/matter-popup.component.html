@@ -31,7 +31,7 @@
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="min_height">
                     <mat-tab-group mat-align-tabs="start">
-                        <mat-tab label="General">
+                        <mat-tab label="General" *ngIf="userType">
                             <app-general [matterdetailForm]="matterdetailForm"></app-general>
                         </mat-tab>
                         <mat-tab label="Client & Corres">
@@ -41,22 +41,21 @@
                             <app-rates [matterdetailForm]="matterdetailForm" [GSTTYPEVALI]="GSTTYPEVAL" [BILLINGMETHODVALI]="BILLINGMETHODVAL"></app-rates>
                         </mat-tab>
                         <mat-tab label="Details">
-                            <app-commercial *ngIf="classtype=='Commercial'" [matterdetailForm]="matterdetailForm"></app-commercial>
-                            <app-compensation *ngIf="classtype=='Compensation' || classtype=='Employement' || classtype=='Medical Negligence' || classtype=='Public Liability' || classtype=='Total and Permanent D' || classtype=='Working injuries Damage' || classtype=='Workers Compensatoior' "
-                                [matterdetailForm]="matterdetailForm"></app-compensation>
-                            <app-compulsory-acquisition *ngIf="classtype=='Compulsory Acquisition'" [matterdetailForm]="matterdetailForm"></app-compulsory-acquisition>
+                            <app-commercial *ngIf="classtype=='19'" [matterdetailForm]="matterdetailForm"></app-commercial>
+                            <app-compensation *ngIf="classtype=='8' || classtype=='21' || classtype=='22' || classtype=='23' || classtype=='24' || classtype=='25' || classtype=='26' " [matterdetailForm]="matterdetailForm"></app-compensation>
+                            <app-compulsory-acquisition *ngIf="classtype=='9'" [matterdetailForm]="matterdetailForm"></app-compulsory-acquisition>
                             <app-criminal *ngIf="classtype=='18'" [matterdetailForm]="matterdetailForm"></app-criminal>
                             <app-family *ngIf="classtype=='10'" [matterdetailForm]="matterdetailForm"></app-family>
-                            <app-immigration *ngIf="classtype=='Immigration'" [matterdetailForm]="matterdetailForm"></app-immigration>
-                            <app-leasing *ngIf="classtype=='Leasing'" [matterdetailForm]="matterdetailForm"></app-leasing>
+                            <app-immigration *ngIf="classtype=='6'" [matterdetailForm]="matterdetailForm"></app-immigration>
+                            <app-leasing *ngIf="classtype=='11'" [matterdetailForm]="matterdetailForm"></app-leasing>
                             <app-litigation *ngIf="classtype=='2'" [matterdetailForm]="matterdetailForm"></app-litigation>
-                            <app-maritime *ngIf="classtype=='Maritime'" [matterdetailForm]="matterdetailForm"></app-maritime>
-                            <app-mortgage-finance *ngIf="classtype=='Mortgage Finance'" [matterdetailForm]="matterdetailForm"></app-mortgage-finance>
-                            <app-property-purchase *ngIf="classtype=='Property Purchase'" [matterdetailForm]="matterdetailForm"></app-property-purchase>
-                            <app-property *ngIf="classtype=='Property Sale'" [matterdetailForm]="matterdetailForm"></app-property>
-                            <app-strata *ngIf="classtype=='Strata'" [matterdetailForm]="matterdetailForm"></app-strata>
+                            <app-maritime *ngIf="classtype=='20'" [matterdetailForm]="matterdetailForm"></app-maritime>
+                            <app-mortgage-finance *ngIf="classtype=='12'" [matterdetailForm]="matterdetailForm"></app-mortgage-finance>
+                            <app-property-purchase *ngIf="classtype=='4'" [matterdetailForm]="matterdetailForm"></app-property-purchase>
+                            <app-property *ngIf="classtype=='3'" [matterdetailForm]="matterdetailForm"></app-property>
+                            <app-strata *ngIf="classtype=='5'" [matterdetailForm]="matterdetailForm"></app-strata>
                             <app-wills-estate *ngIf="classtype=='7'" [matterdetailForm]="matterdetailForm"></app-wills-estate>
-                            <app-trademark-ip *ngIf="classtype=='Trademark/IP'" [matterdetailForm]="matterdetailForm"></app-trademark-ip>
+                            <app-trademark-ip *ngIf="classtype=='14'" [matterdetailForm]="matterdetailForm"></app-trademark-ip>
                         </mat-tab>
                         <mat-tab label="Others">
                             <app-others [matterdetailForm]="matterdetailForm"></app-others>

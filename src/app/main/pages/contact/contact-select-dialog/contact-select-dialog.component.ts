@@ -26,7 +26,7 @@ export class ContactSelectDialogComponent implements OnInit {
   SelectcontactForm: FormGroup;
   pageSize: any;
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
-  filterVals: any = { 'Active': '', 'FirstLetter': '', 'ContactType': '' };
+  filterVals: any = { 'Active': '1', 'FirstLetter': 'a', 'ContactType': 'Person', 'SEARCH': '' };
 
 
   constructor(
@@ -36,7 +36,7 @@ export class ContactSelectDialogComponent implements OnInit {
     public _matDialog: MatDialog,
     public _getContact: ContactService,
   ) {
-    this.SelectcontactForm = this.fb.group({ ContactType: [''], startsWith: [''], ActiveContacts: [''], Filter: [''], });
+    this.SelectcontactForm = this.fb.group({ ContactType: ['Person'], startsWith: ['a'], ActiveContacts: ['1'], SEARCH: [''], });
   }
   ngOnInit() {
     this.loadContectData(this.filterVals);
@@ -46,12 +46,18 @@ export class ContactSelectDialogComponent implements OnInit {
     this.loadContectData(this.filterVals);
   }
   ActiveContactsChange() {
-    this.filterVals.Active = this.f.ActiveContacts.value ? 'Yes' : 'No';
+    this.filterVals.Active = this.f.ActiveContacts.value == 'all' ? "" : this.f.ActiveContacts.value;
     this.loadContectData(this.filterVals);
   }
   ContactTypeChange(value) {
-    this.filterVals.ContactType = value;
+    this.filterVals.ContactType = value == 'all' ? "" : value;
     this.loadContectData(this.filterVals);
+  }
+  onSearch(searchFilter: any) {
+    if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
+      this.filterVals.SEARCH = this.f.SEARCH.value;
+      this.loadContectData(this.filterVals);
+    }
   }
   loadContectData(postData) {
     this.isLoadingResults = true;

@@ -4,6 +4,18 @@
             <div class="matter-serach-div sticky_search_div">
                 <form [formGroup]="contactFilter">
                     <mat-form-field class="example" appearance="outline">
+                        <mat-label>Contact Type</mat-label>
+                        <mat-select #value name="selected" (selectionChange)="ContactTypeChange($event.value)" formControlName="ContactType">
+                            <mat-option value="all">All Contacts</mat-option>
+                            <mat-option value="Person">People</mat-option>
+                            <mat-option value="Company">Company</mat-option>
+                            <mat-option value="Party">Party</mat-option>
+                            <mat-option value="Payee">Payee</mat-option>
+                            <mat-option value="Payor">Payor</mat-option>
+                            <mat-option value="Payee/Payor">Payee/Payor</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="example" appearance="outline">
                         <!-- <mat-label>Active Matters</mat-label>formControlName="Filter1" -->
                         <mat-select (selectionChange)="ContactChange($event.value)" formControlName="Filter1">
                             <mat-option value="all">All Contacts</mat-option>
@@ -42,6 +54,10 @@
                             <mat-option value="y">Y</mat-option>
                             <mat-option value="z">Z</mat-option>
                         </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="example">
+                        <mat-label>Filter</mat-label>
+                        <input matInput formControlName="search" (keydown)="onSearch($event)">
                     </mat-form-field>
                     <button mat-raised-button color="primary" id="refreshContactTab" (click)="refreshContactTab();">Refresh</button>
                 </form>

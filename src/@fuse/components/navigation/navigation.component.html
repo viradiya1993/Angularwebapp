@@ -2,7 +2,13 @@
 
     <!-- Vertical Navigation Layout -->
     <ng-container *ngIf="layout === 'vertical'">
-        <form class="example-form" id="fevrite_form" autocomplete="off">
+        <p class="name">Favourite </p>
+        <ng-container *ngFor="let favopages of page">
+            <span *ngIf="favopages.STAR=='star'">
+                    <fuse-nav-vertical-item *ngIf="favopages.type=='item'" [item]="favopages"></fuse-nav-vertical-item>
+              </span>
+        </ng-container>
+        <form class="example-form favourite_form_div" id="fevrite_form" autocomplete="off">
             <div class="info">Search To Add Favourite</div>
             <div>
                 <mat-form-field class="example-full-width">
@@ -29,13 +35,6 @@
                 </mat-list>
             </div>
         </form>
-        <p class="name">Favourite </p>
-        <ng-container *ngFor="let favopages of page">
-            <span *ngIf="favopages.STAR=='star'">
-                    <fuse-nav-vertical-item *ngIf="favopages.type=='item'" [item]="favopages"></fuse-nav-vertical-item>
-              </span>
-        </ng-container>
-
     </ng-container>
     <!-- / Vertical Navigation Layout -->
 </div>

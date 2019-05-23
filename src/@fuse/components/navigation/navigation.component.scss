@@ -110,3 +110,39 @@ mat-icon.star.mat-icon.material-icons.mat-icon-no-color {
 .side_bar_title {
     padding: 15px;
 }
+
+.favourite_form_div  {
+    position: fixed;
+    bottom: 0;
+}
+.favourite_form_div .listdata.ng-star-inserted {
+    position: fixed;
+    z-index: 1;
+    width: 94%;
+    bottom: 120px;
+}
+.favourite_form_div .info {
+    margin-bottom: 12px;
+}
+.sidebar_btm_div fuse-navigation.material2 {
+    height: 100%;
+}
+
+@media screen and (max-width: 1440px) {
+    .favourite_form_div {
+        position: relative;
+    }
+    .favourite_form_div .listdata.ng-star-inserted {
+        position: relative;
+        margin-top: 90px;
+    }
+}
+@media screen and (max-height: 700px) {
+    .favourite_form_div {
+        position: relative;
+    }
+    .favourite_form_div .listdata.ng-star-inserted {
+        position: relative;
+        margin-top: 90px;
+    }
+}

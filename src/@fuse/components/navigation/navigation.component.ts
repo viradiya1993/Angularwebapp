@@ -6,6 +6,7 @@ import { FuseNavigationService } from '@fuse/components/navigation/navigation.se
 import { Pipe, PipeTransform } from '@angular/core';
 import { GetFavouriteService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
+import * as $ from 'jquery';
 declare var $: any;
 
 @Component({
@@ -160,6 +161,13 @@ export class FuseNavigationComponent implements OnInit {
       $(".mat-input-element").trigger('click');
     }, 5000);
     this.changeIcon();
+    const vph = $(window).height();
+    $('.sidebar_btm_div').css({ 'height': vph - 50 + 'px' });
+
+    $(window).resize(function () {
+      const vph = $(window).height();
+      $('.sidebar_btm_div').css({ 'height': vph - 50 + 'px' });
+    });
   }
   //clear textbox 
   clearSearch() {

@@ -7,15 +7,9 @@
             <mat-radio-button value="Gst Free">GST Free</mat-radio-button>
             <mat-radio-button value="Export">Export</mat-radio-button>
         </mat-radio-group>
+        <mat-checkbox formControlName="ONCHARGEDISBURSEMENTGST" class="gst_charge">Charge Disbursement GST</mat-checkbox>
     </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 40px">
-        <div fxFlex="32">
 
-        </div>
-        <div fxFlex="50" class="Check_1">
-            <mat-checkbox formControlName="ONCHARGEDISBURSEMENTGST">Charge Disbursement GST</mat-checkbox>
-        </div>
-    </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 40px">
         <mat-radio-group fxFlex="100" class="pr-4" [(ngModel)]="BILLINGMETHODVALI" formControlName="BILLINGMETHOD">
             <mat-radio-button value="Time Costed">Time Costed</mat-radio-button>

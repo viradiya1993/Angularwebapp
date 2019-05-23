@@ -995,19 +995,16 @@ export class MatterPopupComponent implements OnInit {
     });
   }
   saveCorDetail(MatterId: any) {
+    let matterService = this._mattersService;
     this.CorrespondDetail.forEach(function (value: { MATTERGUID: any; }) {
       value.MATTERGUID = MatterId;
-      this.savesingleData(value);
-
-    });
-  }
-  savesingleData(value: any) {
-    console.log(value);
-    this._mattersService.AddMatterContact({ FormAction: 'insert', VALIDATEONLY: true, Data: value }).subscribe((response: { CODE: number; STATUS: string; }) => {
-      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+      matterService.AddMatterContact({ FORMACTION: 'insert', VALIDATEONLY: true, DATA: value }).subscribe((response: { CODE: number; STATUS: string; }) => {
+        if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+          console.log(response);
+        }
         console.log(response);
-      }
-    }, (error: any) => { console.log(error); });
+      }, (error: any) => { console.log(error); });
+    });
   }
   corDetailBack(event: any) {
     this.CorrespondDetail.push(event);

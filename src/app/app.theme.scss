@@ -162,6 +162,7 @@ body.theme-pink-dark {
     width: 55px;
     line-height: 55px;
 }
+
 .top_right_action.matter_right_action button {
     height: 55px;
     width: 55px;
@@ -175,15 +176,18 @@ body.theme-pink-dark {
     background-color: #fff;
     z-index: 101;
 }
+
 .contact_right_action {
     position: absolute;
     right: 0;
     top: 0;
     background-color: #fff;
     z-index: 101;
-    height: 55px;;
+    height: 55px;
+    ;
     border-top-right-radius: 5px;
 }
+
 .contact_right_action .mat-icon-button {
     width: 55px;
     height: 55px;
@@ -200,6 +204,7 @@ body.theme-pink-dark {
     height: 55px;
     line-height: 55px;
 }
+
 .top_right_action_billing_one button {
     width: 55px;
     height: 55px;
@@ -221,6 +226,7 @@ body.theme-pink-dark {
     height: 55px;
     border-top-right-radius: 5px;
 }
+
 .top_right_action_billing_position .mat-icon-button {
     width: 55px;
     height: 55px;
@@ -467,15 +473,16 @@ body.theme-yellow-light .mat-dialog-container {
 content.inner-scroll {
     overflow: auto;
 }
+
 // .sticky_search_div {
 //     overflow: hidden !important;
 // }
-
 mat-spinner.mat-progress-spinner {
     zoom: 0 !important;
     height: 20px !important;
     width: 20px !important;
 }
+
 .mat-progress-spinner svg {
     height: 20px !important;
     width: 20px !important;
@@ -485,6 +492,12 @@ mat-spinner.mat-progress-spinner {
     position: relative;
     bottom: 10px;
 }
+
 .add_edit_contact_main button.mat-accent {
     margin-left: 20px;
+}
+
+.add_edit_contact_main .mat-checkbox.gst_charge {
+    position: relative;
+    bottom: 0;
 }

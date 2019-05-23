@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ContactSelectDialogComponent } from '../../../contact/contact-select-dialog/contact-select-dialog.component';
 import { FormGroup } from '@angular/forms';
@@ -16,6 +16,7 @@ export class ClientComponent implements OnInit {
   weight: number;
   symbol: string;
   isspiner: boolean;
+  @Output() CorrespondDetail: EventEmitter<any> = new EventEmitter<any>();
 
 
   constructor(public MatDialog: MatDialog, ) { }
@@ -26,7 +27,8 @@ export class ClientComponent implements OnInit {
     const dialogRef = this.MatDialog.open(CorrespondDailogComponent, { width: '100%', disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.Correspond.push(result);
+        this.CorrespondDetail.emit(result.saveData);
+        this.Correspond.push(result.showData);
       }
     });
   }

@@ -25,6 +25,7 @@ export class MatterPopupComponent implements OnInit {
   BILLINGMETHODVAL: any = '';
   GSTTYPEVAL: any = '';
   userType: any = '';
+  CorrespondDetail: any = [];
 
   constructor(
     private _mattersService: MattersService,
@@ -699,7 +700,7 @@ export class MatterPopupComponent implements OnInit {
     //console.log(this.contactForm);
     return this.matterdetailForm.controls;
   }
-  Classtype(value) {
+  Classtype(value: any) {
     this.classtype = value;
   }
   ondialogSaveClick(): void {
@@ -937,7 +938,7 @@ export class MatterPopupComponent implements OnInit {
   checkValidation(bodyData: any, details: any) {
     let errorData: any = [];
     let warningData: any = [];
-    bodyData.forEach(function (value) {
+    bodyData.forEach(function (value: { VALUEVALID: string; ERRORDESCRIPTION: any; }) {
       if (value.VALUEVALID == 'NO')
         errorData.push(value.ERRORDESCRIPTION);
       else if (value.VALUEVALID == 'WARNING')
@@ -973,6 +974,16 @@ export class MatterPopupComponent implements OnInit {
         } else {
           this.toastr.success('Matter update successfully');
         }
+        this.saveCorDetail(response.DATA.MATTERGUID);
+        // this.CorrespondDetail.forEach(function (value) {
+        //   value.MATTERGUID = response.DATA.MATTERGUID;
+        //   console.log(value);
+        //   this._mattersService.AddMatterContact({ FormAction: 'insert', VALIDATEONLY: true, Data: value }).subscribe(response => {
+        //     if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        //       console.log(response);
+        //     }
+        //   }, error => { console.log(error); });
+        // });
         this.isspiner = false;
         $('#refreshMatterTab').click();
         this.dialogRef.close(true);
@@ -982,5 +993,23 @@ export class MatterPopupComponent implements OnInit {
     }, error => {
       this.toastr.error(error);
     });
+  }
+  saveCorDetail(MatterId: any) {
+    this.CorrespondDetail.forEach(function (value: { MATTERGUID: any; }) {
+      value.MATTERGUID = MatterId;
+      this.savesingleData(value);
+
+    });
+  }
+  savesingleData(value: any) {
+    console.log(value);
+    this._mattersService.AddMatterContact({ FormAction: 'insert', VALIDATEONLY: true, Data: value }).subscribe((response: { CODE: number; STATUS: string; }) => {
+      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        console.log(response);
+      }
+    }, (error: any) => { console.log(error); });
+  }
+  corDetailBack(event: any) {
+    this.CorrespondDetail.push(event);
   }
 }

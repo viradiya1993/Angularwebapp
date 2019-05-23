@@ -74,57 +74,8 @@ export class CorrespondDailogComponent implements OnInit {
       PERSONGUID: this.f.PERSONGUID.value,
       MATTERGUID: this.f.MATTERGUID.value,
     }
-    let matterPostData: any = { FormAction: 'insert', VALIDATEONLY: true, Data: details };
-    this._mattersService.AddMatterContact(matterPostData).subscribe(response => {
-
-      let detailData = { 'type': this.f.TYPE.value, 'Text': this.f.PERSONGUIDTEXT.value + ' - ' + this.f.SOLICITORGUIDTEXT.value };
-      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        this.checkValidation(response.DATA.VALIDATIONS, matterPostData, detailData);
-      } else if (response.CODE == 451 || response.STATUS == "warning") {
-        this.checkValidation(response.DATA.VALIDATIONS, matterPostData, detailData);
-      } else if (response.CODE == 450 || response.STATUS == "error") {
-        this.checkValidation(response.DATA.VALIDATIONS, matterPostData, detailData);
-      } else {
-        if (response.CODE == 402 && response.STATUS == "error" && response.MESSAGE == "Not logged in")
-          this.dialogRef.close(false);
-        this.isspiner = false;
-      }
-    }, err => {
-      this.isspiner = false;
-      this.toastr.error(err);
-    });
+    let data = { 'showData': { 'type': this.f.TYPE.value, 'Text': this.f.PERSONGUIDTEXT.value + ' - ' + this.f.SOLICITORGUIDTEXT.value }, 'saveData': details };
+    this.dialogRef.close(data);
   }
-  checkValidation(bodyData: any, details: any, detailData: any) {
-    let errorData: any = [];
-    let warningData: any = [];
-    bodyData.forEach(function (value) {
-      if (value.VALUEVALID == 'NO' || value.VALUEVALID == 'No')
-        errorData.push(value.ERRORDESCRIPTION);
-      else if (value.VALUEVALID == 'WARNING')
-        warningData.push(value.ERRORDESCRIPTION);
-    });
-    if (Object.keys(errorData).length != 0)
-      this.toastr.error(errorData);
-    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
-      this.isspiner = true;
-      this.saveCorData(details, detailData);
-    }
-    this.isspiner = false;
-  }
-  saveCorData(matterPostData, detailData) {
-    matterPostData.VALIDATEONLY = false;
-    this._mattersService.AddMatterContact(matterPostData).subscribe(response => {
-      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        this.toastr.success('Contact save successfully');
-        this.isspiner = false;
-        this.dialogRef.close(detailData);
-      } else {
-        this.isspiner = false;
-      }
-    }, error => {
-      this.toastr.error(error);
-    });
-  }
-
 
 }

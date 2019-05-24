@@ -26,6 +26,7 @@ import { ReceiptDilogComponent } from 'app/main/pages/invoice/receipt-dilog/rece
 import { InvoiceDetailComponent } from 'app/main/pages/invoice/invoice-detail/invoice-detail.component';
 import { SpendMoneyAddComponent } from 'app/main/pages/spend-money/spend-money-add-dialog/spend-money-add.component';
 import { GeneralReceiptDilogComponent } from 'app/main/pages/receive-money/general-receipt-dilog/general-receipt-dilog.component';
+import { MatterContactDailogComponent } from 'app/main/pages/template/matter-contact-dailog/matter-contact-dailog.component';
 
 
 
@@ -385,13 +386,23 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     //Reportpopup open
     Reportpopup(ReportData) {
-        const dialogRef = this.dialog.open(ReportsComponent, {
-            width: '100%',
-            data: ReportData,
-            disableClose: true,
-        });
-
-        dialogRef.afterClosed().subscribe(result => { });
+        let type: number;
+        if (ReportData.REPORTGROUP == 'Management')
+            type = 27;
+        else if (ReportData.REPORTGROUP == 'Accounts')
+            type = 26;
+        else if (ReportData.REPORTGROUP == 'Trust')
+            type = 25;
+        // console.log(this.appPermissions[type][ReportData.REPORTNAME]);
+        // console.log(ReportData);
+        // console.log(type);
+        // console.log(ReportData.REPORTNAME);
+        if (this.appPermissions[type][ReportData.REPORTNAME]) {
+            const dialogRef = this.dialog.open(ReportsComponent, { width: '100%', data: ReportData, disableClose: true });
+            dialogRef.afterClosed().subscribe(result => { });
+        } else {
+            this.toastr.error('Access Denied');
+        }
     }
     // New matter Pop-up
     AddNewmatterpopup() {
@@ -660,9 +671,24 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     // ******************************************END Invoice related funtion like create update delete view*********************************************
-
+    //***********************************************************START Select Matter Contact*************************************************************************
+    // select matter contact
+    SelectMatterContact() {
+        const dialogRef = this.dialog.open(MatterContactDailogComponent, {
+            width: '100%',
+            disableClose: true,
+            data: { action: 'new' }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+        //***********************************************************END Select Matter Contact*************************************************************************
+    }
 }
 //2 pair Data Convert
 function chunks(arr, size = 3) {
     return arr.map((x, i) => i % size == 0 && arr.slice(i, i + size)).filter(x => x);
 }
+
+
+

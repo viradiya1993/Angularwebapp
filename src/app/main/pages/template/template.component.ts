@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatTableDataSource, MatPaginator,MatDialog } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { ContactService } from 'app/_services';
 import { fuseAnimations } from '@fuse/animations';
@@ -15,8 +15,8 @@ import * as $ from 'jquery';
   animations: fuseAnimations
 })
 export class TemplateComponent implements OnInit {
-  
-  displayedColumns: string[] = ['Image','CONTACTNAME'];
+
+  displayedColumns: string[] = ['Image', 'CONTACTNAME'];
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   highlightedRows: any;
@@ -30,13 +30,13 @@ export class TemplateComponent implements OnInit {
     private toastr: ToastrService,
     public _getContact: ContactService,
     public MatDialog: MatDialog,
-    ) { }
+  ) { }
 
   ngOnInit() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     let d = {};
     this.isLoadingResults = true;
-    this._getContact.ContactData(d).subscribe(response => {      
+    this._getContact.ContactData(d).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Contactdata = new MatTableDataSource(response.DATA.CONTACTS);
         this.Contactdata.paginator = this.paginator;

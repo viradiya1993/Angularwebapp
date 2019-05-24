@@ -383,9 +383,16 @@ toolbar .ribbon-container .large-button .large-button-container .main-text {
 button.disabled-click {
     pointer-events: none;
     color: rgba(0, 0, 0, 0.26) !important;
+}
+
+.disabled-click-cursor {
     cursor: not-allowed !important;
 }
 
 .disabled-click img {
     opacity: 0.5;
+}
+
+button:disabled {
+    cursor: not-allowed !important;
 }

@@ -975,18 +975,7 @@ export class MatterPopupComponent implements OnInit {
           this.toastr.success('Matter update successfully');
         }
         this.saveCorDetail(response.DATA.MATTERGUID);
-        // this.CorrespondDetail.forEach(function (value) {
-        //   value.MATTERGUID = response.DATA.MATTERGUID;
-        //   console.log(value);
-        //   this._mattersService.AddMatterContact({ FormAction: 'insert', VALIDATEONLY: true, Data: value }).subscribe(response => {
-        //     if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        //       console.log(response);
-        //     }
-        //   }, error => { console.log(error); });
-        // });
         this.isspiner = false;
-        $('#refreshMatterTab').click();
-        this.dialogRef.close(true);
       } else {
         this.isspiner = false;
       }
@@ -1000,11 +989,11 @@ export class MatterPopupComponent implements OnInit {
       value.MATTERGUID = MatterId;
       matterService.AddMatterContact({ FORMACTION: 'insert', VALIDATEONLY: true, DATA: value }).subscribe((response: { CODE: number; STATUS: string; }) => {
         if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-          console.log(response);
         }
-        console.log(response);
       }, (error: any) => { console.log(error); });
     });
+    $('#refreshMatterTab').click();
+    this.dialogRef.close(true);
   }
   corDetailBack(event: any) {
     this.CorrespondDetail.push(event);

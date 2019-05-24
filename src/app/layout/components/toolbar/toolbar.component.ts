@@ -37,6 +37,7 @@ import { GeneralReceiptDilogComponent } from 'app/main/pages/receive-money/gener
 })
 @Injectable()
 export class ToolbarComponent implements OnInit, OnDestroy {
+    appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
     @ViewChild(TimeEntriesComponent) TimeEntrieschild: TimeEntriesComponent;
     horizontalNavbar: boolean; isTabShow: number = 1; rightNavbar: boolean; hiddenNavbar: boolean; navigation: any; selectedLanguage: any; selectedIndex: number;
     currentUser: any;
@@ -74,6 +75,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private TimersServiceI: TimersService,
         private _mattersService: MattersService,
     ) {
+        if (this.appPermissions == null) {
+            this.appPermissions = [];
+        }
         this.navigation = navigation;
         if (localStorage.getItem('theme_type') == "theme-yellow-light")
             this.greenTheme = true;

@@ -379,3 +379,13 @@ toolbar .ribbon-container .mat-nav-list .list-help {
 toolbar .ribbon-container .large-button .large-button-container .main-text {
     display: inline-block !important;
 }
+
+button.disabled-click {
+    pointer-events: none;
+    color: rgba(0, 0, 0, 0.26) !important;
+    cursor: not-allowed !important;
+}
+
+.disabled-click img {
+    opacity: 0.5;
+}

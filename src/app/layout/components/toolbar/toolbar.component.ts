@@ -8,7 +8,7 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
-import { AuthenticationService, ReportlistService, TimersService, MattersService } from '../../../_services';
+import { AuthenticationService, ReportlistService, TimersService, MattersService, MatterInvoicesService } from '../../../_services';
 import { Router } from '@angular/router';
 import { ContactDialogComponent } from './../../../main/pages/contact/contact-dialog/contact-dialog.component';
 import { LicenceAgreementComponent } from '../../../main/licence-agreement/licence-agreement.component';
@@ -75,6 +75,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         public _getContact: ContactService,
         private TimersServiceI: TimersService,
         private _mattersService: MattersService,
+        private matterInvoicesService: MatterInvoicesService,
     ) {
         if (this.appPermissions == null) {
             this.appPermissions = [];
@@ -614,14 +615,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
+    //Invoice Detail for invoice
     InvoiceDetail() {
-        const dialogRef = this._matDialog.open(InvoiceDetailComponent, { width: '100%', disableClose: true, data: null });
+        const dialogRef = this._matDialog.open(InvoiceDetailComponent, { width: '100%', disableClose: true, data: { 'type': 'edit', INVOICEGUID: localStorage.getItem('edit_invoice_id') } });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 console.log(result);
             }
         });
     }
+    //delete invoice
     deleteInvoice(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
@@ -630,18 +633,19 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
-                // let WORKITEMGUID = localStorage.getItem('edit_WORKITEMGUID');
-                // let postData = { FormAction: "delete", WorkItemGuid: WORKITEMGUID }
-                // this.TimersServiceI.SetWorkItems(postData).subscribe(res => {
-                //     if (res.STATUS == "success" && res.CODE == 200) {
-                //         $('#refreshTimeEntryTab').click();
-                //         this.toastr.success('Delete successfully');
-                //     }
-                // });
+                let INVOICEGUID = localStorage.getItem('edit_invoice_id');
+                let postData = { FormAction: "delete", DATA: { INVOICEGUID: INVOICEGUID } }
+                this.matterInvoicesService.SetInvoiceData(postData).subscribe(res => {
+                    if (res.STATUS == "success" && res.CODE == 200) {
+                        $('#refreshInvoiceTab').click();
+                        this.toastr.success('Delete successfully');
+                    }
+                });
             }
             this.confirmDialogRef = null;
         });
     }
+    //delete receicept
     deleteReceiceMoany(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,

@@ -12,31 +12,29 @@
         <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
             <form name="invoiceDetailForm" id="invoiceDetailForm" [formGroup]="invoiceDetailForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form" class="generalReceiptForm">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                         <mat-label>Client</mat-label>
-                        <input matInput readonly placeholder="Client" formControlName="client">
+                        <input matInput readonly placeholder="Client" formControlName="CLIENTNAME">
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
                         <mat-label>Matter</mat-label>
-                        <input matInput placeholder="Matter" readonly formControlName="Matter">
+                        <input matInput placeholder="Matter" readonly formControlName="SHORTNAME">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
                         <mat-label>Invoice No</mat-label>
-                        <input matInput placeholder="Invoice No" formControlName="InvoiceNo">
+                        <input matInput placeholder="Invoice No" formControlName="INVOICECODE">
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
                         <mat-label>Invoice Date</mat-label>
-                        <input matInput readonly [satDatepicker]="picker2">
-                        <!-- (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" -->
+                        <input (dateInput)="choosedInvoiceDate('input', $event)" (dateChange)="choosedInvoiceDate('change', $event)" matInput readonly [satDatepicker]="picker2" formControlName="INVOICEDATETEXT">
                         <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
                         <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
                         <mat-label>Due Date</mat-label>
-                        <input matInput readonly [satDatepicker]="picker1">
-                        <!-- (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" -->
+                        <input (dateInput)="choosedDueDate('input', $event)" (dateChange)="choosedDueDate('change', $event)" matInput readonly formControlName="DUEDATETEXT" [satDatepicker]="picker1">
                         <sat-datepicker #picker1 [rangeMode]="true"> </sat-datepicker>
                         <sat-datepicker-toggle matSuffix [for]="picker1"></sat-datepicker-toggle>
                     </mat-form-field>
@@ -94,22 +92,23 @@
                                 <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" showFirstLastButtons></mat-paginator>
                             </div>
                             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
+                                <mat-form-field appearance="outline" class="example" fxFlex="100" class="pr-4">
                                     <mat-label>Comment</mat-label>
-                                    <textarea name="Notes" matInput></textarea>
+                                    <textarea matInput></textarea>
                                 </mat-form-field>
-
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                 <mat-form-field appearance="outline" fxFlex="30" class="example" class="pr-4">
                                     <mat-label>Invoice Total</mat-label>
-                                    <input matInput>
+                                    <input matInput formControlName="INVOICETOTAL">
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" fxFlex="30" class="example" class="pr-4">
                                     <mat-label>GST</mat-label>
-                                    <input matInput>
+                                    <input matInput formControlName="GST">
                                 </mat-form-field>
                                 <mat-form-field appearance="outline" fxFlex="30" class="example" class="pr-4">
                                     <mat-label>Total</mat-label>
-                                    <input matInput>
+                                    <input matInput formControlName="AGENCYTOTAL">
                                 </mat-form-field>
                             </div>
                         </mat-tab>

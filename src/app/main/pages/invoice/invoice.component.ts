@@ -40,14 +40,11 @@ export class InvoiceComponent implements OnInit {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.getTableFilter();
     this.loadData();
-
   }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('invoices', '').subscribe(response => {
-      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'invoicesColumns');
-        console.log(data);
         this.displayedColumns = data.showcol;
         this.tempColobj = data.tempColobj;
         this.ColumnsObj = data.colobj;
@@ -61,13 +58,16 @@ export class InvoiceComponent implements OnInit {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
   }
-
+  refreshInvoiceTab() {
+    this.loadData();
+  }
   loadData() {
     this.isLoadingResults = true;
     let potData = {};
     this._MatterInvoicesService.MatterInvoicesData(potData).subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (response.DATA.INVOICES[0]) {
+          localStorage.setItem('edit_invoice_id', response.DATA.INVOICES[0].INVOICEGUID);
           this.highlightedRows = response.DATA.INVOICES[0].INVOICEGUID;
           this.currentInvoiceData = response.DATA.INVOICES[0];
         }
@@ -81,6 +81,7 @@ export class InvoiceComponent implements OnInit {
     this.pageSize = localStorage.getItem('lastPageSize');
   }
   selectInvoice(Row: any) {
+    localStorage.setItem('edit_invoice_id', Row.INVOICEGUID);
     this.currentInvoiceData = Row;
   }
   openDialog() {
@@ -93,7 +94,6 @@ export class InvoiceComponent implements OnInit {
     //Save button click
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         this.displayedColumns = result.columObj;
         this.ColumnsObj = result.columnameObj;
         this.tempColobj = result.tempColobj;

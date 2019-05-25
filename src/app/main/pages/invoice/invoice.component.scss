@@ -66,10 +66,10 @@
     z-index: 9999;
     left: 0;
 }
+
 // #Spendmoney .sticky_search_remove_padding {
 //     padding-left: 80px;
 // }
-
 .p-24.list_tbl_main {
     //margin-top: 110px;
     padding-top: 0 !important;
@@ -96,6 +96,7 @@
     //margin-top: 85px;
     padding-top: 0 !important;
 }
+
 .mat-table {
     width: 100%;
 }
@@ -121,6 +122,7 @@ button#refreshTimeEntryTab {
 #Invoice .content .example {
     padding: 20px 10px;
 }
+
 #Invoice .content {
     position: relative;
 }
@@ -130,6 +132,7 @@ button#refreshTimeEntryTab {
         width: 15%;
     }
 }
+
 @media screen and (max-width: 991px) {
     #Invoice .sticky_search_div.responsive_auto {
         overflow: auto;
@@ -138,4 +141,8 @@ button#refreshTimeEntryTab {
     #Invoice .sticky_search_div.responsive_auto .example {
         width: 20%;
     }
+}
+
+#refreshInvoiceTab {
+    display: none;
 }

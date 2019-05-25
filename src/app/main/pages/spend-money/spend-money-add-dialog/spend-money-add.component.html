@@ -218,9 +218,11 @@
           <button mat-raised-button color="accent" *ngIf="action === 'edit'" (click)="Editspendmoney()">Edit</button>  
           <button mat-raised-button color="accent" *ngIf="action === 'edit'" (click)="deletespendmoney()">Delete</button>
       </div>
-      <button mat-raised-button color="accent" [disabled]="isspiner" *ngIf="action !== 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Add</button>
-      <button mat-raised-button color="accent" [disabled]="isspiner" *ngIf="action === 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Update</button>
-      <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don`t Save</button>
+      <div class="right_popup_btn">
+        <button mat-raised-button color="accent" [disabled]="isspiner" *ngIf="action !== 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Add</button>
+        <button mat-raised-button color="accent" [disabled]="isspiner" *ngIf="action === 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Update</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don`t Save</button>
+      </div>
     </mat-dialog-actions>
   </div>
   <!-- </form> -->

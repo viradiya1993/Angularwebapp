@@ -199,6 +199,11 @@ table {
     width: 141px;
 }
 .left_popup_btn {    
-    width: 80%;
+    width: 70%;
     text-align: left;
+}
+.right_popup_btn {
+    float: left;
+    width: 30%;
+    text-align: right;
 }

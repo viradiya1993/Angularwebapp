@@ -159,6 +159,11 @@ button.matternews {
     opacity: 0.5;
 }
 .left_popup_btn {    
-    width: 75%;
+    width: 70%;
     text-align: left;
+}
+.right_popup_btn {
+    float: left;
+    width: 30%;
+    text-align: right;
 }

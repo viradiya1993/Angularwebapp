@@ -22,7 +22,7 @@ export class SpendMoneyComponent implements OnInit {
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   highlightedRows: any;
-  displayedColumns: string [];
+  displayedColumns: string[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   currentMatterData: any;
@@ -47,7 +47,7 @@ export class SpendMoneyComponent implements OnInit {
 
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('time and billing', '').subscribe(response => {
+    this.TableColumnsService.getTableFilter('invoices', '').subscribe(response => {
       if (response.CODE === 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'invoicesColumns');
         this.displayedColumns = data.showcol;
@@ -105,7 +105,7 @@ export class SpendMoneyComponent implements OnInit {
       // }
     });
   }
-  onSearch(s){
+  onSearch(s) {
 
   }
 }

@@ -25,7 +25,7 @@ export class InvoiceComponent implements OnInit {
   pageSize: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  currentMatterData: any;
+  currentInvoiceData: any;
 
 
   constructor(
@@ -43,10 +43,11 @@ export class InvoiceComponent implements OnInit {
 
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('time and billing', 'matter invoices').subscribe(response => {
-      //  console.log(response);
+    this.TableColumnsService.getTableFilter('invoices', '').subscribe(response => {
+      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'invoicesColumns');
+        console.log(data);
         this.displayedColumns = data.showcol;
         this.tempColobj = data.tempColobj;
         this.ColumnsObj = data.colobj;
@@ -63,12 +64,12 @@ export class InvoiceComponent implements OnInit {
 
   loadData() {
     this.isLoadingResults = true;
-    let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
+    let potData = {};
     this._MatterInvoicesService.MatterInvoicesData(potData).subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (response.DATA.INVOICES[0]) {
           this.highlightedRows = response.DATA.INVOICES[0].INVOICEGUID;
-          this.currentMatterData = response.DATA.INVOICES[0];
+          this.currentInvoiceData = response.DATA.INVOICES[0];
         }
         this.MatterInvoicesdata = new MatTableDataSource(response.DATA.INVOICES)
         this.MatterInvoicesdata.paginator = this.paginator;
@@ -79,19 +80,20 @@ export class InvoiceComponent implements OnInit {
     });
     this.pageSize = localStorage.getItem('lastPageSize');
   }
-  selectMatterId(Row: any) {
-    this.currentMatterData = Row;
+  selectInvoice(Row: any) {
+    this.currentInvoiceData = Row;
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'time and billing', 'list': 'matter invoices' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'invoices', 'list': '' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        console.log(result);
         this.displayedColumns = result.columObj;
         this.ColumnsObj = result.columnameObj;
         this.tempColobj = result.tempColobj;

@@ -181,7 +181,6 @@ export class ContactComponent implements OnInit {
     }
   }
   onSearch(searchFilter: any) {
-    console.log(searchFilter);
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
       let filterVal: any = JSON.parse(localStorage.getItem('contact_Filter'));
       filterVal.SEARCH = this.f.search.value;

@@ -15,4 +15,10 @@ export class MatterInvoicesService {
   SetInvoiceData(potData) {
     return this.http.post<any>(environment.APIEndpoint + 'SetInvoice', potData);
   }
+  GetWorkItemsData(potData) {
+    return this.http.post<any>(environment.APIEndpoint + 'GetWorkItems', potData);
+  }
+  GetReceiptAllocationData(potData) {
+    return this.http.post<any>(environment.APIEndpoint + 'GetReceiptAllocation', potData);
+  }
 }

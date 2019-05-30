@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatterInvoicesService, TableColumnsService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import * as $ from 'jquery';
-import { MatTableDataSource, MatPaginator, MatDialogConfig, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatDialogConfig, MatDialog, MatDatepickerInputEvent } from '@angular/material';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-invoice',
@@ -14,6 +15,7 @@ import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.c
   animations: fuseAnimations
 })
 export class InvoiceComponent implements OnInit {
+  matterInvoiceFilterForm: FormGroup;
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   isLoadingResults: boolean = false;
   displayedColumns: string[];
@@ -26,20 +28,64 @@ export class InvoiceComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   currentInvoiceData: any;
-
+  lastFilter: any;
+  MatterInvoicesdata;
 
   constructor(
     private _MatterInvoicesService: MatterInvoicesService,
     private toastr: ToastrService,
-    private _formBuilder: FormBuilder,
     private dialog: MatDialog,
     private TableColumnsService: TableColumnsService,
-  ) { }
-  MatterInvoicesdata;
+    private fb: FormBuilder,
+    public datepipe: DatePipe,
+  ) {
+    this.matterInvoiceFilterForm = this.fb.group({ dateRang: [''], OUTSTANDING: [''], ENDDATE: [''], STARTDATE: [''] });
+    let filterData = JSON.parse(localStorage.getItem('matter_invoice_filter'));
+    if (filterData) {
+      this.lastFilter = JSON.parse(localStorage.getItem('matter_invoice_filter'));
+    } else {
+      this.lastFilter = { OUTSTANDING: '', ENDDATE: '', STARTDATE: '' };
+      localStorage.setItem('matter_invoice_filter', JSON.stringify(this.lastFilter));
+    }
+    if (this.lastFilter) {
+      if (this.lastFilter.STARTDATE && this.lastFilter.ENDDATE) {
+        let tempDate = this.lastFilter.STARTDATE.split("/");
+        let tempDate2 = this.lastFilter.ENDDATE.split("/");
+        let Sd = new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]);
+        let ed = new Date(tempDate2[1] + '/' + tempDate2[0] + '/' + tempDate2[2]);
+        this.matterInvoiceFilterForm.controls['dateRang'].setValue({ begin: Sd, end: ed });
+      }
+      this.matterInvoiceFilterForm.controls['OUTSTANDING'].setValue(this.lastFilter.OUTSTANDING);
+    } else {
+      this.matterInvoiceFilterForm.controls['OUTSTANDING'].setValue('');
+    }
+  }
+  get f() {
+    return this.matterInvoiceFilterForm.controls;
+  }
   ngOnInit() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.getTableFilter();
-    this.loadData();
+    this.loadData(JSON.parse(localStorage.getItem('matter_invoice_filter')));
+  }
+  outstandingChange(val) {
+    this.lastFilter.OUTSTANDING = val;
+    localStorage.setItem('matter_invoice_filter', JSON.stringify(this.lastFilter));
+    this.loadData(this.lastFilter);
+  }
+  choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    let begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
+    let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');
+    this.lastFilter = JSON.parse(localStorage.getItem('matter_invoice_filter'));
+    if (this.lastFilter) {
+      this.lastFilter.STARTDATE = begin;
+      this.lastFilter.ENDDATE = end;
+      localStorage.setItem('matter_invoice_filter', JSON.stringify(this.lastFilter));
+    } else {
+      let filterVal = { OUTSTANDING: '', STARTDATE: begin, ENDDATE: end }
+      localStorage.setItem('matter_invoice_filter', JSON.stringify(filterVal));
+    }
+    this.loadData(JSON.parse(localStorage.getItem('matter_invoice_filter')));
   }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('invoices', '').subscribe(response => {
@@ -59,12 +105,11 @@ export class InvoiceComponent implements OnInit {
     localStorage.setItem('lastPageSize', event.pageSize);
   }
   refreshInvoiceTab() {
-    this.loadData();
+    this.loadData(JSON.parse(localStorage.getItem('matter_invoice_filter')));
   }
-  loadData() {
+  loadData(filterData) {
     this.isLoadingResults = true;
-    let potData = {};
-    this._MatterInvoicesService.MatterInvoicesData(potData).subscribe(response => {
+    this._MatterInvoicesService.MatterInvoicesData(filterData).subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (response.DATA.INVOICES[0]) {
           localStorage.setItem('edit_invoice_id', response.DATA.INVOICES[0].INVOICEGUID);
@@ -101,15 +146,12 @@ export class InvoiceComponent implements OnInit {
           this.MatterInvoicesdata = new MatTableDataSource([]);
           this.MatterInvoicesdata.paginator = this.paginator;
         } else {
-          this.loadData();
+          this.loadData(JSON.parse(localStorage.getItem('matter_invoice_filter')));
         }
       }
     });
   }
-  choosedDate(s, ss) {
+  // onSearch(scss) {
 
-  }
-  onSearch(scss) {
-
-  }
+  // }
 } 

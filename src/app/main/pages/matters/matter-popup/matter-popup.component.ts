@@ -62,15 +62,17 @@ export class MatterPopupComponent implements OnInit {
           this.classtype = matterData.MATTERCLASS;
           this.matterdetailForm.controls['MATTERGUID'].setValue(matterData.MATTERGUID);
           this.matterdetailForm.controls['ACTIVE'].setValue(matterData.ACTIVE_ == 1 ? true : false);
-          this.matterdetailForm.controls['MATTERCLASS'].setValue(matterData.MATTERCLASS);
+          this.matterdetailForm.controls['MATTERCLASS'].setValue(matterData.MATTERCLASS == 0 ? '0' : matterData.MATTERCLASS);
           this.matterdetailForm.controls['SHORTNAME'].setValue(matterData.SHORTNAME);
           this.matterdetailForm.controls['MATTER'].setValue(matterData.MATTER);
+          //client
+          this.matterdetailForm.controls['Clientmattertext'].setValue(matterData.ContactName);
           //Rates
-          this.matterdetailForm.controls['GSTTYPE'].setValue(matterData.BILLINGGROUP.GSTTYPE);
+          this.matterdetailForm.controls['GSTTYPE'].setValue(matterData.BILLINGGROUP.GSTTYPEDESC);
           this.GSTTYPEVAL = matterData.BILLINGGROUP.GSTTYPE;
           this.BILLINGMETHODVAL = matterData.BILLINGGROUP.BILLINGMETHOD;
           this.matterdetailForm.controls['ONCHARGEDISBURSEMENTGST'].setValue(matterData.BILLINGGROUP.ONCHARGEDISBURSEMENTGST == 1 ? true : false);
-          this.matterdetailForm.controls['BILLINGMETHOD'].setValue(matterData.BILLINGGROUP.BILLINGMETHOD);
+          this.matterdetailForm.controls['BILLINGMETHOD'].setValue(matterData.BILLINGGROUP.BILLINGMETHODDESC);
           this.matterdetailForm.controls['RATEPERHOUR'].setValue(matterData.BILLINGGROUP.RATEPERHOUR);
           this.matterdetailForm.controls['RATEPERDAY'].setValue(matterData.BILLINGGROUP.RATEPERDAY);
           this.matterdetailForm.controls['FIXEDRATEEXGST'].setValue(matterData.BILLINGGROUP.FIXEDRATEEXGST);
@@ -80,7 +82,8 @@ export class MatterPopupComponent implements OnInit {
           this.matterdetailForm.controls['CLIENTSOURCE'].setValue(matterData.MARKETINGGROUP.CLIENTSOURCE);
           this.matterdetailForm.controls['FIELDOFLAW'].setValue(matterData.MARKETINGGROUP.FIELDOFLAW);
           this.matterdetailForm.controls['INDUSTRY'].setValue(matterData.MARKETINGGROUP.INDUSTRY);
-          this.matterdetailForm.controls['REFERRERGUIDTEXT'].setValue(matterData.MARKETINGGROUP.REFERRERGUID);
+          this.matterdetailForm.controls['REFERRERGUID'].setValue(matterData.MARKETINGGROUP.REFERRERGUID);
+          this.matterdetailForm.controls['REFERRERGUIDTEXT'].setValue(matterData.MARKETINGGROUP.REFERRERNAME);
           this.matterdetailForm.controls['ARCHIVENO'].setValue(matterData.ARCHIVENO);
           let archivedate = matterData.ARCHIVEDATE.split("/");
           this.matterdetailForm.controls['ARCHIVEDATETEXT'].setValue(new Date(archivedate[1] + '/' + archivedate[0] + '/' + archivedate[2]));
@@ -104,6 +107,7 @@ export class MatterPopupComponent implements OnInit {
             this.matterdetailForm.controls['REFERENCE'].setValue(matterData.REFERENCE);
             this.matterdetailForm.controls['OTHERREFERENCE'].setValue(matterData.OTHERREFERENCE);
             this.matterdetailForm.controls['OWNERGUID'].setValue(matterData.OWNERGUID);
+            // this.matterdetailForm.controls['OWNERGUID'].setValue(matterData.OWNERGUID);
             this.matterdetailForm.controls['PRIMARYFEEEARNERGUID'].setValue(matterData.PRIMARYFEEEARNERGUID);
             this.matterdetailForm.controls['EstimateFromTotalExGST'].setValue(matterData.EstimateFromTotalExGST);
             this.matterdetailForm.controls['EstimateFromTotalIncGST'].setValue(matterData.EstimateFromTotalIncGST);
@@ -479,7 +483,7 @@ export class MatterPopupComponent implements OnInit {
       EstimateFromTotalIncGST: [''],
 
       // client
-      FirmGuid: [''],
+      FIRMGUID: [''],
       Clientmattertext: [''],
 
       // rates
@@ -713,7 +717,7 @@ export class MatterPopupComponent implements OnInit {
       SHORTNAME: this.f.SHORTNAME.value,
       MATTER: this.f.MATTER.value,
       // client
-      FirmGuid: this.f.FirmGuid.value,
+      FIRMGUID: this.f.FIRMGUID.value,
       // rates
       BILLINGMETHOD: this.f.BILLINGMETHOD.value,
       ONCHARGEDISBURSEMENTGST: this.f.ONCHARGEDISBURSEMENTGST.value == true ? 1 : 0,
@@ -926,6 +930,8 @@ export class MatterPopupComponent implements OnInit {
         this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
       } else if (response.CODE == 451 && response.STATUS == "warning") {
         this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
+      } else if (response.CODE == 450 && response.STATUS == "error") {
+        this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
       } else {
         if (response.CODE == 402 && response.STATUS == "error" && response.MESSAGE == "Not logged in")
           this.dialogRef.close(false);
@@ -977,6 +983,19 @@ export class MatterPopupComponent implements OnInit {
         this.saveCorDetail(response.DATA.MATTERGUID);
         this.isspiner = false;
       } else {
+        let errorData: any = [];
+        let warningData: any = [];
+        let bodyData = response.DATA.VALIDATIONS;
+        bodyData.forEach(function (value: { VALUEVALID: string; ERRORDESCRIPTION: any; }) {
+          if (value.VALUEVALID == 'NO' || value.VALUEVALID == 'No')
+            errorData.push(value.ERRORDESCRIPTION);
+          else if (value.VALUEVALID == 'WARNING' || value.VALUEVALID == 'Warning')
+            warningData.push(value.ERRORDESCRIPTION);
+        });
+        if (Object.keys(errorData).length != 0)
+          this.toastr.error(errorData);
+        if (Object.keys(warningData).length != 0)
+          this.toastr.warning(errorData);
         this.isspiner = false;
       }
     }, error => {

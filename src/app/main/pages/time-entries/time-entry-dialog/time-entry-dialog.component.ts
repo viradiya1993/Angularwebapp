@@ -7,6 +7,7 @@ import * as $ from 'jquery';
 import { DatePipe } from '@angular/common';
 import { MatterDialogComponent } from '../matter-dialog/matter-dialog.component';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import { round } from 'lodash';
 
 
 @Component({
@@ -86,6 +87,12 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       ADDITIONALTEXT: ['', Validators.required],
       COMMENT: [''],
     });
+    this.ITEMDATEModel = new Date();
+    this.timeEntryForm.controls['ITEMTYPE'].setValue('WIP');
+    let userType = JSON.parse(localStorage.getItem('currentUser'));
+    this.timeEntryForm.controls['FEEEARNER'].setValue(userType.UserId);
+    this.timeEntryForm.controls['QUANTITYTYPE'].setValue('Hours');
+    this.timeEntryForm.controls['QUANTITY'].setValue(0);
     this.isLoadingResults = true;
     this.Timersservice.GetLookupsData({}).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
@@ -135,10 +142,10 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     }
   }
   calcPE() {
-    this.PRICEINCGSTVAL = this.f.PRICE.value * 1.1;
+    this.PRICEINCGSTVAL = round(this.f.PRICE.value * 1.1);
   }
   calcPI() {
-    this.PRICEVAL = this.f.PRICEINCGST.value / 1.1;
+    this.PRICEVAL = round(this.f.PRICEINCGST.value / 1.1);
   }
   public selectMatter() {
     const dialogRef = this.MatDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });

@@ -33,6 +33,7 @@ export class ContactDialogComponent implements OnInit {
   isspiner: boolean = false;
   dateofbirth: any;
   dateofdeath: string;
+  editDataCompny: boolean = false;
 
   constructor(
     public MatDialog: MatDialog,
@@ -54,14 +55,14 @@ export class ContactDialogComponent implements OnInit {
   value: number;
   contactForm: FormGroup;
   ngOnInit() {
-
     this.contactForm = this._formBuilder.group({
       //CONTACTGUID: ['', Validators.required],
       CONTACTNAME: ['', Validators.required],
       CONTACTTYPE: ['', Validators.required],
       ACTIVE: [''],
       //person
-      COMPANYNAME: [''],
+      COMPANYCONTACTGUID: [''],
+      COMPANYCONTACTGUIDTEXT: [''],
       POSITION: [''],
       GIVENNAMES: [''],
       NAMETITLE: [''],
@@ -137,6 +138,8 @@ export class ContactDialogComponent implements OnInit {
       let contactguidforbody = { CONTACTGUID: localStorage.getItem('contactGuid') }
       this.Contact.getContact(contactguidforbody).subscribe(res => {
         let getContactData = res.DATA.CONTACTS[0];
+        this.editDataCompny = (getContactData.COMPANYCONTACTGUID != '' && getContactData.COMPANYNAME != '') ? false : true;
+        console.log(this.editDataCompny);
         localStorage.setItem('getContact_edit', getContactData.CONTACTGUID);
         this.nameSelected = getContactData.CONTACTTYPE;
         this.active = getContactData.ACTIVE == 0 ? false : true;
@@ -177,9 +180,9 @@ export class ContactDialogComponent implements OnInit {
         // this.contactForm.controls['CONTACTGUID'].setValue(getContactData.CONTACTGUID);
         this.contactForm.controls['CONTACTNAME'].setValue(getContactData.CONTACTNAME);
         this.contactForm.controls['CONTACTTYPE'].setValue(getContactData.CONTACTTYPE);
-        this.contactForm.controls['COMPANYNAME'].setValue(getContactData.COMPANYNAME);
+        this.contactForm.controls['COMPANYCONTACTGUID'].setValue(getContactData.COMPANYCONTACTGUID);
+        this.contactForm.controls['COMPANYCONTACTGUIDTEXT'].setValue(getContactData.COMPANYNAME);
         this.contactForm.controls['POSITION'].setValue(getContactData.POSITION);
-
         // this.contactForm.controls['ACTIVE'].setValue(getContactData.ACTIVE);
         this.contactForm.controls['ACTIVE'].setValue(this.active);
         this.contactForm.controls['GIVENNAMES'].setValue(getContactData.GIVENNAMES);
@@ -191,8 +194,6 @@ export class ContactDialogComponent implements OnInit {
         this.contactForm.controls['OTHERFAMILYNAME'].setValue(getContactData.OTHERFAMILYNAME);
         this.contactForm.controls['OTHERGIVENNAMES'].setValue(getContactData.OTHERGIVENNAMES);
         this.contactForm.controls['REASONFORCHANGE'].setValue(getContactData.REASONFORCHANGE);
-
-
         //other
         this.contactForm.controls['GENDER'].setValue(getContactData.GENDER);
         this.contactForm.controls['DATEOFBIRTH'].setValue(getContactData.DATEOFBIRTH);
@@ -205,7 +206,6 @@ export class ContactDialogComponent implements OnInit {
         this.contactForm.controls['DATEOFDEATH'].setValue(getContactData.DATEOFDEATH);
         this.contactForm.controls['CAUSEOFDEATH'].setValue(getContactData.CAUSEOFDEATH);
         //this.contactForm.valueChanges.subscribe(newVal => console.log(newVal))
-
         //address
         this.contactForm.controls['ADDRESS1'].setValue(getContactData.ADDRESS1);
         this.contactForm.controls['ADDRESS2'].setValue(getContactData.ADDRESS2);
@@ -290,7 +290,7 @@ export class ContactDialogComponent implements OnInit {
       CONTACTTYPE: this.f.CONTACTTYPE.value,
       ACTIVE: this.check,
       //person
-      COMPANYNAME: this.f.COMPANYNAME.value,
+      COMPANYCONTACTGUID: this.f.COMPANYCONTACTGUID.value,
       POSITION: this.f.POSITION.value,
       GIVENNAMES: this.f.GIVENNAMES.value,
       NAMETITLE: this.f.NAMETITLE.value,

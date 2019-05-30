@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Inject, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { MatTableDataSource, MAT_DIALOG_DATA, MatDatepickerInputEvent } from '@angular/material';
+import { MatTableDataSource, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatPaginator } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { MatterInvoicesService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
@@ -15,15 +15,17 @@ import { DatePipe } from '@angular/common';
 })
 export class InvoiceDetailComponent implements OnInit {
   invoiceDetailForm: FormGroup;
-  invoiceData: any;
+  invoiceDatasor: any;
   IntersetChatgesData: any;
   ReceiptsData: any;
-  paginator: any;
   isspiner: boolean;
   isLoadingResults: boolean;
-  displayedColumnsTime: string[] = ['Date', 'FE', 'Text', 'Charge', 'GST'];
-  displayedColumnsRecipt: string[] = ['Receipt', 'Received', 'Type', 'Amount'];
-  displayedColumnsInterest: string[] = ['Invoice', 'Date', 'Total', 'Outstanding', 'Comment'];
+  displayedColumnsTime: string[] = ['ITEMDATE', 'FEEEARNER', 'ADDITIONALTEXT', 'PRICE', 'GST'];
+  displayedColumnsRecipt: string[] = ['RECEIPTCODE', 'RECEIPTDATE', 'Type', 'AMOUNT'];
+  displayedColumnsInterest: string[] = ['INVOICECODE', 'INVOICEDATE', 'INVOICETOTAL', 'AMOUNTOUTSTANDINGEXGST', 'COMMENT'];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator1: MatPaginator;
+  @ViewChild(MatPaginator) paginator2: MatPaginator;
   constructor(
     private _formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public _data: any,
@@ -46,9 +48,11 @@ export class InvoiceDetailComponent implements OnInit {
       COMMENT: [''],
       GST: [''],
       INVOICETOTAL: [''],
+      AMOUNTOUTSTANDINGINCGST: [''],
       AGENCYTOTAL: [''],
     });
     if (this._data.type == 'edit') {
+      this.isLoadingResults = true;
       this.matterInvoicesService.MatterInvoicesData({ 'INVOICEGUID': this._data.INVOICEGUID }).subscribe(response => {
         if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
           let invoiceData = response.DATA.INVOICES[0];
@@ -70,15 +74,42 @@ export class InvoiceDetailComponent implements OnInit {
           this.invoiceDetailForm.controls['COMMENT'].setValue(invoiceData.COMMENT);
           this.invoiceDetailForm.controls['GST'].setValue(invoiceData.GST);
           this.invoiceDetailForm.controls['INVOICETOTAL'].setValue(invoiceData.INVOICETOTAL);
+          this.invoiceDetailForm.controls['AMOUNTOUTSTANDINGINCGST'].setValue(invoiceData.AMOUNTOUTSTANDINGINCGST);
           this.invoiceDetailForm.controls['AGENCYTOTAL'].setValue(invoiceData.AGENCYTOTAL);
+
+          // get time entry data for specifc invoice 
+          this.matterInvoicesService.GetWorkItemsData({ 'INVOICEGUID': this._data.INVOICEGUID }).subscribe(response => {
+            if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+              this.invoiceDatasor = new MatTableDataSource(response.DATA.WORKITEMS);
+              this.invoiceDatasor.paginator = this.paginator;
+            }
+          }, error => {
+            this.toastr.error(error);
+          });
+          // get Receipts data.
+          this.matterInvoicesService.GetReceiptAllocationData({ 'INVOICEGUID': this._data.INVOICEGUID }).subscribe(ReceiptAllocationData => {
+            if (ReceiptAllocationData.CODE == 200 && ReceiptAllocationData.STATUS == "success") {
+              this.ReceiptsData = new MatTableDataSource(ReceiptAllocationData.DATA.RECEIPTALLOCATIONS);
+              this.ReceiptsData.paginator = this.paginator1;
+            }
+          }, error => {
+            this.toastr.error(error);
+          });
+          // get Interest Charges data.
+          this.matterInvoicesService.MatterInvoicesData({ 'ParentInvoiceGuid': this._data.INVOICEGUID }).subscribe(response => {
+            if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+              this.IntersetChatgesData = new MatTableDataSource(response.DATA.INVOICES);
+              this.IntersetChatgesData.paginator = this.paginator2;
+            }
+          }, error => {
+            this.toastr.error(error);
+          });
+          this.isLoadingResults = false;
         }
-        this.isLoadingResults = false;
       }, error => {
         this.toastr.error(error);
       });
     }
-    this.invoiceData = new MatTableDataSource([]);
-    this.invoiceData.paginator = this.paginator;
   }
   choosedInvoiceDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.invoiceDetailForm.controls['INVOICEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));

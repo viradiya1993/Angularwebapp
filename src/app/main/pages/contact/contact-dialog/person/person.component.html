@@ -1,11 +1,14 @@
 <div class=" one " [formGroup]="contactForm" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
-            <mat-label>Company Client</mat-label>
-            <mat-select name="COMPANYNAME" [formControlName]="'COMPANYNAME'">
-                <mat-option [value]="val.COMPANYCONTACTGUID" *ngFor="let val of getCompanyName">{{val.CONTACTNAME}}
-                </mat-option>
-            </mat-select>
+            <mat-label>Company/Client</mat-label>
+            <input matInput readonly formControlName="COMPANYCONTACTGUIDTEXT">
+            <mat-icon matSuffix (click)='SelectContactMatter()' *ngIf="isContact">
+                <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+            </mat-icon>
+            <mat-icon matSuffix (click)='removeContactMatter()' *ngIf="!isContact">
+                <i class="material-icons icon-color">delete_forever</i>
+            </mat-icon>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -20,59 +23,59 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
             <mat-label>Position</mat-label>
-            <input name="POSITION" [formControlName]="'POSITION'" matInput>
+            <input name="POSITION" formControlName="POSITION" matInput>
             <mat-icon matSuffix class="secondary-text">position</mat-icon>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>First Name</mat-label>
-            <input name="GIVENNAMES" [formControlName]="'GIVENNAMES'" matInput>
+            <input name="GIVENNAMES" formControlName="GIVENNAMES" matInput>
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
             <mat-label>Middle Name</mat-label>
-            <input name="MIDDLENAMES" [formControlName]="'MIDDLENAMES'" matInput>
+            <input name="MIDDLENAMES" formControlName="MIDDLENAMES" matInput>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
             <mat-label>Family Name</mat-label>
-            <input name="FAMILYNAME" [formControlName]="'FAMILYNAME'" matInput>
+            <input name="FAMILYNAME" formControlName="FAMILYNAME" matInput>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="50">
             <mat-label>Title</mat-label>
-            <mat-select name="NAMETITLE" [formControlName]="'NAMETITLE'">
+            <mat-select name="NAMETITLE" formControlName="NAMETITLE">
                 <mat-option [value]="val.Name" *ngFor="let val of common">{{val.Name}}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
             <mat-label>Letters</mat-label>
-            <input name="NAMELETTERS" [formControlName]="'NAMELETTERS'" matInput>
+            <input name="NAMELETTERS" formControlName="NAMELETTERS" matInput>
             <mat-icon matSuffix class="secondary-text">latter</mat-icon>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-card class="card">
-            <mat-checkbox class="" name="KNOWNBYOTHERNAME" [formControlName]="'KNOWNBYOTHERNAME'" (change)="triggerSomeEvent(contactForm)">Know by Other Name
+            <mat-checkbox class="" name="KNOWNBYOTHERNAME" formControlName="KNOWNBYOTHERNAME" (change)="triggerSomeEvent(contactForm)">Know by Other Name
             </mat-checkbox>
         </mat-card>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Given Names</mat-label>
-            <input name="OTHERGIVENNAMES" [formControlName]="'OTHERGIVENNAMES'" matInput>
+            <input name="OTHERGIVENNAMES" formControlName="OTHERGIVENNAMES" matInput>
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
             <mat-label>Family Name</mat-label>
-            <input name="OTHERFAMILYNAME" [formControlName]="'OTHERFAMILYNAME'" matInput>
+            <input name="OTHERFAMILYNAME" formControlName="OTHERFAMILYNAME" matInput>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="100" class="pl-4">
             <mat-label>Reason</mat-label>
-            <input name="REASONFORCHANGE" [formControlName]="'REASONFORCHANGE'" matInput>
+            <input name="REASONFORCHANGE" formControlName="REASONFORCHANGE" matInput>
             <mat-icon matSuffix class="secondary-text">reason</mat-icon>
         </mat-form-field>
     </div>

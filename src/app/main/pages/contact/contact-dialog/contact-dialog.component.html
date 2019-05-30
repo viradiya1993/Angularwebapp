@@ -31,7 +31,7 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-tab-group mat-align-tabs="start">
                         <mat-tab *ngIf="nameSelected==='Person' ||nameSelected==='Party' ||nameSelected==='Payee/Payor'" label="Person">
-                            <app-person [contactForm]="contactForm"></app-person>
+                            <app-person [contactForm]="contactForm" [editDataCompny]="editDataCompny"></app-person>
                         </mat-tab>
                         <mat-tab *ngIf="nameSelected==='Company'" label="Company">
                             <app-company></app-company>
@@ -46,8 +46,8 @@
                             <app-id [contactForm]="contactForm"></app-id>
                         </mat-tab>
                         <mat-tab label="Other">
-                            <app-other [contactForm]="contactForm"></app-other> 
-                        </mat-tab> 
+                            <app-other [contactForm]="contactForm"></app-other>
+                        </mat-tab>
                     </mat-tab-group>
                 </div>
             </form>

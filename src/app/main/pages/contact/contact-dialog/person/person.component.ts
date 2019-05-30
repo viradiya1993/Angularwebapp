@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ContactService } from 'app/_services/contact.service';
+import { MatDialog } from '@angular/material';
+import { ContactSelectDialogComponent } from '../../contact-select-dialog/contact-select-dialog.component';
 
 
 
@@ -13,12 +15,10 @@ import { ContactService } from 'app/_services/contact.service';
 export class PersonComponent implements OnInit {
 
   @Input() contactForm: FormGroup;
-
+  @Input() editDataCompny: any;
+  isContact: boolean = false;
   common: { Id: number; Name: string; }[];
-  getCompanyName: void;
-  constructor(public _getContact: ContactService) {
-
-  }
+  constructor(public _getContact: ContactService, public MatDialog: MatDialog) { }
   /**
    * On init
    */
@@ -26,23 +26,32 @@ export class PersonComponent implements OnInit {
     this.contactForm.get('OTHERGIVENNAMES').disable();
     this.contactForm.get('OTHERFAMILYNAME').disable();
     this.contactForm.get('REASONFORCHANGE').disable();
-    let data = {
-      CONTACTTYPE: "Company",
-      ACTIVE: "1"
-    }
-
-    this._getContact.getContact(data).subscribe(res => {
-      this.getCompanyName = res.DATA.CONTACTS
-    });
-
     this.common = [
       { Id: 1, Name: "Mr" },
       { Id: 2, Name: "Mrs" },
       { Id: 3, Name: "Miss" },
       { Id: 4, Name: "Ms" },
-
     ];
-
+    this.isContact = this.editDataCompny;
+  }
+  get f() {
+    //console.log(this.contactForm);
+    return this.contactForm.controls;
+  }
+  removeContactMatter() {
+    this.isContact = true;
+    this.contactForm.controls['COMPANYCONTACTGUID'].setValue('');
+    this.contactForm.controls['COMPANYCONTACTGUIDTEXT'].setValue('');
+  }
+  SelectContactMatter() {
+    const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.contactForm.controls['COMPANYCONTACTGUID'].setValue(result.CONTACTGUID);
+        this.contactForm.controls['COMPANYCONTACTGUIDTEXT'].setValue(result.CONTACTNAME);
+        this.isContact = false;
+      }
+    });
   }
   triggerSomeEvent(f) {
     if (f.value.KNOWNBYOTHERNAME == true) {

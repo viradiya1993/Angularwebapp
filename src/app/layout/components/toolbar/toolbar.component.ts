@@ -27,6 +27,8 @@ import { InvoiceDetailComponent } from 'app/main/pages/invoice/invoice-detail/in
 import { SpendMoneyAddComponent } from 'app/main/pages/spend-money/spend-money-add-dialog/spend-money-add.component';
 import { GeneralReceiptDilogComponent } from 'app/main/pages/receive-money/general-receipt-dilog/general-receipt-dilog.component';
 import { MatterContactDailogComponent } from 'app/main/pages/template/matter-contact-dailog/matter-contact-dailog.component';
+import { InstantInvoiceDailogComponent } from 'app/main/pages/invoice/instant-invoice-dailog/instant-invoice-dailog.component';
+import { InvoiceAddDailogComponent } from 'app/main/pages/invoice/invoice-add-dailog/invoice-add-dailog.component';
 
 
 
@@ -54,6 +56,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     getContactData: any;
     detailwidth: any;
     activeSubMenu: any = '';
+    isInvoice: any;
     greenTheme: any = false;
 
 
@@ -561,9 +564,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     navBarSetting(value: any) {
         let x = value.split("/");
-        if (x[2]) {
-            this.activeSubMenu = x[2];
-        }
+        this.activeSubMenu = x[2] ? x[2] : '';
+        this.isInvoice = x[3] ? x[3] : '';
         if (x[1] == "matters" || x[1] == "") {
             this.isTabShow = 1;
         } else if (x[1] == "contact") {
@@ -598,8 +600,26 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     // ****************************************** START Invoice related funtion like create update delete view*********************************************
-    createInvoice() {
+    selectMatterInvoice() {
         const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                localStorage.setItem('set_active_matters', JSON.stringify(result));
+                this.router.navigate(['time-billing/work-in-progress/invoice']);
+            }
+        });
+    }
+    createInstantInvoice() {
+        return false;
+        const dialogRef = this._matDialog.open(InstantInvoiceDailogComponent, { width: '100%', disableClose: true, data: null });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                console.log(result);
+            }
+        });
+    }
+    createInvoice() {
+        const dialogRef = this._matDialog.open(InvoiceAddDailogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 console.log(result);

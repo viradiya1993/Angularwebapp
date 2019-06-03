@@ -10,8 +10,16 @@ export class RatesComponent implements OnInit {
 
   constructor() { }
   @Input() matterdetailForm: FormGroup;
-  @Input() BILLINGMETHODVALI: any;
-  @Input() GSTTYPEVALI: any;
+  isDisabled: boolean = true;
   ngOnInit() { }
-
+  radioChange(event) {
+    if (this.f.GSTTYPE.value == 'GST Free' || this.f.GSTTYPE.value == 'Export')
+      this.isDisabled = false;
+    else
+      this.isDisabled = true;
+  }
+  get f() {
+    //console.log(this.contactForm);
+    return this.matterdetailForm.controls;
+  }
 }

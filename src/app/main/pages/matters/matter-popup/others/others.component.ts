@@ -27,7 +27,6 @@ export class OthersComponent implements OnInit {
 
   ngOnInit() {
     this._mattersService.getMattersClasstype({ 'LookupType': 'Client Source' }).subscribe(responses => {
-      console.log(responses);
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.ClientSource = responses.DATA.LOOKUPS;
       }

@@ -307,7 +307,8 @@
                                     <div class="light_label_txt">View</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
-                                <section class="group-section-tab details_tab" *ngIf="activeSubMenu =='work-in-progress'">
+                                <!-- time entry section -->
+                                <section class="group-section-tab details_tab" *ngIf="activeSubMenu =='work-in-progress' && isInvoice != 'invoice'">
                                     <section [ngClass]="appPermissions[2]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[2]?.Create==0 ? 'large-button' : 'large-button'" (click)="addNewTimeEntry('Add')">
                            <section class="large-button-container">
@@ -382,7 +383,79 @@
                                     </section>
                                     <div class="light_label_txt">Action</div>
                                 </section>
+                                <!-- end time entry section  -->
+                                <!-- strt invoice add section  -->
+                                <section class="group-section-tab details_tab" *ngIf="isInvoice == 'invoice'">
+                                    <section [ngClass]="appPermissions[2]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[2]?.Create==0 ? 'large-button' : 'large-button'" (click)="createInstantInvoice()">
+                               <section class="large-button-container">
+                                  <mat-icon class="main-icon">
+                                        <img src="assets/icons/web_app/icon_invoice_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                  </mat-icon>
+                                  <div class="main-text">
+                                     <span>Instant <br> Invoice</span>
+                                  </div>
+                               </section>
+                            </button>
+                                    </section>
+                                    <section [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="addNewTimeEntry('Edit')">
+                                   <section class="large-button-container">
+                                      <mat-icon class="main-icon">
+                                            <img src="assets/icons/web_app/icon_invoice_draft_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                      </mat-icon>
+                                      <div class="main-text">
+                                         <span>Preview <br> Invoice</span>
+                                      </div>
+                                   </section>
+                                </button>
+                                    </section>
+                                    <section [ngClass]="appPermissions[2]?.Delete==0 ? 'disabled-click large-button' : 'large-button'">
+                                        <button mat-button [ngClass]="appPermissions[2]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" (click)="createInvoice()">
+                                       <section class="large-button-container">
+                                          <mat-icon class="main-icon">
+                                                <img src="assets/icons/web_app/icon_invoice_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                          </mat-icon>
+                                          <div class="main-text">
+                                             <span>Create <br> Invoice</span>
+                                          </div>
+                                       </section>
+                                    </button>
+                                    </section>
+                                    <div class="light_label_txt">Action</div>
+                                </section>
+                                <!-- end invoice add section  -->
+                                <!-- start tag section  -->
                                 <mat-divider vertical *ngIf="activeSubMenu =='work-in-progress'"></mat-divider>
+                                <section class="group-section-tab details_tab">
+                                    <section [ngClass]="appPermissions[2]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="isInvoice != 'invoice'">
+                                        <button mat-button [ngClass]="appPermissions[2]?.Create==0 ? 'large-button' : 'large-button'" [routerLink]="'/time-billing/work-in-progress/invoice'">
+                                   <section class="large-button-container">
+                                      <mat-icon class="main-icon">
+                                            <img src="assets/icons/web_app/icon_invoice_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                      </mat-icon>
+                                      <div class="main-text">
+                                         <span>Prepare Invoice  <br> /Tagging</span>
+                                      </div>
+                                   </section>
+                                </button>
+                                    </section>
+                                    <section [ngClass]="appPermissions[2]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="isInvoice == 'invoice'">
+                                        <button mat-button [ngClass]="appPermissions[2]?.Create==0 ? 'large-button' : 'large-button'" [routerLink]="'/time-billing/work-in-progress'">
+                                   <section class="large-button-container">
+                                      <mat-icon class="main-icon">
+                                            <img src="assets/icons/web_app/icon_time_cost_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                      </mat-icon>
+                                      <div class="main-text">
+                                         <span>Edit Entries  <br> /Cancel Tagging</span>
+                                      </div>
+                                   </section>
+                                </button>
+                                    </section>
+                                    <div class="light_label_txt">Tagging</div>
+                                </section>
+                                <!-- end tag section  -->
+                                <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab" *ngIf="activeSubMenu=='matter-invoices' || activeSubMenu=='receipts-credits'">
                                     <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/create-document'">
@@ -680,7 +753,7 @@
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button" (click)="createInvoice()">
+                                        <button mat-button class="large-button" (click)="selectMatterInvoice()">
                                             <section class="large-button-container">
                                             <mat-icon class="main-icon"> 
                                                 <img class="" src="assets/icons/web_app/icon_invoice_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">

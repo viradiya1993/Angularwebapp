@@ -8,6 +8,7 @@ import { AuthGuard } from '../../../_guards';
 import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
 
 import { MattersComponent } from './matters.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatButtonModule, MatPaginatorModule, MatDividerModule, MatDialogModule, MatCheckboxModule, MatTabsModule, MatExpansionModule, MatSlideToggleModule, MatCardModule, MatSelectModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule, MatProgressSpinnerModule } from '@angular/material';
 import { MattersListComponent } from './matters-list/matters-list.component';
 import { MattersSortDetailComponent } from './matters-sort-detail/matters-sort-detail.component';
@@ -41,6 +42,7 @@ import { TitleComponent } from './matter-popup/newmatter-detail/matter-address-p
 import { CouncilComponent } from './matter-popup/newmatter-detail/matter-address-popup/council/council.component';
 import { CrownAllotmentComponent } from './matter-popup/newmatter-detail/matter-address-popup/crown-allotment/crown-allotment.component';
 import { CorrespondDailogComponent } from './correspond-dailog/correspond-dailog.component';
+
 
 
 const routes = [
@@ -110,10 +112,12 @@ const routes = [
     MatGridListModule,
     MatRadioModule,
     MatGridListModule,
+    DragDropModule
   ],
   exports: [
-    MattersComponent
+    MattersComponent,
+    DragDropModule
   ],
-  entryComponents: [MatterPopupComponent, MatterAddressPopupComponent,CorrespondDailogComponent]
+  entryComponents: [MatterPopupComponent, MatterAddressPopupComponent, CorrespondDailogComponent]
 })
 export class MattersModule { }

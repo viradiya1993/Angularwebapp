@@ -12,6 +12,8 @@ import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 import { ReceiptDilogComponent } from './receipt-dilog/receipt-dilog.component';
 import { InvoiceDetailComponent } from './invoice-detail/invoice-detail.component';
+import { InstantInvoiceDailogComponent } from './instant-invoice-dailog/instant-invoice-dailog.component';
+import { InvoiceAddDailogComponent } from './invoice-add-dailog/invoice-add-dailog.component';
 
 
 const routes = [
@@ -23,10 +25,14 @@ const routes = [
     InvoiceComponent,
     ReceiptDilogComponent,
     InvoiceDetailComponent,
+    InstantInvoiceDailogComponent,
+    InvoiceAddDailogComponent,
   ],
   entryComponents: [
     ReceiptDilogComponent,
-    InvoiceDetailComponent
+    InvoiceDetailComponent,
+    InstantInvoiceDailogComponent,
+    InvoiceAddDailogComponent
   ],
   imports: [
     CommonModule,

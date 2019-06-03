@@ -21,7 +21,12 @@ const routes = [
   {
     path: '', component: TimeBillingComponent, children: [
       { path: 'estimate', component: EstimateComponent },
-      { path: 'work-in-progress', component: WorkInProgressComponent },
+      {
+        path: 'work-in-progress', component: WorkInProgressComponent, children: [
+          { path: '', component: EstimateComponent },
+          { path: 'invoice', component: EstimateComponent },
+        ]
+      },
       { path: 'matter-invoices', component: MatterInvoicesComponent },
       { path: 'receipts-credits', component: ReceiptsCreditsComponent },
       { path: 'matter-trust', component: MatterTrustComponent },

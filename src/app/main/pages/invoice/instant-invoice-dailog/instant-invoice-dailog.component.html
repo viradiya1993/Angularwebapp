@@ -1,0 +1,97 @@
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+</div>
+<div class="popup_main_div add_invoice_main">
+    <h2 mat-dialog-title>
+        Prepare Instant Invoice
+        <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
+            <mat-icon>close</mat-icon>
+        </button>
+    </h2>
+    <div mat-dialog-content class="mat-typography main">
+        <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+            <form name="addInvoiceForm" id="addInvoiceForm" [formGroup]="addInvoiceForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Client</mat-label>
+                        <input matInput readonly placeholder="Client" formControlName="client">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Matter</mat-label>
+                        <input matInput readonly placeholder="Matter" formControlName="matter">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                        <mat-label>Invoice No</mat-label>
+                        <input matInput placeholder="Date Received" formControlName="Invoiceno">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+                        <mat-label>Invoice Date</mat-label>
+                        <input (dateInput)="CompletedDate('input', $event)" formControlName="INVOICEDATETEXT" (dateChange)="CompletedDate('change', $event)" matInput [matDatepicker]="picker3">
+                        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                        <mat-datepicker #picker3></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                        <mat-label>Due Date</mat-label>
+                        <input (dateInput)="CompletedDate('input', $event)" formControlName="DUEDATETEXT" (dateChange)="CompletedDate('change', $event)" matInput [matDatepicker]="picker">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Duration</mat-label>
+                        <input matInput placeholder="Duration" formControlName="Duration">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Type</mat-label>
+                        <mat-select>
+                            <mat-option *ngFor="let option of optionList" value="{{option.ACTIVITYID}}">{{option.DESCRIPTION}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field fxFlex="100" class="pr-4" appearance="outline">
+                        <mat-label>Select Text</mat-label>
+                        <mat-select>
+                            <mat-option *ngFor="let Lookups of LookupsList" (click)="LookupsChange(Lookups.LOOKUPFULLVALUE)" value="{{Lookups.LOOKUPGUID}}">{{Lookups.LOOKUPFULLVALUE}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>Text</mat-label>
+                        <textarea matInput formControlName="ADDITIONALTEXT"></textarea>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>Invoice Comment</mat-label>
+                        <textarea matInput formControlName="INVOICECOMMENT"></textarea>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                        <mat-label>Total (Ex-GST)</mat-label>
+                        <input matInput placeholder="Date Received" formControlName="Totalexgst">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                        <mat-label>GST</mat-label>
+                        <input matInput readonly placeholder="Date Received" formControlName="GST">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                        <mat-label>Total (Inc-GST)</mat-label>
+                        <input matInput placeholder="Date Received" formControlName="Totalincgst">
+                    </mat-form-field>
+                </div>
+            </form>
+        </div>
+    </div>
+    <mat-dialog-actions align="end" class="popup_ftr">
+        <button mat-raised-button color="accent" (click)="SaveReceipt()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don`t Save</button>
+    </mat-dialog-actions>
+</div>
+<!-- </form> -->

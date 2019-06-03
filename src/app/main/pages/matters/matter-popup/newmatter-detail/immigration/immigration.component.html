@@ -16,28 +16,29 @@
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Anticipated Entry</mat-label>
             <input (dateInput)="AnticipatedEntryClick('input', $event)" formControlName="ANTICIPATEDDATEOFENTRYTEXT" (dateChange)="AnticipatedEntryClick('change', $event)" matInput [matDatepicker]="AnticipatedEntry">
             <mat-datepicker-toggle matSuffix [for]="AnticipatedEntry"></mat-datepicker-toggle>
             <mat-datepicker #AnticipatedEntry></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Lodgement Date</mat-label>
             <input (dateInput)="LodgementDateClick('input', $event)" formControlName="LODGEMENTDATETEXT" (dateChange)="LodgementDateClick('change', $event)" matInput [matDatepicker]="LodgementDate">
             <mat-datepicker-toggle matSuffix [for]="LodgementDate"></mat-datepicker-toggle>
             <mat-datepicker #LodgementDate></mat-datepicker>
         </mat-form-field>
-
-        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Visa Expiry Date</mat-label>
             <input (dateInput)="VisaExpiryDateClick('input', $event)" formControlName="VISAEXPIRYDATETEXT" (dateChange)="VisaExpiryDateClick('change', $event)" matInput [matDatepicker]="VisaExpiryDate">
             <mat-datepicker-toggle matSuffix [for]="VisaExpiryDate"></mat-datepicker-toggle>
             <mat-datepicker #VisaExpiryDate></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Decision Due Date</mat-label>
             <input (dateInput)="DecisionDueDateClick('input', $event)" formControlName="DECISIONDUEDATETEXT" (dateChange)="DecisionDueDateClick('change', $event)" matInput [matDatepicker]="DecisionDueDate">
             <mat-datepicker-toggle matSuffix [for]="DecisionDueDate"></mat-datepicker-toggle>

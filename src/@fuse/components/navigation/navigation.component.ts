@@ -54,8 +54,7 @@ export class FuseNavigationComponent implements OnInit {
       { "ID": "diary", "TITLE": "Diary", "URL": "diary", "STAR": "" },
       { "ID": "invoice", "TITLE": "Invoice", "URL": "invoice", "STAR": "" },
       { "ID": "spend-money", "TITLE": "Spend money", "URL": "spend-money", "STAR": "" },
-      { "ID": "receive-money", "TITLE": "Receive money", "URL": "receive-money", "STAR": "" },
-      { "ID": "generate-document", "TITLE": "Generate document", "URL": "create-document", "STAR": "" }]
+      { "ID": "receive-money", "TITLE": "Receive money", "URL": "receive-money", "STAR": "" }]
 
       this.GetFavouriteService.GetFavourite(postdata).subscribe(response => {
         if (response.CODE == 200 && response.STATUS == "success") {

@@ -95,7 +95,7 @@ mat-dialog-actions {
     }
 }
 
-.add_edit_contact_main {
+.add_invoice_div_main {
     background-color: #fff;
     // width: 50%;
     width: 850px;
@@ -122,27 +122,33 @@ mat-dialog-actions {
 }
 
 @media screen and (max-width: 900px) {
-    .add_edit_contact_main {
+    .add_invoice_div_main {
         width: 95%;
     }
 }
 
-.min_height .mat-tab-body.mat-tab-body-active {
-    min-height: 200px;
-}
-
-img.menu-disabled {
-    opacity: 0.5;
-}
-
-.add_edit_contact_main button.mat-accent {
-    margin-left: 15px;
-}
-
-.min_height .mat-tab-group {
+table.mat-table {
     width: 100%;
 }
 
-.main-detail-tab {
-    min-height: 170px !important;
+.unallocated_div .mat-form-field-wrapper {
+    padding-bottom: 0;
+    margin-bottom: 20px;
+}
+
+.total_amount_div .mat-form-field-wrapper {
+    padding-bottom: 0;
+    margin-left: 20px;
+}
+
+.unallocated_div .mat-form-field {
+    padding-left: 20px;
+}
+
+.allocate_btn_div {
+    margin-bottom: 20px;
+}
+
+.allocate_btn_div .mat-raised-button.mat-accent {
+    margin-left: 20px;
 }

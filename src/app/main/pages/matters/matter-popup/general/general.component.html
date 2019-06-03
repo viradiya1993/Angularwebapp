@@ -30,7 +30,7 @@
             <mat-datepicker #picker3></mat-datepicker>
         </mat-form-field>
     </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="userType">
         <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
             <mat-label>Matter Owner</mat-label>
             <input matInput readonly formControlName="OWNERGUID">
@@ -49,11 +49,11 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
             <mat-label>Estimate Minimum </mat-label>
-            <input matInput type="number" formControlName="EstimateFromTotalExGST">
+            <input matInput type="text" formControlName="EstimateFromTotalExGST" (keyup)="calcPE()" [(ngModel)]="PRICEVAL">
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Ex-GST</mat-label>
-            <input name="Ex-GST" matInput type="number" formControlName="EstimateFromTotalIncGST">
+            <input name="Ex-GST" matInput type="text" formControlName="EstimateFromTotalIncGST" (keyup)="calcPI()" [(ngModel)]="PRICEVALGST">
             <mat-icon matSuffix class="secondary-text"></mat-icon>
         </mat-form-field>
     </div>

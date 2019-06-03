@@ -56,21 +56,20 @@ export class MatterPopupComponent implements OnInit {
     });
     if (this.action === 'edit') {
       this.isLoadingResults = true;
-      this._mattersService.getMattersDetail({ 'MatterGuid': this._data.matterGuid, 'GETALLFIELDS': true }).subscribe(response => {
+      this._mattersService.getMattersDetail({ MATTERGUID: this._data.matterGuid, 'GETALLFIELDS': true }).subscribe(response => {
         if (response.CODE === 200 && response.STATUS === 'success') {
           let matterData = response.DATA.MATTERS[0];
           this.classtype = matterData.MATTERCLASS;
           this.matterdetailForm.controls['MATTERGUID'].setValue(matterData.MATTERGUID);
           this.matterdetailForm.controls['ACTIVE'].setValue(matterData.ACTIVE_ == 1 ? true : false);
-          this.matterdetailForm.controls['MATTERCLASS'].setValue(matterData.MATTERCLASS == 0 ? '0' : matterData.MATTERCLASS);
+          this.matterdetailForm.controls['MATTERCLASS'].setValue(matterData.MATTERCLASS.toString());
           this.matterdetailForm.controls['SHORTNAME'].setValue(matterData.SHORTNAME);
           this.matterdetailForm.controls['MATTER'].setValue(matterData.MATTER);
           //client
-          this.matterdetailForm.controls['Clientmattertext'].setValue(matterData.ContactName);
+          this.matterdetailForm.controls['Clientmattertext'].setValue(matterData.CONTACTNAME);
+          this.matterdetailForm.controls['FIRMGUID'].setValue(matterData.FIRMGUID);
           //Rates
           this.matterdetailForm.controls['GSTTYPE'].setValue(matterData.BILLINGGROUP.GSTTYPEDESC);
-          this.GSTTYPEVAL = matterData.BILLINGGROUP.GSTTYPE;
-          this.BILLINGMETHODVAL = matterData.BILLINGGROUP.BILLINGMETHOD;
           this.matterdetailForm.controls['ONCHARGEDISBURSEMENTGST'].setValue(matterData.BILLINGGROUP.ONCHARGEDISBURSEMENTGST == 1 ? true : false);
           this.matterdetailForm.controls['BILLINGMETHOD'].setValue(matterData.BILLINGGROUP.BILLINGMETHODDESC);
           this.matterdetailForm.controls['RATEPERHOUR'].setValue(matterData.BILLINGGROUP.RATEPERHOUR);
@@ -88,30 +87,30 @@ export class MatterPopupComponent implements OnInit {
           let archivedate = matterData.ARCHIVEDATE.split("/");
           this.matterdetailForm.controls['ARCHIVEDATETEXT'].setValue(new Date(archivedate[1] + '/' + archivedate[0] + '/' + archivedate[2]));
           this.matterdetailForm.controls['ARCHIVEDATE'].setValue(matterData.ARCHIVEDATE);
-          if (this.userType) { // General
-            if (matterData.DATEGROUP.COMPLETEDDATE) {
-              let COMPLETEDDATE1 = matterData.DATEGROUP.COMPLETEDDATE.split("/");
-              this.matterdetailForm.controls['COMPLETEDDATETEXT'].setValue(new Date(COMPLETEDDATE1[1] + '/' + COMPLETEDDATE1[0] + '/' + COMPLETEDDATE1[2]));
-              this.matterdetailForm.controls['COMPLETEDDATE'].setValue(matterData.DATEGROUP.COMPLETEDDATE);
-            }
-            if (matterData.LEASINGGROUP.COMMENCEMENTDATE) {
-              let COMMENCEMENTDATE1 = matterData.LEASINGGROUP.COMMENCEMENTDATE.split("/");
-              this.matterdetailForm.controls['COMMENCEMENTDATETEXT'].setValue(new Date(COMMENCEMENTDATE1[1] + '/' + COMMENCEMENTDATE1[0] + '/' + COMMENCEMENTDATE1[2]));
-              this.matterdetailForm.controls['COMMENCEMENTDATE'].setValue(matterData.LEASINGGROUP.COMMENCEMENTDATE);
-            }
-            if (matterData.DATEGROUP.FEEAGREEMENTDATE) {
-              let FeeAgreementDate1 = matterData.DATEGROUP.FEEAGREEMENTDATE.split("/");
-              this.matterdetailForm.controls['FeeAgreementDateText'].setValue(new Date(FeeAgreementDate1[1] + '/' + FeeAgreementDate1[0] + '/' + FeeAgreementDate1[2]));
-              this.matterdetailForm.controls['FEEAGREEMENTDATE'].setValue(matterData.DATEGROUP.FEEAGREEMENTDATE);
-            }
-            this.matterdetailForm.controls['REFERENCE'].setValue(matterData.REFERENCE);
-            this.matterdetailForm.controls['OTHERREFERENCE'].setValue(matterData.OTHERREFERENCE);
+          // General
+          if (matterData.DATEGROUP.COMPLETEDDATE) {
+            let COMPLETEDDATE1 = matterData.DATEGROUP.COMPLETEDDATE.split("/");
+            this.matterdetailForm.controls['COMPLETEDDATETEXT'].setValue(new Date(COMPLETEDDATE1[1] + '/' + COMPLETEDDATE1[0] + '/' + COMPLETEDDATE1[2]));
+            this.matterdetailForm.controls['COMPLETEDDATE'].setValue(matterData.DATEGROUP.COMPLETEDDATE);
+          }
+          if (matterData.LEASINGGROUP.COMMENCEMENTDATE) {
+            let COMMENCEMENTDATE1 = matterData.LEASINGGROUP.COMMENCEMENTDATE.split("/");
+            this.matterdetailForm.controls['COMMENCEMENTDATETEXT'].setValue(new Date(COMMENCEMENTDATE1[1] + '/' + COMMENCEMENTDATE1[0] + '/' + COMMENCEMENTDATE1[2]));
+            this.matterdetailForm.controls['COMMENCEMENTDATE'].setValue(matterData.LEASINGGROUP.COMMENCEMENTDATE);
+          }
+          if (matterData.DATEGROUP.FEEAGREEMENTDATE) {
+            let FeeAgreementDate1 = matterData.DATEGROUP.FEEAGREEMENTDATE.split("/");
+            this.matterdetailForm.controls['FeeAgreementDateText'].setValue(new Date(FeeAgreementDate1[1] + '/' + FeeAgreementDate1[0] + '/' + FeeAgreementDate1[2]));
+            this.matterdetailForm.controls['FEEAGREEMENTDATE'].setValue(matterData.DATEGROUP.FEEAGREEMENTDATE);
+          }
+          this.matterdetailForm.controls['REFERENCE'].setValue(matterData.REFERENCE);
+          this.matterdetailForm.controls['OTHERREFERENCE'].setValue(matterData.OTHERREFERENCE);
+          this.matterdetailForm.controls['EstimateFromTotalExGST'].setValue(matterData.EstimateFromTotalExGST);
+          this.matterdetailForm.controls['EstimateFromTotalIncGST'].setValue(matterData.EstimateFromTotalIncGST);
+          this.matterdetailForm.controls['NOTES'].setValue(matterData.NOTES);
+          if (this.userType) {
             this.matterdetailForm.controls['OWNERGUID'].setValue(matterData.OWNERGUID);
-            // this.matterdetailForm.controls['OWNERGUID'].setValue(matterData.OWNERGUID);
             this.matterdetailForm.controls['PRIMARYFEEEARNERGUID'].setValue(matterData.PRIMARYFEEEARNERGUID);
-            this.matterdetailForm.controls['EstimateFromTotalExGST'].setValue(matterData.EstimateFromTotalExGST);
-            this.matterdetailForm.controls['EstimateFromTotalIncGST'].setValue(matterData.EstimateFromTotalIncGST);
-            this.matterdetailForm.controls['NOTES'].setValue(matterData.NOTES);
           }
           if (matterData.MATTERCLASS == 19) {            // Details -> commercial
             this.matterdetailForm.controls['CLASSOFSHARES'].setValue(matterData.COMMERCIALGROUP.CLASSOFSHARES);
@@ -460,17 +459,18 @@ export class MatterPopupComponent implements OnInit {
       this.matterdetailForm.controls['ACTIVE'].setValue(true);
     }
   }
+  // isDisabled
   matterFormBuild() {
     this.matterdetailForm = this._formBuilder.group({
       MATTERGUID: [''],
-      MATTERCLASS: [''],
+      MATTERCLASS: ['0'],
       ACTIVE: [''],
       SHORTNAME: [''],
       MATTER: [''],
       // general
       NOTES: [''],
       COMMENCEMENTDATE: [''],
-      COMMENCEMENTDATETEXT: [''],
+      COMMENCEMENTDATETEXT: [new Date()],
       REFERENCE: [''],
       OTHERREFERENCE: [''],
       COMPLETEDDATE: [''],
@@ -487,9 +487,9 @@ export class MatterPopupComponent implements OnInit {
       Clientmattertext: [''],
 
       // rates
-      BILLINGMETHOD: [''],
+      BILLINGMETHOD: ['Time Costed'],
       ONCHARGEDISBURSEMENTGST: [''],
-      GSTTYPE: [''],
+      GSTTYPE: ['GST Exclusive'],
       RATEPERHOUR: [''],
       RATEPERDAY: [''],
       FIXEDRATEEXGST: [''],
@@ -711,7 +711,7 @@ export class MatterPopupComponent implements OnInit {
     this.FormAction = this.action !== 'edit' ? 'insert' : 'update';
     this.isspiner = true;
     let details: any = {
-      MatterGuid: this.f.MATTERGUID.value,
+      MATTERGUID: this.f.MATTERGUID.value,
       MATTERCLASS: this.f.MATTERCLASS.value,
       ACTIVE: this.f.ACTIVE.value == true ? 1 : 0,
       SHORTNAME: this.f.SHORTNAME.value,
@@ -734,20 +734,19 @@ export class MatterPopupComponent implements OnInit {
       REFERRERGUID: this.f.REFERRERGUID.value,
       ARCHIVENO: this.f.ARCHIVENO.value,
       ARCHIVEDATE: this.f.ARCHIVEDATE.value,
-
     };
+    // general
+    details.NOTES = this.f.NOTES.value;
+    details.COMMENCEMENTDATE = this.f.COMMENCEMENTDATE.value;
+    details.REFERENCE = this.f.REFERENCE.value;
+    details.OTHERREFERENCE = this.f.OTHERREFERENCE.value;
+    details.COMPLETEDDATE = this.f.COMPLETEDDATE.value;
+    details.FEEAGREEMENTDATE = this.f.FEEAGREEMENTDATE.value;
+    details.EstimateFromTotalExGST = this.f.EstimateFromTotalExGST.value;
+    details.EstimateFromTotalIncGST = this.f.EstimateFromTotalIncGST.value;
     if (this.userType) {
-      // general
-      details.NOTES = this.f.NOTES.value;
-      details.COMMENCEMENTDATE = this.f.COMMENCEMENTDATE.value;
-      details.REFERENCE = this.f.REFERENCE.value;
-      details.OTHERREFERENCE = this.f.OTHERREFERENCE.value;
-      details.COMPLETEDDATE = this.f.COMPLETEDDATE.value;
       details.PRIMARYFEEEARNERGUID = this.f.PRIMARYFEEEARNERGUID.value;
       details.OWNERGUID = this.f.OWNERGUID.value;
-      details.FEEAGREEMENTDATE = this.f.FEEAGREEMENTDATE.value;
-      details.EstimateFromTotalExGST = this.f.EstimateFromTotalExGST.value;
-      details.EstimateFromTotalIncGST = this.f.EstimateFromTotalIncGST.value;
     }
     if (this.classtype == 19) {
       // Details -> commercial

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { DatePipe } from '@angular/common';
 import { MatDatepickerInputEvent } from '@angular/material';
 import { TimersService } from 'app/_services';
+import { round } from 'lodash';
 
 @Component({
   selector: 'app-general',
@@ -11,6 +12,9 @@ import { TimersService } from 'app/_services';
 })
 export class GeneralComponent implements OnInit {
   @Input() matterdetailForm: FormGroup;
+  @Input() userType: any;
+  PRICEVAL: any;
+  PRICEVALGST: any;
   constructor(public datepipe: DatePipe, private Timersservice: TimersService) {
 
   }
@@ -38,7 +42,15 @@ export class GeneralComponent implements OnInit {
       console.log(err);
     });
   }
-
+  get f() {
+    return this.matterdetailForm.controls;
+  }
+  calcPE() {
+    this.PRICEVALGST = round(this.f.EstimateFromTotalExGST.value * 1.1);
+  }
+  calcPI() {
+    this.PRICEVAL = round(this.f.EstimateFromTotalIncGST.value / 1.1);
+  }
   selectFeeEarner() {
     alert('Access to this part of the application has been restricted');
     return;

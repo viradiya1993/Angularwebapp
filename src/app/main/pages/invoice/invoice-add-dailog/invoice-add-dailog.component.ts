@@ -4,6 +4,7 @@ import { MatDialogRef, MatDialog, MatDatepickerInputEvent } from '@angular/mater
 import { DatePipe } from '@angular/common';
 import { fuseAnimations } from '@fuse/animations';
 import { MattersService } from 'app/_services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-invoice-add-dailog',
@@ -15,12 +16,15 @@ import { MattersService } from 'app/_services';
 export class InvoiceAddDailogComponent implements OnInit {
   addInvoiceForm: FormGroup;
   isLoadingResults: boolean = false;
-  LookupsList: any;
+  isFixPrice = true;
+  isMin = true;
+  isMax = true;
   constructor(
     private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<InvoiceAddDailogComponent>,
     public datepipe: DatePipe,
     public MatDialog: MatDialog,
+    private toastr: ToastrService,
     private _mattersService: MattersService, ) { }
 
   ngOnInit() {
@@ -34,23 +38,44 @@ export class InvoiceAddDailogComponent implements OnInit {
       DUEDATETEXT: [dt],
       DUEDATE: [dt],
       MATTERGUID: [matterDetail.MATTERGUID],
-      client: [matterDetail.CLIENT],
-      matter: [matterDetail.MATTER],
+      MATTER: [matterDetail.MATTER],
       Invoiceno: [''],
-      Duration: ['0'],
-      Type: ['U'],
-      Totalexgst: [''],
-      Totalincgst: [''],
-      GST: [''],
-      INVOICECOMMENT: [''],
-      ADDITIONALTEXT: [''],
+      COMMENT: [''],
+      INVOICEDVALUEEXGST: [''],
+      INVOICEDVALUEINCGST: [''],
+      FIXEDRATEEXGST: [''],
+      FIXEDRATEINCGST: [''],
+      FIXEDRATEEXGSTTOTAL: [''],
+      FIXEDRATEINCGSTTOTAL: [''],
+      ESTIMATETOTOTALEXGST: [''],
+      ESTIMATETOTOTALINCGST: [''],
+      ESTIMATEFROMTOTALEXGST: [''],
+      ESTIMATEFROMTOTALINCGST: [''],
     });
-    this._mattersService.getMattersClasstype({ 'LookupType': 'time entry' }).subscribe(responses => {
-      if (responses.CODE === 200 && responses.STATUS === 'success') {
-        this.LookupsList = responses.DATA.LOOKUPS;
+    this._mattersService.getMattersDetail({ MATTERGUID: matterDetail.MATTERGUID, GetAllFields: true }).subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        let matterDate = response.DATA.MATTERS[0];
+        this.addInvoiceForm.controls['INVOICEDVALUEEXGST'].setValue(matterDate.SUMMARYTOTALS.INVOICEDVALUEEXGST);
+        this.addInvoiceForm.controls['INVOICEDVALUEINCGST'].setValue(matterDate.SUMMARYTOTALS.INVOICEDVALUEINCGST);
+        this.addInvoiceForm.controls['FIXEDRATEEXGSTTOTAL'].setValue(matterDate.CONVEYANCINGGROUP.TOTALDUE + matterDate.SUMMARYTOTALS.INVOICEDVALUEEXGST);
+        this.addInvoiceForm.controls['FIXEDRATEINCGSTTOTAL'].setValue(matterDate.CONVEYANCINGGROUP.TOTALDUE + matterDate.SUMMARYTOTALS.INVOICEDVALUEINCGST);
+        this.addInvoiceForm.controls['FIXEDRATEEXGST'].setValue(matterDate.BILLINGGROUP.FIXEDRATEEXGST);
+        this.addInvoiceForm.controls['FIXEDRATEINCGST'].setValue(matterDate.BILLINGGROUP.FIXEDRATEINCGST);
+        this.addInvoiceForm.controls['ESTIMATETOTOTALEXGST'].setValue(matterDate.SUMMARYTOTALS.ESTIMATETOTOTALEXGST);
+        this.addInvoiceForm.controls['ESTIMATETOTOTALINCGST'].setValue(matterDate.SUMMARYTOTALS.ESTIMATETOTOTALINCGST);
+        this.addInvoiceForm.controls['ESTIMATEFROMTOTALEXGST'].setValue(matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALEXGST);
+        this.addInvoiceForm.controls['ESTIMATEFROMTOTALINCGST'].setValue(matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST);
       }
+    }, error => {
+      this.toastr.error(error);
     });
     this.isLoadingResults = false;
+  }
+  selectDueDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.addInvoiceForm.controls['DUEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
+  SelectInvoiceDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.addInvoiceForm.controls['INVOICEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
 
 }

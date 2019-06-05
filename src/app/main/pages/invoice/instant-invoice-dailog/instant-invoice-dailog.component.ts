@@ -64,11 +64,10 @@ export class InstantInvoiceDailogComponent implements OnInit {
   selectDueDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.addInvoiceForm.controls['DUEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  LookupsChange(value: any) {
-    this.addInvoiceForm.controls['ADDITIONALTEXT'].setValue(value);
-  }
-
   SelectInvoiceDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.addInvoiceForm.controls['INVOICEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
+  LookupsChange(value: any) {
+    this.addInvoiceForm.controls['ADDITIONALTEXT'].setValue(value);
   }
 }

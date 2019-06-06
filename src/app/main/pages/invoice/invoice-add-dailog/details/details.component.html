@@ -6,22 +6,22 @@
                 {{row.ADDITIONALTEXT }}
             </td>
         </ng-container>
-        <ng-container matColumnDef="PRICECHARGED">
+        <ng-container matColumnDef="PRICE">
             <th mat-header-cell *matHeaderCellDef>Charge(Ex)</th>
             <td mat-cell *matCellDef="let row">
-                {{row.PRICECHARGED | currency}}
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="PRICEINCGSTCHARGED">
-            <th mat-header-cell *matHeaderCellDef>Charge</th>
-            <td mat-cell *matCellDef="let row">
-                {{row.PRICEINCGSTCHARGED | currency}}
+                {{row.PRICE | currency}}
             </td>
         </ng-container>
         <ng-container matColumnDef="GST">
             <th mat-header-cell *matHeaderCellDef>GST</th>
             <td mat-cell *matCellDef="let row">
                 {{row.GST | currency}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="PRICEINCGST">
+            <th mat-header-cell *matHeaderCellDef>Charge</th>
+            <td mat-cell *matCellDef="let row">
+                {{row.PRICEINCGST | currency}}
             </td>
         </ng-container>
         <tr mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumnsTime; sticky: true"></tr>
@@ -31,5 +31,3 @@
         </tr> -->
     </table>
 </div>
-<mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" showFirstLastButtons></mat-paginator>
-<mat-divider></mat-divider>

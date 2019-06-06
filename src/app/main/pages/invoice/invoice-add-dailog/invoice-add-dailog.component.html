@@ -36,13 +36,14 @@
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
                 </div>
+                <!-- tab detail start -->
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-tab-group class="add-invoice-tab" mat-align-tabs="start">
                         <mat-tab label="Summary">
                             <app-summary [addInvoiceForm]="addInvoiceForm" [isMax]="isMax" [isMin]="isMin" [isFixPrice]="isFixPrice"> </app-summary>
                         </mat-tab>
                         <mat-tab label="Details">
-                            <app-details [addInvoiceForm]="addInvoiceForm"></app-details>
+                            <app-details [addInvoiceForm]="addInvoiceForm" (totalDataOut)=changeTotalDataOut($event)></app-details>
                         </mat-tab>
                         <mat-tab label="Comment">
                             <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -58,6 +59,7 @@
                         </mat-tab>
                     </mat-tab-group>
                 </div>
+                <!-- tab detail end -->
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <div fxFlex="40" style="text-align: right; padding-right: 19px !important;">
                         Discount

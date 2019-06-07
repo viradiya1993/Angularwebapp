@@ -12,19 +12,15 @@
         <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
             <form name="addInvoiceForm" id="addInvoiceForm" [formGroup]="addInvoiceForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                        <mat-label>Client</mat-label>
-                        <input matInput readonly placeholder="Client" formControlName="client">
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
                         <mat-label>Matter</mat-label>
-                        <input matInput readonly placeholder="Matter" formControlName="matter">
+                        <input matInput readonly placeholder="Matter" formControlName="MATTER">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                         <mat-label>Invoice No</mat-label>
-                        <input matInput placeholder="Date Received" formControlName="Invoiceno">
+                        <input matInput placeholder="Date Received" formControlName="INVOICECODE">
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
@@ -40,57 +36,78 @@
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
                 </div>
+                <!-- tab detail start -->
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                        <mat-label>Duration</mat-label>
-                        <input matInput placeholder="Duration" formControlName="Duration">
+                    <mat-tab-group class="add-invoice-tab" mat-align-tabs="start">
+                        <mat-tab label="Summary">
+                            <app-summary [addInvoiceForm]="addInvoiceForm" [isMax]="isMax" [isMin]="isMin" [isFixPrice]="isFixPrice"> </app-summary>
+                        </mat-tab>
+                        <mat-tab label="Details">
+                            <app-details [addInvoiceForm]="addInvoiceForm" (totalDataOut)=changeTotalDataOut($event)></app-details>
+                        </mat-tab>
+                        <mat-tab label="Comment">
+                            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                <mat-form-field appearance="outline" fxFlex="100">
+                                    <mat-label>Comment</mat-label>
+                                    <textarea matInput formControlName="COMMENT"></textarea>
+                                </mat-form-field>
+                            </div>
+                            <mat-divider></mat-divider>
+                        </mat-tab>
+                        <mat-tab label="Discount/Increase">
+                            <app-discount-increase [addInvoiceForm]="addInvoiceForm"></app-discount-increase>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+                <!-- tab detail end -->
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <div fxFlex="40" style="text-align: right; padding-right: 19px !important;">
+                        Discount
+                    </div>
+                    <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
+                        <input matInput readonly placeholder="Date Received">
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                        <mat-label>Type</mat-label>
-                        <mat-select>
-                            <mat-option *ngFor="let option of optionList" value="{{option.ACTIVITYID}}">{{option.DESCRIPTION}}</mat-option>
-                        </mat-select>
+                    <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
+                        <input matInput readonly placeholder="Date Received">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
+                        <input matInput readonly placeholder="Date Received">
+                    </mat-form-field>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <div fxFlex="40" style="text-align: right; padding-right: 19px !important;">
+                        Original Total
+                    </div>
+                    <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
+                        <input matInput readonly placeholder="Date Received" [(ngModel)]="ORIEXTOTAL" formControlName="ORIEXTOTAL">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
+                        <input matInput readonly placeholder="Date Received" [(ngModel)]="ORIGSTTOTAL" formControlName="ORIGSTTOTAL">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
+                        <input matInput readonly placeholder="Date Received" [(ngModel)]="ORIINTOTAL" formControlName="ORIINTOTAL">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field fxFlex="100" class="pr-4" appearance="outline">
-                        <mat-label>Select Text</mat-label>
-                        <mat-select>
-                            <mat-option *ngFor="let Lookups of LookupsList" (click)="LookupsChange(Lookups.LOOKUPFULLVALUE)" value="{{Lookups.LOOKUPGUID}}">{{Lookups.LOOKUPFULLVALUE}}</mat-option>
-                        </mat-select>
+                    <div fxFlex="40" style="text-align: right;padding-right: 19px !important;">
+                        Override The Total
+                    </div>
+                    <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
+                        <input matInput placeholder="Date Received" [(ngModel)]="OVEEXTOTAL" formControlName="OVEEXTOTAL">
                     </mat-form-field>
-                </div>
-                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="100">
-                        <mat-label>Text</mat-label>
-                        <textarea matInput formControlName="ADDITIONALTEXT"></textarea>
+                    <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
+                        <input matInput readonly placeholder="Date Received" [(ngModel)]="OVEGSTTOTAL" formControlName="OVEGSTTOTAL">
                     </mat-form-field>
-                </div>
-                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="100">
-                        <mat-label>Invoice Comment</mat-label>
-                        <textarea matInput formControlName="INVOICECOMMENT"></textarea>
-                    </mat-form-field>
-                </div>
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
-                        <mat-label>Total (Ex-GST)</mat-label>
-                        <input matInput placeholder="Date Received" formControlName="Totalexgst">
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
-                        <mat-label>GST</mat-label>
-                        <input matInput readonly placeholder="Date Received" formControlName="GST">
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
-                        <mat-label>Total (Inc-GST)</mat-label>
-                        <input matInput placeholder="Date Received" formControlName="Totalincgst">
+                    <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
+                        <input matInput placeholder="Date Received" [(ngModel)]="OVEINTOTAL" formControlName="OVEINTOTAL">
                     </mat-form-field>
                 </div>
             </form>
         </div>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
-        <button mat-raised-button color="accent" (click)="SaveReceipt()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
+        <button mat-raised-button color="accent" (click)="SaveInvoice()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don`t Save</button>
     </mat-dialog-actions>
 </div>

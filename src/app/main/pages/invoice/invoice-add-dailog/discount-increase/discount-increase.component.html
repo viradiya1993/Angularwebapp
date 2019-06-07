@@ -1,0 +1,78 @@
+<div class="one" [formGroup]="addInvoiceForm" fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <div fxFlex="40" style="text-align: right; padding-right: 19px !important;"> </div>
+        <div fxFlex="25">Excluding GST</div>
+        <div fxFlex="10">GST</div>
+        <div fxFlex="25">Including GST</div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <div fxFlex="40" style="text-align: right; padding-right: 19px !important;">
+            <mat-checkbox formControlName="APPLYTOFEES">Apply to fees/Activities</mat-checkbox>
+        </div>
+        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+            <input matInput readonly placeholder="Date Received" formControlName="ActivityEXTOTAL">
+        </mat-form-field>
+        <div fxFlex="10"></div>
+        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+            <input matInput readonly placeholder="Date Received" formControlName="ActivityINTOTAL">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <div fxFlex="40" style="text-align: right; padding-right: 19px !important;">
+            <mat-checkbox>Apply to sundries /searching</mat-checkbox>
+        </div>
+        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+            <input matInput readonly placeholder="Date Received" formControlName="SundryEXTOTAL">
+        </mat-form-field>
+        <div fxFlex="10"></div>
+        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+            <input matInput readonly placeholder="Date Received" formControlName="SundryINTOTAL">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <div fxFlex="40" style="text-align: right; padding-right: 19px !important;">
+            <mat-checkbox>aooky to Matter Expenses</mat-checkbox>
+        </div>
+        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+            <input matInput readonly placeholder="Date Received" formControlName="WIPEXTOTAL">
+        </mat-form-field>
+        <div fxFlex="10"></div>
+        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+            <input matInput readonly placeholder="Date Received" formControlName="WIPINTOTAL">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field fxFlex="25" class="pr-4" appearance="outline">
+            <mat-label>Discount</mat-label>
+            <mat-select formControlName="Discount_type">
+                <mat-option value="Increase">Increase</mat-option>
+                <mat-option value="Discount">Discount</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex="25" class="pr-4" appearance="outline">
+            <mat-label>Gst Amount</mat-label>
+            <mat-select formControlName="GST_type">
+                <mat-option value="ExGstAmount">Ex-Gst Amount</mat-option>
+                <mat-option value="IncGstAmount">Inc-Gst Amount</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex="25" class="pr-4" appearance="outline">
+            <mat-label>Discount Type</mat-label>
+            <mat-select formControlName="Percentage_type">
+                <mat-option value="Percentage">Percentage</mat-option>
+                <mat-option value="Amount">Amount</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+            <input matInput placeholder="Date Received" formControlName="Percentage">
+            <input matInput placeholder="Date Received" formControlName="amount">
+        </mat-form-field>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Disc /inc Description</mat-label>
+            <textarea matInput formControlName="COMMENT"></textarea>
+        </mat-form-field>
+    </div>
+</div>
+<mat-divider></mat-divider>

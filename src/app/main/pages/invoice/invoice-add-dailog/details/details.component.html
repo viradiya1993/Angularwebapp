@@ -1,0 +1,40 @@
+<div class="example-containerdata">
+    <table mat-table #table [dataSource]="invoiceData" [@animateStagger]="{value:'50'}">
+        <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                </mat-checkbox>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="ADDITIONALTEXT">
+            <th mat-header-cell *matHeaderCellDef>Text</th>
+            <td mat-cell *matCellDef="let row">
+                {{row.ADDITIONALTEXT }}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="PRICE">
+            <th mat-header-cell *matHeaderCellDef>Charge(Ex)</th>
+            <td mat-cell *matCellDef="let row">
+                {{row.PRICE | currency}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="GST">
+            <th mat-header-cell *matHeaderCellDef>GST</th>
+            <td mat-cell *matCellDef="let row">
+                {{row.GST | currency}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="PRICEINCGST">
+            <th mat-header-cell *matHeaderCellDef>Charge</th>
+            <td mat-cell *matCellDef="let row">
+                {{row.PRICEINCGST | currency}}
+            </td>
+        </ng-container>
+        <tr mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumnsTime; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsTime;" (click)="selection.toggle(row)" matRipple [@animate]="{value:'*',params:{y:'100%'}}"></tr>
+    </table>
+</div>

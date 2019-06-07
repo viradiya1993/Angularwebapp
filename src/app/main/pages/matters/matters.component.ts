@@ -80,6 +80,7 @@ export class MattersComponent implements OnInit {
     return this.matterFilterForm.controls;
   }
   onSearch(searchFilter: any) {
+    console.log(searchFilter);
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
       let filterVal = { 'Active': '', 'SearchString': this.f.searchFilter.value, 'FeeEarner': '', 'UninvoicedWork': '' };
       if (!localStorage.getItem('matter_filter')) {

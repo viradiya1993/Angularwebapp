@@ -78,7 +78,7 @@
             <button mat-raised-button color="accent" (click)="EditNewmatterpopup()">Edit Matter</button>  
         </div>
         <div class="right_popup_btn">
-            <button mat-raised-button [mat-dialog-close]="currentMatterData" color="accent">Select</button>
+            <button mat-raised-button [mat-dialog-close]="currentMatterData" (click)="selectMatter()" color="accent">Select</button>
             <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
         </div>
     </mat-dialog-actions>

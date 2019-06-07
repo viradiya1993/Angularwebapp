@@ -108,6 +108,7 @@ export class InvoiceComponent implements OnInit {
     this.loadData(JSON.parse(localStorage.getItem('matter_invoice_filter')));
   }
   loadData(filterData) {
+    console.log(filterData);
     this.isLoadingResults = true;
     this._MatterInvoicesService.MatterInvoicesData(filterData).subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {

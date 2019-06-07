@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
-import { ContactService } from 'app/_services';
+import { ContactService,TemplateListDetails,TableColumnsService } from 'app/_services';
 import { fuseAnimations } from '@fuse/animations';
 import { MatterDialogComponent } from '../time-entries/matter-dialog/matter-dialog.component';
 import { ContactSelectDialogComponent } from '../contact/contact-select-dialog/contact-select-dialog.component';
@@ -15,34 +15,47 @@ import * as $ from 'jquery';
   animations: fuseAnimations
 })
 export class TemplateComponent implements OnInit {
-
-  displayedColumns: string[] = ['Image', 'CONTACTNAME'];
+  displayedColumns: any = ['TEMPLATETYPE','TEMPLATENAME'];
+  //displayedColumns: string[];
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   highlightedRows: any;
   currentMatterData: any;
-  Contactdata: any = [];
+  Templatedata: any = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   isLoadingResults: boolean;
   pageSize: any;
-
+  abc: number;
+  parentMessage: any;
+  @Output() matterDetail: EventEmitter<any> = new EventEmitter<any>();
   constructor(
     private toastr: ToastrService,
     public _getContact: ContactService,
+    public TemplateListData: TemplateListDetails,
     public MatDialog: MatDialog,
-  ) { }
+    private TableColumnsService: TableColumnsService,
+  ) {
+    this.getTableFilter();
+   }
 
   ngOnInit() {
+    // let i=0;
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     let d = {};
     this.isLoadingResults = true;
-    this._getContact.ContactData(d).subscribe(response => {
+    this.TemplateListData.getTemplateList(d).subscribe(response => {
+      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
-        this.Contactdata = new MatTableDataSource(response.DATA.CONTACTS);
-        this.Contactdata.paginator = this.paginator;
-        if (response.DATA.CONTACTS[0]) {
-          localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);
-          this.highlightedRows = response.DATA.CONTACTS[0].CONTACTGUID;
+        // response.DATA.TEMPLATES.forEach(element => { 
+        //   // this.abc=i++; 
+        // });
+        // console.log(this.abc);
+        this.Templatedata = new MatTableDataSource(response.DATA.TEMPLATES);
+        console.log(this.Templatedata);
+        this.Templatedata.paginator = this.paginator;
+        if (response.DATA.TEMPLATES[0]) {
+          // localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);
+          this.highlightedRows = response.DATA.TEMPLATES[0].TEMPLATENAME;
         }
         this.isLoadingResults = false;
       }
@@ -52,8 +65,44 @@ export class TemplateComponent implements OnInit {
     });
     this.pageSize = localStorage.getItem('lastPageSize');
   }
+
+  getTableFilter() {
+    this.TableColumnsService.getTableFilter('template', '').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'matterColumns');
+        console.log(data);
+        // this.displayedColumns = data.showcol;
+        // this.ColumnsObj = data.colobj;
+        // this.tempColobj = data.tempColobj;
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
+  }
+  onSearch(searchFilter: any) {
+   
+    if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
+        console.log(searchFilter);
+      // let filterVal = { 'Active': '', 'SearchString': this.f.searchFilter.value, 'FeeEarner': '', 'UninvoicedWork': '' };
+      // if (!localStorage.getItem('matter_filter')) {
+      //   // localStorage.setItem('matter_filter', JSON.stringify(filterVal));
+      // } else {
+      //   filterVal = JSON.parse(localStorage.getItem('matter_filter'));
+      //   filterVal.SearchString = this.f.searchFilter.value;
+      //   // localStorage.setItem('matter_filter', JSON.stringify(filterVal));
+      // }
+      // this.child.getMatterList(filterVal);
+    }
+  }
   editContact(Row: any) {
+    console.log(Row);
+    // this.TemplateListData.getData(Row);
+    this.parentMessage = Row;
+    this.matterDetail.emit(Row);
+    // localStorage.setItem('templateData',Row);
+    localStorage.setItem('templateData', JSON.stringify(Row));
     this.currentMatterData = Row;
+
   }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;

@@ -63,6 +63,7 @@ export class ContactSelectDialogComponent implements OnInit {
     this.isLoadingResults = true;
     this._getContact.ContactData(postData).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
+        console.log(response.DATA.CONTACTS);
         this.Contactdata = new MatTableDataSource(response.DATA.CONTACTS);
         this.Contactdata.paginator = this.paginator;
         if (response.DATA.CONTACTS[0]) {

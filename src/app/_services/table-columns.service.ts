@@ -12,8 +12,8 @@ export class TableColumnsService {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     let Data = { "USERGUID": currentUser.UserGuid, "PAGE": table, 'LIST': List };
     return this.httpClient.post<any>(environment.APIEndpoint + 'GetTableColumns', Data);
-
   }
+  
   filtertableColum(response: any, type: any) {
     let tableData: any = Columns[type];
     let tempCol: any = [];

@@ -14,7 +14,7 @@ import { ReceiptDilogComponent } from './receipt-dilog/receipt-dilog.component';
 import { InvoiceDetailComponent } from './invoice-detail/invoice-detail.component';
 import { InstantInvoiceDailogComponent } from './instant-invoice-dailog/instant-invoice-dailog.component';
 import { InvoiceAddDailogComponent } from './invoice-add-dailog/invoice-add-dailog.component';
-
+import { InvoiceDialogComponentForTemplate } from './select-invoice-dialog/select-invoice-dialog.component';
 
 const routes = [
   { path: '', component: InvoiceComponent, canActivate: [AuthGuard] },
@@ -27,12 +27,14 @@ const routes = [
     InvoiceDetailComponent,
     InstantInvoiceDailogComponent,
     InvoiceAddDailogComponent,
+    InvoiceDialogComponentForTemplate
   ],
   entryComponents: [
     ReceiptDilogComponent,
     InvoiceDetailComponent,
     InstantInvoiceDailogComponent,
-    InvoiceAddDailogComponent
+    InvoiceAddDailogComponent,
+    InvoiceDialogComponentForTemplate
   ],
   imports: [
     CommonModule,

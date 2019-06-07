@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
-import { MattersService, } from './../../../../_services';
+import { MattersService, ContactService} from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
@@ -21,7 +21,7 @@ export class MatterContactDailogComponent implements OnInit {
   currentMatterContactData: any;
   pageSize: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(private toastr: ToastrService, public mattersService: MattersService) { }
+  constructor(private toastr: ToastrService, public mattersService: MattersService, public _getContact: ContactService,) { }
 
   ngOnInit() {
     this.loadContectData();

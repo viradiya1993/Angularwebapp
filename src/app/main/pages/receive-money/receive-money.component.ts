@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { TableColumnsService, TimersService } from '../../../_services';
+import { TableColumnsService,MattersService, TimersService, GetReceptData } from '../../../_services';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
@@ -22,33 +22,72 @@ export class ReceiveMoneyComponent implements OnInit {
   displayedColumns: any = [];
   receiveMoneydata: any;
   highlightedRows: any;
+  theme_type = localStorage.getItem('theme_type');
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   pageSize: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  currentReciveMoneyData: any;
+  lastFilter: { 'FeeEarner': string; 'Invoiced': string; 'ItemDateStart': string; 'ItemDateEnd': string; };
   constructor(
     private TableColumnsService: TableColumnsService,
     private dialog: MatDialog,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private Timersservice: TimersService,
+    private GetReceptData: GetReceptData,
     public datepipe: DatePipe,
+    private _mattersService: MattersService,
   ) { }
   receiveMoneyForm: FormGroup;
   ngOnInit() {
+    // this._mattersService.getMattersClasstype({ 'LookupType': ' IncomeClass' }).subscribe(responses => {
+    //   console.log(responses);r
+    //   if (responses.CODE === 200 && responses.STATUS === 'success') {
+    //     // this.Classdata = responses.DATA.LOOKUPS;
+    //   }
+    //   // this.isLoadingResults = false;
+    // });
+    // this.GetReceptData.getRecept().subscribe(response => {
+    //   console.log(response);
+    //   // if (response.CODE == 200 && response.STATUS == "success") {
+    //   //   if (response.DATA.RECEIPTALLOCATIONS[0]) {
+    //   //     this.highlightedRows = response.DATA.RECEIPTALLOCATIONS[0].INVOICEGUID;
+    //   //      this.currentReciveMoneyData = response.DATA.RECEIPTALLOCATIONS[0];
+    //   //   }
+    //   //   this.receiveMoneydata = new MatTableDataSource(response.DATA.RECEIPTALLOCATIONS)
+    //   //   this.receiveMoneydata.paginator = this.paginator;
+    //   // }
+    //   // this.isLoadingResults = false;
+    // }, err => {
+    //   // this.isLoadingResults = false;
+    //   // this.toastr.error(err);
+    // });
+    var dt = new Date();
+    dt.setMonth(dt.getMonth() + 1);
+    let filterVals = { 'active': '1', 'FirstLetter': 'a', 'SEARCH': '', 'ContactType': '' };
+    localStorage.setItem('ReciveMoney_Filter', JSON.stringify(filterVals));
+    
+    this.lastFilter = { 'FeeEarner': '', 'Invoiced': " ", 'ItemDateStart': this.datepipe.transform(new Date(), 'dd/MM/yyyy'), 'ItemDateEnd': this.datepipe.transform(dt, 'dd/MM/yyyy') };
+    localStorage.setItem('recive_money_DateFilter', JSON.stringify(this.lastFilter));
+   
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.receiveMoneyForm = this.fb.group({
       ShowWhat: [''],
       DateRange: [''],
       ReceiptsTotalInc: [''],
       ReceiptsTotalEx: [''],
+      ReceiveMoneyType:[''],
     });
     this.getTableFilter();
-    // this.LoadData({});
+    //  this.LoadData({});
+    this.GetData({});
   }
 
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('time entries', '').subscribe(response => {
+    this.TableColumnsService.getTableFilter('receive money', '').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'WorkItemsColumns');
+      
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'recivemoneyColumns');
         this.tempColobj = data.tempColobj;
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
@@ -57,34 +96,87 @@ export class ReceiveMoneyComponent implements OnInit {
       this.toastr.error(error);
     });
   }
-  choosedDate(W, E) {
-
+  choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
+ 
+    let begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
+    let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');
+    let filterVal = { 'FeeEarner': '', 'Invoiced': '', 'ItemDateStart': begin, 'ItemDateEnd': end };
+    if (!localStorage.getItem('recive_money_DateFilter')) {
+      localStorage.setItem('recive_money_DateFilter', JSON.stringify(filterVal));
+    } else {
+      filterVal = JSON.parse(localStorage.getItem('recive_money_DateFilter'));
+      filterVal.ItemDateStart = begin;
+      filterVal.ItemDateEnd = end;
+      localStorage.setItem('recive_money_DateFilter', JSON.stringify(filterVal));
+    }
+    this.GetData(filterVal);
   }
-  LoadData(Data) {
+  GetData(data) {
     this.isLoadingResults = true;
-    this.Timersservice.getTimeEnrtyData(Data).subscribe(response => {
+    this.GetReceptData.getRecept(data).subscribe(response => {
+    
       if (response.CODE == 200 && response.STATUS == "success") {
-        if (response.DATA.WORKITEMS[0]) {
-          this.highlightedRows = response.DATA.WORKITEMS[0].WORKITEMGUID;
-          localStorage.setItem('edit_WORKITEMGUID', this.highlightedRows);
+        if (response.DATA.RECEIPTALLOCATIONS[0]) {
+          this.highlightedRows = response.DATA.RECEIPTALLOCATIONS[0].RECEIPTGUID;
+           this.currentReciveMoneyData = response.DATA.RECEIPTALLOCATIONS[0];
         }
-        try {
-          this.receiveMoneydata = new MatTableDataSource(response.DATA.WORKITEMS);
-          this.receiveMoneydata.paginator = this.paginator;
-        } catch (error) {
-          console.log(error);
-        }
+        this.receiveMoneydata = new MatTableDataSource(response.DATA.RECEIPTALLOCATIONS)
+        this.receiveMoneydata.paginator = this.paginator;
       }
       this.isLoadingResults = false;
     }, err => {
       this.isLoadingResults = false;
       this.toastr.error(err);
     });
-    this.pageSize = localStorage.getItem('lastPageSize');
   }
+  selectMatterId(row:any){
+this.currentReciveMoneyData=row;
+
+localStorage.setItem('receiptGuid',row.RECEIPTGUID);
+  }
+  // LoadData(Data) {
+  //   this.isLoadingResults = true;
+  //   this.Timersservice.getTimeEnrtyData(Data).subscribe(response => {
+  //     console.log(response);
+  //     if (response.CODE == 200 && response.STATUS == "success") {
+  //       if (response.DATA.WORKITEMS[0]) {
+  //         this.highlightedRows = response.DATA.WORKITEMS[0].WORKITEMGUID;
+  //         localStorage.setItem('edit_WORKITEMGUID', this.highlightedRows);
+  //       }
+  //       try {
+  //         this.receiveMoneydata = new MatTableDataSource(response.DATA.WORKITEMS);
+  //         this.receiveMoneydata.paginator = this.paginator;
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //     }
+  //     this.isLoadingResults = false;
+  //   }, err => {
+  //     this.isLoadingResults = false;
+  //     this.toastr.error(err);
+  //   });
+  //   this.pageSize = localStorage.getItem('lastPageSize');
+  // }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
+  }
+  get f() {
+    return this.receiveMoneyForm.controls;
+  }
+  onChange(value){
+  
+    let filterVal: any = JSON.parse(localStorage.getItem('ReciveMoney_Filter'));
+    if (!filterVal) {
+      filterVal = { 'active': '', 'FirstLetter': '', 'SEARCH': this.f.search.value, 'ContactType': value == "all" ? "" : value };
+    } else {
+      filterVal.ContactType = value == "all" ? "" : value;
+      filterVal.SEARCH = '';
+    }
+     localStorage.setItem('ReciveMoney_Filter', JSON.stringify(filterVal));
+    this.GetData(filterVal);
+  
+
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
@@ -94,7 +186,8 @@ export class ReceiveMoneyComponent implements OnInit {
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+  
+      if (result) { 
         this.tempColobj = result.tempColobj;
         this.displayedColumns = result.columObj;
         this.ColumnsObj = result.columnameObj;

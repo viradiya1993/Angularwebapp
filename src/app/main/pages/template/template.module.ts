@@ -11,22 +11,21 @@ import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, 
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 import { MatterContactDailogComponent } from './matter-contact-dailog/matter-contact-dailog.component';
-
+import { MatterDialogComponentForTemplate } from './matter-dialog/matter-dialog.component';
 
 const routes = [
   { path: '', component: TemplateComponent, canActivate: [AuthGuard] },
 
 ];
 @NgModule({
-  declarations: [TemplateComponent, MatterContactDailogComponent,],
-  entryComponents: [MatterContactDailogComponent],
+  declarations: [TemplateComponent, MatterContactDailogComponent,MatterDialogComponentForTemplate],
+  entryComponents: [MatterContactDailogComponent,MatterDialogComponentForTemplate],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     FuseSharedModule,
     FuseConfirmDialogModule,
     FuseSidebarModule,
-
     MatButtonModule,
     MatCheckboxModule,
     MatDatepickerModule,
@@ -56,7 +55,8 @@ const routes = [
   ],
   exports: [
     TemplateComponent
-  ]
+  ],
+  providers: [ TemplateComponent ]
 })
 export class TemplateModule { }
 

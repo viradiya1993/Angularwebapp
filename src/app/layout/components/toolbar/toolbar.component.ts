@@ -29,7 +29,9 @@ import { GeneralReceiptDilogComponent } from 'app/main/pages/receive-money/gener
 import { MatterContactDailogComponent } from 'app/main/pages/template/matter-contact-dailog/matter-contact-dailog.component';
 import { InstantInvoiceDailogComponent } from 'app/main/pages/invoice/instant-invoice-dailog/instant-invoice-dailog.component';
 import { InvoiceAddDailogComponent } from 'app/main/pages/invoice/invoice-add-dailog/invoice-add-dailog.component';
-
+import { MatterDialogComponentForTemplate } from 'app/main/pages/template/matter-dialog/matter-dialog.component';
+import { InvoiceDialogComponentForTemplate } from 'app/main/pages/invoice/select-invoice-dialog/select-invoice-dialog.component'
+import { MatterReceiptDialogComponentForTemplate } from 'app/main/pages/receive-money/matter-dialog/matter-dialog.component';
 
 
 @Component({
@@ -64,6 +66,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     // Private
     private _unsubscribeAll: Subject<any>;
     activedocument: any;
+    clickedBtn: string;
 
 
     constructor(
@@ -79,6 +82,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private TimersServiceI: TimersService,
         private _mattersService: MattersService,
         private matterInvoicesService: MatterInvoicesService,
+        private _router:Router
     ) {
         if (this.appPermissions == null) {
             this.appPermissions = [];
@@ -331,7 +335,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             disableClose: true,
             panelClass: 'contact-dialog',
             data: {
-                action: 'new'
+                action: 'new',
             }
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -609,6 +613,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
+    //web19
+    isInvoiceClick(){
+        console.log("jfgdgfghdshfgjsdgf");
+        this.clickedBtn='invoiceDoc';
+    }
     createInstantInvoice() {
         return false;
         const dialogRef = this._matDialog.open(InstantInvoiceDailogComponent, { width: '100%', disableClose: true, data: null });
@@ -619,6 +628,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     createInvoice() {
+        console.log("addInvoice");
         const dialogRef = this._matDialog.open(InvoiceAddDailogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -628,10 +638,22 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     createReceipt() {
-        const dialogRef = this._matDialog.open(ReceiptDilogComponent, { width: '100%', disableClose: true, data: null });
+        const dialogRef = this._matDialog.open(MatterReceiptDialogComponentForTemplate, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 console.log(result);
+            }
+        });
+    }
+    ViewReceipt(){
+         const dialogRef = this._matDialog.open(ReceiptDilogComponent, { width: '100%', disableClose: true,
+          data:{
+            action:'edit'
+         }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                localStorage.removeItem('matterName');
             }
         });
     }
@@ -697,17 +719,51 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     // ******************************************END Invoice related funtion like create update delete view*********************************************
     //***********************************************************START Select Matter Contact*************************************************************************
     // select matter contact
+    // SelectMatterContact() {
+    //     const dialogRef = this.dialog.open(MatterContactDailogComponent, {
+    //         width: '100%',
+    //         disableClose: true,
+    //         data: { action: 'new' }
+    //     });
+    //     dialogRef.afterClosed().subscribe(result => {
+    //         console.log(result);
+    //     });
+    //     //***********************************************************END Select Matter Contact*************************************************************************
+    // }
     SelectMatterContact() {
-        const dialogRef = this.dialog.open(MatterContactDailogComponent, {
-            width: '100%',
-            disableClose: true,
-            data: { action: 'new' }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
+        if(this.clickedBtn=='invoiceDoc'){
+            console.log("21");
+            // this._router.navigate(['/create-document/invoice']);
+            const dialogRef = this._matDialog.open(InvoiceDialogComponentForTemplate, { 
+                width: '100%',
+                 disableClose: true, 
+                 data: 'select_matter' });
+            dialogRef.afterClosed().subscribe(result => {
+                this.clickedBtn=' ';
+                if (result) {
+                    // console.log(result);
+                    localStorage.setItem('set_active_matters', JSON.stringify(result));
+                    // this.router.navigate(['time-billing/work-in-progress/invoice']);
+                }
+            });
+
+        }else{
+            const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, { 
+                width: '100%',
+                 disableClose: true, 
+                 data: 'select_matter' });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    // console.log(result);
+                    localStorage.setItem('set_active_matters', JSON.stringify(result));
+                    // this.router.navigate(['time-billing/work-in-progress/invoice']);
+                }
+            });
+        }
+    
         //***********************************************************END Select Matter Contact*************************************************************************
     }
+    
 }
 //2 pair Data Convert
 function chunks(arr, size = 3) {

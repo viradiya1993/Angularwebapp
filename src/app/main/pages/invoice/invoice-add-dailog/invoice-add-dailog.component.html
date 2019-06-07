@@ -20,7 +20,7 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                         <mat-label>Invoice No</mat-label>
-                        <input matInput placeholder="Date Received" formControlName="Invoiceno">
+                        <input matInput placeholder="Date Received" formControlName="INVOICECODE">
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
@@ -65,13 +65,13 @@
                         Discount
                     </div>
                     <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
-                        <input matInput readonly placeholder="Date Received" formControlName="Invoiceno">
+                        <input matInput readonly placeholder="Date Received">
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
-                        <input matInput readonly placeholder="Date Received" formControlName="Invoiceno">
+                        <input matInput readonly placeholder="Date Received">
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
-                        <input matInput readonly placeholder="Date Received" formControlName="Invoiceno">
+                        <input matInput readonly placeholder="Date Received">
                     </mat-form-field>
                 </div>
                 <mat-divider></mat-divider>
@@ -80,13 +80,13 @@
                         Original Total
                     </div>
                     <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
-                        <input matInput readonly placeholder="Date Received" formControlName="Invoiceno">
+                        <input matInput readonly placeholder="Date Received" [(ngModel)]="ORIEXTOTAL" formControlName="ORIEXTOTAL">
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
-                        <input matInput readonly placeholder="Date Received" formControlName="Invoiceno">
+                        <input matInput readonly placeholder="Date Received" [(ngModel)]="ORIGSTTOTAL" formControlName="ORIGSTTOTAL">
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
-                        <input matInput readonly placeholder="Date Received" formControlName="Invoiceno">
+                        <input matInput readonly placeholder="Date Received" [(ngModel)]="ORIINTOTAL" formControlName="ORIINTOTAL">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -94,20 +94,20 @@
                         Override The Total
                     </div>
                     <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
-                        <input matInput placeholder="Date Received" formControlName="Invoiceno">
+                        <input matInput placeholder="Date Received" [(ngModel)]="OVEEXTOTAL" formControlName="OVEEXTOTAL">
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
-                        <input matInput readonly placeholder="Date Received" formControlName="Invoiceno">
+                        <input matInput readonly placeholder="Date Received" [(ngModel)]="OVEGSTTOTAL" formControlName="OVEGSTTOTAL">
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
-                        <input matInput placeholder="Date Received" formControlName="Invoiceno">
+                        <input matInput placeholder="Date Received" [(ngModel)]="OVEINTOTAL" formControlName="OVEINTOTAL">
                     </mat-form-field>
                 </div>
             </form>
         </div>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
-        <button mat-raised-button color="accent" (click)="SaveReceipt()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
+        <button mat-raised-button color="accent" (click)="SaveInvoice()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don`t Save</button>
     </mat-dialog-actions>
 </div>

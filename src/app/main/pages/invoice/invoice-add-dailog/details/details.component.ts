@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { TimersService } from 'app/_services';
+import { SelectionModel } from '@angular/cdk/collections';
 
 
 @Component({
@@ -15,9 +16,10 @@ import { TimersService } from 'app/_services';
 export class DetailsComponent implements OnInit {
   @Input() addInvoiceForm: FormGroup;
   @Output() totalDataOut: EventEmitter<any> = new EventEmitter<any>();
-  invoiceData: any;
-  displayedColumnsTime: string[] = ['ADDITIONALTEXT', 'PRICE', 'GST', 'PRICEINCGST'];
+  invoiceData: any = [];
+  displayedColumnsTime: string[] = ['select', 'ADDITIONALTEXT', 'PRICE', 'GST', 'PRICEINCGST'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  selection = new SelectionModel(true, []);
   constructor(private _timersService: TimersService) { }
 
   ngOnInit() {
@@ -25,19 +27,32 @@ export class DetailsComponent implements OnInit {
     this._timersService.getTimeEnrtyData({ MATTERGUID: matterDetail.MATTERGUID, Invoiced: 'No' }).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.invoiceData = new MatTableDataSource(response.DATA.WORKITEMS);
-        let EXTOTAL: number = 0;
-        let INTOTAL: number = 0;
-        let TOTALGST: number = 0;
-        response.DATA.WORKITEMS.forEach(function (value) {
-          EXTOTAL += Number(value.PRICE);
-          INTOTAL += Number(value.PRICEINCGST);
-          TOTALGST += Number(value.GST);
-        });
-        this.totalDataOut.emit({ EXTOTAL: EXTOTAL, INTOTAL: INTOTAL, TOTALGST: TOTALGST });
+        this.masterToggle();
+        this.totalDataOut.emit(response.DATA.WORKITEMS);
       }
     }, error => {
       console.log(error);
     });
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.invoiceData.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ? this.selection.clear() : this.invoiceData.data.forEach(row => this.selection.select(row));
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: any): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 
 }

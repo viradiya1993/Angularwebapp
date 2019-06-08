@@ -116,6 +116,20 @@ export class InvoiceAddDailogComponent implements OnInit {
   }
   changeDiscountAmount(event) {
     console.log(event);
+    let dicountex: number = 0;
+    let dicountin: number = 0;
+    if (event.amount == "" || event.amount == "0") {
+      dicountex = (Number(event.Percentage) * Number(this.f.ORIEXTOTAL.value)) / 100;
+      dicountin = (Number(event.Percentage) * Number(this.f.ORIINTOTAL.value)) / 100;
+    } else {
+      dicountex = event.amount;
+      dicountin = event.amount;
+    }
+    this.addInvoiceForm.controls['DISEXAMOUNT'].setValue(dicountex.toFixed(2));
+    this.addInvoiceForm.controls['DISUINAMOUNT'].setValue(dicountex.toFixed(2));
+
+    this.addInvoiceForm.controls['OVEEXTOTAL'].setValue((this.f.ORIEXTOTAL.value + dicountex).toFixed(2));
+    this.addInvoiceForm.controls['OVEINTOTAL'].setValue((this.f.ORIINTOTAL.value + dicountin).toFixed(2));
   }
   changeTotalDataOut(event) {
     let EXTOTAL: number = 0;

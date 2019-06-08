@@ -14,6 +14,8 @@ export class DiscountIncreaseComponent implements OnInit {
 
   ngOnInit() {
     this.addInvoiceForm.controls['Percentage_type'].setValue('Percentage');
+    this.addInvoiceForm.controls['Percentage'].setValue(0);
+    this.addInvoiceForm.controls['amount'].setValue(0);
   }
   get f() {
     return this.addInvoiceForm.controls;
@@ -24,9 +26,10 @@ export class DiscountIncreaseComponent implements OnInit {
       this.addInvoiceForm.controls['amount'].setValue(0);
     else
       this.addInvoiceForm.controls['Percentage'].setValue(0);
+    this.onAmoPerChnage('Enter');
   }
-  onAmoPerChnage(searchFilter) {
-    if (searchFilter['code'] == "Enter") {
+  onAmoPerChnage(searchFilter = "") {
+    if (searchFilter['code'] == "Enter" || searchFilter == "Enter") {
       this.discountAmount.emit({ 'amount': this.f.amount.value, 'Percentage': this.f.Percentage.value, 'Percentage_type': this.f.Percentage_type.value, 'GST_type': this.f.GST_type.value, 'Discount_type': this.f.Discount_type.value });
     }
   }

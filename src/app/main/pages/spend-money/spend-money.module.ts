@@ -11,7 +11,7 @@ import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, 
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 import { SpendMoneyAddComponent } from './spend-money-add-dialog/spend-money-add.component';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 const routes = [
   { path: '', component: SpendMoneyComponent, canActivate: [AuthGuard] },
@@ -57,7 +57,8 @@ const routes = [
     SatDatepickerModule, SatNativeDateModule,
 
     MaterialTimePickerModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    DragDropModule
   ],
   exports: [
     SpendMoneyComponent, SpendMoneyAddComponent

@@ -19,6 +19,7 @@ export * from './timers.service';
 export * from './getallcolumns-filter.service';
 export * from './reportlist.service';
 
+
 //add contact
 export * from './add-contact.service';
 export * from './reportfilter.service';
@@ -26,3 +27,6 @@ export * from './get-favourite.service';
 export * from './table-columns.service';
 export * from './spendmoney.service';
 
+//added by web19
+export * from './getreceiptdata.service';
+export * from './template-list.service';

@@ -9,7 +9,10 @@ export class SpendmoneyService {
 
   constructor(private http: HttpClient) { }
 
- SpendmoneyListData(potData) {
-    return this.http.post<any>(environment.APIEndpoint + 'GetInvoice', potData);
+//  SpendmoneyListData(potData) {
+//     return this.http.post<any>(environment.APIEndpoint + 'GetInvoice', potData);
+//   }
+  SpendmoneyListData(potData) {
+    return this.http.post<any>(environment.APIEndpoint + 'GetExpenses', potData);
   }
 }

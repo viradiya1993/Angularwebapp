@@ -22,7 +22,7 @@ import { MatDialogModule, MatTabsModule, MatProgressSpinnerModule, MatPaginatorM
 import { TimeEntryDialogComponent } from './time-entry-dialog/time-entry-dialog.component';
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 import { MatterDialogComponent } from './matter-dialog/matter-dialog.component';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
 const routes = [
   { path: '', component: TimeEntriesComponent, canActivate: [AuthGuard] }
 ];
@@ -63,7 +63,8 @@ const routes = [
     FuseSidebarModule,
     SatDatepickerModule, SatNativeDateModule,
 
-    MaterialTimePickerModule
+    MaterialTimePickerModule,
+    DragDropModule
   ],
   providers: [
     // {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},

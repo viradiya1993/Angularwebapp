@@ -2,7 +2,7 @@
     <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
 </div>
 <div class="popup_main_div add_edit_contact_main" cdkDrag>
-    <h2 mat-dialog-title>{{dialogTitle}}
+    <h2 cdkDragHandle mat-dialog-title>{{dialogTitle}}
         <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
                 <mat-icon>close</mat-icon>
         </button>

@@ -47,7 +47,8 @@ export class SpendMoneyComponent implements OnInit {
 
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('invoices', '').subscribe(response => {
+    this.TableColumnsService.getTableFilter('spend money', '').subscribe(response => {
+      console.log(response);
       if (response.CODE === 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'invoicesColumns');
         this.displayedColumns = data.showcol;
@@ -64,8 +65,10 @@ export class SpendMoneyComponent implements OnInit {
   }
   loadData() {
     // this.isLoadingResults = true;
-    let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
-    this.SpendmoneyService.SpendmoneyListData(potData).subscribe(response => {
+    // let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
+    this.SpendmoneyService.SpendmoneyListData('').subscribe(response => {
+      console.log(response       );
+      
       // if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
       //   if (response.DATA.INVOICES[0]) {
       //     this.highlightedRows = response.DATA.INVOICES[0].INVOICEGUID;

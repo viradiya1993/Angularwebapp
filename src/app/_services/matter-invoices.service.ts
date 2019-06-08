@@ -10,6 +10,7 @@ export class MatterInvoicesService {
   constructor(private http: HttpClient) { }
 
   MatterInvoicesData(potData) {
+
     return this.http.post<any>(environment.APIEndpoint + 'GetInvoice', potData);
   }
   SetInvoiceData(potData) {

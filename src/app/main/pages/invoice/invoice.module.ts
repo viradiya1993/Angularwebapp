@@ -14,6 +14,7 @@ import { ReceiptDilogComponent } from './receipt-dilog/receipt-dilog.component';
 import { InvoiceDetailComponent } from './invoice-detail/invoice-detail.component';
 import { InstantInvoiceDailogComponent } from './instant-invoice-dailog/instant-invoice-dailog.component';
 import { InvoiceAddDailogComponent } from './invoice-add-dailog/invoice-add-dailog.component';
+import { InvoiceDialogComponentForTemplate } from './select-invoice-dialog/select-invoice-dialog.component';
 import { SummaryComponent } from './invoice-add-dailog/summary/summary.component';
 import { DetailsComponent } from './invoice-add-dailog/details/details.component';
 import { DiscountIncreaseComponent } from './invoice-add-dailog/discount-increase/discount-increase.component';
@@ -30,6 +31,7 @@ const routes = [
     InvoiceDetailComponent,
     InstantInvoiceDailogComponent,
     InvoiceAddDailogComponent,
+    InvoiceDialogComponentForTemplate,
     SummaryComponent,
     DetailsComponent,
     DiscountIncreaseComponent,
@@ -38,7 +40,8 @@ const routes = [
     ReceiptDilogComponent,
     InvoiceDetailComponent,
     InstantInvoiceDailogComponent,
-    InvoiceAddDailogComponent
+    InvoiceAddDailogComponent,
+    InvoiceDialogComponentForTemplate
   ],
   imports: [
     CommonModule,

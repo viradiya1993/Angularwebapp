@@ -35,4 +35,29 @@ export class Columns {
         'PRIVILEGED', 'BRIEFPAGENO', 'REFERENCE', 'COMMENT', 'WITNESSES', 'EVENTAGREED', 'DOCUMENTNAME', 'ADDITIONALTEXT', 'SHORTNAME', 'CLIENTNAME'];
     public static authoritiesColumns: any = ['MATTERAUTHORITYGUID', 'MATTERGUID', 'AUTHORITYGUID', 'AUTHORITY', 'CITATION', 'WEBADDRESS', 'TOPIC', 'REFERENCE', 'COMMENT'
         , 'SHORTNAME', 'CLIENTNAME'];
+        public static recivemoneyColumns: any = ['ACCOUNTCLASS',
+        'ACCOUNTNUMBER',
+        'ALLOCATIONCODE',
+        'AMOUNT',
+        'BANKACCOUNTGUID',
+        'CREDITCONTACTNAME',
+        'CREDITSHORTNAME',
+        'EXPENDITUREGUID',
+        'FIRMGUID',
+        'INCOMETYPE',
+        'INVOICECODE',
+        'INVOICEDATE',
+        'INVOICEGUID',
+        'INVOICETOTAL',
+        'MATTERGUID',
+        'PAYEE',
+        'RECEIPTALLOCATIONGUID',
+        'RECEIPTAMOUNTEXGST',
+        'RECEIPTCODE',
+        'RECEIPTDATE',
+        'RECEIPTGST',
+        'RECEIPTGUID',
+        'RECEIPTTOTAL',
+        'XEROGUID'
+    ];
 }

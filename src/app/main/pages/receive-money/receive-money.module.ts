@@ -11,14 +11,15 @@ import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, 
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 import { GeneralReceiptDilogComponent } from './general-receipt-dilog/general-receipt-dilog.component';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatterReceiptDialogComponentForTemplate } from './matter-dialog/matter-dialog.component';
 const routes = [
   { path: '', component: ReceiveMoneyComponent, canActivate: [AuthGuard] },
 
 ];
 @NgModule({
-  declarations: [ReceiveMoneyComponent, GeneralReceiptDilogComponent],
-  entryComponents: [GeneralReceiptDilogComponent],
+  declarations: [ReceiveMoneyComponent, GeneralReceiptDilogComponent,MatterReceiptDialogComponentForTemplate],
+  entryComponents: [GeneralReceiptDilogComponent,MatterReceiptDialogComponentForTemplate],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -51,7 +52,9 @@ const routes = [
     SatDatepickerModule, SatNativeDateModule,
 
     MaterialTimePickerModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    DragDropModule,
+    
   ],
   exports: [
     ReceiveMoneyComponent

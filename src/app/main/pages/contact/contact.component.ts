@@ -188,6 +188,7 @@ export class ContactComponent implements OnInit {
     }
   }
   ContactTypeChange(value) {
+    console.log(this.f);
     let filterVal: any = JSON.parse(localStorage.getItem('contact_Filter'));
     if (!filterVal) {
       filterVal = { 'active': '', 'FirstLetter': '', 'SEARCH': this.f.search.value, 'ContactType': value == "all" ? "" : value };

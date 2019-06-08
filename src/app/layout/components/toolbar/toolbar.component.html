@@ -103,7 +103,7 @@
                                                 <img class="" src="assets/icons/web_app/icon_letters_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                             </mat-icon>
                                                 <div class="main-text">
-                                                    <span>Generate <br> Document</span>
+                                                    <span>Generate <br> Template</span>
                                                 </div>
                                             </section>
                                         </button>
@@ -800,6 +800,18 @@
                                                 </section>
                                             </button>
                                     </section>
+                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                            <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="isInvoiceClick()" (click)="setTab($event)" [routerLink]="'/create-document'">
+                                                <section class="large-button-container">
+                                                <mat-icon class="main-icon"> 
+                                                    <img class="" src="assets/icons/web_app/icon_letters_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                    <div class="main-text">
+                                                        <span> Generate <br> Template</span>
+                                                    </div>
+                                                </section>
+                                            </button>
+                                    </section>
                                     <div class="light_label_txt">Action</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
@@ -877,7 +889,7 @@
                                              </button>
                                     </section>
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button" (click)="createReceipt()">
+                                        <button mat-button class="large-button" (click)="ViewReceipt()">
                                                 <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img class="" src="assets/icons/web_app/icon_receipt_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -951,6 +963,20 @@
                                             </section>
                                         </button>
                                     </section>
+
+                                    <!-- //for invoice -->
+                                    <!-- <section *ngIf="clickedBtn='invoiceDoc'" [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                            <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="SelectMatterContact()">
+                                                <section class="large-button-container">
+                                                <mat-icon class="main-icon"> 
+                                                    <img class="" src="assets/icons/web_app/icon_letters_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                    <div class="main-text">
+                                                        <span>Generate3434 <br> Document</span>
+                                                    </div>
+                                                </section>
+                                            </button>
+                                        </section> -->
                                     <div class="light_label_txt">Generate</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>

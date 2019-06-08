@@ -55,7 +55,7 @@
                             <mat-divider></mat-divider>
                         </mat-tab>
                         <mat-tab label="Discount/Increase">
-                            <app-discount-increase [addInvoiceForm]="addInvoiceForm"></app-discount-increase>
+                            <app-discount-increase [addInvoiceForm]="addInvoiceForm" (discountAmount)=changeDiscountAmount($event)></app-discount-increase>
                         </mat-tab>
                     </mat-tab-group>
                 </div>
@@ -65,13 +65,13 @@
                         Discount
                     </div>
                     <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
-                        <input matInput readonly placeholder="Date Received">
+                        <input matInput readonly formControlName="DISEXAMOUNT">
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
-                        <input matInput readonly placeholder="Date Received">
+                        <input matInput readonly formControlName="DISGSTAMOUNT">
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
-                        <input matInput readonly placeholder="Date Received">
+                        <input matInput readonly formControlName="DISUINAMOUNT">
                     </mat-form-field>
                 </div>
                 <mat-divider></mat-divider>

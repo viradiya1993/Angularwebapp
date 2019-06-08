@@ -80,6 +80,9 @@ export class InvoiceAddDailogComponent implements OnInit {
       Percentage_type: [''],
       GST_type: [''],
       Discount_type: [''],
+      DISEXAMOUNT: [''],
+      DISGSTAMOUNT: [''],
+      DISUINAMOUNT: [''],
     });
     this._mattersService.getMattersDetail({ MATTERGUID: matterDetail.MATTERGUID, GetAllFields: true }).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
@@ -111,8 +114,10 @@ export class InvoiceAddDailogComponent implements OnInit {
     });
     this.isLoadingResults = false;
   }
-  changeTotalDataOut(event) {
+  changeDiscountAmount(event) {
     console.log(event);
+  }
+  changeTotalDataOut(event) {
     let EXTOTAL: number = 0;
     let INTOTAL: number = 0;
     let TOTALGST: number = 0;
@@ -163,7 +168,6 @@ export class InvoiceAddDailogComponent implements OnInit {
     return this.addInvoiceForm.controls;
   }
   SaveInvoice() {
-    alert('save');
     this.isspiner = true;
     let PostData: any = {
       // "INVOICEGUID": this.f.ADDITIONALTEXT.value,

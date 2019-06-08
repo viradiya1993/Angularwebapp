@@ -20,7 +20,11 @@ export class ReceiptsCreditsComponent implements OnInit {
   ColumnsObj: any = [];
   pageSize: any;
   tempColobj: any;
+  highlightedRows: any;
+  theme_type = localStorage.getItem('theme_type');
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   isLoadingResults: boolean = false;
+  currentData: any;
   constructor(private dialog: MatDialog,
     private ReceiptsCredits: ReceiptsCreditsService,
     private TableColumnsService: TableColumnsService,
@@ -39,6 +43,8 @@ export class ReceiptsCreditsComponent implements OnInit {
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
     this.ReceiptsCredits.ReceiptsCreditsData(potData).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
+        localStorage.setItem('TBreceiptData',JSON.stringify(res.DATA.RECEIPTS[0]));
+        this.highlightedRows = res.DATA.RECEIPTS[0].INCOMEGUID;
         this.ReceiptsCreditsdata = new MatTableDataSource(res.DATA.RECEIPTS)
         this.ReceiptsCreditsdata.paginator = this.paginator
       }
@@ -65,6 +71,11 @@ export class ReceiptsCreditsComponent implements OnInit {
     }, error => {
       this.toastr.error(error);
     });
+  }
+  selectId(row:any){
+    this.currentData=row;
+    console.log(row);
+    localStorage.setItem('TBreceiptData',JSON.stringify(row));
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();

@@ -28,8 +28,10 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
   pageSize: any;
   currentMatterData: any;
   MatterDropData: any;
-  filterVal: any = { 'Active': '', 'FeeEarner': '', 'SearchString': '' };
+  filterVal: any = { 'Active': 'ewew', 'FeeEarner': '', 'SearchString': '' };
   @Input() mattersDetailData;
+  firstTime: string;
+  passdata: any;
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
@@ -45,6 +47,7 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
   }
 
   ngOnInit() {
+    this.firstTime='true';
     // this.data.currentMessage.subscribe(message =>{
     //   console.log(message);
     // });
@@ -101,10 +104,16 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
     this.getList(this.filterVal);
   }
   getList(filterVal: any) {
+    console.log(filterVal);
+    if(this.firstTime=='true'){
+    this.passdata={"GETALLFIELDS":true}
+    }else{
+      this.passdata=filterVal
+    }
     this.isLoadingResults = true;
-    this.mattersService.getMatters(filterVal).subscribe(response => {
+    this.mattersService.getMatters(this.passdata).subscribe(response => {
       console.log(response);
-      if (response.CODE == 200 && response.STATUS == "success") {
+      if (response.CODE == 200 && response.STATUS == "success"){
         if (response.DATA.MATTERS[0]) {
           this.highlightedRows = response.DATA.MATTERS[0].MATTERGUID;
           this.currentMatterData = response.DATA.MATTERS[0];
@@ -128,7 +137,8 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
     const dialogRef = this._matDialog.open(ReceiptDilogComponent, { width: '100%', disableClose: true,
     data:{
       action:'add',
-      matterGuid:this.currentMatterData.MATTERGUID
+      matterGuid:this.currentMatterData.MATTERGUID,
+      clientName:this.currentMatterData.CONTACTNAME
     } });
     dialogRef.afterClosed().subscribe(result => {
         if (result) {

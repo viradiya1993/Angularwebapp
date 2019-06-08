@@ -125,8 +125,16 @@
                                         </td>
                                     </ng-container>
                                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
-                                    </tr>
+                                    <tr mat-row
+                                    [style.background]="highlightedRows == row.INCOMEGUID ? selectedColore : ''"
+                                    *matRowDef="let row; columns: displayedColumns;"
+                                    [ngClass]="highlightedRows == row.INCOMEGUID ? 'row-text-colore' : ''"
+                                    
+                                    (click)="selectId(row);highlightedRows = row.INCOMEGUID"
+                                    matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                </tr>
+                                    <!-- <tr mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}"> -->
+                                  
                                 </table>
                             </div>
                         </div>

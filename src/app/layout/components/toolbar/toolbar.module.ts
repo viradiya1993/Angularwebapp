@@ -8,10 +8,12 @@ import { QuickPanelModule } from 'app/layout/components/quick-panel/quick-panel.
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
 
 import { ToolbarComponent } from 'app/layout/components/toolbar/toolbar.component';
+import { FileComponent } from 'app/layout/components/toolbar/file/file.component';
 
 @NgModule({
     declarations: [
-        ToolbarComponent
+        ToolbarComponent,
+        FileComponent
     ],
     imports: [
         RouterModule,

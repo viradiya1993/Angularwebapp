@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, Inject, ɵConsole } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MatPaginator, MatDialog, MatTableDataSource, MatDatepickerInputEvent, MAT_DIALOG_DATA } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
@@ -83,17 +83,18 @@ export class ReceiptDilogComponent implements OnInit {
         this.isShowchecked = "false";
         //for invoice
         if(this._data.action=='editForTB'){
-          console.log("called");
+           console.log(localStorage.getItem('TBreceiptData'));
            this.receiptData=JSON.parse(localStorage.getItem('TBreceiptData'));
+           this.GetInvoiceForReceipt({ 'Outstanding': 'Yes'});
           //  this.setInvoiceForReceipt(this.receiptData.RECEIPTGUID);
         }else if(this._data.action=='addForTB'){
-          this.GetInvoiceForReceipt({});
+          this.GetInvoiceForReceipt({ 'Outstanding': 'Yes'});
         }
         else if(this._data.action=='edit'){
           this.receiptData=JSON.parse(localStorage.getItem('receiptData'));
           this.setInvoiceForReceipt(this.receiptData.RECEIPTGUID);
         }else if(this._data.action=='add'){
-          this.GetInvoiceForReceipt({});
+          this.GetInvoiceForReceipt({ 'Outstanding': 'Yes'});
         }
         this.getPayor({});
     if(this._data.action=='edit'){
@@ -155,16 +156,17 @@ export class ReceiptDilogComponent implements OnInit {
       this.toastr.error(err);
     });
   }
-  GetInvoiceForReceipt(data) {
-    
-    if (this.isShowchecked != 'true') {
-      this.data = {
-        'Outstanding': 'Yes'
-      }
-    } else {
-      this.data = data
-    }
-    this._MatterInvoicesService.MatterInvoicesData(this.data).subscribe(response => {
+  GetInvoiceForReceipt(data) {  
+    console.log(data);
+    // if (this.isShowchecked != 'true') {
+    //   console.log("invoice");
+    //   this.data = {
+    //     'Outstanding': 'Yes'
+    //   }
+    // } else {
+    //   this.data = data
+    // }
+    this._MatterInvoicesService.MatterInvoicesData(data).subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (response.DATA.INVOICES[0]) {
           // localStorage.setItem('edit_invoice_id', response.DATA.INVOICES[0].INVOICEGUID);
@@ -237,8 +239,10 @@ export class ReceiptDilogComponent implements OnInit {
     this.currentInvoiceData = row;
   }
   onChangeShow(val) {
-    if(this._data.action!='edit'){
-      this.isShowchecked = "true";
+    console.log(this._data.action);
+    if(this._data.action =='add' || this._data.action == "addForTB"){
+      console.log("called");
+      // this.isShowchecked = "true";
       if (val == 3) {
         this.GetInvoiceForReceipt({ 'Outstanding': 'Yes'});
       } else if(val == 1) {

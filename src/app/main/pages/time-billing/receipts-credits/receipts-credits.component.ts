@@ -43,10 +43,14 @@ export class ReceiptsCreditsComponent implements OnInit {
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
     this.ReceiptsCredits.ReceiptsCreditsData(potData).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
-        localStorage.setItem('TBreceiptData',JSON.stringify(res.DATA.RECEIPTS[0]));
-        this.highlightedRows = res.DATA.RECEIPTS[0].INCOMEGUID;
-        this.ReceiptsCreditsdata = new MatTableDataSource(res.DATA.RECEIPTS)
-        this.ReceiptsCreditsdata.paginator = this.paginator
+      //  console.log(res.DATA.RECEIPTS);
+        if(res.DATA.RECEIPTS.length != 0){
+          localStorage.setItem('TBreceiptData',JSON.stringify(res.DATA.RECEIPTS[0]));
+          this.highlightedRows = res.DATA.RECEIPTS[0].INCOMEGUID;
+          this.ReceiptsCreditsdata = new MatTableDataSource(res.DATA.RECEIPTS)
+          this.ReceiptsCreditsdata.paginator = this.paginator
+        }
+       
       }
       this.isLoadingResults = false;
     },
@@ -74,7 +78,6 @@ export class ReceiptsCreditsComponent implements OnInit {
   }
   selectId(row:any){
     this.currentData=row;
-    console.log(row);
     localStorage.setItem('TBreceiptData',JSON.stringify(row));
   }
   openDialog() {

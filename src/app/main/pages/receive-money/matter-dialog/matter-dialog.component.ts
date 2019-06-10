@@ -138,7 +138,8 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
     data:{
       action:'add',
       matterGuid:this.currentMatterData.MATTERGUID,
-      clientName:this.currentMatterData.CONTACTNAME
+      clientName:this.currentMatterData.CONTACTNAME,
+      fullData:this.currentMatterData
     } });
     dialogRef.afterClosed().subscribe(result => {
         if (result) {

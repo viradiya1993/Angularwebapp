@@ -97,7 +97,6 @@ export class ReceiveMoneyComponent implements OnInit {
     });
   }
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
- 
     let begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
     let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');
     let filterVal = { 'FeeEarner': '', 'Invoiced': '', 'ItemDateStart': begin, 'ItemDateEnd': end };
@@ -114,9 +113,10 @@ export class ReceiveMoneyComponent implements OnInit {
   GetData(data) {
     this.isLoadingResults = true;
     this.GetReceptData.getRecept(data).subscribe(response => {
-    
+      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.RECEIPTALLOCATIONS[0]) {
+          localStorage.setItem('receiptData',JSON.stringify(response.DATA.RECEIPTALLOCATIONS[0]));
           this.highlightedRows = response.DATA.RECEIPTALLOCATIONS[0].RECEIPTGUID;
            this.currentReciveMoneyData = response.DATA.RECEIPTALLOCATIONS[0];
         }
@@ -132,7 +132,8 @@ export class ReceiveMoneyComponent implements OnInit {
   selectMatterId(row:any){
 this.currentReciveMoneyData=row;
 
-localStorage.setItem('receiptGuid',row.RECEIPTGUID);
+// localStorage.setItem('receiptGuid',row.RECEIPTGUID);
+localStorage.setItem('receiptData',JSON.stringify(row));
   }
   // LoadData(Data) {
   //   this.isLoadingResults = true;

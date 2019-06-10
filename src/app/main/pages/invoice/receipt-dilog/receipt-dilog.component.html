@@ -50,7 +50,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
                         <mat-label>Income Type</mat-label>
-                        <mat-select formControlName="IncomeType">
+                        <mat-select formControlName="IncomeType" [value]="incomeType">
                             <mat-option value="Cash">Cash</mat-option>
                             <mat-option value="Cheque">Cheque</mat-option>
                             <mat-option value="Credit Card">Credit Card</mat-option>
@@ -58,7 +58,7 @@
                             <mat-option value="Direct Withdrawal">Direct Withdrawal</mat-option>
                             <mat-option value="Money Order">Money Order</mat-option>
                             <mat-option value="Transfer">Transfer</mat-option>
-                            <mat-option value="Other">Other</mat-option>
+                            <mat-option value="SilqPay">SilqPay</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="34" class="pr-4">
@@ -88,7 +88,7 @@
                             </mat-option>
                             <mat-option value="2">Show unpaid invoices for client : Eleanoar Carver & Associates
                             </mat-option>
-                            <mat-option value="3">Show unpaid invoices for matter : GARL001
+                            <mat-option value="3">Show all unpaid invoices for matter: TORR0002   
                             </mat-option>
                         </mat-select>
                     </mat-form-field>

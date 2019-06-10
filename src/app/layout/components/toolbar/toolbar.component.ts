@@ -635,6 +635,33 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
+    createReceiptForTimeBilling(){
+        const dialogRef = this._matDialog.open(ReceiptDilogComponent, { width: '100%', disableClose: true,
+        data:{
+          action:'addForTB'
+       }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+          if (result) { 
+          }
+      });
+    }
+    ViewReceiptForTimeBilling(){
+        console.log("view");
+        const dialogRef = this._matDialog.open(ReceiptDilogComponent, { width: '100%', disableClose: true,
+        data:{
+          action:'editForTB'
+       }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+          }
+      });
+    }
+    
+    deleteReceiceMoanyForTimeBilling(){
+
+    }
 
     createReceipt() {
         const dialogRef = this._matDialog.open(MatterReceiptDialogComponentForTemplate, { width: '100%', disableClose: true, data: null });

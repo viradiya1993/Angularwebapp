@@ -118,18 +118,30 @@ export class InvoiceAddDailogComponent implements OnInit {
     console.log(event);
     let dicountex: number = 0;
     let dicountin: number = 0;
-    if (event.amount == "" || event.amount == "0") {
+    let dicountGst: number = 0;
+    let Percentage: number = 0;
+    if (event.Percentage_type == "Percentage") {
       dicountex = (Number(event.Percentage) * Number(this.f.ORIEXTOTAL.value)) / 100;
       dicountin = (Number(event.Percentage) * Number(this.f.ORIINTOTAL.value)) / 100;
+      dicountGst = (Number(event.Percentage) * Number(this.f.ORIGSTTOTAL.value)) / 100;
     } else {
-      dicountex = event.amount;
-      dicountin = event.amount;
+      Percentage = (Number(event.amount) * 100) / Number(this.f.ORIEXTOTAL.value);
+      dicountex = (Number(Percentage) * Number(this.f.ORIEXTOTAL.value)) / 100;;
+      dicountin = (Number(Percentage) * Number(this.f.ORIINTOTAL.value)) / 100;
+      dicountGst = (Number(Percentage) * Number(this.f.ORIGSTTOTAL.value)) / 100;
     }
     this.addInvoiceForm.controls['DISEXAMOUNT'].setValue(dicountex.toFixed(2));
-    this.addInvoiceForm.controls['DISUINAMOUNT'].setValue(dicountex.toFixed(2));
+    this.addInvoiceForm.controls['DISGSTAMOUNT'].setValue(dicountGst.toFixed(2));
+    this.addInvoiceForm.controls['DISUINAMOUNT'].setValue(dicountin.toFixed(2));
 
-    this.addInvoiceForm.controls['OVEEXTOTAL'].setValue((this.f.ORIEXTOTAL.value + dicountex).toFixed(2));
-    this.addInvoiceForm.controls['OVEINTOTAL'].setValue((this.f.ORIINTOTAL.value + dicountin).toFixed(2));
+
+    let exfinalTotal = Number(this.f.ORIEXTOTAL.value - dicountex);
+    let GSTfinalTotal = Number(this.f.ORIGSTTOTAL.value - dicountGst);
+    let infinalTotal = Number(this.f.ORIINTOTAL.value - dicountin);
+
+    this.addInvoiceForm.controls['OVEEXTOTAL'].setValue(exfinalTotal.toFixed(2));
+    this.addInvoiceForm.controls['OVEGSTTOTAL'].setValue(GSTfinalTotal.toFixed(2));
+    this.addInvoiceForm.controls['OVEINTOTAL'].setValue(infinalTotal.toFixed(2));
   }
   changeTotalDataOut(event) {
     let EXTOTAL: number = 0;

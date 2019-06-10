@@ -128,6 +128,7 @@ export class FuseNavigationComponent implements OnInit {
 
   //For click
   onChange(values) {
+    console.log(values);
     this.page.forEach(items => {
       if (items.STAR == '') {
         if (items.TITLE == values) {

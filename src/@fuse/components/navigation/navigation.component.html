@@ -5,7 +5,7 @@
         <p class="name">Favourite </p>
         <ng-container *ngFor="let favopages of page">
             <span *ngIf="favopages.STAR=='star'">
-                    <fuse-nav-vertical-item *ngIf="favopages.type=='item'" [item]="favopages"></fuse-nav-vertical-item>
+                    <fuse-nav-vertical-item *ngIf="favopages.type=='item'" (onChangeVal)="onChange($event)" [item]="favopages"></fuse-nav-vertical-item>
               </span>
         </ng-container>
         <form class="example-form favourite_form_div" id="fevrite_form" autocomplete="off">

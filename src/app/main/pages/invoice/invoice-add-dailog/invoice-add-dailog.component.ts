@@ -44,9 +44,9 @@ export class InvoiceAddDailogComponent implements OnInit {
     dt.setMonth(dt.getMonth() + 1);
     this.addInvoiceForm = this._formBuilder.group({
       INVOICEDATETEXT: [new Date()],
-      INVOICEDATE: [new Date()],
+      INVOICEDATE: [this.datepipe.transform(new Date(), 'dd/MM/yyyy')],
       DUEDATETEXT: [dt],
-      DUEDATE: [dt],
+      DUEDATE: [this.datepipe.transform(dt, 'dd/MM/yyyy')],
       MATTERGUID: [matterDetail.MATTERGUID],
       MATTER: [matterDetail.MATTER],
       INVOICECODE: [''],
@@ -114,6 +114,12 @@ export class InvoiceAddDailogComponent implements OnInit {
     });
     this.isLoadingResults = false;
   }
+  invoiceDateChange(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.addInvoiceForm.controls['INVOICEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
+  dueDateChange(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.addInvoiceForm.controls['DUEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
   changeDiscountAmount(event) {
     console.log(event);
     let dicountex: number = 0;
@@ -133,8 +139,11 @@ export class InvoiceAddDailogComponent implements OnInit {
     this.addInvoiceForm.controls['DISEXAMOUNT'].setValue(dicountex.toFixed(2));
     this.addInvoiceForm.controls['DISGSTAMOUNT'].setValue(dicountGst.toFixed(2));
     this.addInvoiceForm.controls['DISUINAMOUNT'].setValue(dicountin.toFixed(2));
-
-
+    if (event.Discount_type == "Increase") {
+      dicountex = -Math.abs(dicountex);
+      dicountGst = -Math.abs(dicountGst);
+      dicountin = -Math.abs(dicountin);
+    }
     let exfinalTotal = Number(this.f.ORIEXTOTAL.value - dicountex);
     let GSTfinalTotal = Number(this.f.ORIGSTTOTAL.value - dicountGst);
     let infinalTotal = Number(this.f.ORIINTOTAL.value - dicountin);
@@ -209,6 +218,8 @@ export class InvoiceAddDailogComponent implements OnInit {
       "WORKITEMS": this.WORKITEMS
     }
     let PostInvoiceEntryData: any = { FormAction: 'insert', VALIDATEONLY: true, Data: PostData };
+    // console.log(PostInvoiceEntryData);
+    // return false;
     this._matterInvoicesService.SetInvoiceData(PostInvoiceEntryData).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.checkValidation(res.DATA.VALIDATIONS, PostInvoiceEntryData);

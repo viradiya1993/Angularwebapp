@@ -46,7 +46,9 @@ export class DetailsComponent implements OnInit {
   masterToggle() {
     this.isAllSelected() ? this.selection.clear() : this.invoiceData.data.forEach(row => this.selection.select(row));
   }
-
+  retuenData() {
+    this.totalDataOut.emit(this.selection.selected);
+  }
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: any): string {
     if (!row) {

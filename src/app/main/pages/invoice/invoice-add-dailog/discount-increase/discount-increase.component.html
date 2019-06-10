@@ -44,7 +44,7 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field fxFlex="25" class="pr-4" appearance="outline">
             <mat-label>Discount</mat-label>
-            <mat-select formControlName="Discount_type">
+            <mat-select formControlName="Discount_type" (selectionChange)="DiscountTypeChange()">
                 <mat-option value="Increase">Increase</mat-option>
                 <mat-option value="Discount">Discount</mat-option>
             </mat-select>

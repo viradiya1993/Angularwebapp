@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostBinding, Input, OnDestroy, OnInit, EventEmitter, Output } from '@angular/core';
 import { merge, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FuseNavigationService } from '@fuse/components/navigation/navigation.service';
@@ -14,6 +14,8 @@ export class FuseNavVerticalItemComponent implements OnInit, OnDestroy {
     classes = 'nav-item';
 
     @Input() item: any;
+    @Output() onChangeVal: EventEmitter<any> = new EventEmitter<any>();
+
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -56,6 +58,9 @@ export class FuseNavVerticalItemComponent implements OnInit, OnDestroy {
             });
     }
 
+    onChange(val) {
+        this.onChangeVal.emit(val);
+    }
     /**
      * On destroy
      */

@@ -25,13 +25,13 @@
 
                     <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
                         <mat-label>Invoice Date</mat-label>
-                        <input (dateInput)="CompletedDate('input', $event)" formControlName="INVOICEDATETEXT" (dateChange)="CompletedDate('change', $event)" matInput [matDatepicker]="picker3">
+                        <input (dateInput)="invoiceDateChange('input', $event)" formControlName="INVOICEDATETEXT" (dateChange)="invoiceDateChange('change', $event)" matInput [matDatepicker]="picker3">
                         <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                         <mat-datepicker #picker3></mat-datepicker>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                         <mat-label>Due Date</mat-label>
-                        <input (dateInput)="CompletedDate('input', $event)" formControlName="DUEDATETEXT" (dateChange)="CompletedDate('change', $event)" matInput [matDatepicker]="picker">
+                        <input (dateInput)="dueDateChange('input', $event)" formControlName="DUEDATETEXT" (dateChange)="dueDateChange('change', $event)" matInput [matDatepicker]="picker">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>

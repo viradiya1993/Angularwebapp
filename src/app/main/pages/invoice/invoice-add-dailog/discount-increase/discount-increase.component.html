@@ -58,19 +58,19 @@
         </mat-form-field>
         <mat-form-field fxFlex="25" class="pr-4" appearance="outline">
             <mat-label>Discount Type</mat-label>
-            <mat-select formControlName="Percentage_type">
+            <mat-select formControlName="Percentage_type" (selectionChange)="PercentageTypeChange($event.value)">
                 <mat-option value="Percentage">Percentage</mat-option>
                 <mat-option value="Amount">Amount</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input matInput placeholder="Date Received" formControlName="Percentage">
-            <input matInput placeholder="Date Received" formControlName="amount">
+            <input matInput type="number" min="0" max="100" placeholder="Percentage" *ngIf="isAmount" (keydown)="onAmoPerChnage($event)" formControlName="Percentage">
+            <input matInput placeholder="Amount" *ngIf="!isAmount" (keydown)="onAmoPerChnage($event)" formControlName="amount">
         </mat-form-field>
     </div>
     <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="100">
-            <mat-label>Disc /inc Description</mat-label>
+            <mat-label>Disc / inc Description</mat-label>
             <textarea matInput formControlName="COMMENT"></textarea>
         </mat-form-field>
     </div>

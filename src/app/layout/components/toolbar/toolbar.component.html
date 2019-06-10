@@ -463,15 +463,15 @@
                                     </section>
                                     <section [ngClass]="appPermissions[2]?.Delete==0 ? 'disabled-click large-button' : 'large-button'">
                                         <button mat-button [ngClass]="appPermissions[2]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" (click)="createInvoice()">
-                                       <section class="large-button-container">
-                                          <mat-icon class="main-icon">
-                                                <img src="assets/icons/web_app/icon_invoice_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                          </mat-icon>
-                                          <div class="main-text">
-                                             <span>Create <br> Invoice</span>
-                                          </div>
-                                       </section>
-                                    </button>
+                                   <section class="large-button-container">
+                                      <mat-icon class="main-icon">
+                                        <img src="assets/icons/web_app/icon_invoice_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                      </mat-icon>
+                                      <div class="main-text">
+                                         <span>Create <br> Invoice</span>
+                                      </div>
+                                   </section>
+                                </button>
                                     </section>
                                     <div class="light_label_txt">Action</div>
                                 </section>
@@ -479,7 +479,7 @@
                                 <!-- start tag section  -->
                                 <mat-divider vertical *ngIf="activeSubMenu =='work-in-progress'"></mat-divider>
                                 <section class="group-section-tab details_tab">
-                                    <section [ngClass]="appPermissions[2]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="isInvoice != 'invoice'">
+                                    <section [ngClass]="appPermissions[2]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="isInvoice != 'invoice' && activeSubMenu =='work-in-progress'">
                                         <button mat-button [ngClass]="appPermissions[2]?.Create==0 ? 'large-button' : 'large-button'" [routerLink]="'/time-billing/work-in-progress/invoice'">
                                    <section class="large-button-container">
                                       <mat-icon class="main-icon">
@@ -491,7 +491,7 @@
                                    </section>
                                 </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[2]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="isInvoice == 'invoice'">
+                                    <section [ngClass]="appPermissions[2]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="isInvoice == 'invoice' && activeSubMenu =='work-in-progress'">
                                         <button mat-button [ngClass]="appPermissions[2]?.Create==0 ? 'large-button' : 'large-button'" [routerLink]="'/time-billing/work-in-progress'">
                                    <section class="large-button-container">
                                       <mat-icon class="main-icon">
@@ -503,7 +503,7 @@
                                    </section>
                                 </button>
                                     </section>
-                                    <div class="light_label_txt">Tagging</div>
+                                    <div class="light_label_txt" *ngIf="activeSubMenu =='work-in-progress'">Tagging</div>
                                 </section>
                                 <!-- end tag section  -->
                                 <mat-divider vertical></mat-divider>
@@ -852,7 +852,7 @@
                                             </button>
                                     </section>
                                     <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                            <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="isInvoiceClick()" (click)="setTab($event)" [routerLink]="'/create-document'">
+                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="isInvoiceClick()" (click)="setTab($event)" [routerLink]="'/create-document'">
                                                 <section class="large-button-container">
                                                 <mat-icon class="main-icon"> 
                                                     <img class="" src="assets/icons/web_app/icon_letters_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">

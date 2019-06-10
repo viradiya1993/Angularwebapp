@@ -82,7 +82,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private TimersServiceI: TimersService,
         private _mattersService: MattersService,
         private matterInvoicesService: MatterInvoicesService,
-        private _router:Router
+        private _router: Router
     ) {
         if (this.appPermissions == null) {
             this.appPermissions = [];
@@ -614,9 +614,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     //web19
-    isInvoiceClick(){
+    isInvoiceClick() {
         console.log("jfgdgfghdshfgjsdgf");
-        this.clickedBtn='invoiceDoc';
+        this.clickedBtn = 'invoiceDoc';
     }
     createInstantInvoice() {
         return false;
@@ -628,7 +628,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     createInvoice() {
-        console.log("addInvoice");
         const dialogRef = this._matDialog.open(InvoiceAddDailogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -672,11 +671,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    ViewReceipt(){
-         const dialogRef = this._matDialog.open(ReceiptDilogComponent, { width: '100%', disableClose: true,
-          data:{
-            action:'edit'
-         }
+    ViewReceipt() {
+        const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
+            width: '100%', disableClose: true,
+            data: {
+                action: 'edit'
+            }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -758,15 +758,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     //     //***********************************************************END Select Matter Contact*************************************************************************
     // }
     SelectMatterContact() {
-        if(this.clickedBtn=='invoiceDoc'){
+        if (this.clickedBtn == 'invoiceDoc') {
             console.log("21");
             // this._router.navigate(['/create-document/invoice']);
-            const dialogRef = this._matDialog.open(InvoiceDialogComponentForTemplate, { 
+            const dialogRef = this._matDialog.open(InvoiceDialogComponentForTemplate, {
                 width: '100%',
-                 disableClose: true, 
-                 data: 'select_matter' });
+                disableClose: true,
+                data: 'select_matter'
+            });
             dialogRef.afterClosed().subscribe(result => {
-                this.clickedBtn=' ';
+                this.clickedBtn = ' ';
                 if (result) {
                     // console.log(result);
                     localStorage.setItem('set_active_matters', JSON.stringify(result));
@@ -774,11 +775,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 }
             });
 
-        }else{
-            const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, { 
+        } else {
+            const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
                 width: '100%',
-                 disableClose: true, 
-                 data: 'select_matter' });
+                disableClose: true,
+                data: 'select_matter'
+            });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     // console.log(result);
@@ -787,10 +789,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 }
             });
         }
-    
+
         //***********************************************************END Select Matter Contact*************************************************************************
     }
-    
+
 }
 //2 pair Data Convert
 function chunks(arr, size = 3) {

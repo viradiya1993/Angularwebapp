@@ -30,6 +30,7 @@ export class ContactSelectDialogComponent implements OnInit {
 
 
   constructor(
+    public dialogRef: MatDialogRef<ContactSelectDialogComponent>,
     private toastr: ToastrService,
     private fb: FormBuilder,
     public dialog: MatDialog,
@@ -63,7 +64,6 @@ export class ContactSelectDialogComponent implements OnInit {
     this.isLoadingResults = true;
     this._getContact.ContactData(postData).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        console.log(response.DATA.CONTACTS);
         this.Contactdata = new MatTableDataSource(response.DATA.CONTACTS);
         this.Contactdata.paginator = this.paginator;
         if (response.DATA.CONTACTS[0]) {
@@ -72,6 +72,8 @@ export class ContactSelectDialogComponent implements OnInit {
           this.highlightedRows = response.DATA.CONTACTS[0].CONTACTGUID;
         }
         this.isLoadingResults = false;
+      } else if (response.MESSAGE == "Not logged in") {
+        this.dialogRef.close(false);
       }
     }, err => {
       this.isLoadingResults = false;

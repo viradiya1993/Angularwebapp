@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, Inject, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { MatTableDataSource, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatPaginator, MatDialogRef } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { MatterInvoicesService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
@@ -31,6 +31,7 @@ export class InvoiceDetailComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public _data: any,
     private matterInvoicesService: MatterInvoicesService,
     private toastr: ToastrService,
+    public dialogRef: MatDialogRef<InvoiceDetailComponent>,
     public datepipe: DatePipe
   ) { }
 
@@ -105,6 +106,8 @@ export class InvoiceDetailComponent implements OnInit {
             this.toastr.error(error);
           });
           this.isLoadingResults = false;
+        } else if (response.MESSAGE == "Not logged in") {
+          this.dialogRef.close(false);
         }
       }, error => {
         this.toastr.error(error);

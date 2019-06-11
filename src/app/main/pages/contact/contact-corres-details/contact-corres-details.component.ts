@@ -42,22 +42,26 @@ export class ContactCorresDetailsComponent implements OnInit {
     this.isLoadingResults = true;
     this.getin = { MatterGuid: this.getMatterGuid }
     this._getMattersService.getMattersContact(this.getin).subscribe(res => {
-      if (res.DATA.queue[0]) {
-        this.highlightedRows = res.DATA.queue[0].PERSONGUID;
-        localStorage.setItem('contactGuid', res.DATA.queue[0].PERSONGUID);
-      }
-      if (Object.keys(res.DATA.queue).length == 0) {
-        this.toastr.error("Can't Find corresponding Details");
+      if (res.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
+      } else {
+        if (res.DATA.queue[0]) {
+          this.highlightedRows = res.DATA.queue[0].PERSONGUID;
+          localStorage.setItem('contactGuid', res.DATA.queue[0].PERSONGUID);
+        }
+        if (Object.keys(res.DATA.queue).length == 0) {
+          this.toastr.error("Can't Find corresponding Details");
+          this.dialogRef.close(false);
+        }
+        if (Object.keys(res.DATA.queue).length == 1) {
+          this.dialogRef.close(false);
+          this.selectButton();
+        }
+        this.getDataForTable = new MatTableDataSource(res.DATA.queue);
+        this.getDataForTable.paginator = this.paginator;
+        this.isLoadingResults = false;
+        this.pageSize = localStorage.getItem('lastPageSize');
       }
-      if (Object.keys(res.DATA.queue).length == 1) {
-        this.dialogRef.close(false);
-        this.selectButton();
-      }
-      this.getDataForTable = new MatTableDataSource(res.DATA.queue);
-      this.getDataForTable.paginator = this.paginator;
-      this.isLoadingResults = false;
-      this.pageSize = localStorage.getItem('lastPageSize');
     });
   }
   onPaginateChange(event) {

@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, AfterViewInit, ViewChild, ViewEncapsulation, Input, ɵConsole } from '@angular/core';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatPaginator, MatTableDataSource, MatDialogConfig } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { MattersService, TimersService,TemplateListDetails } from './../../../../_services';
+import { MattersService, TimersService, TemplateListDetails } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.component';
@@ -16,7 +16,7 @@ import { ReceiptDilogComponent } from '../../invoice/receipt-dilog/receipt-dilog
   animations: fuseAnimations
 })
 export class MatterReceiptDialogComponentForTemplate implements OnInit {
-  message:string;
+  message: string;
   displayedColumns: string[] = ['matternumber', 'matter', 'client'];
   getDataForTable: any = [];
   highlightedRows: any;
@@ -38,7 +38,7 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
     private mattersService: MattersService,
     private toastr: ToastrService,
     private Timersservice: TimersService,
-    private TemplateListDetails: TemplateListDetails,  
+    private TemplateListDetails: TemplateListDetails,
     public _matDialog: MatDialog,
     // private data:TemplateComponent
   ) {
@@ -47,14 +47,14 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
   }
 
   ngOnInit() {
-    this.firstTime='true';
+    this.firstTime = 'true';
     // this.data.currentMessage.subscribe(message =>{
     //   console.log(message);
     // });
     // localStorage.getItem('templateData');
     this.getDropValue();
     this.getMatterList();
-   
+
     // this.TemplateListDetails.getData('').subscribe(response => {
     //   console.log(response);
     //   if (response.CODE == 200 && response.STATUS == "success") {
@@ -62,7 +62,7 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
     //     //   // this.abc=i++; 
     //     // });
     //     // console.log(this.abc);
-  
+
     //   }
     // }, err => {
     //   this.isLoadingResults = false;
@@ -105,19 +105,19 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
   }
   getList(filterVal: any) {
     console.log(filterVal);
-    if(this.firstTime=='true'){
-    this.passdata={"GETALLFIELDS":true}
-    }else{
-      this.passdata=filterVal
+    if (this.firstTime == 'true') {
+      this.passdata = { "GETALLFIELDS": true }
+    } else {
+      this.passdata = filterVal
     }
     this.isLoadingResults = true;
     this.mattersService.getMatters(this.passdata).subscribe(response => {
       console.log(response);
-      if (response.CODE == 200 && response.STATUS == "success"){
+      if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.MATTERS[0]) {
           this.highlightedRows = response.DATA.MATTERS[0].MATTERGUID;
           this.currentMatterData = response.DATA.MATTERS[0];
-          localStorage.setItem('matterName',response.DATA.MATTERS[0].MATTER);
+          localStorage.setItem('matterName', response.DATA.MATTERS[0].MATTER);
         }
         this.getDataForTable = new MatTableDataSource(response.DATA.MATTERS);
         this.getDataForTable.paginator = this.paginator;
@@ -132,45 +132,47 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
     localStorage.setItem('lastPageSize', event.pageSize);
   }
   //select matter
-  selectMatter(Row: any){
-    localStorage.setItem('matterName',this.currentMatterData.MATTER);
-    const dialogRef = this._matDialog.open(ReceiptDilogComponent, { width: '100%', disableClose: true,
-    data:{
-      action:'add',
-      matterGuid:this.currentMatterData.MATTERGUID,
-      clientName:this.currentMatterData.CONTACTNAME
-    } });
-    dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-       
-        }
+  selectMatter(Row: any = "") {
+    localStorage.setItem('matterName', this.currentMatterData.MATTER);
+    const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
+      width: '100%', disableClose: true,
+      data: {
+        action: 'add',
+        matterGuid: this.currentMatterData.MATTERGUID,
+        clientName: this.currentMatterData.CONTACTNAME
+      }
     });
-  // let data=JSON.parse(localStorage.getItem('templateData'));
-  //  // console.log(this.currentMatterData.MATTERGUID);
-  // let passingData={ 
-  // 'Context':"Matter",
-  // 'ContextGuid': this.currentMatterData.MATTERGUID ,
-  // "Type":"Template",
-  // "Folder":'abc',
-  // "Template":data.TEMPLATENAME}
-  // this.TemplateListDetails.getGenerateTemplate(passingData).subscribe(response => {
-  //   console.log(response);
-  //   if (response.CODE == 200 && response.STATUS == "success") {
-     
-  //   }
-  // }, error => {
-  //   this.toastr.error(error);
-  // });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+
+      }
+    });
+    // let data=JSON.parse(localStorage.getItem('templateData'));
+    //  // console.log(this.currentMatterData.MATTERGUID);
+    // let passingData={ 
+    // 'Context':"Matter",
+    // 'ContextGuid': this.currentMatterData.MATTERGUID ,
+    // "Type":"Template",
+    // "Folder":'abc',
+    // "Template":data.TEMPLATENAME}
+    // this.TemplateListDetails.getGenerateTemplate(passingData).subscribe(response => {
+    //   console.log(response);
+    //   if (response.CODE == 200 && response.STATUS == "success") {
+
+    //   }
+    // }, error => {
+    //   this.toastr.error(error);
+    // });
   }
-   // New matter Pop-up
-   AddNewmatterpopup() {
+  // New matter Pop-up
+  AddNewmatterpopup() {
     const dialogConfig = new MatDialogConfig();
     const dialogRef = this.dialog.open(MatterPopupComponent, {
-        width: '100%',
-        disableClose: true,
-        data: {
-            action: 'new'
-        }
+      width: '100%',
+      disableClose: true,
+      data: {
+        action: 'new'
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => { });
@@ -179,11 +181,11 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
   EditNewmatterpopup() {
     const dialogConfig = new MatDialogConfig();
     const dialogRef = this.dialog.open(MatterPopupComponent, {
-        width: '100%',
-        disableClose: true,
-        data: {
-            action: 'edit'
-        }
+      width: '100%',
+      disableClose: true,
+      data: {
+        action: 'edit'
+      }
     });
     dialogRef.afterClosed().subscribe(result => { });
   }

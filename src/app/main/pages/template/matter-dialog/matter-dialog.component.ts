@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, AfterViewInit, ViewChild, ViewEncapsulation, Input } from '@angular/core';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatPaginator, MatTableDataSource, MatDialogConfig } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { MattersService, TimersService,TemplateListDetails } from './../../../../_services';
+import { MattersService, TimersService, TemplateListDetails } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.component';
@@ -15,7 +15,7 @@ import { TemplateComponent } from '../template.component';
   animations: fuseAnimations
 })
 export class MatterDialogComponentForTemplate implements OnInit {
-  message:string;
+  message: string;
   displayedColumns: string[] = ['matternumber', 'matter', 'client'];
   getDataForTable: any = [];
   highlightedRows: any;
@@ -47,11 +47,11 @@ export class MatterDialogComponentForTemplate implements OnInit {
     //   console.log(message);
     // });
     console.log();
-   
+
     // localStorage.getItem('templateData');
     this.getDropValue();
     this.getMatterList();
-   
+
     // this.TemplateListDetails.getData('').subscribe(response => {
     //   console.log(response);
     //   if (response.CODE == 200 && response.STATUS == "success") {
@@ -59,7 +59,7 @@ export class MatterDialogComponentForTemplate implements OnInit {
     //     //   // this.abc=i++; 
     //     // });
     //     // console.log(this.abc);
-  
+
     //   }
     // }, err => {
     //   this.isLoadingResults = false;
@@ -121,33 +121,34 @@ export class MatterDialogComponentForTemplate implements OnInit {
     localStorage.setItem('lastPageSize', event.pageSize);
   }
   //select matter
-  selectMatter(Row: any){
-  let data=JSON.parse(localStorage.getItem('templateData'));
-   // console.log(this.currentMatterData.MATTERGUID);
-  let passingData={ 
-  'Context':"Matter",
-  'ContextGuid': this.currentMatterData.MATTERGUID ,
-  "Type":"Template",
-  "Folder":'abc',
-  "Template":data.TEMPLATENAME}
-  this.TemplateListDetails.getGenerateTemplate(passingData).subscribe(response => {
-    console.log(response);
-    if (response.CODE == 200 && response.STATUS == "success") {
-     
+  selectMatter(Row: any = "") {
+    let data = JSON.parse(localStorage.getItem('templateData'));
+    // console.log(this.currentMatterData.MATTERGUID);
+    let passingData = {
+      'Context': "Matter",
+      'ContextGuid': this.currentMatterData.MATTERGUID,
+      "Type": "Template",
+      "Folder": 'abc',
+      "Template": data.TEMPLATENAME
     }
-  }, error => {
-    this.toastr.error(error);
-  });
+    this.TemplateListDetails.getGenerateTemplate(passingData).subscribe(response => {
+      console.log(response);
+      if (response.CODE == 200 && response.STATUS == "success") {
+
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
   }
-   // New matter Pop-up
-   AddNewmatterpopup() {
+  // New matter Pop-up
+  AddNewmatterpopup() {
     const dialogConfig = new MatDialogConfig();
     const dialogRef = this.dialog.open(MatterPopupComponent, {
-        width: '100%',
-        disableClose: true,
-        data: {
-            action: 'new'
-        }
+      width: '100%',
+      disableClose: true,
+      data: {
+        action: 'new'
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => { });
@@ -156,11 +157,11 @@ export class MatterDialogComponentForTemplate implements OnInit {
   EditNewmatterpopup() {
     const dialogConfig = new MatDialogConfig();
     const dialogRef = this.dialog.open(MatterPopupComponent, {
-        width: '100%',
-        disableClose: true,
-        data: {
-            action: 'edit'
-        }
+      width: '100%',
+      disableClose: true,
+      data: {
+        action: 'edit'
+      }
     });
     dialogRef.afterClosed().subscribe(result => { });
   }

@@ -51,6 +51,8 @@ export class MatterPopupComponent implements OnInit {
     this._mattersService.getMattersClasstype({ 'LookupType': 'Matter Class' }).subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.Classdata = responses.DATA.LOOKUPS;
+      } else if (responses.MESSAGE == "Not logged in") {
+        this.dialogRef.close(false);
       }
       this.isLoadingResults = false;
     });
@@ -451,6 +453,8 @@ export class MatterPopupComponent implements OnInit {
             this.matterdetailForm.controls['MatterNo'].setValue(matterData.LEGALDETAILS.MATTERNO);
           }
           this.isLoadingResults = false;
+        } else if (response.MESSAGE == "Not logged in") {
+          this.dialogRef.close(false);
         }
       }, error => {
         this.toastr.error(error);
@@ -931,9 +935,9 @@ export class MatterPopupComponent implements OnInit {
         this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
       } else if (response.CODE == 450 && response.STATUS == "error") {
         this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
+      } else if (response.MESSAGE == "Not logged in") {
+        this.dialogRef.close(false);
       } else {
-        if (response.CODE == 402 && response.STATUS == "error" && response.MESSAGE == "Not logged in")
-          this.dialogRef.close(false);
         this.isspiner = false;
       }
     }, error => {

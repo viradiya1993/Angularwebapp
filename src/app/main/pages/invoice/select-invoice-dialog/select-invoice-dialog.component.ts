@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, AfterViewInit, ViewChild, ViewEncapsulation, Input } from '@angular/core';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatPaginator, MatTableDataSource, MatDialogConfig } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { MattersService, TimersService,TemplateListDetails,MatterInvoicesService } from './../../../../_services';
+import { MattersService, TimersService, TemplateListDetails, MatterInvoicesService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.component';
@@ -16,7 +16,7 @@ import { InvoiceAddDailogComponent } from '../invoice-add-dailog/invoice-add-dai
   animations: fuseAnimations
 })
 export class InvoiceDialogComponentForTemplate implements OnInit {
-  message:string;
+  message: string;
   displayedColumns: string[] = ['INVOICECODE', 'CLIENTNAME', 'INVOICETOTAL'];
   getDataForTable: any = [];
   highlightedRows: any;
@@ -40,7 +40,7 @@ export class InvoiceDialogComponentForTemplate implements OnInit {
     private TemplateListDetails: TemplateListDetails,
     private _MatterInvoicesService: MatterInvoicesService,
     public _matDialog: MatDialog,
-    
+
     // private data:TemplateComponent
   ) {
 
@@ -50,15 +50,15 @@ export class InvoiceDialogComponentForTemplate implements OnInit {
   ngOnInit() {
     // this.getDropValue();
     // this.getMatterList();
-   
+
     this.isLoadingResults = true;
     this._MatterInvoicesService.MatterInvoicesData(JSON.parse(localStorage.getItem('matter_invoice_filter'))).subscribe(response => {
-console.log(response);
+      console.log(response);
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (response.DATA.INVOICES[0]) {
           localStorage.setItem('edit_invoice_id', response.DATA.INVOICES[0].INVOICEGUID);
           this.highlightedRows = response.DATA.INVOICES[0].INVOICEGUID;
-           this.currentInvoiceData = response.DATA.INVOICES[0];
+          this.currentInvoiceData = response.DATA.INVOICES[0];
         }
         this.getDataForTable = new MatTableDataSource(response.DATA.INVOICES);
         this.getDataForTable.paginator = this.paginator;
@@ -83,25 +83,26 @@ console.log(response);
   // }
   selectMatterId(Row: any) {
     this.currentInvoiceData = Row;
-   
+
   }
-  selectInvoicve(){
-    let data=JSON.parse(localStorage.getItem('templateData'));
+  selectInvoicve() {
+    let data = JSON.parse(localStorage.getItem('templateData'));
     //this.currentInvoiceData
-    let passingData={ 
-      'Context':"Invoice",
+    let passingData = {
+      'Context': "Invoice",
       'ContextGuid': this.currentInvoiceData.INVOICEGUID,
-      "Type":"Template",
-      "Folder":'abc',
-      "Template":data.TEMPLATENAME}
-      this.TemplateListDetails.getGenerateTemplate(passingData).subscribe(response => {
-        console.log(response);
-        if (response.CODE == 200 && response.STATUS == "success") {
-         
-        }
-      }, error => {
-        this.toastr.error(error);
-      });
+      "Type": "Template",
+      "Folder": 'abc',
+      "Template": data.TEMPLATENAME
+    }
+    this.TemplateListDetails.getGenerateTemplate(passingData).subscribe(response => {
+      console.log(response);
+      if (response.CODE == 200 && response.STATUS == "success") {
+
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
   }
   // getMatterList() {
   //   this.getList(JSON.parse(localStorage.getItem('matter_invoice_filter')));
@@ -160,32 +161,32 @@ console.log(response);
   // this.TemplateListDetails.getGenerateTemplate(passingData).subscribe(response => {
   //   console.log(response);
   //   if (response.CODE == 200 && response.STATUS == "success") {
-     
+
   //   }
   // }, error => {
   //   this.toastr.error(error);
   // });
   // }
   //  // New matter Pop-up
-   AddNewInvoicepopup() {
+  AddNewInvoicepopup() {
     console.log("addInvoice");
     const dialogRef = this._matDialog.open(InvoiceAddDailogComponent, { width: '100%', disableClose: true, data: null });
     dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-            console.log(result);
-        }
+      if (result) {
+        console.log(result);
+      }
     });
   }
-  // // Edit matter Pop-up
-  // EditNewInvoicepopup() {
-  //   const dialogConfig = new MatDialogConfig();
-  //   const dialogRef = this.dialog.open(MatterPopupComponent, {
-  //       width: '100%',
-  //       disableClose: true,
-  //       data: {
-  //           action: 'edit'
-  //       }
-  //   });
-  //   dialogRef.afterClosed().subscribe(result => { });
-  // }
+  // Edit matter Pop-up
+  EditNewInvoicepopup() {
+    const dialogConfig = new MatDialogConfig();
+    const dialogRef = this.dialog.open(MatterPopupComponent, {
+      width: '100%',
+      disableClose: true,
+      data: {
+        action: 'edit'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => { });
+  }
 }

@@ -90,13 +90,17 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.ITEMDATEModel = new Date();
     this.timeEntryForm.controls['ITEMTYPE'].setValue('WIP');
     let userType = JSON.parse(localStorage.getItem('currentUser'));
-    this.timeEntryForm.controls['FEEEARNER'].setValue(userType.UserId);
+    if (userType) {
+      this.timeEntryForm.controls['FEEEARNER'].setValue(userType.UserId);
+    }
     this.timeEntryForm.controls['QUANTITYTYPE'].setValue('Hours');
     this.timeEntryForm.controls['QUANTITY'].setValue(0);
     this.isLoadingResults = true;
     this.Timersservice.GetLookupsData({}).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.LookupsList = res.DATA.LOOKUPS;
+      } else if (res.MESSAGE == "Not logged in") {
+        this.dialogRef.close(false);
       } else {
         this.LookupsList = [];
       }
@@ -108,6 +112,8 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.Timersservice.GetUsers({}).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.userList = res.DATA.USERS;
+      } else if (res.MESSAGE == "Not logged in") {
+        this.dialogRef.close(false);
       } else {
         this.userList = [];
       }
@@ -126,6 +132,8 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
           itemsdata.name = itemsdata.SHORTNAME + ' : ' + itemsdata.MATTER + ' : ' + itemsdata.CLIENT;
           this.matterList.push(itemsdata);
         });
+      } else if (res.MESSAGE == "Not logged in") {
+        this.dialogRef.close(false);
       }
       this.isLoadingResults = false;
     }, err => {
@@ -371,9 +379,12 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   saveTimeEntry(PostTimeEntryData: any) {
     PostTimeEntryData.VALIDATEONLY = false;
     this.Timersservice.SetWorkItems(PostTimeEntryData).subscribe(res => {
+      console.log(res);
       if (res.CODE == 200 && res.STATUS == "success") {
         this.toasterService.success(this.successMsg);
         this.dialogRef.close(true);
+      } else if (res.CODE == 451 && res.STATUS == "warning") {
+        this.toasterService.warning(this.successMsg);
       } else {
         if (res.CODE == 402 && res.STATUS == "error" && res.MESSAGE == "Not logged in")
           this.dialogRef.close(false);

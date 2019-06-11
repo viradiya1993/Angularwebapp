@@ -21,8 +21,12 @@ export class ClientComponent implements OnInit {
 
   constructor(public MatDialog: MatDialog, ) { }
   @Input() matterdetailForm: FormGroup;
-
-  ngOnInit() { }
+  get f() {
+    return this.matterdetailForm.controls;
+  }
+  ngOnInit() {
+    console.log(this.f.MATTERGUID.value);
+  }
   Addcorres_party() {
     const dialogRef = this.MatDialog.open(CorrespondDailogComponent, { width: '100%', disableClose: true });
     dialogRef.afterClosed().subscribe(result => {

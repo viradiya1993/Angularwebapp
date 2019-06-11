@@ -75,10 +75,10 @@
     <mat-dialog-actions align="end" class="popup_ftr">
         <div class="left_popup_btn">
             <button mat-raised-button color="accent" (click)="AddNewInvoicepopup()">New Invoice</button>
-            <button mat-raised-button color="accent" (click)="EditNewInvoicepopup()">Edit Invoice</button>  
+            <button mat-raised-button color="accent" (click)="EditNewInvoicepopup()">Edit Invoice</button>
         </div>
         <div class="right_popup_btn">
-            <button mat-raised-button [mat-dialog-close]="currentMatterData" (click)="selectInvoicve()" color="accent">Select</button>
+            <button mat-raised-button (click)="selectInvoicve()" color="accent">Select</button>
             <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
         </div>
     </mat-dialog-actions>

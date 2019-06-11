@@ -15,6 +15,7 @@ import { MattersService } from 'app/_services';
 export class InstantInvoiceDailogComponent implements OnInit {
   addInvoiceForm: FormGroup;
   isLoadingResults: boolean = false;
+  isspiner: boolean = false;
   optionList: any = [
     { 'ACTIVITYID': 'X', 'DESCRIPTION': 'hh:mm' },
     { 'ACTIVITYID': 'H', 'DESCRIPTION': 'Hours' },
@@ -69,5 +70,8 @@ export class InstantInvoiceDailogComponent implements OnInit {
   }
   LookupsChange(value: any) {
     this.addInvoiceForm.controls['ADDITIONALTEXT'].setValue(value);
+  }
+  CompletedDate(s: any, ss: any) {
+
   }
 }

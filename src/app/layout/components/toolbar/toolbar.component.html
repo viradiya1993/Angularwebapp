@@ -16,6 +16,13 @@
             <mat-tab-group [selectedIndex]="selectedIndex">
                 <!-- {{isTabShow}} -->
                 <!-- matters tab start -->
+
+                <!-- //for the second time  -->
+                <mat-tab label="FILE" >
+                        <app-file ></app-file>
+                </mat-tab>
+                
+
                 <mat-tab label="MATTERS" *ngIf="isTabShow===1">
                     <section class="ribbon-container matter_tab_main" [style.width]="detailwidth">
                         <mat-card>

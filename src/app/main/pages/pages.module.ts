@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
+import { SystemSettingModule } from './system-settings/system-setting.module';
 import { ContactModule } from './contact/contact.module';
 import { MattersModule } from './matters/matters.module';
 import { TimeEntriesModule } from './time-entries/time-entries.module';
@@ -22,7 +23,10 @@ const appRoutes: Routes = [
   { path: 'spend-money', loadChildren: './spend-money/spend-money.module#SpendMoneyModule' },
   { path: 'receive-money', loadChildren: './receive-money/receive-money.module#ReceiveMoneyModule' },
   { path: 'create-document', loadChildren: './template/template.module#TemplateModule' },
-  { path: 'diary', loadChildren: './diary/diary.module#DiaryModule' }
+  { path: 'diary', loadChildren: './diary/diary.module#DiaryModule' },
+
+  //added by web 19
+  //  { path: ' ', loadChildren: './system-setting/system-settings.module#SystemSettingModule' },
 ];
 
 
@@ -32,6 +36,7 @@ const appRoutes: Routes = [
     CommonModule,
     RouterModule.forChild(appRoutes),
     ContactModule,
+    SystemSettingModule,
     MattersModule,
     TimeEntriesModule,
     DiaryModule,

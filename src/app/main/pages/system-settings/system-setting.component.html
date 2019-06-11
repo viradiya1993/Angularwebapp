@@ -1,0 +1,96 @@
+
+<div id="mail" class="page-layout carded left-sidebar inner-scroll">
+
+    
+    <div class="top-bg accent"></div>
+   
+
+    <!-- SIDEBAR -->
+    <fuse-sidebar class="sidebar" name="mail-main-sidebar" position="left" lockedOpen="gt-md">
+    
+<!-- <div class="px-24 pt-32 pb-12"></div>
+    <div class="nav material2">
+        <div class="nav-item" >
+            <a class="nav-link" matRipple >
+             <span (click)="aa()">Name</span>
+            </a>
+        </div>
+    </div> -->
+
+
+    <div fxLayout="column" fxLayoutAlign="space-between start"
+    class="header accent p-24 pb-4">
+
+   <div class="logo" fxFlex fxLayout="row" fxLayoutAlign="start center">
+     
+   </div>
+
+   <div class="account" fxLayout="column" [@animate]="{value:'*',params:{delay:'300ms'}}">
+      
+   </div>
+
+</div>
+<!-- / SIDEBAR HEADER -->
+<!-- SIDEBAR CONTENT -->
+<div class="content" fusePerfectScrollbar [@animate]="{value:'*',params:{y:'50px'}}">
+   <div class="px-24 pt-32 pb-12"></div>
+   <div class="nav material2">
+       <div class="nav-subheader"></div>
+       <div class="nav-item" ><a class="nav-link" (click)="nameClick()" matRipple>
+                <span>Name</span>
+            </a>
+        </div>
+        <!-- for business -->
+        <div class="nav-subheader"></div>
+        <div class="nav-item" ><a class="nav-link" (click)="businessClick()" matRipple>
+                 <span>Business</span>
+             </a>
+         </div>
+   </div>
+</div>
+<!-- / SIDEBAR CONTENT -->
+    </fuse-sidebar>
+    <!-- / SIDEBAR -->
+    <!-- CENTER -->
+    <div class="center">
+
+        <!-- CONTENT HEADER -->
+        <div class="header" fxLayout="row" fxLayoutAlign="start center">
+
+            <div class="search-wrapper" fxFlex fxLayout="row" fxLayoutAlign="start center">
+
+                <button mat-icon-button class="sidebar-toggle" fxHide.gt-md>
+                    <mat-icon>menu</mat-icon>
+                </button>
+
+            </div>
+
+        </div>
+        <!-- / CONTENT HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card" [ngClass]="{'current-mail-selected':currentMail}">
+
+            <!-- CONTENT TOOLBAR -->
+            <div class="toolbar px-24 py-8">
+               
+            </div>
+            <!-- / CONTENT TOOLBAR -->
+
+            <!-- CONTENT -->
+            <div class="content" fxLayout="row">
+
+                <app-name *ngIf="button ==='name'" fusePerfectScrollbar fxFlex></app-name>
+                <app-business *ngIf="button==='business'" fusePerfectScrollbar fxFlex></app-business>
+
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>
+

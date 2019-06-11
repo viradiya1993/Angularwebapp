@@ -1,0 +1,34 @@
+
+    <section class="ribbon-container matter_tab_main" [style.width]="detailwidth">
+        <mat-card>
+            <mat-card-content>
+                <section class="group-section-tab action_tab">
+                    <!-- <span class="action-section">Action</span> -->
+                    <section >
+                        <button mat-button [routerLink]="'/system-setting'"  >
+                   <section class="large-button-container">
+                      <mat-icon class="main-icon" >
+                          <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                        </mat-icon>
+                      <div class="main-text"><span>System<br> Settings</span></div>
+                   </section>
+                      </button>
+                    </section>
+                    <section >
+                        <button mat-button (click)="EditNewmatterpopup()" >
+                   <section class="large-button-container">
+                      <mat-icon class="main-icon">
+                            <img  src="assets/icons/web_app/icon_contact_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                      </mat-icon>
+                      <div class="main-text">
+                         <span>Edit<br>Matters</span>
+                      </div>
+                   </section>
+                </button>
+                    </section>
+              
+                    <div class="light_label_txt">Action</div>
+                </section>
+         </mat-card-content>
+        </mat-card>
+    </section>

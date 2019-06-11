@@ -1,0 +1,124 @@
+@import "src/@fuse/scss/fuse";
+
+#mail {
+    width: 100%;
+
+    .center {
+
+        .header {
+
+            .search-wrapper {
+                border-radius: 28px;
+                overflow: hidden;
+                @include mat-elevation(1);
+
+                .sidebar-toggle {
+                    margin: 0 0 0 6px;
+                    width: 56px;
+                    height: 56px;
+                    border-radius: 0;
+                    border-right: 1px solid;
+                }
+
+                .search {
+                    width: 100%;
+                    height: 56px;
+                    line-height: 56px;
+                    padding: 0 18px;
+
+                    input {
+                        height: 56px;
+                        min-height: 56px;
+                        max-height: 56px;
+                        padding: 0 16px;
+                        border: none;
+                        outline: none;
+                    }
+                }
+            }
+        }
+
+        .content-card {
+
+            .toolbar {
+
+                .toolbar-separator {
+                    height: 32px;
+                    width: 1px;
+                    margin: 0 12px;
+                }
+            }
+
+            @include media-breakpoint(xs) {
+
+                app-name {
+                    border-right: none;
+                }
+                app-business {
+                    border-right: none;
+                }
+
+                // app-name,
+                // app-business{
+                //     flex: 1 0 100%;
+                // }
+
+                // app-business{
+                //     display: none !important;
+                // }
+
+                &.current-mail-selected {
+
+                    .toolbar {
+                        padding-left: 16px !important;
+
+                        .mail-selection {
+                            display: none !important;
+                        }
+                    }
+                    .content {
+
+                        app-name {
+                            display: none !important;
+                            width: 100%
+                        }
+
+                        app-business {
+                            display: none !important;
+                            width: 100%
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+app-system-setting {
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    height: 100%;
+
+    .header {
+
+        .logo {
+
+            .logo-icon {
+                margin: 0 16px 0 0;
+            }
+
+            .logo-text {
+                font-size: 24px;
+                line-height: 24px;
+            }
+        }
+
+        .account {
+            width: 100%;
+        }
+    }
+}
+// .content {
+//     width: 1950px;
+// }

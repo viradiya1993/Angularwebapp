@@ -57,6 +57,9 @@
                 app-business {
                     border-right: none;
                 }
+                app-defaults{
+                    border-right: none;
+                }
 
                 // app-name,
                 // app-business{
@@ -84,6 +87,10 @@
                         }
 
                         app-business {
+                            display: none !important;
+                            width: 100%
+                        }
+                        app-defaults {
                             display: none !important;
                             width: 100%
                         }

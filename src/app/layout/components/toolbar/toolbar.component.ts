@@ -575,6 +575,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else if (x[1] == "contact") {
             this.isTabShow = 2;
         } else if (x[1] == "time-billing") {
+    
             this.isTabShow = 3;
         } else if (x[1] == "legal-details") {
             this.isTabShow = 4;
@@ -591,7 +592,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else if (x[1] == "create-document") {
             this.activedocument = x[1];
             this.isTabShow = 10;
-        } else {
+        }
+        // else if (x[1] == "/system-setting") {
+        //     this.activedocument = x[1];
+        //     this.isTabShow = 11;
+        // }
+        else if (x[1] == "/users") {
+            console.log("user");
+            this.activedocument = x[1];
+            this.isTabShow = 12;
+        }
+         else {
             this.isTabShow = 1;
         }
 

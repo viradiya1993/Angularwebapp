@@ -294,7 +294,11 @@ export class ReceiptDilogComponent implements OnInit {
           }
           this.isspiner = false;
           this.dialogRef.close(true);
-        } else {
+        } 
+        else if (response.MESSAGE == "Not logged in") {
+          this.dialogRef.close(false);
+        }
+        else {
           this.isspiner = false;
         }
       }, error => {

@@ -14,12 +14,7 @@
                 </div>
             </div>
             <mat-tab-group [selectedIndex]="selectedIndex">
-                <!-- {{isTabShow}} -->
                 <!-- matters tab start -->
-
-                <!-- //for the second time  -->
-        
-
                 <mat-tab label="MATTERS" *ngIf="isTabShow===1">
                     <section class="ribbon-container matter_tab_main" [style.width]="detailwidth">
                         <mat-card>
@@ -158,13 +153,7 @@
                     </section>
                 </mat-tab>
                 <!-- mattter tab menu end -->
-
-            <mat-tab label="FILE" >
-                        <app-file ></app-file>
-                </mat-tab>
-                
-            <mat-tab label="USERS" *ngIf="router.url === '/users'">
-                <app-user-tab></app-user-tab>
+                <mat-tab label="USERS" *ngIf="isTabShow===12">
                 </mat-tab>
 
                 <!-- contacts tab menu start -->
@@ -320,7 +309,7 @@
                                     <div class="light_label_txt">View</div>
                                 </section>
                                 <!-- //for 2nd  -->
-                               
+
 
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab" *ngIf="activeSubMenu=='receipts-credits'">
@@ -1042,6 +1031,42 @@
                     </section>
                 </mat-tab>
                 <!-- End  Start Create Document menu  -->
+                <!-- FILE menu start -->
+                <mat-tab label="FILE">
+                    <section class="ribbon-container matter_tab_main" [style.width]="detailwidth">
+                        <mat-card>
+                            <mat-card-content>
+                                <section class="group-section-tab action_tab">
+                                    <!-- <span class="action-section">Action</span> -->
+                                    <section>
+                                        <button mat-button [routerLink]="'/system-setting'">
+                                                   <section class="large-button-container">
+                                                      <mat-icon class="main-icon" >
+                                                          <img src="assets/icons/web_app/icon_tools_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                        </mat-icon>
+                                                      <div class="main-text"><span>System<br> Settings</span></div>
+                                                   </section>
+                                                      </button>
+                                    </section>
+                                    <section>
+                                        <button mat-button [routerLink]="'/users'">
+                                                   <section class="large-button-container">
+                                                      <mat-icon class="main-icon">
+                                                            <img  src="assets/icons/web_app/icon_firm_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                      </mat-icon>
+                                                      <div class="main-text">
+                                                         <span>Users</span>
+                                                      </div>
+                                                   </section>
+                                                </button>
+                                    </section>
+                                    <div class="light_label_txt">Exit</div>
+                                </section>
+                            </mat-card-content>
+                        </mat-card>
+                    </section>
+                </mat-tab>
+                <!-- FILE menu end -->
                 <!-- goto tab menu start -->
                 <mat-tab label="GO TO">
                     <section class="ribbon-container goto_tab_main" [style.width]="detailwidth">

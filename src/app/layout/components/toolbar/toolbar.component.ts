@@ -575,7 +575,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else if (x[1] == "contact") {
             this.isTabShow = 2;
         } else if (x[1] == "time-billing") {
-    
             this.isTabShow = 3;
         } else if (x[1] == "legal-details") {
             this.isTabShow = 4;
@@ -592,20 +591,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else if (x[1] == "create-document") {
             this.activedocument = x[1];
             this.isTabShow = 10;
-        }
-        // else if (x[1] == "/system-setting") {
-        //     this.activedocument = x[1];
-        //     this.isTabShow = 11;
-        // }
-        else if (x[1] == "/users") {
-            console.log("user");
-            this.activedocument = x[1];
+        } else if (x[1] == "system-setting") {
+            this.isTabShow = 11;
+        } else if (x[1] == "users") {
             this.isTabShow = 12;
-        }
-         else {
+        } else {
             this.isTabShow = 1;
         }
-
     }
     setTab(event: any) {
         this.selectedIndex = 0;
@@ -646,31 +638,33 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    createReceiptForTimeBilling(){
-        const dialogRef = this._matDialog.open(ReceiptDilogComponent, { width: '100%', disableClose: true,
-        data:{
-          action:'addForTB'
-       }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-          if (result) { 
-          }
-      });
+    createReceiptForTimeBilling() {
+        const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
+            width: '100%', disableClose: true,
+            data: {
+                action: 'addForTB'
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+            }
+        });
     }
-    ViewReceiptForTimeBilling(){
+    ViewReceiptForTimeBilling() {
         console.log("view");
-        const dialogRef = this._matDialog.open(ReceiptDilogComponent, { width: '100%', disableClose: true,
-        data:{
-          action:'editForTB'
-       }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-          if (result) {
-          }
-      });
+        const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
+            width: '100%', disableClose: true,
+            data: {
+                action: 'editForTB'
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+            }
+        });
     }
-    
-    deleteReceiceMoanyForTimeBilling(){
+
+    deleteReceiceMoanyForTimeBilling() {
 
     }
 

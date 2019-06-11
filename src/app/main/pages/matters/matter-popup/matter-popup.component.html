@@ -35,7 +35,7 @@
                             <app-general [matterdetailForm]="matterdetailForm" [userType]="userType"></app-general>
                         </mat-tab>
                         <mat-tab label="Client & Corres">
-                            <app-client [matterdetailForm]="matterdetailForm" (CorrespondDetail)="corDetailBack($event)"></app-client>
+                            <app-client [matterdetailForm]="matterdetailForm" [isEditMatter]="isEditMatter" [isEdit]="isEdit" (CorrespondDetail)="corDetailBack($event)"></app-client>
                         </mat-tab>
                         <mat-tab label="Rates">
                             <app-rates [matterdetailForm]="matterdetailForm"></app-rates>

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material';
 import { ContactSelectDialogComponent } from '../../../contact/contact-select-dialog/contact-select-dialog.component';
 import { FormGroup } from '@angular/forms';
 import { CorrespondDailogComponent } from '../../correspond-dailog/correspond-dailog.component';
+import { MattersService } from 'app/_services';
 
 @Component({
   selector: 'app-client',
@@ -17,15 +18,23 @@ export class ClientComponent implements OnInit {
   symbol: string;
   isspiner: boolean;
   @Output() CorrespondDetail: EventEmitter<any> = new EventEmitter<any>();
-
-
-  constructor(public MatDialog: MatDialog, ) { }
+  @Input() isEdit: any;
+  @Input() isEditMatter: any;
   @Input() matterdetailForm: FormGroup;
+
+
+  constructor(public MatDialog: MatDialog, private _mattersService: MattersService, ) {
+
+  }
   get f() {
     return this.matterdetailForm.controls;
   }
   ngOnInit() {
-    console.log(this.f.MATTERGUID.value);
+    if (this.isEdit) {
+      this._mattersService.getMattersContact({ MATTERGUID: this.isEditMatter }).subscribe(response => {
+        console.log(response);
+      }, error => { console.log(error); });
+    }
   }
   Addcorres_party() {
     const dialogRef = this.MatDialog.open(CorrespondDailogComponent, { width: '100%', disableClose: true });

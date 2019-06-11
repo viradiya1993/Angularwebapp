@@ -18,6 +18,8 @@ export class MatterPopupComponent implements OnInit {
   active: any;
   isLoadingResults: boolean = false;
   action: any;
+  isEdit: boolean = false;
+  isEditMatter: any = "";
   dialogTitle: string;
   isspiner: boolean = false;
   FormAction: string;
@@ -38,6 +40,8 @@ export class MatterPopupComponent implements OnInit {
   ) {
     this.action = _data.action;
     this.dialogTitle = this.action === 'edit' ? 'Edit Matter' : 'New Matter';
+    this.isEdit = _data.action === 'edit' ? true : false;
+    this.isEditMatter = this._data.matterGuid;
     this.classtype;
   }
 

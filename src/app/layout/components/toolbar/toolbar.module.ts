@@ -5,7 +5,7 @@ import { MatButtonModule, MatIconModule, MatMenuModule, MatCardModule, MatListMo
 import { FuseSearchBarModule, FuseShortcutsModule, FuseSidebarModule } from '@fuse/components';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { QuickPanelModule } from 'app/layout/components/quick-panel/quick-panel.module';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { ToolbarComponent } from 'app/layout/components/toolbar/toolbar.component';
 
@@ -23,7 +23,6 @@ import { ToolbarComponent } from 'app/layout/components/toolbar/toolbar.componen
         MatListModule,
         MatCardModule,
         MatBadgeModule,
-
         FuseSharedModule,
         FuseSearchBarModule,
         FuseSidebarModule,

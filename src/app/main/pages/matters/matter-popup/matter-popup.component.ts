@@ -1013,7 +1013,7 @@ export class MatterPopupComponent implements OnInit {
     let matterService = this._mattersService;
     this.CorrespondDetail.forEach(function (value: { MATTERGUID: any; }) {
       value.MATTERGUID = MatterId;
-      matterService.AddMatterContact({ FORMACTION: 'insert', VALIDATEONLY: true, DATA: value }).subscribe((response: { CODE: number; STATUS: string; }) => {
+      matterService.AddMatterContact({ FORMACTION: 'insert', VALIDATEONLY: false, DATA: value }).subscribe((response: { CODE: number; STATUS: string; }) => {
         if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         }
       }, (error: any) => { console.log(error); });

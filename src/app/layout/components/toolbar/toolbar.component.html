@@ -18,10 +18,7 @@
                 <!-- matters tab start -->
 
                 <!-- //for the second time  -->
-                <mat-tab label="FILE" >
-                        <app-file ></app-file>
-                </mat-tab>
-                
+        
 
                 <mat-tab label="MATTERS" *ngIf="isTabShow===1">
                     <section class="ribbon-container matter_tab_main" [style.width]="detailwidth">
@@ -161,6 +158,15 @@
                     </section>
                 </mat-tab>
                 <!-- mattter tab menu end -->
+
+            <mat-tab label="FILE" >
+                        <app-file ></app-file>
+                </mat-tab>
+                
+            <mat-tab label="USERS" *ngIf="router.url === '/users'">
+                <app-user-tab></app-user-tab>
+                </mat-tab>
+
                 <!-- contacts tab menu start -->
                 <mat-tab label="CONTACT" *ngIf="isTabShow===2">
                     <section class="ribbon-container contact_tab_main">

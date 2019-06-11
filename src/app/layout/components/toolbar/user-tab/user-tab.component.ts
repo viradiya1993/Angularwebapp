@@ -8,12 +8,12 @@ import { MatDialog } from '@angular/material';
 import { SystemSettingComponent } from 'app/main/pages/system-settings/system-setting.component';
 
 @Component({
-  selector: 'app-file',
-  templateUrl: './file.component.html',
-  styleUrls: ['./file.component.scss'],
+  selector: 'app-user-tab',
+  templateUrl: './user-tab.component.html',
+  styleUrls: ['./user-tab.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class FileComponent implements OnInit {
+export class UserTabComponent implements OnInit {
     appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
     constructor(
       public dialog: MatDialog,

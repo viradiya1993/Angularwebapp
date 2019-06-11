@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
 import { SystemSettingModule } from './system-settings/system-setting.module';
+import { UsersModule } from './users/users.module';
 import { ContactModule } from './contact/contact.module';
 import { MattersModule } from './matters/matters.module';
 import { TimeEntriesModule } from './time-entries/time-entries.module';
@@ -37,6 +38,7 @@ const appRoutes: Routes = [
     RouterModule.forChild(appRoutes),
     ContactModule,
     SystemSettingModule,
+    UsersModule,
     MattersModule,
     TimeEntriesModule,
     DiaryModule,

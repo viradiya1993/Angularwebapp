@@ -9,11 +9,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { ToolbarComponent } from 'app/layout/components/toolbar/toolbar.component';
 import { FileComponent } from 'app/layout/components/toolbar/file/file.component';
+//import { UserTabComponent } from './file/user-tab/user-tab.component';
+ import { UserTabComponent } from 'app/layout/components/toolbar/user-tab/user-tab.component';
 
 @NgModule({
     declarations: [
         ToolbarComponent,
-        FileComponent
+        FileComponent,
+        UserTabComponent
     ],
     imports: [
         RouterModule,

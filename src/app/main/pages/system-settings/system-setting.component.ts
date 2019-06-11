@@ -23,4 +23,7 @@ export class SystemSettingComponent implements OnInit {
 businessClick(){
   this.button='business';
 }
+defaultsClick(){
+  this.button='defaults';
+}
 }

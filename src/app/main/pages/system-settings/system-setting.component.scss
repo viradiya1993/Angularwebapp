@@ -1,6 +1,6 @@
 @import "src/@fuse/scss/fuse";
 
-setting {
+#mail {
     width: 100%;
 
     .center {
@@ -51,18 +51,21 @@ setting {
 
             @include media-breakpoint(xs) {
 
-                mail-name {
+                app-name {
+                    border-right: none;
+                }
+                app-business {
                     border-right: none;
                 }
 
-                mail-name,
-                mail-details {
-                    flex: 1 0 100%;
-                }
+                // app-name,
+                // app-business{
+                //     flex: 1 0 100%;
+                // }
 
-                mail-details {
-                    display: none !important;
-                }
+                // app-business{
+                //     display: none !important;
+                // }
 
                 &.current-mail-selected {
 
@@ -73,15 +76,16 @@ setting {
                             display: none !important;
                         }
                     }
-
                     .content {
 
-                        mail-name {
+                        app-name {
                             display: none !important;
+                            width: 100%
                         }
 
-                        mail-details {
-                            display: flex !important;
+                        app-business {
+                            display: none !important;
+                            width: 100%
                         }
                     }
                 }
@@ -90,3 +94,31 @@ setting {
     }
 }
 
+app-system-setting {
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    height: 100%;
+
+    .header {
+
+        .logo {
+
+            .logo-icon {
+                margin: 0 16px 0 0;
+            }
+
+            .logo-text {
+                font-size: 24px;
+                line-height: 24px;
+            }
+        }
+
+        .account {
+            width: 100%;
+        }
+    }
+}
+// .content {
+//     width: 1950px;
+// }

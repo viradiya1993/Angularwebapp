@@ -10,12 +10,17 @@ import { fuseAnimations } from '@fuse/animations';
 })
 export class SystemSettingComponent implements OnInit {
   a: string;
+  button:string;
 
   constructor() { }
 
   ngOnInit() {
+    this.button='';
   }
-aa(){
-  this.a='true';
+  nameClick(){
+  this.button='name';
+}
+businessClick(){
+  this.button='business';
 }
 }

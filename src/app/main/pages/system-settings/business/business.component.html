@@ -1,0 +1,77 @@
+<div class="one" fxLayout="column">
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                    <mat-label>ABN</mat-label>
+                    <input matInput>
+                    <mat-icon matSuffix class="secondary-text"></mat-icon>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-card class="card">
+                        <mat-checkbox class="" name="KNOWNBYOTHERNAME">Defult Rate
+                        </mat-checkbox>
+                    </mat-card>
+                </div>
+            
+             <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-radio-group aria-label="Select an option" fxFlex="33" class="pr-4">
+                            <mat-radio-button value="1">GST Exclusive</mat-radio-button>
+                    </mat-radio-group>
+                    <mat-radio-group aria-label="Select an option" fxFlex="34" class="pr-4">
+                            <mat-radio-button value="1">GST Inclusive</mat-radio-button>
+                    </mat-radio-group>
+                    <mat-radio-group aria-label="Select an option" fxFlex="33" class="pr-4">
+                            <mat-radio-button value="1">GST Free</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                                <mat-label>Hourly Rate</mat-label>
+                                <input type="number" name="ADDRESS3"  matInput>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+                                <mat-label>Daily Rate</mat-label>
+                                <input type="number" name="ADDRESS3"  matInput>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                                <mat-select placeholder="Unit Size">
+                                        <mat-option value="option">60 min units</mat-option>
+                                        <mat-option value="option">50 min units</mat-option>
+                                        <mat-option value="option">45 min units</mat-option>
+                                        <mat-option value="option">07 min units</mat-option>
+                                      </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                                <mat-label>Due Date Offset</mat-label>
+                                <input type="number" matInput>
+                                <mat-icon matSuffix class="secondary-text"></mat-icon>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                                    <mat-select placeholder="Office Cheque Formate">
+                                            <mat-option value="option">static 1</mat-option>
+                                            <mat-option value="option">static 2</mat-option>
+                                          </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" class="check" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                
+                                    <mat-checkbox class="check_1" name="KNOWNBYOTHERNAME">Vendor Is Liable For Settlement Day
+                                    </mat-checkbox>
+                                    <mat-checkbox class="check_1" name="KNOWNBYOTHERNAME">Use Single Line Expense
+                                        </mat-checkbox>
+                            </div>
+                            <div fxLayout="row"  fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                                    
+                                    <mat-select placeholder="Time Entry Rate Calculation Sequence">
+                                            <mat-option value="option">Matter -> Contact -> Fee Earner </mat-option>
+                                            <mat-option value="option">Matter -> Matter Class-> Fee Earner </mat-option>
+                                    </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+
+            </div>

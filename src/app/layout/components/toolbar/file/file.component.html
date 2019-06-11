@@ -4,8 +4,8 @@
             <mat-card-content>
                 <section class="group-section-tab action_tab">
                     <!-- <span class="action-section">Action</span> -->
-                    <section [ngClass]="appPermissions[1]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                        <button mat-button [routerLink]="'/system-setting'"  [ngClass]="appPermissions[1]?.Create==0 ? 'disabled-click large-button' : 'large-button'">
+                    <section >
+                        <button mat-button [routerLink]="'/system-setting'"  >
                    <section class="large-button-container">
                       <mat-icon class="main-icon" >
                           <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -14,8 +14,8 @@
                    </section>
                       </button>
                     </section>
-                    <section [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                        <button mat-button (click)="EditNewmatterpopup()" [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
+                    <section >
+                        <button mat-button (click)="EditNewmatterpopup()" >
                    <section class="large-button-container">
                       <mat-icon class="main-icon">
                             <img  src="assets/icons/web_app/icon_contact_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">

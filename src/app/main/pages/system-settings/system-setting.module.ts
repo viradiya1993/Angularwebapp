@@ -28,7 +28,7 @@ const routes = [
   { path: 'system-setting/business', component: SystemSettingComponent },
   { path: 'system-setting/defaults', component: SystemSettingComponent },
   { path: 'system-setting/reginoal', component: SystemSettingComponent },
-  { path: 'system-setting/trust', component: SystemSettingComponent },
+  { path: 'system-setting/trust',  component: SystemSettingComponent },
   { path: 'system-setting/templates', component: SystemSettingComponent },
   { path: 'system-setting/estimates', component: SystemSettingComponent },
 ];

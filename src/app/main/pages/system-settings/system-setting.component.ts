@@ -14,40 +14,39 @@ export class SystemSettingComponent implements OnInit {
   button:string;
   ForDataBind: any;
 
-  constructor(public router: Router) { }
+  constructor(public router: Router) { 
+    this.nameFunction();
+  }
 
   ngOnInit() {
     // this.button='name';
-    this.ForDataBind="Name";
+    // this.ForDataBind="Name";
+    // this.router.url === '/login'
+    
+    // this.router.navigate(['time-billing/work-in-progress/invoice']);
   }
-  nameClick(){
-  // this.button='name';
-  this.ForDataBind="Name";
-}
-businessClick(){
-  // this.button='business';
-  this.ForDataBind="Business";
-}
-defaultsClick(){
-  // this.button='defaults';
-  this.ForDataBind="Defaults";
-}
-estimatesClick(){
-  // this.button='estimates';
-  this.ForDataBind="Estimates";
-}
-reginoalClick(){
-  // this.button='reginoal';
-  this.ForDataBind="Reginoal";
 
-}
-trustClick(){
-  // this.button='trust';
-  this.ForDataBind="Trust";
-}
-templatesClick(){
-  // this.button='templates';
-  this.ForDataBind="Templates";
-}
+  nameFunction(){
+    if( this.router.url=="/system-setting/business"){
+      this.ForDataBind="Business";
+    }else if(this.router.url=="/system-setting/name"){  
+      this.ForDataBind="Name";
+    }
+    else if(this.router.url=="/system-setting/defaults"){  
+      this.ForDataBind="Defaults";
+    }
+    else if(this.router.url=="/system-setting/estimates"){  
+      this.ForDataBind="Estimates";
+    }
+    else if(this.router.url=="/system-setting/reginoal"){  
+      this.ForDataBind="Reginoal";
+    }
+    else if(this.router.url=="/system-setting/trust"){  
+      this.ForDataBind="Trust";
+    }
+    else if(this.router.url=="/system-setting/templates"){  
+      this.ForDataBind="Templates";
+    }
+  }
 
 }

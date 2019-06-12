@@ -1,21 +1,204 @@
 
+<div id="contacts" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
+
+    <!-- HEADER -->
+    <div class="header accent p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start"
+         fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
+
+        
+        <div fxLayout="row" fxLayoutAlign="start center">
+
+            <div class="logo" fxLayout="row" fxLayoutAlign="start center">
+                
+                <span class="logo-text h1" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    {{ForDataBind}}
+                </span>
+            </div>
+
+          
+
+        </div>
+     
+        <div class="ml-sm-32" fxLayout="row" fxLayoutAlign="center center" fxFlex>
+            <!-- <div class="search-wrapper mt-16 mt-sm-0">
+
+                <div class="search" fxFlex fxLayout="row" fxLayoutAlign="start center">
+                    <mat-icon>search</mat-icon>
+                    <input [(ngModel)]="ForDataBind">
+                </div>
+
+            </div>
+  -->
+
+        </div>
+       
+    </div>
+    <!-- / HEADER -->
+
+    <!-- SELECTED BAR -->
+   
+    <!-- / SELECTED BAR -->
+
+    <!-- CONTENT -->
+    <div class="content">
+
+        <!-- SIDEBAR -->
+        <fuse-sidebar class="sidebar" name="contacts-main-sidebar" position="left" lockedOpen="gt-sm">
+
+            <!-- SIDEBAR CONTENT -->
+            <div class="content" fusePerfectScrollbar>
+                    <div class="sidebar-content">
+
+                            <div class="card">
+                        
+                                <!-- SIDEBAR HEADER -->
+                          
+                                <!-- / SIDEBAR HEADER -->
+                        
+                                <!-- SIDEBAR CONTENT -->
+                                <div class="content py-16" fusePerfectScrollbar>
+                        
+                                    <div class="nav material2">
+                                        <!-- (click)="nameClick()" -->
+                                        <div class="nav-item name" aria-label="inbox" (click)="nameClick()">
+                                            <a [routerLink]="'/system-setting/name'"  class="nav-link" matRipple 
+                                               [ngClass]="{'active accent':(router.url === '/system-setting/name')}">
+                                                <span class="title">Name</span>
+                                            </a>
+                                        </div>
+                        
+                                        <div class="nav-item business" aria-label="frequently contacted" (click)="businessClick()">
+                                            <a [routerLink]="'/system-setting/business'"  class="nav-link" matRipple
+                                             [ngClass]="{'active accent':(router.url === '/system-setting/business')}">
+                                                <div class="title">Business</div>
+                                            </a>
+                                        </div>
+                        
+                                        <div class="nav-item defaults" aria-label="starred" (click)="defaultsClick()">
+                                            <a [routerLink]="'/system-setting/defaults'" class="nav-link" matRipple 
+                                            [ngClass]="{'active accent':(router.url === '/system-setting/defaults')}">
+                                                <div class="title">Defaults</div>
+                                            </a>
+                                        </div>
+                                        <div class="nav-item estimate" aria-label="starred" (click)="estimatesClick()">
+                                                <a [routerLink]="'/system-setting/estimates'" class="nav-link" matRipple 
+                                                [ngClass]="{'active accent':(router.url === '/system-setting/estimates')}">
+                                                    <div class="title">Estimates</div>
+                                                </a>
+                                            </div>
+                                            <div class="nav-item reginoal" aria-label="starred" (click)="reginoalClick()">
+                                                    <a [routerLink]="'/system-setting/reginoal'" class="nav-link" matRipple 
+                                                    [ngClass]="{'active accent':(router.url === '/system-setting/reginoal')}">
+                                                        <div class="title">Reginoal</div>
+                                                    </a>
+                                                </div>
+                                                <div class="nav-item trust" aria-label="starred" (click)="trustClick()">
+                                                    <a [routerLink]="'/system-setting/trust'" class="nav-link" matRipple 
+                                                    [ngClass]="{'active accent':(router.url === '/system-setting/trust')}">
+                                                        <div class="title">Trust</div>
+                                                    </a>
+                                                </div> 
+                                                <div class="nav-item template" aria-label="starred" (click)="templatesClick()">
+                                                    <a [routerLink]="'/system-setting/templates'" class="nav-link" matRipple 
+                                                    [ngClass]="{'active accent':(router.url === '/system-setting/templates')}">
+                                                        <div class="title">Templates</div>
+                                                    </a>
+                                                </div> 
+                                    </div>
+                        
+                                </div>
+                        
+                            </div>
+                        
+                        </div>
+                    <!-- <div class="nav material2">
+                            <div class="nav-subheader"></div>
+                            <div class="nav-item" ><a class="nav-link" (click)="nameClick()" matRipple>
+                                     <span>Name</span>
+                                 </a>
+                             </div>
+                            
+                             <div class="nav-subheader"></div>
+                             <div class="nav-item" ><a class="nav-link" (click)="businessClick()" matRipple>
+                                      <span>Business</span>
+                                  </a>
+                              </div>
+                              <div class="nav-subheader"></div>
+                              <div class="nav-item" ><a class="nav-link" (click)="defaultsClick()" matRipple>
+                                       <span>Defaults</span>
+                                   </a>
+                               </div>
+                               <div class="nav-subheader"></div>
+                               <div class="nav-item" ><a class="nav-link" (click)="estimatesClick()" matRipple>
+                                        <span>Estimates</span>
+                                    </a>
+                                </div>
+                        </div> -->
+                <!-- <contacts-main-sidebar [@animate]="{value:'*'}"></contacts-main-sidebar> -->
+            </div>
+            <!-- / SIDEBAR CONTENT -->
+
+        </fuse-sidebar>
+        <!-- / SIDEBAR -->
+
+        <!-- CENTER -->
+        <div class="center p-24 pb-56 pr-sm-92" fusePerfectScrollbar>
+
+            <!-- CONTENT -->
+            <div class="content">
+                    <app-name *ngIf="(router.url ==='/system-setting/name')" ></app-name>
+                <app-business *ngIf="(router.url ==='/system-setting/business')" ></app-business>
+                <app-defaults *ngIf="(router.url ==='/system-setting/defaults')" ></app-defaults>
+                <app-estimates-setting *ngIf="(router.url ==='/system-setting/estimates')" > </app-estimates-setting>
+                <app-reginoal-setting *ngIf="(router.url ==='/system-setting/reginoal')" ></app-reginoal-setting>
+                <app-trust *ngIf="(router.url ==='/system-setting/trust')" ></app-trust>
+                <app-templates *ngIf="(router.url ==='/system-setting/templates')" ></app-templates>
+                <!-- <contacts-contact-list></contacts-contact-list> -->
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CENTER -->
+
+    </div>
+    <!-- / CONTENT-->
+
+</div>
+
+<!-- ADD CONTACT BUTTON -->
+
+<!-- / ADD CONTACT BUTTON -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
 <div id="mail" class="page-layout carded left-sidebar inner-scroll">
 
     
     <div class="top-bg accent"></div>
    
 
-    <!-- SIDEBAR -->
+ 
     <fuse-sidebar class="sidebar" name="mail-main-sidebar" position="left" lockedOpen="gt-md">
     
-<!-- <div class="px-24 pt-32 pb-12"></div>
-    <div class="nav material2">
-        <div class="nav-item" >
-            <a class="nav-link" matRipple >
-             <span (click)="aa()">Name</span>
-            </a>
-        </div>
-    </div> -->
+
 
 
     <div fxLayout="column" fxLayoutAlign="space-between start"
@@ -30,8 +213,7 @@
    </div>
 
 </div>
-<!-- / SIDEBAR HEADER -->
-<!-- SIDEBAR CONTENT -->
+
 <div class="content" fusePerfectScrollbar [@animate]="{value:'*',params:{y:'50px'}}">
    <div class="px-24 pt-32 pb-12"></div>
    <div class="nav material2">
@@ -40,7 +222,7 @@
                 <span>Name</span>
             </a>
         </div>
-        <!-- for business -->
+       
         <div class="nav-subheader"></div>
         <div class="nav-item" ><a class="nav-link" (click)="businessClick()" matRipple>
                  <span>Business</span>
@@ -51,15 +233,19 @@
                   <span>Defaults</span>
               </a>
           </div>
+          <div class="nav-subheader"></div>
+          <div class="nav-item" ><a class="nav-link" (click)="estimatesClick()" matRipple>
+                   <span>Estimates</span>
+               </a>
+           </div>
    </div>
 </div>
-<!-- / SIDEBAR CONTENT -->
+
     </fuse-sidebar>
-    <!-- / SIDEBAR -->
-    <!-- CENTER -->
+  
     <div class="center">
 
-        <!-- CONTENT HEADER -->
+  
         <div class="header" fxLayout="row" fxLayoutAlign="start center">
 
             <div class="search-wrapper" fxFlex fxLayout="row" fxLayoutAlign="start center">
@@ -71,32 +257,29 @@
             </div>
 
         </div>
-        <!-- / CONTENT HEADER -->
-
-        <!-- CONTENT CARD -->
+       
         <div class="content-card" [ngClass]="{'current-mail-selected':currentMail}">
 
-            <!-- CONTENT TOOLBAR -->
+        
             <div class="toolbar px-24 py-8">
                
             </div>
-            <!-- / CONTENT TOOLBAR -->
+       
 
-            <!-- CONTENT -->
+         
             <div class="content" fxLayout="row">
 
                 <app-name *ngIf="button ==='name'" fusePerfectScrollbar fxFlex></app-name>
                 <app-business *ngIf="button==='business'" fusePerfectScrollbar fxFlex></app-business>
                 <app-defaults *ngIf="button==='defaults'" fusePerfectScrollbar fxFlex></app-defaults>
+                <app-estimates-setting *ngIf="button ==='estimates'" fusePerfectScrollbar fxFlex> </app-estimates-setting>
 
             </div>
-            <!-- / CONTENT -->
+           
 
         </div>
-        <!-- / CONTENT CARD -->
-
     </div>
-    <!-- / CENTER -->
+ 
 
 </div>
-
+ -->

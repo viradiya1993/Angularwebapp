@@ -31,6 +31,7 @@ export class ReceiptDilogComponent implements OnInit {
   receiptCode: any;
   gst: any;
   receiptData: any;
+  formaction: string;
 
   constructor(
     private toastr: ToastrService,
@@ -59,7 +60,7 @@ export class ReceiptDilogComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit() {
-
+//console.log(JSON.parse(localStorage.getItem('receiptData')).RECEIPTGUID);
     //Call get invoice api 
    
 
@@ -83,7 +84,7 @@ export class ReceiptDilogComponent implements OnInit {
         this.isShowchecked = "false";
         //for invoice
         if(this._data.action=='editForTB'){
-           console.log(localStorage.getItem('TBreceiptData'));
+          
            this.receiptData=JSON.parse(localStorage.getItem('TBreceiptData'));
            this.GetInvoiceForReceipt({ 'Outstanding': 'Yes'});
           //  this.setInvoiceForReceipt(this.receiptData.RECEIPTGUID);
@@ -157,7 +158,7 @@ export class ReceiptDilogComponent implements OnInit {
     });
   }
   GetInvoiceForReceipt(data) {  
-    console.log(data);
+   
     // if (this.isShowchecked != 'true') {
     //   console.log("invoice");
     //   this.data = {
@@ -203,24 +204,37 @@ export class ReceiptDilogComponent implements OnInit {
     localStorage.setItem('preparReceiptDate', begin);
   }
   SaveReceipt() {
-    let data = {
-      RECEIPTGUID: localStorage.getItem('receiptGuid'),
-      client: this.f.client.value,
-      RECEIPTCODE: this.f.ReceiptCode.value,
-      RECEIPTDATE: localStorage.getItem('preparReceiptDate'),
-      RECEIPTTOTAL: this.f.AmountReceived.value,
-      RECEIPTAMOUNTEXGST: this.f.AmountExGST.value,
-      GST: this.f.GST.value,
-      INCOMETYPE: this.f.IncomeType.value,
-      PAYEE: this.f.Payor.value,
-      BANKACCOUNTNAME: this.f.BankAccount.value,
-      NOTE: this.f.Note.value,
-      Show: this.f.Show.value,
-      Unallocated: this.f.Unallocated.value,
-      AMOUNT: this.f.Amount.value,
-      Outstanding: 'Yes'
+    if(this._data.action =='add' || this._data.action == "addForTB"){
+    this.formaction='insert';
+    }else{
+      this.formaction='update';
     }
-    this.GetReceptData.getRecept(data).subscribe(response => {
+    // RECEIPTGUID
+    let data = {
+      DATA:{
+        RECEIPTGUID: JSON.parse(localStorage.getItem('receiptData')).RECEIPTGUID,
+        client: this.f.client.value,
+        RECEIPTCODE: this.f.ReceiptCode.value,
+        RECEIPTDATE: localStorage.getItem('preparReceiptDate'),
+        RECEIPTTOTAL: this.f.AmountReceived.value,
+        RECEIPTAMOUNTEXGST: this.f.AmountExGST.value,
+        GST: this.f.GST.value,
+        INCOMETYPE: this.f.IncomeType.value,
+        PAYEE: this.f.Payor.value,
+        BANKACCOUNTNAME: this.f.BankAccount.value,
+        NOTE: this.f.Note.value,
+        Show: this.f.Show.value,
+        Unallocated: this.f.Unallocated.value,
+        AMOUNT: this.f.Amount.value,
+        Outstanding: 'Yes',
+        INCOMECLASS:'Receipt',
+        FormAction:this.formaction
+      }
+      
+    }
+console.log(data);
+    this.GetReceptData.setReceipt(data).subscribe(response => {
+        console.log(response);
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, data);
       } else if (response.CODE == 451 && response.STATUS == "warning") {
@@ -241,7 +255,7 @@ export class ReceiptDilogComponent implements OnInit {
   onChangeShow(val) {
     console.log(this._data.action);
     if(this._data.action =='add' || this._data.action == "addForTB"){
-      console.log("called");
+
       // this.isShowchecked = "true";
       if (val == 3) {
         this.GetInvoiceForReceipt({ 'Outstanding': 'Yes'});

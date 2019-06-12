@@ -23,6 +23,7 @@ app-business {
 }
 .one {
     margin-left: 7px; 
+    margin-top: 15px;
 }
 .card {
     // margin-top: 10px;
@@ -39,3 +40,11 @@ mat-radio-button#mat-radio-2 {
 .check_2 {
     width: 50% !important ;
 }
+mat-radio-group.pr-4.mat-radio-group {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+mat-checkbox#mat-checkbox-2 {
+    margin-bottom: 10px !important;
+}
+

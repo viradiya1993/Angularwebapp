@@ -17,11 +17,20 @@ import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatRadioModule} from '@angular/material/radio';
-
+import { EstimatesSettingComponent } from './estimates-setting/estimates-setting.component';
+import { ReginoalSettingComponent } from './regional-setting/reginoal-setting.component';
+import { TrustComponent } from './trust/trust.component';
+import { TemplatesComponent } from './templates/templates.component';
 
 const routes = [
-  { path: 'system-setting', component: SystemSettingComponent, canActivate: [AuthGuard] },
-
+  { path: 'system-setting/name', component: SystemSettingComponent, canActivate: [AuthGuard] },
+  // { path: 'system-setting/name', component: SystemSettingComponent },
+  { path: 'system-setting/business', component: SystemSettingComponent },
+  { path: 'system-setting/defaults', component: SystemSettingComponent },
+  { path: 'system-setting/reginoal', component: SystemSettingComponent },
+  { path: 'system-setting/trust', component: SystemSettingComponent },
+  { path: 'system-setting/templates', component: SystemSettingComponent },
+  { path: 'system-setting/estimates', component: SystemSettingComponent },
 ];
 @NgModule({  
   declarations: [
@@ -29,7 +38,11 @@ const routes = [
     NameComponent,
     SettingSidebarComponent,
     BusinessComponent,
-    DefultsComponent
+    DefultsComponent,
+    EstimatesSettingComponent,
+    ReginoalSettingComponent,
+    TrustComponent,
+    TemplatesComponent
    // SpendMoneyAddComponent,    
   ],
   entryComponents: [

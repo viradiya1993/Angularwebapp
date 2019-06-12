@@ -81,6 +81,20 @@ export class ReceiveMoneyComponent implements OnInit {
     this.getTableFilter();
     //  this.LoadData({});
     this.GetData({});
+
+    // this.GetReceptData.getIncome({}).subscribe(response => {
+    //   console.log(response);
+    //   if (response.CODE == 200 && response.STATUS == "success") {
+    //     if (response.DATA.RECEIPTALLOCATIONS[0]) {
+         
+    //     }
+       
+    //   }
+      
+    // }, err => {
+      
+    //   this.toastr.error(err);
+    // });
   }
 
   getTableFilter() {
@@ -113,7 +127,7 @@ export class ReceiveMoneyComponent implements OnInit {
   GetData(data) {
     this.isLoadingResults = true;
     this.GetReceptData.getRecept(data).subscribe(response => {
-      console.log(response);
+   
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.RECEIPTALLOCATIONS[0]) {
           localStorage.setItem('receiptData',JSON.stringify(response.DATA.RECEIPTALLOCATIONS[0]));
@@ -176,7 +190,6 @@ localStorage.setItem('receiptData',JSON.stringify(row));
     }
      localStorage.setItem('ReciveMoney_Filter', JSON.stringify(filterVal));
     this.GetData(filterVal);
-  
 
   }
   openDialog() {

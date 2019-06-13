@@ -17,13 +17,13 @@
                             <mat-form-field class="example" fxFlex="30" class="pr-4" appearance="outline">
                                 <mat-label>Contact Type</mat-label>
                                 <mat-select #value name="selected" (selectionChange)="ContactTypeChange($event.value)" formControlName="ContactType">
-                                    <mat-option *ngIf="_data.type==='formcontact' ">All Contacts</mat-option>
-                                    <mat-option *ngIf="_data.type==='formcontact'" value="Person">People</mat-option>
+                                    <mat-option>All Contacts</mat-option>
+                                    <mat-option value="Person">People</mat-option>
                                     <mat-option value="Company">Company</mat-option>
-                                    <mat-option  *ngIf="_data.type==='formcontact'" value="Party">Party</mat-option>
-                                    <mat-option  *ngIf="_data.type==='formcontact'" value="Payee">Payee</mat-option>
-                                    <mat-option  *ngIf="_data.type==='formcontact'" value="Payor">Payor</mat-option> 
-                                   <mat-option   *ngIf="_data.type==='formcontact'" value="Payee/Payor">Payee/Payor</mat-option> 
+                                    <mat-option value="Party">Party</mat-option>
+                                    <mat-option value="Payee">Payee</mat-option>
+                                    <mat-option value="Payor">Payor</mat-option>
+                                    <mat-option value="Payee/Payor">Payee/Payor</mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <mat-form-field class="example" fxFlex="20" class="pr-4" appearance="outline">

@@ -48,7 +48,6 @@ export class ContactComponent implements OnInit {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.getTableFilter();
     let filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
-    console.log(filterVals);
     if (filterVals) {
       if (!filterVals.active) {
         this.contactFilter.controls['Filter1'].setValue('all');
@@ -60,8 +59,8 @@ export class ContactComponent implements OnInit {
       } else {
         this.contactFilter.controls['Filter2'].setValue(filterVals.FirstLetter);
       }
-      this.selectedVal="all";
-      filterVals.ContactType=" ";
+      this.selectedVal = "all";
+      filterVals.ContactType = " ";
       console.log(filterVals.ContactType);
       this.contactFilter.controls['ContactType'].setValue(filterVals.ContactType);
     } else {
@@ -187,7 +186,7 @@ export class ContactComponent implements OnInit {
     }
   }
   onSearch(searchFilter: any) {
-   
+
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
       let filterVal: any = JSON.parse(localStorage.getItem('contact_Filter'));
       console.log(filterVal);
@@ -198,11 +197,11 @@ export class ContactComponent implements OnInit {
     }
   }
   ContactTypeChange(value) {
-  
+
     let filterVal: any = JSON.parse(localStorage.getItem('contact_Filter'));
     console.log(filterVal);
     if (!filterVal) {
-      filterVal = { 'active': '', 'FirstLetter': '', 'SEARCH': this.f.search.value, 'ContactType': value  };
+      filterVal = { 'active': '', 'FirstLetter': '', 'SEARCH': this.f.search.value, 'ContactType': value };
     } else {
       filterVal.ContactType = value;
       filterVal.SEARCH = this.f.search.value;

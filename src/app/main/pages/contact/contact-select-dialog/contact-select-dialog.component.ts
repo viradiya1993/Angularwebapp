@@ -41,8 +41,10 @@ export class ContactSelectDialogComponent implements OnInit {
     this.SelectcontactForm = this.fb.group({ ContactType: ['Company'], startsWith: ['a'], ActiveContacts: ['1'], SEARCH: [''], });
   }
   ngOnInit() {
-    console.log(this.filterVals); 
     this.loadContectData(this.filterVals);
+    if (this._data.type == "fromcontact") {
+      this.SelectcontactForm.get('ContactType').disable();
+    }
   }
   Contactvalue(value) {
     this.filterVals.FirstLetter = value != -1 ? value : '';
@@ -60,7 +62,6 @@ export class ContactSelectDialogComponent implements OnInit {
   onSearch(searchFilter: any) {
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
       this.filterVals.SEARCH = this.f.SEARCH.value;
-      console.log(this.filterVals);
       this.loadContectData(this.filterVals);
     }
   }

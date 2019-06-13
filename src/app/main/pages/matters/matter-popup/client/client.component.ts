@@ -24,26 +24,24 @@ export class ClientComponent implements OnInit {
   @Input() isEditMatter: any;
   @Input() matterdetailForm: FormGroup;
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
-
-
   constructor(
     private MatDialog: MatDialog,
     private _mattersService: MattersService,
     private dialogRef: MatDialogRef<ClientComponent>,
-  ) {
+    private dialogRefDe: MatDialogRef<FuseConfirmDialogComponent>,
+  ) { }
 
-  }
-  get f() {
-    return this.matterdetailForm.controls;
-  }
 
   ngOnInit() {
     if (this.isEdit) {
       this.loadData();
     }
   }
+  get f() {
+    return this.matterdetailForm.controls;
+  }
   Addcorres_party() {
-    const dialogRef = this.MatDialog.open(CorrespondDailogComponent, { width: '100%', disableClose: true });
+    const dialogRef = this.MatDialog.open(CorrespondDailogComponent, { width: '100%', disableClose: true, data: { type: 'new' } });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.CorrespondDetail.emit(result.saveData);
@@ -81,7 +79,7 @@ export class ClientComponent implements OnInit {
             this.loadData();
             // this.toastr.success('Matter Contact Delete successfully');
             this.isspiner = false;
-            this.dialogRef.close(true);
+            this.dialogRefDe.close(true);
           }
         }, (error: any) => {
           console.log(error);
@@ -93,7 +91,6 @@ export class ClientComponent implements OnInit {
   }
   loadData() {
     this._mattersService.getMattersContact({ MATTERGUID: this.isEditMatter }).subscribe(response => {
-      console.log(response);
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.CorrespondEdit = response.DATA.queue;
       } else if (response.MESSAGE == "Not logged in") {

@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { ContactService, } from './../../../../_services';
-import { MatTableDataSource, MatPaginator, MatDialog, MatDialogRef } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -26,7 +26,7 @@ export class ContactSelectDialogComponent implements OnInit {
   SelectcontactForm: FormGroup;
   pageSize: any;
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
-  filterVals: any = { 'Active': '1', 'FirstLetter': 'a', 'ContactType': 'Person', 'SEARCH': '' };
+  filterVals: any = { 'Active': '1', 'FirstLetter': 'a', 'ContactType': 'Company', 'SEARCH': '' };
 
 
   constructor(
@@ -36,10 +36,12 @@ export class ContactSelectDialogComponent implements OnInit {
     public dialog: MatDialog,
     public _matDialog: MatDialog,
     public _getContact: ContactService,
+    @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
-    this.SelectcontactForm = this.fb.group({ ContactType: ['Person'], startsWith: ['a'], ActiveContacts: ['1'], SEARCH: [''], });
+    this.SelectcontactForm = this.fb.group({ ContactType: ['Company'], startsWith: ['a'], ActiveContacts: ['1'], SEARCH: [''], });
   }
   ngOnInit() {
+    console.log(this.filterVals); 
     this.loadContectData(this.filterVals);
   }
   Contactvalue(value) {
@@ -52,11 +54,13 @@ export class ContactSelectDialogComponent implements OnInit {
   }
   ContactTypeChange(value) {
     this.filterVals.ContactType = value == 'all' ? "" : value;
+    console.log(this.filterVals);
     this.loadContectData(this.filterVals);
   }
   onSearch(searchFilter: any) {
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
       this.filterVals.SEARCH = this.f.SEARCH.value;
+      console.log(this.filterVals);
       this.loadContectData(this.filterVals);
     }
   }

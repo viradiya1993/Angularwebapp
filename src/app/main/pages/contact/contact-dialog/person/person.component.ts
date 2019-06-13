@@ -44,7 +44,12 @@ export class PersonComponent implements OnInit {
     this.contactForm.controls['COMPANYCONTACTGUIDTEXT'].setValue('');
   }
   SelectContactMatter() {
-    const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true });
+    const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { 
+      width: '100%', 
+      disableClose: true,
+    data:{
+      type:"fromcontact"
+    } });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.contactForm.controls['COMPANYCONTACTGUID'].setValue(result.CONTACTGUID);

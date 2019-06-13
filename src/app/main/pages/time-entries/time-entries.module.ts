@@ -23,6 +23,7 @@ import { TimeEntryDialogComponent } from './time-entry-dialog/time-entry-dialog.
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 import { MatterDialogComponent } from './matter-dialog/matter-dialog.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { NumericDirective } from './time-entry-dialog/numericValidation.component';
 const routes = [
   { path: '', component: TimeEntriesComponent, canActivate: [AuthGuard] }
 ];
@@ -32,6 +33,7 @@ const routes = [
     TimeEntriesComponent,
     TimeEntryDialogComponent,
     MatterDialogComponent,
+    NumericDirective
     // SatDatepickerModule,
   ],
   imports: [

@@ -48,6 +48,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   QuantityTypeLabel: any = 'Quantity Type';
   currentTimeMatter: any = '';
   actiontype: string;
+  abc: Date;
 
   constructor(
     public dialogRef: MatDialogRef<TimeEntryDialogComponent>,
@@ -294,6 +295,11 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.timeEntryForm.controls['ADDITIONALTEXT'].setValue(value);
   }
   SaveClickTimeEntry() {
+    
+    if(this.ITEMDATEVLAUE=="" || this.ITEMDATEVLAUE==null || this.ITEMDATEVLAUE==undefined){
+      this.abc= new Date();
+    }
+    console.log(this.abc);
     this.isspiner = true;
     let PostData: any = {
       "FormAction": "insert",
@@ -315,6 +321,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       // "GSTCHARGED": "value",
       // "GSTTYPE": "value",
     }
+    console.log(PostData);
     if (this.f.ITEMTYPE.value == "Activity" || this.f.ITEMTYPE.value == "Sundry") {
       PostData.FEETYPE = this.f.QUANTITYTYPE.value;
       PostData.QUANTITYTYPE = '';

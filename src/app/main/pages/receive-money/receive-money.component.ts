@@ -27,7 +27,7 @@ export class ReceiveMoneyComponent implements OnInit {
   pageSize: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   currentReciveMoneyData: any;
-  lastFilter: { 'FeeEarner': string; 'Invoiced': string; 'ItemDateStart': string; 'ItemDateEnd': string; };
+  lastFilter: { 'INCOMECLASS': string;  'ItemDateStart': string; 'ItemDateEnd': string; };
   constructor(
     private TableColumnsService: TableColumnsService,
     private dialog: MatDialog,
@@ -67,7 +67,7 @@ export class ReceiveMoneyComponent implements OnInit {
     let filterVals = { 'active': '1', 'FirstLetter': 'a', 'SEARCH': '', 'ContactType': '' };
     localStorage.setItem('ReciveMoney_Filter', JSON.stringify(filterVals));
     
-    this.lastFilter = { 'FeeEarner': '', 'Invoiced': " ", 'ItemDateStart': this.datepipe.transform(new Date(), 'dd/MM/yyyy'), 'ItemDateEnd': this.datepipe.transform(dt, 'dd/MM/yyyy') };
+    this.lastFilter = { "INCOMECLASS":" ",'ItemDateStart': this.datepipe.transform(new Date(), 'dd/MM/yyyy'), 'ItemDateEnd': this.datepipe.transform(dt, 'dd/MM/yyyy') };
     localStorage.setItem('recive_money_DateFilter', JSON.stringify(this.lastFilter));
    
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
@@ -80,9 +80,10 @@ export class ReceiveMoneyComponent implements OnInit {
     });
     this.getTableFilter();
     //  this.LoadData({});
-    this.GetData({});
+    // this.GetData({});
+    this.forListing({"INCOMECLASS":"Receipt"});
 
-    // this.GetReceptData.getIncome({}).subscribe(response => {
+    // this.GetReceptData.setReceipt({"INCOMECLASS":"Receipt"}).subscribe(response => {
     //   console.log(response);
     //   if (response.CODE == 200 && response.STATUS == "success") {
     //     if (response.DATA.RECEIPTALLOCATIONS[0]) {
@@ -95,8 +96,39 @@ export class ReceiveMoneyComponent implements OnInit {
       
     //   this.toastr.error(err);
     // });
+    // this.GetReceptData.getIncome({"INCOMECLASS":"Receipt"}).subscribe(response => {
+    //   console.log(response);return
+    //   if (response.CODE == 200 && response.STATUS == "success") {
+    //     if (response.DATA.RECEIPTALLOCATIONS[0]) {
+         
+    //     }
+       
+    //   }
+      
+    // }, err => {
+      
+    //   this.toastr.error(err);
+    // });
   }
-
+  forListing(data){
+    this.isLoadingResults = true;
+    this.GetReceptData.getIncome(data).subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        if (response.DATA.INCOMEITEMS[0]) {
+          localStorage.setItem('receiptData',JSON.stringify(response.DATA.INCOMEITEMS[0]));
+          this.highlightedRows = response.DATA.INCOMEITEMS[0].INCOMEGUID;
+           this.currentReciveMoneyData = response.DATA.INCOMEITEMS[0];
+        }
+        this.receiveMoneydata = new MatTableDataSource(response.DATA.INCOMEITEMS)
+        this.receiveMoneydata.paginator = this.paginator;
+      }
+      this.isLoadingResults = false;
+    }, err => {
+      this.isLoadingResults = false;
+      this.toastr.error(err);
+    });
+    
+  }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('receive money', '').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
@@ -110,19 +142,26 @@ export class ReceiveMoneyComponent implements OnInit {
       this.toastr.error(error);
     });
   }
+
+
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
     let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');
-    let filterVal = { 'FeeEarner': '', 'Invoiced': '', 'ItemDateStart': begin, 'ItemDateEnd': end };
-    if (!localStorage.getItem('recive_money_DateFilter')) {
-      localStorage.setItem('recive_money_DateFilter', JSON.stringify(filterVal));
-    } else {
-      filterVal = JSON.parse(localStorage.getItem('recive_money_DateFilter'));
-      filterVal.ItemDateStart = begin;
-      filterVal.ItemDateEnd = end;
-      localStorage.setItem('recive_money_DateFilter', JSON.stringify(filterVal));
-    }
-    this.GetData(filterVal);
+   let filterVal= JSON.parse(localStorage.getItem('recive_money_DateFilter'));
+   filterVal.ItemDateStart = begin;
+   filterVal.ItemDateEnd = end;
+
+    this.forListing(filterVal);
+    // let filterVal = {"INCOMECLASS":"", 'ItemDateStart': begin, 'ItemDateEnd': end };
+    // if (!localStorage.getItem('recive_money_DateFilter')) {
+    //   localStorage.setItem('recive_money_DateFilter', JSON.stringify(filterVal));
+    // } else {
+    //   filterVal = JSON.parse(localStorage.getItem('recive_money_DateFilter'));
+    //   filterVal.ItemDateStart = begin;
+    //   filterVal.ItemDateEnd = end;
+    //   localStorage.setItem('recive_money_DateFilter', JSON.stringify(filterVal));
+    // }
+    // this.GetData(filterVal);
   }
   GetData(data) {
     this.isLoadingResults = true;
@@ -142,6 +181,7 @@ export class ReceiveMoneyComponent implements OnInit {
       this.isLoadingResults = false;
       this.toastr.error(err);
     });
+    
   }
   selectMatterId(row:any){
 this.currentReciveMoneyData=row;
@@ -180,16 +220,20 @@ localStorage.setItem('receiptData',JSON.stringify(row));
     return this.receiveMoneyForm.controls;
   }
   onChange(value){
-  
-    let filterVal: any = JSON.parse(localStorage.getItem('ReciveMoney_Filter'));
-    if (!filterVal) {
-      filterVal = { 'active': '', 'FirstLetter': '', 'SEARCH': this.f.search.value, 'ContactType': value == "all" ? "" : value };
-    } else {
-      filterVal.ContactType = value == "all" ? "" : value;
-      filterVal.SEARCH = '';
-    }
-     localStorage.setItem('ReciveMoney_Filter', JSON.stringify(filterVal));
-    this.GetData(filterVal);
+    
+    let data={value}
+    let filterVal: any = JSON.parse(localStorage.getItem('recive_money_DateFilter'));
+    filterVal.INCOMECLASS=data.value;
+    localStorage.setItem('recive_money_DateFilter',JSON.stringify(filterVal))
+     this.forListing(filterVal);
+    // if (!filterVal) {
+    //   filterVal = { 'active': '', 'FirstLetter': '', 'SEARCH': this.f.search.value, 'ContactType': value == "all" ? "" : value };
+    // } else {
+    //   filterVal.ContactType = value == "all" ? "" : value;
+    //   filterVal.SEARCH = '';
+    // }
+    //  localStorage.setItem('ReciveMoney_Filter', JSON.stringify(filterVal));
+    // this.GetData(filterVal);
 
   }
   openDialog() {

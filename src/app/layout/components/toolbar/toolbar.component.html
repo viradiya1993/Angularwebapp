@@ -1032,12 +1032,12 @@
                 </mat-tab>
                 <!-- End  Start Create Document menu  -->
                 <!-- FILE menu start -->
-                <mat-tab label="FILE">
+                <!-- <mat-tab label="FILE">
                     <section class="ribbon-container matter_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
-                                    <!-- <span class="action-section">Action</span> -->
+                                   
                                     <section>
                                         <button mat-button [routerLink]="'/system-setting/name'">
                                                    <section class="large-button-container">
@@ -1065,7 +1065,7 @@
                             </mat-card-content>
                         </mat-card>
                     </section>
-                </mat-tab>
+                </mat-tab> -->
                 <!-- FILE menu end -->
                 <!-- goto tab menu start -->
                 <mat-tab label="GO TO">
@@ -1340,7 +1340,7 @@
                  <span>Preferences</span>
               </button>
 
-                <button mat-menu-item class="" disabled>
+                <button [routerLink]="'/system-setting/name'" mat-menu-item class="" >
                  <span>Setting</span>
                 </button>
 

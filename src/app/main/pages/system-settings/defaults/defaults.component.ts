@@ -9,9 +9,11 @@ import { fuseAnimations } from '@fuse/animations';
 })
 export class DefultsComponent implements OnInit {
 
+
   constructor() { }
 
   ngOnInit() {
+   
   }
 
 }

@@ -56,58 +56,94 @@
                                     <div class="example-containerdata">
                                         <table mat-table #table [dataSource]="receiveMoneydata"
                                             [@animateStagger]="{value:'50'}">
-                                            <ng-container matColumnDef="ACCOUNTNUMBER">
-                                                <th mat-header-cell *matHeaderCellDef class="header_title">
-                                                    {{ tempColobj['ACCOUNTNUMBER'].DESCRIPTION }}</th>
-                                                <td mat-cell *matCellDef="let row">{{row.ACCOUNTNUMBER}}
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="ALLOCATIONCODE">
-                                                <th mat-header-cell *matHeaderCellDef class="header_title">
-                                                    {{ tempColobj['ALLOCATIONCODE'].DESCRIPTION }}</th>
-                                                <td mat-cell *matCellDef="let row">{{row.ALLOCATIONCODE}}
-                                                </td>
-                                            </ng-container>
                                             <ng-container matColumnDef="AMOUNT">
                                                 <th mat-header-cell *matHeaderCellDef class="header_title">
                                                     {{ tempColobj['AMOUNT'].DESCRIPTION }}</th>
-                                                <td mat-cell *matCellDef="let row">{{row.AMOUNT }}
+                                                <td mat-cell *matCellDef="let row">{{row.AMOUNT}}
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="BANKACCOUNTGUID">
                                                 <th mat-header-cell *matHeaderCellDef class="header_title">
                                                     {{ tempColobj['BANKACCOUNTGUID'].DESCRIPTION }}</th>
-                                                <td mat-cell *matCellDef="let row">{{row.BANKACCOUNTGUID }}
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="CREDITCONTACTNAME">
-                                                <th mat-header-cell *matHeaderCellDef class="header_title">
-                                                    {{ tempColobj['CREDITCONTACTNAME'].DESCRIPTION }}</th>
-                                                <td mat-cell *matCellDef="let row">{{row.CREDITCONTACTNAME }}
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="CREDITSHORTNAME">
-                                                <th mat-header-cell *matHeaderCellDef class="header_title">
-                                                    {{ tempColobj['CREDITSHORTNAME'].DESCRIPTION }}</th>
-                                                <td mat-cell *matCellDef="let row">{{row.CREDITSHORTNAME }}
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="CONTACTNAME">
-                                                <th mat-header-cell *matHeaderCellDef class="header_title">
-                                                    {{ tempColobj['CONTACTNAME'].DESCRIPTION }}</th>
-                                                <td mat-cell *matCellDef="let row">{{row.CONTACTNAME}}
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="EXPENDITUREGUID">
-                                                <th mat-header-cell *matHeaderCellDef class="header_title">
-                                                    {{ tempColobj['EXPENDITUREGUID'].DESCRIPTION }}</th>
-                                                <td mat-cell *matCellDef="let row">{{row.EXPENDITUREGUID}}
+                                                <td mat-cell *matCellDef="let row">{{row.BANKACCOUNTGUID}}
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="FIRMGUID">
                                                 <th mat-header-cell *matHeaderCellDef class="header_title">
                                                     {{ tempColobj['FIRMGUID'].DESCRIPTION }}</th>
-                                                <td mat-cell *matCellDef="let row">{{row.FIRMGUID}}
+                                                <td mat-cell *matCellDef="let row">{{row.FIRMGUID }}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="FOREIGNCURRENCYAMOUNT">
+                                                <th mat-header-cell *matHeaderCellDef class="header_title">
+                                                    {{ tempColobj['FOREIGNCURRENCYAMOUNT'].DESCRIPTION }}</th>
+                                                <td mat-cell *matCellDef="let row">{{row.FOREIGNCURRENCYAMOUNT }}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="FOREIGNCURRENCYGST">
+                                                <th mat-header-cell *matHeaderCellDef class="header_title">
+                                                    {{ tempColobj['FOREIGNCURRENCYGST'].DESCRIPTION }}</th>
+                                                <td mat-cell *matCellDef="let row">{{row.FOREIGNCURRENCYGST }}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="FOREIGNCURRENCYID">
+                                                <th mat-header-cell *matHeaderCellDef class="header_title">
+                                                    {{ tempColobj['FOREIGNCURRENCYID'].DESCRIPTION }}</th>
+                                                <td mat-cell *matCellDef="let row">{{row.FOREIGNCURRENCYID }}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="FOREIGNCURRENCYRATE">
+                                                <th mat-header-cell *matHeaderCellDef class="header_title">
+                                                    {{ tempColobj['FOREIGNCURRENCYRATE'].DESCRIPTION }}</th>
+                                                <td mat-cell *matCellDef="let row">{{row.FOREIGNCURRENCYRATE}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="GST">
+                                                <th mat-header-cell *matHeaderCellDef class="header_title">
+                                                    {{ tempColobj['GST'].DESCRIPTION }}</th>
+                                                <td mat-cell *matCellDef="let row">{{row.GST}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="INCOMEACCOUNTGUID">
+                                                <th mat-header-cell *matHeaderCellDef class="header_title">
+                                                    {{ tempColobj['INCOMEACCOUNTGUID'].DESCRIPTION }}</th>
+                                                <td mat-cell *matCellDef="let row">{{row.INCOMEACCOUNTGUID}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="INCOMEACCOUNTGUID_COPY">
+                                                <th mat-header-cell *matHeaderCellDef class="header_title">
+                                                    {{ tempColobj['INCOMEACCOUNTGUID_COPY'].DESCRIPTION }}</th>
+                                                <td mat-cell *matCellDef="let row">{{row.INCOMEACCOUNTGUID_COPY}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="INCOMECLASS">
+                                                <th mat-header-cell *matHeaderCellDef class="header_title">
+                                                    {{ tempColobj['INCOMECLASS'].DESCRIPTION }}</th>
+                                                <td mat-cell *matCellDef="let row">{{row.INCOMECLASS}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="INCOMECODE">
+                                                <th mat-header-cell *matHeaderCellDef class="header_title">
+                                                    {{ tempColobj['INCOMECODE'].DESCRIPTION }}</th>
+                                                <td mat-cell *matCellDef="let row">{{row.INCOMECODE}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="INCOMEDATE">
+                                                <th mat-header-cell *matHeaderCellDef class="header_title">
+                                                    {{ tempColobj['INCOMEDATE'].DESCRIPTION }}</th>
+                                                <td mat-cell *matCellDef="let row">{{row.INCOMEDATE}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="INCOMEGUID">
+                                                <th mat-header-cell *matHeaderCellDef class="header_title">
+                                                    {{ tempColobj['INCOMEGUID'].DESCRIPTION }}</th>
+                                                <td mat-cell *matCellDef="let row">{{row.INCOMEGUID}}
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="INCOMEREVERSALGUID">
+                                                <th mat-header-cell *matHeaderCellDef class="header_title">
+                                                    {{ tempColobj['INCOMEREVERSALGUID'].DESCRIPTION }}</th>
+                                                <td mat-cell *matCellDef="let row">{{row.INCOMEREVERSALGUID}}
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="INCOMETYPE">
@@ -116,34 +152,10 @@
                                                 <td mat-cell *matCellDef="let row">{{row.INCOMETYPE}}
                                                 </td>
                                             </ng-container>
-                                            <ng-container matColumnDef="INVOICECODE">
+                                            <ng-container matColumnDef="NOTE">
                                                 <th mat-header-cell *matHeaderCellDef class="header_title">
-                                                    {{ tempColobj['INVOICECODE'].DESCRIPTION }}</th>
-                                                <td mat-cell *matCellDef="let row">{{row.INVOICECODE}}
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="INVOICEDATE">
-                                                <th mat-header-cell *matHeaderCellDef class="header_title">
-                                                    {{ tempColobj['INVOICEDATE'].DESCRIPTION }}</th>
-                                                <td mat-cell *matCellDef="let row">{{row.INVOICEDATE}}
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="INVOICEGUID">
-                                                <th mat-header-cell *matHeaderCellDef class="header_title">
-                                                    {{ tempColobj['INVOICEGUID'].DESCRIPTION }}</th>
-                                                <td mat-cell *matCellDef="let row">{{row.INVOICEGUID}}
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="INVOICETOTAL">
-                                                <th mat-header-cell *matHeaderCellDef class="header_title">
-                                                    {{ tempColobj['INVOICETOTAL'].DESCRIPTION }}</th>
-                                                <td mat-cell *matCellDef="let row">{{row.INVOICETOTAL}}
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="MATTERGUID">
-                                                <th mat-header-cell *matHeaderCellDef class="header_title">
-                                                    {{ tempColobj['MATTERGUID'].DESCRIPTION }}</th>
-                                                <td mat-cell *matCellDef="let row">{{row.MATTERGUID}}
+                                                    {{ tempColobj['NOTE'].DESCRIPTION }}</th>
+                                                <td mat-cell *matCellDef="let row">{{row.NOTE}}
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="PAYEE">
@@ -152,54 +164,13 @@
                                                 <td mat-cell *matCellDef="let row">{{row.PAYEE}}
                                                 </td>
                                             </ng-container>
-                                            <ng-container matColumnDef="RECEIPTALLOCATIONGUID">
+                                            <ng-container matColumnDef="TRUSTTRANSACTIONGUID">
                                                 <th mat-header-cell *matHeaderCellDef class="header_title">
-                                                    {{ tempColobj['RECEIPTALLOCATIONGUID'].DESCRIPTION }}</th>
-                                                <td mat-cell *matCellDef="let row">{{row.RECEIPTALLOCATIONGUID}}
+                                                    {{ tempColobj['TRUSTTRANSACTIONGUID'].DESCRIPTION }}</th>
+                                                <td mat-cell *matCellDef="let row">{{row.TRUSTTRANSACTIONGUID}}
                                                 </td>
                                             </ng-container>
-                                            <ng-container matColumnDef="RECEIPTAMOUNTEXGST">
-                                                <th mat-header-cell *matHeaderCellDef class="header_title">
-                                                    {{ tempColobj['RECEIPTAMOUNTEXGST'].DESCRIPTION }}</th>
-                                                <td mat-cell *matCellDef="let row">{{row.RECEIPTAMOUNTEXGST}}
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="RECEIPTCODE">
-                                                <th mat-header-cell *matHeaderCellDef class="header_title">
-                                                    {{ tempColobj['RECEIPTCODE'].DESCRIPTION }}</th>
-                                                <td mat-cell *matCellDef="let row">{{row.RECEIPTCODE}}
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="RECEIPTDATE">
-                                                <th mat-header-cell *matHeaderCellDef class="header_title">
-                                                    {{ tempColobj['RECEIPTDATE'].DESCRIPTION }}</th>
-                                                <td mat-cell *matCellDef="let row">{{row.RECEIPTDATE}}
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="RECEIPTGST">
-                                                <th mat-header-cell *matHeaderCellDef class="header_title">
-                                                    {{ tempColobj['RECEIPTGST'].DESCRIPTION }}</th>
-                                                <td mat-cell *matCellDef="let row">{{row.RECEIPTGST}}
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="RECEIPTGUID">
-                                                <th mat-header-cell *matHeaderCellDef class="header_title">
-                                                    {{ tempColobj['RECEIPTGUID'].DESCRIPTION }}</th>
-                                                <td mat-cell *matCellDef="let row">{{row.RECEIPTGUID}}
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="RECEIPTTOTAL">
-                                                <th mat-header-cell *matHeaderCellDef class="header_title">
-                                                    {{ tempColobj['RECEIPTTOTAL'].DESCRIPTION }}</th>
-                                                <td mat-cell *matCellDef="let row">{{row.RECEIPTTOTAL}}
-                                                </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="XEROGUID">
-                                                <th mat-header-cell *matHeaderCellDef class="header_title">
-                                                    {{ tempColobj['XEROGUID'].DESCRIPTION }}</th>
-                                                <td mat-cell *matCellDef="let row">{{row.XEROGUID}}
-                                                </td>
-                                            </ng-container>
+                                            
                                             <!-- <ng-container matColumnDef="AMOUNTOUTSTANDINGEXGST">
                                                 <th mat-header-cell *matHeaderCellDef class="header_title">{{ tempColobj['AMOUNTOUTSTANDINGEXGST'].DESCRIPTION }}</th>
                                                 <td mat-cell *matCellDef="let row">{{row.AMOUNTOUTSTANDINGEXGST}}
@@ -252,11 +223,11 @@
                                             </ng-container> -->
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                                             <tr mat-row
-                                                [style.background]="highlightedRows == row.RECEIPTGUID ? selectedColore : ''"
+                                                [style.background]="highlightedRows == row.INCOMEGUID ? selectedColore : ''"
                                                 *matRowDef="let row; columns: displayedColumns;"
-                                                [ngClass]="highlightedRows == row.RECEIPTGUID ? 'row-text-colore' : ''"
+                                                [ngClass]="highlightedRows == row.INCOMEGUID ? 'row-text-colore' : ''"
                                                 class="contact"
-                                                (click)="selectMatterId(row);highlightedRows = row.RECEIPTGUID"
+                                                (click)="selectMatterId(row);highlightedRows = row.INCOMEGUID"
                                                 matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                             </tr>
             

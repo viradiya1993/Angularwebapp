@@ -359,10 +359,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     //client details from matter
     ClientDetailsDialog() {
         let getMatterContactGuId = JSON.parse(localStorage.getItem('set_active_matters'));
-        if (getMatterContactGuId.CONTACTGUID == "") {
+        if (getMatterContactGuId.COMPANYCONTACTGUID == "") {
             this.toastr.error('CONTACTGUID not available');
         } else {
-            localStorage.setItem('contactGuid', getMatterContactGuId.CONTACTGUID);
+            localStorage.setItem('contactGuid', getMatterContactGuId.COMPANYCONTACTGUID);
             const dialogRef = this.dialog.open(ContactDialogComponent, { disableClose: true, data: { action: 'edit' } });
             dialogRef.afterClosed().subscribe(result => { });
         }

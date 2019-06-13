@@ -16,5 +16,12 @@ import { Columns } from 'app/_tableColumns/Columns';
     getRecept(d) {
       return this.http.post<any>(environment.APIEndpoint + 'GetReceiptAllocation', d);
     }
+
+    setReceipt(d){
+      return this.http.post<any>(environment.APIEndpoint + 'SetIncome', d);
+    }
+    getIncome(d){
+      return this.http.post<any>(environment.APIEndpoint + 'GetIncome', d);
+    }
   
   }

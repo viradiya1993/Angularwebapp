@@ -135,11 +135,13 @@ export class ContactDialogComponent implements OnInit {
     this.nameSelected = "Person";
     if (this.action === 'edit') {
       this.isLoadingResults = true;
+      console.log(localStorage.getItem('contactGuid'));
       let contactguidforbody = { CONTACTGUID: localStorage.getItem('contactGuid') }
       this.Contact.getContact(contactguidforbody).subscribe(res => {
         if (res.MESSAGE == "Not logged in") {
           this.dialogRef.close(false);
         } else {
+          console.log( res.DATA.CONTACTS[0]);
           let getContactData = res.DATA.CONTACTS[0];
           this.editDataCompny = (getContactData.COMPANYCONTACTGUID != '' && getContactData.COMPANYNAME != '') ? false : true;
           // console.log(this.editDataCompny);

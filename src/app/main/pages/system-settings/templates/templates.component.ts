@@ -2,18 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 
 @Component({
-  selector: 'app-defaults',
-  templateUrl: './defaults.component.html',
-  styleUrls: ['./defaults.component.scss'],
+  selector: 'app-templates',
+  templateUrl: './templates.component.html',
+  styleUrls: ['./templates.component.scss'],
   animations: fuseAnimations
 })
-export class DefultsComponent implements OnInit {
-
+export class TemplatesComponent implements OnInit {
 
   constructor() { }
 
   ngOnInit() {
-   
   }
 
 }

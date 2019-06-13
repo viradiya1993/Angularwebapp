@@ -48,7 +48,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   QuantityTypeLabel: any = 'Quantity Type';
   currentTimeMatter: any = '';
   actiontype: string;
-  abc: Date;
 
   constructor(
     public dialogRef: MatDialogRef<TimeEntryDialogComponent>,
@@ -87,6 +86,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       ITEMTIME: [''],
       ADDITIONALTEXT: ['', Validators.required],
       COMMENT: [''],
+      INVOICEDATE: [this.datepipe.transform(new Date(), 'dd/MM/yyyy')],
     });
     this.ITEMDATEModel = new Date();
     this.timeEntryForm.controls['ITEMTYPE'].setValue('WIP');
@@ -295,14 +295,13 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.timeEntryForm.controls['ADDITIONALTEXT'].setValue(value);
   }
   SaveClickTimeEntry() {
-    
+   
     if(this.ITEMDATEVLAUE=="" || this.ITEMDATEVLAUE==null || this.ITEMDATEVLAUE==undefined){
-      this.abc= new Date();
+      this.ITEMDATEVLAUE=this.f.INVOICEDATE.value;
     }
-    console.log(this.abc);
+    console.log(this.ITEMDATEVLAUE);
     this.isspiner = true;
     let PostData: any = {
-      "FormAction": "insert",
       "ADDITIONALTEXT": this.f.ADDITIONALTEXT.value,
       "COMMENT": this.f.COMMENT.value,
       "FEEEARNER": this.f.FEEEARNER.value,

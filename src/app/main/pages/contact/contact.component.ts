@@ -37,8 +37,8 @@ export class ContactComponent implements OnInit {
   ) {
     this.contactFilter = this._formBuilder.group({
       Filter1: [''],
-      Filter2: [''],
-      ContactType: [''],
+      Filter2: ['a'],
+      ContactType: ['all'],
       search: [''],
     });
   }

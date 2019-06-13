@@ -42,6 +42,7 @@ import { TitleComponent } from './matter-popup/newmatter-detail/matter-address-p
 import { CouncilComponent } from './matter-popup/newmatter-detail/matter-address-popup/council/council.component';
 import { CrownAllotmentComponent } from './matter-popup/newmatter-detail/matter-address-popup/crown-allotment/crown-allotment.component';
 import { CorrespondDailogComponent } from './correspond-dailog/correspond-dailog.component';
+import { UserSelectPopupComponent } from './user-select-popup/user-select-popup.component';
 
 
 
@@ -82,6 +83,7 @@ const routes = [
     CouncilComponent,
     CrownAllotmentComponent,
     CorrespondDailogComponent,
+    UserSelectPopupComponent,
   ],
   imports: [
     CommonModule,
@@ -118,6 +120,6 @@ const routes = [
     MattersComponent,
     DragDropModule
   ],
-  entryComponents: [MatterPopupComponent, MatterAddressPopupComponent, CorrespondDailogComponent]
+  entryComponents: [MatterPopupComponent, MatterAddressPopupComponent, CorrespondDailogComponent, UserSelectPopupComponent]
 })
 export class MattersModule { }

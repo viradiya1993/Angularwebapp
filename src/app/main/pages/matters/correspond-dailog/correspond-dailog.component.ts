@@ -24,7 +24,7 @@ export class CorrespondDailogComponent implements OnInit {
   isspiner: boolean = false;
   ngOnInit() {
     this.correspondForm = this._formBuilder.group({
-      TYPE: [''],
+      TYPE: ['General'],
       PERSONGUID: [''],
       PERSONGUIDTEXT: [''],
       SOLICITORGUID: [''],
@@ -48,7 +48,6 @@ export class CorrespondDailogComponent implements OnInit {
     const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         this.correspondForm.controls['MATTERGUID'].setValue(result.MATTERGUID);
         this.correspondForm.controls['PERSONGUID'].setValue(result.CONTACTGUID);
         this.correspondForm.controls['PERSONGUIDTEXT'].setValue(result.CONTACTNAME);
@@ -59,7 +58,6 @@ export class CorrespondDailogComponent implements OnInit {
     const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         this.correspondForm.controls['SOLICITORGUID'].setValue(result.CONTACTGUID);
         this.correspondForm.controls['SOLICITORGUIDTEXT'].setValue(result.CONTACTNAME);
       }

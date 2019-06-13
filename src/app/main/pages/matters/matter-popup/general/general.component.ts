@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { MatDatepickerInputEvent } from '@angular/material';
 import { TimersService } from 'app/_services';
 import { round } from 'lodash';
+import { MatDialog, MatDialogRef, MatDatepickerInputEvent } from '@angular/material';
+import { UserSelectPopupComponent } from '../../user-select-popup/user-select-popup.component';
 
 @Component({
   selector: 'app-general',
@@ -15,7 +16,7 @@ export class GeneralComponent implements OnInit {
   @Input() userType: any;
   PRICEVAL: any;
   PRICEVALGST: any;
-  constructor(public datepipe: DatePipe, private Timersservice: TimersService) {
+  constructor(public datepipe: DatePipe, public MatDialog: MatDialog, private Timersservice: TimersService) {
 
   }
 
@@ -31,37 +32,31 @@ export class GeneralComponent implements OnInit {
   }
   ngOnInit() { }
   selectMatter() {
-    alert('Access to this part of the application has been restricted');
-    return;
-    let d = { 'Active': 'yes' };
-    this.Timersservice.GetUsers(d).subscribe(response => {
-      if (response.CODE == 200 && response.STATUS == "success") {
-        console.log(response.DATA);
+    const dialogRef = this.MatDialog.open(UserSelectPopupComponent, { width: '100%', disableClose: true });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.matterdetailForm.controls['OWNERGUID'].setValue(result.USERGUID);
+        this.matterdetailForm.controls['OWNERGUIDTEXT'].setValue(result.FULLNAME);
       }
-    }, err => {
-      console.log(err);
     });
   }
   get f() {
     return this.matterdetailForm.controls;
+  }
+  selectFeeEarner() {
+    const dialogRef = this.MatDialog.open(UserSelectPopupComponent, { width: '100%', disableClose: true });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.matterdetailForm.controls['PRIMARYFEEEARNERGUID'].setValue(result.USERGUID);
+        this.matterdetailForm.controls['PRIMARYFEEEARNERGUIDTEXT'].setValue(result.FULLNAME);
+      }
+    });
   }
   calcPE() {
     this.PRICEVALGST = round(this.f.EstimateFromTotalExGST.value * 1.1);
   }
   calcPI() {
     this.PRICEVAL = round(this.f.EstimateFromTotalIncGST.value / 1.1);
-  }
-  selectFeeEarner() {
-    alert('Access to this part of the application has been restricted');
-    return;
-    let d = { 'Active': 'yes' };
-    this.Timersservice.GetUsers(d).subscribe(response => {
-      if (response.CODE == 200 && response.STATUS == "success") {
-        console.log(response.DATA);
-      }
-    }, err => {
-      console.log(err);
-    });
   }
 
 }

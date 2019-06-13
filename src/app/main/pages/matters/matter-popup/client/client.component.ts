@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 import { ContactSelectDialogComponent } from '../../../contact/contact-select-dialog/contact-select-dialog.component';
 import { FormGroup } from '@angular/forms';
 import { CorrespondDailogComponent } from '../../correspond-dailog/correspond-dailog.component';
 import { MattersService } from 'app/_services';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-client',
@@ -12,7 +13,7 @@ import { MattersService } from 'app/_services';
 })
 export class ClientComponent implements OnInit {
   Correspond = [];
-  CorrespondData = [];
+  CorrespondEdit: any;
   name: string;
   position: number;
   weight: number;
@@ -22,24 +23,23 @@ export class ClientComponent implements OnInit {
   @Input() isEdit: any;
   @Input() isEditMatter: any;
   @Input() matterdetailForm: FormGroup;
+  confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
 
 
-  constructor(public MatDialog: MatDialog, private _mattersService: MattersService, public dialogRef: MatDialogRef<ClientComponent>, ) {
+  constructor(
+    private MatDialog: MatDialog,
+    private _mattersService: MattersService,
+    private dialogRef: MatDialogRef<ClientComponent>,
+  ) {
 
   }
   get f() {
     return this.matterdetailForm.controls;
   }
+
   ngOnInit() {
     if (this.isEdit) {
-      this._mattersService.getMattersContact({ MATTERGUID: this.isEditMatter }).subscribe(response => {
-        console.log(response);
-        if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-          this.CorrespondData = response.DATA;
-        } else if (response.MESSAGE == "Not logged in") {
-          this.dialogRef.close(false);
-        }
-      }, error => { console.log(error); });
+      this.loadData();
     }
   }
   Addcorres_party() {
@@ -60,11 +60,48 @@ export class ClientComponent implements OnInit {
       }
     });
   }
-  editElement() {
-    alert('editElement');
+  editElement(editElement) {
+    const dialogRef = this.MatDialog.open(CorrespondDailogComponent, {
+      width: '100%', disableClose: true, data: { EditData: editElement, type: 'edit' }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadData();
+    });
   }
-  deleteElement() {
-    alert('deleteElement');
+  deleteElement(editElement) {
+    this.confirmDialogRef = this.MatDialog.open(FuseConfirmDialogComponent, {
+      disableClose: true,
+      width: '100%',
+    });
+    this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+    this.confirmDialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this._mattersService.AddMatterContact({ FORMACTION: 'delete', VALIDATEONLY: false, DATA: { MATTERCONTACTGUID: editElement.MATTERCONTACTGUID } }).subscribe(response => {
+          if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+            this.loadData();
+            // this.toastr.success('Matter Contact Delete successfully');
+            this.isspiner = false;
+            this.dialogRef.close(true);
+          }
+        }, (error: any) => {
+          console.log(error);
+        });
+
+      }
+      this.confirmDialogRef = null;
+    });
+  }
+  loadData() {
+    this._mattersService.getMattersContact({ MATTERGUID: this.isEditMatter }).subscribe(response => {
+      console.log(response);
+      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        this.CorrespondEdit = response.DATA.queue;
+      } else if (response.MESSAGE == "Not logged in") {
+        this.dialogRef.close(false);
+      }
+    }, error => {
+      console.log(error);
+    });
   }
 
 }

@@ -41,9 +41,10 @@
 
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Date/s of Codicil/s</mat-label>
-            <input matInput formControlName="DATEOFCODICILS">
+            <input (dateInput)="DatDATEOFCODICILSTEXTClick('input', $event)" formControlName="DATEOFCODICILSTEXT" (dateChange)="DatDATEOFCODICILSTEXTClick('change', $event)" matInput [matDatepicker]="DatDATEOFCODICILSTEXT">
+            <mat-datepicker-toggle matSuffix [for]="DatDATEOFCODICILSTEXT"></mat-datepicker-toggle>
+            <mat-datepicker #DatDATEOFCODICILSTEXT></mat-datepicker>
         </mat-form-field>
-
         <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
             <mat-label> Date of Grant of Representation</mat-label>
             <input (dateInput)="DateGrantRepresentationClick('input', $event)" formControlName="DateOfGrantOfReptext" (dateChange)="DateGrantRepresentationClick('change', $event)" matInput name="DateGrantRepresentation" [matDatepicker]="DateGrantRepresentation">

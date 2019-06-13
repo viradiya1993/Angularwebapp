@@ -21,5 +21,8 @@ export class WillsEstateComponent implements OnInit {
   DateGrantRepresentationClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['DateOfGrantOfRep'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
+  DatDATEOFCODICILSTEXTClick(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.matterdetailForm.controls['DATEOFCODICILS'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
 
 }

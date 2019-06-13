@@ -80,8 +80,8 @@ export class MatterPopupComponent implements OnInit {
           this.matterdetailForm.controls['BILLINGMETHOD'].setValue(matterData.BILLINGGROUP.BILLINGMETHODDESC);
           this.matterdetailForm.controls['RATEPERHOUR'].setValue(matterData.BILLINGGROUP.RATEPERHOUR);
           this.matterdetailForm.controls['RATEPERDAY'].setValue(matterData.BILLINGGROUP.RATEPERDAY);
-          this.matterdetailForm.controls['FIXEDRATEEXGST'].setValue(matterData.BILLINGGROUP.FIXEDRATEEXGST);
-          this.matterdetailForm.controls['FIXEDRATEINCGST'].setValue(matterData.BILLINGGROUP.FIXEDRATEINCGST);
+          this.matterdetailForm.controls['FIXEDRATEEXGST'].setValue(matterData.BILLINGGROUP.FIXEDRATEINCGST);
+          this.matterdetailForm.controls['FIXEDRATEINCGST'].setValue(matterData.BILLINGGROUP.FIXEDRATEEXGST);
           //other
           this.matterdetailForm.controls['MATTERTYPE'].setValue(matterData.LEGALDETAILS.MATTERTYPE);
           this.matterdetailForm.controls['CLIENTSOURCE'].setValue(matterData.MARKETINGGROUP.CLIENTSOURCE);
@@ -111,8 +111,8 @@ export class MatterPopupComponent implements OnInit {
           }
           this.matterdetailForm.controls['REFERENCE'].setValue(matterData.REFERENCE);
           this.matterdetailForm.controls['OTHERREFERENCE'].setValue(matterData.OTHERREFERENCE);
-          this.matterdetailForm.controls['EstimateFromTotalExGST'].setValue(matterData.EstimateFromTotalExGST);
-          this.matterdetailForm.controls['EstimateFromTotalIncGST'].setValue(matterData.EstimateFromTotalIncGST);
+          this.matterdetailForm.controls['EstimateFromTotalExGST'].setValue(matterData.EstimateFromTotalIncGST);
+          this.matterdetailForm.controls['EstimateFromTotalIncGST'].setValue(matterData.EstimateFromTotalExGST);
           this.matterdetailForm.controls['NOTES'].setValue(matterData.NOTES);
           if (this.userType) {
             this.matterdetailForm.controls['OWNERGUID'].setValue(matterData.OWNERGUID);
@@ -448,7 +448,11 @@ export class MatterPopupComponent implements OnInit {
             this.matterdetailForm.controls['NAMEOFTRUST'].setValue(matterData.ESTATEGROUP.NAMEOFTRUST);
             this.matterdetailForm.controls['NAMEOFSUPERANNUATION'].setValue(matterData.ESTATEGROUP.NAMEOFSUPERANNUATION);
             this.matterdetailForm.controls['NUMBEROFCODICILS'].setValue(matterData.ESTATEGROUP.NUMBEROFCODICILS);
-            this.matterdetailForm.controls['DATEOFCODICILS'].setValue(matterData.ESTATEGROUP.DATEOFCODICILS);
+            if (matterData.ESTATEGROUP.DATEOFCODICILS) {
+              let DATEOFCODICILSTEXTDATA = matterData.ESTATEGROUP.DATEOFCODICILS.split("/");
+              this.matterdetailForm.controls['DATEOFCODICILSTEXT'].setValue(new Date(DATEOFCODICILSTEXTDATA[1] + '/' + DATEOFCODICILSTEXTDATA[0] + '/' + DATEOFCODICILSTEXTDATA[2]));
+              this.matterdetailForm.controls['DATEOFCODICILS'].setValue(matterData.ESTATEGROUP.DATEOFCODICILS);
+            }
             if (matterData.ESTATEGROUP.DATEOFGRANTOFREP) {
               let DateOfGrantOfReptexttem = matterData.ESTATEGROUP.DATEOFGRANTOFREP.split("/");
               this.matterdetailForm.controls['DateOfGrantOfReptext'].setValue(new Date(DateOfGrantOfReptexttem[1] + '/' + DateOfGrantOfReptexttem[0] + '/' + DateOfGrantOfReptexttem[2]));
@@ -484,7 +488,9 @@ export class MatterPopupComponent implements OnInit {
       COMPLETEDDATE: [''],
       COMPLETEDDATETEXT: [''],
       PRIMARYFEEEARNERGUID: [''],
+      PRIMARYFEEEARNERGUIDTEXT: [''],
       OWNERGUID: [''],
+      OWNERGUIDTEXT: [''],
       FEEAGREEMENTDATE: [],
       FeeAgreementDateText: [],
       EstimateFromTotalExGST: [''],
@@ -693,6 +699,7 @@ export class MatterPopupComponent implements OnInit {
       NAMEOFSUPERANNUATION: [''],
       NUMBEROFCODICILS: [''],
       DATEOFCODICILS: [''],
+      DATEOFCODICILSTEXT: [''],
       DateOfGrantOfRep: [''],
       DateOfGrantOfReptext: [''],
 
@@ -732,8 +739,8 @@ export class MatterPopupComponent implements OnInit {
       GSTTYPE: this.f.GSTTYPE.value,
       RATEPERHOUR: this.f.RATEPERHOUR.value,
       RATEPERDAY: this.f.RATEPERDAY.value,
-      FIXEDRATEEXGST: this.f.FIXEDRATEEXGST.value,
-      FIXEDRATEINCGST: this.f.FIXEDRATEINCGST.value,
+      FIXEDRATEEXGST: this.f.FIXEDRATEINCGST.value,
+      FIXEDRATEINCGST: this.f.FIXEDRATEEXGST.value,
       // others
       MATTERTYPE: this.f.MATTERTYPE.value,
       CLIENTSOURCE: this.f.CLIENTSOURCE.value,
@@ -750,8 +757,8 @@ export class MatterPopupComponent implements OnInit {
     details.OTHERREFERENCE = this.f.OTHERREFERENCE.value;
     details.COMPLETEDDATE = this.f.COMPLETEDDATE.value;
     details.FEEAGREEMENTDATE = this.f.FEEAGREEMENTDATE.value;
-    details.EstimateFromTotalExGST = this.f.EstimateFromTotalExGST.value;
-    details.EstimateFromTotalIncGST = this.f.EstimateFromTotalIncGST.value;
+    details.EstimateFromTotalExGST = this.f.EstimateFromTotalIncGST.value;
+    details.EstimateFromTotalIncGST = this.f.EstimateFromTotalExGST.value;
     if (this.userType) {
       details.PRIMARYFEEEARNERGUID = this.f.PRIMARYFEEEARNERGUID.value;
       details.OWNERGUID = this.f.OWNERGUID.value;
@@ -933,6 +940,7 @@ export class MatterPopupComponent implements OnInit {
     }
     let matterPostData: any = { FormAction: this.FormAction, VALIDATEONLY: true, Data: details };
     this._mattersService.AddNewMatter(matterPostData).subscribe(response => {
+      this.matterdetailForm.controls['SHORTNAME'].setValue(response.DATA.SHORTNAME);
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
       } else if (response.CODE == 451 && response.STATUS == "warning") {

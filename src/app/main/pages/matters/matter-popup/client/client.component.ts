@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { ContactSelectDialogComponent } from '../../../contact/contact-select-dialog/contact-select-dialog.component';
 import { FormGroup } from '@angular/forms';
 import { CorrespondDailogComponent } from '../../correspond-dailog/correspond-dailog.component';
@@ -12,6 +12,7 @@ import { MattersService } from 'app/_services';
 })
 export class ClientComponent implements OnInit {
   Correspond = [];
+  CorrespondData = [];
   name: string;
   position: number;
   weight: number;
@@ -23,7 +24,7 @@ export class ClientComponent implements OnInit {
   @Input() matterdetailForm: FormGroup;
 
 
-  constructor(public MatDialog: MatDialog, private _mattersService: MattersService, ) {
+  constructor(public MatDialog: MatDialog, private _mattersService: MattersService, public dialogRef: MatDialogRef<ClientComponent>, ) {
 
   }
   get f() {
@@ -32,7 +33,11 @@ export class ClientComponent implements OnInit {
   ngOnInit() {
     if (this.isEdit) {
       this._mattersService.getMattersContact({ MATTERGUID: this.isEditMatter }).subscribe(response => {
-        console.log(response);
+        if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+          this.CorrespondData = response.DATA;
+        } else if (response.MESSAGE == "Not logged in") {
+          this.dialogRef.close(false);
+        }
       }, error => { console.log(error); });
     }
   }

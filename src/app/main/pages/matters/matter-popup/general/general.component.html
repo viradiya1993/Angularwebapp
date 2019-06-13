@@ -33,16 +33,16 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="userType">
         <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
             <mat-label>Matter Owner</mat-label>
-            <input matInput readonly formControlName="OWNERGUID">
+            <input matInput readonly formControlName="OWNERGUIDTEXT">
             <mat-icon matSuffix (click)="selectMatter();">
-                <img class="menu-disabled" src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
             </mat-icon>
         </mat-form-field>
         <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
             <mat-label>Primary Fee Earner</mat-label>
-            <input matInput readonly formControlName="PRIMARYFEEEARNERGUID">
+            <input matInput readonly formControlName="PRIMARYFEEEARNERGUIDTEXT">
             <mat-icon matSuffix (click)="selectFeeEarner();">
-                <img class="menu-disabled" src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
             </mat-icon>
         </mat-form-field>
     </div>

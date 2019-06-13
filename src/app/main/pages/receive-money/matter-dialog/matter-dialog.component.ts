@@ -138,6 +138,7 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
       width: '100%', disableClose: true,
       data: {
         action: 'add',
+        type: " ",
         matterGuid: this.currentMatterData.MATTERGUID,
         clientName: this.currentMatterData.CONTACTNAME,
         fullData: this.currentMatterData

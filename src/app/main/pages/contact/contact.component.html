@@ -5,8 +5,8 @@
                 <form [formGroup]="contactFilter">
                     <mat-form-field class="example" appearance="outline">
                         <mat-label>Contact Type</mat-label>
-                        <mat-select #value name="selected" (selectionChange)="ContactTypeChange($event.value)" formControlName="ContactType">
-                            <mat-option value="all">All Contacts</mat-option>
+                        <mat-select [value]="selectedVal"  name="selected" (selectionChange)="ContactTypeChange($event.value)" formControlName="ContactType">
+                            <mat-option value=" ">All Contacts</mat-option>
                             <mat-option value="Person">People</mat-option>
                             <mat-option value="Company">Company</mat-option>
                             <mat-option value="Party">Party</mat-option>

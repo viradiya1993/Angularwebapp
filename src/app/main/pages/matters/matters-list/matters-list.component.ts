@@ -52,7 +52,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
     this.getMatterList(this.lastFilter);
   }
   refreshMatterTab() {
-    this.getMatterList(this.lastFilter);
+    this.getMatterList(JSON.parse(localStorage.getItem('matter_filter')));
   }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;

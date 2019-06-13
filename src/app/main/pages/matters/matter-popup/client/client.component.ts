@@ -33,6 +33,7 @@ export class ClientComponent implements OnInit {
   ngOnInit() {
     if (this.isEdit) {
       this._mattersService.getMattersContact({ MATTERGUID: this.isEditMatter }).subscribe(response => {
+        console.log(response);
         if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
           this.CorrespondData = response.DATA;
         } else if (response.MESSAGE == "Not logged in") {

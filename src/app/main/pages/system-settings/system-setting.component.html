@@ -182,9 +182,9 @@
 <!-- 
 <div id="mail" class="page-layout carded left-sidebar inner-scroll">
 
-
+    
     <div class="top-bg accent"></div>
-
+   
 
  
     <fuse-sidebar class="sidebar" name="mail-main-sidebar" position="left" lockedOpen="gt-md">
@@ -192,11 +192,16 @@
 
 
 
-        <div fxLayout="column" fxLayoutAlign="space-between start" class="header accent p-24 pb-4">
+    <div fxLayout="column" fxLayoutAlign="space-between start"
+    class="header accent p-24 pb-4">
 
-            <div class="logo" fxFlex fxLayout="row" fxLayoutAlign="start center">
+   <div class="logo" fxFlex fxLayout="row" fxLayoutAlign="start center">
+     
+   </div>
 
-            </div>
+   <div class="account" fxLayout="column" [@animate]="{value:'*',params:{delay:'300ms'}}">
+      
+   </div>
 
 </div>
 
@@ -243,30 +248,29 @@
             </div>
 
         </div>
-        <!-- / CONTENT HEADER -->
+       
+        <div class="content-card" [ngClass]="{'current-mail-selected':currentMail}">
 
-<!-- CONTENT CARD -->
-<div class="content-card">
+        
+            <div class="toolbar px-24 py-8">
+               
+            </div>
+       
 
+         
+            <div class="content" fxLayout="row">
 
-    <div class="toolbar px-24 py-8">
+                <app-name *ngIf="button ==='name'" fusePerfectScrollbar fxFlex></app-name>
+                <app-business *ngIf="button==='business'" fusePerfectScrollbar fxFlex></app-business>
+                <app-defaults *ngIf="button==='defaults'" fusePerfectScrollbar fxFlex></app-defaults>
+                <app-estimates-setting *ngIf="button ==='estimates'" fusePerfectScrollbar fxFlex> </app-estimates-setting>
 
+            </div>
+           
+
+        </div>
     </div>
-
-
-
-    <div class="content" fxLayout="row">
-
-        <app-name *ngIf="button ==='name'" fusePerfectScrollbar fxFlex></app-name>
-        <app-business *ngIf="button==='business'" fusePerfectScrollbar fxFlex></app-business>
-        <app-defaults *ngIf="button==='defaults'" fusePerfectScrollbar fxFlex></app-defaults>
-        <app-estimates-setting *ngIf="button ==='estimates'" fusePerfectScrollbar fxFlex> </app-estimates-setting>
-
-    </div>
-
+ 
 
 </div>
-</div>
-
-
-</div>
+ -->

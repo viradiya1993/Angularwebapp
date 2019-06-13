@@ -57,7 +57,11 @@ export class CorrespondDailogComponent implements OnInit {
     return this.correspondForm.controls;
   }
   selectContact() {
-    const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true });
+    const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, {
+      width: '100%', disableClose: true, data: {
+        type: ""
+      }
+    });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.correspondForm.controls['MATTERGUID'].setValue(result.MATTERGUID);
@@ -67,7 +71,11 @@ export class CorrespondDailogComponent implements OnInit {
     });
   }
   selectSolicitor() {
-    const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true });
+    const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, {
+      width: '100%', disableClose: true, data: {
+        type: ""
+      }
+    });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.correspondForm.controls['SOLICITORGUID'].setValue(result.CONTACTGUID);

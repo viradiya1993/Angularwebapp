@@ -941,7 +941,8 @@ export class MatterPopupComponent implements OnInit {
     let matterPostData: any = { FormAction: this.FormAction, VALIDATEONLY: true, Data: details };
     this._mattersService.AddNewMatter(matterPostData).subscribe(response => {
       this.matterdetailForm.controls['SHORTNAME'].setValue(response.DATA.SHORTNAME);
-      matterPostData = matterPostData.Data.SHORTNAME = response.DATA.SHORTNAME;
+      details.SHORTNAME = response.DATA.SHORTNAME;
+      matterPostData = { FormAction: this.FormAction, VALIDATEONLY: true, Data: details };
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
       } else if (response.CODE == 451 && response.STATUS == "warning") {

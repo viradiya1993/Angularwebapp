@@ -18,7 +18,7 @@ export class InvoiceAddDailogComponent implements OnInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   addInvoiceForm: FormGroup;
   isLoadingResults: boolean = false;
-  isspiner: boolean = false;
+  isspiner: boolean = true;
   isFixPrice: any = true;
   isMin: any = true;
   isMax: any = true;
@@ -123,7 +123,6 @@ export class InvoiceAddDailogComponent implements OnInit {
     this.addInvoiceForm.controls['DUEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
   changeDiscountAmount(event) {
-    console.log(event);
     let dicountex: number = 0;
     let dicountin: number = 0;
     let dicountGst: number = 0;

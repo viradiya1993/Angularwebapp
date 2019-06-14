@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { round } from 'lodash';
 
 @Component({
   selector: 'app-rates',
@@ -11,15 +12,24 @@ export class RatesComponent implements OnInit {
   constructor() { }
   @Input() matterdetailForm: FormGroup;
   isDisabled: boolean = true;
+  FIXEDRATEEXGST: number;
+  FIXEDRATEINCGST: number;
   ngOnInit() { }
   radioChange(event) {
     if (this.f.GSTTYPE.value == 'GST Free' || this.f.GSTTYPE.value == 'Export')
       this.isDisabled = false;
-    else
+    else {
       this.isDisabled = true;
+      this.matterdetailForm.controls['ONCHARGEDISBURSEMENTGST'].setValue(0);
+    }
   }
   get f() {
-    //console.log(this.contactForm);
     return this.matterdetailForm.controls;
+  }
+  calcPE() {
+    this.FIXEDRATEINCGST = round(this.f.FIXEDRATEEXGST.value * 1.1);
+  }
+  calcPI() {
+    this.FIXEDRATEEXGST = round(this.f.FIXEDRATEINCGST.value / 1.1);
   }
 }

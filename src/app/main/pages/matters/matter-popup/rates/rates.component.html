@@ -32,11 +32,11 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
             <mat-label>Fixed Price</mat-label>
-            <input matInput name="FixedPrice" type="number" formControlName="FIXEDRATEEXGST">
+            <input matInput name="FixedPrice" type="number" (keyup)="calcPE()" formControlName="FIXEDRATEEXGST" [(ngModel)]="FIXEDRATEEXGST">
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Ex-GST</mat-label>
-            <input name="Ex-GST" matInput type="number" formControlName="FIXEDRATEINCGST">
+            <input name="Ex-GST" matInput type="number" formControlName="FIXEDRATEINCGST" (keyup)="calcPI()" [(ngModel)]="FIXEDRATEINCGST">
             <mat-icon matSuffix class="secondary-text"></mat-icon>
         </mat-form-field>
     </div>

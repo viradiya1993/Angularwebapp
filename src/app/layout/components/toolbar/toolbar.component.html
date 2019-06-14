@@ -1090,8 +1090,10 @@
                                                </section>
                                             </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[9]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[9]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/spend-money'">
+                                    <section [ngClass]="0==0  ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <!-- <section [ngClass]="appPermissions[9]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'"> -->
+                                        <button mat-button [ngClass]="0==0  ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/spend-money'">
+                                        <!-- <button mat-button [ngClass]="appPermissions[9]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/spend-money'"> -->
                                                <section class="large-button-container">
                                                   <mat-icon class="main-icon">
                                                         <img src="assets/icons/web_app/icon_expenses_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1102,8 +1104,11 @@
                                                </section>
                                             </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[8]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[8]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/receive-money'">
+
+                                    <section [ngClass]="0==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <!-- <section [ngClass]="appPermissions[8]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'"> -->
+                                        <button mat-button [ngClass]="0==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/receive-money'">
+                                        <!-- <button mat-button [ngClass]="appPermissions[8]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/receive-money'"> -->
                                                <section class="large-button-container">
                                                   <mat-icon class="main-icon">
                                                         <img src="assets/icons/web_app/icon_receipt_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">

@@ -95,15 +95,15 @@ export class MatterDialogComponent implements OnInit {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
   }
-   // New matter Pop-up
-   AddNewmatterpopup() {
+  // New matter Pop-up
+  AddNewmatterpopup() {
     const dialogConfig = new MatDialogConfig();
     const dialogRef = this.dialog.open(MatterPopupComponent, {
-        width: '100%',
-        disableClose: true,
-        data: {
-            action: 'new'
-        }
+      width: '100%',
+      disableClose: true,
+      data: {
+        action: 'new'
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => { });
@@ -111,13 +111,13 @@ export class MatterDialogComponent implements OnInit {
   // Edit matter Pop-up
   EditNewmatterpopup() {
     const dialogConfig = new MatDialogConfig();
+    let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
     const dialogRef = this.dialog.open(MatterPopupComponent, {
-        width: '100%',
-        disableClose: true,
-        data: {
-            action: 'edit'
-        }
+      width: '100%',
+      disableClose: true,
+      data: { action: 'edit', 'matterGuid': mattersData.MATTERGUID }
     });
     dialogRef.afterClosed().subscribe(result => { });
   }
+
 }

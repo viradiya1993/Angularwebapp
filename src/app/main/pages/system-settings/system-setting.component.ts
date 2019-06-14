@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { fuseAnimations } from '@fuse/animations';
 import { Router } from '@angular/router';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-system-setting',
@@ -13,8 +14,9 @@ export class SystemSettingComponent implements OnInit {
   a: string;
   button:string;
   ForDataBind: any;
+  SettingForm: FormGroup;
 
-  constructor(public router: Router) { 
+  constructor(public router: Router,    private _formBuilder: FormBuilder,) { 
     this.nameFunction();
   }
 
@@ -24,7 +26,11 @@ export class SystemSettingComponent implements OnInit {
     // this.router.url === '/login'
     
     // this.router.navigate(['time-billing/work-in-progress/invoice']);
+    this.SettingForm=this._formBuilder.group({
+      NAME:['']
+    })
   }
+
 
   nameFunction(){
     if( this.router.url=="/system-setting/business"){
@@ -47,6 +53,14 @@ export class SystemSettingComponent implements OnInit {
     else if(this.router.url=="/system-setting/templates"){  
       this.ForDataBind="Templates";
     }
+  }
+  get f() {
+    //console.log(this.contactForm);
+    return this.SettingForm.controls;
+  }
+  save(){
+    console.log("fhusdgf");
+    console.log(this.f);
   }
 
 }

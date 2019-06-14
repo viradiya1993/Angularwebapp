@@ -13,6 +13,6 @@ export class SpendmoneyService {
 //     return this.http.post<any>(environment.APIEndpoint + 'GetInvoice', potData);
 //   }
   SpendmoneyListData(potData) {
-    return this.http.post<any>(environment.APIEndpoint + 'GetExpenses', potData);
+    return this.http.post<any>(environment.APIEndpoint + 'GetExpenditure', potData);
   }
 }

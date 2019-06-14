@@ -22,8 +22,10 @@ app-business {
     }
 }
 .one {
-    margin-left: 7px; 
-    margin-top: 15px;
+    margin-left: 20px;
+    margin-right: 15px; 
+    margin-top: 20px;
+    margin-bottom: 15px;
 }
 .card {
     // margin-top: 10px;
@@ -36,9 +38,14 @@ mat-radio-button#mat-radio-2 {
 }
 .check_1 {
     width: 50% !important ;
+   
 }
 .check_2 {
     width: 50% !important ;
+   
+}
+.check {
+    margin-bottom: 10px !important;
 }
 mat-radio-group.pr-4.mat-radio-group {
     margin-top: 10px !important;
@@ -46,5 +53,12 @@ mat-radio-group.pr-4.mat-radio-group {
 }
 mat-checkbox#mat-checkbox-2 {
     margin-bottom: 10px !important;
+}
+.check_child{
+    margin-left: 58px !important;
+}
+
+.a.mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.5em 0 0.5em 0 !important;
 }
 

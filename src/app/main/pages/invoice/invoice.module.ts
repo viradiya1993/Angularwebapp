@@ -19,6 +19,7 @@ import { SummaryComponent } from './invoice-add-dailog/summary/summary.component
 import { DetailsComponent } from './invoice-add-dailog/details/details.component';
 import { DiscountIncreaseComponent } from './invoice-add-dailog/discount-increase/discount-increase.component';
 import {MatDividerModule} from '@angular/material/divider';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 const routes = [
   { path: '', component: InvoiceComponent, canActivate: [AuthGuard] },
@@ -76,7 +77,8 @@ const routes = [
     SatDatepickerModule, SatNativeDateModule,
 
     MaterialTimePickerModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    DragDropModule
   ],
   exports: [
     InvoiceComponent

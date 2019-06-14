@@ -25,7 +25,7 @@ export class ReportsComponent implements OnInit {
       if(data.ReportGenerateData){   
         this.PDF_Generation=data.ReportGenerateData;
         this.title=data.ReportGenerateData.title;
-        this.base_url=environment.APIEndpoint;
+        this.base_url=environment.ReportUrl;
       }else{ 
         this.isLoadingResults = true;
         this.Reportfilter.ReportfilterData(this.data.REPORTID).subscribe(response => {          

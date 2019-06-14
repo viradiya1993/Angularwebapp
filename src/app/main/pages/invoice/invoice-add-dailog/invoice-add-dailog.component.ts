@@ -18,7 +18,7 @@ export class InvoiceAddDailogComponent implements OnInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   addInvoiceForm: FormGroup;
   isLoadingResults: boolean = false;
-  isspiner: boolean = true;
+  isspiner: boolean = false;
   isFixPrice: any = true;
   isMin: any = true;
   isMax: any = true;

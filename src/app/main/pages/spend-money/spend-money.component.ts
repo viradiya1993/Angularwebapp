@@ -47,17 +47,17 @@ export class SpendMoneyComponent implements OnInit {
 
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('spend money', '').subscribe(response => {
-      console.log(response);
-      if (response.CODE === 200 && response.STATUS == "success") {
-        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'invoicesColumns');
-        this.displayedColumns = data.showcol;
-        this.tempColobj = data.tempColobj;
-        this.ColumnsObj = data.colobj;
-      }
-    }, error => {
-      this.toastr.error(error);
-    });
+    // this.TableColumnsService.getTableFilter('spend money', '').subscribe(response => {
+    //   console.log(response);
+    //   if (response.CODE === 200 && response.STATUS == "success") {
+    //     let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'invoicesColumns');
+    //     this.displayedColumns = data.showcol;
+    //     this.tempColobj = data.tempColobj;
+    //     this.ColumnsObj = data.colobj;
+    //   }
+    // }, error => {
+    //   this.toastr.error(error);
+    // });
   }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
@@ -67,8 +67,8 @@ export class SpendMoneyComponent implements OnInit {
     // this.isLoadingResults = true;
     // let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
     this.SpendmoneyService.SpendmoneyListData('').subscribe(response => {
-      console.log(response       );
-      
+      console.log(response);
+
       // if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
       //   if (response.DATA.INVOICES[0]) {
       //     this.highlightedRows = response.DATA.INVOICES[0].INVOICEGUID;

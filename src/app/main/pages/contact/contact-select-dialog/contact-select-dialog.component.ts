@@ -56,7 +56,6 @@ export class ContactSelectDialogComponent implements OnInit {
   }
   ContactTypeChange(value) {
     this.filterVals.ContactType = value == 'all' ? "" : value;
-    console.log(this.filterVals);
     this.loadContectData(this.filterVals);
   }
   onSearch(searchFilter: any) {

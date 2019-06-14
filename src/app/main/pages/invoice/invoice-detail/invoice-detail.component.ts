@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewEncapsulation, Inject, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { MatTableDataSource, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatPaginator, MatDialogRef } from '@angular/material';
+import { MatTableDataSource, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatPaginator, MatDialog, MatDialogRef } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { MatterInvoicesService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-invoice-detail',
@@ -14,6 +15,7 @@ import { DatePipe } from '@angular/common';
   animations: fuseAnimations
 })
 export class InvoiceDetailComponent implements OnInit {
+  confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   invoiceDetailForm: FormGroup;
   invoiceDatasor: any;
   IntersetChatgesData: any;
@@ -32,7 +34,8 @@ export class InvoiceDetailComponent implements OnInit {
     private matterInvoicesService: MatterInvoicesService,
     private toastr: ToastrService,
     public dialogRef: MatDialogRef<InvoiceDetailComponent>,
-    public datepipe: DatePipe
+    public datepipe: DatePipe,
+    public MatDialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -120,8 +123,79 @@ export class InvoiceDetailComponent implements OnInit {
   choosedDueDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.invoiceDetailForm.controls['DUEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  SaveReceipt() {
+  get f() {
+    return this.invoiceDetailForm.controls;
+  }
+  updateInvoice() {
+    this.isspiner = true;
+    let PostData: any = {
+      "INVOICEGUID": this.f.INVOICEGUID.value,
+      "COMMENT": this.f.COMMENT.value,
+      "MATTERGUID": this.f.MATTERGUID.value
+    }
+    let PostInvoiceEntryData: any = { FormAction: 'update', VALIDATEONLY: true, Data: PostData };
+    this.matterInvoicesService.SetInvoiceData(PostInvoiceEntryData).subscribe(res => {
+      if (res.CODE == 200 && res.STATUS == "success") {
+        this.checkValidation(res.DATA.VALIDATIONS, PostInvoiceEntryData);
+      } else if (res.CODE == 451 && res.STATUS == "warning") {
+        this.checkValidation(res.DATA.VALIDATIONS, PostInvoiceEntryData);
+      } else if (res.CODE == 450 && res.STATUS == "error") {
+        this.checkValidation(res.DATA.VALIDATIONS, PostInvoiceEntryData);
+      } else if (res.MESSAGE == "Not logged in") {
+        this.dialogRef.close(false);
+      }
+      this.isspiner = false;
+    }, err => {
+      this.isspiner = false;
+      this.toastr.error(err);
+    });
+  }
+  checkValidation(bodyData: any, PostInvoiceEntryData: any) {
+    let errorData: any = [];
+    let warningData: any = [];
+    bodyData.forEach(function (value) {
+      if (value.VALUEVALID == 'NO')
+        errorData.push(value.ERRORDESCRIPTION);
+      else if (value.VALUEVALID == 'WARNING')
+        warningData.push(value.ERRORDESCRIPTION);
+    });
 
+    if (Object.keys(errorData).length != 0)
+      this.toastr.error(errorData);
+    if (Object.keys(warningData).length != 0) {
+      this.confirmDialogRef = this.MatDialog.open(FuseConfirmDialogComponent, {
+        disableClose: true,
+        width: '100%',
+        data: warningData
+      });
+      this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Save?';
+      this.confirmDialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.isspiner = true;
+          this.saveInvoice(PostInvoiceEntryData);
+        }
+        this.confirmDialogRef = null;
+      });
+    }
+    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+      this.saveInvoice(PostInvoiceEntryData);
+    this.isspiner = false;
+  }
+  saveInvoice(PostInvoiceEntryData: any) {
+    PostInvoiceEntryData.VALIDATEONLY = false;
+    this.matterInvoicesService.SetInvoiceData(PostInvoiceEntryData).subscribe(res => {
+      if (res.CODE == 200 && res.STATUS == "success") {
+        this.toastr.success('Save Success');
+        this.dialogRef.close(true);
+      } else {
+        if (res.CODE == 402 && res.STATUS == "error" && res.MESSAGE == "Not logged in")
+          this.dialogRef.close(false);
+      }
+      this.isspiner = false;
+    }, err => {
+      this.isspiner = false;
+      this.toastr.error(err);
+    });
   }
 
 }

@@ -45,17 +45,15 @@ export class ContactCorresDetailsComponent implements OnInit {
       if (res.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       } else {
-        if (res.DATA.MATTERCONTACTS[0]) {
-          this.highlightedRows = res.DATA.MATTERCONTACTS[0].PERSONGUID;
-          localStorage.setItem('contactGuid', res.DATA.MATTERCONTACTS[0].PERSONGUID);
-        }
         if (Object.keys(res.DATA.MATTERCONTACTS).length == 0) {
           this.toastr.error("Can't Find corresponding Details");
           this.dialogRef.close(false);
-        }
-        if (Object.keys(res.DATA.MATTERCONTACTS).length == 1) {
+        } else if (Object.keys(res.DATA.MATTERCONTACTS).length == 1) {
           this.dialogRef.close(false);
           this.selectButton();
+        } else if (Object.keys(res.DATA.MATTERCONTACTS).length != 0) {
+          this.highlightedRows = res.DATA.MATTERCONTACTS[0].PERSONGUID;
+          localStorage.setItem('contactGuid', res.DATA.MATTERCONTACTS[0].PERSONGUID);
         }
         this.getDataForTable = new MatTableDataSource(res.DATA.MATTERCONTACTS);
         this.getDataForTable.paginator = this.paginator;

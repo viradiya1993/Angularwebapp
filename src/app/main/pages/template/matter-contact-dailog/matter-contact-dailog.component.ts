@@ -33,8 +33,7 @@ export class MatterContactDailogComponent implements OnInit {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.matterContactData = new MatTableDataSource(response.DATA.MATTERCONTACTS);
         this.matterContactData.paginator = this.paginator;
-        console.log(response.DATA.MATTERCONTACTS.length);
-        if (response.DATA.MATTERCONTACTS[0]) {
+        if (Object.keys(response.DATA.MATTERCONTACTS).length != 0) {
           this.currentMatterContactData = response.DATA.MATTERCONTACTS[0];
           this.highlightedRows = response.DATA.MATTERCONTACTS[0].MATTERCONTACTGUID;
         }

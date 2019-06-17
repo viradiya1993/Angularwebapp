@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
-import { MattersService, ContactService} from './../../../../_services';
+import { MattersService, ContactService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
@@ -21,7 +21,7 @@ export class MatterContactDailogComponent implements OnInit {
   currentMatterContactData: any;
   pageSize: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(private toastr: ToastrService, public mattersService: MattersService, public _getContact: ContactService,) { }
+  constructor(private toastr: ToastrService, public mattersService: MattersService, public _getContact: ContactService, ) { }
 
   ngOnInit() {
     this.loadContectData();
@@ -31,11 +31,12 @@ export class MatterContactDailogComponent implements OnInit {
     let matterSelected = JSON.parse(localStorage.getItem('set_active_matters'));
     this.mattersService.getMattersContact({ 'MATTERGUID': matterSelected.MATTERGUID }).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        this.matterContactData = new MatTableDataSource(response.DATA.queue);
+        this.matterContactData = new MatTableDataSource(response.DATA.MATTERCONTACTS);
         this.matterContactData.paginator = this.paginator;
-        if (response.DATA.queue[0]) {
-          this.currentMatterContactData = response.DATA.queue[0];
-          this.highlightedRows = response.DATA.queue[0].MATTERCONTACTGUID;
+        console.log(response.DATA.MATTERCONTACTS.length);
+        if (response.DATA.MATTERCONTACTS[0]) {
+          this.currentMatterContactData = response.DATA.MATTERCONTACTS[0];
+          this.highlightedRows = response.DATA.MATTERCONTACTS[0].MATTERCONTACTGUID;
         }
         this.isLoadingResults = false;
       }

@@ -92,7 +92,7 @@ export class ClientComponent implements OnInit {
   loadData() {
     this._mattersService.getMattersContact({ MATTERGUID: this.isEditMatter }).subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        this.CorrespondEdit = response.DATA.queue;
+        this.CorrespondEdit = response.DATA.MATTERCONTACTS;
       } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }

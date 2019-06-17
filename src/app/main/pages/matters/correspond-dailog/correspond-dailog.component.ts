@@ -46,7 +46,9 @@ export class CorrespondDailogComponent implements OnInit {
     if (this._data.type == "edit") {
       let editData = this._data.EditData;
       this.correspondForm.controls['SOLICITORGUID'].setValue(editData.SOLICITORGUID);
+      this.correspondForm.controls['SOLICITORGUIDTEXT'].setValue(editData.SOLICITORNAME);
       this.correspondForm.controls['PERSONGUID'].setValue(editData.PERSONGUID);
+      this.correspondForm.controls['PERSONGUIDTEXT'].setValue(editData.PERSONNAME);
       this.correspondForm.controls['REFERENCE'].setValue(editData.REFERENCE);
       this.correspondForm.controls['MATTERGUID'].setValue(editData.MATTERGUID);
       this.correspondForm.controls['TYPE'].setValue(editData.TYPE);

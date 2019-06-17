@@ -940,8 +940,12 @@ export class MatterPopupComponent implements OnInit {
     }
     let matterPostData: any = { FormAction: this.FormAction, VALIDATEONLY: true, Data: details };
     this._mattersService.AddNewMatter(matterPostData).subscribe(response => {
-      this.matterdetailForm.controls['SHORTNAME'].setValue(response.DATA.SHORTNAME);
-      details.SHORTNAME = response.DATA.SHORTNAME;
+      if (response.DATA.SHORTNAME && response.DATA.SHORTNAME != "") {
+        this.matterdetailForm.controls['SHORTNAME'].setValue(response.DATA.SHORTNAME);
+        details.SHORTNAME = response.DATA.SHORTNAME;
+      } else {
+        details.SHORTNAME = this.f.SHORTNAME.value;
+      }
       matterPostData = { FormAction: this.FormAction, VALIDATEONLY: true, Data: details };
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, matterPostData);

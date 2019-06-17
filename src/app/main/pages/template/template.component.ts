@@ -51,7 +51,7 @@ export class TemplateComponent implements OnInit {
         // });
         // console.log(this.abc);
         this.Templatedata = new MatTableDataSource(response.DATA.TEMPLATES);
-        console.log(this.Templatedata);
+       
         this.Templatedata.paginator = this.paginator;
         if (response.DATA.TEMPLATES[0]) {
           // localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);

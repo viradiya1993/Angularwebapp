@@ -1,22 +1,22 @@
 
-<div class="one" fxLayout="column">
+<div class="one" [formGroup]="SettingForm" fxLayout="column">
 
  
             <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
-                        <mat-select placeholder="Defaults Expense">
+                        <mat-select  name="DEFAULTEXPENSETYPE" formControlName="DEFAULTEXPENSETYPE" placeholder="Defaults Expense">
                             <mat-option value="option">Cash</mat-option>
                             
                           </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
-                        <mat-select placeholder="Default Paid Type">
+                    <mat-form-field   appearance="outline" fxFlex="34" class="pr-4">
+                        <mat-select name="DEFAULTPAIDTYPE" formControlName="DEFAULTPAIDTYPE" placeholder="Default Paid Type">
                             <mat-option value="option">Cash</mat-option>
                            
                           </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
-                        <mat-select placeholder="Default Income Type">
+                    <mat-form-field   appearance="outline" fxFlex="33" class="pr-4">
+                        <mat-select name="DEFAULTINCOMETYPE" formControlName="DEFAULTINCOMETYPE" placeholder="Default Income Type">
                             <mat-option value="option">Cash</mat-option>
                             
                           </mat-select>
@@ -24,8 +24,8 @@
                 </div>
 
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
-                        <mat-select placeholder="Matter No. Strategy">
+                    <mat-form-field  appearance="outline" fxFlex="100" class="pr-4">
+                        <mat-select name="SHORTNAMESTRATEGY" formControlName="SHORTNAMESTRATEGY"  placeholder="Matter No. Strategy">
                             <mat-option value="option">xyz</mat-option> 
                           </mat-select>               
                     </mat-form-field>
@@ -34,33 +34,33 @@
 
             <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                        <mat-select placeholder="Cost Agreement">
+                        <mat-select  name="REQUIRECOSTAGREEMENT" formControlName="REQUIRECOSTAGREEMENT" placeholder="Cost Agreement">
                             <mat-option value="option">Not Requried</mat-option>
                             
                           </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                        <mat-select placeholder="Default Master Class">
+                    <mat-form-field   appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-select name="DEFAULTMATTERCLASS" formControlName="DEFAULTMATTERCLASS" placeholder="Default Master Class">
                             <mat-option value="option">Not Requried</mat-option>
                            
                           </mat-select>
                     </mat-form-field>
                 </div>
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
-                        <mat-select placeholder="Matter Owner">
+                    <mat-form-field   appearance="outline" fxFlex="33" class="pr-4">
+                        <mat-select name="REQUIREMATTEROWNER" formControlName="REQUIREMATTEROWNER" placeholder="Matter Owner">
                             <mat-option value="option">Not Requried</mat-option>
                             
                           </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
-                        <mat-select placeholder="Matter Free Earner">
+                    <mat-form-field  appearance="outline" fxFlex="34" class="pr-4">
+                        <mat-select name="REQUIREFEEEARNER" formControlName="REQUIREFEEEARNER" placeholder="Matter Free Earner">
                             <mat-option value="option">Not Requried</mat-option>
                            
                           </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
-                        <mat-select placeholder="Sundry Free Earner">
+                        <mat-select  name="SUNDRYFEEEARNER" formControlName="SUNDRYFEEEARNER" placeholder="Sundry Free Earner">
                             <mat-option value="option">Not Requried</mat-option>
                             
                           </mat-select>
@@ -68,7 +68,7 @@
                 </div>
                 <div fxLayout="row" class="check" fxLayoutAlign="start center" fxFlex="1 0 auto">
                    
-                        <mat-checkbox class="check_1" name="KNOWNBYOTHERNAME">Show Conflict Check when creating new matter
+                        <mat-checkbox name="SHOWCONFLICTCHECKFORNEWMATTER" formControlName="SHOWCONFLICTCHECKFORNEWMATTER" class="check_1" name="KNOWNBYOTHERNAME">Show Conflict Check when creating new matter
                         </mat-checkbox>
                         
                         <!-- <mat-checkbox class="check_2" name="KNOWNBYOTHERNAME">Allow Mobile Access
@@ -81,13 +81,13 @@
                 </div>
                 <div fxLayout="row" class="check" fxLayoutAlign="start center" fxFlex="1 0 auto">
                    
-                        <mat-checkbox class="check_2" name="KNOWNBYOTHERNAME">Allow Mobile Access
+                        <mat-checkbox name="ALLOWMOBILEACCESS" formControlName="ALLOWMOBILEACCESS" class="check_2" name="KNOWNBYOTHERNAME">Allow Mobile Access
                         </mat-checkbox>
                     
                 </div> 
                 <div fxLayout="row" class="check" fxLayoutAlign="start center" fxFlex="1 0 auto">
                    
-                        <mat-checkbox class="check_2" name="KNOWNBYOTHERNAME">Don’t Notify About Cloud Sync 
+                        <mat-checkbox name="DONTALLOWTRUSTOVERDRAWS" formControlName="DONTALLOWTRUSTOVERDRAWS" class="check_2" name="KNOWNBYOTHERNAME">Don’t Notify About Cloud Sync 
                         </mat-checkbox>
                    
                 </div> 

@@ -1,14 +1,14 @@
-<div class="one" fxLayout="column">
+<div class="one" [formGroup]="SettingForm" fxLayout="column">
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                    <mat-select placeholder="Invoice Template">
+                    <mat-select  name="INVOICETEMPLATE" formControlName="INVOICETEMPLATE"  placeholder="Invoice Template">
                             <mat-option value="option">static 1</mat-option>
                             <mat-option value="option">static 2</mat-option>
                           </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                    <mat-select placeholder="Receipt Template">
+                    <mat-select placeholder="Receipt Template" name="RECEIPTTEMPLATE" formControlName="RECEIPTTEMPLATE">
                             <mat-option value="option">static 1</mat-option>
                             <mat-option value="option">static 2</mat-option>
                           </mat-select>
@@ -16,19 +16,19 @@
         </div>
         <div fxLayout="row" class="check" fxLayoutAlign="start center" fxFlex="1 0 auto">
             
-                <mat-checkbox  name="KNOWNBYOTHERNAME">Don't generate receipt
+                <mat-checkbox name="DONTGENERATERECEIPT" formControlName="DONTGENERATERECEIPT" >Don't generate receipt
                 </mat-checkbox>
           
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                    <mat-select placeholder="Save Document ">
+                    <mat-select name="SAVEDOCUMENTS" formControlName="SAVEDOCUMENTS" placeholder="Save Document ">
                             <mat-option value="option">static 1</mat-option>
                             <mat-option value="option">static 2</mat-option>
                           </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                    <mat-select placeholder="Folder Naming strategy">
+                    <mat-select name="DIRECTORYSAVESTRATEGY" formControlName="DIRECTORYSAVESTRATEGY" placeholder="Folder Naming strategy">
                             <mat-option value="option">static 1</mat-option>
                             <mat-option value="option">static 2</mat-option>
                           </mat-select>

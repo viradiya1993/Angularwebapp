@@ -128,7 +128,7 @@ export class MatterDialogComponentForTemplate implements OnInit {
       'Context': "Matter",
       'ContextGuid': this.currentMatterData.MATTERGUID,
       "Type": "Template",
-      "Folder": 'abc',
+      "Folder": '',
       "Template": data.TEMPLATENAME
     }
     this.TemplateListDetails.getGenerateTemplate(passingData).subscribe(response => {

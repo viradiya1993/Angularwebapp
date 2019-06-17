@@ -9,8 +9,8 @@ import { FormGroup } from '@angular/forms';
   animations: fuseAnimations
 })
 export class NameComponent implements OnInit {
-
   @Input() SettingForm: FormGroup;
+
   constructor() { }
 
   ngOnInit() {

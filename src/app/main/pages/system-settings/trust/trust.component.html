@@ -1,28 +1,28 @@
-<div class="one" fxLayout="column">
+<div class="one" [formGroup]="SettingForm" fxLayout="column">
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-            <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                    <mat-select placeholder="First Trust Month">
+            <mat-form-field  appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-select name="FIRSTTRUSTMONTH" formControlName="FIRSTTRUSTMONTH" placeholder="First Trust Month">
                             <mat-option value="option">static 1</mat-option>
                             <mat-option value="option">static 2</mat-option>
                           </mat-select>
             </mat-form-field>
-            <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                    <mat-select placeholder="Trust State">
+            <mat-form-field  appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-select name="TRUSTSTATE" formControlName="TRUSTSTATE" placeholder="Trust State">
                             <mat-option value="option">static 1</mat-option>
                             <mat-option value="option">static 2</mat-option>
                           </mat-select>
             </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                        <mat-select placeholder="Trust Cheque">
+                <mat-form-field  appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-select name="TRUSTCHEQUEFORMAT" formControlName="TRUSTCHEQUEFORMAT" placeholder="Trust Cheque">
                                 <mat-option value="option">static 1</mat-option>
                                 <mat-option value="option">static 2</mat-option>
                               </mat-select>
                 </mat-form-field>
                 <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                    <mat-select placeholder="Trust Receipt Copies">
+                    <mat-select  name="TRUSTRECEIPTCOPIES" formControlName="TRUSTRECEIPTCOPIES" placeholder="Trust Receipt Copies">
                         <mat-option value="option">static 1</mat-option>
                         <mat-option value="option">static 2</mat-option>
                       </mat-select>
@@ -37,31 +37,31 @@
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                 <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
                     <mat-label>Account Name</mat-label>
-                    <input matInput>
+                    <input name="EFTTRUSTACCOUNTNAME" formControlName="EFTTRUSTACCOUNTNAME" matInput>
                     <mat-icon matSuffix class="secondary-text"></mat-icon>
                 </mat-form-field>
             </div>
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                 <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                     <mat-label>BSB</mat-label>
-                    <input matInput>
+                    <input name="EFTTRUSTBSB" formControlName="EFTTRUSTBSB" matInput>
                     <mat-icon matSuffix class="secondary-text"></mat-icon>
                 </mat-form-field>
                 <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                     <mat-label>A/C No</mat-label>
-                    <input matInput>
+                    <input name="EFTTRUSTACCOUNTNUMBER" formControlName="EFTTRUSTACCOUNTNUMBER" matInput>
                     <mat-icon matSuffix class="secondary-text"></mat-icon>
                 </mat-form-field>
             </div>
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <mat-form-field appearance="outline" fxFlex="50" class="prs-4">
-                        <mat-select placeholder="Default Receipt Type">
+                <mat-form-field  appearance="outline" fxFlex="50" class="prs-4">
+                        <mat-select name="DEFAULTTRUSTRECEIPTTYPE" formControlName="DEFAULTTRUSTRECEIPTTYPE" placeholder="Default Receipt Type">
                                 <mat-option value="option">static 1</mat-option>
                                 <mat-option value="option">static 2</mat-option>
                               </mat-select>
                 </mat-form-field>
-                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                        <mat-select placeholder="Default Withdrawal Type">
+                <mat-form-field  appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-select name="DEFAULTTRUSTWITHDRAWALTYPE" formControlName="DEFAULTTRUSTWITHDRAWALTYPE" placeholder="Default Withdrawal Type">
                                 <mat-option value="option">static 1</mat-option>
                                 <mat-option value="option">static 2</mat-option>
                               </mat-select>

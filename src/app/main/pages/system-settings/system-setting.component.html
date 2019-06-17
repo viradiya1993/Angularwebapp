@@ -57,14 +57,15 @@
                         <div class="content py-16" fusePerfectScrollbar>
 
                             <div class="nav material2">
-                                <!-- (click)="nameClick()" -->
+                                <!-- (click)="nameClick()"-->
                                 <div class="nav-item name" aria-label="inbox">
-                                    <a [routerLink]="'/system-setting/name'" class="nav-link" matRipple [ngClass]="{'active accent':(router.url === '/system-setting/name')}">
+                                    <a [routerLink]="'/system-setting/name'"    class="nav-link" matRipple [ngClass]="{'active accent':(router.url === '/system-setting/name')}">
                                         <span class="title">Name</span>
                                     </a>
                                 </div>
-
+                                
                                 <div class="nav-item business" aria-label="frequently contacted">
+                                    <!-- <button [queryParams]="{ calander: 'business' }"></button> -->
                                     <a [routerLink]="'/system-setting/business'" class="nav-link" matRipple [ngClass]="{'active accent':(router.url === '/system-setting/business')}">
                                         <div class="title">Business</div>
                                     </a>
@@ -128,6 +129,10 @@
                 <!-- <contacts-main-sidebar [@animate]="{value:'*'}"></contacts-main-sidebar> -->
             </div>
             <!-- / SIDEBAR CONTENT -->
+            <div class="main_btn">
+                    <button mat-raised-button color="accent" (click)="save()">Save</button>
+                    <button mat-raised-button color="primary" class="btn_2" cdkFocusInitial>Don't Save</button>
+            </div>
 
         </fuse-sidebar>
         <!-- / SIDEBAR -->
@@ -137,14 +142,14 @@
 
             <!-- CONTENT -->
             <div class="content">
-                    <form fxLayoutAlign="start" fxFlex="1 0 auto" name="form" [formGroup]="SettingForm">
+                 <form name="form" [formGroup]="SettingForm">
                 <app-name [SettingForm]="SettingForm" *ngIf="(router.url ==='/system-setting/name')"></app-name>
-                <app-business *ngIf="(router.url ==='/system-setting/business')"></app-business>
-                <app-defaults *ngIf="(router.url ==='/system-setting/defaults')"></app-defaults>
-                <app-estimates-setting *ngIf="(router.url ==='/system-setting/estimates')"> </app-estimates-setting>
-                <app-reginoal-setting *ngIf="(router.url ==='/system-setting/reginoal')"></app-reginoal-setting>
-                <app-trust *ngIf="(router.url ==='/system-setting/trust')"></app-trust>
-                <app-templates *ngIf="(router.url ==='/system-setting/templates')"></app-templates>
+                <app-business [SettingForm]="SettingForm" *ngIf="(router.url ==='/system-setting/business')"></app-business>
+                <app-defaults [SettingForm]="SettingForm" *ngIf="(router.url ==='/system-setting/defaults')"></app-defaults>
+                <app-estimates-setting [SettingForm]="SettingForm" *ngIf="(router.url ==='/system-setting/estimates')"> </app-estimates-setting>
+                <app-reginoal-setting [SettingForm]="SettingForm" *ngIf="(router.url ==='/system-setting/reginoal')"></app-reginoal-setting>
+                <app-trust [SettingForm]="SettingForm" *ngIf="(router.url ==='/system-setting/trust')"></app-trust>
+                <app-templates  [SettingForm]="SettingForm" *ngIf="(router.url ==='/system-setting/templates')"></app-templates>
                 <!-- <contacts-contact-list></contacts-contact-list> -->
                 </form>
             </div>
@@ -155,7 +160,7 @@
 
     </div>
     <!-- / CONTENT-->
-    <button (click)="save()" >SUBMIT</button>
+  
 </div>
 
 

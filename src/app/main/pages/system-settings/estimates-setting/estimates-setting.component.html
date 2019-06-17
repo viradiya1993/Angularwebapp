@@ -1,31 +1,31 @@
 
-<div class="one" fxLayout="column">
+<div class="one" [formGroup]="SettingForm" fxLayout="column">
 
  
   
 
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-            <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+            <mat-form-field appearance="outline"  fxFlex="100" class="pr-4">
                 <mat-label>Estimate Warning %</mat-label>
-                <input type="number" name="ADDRESS3"  matInput>
+                <input type="number" name="ESTIMATEWARNINGPERCENT" formControlName="ESTIMATEWARNINGPERCENT"  matInput>
             </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
             <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
                 <mat-label>Next Estimate Threshold </mat-label>
-                <input type="number" name="ADDRESS3"  matInput>
+                <input type="number" name="ESTIMATENEXTTHRESHOLD"  formControlName="ESTIMATENEXTTHRESHOLD" matInput>
             </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
             <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
                 <mat-label>Next Threshold Warning %</mat-label>
-                <input type="number" name="ADDRESS3"  matInput>
+                <input type="number" name="ESTIMATENEXTWARNINGPERCENT"  formControlName="ESTIMATENEXTWARNINGPERCENT" matInput>
             </mat-form-field>
         </div>
 
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
           
-                <mat-checkbox class="check_1" name="KNOWNBYOTHERNAME">Allow Estimate Range 
+                <mat-checkbox class="check_1" name="ALLOWESTIMATERANGE" formControlName="ALLOWESTIMATERANGE">Allow Estimate Range 
                 </mat-checkbox>
        
         </div>

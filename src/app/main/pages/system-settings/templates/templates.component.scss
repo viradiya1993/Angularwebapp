@@ -22,12 +22,20 @@ app-templates {
     }
 }
 .one {
-    margin-left: 7px; 
-    margin-top: 15px;
+    margin-left: 20px;
+    margin-right: 15px; 
+    margin-top: 20px;
+    margin-bottom: 15px;
 }
 
 .card {
     // margin-top: 10px;
     margin-bottom: 10px;
     width: 100%;
+}
+.check{
+    margin-bottom: 12px;
+}
+.check_1{
+    margin-bottom: 15px !important;
 }

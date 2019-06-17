@@ -22,8 +22,10 @@ app-defaults {
     }
 }
 .one {
-    margin-left: 7px; 
-    margin-top: 15px;
+    margin-left: 20px;
+    margin-right: 15px; 
+    margin-top: 20px;
+    margin-bottom: 15px;
 }
 
 .card {
@@ -31,3 +33,12 @@ app-defaults {
     margin-bottom: 10px;
     width: 100%;
 }
+.check {
+    margin-bottom: 10px !important;
+}
+.check_1{
+    // width: 100% !important ; 
+}
+.check_2{
+//     width: 100% !important ;   
+ }

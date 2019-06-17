@@ -64,11 +64,11 @@ export class SpendMoneyComponent implements OnInit {
     localStorage.setItem('lastPageSize', event.pageSize);
   }
   loadData() {
+    console.log(this.currentMatter);
     // this.isLoadingResults = true;
     // let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
     this.SpendmoneyService.SpendmoneyListData('').subscribe(response => {
       console.log(response);
-
       // if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
       //   if (response.DATA.INVOICES[0]) {
       //     this.highlightedRows = response.DATA.INVOICES[0].INVOICEGUID;

@@ -1,9 +1,9 @@
-<div class="one" fxLayout="column">
+<div [formGroup]="SettingForm" class="one" fxLayout="column">
     <h2>Name</h2>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-            <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+            <mat-form-field class="a" appearance="outline" fxFlex="100" class="pr-4">
                 <mat-label>Name</mat-label>
-                <input matInput>
+                <input name="NAME" formControlName="NAME" matInput>
                 <mat-icon matSuffix class="secondary-text"></mat-icon>
             </mat-form-field>
         </div>

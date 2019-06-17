@@ -32,6 +32,7 @@ export class ReceiptDilogComponent implements OnInit {
   gst: any;
   receiptData: any;
   formaction: string;
+  val: any;
 
   constructor(
     private toastr: ToastrService,
@@ -86,52 +87,19 @@ export class ReceiptDilogComponent implements OnInit {
         if(this._data.action=='editForTB'){
           
            this.receiptData=JSON.parse(localStorage.getItem('TBreceiptData'));
+           console.log(this.receiptData);
            this.GetInvoiceForReceipt({ 'Outstanding': 'Yes'});
           //  this.setInvoiceForReceipt(this.receiptData.RECEIPTGUID);
         }else if(this._data.action=='addForTB'){
           this.GetInvoiceForReceipt({ 'Outstanding': 'Yes'});
         }
         else if(this._data.action=='edit'){
-           this.receiptData=JSON.parse(localStorage.getItem('receiptData'));
-           console.log(this.receiptData);
-          this.setInvoiceForReceipt(this.receiptData.RECEIPTGUID);
+          this.receiptData=JSON.parse(localStorage.getItem('receiptData'));
+          this.setInvoiceForReceipt({"RECEIPTGUID":this.receiptData.INCOMEGUID});
         }else if(this._data.action=='add'){
           this.GetInvoiceForReceipt({ 'Outstanding': 'Yes'});
         }
         this.getPayor({});
-    if(this._data.action=='edit'){
-      // this.receiptCode=this.receiptData.RECEIPTCODE;
-      // this.dateReceived=this.receiptData.RECEIPTDATE;
-      // this.amountReceived=this.receiptData.AMOUNT;
-      // this.amountExGST=this.receiptData.RECEIPTAMOUNTEXGST;
-      // this.note=this.receiptData.NOTE;
-      // this.incometype=this.receiptData.RECEIPTGST;
-
-    }else if(this._data.action=='editForTB'){
-      // this.receiptCode=this.receiptData.INVOICECODE;
-      // this.dateReceived=this.receiptData.INCOMEDATE;
-      // this.amountReceived=this.receiptData.AMOUNT;
-      // // this.amountExGST=receiptData.RECEIPTAMOUNTEXGST;
-      // this.gst=this.receiptData.GST;
-      // this.note=this.receiptData.NOTE;
-      // this.incometype=this.receiptData.INCOMETYPE;
-    }
-   
-   if(this._data.action=='edit' || this._data.action=='editForTB' ){
-    // this.PrepareReceiptForm.controls['ReceiptCode'].setValue(this.receiptCode);
-    // let FeeAgreementDate1 = this.dateReceived.split("/");
-    // this.PrepareReceiptForm.controls['DateReceived'].setValue(new Date(FeeAgreementDate1[1] + '/' + FeeAgreementDate1[0] + '/' + FeeAgreementDate1[2]));
-    // this.PrepareReceiptForm.controls['AmountReceived'].setValue(this.amountReceived);
-    // this.PrepareReceiptForm.controls['AmountExGST'].setValue(this.amountExGST);
-    // this.PrepareReceiptForm.controls['GST'].setValue(this.gst);
-    // this.incomeType=this.incometype;
-    //  this.PrepareReceiptForm.controls['IncomeType'].setValue(this.incometype);
-    // this.PrepareReceiptForm.controls['Note'].setValue( this.note);
-    
-    //this.PrepareReceiptForm.controls['Show'].setValue(receiptData.RECEIPTCODE);
-    //this.PrepareReceiptForm.controls['Unallocated'].setValue(receiptData.RECEIPTCODE);
-   }
-   
     this.PrepareReceiptData = new MatTableDataSource([]);
     this.PrepareReceiptData.paginator = this.paginator;
 
@@ -142,15 +110,17 @@ export class ReceiptDilogComponent implements OnInit {
 
   // }
   setInvoiceForReceipt(reciptGuid){
-    console.log("called");
+ 
     this.isLoadingResults = true;
     this.GetReceptData.getRecept(reciptGuid).subscribe(response => {
-   console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.RECEIPTALLOCATIONS[0]) {
+          console.log(response.DATA.RECEIPTALLOCATIONS);
           localStorage.setItem('receiptData',JSON.stringify(response.DATA.RECEIPTALLOCATIONS[0]));
-          this.highlightedRows = response.DATA.RECEIPTALLOCATIONS[0].RECEIPTGUID;
+          this.highlightedRows = response.DATA.RECEIPTALLOCATIONS[0].INVOICEGUID;
            this.currentInvoiceData = response.DATA.RECEIPTALLOCATIONS[0];
+
+           this.forViewRecepit(response.DATA.RECEIPTALLOCATIONS[0]);
         }
         this.PrepareReceiptData = new MatTableDataSource(response.DATA.RECEIPTALLOCATIONS)
         this.PrepareReceiptData.paginator = this.paginator;
@@ -160,35 +130,26 @@ export class ReceiptDilogComponent implements OnInit {
       this.isLoadingResults = false;
       this.toastr.error(err);
     });
+  }
 
+  forViewRecepit(data){
+    console.log(data);
+    this.PrepareReceiptForm.controls['ReceiptCode'].setValue(data.RECEIPTCODE);
+    let FeeAgreementDate1 = data.RECEIPTDATE.split("/");
+    this.PrepareReceiptForm.controls['DateReceived'].setValue(new Date(FeeAgreementDate1[1] + '/' + FeeAgreementDate1[0] + '/' + FeeAgreementDate1[2]));
+    this.PrepareReceiptForm.controls['AmountReceived'].setValue(data.AMOUNT);
+    this.PrepareReceiptForm.controls['AmountExGST'].setValue(data.RECEIPTAMOUNTEXGST);
+    this.PrepareReceiptForm.controls['GST'].setValue(data.RECEIPTGST);
+    this.incomeType=this.incometype;
+     this.PrepareReceiptForm.controls['IncomeType'].setValue(data.INCOMETYPE);
+    this.PrepareReceiptForm.controls['Note'].setValue(data.NOTE);
+    this.val=data.PAYEE
+    this.PrepareReceiptForm.controls['Payor'].setValue(data.PAYEE);
+    // this.PrepareReceiptForm.controls['Unallocated'].setValue(receiptData.RECEIPTCODE);
+    
 
-    // this.isLoadingResults = true;
-    // this.GetReceptData.getRecept({RECEIPTGUID:reciptGuid}).subscribe(response => {
-
-    //   if (response.CODE == 200 && response.STATUS == "success") {
-    //     if (response.DATA.RECEIPTALLOCATIONS[0]) {
-    //       this.highlightedRows = response.DATA.RECEIPTALLOCATIONS[0].INVOICEGUID;
-    //       this.currentInvoiceData = response.DATA.RECEIPTALLOCATIONS[0];
-    //     }
-    //     this.PrepareReceiptData = new MatTableDataSource(response.DATA.RECEIPTALLOCATIONS)
-    //     this.PrepareReceiptData.paginator = this.paginator;
-    //   }
-    //   this.isLoadingResults = false;
-    // }, err => {
-    //   this.isLoadingResults = false;
-    //   this.toastr.error(err);
-    // });
   }
   GetInvoiceForReceipt(data) {  
-   
-    // if (this.isShowchecked != 'true') {
-    //   console.log("invoice");
-    //   this.data = {
-    //     'Outstanding': 'Yes'
-    //   }
-    // } else {
-    //   this.data = data
-    // }
     this._MatterInvoicesService.MatterInvoicesData(data).subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (response.DATA.INVOICES[0]) {
@@ -198,6 +159,7 @@ export class ReceiptDilogComponent implements OnInit {
         }
         this.PrepareReceiptData = new MatTableDataSource(response.DATA.INVOICES)
         this.PrepareReceiptData.paginator = this.paginator;
+        this.PrepareReceiptData=response.DATA.INVOICES;
       }
       // this.isLoadingResults = false;
     }, error => {
@@ -231,32 +193,34 @@ export class ReceiptDilogComponent implements OnInit {
     }else{
       this.formaction='update';
     }
+    this.receiptData=JSON.parse(localStorage.getItem('receiptData'));
     // RECEIPTGUID
     let data = {
-      DATA:{
-        // RECEIPTGUID: JSON.parse(localStorage.getItem('receiptData')).RECEIPTGUID,
-        // client: this.f.client.value,
-        INCOMEGUID:"",
-        INCOMECODE: this.f.ReceiptCode.value,
-        INCOMEDATE: localStorage.getItem('preparReceiptDate'),
-        RECEIPTTOTAL: this.f.AmountReceived.value,
-        RECEIPTAMOUNTEXGST: this.f.AmountExGST.value,
-        GST: this.f.GST.value,
-        INCOMETYPE: this.f.IncomeType.value,
-        PAYEE: this.f.Payor.value,
-        // BANKACCOUNTNAME: this.f.BankAccount.value,
-        NOTE: this.f.Note.value,
-        // Show: this.f.Show.value,
-        // Unallocated: this.f.Unallocated.value,
-        AMOUNT: this.f.Amount.value,
-        Outstanding: 'Yes',
-        INCOMECLASS:'Receipt',
-        FormAction:this.formaction
-      }
+  
+           AMOUNT:this.f.Amount.value,
+           BANKACCOUNTGUID: this.receiptData.BANKACCOUNTGUID,
+           FIRMGUID: this.receiptData.FIRMGUID,
+          //  FOREIGNCURRENCYAMOUNT: this.receiptData.FOREIGNCURRENCYAMOUNT,
+          //  FOREIGNCURRENCYGST: this.receiptData.FOREIGNCURRENCYGST,
+          //  FOREIGNCURRENCYID: this.receiptData.FOREIGNCURRENCYID,
+          //  FOREIGNCURRENCYRATE: this.receiptData.FOREIGNCURRENCYRATE,
+           GST: this.f.GST.value,
+           INCOMEACCOUNTGUID: this.receiptData.INCOMEACCOUNTGUID,
+          //  INCOMEACCOUNTGUID_COPY: this.receiptData.INCOMEACCOUNTGUID_COPY,
+           INCOMECLASS: this.receiptData.INCOMECLASS,
+           INCOMECODE: this.f.ReceiptCode.value,
+           INCOMEDATE: localStorage.getItem('preparReceiptDate'),
+           INCOMEGUID: this.receiptData.INCOMEGUID,
+          //  INCOMEREVERSALGUID: this.receiptData.INCOMEREVERSALGUID,
+           INCOMETYPE: this.f.IncomeType.value,
+           NOTE: this.f.Note.value,
+           PAYEE: this.f.Payor.value,
+           ALLOCATIONS:'',
       
     }
-    this.GetReceptData.setReceipt(data).subscribe(response => {
-        console.log(response);
+    let matterPostData: any = { FormAction: 'insert', VALIDATEONLY: true, Data: data };
+    this.GetReceptData.setReceipt(matterPostData).subscribe(response => {
+      console.log(response);
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, data);
       } else if (response.CODE == 451 && response.STATUS == "warning") {
@@ -275,8 +239,7 @@ export class ReceiptDilogComponent implements OnInit {
     this.currentInvoiceData = row;
   }
   onChangeShow(val) {
-    console.log(this._data.matterGuid);
-    console.log(this._data.clientName );
+
     if(this._data.action =='add' || this._data.action == "addForTB"){
 
       // this.isShowchecked = "true";

@@ -1,4 +1,4 @@
-<div id="contacts" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
+<div id="contacts" class="con page-layout simple left-sidebar inner-sidebar inner-scroll">
 
     <!-- HEADER -->
     <div class="header accent p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
@@ -137,7 +137,8 @@
 
             <!-- CONTENT -->
             <div class="content">
-                <app-name *ngIf="(router.url ==='/system-setting/name')"></app-name>
+                    <form fxLayoutAlign="start" fxFlex="1 0 auto" name="form" [formGroup]="SettingForm">
+                <app-name [SettingForm]="SettingForm" *ngIf="(router.url ==='/system-setting/name')"></app-name>
                 <app-business *ngIf="(router.url ==='/system-setting/business')"></app-business>
                 <app-defaults *ngIf="(router.url ==='/system-setting/defaults')"></app-defaults>
                 <app-estimates-setting *ngIf="(router.url ==='/system-setting/estimates')"> </app-estimates-setting>
@@ -145,6 +146,7 @@
                 <app-trust *ngIf="(router.url ==='/system-setting/trust')"></app-trust>
                 <app-templates *ngIf="(router.url ==='/system-setting/templates')"></app-templates>
                 <!-- <contacts-contact-list></contacts-contact-list> -->
+                </form>
             </div>
             <!-- / CONTENT -->
 
@@ -153,8 +155,9 @@
 
     </div>
     <!-- / CONTENT-->
-
+    <button (click)="save()" >SUBMIT</button>
 </div>
+
 
 <!-- ADD CONTACT BUTTON -->
 

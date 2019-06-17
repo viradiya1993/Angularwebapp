@@ -16,9 +16,10 @@
                     <mat-icon matSuffix class="disabled-text" (click)="clearSearch()">{{icon}}</mat-icon>
                 </mat-form-field>
             </div>
+            <!-- <div>{{searchpage}}</div> -->
             <div class="listdata" *ngIf="( page | filterByName:searchpage ) as result">
                 <mat-list role="list" *ngFor="let pages of result">
-                    <mat-list-item role="listitem" (click)="onChange(pages.TITLE)">
+                    <mat-list-item *ngIf="pages.TITLE !='Spend money' && pages.TITLE !='Receive money'" role="listitem" (click)="onChange(pages.TITLE)">
                         <mat-icon>
                             <img *ngIf="pages.TITLE=='Matters'" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                             <img *ngIf="pages.TITLE=='Contact'" src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">

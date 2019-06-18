@@ -29,7 +29,6 @@ export class SortingDialogComponent implements OnInit {
     this.modelType = data.type;
     this.list = data.list;
     this.propertyNew = data.data;
-    console.log(data.data);
   }
   ngOnInit(): void {
     this.property = this.propertyNew.sort(function (a, b) {
@@ -57,7 +56,9 @@ export class SortingDialogComponent implements OnInit {
         tempPropertyData.push(itemsdata);
       }
     });
-    this.property = tempPropertyData;
+    this.property = tempPropertyData.sort(function (a, b) {
+      return a.HIDDEN - b.HIDDEN;
+    });
     this.updateCount();
   }
   //data drag and drop
@@ -79,7 +80,9 @@ export class SortingDialogComponent implements OnInit {
         tempPropertyData.push(itemsdata);
       }
     });
-    this.property = tempPropertyData;
+    this.property = tempPropertyData.sort(function (a, b) {
+      return a.HIDDEN - b.HIDDEN;
+    });
     this.updateCount();
   }
 
@@ -96,7 +99,9 @@ export class SortingDialogComponent implements OnInit {
       itemsdata.HIDDEN = isCheck ? 0 : 1;
       tempPropertyData.push(itemsdata);
     });
-    this.property = tempPropertyData;
+    this.property = tempPropertyData.sort(function (a, b) {
+      return a.HIDDEN - b.HIDDEN;
+    });
   }
 
   //dialog content close event

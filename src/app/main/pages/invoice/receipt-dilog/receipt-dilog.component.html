@@ -21,36 +21,32 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="30" class="pr-4">
                         <mat-label>Receipt Code</mat-label>
-                        <input matInput placeholder="Receipt Code" formControlName="ReceiptCode">
+                        <input matInput placeholder="Receipt Code" formControlName="RECEIPTCODE">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <!-- <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
-                        <mat-label>Date Received</mat-label>
-                        <input matInput placeholder="Date Received" formControlName="DateReceived">
-                    </mat-form-field> -->
                     <mat-form-field appearance="outline">
-                        <input (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" formControlName="DateReceived" matInput [matDatepicker]="picker" placeholder="Choose a date">
+                        <input (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" formControlName="INCOMEDATETEXT" matInput [matDatepicker]="picker" placeholder="Choose a date">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
-                      </mat-form-field>
+                    </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
                         <mat-label>Amount Received</mat-label>
-                        <input matInput placeholder="Amount Received" formControlName="AmountReceived">
+                        <input matInput placeholder="Amount Received" formControlName="AMOUNT">
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="34" class="pr-4">
                         <mat-label>Amount Ex-GST</mat-label>
-                        <input matInput placeholder="Amount Ex-GST" formControlName="AmountExGST">
+                        <input matInput placeholder="Amount Ex-GST" formControlName="RECEIPTAMOUNTEXGST">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
                         <mat-label>GST</mat-label>
-                        <input matInput placeholder="GST" formControlName="GST">
+                        <input matInput placeholder="GST" formControlName="RECEIPTGST">
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
                         <mat-label>Income Type</mat-label>
-                        <mat-select formControlName="IncomeType" [value]="incomeType">
+                        <mat-select formControlName="INCOMETYPE" [value]="incomeType">
                             <mat-option value="Cash">Cash</mat-option>
                             <mat-option value="Cheque">Cheque</mat-option>
                             <mat-option value="Credit Card">Credit Card</mat-option>
@@ -83,12 +79,12 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" class="example" fxFlex="100" class="pr-4">
                         <mat-label>Show?</mat-label>
-                        <mat-select formControlName="Show" (ngModelChange)="onChangeShow($event)" >
+                        <mat-select formControlName="Show" (ngModelChange)="onChangeShow($event)">
                             <mat-option value="1">Show unpaid invoices for matter : GARL001
                             </mat-option>
                             <mat-option value="2">Show unpaid invoices for client : Eleanoar Carver & Associates
                             </mat-option>
-                            <mat-option value="3">Show all unpaid invoices for matter: TORR0002   
+                            <mat-option value="3">Show all unpaid invoices for matter: TORR0002
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -158,7 +154,7 @@
                     <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" showFirstLastButtons></mat-paginator>
                 </div>
 
-                <div  fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="total_amount_div">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="total_amount_div">
                     Enter the amount to allocate to the selected invoice and press tab
                     <mat-form-field appearance="outline" class="example" fxFlex="40" class="pr-4">
                         <mat-label>Amount</mat-label>

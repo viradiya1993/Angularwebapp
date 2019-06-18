@@ -48,26 +48,8 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
 
   ngOnInit() {
     this.firstTime = 'true';
-    // this.data.currentMessage.subscribe(message =>{
-    //   console.log(message);
-    // });
-    // localStorage.getItem('templateData');
     this.getDropValue();
     this.getMatterList();
-
-    // this.TemplateListDetails.getData('').subscribe(response => {
-    //   console.log(response);
-    //   if (response.CODE == 200 && response.STATUS == "success") {
-    //     // response.DATA.TEMPLATES.forEach(element => { 
-    //     //   // this.abc=i++; 
-    //     // });
-    //     // console.log(this.abc);
-
-    //   }
-    // }, err => {
-    //   this.isLoadingResults = false;
-    //   this.toastr.error(err);
-    // });
   }
   getDropValue() {
     let d = {};
@@ -104,7 +86,6 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
     this.getList(this.filterVal);
   }
   getList(filterVal: any) {
-    console.log(filterVal);
     if (this.firstTime == 'true') {
       this.passdata = { "GETALLFIELDS": true }
     } else {
@@ -112,7 +93,6 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
     }
     this.isLoadingResults = true;
     this.mattersService.getMatters(this.passdata).subscribe(response => {
-      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.MATTERS[0]) {
           this.highlightedRows = response.DATA.MATTERS[0].MATTERGUID;
@@ -149,22 +129,6 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
 
       }
     });
-    // let data=JSON.parse(localStorage.getItem('templateData'));
-    //  // console.log(this.currentMatterData.MATTERGUID);
-    // let passingData={ 
-    // 'Context':"Matter",
-    // 'ContextGuid': this.currentMatterData.MATTERGUID ,
-    // "Type":"Template",
-    // "Folder":'abc',
-    // "Template":data.TEMPLATENAME}
-    // this.TemplateListDetails.getGenerateTemplate(passingData).subscribe(response => {
-    //   console.log(response);
-    //   if (response.CODE == 200 && response.STATUS == "success") {
-
-    //   }
-    // }, error => {
-    //   this.toastr.error(error);
-    // });
   }
   // New matter Pop-up
   AddNewmatterpopup() {

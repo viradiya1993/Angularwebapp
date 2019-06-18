@@ -401,10 +401,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             type = 26;
         else if (ReportData.REPORTGROUP == 'Trust')
             type = 25;
-        // console.log(this.appPermissions[type][ReportData.REPORTNAME]);
-        // console.log(ReportData);
-        // console.log(type);
-        // console.log(ReportData.REPORTNAME);
         if (this.appPermissions[type][ReportData.REPORTNAME]) {
             const dialogRef = this.dialog.open(ReportsComponent, { width: '100%', data: ReportData, disableClose: true });
             dialogRef.afterClosed().subscribe(result => { });
@@ -618,7 +614,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //web19
     isInvoiceClick() {
-        console.log("jfgdgfghdshfgjsdgf");
         this.clickedBtn = 'invoiceDoc';
     }
     createInstantInvoice() {
@@ -651,7 +646,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     ViewReceiptForTimeBilling() {
-        console.log("view");
         const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
             width: '100%', disableClose: true,
             data: {
@@ -679,9 +673,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     ViewReceipt() {
         const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
             width: '100%', disableClose: true,
-            data: {
-                action: 'edit'
-            }
+            data: { action: 'edit' }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -764,7 +756,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     // }
     SelectMatterContact() {
         if (this.clickedBtn == 'invoiceDoc') {
-            console.log("21");
             // this._router.navigate(['/create-document/invoice']);
             const dialogRef = this._matDialog.open(InvoiceDialogComponentForTemplate, {
                 width: '100%',
@@ -774,7 +765,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             dialogRef.afterClosed().subscribe(result => {
                 this.clickedBtn = ' ';
                 if (result) {
-                    // console.log(result);
                     localStorage.setItem('set_active_matters', JSON.stringify(result));
                     // this.router.navigate(['time-billing/work-in-progress/invoice']);
                 }
@@ -788,7 +778,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
-                    // console.log(result);
                     localStorage.setItem('set_active_matters', JSON.stringify(result));
                     // this.router.navigate(['time-billing/work-in-progress/invoice']);
                 }

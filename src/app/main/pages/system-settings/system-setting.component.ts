@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { SystemSetting } from './../../../_services';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-system-setting',
@@ -16,11 +18,15 @@ export class SystemSettingComponent implements OnInit {
   ForDataBind: any;
   SettingForm: FormGroup;
   view: any;
+  texVal:any=[];
+  clicked: any;
+  clickedBtn: string;
 
-  constructor(public router: Router,  private route: ActivatedRoute,  private _formBuilder: FormBuilder,) { 
+  constructor(private location: Location,public router: Router,  private route: ActivatedRoute,private SystemSetting:SystemSetting,  private _formBuilder: FormBuilder,) { 
+    // this.nameFunction();
     this.nameFunction();
   }
-
+  
   ngOnInit() {
     // this.button='name';
     // this.ForDataBind="Name";
@@ -104,36 +110,163 @@ export class SystemSettingComponent implements OnInit {
       DIRECTORYSAVESTRATEGY:[''],
      
     })
+    this.SystemSetting.getSystemSetting({}).subscribe(response=>{
+      this.getVal(response);
+      })
   }
+  getVal(data){
+    console.log(data);
+    console.log(data.DATA.SYSTEM.BUSINESSGROUP.DEFAULTMATTERCLASS.toString());
+  // for trust  
+   this.SettingForm.controls['DEFAULTTRUSTRECEIPTTYPE'].setValue(data.DATA.SYSTEM.TRUSTGROUP.DEFAULTTRUSTRECEIPTTYPE.toString()); 
+   this.SettingForm.controls['DEFAULTTRUSTWITHDRAWALTYPE'].setValue(data.DATA.SYSTEM.TRUSTGROUP.DEFAULTTRUSTWITHDRAWALTYPE.toString()); 
+   this.SettingForm.controls['EFTTRUSTACCOUNTNAME'].setValue(data.DATA.SYSTEM.TRUSTGROUP.EFTTRUSTACCOUNTNAME); 
+   this.SettingForm.controls['EFTTRUSTACCOUNTNUMBER'].setValue(data.DATA.SYSTEM.TRUSTGROUP.EFTTRUSTACCOUNTNUMBER); 
+   this.SettingForm.controls['EFTTRUSTBSB'].setValue(data.DATA.SYSTEM.TRUSTGROUP.EFTTRUSTBSB); 
+   this.SettingForm.controls['TRUSTCHEQUEFORMAT'].setValue(data.DATA.SYSTEM.TRUSTGROUP.TRUSTCHEQUEFORMAT.toString()); 
+   this.SettingForm.controls['TRUSTRECEIPTCOPIES'].setValue(data.DATA.SYSTEM.TRUSTGROUP.TRUSTRECEIPTCOPIES.toString()); 
+   this.SettingForm.controls['TRUSTSTATE'].setValue(data.DATA.SYSTEM.TRUSTGROUP.TRUSTSTATE); 
+   
+   //for name 
+   this.SettingForm.controls['BARRISTERSNAME'].setValue(data.DATA.SYSTEM.BARRISTERSNAME); 
 
+   this.SettingForm.controls['ADDRESS1'].setValue(data.DATA.SYSTEM.ADDRESSGROUP.STREETADDRESSGROUP.ADDRESS1); 
+   this.SettingForm.controls['POSTCODE'].setValue(data.DATA.SYSTEM.ADDRESSGROUP.STREETADDRESSGROUP.POSTCODE); 
+   this.SettingForm.controls['SUBURB'].setValue(data.DATA.SYSTEM.ADDRESSGROUP.STREETADDRESSGROUP.SUBURB); 
+   this.SettingForm.controls['STATE'].setValue(data.DATA.SYSTEM.ADDRESSGROUP.STREETADDRESSGROUP.STATE_); 
+
+   this.SettingForm.controls['POSTALADDRESS1'].setValue(data.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP.POSTALADDRESS1); 
+   this.SettingForm.controls['POSTALPOSTCODE'].setValue(data.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP.POSTALPOSTCODE); 
+   this.SettingForm.controls['POSTALSUBURB'].setValue(data.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP.POSTALSUBURB); 
+   this.SettingForm.controls['POSTALSTATE'].setValue(data.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP.POSTALSTATE); 
+
+   this.SettingForm.controls['DXNUMBER'].setValue(data.DATA.SYSTEM.ADDRESSGROUP.DXGROUP.DXNUMBER); 
+   this.SettingForm.controls['DXSUBURB'].setValue(data.DATA.SYSTEM.ADDRESSGROUP.DXGROUP.DXSUBURB); 
+
+   this.SettingForm.controls['FAX1'].setValue(data.DATA.SYSTEM.CONTACTGROUP.FAX1); 
+   this.SettingForm.controls['FAX2'].setValue(data.DATA.SYSTEM.CONTACTGROUP.FAX2); 
+   this.SettingForm.controls['PHONE1'].setValue(data.DATA.SYSTEM.CONTACTGROUP.PHONE1); 
+   this.SettingForm.controls['PHONE2'].setValue(data.DATA.SYSTEM.CONTACTGROUP.PHONE2); 
+
+   //for business
+
+   this.SettingForm.controls['ABN'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.ABN); 
+   this.SettingForm.controls['GSTTYPE'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.GSTTYPE); 
+   this.SettingForm.controls['HOURLYBASERATE'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.HOURLYBASERATE); 
+   this.SettingForm.controls['DAILYBASERATE'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.DAILYBASERATE); 
+
+   this.SettingForm.controls['UNITSPERHOUR'].setValue(data.DATA.SYSTEM.FEEEARNERS.UNITSPERHOUR); 
+   this.SettingForm.controls['DUEDATEOFFSET'].setValue(data.DATA.SYSTEM.INVOICEDEFAULTS.DUEDATEOFFSET); 
+   this.SettingForm.controls['OFFICECHEQUEFORMAT'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.OFFICECHEQUEFORMAT); 
+   this.SettingForm.controls['VENDORISLIABLEFORSETTLEMENTDATE'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.VENDORISLIABLEFORSETTLEMENTDATE); 
+   this.SettingForm.controls['RATEOVERRIDESEQUENCE'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.RATEOVERRIDESEQUENCE);
+   
+   //for defults
+   this.SettingForm.controls['DEFAULTEXPENSETYPE'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.DEFAULTEXPENSETYPE);
+   this.SettingForm.controls['DEFAULTPAIDTYPE'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.DEFAULTPAIDTYPE.toString());
+   this.SettingForm.controls['DEFAULTINCOMETYPE'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.DEFAULTINCOMETYPE);
+   this.SettingForm.controls['SHORTNAMESTRATEGY'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.SHORTNAMESTRATEGY.toString());
+   this.SettingForm.controls['REQUIRECOSTAGREEMENT'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.REQUIRECOSTAGREEMENT.toString());
+   this.SettingForm.controls['REQUIREMATTEROWNER'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.REQUIREMATTEROWNER.toString());
+   this.SettingForm.controls['REQUIREFEEEARNER'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.REQUIREFEEEARNER.toString());
+   this.SettingForm.controls['DEFAULTMATTERCLASS'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.DEFAULTMATTERCLASS.toString());
+
+   this.SettingForm.controls['SUNDRYFEEEARNER'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.SUNDRYFEEEARNER.toString());
+   this.SettingForm.controls['ALLOWMOBILEACCESS'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.ALLOWMOBILEACCESS);
+    
+   //for estimate
+   this.SettingForm.controls['ALLOWESTIMATERANGE'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.ALLOWESTIMATERANGE);
+   this.SettingForm.controls['ESTIMATEWARNINGPERCENT'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.ESTIMATEWARNINGPERCENT);
+   this.SettingForm.controls['ESTIMATENEXTTHRESHOLD'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.ESTIMATENEXTTHRESHOLD);
+   this.SettingForm.controls['ESTIMATENEXTWARNINGPERCENT'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.ESTIMATENEXTWARNINGPERCENT);
+  
+   //reginoal setting
+   this.SettingForm.controls['COUNTRY'].setValue(data.DATA.SYSTEM.REGIONALGROUP.COUNTRY);
+   this.SettingForm.controls['CURRENCYSYMBOL'].setValue(data.DATA.SYSTEM.REGIONALGROUP.CURRENCYSYMBOL);
+   this.SettingForm.controls['TAXRATE'].setValue(data.DATA.SYSTEM.REGIONALGROUP.TAXRATE);
+   this.SettingForm.controls['TAXTYPE'].setValue(data.DATA.SYSTEM.REGIONALGROUP.TAXTYPE);
+  
+   //for Template
+   this.SettingForm.controls['INVOICETEMPLATE'].setValue(data.DATA.SYSTEM.INVOICEDEFAULTS.INVOICETEMPLATE);
+   this.SettingForm.controls['RECEIPTTEMPLATE'].setValue(data.DATA.SYSTEM.INVOICEDEFAULTS.RECEIPTTEMPLATE);
+   this.SettingForm.controls['DONTGENERATERECEIPT'].setValue(data.DATA.SYSTEM.INVOICEDEFAULTS.DONTGENERATERECEIPT);
+   this.SettingForm.controls['SAVEDOCUMENTS'].setValue(data.DATA.SYSTEM.DOCUMENTGROUP.SAVEDOCUMENTS);
+   this.SettingForm.controls['DIRECTORYSAVESTRATEGY'].setValue(data.DATA.SYSTEM.DOCUMENTGROUP.DIRECTORYSAVESTRATEGY);
+   this.SettingForm.controls['SAVEDOCUMENTS'].setValue(data.DATA.SYSTEM.DOCUMENTGROUP.SAVEDOCUMENTS);
+
+  }
 
   nameFunction(){
     if( this.router.url=="/system-setting/business"){
       this.ForDataBind="Business";
+      this.clickedBtn="business";
     }else if(this.router.url=="/system-setting/name"){  
       this.ForDataBind="Name";
+      this.clickedBtn="name";
   }
     else if(this.router.url=="/system-setting/defaults"){  
       this.ForDataBind="Defaults";
+      this.clickedBtn="defaults";
     }
     else if(this.router.url=="/system-setting/estimates"){  
       this.ForDataBind="Estimates";
+      this.clickedBtn="estimate";
     }
     else if(this.router.url=="/system-setting/reginoal"){  
       this.ForDataBind="Reginoal";
+      this.clickedBtn="reginoal";
     }
     else if(this.router.url=="/system-setting/trust"){  
       this.ForDataBind="Trust";
+      this.clickedBtn="trust";
     }
     else if(this.router.url=="/system-setting/templates"){  
       this.ForDataBind="Templates";
+      this.clickedBtn="templates";
     }
+  }
+  nameClick(){
+    this.location.replaceState("/system-setting/name");
+    this.clickedBtn="name";
+    this.ForDataBind="Name";
+  }
+  businessClick(){
+    this.location.replaceState("/system-setting/business");
+    this.clickedBtn="business";
+    this.ForDataBind="Business";
+    
+  }
+  defaultsClick(){
+    this.location.replaceState("/system-setting/defaults");
+    this.clickedBtn="defaults";
+    this.ForDataBind="Defaults";
+  }
+  estimateClick(){
+    this.location.replaceState("/system-setting/estimate");
+    this.clickedBtn="estimate";
+    this.ForDataBind="Estimates";
+  }
+  reginoalClick(){
+    this.location.replaceState("/system-setting/reginoal");
+    this.clickedBtn="reginoal";
+    this.ForDataBind="Reginoal";
+  }
+  templatesClick(){
+    this.location.replaceState("/system-setting/templates");
+    this.clickedBtn="templates";
+    this.ForDataBind="Templates";
+  }
+  trustClick(){
+    this.location.replaceState("/system-setting/trust");
+    this.clickedBtn="trust";
+    this.ForDataBind="Trust";
   }
   get f() {
     //console.log(this.contactForm);
     return this.SettingForm.controls;
   }
   save(){
+    console.log(this.f.DEFAULTTRUSTRECEIPTTYPE);
     let data={
       //for name 
       BARRISTERSNAME:this.f.BARRISTERSNAME.value,
@@ -207,6 +340,12 @@ export class SystemSettingComponent implements OnInit {
       DIRECTORYSAVESTRATEGY:this.f.DIRECTORYSAVESTRATEGY.value,
     }
     console.log(data);
+     let data1={ FormAction:"insert" , Data:data}
+    this.SystemSetting.setSystemSetting(data1).subscribe(response=>{
+      console.log(response);
+      // this.getVal(response);
+      })
+
   }
 
 }

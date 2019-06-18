@@ -30,3 +30,4 @@ export * from './spendmoney.service';
 //added by web19
 export * from './getreceiptdata.service';
 export * from './template-list.service';
+export * from './system-setting.service';

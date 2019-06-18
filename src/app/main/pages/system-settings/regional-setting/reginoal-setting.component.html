@@ -3,22 +3,22 @@
 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field   appearance="outline" fxFlex="50" class="pr-4">
                 <mat-select name="COUNTRY" formControlName="COUNTRY" placeholder="Country">
-                        <mat-option value="option">static 1</mat-option>
-                        <mat-option value="option">static 2</mat-option>
+                        <mat-option *ngFor="let val of getDropDownValue.COUNTRY" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
+                     
                       </mat-select>
         </mat-form-field>
         <mat-form-field   appearance="outline" fxFlex="50" class="pr-4">
                 <mat-select name="CURRENCYSYMBOL" formControlName="CURRENCYSYMBOL" placeholder="Currency">
-                        <mat-option value="option">static 1</mat-option>
-                        <mat-option value="option">static 2</mat-option>
+                        <mat-option *ngFor="let val of getDropDownValue.CURRENCYSYMBOL" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
+                    
                       </mat-select>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                     <mat-select  name="TAXTYPE" formControlName="TAXTYPE"  placeholder="Tax Type">
-                            <mat-option value="option">static 1</mat-option>
-                            <mat-option value="option">static 2</mat-option>
+                        <mat-option *ngFor="let val of getDropDownValue.TAXYPE" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
+                        
                           </mat-select>
             </mat-form-field>
             <mat-form-field  appearance="outline" fxFlex="50" class="pr-4">

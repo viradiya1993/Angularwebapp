@@ -31,7 +31,7 @@ export class AuthoritiesComponent implements OnInit {
   getTableFilter() {
     this.TableColumnsService.getTableFilter('legal details', 'authorities').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'authoritiesColumns');
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
         this.tempColobj = data.tempColobj;

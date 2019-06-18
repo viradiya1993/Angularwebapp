@@ -57,7 +57,6 @@ export class ContactComponent implements OnInit {
     } else {
       localStorage.setItem('contact_Filter', JSON.stringify(this.filterVals));
     }
-    console.log(this.filterVals);
     this.LoadData(this.filterVals);
   }
   onPaginateChange(event) {
@@ -67,7 +66,8 @@ export class ContactComponent implements OnInit {
   getTableFilter() {
     this.TableColumnsService.getTableFilter('contacts', '').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'contactColumns');
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
+        console.log(data);
         this.tempColobj = data.tempColobj;
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;

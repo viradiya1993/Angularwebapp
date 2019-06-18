@@ -36,7 +36,7 @@ export class MatterTrustComponent implements OnInit {
   getTableFilter() {
     this.TableColumnsService.getTableFilter('time and billing', 'trust').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'MatterTrustColumns');
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
         this.tempColobj = data.tempColobj;
@@ -69,7 +69,7 @@ export class MatterTrustComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj,  'type': 'time and billing', 'list': 'trust' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'time and billing', 'list': 'trust' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click

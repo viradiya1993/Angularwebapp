@@ -33,7 +33,7 @@ export class SafecustodyComponent implements OnInit {
   getTableFilter() {
     this.TableColumnsService.getTableFilter('legal details', 'safe custody').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'safeCustodyColumns');
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
         this.tempColobj = data.tempColobj;

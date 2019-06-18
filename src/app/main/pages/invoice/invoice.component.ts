@@ -1,4 +1,4 @@
-  import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatterInvoicesService, TableColumnsService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
@@ -90,7 +90,7 @@ export class InvoiceComponent implements OnInit {
   getTableFilter() {
     this.TableColumnsService.getTableFilter('invoices', '').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'invoicesColumns');
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
         this.displayedColumns = data.showcol;
         this.tempColobj = data.tempColobj;
         this.ColumnsObj = data.colobj;

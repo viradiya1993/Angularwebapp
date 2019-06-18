@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
-import { ContactService,TemplateListDetails,TableColumnsService } from 'app/_services';
+import { ContactService, TemplateListDetails, TableColumnsService } from 'app/_services';
 import { fuseAnimations } from '@fuse/animations';
 import { MatterDialogComponent } from '../time-entries/matter-dialog/matter-dialog.component';
 import { ContactSelectDialogComponent } from '../contact/contact-select-dialog/contact-select-dialog.component';
@@ -15,7 +15,7 @@ import * as $ from 'jquery';
   animations: fuseAnimations
 })
 export class TemplateComponent implements OnInit {
-  displayedColumns: any = ['TEMPLATETYPE','TEMPLATENAME'];
+  displayedColumns: any = ['TEMPLATETYPE', 'TEMPLATENAME'];
   //displayedColumns: string[];
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
@@ -34,9 +34,7 @@ export class TemplateComponent implements OnInit {
     public TemplateListData: TemplateListDetails,
     public MatDialog: MatDialog,
     private TableColumnsService: TableColumnsService,
-  ) {
-    this.getTableFilter();
-   }
+  ) { }
 
   ngOnInit() {
     // let i=0;
@@ -46,12 +44,8 @@ export class TemplateComponent implements OnInit {
     this.TemplateListData.getTemplateList(d).subscribe(response => {
       console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
-        // response.DATA.TEMPLATES.forEach(element => { 
-        //   // this.abc=i++; 
-        // });
-        // console.log(this.abc);
         this.Templatedata = new MatTableDataSource(response.DATA.TEMPLATES);
-       
+
         this.Templatedata.paginator = this.paginator;
         if (response.DATA.TEMPLATES[0]) {
           // localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);
@@ -66,32 +60,10 @@ export class TemplateComponent implements OnInit {
     this.pageSize = localStorage.getItem('lastPageSize');
   }
 
-  getTableFilter() {
-    this.TableColumnsService.getTableFilter('template', '').subscribe(response => {
-      if (response.CODE == 200 && response.STATUS == "success") {
-        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'matterColumns');
-        console.log(data);
-        // this.displayedColumns = data.showcol;
-        // this.ColumnsObj = data.colobj;
-        // this.tempColobj = data.tempColobj;
-      }
-    }, error => {
-      this.toastr.error(error);
-    });
-  }
+
   onSearch(searchFilter: any) {
-   
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
-        console.log(searchFilter);
-      // let filterVal = { 'Active': '', 'SearchString': this.f.searchFilter.value, 'FeeEarner': '', 'UninvoicedWork': '' };
-      // if (!localStorage.getItem('matter_filter')) {
-      //   // localStorage.setItem('matter_filter', JSON.stringify(filterVal));
-      // } else {
-      //   filterVal = JSON.parse(localStorage.getItem('matter_filter'));
-      //   filterVal.SearchString = this.f.searchFilter.value;
-      //   // localStorage.setItem('matter_filter', JSON.stringify(filterVal));
-      // }
-      // this.child.getMatterList(filterVal);
+      console.log(searchFilter);
     }
   }
   editContact(Row: any) {

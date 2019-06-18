@@ -61,7 +61,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   getTableFilter() {
     this.TableColumnsService.getTableFilter('matters', '').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'matterColumns');
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
         this.tempColobj = data.tempColobj;

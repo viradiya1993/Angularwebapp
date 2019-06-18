@@ -43,14 +43,14 @@ export class ReceiptsCreditsComponent implements OnInit {
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
     this.ReceiptsCredits.ReceiptsCreditsData(potData).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
-      //  console.log(res.DATA.RECEIPTS);
-        if(res.DATA.RECEIPTS.length != 0){
-          localStorage.setItem('TBreceiptData',JSON.stringify(res.DATA.RECEIPTS[0]));
+        //  console.log(res.DATA.RECEIPTS);
+        if (res.DATA.RECEIPTS.length != 0) {
+          localStorage.setItem('TBreceiptData', JSON.stringify(res.DATA.RECEIPTS[0]));
           this.highlightedRows = res.DATA.RECEIPTS[0].INCOMEGUID;
           this.ReceiptsCreditsdata = new MatTableDataSource(res.DATA.RECEIPTS)
           this.ReceiptsCreditsdata.paginator = this.paginator
         }
-       
+
       }
       this.isLoadingResults = false;
     },
@@ -67,7 +67,7 @@ export class ReceiptsCreditsComponent implements OnInit {
   getTableFilter() {
     this.TableColumnsService.getTableFilter('time and billing', 'receipts and credits').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'MatterReceiptsColumns');
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
         this.tempColobj = data.tempColobj;
@@ -76,15 +76,15 @@ export class ReceiptsCreditsComponent implements OnInit {
       this.toastr.error(error);
     });
   }
-  selectId(row:any){
-    this.currentData=row;
-    localStorage.setItem('TBreceiptData',JSON.stringify(row));
+  selectId(row: any) {
+    this.currentData = row;
+    localStorage.setItem('TBreceiptData', JSON.stringify(row));
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj,  'type': 'time and billing', 'list': 'receipts and credits'  };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'time and billing', 'list': 'receipts and credits' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click

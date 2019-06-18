@@ -87,7 +87,7 @@ export class TimeEntriesComponent implements OnInit {
   getTableFilter() {
     this.TableColumnsService.getTableFilter('time entries', '').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'WorkItemsColumns');
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
         this.tempColobj = data.tempColobj;
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;

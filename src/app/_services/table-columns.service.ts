@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
-import { Columns } from 'app/_tableColumns/Columns';
 
 @Injectable({ providedIn: 'root' })
 export class TableColumnsService {
@@ -13,9 +12,8 @@ export class TableColumnsService {
     let Data = { "USERGUID": currentUser.UserGuid, "PAGE": table, 'LIST': List };
     return this.httpClient.post<any>(environment.APIEndpoint + 'GetTableColumns', Data);
   }
-  
-  filtertableColum(response: any, type: any) {
-    let tableData: any = Columns[type];
+
+  filtertableColum(response: any) {
     let tempCol: any = [];
     let tempColobj: any = [];
     let showCol: any = [];
@@ -24,7 +22,7 @@ export class TableColumnsService {
       return a.POSITION - b.POSITION;
     });
     finalList.forEach(itemsdata => {
-      if ((itemsdata.HIDDEN == 1 || itemsdata.HIDDEN == 0) && tableData.includes(itemsdata.COLUMNID)) {
+      if (itemsdata.HIDDEN == 1 || itemsdata.HIDDEN == 0) {
         if (!temshowCol.includes(itemsdata.COLUMNID)) {
           if (itemsdata.HIDDEN == 0 && !showCol.includes(itemsdata.COLUMNID)) {
             showCol.push(itemsdata.COLUMNID);

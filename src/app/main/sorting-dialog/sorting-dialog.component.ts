@@ -12,6 +12,7 @@ import { TableColumnsService } from '../../_services';
 export class SortingDialogComponent implements OnInit {
   checkboxdata: number = 0;
   property: any[] = [];
+  propertyNew: any[] = [];
   filterName: string;
   modelType: string;
   list: string;
@@ -27,9 +28,13 @@ export class SortingDialogComponent implements OnInit {
   ) {
     this.modelType = data.type;
     this.list = data.list;
-    this.property = data.data;
+    this.propertyNew = data.data;
+    console.log(data.data);
   }
   ngOnInit(): void {
+    this.property = this.propertyNew.sort(function (a, b) {
+      return a.HIDDEN - b.HIDDEN;
+    });
     this.updateCount();
   }
   updateCount() {

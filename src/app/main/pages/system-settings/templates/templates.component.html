@@ -3,14 +3,14 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                     <mat-select  name="INVOICETEMPLATE" formControlName="INVOICETEMPLATE"  placeholder="Invoice Template">
-                            <mat-option value="option">static 1</mat-option>
-                            <mat-option value="option">static 2</mat-option>
+                            <mat-option *ngFor="let val of getDropDownValue.INVOICETEMPLATE" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
+                         
                           </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                     <mat-select placeholder="Receipt Template" name="RECEIPTTEMPLATE" formControlName="RECEIPTTEMPLATE">
-                            <mat-option value="option">static 1</mat-option>
-                            <mat-option value="option">static 2</mat-option>
+                            <mat-option  *ngFor="let val of getDropDownValue.RECEIPTTEMPLATE" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
+                          
                           </mat-select>
             </mat-form-field>
         </div>
@@ -23,8 +23,8 @@
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                     <mat-select name="SAVEDOCUMENTS" formControlName="SAVEDOCUMENTS" placeholder="Save Document ">
-                            <mat-option value="option">static 1</mat-option>
-                            <mat-option value="option">static 2</mat-option>
+                            <mat-option *ngFor="let val of getDropDownValue.SAVEDOCUMENTS" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
+                            
                           </mat-select>
             </mat-form-field>
             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">

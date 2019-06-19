@@ -1,23 +1,22 @@
 
 <div class="one" [formGroup]="SettingForm" fxLayout="column">
-
- 
             <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                         <mat-select  name="DEFAULTEXPENSETYPE" formControlName="DEFAULTEXPENSETYPE" placeholder="Defaults Expense">
-                            <mat-option value="option">Cash</mat-option>
+                            <mat-option *ngFor="let val of getDropDownValue.DEFAULTEXPENSETYPE"  value="{{val.VALUE}}">{{val.VALUE}}</mat-option>
                             
                           </mat-select>
                     </mat-form-field>
                     <mat-form-field   appearance="outline" fxFlex="34" class="pr-4">
                         <mat-select name="DEFAULTPAIDTYPE" formControlName="DEFAULTPAIDTYPE" placeholder="Default Paid Type">
-                            <mat-option value="option">Cash</mat-option>
+                            <mat-option value="0">Paid</mat-option>
+                            <mat-option value="1">UnPaid</mat-option>
                            
                           </mat-select>
                     </mat-form-field>
                     <mat-form-field   appearance="outline" fxFlex="33" class="pr-4">
                         <mat-select name="DEFAULTINCOMETYPE" formControlName="DEFAULTINCOMETYPE" placeholder="Default Income Type">
-                            <mat-option value="option">Cash</mat-option>
+                            <mat-option *ngFor="let val of getDropDownValue.DEFAULTINCOMETYPE"  value="{{val.VALUE}}">{{val.VALUE}}</mat-option>
                             
                           </mat-select>
                     </mat-form-field>
@@ -26,7 +25,7 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field  appearance="outline" fxFlex="100" class="pr-4">
                         <mat-select name="SHORTNAMESTRATEGY" formControlName="SHORTNAMESTRATEGY"  placeholder="Matter No. Strategy">
-                            <mat-option value="option">xyz</mat-option> 
+                            <mat-option *ngFor="let val of getDropDownValue.SHORTNAMESTRATEGY" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option> 
                           </mat-select>               
                     </mat-form-field>
                 </div>
@@ -35,13 +34,16 @@
             <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                         <mat-select  name="REQUIRECOSTAGREEMENT" formControlName="REQUIRECOSTAGREEMENT" placeholder="Cost Agreement">
-                            <mat-option value="option">Not Requried</mat-option>
-                            
+                            <mat-option value="0">Not Requried</mat-option>
+                            <mat-option value="1">Recommended</mat-option>
+                            <mat-option value="2">Requried</mat-option> 
                           </mat-select>
+
                     </mat-form-field>
+                    
                     <mat-form-field   appearance="outline" fxFlex="50" class="pr-4">
-                        <mat-select name="DEFAULTMATTERCLASS" formControlName="DEFAULTMATTERCLASS" placeholder="Default Master Class">
-                            <mat-option value="option">Not Requried</mat-option>
+                        <mat-select name="DEFAULTMATTERCLASS" formControlName="DEFAULTMATTERCLASS" placeholder="Default Matter Class">
+                            <mat-option *ngFor="let val of getDropDownValue.DEFAULTMATTERCLASS" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
                            
                           </mat-select>
                     </mat-form-field>
@@ -49,19 +51,23 @@
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field   appearance="outline" fxFlex="33" class="pr-4">
                         <mat-select name="REQUIREMATTEROWNER" formControlName="REQUIREMATTEROWNER" placeholder="Matter Owner">
-                            <mat-option value="option">Not Requried</mat-option>
+                            <mat-option value="0">Not Requried</mat-option>
+                            <mat-option value="1">Recommended</mat-option>
+                            <mat-option value="2">Requried</mat-option> 
                             
                           </mat-select>
                     </mat-form-field>
                     <mat-form-field  appearance="outline" fxFlex="34" class="pr-4">
                         <mat-select name="REQUIREFEEEARNER" formControlName="REQUIREFEEEARNER" placeholder="Matter Free Earner">
-                            <mat-option value="option">Not Requried</mat-option>
+                            <mat-option value="0">Not Requried</mat-option>
+                            <mat-option value="1">Recommended</mat-option>
+                            <mat-option value="2">Requried</mat-option> 
                            
                           </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                         <mat-select  name="SUNDRYFEEEARNER" formControlName="SUNDRYFEEEARNER" placeholder="Sundry Free Earner">
-                            <mat-option value="option">Not Requried</mat-option>
+                            <mat-option *ngFor="let val of getDropDownValue.SUNDRYFEEEARNER" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
                             
                           </mat-select>
                     </mat-form-field>

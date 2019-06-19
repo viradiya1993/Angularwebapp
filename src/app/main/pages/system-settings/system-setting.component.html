@@ -59,40 +59,40 @@
                             <div class="nav material2">
                                 <!-- (click)="nameClick()"-->
                                 <div class="nav-item name" aria-label="inbox">
-                                    <a [routerLink]="'/system-setting/name'"    class="nav-link" matRipple [ngClass]="{'active accent':(router.url === '/system-setting/name')}">
+                                    <a (click)=" nameClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='name'}">
                                         <span class="title">Name</span>
                                     </a>
                                 </div>
                                 
                                 <div class="nav-item business" aria-label="frequently contacted">
-                                    <!-- <button [queryParams]="{ calander: 'business' }"></button> -->
-                                    <a [routerLink]="'/system-setting/business'" class="nav-link" matRipple [ngClass]="{'active accent':(router.url === '/system-setting/business')}">
+                                    <!-- [routerLink]="'/system-setting/business'" <button [queryParams]="{ calander: 'business' }"></button> -->
+                                    <a (click)="businessClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='business'}">
                                         <div class="title">Business</div>
                                     </a>
                                 </div>
 
                                 <div class="nav-item defaults" aria-label="starred">
-                                    <a [routerLink]="'/system-setting/defaults'" class="nav-link" matRipple [ngClass]="{'active accent':(router.url === '/system-setting/defaults')}">
+                                    <a (click)="defaultsClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='defaults'}">
                                         <div class="title">Defaults</div>
                                     </a>
                                 </div>
                                 <div class="nav-item estimate" aria-label="starred">
-                                    <a [routerLink]="'/system-setting/estimates'" class="nav-link" matRipple [ngClass]="{'active accent':(router.url === '/system-setting/estimates')}">
+                                    <a  (click)="estimateClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='estimate'}">
                                         <div class="title">Estimates</div>
                                     </a>
                                 </div>
                                 <div class="nav-item reginoal" aria-label="starred">
-                                    <a [routerLink]="'/system-setting/reginoal'" class="nav-link" matRipple [ngClass]="{'active accent':(router.url === '/system-setting/reginoal')}">
+                                    <a (click)="reginoalClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='reginoal'}">
                                         <div class="title">Reginoal</div>
                                     </a>
                                 </div>
                                 <div class="nav-item trust" aria-label="starred">
-                                    <a [routerLink]="'/system-setting/trust'" class="nav-link" matRipple [ngClass]="{'active accent':(router.url === '/system-setting/trust')}">
+                                    <a (click)="trustClick()"  class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='trust'}">
                                         <div class="title">Trust</div>
                                     </a>
                                 </div>
                                 <div class="nav-item template" aria-label="starred">
-                                    <a [routerLink]="'/system-setting/templates'" class="nav-link" matRipple [ngClass]="{'active accent':(router.url === '/system-setting/templates')}">
+                                    <a (click)="templatesClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='templates'}">
                                         <div class="title">Templates</div>
                                     </a>
                                 </div>
@@ -143,14 +143,21 @@
             <!-- CONTENT -->
             <div class="content">
                  <form name="form" [formGroup]="SettingForm">
-                <app-name [SettingForm]="SettingForm" *ngIf="(router.url ==='/system-setting/name')"></app-name>
-                <app-business [SettingForm]="SettingForm" *ngIf="(router.url ==='/system-setting/business')"></app-business>
+                <app-name [SettingForm]="SettingForm" *ngIf="clickedBtn ==='name'"></app-name>
+                <app-business [SettingForm]="SettingForm" *ngIf="clickedBtn ==='business'"></app-business>
+                <app-defaults [SettingForm]="SettingForm" *ngIf="clickedBtn ==='defaults'"></app-defaults>
+                <app-estimates-setting [SettingForm]="SettingForm" *ngIf="clickedBtn ==='estimate'"> </app-estimates-setting>
+                <app-reginoal-setting [SettingForm]="SettingForm" *ngIf="clickedBtn ==='reginoal'"></app-reginoal-setting>
+                <app-trust [SettingForm]="SettingForm" *ngIf="clickedBtn ==='trust'"></app-trust>
+                <app-templates  [SettingForm]="SettingForm" *ngIf="clickedBtn ==='templates'"></app-templates>
+                <!-- <contacts-contact-list></contacts-contact-list> 
+                 <app-name [SettingForm]="SettingForm" *ngIf="(router.url ==='/system-setting/name')"></app-name>
+                <app-business [SettingForm]="SettingForm" *ngIf="clicked ==='true'"></app-business>
                 <app-defaults [SettingForm]="SettingForm" *ngIf="(router.url ==='/system-setting/defaults')"></app-defaults>
                 <app-estimates-setting [SettingForm]="SettingForm" *ngIf="(router.url ==='/system-setting/estimates')"> </app-estimates-setting>
                 <app-reginoal-setting [SettingForm]="SettingForm" *ngIf="(router.url ==='/system-setting/reginoal')"></app-reginoal-setting>
                 <app-trust [SettingForm]="SettingForm" *ngIf="(router.url ==='/system-setting/trust')"></app-trust>
-                <app-templates  [SettingForm]="SettingForm" *ngIf="(router.url ==='/system-setting/templates')"></app-templates>
-                <!-- <contacts-contact-list></contacts-contact-list> -->
+                <app-templates  [SettingForm]="SettingForm" *ngIf="(router.url ==='/system-setting/templates')"></app-templates>-->
                 </form>
             </div>
             <!-- / CONTENT -->

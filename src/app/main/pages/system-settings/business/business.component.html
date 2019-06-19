@@ -37,10 +37,8 @@
                         </mat-form-field>
                         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                                 <mat-select name="UNITSPERHOUR" formControlName="UNITSPERHOUR" placeholder="Unit Size">
-                                        <mat-option value="option">60 min units</mat-option>
-                                        <mat-option value="option">50 min units</mat-option>
-                                        <mat-option value="option">45 min units</mat-option>
-                                        <mat-option value="option">07 min units</mat-option>
+                                        <mat-option *ngFor="let val of getDropDownValue.UNITSPERHOUR" value="val">{{val.DESCRIPTION}}</mat-option>
+                                       
                                       </mat-select>
                         </mat-form-field>
                     </div>
@@ -52,8 +50,8 @@
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                                     <mat-select name="OFFICECHEQUEFORMAT" formControlName="OFFICECHEQUEFORMAT" placeholder="Office Cheque Formate">
-                                            <mat-option value="option">static 1</mat-option>
-                                            <mat-option value="option">static 2</mat-option>
+                                            <mat-option *ngFor="let val of getDropDownValue.OFFICECHEQUEFORMAT" value="val">{{val.DESCRIPTION}}</mat-option>
+                                          
                                           </mat-select>
                             </mat-form-field>
                         </div>

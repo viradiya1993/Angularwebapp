@@ -99,11 +99,6 @@
     margin-left: 23px;
 }
 
-
-
-
-
-
 // @import "src/@fuse/scss/fuse";
 
 // #mail {
@@ -246,8 +241,14 @@
 }
 
 .main_btn{
-    margin-left: 23px !important;
+    margin-left: 699px !important;
+    margin-top: 26px !important;
 }
 .btn_2{
     margin-left: 12px !important;
+}
+
+.page-layout.simple.inner-sidebar > .header.business_head_tab {
+    min-height: 70px;
+    max-height: 70px;
 }

@@ -36,6 +36,7 @@ export class MatterDialogComponentForTemplate implements OnInit {
     private toastr: ToastrService,
     private Timersservice: TimersService,
     private TemplateListDetails: TemplateListDetails,
+    public dialogRef: MatDialogRef<MatterDialogComponentForTemplate>,
     // private data:TemplateComponent
   ) {
 
@@ -134,10 +135,12 @@ export class MatterDialogComponentForTemplate implements OnInit {
     this.TemplateListDetails.getGenerateTemplate(passingData).subscribe(response => {
       console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
-
+        this.toastr.success('Template Generate successfully');
+        this.dialogRef.close(true);
       }
     }, error => {
       this.toastr.error(error);
+      this.dialogRef.close(true);
     });
   }
   // New matter Pop-up

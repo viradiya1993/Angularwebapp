@@ -124,6 +124,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     });
     this.isLoadingResults = true;
     this.MattersService.getMatters({ "Active": "active" }).subscribe(res => {
+      console.log(res);
       if (res.CODE == 200 && res.STATUS == "success") {
         res.DATA.MATTERS.forEach(itemsdata => {
           if (this.currentTimeMatter == itemsdata.MATTERGUID) {
@@ -169,12 +170,21 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   setTimeEntryData() {
     this.isLoadingResults = true;
     this.Timersservice.getTimeEnrtyData({ 'WorkItemGuid': localStorage.getItem('edit_WORKITEMGUID') }).subscribe(response => {
+     console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
+ 
+        // added by web19 19/06 
+        this.matterChange('MatterGuid', response.DATA.WORKITEMS[0].MATTERGUID);
+        this.matterChange('QuantityType', response.DATA.WORKITEMS[0].QUANTITYTYPE);
+        this.timeEntryForm.controls['matterautoVal'].setValue(response.DATA.WORKITEMS[0].SHORTNAME);
+        ////
+        
         localStorage.setItem('edit_WORKITEMGUID', response.DATA.WORKITEMS[0].WORKITEMGUID);
         let timeEntryData = response.DATA.WORKITEMS[0];
         this.matterList.forEach(itemsdata => {
           if (response.DATA.WORKITEMS[0].MATTERGUID == itemsdata.MATTERGUID) {
-            this.timeEntryForm.controls['matterautoVal'].setValue(itemsdata.SHORTNAME + ' : ' + itemsdata.MATTER);
+            // this.timeEntryForm.controls['matterautoVal'].setValue(itemsdata.SHORTNAME + ' : ' + itemsdata.MATTER);
+           
           }
         });
         this.itemTypeChange(timeEntryData.ITEMTYPE);
@@ -211,11 +221,14 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   }
   matterChange(key: any, event: any) {
     if (key == "MatterGuid") {
+      
       this.timeEntryForm.controls['MATTERGUID'].setValue(event);
       this.calculateData.MatterGuid = event;
     } else if (key == "FeeEarner") {
+    
       this.calculateData.FeeEarner = event;
     } else if (key == "QuantityType") {
+    
       switch (event) {
         case 'hh:mm': {
           this.calculateData.QuantityType = 'X';
@@ -252,6 +265,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     if (this.calculateData.MatterGuid != '' && this.calculateData.Quantity != '' && (this.calculateData.QuantityType != '' || this.calculateData.FeeType != '')) {
       this.isLoadingResults = true;
       this.Timersservice.calculateWorkItems(this.calculateData).subscribe(response => {
+        console.log(response);
         if (response.CODE == 200 && response.STATUS == "success") {
           let CalcWorkItemCharge = response.DATA;
           this.timeEntryForm.controls['PRICE'].setValue(CalcWorkItemCharge.PRICE);

@@ -56,6 +56,7 @@ export class ReceiptDilogComponent implements OnInit {
   highlightedRows: any;
   currentInvoiceData: any;
   lastFilter: any;
+  invoiceGuidArray:any=[];
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
 
@@ -183,6 +184,10 @@ export class ReceiptDilogComponent implements OnInit {
     }
   }
   SaveReceipt() {
+    console.log( this.PrepareReceiptData);
+    this.PrepareReceiptData.forEach(element => {
+      this.invoiceGuidArray.push(element.INVOICEGUID)
+    });
     if (this._data.action == 'add' || this._data.action == "addForTB") {
       this.formaction = 'insert';
     } else {
@@ -190,26 +195,33 @@ export class ReceiptDilogComponent implements OnInit {
     }
     this.receiptData = JSON.parse(localStorage.getItem('receiptData'));
     let data = {
-      AMOUNT: this.f.Amount.value,
-      BANKACCOUNTGUID: this.receiptData.BANKACCOUNTGUID,
-      FIRMGUID: this.receiptData.FIRMGUID,
-      //  FOREIGNCURRENCYAMOUNT: this.receiptData.FOREIGNCURRENCYAMOUNT,
-      //  FOREIGNCURRENCYGST: this.receiptData.FOREIGNCURRENCYGST,
-      //  FOREIGNCURRENCYID: this.receiptData.FOREIGNCURRENCYID,
-      //  FOREIGNCURRENCYRATE: this.receiptData.FOREIGNCURRENCYRATE,
-      GST: this.f.RECEIPTGST.value,
-      INCOMEACCOUNTGUID: this.receiptData.INCOMEACCOUNTGUID,
-      //  INCOMEACCOUNTGUID_COPY: this.receiptData.INCOMEACCOUNTGUID_COPY,
-      INCOMECLASS: this.receiptData.INCOMECLASS,
-      INCOMECODE: this.f.RECEIPTCODE.value,
-      INCOMEDATE: this.f.INCOMEDATE.value,
-      INCOMEGUID: this.receiptData.INCOMEGUID,
-      //  INCOMEREVERSALGUID: this.receiptData.INCOMEREVERSALGUID,
-      INCOMETYPE: this.f.INCOMETYPE.value,
-      NOTE: this.f.Note.value,
-      PAYEE: this.f.Payor.value,
-      ALLOCATIONS: '',
+      DATA:{
+        AMOUNT: this.f.Amount.value,
+        BANKACCOUNTGUID: this.receiptData.BANKACCOUNTGUID,
+        FIRMGUID: this.receiptData.FIRMGUID,
+        //  FOREIGNCURRENCYAMOUNT: this.receiptData.FOREIGNCURRENCYAMOUNT,
+        //  FOREIGNCURRENCYGST: this.receiptData.FOREIGNCURRENCYGST,
+        //  FOREIGNCURRENCYID: this.receiptData.FOREIGNCURRENCYID,
+        //  FOREIGNCURRENCYRATE: this.receiptData.FOREIGNCURRENCYRATE,
+        GST: this.f.RECEIPTGST.value,
+        INCOMEACCOUNTGUID: this.receiptData.INCOMEACCOUNTGUID,
+        //  INCOMEACCOUNTGUID_COPY: this.receiptData.INCOMEACCOUNTGUID_COPY,
+        INCOMECLASS: this.receiptData.INCOMECLASS,
+        INCOMECODE: this.f.RECEIPTCODE.value,
+        INCOMEDATE: this.f.INCOMEDATE.value,
+        INCOMEGUID: this.receiptData.INCOMEGUID,
+        //  INCOMEREVERSALGUID: this.receiptData.INCOMEREVERSALGUID,
+        INCOMETYPE: this.f.INCOMETYPE.value,
+        NOTE: this.f.Note.value,
+        PAYEE: this.f.Payor.value,
+        ALLOCATIONS:{
+          INVOICEGUID: this.invoiceGuidArray,
+          AMOUNTAPPLIED: 200
+        }
+      }
+     
     }
+    console.log(data);
     let matterPostData: any = { FormAction: 'insert', VALIDATEONLY: true, Data: data };
     this.GetReceptData.setReceipt(matterPostData).subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
@@ -256,12 +268,12 @@ export class ReceiptDilogComponent implements OnInit {
   }
   SaveReceiptAfterVAlidation(data: any) {
     data.VALIDATEONLY = false;
-    this.GetReceptData.getRecept(data).subscribe(response => {
+    this.GetReceptData.setReceipt(data).subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         if (this._data.action !== 'edit') {
-          this.toastr.success('Contact save successfully');
+          this.toastr.success('Receipt save successfully');
         } else {
-          this.toastr.success('Contact update successfully');
+          this.toastr.success('Receipt update successfully');
         }
         this.isspiner = false;
         this.dialogRef.close(true);

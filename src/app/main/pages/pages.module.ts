@@ -12,6 +12,7 @@ import { InvoiceModule } from './invoice/invoice.module';
 import { SpendMoneyModule } from './spend-money/spend-money.module';
 import { ReceiveMoneyModule } from './receive-money/receive-money.module';
 import { TemplateModule } from './template/template.module';
+import { SystemSettingTemplateModule } from './system-settings/templates/templates.module';
 // import { NumericDirective } from './time-entries/time-entry-dialog/numericValidation.component';
 
 
@@ -47,6 +48,7 @@ const appRoutes: Routes = [
     SpendMoneyModule,
     ReceiveMoneyModule,
     TemplateModule,
+    SystemSettingTemplateModule
     
   ]
 })

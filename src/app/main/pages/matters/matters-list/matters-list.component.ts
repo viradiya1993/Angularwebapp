@@ -75,6 +75,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
 
   editmatter(matters) {
     this.matterDetail.emit(matters);
+    console.log(matters);
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();

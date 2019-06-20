@@ -21,6 +21,7 @@ import { EstimatesSettingComponent } from './estimates-setting/estimates-setting
 import { ReginoalSettingComponent } from './regional-setting/reginoal-setting.component';
 import { TrustComponent } from './trust/trust.component';
 import { TemplatesComponent } from './templates/templates.component';
+import { GenerateTemplatesDialoagComponent } from './templates/gennerate-template-dialoag/generate-template.component';
 
 const routes = [
   { path: 'system-setting/name', component: SystemSettingComponent, canActivate: [AuthGuard] },
@@ -35,6 +36,7 @@ const routes = [
 @NgModule({  
   declarations: [
     SystemSettingComponent,
+    GenerateTemplatesDialoagComponent,
     NameComponent,
     SettingSidebarComponent,
     BusinessComponent,
@@ -46,7 +48,8 @@ const routes = [
    // SpendMoneyAddComponent,    
   ],
   entryComponents: [
-    SystemSettingComponent
+    SystemSettingComponent,
+    GenerateTemplatesDialoagComponent
    // SpendMoneyAddComponent,
   ],
   imports: [
@@ -88,7 +91,8 @@ const routes = [
     
   ],
   exports: [
-    SystemSettingComponent
+    SystemSettingComponent,
+    GenerateTemplatesDialoagComponent
   ]
 })
 export class SystemSettingModule { }

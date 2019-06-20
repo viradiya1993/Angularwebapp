@@ -7,7 +7,8 @@ import { ContactSelectDialogComponent } from '../../contact/contact-select-dialo
 import { MatterDialogComponent } from '../../time-entries/matter-dialog/matter-dialog.component';
 import * as $ from 'jquery';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-
+import { SpendmoneyService, TableColumnsService } from 'app/_services';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-spend-money-add',
   templateUrl: './spend-money-add.component.html',
@@ -35,7 +36,9 @@ export class SpendMoneyAddComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<SpendMoneyAddComponent>,
      @Inject(MAT_DIALOG_DATA) public _data: any, 
      private _formBuilder: FormBuilder, 
+     private SpendmoneyService: SpendmoneyService,
      public MatDialog: MatDialog,
+     private toastr: ToastrService,
      public _matDialog: MatDialog,) { 
     this.action = _data.action;
     this.dialogTitle = this.action === 'edit' ? 'Update Spend Money' : 'Add Spend Money';
@@ -207,6 +210,28 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['AmountIncGST'].enable();
       this.spendmoneyForm.controls['Note'].enable();
     }
+    //call api   
+    this.CallClassChangeApi(Classvalue);
+
+
+  }
+  CallClassChangeApi(Classvalue){
+    let potData = { 'EXPENDITURECLASS':Classvalue };
+    this.isLoadingResults = true;
+    this.SpendmoneyService.SpendmoneyListData(potData).subscribe(response => {
+      console.log(response);
+      if (response.CODE == 200 && response.STATUS == "success") {
+      
+      
+        if (response.DATA.EXPENDITURES[0]) {
+       
+        }
+      
+      } 
+      this.isLoadingResults = false;
+    }, error => {
+      this.toastr.error(error);
+    });
   }
   ContactMatter() {
     const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true });

@@ -6,6 +6,7 @@ app-name {
     padding: 0;
     border-right: 1px solid;
     overflow-y: auto;
+    overflow: hidden;
     -webkit-overflow-scrolling: touch;
 
     .no-messages-text {
@@ -34,6 +35,9 @@ app-name {
 // }
 h2.ng-tns-c26-8 {
     margin-top: 1px !important;
+}
+.check_1{
+    margin-bottom: 15px;
 }
 // .mat-form-field-outline.ng-tns-c14-573.ng-star-inserted {
   

@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SystemSetting } from './../../../_services';
 import {Location} from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-system-setting',
@@ -22,7 +23,7 @@ export class SystemSettingComponent implements OnInit {
   clicked: any;
   clickedBtn: string;
 
-  constructor(private location: Location,public router: Router,  private route: ActivatedRoute,private SystemSetting:SystemSetting,  private _formBuilder: FormBuilder,) { 
+  constructor(private toastr: ToastrService,private location: Location,public router: Router,  private route: ActivatedRoute,private SystemSetting:SystemSetting,  private _formBuilder: FormBuilder,) { 
     // this.nameFunction();
     this.nameFunction();
   }
@@ -34,7 +35,7 @@ export class SystemSettingComponent implements OnInit {
     
     // this.router.navigate(['time-billing/work-in-progress/invoice']);
     this.SettingForm=this._formBuilder.group({
-      
+      SAMECOPYADDRESS:[''],
       // for name
       BARRISTERSNAME:[''],
       ADDRESS1:[''],
@@ -108,6 +109,10 @@ export class SystemSettingComponent implements OnInit {
       DONTGENERATERECEIPT:[''],
       SAVEDOCUMENTS:[''],
       DIRECTORYSAVESTRATEGY:[''],
+      DOCUMENTSAVESTRATEGY:[''],
+      DIRECTORYSAVESTATEGY:[''],
+      DEFAULTSUBFOLDERS:[''],
+      TRACKDOCUMENTS:['']
      
     })
     this.SystemSetting.getSystemSetting({}).subscribe(response=>{
@@ -126,10 +131,14 @@ export class SystemSettingComponent implements OnInit {
    this.SettingForm.controls['TRUSTCHEQUEFORMAT'].setValue(data.DATA.SYSTEM.TRUSTGROUP.TRUSTCHEQUEFORMAT.toString()); 
    this.SettingForm.controls['TRUSTRECEIPTCOPIES'].setValue(data.DATA.SYSTEM.TRUSTGROUP.TRUSTRECEIPTCOPIES.toString()); 
    this.SettingForm.controls['TRUSTSTATE'].setValue(data.DATA.SYSTEM.TRUSTGROUP.TRUSTSTATE); 
+   this.SettingForm.controls['FIRSTTRUSTMONTH'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.FIRSTTRUSTMONTH.toString()); 
    
    //for name 
+   let name = JSON.parse(localStorage.getItem('currentUser'));
+   name.UserName=data.DATA.SYSTEM.BARRISTERSNAME;
+   console.log(name);
    this.SettingForm.controls['BARRISTERSNAME'].setValue(data.DATA.SYSTEM.BARRISTERSNAME); 
-
+   
    this.SettingForm.controls['ADDRESS1'].setValue(data.DATA.SYSTEM.ADDRESSGROUP.STREETADDRESSGROUP.ADDRESS1); 
    this.SettingForm.controls['POSTCODE'].setValue(data.DATA.SYSTEM.ADDRESSGROUP.STREETADDRESSGROUP.POSTCODE); 
    this.SettingForm.controls['SUBURB'].setValue(data.DATA.SYSTEM.ADDRESSGROUP.STREETADDRESSGROUP.SUBURB); 
@@ -151,15 +160,15 @@ export class SystemSettingComponent implements OnInit {
    //for business
 
    this.SettingForm.controls['ABN'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.ABN); 
-   this.SettingForm.controls['GSTTYPE'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.GSTTYPE); 
+   this.SettingForm.controls['GSTTYPE'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.GSTTYPE.toString()); 
    this.SettingForm.controls['HOURLYBASERATE'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.HOURLYBASERATE); 
    this.SettingForm.controls['DAILYBASERATE'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.DAILYBASERATE); 
 
-   this.SettingForm.controls['UNITSPERHOUR'].setValue(data.DATA.SYSTEM.FEEEARNERS.UNITSPERHOUR); 
+   this.SettingForm.controls['UNITSPERHOUR'].setValue(data.DATA.SYSTEM.FEEEARNERS.UNITSPERHOUR.toString()); 
    this.SettingForm.controls['DUEDATEOFFSET'].setValue(data.DATA.SYSTEM.INVOICEDEFAULTS.DUEDATEOFFSET); 
-   this.SettingForm.controls['OFFICECHEQUEFORMAT'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.OFFICECHEQUEFORMAT); 
+   this.SettingForm.controls['OFFICECHEQUEFORMAT'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.OFFICECHEQUEFORMAT.toString()); 
    this.SettingForm.controls['VENDORISLIABLEFORSETTLEMENTDATE'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.VENDORISLIABLEFORSETTLEMENTDATE); 
-   this.SettingForm.controls['RATEOVERRIDESEQUENCE'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.RATEOVERRIDESEQUENCE);
+   this.SettingForm.controls['RATEOVERRIDESEQUENCE'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.RATEOVERRIDESEQUENCE.toString());
    
    //for defults
    this.SettingForm.controls['DEFAULTEXPENSETYPE'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.DEFAULTEXPENSETYPE);
@@ -173,6 +182,8 @@ export class SystemSettingComponent implements OnInit {
 
    this.SettingForm.controls['SUNDRYFEEEARNER'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.SUNDRYFEEEARNER.toString());
    this.SettingForm.controls['ALLOWMOBILEACCESS'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.ALLOWMOBILEACCESS);
+   this.SettingForm.controls['SHOWCONFLICTCHECKFORNEWMATTER'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.SHOWCONFLICTCHECKFORNEWMATTER);
+   this.SettingForm.controls['DONTALLOWTRUSTOVERDRAWS'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.DONTALLOWTRUSTOVERDRAWS);
     
    //for estimate
    this.SettingForm.controls['ALLOWESTIMATERANGE'].setValue(data.DATA.SYSTEM.BUSINESSGROUP.ALLOWESTIMATERANGE);
@@ -190,9 +201,11 @@ export class SystemSettingComponent implements OnInit {
    this.SettingForm.controls['INVOICETEMPLATE'].setValue(data.DATA.SYSTEM.INVOICEDEFAULTS.INVOICETEMPLATE);
    this.SettingForm.controls['RECEIPTTEMPLATE'].setValue(data.DATA.SYSTEM.INVOICEDEFAULTS.RECEIPTTEMPLATE);
    this.SettingForm.controls['DONTGENERATERECEIPT'].setValue(data.DATA.SYSTEM.INVOICEDEFAULTS.DONTGENERATERECEIPT);
-   this.SettingForm.controls['SAVEDOCUMENTS'].setValue(data.DATA.SYSTEM.DOCUMENTGROUP.SAVEDOCUMENTS);
-   this.SettingForm.controls['DIRECTORYSAVESTRATEGY'].setValue(data.DATA.SYSTEM.DOCUMENTGROUP.DIRECTORYSAVESTRATEGY);
-   this.SettingForm.controls['SAVEDOCUMENTS'].setValue(data.DATA.SYSTEM.DOCUMENTGROUP.SAVEDOCUMENTS);
+   this.SettingForm.controls['DEFAULTSUBFOLDERS'].setValue(data.DATA.SYSTEM.DOCUMENTGROUP.DEFAULTSUBFOLDERS);
+   this.SettingForm.controls['DIRECTORYSAVESTRATEGY'].setValue(data.DATA.SYSTEM.DOCUMENTGROUP.DIRECTORYSAVESTRATEGY.toString());
+   this.SettingForm.controls['SAVEDOCUMENTS'].setValue(data.DATA.SYSTEM.DOCUMENTGROUP.SAVEDOCUMENTS.toString());
+   this.SettingForm.controls['DOCUMENTSAVESTRATEGY'].setValue(data.DATA.SYSTEM.DOCUMENTGROUP.DOCUMENTSAVESTRATEGY.toString());
+   this.SettingForm.controls['TRACKDOCUMENTS'].setValue(data.DATA.SYSTEM.DOCUMENTGROUP.TRACKDOCUMENTS);
 
   }
 
@@ -242,7 +255,7 @@ export class SystemSettingComponent implements OnInit {
     this.ForDataBind="Defaults";
   }
   estimateClick(){
-    this.location.replaceState("/system-setting/estimate");
+    this.location.replaceState("/system-setting/estimates");
     this.clickedBtn="estimate";
     this.ForDataBind="Estimates";
   }
@@ -338,13 +351,23 @@ export class SystemSettingComponent implements OnInit {
       DONTGENERATERECEIPT:this.f.DONTGENERATERECEIPT.value,
       SAVEDOCUMENTS:this.f.SAVEDOCUMENTS.value,
       DIRECTORYSAVESTRATEGY:this.f.DIRECTORYSAVESTRATEGY.value,
+      DOCUMENTSAVESTRATEGY:this.f.DOCUMENTSAVESTRATEGY.value,
+      TRACKDOCUMENTS:this.f.TRACKDOCUMENTS.value,
+      DEFAULTSUBFOLDERS:this.f.DEFAULTSUBFOLDERS.value,
+      // DIRECTORYSAVESTATEGY:this.f.DIRECTORYSAVESTRATEGY.value,
     }
     console.log(data);
      let data1={ FormAction:"insert" , Data:data}
     this.SystemSetting.setSystemSetting(data1).subscribe(response=>{
       console.log(response);
+if(response.CODE == 200){
+  this.toastr.success('Data Update successfully');
+}
       // this.getVal(response);
-      })
+      
+      }),error => {
+        this.toastr.error(error);
+      };
 
   }
 

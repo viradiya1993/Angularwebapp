@@ -1,5 +1,4 @@
 <div [formGroup]="SettingForm" class="one" fxLayout="column">
-    <h2>Name</h2>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
             <mat-form-field class="a" appearance="outline" fxFlex="100" class="pr-4">
                 <mat-label>Name</mat-label>
@@ -29,6 +28,13 @@
                         <input name="POSTCODE" formControlName="POSTCODE"  matInput>
                     </mat-form-field>
                 </div>
+
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        
+                        <mat-checkbox class="check_1" name="SAMECOPYADDRESS" formControlName="SAMECOPYADDRESS" (change)="triggerSomeEvent(SettingForm)" >Copy From Street Address  
+                        </mat-checkbox>
+                </div>
+
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                         <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
                             <mat-label>Postal</mat-label>

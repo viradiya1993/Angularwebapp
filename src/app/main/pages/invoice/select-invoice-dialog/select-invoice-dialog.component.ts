@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.component';
 import { InvoiceAddDailogComponent } from '../invoice-add-dailog/invoice-add-dailog.component';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 // import { TemplateComponent } from '../template.component';
 
 @Component({
@@ -17,6 +18,8 @@ import { InvoiceAddDailogComponent } from '../invoice-add-dailog/invoice-add-dai
 })
 export class InvoiceDialogComponentForTemplate implements OnInit {
   message: string;
+  isspiner: boolean = false;
+  confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   displayedColumns: string[] = ['INVOICECODE', 'CLIENTNAME', 'INVOICETOTAL'];
   getDataForTable: any = [];
   highlightedRows: any;
@@ -40,6 +43,8 @@ export class InvoiceDialogComponentForTemplate implements OnInit {
     private TemplateListDetails: TemplateListDetails,
     private _MatterInvoicesService: MatterInvoicesService,
     public _matDialog: MatDialog,
+    public dialogRef: MatDialogRef<InvoiceDialogComponentForTemplate>,
+   
 
     // private data:TemplateComponent
   ) {
@@ -92,18 +97,77 @@ export class InvoiceDialogComponentForTemplate implements OnInit {
       'Context': "Invoice",
       'ContextGuid': this.currentInvoiceData.INVOICEGUID,
       "Type": "Template",
-      "Folder": 'abc',
+      "Folder": '',
       "Template": data.TEMPLATENAME
     }
     this.TemplateListDetails.getGenerateTemplate(passingData).subscribe(response => {
       console.log(response);
-      if (response.CODE == 200 && response.STATUS == "success") {
-
+      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        this.toastr.success('Template Generate successfully');
+        this.dialogRef.close(true);
+      //   this.checkValidation(response.DATA.VALIDATIONS, passingData);
+      // } else if (response.CODE == 451 && response.STATUS == "warning") {
+      //   this.checkValidation(response.DATA.VALIDATIONS, passingData);
+      // } else if (response.CODE == 450 && response.STATUS == "error") {
+      //   this.checkValidation(response.DATA.VALIDATIONS, passingData);
+      // } else if (response.MESSAGE == "Not logged in") {
+      //   this.dialogRef.close(false);
+      // } else {
+      //   this.isspiner = false;
       }
     }, error => {
       this.toastr.error(error);
+      this.dialogRef.close(true);
     });
   }
+
+  // checkValidation(bodyData: any, details: any) {
+  //   let errorData: any = [];
+  //   let warningData: any = [];
+  //   bodyData.forEach(function (value) {
+  //     if (value.VALUEVALID == 'NO')
+  //       errorData.push(value.ERRORDESCRIPTION);
+  //     else if (value.VALUEVALID == 'WARNING')
+  //       warningData.push(value.ERRORDESCRIPTION);
+  //   });
+  //   if (Object.keys(errorData).length != 0)
+  //     this.toastr.error(errorData);
+  //   if (Object.keys(warningData).length != 0) {
+  //     this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+  //       disableClose: true,
+  //       width: '100%',
+  //       data: warningData
+  //     });
+  //     this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Save?';
+  //     this.confirmDialogRef.afterClosed().subscribe(result => {
+  //       if (result) {
+  //         this.isspiner = true;
+  //         this.saveTemplatetData(details);
+  //       }
+  //       this.confirmDialogRef = null;
+  //     });
+  //   }
+  //   if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+  //     this.saveTemplatetData(details);
+  //   this.isspiner = false;
+  // }
+  // saveTemplatetData(data: any) {
+  //   data.VALIDATEONLY = false;
+  //   this.TemplateListDetails.getGenerateTemplate(data).subscribe(response => {
+  //     if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+  //       this.toastr.success('Template Generate successfully');
+  //       this.isspiner = false;
+  //       this.dialogRef.close(true);
+  //     } else if (response.MESSAGE == "Not logged in") {
+  //       this.dialogRef.close(false);
+  //     } else {
+  //       this.isspiner = false;
+  //     }
+  //   }, error => {
+  //     this.toastr.error(error);
+  //   });
+   
+  // }
   // getMatterList() {
   //   this.getList(JSON.parse(localStorage.getItem('matter_invoice_filter')));
   //   this.pageSize = localStorage.getItem('lastPageSize');

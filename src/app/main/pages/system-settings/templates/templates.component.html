@@ -6,13 +6,22 @@
                             <mat-option *ngFor="let val of getDropDownValue.INVOICETEMPLATE" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
                          
                           </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                    <mat-select placeholder="Receipt Template" name="RECEIPTTEMPLATE" formControlName="RECEIPTTEMPLATE">
-                            <mat-option  *ngFor="let val of getDropDownValue.RECEIPTTEMPLATE" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
                           
-                          </mat-select>
             </mat-form-field>
+            <mat-icon matSuffix (click)='SelectDocument()' >
+                        <img src="assets/icons/web_app/icon_letters_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                    </mat-icon>
+            <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-select  placeholder="Receipt Template" name="RECEIPTTEMPLATE" formControlName="RECEIPTTEMPLATE">
+                             
+                        <mat-option  *ngFor="let val of getDropDownValue.RECEIPTTEMPLATE" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
+                        <mat-option  value="{{abc}}">{{abc}}</mat-option> 
+                          </mat-select>
+                        
+            </mat-form-field>
+            <mat-icon matSuffix (click)='SelectReceiptDocument()' >
+                        <img src="assets/icons/web_app/icon_letters_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                    </mat-icon>
         </div>
         <div fxLayout="row" class="check" fxLayoutAlign="start center" fxFlex="1 0 auto">
             
@@ -29,28 +38,26 @@
             </mat-form-field>
             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                     <mat-select name="DIRECTORYSAVESTRATEGY" formControlName="DIRECTORYSAVESTRATEGY" placeholder="Folder Naming strategy">
-                            <mat-option value="option">static 1</mat-option>
-                            <mat-option value="option">static 2</mat-option>
+                            <mat-option *ngFor="let val of getDropDownValue.DIRECTORYSAVESTATEGY" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>   
                           </mat-select>
             </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                                <mat-label>Sub Folders</mat-label>
+                        <textarea  name="DEFAULTSUBFOLDERS" formControlName="DEFAULTSUBFOLDERS" matInput  placeholder="Sub Folders "></textarea>
+                      </mat-form-field>
+            
             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                    <mat-select placeholder="Sub Folders ">
-                            <mat-option value="option">static 1</mat-option>
-                            <mat-option value="option">static 2</mat-option>
-                          </mat-select>
-            </mat-form-field>
-            <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                    <mat-select placeholder="File naming strategy">
-                            <mat-option value="option">static 1</mat-option>
-                            <mat-option value="option">static 2</mat-option>
+                    <mat-select  name="DOCUMENTSAVESTRATEGY" formControlName="DOCUMENTSAVESTRATEGY" placeholder="File naming strategy">
+        <mat-option *ngFor="let val of getDropDownValue.DOCUMENTSAVESTRATEGY" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
+        
                           </mat-select>
             </mat-form-field>
         </div>
         <div fxLayout="row"  fxLayoutAlign="start center" fxFlex="1 0 auto">
           
-                <mat-checkbox class="check_1" name="KNOWNBYOTHERNAME">Record in Document Register
+                <mat-checkbox class="check_1" name="TRACKDOCUMENTS" formControlName="TRACKDOCUMENTS">Record in Document Register
                 </mat-checkbox>
           
         </div>

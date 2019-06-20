@@ -47,6 +47,7 @@ export class WorkInProgressComponent implements OnInit {
     this.isLoadingResults = true;
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
     this.WorkInProgress.WorkInProgressData(potData).subscribe(res => {
+      console.log(res);
       if (res.CODE == 200 && res.STATUS == "success") {
         this.WorkInProgressdata = new MatTableDataSource(res.DATA.WORKITEMS);
         this.WorkInProgressdata.paginator = this.paginator;

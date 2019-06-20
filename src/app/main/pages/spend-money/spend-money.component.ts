@@ -36,54 +36,59 @@ export class SpendMoneyComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private dialog: MatDialog,
   ) {
-
+    this.getTableFilter();
   }
   ngOnInit() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
-    this.getTableFilter();
+   
     this.loadData();
   }
   DateRange(a, s) {
 
   }
   getTableFilter() {
-    // this.TableColumnsService.getTableFilter('spend money', '').subscribe(response => {
-    //   console.log(response);
-    //   if (response.CODE === 200 && response.STATUS == "success") {
-    //     let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS, 'invoicesColumns');
-    //     this.displayedColumns = data.showcol;
-    //     this.tempColobj = data.tempColobj;
-    //     this.ColumnsObj = data.colobj;
-    //   }
-    // }, error => {
-    //   this.toastr.error(error);
-    // });
+    this.TableColumnsService.getTableFilter('spend money', '').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
+        this.displayedColumns = data.showcol;
+        this.ColumnsObj = data.colobj;
+        this.tempColobj = data.tempColobj;
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
   }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
   }
   loadData() {
-    console.log(this.currentMatter);
-    // this.isLoadingResults = true;
-    // let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
-    this.SpendmoneyService.SpendmoneyListData('').subscribe(response => {
+    
+   
+    let potData = { 'ITEMSTARTDATE': new Date() };
+    this.isLoadingResults = true;
+    this.SpendmoneyService.SpendmoneyListData(potData).subscribe(response => {
       console.log(response);
-      // if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
-      //   if (response.DATA.INVOICES[0]) {
-      //     this.highlightedRows = response.DATA.INVOICES[0].INVOICEGUID;
-      //     this.currentMatterData = response.DATA.INVOICES[0];
-      //   }
-      //   this.Spendmoneydata = new MatTableDataSource(response.DATA.INVOICES)
-      //   this.Spendmoneydata.paginator = this.paginator;
-      // } 
-      // this.isLoadingResults = false;
+      if (response.CODE == 200 && response.STATUS == "success") {
+        console.log("called");
+        this.Spendmoneydata = new MatTableDataSource(response.DATA.EXPENDITURES)
+        this.Spendmoneydata.paginator = this.paginator;
+        if (response.DATA.EXPENDITURES[0]) {
+          this.highlightedRows = response.DATA.EXPENDITURES[0].EXPENDITUREGUID;
+          this.currentMatterData = response.DATA.EXPENDITURES[0].EXPENDITUREGUID;
+        }
+      
+      } 
+      this.isLoadingResults = false;
     }, error => {
       this.toastr.error(error);
     });
     this.pageSize = localStorage.getItem('lastPageSize');
   }
-  selectMatterId(Row: any) {
+
+  
+
+  editmatter(Row: any) {
     this.currentMatterData = Row;
   }
   openDialog() {

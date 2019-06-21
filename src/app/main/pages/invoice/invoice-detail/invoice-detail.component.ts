@@ -133,7 +133,6 @@ export class InvoiceDetailComponent implements OnInit {
       "INVOICEGUID": this.f.INVOICEGUID.value,
       "COMMENT": this.f.COMMENT.value,
       "DUEDATE": this.f.DUEDATE.value,
-      "INVOICEDATE": this.f.DUEDATE.value,
     }
     let PostInvoiceEntryData: any = { FormAction: 'update', VALIDATEONLY: true, Data: PostData };
     this.matterInvoicesService.SetInvoiceData(PostInvoiceEntryData).subscribe(res => {

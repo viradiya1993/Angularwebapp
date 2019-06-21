@@ -15,7 +15,7 @@ export class TemplatesComponent implements OnInit {
   @Input() SettingForm: FormGroup;
  
   getTemplateArray:any=[];
-
+  options: string[] = ['One', 'Two', 'Three'];
   getDropDownValue:any=[];
   abc: any;
   a: string;
@@ -41,7 +41,7 @@ export class TemplatesComponent implements OnInit {
   });
   dialogRef.afterClosed().subscribe(result => {
     console.log(result);
-    // this.SettingForm.controls['INVOICETEMPLATE'].setValue(result);  
+  this.SettingForm.controls['INVOICETEMPLATE'].setValue(result);  
       
   });
   }
@@ -54,8 +54,8 @@ export class TemplatesComponent implements OnInit {
       }
   });
   dialogRef.afterClosed().subscribe(result => {
-    this.abc=result;
-    // this.SettingForm.controls['RECEIPTTEMPLATE'].setValue(result);  
+    // this.abc=result;
+   this.SettingForm.controls['RECEIPTTEMPLATE'].setValue(result);  
      
           
   });

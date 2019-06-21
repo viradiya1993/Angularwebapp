@@ -13,7 +13,7 @@ import { WorkInProgressComponent } from './work-in-progress/work-in-progress.com
 import { MatterInvoicesComponent } from './matter-invoices/matter-invoices.component';
 import { ReceiptsCreditsComponent } from './receipts-credits/receipts-credits.component';
 import { MatterTrustComponent } from './matter-trust/matter-trust.component';
-
+import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 
 
 const routes = [
@@ -41,6 +41,7 @@ const routes = [
     FuseSharedModule,
 
     //mat 
+    SatDatepickerModule, SatNativeDateModule,
     MatButtonModule,
     MatCheckboxModule,
     MatDatepickerModule,

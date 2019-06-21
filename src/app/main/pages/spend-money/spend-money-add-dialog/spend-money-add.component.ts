@@ -210,15 +210,21 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['AmountIncGST'].enable();
       this.spendmoneyForm.controls['Note'].enable();
     }
-    //call api   
-    this.CallClassChangeApi(Classvalue);
+    //call api  
+    // spendMoney_data
+    let SpendData =JSON.parse(localStorage.getItem('spendMoney_data')); 
+    let passData={
+      EXPENDITUREGUID:SpendData.EXPENDITUREGUID,
+      EXPENDITURECLASS:Classvalue
+    }
+    this.CallClassChangeApi(passData);
 
 
   }
-  CallClassChangeApi(Classvalue){
-    let potData = { 'EXPENDITURECLASS':Classvalue };
+  CallClassChangeApi(passData){
+    // let potData = { 'EXPENDITURECLASS':Classvalue };
     this.isLoadingResults = true;
-    this.SpendmoneyService.SpendmoneyListData(potData).subscribe(response => {
+    this.SpendmoneyService.SpendmoneyListData(passData).subscribe(response => {
       console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
       

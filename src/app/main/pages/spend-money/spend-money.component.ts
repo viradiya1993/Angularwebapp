@@ -90,6 +90,8 @@ export class SpendMoneyComponent implements OnInit {
 
   editmatter(Row: any) {
     this.currentMatterData = Row;
+    console.log(Row);
+    localStorage.setItem('spendMoney_data', JSON.stringify(Row));
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();

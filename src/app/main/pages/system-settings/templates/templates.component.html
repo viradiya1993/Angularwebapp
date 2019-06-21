@@ -2,21 +2,33 @@
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                    <mat-select  name="INVOICETEMPLATE" formControlName="INVOICETEMPLATE"  placeholder="Invoice Template">
+                        <input type="text" placeholder="Invoice Template" aria-label="Number" matInput name="INVOICETEMPLATE" formControlName="INVOICETEMPLATE" [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete">
+                          <mat-option *ngFor="let val of getDropDownValue.INVOICETEMPLATE" value="{{val.VALUE}}">
+                            {{val.DESCRIPTION}}
+                          </mat-option>
+                        </mat-autocomplete>
+                    <!-- <mat-select name="INVOICETEMPLATE" formControlName="INVOICETEMPLATE"  placeholder="Invoice Template">
                             <mat-option *ngFor="let val of getDropDownValue.INVOICETEMPLATE" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
                          
-                          </mat-select>
+                          </mat-select> -->
                           
             </mat-form-field>
             <mat-icon matSuffix (click)='SelectDocument()' >
                         <img src="assets/icons/web_app/icon_letters_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                     </mat-icon>
             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                    <mat-select  placeholder="Receipt Template" name="RECEIPTTEMPLATE" formControlName="RECEIPTTEMPLATE">
+                        <input type="text"  placeholder="Receipt Template" aria-label="Number" matInput name="RECEIPTTEMPLATE" formControlName="RECEIPTTEMPLATE" [matAutocomplete]="auto1">
+                        <mat-autocomplete #auto1="matAutocomplete">
+                          <mat-option *ngFor="let val of getDropDownValue.RECEIPTTEMPLATE" value="{{val.VALUE}}">
+                            {{val.DESCRIPTION}}
+                          </mat-option>
+                        </mat-autocomplete>
+                    <!-- <mat-select  placeholder="Receipt Template" name="RECEIPTTEMPLATE" formControlName="RECEIPTTEMPLATE">
                              
                         <mat-option  *ngFor="let val of getDropDownValue.RECEIPTTEMPLATE" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
                         <mat-option  value="{{abc}}">{{abc}}</mat-option> 
-                          </mat-select>
+                          </mat-select> -->
                         
             </mat-form-field>
             <mat-icon matSuffix (click)='SelectReceiptDocument()' >

@@ -1,11 +1,12 @@
 @import "src/@fuse/scss/fuse";
 #work_in_progress {
+    // margin-top: 95px;
     .header {
         .search-wrapper {
             width: 100%;
             max-width: 480px;
             border-radius: 28px;
-            overflow: hidden;
+            // overflow: hidden;
             @include mat-elevation(1);
             .search {
                 width: 100%;
@@ -25,7 +26,7 @@
         }
     }
     .content {
-        overflow: hidden;
+        // overflow: hidden;
         // margin-top: 10px;
         .example {
             width: 18%;
@@ -68,4 +69,14 @@ app-time-billing {
 .more_tbl_clmn .mat-header-cell:last-child,
 .more_tbl_clmn .mat-cell:last-child {
     padding-right: 70px;
+}
+.h2 {
+    margin-top: 13px !important;
+}
+.matter-serach-div.sticky_search_div {
+    margin-top: 18px !important;
+    margin-left: 45px !important;
+}
+.page-layout.carded > .top-bg.work_progress_height {
+    height: 86px;
 }

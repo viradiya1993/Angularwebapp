@@ -131,14 +131,14 @@
                   <mat-form-field class="example" fxFlex="33.33" class="pr-4" appearance="outline">
                       <mat-label>Class</mat-label>
                       <mat-select #value name="selected" formControlName="Class" [(ngModel)]="classtype" (ngModelChange)="Classtype($event)">
-                        <mat-option value="Expense">Expence</mat-option>
+                        <mat-option value="Expense">Expense</mat-option>
                         <mat-option value="Matter Expense">Matter Expence</mat-option>
-                        <mat-option value="Capital">capital</mat-option>
-                        <mat-option value="Pay GST">pay gst</mat-option>
-                        <mat-option value="Pay Tax">pay tax</mat-option>
-                        <mat-option value="Personal">personal</mat-option>
-                        <mat-option value="Description">depreciation</mat-option>
-                        <mat-option value="Others">other</mat-option>
+                        <mat-option value="Capital">Capital</mat-option>
+                        <mat-option value="Pay GST">Pay GST</mat-option>
+                        <mat-option value="Pay Tax">Pay Tax</mat-option>
+                        <mat-option value="Personal">Personal</mat-option>
+                        <mat-option value="Description">Description</mat-option>
+                        <mat-option value="Others">Others</mat-option>
                       </mat-select>
                   </mat-form-field>
                   <mat-form-field appearance="outline" fxFlex="33.33" class="pr-4">
@@ -169,7 +169,8 @@
                       <mat-label>Amount Ex GST</mat-label>
                         <input matInput formControlName="AmountExGST">
                   </mat-form-field>
-                  <mat-form-field appearance="outline" fxFlex="25" class="pr-4" *ngIf="classtype=='Expence' || classtype=='matter Expence' || classtype=='depreciation' || classtype=='other'">
+                  <!-- for expense *ngIf="classtype=='Expence' || classtype=='matter Expence' || classtype=='depreciation' || classtype=='other'" -->
+                  <mat-form-field appearance="outline" fxFlex="25" class="pr-4" >
                       <mat-label>Expense a/c </mat-label>
                       <input matInput  formControlName="Expenseac">
                     <mat-icon matSuffix >
@@ -208,6 +209,7 @@
                       <mat-label>Note</mat-label>
                       <input matInput formControlName="Note">
                   </mat-form-field>
+                  
                </div>
             </form>
         </div>

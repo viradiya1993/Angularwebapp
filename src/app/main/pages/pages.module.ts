@@ -14,6 +14,8 @@ import { ReceiveMoneyModule } from './receive-money/receive-money.module';
 import { TemplateModule } from './template/template.module';
 import { SystemSettingTemplateModule } from './system-settings/templates/templates.module';
 // import { NumericDirective } from './time-entries/time-entry-dialog/numericValidation.component';
+import { ActivitiesModule } from './activities/activities.module';
+
 
 
 
@@ -48,8 +50,9 @@ const appRoutes: Routes = [
     SpendMoneyModule,
     ReceiveMoneyModule,
     TemplateModule,
-    SystemSettingTemplateModule
-    
+    SystemSettingTemplateModule,
+    ActivitiesModule,
+
   ]
 })
 export class PagesModule { }  

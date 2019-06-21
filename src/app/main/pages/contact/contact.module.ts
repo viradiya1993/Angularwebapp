@@ -42,9 +42,7 @@ const routes = [
     IdComponent,
     OtherComponent,
     CompanyComponent,
-
     ContactCorresDetailsComponent,
-
     ContactSelectDialogComponent,
 
   

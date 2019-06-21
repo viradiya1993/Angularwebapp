@@ -33,6 +33,10 @@ import { MatterDialogComponentForTemplate } from 'app/main/pages/template/matter
 import { InvoiceDialogComponentForTemplate } from 'app/main/pages/invoice/select-invoice-dialog/select-invoice-dialog.component'
 import { MatterReceiptDialogComponentForTemplate } from 'app/main/pages/receive-money/matter-dialog/matter-dialog.component';
 
+import { UserDialogComponent } from './../../../main/pages/users/user-dialog/user-dialog.component';
+import { ActivityDialogComponent } from './../../../main/pages/activities/activity-dialog/activity-dialog.component';
+import { ChangePasswordComponent } from 'app/main/change-password/change-password.component';
+
 
 @Component({
     selector: 'toolbar',
@@ -187,8 +191,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     }
 
-
-
     //for binding
 
     /* ---------------------------------------------------------------------------start of timer add-------------------------------------------------------------------------  */
@@ -231,6 +233,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         var seconds = ("00" + (d % 3600) % 60).slice(-2);
         return hours + ":" + minutes + ":" + seconds;
     }
+
     stopMatterBack(matterId: any) {
         clearTimeout(this.timerInterval);
         let tempArray: any[] = []
@@ -250,6 +253,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.prevMatterArray = tempArray;
         this.displayMattterList();
     }
+
     startMatterBack(matterId: any) {
         clearTimeout(this.timerInterval);
         this.currentTimer = 0;
@@ -276,6 +280,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.prevMatterArray = tempArray;
         this.displayMattterList();
     }
+
     startTimer(matterId: any) {
         if (localStorage.getItem('start_' + matterId)) {
             this.timerInterval = setInterval(() => {
@@ -285,9 +290,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }, 1000);
         }
     }
+
     stopTimer() {
         clearTimeout(this.timerInterval);
     }
+
     endMatterBack(matterId: any) {
         let AllTimer = JSON.parse(localStorage.getItem(this.timerId));
         let matterDataTime;
@@ -309,6 +316,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.addNewTimeEntry(matterId, matterDataTime);
 
     }
+
     addNewTimeEntryNew() {
         let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
         if (matterData.ACTIVE) {
@@ -343,6 +351,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 $('#refreshContactTab').click();
         });
     }
+
+  
     /* ---------------------------------------------------------------------help Licence start--------------------------------------------------------------------------  */
     openLicence(Data) {
         let w = Data == 'LI' ? '50%' : '25%';
@@ -381,6 +391,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }
 
     }
+
+  
     openCorresDialog() {
         let getMatterGuId = JSON.parse(localStorage.getItem('set_active_matters'));
         let getmatguid = getMatterGuId.MATTERGUID;
@@ -524,6 +536,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef = null;
         });
     }
+
     deleteTimeEntry(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
@@ -554,6 +567,138 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.complete();
     }
 
+    /* User Module Function's */
+    
+    // Add User Dialog
+    AddUserDialog(){
+        const dialogRef = this.dialog.open(UserDialogComponent, {
+            disableClose: true,
+            panelClass: 'User-dialog',
+            data: {
+                action: 'new',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result)
+                 $('#refreshUserTab').click();
+        });
+    }
+
+    //EditUserDialog
+    EditUserDialog(){
+        const dialogRef = this.dialog.open(UserDialogComponent,{
+            disableClose: true,
+            panelClass: 'User-dialog',
+            data:{
+                action: 'edit',
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result)
+                 $('#refreshUserTab').click();
+        });
+    }
+
+    //DeleteUser
+    DeleteUser(): void{
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result)
+            $('#refreshUserTab').click();
+        });
+    }
+
+    //DuplicateUserDialog
+
+    DuplicateUserDialog(){
+        const dialogRef = this.dialog.open(UserDialogComponent, {
+            disableClose: true,
+            panelClass: 'User-dialog',
+            data: {
+               action: 'Duplicate',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result)
+                 $('#refreshUserTab').click();
+        });
+    }
+
+    /* Activity Module Function's */
+    
+    //NewActivityDialog
+    AddActivityDialog(){
+        const dialogRef = this.dialog.open(ActivityDialogComponent, {
+            disableClose: true,
+            panelClass: 'Activity-dialog',
+            data: {
+                action: 'new',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result)
+                 $('#ActivityTab').click();
+        });
+    }
+
+    //EditActivityDialog
+    EditActivityDialog(){
+        const dialogRef = this.dialog.open(ActivityDialogComponent,{
+            disableClose: true,
+            panelClass: 'Activity-dialog',
+            data:{
+                action: 'edit',
+            }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result)
+                 $('#ActivityTab').click();
+        });
+    }
+
+    //DeleteActivity
+    DeleteActivityDialog():void{
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result)
+            $('#ActivityTab').click();
+        });
+    }
+
+    //DuplicateActivity
+    DuplicateActivityDialog(){
+        const dialogRef = this.dialog.open(ActivityDialogComponent, {
+            disableClose: true,
+            panelClass: 'User-dialog',
+            data: {
+               action: 'Duplicate',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result)
+            $('#ActivityTab').click();
+        });
+    }
+
+    //Change Password Dialog
+    ChangePass(){
+        const dialogRef = this.dialog.open(ChangePasswordComponent, {
+            
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }   
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -562,6 +707,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     logOutUser() {
         this.authenticationService.logout();
     }
+    
     navBarSetting(value: any) {
         let x = value.split("/");
         this.activeSubMenu = x[2] ? x[2] : '';
@@ -591,7 +737,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 11;
         } else if (x[1] == "users") {
             this.isTabShow = 12;
-        } else {
+        } else if (x[1] == "activities"){
+            this.isTabShow = 13;
+        }
+        else {
             this.isTabShow = 1;
         }
     }
@@ -616,6 +765,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     isInvoiceClick() {
         this.clickedBtn = 'invoiceDoc';
     }
+
     createInstantInvoice() {
         return false;
         const dialogRef = this._matDialog.open(InstantInvoiceDailogComponent, { width: '100%', disableClose: true, data: null });
@@ -625,6 +775,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
+
     createInvoice() {
         const dialogRef = this._matDialog.open(InvoiceAddDailogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
@@ -633,6 +784,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
+
     createReceiptForTimeBilling() {
         const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
             width: '100%', disableClose: true,
@@ -645,6 +797,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
+
     ViewReceiptForTimeBilling() {
         const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
             width: '100%', disableClose: true,
@@ -670,6 +823,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
+    
     ViewReceipt() {
         const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
             width: '100%', disableClose: true,
@@ -732,6 +886,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef = null;
         });
     }
+    
     NewGeneralReceipt(): void {
         const dialogRef = this._matDialog.open(GeneralReceiptDilogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {

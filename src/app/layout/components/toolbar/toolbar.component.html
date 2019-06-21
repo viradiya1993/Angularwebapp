@@ -153,10 +153,6 @@
                     </section>
                 </mat-tab>
                 <!-- mattter tab menu end -->
-                <mat-tab label="USERS" *ngIf="isTabShow===12">
-                </mat-tab>
-
-                <!-- contacts tab menu start -->
                 <mat-tab label="CONTACT" *ngIf="isTabShow===2">
                     <section class="ribbon-container contact_tab_main">
                         <mat-card>
@@ -164,15 +160,15 @@
                                 <section class="group-section-tab action_tab">
                                     <section [ngClass]="appPermissions[3]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[3]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="AddContactsDialog()">
-                                   <section class="large-button-container">
-                                      <mat-icon class="main-icon">
-                                          <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                        </mat-icon>
-                                      <div class="main-text">
-                                         <span>New<br> Contact</span>
-                                      </div>
-                                   </section>
-                                </button>
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                            <div class="main-text">
+                                                <span>New<br> Contact</span>
+                                            </div>
+                                        </section>
+                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="EditContactsDialog()">
@@ -184,31 +180,31 @@
                                          <span>Edit<br> Contact</span>
                                       </div>
                                    </section>
-                                </button>
+                                        </button>
                                     </section>
                                     <section [ngClass]="appPermissions[3]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[3]?.Delete==0 ? 'disabled-click large-button' : 'large-button'" (click)="deleteContact()">
-                                   <section class="large-button-container">
-                                      <mat-icon class="main-icon">
-                                            <img src="assets/icons/web_app/icon_contact_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                      </mat-icon>
-                                      <div class="main-text">
-                                         <span>Delete<br> Contact</span>
-                                      </div>
-                                   </section>
-                                </button>
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_contact_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>Delete<br> Contact</span>
+                                            </div>
+                                        </section>
+                                        </button>
                                     </section>
                                     <section class="ribbon-section">
                                         <button mat-button class="large-button" disabled>
-                                   <section class="large-button-container">
-                                      <mat-icon class="main-icon">
-                                            <img class="menu-disabled" src="assets/icons/web_app/icon_contact_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                      </mat-icon>
-                                      <div class="main-text">
-                                         <span>Duplicate<br> Contact</span>
-                                      </div>
-                                   </section>
-                                </button>
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                    <img class="menu-disabled" src="assets/icons/web_app/icon_contact_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>Duplicate<br> Contact</span>
+                                            </div>
+                                        </section>
+                                        </button>
                                     </section>
                                     <div class="light_label_txt">Action</div>
                                 </section>
@@ -1031,6 +1027,184 @@
                     </section>
                 </mat-tab>
                 <!-- End  Start Create Document menu  -->
+                <!-- User tab Start-->
+                <mat-tab label="USERS" *ngIf="isTabShow===12">
+                    <section class="ribbon-container contact_tab_main">
+                        <mat-card>
+                            <mat-card-content>
+                                <section class="group-section-tab action_tab">
+                                    <section [ngClass]="appPermissions[3]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[3]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="AddUserDialog()">
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                <img src="assets/icons/web_app/icon_add_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>New<br> User</span>
+                                            </div>
+                                        </section>
+                                        </button>
+                                    </section>
+                                    <section [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="EditUserDialog()">
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                <img src="assets/icons/web_app/icon_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>Edit<br> User</span>
+                                            </div>
+                                        </section>
+                                        </button>
+                                    </section>
+                                    <section [ngClass]="appPermissions[3]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[3]?.Delete==0 ? 'disabled-click large-button' : 'large-button'" (click)="DeleteUser()">
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                <img src="assets/icons/web_app/icon_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>Delete<br> User</span>
+                                            </div>
+                                        </section>
+                                        </button>
+                                    </section>
+                                    <section [ngClass]="appPermissions[3]?.duplicate==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="DuplicateUserDialog()">
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                <img src="assets/icons/web_app/icon_duplicate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>Duplicate<br> User</span>
+                                            </div>
+                                        </section>
+                                        </button>
+                                    </section>
+                                    <div class="light_label_txt">Action</div>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                                <mat-divider vertical></mat-divider>
+                            </mat-card-content>
+                        </mat-card>
+                    </section>
+                </mat-tab>
+                <!-- User tab End-->
+                <!-- Activity tab Start-->
+                <mat-tab label="Activities" *ngIf="isTabShow===13">
+                    <section class="ribbon-container contact_tab_main">
+                        <mat-card>
+                            <mat-card-content>
+                                <section class="group-section-tab action_tab">
+                                    <section [ngClass]="appPermissions[3]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[3]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="AddActivityDialog()">
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                <img src="assets/icons/web_app/icon_time_cost_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>New<br> Activity</span>
+                                            </div>
+                                        </section>
+                                        </button>
+                                    </section>
+                                    <section [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="EditActivityDialog()">
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                <img src="assets/icons/web_app/icon_time_cost_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>Edit<br> Activity</span>
+                                            </div>
+                                        </section>
+                                        </button>
+                                    </section>
+                                    <section [ngClass]="appPermissions[3]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[3]?.Delete==0 ? 'disabled-click large-button' : 'large-button'" (click)="DeleteActivityDialog()">
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                <img src="assets/icons/web_app/icon_time_cost_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>Delete<br> Activity</span>
+                                            </div>
+                                        </section>
+                                        </button>
+                                    </section>
+                                    <section [ngClass]="appPermissions[3]?.duplicate==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="DuplicateActivityDialog()">
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                <img src="assets/icons/web_app/icon_duplicate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>Duplicate<br> Activity</span>
+                                            </div>
+                                        </section>
+                                        </button>
+                                    </section>
+                                    <div class="light_label_txt">Action</div>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                                <mat-divider vertical></mat-divider>
+                            </mat-card-content>
+                        </mat-card>
+                    </section>
+                </mat-tab>
+                <!-- Activity tab End-->
+                <!-- contacts tab menu start -->
+                <!-- FILE menu start -->
+                <mat-tab label="FILE">
+                    <section class="ribbon-container matter_tab_main" [style.width]="detailwidth">
+                        <mat-card>
+                            <mat-card-content>
+                                <section class="group-section-tab action_tab">
+                                    <!-- <span class="action-section">Action</span> -->
+                                    <section class="ribbon-section">
+                                        <button mat-button [routerLink]="'/system-setting'">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon" >
+                                                    <img src="assets/icons/web_app/icon_tools_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text"><span>System<br> Settings</span></div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button [routerLink]="'/users'">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img  src="assets/icons/web_app/icon_firm_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Users</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button [routerLink]="'/activities'">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img  src="assets/icons/web_app/icon_time_cost_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Activities<br>Sundries</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <div class="light_label_txt">Exit</div>
+                                </section>
+                            </mat-card-content>
+                        </mat-card>
+                    </section>
+                </mat-tab>
+
+                <!-- tab for user -->
+
+                <!-- FILE menu end -->
                 <!-- goto tab menu start -->
                 <mat-tab label="GO TO">
                     <section class="ribbon-container goto_tab_main" [style.width]="detailwidth">
@@ -1309,8 +1483,8 @@
                  <span>System Setting</span>
                 </button>
 
-                <button mat-menu-item class="" disabled>
-                        <span>Change Password</span>
+                <button mat-menu-item class="" (click)="ChangePass()">
+                    <span>Change Password</span>
                 </button>
                 <button mat-menu-item class="" disabled>
                         <span>Integration</span>

@@ -36,6 +36,7 @@
                                 <input type="number" name="DAILYBASERATE" formControlName="DAILYBASERATE" matInput>
                         </mat-form-field>
                         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                                        <mat-label>Unit Size</mat-label>
                                 <mat-select name="UNITSPERHOUR" formControlName="UNITSPERHOUR" placeholder="Unit Size">
                                         <mat-option *ngFor="let val of getDropDownValue.UNITSPERHOUR" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
                                        
@@ -49,6 +50,7 @@
                                 <mat-icon matSuffix class="secondary-text"></mat-icon>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                                        <mat-label>Office Cheque Formate</mat-label>
                                     <mat-select name="OFFICECHEQUEFORMAT" formControlName="OFFICECHEQUEFORMAT" placeholder="Office Cheque Formate">
                                             <mat-option *ngFor="let val of getDropDownValue.OFFICECHEQUEFORMAT" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
                                           
@@ -63,7 +65,7 @@
                             </div>
                             <div fxLayout="row"  fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
-                                    
+                                                <mat-label>Time Entry Rate Calculation Sequence</mat-label>
                                     <mat-select name="RATEOVERRIDESEQUENCE" formControlName="RATEOVERRIDESEQUENCE" placeholder="Time Entry Rate Calculation Sequence">
                                             <mat-option value="0">Matter -> Contact -> Fee Earner </mat-option>
                                             <mat-option value="1">Matter -> Matter Class-> Fee Earner </mat-option>

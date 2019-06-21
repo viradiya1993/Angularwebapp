@@ -252,3 +252,8 @@
     min-height: 70px;
     max-height: 70px;
 }
+mat-dialog-actions.popup_ftr.mat-dialog-actions {
+    /* align-items: end; */
+    float: right !important;
+    margin-top: 24px !important;
+}

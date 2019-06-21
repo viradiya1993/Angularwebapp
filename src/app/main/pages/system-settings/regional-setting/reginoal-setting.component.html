@@ -2,12 +2,14 @@
 
 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field   appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Country</mat-label>
                 <mat-select name="COUNTRY" formControlName="COUNTRY" placeholder="Country">
                         <mat-option *ngFor="let val of getDropDownValue.COUNTRY" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
                      
                       </mat-select>
         </mat-form-field>
-        <mat-form-field   appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field  appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Currency Symbol</mat-label>
                 <mat-select name="CURRENCYSYMBOL" formControlName="CURRENCYSYMBOL" placeholder="Currency">
                         <mat-option *ngFor="let val of getDropDownValue.CURRENCYSYMBOL" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
                     
@@ -15,13 +17,16 @@
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                
             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Tax Type</mat-label>
                     <mat-select  name="TAXTYPE" formControlName="TAXTYPE"  placeholder="Tax Type">
                         <mat-option *ngFor="let val of getDropDownValue.TAXYPE" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
                         
                           </mat-select>
             </mat-form-field>
             <mat-form-field  appearance="outline" fxFlex="50" class="pr-4">
+                      
                     <mat-label>Tax Rate</mat-label>
                     <input name="TAXRATE" formControlName="TAXRATE"  type="number" matInput>
                 </mat-form-field>

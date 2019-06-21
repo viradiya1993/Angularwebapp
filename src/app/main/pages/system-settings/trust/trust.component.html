@@ -1,15 +1,15 @@
 <div class="one" [formGroup]="SettingForm" fxLayout="column">
-        <div class="example-loading-shade" *ngIf="isLoadingResults">
-                <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
-            </div>
+       
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
             <mat-form-field  appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>First Trust Month</mat-label>
                     <mat-select name="FIRSTTRUSTMONTH" formControlName="FIRSTTRUSTMONTH" placeholder="First Trust Month">
                             <mat-option *ngFor="let val of getDropDownValue.FIRSTTRUSTMONTH"  value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
                             
                           </mat-select>
             </mat-form-field>
             <mat-form-field  appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Trust State</mat-label>
                     <mat-select name="TRUSTSTATE" formControlName="TRUSTSTATE" placeholder="Trust State">
                             <mat-option *ngFor="let val of getDropDownValue.TRUSTSTATE" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
                             
@@ -17,13 +17,16 @@
             </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+               
                 <mat-form-field  appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Trust Cheque Formate</mat-label>
                         <mat-select name="TRUSTCHEQUEFORMAT" formControlName="TRUSTCHEQUEFORMAT" placeholder="Trust Cheque">
                                 <mat-option *ngFor="let val of getDropDownValue.TRUSTCHEQUEFORMAT" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
                                 
                               </mat-select>
                 </mat-form-field>
                 <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Trust Receipt Copies</mat-label>
                     <mat-select  name="TRUSTRECEIPTCOPIES" formControlName="TRUSTRECEIPTCOPIES" placeholder="Trust Receipt Copies">
                         <mat-option value="1">1</mat-option>
                         <mat-option value="2">2</mat-option>
@@ -57,12 +60,14 @@
             </div>
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                 <mat-form-field  appearance="outline" fxFlex="50" class="prs-4">
+                        <mat-label>Default Trust Receipt Type</mat-label>
                         <mat-select name="DEFAULTTRUSTRECEIPTTYPE" formControlName="DEFAULTTRUSTRECEIPTTYPE" placeholder="Default Receipt Type">
                                 <mat-option *ngFor="let val of getDropDownValue.DEFAULTTRUSTRECEIPTTYPE" value="{{val.VALUE}}" >{{val.DESCRIPTION}}</mat-option>
                                
                               </mat-select>
                 </mat-form-field>
                 <mat-form-field  appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Default Trust Withdrawal Type</mat-label>
                         <mat-select name="DEFAULTTRUSTWITHDRAWALTYPE" formControlName="DEFAULTTRUSTWITHDRAWALTYPE" placeholder="Default Withdrawal Type">
                                 <mat-option *ngFor="let val of getDropDownValue.DEFAULTTRUSTWITHDRAWALTYPE"  value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
                              

@@ -16,39 +16,39 @@
                         <span>Client</span>
                         <span> {{currentMatter?.MATTER}}</span>
                     </div>
-                </div> 
-               
+                </div>
+
             </div>
-                     
+
         </div>
-        <div  class="" fxLayout="row" fxLayoutAlign="start center" class="matter-serach-div sticky_search_div">
-                <form [formGroup]="TimeEnrtyForm">
-                    <mat-form-field class="example p-8" appearance="outline" *ngIf="isShowDrop">
-                        <mat-label>DLP</mat-label>
-                        <mat-select (selectionChange)="dlpChange($event.value)" formControlName="dlpdrop">
-                            <mat-option value="all">All</mat-option>
-                            <mat-option value="">None</mat-option>
-                            <mat-option *ngFor="let TimerDrop of TimerDropData" value="{{TimerDrop.USERID}}">{{TimerDrop.USERID}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field class="example p-8" appearance="outline">
-                        <mat-label>Uninvoiced Work</mat-label>
-                        <mat-select (selectionChange)="uninvoicedWorkChange($event.value)" formControlName="uninvoicedWork">
-                            <mat-option value="No">Uninvoiced Work</mat-option>
-                            <mat-option value="Yes">Invoiced Work</mat-option>
-                            <mat-option value="">All Work</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" class="p-8">
-                        <mat-label>Date Range</mat-label>
-                        <input matInput placeholder="Choose a date" [satDatepicker]="picker2" formControlName="date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)">
-                       
-                        <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>  
-                        <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
-                    </mat-form-field>
-                   
-                </form>
-            </div>
+        <div fxLayout="row" fxLayoutAlign="start center" class="matter-serach-div sticky_search_div">
+            <form [formGroup]="TimeEnrtyForm">
+                <mat-form-field class="example" appearance="outline" *ngIf="isShowDrop">
+                    <mat-label>DLP</mat-label>
+                    <mat-select (selectionChange)="dlpChange($event.value)" formControlName="dlpdrop">
+                        <mat-option value="all">All</mat-option>
+                        <mat-option value="">None</mat-option>
+                        <mat-option *ngFor="let TimerDrop of TimerDropData" value="{{TimerDrop.USERID}}">{{TimerDrop.USERID}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="example" appearance="outline">
+                    <mat-label>Uninvoiced Work</mat-label>
+                    <mat-select (selectionChange)="uninvoicedWorkChange($event.value)" formControlName="uninvoicedWork">
+                        <mat-option value="No">Uninvoiced Work</mat-option>
+                        <mat-option value="Yes">Invoiced Work</mat-option>
+                        <mat-option value="">All Work</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="">
+                    <mat-label>Date Range</mat-label>
+                    <input matInput placeholder="Choose a date" [satDatepicker]="picker2" formControlName="date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)">
+                    <!-- (click)="picker2.open();" -->
+                    <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
+                    <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
+                </mat-form-field>
+
+            </form>
+        </div>
         <div id="work_in_progress" class="page-layout simple left-sidebar  inner-sidebar">
             <div fxLayoutAlign="center" class="content">
                 <div class="center more_tbl_clmn" fusePerfectScrollbar>

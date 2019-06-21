@@ -55,6 +55,7 @@ export class ContactDialogComponent implements OnInit {
   value: number;
   contactForm: FormGroup;
   ngOnInit() {
+
     this.contactForm = this._formBuilder.group({
       //CONTACTGUID: ['', Validators.required],
       CONTACTNAME: ['', Validators.required],
@@ -267,6 +268,7 @@ export class ContactDialogComponent implements OnInit {
   ondialogcloseClick(): void {
     this.dialogRef.close(false);
   }
+ 
 
   onClick(value) {
   }

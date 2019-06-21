@@ -26,6 +26,7 @@
     }
     .content {
         overflow: hidden;
+        
         // margin-top: 10px;
         .example {
             width: 18%;
@@ -38,7 +39,14 @@
         }
     }
 }
-
+#contact[_ngcontent-c25] .content[_ngcontent-c25] {
+    position: relative;
+    margin-top: 10px;
+}
+// .content[_ngcontent-c32] {
+//     position: relative;
+//     margin-top: 10px;
+// }
 .search {
     width: 45% !important;
     padding: 20px !important;
@@ -57,15 +65,42 @@ app-contact {
     z-index: 9999;
     left: 0;
 }
-.sticky_search_remove_padding {
-    padding-left: 80px;
+.example-containerdata {
+    height: 400px;
+    overflow: auto;
+    margin-top: 10px;
 }
 
-#contact .p-24.list_tbl_main {
-    // margin-top: 85px;
-    overflow: hidden;
-}
 
+element.style {
+    // top: 0px;
+    // position: sticky;
+    // z-index: 100;
+    width: 100%;
+}
+.contact_right_action {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: #fff;
+    z-index: 101;
+    height: 55px;
+    border-top-right-radius: 10px;
+    margin-top: 10px;
+    margin-right: 11px;
+}  
+
+table {
+    width: 100%;
+}
+// .sticky_search_remove_padding {
+//     padding-left: 80px;
+// }
+
+// #contact .p-24.list_tbl_main {
+//     margin-top: 85px;
+//     overflow: hidden;
+// }
 
 .p-24.list_tbl_main {
     //margin-top: 110px;
@@ -73,6 +108,7 @@ app-contact {
 }
 #contact .content {
     position: relative;
+    margin-top: 10px;
 }
 
 .mat-table.mat-table.ng-trigger.ng-trigger-animateStagger {

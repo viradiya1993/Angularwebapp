@@ -1,0 +1,68 @@
+<div class="one" [formGroup]="userForm"  fxLayout="column">
+  <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+          <mat-label>Fee Earner Id</mat-label>
+          <input name="feeearnerid" [formControlName]="'feeearnerid'" matInput>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+          <mat-label>Posotion</mat-label>
+          <input name="posotion" [formControlName]="'posotion'" matInput>
+      </mat-form-field>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+          <mat-label>$ /hr</mat-label>
+          <input type="number" name="hours" [formControlName]="'hours'" matInput>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+          <mat-label>$ /day</mat-label>
+          <input type="number" name="day" [formControlName]="'day'" matInput>
+      </mat-form-field>
+  </div>
+  <!-- Redio Button -->
+  <h3> GST Type</h3>
+  <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-radio-group aria-label="GST Type" fxFlex="100" class="pr-4">
+          <mat-radio-button value="exclusive" checked>Exclusive</mat-radio-button>
+          <mat-radio-button value="inclusive">Inclusive</mat-radio-button>
+          <mat-radio-button value="free">Free</mat-radio-button>
+      </mat-radio-group>
+  </div>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+          <mat-label>Ph 1</mat-label>
+          <input name="ph1" [formControlName]="'ph1'" matInput>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+          <mat-label>Ph 2</mat-label>
+          <input name="ph2" [formControlName]="'ph2'" matInput>
+      </mat-form-field>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+          <mat-label>Fax 1</mat-label>
+          <input name="fax1" [formControlName]="'fax1'" matInput>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+          <mat-label>Fax 2</mat-label>
+          <input name="fax2" [formControlName]="'fax2'" matInput>
+      </mat-form-field>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+          <mat-label>Mobile</mat-label>
+          <input name="mobile" [formControlName]="'mobile'" matInput>
+      </mat-form-field>
+      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+          <mat-label>Practicinc Cert. No</mat-label>
+          <input name="pracno" [formControlName]="'pracno'" matInput>
+      </mat-form-field>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+          <mat-label>Comment</mat-label>
+        <textarea name="comment" [formControlName]="'comment'"  matInput ></textarea>
+      </mat-form-field>
+  </div>
+</div>

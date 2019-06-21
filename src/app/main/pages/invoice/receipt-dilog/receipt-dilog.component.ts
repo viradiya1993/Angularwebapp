@@ -92,7 +92,6 @@ export class ReceiptDilogComponent implements OnInit {
       this.receiptData = JSON.parse(localStorage.getItem('receiptData'));
       this.setInvoiceForReceipt({ "RECEIPTGUID": this.receiptData.INCOMEGUID });
     } else if (this._data.action == 'add') {
-      alert('d');
       this.GetInvoiceForReceipt({ 'Outstanding': 'Yes' });
     }
     this.getPayor({});

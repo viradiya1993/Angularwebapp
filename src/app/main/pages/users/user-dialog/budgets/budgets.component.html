@@ -1,0 +1,40 @@
+<div class=" one "  fxLayout="column">
+	<div class="example-container mat-elevation-z8">
+		<mat-table [dataSource]="dataSource">
+			<!-- PeriodStart Column -->
+			<ng-container matColumnDef="periodstart">
+				<mat-header-cell *matHeaderCellDef> Period Start </mat-header-cell>
+				<mat-cell *matCellDef="let element"> {{element.PeriodStart}} </mat-cell>
+			</ng-container>
+
+			<!-- TotalHours Column -->
+			<ng-container matColumnDef="totalhours">
+				<mat-header-cell *matHeaderCellDef>TotalHours</mat-header-cell>
+				<mat-cell *matCellDef="let element"> {{element.TotalHours}} </mat-cell>
+			</ng-container>
+		
+			<!-- TotalDollars Column -->
+
+			<ng-container matColumnDef="totaldollars">
+				<mat-header-cell *matHeaderCellDef>Total Dollars</mat-header-cell>
+				<mat-cell *matCellDef="let element"> {{element.TotalDollars}} </mat-cell>
+			</ng-container>
+			
+			
+			   <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+				<mat-row [style.background]="highlightedRows == row.PeriodStart ? selectedColore : ''" 
+					[ngClass]="highlightedRows == row.PeriodStart ? 'row-text-colore' : ''" 
+					highlightedRows=row.PeriodStart mat-row *matRowDef="let row; columns: displayedColumns;"
+					(click)="clickbudget(row.PeriodStart);highlightedRows = row.PeriodStart "
+					matRipple>
+				</mat-row>
+		</mat-table>	
+	</div>	
+</div>
+<div>
+	<mat-dialog-actions align="end" class="popup_ftr">
+		<button mat-raised-button color="accent" (click)="new_budget()" cdkFocusInitial>New Budget</button>
+		<button mat-raised-button color="primary" (click)="edit_budget()" cdkFocusInitial>Edit Budget</button>
+		<button mat-raised-button class="btn btn-primary" (click)="delete_budget()" cdkFocusInitial>Delete Budget</button>
+	</mat-dialog-actions>
+</div>

@@ -116,9 +116,9 @@ export class InvoiceAddDailogComponent implements OnInit {
     });
     this.isLoadingResults = false;
   }
-  firstDate(val){
+  firstDate(val) {
     var dt = val._d;
-    dt.setMonth(dt.getMonth() + 1); 
+    dt.setMonth(dt.getMonth() + 1);
     this.addInvoiceForm.controls['DUEDATETEXT'].setValue(dt);
     this.addInvoiceForm.controls['DUEDATE'].setValue(dt);
   }
@@ -171,7 +171,7 @@ export class InvoiceAddDailogComponent implements OnInit {
     let SundryINTOTAL: number = 0;
     let WORKITEMSData = [];
     event.forEach(function (value) {
-      WORKITEMSData.push(value.WORKITEMGUID);
+      WORKITEMSData.push({ 'WORKITEMGUID': value.WORKITEMGUID });
       EXTOTAL += Number(value.PRICE);
       INTOTAL += Number(value.PRICEINCGST);
       TOTALGST += Number(value.GST);
@@ -225,8 +225,6 @@ export class InvoiceAddDailogComponent implements OnInit {
       "WORKITEMS": this.WORKITEMS
     }
     let PostInvoiceEntryData: any = { FormAction: 'insert', VALIDATEONLY: true, Data: PostData };
-    // console.log(PostInvoiceEntryData);
-    // return false;
     this._matterInvoicesService.SetInvoiceData(PostInvoiceEntryData).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.checkValidation(res.DATA.VALIDATIONS, PostInvoiceEntryData);

@@ -401,12 +401,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             type = 26;
         else if (ReportData.REPORTGROUP == 'Trust')
             type = 25;
-        if (this.appPermissions[type][ReportData.REPORTNAME]) {
-            const dialogRef = this.dialog.open(ReportsComponent, { width: '100%', data: ReportData, disableClose: true });
-            dialogRef.afterClosed().subscribe(result => { });
-        } else {
-            this.toastr.error('Access Denied');
-        }
+        // if (this.appPermissions[type][ReportData.REPORTNAME]) {
+        const dialogRef = this.dialog.open(ReportsComponent, { width: '100%', data: ReportData, disableClose: true });
+        dialogRef.afterClosed().subscribe(result => { });
+        // } else {
+        //     this.toastr.error('Access Denied');
+        // }
     }
     // New matter Pop-up
     AddNewmatterpopup() {

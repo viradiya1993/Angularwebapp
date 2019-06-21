@@ -6,6 +6,7 @@ import { MatterInvoicesService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-invoice-detail',
@@ -131,7 +132,8 @@ export class InvoiceDetailComponent implements OnInit {
     let PostData: any = {
       "INVOICEGUID": this.f.INVOICEGUID.value,
       "COMMENT": this.f.COMMENT.value,
-      "MATTERGUID": this.f.MATTERGUID.value
+      "DUEDATE": this.f.DUEDATE.value,
+      "INVOICEDATE": this.f.DUEDATE.value,
     }
     let PostInvoiceEntryData: any = { FormAction: 'update', VALIDATEONLY: true, Data: PostData };
     this.matterInvoicesService.SetInvoiceData(PostInvoiceEntryData).subscribe(res => {
@@ -185,7 +187,8 @@ export class InvoiceDetailComponent implements OnInit {
     PostInvoiceEntryData.VALIDATEONLY = false;
     this.matterInvoicesService.SetInvoiceData(PostInvoiceEntryData).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
-        this.toastr.success('Save Success');
+        $('#refreshInvoiceTab').click();
+        this.toastr.success('Update Success');
         this.dialogRef.close(true);
       } else {
         if (res.CODE == 402 && res.STATUS == "error" && res.MESSAGE == "Not logged in")

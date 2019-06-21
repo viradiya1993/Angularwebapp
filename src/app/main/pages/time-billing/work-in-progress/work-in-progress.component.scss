@@ -1,6 +1,7 @@
 @import "src/@fuse/scss/fuse";
 #work_in_progress {
     // margin-top: 95px;
+    overflow-y: hidden;
     .header {
         .search-wrapper {
             width: 100%;

@@ -18,6 +18,7 @@ export class MatterDialogComponentForTemplate implements OnInit {
   message: string;
   displayedColumns: string[] = ['matternumber', 'matter', 'client'];
   getDataForTable: any = [];
+  isspiner: boolean = false;
   highlightedRows: any;
   theme_type = localStorage.getItem('theme_type');
   @ViewChild(MatPaginator) paginator: MatPaginator;

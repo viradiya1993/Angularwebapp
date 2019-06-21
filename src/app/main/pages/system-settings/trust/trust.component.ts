@@ -11,16 +11,18 @@ import { SystemSetting } from './../../../../_services';
   animations: fuseAnimations
 })
 export class TrustComponent implements OnInit {
-
+  isLoadingResults: boolean;
   @Input() SettingForm: FormGroup;
 
   getDropDownValue: any=[];
   constructor(private SystemSetting:SystemSetting) { }
 
   ngOnInit() {
+    this.isLoadingResults=true;
     this.SystemSetting.getSystemSetting({}).subscribe(response=>{
       console.log(response);
       this.getDropDownValue=response.DATA.LISTS;
+      this.isLoadingResults=false;
       })
        
   }

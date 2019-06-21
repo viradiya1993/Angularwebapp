@@ -183,9 +183,11 @@ body.theme-pink-dark {
     top: 0;
     background-color: #fff;
     z-index: 101;
-    height: 55px;
-    ;
+    height: 54px;
     border-top-right-radius: 5px;
+}
+body.theme-default .user_module_table .mat-table {
+    width: 100%;
 }
 
 .contact_right_action .mat-icon-button {

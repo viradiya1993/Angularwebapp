@@ -12,6 +12,8 @@ import { InvoiceModule } from './invoice/invoice.module';
 import { SpendMoneyModule } from './spend-money/spend-money.module';
 import { ReceiveMoneyModule } from './receive-money/receive-money.module';
 import { TemplateModule } from './template/template.module';
+import { ActivitiesModule } from './activities/activities.module';
+
 
 
 
@@ -46,6 +48,7 @@ const appRoutes: Routes = [
     SpendMoneyModule,
     ReceiveMoneyModule,
     TemplateModule,
+    ActivitiesModule,
     
   ]
 })

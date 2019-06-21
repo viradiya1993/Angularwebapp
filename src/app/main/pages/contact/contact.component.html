@@ -5,7 +5,7 @@
                 <form [formGroup]="contactFilter">
                     <mat-form-field class="example" appearance="outline">
                         <mat-label>Contact Type</mat-label>
-                        <mat-select #value name="selected" (selectionChange)="ContactTypeChange($event.value)" formControlName="ContactType">
+                        <mat-select #value name="selected" (selectionChange)="ContactTypeChange($event.Contactdata)" formControlName="ContactType">
                             <mat-option value="all">All Contacts</mat-option>
                             <mat-option value="Person">People</mat-option>
                             <mat-option value="Company">Company</mat-option>
@@ -65,8 +65,8 @@
             <div class="content">
                 <div class="btn contact_right_action one">
                     <button mat-icon-button (click)="openDialog()" aria-label="More">
-                                <mat-icon class="secondary-text">more_vert</mat-icon>
-                            </button>
+                        <mat-icon class="secondary-text">more_vert</mat-icon>
+                    </button>
                 </div>
                 <div class="content">
                     <div class="example-loading-shade" *ngIf="isLoadingResults">

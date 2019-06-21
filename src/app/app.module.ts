@@ -32,6 +32,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NotFoundComponent } from './main/errors/not-found/not-found.component';
 import { InternalErrorComponent } from './main/errors/internal-error/internal-error.component';
 
+
+
+
 //Datepicker
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { ToastrModule } from 'ngx-toastr';
@@ -39,6 +42,7 @@ import { DatePipe } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LicenceAgreementComponent } from './main/licence-agreement/licence-agreement.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
+import { ChangePasswordComponent } from './main/change-password/change-password.component';
 
 //end
 const appRoutes: Routes = [
@@ -55,11 +59,13 @@ const appRoutes: Routes = [
         InternalErrorComponent,
         ReportsComponent,
         LicenceAgreementComponent,
+        ChangePasswordComponent
     ],
     entryComponents: [
         SortingDialogComponent,
         ReportsComponent,
-        LicenceAgreementComponent
+        LicenceAgreementComponent,
+        ChangePasswordComponent
     ],
     imports: [
         BrowserModule,
@@ -110,7 +116,8 @@ const appRoutes: Routes = [
        
     ],
     exports: [
-        SortingDialogComponent
+        SortingDialogComponent,
+        ChangePasswordComponent
     ],
     bootstrap: [
         AppComponent

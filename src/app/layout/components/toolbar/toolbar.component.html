@@ -1162,7 +1162,7 @@
                                 <section class="group-section-tab action_tab">
                                     <!-- <span class="action-section">Action</span> -->
                                     <section class="ribbon-section">
-                                        <button mat-button [routerLink]="'/users'">
+                                        <button mat-button (click)="setTab($event)" [routerLink]="'/users'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img  src="assets/icons/web_app/icon_firm_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1174,7 +1174,7 @@
                                         </button>
                                     </section>
                                     <section class="ribbon-section">
-                                        <button mat-button [routerLink]="'/activities'">
+                                        <button mat-button (click)="setTab($event)" [routerLink]="'/activities'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img  src="assets/icons/web_app/icon_time_cost_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1185,7 +1185,7 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <div class="light_label_txt">Exit</div>
+                                    <div class="light_label_txt">Setup</div>
                                 </section>
                             </mat-card-content>
                         </mat-card>

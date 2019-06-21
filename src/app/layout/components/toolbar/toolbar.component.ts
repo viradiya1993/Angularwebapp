@@ -352,7 +352,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
 
-  
+
     /* ---------------------------------------------------------------------help Licence start--------------------------------------------------------------------------  */
     openLicence(Data) {
         let w = Data == 'LI' ? '50%' : '25%';
@@ -392,7 +392,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     }
 
-  
+
     openCorresDialog() {
         let getMatterGuId = JSON.parse(localStorage.getItem('set_active_matters'));
         let getmatguid = getMatterGuId.MATTERGUID;
@@ -568,9 +568,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     /* User Module Function's */
-    
+
     // Add User Dialog
-    AddUserDialog(){
+    AddUserDialog() {
         const dialogRef = this.dialog.open(UserDialogComponent, {
             disableClose: true,
             panelClass: 'User-dialog',
@@ -580,28 +580,28 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result)
-                 $('#refreshUserTab').click();
+                $('#refreshUserTab').click();
         });
     }
 
     //EditUserDialog
-    EditUserDialog(){
-        const dialogRef = this.dialog.open(UserDialogComponent,{
+    EditUserDialog() {
+        const dialogRef = this.dialog.open(UserDialogComponent, {
             disableClose: true,
             panelClass: 'User-dialog',
-            data:{
+            data: {
                 action: 'edit',
             }
         });
 
         dialogRef.afterClosed().subscribe(result => {
             if (result)
-                 $('#refreshUserTab').click();
+                $('#refreshUserTab').click();
         });
     }
 
     //DeleteUser
-    DeleteUser(): void{
+    DeleteUser(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
@@ -609,30 +609,30 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result)
-            $('#refreshUserTab').click();
+                $('#refreshUserTab').click();
         });
     }
 
     //DuplicateUserDialog
 
-    DuplicateUserDialog(){
+    DuplicateUserDialog() {
         const dialogRef = this.dialog.open(UserDialogComponent, {
             disableClose: true,
             panelClass: 'User-dialog',
             data: {
-               action: 'Duplicate',
+                action: 'Duplicate',
             }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result)
-                 $('#refreshUserTab').click();
+                $('#refreshUserTab').click();
         });
     }
 
     /* Activity Module Function's */
-    
+
     //NewActivityDialog
-    AddActivityDialog(){
+    AddActivityDialog() {
         const dialogRef = this.dialog.open(ActivityDialogComponent, {
             disableClose: true,
             panelClass: 'Activity-dialog',
@@ -642,28 +642,28 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result)
-                 $('#ActivityTab').click();
+                $('#ActivityTab').click();
         });
     }
 
     //EditActivityDialog
-    EditActivityDialog(){
-        const dialogRef = this.dialog.open(ActivityDialogComponent,{
+    EditActivityDialog() {
+        const dialogRef = this.dialog.open(ActivityDialogComponent, {
             disableClose: true,
             panelClass: 'Activity-dialog',
-            data:{
+            data: {
                 action: 'edit',
             }
         });
 
         dialogRef.afterClosed().subscribe(result => {
             if (result)
-                 $('#ActivityTab').click();
+                $('#ActivityTab').click();
         });
     }
 
     //DeleteActivity
-    DeleteActivityDialog():void{
+    DeleteActivityDialog(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
@@ -671,34 +671,34 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result)
-            $('#ActivityTab').click();
+                $('#ActivityTab').click();
         });
     }
 
     //DuplicateActivity
-    DuplicateActivityDialog(){
+    DuplicateActivityDialog() {
         const dialogRef = this.dialog.open(ActivityDialogComponent, {
             disableClose: true,
             panelClass: 'User-dialog',
             data: {
-               action: 'Duplicate',
+                action: 'Duplicate',
             }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result)
-            $('#ActivityTab').click();
+                $('#ActivityTab').click();
         });
     }
 
     //Change Password Dialog
-    ChangePass(){
+    ChangePass() {
         const dialogRef = this.dialog.open(ChangePasswordComponent, {
-            
+
         });
         dialogRef.afterClosed().subscribe(result => {
             console.log(result);
         });
-    }   
+    }
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -707,7 +707,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     logOutUser() {
         this.authenticationService.logout();
     }
-    
+
     navBarSetting(value: any) {
         let x = value.split("/");
         this.activeSubMenu = x[2] ? x[2] : '';
@@ -737,7 +737,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 11;
         } else if (x[1] == "users") {
             this.isTabShow = 12;
-        } else if (x[1] == "activities"){
+        } else if (x[1] == "activities") {
             this.isTabShow = 13;
         }
         else {
@@ -823,7 +823,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    
+
     ViewReceipt() {
         const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
             width: '100%', disableClose: true,
@@ -886,7 +886,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef = null;
         });
     }
-    
+
     NewGeneralReceipt(): void {
         const dialogRef = this._matDialog.open(GeneralReceiptDilogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {

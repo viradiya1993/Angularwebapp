@@ -24,18 +24,18 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
                         <mat-label>Invoice No</mat-label>
-                        <input matInput placeholder="Invoice No" formControlName="INVOICECODE">
+                        <input matInput placeholder="Invoice No" readonly formControlName="INVOICECODE">
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
                         <mat-label>Invoice Date</mat-label>
                         <input (dateInput)="choosedInvoiceDate('input', $event)" (dateChange)="choosedInvoiceDate('change', $event)" matInput readonly [satDatepicker]="picker2" formControlName="INVOICEDATETEXT">
-                        <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
+                        <sat-datepicker #picker2> </sat-datepicker>
                         <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
                         <mat-label>Due Date</mat-label>
                         <input (dateInput)="choosedDueDate('input', $event)" (dateChange)="choosedDueDate('change', $event)" matInput readonly formControlName="DUEDATETEXT" [satDatepicker]="picker1">
-                        <sat-datepicker #picker1 [rangeMode]="true"> </sat-datepicker>
+                        <sat-datepicker #picker1> </sat-datepicker>
                         <sat-datepicker-toggle matSuffix [for]="picker1"></sat-datepicker-toggle>
                     </mat-form-field>
                 </div>
@@ -85,7 +85,7 @@
                             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                 <mat-form-field appearance="outline" class="example" fxFlex="100" class="pr-4">
                                     <mat-label>Comment</mat-label>
-                                    <textarea matInput></textarea>
+                                    <textarea matInput formControlName="COMMENT"></textarea>
                                 </mat-form-field>
                             </div>
                             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -207,7 +207,7 @@
             </form>
         </div>
     </div>
-    
+
     <mat-dialog-actions align="end" class="popup_ftr">
         <button mat-raised-button color="accent" (click)="updateInvoice()" [disabled]="isspiner"><mat-spinner style=" zoom: 0.2;position: absolute;right: 0;left: 0;
             margin: auto;top: 0;bottom: 0;" *ngIf="isspiner"></mat-spinner>Update</button>

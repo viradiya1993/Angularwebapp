@@ -3,7 +3,6 @@ import { environment } from '../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 
-
 @Injectable({
     providedIn: 'root'
   })

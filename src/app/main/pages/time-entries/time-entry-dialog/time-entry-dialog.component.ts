@@ -77,7 +77,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       matterautoVal: [''],
       MATTERGUID: ['', Validators.required],
       ITEMTYPE: [''],
-      QUANTITYTYPE: [''],
+      QUANTITYTYPE: ['Hours'],
       ITEMDATE: ['', Validators.required],
       FEEEARNER: [''],
       QUANTITY: [''],
@@ -94,7 +94,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     if (userType) {
       this.timeEntryForm.controls['FEEEARNER'].setValue(userType.UserId);
     }
-    this.timeEntryForm.controls['QUANTITYTYPE'].setValue('Hours');
     this.timeEntryForm.controls['QUANTITY'].setValue(0);
     this.isLoadingResults = true;
     this.Timersservice.GetLookupsData({}).subscribe(res => {
@@ -124,7 +123,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     });
     this.isLoadingResults = true;
     this.MattersService.getMatters({ "Active": "active" }).subscribe(res => {
-      console.log(res);
       if (res.CODE == 200 && res.STATUS == "success") {
         res.DATA.MATTERS.forEach(itemsdata => {
           if (this.currentTimeMatter == itemsdata.MATTERGUID) {
@@ -145,11 +143,13 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.setTimeEntryData();
     } else if (this.currentTimeMatter != '') {
       this.timeEntryForm.controls['MATTERGUID'].setValue(this.currentTimeMatter);
-      this.timeEntryForm.controls['QUANTITYTYPE'].setValue('hh:mm');
+      let Qval = this.matterTimerData == '' ? 'Hours' : 'hh:mm';
+      this.timeEntryForm.controls['QUANTITYTYPE'].setValue(Qval);
       this.timeEntryForm.controls['QUANTITY'].setValue(this.matterTimerData);
       this.timeEntryForm.controls['ITEMTYPE'].setValue('WIP');
       this.matterChange('MatterGuid', this.currentTimeMatter);
     }
+
   }
   calcPE() {
     this.PRICEINCGSTVAL = round(this.f.PRICE.value * 1.1);
@@ -170,21 +170,20 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   setTimeEntryData() {
     this.isLoadingResults = true;
     this.Timersservice.getTimeEnrtyData({ 'WorkItemGuid': localStorage.getItem('edit_WORKITEMGUID') }).subscribe(response => {
-     console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
- 
+
         // added by web19 19/06 
         this.matterChange('MatterGuid', response.DATA.WORKITEMS[0].MATTERGUID);
         this.matterChange('QuantityType', response.DATA.WORKITEMS[0].QUANTITYTYPE);
         this.timeEntryForm.controls['matterautoVal'].setValue(response.DATA.WORKITEMS[0].SHORTNAME);
         ////
-        
+
         localStorage.setItem('edit_WORKITEMGUID', response.DATA.WORKITEMS[0].WORKITEMGUID);
         let timeEntryData = response.DATA.WORKITEMS[0];
         this.matterList.forEach(itemsdata => {
           if (response.DATA.WORKITEMS[0].MATTERGUID == itemsdata.MATTERGUID) {
             // this.timeEntryForm.controls['matterautoVal'].setValue(itemsdata.SHORTNAME + ' : ' + itemsdata.MATTER);
-           
+
           }
         });
         this.itemTypeChange(timeEntryData.ITEMTYPE);
@@ -221,14 +220,14 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   }
   matterChange(key: any, event: any) {
     if (key == "MatterGuid") {
-      
+
       this.timeEntryForm.controls['MATTERGUID'].setValue(event);
       this.calculateData.MatterGuid = event;
     } else if (key == "FeeEarner") {
-    
+
       this.calculateData.FeeEarner = event;
     } else if (key == "QuantityType") {
-    
+
       switch (event) {
         case 'hh:mm': {
           this.calculateData.QuantityType = 'X';
@@ -309,11 +308,10 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.timeEntryForm.controls['ADDITIONALTEXT'].setValue(value);
   }
   SaveClickTimeEntry() {
-   
-    if(this.ITEMDATEVLAUE=="" || this.ITEMDATEVLAUE==null || this.ITEMDATEVLAUE==undefined){
-      this.ITEMDATEVLAUE=this.f.INVOICEDATE.value;
+
+    if (this.ITEMDATEVLAUE == "" || this.ITEMDATEVLAUE == null || this.ITEMDATEVLAUE == undefined) {
+      this.ITEMDATEVLAUE = this.f.INVOICEDATE.value;
     }
-    console.log(this.ITEMDATEVLAUE);
     this.isspiner = true;
     let PostData: any = {
       "ADDITIONALTEXT": this.f.ADDITIONALTEXT.value,
@@ -399,7 +397,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   saveTimeEntry(PostTimeEntryData: any) {
     PostTimeEntryData.VALIDATEONLY = false;
     this.Timersservice.SetWorkItems(PostTimeEntryData).subscribe(res => {
-      console.log(res);
       if (res.CODE == 200 && res.STATUS == "success") {
         this.toasterService.success(this.successMsg);
         this.dialogRef.close(true);

@@ -20,19 +20,18 @@ export class GenerateTemplatesDialoagComponent implements OnInit {
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   isLoadingResults: boolean;
   Templatedata: any = [];
-  getTemplateArray:any=[];
+  getTemplateArray: any = [];
   highlightedRows: any;
-  getDropDownValue:any=[];
- 
+  getDropDownValue: any = [];
+
   pageSize: any;
-  constructor(public TemplateListData: TemplateListDetails,private toastr: ToastrService,
-    public dialogRef: MatDialogRef<GenerateTemplatesDialoagComponent>,) { }
+  constructor(public TemplateListData: TemplateListDetails, private toastr: ToastrService,
+    public dialogRef: MatDialogRef<GenerateTemplatesDialoagComponent>, ) { }
 
   ngOnInit() {
     this.isLoadingResults = true;
     let d = {};
     this.TemplateListData.getTemplateList(d).subscribe(response => {
-      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Templatedata = new MatTableDataSource(response.DATA.TEMPLATES);
 
@@ -49,12 +48,13 @@ export class GenerateTemplatesDialoagComponent implements OnInit {
     });
     this.pageSize = localStorage.getItem('lastPageSize');
   }
-  
-  selectTemplate(data){
-    console.log(data);
-    this.dialogRef.close(data.TEMPLATENAME);
-    // localStorage.setItem("TemplateName",data.TEMPLATENAME);
 
+  selectTemplate(data) {
+    this.dialogRef.close(data.TEMPLATENAME);
+  }
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
   }
 
 }

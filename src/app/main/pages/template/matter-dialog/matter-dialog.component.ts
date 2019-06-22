@@ -163,13 +163,6 @@ export class MatterDialogComponentForTemplate implements OnInit {
         this.dialog.open(MatterDialogComponentForTemplate,{
           data:response
         });
-        // this.dialog.open(MatterDialogComponentForTemplate,{
-        //   data:{
-        //     action:'ReadyToViewTemplate'
-        //   }
-        // });
-
-
       }
     }, error => {
       this.toastr.error(error);

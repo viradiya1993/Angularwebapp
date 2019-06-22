@@ -118,7 +118,10 @@ export class InvoiceAddDailogComponent implements OnInit {
   }
   invoiceDateChange(type: string, event: MatDatepickerInputEvent<Date>) {
     this.addInvoiceForm.controls['INVOICEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
-    var dt = event.value;
+  }
+
+  firstDate(event) {
+    var dt = event;
     dt.setMonth(dt.getMonth() + 1);
     this.addInvoiceForm.controls['DUEDATETEXT'].setValue(new Date(dt));
     this.addInvoiceForm.controls['DUEDATE'].setValue(this.datepipe.transform(dt, 'dd/MM/yyyy'));

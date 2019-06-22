@@ -151,11 +151,15 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     }
 
   }
-  calcPE() {
-    this.PRICEINCGSTVAL = round(this.f.PRICE.value * 1.1);
+  calcPE(val) {
+  
+   console.log(parseFloat(this.f.PRICE.value).toFixed(2));
+  //  this.PRICEVAL=parseFloat(this.f.PRICE.value).toFixed(2);
+    // console.log(val.toFixed(2))
+    this.PRICEINCGSTVAL = round(this.f.PRICE.value * 1.1).toFixed(2);
   }
-  calcPI() {
-    this.PRICEVAL = round(this.f.PRICEINCGST.value / 1.1);
+  calcPI(val) {
+    this.PRICEVAL = round(this.f.PRICEINCGST.value / 1.1).toFixed(2);
   }
   public selectMatter() {
     const dialogRef = this.MatDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
@@ -412,5 +416,5 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.toastr.error(err);
     });
   }
-
+ 
 }

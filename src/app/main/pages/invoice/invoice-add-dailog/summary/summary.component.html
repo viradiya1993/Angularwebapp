@@ -10,11 +10,11 @@
             Total invoiced befor this invoice ?
         </div>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input matInput readonly placeholder="Date Received" formControlName="INVOICEDVALUEEXGST">
+            <input class="sideText" matInput readonly placeholder="Date Received" formControlName="INVOICEDVALUEEXGST">
         </mat-form-field>
         <div fxFlex="10"></div>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input matInput readonly placeholder="Date Received" formControlName="INVOICEDVALUEINCGST">
+            <input class="sideText"  matInput readonly placeholder="Date Received" formControlName="INVOICEDVALUEINCGST">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -22,11 +22,11 @@
             Total invoiced including this invoice?
         </div>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input matInput readonly placeholder="Date Received" formControlName="FIXEDRATEEXGSTTOTAL">
+            <input class="sideText" matInput readonly placeholder="Date Received" formControlName="FIXEDRATEEXGSTTOTAL">
         </mat-form-field>
         <div fxFlex="10"></div>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input matInput readonly placeholder="Date Received" formControlName="FIXEDRATEINCGSTTOTAL">
+            <input class="sideText" matInput readonly placeholder="Date Received" formControlName="FIXEDRATEINCGSTTOTAL">
         </mat-form-field>
     </div>
 
@@ -34,10 +34,10 @@
         <div fxFlex="30" style="text-align: right; padding-right: 19px !important;">Fixed Price Status: </div>
         <div fxFlex="20">Exceeded By :</div>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input matInput readonly placeholder="Date Received" formControlName="FIXEDRATEEXGST">
+            <input class="sideText" matInput readonly placeholder="Date Received" formControlName="FIXEDRATEEXGST">
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input matInput readonly placeholder="Date Received" formControlName="FIXEDRATEINCGST">
+            <input class="sideText" matInput readonly placeholder="Date Received" formControlName="FIXEDRATEINCGST">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="!isFixPrice">
@@ -48,10 +48,10 @@
         <div fxFlex="30" style="text-align: right; padding-right: 19px !important;">Minimum Estimate Status: </div>
         <div fxFlex="20">Exceeded By :</div>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input matInput readonly placeholder="Date Received" formControlName="ESTIMATETOTOTALEXGST">
+            <input class="sideText" matInput readonly placeholder="Date Received" formControlName="ESTIMATETOTOTALEXGST">
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input matInput readonly placeholder="Date Received" formControlName="ESTIMATETOTOTALINCGST">
+            <input class="sideText" matInput readonly placeholder="Date Received" formControlName="ESTIMATETOTOTALINCGST">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="!isMin">
@@ -68,7 +68,7 @@
             <input matInput readonly placeholder="Date Received" formControlName="ESTIMATEFROMTOTALEXGST">
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input matInput readonly placeholder="Date Received" formControlName="ESTIMATEFROMTOTALINCGST">
+            <input  matInput readonly placeholder="Date Received" formControlName="ESTIMATEFROMTOTALINCGST">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="!isMax">

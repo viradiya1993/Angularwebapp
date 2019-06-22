@@ -138,6 +138,13 @@ export class MatterDialogComponentForTemplate implements OnInit {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.toastr.success('Template Generate successfully');
         this.dialogRef.close(true);
+        // this.dialog.open(MatterDialogComponentForTemplate,{
+        //   data:{
+        //     action:'ReadyToViewTemplate'
+        //   }
+        // });
+
+
       }
     }, error => {
       this.toastr.error(error);

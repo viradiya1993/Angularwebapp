@@ -52,7 +52,8 @@ export class GeneralComponent implements OnInit {
       }
     });
   }
-  calcPE() {
+  calcPE(val) {
+    
     this.PRICEVALGST = round(this.f.EstimateFromTotalExGST.value * 1.1);
   }
   calcPI() {

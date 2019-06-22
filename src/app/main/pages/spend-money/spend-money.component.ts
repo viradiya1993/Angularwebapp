@@ -62,6 +62,7 @@ export class SpendMoneyComponent implements OnInit {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
   }
+  
   loadData() {
     
    
@@ -116,6 +117,9 @@ export class SpendMoneyComponent implements OnInit {
     });
   }
   onSearch(s) {
+
+  }
+  SpendClassChange(val){
 
   }
 }

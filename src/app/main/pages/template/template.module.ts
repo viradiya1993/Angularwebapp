@@ -15,6 +15,9 @@ import { MatterDialogComponentForTemplate } from './matter-dialog/matter-dialog.
 
 const routes = [
   { path: '', component: TemplateComponent, canActivate: [AuthGuard] },
+  { path: 'create-document/matter', component: TemplateComponent },
+  { path: 'create-document/invoice', component: TemplateComponent },
+
 
 ];
 @NgModule({

@@ -191,6 +191,7 @@ export class ReportsComponent implements OnInit {
        keydelete(ReportData);         
        //Api Report Generate 
        this.Reportfilter.ReportgenerateData(ReportData).subscribe(reportgenerateData => {
+         console.log(reportgenerateData);
         if(reportgenerateData.PDF_Generation.CODE==200 && reportgenerateData.PDF_Generation.STATUS=="success"){         
           this.dialogRef.close(true); 
           this.isLoadingResults = false;

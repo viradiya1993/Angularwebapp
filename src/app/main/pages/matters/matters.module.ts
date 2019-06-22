@@ -43,6 +43,8 @@ import { CouncilComponent } from './matter-popup/newmatter-detail/matter-address
 import { CrownAllotmentComponent } from './matter-popup/newmatter-detail/matter-address-popup/crown-allotment/crown-allotment.component';
 import { CorrespondDailogComponent } from './correspond-dailog/correspond-dailog.component';
 import { UserSelectPopupComponent } from './user-select-popup/user-select-popup.component';
+import { NumericDirective } from './matter-popup/numericValidation.component';
+
 
 
 
@@ -59,6 +61,7 @@ const routes = [
     GeneralComponent,
     ClientComponent,
     RatesComponent,
+    NumericDirective,
     // DetailsComponent,
     OthersComponent,
     // NewmatterDetailComponent,

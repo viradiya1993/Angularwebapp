@@ -31,7 +31,7 @@
                         <mat-option *ngFor="let TimerDrop of TimerDropData" value="{{TimerDrop.USERID}}">{{TimerDrop.USERID}}</mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field class="example" appearance="outline">
+                <mat-form-field class="example  p-16" appearance="outline">
                     <mat-label>Uninvoiced Work</mat-label>
                     <mat-select (selectionChange)="uninvoicedWorkChange($event.value)" formControlName="uninvoicedWork">
                         <mat-option value="No">Uninvoiced Work</mat-option>
@@ -39,7 +39,7 @@
                         <mat-option value="">All Work</mat-option>
                     </mat-select>
                 </mat-form-field>
-                <mat-form-field appearance="outline" class="">
+                <mat-form-field appearance="outline" class="p-16">
                     <mat-label>Date Range</mat-label>
                     <input matInput placeholder="Choose a date" [satDatepicker]="picker2" formControlName="date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)">
                     <!-- (click)="picker2.open();" -->

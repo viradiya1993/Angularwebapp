@@ -5,7 +5,7 @@
                 <form>
                     <mat-form-field class="example" appearance="outline">
                         <mat-label>Show What?</mat-label>
-                        <mat-select>
+                        <mat-select (selectionChange)="SpendClassChange($event.value)" >
                             <mat-option value="Expense">Expense</mat-option>
                             <mat-option value="Matter Expense">Matter Expence</mat-option>
                             <mat-option value="Capital">Capital</mat-option>

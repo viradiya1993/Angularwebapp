@@ -10,11 +10,11 @@
             <mat-checkbox formControlName="APPLYTOFEES">Apply to fees/Activities</mat-checkbox>
         </div>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input matInput readonly placeholder="Date Received" formControlName="ActivityEXTOTAL">
+            <input  class="sideText"  matInput readonly placeholder="Date Received" formControlName="ActivityEXTOTAL">
         </mat-form-field>
         <div fxFlex="10"></div>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input matInput readonly placeholder="Date Received" formControlName="ActivityINTOTAL">
+            <input  class="sideText" matInput readonly placeholder="Date Received" formControlName="ActivityINTOTAL">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -22,11 +22,11 @@
             <mat-checkbox>Apply to sundries /searching</mat-checkbox>
         </div>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input matInput readonly placeholder="Date Received" formControlName="SundryEXTOTAL">
+            <input  class="sideText" matInput readonly placeholder="Date Received" formControlName="SundryEXTOTAL">
         </mat-form-field>
         <div fxFlex="10"></div>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input matInput readonly placeholder="Date Received" formControlName="SundryINTOTAL">
+            <input  class="sideText" matInput readonly placeholder="Date Received" formControlName="SundryINTOTAL">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -34,11 +34,11 @@
             <mat-checkbox>aooky to Matter Expenses</mat-checkbox>
         </div>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input matInput readonly placeholder="Date Received" formControlName="WIPEXTOTAL">
+            <input  class="sideText" matInput readonly placeholder="Date Received" formControlName="WIPEXTOTAL">
         </mat-form-field>
         <div fxFlex="10"></div>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input matInput readonly placeholder="Date Received" formControlName="WIPINTOTAL">
+            <input  class="sideText" matInput readonly placeholder="Date Received" formControlName="WIPINTOTAL">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -64,8 +64,8 @@
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input matInput type="number" min="0" max="100" placeholder="Percentage" *ngIf="isAmount" (keydown)="onAmoPerChnage($event)" formControlName="Percentage">
-            <input matInput placeholder="Amount" *ngIf="!isAmount" (keydown)="onAmoPerChnage($event)" formControlName="amount">
+            <input  class="sideText" matInput type="number" min="0" max="100" placeholder="Percentage" *ngIf="isAmount" (keydown)="onAmoPerChnage($event)" formControlName="Percentage">
+            <input  class="sideText" matInput placeholder="Amount" *ngIf="!isAmount" (keydown)="onAmoPerChnage($event)" formControlName="amount">
         </mat-form-field>
     </div>
     <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">

@@ -6,7 +6,7 @@
             width: 100%;
             max-width: 480px;
             border-radius: 28px;
-             overflow: hidden;
+            overflow: hidden;
             @include mat-elevation(1);
             .search {
                 width: 100%;
@@ -26,7 +26,7 @@
         }
     }
     .content {
-         overflow: hidden;
+        overflow: hidden;
         // margin-top: 10px;
         .example {
             width: 18%;
@@ -70,6 +70,7 @@ app-time-billing {
 .more_tbl_clmn .mat-cell:last-child {
     padding-right: 70px;
 }
+
 // .h2 {
 //     margin-top: 13px !important;
 // }
@@ -77,6 +78,9 @@ app-time-billing {
 //     margin-top: 18px !important;
 //     margin-left: 45px !important;
 // }
-.page-layout.carded > .top-bg.work_progress_height {
+.page-layout.carded>.top-bg.work_progress_height {
     height: 86px;
+    th.mat-sort-header-sorted {
+        color: black;
+    }
 }

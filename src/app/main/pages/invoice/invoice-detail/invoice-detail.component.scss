@@ -140,13 +140,22 @@ table.mat-table {
     min-height: 250px;
     display: inline-block;
 }
+
 .view_invoice_main .mat-icon-button {
     width: 30px;
     height: 30px;
     line-height: 30px;
 }
+
 .generalReceiptForm {
     float: left;
     width: 100%;
 }
-.sideText{ text-align: right; }
+
+.sideText {
+    text-align: right;
+}
+
+th.mat-sort-header-sorted {
+    color: black;
+}

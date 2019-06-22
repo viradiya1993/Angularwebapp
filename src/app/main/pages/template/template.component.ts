@@ -6,6 +6,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { MatterDialogComponent } from '../time-entries/matter-dialog/matter-dialog.component';
 import { ContactSelectDialogComponent } from '../contact/contact-select-dialog/contact-select-dialog.component';
 import * as $ from 'jquery';
+import {MatSort} from '@angular/material';
 
 @Component({
   selector: 'app-template',
@@ -23,6 +24,7 @@ export class TemplateComponent implements OnInit {
   currentMatterData: any;
   Templatedata: any = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   isLoadingResults: boolean;
   pageSize: any;
   abc: number;
@@ -47,6 +49,7 @@ export class TemplateComponent implements OnInit {
         this.Templatedata = new MatTableDataSource(response.DATA.TEMPLATES);
 
         this.Templatedata.paginator = this.paginator;
+        this.Templatedata.sort = this.sort;
         if (response.DATA.TEMPLATES[0]) {
           // localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);
           this.highlightedRows = response.DATA.TEMPLATES[0].TEMPLATENAME;

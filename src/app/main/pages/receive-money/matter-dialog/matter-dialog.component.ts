@@ -7,6 +7,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.component';
 import { ReceiptDilogComponent } from '../../invoice/receipt-dilog/receipt-dilog.component';
 // import { TemplateComponent } from '../template.component';
+import {MatSort} from '@angular/material';
 
 @Component({
   selector: 'app-matter-dialog',
@@ -22,6 +23,7 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
   highlightedRows: any;
   theme_type = localStorage.getItem('theme_type');
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   matterFilterForm: FormGroup;
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   isLoadingResults: boolean = false;
@@ -101,6 +103,7 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
         }
         this.getDataForTable = new MatTableDataSource(response.DATA.MATTERS);
         this.getDataForTable.paginator = this.paginator;
+        this.getDataForTable.sort = this.sort;
         this.isLoadingResults = false;
       }
     }, error => {

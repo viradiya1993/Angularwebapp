@@ -13,6 +13,7 @@ import { ChronologyComponent } from './chronology/chronology.component';
 import { AuthoritiesComponent } from './authorities/authorities.component';
 import { FileNotesComponent } from './file-notes/file-notes.component';
 import { SafecustodyComponent } from './safecustody/safecustody.component';
+import {MatSortModule} from '@angular/material/sort';
 
 const routes = [
   { path: '', redirectTo: '/legal-details/chronology', pathMatch: 'full', canActivate: [AuthGuard] },
@@ -48,7 +49,8 @@ const routes = [
     MatSlideToggleModule,
     MatExpansionModule,
     MatTabsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSortModule
   ],
   exports: [
     LegalDetailsComponent

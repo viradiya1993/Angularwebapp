@@ -6,6 +6,7 @@ import { ContactService, TableColumnsService } from '../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import {MatSort} from '@angular/material';
 
 @Component({
   selector: 'app-contact',
@@ -23,6 +24,7 @@ export class ContactComponent implements OnInit {
   displayedColumns: string[];
   tempColobj: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   datanull: null;
   isLoadingResults: boolean = false;
   contactFilter: FormGroup;
@@ -87,6 +89,7 @@ export class ContactComponent implements OnInit {
     this.Contact.ContactData(data).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Contactdata = new MatTableDataSource(response.DATA.CONTACTS);
+        this.Contactdata.sort = this.sort;
         this.Contactdata.paginator = this.paginator;
         if (response.DATA.CONTACTS[0]) {
           localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);
@@ -123,6 +126,7 @@ export class ContactComponent implements OnInit {
         if (!result.columObj) {
           this.Contactdata = new MatTableDataSource([]);
           this.Contactdata.paginator = this.paginator;
+          this.Contactdata.sort = this.sort;
         } else {
           let filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
           let filterVal = { 'active': filterVals.active, 'FirstLetter': filterVals.FirstLetter };

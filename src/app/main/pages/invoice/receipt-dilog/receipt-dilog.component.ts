@@ -9,6 +9,7 @@ import { Pipe } from '@angular/compiler/src/core';
 import { MatterInvoicesService, GetReceptData, ContactService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 //import { TableColumnsService,MattersService, TimersService, GetReceptData } from '../../../_services';
+import { MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-receipt-dilog',
@@ -33,6 +34,7 @@ export class ReceiptDilogComponent implements OnInit {
   receiptData: any;
   formaction: string;
   val: any;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private toastr: ToastrService,
@@ -98,7 +100,14 @@ export class ReceiptDilogComponent implements OnInit {
     this.getPayor({});
     this.PrepareReceiptData = new MatTableDataSource([]);
     this.PrepareReceiptData.paginator = this.paginator;
+    this.PrepareReceiptData.sort = this.sort;
+
+    // }
+
   }
+  // setOtherReceiptData(){
+
+  // }
   setInvoiceForReceipt(reciptGuid) {
     this.isLoadingResults = true;
     this.GetReceptData.getRecept(reciptGuid).subscribe(response => {
@@ -111,6 +120,7 @@ export class ReceiptDilogComponent implements OnInit {
         }
         this.PrepareReceiptData = new MatTableDataSource(response.DATA.RECEIPTALLOCATIONS)
         this.PrepareReceiptData.paginator = this.paginator;
+        this.PrepareReceiptData.sort = this.sort;
       } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
@@ -144,6 +154,7 @@ export class ReceiptDilogComponent implements OnInit {
         this.PrepareReceiptData = new MatTableDataSource(response.DATA.INVOICES)
         this.PrepareReceiptData.paginator = this.paginator;
         this.PrepareReceiptData = response.DATA.INVOICES;
+        this.PrepareReceiptData.sort = this.sort;
       }
     }, error => {
       this.toastr.error(error);

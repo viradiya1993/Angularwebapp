@@ -7,6 +7,7 @@ import * as $ from 'jquery';
 import { MatTableDataSource, MatPaginator, MatDialogConfig, MatDialog, MatDatepickerInputEvent } from '@angular/material';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { DatePipe } from '@angular/common';
+import {MatSort} from '@angular/material';
 
 @Component({
   selector: 'app-invoice',
@@ -27,6 +28,7 @@ export class InvoiceComponent implements OnInit {
   pageSize: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   currentInvoiceData: any;
   lastFilter: any;
   MatterInvoicesdata;
@@ -118,6 +120,7 @@ export class InvoiceComponent implements OnInit {
         }
         this.MatterInvoicesdata = new MatTableDataSource(response.DATA.INVOICES)
         this.MatterInvoicesdata.paginator = this.paginator;
+        this.MatterInvoicesdata.sort = this.sort;
       }
       this.isLoadingResults = false;
     }, error => {
@@ -145,6 +148,7 @@ export class InvoiceComponent implements OnInit {
         if (!result.columObj) {
           this.MatterInvoicesdata = new MatTableDataSource([]);
           this.MatterInvoicesdata.paginator = this.paginator;
+          this.MatterInvoicesdata.sort = this.sort;
         } else {
           this.loadData(JSON.parse(localStorage.getItem('matter_invoice_filter')));
         }

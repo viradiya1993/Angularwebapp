@@ -7,6 +7,8 @@ import { WorkInProgressService, TableColumnsService } from '../../../../_service
 import * as $ from 'jquery';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import {MatSort} from '@angular/material';
+
 @Component({
   selector: 'app-work-in-progress',
   templateUrl: './work-in-progress.component.html',
@@ -24,6 +26,7 @@ export class WorkInProgressComponent implements OnInit {
   isShowDrop: boolean;
   lastFilter: any
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   isLoadingResults: boolean = false;
   constructor(public datepipe: DatePipe, private dialog: MatDialog, private fb: FormBuilder, private WorkInProgress: WorkInProgressService, private TableColumnsService: TableColumnsService, private toastr: ToastrService) {
     this.lastFilter = JSON.parse(localStorage.getItem('Work_in_progress_filter'));
@@ -67,6 +70,7 @@ export class WorkInProgressComponent implements OnInit {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.WorkInProgressdata = new MatTableDataSource(res.DATA.WORKITEMS);
         this.WorkInProgressdata.paginator = this.paginator;
+        this.WorkInProgressdata.sort = this.sort;
       }
       this.isLoadingResults = false;
     }, err => {
@@ -129,6 +133,7 @@ export class WorkInProgressComponent implements OnInit {
         if (!result.columObj) {
           this.WorkInProgressdata = new MatTableDataSource([]);
           this.WorkInProgressdata.paginator = this.paginator;
+          this.WorkInProgressdata.sort = this.sort;
         } else {
           this.loadData({});
         }

@@ -116,14 +116,12 @@ export class InvoiceAddDailogComponent implements OnInit {
     });
     this.isLoadingResults = false;
   }
-  firstDate(val) {
-    var dt = val._d;
-    dt.setMonth(dt.getMonth() + 1);
-    this.addInvoiceForm.controls['DUEDATETEXT'].setValue(dt);
-    this.addInvoiceForm.controls['DUEDATE'].setValue(dt);
-  }
   invoiceDateChange(type: string, event: MatDatepickerInputEvent<Date>) {
     this.addInvoiceForm.controls['INVOICEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+    var dt = event.value;
+    dt.setMonth(dt.getMonth() + 1);
+    this.addInvoiceForm.controls['DUEDATETEXT'].setValue(new Date(dt));
+    this.addInvoiceForm.controls['DUEDATE'].setValue(this.datepipe.transform(dt, 'dd/MM/yyyy'));
   }
   dueDateChange(type: string, event: MatDatepickerInputEvent<Date>) {
     this.addInvoiceForm.controls['DUEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));

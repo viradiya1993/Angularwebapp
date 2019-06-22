@@ -5,6 +5,8 @@ import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.c
 import { MatterInvoicesService, TableColumnsService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
+import {MatSort} from '@angular/material';
+
 
 @Component({
   selector: 'app-matter-invoices',
@@ -19,6 +21,7 @@ export class MatterInvoicesComponent implements OnInit {
   displayedColumns: string[];
   tempColobj: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   pageSize: any;
   isLoadingResults: boolean = false;
   constructor(private dialog: MatDialog,
@@ -44,7 +47,8 @@ export class MatterInvoicesComponent implements OnInit {
     this.MatterInvoices.MatterInvoicesData(potData).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.MatterInvoicesdata = new MatTableDataSource(res.DATA.INVOICES)
-        this.MatterInvoicesdata.paginator = this.paginator
+        this.MatterInvoicesdata.paginator = this.paginator;
+        this.MatterInvoicesdata.sort = this.sort;
       }
       this.isLoadingResults = false;
     }, err => {
@@ -80,6 +84,7 @@ export class MatterInvoicesComponent implements OnInit {
         if (!result.columObj) {
           this.MatterInvoicesdata = new MatTableDataSource([]);
           this.MatterInvoicesdata.paginator = this.paginator;
+          this.MatterInvoicesdata.sort = this.sort;
         } else {
           this.loadData();
         }

@@ -7,6 +7,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.component';
 import { InvoiceAddDailogComponent } from '../invoice-add-dailog/invoice-add-dailog.component';
 // import { TemplateComponent } from '../template.component';
+import {MatSort} from '@angular/material';
 
 @Component({
   selector: 'app-select-invoice-dialog',
@@ -22,6 +23,7 @@ export class InvoiceDialogComponentForTemplate implements OnInit {
   highlightedRows: any;
   theme_type = localStorage.getItem('theme_type');
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   matterFilterForm: FormGroup;
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   isLoadingResults: boolean = false;
@@ -62,6 +64,7 @@ export class InvoiceDialogComponentForTemplate implements OnInit {
         }
         this.getDataForTable = new MatTableDataSource(response.DATA.INVOICES);
         this.getDataForTable.paginator = this.paginator;
+        this.getDataForTable.sort = this.sort;
         // this.MatterInvoicesdata = new MatTableDataSource(response.DATA.INVOICES)
         // this.MatterInvoicesdata.paginator = this.paginator;
       }

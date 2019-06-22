@@ -5,6 +5,8 @@ import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.c
 import { ToastrService } from 'ngx-toastr';
 import { WorkInProgressService, TableColumnsService } from '../../../../_services';
 import * as $ from 'jquery';
+import {MatSort} from '@angular/material';
+
 @Component({
   selector: 'app-work-in-progress',
   templateUrl: './work-in-progress.component.html',
@@ -19,6 +21,7 @@ export class WorkInProgressComponent implements OnInit {
   pageSize: any;
   tempColobj: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   isLoadingResults: boolean = false;
   constructor(private dialog: MatDialog, private WorkInProgress: WorkInProgressService, private TableColumnsService: TableColumnsService, private toastr: ToastrService) {
 
@@ -50,6 +53,7 @@ export class WorkInProgressComponent implements OnInit {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.WorkInProgressdata = new MatTableDataSource(res.DATA.WORKITEMS);
         this.WorkInProgressdata.paginator = this.paginator;
+        this.WorkInProgressdata.sort = this.sort;
       }
       this.isLoadingResults = false;
     }, err => {
@@ -78,6 +82,7 @@ export class WorkInProgressComponent implements OnInit {
         if (!result.columObj) {
           this.WorkInProgressdata = new MatTableDataSource([]);
           this.WorkInProgressdata.paginator = this.paginator;
+          this.WorkInProgressdata.sort = this.sort;
         } else {
           this.loadData();
         }

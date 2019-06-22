@@ -4,6 +4,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { AuthoritiesService, TableColumnsService } from './../../../../_services';
 import * as $ from 'jquery';
+import {MatSort} from '@angular/material';
 @Component({
   selector: 'app-authorities',
   templateUrl: './authorities.component.html',
@@ -18,6 +19,7 @@ export class AuthoritiesComponent implements OnInit {
   pageSize: any;
   tempColobj: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   isLoadingResults: boolean = false;
 
   constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, private authorities_service: AuthoritiesService) { }
@@ -47,6 +49,7 @@ export class AuthoritiesComponent implements OnInit {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.authorities_table = new MatTableDataSource(response.DATA.MATTERAUTHORITIES);
         this.authorities_table.paginator = this.paginator;
+        this.authorities_table.sort = this.sort;
       }
       this.isLoadingResults = false;
     }, err => {
@@ -77,6 +80,7 @@ export class AuthoritiesComponent implements OnInit {
         if (!result.columObj) {
           this.authorities_table = new MatTableDataSource([]);
           this.authorities_table.paginator = this.paginator;
+          this.authorities_table.sort = this.sort;
         } else {
           this.LoadData();
         }

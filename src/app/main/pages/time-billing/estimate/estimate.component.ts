@@ -5,6 +5,8 @@ import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.c
 import { EstimateService, GetallcolumnsFilterService, TableColumnsService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
+import {MatSort} from '@angular/material';
+
 
 @Component({
   selector: 'app-estimate',
@@ -19,6 +21,7 @@ export class EstimateComponent implements OnInit {
   tempColobj: any;
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   isLoadingResults: boolean = false;
   ColumnsObj: any = [];
   constructor(private TableColumnsService: TableColumnsService,
@@ -37,6 +40,7 @@ export class EstimateComponent implements OnInit {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.Estimatedata = new MatTableDataSource(res.DATA.ESTIMATES)
         this.Estimatedata.paginator = this.paginator
+        this.Estimatedata.sort = this.sort;
         this.isLoadingResults = false;
       }
     }, err => {
@@ -77,6 +81,7 @@ export class EstimateComponent implements OnInit {
         if (!result.columObj) {
           this.Estimatedata = new MatTableDataSource([]);
           this.Estimatedata.paginator = this.paginator;
+          this.Estimatedata.sort = this.sort;
         } else {
           this.loadData();
         }

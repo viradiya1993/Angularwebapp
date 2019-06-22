@@ -38,9 +38,9 @@
                 </div>
             </div>
             <div class="example-containerdata">
-                <table mat-table #table [dataSource]="getDataForTable" [@animateStagger]="{value:'50'}">
+                <table mat-table #table [dataSource]="getDataForTable" [@animateStagger]="{value:'50'}" matSort class="mat-elevation-z8">
                     <ng-container matColumnDef="INVOICECODE">
-                        <th mat-header-cell *matHeaderCellDef>INVOICECODE</th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>INVOICECODE</th>
                         <td mat-cell *matCellDef="let row">
                             <p class="job-title text-truncate">
                                 {{row.INVOICECODE }}
@@ -48,7 +48,7 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="CLIENTNAME">
-                        <th mat-header-cell *matHeaderCellDef>CLIENTNAME</th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>CLIENTNAME</th>
                         <td mat-cell *matCellDef="let row">
                             <p class="company text-truncate">
                                 {{row.CLIENTNAME }}
@@ -56,7 +56,7 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="INVOICETOTAL">
-                        <th mat-header-cell *matHeaderCellDef>INVOICETOTAL</th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>INVOICETOTAL</th>
                         <td mat-cell *matCellDef="let row">
                             <p class="company text-truncate">
                                 {{row.INVOICETOTAL }}

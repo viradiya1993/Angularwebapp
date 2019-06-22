@@ -17,7 +17,7 @@ import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatRadioModule} from '@angular/material/radio';
-
+import {MatSortModule} from '@angular/material/sort';
 
 const routes = [
   { path: 'system-setting', component: SystemSettingComponent, canActivate: [AuthGuard] },
@@ -71,7 +71,8 @@ const routes = [
     MatCheckboxModule,
     DragDropModule,
     MatExpansionModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSortModule
     
   ],
   exports: [

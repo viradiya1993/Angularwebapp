@@ -9,6 +9,7 @@ import { Pipe } from '@angular/compiler/src/core';
 import { MatterInvoicesService, GetReceptData, ContactService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 //import { TableColumnsService,MattersService, TimersService, GetReceptData } from '../../../_services';
+import {MatSort} from '@angular/material';
 
 @Component({
   selector: 'app-receipt-dilog',
@@ -31,6 +32,7 @@ export class ReceiptDilogComponent implements OnInit {
   receiptCode: any;
   gst: any;
   receiptData: any;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private toastr: ToastrService,
@@ -131,6 +133,7 @@ export class ReceiptDilogComponent implements OnInit {
    
     this.PrepareReceiptData = new MatTableDataSource([]);
     this.PrepareReceiptData.paginator = this.paginator;
+    this.PrepareReceiptData.sort = this.sort;
 
     // }
    
@@ -149,6 +152,8 @@ export class ReceiptDilogComponent implements OnInit {
         }
         this.PrepareReceiptData = new MatTableDataSource(response.DATA.RECEIPTALLOCATIONS)
         this.PrepareReceiptData.paginator = this.paginator;
+        this.PrepareReceiptData.sort = this.sort;
+
       }
       this.isLoadingResults = false;
     }, err => {
@@ -175,6 +180,7 @@ export class ReceiptDilogComponent implements OnInit {
         }
         this.PrepareReceiptData = new MatTableDataSource(response.DATA.INVOICES)
         this.PrepareReceiptData.paginator = this.paginator;
+        this.PrepareReceiptData.sort = this.sort;
       }
       // this.isLoadingResults = false;
     }, error => {

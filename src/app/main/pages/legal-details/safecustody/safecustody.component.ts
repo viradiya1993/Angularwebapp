@@ -5,6 +5,7 @@ import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.c
 import { SafeCustodyService, TableColumnsService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
+import {MatSort} from '@angular/material';
 
 @Component({
   selector: 'app-safecustody',
@@ -21,6 +22,7 @@ export class SafecustodyComponent implements OnInit {
   pageSize: any;
   tempColobj: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, private safeCustody_service: SafeCustodyService, private toastr: ToastrService) { }
   safeCustody_table;
@@ -50,6 +52,7 @@ export class SafecustodyComponent implements OnInit {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.safeCustody_table = new MatTableDataSource(response.DATA.SAFECUSTODIES);
         this.safeCustody_table.paginator = this.paginator;
+        this.safeCustody_table.sort = this.sort;
       }
       this.isLoadingResults = false;
     }, error => {
@@ -77,6 +80,7 @@ export class SafecustodyComponent implements OnInit {
         if (!result.columObj) {
           this.safeCustody_table = new MatTableDataSource([]);
           this.safeCustody_table.paginator = this.paginator;
+          this.safeCustody_table.sort = this.sort;
         } else
           this.LoadData();
       }

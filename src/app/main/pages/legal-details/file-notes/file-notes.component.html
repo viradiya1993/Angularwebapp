@@ -32,37 +32,37 @@
                                 <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                             </div>
                             <div class="example-containerdata">
-                                <table mat-table #table [dataSource]="filenotes_table" [@animateStagger]="{value:'50'}">
+                                <table mat-table #table [dataSource]="filenotes_table" [@animateStagger]="{value:'50'}" matSort class="mat-elevation-z8">
                                     <ng-container matColumnDef="FILENOTEGUID">
-                                        <th mat-header-cell class="header_title" *matHeaderCellDef>{{ tempColobj['FILENOTEGUID'].DESCRIPTION }}</th>
+                                        <th mat-header-cell class="header_title" *matHeaderCellDef mat-sort-header>{{ tempColobj['FILENOTEGUID'].DESCRIPTION }}</th>
                                         <td mat-cell *matCellDef="let row">{{row.FILENOTEGUID}}</td>
                                     </ng-container>
                                     <ng-container matColumnDef="MATTERGUID">
-                                        <th mat-header-cell class="header_title" *matHeaderCellDef>{{ tempColobj['MATTERGUID'].DESCRIPTION }}</th>
+                                        <th mat-header-cell class="header_title" *matHeaderCellDef mat-sort-header>{{ tempColobj['MATTERGUID'].DESCRIPTION }}</th>
                                         <td mat-cell *matCellDef="let row">{{row.MATTERGUID}}</td>
                                     </ng-container>
                                     <ng-container matColumnDef="USERNAME">
-                                        <th mat-header-cell class="header_title" *matHeaderCellDef>{{ tempColobj['USERNAME'].DESCRIPTION }}</th>
+                                        <th mat-header-cell class="header_title" *matHeaderCellDef mat-sort-header>{{ tempColobj['USERNAME'].DESCRIPTION }}</th>
                                         <td mat-cell *matCellDef="let row">{{row.USERNAME}}</td>
                                     </ng-container>
                                     <ng-container matColumnDef="DATE">
-                                        <th mat-header-cell class="header_title" *matHeaderCellDef>{{ tempColobj['DATE'].DESCRIPTION }}</th>
+                                        <th mat-header-cell class="header_title" *matHeaderCellDef mat-sort-header>{{ tempColobj['DATE'].DESCRIPTION }}</th>
                                         <td mat-cell *matCellDef="let row">{{row.DATE}}</td>
                                     </ng-container>
                                     <ng-container matColumnDef="TIME">
-                                        <th mat-header-cell class="header_title" *matHeaderCellDef>{{ tempColobj['TIME'].DESCRIPTION }}</th>
+                                        <th mat-header-cell class="header_title" *matHeaderCellDef mat-sort-header>{{ tempColobj['TIME'].DESCRIPTION }}</th>
                                         <td mat-cell *matCellDef="let row">{{row.TIME}}</td>
                                     </ng-container>
                                     <ng-container matColumnDef="NOTE">
-                                        <th mat-header-cell class="header_title" *matHeaderCellDef>{{ tempColobj['NOTE'].DESCRIPTION }}</th>
+                                        <th mat-header-cell class="header_title" *matHeaderCellDef mat-sort-header>{{ tempColobj['NOTE'].DESCRIPTION }}</th>
                                         <td mat-cell *matCellDef="let row">{{row.FILENOTES}}</td>
                                     </ng-container>
                                     <ng-container matColumnDef="SHORTNAME">
-                                        <th mat-header-cell class="header_title" *matHeaderCellDef>{{ tempColobj['SHORTNAME'].DESCRIPTION }}</th>
+                                        <th mat-header-cell class="header_title" *matHeaderCellDef mat-sort-header>{{ tempColobj['SHORTNAME'].DESCRIPTION }}</th>
                                         <td mat-cell *matCellDef="let row">{{row.SHORTNAME}}</td>
                                     </ng-container>
                                     <ng-container matColumnDef="CONTACTNAME">
-                                        <th mat-header-cell class="header_title" *matHeaderCellDef>{{ tempColobj['CONTACTNAME'].DESCRIPTION }}</th>
+                                        <th mat-header-cell class="header_title" *matHeaderCellDef mat-sort-header>{{ tempColobj['CONTACTNAME'].DESCRIPTION }}</th>
                                         <td mat-cell *matCellDef="let row">{{row.CONTACTNAME}}</td>
                                     </ng-container>
                                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

@@ -109,7 +109,6 @@ export class BudgetsComponent implements OnInit {
 })
 
 export class UserBudget {
-  //nowdate:any = '2014/';
   isLoadingResults: boolean = false;
   action_2: string;
   dialogTitle: string;
@@ -133,18 +132,15 @@ export class UserBudget {
       this.dialogTitle = 'Edit Budget';
     }
     this.Months=[];
-    console.log(this.nowdate);
-    console.log(this.Months);
-    // let nowdate =new Date('01/07/2014');
-    // for (let i = 0; i < 12; i++) {
-    //   //let nowdate = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
-    //   console.log(nowdate);
-    //   nowdate.setMonth(nowdate.getMonth()+i);
-    //   this.Months.push(nowdate);
-    //   return this.nowdate.toISOString().substring(0, 10);
-    //   console.log(i);
-    // }
-    // console.log(this.Months);
+    for (let i = 0; i < 12; i++) {
+      let nowdate = (new Date('July 01, 2014'));
+       //let d = nowdate.getDate();
+       console.log(nowdate);
+       nowdate.setMonth(nowdate.getMonth()+i);
+       this.Months.push(nowdate);
+       console.log(i);
+     }
+    
     
   }
 
@@ -152,14 +148,15 @@ export class UserBudget {
     this.user_budget = this._formBuilder.group({
       Budgetdate:[],
       ratehr: [],
-      june1: [],
-      YearHour: [],
-      YearExGst: [],
-      YearlyHours: [],
-      YearlyRate: []
+      Year: [],
+      ExGst: [],
+      june1:[],
+      hoursyear: [],
+      rateyear: [],
     });
 
   }
+
   // Year Hour
   YearHour(val) {
     console.log(val);
@@ -173,32 +170,28 @@ export class UserBudget {
     this.YearlyRate = val / 12
   }
  
-  budgetsChange(type: string, event: MatDatepickerInputEvent<Date>) {
-  
-   this.Months=[];
-   //let nowdate = this.datepipe.transform(event.value, 'dd/MM/yyyy');
-    
-    let nowdate = event.value;
-    console.log(nowdate);
-    for (let i = 0; i < 12; i++) {
-        nowdate.setMonth(nowdate.getMonth()+i);
-        this.Months.push(nowdate);
-       console.log("Block statement execution no." + i);
-     }
+
+  firstDate(value){
+    this.Months=[];
+    // console.log(value);
+    // console.log('-----');
+    let newdate = new Date(value);
+    for(let i = 0 ;i < 12;i++){
+      newdate.setMonth(newdate.getMonth()+i);
+      console.log(newdate);
+     // this.Months.push(new Date(newdate));
+      console.log(i);
+      this.Months.push(newdate);
+    }
+    /* this.Months=[];
+    for (let i = 0; i < 12; i++){
+     let nowdate = value;
+     nowdate.setMonth(nowdate.getMonth()+i);
+     this.Months.push(nowdate);
+     console.log(i);
+    } */
     //console.log(this.Months);
   }
-  // firstDate(value){
-  //   console.log(value);
-  //   console.log('-----');
-  //   this.Months=[];
-  //   let nowdate = value;
-  //   for (let i = 0; i < 12; i++){
-  //    nowdate.setMonth(nowdate.getMonth()+i);
-  //    this.Months.push(nowdate);
-  //    console.log(i);
-  //   }
-  //   console.log(this.Months);
-  // }
 
   //Save Budget
   ok_budget() {

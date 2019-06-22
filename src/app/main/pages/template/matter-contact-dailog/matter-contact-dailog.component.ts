@@ -4,6 +4,8 @@ import { MattersService, ContactService} from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
+import {MatSort} from '@angular/material';
+
 
 @Component({
   selector: 'app-matter-contact-dailog',
@@ -21,6 +23,7 @@ export class MatterContactDailogComponent implements OnInit {
   currentMatterContactData: any;
   pageSize: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   constructor(private toastr: ToastrService, public mattersService: MattersService, public _getContact: ContactService,) { }
 
   ngOnInit() {
@@ -33,6 +36,7 @@ export class MatterContactDailogComponent implements OnInit {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.matterContactData = new MatTableDataSource(response.DATA.queue);
         this.matterContactData.paginator = this.paginator;
+        this.matterContactData.sort = this.sort;
         if (response.DATA.queue[0]) {
           this.currentMatterContactData = response.DATA.queue[0];
           this.highlightedRows = response.DATA.queue[0].MATTERCONTACTGUID;

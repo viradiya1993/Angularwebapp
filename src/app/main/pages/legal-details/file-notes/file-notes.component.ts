@@ -5,6 +5,7 @@ import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.c
 import { FileNotesService, TableColumnsService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
+import {MatSort} from '@angular/material';
 
 @Component({
   selector: 'app-file-notes',
@@ -18,6 +19,7 @@ export class FileNotesComponent implements OnInit {
   displayedColumns: string[];
   isLoadingResults: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   ColumnsObj: any[];
   pageSize: any;
   tempColobj: any;
@@ -38,6 +40,7 @@ export class FileNotesComponent implements OnInit {
         let FILENOTES = response.DATA.FILENOTES == null ? [] : response.DATA.FILENOTES;
         this.filenotes_table = new MatTableDataSource(FILENOTES);
         this.filenotes_table.paginator = this.paginator;
+        this.filenotes_table.sort = this.sort;
       }
       this.isLoadingResults = false;
     }, error => {
@@ -78,6 +81,7 @@ export class FileNotesComponent implements OnInit {
         if (!result.columObj) {
           this.filenotes_table = new MatTableDataSource([]);
           this.filenotes_table.paginator = this.paginator;
+          this.filenotes_table.sort = this.sort;
         } else {
           this.loadData();
         }

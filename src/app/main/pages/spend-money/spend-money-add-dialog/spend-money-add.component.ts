@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Inject, ViewEncapsulation,ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatTableDataSource } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -7,6 +7,8 @@ import { ContactSelectDialogComponent } from '../../contact/contact-select-dialo
 import { MatterDialogComponent } from '../../time-entries/matter-dialog/matter-dialog.component';
 import * as $ from 'jquery';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import {MatSort} from '@angular/material';
+
 
 @Component({
   selector: 'app-spend-money-add',
@@ -32,6 +34,7 @@ export class SpendMoneyAddComponent implements OnInit {
   tdata : boolean;
   confirmDialogRef: any;
   expac : boolean;
+  @ViewChild(MatSort) sort: MatSort;
   constructor(public dialogRef: MatDialogRef<SpendMoneyAddComponent>,
      @Inject(MAT_DIALOG_DATA) public _data: any, 
      private _formBuilder: FormBuilder, 
@@ -45,6 +48,7 @@ export class SpendMoneyAddComponent implements OnInit {
 
     this.getDataForTable = new MatTableDataSource([]);
     this.getDataForTable.paginator = this.paginator;
+    this.getDataForTable.sort = this.sort;
 
     this.spendmoneyForm = this._formBuilder.group({
       DateIncurred: [''],

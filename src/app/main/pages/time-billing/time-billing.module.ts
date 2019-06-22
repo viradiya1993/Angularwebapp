@@ -13,7 +13,7 @@ import { WorkInProgressComponent } from './work-in-progress/work-in-progress.com
 import { MatterInvoicesComponent } from './matter-invoices/matter-invoices.component';
 import { ReceiptsCreditsComponent } from './receipts-credits/receipts-credits.component';
 import { MatterTrustComponent } from './matter-trust/matter-trust.component';
-
+import {MatSortModule} from '@angular/material/sort';
 
 
 const routes = [
@@ -56,7 +56,8 @@ const routes = [
     MatSlideToggleModule,
     MatExpansionModule,
     MatTabsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSortModule
   ],
   exports: [
     TimeBillingComponent

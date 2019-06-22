@@ -28,6 +28,7 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { ContactCorresDetailsComponent } from './contact-corres-details/contact-corres-details.component';
 import { ContactSelectDialogComponent } from './contact-select-dialog/contact-select-dialog.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import {MatSortModule} from '@angular/material/sort';
 const routes = [
   { path: 'contact', component: ContactComponent, canActivate: [AuthGuard] }
 ];
@@ -77,7 +78,8 @@ const routes = [
     SatDatepickerModule,
     SatNativeDateModule,
     MatProgressSpinnerModule,
-    DragDropModule
+    DragDropModule,
+    MatSortModule
   ],
   exports: [
     ContactComponent

@@ -5,6 +5,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { MatterInvoicesService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
+import {MatSort} from '@angular/material';
 
 @Component({
   selector: 'app-invoice-detail',
@@ -26,6 +27,9 @@ export class InvoiceDetailComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatPaginator) paginator1: MatPaginator;
   @ViewChild(MatPaginator) paginator2: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort) sort1: MatSort;
+  @ViewChild(MatSort) sort2: MatSort;
   constructor(
     private _formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public _data: any,
@@ -83,6 +87,7 @@ export class InvoiceDetailComponent implements OnInit {
             if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
               this.invoiceDatasor = new MatTableDataSource(response.DATA.WORKITEMS);
               this.invoiceDatasor.paginator = this.paginator;
+              this.invoiceDatasor.sort = this.sort;
             }
           }, error => {
             this.toastr.error(error);
@@ -92,6 +97,7 @@ export class InvoiceDetailComponent implements OnInit {
             if (ReceiptAllocationData.CODE == 200 && ReceiptAllocationData.STATUS == "success") {
               this.ReceiptsData = new MatTableDataSource(ReceiptAllocationData.DATA.RECEIPTALLOCATIONS);
               this.ReceiptsData.paginator = this.paginator1;
+              this.ReceiptsData.sort = this.sort1;
             }
           }, error => {
             this.toastr.error(error);
@@ -101,6 +107,7 @@ export class InvoiceDetailComponent implements OnInit {
             if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
               this.IntersetChatgesData = new MatTableDataSource(response.DATA.INVOICES);
               this.IntersetChatgesData.paginator = this.paginator2;
+              this.IntersetChatgesData.sort = this.sort2;
             }
           }, error => {
             this.toastr.error(error);

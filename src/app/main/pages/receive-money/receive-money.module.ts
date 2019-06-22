@@ -13,6 +13,7 @@ import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 import { GeneralReceiptDilogComponent } from './general-receipt-dilog/general-receipt-dilog.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatterReceiptDialogComponentForTemplate } from './matter-dialog/matter-dialog.component';
+import {MatSortModule} from '@angular/material/sort';
 const routes = [
   { path: '', component: ReceiveMoneyComponent, canActivate: [AuthGuard] },
 
@@ -54,6 +55,7 @@ const routes = [
     MaterialTimePickerModule,
     MatCheckboxModule,
     DragDropModule,
+    MatSortModule
     
   ],
   exports: [

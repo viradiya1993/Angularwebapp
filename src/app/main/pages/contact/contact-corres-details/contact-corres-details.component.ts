@@ -5,7 +5,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 import { MattersService, ContactService } from './../../../../_services';
 import { ContactDialogComponent } from '../contact-dialog/contact-dialog.component';
 import { ToastrService } from 'ngx-toastr';
-
+import {MatSort} from '@angular/material';
 
 
 @Component({
@@ -22,6 +22,7 @@ export class ContactCorresDetailsComponent implements OnInit {
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   getin: any;
   getDataForTable: any;
   getContactData: any;
@@ -59,6 +60,7 @@ export class ContactCorresDetailsComponent implements OnInit {
         }
         this.getDataForTable = new MatTableDataSource(res.DATA.queue);
         this.getDataForTable.paginator = this.paginator;
+        this.getDataForTable.sort = this.sort;
         this.isLoadingResults = false;
         this.pageSize = localStorage.getItem('lastPageSize');
       }

@@ -42,7 +42,7 @@ import { TitleComponent } from './matter-popup/newmatter-detail/matter-address-p
 import { CouncilComponent } from './matter-popup/newmatter-detail/matter-address-popup/council/council.component';
 import { CrownAllotmentComponent } from './matter-popup/newmatter-detail/matter-address-popup/crown-allotment/crown-allotment.component';
 import { CorrespondDailogComponent } from './correspond-dailog/correspond-dailog.component';
-
+import {MatSortModule} from '@angular/material/sort';
 
 
 const routes = [
@@ -112,7 +112,8 @@ const routes = [
     MatGridListModule,
     MatRadioModule,
     MatGridListModule,
-    DragDropModule
+    DragDropModule,
+    MatSortModule
   ],
   exports: [
     MattersComponent,

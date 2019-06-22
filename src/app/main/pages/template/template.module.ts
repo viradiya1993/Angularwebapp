@@ -12,6 +12,7 @@ import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 import { MatterContactDailogComponent } from './matter-contact-dailog/matter-contact-dailog.component';
 import { MatterDialogComponentForTemplate } from './matter-dialog/matter-dialog.component';
+import {MatSortModule} from '@angular/material/sort';
 
 const routes = [
   { path: '', component: TemplateComponent, canActivate: [AuthGuard] },
@@ -51,7 +52,8 @@ const routes = [
     SatDatepickerModule, SatNativeDateModule,
 
     MaterialTimePickerModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSortModule
   ],
   exports: [
     TemplateComponent

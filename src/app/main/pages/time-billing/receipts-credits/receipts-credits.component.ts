@@ -5,6 +5,9 @@ import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.c
 import { ReceiptsCreditsService, TableColumnsService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
+import {MatSort} from '@angular/material';
+
+
 
 @Component({
   selector: 'app-receipts-credits',
@@ -17,6 +20,7 @@ export class ReceiptsCreditsComponent implements OnInit {
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   displayedColumns: string[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   ColumnsObj: any = [];
   pageSize: any;
   tempColobj: any;
@@ -48,7 +52,8 @@ export class ReceiptsCreditsComponent implements OnInit {
           localStorage.setItem('TBreceiptData',JSON.stringify(res.DATA.RECEIPTS[0]));
           this.highlightedRows = res.DATA.RECEIPTS[0].INCOMEGUID;
           this.ReceiptsCreditsdata = new MatTableDataSource(res.DATA.RECEIPTS)
-          this.ReceiptsCreditsdata.paginator = this.paginator
+          this.ReceiptsCreditsdata.paginator = this.paginator;
+          this.ReceiptsCreditsdata.sort = this.sort;
         }
        
       }
@@ -96,6 +101,7 @@ export class ReceiptsCreditsComponent implements OnInit {
         if (!result.columObj) {
           this.ReceiptsCreditsdata = new MatTableDataSource([]);
           this.ReceiptsCreditsdata.paginator = this.paginator;
+          this.ReceiptsCreditsdata.sort = this.sort;
         } else {
           this.LoadData();
         }

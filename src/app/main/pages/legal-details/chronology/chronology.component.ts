@@ -5,7 +5,7 @@ import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.c
 import { ChronologyService, TableColumnsService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
-
+import {MatSort} from '@angular/material';
 
 
 @Component({
@@ -22,6 +22,7 @@ export class ChronologyComponent implements OnInit {
   //dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   isLoadingResults: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   chronology_table;
   pageSize: any;
   tempColobj: any;
@@ -54,6 +55,7 @@ export class ChronologyComponent implements OnInit {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.chronology_table = new MatTableDataSource(response.DATA.CHRONOLOGIES);
         this.chronology_table.paginator = this.paginator;
+        this.chronology_table.sort = this.sort;
       }
       this.isLoadingResults = false;
     }, error => {
@@ -82,6 +84,7 @@ export class ChronologyComponent implements OnInit {
         if (!result.columObj) {
           this.chronology_table = new MatTableDataSource([]);
           this.chronology_table.paginator = this.paginator;
+          this.chronology_table.sort = this.sort;
         } else {
           this.LoadData();
         }

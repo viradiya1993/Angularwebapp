@@ -10,9 +10,9 @@
         </div>
         <div class="one select_matter_contact_main_div">
             <div class="example-containerdata">
-                <table mat-table #table [dataSource]="matterContactData" [@animateStagger]="{value:'50'}">
+                <table mat-table #table [dataSource]="matterContactData" [@animateStagger]="{value:'50'}" matSort class="mat-elevation-z8">
                     <ng-container matColumnDef="CONTACTNAME">
-                        <th mat-header-cell *matHeaderCellDef>Contact</th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact</th>
                         <td mat-cell *matCellDef="let row">
                             <p class="job-title text-truncate">
                                 {{row.CONTACTNAME }}
@@ -20,7 +20,7 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="ORDER">
-                        <th mat-header-cell *matHeaderCellDef>#</th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>#</th>
                         <td mat-cell *matCellDef="let row">
                             <p class="job-title text-truncate">
                                 {{row.ORDER }}
@@ -28,7 +28,7 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="TYPENAME">
-                        <th mat-header-cell *matHeaderCellDef> Type</th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Type</th>
                         <td mat-cell *matCellDef="let row">
                             <p class="company text-truncate">
                                 {{row.TYPENAME}}

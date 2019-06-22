@@ -9,6 +9,7 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MattersService, TableColumnsService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
+import {MatSort} from '@angular/material';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   displayedColumns = [];
   ColumnsObj = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   mattersData: any;
   lastFilter = {};
   tempColobj: any;
@@ -92,6 +94,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
         if (!result.columObj) {
           this.mattersData = new MatTableDataSource([]);
           this.mattersData.paginator = this.paginator;
+          this.mattersData.sort = this.sort;
         } else {
           this.getMatterList(this.lastFilter);
         }
@@ -108,6 +111,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
         }
         this.mattersData = new MatTableDataSource(response.DATA.MATTERS);
         this.mattersData.paginator = this.paginator;
+        this.mattersData.sort = this.sort;
 
         this.isLoadingResults = false;
       }

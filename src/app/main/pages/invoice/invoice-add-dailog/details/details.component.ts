@@ -4,6 +4,7 @@ import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { TimersService } from 'app/_services';
 import { SelectionModel } from '@angular/cdk/collections';
+import {MatSort} from '@angular/material';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class DetailsComponent implements OnInit {
   invoiceData: any = [];
   displayedColumnsTime: string[] = ['select', 'ADDITIONALTEXT', 'PRICE', 'GST', 'PRICEINCGST'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   selection = new SelectionModel(true, []);
   constructor(private _timersService: TimersService) { }
 
@@ -27,6 +29,7 @@ export class DetailsComponent implements OnInit {
     this._timersService.getTimeEnrtyData({ MATTERGUID: matterDetail.MATTERGUID, Invoiced: 'No' }).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.invoiceData = new MatTableDataSource(response.DATA.WORKITEMS);
+        this.invoiceData.sort = this.sort;
         this.masterToggle();
         this.totalDataOut.emit(response.DATA.WORKITEMS);
       }

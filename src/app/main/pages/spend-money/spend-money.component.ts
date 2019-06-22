@@ -6,6 +6,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { MatTableDataSource, MatPaginator, MatDialogConfig, MatDialog } from '@angular/material';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import * as $ from 'jquery';
+import {MatSort} from '@angular/material';
 
 @Component({
   selector: 'app-spend-money',
@@ -25,6 +26,7 @@ export class SpendMoneyComponent implements OnInit {
   displayedColumns: string[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   currentMatterData: any;
   Spendmoneydata: any;
   pageSize: any;
@@ -76,6 +78,7 @@ export class SpendMoneyComponent implements OnInit {
       //   }
       //   this.Spendmoneydata = new MatTableDataSource(response.DATA.INVOICES)
       //   this.Spendmoneydata.paginator = this.paginator;
+      //   this.Spendmoneydata.sort = this.sort;
       // } 
       // this.isLoadingResults = false;
     }, error => {
@@ -102,6 +105,7 @@ export class SpendMoneyComponent implements OnInit {
       //   if (!result.columObj) {
       //     this.MatterInvoicesdata = new MatTableDataSource([]);
       //     this.MatterInvoicesdata.paginator = this.paginator;
+      //     this.MatterInvoicesdata.sort = this.sort;
       //   } else {
       //     this.loadData();
       //   }

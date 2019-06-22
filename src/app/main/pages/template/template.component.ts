@@ -6,6 +6,9 @@ import { fuseAnimations } from '@fuse/animations';
 import { MatterDialogComponent } from '../time-entries/matter-dialog/matter-dialog.component';
 import { ContactSelectDialogComponent } from '../contact/contact-select-dialog/contact-select-dialog.component';
 import * as $ from 'jquery';
+import { InvoiceDialogComponentForTemplate } from '../invoice/select-invoice-dialog/select-invoice-dialog.component';
+import { MatterDialogComponentForTemplate } from './matter-dialog/matter-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-template',
@@ -34,6 +37,8 @@ export class TemplateComponent implements OnInit {
     public TemplateListData: TemplateListDetails,
     public MatDialog: MatDialog,
     private TableColumnsService: TableColumnsService,
+    private router:Router,
+    public _matDialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -81,9 +86,38 @@ export class TemplateComponent implements OnInit {
     localStorage.setItem('lastPageSize', event.pageSize);
   }
   public selectMatter() {
-    const dialogRef = this.MatDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
-    dialogRef.afterClosed().subscribe(result => {
-    });
+    if (this.router.url=="/create-document/invoice") {
+      // this._router.navigate(['/create-document/invoice']);
+      const dialogRef = this._matDialog.open(InvoiceDialogComponentForTemplate, {
+          width: '100%',
+          disableClose: true,
+          data: 'select_matter',
+          
+      });
+      dialogRef.afterClosed().subscribe(result => { 
+          if (result) {
+              localStorage.setItem('set_active_matters', JSON.stringify(result));
+              // this.router.navigate(['time-billing/work-in-progress/invoice']);
+          }
+      });
+
+  } else if( this.router.url=="/create-document/matter") {
+      const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
+          width: '100%',
+          disableClose: true,
+          data: 'select_matter'
+      });
+      dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+              localStorage.setItem('set_active_matters', JSON.stringify(result));
+              // this.router.navigate(['time-billing/work-in-progress/invoice']);
+          }
+      });
+  }
+
+    // const dialogRef = this.MatDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
+    // dialogRef.afterClosed().subscribe(result => {
+    // });
   }
   ContactMatter() {
     const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true });

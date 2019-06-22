@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.component';
 import { TemplateComponent } from '../template.component';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-matter-dialog',
@@ -30,6 +31,11 @@ export class MatterDialogComponentForTemplate implements OnInit {
   MatterDropData: any;
   filterVal: any = { 'Active': '', 'FeeEarner': '', 'SearchString': '' };
   @Input() mattersDetailData;
+  filefolder_Name: any;
+  base_url: any;
+  CheckCondition: any;
+  ForHideShow: string;
+  title: string;
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
@@ -38,10 +44,24 @@ export class MatterDialogComponentForTemplate implements OnInit {
     private Timersservice: TimersService,
     private TemplateListDetails: TemplateListDetails,
     public dialogRef: MatDialogRef<MatterDialogComponentForTemplate>,
+    @Inject(MAT_DIALOG_DATA) public _data: any
     // private data:TemplateComponent
   ) {
-
+    
     this.matterFilterForm = this.fb.group({ MatterFilter: [''], UserFilter: [''], searchFilter: [''], InvoiceFilter: [''], });
+    
+    this.ForHideShow=_data;
+    if(_data!='select_matter'){
+      this.title="View Template"
+      this.CheckCondition=_data.DATA.DOCUMENTS[0];
+      this.filefolder_Name=_data.DATA.DOCUMENTS[0].FILENAME;
+      console.log( this.filefolder_Name);
+      this.base_url=environment.ReportUrl;
+    }else{
+      console.log("data not in ");
+      this.title="Select Matter";
+    }
+  
   }
 
   ngOnInit() {
@@ -138,11 +158,9 @@ export class MatterDialogComponentForTemplate implements OnInit {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.toastr.success('Template Generate successfully');
         this.dialogRef.close(true);
-        // this.dialog.open(MatterDialogComponentForTemplate,{
-        //   data:{
-        //     action:'ReadyToViewTemplate'
-        //   }
-        // });
+        this.dialog.open(MatterDialogComponentForTemplate,{
+          data:response
+        });
 
 
       }

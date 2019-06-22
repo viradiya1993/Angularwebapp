@@ -1,8 +1,8 @@
 <div class="popup_main_div corres_popup_main select_metter_main_div" cdkDrag>
-    <h2 cdkDragHandle mat-dialog-title>Select Matter
+    <h2 cdkDragHandle mat-dialog-title>{{title}}
         <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog"><mat-icon>close</mat-icon></button>
     </h2>
-    <div mat-dialog-content class="mat-typography">
+    <div mat-dialog-content class="mat-typography" *ngIf="ForHideShow==='select_matter'">
         <div class="example-loading-shade" *ngIf="isLoadingResults">
             <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
         </div>
@@ -72,14 +72,32 @@
             <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
         </div>
     </div>
-    <mat-dialog-actions align="end" class="popup_ftr">
-        <div class="left_popup_btn">
+
+    <div mat-dialog-content class="mat-typography" *ngIf="CheckCondition">
+            <div class="popup_body">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <div class="middle">The Template has been produced.</div>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="button">
+                    <a href="{{this.base_url}}{{filefolder_Name}}" target="_blank">
+                        <button mat-raised-button mat-dialog-close color="accent">Click here to view it</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+    <mat-dialog-actions  align="end" class="popup_ftr">
+        <div class="left_popup_btn" *ngIf="ForHideShow==='select_matter'">
             <button mat-raised-button color="accent" (click)="AddNewmatterpopup()">New Matter</button>
             <button mat-raised-button color="accent" (click)="EditNewmatterpopup()">Edit Matter</button>
         </div>
-        <div class="right_popup_btn">
+        <div class="right_popup_btn" *ngIf="ForHideShow==='select_matter'">
             <button mat-raised-button [mat-dialog-close]="currentMatterData" (click)="selectMatter()"  [disabled]="isspiner" color="accent"><mat-spinner *ngIf="isspiner"></mat-spinner>Select</button>
             <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
         </div>
+        <div class="right_popup_btn" *ngIf="CheckCondition">
+                <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
+            </div>
     </mat-dialog-actions>
 </div>

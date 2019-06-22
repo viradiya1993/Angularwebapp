@@ -6,7 +6,7 @@ import { ContactService, TableColumnsService } from '../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-contact',
@@ -60,6 +60,7 @@ export class ContactComponent implements OnInit {
       localStorage.setItem('contact_Filter', JSON.stringify(this.filterVals));
     }
     this.LoadData(this.filterVals);
+    console.log('hello6');
   }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
@@ -69,7 +70,6 @@ export class ContactComponent implements OnInit {
     this.TableColumnsService.getTableFilter('contacts', '').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
-        console.log(data);
         this.tempColobj = data.tempColobj;
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
@@ -83,8 +83,10 @@ export class ContactComponent implements OnInit {
   }
   refreshContactTab() {
     this.LoadData(this.filterVals);
+    console.log('hello7');
   }
   LoadData(data) {
+    console.log('hello');
     this.isLoadingResults = true;
     this.Contact.ContactData(data).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
@@ -130,7 +132,9 @@ export class ContactComponent implements OnInit {
         } else {
           let filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
           let filterVal = { 'active': filterVals.active, 'FirstLetter': filterVals.FirstLetter };
+          
           this.LoadData(filterVal);
+          console.log('hello1');
         }
       }
     });
@@ -139,22 +143,29 @@ export class ContactComponent implements OnInit {
     this.filterVals.active = this.f.active.value == 'all' ? "" : this.f.active.value;
     localStorage.setItem('contact_Filter', JSON.stringify(this.filterVals));
     this.LoadData(this.filterVals);
+    console.log('hello2');
   }
   ContactTypeChange(value) {
     this.filterVals.ContactType = value == 'all' ? "" : value;
     localStorage.setItem('contact_Filter', JSON.stringify(this.filterVals));
     this.LoadData(this.filterVals);
+    console.log('hello3');
   }
   Contactvalue(value) {
     this.filterVals.FirstLetter = value != -1 ? value : '';
     localStorage.setItem('contact_Filter', JSON.stringify(this.filterVals));
     this.LoadData(this.filterVals);
+    console.log('hello4');
   }
   onSearch(searchFilter: any) {
-    if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
-      this.filterVals.SEARCH = this.f.search.value;
-      this.LoadData(this.filterVals);
-    }
+    console.log('asd');
+    //if (searchFilter['key'] === "Enter") {
+      //if(searchFilter.keyCode == 13) {
+        this.filterVals.SEARCH = this.f.search.value;
+        this.LoadData(this.filterVals);
+        console.log('hello5');
+      //}
+   // }
   }
 }
 

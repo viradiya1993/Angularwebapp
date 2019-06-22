@@ -39,11 +39,11 @@
                 <!-- tab detail start -->
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-tab-group class="add-invoice-tab" mat-align-tabs="start">
-                        <mat-tab label="Summary">
-                            <app-summary [addInvoiceForm]="addInvoiceForm" [isMax]="isMax" [isMin]="isMin" [isFixPrice]="isFixPrice"> </app-summary>
-                        </mat-tab>
                         <mat-tab label="Details">
                             <app-details [addInvoiceForm]="addInvoiceForm" (totalDataOut)=changeTotalDataOut($event)></app-details>
+                        </mat-tab>
+                        <mat-tab label="Summary">
+                            <app-summary [addInvoiceForm]="addInvoiceForm" [isMax]="isMax" [isMin]="isMin" [isFixPrice]="isFixPrice"> </app-summary>
                         </mat-tab>
                         <mat-tab label="Comment">
                             <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">

@@ -56,20 +56,22 @@ export class ReceiptDilogComponent implements OnInit {
   highlightedRows: any;
   currentInvoiceData: any;
   lastFilter: any;
-  invoiceGuidArray:any=[];
+  invoiceGuidArray: any = [];
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit() {
     this.PrepareReceiptForm = this._formBuilder.group({
+      INCOMECODE: [''],
+      INCOMECLASS: ['Receipt'],
+      INCOMETYPE: [''],
+      PAYEE: [''],
+
       client: ['', Validators.required],
-      RECEIPTCODE: [''],
       AMOUNT: [''],
       RECEIPTAMOUNTEXGST: [''],
       RECEIPTGST: [''],
-      INCOMETYPE: [''],
-      Payor: [''],
       BankAccount: [''],
       Note: [''],
       Show: [''],
@@ -80,7 +82,6 @@ export class ReceiptDilogComponent implements OnInit {
     });
     let INCOMEDATEVAL = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
     this.PrepareReceiptForm.controls['INCOMEDATE'].setValue(INCOMEDATEVAL);
-    //  console.log(receiptData1.RECEIPTCODE);
     this.isShowchecked = "false";
     //for invoice
     if (this._data.action == 'editForTB') {
@@ -131,7 +132,7 @@ export class ReceiptDilogComponent implements OnInit {
     this.PrepareReceiptForm.controls['INCOMETYPE'].setValue(data.INCOMETYPE);
     this.PrepareReceiptForm.controls['Note'].setValue(data.NOTE);
     this.val = data.PAYEE
-    this.PrepareReceiptForm.controls['Payor'].setValue(data.PAYEE);
+    this.PrepareReceiptForm.controls['PAYEE'].setValue(data.PAYEE);
   }
   GetInvoiceForReceipt(data) {
     this._MatterInvoicesService.MatterInvoicesData(data).subscribe(response => {
@@ -183,7 +184,7 @@ export class ReceiptDilogComponent implements OnInit {
     }
   }
   SaveReceipt() {
-    console.log( this.PrepareReceiptData);
+    console.log(this.PrepareReceiptData);
     this.PrepareReceiptData.forEach(element => {
       this.invoiceGuidArray.push(element.INVOICEGUID)
     });
@@ -193,32 +194,27 @@ export class ReceiptDilogComponent implements OnInit {
       this.formaction = 'update';
     }
     this.receiptData = JSON.parse(localStorage.getItem('receiptData'));
+    console.log(this.receiptData);
     let data = {
-      DATA:{
+      DATA: {
         AMOUNT: this.f.Amount.value,
         BANKACCOUNTGUID: this.receiptData.BANKACCOUNTGUID,
         FIRMGUID: this.receiptData.FIRMGUID,
-        //  FOREIGNCURRENCYAMOUNT: this.receiptData.FOREIGNCURRENCYAMOUNT,
-        //  FOREIGNCURRENCYGST: this.receiptData.FOREIGNCURRENCYGST,
-        //  FOREIGNCURRENCYID: this.receiptData.FOREIGNCURRENCYID,
-        //  FOREIGNCURRENCYRATE: this.receiptData.FOREIGNCURRENCYRATE,
         GST: this.f.RECEIPTGST.value,
         INCOMEACCOUNTGUID: this.receiptData.INCOMEACCOUNTGUID,
-        //  INCOMEACCOUNTGUID_COPY: this.receiptData.INCOMEACCOUNTGUID_COPY,
-        INCOMECLASS: this.receiptData.INCOMECLASS,
-        INCOMECODE: this.f.RECEIPTCODE.value,
+        INCOMECLASS: this.f.INCOMECLASS.value,
+        INCOMECODE: this.f.INCOMECODE.value,
         INCOMEDATE: this.f.INCOMEDATE.value,
         INCOMEGUID: this.receiptData.INCOMEGUID,
-        //  INCOMEREVERSALGUID: this.receiptData.INCOMEREVERSALGUID,
         INCOMETYPE: this.f.INCOMETYPE.value,
         NOTE: this.f.Note.value,
-        PAYEE: this.f.Payor.value,
-        ALLOCATIONS:{
+        PAYEE: this.f.PAYEE.value,
+        ALLOCATIONS: {
           INVOICEGUID: this.invoiceGuidArray,
           AMOUNTAPPLIED: 200
         }
       }
-     
+
     }
     console.log(data);
     let matterPostData: any = { FormAction: 'insert', VALIDATEONLY: true, Data: data };

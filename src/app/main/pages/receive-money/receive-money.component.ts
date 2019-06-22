@@ -7,6 +7,7 @@ import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig, MatDatepi
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import * as $ from 'jquery';
+import {MatSort} from '@angular/material';
 
 @Component({
   selector: 'app-receive-money',
@@ -26,6 +27,7 @@ export class ReceiveMoneyComponent implements OnInit {
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   pageSize: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   currentReciveMoneyData: any;
   lastFilter: { 'INCOMECLASS': string; 'ItemDateStart': string; 'ItemDateEnd': string; };
   constructor(
@@ -175,6 +177,7 @@ export class ReceiveMoneyComponent implements OnInit {
         }
         this.receiveMoneydata = new MatTableDataSource(response.DATA.RECEIPTALLOCATIONS)
         this.receiveMoneydata.paginator = this.paginator;
+        this.receiveMoneydata.sort = this.sort;
       }
       this.isLoadingResults = false;
     }, err => {
@@ -252,6 +255,7 @@ export class ReceiveMoneyComponent implements OnInit {
         if (!result.columObj) {
           this.receiveMoneydata = new MatTableDataSource([]);
           this.receiveMoneydata.paginator = this.paginator;
+          this.receiveMoneydata.sort = this.sort;
         } else {
           // this.LoadData(JSON.parse(localStorage.getItem('time_entries_filter')));
         }

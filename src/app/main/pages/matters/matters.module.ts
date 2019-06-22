@@ -46,6 +46,7 @@ import { UserSelectPopupComponent } from './user-select-popup/user-select-popup.
 import { NumericDirective } from './matter-popup/numericValidation.component';
 
 
+import {MatSortModule} from '@angular/material/sort';
 
 
 const routes = [
@@ -117,7 +118,8 @@ const routes = [
     MatGridListModule,
     MatRadioModule,
     MatGridListModule,
-    DragDropModule
+    DragDropModule,
+    MatSortModule
   ],
   exports: [
     MattersComponent,

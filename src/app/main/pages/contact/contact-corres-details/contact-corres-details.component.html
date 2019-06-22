@@ -10,10 +10,10 @@
         </div>
         <div class="one">
             <div class="example-containerdata">
-                <table mat-table #table [dataSource]="getDataForTable" [@animateStagger]="{value:'50'}">
+                <table mat-table #table [dataSource]="getDataForTable" [@animateStagger]="{value:'50'}" matSort class="mat-elevation-z8">
                     <!-- Job Title Column -->
                     <ng-container matColumnDef="contact">
-                        <th mat-header-cell *matHeaderCellDef>Contact</th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact</th>
                         <td mat-cell *matCellDef="let row">
                             <p class="job-title text-truncate">
                                 {{row.CONTACTNAME}}
@@ -23,7 +23,7 @@
 
                     <!-- Company Column -->
                     <ng-container matColumnDef="type">
-                        <th mat-header-cell *matHeaderCellDef>Type</th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
                         <td mat-cell *matCellDef="let row">
                             <p class="company text-truncate">
                                 {{row.TYPENAME }}

@@ -14,6 +14,7 @@ import { MatterInvoicesComponent } from './matter-invoices/matter-invoices.compo
 import { ReceiptsCreditsComponent } from './receipts-credits/receipts-credits.component';
 import { MatterTrustComponent } from './matter-trust/matter-trust.component';
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
+import {MatSortModule} from '@angular/material/sort';
 
 
 const routes = [
@@ -57,7 +58,8 @@ const routes = [
     MatSlideToggleModule,
     MatExpansionModule,
     MatTabsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSortModule
   ],
   exports: [
     TimeBillingComponent

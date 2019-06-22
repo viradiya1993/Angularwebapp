@@ -7,6 +7,8 @@ import { TimersService, TableColumnsService } from '../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common'
 import * as $ from 'jquery';
+import {MatSort} from '@angular/material';
+
 
 @Component({
   selector: 'app-time-entries',
@@ -25,6 +27,7 @@ export class TimeEntriesComponent implements OnInit {
   TimerDropData: any;
   isShowDrop: boolean;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   lastFilter: any;
   highlightedRows: any;
   theme_type = localStorage.getItem('theme_type');
@@ -114,6 +117,7 @@ export class TimeEntriesComponent implements OnInit {
         try {
           this.TimerData = new MatTableDataSource(response.DATA.WORKITEMS);
           this.TimerData.paginator = this.paginator;
+          this.TimerData.sort = this.sort;
         } catch (error) {
           console.log(error);
         }
@@ -183,6 +187,7 @@ export class TimeEntriesComponent implements OnInit {
         if (!result.columObj) {
           this.TimerData = new MatTableDataSource([]);
           this.TimerData.paginator = this.paginator;
+          this.TimerData.sort = this.sort;
         } else {
           this.LoadData(JSON.parse(localStorage.getItem('time_entries_filter')));
         }

@@ -32,9 +32,9 @@
                                 <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                             </div>
                             <div class="example-containerdata">
-                                <table mat-table #table [dataSource]="safeCustody_table" [@animateStagger]="{value:'50'}">
+                                <table mat-table #table [dataSource]="safeCustody_table" matSort [@animateStagger]="{value:'50'}">
                                     <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
-                                        <th mat-header-cell *matHeaderCellDef class="header_title"> {{ tempColobj[item].DESCRIPTION }}</th>
+                                        <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header> {{ tempColobj[item].DESCRIPTION }}</th>
                                         <td mat-cell *matCellDef="let row"> <span *ngIf="row[item]">{{row[item]}}</span> </td>
                                     </ng-container>
                                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

@@ -6,6 +6,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { MatTableDataSource, MatPaginator, MatDialogConfig, MatDialog } from '@angular/material';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import * as $ from 'jquery';
+import { MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-spend-money',
@@ -25,6 +26,7 @@ export class SpendMoneyComponent implements OnInit {
   displayedColumns: string[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   currentMatterData: any;
   Spendmoneydata: any;
   pageSize: any;
@@ -40,7 +42,7 @@ export class SpendMoneyComponent implements OnInit {
   }
   ngOnInit() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
-   
+
     this.loadData();
   }
   DateRange(a, s) {
@@ -62,10 +64,10 @@ export class SpendMoneyComponent implements OnInit {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
   }
-  
+
   loadData() {
-    
-   
+
+
     let potData = { 'ITEMSTARTDATE': new Date() };
     this.isLoadingResults = true;
     this.SpendmoneyService.SpendmoneyListData(potData).subscribe(response => {
@@ -78,16 +80,26 @@ export class SpendMoneyComponent implements OnInit {
           this.highlightedRows = response.DATA.EXPENDITURES[0].EXPENDITUREGUID;
           this.currentMatterData = response.DATA.EXPENDITURES[0].EXPENDITUREGUID;
         }
-      
-      } 
+
+      }
       this.isLoadingResults = false;
+      // if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
+      //   if (response.DATA.INVOICES[0]) {
+      //     this.highlightedRows = response.DATA.INVOICES[0].INVOICEGUID;
+      //     this.currentMatterData = response.DATA.INVOICES[0];
+      //   }
+      //   this.Spendmoneydata = new MatTableDataSource(response.DATA.INVOICES)
+      //   this.Spendmoneydata.paginator = this.paginator;
+      //   this.Spendmoneydata.sort = this.sort;
+      // } 
+      // this.isLoadingResults = false;
     }, error => {
       this.toastr.error(error);
     });
     this.pageSize = localStorage.getItem('lastPageSize');
   }
 
-  
+
 
   editmatter(Row: any) {
     this.currentMatterData = Row;
@@ -110,6 +122,7 @@ export class SpendMoneyComponent implements OnInit {
       //   if (!result.columObj) {
       //     this.MatterInvoicesdata = new MatTableDataSource([]);
       //     this.MatterInvoicesdata.paginator = this.paginator;
+      //     this.MatterInvoicesdata.sort = this.sort;
       //   } else {
       //     this.loadData();
       //   }
@@ -119,7 +132,7 @@ export class SpendMoneyComponent implements OnInit {
   onSearch(s) {
 
   }
-  SpendClassChange(val){
+  SpendClassChange(val) {
 
   }
 }

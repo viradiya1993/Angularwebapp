@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ContactDialogComponent } from '../contact-dialog/contact-dialog.component';
 import * as $ from 'jquery';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import {MatSort} from '@angular/material';
 
 @Component({
   selector: 'app-contact-select-dialog',
@@ -22,6 +23,7 @@ export class ContactSelectDialogComponent implements OnInit {
   currentMatterData: any;
   Contactdata: any = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   isLoadingResults: boolean;
   SelectcontactForm: FormGroup;
   pageSize: any;
@@ -70,6 +72,7 @@ export class ContactSelectDialogComponent implements OnInit {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Contactdata = new MatTableDataSource(response.DATA.CONTACTS);
         this.Contactdata.paginator = this.paginator;
+        this.Contactdata.sort = this.sort;
         if (response.DATA.CONTACTS[0]) {
           this.currentMatterData = response.DATA.CONTACTS[0];
           localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);

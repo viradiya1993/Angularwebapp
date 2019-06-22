@@ -14,7 +14,7 @@ import { DiaryComponent } from './diary.component';
 import { AuthGuard } from 'app/_guards';
 import { EventFormComponent } from './event-form/event-form.component';
 import { DiaryService } from './diary.service';
-
+import {MatSortModule} from '@angular/material/sort';
 
 const routes = [
   {
@@ -43,6 +43,7 @@ const routes = [
     MatSlideToggleModule,
     MatToolbarModule,
     MatTooltipModule,
+    
 
     AngularCalendarModule.forRoot({
       provide: DateAdapter,
@@ -51,7 +52,8 @@ const routes = [
     ColorPickerModule,
 
     FuseSharedModule,
-    FuseConfirmDialogModule
+    FuseConfirmDialogModule,
+    MatSortModule
   ],
   exports: [
     DiaryComponent

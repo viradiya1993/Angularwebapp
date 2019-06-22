@@ -140,20 +140,32 @@ table.mat-table {
     padding-bottom: 0;
     margin-bottom: 20px;
 }
+
 .total_amount_div .mat-form-field-wrapper {
     padding-bottom: 0;
     margin-left: 20px;
 }
+
 .unallocated_div .mat-form-field {
     padding-left: 20px;
 }
+
 .allocate_btn_div {
     margin-bottom: 20px;
 }
+
 .allocate_btn_div .mat-raised-button.mat-accent {
     margin-left: 20px;
 }
+
 .invoice_receipt_main_div th.mat-header-cell:first-of-type {
     padding-left: 0;
 }
-.sideText{ text-align: right; }
+
+.sideText {
+    text-align: right;
+}
+
+th.mat-sort-header-sorted {
+    color: black;
+}

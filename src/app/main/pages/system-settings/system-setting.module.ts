@@ -22,6 +22,7 @@ import { ReginoalSettingComponent } from './regional-setting/reginoal-setting.co
 import { TrustComponent } from './trust/trust.component';
 import { TemplatesComponent } from './templates/templates.component';
 import { GenerateTemplatesDialoagComponent } from './templates/gennerate-template-dialoag/generate-template.component';
+import {MatSortModule} from '@angular/material/sort';
 
 const routes = [
   { path: 'system-setting/name', component: SystemSettingComponent, canActivate: [AuthGuard] },
@@ -87,7 +88,8 @@ const routes = [
     MatCheckboxModule,
     DragDropModule,
     MatExpansionModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSortModule
     
   ],
   exports: [

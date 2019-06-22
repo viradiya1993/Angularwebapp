@@ -5,6 +5,8 @@ import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.c
 import { MatterTrustService, TableColumnsService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
+import {MatSort} from '@angular/material';
+
 @Component({
   selector: 'app-matter-trust',
   templateUrl: './matter-trust.component.html',
@@ -20,6 +22,7 @@ export class MatterTrustComponent implements OnInit {
   pageSize: any;
   tempColobj: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private dialog: MatDialog,
     private TableColumnsService: TableColumnsService,
@@ -53,6 +56,7 @@ export class MatterTrustComponent implements OnInit {
         let TRUSTTRANSACTIONS = res.DATA.TRUSTTRANSACTIONS == null ? [] : res.DATA.TRUSTTRANSACTIONS;
         this.MatterTrustdata = new MatTableDataSource(TRUSTTRANSACTIONS);
         this.MatterTrustdata.paginator = this.paginator;
+        this.MatterTrustdata.sort = this.sort;
       }
       this.isLoadingResults = false;
     }, err => {
@@ -81,6 +85,7 @@ export class MatterTrustComponent implements OnInit {
         if (!result.columObj) {
           this.MatterTrustdata = new MatTableDataSource([]);
           this.MatterTrustdata.paginator = this.paginator;
+          this.MatterTrustdata.sort = this.sort;
         } else {
           this.loadData();
         }

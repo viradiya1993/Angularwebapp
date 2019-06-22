@@ -25,7 +25,7 @@
 
                     <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
                         <mat-label>Invoice Date</mat-label>
-                        <input (ngModelChange)="firstDate($event)" (dateInput)="invoiceDateChange('input', $event)" formControlName="INVOICEDATETEXT" (dateChange)="invoiceDateChange('change', $event)" matInput [matDatepicker]="picker3">
+                        <input (dateInput)="invoiceDateChange('input', $event)" formControlName="INVOICEDATETEXT" (dateChange)="invoiceDateChange('change', $event)" matInput [matDatepicker]="picker3">
                         <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                         <mat-datepicker #picker3></mat-datepicker>
                     </mat-form-field>
@@ -39,11 +39,11 @@
                 <!-- tab detail start -->
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-tab-group class="add-invoice-tab" mat-align-tabs="start">
-                        <mat-tab label="Summary">
-                            <app-summary [addInvoiceForm]="addInvoiceForm" [isMax]="isMax" [isMin]="isMin" [isFixPrice]="isFixPrice"> </app-summary>
-                        </mat-tab>
                         <mat-tab label="Details">
                             <app-details [addInvoiceForm]="addInvoiceForm" (totalDataOut)=changeTotalDataOut($event)></app-details>
+                        </mat-tab>
+                        <mat-tab label="Summary">
+                            <app-summary [addInvoiceForm]="addInvoiceForm" [isMax]="isMax" [isMin]="isMin" [isFixPrice]="isFixPrice"> </app-summary>
                         </mat-tab>
                         <mat-tab label="Comment">
                             <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">

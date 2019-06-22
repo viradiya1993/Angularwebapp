@@ -75,7 +75,6 @@ export class MattersListComponent implements OnInit, OnDestroy {
 
   editmatter(matters) {
     this.matterDetail.emit(matters);
-
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
@@ -105,7 +104,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.MATTERS[0]) {
           this.highlightedRows = response.DATA.MATTERS[0].MATTERGUID;
-          this.matterDetail.emit(response.DATA.MATTERS[0]);
+          this.editmatter(response.DATA.MATTERS[0]);
         }
         this.mattersData = new MatTableDataSource(response.DATA.MATTERS);
         this.mattersData.paginator = this.paginator;

@@ -21,7 +21,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="30" class="pr-4">
                         <mat-label>Receipt Code</mat-label>
-                        <input matInput placeholder="Receipt Code" formControlName="RECEIPTCODE">
+                        <input matInput placeholder="Receipt Code" formControlName="INCOMECODE">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -36,13 +36,13 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
                         <mat-label>Amount Ex-GST</mat-label>
-                        <input class="sideText" matInput placeholder="Amount Ex-GST" formControlName="RECEIPTAMOUNTEXGST">
+                        <input class="sideText" matInput placeholder="Amount Ex-GST" readonly formControlName="RECEIPTAMOUNTEXGST">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                         <mat-label>GST</mat-label>
-                        <input class="sideText" matInput placeholder="GST" formControlName="RECEIPTGST">
+                        <input class="sideText" matInput placeholder="GST" readonly formControlName="RECEIPTGST">
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                         <mat-label>Income Type</mat-label>
@@ -59,7 +59,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
                         <mat-label>Payor</mat-label>
-                        <mat-select formControlName="Payor">
+                        <mat-select formControlName="PAYEE">
                             <mat-option *ngFor="let val of getPayourarray" [value]="val">{{val}}</mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -93,7 +93,7 @@
                     Unallocated
                     <mat-form-field appearance="outline" fxFlex="60" class="pr-4">
                         <mat-label>Unallocated</mat-label>
-                        <input matInput placeholder="Unallocated" formControlName="Unallocated">
+                        <input matInput placeholder="Unallocated" readonly formControlName="Unallocated">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="allocate_btn_div">

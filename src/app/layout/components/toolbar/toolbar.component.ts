@@ -36,6 +36,7 @@ import { MatterReceiptDialogComponentForTemplate } from 'app/main/pages/receive-
 import { UserDialogComponent } from './../../../main/pages/users/user-dialog/user-dialog.component';
 import { ActivityDialogComponent } from './../../../main/pages/activities/activity-dialog/activity-dialog.component';
 import { ChangePasswordComponent } from 'app/main/change-password/change-password.component';
+import { NewfilenoteComponent } from './../../../main/pages/newfilenote/newfilenote.component';
 
 
 @Component({
@@ -693,6 +694,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     //Change Password Dialog
     ChangePass() {
         const dialogRef = this.dialog.open(ChangePasswordComponent, {
+
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+
+    //New File Note Dialog
+    NewFileNote(){
+        console.log('New File Work!!!');
+        const dialogRef = this.dialog.open(NewfilenoteComponent, {
 
         });
         dialogRef.afterClosed().subscribe(result => {

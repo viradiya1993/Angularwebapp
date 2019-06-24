@@ -16,6 +16,8 @@ import { SystemSettingTemplateModule } from './system-settings/templates/templat
 // import { NumericDirective } from './time-entries/time-entry-dialog/numericValidation.component';
 import { ActivitiesModule } from './activities/activities.module';
 import { SortingDialogModule } from '../sorting-dialog/sorting-dialog.module';
+import { NewfilenoteModule } from './newfilenote/newfilenote.module';
+
 
 
 
@@ -53,7 +55,8 @@ const appRoutes: Routes = [
     TemplateModule,
     SystemSettingTemplateModule,
     ActivitiesModule,
-    SortingDialogModule
+    SortingDialogModule,
+    NewfilenoteModule
 
   ]
 })

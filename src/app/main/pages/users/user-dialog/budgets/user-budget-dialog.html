@@ -21,7 +21,7 @@
                         <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                         <mat-datepicker #picker3></mat-datepicker> -->
 
-                        <input (ngModelChange)="firstDate($event)" [formControlName]="'Budgetdate'"matInput [matDatepicker]="picker3">
+                        <input (ngModelChange)="NowDate($event)" [formControlName]="'Budgetdate'"matInput [matDatepicker]="picker3">
                         <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                         <mat-datepicker #picker3></mat-datepicker>
                     </mat-form-field>
@@ -45,21 +45,24 @@
                         <mat-icon matSuffix class="secondary-text">yearlygst</mat-icon>
                     </mat-form-field>
                 </div>
-                <div *ngFor="let val of Months" of fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <div *ngFor="let val of Months; index as i" of fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
-                        <input value="{{val}}"  [formControlName]="'june1'" matInput readonly>
+                        <input value="{{val | date:'MM/dd/yyyy' }}"  [formControlName]="'june1'" matInput readonly>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="" class="pr-4">
                         <input [(ngModel)]="YearlyHours"  type="number" [formControlName]="'hoursyear'"
                             matInput>
                         <mat-icon matSuffix class="secondary-text">julyhours</mat-icon>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="" class="pr-4">
                         <input [(ngModel)]="YearlyRate"  type="number" [formControlName]="'rateyear'"
                             matInput>
                         <mat-icon matSuffix class="secondary-text">julyrate</mat-icon>
                     </mat-form-field>
-                </div>
+                </div> 
+                <!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    
+                </div> -->
             </form>
         </div>
     </div>

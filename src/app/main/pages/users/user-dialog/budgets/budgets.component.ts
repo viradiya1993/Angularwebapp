@@ -171,17 +171,18 @@ export class UserBudget {
   }
  
 
-  firstDate(value){
+  NowDate(value){
     this.Months=[];
     // console.log(value);
     // console.log('-----');
     let newdate = new Date(value);
-    for(let i = 0 ;i < 12;i++){
-      newdate.setMonth(newdate.getMonth()+i);
+    for(let i = 0 ;i < 11;i++){
+      newdate.setMonth(newdate.getMonth()+1);
       console.log(newdate);
-     // this.Months.push(new Date(newdate));
+     // this.Months.push(newdate);
+      this.Months.push(new Date(newdate[i]));
       console.log(i);
-      this.Months.push(newdate);
+      
     }
     /* this.Months=[];
     for (let i = 0; i < 12; i++){

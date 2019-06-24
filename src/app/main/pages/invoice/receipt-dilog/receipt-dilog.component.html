@@ -42,7 +42,7 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                         <mat-label>GST</mat-label>
-                        <input class="sideText" matInput placeholder="GST" readonly formControlName="RECEIPTGST">
+                        <input class="sideText" matInput placeholder="GST" readonly formControlName="GST">
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                         <mat-label>Income Type</mat-label>
@@ -67,13 +67,13 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
                         <mat-label>Bank Account</mat-label>
-                        <input matInput placeholder="Bank Account" formControlName="BankAccount">
+                        <input matInput placeholder="Bank Account" formControlName="BANKACCOUNTGUID">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
                         <mat-label>Note</mat-label>
-                        <textarea matInput formControlName="Note"></textarea>
+                        <textarea matInput formControlName="NOTE"></textarea>
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -105,7 +105,7 @@
                     <div class="example-containerdata">
                         <table mat-table #table [dataSource]="PrepareReceiptData" [@animateStagger]="{value:'50'}" matSort class="mat-elevation-z8">
                             <ng-container matColumnDef="INVOICEDATE">
-                                <th mat-header-cell *matHeaderCellDef  mat-sort-header>Invoice</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Invoice</th>
                                 <td mat-cell *matCellDef="let row">
                                     <p class="job-title text-truncate">
                                         {{row.INVOICEDATE}}
@@ -113,7 +113,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="INVOICETOTAL">
-                                <th mat-header-cell *matHeaderCellDef  mat-sort-header>Total</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
                                 <td mat-cell *matCellDef="let row">
                                     <p class="company text-truncate">
                                         {{row.INVOICETOTAL }}
@@ -121,7 +121,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="AMOUNTOUTSTANDINGEXGST">
-                                <th mat-header-cell *matHeaderCellDef  mat-sort-header>Outstanding</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Outstanding</th>
                                 <td mat-cell *matCellDef="let row">
                                     <p class="company text-truncate">
                                         {{row.AMOUNTOUTSTANDINGEXGST }}
@@ -137,7 +137,7 @@
                                 </td>
                             </ng-container> -->
                             <ng-container matColumnDef="MATTERGUID">
-                                <th mat-header-cell *matHeaderCellDef  mat-sort-header>Matter</th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Matter</th>
                                 <td mat-cell *matCellDef="let row">
                                     <p class="company text-truncate">
                                         {{row.MATTERGUID }}

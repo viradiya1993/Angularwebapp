@@ -48,7 +48,6 @@ export class ReceiptDilogComponent implements OnInit {
     public _matDialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
-    // console.log(this._data);
   }
   displayedColumns: string[] = ['INVOICEDATE', 'INVOICETOTAL', 'AMOUNTOUTSTANDINGEXGST', 'MATTERGUID'];
   PrepareReceiptForm: FormGroup;
@@ -61,6 +60,7 @@ export class ReceiptDilogComponent implements OnInit {
   invoiceGuidArray: any = [];
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
+  isShowData: any = [];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit() {
@@ -69,19 +69,25 @@ export class ReceiptDilogComponent implements OnInit {
       INCOMECLASS: ['Receipt'],
       INCOMETYPE: [''],
       PAYEE: [''],
-
-      client: ['', Validators.required],
+      INCOMEDATE: [''],
+      INCOMEDATETEXT: [new Date()],
       AMOUNT: [''],
+      GST: [''],
+      BANKACCOUNTGUID: [''],
+      NOTE: [''],
+      INCOMEACCOUNTGUID: ['', Validators.required],
+      INCOMEACCOUNTGUIDTEXT: [''],
+      Amount: [''],
+
       RECEIPTAMOUNTEXGST: [''],
-      RECEIPTGST: [''],
-      BankAccount: [''],
-      Note: [''],
       Show: [''],
       Unallocated: [''],
-      Amount: [''],
-      INCOMEDATE: [''],
-      INCOMEDATETEXT: [new Date()]
     });
+    console.log(this._data);
+    // Show unpaid invoices for matter :
+    // Show unpaid invoices for client :
+    // Show all unpaid invoices
+    this.getPayor({});
     let INCOMEDATEVAL = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
     this.PrepareReceiptForm.controls['INCOMEDATE'].setValue(INCOMEDATEVAL);
     this.isShowchecked = "false";
@@ -97,17 +103,7 @@ export class ReceiptDilogComponent implements OnInit {
     } else if (this._data.action == 'add') {
       this.GetInvoiceForReceipt({ 'Outstanding': 'Yes' });
     }
-    this.getPayor({});
-    this.PrepareReceiptData = new MatTableDataSource([]);
-    this.PrepareReceiptData.paginator = this.paginator;
-    this.PrepareReceiptData.sort = this.sort;
-
-    // }
-
   }
-  // setOtherReceiptData(){
-
-  // }
   setInvoiceForReceipt(reciptGuid) {
     this.isLoadingResults = true;
     this.GetReceptData.getRecept(reciptGuid).subscribe(response => {
@@ -137,10 +133,10 @@ export class ReceiptDilogComponent implements OnInit {
     this.PrepareReceiptForm.controls['INCOMEDATETEXT'].setValue(new Date(FeeAgreementDate1[1] + '/' + FeeAgreementDate1[0] + '/' + FeeAgreementDate1[2]));
     this.PrepareReceiptForm.controls['AMOUNT'].setValue(data.AMOUNT);
     this.PrepareReceiptForm.controls['RECEIPTAMOUNTEXGST'].setValue(data.RECEIPTAMOUNTEXGST);
-    this.PrepareReceiptForm.controls['RECEIPTGST'].setValue(data.RECEIPTGST);
+    this.PrepareReceiptForm.controls['GST'].setValue(data.RECEIPTGST);
     this.incomeType = this.incometype;
     this.PrepareReceiptForm.controls['INCOMETYPE'].setValue(data.INCOMETYPE);
-    this.PrepareReceiptForm.controls['Note'].setValue(data.NOTE);
+    this.PrepareReceiptForm.controls['NOTE'].setValue(data.NOTE);
     this.val = data.PAYEE
     this.PrepareReceiptForm.controls['PAYEE'].setValue(data.PAYEE);
   }
@@ -208,17 +204,17 @@ export class ReceiptDilogComponent implements OnInit {
     console.log(this.receiptData);
     let data = {
       DATA: {
-        AMOUNT: this.f.Amount.value,
+        AMOUNT: this.f.AMOUNT.value,
         BANKACCOUNTGUID: this.receiptData.BANKACCOUNTGUID,
         FIRMGUID: this.receiptData.FIRMGUID,
-        GST: this.f.RECEIPTGST.value,
+        GST: this.f.GST.value,
         INCOMEACCOUNTGUID: this.receiptData.INCOMEACCOUNTGUID,
         INCOMECLASS: this.f.INCOMECLASS.value,
         INCOMECODE: this.f.INCOMECODE.value,
         INCOMEDATE: this.f.INCOMEDATE.value,
         INCOMEGUID: this.receiptData.INCOMEGUID,
         INCOMETYPE: this.f.INCOMETYPE.value,
-        NOTE: this.f.Note.value,
+        NOTE: this.f.NOTE.value,
         PAYEE: this.f.PAYEE.value,
         ALLOCATIONS: {
           INVOICEGUID: this.invoiceGuidArray,
@@ -299,7 +295,8 @@ export class ReceiptDilogComponent implements OnInit {
     const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.PrepareReceiptForm.controls['client'].setValue(result.CONTACTNAME);
+        this.PrepareReceiptForm.controls['INCOMEACCOUNTGUIDTEXT'].setValue(result.CONTACTNAME);
+        this.PrepareReceiptForm.controls['INCOMEACCOUNTGUID'].setValue(result.CONTACTNAME);
       }
     });
   }

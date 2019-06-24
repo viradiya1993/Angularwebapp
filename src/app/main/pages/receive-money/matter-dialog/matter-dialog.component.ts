@@ -7,7 +7,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.component';
 import { ReceiptDilogComponent } from '../../invoice/receipt-dilog/receipt-dilog.component';
 // import { TemplateComponent } from '../template.component';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-matter-dialog',
@@ -32,8 +32,7 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
   MatterDropData: any;
   filterVal: any = { 'Active': 'ewew', 'FeeEarner': '', 'SearchString': '' };
   @Input() mattersDetailData;
-  firstTime: string;
-  passdata: any;
+  isShowDrop: boolean = false;
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
@@ -44,12 +43,12 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
     public _matDialog: MatDialog,
     // private data:TemplateComponent
   ) {
-
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.isShowDrop = currentUser.ProductType == "Barrister" ? false : true;
     this.matterFilterForm = this.fb.group({ MatterFilter: [''], UserFilter: [''], searchFilter: [''], InvoiceFilter: [''], });
   }
 
   ngOnInit() {
-    this.firstTime = 'true';
     this.getDropValue();
     this.getMatterList();
   }
@@ -88,13 +87,8 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
     this.getList(this.filterVal);
   }
   getList(filterVal: any) {
-    if (this.firstTime == 'true') {
-      this.passdata = { "GETALLFIELDS": true }
-    } else {
-      this.passdata = filterVal
-    }
     this.isLoadingResults = true;
-    this.mattersService.getMatters(this.passdata).subscribe(response => {
+    this.mattersService.getMatters(filterVal).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.MATTERS[0]) {
           this.highlightedRows = response.DATA.MATTERS[0].MATTERGUID;
@@ -113,25 +107,6 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
-  }
-  //select matter
-  selectMatter(Row: any = "") {
-    localStorage.setItem('matterName', this.currentMatterData.MATTER);
-    const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
-      width: '100%', disableClose: true,
-      data: {
-        action: 'add',
-        type: " ",
-        matterGuid: this.currentMatterData.MATTERGUID,
-        clientName: this.currentMatterData.CONTACTNAME,
-        fullData: this.currentMatterData
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-
-      }
-    });
   }
   // New matter Pop-up
   AddNewmatterpopup() {

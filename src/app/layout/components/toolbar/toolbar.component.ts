@@ -765,8 +765,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     isInvoiceClick() {
         this.clickedBtn = 'invoiceDoc';
     }
-    isMatterClick(){
-        this.clickedBtn = 'matterDoc';   
+    isMatterClick() {
+        this.clickedBtn = 'matterDoc';
     }
 
     createInstantInvoice() {
@@ -822,7 +822,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this._matDialog.open(MatterReceiptDialogComponentForTemplate, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                console.log(result);
+                const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
+                    width: '100%', disableClose: true,
+                    data: { action: 'add', type: " ", matterData: result }
+                });
+                dialogRef.afterClosed().subscribe(result => { if (result) { } });
             }
         });
     }
@@ -913,22 +917,22 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     //     //***********************************************************END Select Matter Contact*************************************************************************
     // }
     SelectMatterContact() {
-        if (this.router.url=="/create-document/invoice") {
+        if (this.router.url == "/create-document/invoice") {
             // this._router.navigate(['/create-document/invoice']);
             const dialogRef = this._matDialog.open(InvoiceDialogComponentForTemplate, {
                 width: '100%',
                 disableClose: true,
                 data: 'select_matter',
-                
+
             });
-            dialogRef.afterClosed().subscribe(result => { 
+            dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     localStorage.setItem('set_active_matters', JSON.stringify(result));
                     // this.router.navigate(['time-billing/work-in-progress/invoice']);
                 }
             });
 
-        } else if( this.router.url=="/create-document/matter") {
+        } else if (this.router.url == "/create-document/matter") {
             const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
                 width: '100%',
                 disableClose: true,

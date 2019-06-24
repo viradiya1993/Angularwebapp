@@ -8,7 +8,6 @@ import { ContactSelectDialogComponent } from '../../contact/contact-select-dialo
 import { Pipe } from '@angular/compiler/src/core';
 import { MatterInvoicesService, GetReceptData, ContactService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-//import { TableColumnsService,MattersService, TimersService, GetReceptData } from '../../../_services';
 import { MatSort } from '@angular/material';
 
 @Component({
@@ -34,6 +33,19 @@ export class ReceiptDilogComponent implements OnInit {
   receiptData: any;
   formaction: string;
   val: any;
+  displayedColumns: string[] = ['INVOICEDATE', 'INVOICETOTAL', 'AMOUNTOUTSTANDINGEXGST', 'MATTERGUID'];
+  PrepareReceiptForm: FormGroup;
+  PrepareReceiptData: any;
+  isspiner: boolean;
+  isLoadingResults: boolean = false;
+  highlightedRows: any;
+  currentInvoiceData: any;
+  lastFilter: any;
+  invoiceGuidArray: any = [];
+  theme_type = localStorage.getItem('theme_type');
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
+  ShowData: any = [];
+  matterData: any;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(
@@ -48,26 +60,17 @@ export class ReceiptDilogComponent implements OnInit {
     public _matDialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
+    this.matterData = this._data.matterData;
   }
-  displayedColumns: string[] = ['INVOICEDATE', 'INVOICETOTAL', 'AMOUNTOUTSTANDINGEXGST', 'MATTERGUID'];
-  PrepareReceiptForm: FormGroup;
-  PrepareReceiptData: any;
-  isspiner: boolean;
-  isLoadingResults: boolean;
-  highlightedRows: any;
-  currentInvoiceData: any;
-  lastFilter: any;
-  invoiceGuidArray: any = [];
-  theme_type = localStorage.getItem('theme_type');
-  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
-  isShowData: any = [];
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit() {
+    console.log(this._data);
     this.PrepareReceiptForm = this._formBuilder.group({
       INCOMECODE: [''],
       INCOMECLASS: ['Receipt'],
-      INCOMETYPE: [''],
+      INCOMETYPE: ['Cash'],
       PAYEE: [''],
       INCOMEDATE: [''],
       INCOMEDATETEXT: [new Date()],
@@ -77,32 +80,35 @@ export class ReceiptDilogComponent implements OnInit {
       NOTE: [''],
       INCOMEACCOUNTGUID: ['', Validators.required],
       INCOMEACCOUNTGUIDTEXT: [''],
+      FIRMGUID: [''],
+      FIRMGUIDTEXT: [''],
       Amount: [''],
 
       RECEIPTAMOUNTEXGST: [''],
-      Show: [''],
+      SHOW: [''],
       Unallocated: [''],
     });
-    console.log(this._data);
-    // Show unpaid invoices for matter :
-    // Show unpaid invoices for client :
-    // Show all unpaid invoices
+    this.PrepareReceiptForm.controls['FIRMGUID'].setValue(this.matterData.FIRMGUID);
+    this.PrepareReceiptForm.controls['FIRMGUIDTEXT'].setValue(this.matterData.CONTACTNAME);
+    this.PrepareReceiptForm.controls['SHOW'].setValue(3);
+    this.ShowData.push({ id: 1, text: 'Show unpaid invoices for matter : ' + this.matterData.SHORTNAME });
+    this.ShowData.push({ id: 2, text: 'Show unpaid invoices for client : ' + this.matterData.CONTACTNAME });
+    this.ShowData.push({ id: 3, text: 'Show all unpaid invoices' });
     this.getPayor({});
     let INCOMEDATEVAL = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
     this.PrepareReceiptForm.controls['INCOMEDATE'].setValue(INCOMEDATEVAL);
     this.isShowchecked = "false";
     //for invoice
-    if (this._data.action == 'editForTB') {
+    if (this._data.action == 'editForTB' || this._data.action == 'edit') {
       this.receiptData = JSON.parse(localStorage.getItem('TBreceiptData'));
-      this.GetInvoiceForReceipt({ 'Outstanding': 'Yes' });
-    } else if (this._data.action == 'addForTB') {
-      this.GetInvoiceForReceipt({ 'Outstanding': 'Yes' });
-    } else if (this._data.action == 'edit') {
-      this.receiptData = JSON.parse(localStorage.getItem('receiptData'));
-      this.setInvoiceForReceipt({ "RECEIPTGUID": this.receiptData.INCOMEGUID });
+      if (this._data.action == 'editForTB')
+        this.GetInvoiceForReceipt({ 'Outstanding': 'Yes' });
+      else if (this._data.action == 'edit')
+        this.setInvoiceForReceipt({ "RECEIPTGUID": this.receiptData.INCOMEGUID });
     } else if (this._data.action == 'add') {
       this.GetInvoiceForReceipt({ 'Outstanding': 'Yes' });
     }
+
   }
   setInvoiceForReceipt(reciptGuid) {
     this.isLoadingResults = true;
@@ -141,6 +147,7 @@ export class ReceiptDilogComponent implements OnInit {
     this.PrepareReceiptForm.controls['PAYEE'].setValue(data.PAYEE);
   }
   GetInvoiceForReceipt(data) {
+    this.isLoadingResults = true;
     this._MatterInvoicesService.MatterInvoicesData(data).subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (response.DATA.INVOICES[0]) {
@@ -149,10 +156,13 @@ export class ReceiptDilogComponent implements OnInit {
         }
         this.PrepareReceiptData = new MatTableDataSource(response.DATA.INVOICES)
         this.PrepareReceiptData.paginator = this.paginator;
-        this.PrepareReceiptData = response.DATA.INVOICES;
         this.PrepareReceiptData.sort = this.sort;
+        this.isLoadingResults = false;
+      } else if (response.MESSAGE == "Not logged in") {
+        this.dialogRef.close(false);
       }
     }, error => {
+      this.isLoadingResults = false;
       this.toastr.error(error);
     });
   }
@@ -168,74 +178,62 @@ export class ReceiptDilogComponent implements OnInit {
     });
   }
   get f() {
-    //console.log(this.contactForm);
     return this.PrepareReceiptForm.controls;
   }
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    let INCOMEDATEVAL = this.datepipe.transform(event.value, 'dd/MM/yyyy');
-    this.PrepareReceiptForm.controls['INCOMEDATE'].setValue(INCOMEDATEVAL);
+    this.PrepareReceiptForm.controls['INCOMEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
   editContact(row: any) {
     this.currentInvoiceData = row;
   }
   onChangeShow(val) {
-    if (this._data.action == 'add' || this._data.action == "addForTB") {
-      // this.isShowchecked = "true";
-      if (val == 3) {
-        this.GetInvoiceForReceipt({ 'Outstanding': 'Yes' });
-      } else if (val == 1) {
-        this.GetInvoiceForReceipt({ MATTERGUID: this._data.matterGuid });
-      } else if (val == 2) {
-        this.GetInvoiceForReceipt({ MATTERGUID: this._data.clientName });
-      }
+    let data = {};
+    if (val == 3) {
+      data = { 'Outstanding': 'Yes' };
+    } else if (val == 1) {
+      data = { MATTERGUID: this.matterData.MATTERGUID };
+    } else if (val == 2) {
+      data = { MATTERGUID: this.matterData.CONTACTNAME };
     }
+    this.GetInvoiceForReceipt(data);
   }
   SaveReceipt() {
     console.log(this.PrepareReceiptData);
     this.PrepareReceiptData.forEach(element => {
       this.invoiceGuidArray.push(element.INVOICEGUID)
     });
-    if (this._data.action == 'add' || this._data.action == "addForTB") {
-      this.formaction = 'insert';
-    } else {
-      this.formaction = 'update';
-    }
     this.receiptData = JSON.parse(localStorage.getItem('receiptData'));
     console.log(this.receiptData);
     let data = {
-      DATA: {
-        AMOUNT: this.f.AMOUNT.value,
-        BANKACCOUNTGUID: this.receiptData.BANKACCOUNTGUID,
-        FIRMGUID: this.receiptData.FIRMGUID,
-        GST: this.f.GST.value,
-        INCOMEACCOUNTGUID: this.receiptData.INCOMEACCOUNTGUID,
-        INCOMECLASS: this.f.INCOMECLASS.value,
-        INCOMECODE: this.f.INCOMECODE.value,
-        INCOMEDATE: this.f.INCOMEDATE.value,
-        INCOMEGUID: this.receiptData.INCOMEGUID,
-        INCOMETYPE: this.f.INCOMETYPE.value,
-        NOTE: this.f.NOTE.value,
-        PAYEE: this.f.PAYEE.value,
-        ALLOCATIONS: {
-          INVOICEGUID: this.invoiceGuidArray,
-          AMOUNTAPPLIED: 200
-        }
-      }
-
+      INCOMECODE: this.f.INCOMECODE.value,
+      INCOMECLASS: this.f.INCOMECLASS.value,
+      INCOMETYPE: this.f.INCOMETYPE.value,
+      FIRMGUID: this.f.FIRMGUID.value,
+      INCOMEDATE: this.f.INCOMEDATE.value,
+      PAYEE: this.f.PAYEE.value,
+      AMOUNT: this.f.AMOUNT.value,
+      GST: this.f.GST.value,
+      BANKACCOUNTGUID: this.f.BANKACCOUNTGUID.value,
+      INCOMEACCOUNTGUID: "",
+      NOTE: this.f.NOTE.value,
+      MATTERGUID: this.matterData.MATTERGUID,
+      // CLERKFEE: "",
+      // ALLOCATIONS: [
+      //   INVOICEGUID: "",
+      //   AMOUNTAPPLIED : ""
+      // ]
     }
-    console.log(data);
     let matterPostData: any = { FormAction: 'insert', VALIDATEONLY: true, Data: data };
     this.GetReceptData.setReceipt(matterPostData).subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, data);
       } else if (response.CODE == 451 && response.STATUS == "warning") {
         this.checkValidation(response.DATA.VALIDATIONS, data);
-      } else {
-        if (response.CODE == 402 && response.STATUS == "error" && response.MESSAGE == "Not logged in")
-          this.dialogRef.close(false);
-        this.isspiner = false;
+      } else if (response.MESSAGE == "Not logged in") {
+        this.dialogRef.close(false);
       }
     }, error => {
+      this.isspiner = false;
       this.toastr.error(error);
     });
   }
@@ -292,11 +290,11 @@ export class ReceiptDilogComponent implements OnInit {
 
   }
   selectClient() {
-    const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true });
+    const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true, data: { type: '' } });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.PrepareReceiptForm.controls['INCOMEACCOUNTGUIDTEXT'].setValue(result.CONTACTNAME);
-        this.PrepareReceiptForm.controls['INCOMEACCOUNTGUID'].setValue(result.CONTACTNAME);
+        this.PrepareReceiptForm.controls['FIRMGUIDTEXT'].setValue(result.CONTACTNAME);
+        this.PrepareReceiptForm.controls['FIRMGUID'].setValue(result.CONTACTGUID);
       }
     });
   }

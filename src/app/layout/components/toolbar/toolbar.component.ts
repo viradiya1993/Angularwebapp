@@ -702,7 +702,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     //New File Note Dialog
-    NewFileNote(){
+    NewFileNote() {
         console.log('New File Work!!!');
         const dialogRef = this.dialog.open(NewfilenoteComponent, {
 
@@ -803,9 +803,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     createReceiptForTimeBilling() {
         const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
             width: '100%', disableClose: true,
-            data: {
-                action: 'addForTB'
-            }
+            data: { action: 'add' }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -909,9 +907,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     NewGeneralReceipt(): void {
         const dialogRef = this._matDialog.open(GeneralReceiptDilogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                console.log(result);
-            }
+            if (result) { console.log(result); }
         });
     }
     // ******************************************END Invoice related funtion like create update delete view*********************************************

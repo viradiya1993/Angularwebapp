@@ -56,7 +56,7 @@ export class TemplateComponent implements OnInit {
      
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Templatedata = new MatTableDataSource(response.DATA.TEMPLATES);
-
+        this.editContact(response.DATA.TEMPLATES[0]);
         this.Templatedata.paginator = this.paginator;
         this.Templatedata.sort = this.sort;
         if (response.DATA.TEMPLATES[0]) {
@@ -79,11 +79,11 @@ export class TemplateComponent implements OnInit {
     }
   }
   editContact(Row: any) {
- 
-   
     if(Row.TEMPLATETYPE=="Folder"){
+      $('#clickToolbarbtn').click();
       localStorage.setItem('handelGenerateDoc','Folder');
     }else{
+      $('#clickToolbarbtn2').click();
       localStorage.setItem('handelGenerateDoc','Template');
     }
     this.parentMessage = Row;

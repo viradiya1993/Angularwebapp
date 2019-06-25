@@ -1,8 +1,8 @@
 <div class="example-loading-shade" *ngIf="isLoadingResults">
     <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
 </div>
-<div class="popup_main_div add_report_main add_top_clients" *ngIf="responseData || PDF_Generation">
-    <h2 mat-dialog-title class="popup_title_div"> {{title}}
+<div cdkDrag class="popup_main_div add_report_main add_top_clients" *ngIf="responseData || PDF_Generation">
+    <h2 cdkDragHandle mat-dialog-title class="popup_title_div"> {{title}}
         <button class="btn" mat-icon-button (click)="ondialogcloseClick()" aria-label="Close dialog">
             <mat-icon>close</mat-icon>
         </button>

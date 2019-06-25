@@ -8,7 +8,7 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 
 import { navigation } from 'app/navigation/navigation';
-import { AuthenticationService, ReportlistService, TimersService, MattersService, MatterInvoicesService } from '../../../_services';
+import { AuthenticationService, ReportlistService, TimersService, MattersService, MatterInvoicesService, GetReceptData } from '../../../_services';
 import { Router } from '@angular/router';
 import { ContactDialogComponent } from './../../../main/pages/contact/contact-dialog/contact-dialog.component';
 import { LicenceAgreementComponent } from '../../../main/licence-agreement/licence-agreement.component';
@@ -88,7 +88,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private TimersServiceI: TimersService,
         private _mattersService: MattersService,
         private matterInvoicesService: MatterInvoicesService,
-        private _router: Router
+        private _router: Router,
+        private _getReceptData: GetReceptData,
     ) {
         if (this.appPermissions == null) {
             this.appPermissions = [];
@@ -131,11 +132,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
 
         //addedby web19
-        let val=localStorage.getItem('handelGenerateDoc');
-        if(val=='Folder'){
-            this.hideShowDoc='yes';
-        }else{
-            this.hideShowDoc='no'; 
+        let val = localStorage.getItem('handelGenerateDoc');
+        if (val == 'Folder') {
+            this.hideShowDoc = 'yes';
+        } else {
+            this.hideShowDoc = 'no';
         }
     }
 
@@ -580,13 +581,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /* User Module Function's */
 
     // Add User Dialog
-    AddUserDialog() {
+    AddNewUser() {
         const dialogRef = this.dialog.open(UserDialogComponent, {
             disableClose: true,
             panelClass: 'User-dialog',
-            data: {
-                action: 'new',
-            }
+            data: { action: 'new' }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result)
@@ -894,20 +893,19 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     //delete receicept
     deleteReceiceMoany(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-            disableClose: true,
-            width: '100%',
+            disableClose: true, width: '100%',
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
-                // let WORKITEMGUID = localStorage.getItem('edit_WORKITEMGUID');
-                // let postData = { FormAction: "delete", WorkItemGuid: WORKITEMGUID }
-                // this.TimersServiceI.SetWorkItems(postData).subscribe(res => {
-                //     if (res.STATUS == "success" && res.CODE == 200) {
-                //         $('#refreshTimeEntryTab').click();
-                //         this.toastr.success('Delete successfully');
-                //     }
-                // });
+                let receiptData = JSON.parse(localStorage.getItem('receiptData'));
+                let postData = { FormAction: "delete", DATA: { INCOMEGUID: receiptData.INCOMEGUID } };
+                this._getReceptData.setReceipt(postData).subscribe(res => {
+                    if (res.STATUS == "success" && res.CODE == 200) {
+                        $('#refreshReceiceMoany').click();
+                        this.toastr.success('Delete successfully');
+                    }
+                });
             }
             this.confirmDialogRef = null;
         });
@@ -916,7 +914,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     NewGeneralReceipt(): void {
         const dialogRef = this._matDialog.open(GeneralReceiptDilogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
-            if (result) { console.log(result); }
+            if (result) {
+                $('#refreshReceiceMoany').click();
+            }
         });
     }
     // ******************************************END Invoice related funtion like create update delete view*********************************************
@@ -934,37 +934,37 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     //     //***********************************************************END Select Matter Contact*************************************************************************
     // }
     SelectMatterContact() {
-            let templateData = JSON.parse(localStorage.getItem('templateData')); 
-        if (this.router.url=="/create-document/invoice") {
-             let invoiceGUid = localStorage.getItem('edit_invoice_id');
-            let passdata={
+        let templateData = JSON.parse(localStorage.getItem('templateData'));
+        if (this.router.url == "/create-document/invoice") {
+            let invoiceGUid = localStorage.getItem('edit_invoice_id');
+            let passdata = {
                 'Context': "Invoice",
                 'ContextGuid': invoiceGUid,
                 "Type": "Template",
                 "Folder": '',
                 "Template": templateData.TEMPLATENAME
-              }
+            }
             const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
                 width: '100%',
                 disableClose: true,
-                data: passdata ,  
+                data: passdata,
             });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     localStorage.setItem('set_active_matters', JSON.stringify(result));
-                    
+
                 }
             });
 
-        } else if( this.router.url=="/create-document/matter") {
+        } else if (this.router.url == "/create-document/matter") {
             let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
-            let passdata={
+            let passdata = {
                 'Context': "Matter",
                 'ContextGuid': matterData.MATTERGUID,
                 "Type": "Template",
                 "Folder": '',
                 "Template": templateData.TEMPLATENAME
-              }
+            }
             const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
                 width: '100%',
                 disableClose: true,
@@ -973,18 +973,18 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     localStorage.setItem('set_active_matters', JSON.stringify(result));
-                   
+
                 }
             });
-        }else if( this.router.url=="/create-document/receive-money") {
+        } else if (this.router.url == "/create-document/receive-money") {
             let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
-            let passdata={
+            let passdata = {
                 'Context': "Income",
                 'ContextGuid': ReceiptData.INCOMEGUID,
                 "Type": "Template",
                 "Folder": '',
                 "Template": templateData.TEMPLATENAME
-              }
+            }
             const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
                 width: '100%',
                 disableClose: true,
@@ -993,18 +993,18 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     localStorage.setItem('set_active_matters', JSON.stringify(result));
-                   
+
                 }
             });
-        }else if( this.router.url=="/create-document/contact") {
+        } else if (this.router.url == "/create-document/contact") {
             let ContactGuID = localStorage.getItem('contactGuid');
-            let passdata={
+            let passdata = {
                 'Context': "Income",
                 'ContextGuid': ContactGuID,
                 "Type": "Template",
                 "Folder": '',
                 "Template": templateData.TEMPLATENAME
-              }
+            }
             const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
                 width: '100%',
                 disableClose: true,
@@ -1013,11 +1013,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     // localStorage.setItem('set_active_matters', JSON.stringify(result));
-                   
+
                 }
             });
         }
-        
+
 
         //***********************************************************END Select Matter Contact*************************************************************************
     }

@@ -41,8 +41,8 @@ export class GeneralReceiptDilogComponent implements OnInit {
       INCOMETYPE: [''],
       PAYEE: [''],
       AMOUNT: [''],
-      gsttype: [''],
-      GST: [''],
+      // gsttype: [''],
+      // GST: [''],
       BANKACCOUNTGUID: [''],
       INCOMEACCOUNTGUID: [''],
       NOTE: [''],
@@ -81,17 +81,19 @@ export class GeneralReceiptDilogComponent implements OnInit {
       INCOMEDATE: this.f.INCOMEDATE.value,
       PAYEE: this.f.PAYEE.value,
       AMOUNT: this.f.AMOUNT.value,
-      GST: this.f.GST.value,
+      // GST: this.f.GST.value,
       BANKACCOUNTGUID: "ACCAAAAAAAAAAAA4",
-      INCOMEACCOUNTGUID: "ACCAAAAAAAAAAAA5",
+      INCOMEACCOUNTGUID: "ACCAAAAAAAAAAAA9",
       NOTE: this.f.NOTE.value,
     }
     let matterPostData: any = { FormAction: 'insert', VALIDATEONLY: true, Data: data };
     this._getReceptData.setReceipt(matterPostData).subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        this.checkValidation(response.DATA.VALIDATIONS, data);
+        this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
+      } else if (response.CODE == 450 && response.STATUS == "error") {
+        this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
       } else if (response.CODE == 451 && response.STATUS == "warning") {
-        this.checkValidation(response.DATA.VALIDATIONS, data);
+        this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
       } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }

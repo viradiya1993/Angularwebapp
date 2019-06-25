@@ -37,8 +37,8 @@
                     <button mat-raised-button color="primary" id="refreshInvoiceTab" (click)="refreshInvoiceTab();">Refresh</button>
                 </form>
             </div>
-            <div class="content fix_div_padding">
-                <div id="Invoice" class="page-layout simple left-sidebar inner-sidebar">
+            <div class="content">
+                <div class="page-layout simple left-sidebar inner-sidebar">
                     <div fxLayoutAlign="center" class="content">
                         <div class="center more_tbl_clmn" fusePerfectScrollbar>
                             <div class="content">
@@ -60,7 +60,7 @@
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                                             <tr mat-row [style.background]="highlightedRows == row.INVOICEGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" [ngClass]="highlightedRows == row.INVOICEGUID ? 'row-text-colore' : ''" class="contact" (click)="selectInvoice(row);highlightedRows = row.INVOICEGUID"
                                                 matRipple [@animate]="{value:'*',params:{y:'100%'}}">
-                                              </tr>
+                                            </tr>
                                         </table>
                                     </div>
                                     <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>

@@ -88,37 +88,58 @@ export class ReceiptDilogComponent implements OnInit {
       SHOW: [''],
       Unallocated: [''],
     });
-    this.PrepareReceiptForm.controls['FIRMGUID'].setValue(this.matterData.FIRMGUID);
-    this.PrepareReceiptForm.controls['FIRMGUIDTEXT'].setValue(this.matterData.CONTACTNAME);
-    this.PrepareReceiptForm.controls['SHOW'].setValue(3);
-    this.ShowData.push({ id: 1, text: 'Show unpaid invoices for matter : ' + this.matterData.SHORTNAME });
-    this.ShowData.push({ id: 2, text: 'Show unpaid invoices for client : ' + this.matterData.CONTACTNAME });
-    this.ShowData.push({ id: 3, text: 'Show all unpaid invoices' });
     this.getPayor({});
     let INCOMEDATEVAL = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
     this.PrepareReceiptForm.controls['INCOMEDATE'].setValue(INCOMEDATEVAL);
     this.isShowchecked = "false";
     //for invoice
     if (this._data.action == 'editForTB' || this._data.action == 'edit') {
-      this.receiptData = JSON.parse(localStorage.getItem('TBreceiptData'));
+      this.receiptData = JSON.parse(localStorage.getItem('receiptData'));
       if (this._data.action == 'editForTB')
         this.GetInvoiceForReceipt({ 'Outstanding': 'Yes' });
       else if (this._data.action == 'edit')
-        this.setInvoiceForReceipt({ "RECEIPTGUID": this.receiptData.INCOMEGUID });
+        this.setInvoiceForReceipt(this.receiptData.INCOMEGUID);
     } else if (this._data.action == 'add') {
+      this.PrepareReceiptForm.controls['FIRMGUID'].setValue(this.matterData.FIRMGUID);
+      this.PrepareReceiptForm.controls['FIRMGUIDTEXT'].setValue(this.matterData.CONTACTNAME);
+      this.PrepareReceiptForm.controls['SHOW'].setValue(3);
+      this.ShowData.push({ id: 1, text: 'Show unpaid invoices for matter : ' + this.matterData.SHORTNAME });
+      this.ShowData.push({ id: 2, text: 'Show unpaid invoices for client : ' + this.matterData.CONTACTNAME });
+      this.ShowData.push({ id: 3, text: 'Show all unpaid invoices' });
       this.GetInvoiceForReceipt({ 'Outstanding': 'Yes' });
     }
 
   }
-  setInvoiceForReceipt(reciptGuid) {
+  setInvoiceForReceipt(INCOMEGUID) {
     this.isLoadingResults = true;
-    this.GetReceptData.getRecept(reciptGuid).subscribe(response => {
+    this.GetReceptData.getIncome({ INCOMEGUID: INCOMEGUID }).subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        if (response.DATA.INCOMEITEMS[0]) {
+          localStorage.setItem('receiptData', JSON.stringify(response.DATA.INCOMEITEMS[0]));
+          let data = response.DATA.INCOMEITEMS[0];
+          this.PrepareReceiptForm.controls['INCOMECODE'].setValue(data.INCOMECODE);
+          let FeeAgreementDate1 = data.INCOMEDATE.split("/");
+          this.PrepareReceiptForm.controls['INCOMEDATETEXT'].setValue(new Date(FeeAgreementDate1[1] + '/' + FeeAgreementDate1[0] + '/' + FeeAgreementDate1[2]));
+          this.PrepareReceiptForm.controls['INCOMEDATE'].setValue(data.INCOMEDATE);
+          this.PrepareReceiptForm.controls['AMOUNT'].setValue(data.AMOUNT);
+          this.PrepareReceiptForm.controls['BANKACCOUNTGUID'].setValue(data.BANKACCOUNTGUID);
+          this.PrepareReceiptForm.controls['FIRMGUID'].setValue(data.FIRMGUID);
+          this.PrepareReceiptForm.controls['INCOMETYPE'].setValue(data.INCOMETYPE);
+          this.PrepareReceiptForm.controls['NOTE'].setValue(data.NOTE);
+          this.PrepareReceiptForm.controls['PAYEE'].setValue(data.PAYEE);
+        }
+      }
+      this.isLoadingResults = false;
+    }, err => {
+      this.isLoadingResults = false;
+      this.toastr.error(err);
+    });
+    this.isLoadingResults = true;
+    this.GetReceptData.getRecept({ "RECEIPTGUID": INCOMEGUID }).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.RECEIPTALLOCATIONS[0]) {
-          localStorage.setItem('receiptData', JSON.stringify(response.DATA.RECEIPTALLOCATIONS[0]));
           this.highlightedRows = response.DATA.RECEIPTALLOCATIONS[0].INVOICEGUID;
           this.currentInvoiceData = response.DATA.RECEIPTALLOCATIONS[0];
-          this.forViewRecepit(response.DATA.RECEIPTALLOCATIONS[0]);
         }
         this.PrepareReceiptData = new MatTableDataSource(response.DATA.RECEIPTALLOCATIONS)
         this.PrepareReceiptData.paginator = this.paginator;
@@ -133,19 +154,6 @@ export class ReceiptDilogComponent implements OnInit {
     });
   }
 
-  forViewRecepit(data) {
-    this.PrepareReceiptForm.controls['RECEIPTCODE'].setValue(data.RECEIPTCODE);
-    let FeeAgreementDate1 = data.RECEIPTDATE.split("/");
-    this.PrepareReceiptForm.controls['INCOMEDATETEXT'].setValue(new Date(FeeAgreementDate1[1] + '/' + FeeAgreementDate1[0] + '/' + FeeAgreementDate1[2]));
-    this.PrepareReceiptForm.controls['AMOUNT'].setValue(data.AMOUNT);
-    this.PrepareReceiptForm.controls['RECEIPTAMOUNTEXGST'].setValue(data.RECEIPTAMOUNTEXGST);
-    this.PrepareReceiptForm.controls['GST'].setValue(data.RECEIPTGST);
-    this.incomeType = this.incometype;
-    this.PrepareReceiptForm.controls['INCOMETYPE'].setValue(data.INCOMETYPE);
-    this.PrepareReceiptForm.controls['NOTE'].setValue(data.NOTE);
-    this.val = data.PAYEE
-    this.PrepareReceiptForm.controls['PAYEE'].setValue(data.PAYEE);
-  }
   GetInvoiceForReceipt(data) {
     this.isLoadingResults = true;
     this._MatterInvoicesService.MatterInvoicesData(data).subscribe(response => {
@@ -228,6 +236,8 @@ export class ReceiptDilogComponent implements OnInit {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, data);
       } else if (response.CODE == 451 && response.STATUS == "warning") {
+        this.checkValidation(response.DATA.VALIDATIONS, data);
+      } else if (response.CODE == 450 && response.STATUS == "error") {
         this.checkValidation(response.DATA.VALIDATIONS, data);
       } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);

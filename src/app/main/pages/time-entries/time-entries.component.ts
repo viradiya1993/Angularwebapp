@@ -7,7 +7,7 @@ import { TimersService, TableColumnsService } from '../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common'
 import * as $ from 'jquery';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material';
 
 
 @Component({
@@ -48,24 +48,9 @@ export class TimeEntriesComponent implements OnInit {
     if (this.lastFilter) {
       if (this.lastFilter.ItemDateStart && this.lastFilter.ItemDateEnd) {
         let tempDate = this.lastFilter.ItemDateStart.split("/");
-        // console.log('tempDate');
-        // console.log(tempDate);
-        // let templete1 = this.datepipe.transform(new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]),'dd/MM/yyyy');
-        // console.log(templete1);
-        // console.log('templete1111');
         let tempDate2 = this.lastFilter.ItemDateEnd.split("/");
-        // console.log('tempDate2222');
-        // console.log(tempDate2);
-        // let tempDate3 = this.datepipe.transform(new Date(tempDate2[1] + '/' + tempDate2[0] + '/' + tempDate2[2]),'dd/MM/yyyy');
-        // console.log(tempDate3);
-        // console.log('templete333');
         let Sd = new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]);
-        //let Sd = new Date(templete1);
         let ed = new Date(tempDate2[1] + '/' + tempDate2[0] + '/' + tempDate2[2]);
-       // let ed = new Date(tempDate3);
-        // console.log(Sd);
-        // console.log('Sd--ed');
-        // console.log(ed);
         this.TimeEnrtyForm.controls['date'].setValue({ begin: Sd, end: ed });
       } else {
         var dt = new Date();
@@ -124,7 +109,6 @@ export class TimeEntriesComponent implements OnInit {
     this.isLoadingResults = true;
     this.Timersservice.getTimeEnrtyData(Data).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        console.log(response);
         if (response.DATA.WORKITEMS[0]) {
           this.highlightedRows = response.DATA.WORKITEMS[0].WORKITEMGUID;
           localStorage.setItem('edit_WORKITEMGUID', this.highlightedRows);
@@ -174,9 +158,7 @@ export class TimeEntriesComponent implements OnInit {
 
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
-    console.log(begin);
     let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');
-    console.log(end);
     let filterVal = { 'FeeEarner': '', 'Invoiced': '', 'ItemDateStart': begin, 'ItemDateEnd': end };
     if (!localStorage.getItem('time_entries_filter')) {
       localStorage.setItem('time_entries_filter', JSON.stringify(filterVal));

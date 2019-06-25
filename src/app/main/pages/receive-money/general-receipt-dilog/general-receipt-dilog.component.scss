@@ -86,7 +86,7 @@ mat-icon.close_icon.mat-icon.material-icons.mat-icon-no-color {
 mat-dialog-actions {
     mat-spinner {
         zoom: 0.2;
-        position: absolute;
+        position: absolute !important;
         right: 0;
         left: 0;
         margin: auto;

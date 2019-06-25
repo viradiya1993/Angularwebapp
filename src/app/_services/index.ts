@@ -31,3 +31,7 @@ export * from './spendmoney.service';
 export * from './getreceiptdata.service';
 export * from './template-list.service';
 export * from './system-setting.service';
+
+
+//user
+export * from './users.service';

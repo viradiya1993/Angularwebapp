@@ -88,6 +88,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       COMMENT: [''],
       INVOICEDATE: [this.datepipe.transform(new Date(), 'dd/MM/yyyy')],
     });
+    this.calculateData.QuantityType = 'H';
     this.ITEMDATEModel = new Date();
     this.timeEntryForm.controls['ITEMTYPE'].setValue('WIP');
     let userType = JSON.parse(localStorage.getItem('currentUser'));
@@ -149,7 +150,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.timeEntryForm.controls['ITEMTYPE'].setValue('WIP');
       this.matterChange('MatterGuid', this.currentTimeMatter);
     }
-
   }
   calcPE(val) {
     this.PRICEINCGSTVAL = round(this.f.PRICE.value * 1.1).toFixed(2);
@@ -220,14 +220,11 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   }
   matterChange(key: any, event: any) {
     if (key == "MatterGuid") {
-
       this.timeEntryForm.controls['MATTERGUID'].setValue(event);
       this.calculateData.MatterGuid = event;
     } else if (key == "FeeEarner") {
-
       this.calculateData.FeeEarner = event;
     } else if (key == "QuantityType") {
-
       switch (event) {
         case 'hh:mm': {
           this.calculateData.QuantityType = 'X';

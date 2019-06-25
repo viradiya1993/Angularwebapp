@@ -34,16 +34,6 @@
                         <mat-label>Amount Received</mat-label>
                         <input class="sideText" matInput placeholder="Amount Received" formControlName="AMOUNT">
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
-                        <mat-label>Amount Ex-GST</mat-label>
-                        <input class="sideText" matInput placeholder="Amount Ex-GST" readonly formControlName="RECEIPTAMOUNTEXGST">
-                    </mat-form-field>
-                </div>
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
-                        <mat-label>GST</mat-label>
-                        <input class="sideText" matInput placeholder="GST" readonly formControlName="GST">
-                    </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                         <mat-label>Income Type</mat-label>
                         <mat-select formControlName="INCOMETYPE" [value]="incomeType">
@@ -57,15 +47,23 @@
                             <mat-option value="SilqPay">SilqPay</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+                    <!-- <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+                        <mat-label>Amount Ex-GST</mat-label>
+                        <input class="sideText" matInput placeholder="Amount Ex-GST" readonly formControlName="RECEIPTAMOUNTEXGST">
+                    </mat-form-field> -->
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <!-- <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                        <mat-label>GST</mat-label>
+                        <input class="sideText" matInput placeholder="GST" readonly formControlName="GST">
+                    </mat-form-field> -->
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                         <mat-label>Payor</mat-label>
                         <mat-select formControlName="PAYEE">
                             <mat-option *ngFor="let val of getPayourarray" [value]="val">{{val}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-                </div>
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                         <mat-label>Bank Account</mat-label>
                         <input matInput placeholder="Bank Account" value="ACCAAAAAAAAAAAA4" formControlName="BANKACCOUNTGUID">
                     </mat-form-field>

@@ -95,7 +95,7 @@
                                    </section>
                                 </button>
                                     </section>
-                                    <section  [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="isMatterClick()" (click)="setTab($event)" [routerLink]="'/create-document/matter'">
                                             <section  class="large-button-container">
                                             <mat-icon class="main-icon"> 
@@ -974,7 +974,7 @@
                                     </section>
 
                                     <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                            <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="isMatterClick()" (click)="setTab($event)" [routerLink]="'/create-document/receive-money'">
+                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="isMatterClick()" (click)="setTab($event)" [routerLink]="'/create-document/receive-money'">
                                                 <section class="large-button-container">
                                                 <mat-icon class="main-icon"> 
                                                     <img class="" src="assets/icons/web_app/icon_letters_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -984,8 +984,8 @@
                                                     </div>
                                                 </section>
                                             </button>
-                                        </section>
-                                    
+                                    </section>
+
                                     <div class="light_label_txt">Action</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
@@ -1013,10 +1013,10 @@
                                 </section>
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab">
-                                        <!-- <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                    <!-- <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                                 <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="SelectMatterContact()"> -->
-                                    <section class="ribbon-section" >
-                                        <button mat-button class="large-button"  (click)="SelectMatterContact()" [disabled]="hideShowDoc ==='Template'">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="SelectMatterContact()" [disabled]="hideShowDoc ==='Template'">
                                             <section class="large-button-container">
                                             <mat-icon class="main-icon"> 
                                                 <img class="" src="assets/icons/web_app/icon_letters_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1056,7 +1056,7 @@
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
                                     <section [ngClass]="appPermissions[3]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[3]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="AddUserDialog()">
+                                        <button mat-button [ngClass]="appPermissions[3]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="AddNewUser()">
                                         <section class="large-button-container">
                                             <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_add_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1105,7 +1105,6 @@
                                     </section>
                                     <div class="light_label_txt">Action</div>
                                 </section>
-                                <mat-divider vertical></mat-divider>
                                 <mat-divider vertical></mat-divider>
                             </mat-card-content>
                         </mat-card>
@@ -1175,48 +1174,7 @@
                     </section>
                 </mat-tab>
                 <!-- Activity tab End-->
-                <!-- contacts tab menu start -->
-                <!-- FILE menu start -->
-                <!-- <mat-tab label="FILE">
-                    <section class="ribbon-container matter_tab_main" [style.width]="detailwidth">
-                        <mat-card>
-                            <mat-card-content>
-                                <section class="group-section-tab action_tab">
-                                 
-                                    <section class="ribbon-section">
-                                        <button class="large-button" mat-button (click)="setTab($event)"  [routerLink]="'/users'">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img  src="assets/icons/web_app/icon_firm_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text">
-                                                    <span>Users</span>
-                                                </div>
-                                            </section>
-                                        </button>
-                                    </section>
-                                    <section class="ribbon-section">
-                                        <button class="large-button" mat-button (click)="setTab($event)" [routerLink]="'/activities'">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img  src="assets/icons/web_app/icon_time_cost_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text">
-                                                    <span>Activities<br>Sundries</span>
-                                                </div>
-                                            </section>
-                                        </button>
-                                    </section>
-                                    <div class="light_label_txt">Setup</div>
-                                </section>
-                            </mat-card-content>
-                        </mat-card>
-                    </section>
-                </mat-tab> -->
 
-                <!-- tab for user -->
-
-                <!-- FILE menu end -->
                 <!-- goto tab menu start -->
                 <mat-tab label="GO TO">
                     <section class="ribbon-container goto_tab_main" [style.width]="detailwidth">
@@ -1495,9 +1453,9 @@
                  <span>System Setting</span>
                 </button>
 
-                <button [routerLink]="'/users'" mat-menu-item class="">
+                <button [routerLink]="'/users'" (click)="setTab($event)" mat-menu-item class="">
                     <span>Users</span>
-                   </button>
+                </button>
 
                 <button [routerLink]="'/activities'" mat-menu-item class="">
                     <span>Activites Sundries</span>

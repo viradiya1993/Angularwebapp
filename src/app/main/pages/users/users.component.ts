@@ -3,30 +3,11 @@ import { fuseAnimations } from '@fuse/animations';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource,MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material';
-import {MatSort} from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material';
+import { MatSort } from '@angular/material';
 import * as $ from 'jquery';
-
-
-
-export interface ActivityElement {
-  Username: string;
-  Userid: number;
-  Active: string;
-  Fullname: string;
-  Comment: string;
-  Position: string;
-  Phone: number;
-  Mobile: number;
-  Email: string;
-
-}
-const ELEMENT_DATA: ActivityElement[] = [
-  { Username: 'Amit', Userid: 1, Active:'Yes',Fullname:'Amit Viradiya',Comment: '---',Position: 'Partner',Phone:265282,Mobile:9727809070,Email:'web6@moontechnolabs.com'},
-  { Username: 'Karan', Userid: 2, Active:'Yes',Fullname:'Amit Viradiya',Comment: '---',Position: 'Partner',Phone:265282,Mobile:9727809070,Email:'web6@moontechnolabs.com'},
-  { Username: 'Kalpesh', Userid: 3, Active:'Yes',Fullname:'Amit Viradiya',Comment: '---',Position: 'Partner',Phone:265282,Mobile:9727809070,Email:'web6@moontechnolabs.com'},
-  { Username: 'Ankur', Userid: 4, Active:'Yes',Fullname:'Amit Viradiya',Comment: '---',Position: 'Partner',Phone:265282,Mobile:9727809070,Email:'web6@moontechnolabs.com'},
-];
+import { TableColumnsService, UsersService } from 'app/_services';
+import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 
 @Component({
   selector: 'app-users',
@@ -35,39 +16,105 @@ const ELEMENT_DATA: ActivityElement[] = [
   animations: fuseAnimations
 })
 export class UsersComponent implements OnInit {
-  highlightedRows: any;
+  userfilter: FormGroup;
+  isLoadingResults: boolean = false;
+  displayedColumns: string[];
+  ColumnsObj: any = [];
+  tempColobj: any;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   Userid = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
-  userfilter: FormGroup;
-  isLoadingResults: boolean = false;
-  displayedColumns: string[] = ['Username', 'Userid', 'Active','Fullname','Comment','Position','Phone','Mobile','Email'];
-  Useralldata = new MatTableDataSource(ELEMENT_DATA);
+  highlightedRows: any;
+  currentUserData: any;
+  pageSize: any;
+  Useralldata: any = [];
+  lastFilter: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  
+
 
   constructor(
     private _formBuilder: FormBuilder,
-    private dialog: MatDialog
-    ) {}
-  Userdata;
+    private dialog: MatDialog,
+    private TableColumnsService: TableColumnsService,
+    private _UsersService: UsersService,
+    private toastr: ToastrService,
+  ) {
+    let filterData = JSON.parse(localStorage.getItem('users_filter'));
+    if (filterData) {
+      this.lastFilter = JSON.parse(localStorage.getItem('users_filter'));
+    } else {
+      this.lastFilter = { ACTIVE: '' };
+      localStorage.setItem('users_filter', JSON.stringify(this.lastFilter));
+    }
+    this.userfilter = this._formBuilder.group({ ACTIVE: [this.lastFilter.ACTIVE] });
+  }
   ngOnInit() {
-    this.Useralldata.sort = this.sort;
-    this.Useralldata.paginator = this.paginator;
-    this.userfilter = this._formBuilder.group({
-      UserType: ['']
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
+    this.getTableFilter();
+    this.loadData(this.lastFilter);
+  }
+  getTableFilter() {
+    this.TableColumnsService.getTableFilter('users', '').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
+        this.displayedColumns = data.showcol;
+        this.tempColobj = data.tempColobj;
+        this.ColumnsObj = data.colobj;
+      }
+    }, error => {
+      this.toastr.error(error);
     });
   }
-  UserTypeChange(value){
-    
+  UserTypeChange(event) {
+    this.lastFilter.ACTIVE = event.value;
+    localStorage.setItem('users_filter', JSON.stringify(this.lastFilter));
+    this.loadData(this.lastFilter);
   }
-  
-  //userDialog
-  userDialog(){
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
   }
-  //Click User Row
-  clickuser(val){
-   
+  loadData(filterData) {
+    this.isLoadingResults = true;
+    this._UsersService.getUserData(filterData).subscribe(response => {
+      if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
+        if (response.DATA.USERS[0]) {
+          this.highlightedRows = response.DATA.USERS[0].USERGUID;
+          this.currentUserData = response.DATA.USERS[0];
+        }
+        this.Useralldata = new MatTableDataSource(response.DATA.USERS);
+        this.Useralldata.paginator = this.paginator;
+        this.Useralldata.sort = this.sort;
+      }
+      this.isLoadingResults = false;
+    }, error => {
+      this.toastr.error(error);
+    });
+    this.pageSize = localStorage.getItem('lastPageSize');
+  }
+
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '100%';
+    dialogConfig.disableClose = true;
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'users', 'list': '' };
+    //open pop-up
+    const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
+    //Save button click
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.displayedColumns = result.columObj;
+        this.ColumnsObj = result.columnameObj;
+        this.tempColobj = result.tempColobj;
+        if (!result.columObj) {
+          this.Useralldata = new MatTableDataSource([]);
+          this.Useralldata.paginator = this.paginator;
+          this.Useralldata.sort = this.sort;
+        } else {
+          this.loadData(this.lastFilter);
+        }
+      }
+    });
   }
 }

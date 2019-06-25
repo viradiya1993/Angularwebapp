@@ -7,7 +7,7 @@ import * as $ from 'jquery';
 import { MatTableDataSource, MatPaginator, MatDialogConfig, MatDialog, MatDatepickerInputEvent } from '@angular/material';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { DatePipe } from '@angular/common';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material';
 // import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule } from 'saturn-datepicker'
 // import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter'
 
@@ -18,10 +18,10 @@ import {MatSort} from '@angular/material';
   templateUrl: './invoice.component.html',
   styleUrls: ['./invoice.component.scss'],
   animations: fuseAnimations
-  
+
 })
 export class InvoiceComponent implements OnInit {
-  resultPicker:any;
+  resultPicker: any;
   matterInvoiceFilterForm: FormGroup;
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   isLoadingResults: boolean = false;
@@ -164,7 +164,5 @@ export class InvoiceComponent implements OnInit {
       }
     });
   }
-  // onSearch(scss) {
 
-  // }
 } 

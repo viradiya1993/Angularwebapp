@@ -72,6 +72,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any>;
     activedocument: any;
     clickedBtn: string;
+    hideShowDoc: string;
 
 
     constructor(
@@ -128,6 +129,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }, err => {
             this.toastr.error(err);
         });
+
+        //addedby web19
+        let val=localStorage.getItem('handelGenerateDoc');
+        if(val=='Folder'){
+            this.hideShowDoc='yes';
+        }else{
+            this.hideShowDoc='no'; 
+        }
     }
 
 
@@ -925,34 +934,90 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     //     //***********************************************************END Select Matter Contact*************************************************************************
     // }
     SelectMatterContact() {
-        if (this.router.url == "/create-document/invoice") {
-            // this._router.navigate(['/create-document/invoice']);
-            const dialogRef = this._matDialog.open(InvoiceDialogComponentForTemplate, {
-                width: '100%',
-                disableClose: true,
-                data: 'select_matter',
-
-            });
-            dialogRef.afterClosed().subscribe(result => {
-                if (result) {
-                    localStorage.setItem('set_active_matters', JSON.stringify(result));
-                    // this.router.navigate(['time-billing/work-in-progress/invoice']);
-                }
-            });
-
-        } else if (this.router.url == "/create-document/matter") {
+            let templateData = JSON.parse(localStorage.getItem('templateData')); 
+        if (this.router.url=="/create-document/invoice") {
+             let invoiceGUid = localStorage.getItem('edit_invoice_id');
+            let passdata={
+                'Context': "Invoice",
+                'ContextGuid': invoiceGUid,
+                "Type": "Template",
+                "Folder": '',
+                "Template": templateData.TEMPLATENAME
+              }
             const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
                 width: '100%',
                 disableClose: true,
-                data: 'select_matter'
+                data: passdata ,  
             });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     localStorage.setItem('set_active_matters', JSON.stringify(result));
-                    // this.router.navigate(['time-billing/work-in-progress/invoice']);
+                    
+                }
+            });
+
+        } else if( this.router.url=="/create-document/matter") {
+            let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
+            let passdata={
+                'Context': "Matter",
+                'ContextGuid': matterData.MATTERGUID,
+                "Type": "Template",
+                "Folder": '',
+                "Template": templateData.TEMPLATENAME
+              }
+            const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
+                width: '100%',
+                disableClose: true,
+                data: passdata
+            });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    localStorage.setItem('set_active_matters', JSON.stringify(result));
+                   
+                }
+            });
+        }else if( this.router.url=="/create-document/receive-money") {
+            let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
+            let passdata={
+                'Context': "Income",
+                'ContextGuid': ReceiptData.INCOMEGUID,
+                "Type": "Template",
+                "Folder": '',
+                "Template": templateData.TEMPLATENAME
+              }
+            const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
+                width: '100%',
+                disableClose: true,
+                data: passdata
+            });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    localStorage.setItem('set_active_matters', JSON.stringify(result));
+                   
+                }
+            });
+        }else if( this.router.url=="/create-document/contact") {
+            let ContactGuID = localStorage.getItem('contactGuid');
+            let passdata={
+                'Context': "Income",
+                'ContextGuid': ContactGuID,
+                "Type": "Template",
+                "Folder": '',
+                "Template": templateData.TEMPLATENAME
+              }
+            const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
+                width: '100%',
+                disableClose: true,
+                data: passdata
+            });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    // localStorage.setItem('set_active_matters', JSON.stringify(result));
+                   
                 }
             });
         }
+        
 
         //***********************************************************END Select Matter Contact*************************************************************************
     }

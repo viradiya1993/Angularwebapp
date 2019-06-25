@@ -1,102 +1,29 @@
 <div class="popup_main_div corres_popup_main select_metter_main_div" cdkDrag>
-    <h2 cdkDragHandle mat-dialog-title>{{title}}
+    <h2 cdkDragHandle mat-dialog-title> Document Generated
         <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog"><mat-icon>close</mat-icon></button>
     </h2>
-    <div mat-dialog-content class="mat-typography" *ngIf="ForHideShow==='select_matter'">
-        <div class="example-loading-shade" *ngIf="isLoadingResults">
-            <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
-        </div>
-        <div class="one select_matter_main_div">
-            <div class="center p-24 list_tbl_main more_tbl_clmn">
-                <div class="matter-serach-div sticky_search_div">
-                    <!-- select bar  -->
-                    <form [formGroup]="matterFilterForm">
-                        <mat-form-field class="example" appearance="outline">
-                            <mat-label>Active Matters</mat-label>
-                            <mat-select formControlName="MatterFilter" (selectionChange)="MatterChange($event.value)">
-                                <mat-option value="active">Active Matters</mat-option>
-                                <mat-option value="inactive">Inactive Matters</mat-option>
-                                <mat-option value="recent inactive">Recently Inactive</mat-option>
-                                <mat-option value="near estimate">Near Estimate</mat-option>
-                                <mat-option value="">All Matters</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <mat-form-field class="example freeEarner" appearance="outline">
-                            <mat-label>Free Earner/Owner</mat-label>
-                            <mat-select (selectionChange)="MatterUserChange($event.value)" formControlName="UserFilter">
-                                <mat-option value="all">All</mat-option>
-                                <mat-option value="">None</mat-option>
-                                <mat-option *ngFor="let MatterDrop of MatterDropData" value="{{MatterDrop.USERID}}">{{MatterDrop.USERID}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <mat-form-field class="search" appearance="outline">
-                            <mat-label>Search</mat-label>
-                            <input matInput placeholder="Search" (keydown)="onSearch($event)" formControlName="searchFilter">
-                            <mat-icon matSuffix (click)="onSearch('Enter')">search</mat-icon>
-                        </mat-form-field>
-                    </form>
-                </div>
-            </div>
-            <div class="example-containerdata">
-                <table mat-table #table [dataSource]="getDataForTable" [@animateStagger]="{value:'50'}" matSort class="mat-elevation-z8">
-                    <ng-container matColumnDef="matternumber">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>matternumber</th>
-                        <td mat-cell *matCellDef="let row">
-                            <p class="job-title text-truncate">
-                                {{row.SHORTNAME }}
-                            </p>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="matter">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>matter</th>
-                        <td mat-cell *matCellDef="let row">
-                            <p class="company text-truncate">
-                                {{row.MATTER }}
-                            </p>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="client">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>client</th>
-                        <td mat-cell *matCellDef="let row">
-                            <p class="company text-truncate">
-                                {{row.CLIENT }}
-                            </p>
-                        </td>
-                    </ng-container>
-                    <tr mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                    <tr mat-row [style.background]="highlightedRows == row.MATTERGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" [ngClass]="highlightedRows == row.MATTERGUID ? 'row-text-colore' : ''" class="contact" (click)="selectMatterId(row);highlightedRows = row.MATTERGUID"
-                        matRipple [@animate]="{value:'*',params:{y:'100%'}}">
-                    </tr>
-                </table>
-            </div>
-            <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
-        </div>
-    </div>
+    
 
-    <div mat-dialog-content class="mat-typography" *ngIf="CheckCondition">
+    <div mat-dialog-content class="mat-typography" >
+            <div class="example-loading-shade" *ngIf="isLoadingResults">
+                    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+                </div>
             <div class="popup_body">
+            
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <div class="middle">The Template has been produced.</div>
+                    <div class="middle">The FILENAME has been produced.</div>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="button">
                     <a href="{{this.base_url}}{{filefolder_Name}}" target="_blank">
                         <button mat-raised-button mat-dialog-close color="accent">Click here to view it</button>
                     </a>
                 </div>
-            </div>
+    
         </div>
-
-
+        </div>
+      
     <mat-dialog-actions  align="end" class="popup_ftr">
-        <div class="left_popup_btn" *ngIf="ForHideShow==='select_matter'">
-            <button mat-raised-button color="accent" (click)="AddNewmatterpopup()">New Matter</button>
-            <button mat-raised-button color="accent" (click)="EditNewmatterpopup()">Edit Matter</button>
-        </div>
-        <div class="right_popup_btn" *ngIf="ForHideShow==='select_matter'">
-            <button mat-raised-button [mat-dialog-close]="currentMatterData" (click)="selectMatter()"  [disabled]="isspiner" color="accent"><mat-spinner *ngIf="isspiner"></mat-spinner>Select</button>
-            <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
-        </div>
-        <div class="right_popup_btn" *ngIf="CheckCondition">
+        <div class="right_popup_btn">
                 <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
             </div>
     </mat-dialog-actions>

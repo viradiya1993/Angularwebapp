@@ -122,6 +122,7 @@ export class InvoiceComponent implements OnInit {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (response.DATA.INVOICES[0]) {
           localStorage.setItem('edit_invoice_id', response.DATA.INVOICES[0].INVOICEGUID);
+          // localStorage.setItem('set_active_Invoices', JSON.stringify(response.DATA.INVOICES[0]));
           this.highlightedRows = response.DATA.INVOICES[0].INVOICEGUID;
           this.currentInvoiceData = response.DATA.INVOICES[0];
         }
@@ -137,6 +138,7 @@ export class InvoiceComponent implements OnInit {
   }
   selectInvoice(Row: any) {
     localStorage.setItem('edit_invoice_id', Row.INVOICEGUID);
+    // localStorage.setItem('set_active_Invoices', JSON.stringify(Row));
     this.currentInvoiceData = Row;
   }
   openDialog() {

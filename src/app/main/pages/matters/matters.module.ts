@@ -63,6 +63,7 @@ const routes = [
     ClientComponent,
     RatesComponent,
     NumericDirective,
+ 
     // DetailsComponent,
     OthersComponent,
     // NewmatterDetailComponent,

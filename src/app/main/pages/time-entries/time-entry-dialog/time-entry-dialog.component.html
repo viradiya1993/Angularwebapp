@@ -65,11 +65,13 @@
                             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                                 <mat-label>Price (Ex GST)</mat-label>
                                 <input class="sideText" type="text" numeric numericType="decimal" matInput formControlName="PRICE" (keyup)="calcPE()" [(ngModel)]="PRICEVAL">
+                                <span matPrefix>$&nbsp;</span>
                                 <mat-icon matSuffix class="secondary-text">currency</mat-icon>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                                 <mat-label>Price (Inc GST)</mat-label>
                                 <input class="sideText" type="text" numeric numericType="decimal" matInput formControlName="PRICEINCGST" (keyup)="calcPI()" [(ngModel)]="PRICEINCGSTVAL">
+                                <span matPrefix>$&nbsp;</span>
                                 <mat-icon matSuffix class="secondary-text">currency</mat-icon>
                             </mat-form-field>
                         </div>

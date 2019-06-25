@@ -47,7 +47,7 @@ import { NumericDirective } from './matter-popup/numericValidation.component';
 
 
 import {MatSortModule} from '@angular/material/sort';
-
+import {NgxMaskModule} from 'ngx-mask'
 
 const routes = [
   { path: '', component: MattersComponent, canActivate: [AuthGuard] }
@@ -63,6 +63,7 @@ const routes = [
     ClientComponent,
     RatesComponent,
     NumericDirective,
+ 
     // DetailsComponent,
     OthersComponent,
     // NewmatterDetailComponent,
@@ -90,6 +91,7 @@ const routes = [
     UserSelectPopupComponent,
   ],
   imports: [
+    NgxMaskModule,
     CommonModule,
     RouterModule.forChild(routes),
     FuseSharedModule,

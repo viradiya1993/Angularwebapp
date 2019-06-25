@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { SpendmoneyService, TableColumnsService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
-import { MatTableDataSource, MatPaginator, MatDialogConfig, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatDialogConfig, MatDialog, MatDatepickerInputEvent } from '@angular/material';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import * as $ from 'jquery';
 import { MatSort } from '@angular/material';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-spend-money',
@@ -15,7 +16,7 @@ import { MatSort } from '@angular/material';
   animations: fuseAnimations
 })
 export class SpendMoneyComponent implements OnInit {
-
+  SepndMoneyForm:FormGroup;
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   isLoadingResults: boolean = false;
   ColumnsObj: any = [];
@@ -30,6 +31,7 @@ export class SpendMoneyComponent implements OnInit {
   currentMatterData: any;
   Spendmoneydata: any;
   pageSize: any;
+  filterData:any=[];
 
   constructor(
     private TableColumnsService: TableColumnsService,
@@ -37,17 +39,23 @@ export class SpendMoneyComponent implements OnInit {
     private toastr: ToastrService,
     private _formBuilder: FormBuilder,
     private dialog: MatDialog,
+    public datepipe: DatePipe,
   ) {
     this.getTableFilter();
   }
   ngOnInit() {
+this.SepndMoneyForm=this._formBuilder.group({
+  MainClass:[''],
+})
+
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
-
-    this.loadData();
+   this.filterData={'EXPENDITURECLASS':"Expense",'ITEMSTARTDATE':'','ITEMENDDATE':'',"RECEIVEDSTARTDATE":'',
+  'RECEIVEDENDDATE':''}
+  this.SepndMoneyForm.controls['MainClass'].setValue("Expense"); 
+    // let potData = { 'ITEMSTARTDATE': new Date() };
+    this.loadData(this.filterData);
   }
-  DateRange(a, s) {
 
-  }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('spend money', '').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
@@ -65,10 +73,8 @@ export class SpendMoneyComponent implements OnInit {
     localStorage.setItem('lastPageSize', event.pageSize);
   }
 
-  loadData() {
-
-
-    let potData = { 'ITEMSTARTDATE': new Date() };
+  loadData(potData) {
+    console.log(potData) ;
     this.isLoadingResults = true;
     this.SpendmoneyService.SpendmoneyListData(potData).subscribe(response => {
       console.log(response);
@@ -133,6 +139,28 @@ export class SpendMoneyComponent implements OnInit {
 
   }
   SpendClassChange(val) {
+    console.log(val)
+    this.filterData.EXPENDITURECLASS=val;
+    // let potData = { 'EXPENDITURECLASS':val };
+    this.loadData(this.filterData);
+
+  }
+  SpendDateClassChnage(val){
+
+  }
+  DateRange1(type: string, event: MatDatepickerInputEvent<Date>) {
+    let begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
+    let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');
+    
+    // this.filterData={'EXPENDITURECLASS':"Expense",'ITEMSTARTDATE':'','ITEMENDDATE':'',"RECEIVEDSTARTDATE":'',
+    // 'RECEIVEDENDDATE':''}
+    this.filterData.RECEIVEDSTARTDATE=begin;
+    this.filterData.RECEIVEDENDDATE=end;
+ 
+ this.loadData(this.filterData);
+   
+  }
+  DateRange(a,b){
 
   }
 }

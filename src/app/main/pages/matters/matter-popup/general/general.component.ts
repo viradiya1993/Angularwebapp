@@ -17,7 +17,8 @@ export class GeneralComponent implements OnInit {
   PRICEVAL: any;
   PRICEVALGST: any;
   constructor(public datepipe: DatePipe, public MatDialog: MatDialog, private Timersservice: TimersService) {
-
+  // this.PRICEVALGST='$ '+ 0.00;
+  // this.PRICEVAL='$ '+0.00;
   }
 
   CommencementDate(type: string, event: MatDatepickerInputEvent<Date>) {
@@ -54,10 +55,10 @@ export class GeneralComponent implements OnInit {
   }
   calcPE(val) {
     
-    this.PRICEVALGST = round(this.f.EstimateFromTotalExGST.value * 1.1);
+    this.PRICEVALGST = round(this.f.EstimateFromTotalExGST.value * 1.1).toFixed(2);
   }
   calcPI() {
-    this.PRICEVAL = round(this.f.EstimateFromTotalIncGST.value / 1.1);
+    this.PRICEVAL = round(this.f.EstimateFromTotalIncGST.value / 1.1).toFixed(2);
   }
 
 }

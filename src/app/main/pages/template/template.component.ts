@@ -46,7 +46,11 @@ export class TemplateComponent implements OnInit {
   ngOnInit() {
     // let i=0;
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
-    let d = {};
+    this.LoadData({})
+    
+
+  }
+  LoadData(d){
     this.isLoadingResults = true;
     this.TemplateListData.getTemplateList(d).subscribe(response => {
       console.log(response);
@@ -62,12 +66,12 @@ export class TemplateComponent implements OnInit {
         this.isLoadingResults = false;
       }
     }, err => {
-      this.isLoadingResults = false;
+    
       this.toastr.error(err);
+      this.isLoadingResults = false;
     });
     this.pageSize = localStorage.getItem('lastPageSize');
   }
-
 
   onSearch(searchFilter: any) {
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
@@ -76,10 +80,14 @@ export class TemplateComponent implements OnInit {
   }
   editContact(Row: any) {
     console.log(Row);
-    // this.TemplateListData.getData(Row);
+   
+    if(Row.TEMPLATETYPE=="Folder"){
+      localStorage.setItem('handelGenerateDoc','Folder');
+    }else{
+      localStorage.setItem('handelGenerateDoc','Template');
+    }
     this.parentMessage = Row;
     this.matterDetail.emit(Row);
-    // localStorage.setItem('templateData',Row);
     localStorage.setItem('templateData', JSON.stringify(Row));
     this.currentMatterData = Row;
 
@@ -88,39 +96,134 @@ export class TemplateComponent implements OnInit {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
   }
-  public selectMatter() {
-    if (this.router.url=="/create-document/invoice") {
-      // this._router.navigate(['/create-document/invoice']);
-      const dialogRef = this._matDialog.open(InvoiceDialogComponentForTemplate, {
-          width: '100%',
-          disableClose: true,
-          data: 'select_matter',
+   selectMatter(data) {
+
+     if(data.TEMPLATETYPE=="Folder"){
+      this.LoadData({"Folder":data.TEMPLATENAME});
+     }else if(data.TEMPLATETYPE=="Sub Folder"){
+      this.LoadData({"Sub Folder":data.TEMPLATENAME});
+     }
+     else{
+       
+       this.openDilog()
+     }
+  
+   
+  //   if (this.router.url=="/create-document/invoice") {
+  //     // this._router.navigate(['/create-document/invoice']);
+  //     const dialogRef = this._matDialog.open(InvoiceDialogComponentForTemplate, {
+  //         width: '100%',
+  //         disableClose: true,
+  //         data: 'select_matter',
           
-      });
-      dialogRef.afterClosed().subscribe(result => { 
-          if (result) {
-              localStorage.setItem('set_active_matters', JSON.stringify(result));
-              // this.router.navigate(['time-billing/work-in-progress/invoice']);
-          }
-      });
+  //     });
+  //     dialogRef.afterClosed().subscribe(result => { 
+  //         if (result) {
+  //             localStorage.setItem('set_active_matters', JSON.stringify(result));
+  //             // this.router.navigate(['time-billing/work-in-progress/invoice']);
+  //         }
+  //     });
 
-  } else if( this.router.url=="/create-document/matter") {
-      const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
-          width: '100%',
-          disableClose: true,
-          data: 'select_matter'
-      });
-      dialogRef.afterClosed().subscribe(result => {
-          if (result) {
-              localStorage.setItem('set_active_matters', JSON.stringify(result));
-              // this.router.navigate(['time-billing/work-in-progress/invoice']);
-          }
-      });
+  // } else if( this.router.url=="/create-document/matter") {
+  //     const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
+  //         width: '100%',
+  //         disableClose: true,
+  //         data: 'select_matter'
+  //     });
+  //     dialogRef.afterClosed().subscribe(result => {
+  //         if (result) {
+  //             localStorage.setItem('set_active_matters', JSON.stringify(result));
+  //             // this.router.navigate(['time-billing/work-in-progress/invoice']);
+  //         }
+  //     });
+  // }
+
   }
+  openDilog(){
+    let templateData = JSON.parse(localStorage.getItem('templateData')); 
+    if (this.router.url=="/create-document/invoice") {
+         let invoiceGUid = localStorage.getItem('edit_invoice_id');
+        let passdata={
+            'Context': "Invoice",
+            'ContextGuid': invoiceGUid,
+            "Type": "Template",
+            "Folder": '',
+            "Template": templateData.TEMPLATENAME
+          }
+        const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
+            width: '100%',
+            disableClose: true,
+            data: passdata ,  
+        });
+        dialogRef.afterClosed().subscribe(result => { 
+            if (result) {
+                localStorage.setItem('set_active_matters', JSON.stringify(result));
+                
+            }
+        });
 
-    // const dialogRef = this.MatDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
-    // dialogRef.afterClosed().subscribe(result => {
-    // });
+    } else if( this.router.url=="/create-document/matter") {
+        let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
+        let passdata={
+            'Context': "Matter",
+            'ContextGuid': matterData.MATTERGUID,
+            "Type": "Template",
+            "Folder": '',
+            "Template": templateData.TEMPLATENAME
+          }
+        const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
+            width: '100%',
+            disableClose: true,
+            data: passdata
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                localStorage.setItem('set_active_matters', JSON.stringify(result));
+               
+            }
+        });
+    }else if( this.router.url=="/create-document/receive-money") {
+        let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
+        let passdata={
+            'Context': "Income",
+            'ContextGuid': ReceiptData.INCOMEGUID,
+            "Type": "Template",
+            "Folder": '',
+            "Template": templateData.TEMPLATENAME
+          }
+        const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
+            width: '100%',
+            disableClose: true,
+            data: passdata
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                localStorage.setItem('set_active_matters', JSON.stringify(result));
+               
+            }
+        });
+    }else if( this.router.url=="/create-document/contact") {
+        let ContactGuID = localStorage.getItem('contactGuid');
+        let passdata={
+            'Context': "Income",
+            'ContextGuid': ContactGuID,
+            "Type": "Template",
+            "Folder": '',
+            "Template": templateData.TEMPLATENAME
+          }
+        const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
+            width: '100%',
+            disableClose: true,
+            data: passdata
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // localStorage.setItem('set_active_matters', JSON.stringify(result));
+               
+            }
+        });
+    }
+     
   }
   ContactMatter() {
     const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true });

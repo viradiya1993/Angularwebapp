@@ -13,12 +13,14 @@ import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 import { MatterContactDailogComponent } from './matter-contact-dailog/matter-contact-dailog.component';
 import { MatterDialogComponentForTemplate } from './matter-dialog/matter-dialog.component';
 import {MatSortModule} from '@angular/material/sort';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 const routes = [
   { path: '', component: TemplateComponent, canActivate: [AuthGuard] },
   { path: 'create-document/matter', component: TemplateComponent },
   { path: 'create-document/invoice', component: TemplateComponent },
-
+  { path: 'create-document/receive-money', component: TemplateComponent },
+  { path: 'create-document/contact', component: TemplateComponent },
 
 ];
 @NgModule({
@@ -48,6 +50,7 @@ const routes = [
     MatTabsModule,
     MatDialogModule,
     MatProgressSpinnerModule,
+    DragDropModule,
 
     FuseSharedModule,
     FuseConfirmDialogModule,

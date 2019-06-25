@@ -13,11 +13,11 @@ import { UserSelectPopupComponent } from '../../user-select-popup/user-select-po
 })
 export class GeneralComponent implements OnInit {
   @Input() matterdetailForm: FormGroup;
+  //matterdetailForm: FormGroup;
   @Input() userType: any;
   PRICEVAL: any;
   PRICEVALGST: any;
   constructor(public datepipe: DatePipe, public MatDialog: MatDialog, private Timersservice: TimersService) {
-
   }
 
   CommencementDate(type: string, event: MatDatepickerInputEvent<Date>) {
@@ -30,7 +30,9 @@ export class GeneralComponent implements OnInit {
   CompletedDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['COMPLETEDDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  ngOnInit() { }
+  ngOnInit() { 
+    
+  }
   selectMatter() {
     const dialogRef = this.MatDialog.open(UserSelectPopupComponent, { width: '100%', disableClose: true });
     dialogRef.afterClosed().subscribe(result => {

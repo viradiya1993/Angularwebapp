@@ -36,6 +36,7 @@ import { MatterReceiptDialogComponentForTemplate } from 'app/main/pages/receive-
 import { UserDialogComponent } from './../../../main/pages/users/user-dialog/user-dialog.component';
 import { ActivityDialogComponent } from './../../../main/pages/activities/activity-dialog/activity-dialog.component';
 import { ChangePasswordComponent } from 'app/main/change-password/change-password.component';
+import { NewfilenoteComponent } from './../../../main/pages/newfilenote/newfilenote.component';
 
 
 @Component({
@@ -708,6 +709,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             console.log(result);
         });
     }
+
+    //New File Note Dialog
+    NewFileNote() {
+        console.log('New File Work!!!');
+        const dialogRef = this.dialog.open(NewfilenoteComponent, {
+
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -774,8 +786,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     isInvoiceClick() {
         this.clickedBtn = 'invoiceDoc';
     }
-    isMatterClick(){
-        this.clickedBtn = 'matterDoc';   
+    isMatterClick() {
+        this.clickedBtn = 'matterDoc';
     }
 
     createInstantInvoice() {
@@ -800,9 +812,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     createReceiptForTimeBilling() {
         const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
             width: '100%', disableClose: true,
-            data: {
-                action: 'addForTB'
-            }
+            data: { action: 'add' }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -831,7 +841,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this._matDialog.open(MatterReceiptDialogComponentForTemplate, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                console.log(result);
+                const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
+                    width: '100%', disableClose: true,
+                    data: { action: 'add', type: " ", matterData: result }
+                });
+                dialogRef.afterClosed().subscribe(result => { if (result) { } });
             }
         });
     }
@@ -902,9 +916,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     NewGeneralReceipt(): void {
         const dialogRef = this._matDialog.open(GeneralReceiptDilogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                console.log(result);
-            }
+            if (result) { console.log(result); }
         });
     }
     // ******************************************END Invoice related funtion like create update delete view*********************************************
@@ -937,7 +949,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 disableClose: true,
                 data: passdata ,  
             });
-            dialogRef.afterClosed().subscribe(result => { 
+            dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     localStorage.setItem('set_active_matters', JSON.stringify(result));
                     

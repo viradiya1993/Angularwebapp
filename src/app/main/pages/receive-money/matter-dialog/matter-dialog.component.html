@@ -21,7 +21,7 @@
                                 <mat-option value="">All Matters</mat-option>
                             </mat-select>
                         </mat-form-field>
-                        <mat-form-field class="example freeEarner" appearance="outline">
+                        <mat-form-field class="example freeEarner" appearance="outline" *ngIf="isShowDrop">
                             <mat-label>Free Earner/Owner</mat-label>
                             <mat-select (selectionChange)="MatterUserChange($event.value)" formControlName="UserFilter">
                                 <mat-option value="all">All</mat-option>
@@ -78,7 +78,7 @@
             <button mat-raised-button color="accent" (click)="EditNewmatterpopup()">Edit Matter</button>
         </div>
         <div class="right_popup_btn">
-            <button mat-raised-button [mat-dialog-close]="currentMatterData" (click)="selectMatter()" color="accent">Select</button>
+            <button mat-raised-button [mat-dialog-close]="currentMatterData" color="accent">Select</button>
             <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
         </div>
     </mat-dialog-actions>

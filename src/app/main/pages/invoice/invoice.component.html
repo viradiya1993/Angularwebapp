@@ -60,7 +60,7 @@
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                                             <tr mat-row [style.background]="highlightedRows == row.INVOICEGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" [ngClass]="highlightedRows == row.INVOICEGUID ? 'row-text-colore' : ''" class="contact" (click)="selectInvoice(row);highlightedRows = row.INVOICEGUID"
                                                 matRipple [@animate]="{value:'*',params:{y:'100%'}}">
-                                            </tr>
+                                              </tr>
                                         </table>
                                     </div>
                                     <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>

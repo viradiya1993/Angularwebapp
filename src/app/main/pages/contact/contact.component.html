@@ -57,9 +57,9 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example">
                         <mat-label>Filter</mat-label>
-                        <input matInput formControlName="search" (keydown)="onSearch($event)">
+                        <input matInput formControlName="search" (keyup.enter)="onSearch($event)">
                     </mat-form-field>
-                    <button mat-raised-button color="primary" id="refreshContactTab" (click)="refreshContactTab();">Refresh</button>
+                    <button mat-raised-button color="primary" type="button" id="refreshContactTab" (click)="refreshContactTab();">Refresh</button>
                 </form>
             </div>
             <div class="content">
@@ -74,8 +74,8 @@
                     </div>
                     <div class="example-containerdata">
                         <table mat-table [dataSource]="Contactdata" matSort [@animateStagger]="{value:'50'}">
-                            <ng-container *ngFor="let item of displayedColumns;" mat-sort-header matColumnDef="{{item}}">
-                                <th mat-header-cell *matHeaderCellDef class="header_title"> {{ tempColobj[item].DESCRIPTION }}</th>
+                            <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
+                                <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header> {{ tempColobj[item].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">
                                     <span *ngIf="row[item]">{{row[item]}}</span>
                                 </td>

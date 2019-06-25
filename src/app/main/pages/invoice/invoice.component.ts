@@ -8,14 +8,20 @@ import { MatTableDataSource, MatPaginator, MatDialogConfig, MatDialog, MatDatepi
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { DatePipe } from '@angular/common';
 import {MatSort} from '@angular/material';
+// import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule } from 'saturn-datepicker'
+// import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter'
+
+
 
 @Component({
   selector: 'app-invoice',
   templateUrl: './invoice.component.html',
   styleUrls: ['./invoice.component.scss'],
   animations: fuseAnimations
+  
 })
 export class InvoiceComponent implements OnInit {
+  resultPicker:any;
   matterInvoiceFilterForm: FormGroup;
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   isLoadingResults: boolean = false;
@@ -76,6 +82,7 @@ export class InvoiceComponent implements OnInit {
     this.loadData(this.lastFilter);
   }
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    console.log('abcabc');
     let begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
     let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');
     this.lastFilter = JSON.parse(localStorage.getItem('matter_invoice_filter'));

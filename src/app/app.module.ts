@@ -40,6 +40,10 @@ import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { ToastrModule } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+
+
 import { LicenceAgreementComponent } from './main/licence-agreement/licence-agreement.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { ChangePasswordComponent } from './main/change-password/change-password.component';
@@ -114,7 +118,7 @@ const appRoutes: Routes = [
 
         ToastrModule.forRoot(), // ToastrModule added
         MatProgressSpinnerModule,
-       
+
     ],
     exports: [
         SortingDialogComponent,
@@ -127,6 +131,9 @@ const appRoutes: Routes = [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
         DatePipe,
+        { provide: MAT_DATE_LOCALE, useValue: 'fr' },
+        { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+        { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS }
     ],
 })
 export class AppModule {

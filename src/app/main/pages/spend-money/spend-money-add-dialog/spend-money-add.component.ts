@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewEncapsulation,ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatTableDataSource } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -9,7 +9,7 @@ import * as $ from 'jquery';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { SpendmoneyService, TableColumnsService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material';
 
 
 @Component({
@@ -22,7 +22,7 @@ import {MatSort} from '@angular/material';
 export class SpendMoneyAddComponent implements OnInit {
   action: any;
   dialogTitle: string;
-  isLoadingResults:boolean;
+  isLoadingResults: boolean;
   spendmoneyForm: FormGroup;
   displayedColumnsTime: string[] = ['class', 'amount', 'Gst', 'note'];
   getDataForTable: any;
@@ -33,21 +33,21 @@ export class SpendMoneyAddComponent implements OnInit {
   size = 33.33;
   Bankhide: boolean = true;
   hide: boolean = true;
-  tdata : boolean;
+  tdata: boolean;
   confirmDialogRef: any;
-  expac : boolean;
+  expac: boolean;
   @ViewChild(MatSort) sort: MatSort;
   constructor(public dialogRef: MatDialogRef<SpendMoneyAddComponent>,
-     @Inject(MAT_DIALOG_DATA) public _data: any, 
-     private _formBuilder: FormBuilder, 
-     private SpendmoneyService: SpendmoneyService,
-     public MatDialog: MatDialog,
-     private toastr: ToastrService,
-     public _matDialog: MatDialog,) { 
+    @Inject(MAT_DIALOG_DATA) public _data: any,
+    private _formBuilder: FormBuilder,
+    private SpendmoneyService: SpendmoneyService,
+    public MatDialog: MatDialog,
+    private toastr: ToastrService,
+    public _matDialog: MatDialog, ) {
     this.action = _data.action;
     this.dialogTitle = this.action === 'edit' ? 'Update Spend Money' : 'Add Spend Money';
   }
-  
+
   ngOnInit() {
 
     this.getDataForTable = new MatTableDataSource([]);
@@ -60,8 +60,8 @@ export class SpendMoneyAddComponent implements OnInit {
       DatePaid: [''],
       Amount: [''],
       GST: [''],
-      Bankac: [''],      
-      Notes: [''],      
+      Bankac: [''],
+      Notes: [''],
       Type: [''],
       ChequeNo: [''],
       Payee: [''],
@@ -81,15 +81,15 @@ export class SpendMoneyAddComponent implements OnInit {
       Equityac: ['']
     });
 
-  if (this.action === 'edit') {
-      this.size = 20;      
+    if (this.action === 'edit') {
+      this.size = 20;
       $('#expac').addClass('menu-disabled');
       this.expac = true;
       this.spendmoneyForm.controls['Class'].disable();
       this.spendmoneyForm.controls['Matter'].disable();
-      this.spendmoneyForm.controls['AmountIncGST'].disable();      
+      this.spendmoneyForm.controls['AmountIncGST'].disable();
       this.spendmoneyForm.controls['GSTType'].disable();
-      this.spendmoneyForm.controls['GST1'].disable();      
+      this.spendmoneyForm.controls['GST1'].disable();
       this.spendmoneyForm.controls['AmountExGST'].disable();
       this.spendmoneyForm.controls['Expenseac'].disable();
       this.spendmoneyForm.controls['Note'].disable();
@@ -100,27 +100,27 @@ export class SpendMoneyAddComponent implements OnInit {
     localStorage.setItem('lastPageSize', event.pageSize);
   }
   // paid Type Dropdown
-  Paidtype (paidvalue){
-    if (paidvalue === 'paid'){
+  Paidtype(paidvalue) {
+    if (paidvalue === 'paid') {
       this.Bankhide = false;
       $('#bank').removeClass('menu-disabled');
       this.spendmoneyForm.controls['DatePaid'].enable();
       this.spendmoneyForm.controls['Bankac'].enable();
       this.spendmoneyForm.controls['Type'].enable();
       this.spendmoneyForm.controls['ChequeNo'].enable();
-    } else if (paidvalue === 'unpaid'){
+    } else if (paidvalue === 'unpaid') {
       this.Bankhide = true;
       $('#bank').addClass('menu-disabled');
       this.spendmoneyForm.controls['DatePaid'].disable();
       this.spendmoneyForm.controls['Bankac'].disable();
       this.spendmoneyForm.controls['Type'].disable();
-      this.spendmoneyForm.controls['ChequeNo'].disable();      
+      this.spendmoneyForm.controls['ChequeNo'].disable();
     }
   }
-  Classtype(Classvalue){
-    this.classtype = Classvalue;    
-    if (Classvalue === 'Expence'){      
-      if (this.action !== 'edit'){
+  Classtype(Classvalue) {
+    this.classtype = Classvalue;
+    if (Classvalue === 'Expence') {
+      if (this.action !== 'edit') {
         this.hide = true;
         $("#mattersnew").addClass("menu-disabled");
         this.spendmoneyForm.controls['Class'].enable();
@@ -128,7 +128,7 @@ export class SpendMoneyAddComponent implements OnInit {
         this.spendmoneyForm.controls['AmountExGST'].disable();
         this.spendmoneyForm.controls['GSTType'].enable();
         this.spendmoneyForm.controls['GST1'].enable();
-      }else if (this.action === 'edit'){
+      } else if (this.action === 'edit') {
         this.hide = true;
         this.expac = false;
         $("#mattersnew").addClass("menu-disabled");
@@ -137,11 +137,11 @@ export class SpendMoneyAddComponent implements OnInit {
         // this.spendmoneyForm.controls['GSTType'].enable();
         // this.spendmoneyForm.controls['GST1'].enable();     
       }
-    }else if (Classvalue === 'matter Expence') {
+    } else if (Classvalue === 'matter Expence') {
       this.hide = false;
       this.expac = false;
-      $("#mattersnew").removeClass("menu-disabled");  
-      this.spendmoneyForm.controls['Class'].enable();    
+      $("#mattersnew").removeClass("menu-disabled");
+      this.spendmoneyForm.controls['Class'].enable();
       this.spendmoneyForm.controls['Matter'].enable();
       this.spendmoneyForm.controls['AmountExGST'].disable();
       this.spendmoneyForm.controls['GSTType'].enable();
@@ -149,7 +149,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['AmountIncGST'].enable();
       this.spendmoneyForm.controls['Note'].enable();
       this.spendmoneyForm.controls['Expenseac'].enable();
-    }else if (Classvalue === 'capital'){
+    } else if (Classvalue === 'capital') {
       this.hide = true;
       this.expac = false;
       $("#mattersnew").addClass("menu-disabled");
@@ -160,7 +160,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['GST1'].disable();
       this.spendmoneyForm.controls['AmountIncGST'].enable();
       this.spendmoneyForm.controls['Note'].enable();
-    }else if (Classvalue === 'pay gst'){
+    } else if (Classvalue === 'pay gst') {
       this.hide = true;
       $("#mattersnew").addClass("menu-disabled");
       this.spendmoneyForm.controls['Class'].enable();
@@ -170,18 +170,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['AmountExGST'].disable();
       this.spendmoneyForm.controls['AmountIncGST'].enable();
       this.spendmoneyForm.controls['Note'].enable();
-    }else if (Classvalue === 'pay txt'){
-      this.hide = true;
-      this.expac = false;
-      $("#mattersnew").addClass("menu-disabled");
-      this.spendmoneyForm.controls['Class'].enable();
-      this.spendmoneyForm.controls['Matter'].disable();
-      this.spendmoneyForm.controls['GSTType'].disable();
-      this.spendmoneyForm.controls['GST1'].disable();
-      this.spendmoneyForm.controls['AmountExGST'].disable();
-      this.spendmoneyForm.controls['AmountIncGST'].enable();
-      this.spendmoneyForm.controls['Note'].enable();
-    }else if (Classvalue === 'personal') {
+    } else if (Classvalue === 'pay txt') {
       this.hide = true;
       this.expac = false;
       $("#mattersnew").addClass("menu-disabled");
@@ -192,7 +181,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['AmountExGST'].disable();
       this.spendmoneyForm.controls['AmountIncGST'].enable();
       this.spendmoneyForm.controls['Note'].enable();
-    }else if (Classvalue === 'depreciation'){
+    } else if (Classvalue === 'personal') {
       this.hide = true;
       this.expac = false;
       $("#mattersnew").addClass("menu-disabled");
@@ -203,7 +192,18 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['AmountExGST'].disable();
       this.spendmoneyForm.controls['AmountIncGST'].enable();
       this.spendmoneyForm.controls['Note'].enable();
-    }else if (Classvalue === 'other'){
+    } else if (Classvalue === 'depreciation') {
+      this.hide = true;
+      this.expac = false;
+      $("#mattersnew").addClass("menu-disabled");
+      this.spendmoneyForm.controls['Class'].enable();
+      this.spendmoneyForm.controls['Matter'].disable();
+      this.spendmoneyForm.controls['GSTType'].disable();
+      this.spendmoneyForm.controls['GST1'].disable();
+      this.spendmoneyForm.controls['AmountExGST'].disable();
+      this.spendmoneyForm.controls['AmountIncGST'].enable();
+      this.spendmoneyForm.controls['Note'].enable();
+    } else if (Classvalue === 'other') {
       this.hide = true;
       this.expac = false;
       $("#mattersnew").addClass("menu-disabled");
@@ -217,35 +217,39 @@ export class SpendMoneyAddComponent implements OnInit {
     }
     //call api  
     // spendMoney_data
-    let SpendData =JSON.parse(localStorage.getItem('spendMoney_data')); 
-    let passData={
-      EXPENDITUREGUID:SpendData.EXPENDITUREGUID,
-      EXPENDITURECLASS:Classvalue
+    let SpendData = JSON.parse(localStorage.getItem('spendMoney_data'));
+    let passData = {
+      EXPENDITUREGUID: SpendData.EXPENDITUREGUID,
+      EXPENDITURECLASS: Classvalue
     }
     this.CallClassChangeApi(passData);
 
 
   }
-  CallClassChangeApi(passData){
+  CallClassChangeApi(passData) {
     // let potData = { 'EXPENDITURECLASS':Classvalue };
     this.isLoadingResults = true;
     this.SpendmoneyService.SpendmoneyListData(passData).subscribe(response => {
       console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
-      
-      
+
+
         if (response.DATA.EXPENDITURES[0]) {
-       
+
         }
-      
-      } 
+
+      }
       this.isLoadingResults = false;
     }, error => {
       this.toastr.error(error);
     });
   }
   ContactMatter() {
-    const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true });
+    const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, {
+      width: '100%', disableClose: true, data: {
+        type: ""
+      }
+    });
     dialogRef.afterClosed().subscribe(result => {
 
     });
@@ -260,8 +264,8 @@ export class SpendMoneyAddComponent implements OnInit {
       }
     });
   }
-  
-  Addspendmoney(){
+
+  Addspendmoney() {
     this.spendmoneyForm.controls['Class'].enable();
     //this.spendmoneyForm.controls['Matter'].enable();
     this.spendmoneyForm.controls['Expenseac'].enable();
@@ -272,32 +276,32 @@ export class SpendMoneyAddComponent implements OnInit {
     this.spendmoneyForm.controls['Note'].enable();
     //this.Classtype(this.classtype);
   }
-  Editspendmoney(){   
+  Editspendmoney() {
     this.Classtype('capital');
   }
-  deletespendmoney(){
-   
-      this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-          disableClose: true,
-          width: '100%',
-      });
-      this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-      this.confirmDialogRef.afterClosed().subscribe(result => {
-          // if (result) {
-          //     let getContactGuId = localStorage.getItem('contactGuid');
-          //     let postData = { FormAction: "delete", CONTACTGUID: getContactGuId }
-          //     this._getContact.AddContactData(postData).subscribe(res => {
-          //         if (res.STATUS == "success") {
-          //             $('#refreshContactTab').click();
-          //             this.toastr.success(res.STATUS);
-          //         } else {
-          //             this.toastr.error("You Can't Delete Contact Which One Is To Related to Matters");
-          //         }
-          //     });;
-          // }
-          // this.confirmDialogRef = null;
-      });
-    
+  deletespendmoney() {
+
+    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+      disableClose: true,
+      width: '100%',
+    });
+    this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+    this.confirmDialogRef.afterClosed().subscribe(result => {
+      // if (result) {
+      //     let getContactGuId = localStorage.getItem('contactGuid');
+      //     let postData = { FormAction: "delete", CONTACTGUID: getContactGuId }
+      //     this._getContact.AddContactData(postData).subscribe(res => {
+      //         if (res.STATUS == "success") {
+      //             $('#refreshContactTab').click();
+      //             this.toastr.success(res.STATUS);
+      //         } else {
+      //             this.toastr.error("You Can't Delete Contact Which One Is To Related to Matters");
+      //         }
+      //     });;
+      // }
+      // this.confirmDialogRef = null;
+    });
+
   }
 }
- 
+

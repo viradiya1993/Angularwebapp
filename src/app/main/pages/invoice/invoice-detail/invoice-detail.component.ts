@@ -15,6 +15,8 @@ import {MatSort} from '@angular/material';
   styleUrls: ['./invoice-detail.component.scss'],
   encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
+ 
+  
 })
 export class InvoiceDetailComponent implements OnInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
@@ -51,7 +53,7 @@ export class InvoiceDetailComponent implements OnInit {
       INVOICEGUID: [''],
       INVOICECODE: [''],
       INVOICEDATE: [''],
-      INVOICEDATETEXT: [''],
+      INVOICEDATETEXT: [],
       DUEDATE: [''],
       DUEDATETEXT: [''],
       COMMENT: [''],
@@ -74,11 +76,15 @@ export class InvoiceDetailComponent implements OnInit {
             this.invoiceDetailForm.controls['INVOICEDATE'].setValue(invoiceData.INVOICEDATE);
             let INVOICEDATET = invoiceData.INVOICEDATE.split("/");
             this.invoiceDetailForm.controls['INVOICEDATETEXT'].setValue(new Date(INVOICEDATET[1] + '/' + INVOICEDATET[0] + '/' + INVOICEDATET[2]));
+            // console.log('this.invoiceDetailForm.controls');
+            // console.log(abc);
           }
           if (invoiceData.DUEDATE) {
             this.invoiceDetailForm.controls['DUEDATE'].setValue(invoiceData.DUEDATE);
             let DUEDATE1 = invoiceData.DUEDATE.split("/");
             this.invoiceDetailForm.controls['DUEDATETEXT'].setValue(new Date(DUEDATE1[1] + '/' + DUEDATE1[0] + '/' + DUEDATE1[2]));
+            // console.log('this.invoiceDetailForm.controls');
+            // console.log(ab1);
           }
           this.invoiceDetailForm.controls['COMMENT'].setValue(invoiceData.COMMENT);
           this.invoiceDetailForm.controls['GST'].setValue(invoiceData.GST);

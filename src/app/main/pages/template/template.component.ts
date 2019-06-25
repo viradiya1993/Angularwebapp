@@ -9,7 +9,7 @@ import * as $ from 'jquery';
 import { InvoiceDialogComponentForTemplate } from '../invoice/select-invoice-dialog/select-invoice-dialog.component';
 import { MatterDialogComponentForTemplate } from './matter-dialog/matter-dialog.component';
 import { Router } from '@angular/router';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-template',
@@ -39,7 +39,7 @@ export class TemplateComponent implements OnInit {
     public TemplateListData: TemplateListDetails,
     public MatDialog: MatDialog,
     private TableColumnsService: TableColumnsService,
-    private router:Router,
+    private router: Router,
     public _matDialog: MatDialog,
   ) { }
 
@@ -226,7 +226,11 @@ export class TemplateComponent implements OnInit {
      
   }
   ContactMatter() {
-    const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true });
+    const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, {
+      width: '100%', disableClose: true, data: {
+        type: ""
+      }
+    });
     dialogRef.afterClosed().subscribe(result => {
     });
   }

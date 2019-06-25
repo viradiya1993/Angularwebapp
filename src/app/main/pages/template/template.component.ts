@@ -53,7 +53,7 @@ export class TemplateComponent implements OnInit {
   LoadData(d){
     this.isLoadingResults = true;
     this.TemplateListData.getTemplateList(d).subscribe(response => {
-      console.log(response);
+     
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Templatedata = new MatTableDataSource(response.DATA.TEMPLATES);
 
@@ -75,11 +75,11 @@ export class TemplateComponent implements OnInit {
 
   onSearch(searchFilter: any) {
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
-      console.log(searchFilter);
+     
     }
   }
   editContact(Row: any) {
-    console.log(Row);
+ 
    
     if(Row.TEMPLATETYPE=="Folder"){
       localStorage.setItem('handelGenerateDoc','Folder');

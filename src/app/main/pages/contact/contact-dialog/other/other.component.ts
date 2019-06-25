@@ -9,14 +9,14 @@ import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
   selector: 'app-other',
   templateUrl: './other.component.html',
   styleUrls: ['./other.component.scss'],
-  // providers: [
-  //   {
-  //       provide: DateAdapter, useClass: AppDateAdapter
-  //   },
-  //   {
-  //       provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
-  //   }
-  //   ]
+  providers: [
+    {
+        provide: DateAdapter, useClass: AppDateAdapter
+    },
+    {
+        provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
+    }
+    ]
 })
 export class OtherComponent implements OnInit {
 

@@ -13,9 +13,10 @@ import { WorkInProgressComponent } from './work-in-progress/work-in-progress.com
 import { MatterInvoicesComponent } from './matter-invoices/matter-invoices.component';
 import { ReceiptsCreditsComponent } from './receipts-credits/receipts-credits.component';
 import { MatterTrustComponent } from './matter-trust/matter-trust.component';
-import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
+//import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import {MatSortModule} from '@angular/material/sort';
-
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker'
+import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
 
 const routes = [
   { path: '', redirectTo: '/time-billing/estimate', pathMatch: 'full', canActivate: [AuthGuard] },
@@ -63,6 +64,10 @@ const routes = [
   ],
   exports: [
     TimeBillingComponent
-  ]
+  ],
+  providers: [
+    {provide: DateAdapter, useClass: AppDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
+  ],
 })
 export class TimeBillingModule { }

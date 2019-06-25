@@ -152,10 +152,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
 
   }
   calcPE(val) {
-  
-   console.log(parseFloat(this.f.PRICE.value).toFixed(2));
-  //  this.PRICEVAL=parseFloat(this.f.PRICE.value).toFixed(2);
-    // console.log(val.toFixed(2))
     this.PRICEINCGSTVAL = round(this.f.PRICE.value * 1.1).toFixed(2);
   }
   calcPI(val) {
@@ -268,7 +264,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     if (this.calculateData.MatterGuid != '' && this.calculateData.Quantity != '' && (this.calculateData.QuantityType != '' || this.calculateData.FeeType != '')) {
       this.isLoadingResults = true;
       this.Timersservice.calculateWorkItems(this.calculateData).subscribe(response => {
-        console.log(response);
         if (response.CODE == 200 && response.STATUS == "success") {
           let CalcWorkItemCharge = response.DATA;
           this.timeEntryForm.controls['PRICE'].setValue(CalcWorkItemCharge.PRICE);
@@ -336,7 +331,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       // "GSTCHARGED": "value",
       // "GSTTYPE": "value",
     }
-    console.log(PostData);
     if (this.f.ITEMTYPE.value == "Activity" || this.f.ITEMTYPE.value == "Sundry") {
       PostData.FEETYPE = this.f.QUANTITYTYPE.value;
       PostData.QUANTITYTYPE = '';
@@ -416,5 +410,5 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.toastr.error(err);
     });
   }
- 
+
 }

@@ -12,4 +12,7 @@ export class FileNotesService {
   getData(potData) {
     return this.http.post<any>(environment.APIEndpoint + 'GetMatterFileNote', potData);
   }
+  setFileNote(potData) {
+    return this.http.post<any>(environment.APIEndpoint + 'SetFileNote', potData);
+  }
 }

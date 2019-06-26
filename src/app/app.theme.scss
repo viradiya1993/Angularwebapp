@@ -306,13 +306,13 @@ body.theme-yellow-light .mat-dialog-container {
     padding: 0;
 }
 
-.popup_main_div .mat-form-field-appearance-outline .mat-form-field-infix {
-    padding: 0.5em 0 0.5em 0;
-}
+// .popup_main_div .mat-form-field-appearance-outline .mat-form-field-infix {
+//     padding: 0.5em 0 0.5em 0;
+// }
 
-.popup_main_div .mat-form-field-appearance-outline .mat-form-field-label {
-    top: 1.34375em;
-}
+// .popup_main_div .mat-form-field-appearance-outline .mat-form-field-label {
+//     top: 1.34375em;
+// }
 
 .popup_main_div .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
     -webkit-transform: translateY(-1.09375em) scale(0.75);
@@ -507,6 +507,10 @@ mat-spinner.mat-progress-spinner {
 
 .mat-dialog-container {
     overflow: visible !important;
+}
+.currency_sign {
+    top: -8px;
+    position: relative;
 }
 
 mat-dialog-actions {

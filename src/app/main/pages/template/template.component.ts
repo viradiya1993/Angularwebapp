@@ -53,10 +53,10 @@ export class TemplateComponent implements OnInit {
   LoadData(d){
     this.isLoadingResults = true;
     this.TemplateListData.getTemplateList(d).subscribe(response => {
-      console.log(response);
+     
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Templatedata = new MatTableDataSource(response.DATA.TEMPLATES);
-
+        this.editContact(response.DATA.TEMPLATES[0]);
         this.Templatedata.paginator = this.paginator;
         this.Templatedata.sort = this.sort;
         if (response.DATA.TEMPLATES[0]) {
@@ -75,15 +75,15 @@ export class TemplateComponent implements OnInit {
 
   onSearch(searchFilter: any) {
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
-      console.log(searchFilter);
+     
     }
   }
   editContact(Row: any) {
-    console.log(Row);
-   
     if(Row.TEMPLATETYPE=="Folder"){
+      $('#clickToolbarbtn').click();
       localStorage.setItem('handelGenerateDoc','Folder');
     }else{
+      $('#clickToolbarbtn2').click();
       localStorage.setItem('handelGenerateDoc','Template');
     }
     this.parentMessage = Row;

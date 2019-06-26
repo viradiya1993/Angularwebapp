@@ -396,3 +396,9 @@ button.disabled-click {
 button:disabled {
     cursor: not-allowed !important;
 }
+button#clickToolbarbtn {
+    display: none;
+}
+button#clickToolbarbtn2 {
+    display: none;
+}

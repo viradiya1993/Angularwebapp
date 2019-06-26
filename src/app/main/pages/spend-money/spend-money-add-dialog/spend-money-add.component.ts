@@ -37,6 +37,7 @@ export class SpendMoneyAddComponent implements OnInit {
   confirmDialogRef: any;
   expac: boolean;
   @ViewChild(MatSort) sort: MatSort;
+  dataTableHide: string;
   constructor(public dialogRef: MatDialogRef<SpendMoneyAddComponent>,
     @Inject(MAT_DIALOG_DATA) public _data: any,
     private _formBuilder: FormBuilder,
@@ -49,6 +50,8 @@ export class SpendMoneyAddComponent implements OnInit {
   }
 
   ngOnInit() {
+    //for Data Table hideshow 
+    this.dataTableHide="false";
 
     this.getDataForTable = new MatTableDataSource([]);
     this.getDataForTable.paginator = this.paginator;
@@ -302,6 +305,16 @@ export class SpendMoneyAddComponent implements OnInit {
       // this.confirmDialogRef = null;
     });
 
+  }
+  get f() {
+    return this.spendmoneyForm.controls;
+  }
+  multilineCheckbox(){
+    if(this.f.MultiLineExpense.value==true){
+      this.dataTableHide="yes";
+    }else{
+      this.dataTableHide="false";
+    }
   }
 }
 

@@ -54,9 +54,9 @@ export class MatterDialogComponentForTemplate implements OnInit {
     this.matterFilterForm = this.fb.group({ MatterFilter: [''], UserFilter: [''], searchFilter: [''], InvoiceFilter: [''], });
     // this.title="View Template"
    //need to call generate template api 
-   if(_data){
-     console.log("constructor ")
+      if(_data){
     this.base_url=environment.ReportUrl;
+    this.filefolder_Name=_data.Template;
     this.selectMatter(_data);
    }
    
@@ -72,20 +72,15 @@ export class MatterDialogComponentForTemplate implements OnInit {
   //select matter
   selectMatter(data) {
     this.isLoadingResults = true;
-    console.log("matter called");
     this.TemplateListDetails.getGenerateTemplate(data).subscribe(response => {
-      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
-        this.toastr.success('Template Generate successfully');
-
-        this.filefolder_Name=response.DATA.DOCUMENTS[0].FILENAME;
+        this.toastr.success('success');       
         this.isLoadingResults = false;
       }else if(response.CODE == 420 ){
         this.isLoadingResults = false;
         this.dialogRef.close();
       }
-    }, error => {
-    
+    }, error => { 
       this.toastr.error(error);
       this.dialogRef.close();
     

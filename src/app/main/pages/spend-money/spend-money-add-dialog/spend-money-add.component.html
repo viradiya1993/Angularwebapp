@@ -83,10 +83,10 @@
              </div>
               <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" >
                   <section class="example-section">
-                    <mat-checkbox class="example-margin" formControlName="MultiLineExpense">Multi Line Expense</mat-checkbox> 
+                    <mat-checkbox (change)="multilineCheckbox()" class="example-margin" formControlName="MultiLineExpense">Multi Line Expense</mat-checkbox> 
                   </section>
               </div>
-              <div class="example-containerdata" *ngIf="action === 'edit'">
+              <div class="example-containerdata" *ngIf="action === 'edit' && dataTableHide =='yes'">
                   <table mat-table #table [dataSource]="getDataForTable" [@animateStagger]="{value:'50'}" class="spen_money_update" matSort class="mat-elevation-z8">
                       <ng-container matColumnDef="class">
                           <th mat-header-cell *matHeaderCellDef mat-sort-header>class</th>

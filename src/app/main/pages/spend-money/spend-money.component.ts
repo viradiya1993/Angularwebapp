@@ -49,8 +49,8 @@ this.SepndMoneyForm=this._formBuilder.group({
 })
 
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
-   this.filterData={'EXPENDITURECLASS':"Expense",'ITEMSTARTDATE':'','ITEMENDDATE':'',"RECEIVEDSTARTDATE":'',
-  'RECEIVEDENDDATE':''}
+   this.filterData={'EXPENDITURECLASS':"Expense",'INCURREDSTARTDATE':'','INCURREDENDDATE':'',"PAIDSTARTDATE":'',
+  'PAIDENDDATE':''}
   this.SepndMoneyForm.controls['MainClass'].setValue("Expense"); 
     // let potData = { 'ITEMSTARTDATE': new Date() };
     this.loadData(this.filterData);

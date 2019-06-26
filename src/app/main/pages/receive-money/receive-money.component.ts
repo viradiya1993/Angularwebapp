@@ -29,7 +29,7 @@ export class ReceiveMoneyComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   currentReciveMoneyData: any;
-  lastFilter: { 'INCOMECLASS': string; 'ItemDateStart': string; 'ItemDateEnd': string; };
+  lastFilter: any;
   constructor(
     private TableColumnsService: TableColumnsService,
     private dialog: MatDialog,
@@ -44,23 +44,32 @@ export class ReceiveMoneyComponent implements OnInit {
   ngOnInit() {
     var dt = new Date();
     dt.setMonth(dt.getMonth() + 1);
-    let filterVals = { 'active': '1', 'FirstLetter': 'a', 'SEARCH': '', 'ContactType': '' };
-    localStorage.setItem('ReciveMoney_Filter', JSON.stringify(filterVals));
+    if (JSON.parse(localStorage.getItem('recive_money_DateFilter'))) {
+      this.lastFilter = JSON.parse(localStorage.getItem('recive_money_DateFilter'));
+    } else {
+      this.lastFilter = { "INCOMECLASS": "Receipt", 'ItemDateStart': this.datepipe.transform(new Date(), 'dd/MM/yyyy'), 'ItemDateEnd': this.datepipe.transform(dt, 'dd/MM/yyyy') };
+    }
 
-    this.lastFilter = { "INCOMECLASS": " ", 'ItemDateStart': this.datepipe.transform(new Date(), 'dd/MM/yyyy'), 'ItemDateEnd': this.datepipe.transform(dt, 'dd/MM/yyyy') };
     localStorage.setItem('recive_money_DateFilter', JSON.stringify(this.lastFilter));
-
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.receiveMoneyForm = this.fb.group({
       ShowWhat: [''],
-      DateRange: [''],
+      DateRange: [],
       ReceiptsTotalInc: [''],
       ReceiptsTotalEx: [''],
       ReceiveMoneyType: [''],
     });
-    this.getTableFilter();
-    this.forListing({ "INCOMECLASS": "Receipt" });
+    if (this.lastFilter.ItemDateStart && this.lastFilter.ItemDateEnd) {
+      let tempDate = this.lastFilter.ItemDateStart.split("/");
+      let tempDate2 = this.lastFilter.ItemDateEnd.split("/");
+      let Sd = new Date(tempDate[0] + '/' + tempDate[1] + '/' + tempDate[2]);
+      let ed = new Date(tempDate2[0] + '/' + tempDate2[1] + '/' + tempDate2[2]);
+      this.receiveMoneyForm.controls['DateRange'].setValue({ begin: Sd, end: ed });
+    }
+    this.receiveMoneyForm.controls['ShowWhat'].setValue(this.lastFilter.INCOMECLASS);
 
+    this.getTableFilter();
+    this.forListing(this.lastFilter);
   }
   forListing(data) {
     this.isLoadingResults = true;
@@ -98,59 +107,16 @@ export class ReceiveMoneyComponent implements OnInit {
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
     let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');
-    let filterVal = JSON.parse(localStorage.getItem('recive_money_DateFilter'));
-    filterVal.ItemDateStart = begin;
-    filterVal.ItemDateEnd = end;
-    this.forListing(filterVal);
-  }
-  GetData(data) {
-    this.isLoadingResults = true;
-    this.GetReceptData.getRecept(data).subscribe(response => {
-      if (response.CODE == 200 && response.STATUS == "success") {
-        if (response.DATA.RECEIPTALLOCATIONS[0]) {
-          localStorage.setItem('receiptData', JSON.stringify(response.DATA.RECEIPTALLOCATIONS[0]));
-          this.highlightedRows = response.DATA.RECEIPTALLOCATIONS[0].RECEIPTGUID;
-          this.currentReciveMoneyData = response.DATA.RECEIPTALLOCATIONS[0];
-        }
-        this.receiveMoneydata = new MatTableDataSource(response.DATA.RECEIPTALLOCATIONS)
-        this.receiveMoneydata.paginator = this.paginator;
-        this.receiveMoneydata.sort = this.sort;
-      }
-      this.isLoadingResults = false;
-    }, err => {
-      this.isLoadingResults = false;
-      this.toastr.error(err);
-    });
+    this.lastFilter.ItemDateStart = begin;
+    this.lastFilter.ItemDateEnd = end;
 
+    localStorage.setItem('recive_money_DateFilter', JSON.stringify(this.lastFilter));
+    this.forListing(this.lastFilter);
   }
   selectMatterId(row: any) {
     this.currentReciveMoneyData = row;
-    // localStorage.setItem('receiptGuid',row.RECEIPTGUID);
     localStorage.setItem('receiptData', JSON.stringify(row));
   }
-  // LoadData(Data) {
-  //   this.isLoadingResults = true;
-  //   this.Timersservice.getTimeEnrtyData(Data).subscribe(response => {
-  //     console.log(response);
-  //     if (response.CODE == 200 && response.STATUS == "success") {
-  //       if (response.DATA.WORKITEMS[0]) {
-  //         this.highlightedRows = response.DATA.WORKITEMS[0].WORKITEMGUID;
-  //         localStorage.setItem('edit_WORKITEMGUID', this.highlightedRows);
-  //       }
-  //       try {
-  //         this.receiveMoneydata = new MatTableDataSource(response.DATA.WORKITEMS);
-  //         this.receiveMoneydata.paginator = this.paginator;
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     }
-  //     this.isLoadingResults = false;
-  //   }, err => {
-  //     this.isLoadingResults = false;
-  //     this.toastr.error(err);
-  //   });
-  //   this.pageSize = localStorage.getItem('lastPageSize');
-  // }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
@@ -159,13 +125,10 @@ export class ReceiveMoneyComponent implements OnInit {
     return this.receiveMoneyForm.controls;
   }
   onChange(value) {
+    this.lastFilter.INCOMECLASS = value.value;
 
-    let data = { value }
-    let filterVal: any = JSON.parse(localStorage.getItem('recive_money_DateFilter'));
-    filterVal.INCOMECLASS = data.value;
-    localStorage.setItem('recive_money_DateFilter', JSON.stringify(filterVal))
-    this.forListing(filterVal);
-
+    localStorage.setItem('recive_money_DateFilter', JSON.stringify(this.lastFilter));
+    this.forListing(this.lastFilter);
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
@@ -175,7 +138,6 @@ export class ReceiveMoneyComponent implements OnInit {
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
-
       if (result) {
         this.tempColobj = result.tempColobj;
         this.displayedColumns = result.columObj;
@@ -185,7 +147,7 @@ export class ReceiveMoneyComponent implements OnInit {
           this.receiveMoneydata.paginator = this.paginator;
           this.receiveMoneydata.sort = this.sort;
         } else {
-          // this.LoadData(JSON.parse(localStorage.getItem('time_entries_filter')));
+          this.forListing(this.lastFilter);
         }
       }
     });

@@ -1,50 +1,50 @@
 <div class="example-loading-shade" *ngIf="isLoadingResults">
-  <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
 </div>
-<div cdkDrag class="popup_main_div add_edit_contact_main" >
-  <h2 cdkDragHandle mat-dialog-title>File Note : 20140008
-    <button class="btn" mat-icon-button (click)="CloseFileNote()"  [mat-dialog-close]="false" aria-label="Close dialog">
+<div cdkDrag class="popup_main_div add_edit_contact_main">
+    <h2 cdkDragHandle mat-dialog-title>File Note : 20140008
+        <button class="btn" mat-icon-button (click)="CloseFileNote()" [mat-dialog-close]="false" aria-label="Close dialog">
       <mat-icon>close</mat-icon>
     </button>
-  </h2>
-  <div mat-dialog-content class="mat-typography main">
-    <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
-      <form [formGroup]="NewFileNote" fxLayout="column" fxFlex="1 0 auto" name="form">
-        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-          <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
-            <mat-label>Date</mat-label>
-            <input (ngModelChange)="NewNoteDate($event)" [formControlName]="'newfiledate'"matInput [matDatepicker]="picker3">
-            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-            <mat-datepicker #picker3></mat-datepicker>
-          </mat-form-field>
-          <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
-            <mat-label>Time</mat-label>
-            <input  [formControlName]="'time'" matInput type="time" format="HH:mm" value="06:10">
-          </mat-form-field>
-          <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
-            <mat-label>User</mat-label>
-              <mat-select #value name="selected" (selectionChange)="UserChange($event.value)" formControlName="User">
-                <mat-option value="1">Rajiv</mat-option>
-                <mat-option value="2">Karan</mat-option>
-                <mat-option value="2">Jay</mat-option>
-            </mat-select>
-          </mat-form-field>
+    </h2>
+    <div mat-dialog-content class="mat-typography main">
+        <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+            <form [formGroup]="NewFileNote" fxLayout="column" fxFlex="1 0 auto" name="form">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                        <mat-label>Date</mat-label>
+                        <input (ngModelChange)="NewNoteDate($event)" [formControlName]="'newfiledate'" matInput [matDatepicker]="picker3">
+                        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                        <mat-datepicker #picker3></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                        <mat-label>Time</mat-label>
+                        <input [formControlName]="'time'" matInput type="time" format="HH:mm" value="06:10">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+                        <mat-label>User</mat-label>
+                        <mat-select #value name="selected" (selectionChange)="UserChange($event.value)" formControlName="User">
+                            <mat-option value="1">Rajiv</mat-option>
+                            <mat-option value="2">Karan</mat-option>
+                            <mat-option value="2">Jay</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                        <mat-label>Comment</mat-label>
+                        <textarea name="comment" [formControlName]="'comment'" matInput></textarea>
+                    </mat-form-field>
+                </div>
+            </form>
         </div>
-        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-          <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
-            <mat-label>Comment</mat-label>
-          <textarea name="comment" [formControlName]="'comment'"  matInput ></textarea>
-        </mat-form-field>
-        </div>
-      </form>
     </div>
-  </div>
-  <mat-dialog-actions align="end" class="popup_ftr">
-    <button mat-raised-button color="accent" (click)="SaveFileNote()">Add</button>
-    <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
-  </mat-dialog-actions>
+    <mat-dialog-actions align="end" class="popup_ftr">
+        <button mat-raised-button color="accent">Add</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
+    </mat-dialog-actions>
 </div>
-  <!-- <div mat-dialog-content class="mat-typography main">
+<!-- <div mat-dialog-content class="mat-typography main">
     <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
       <form [formGroup]="activityForm" fxLayout="column" fxFlex="1 0 auto" name="form">
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -99,4 +99,3 @@
       </form>
     </div>
   </div> -->
- 

@@ -33,39 +33,39 @@
                                     </section>
                                     <section [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button (click)="EditNewmatterpopup()" [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
-                                   <section class="large-button-container">
-                                      <mat-icon class="main-icon">
-                                            <img  src="assets/icons/web_app/icon_contact_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                      </mat-icon>
-                                      <div class="main-text">
-                                         <span>Edit<br> Matters</span>
-                                      </div>
-                                   </section>
-                                </button>
+                                    <section class="large-button-container">
+                                        <mat-icon class="main-icon">
+                                                <img  src="assets/icons/web_app/icon_contact_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                        </mat-icon>
+                                        <div class="main-text">
+                                            <span>Edit<br> Matters</span>
+                                        </div>
+                                    </section>
+                                    </button>
                                     </section>
                                     <section [ngClass]="appPermissions[1]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button (click)="DeleteNewmatterpopup()" [ngClass]="appPermissions[1]?.Delete==0 ? 'disabled-click large-button' : 'large-button'">
-                                   <section class="large-button-container">
-                                      <mat-icon class="main-icon">
-                                            <img  src="assets/icons/web_app/icon_contact_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                      </mat-icon>
-                                      <div class="main-text">
-                                         <span>Delete<br> Matters</span>
-                                      </div>
-                                   </section>
-                                </button>
+                                    <section class="large-button-container">
+                                        <mat-icon class="main-icon">
+                                                <img  src="assets/icons/web_app/icon_contact_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                        </mat-icon>
+                                        <div class="main-text">
+                                            <span>Delete<br> Matters</span>
+                                        </div>
+                                    </section>
+                                    </button>
                                     </section>
                                     <section class="ribbon-section">
                                         <button mat-button class="large-button" disabled>
-                                   <section class="large-button-container">
-                                      <mat-icon class="main-icon">
-                                            <img class="menu-disabled" src="assets/icons/web_app/icon_contact_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                      </mat-icon>
-                                      <div class="main-text">
-                                         <span>Duplicate<br> Matters</span>
-                                      </div>
-                                   </section>
-                                </button>
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                    <img class="menu-disabled" src="assets/icons/web_app/icon_contact_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>Duplicate<br> Matters</span>
+                                            </div>
+                                        </section>
+                                        </button>
                                     </section>
                                     <div class="light_label_txt">Action</div>
                                 </section>
@@ -102,10 +102,47 @@
                                                 <img class="" src="assets/icons/web_app/icon_letters_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                             </mat-icon>
                                                 <div class="main-text">
-                                                    <span>Generate <br> Template</span>
+                                                    <span>Time &<br> Billing</span>
                                                 </div>
                                             </section>
                                         </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/legal-details'">
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_authorities_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>Legal<br> Details</span>
+                                            </div>
+                                        </section>
+                                    </button>
+                                    </section>
+                                    <!-- Document Register-->
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/document-register'">
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_doc_reg_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>Document<br> Register</span>
+                                            </div>
+                                        </section>
+                                    </button>
+                                    </section>
+                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="isMatterClick()" (click)="setTab($event)" [routerLink]="'/create-document/matter'">
+                                        <section class="large-button-container">
+                                        <mat-icon class="main-icon"> 
+                                            <img class="" src="assets/icons/web_app/icon_letters_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                        </mat-icon>
+                                            <div class="main-text">
+                                                <span>Generate <br> Template</span>
+                                            </div>
+                                        </section>
+                                    </button>
                                     </section>
                                     <div class="light_label_txt">Details</div>
                                 </section>
@@ -325,7 +362,7 @@
                                                         <span>New Matter<br> Receipt</span>
                                                     </div>
                                                 </section>
-                                             </button>
+                                         </button>
                                     </section>
                                     <section class="ribbon-section">
                                         <button mat-button class="large-button" (click)="ViewReceiptForTimeBilling()">
@@ -367,7 +404,7 @@
                                  <span>New Time  <br> Entry</span>
                               </div>
                            </section>
-                        </button>
+                                        </button>
                                     </section>
                                     <section [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="addNewTimeEntry('Edit')">
@@ -543,8 +580,8 @@
                                    </section>
                                 </button>
                                     </section>
-                                    <section class="ribbon-section">
-                                        <button mat-button class="large-button" disabled>
+                                    <section class="ribbon-section" disabled>
+                                        <button mat-button class="large-button">
                                    <section class="large-button-container">
                                       <mat-icon class="main-icon">
                                             <img class="menu-disabled" src="assets/icons/web_app/icon_doc_reg_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1176,6 +1213,203 @@
                     </section>
                 </mat-tab>
                 <!-- Activity tab End-->
+                <!-- Document Register tab Start-->
+                <mat-tab label="Matter Register" *ngIf="isTabShow===14">
+                    <section class="ribbon-container legal_details_tab_main">
+                        <mat-card>
+                            <mat-card-content>
+                                <section class="group-section-tab details_tab">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/legal-details'">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_authorities_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Legal <br> Details</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/time-billing'">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                        <img src="assets/icons/web_app/icon_invoice_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Time &<br> Billing</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <div class="light_label_txt">Go To</div>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                                <section class="group-section-tab action_tab">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="NewDocumnt()">
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                <img src="assets/icons/web_app/icon_doc_reg_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>New Doc<br>Record</span>
+                                            </div>
+                                        </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="EditDocument()">
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                <img src="assets/icons/web_app/icon_doc_reg_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>Edit Doc<br>Record</span>
+                                            </div>
+                                        </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="DeleteDocument()">
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                <img src="assets/icons/web_app/icon_doc_reg_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>Delete Doc<br>Record</span>
+                                            </div>
+                                        </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button class="large-button" (click)="DuplicateDocument()">
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                <img src="assets/icons/web_app/icon_duplicate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>Duplicate Doc<br>Record</span>
+                                            </div>
+                                        </section>
+                                        </button>
+                                    </section>
+                                    <div class="light_label_txt">Action</div>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                                <section class="group-section-tab details_tab">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="OpenMatter()">
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                <img src="assets/icons/web_app/folder_large.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>Open Matter<br>Folder</span>
+                                            </div>
+                                        </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="OpenDocument()">
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                <img src="assets/icons/web_app/icon_letters_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>Open<br>Document</span>
+                                            </div>
+                                        </section>
+                                        </button>
+                                    </section>
+                                    <div class="light_label_txt">Details</div>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                                <section class="group-section-tab details_tab">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="LoadDocument()" disabled>
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                <img src="assets/icons/web_app/icon_doc_reg_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>Load<br>Document</span>
+                                            </div>
+                                        </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="PdfDocument()">
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                <img src="assets/icons/web_app/pdf_small.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>PDF<br>Document</span>
+                                            </div>
+                                        </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="PdfEmailDocument()">
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                <img src="assets/icons/web_app/pdf_small.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>PDF & Email<br>Document</span>
+                                            </div>
+                                        </section>
+                                        </button>
+                                    </section>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                            </mat-card-content>
+                        </mat-card>
+                    </section>
+                </mat-tab>
+                <!-- Document Register tab End-->
+                <!-- contacts tab menu start -->
+                <!-- FILE menu start -->
+                <!-- <mat-tab label="FILE">
+                    <section class="ribbon-container matter_tab_main" [style.width]="detailwidth">
+                        <mat-card>
+                            <mat-card-content>
+                                <section class="group-section-tab action_tab">
+                                 
+                                    <section class="ribbon-section">
+                                        <button class="large-button" mat-button (click)="setTab($event)"  [routerLink]="'/users'">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img  src="assets/icons/web_app/icon_firm_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Users</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button class="large-button" mat-button (click)="setTab($event)" [routerLink]="'/activities'">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img  src="assets/icons/web_app/icon_time_cost_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Activities<br>Sundries</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <div class="light_label_txt">Setup</div>
+                                </section>
+                            </mat-card-content>
+                        </mat-card>
+                    </section>
+                </mat-tab> -->
+
+                <!-- tab for user -->
 
                 <!-- goto tab menu start -->
                 <mat-tab label="GO TO">

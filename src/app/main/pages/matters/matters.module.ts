@@ -88,7 +88,8 @@ const routes = [
     CouncilComponent,
     CrownAllotmentComponent,
     CorrespondDailogComponent,
-    UserSelectPopupComponent,
+    UserSelectPopupComponent
+    
   ],
   imports: [
     CommonModule,

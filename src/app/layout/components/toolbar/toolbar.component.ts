@@ -37,6 +37,7 @@ import { UserDialogComponent } from './../../../main/pages/users/user-dialog/use
 import { ActivityDialogComponent } from './../../../main/pages/activities/activity-dialog/activity-dialog.component';
 import { ChangePasswordComponent } from 'app/main/change-password/change-password.component';
 import { NewfilenoteComponent } from './../../../main/pages/newfilenote/newfilenote.component';
+import { DocumentDailogComponent } from './../../../main/pages/document-register/document-dailog/document-dailog.component';
 
 
 @Component({
@@ -214,6 +215,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         /*Keep open timer box once timer added*/
         this._fuseSidebarService.getSidebar(key).toggleOpen();
     }
+
     addTimerForMatter() {
         this.TimersServiceI.addTimeEnrtS();
     }
@@ -722,6 +724,90 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             console.log(result);
         });
     }
+
+    /* Document Register Module */
+
+    // New Record Document
+    NewDocumnt(){
+        const dialogRef = this.dialog.open(DocumentDailogComponent, {
+            disableClose: true,
+            panelClass: 'Activity-dialog',
+            data: {
+                action: 'new',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+
+    // Edit Record Document
+    EditDocument(){
+        const dialogRef = this.dialog.open(DocumentDailogComponent, {
+            disableClose: true,
+            panelClass: 'Activity-dialog',
+            data: {
+                action: 'edit',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result)
+                $('#ActivityTab').click();
+        });
+    }
+
+    // Delete Record Document
+    DeleteDocument() : void{
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+
+    // Duplicate Record Document
+    DuplicateDocument(){
+        const dialogRef = this.dialog.open(DocumentDailogComponent, {
+            disableClose: true,
+            panelClass: 'User-dialog',
+            data: {
+                action: 'Duplicate',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result)
+                $('#ActivityTab').click();
+        });
+    }
+
+    //Open Matter Folder
+    OpenMatter(){
+      console.log('Matter Folder Work!!!');
+    }
+
+    //Open Document
+    OpenDocument(){
+        console.log('Document  Work!!!');  
+    }
+
+    //Load Document
+    LoadDocument(){
+     console.log('Load Document Work!!!');  
+    }
+
+    //PDF Document
+    PdfDocument(){
+        console.log('Pdf Document work!!!')
+    }
+
+    //Pdf Email Document
+    PdfEmailDocument(){
+        console.log('Pdf Email Document Work!!!');
+    }
+
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -762,6 +848,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 12;
         } else if (x[1] == "activities") {
             this.isTabShow = 13;
+        }
+        else if(x[1] == "document-register"){
+            this.isTabShow = 14;
         }
         else {
             this.isTabShow = 1;

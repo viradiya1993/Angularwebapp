@@ -17,6 +17,7 @@ import { SystemSettingTemplateModule } from './system-settings/templates/templat
 import { ActivitiesModule } from './activities/activities.module';
 import { SortingDialogModule } from '../sorting-dialog/sorting-dialog.module';
 import { NewfilenoteModule } from './newfilenote/newfilenote.module';
+import { DocumentRegitser } from './document-register/document-register.module';
 
 
 
@@ -32,6 +33,7 @@ const appRoutes: Routes = [
   { path: 'receive-money', loadChildren: './receive-money/receive-money.module#ReceiveMoneyModule' },
   { path: 'create-document', loadChildren: './template/template.module#TemplateModule' },
   { path: 'diary', loadChildren: './diary/diary.module#DiaryModule' },
+  { path: 'document-register', loadChildren: './document-register/document-register.module#DocumentRegitser' },
 
   //added by web 19
   //  { path: ' ', loadChildren: './system-setting/system-settings.module#SystemSettingModule' },
@@ -56,7 +58,8 @@ const appRoutes: Routes = [
     SystemSettingTemplateModule,
     ActivitiesModule,
     SortingDialogModule,
-    NewfilenoteModule
+    NewfilenoteModule,
+    DocumentRegitser
 
   ]
 })

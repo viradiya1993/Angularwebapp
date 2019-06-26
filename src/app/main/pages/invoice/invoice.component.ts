@@ -82,7 +82,6 @@ export class InvoiceComponent implements OnInit {
     this.loadData(this.lastFilter);
   }
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    console.log('abcabc');
     let begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
     let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');
     this.lastFilter = JSON.parse(localStorage.getItem('matter_invoice_filter'));

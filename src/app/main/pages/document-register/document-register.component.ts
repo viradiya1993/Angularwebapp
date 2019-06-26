@@ -87,7 +87,7 @@ export class DocumentRegisterComponent implements OnInit {
   }
   //FilterSearch
   FilterSearch(filterValue:any){
-    this.DocumentAllData.filter = filterValue.trim().toLowerCase();
+    this.DocumentAllData.filter = filterValue;
   }
   //DocumentDialog
 

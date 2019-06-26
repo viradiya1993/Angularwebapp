@@ -102,8 +102,6 @@ export class ReceiveMoneyComponent implements OnInit {
       this.toastr.error(error);
     });
   }
-
-
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
     let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');

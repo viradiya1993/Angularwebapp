@@ -12,8 +12,8 @@ export class RatesComponent implements OnInit {
   constructor() { }
   @Input() matterdetailForm: FormGroup;
   isDisabled: boolean = true;
-  FIXEDRATEEXGST: number;
-  FIXEDRATEINCGST: number;
+  FIXEDRATEEXGST: any;
+  FIXEDRATEINCGST: any;
   ngOnInit() { }
   radioChange(event) {
     if (this.f.GSTTYPE.value == 'GST Free' || this.f.GSTTYPE.value == 'Export')
@@ -27,9 +27,9 @@ export class RatesComponent implements OnInit {
     return this.matterdetailForm.controls;
   }
   calcPE() {
-    this.FIXEDRATEINCGST = round(this.f.FIXEDRATEEXGST.value * 1.1);
+    this.FIXEDRATEINCGST = round(this.f.FIXEDRATEEXGST.value * 1.1).toFixed(2);
   }
   calcPI() {
-    this.FIXEDRATEEXGST = round(this.f.FIXEDRATEINCGST.value / 1.1);
+    this.FIXEDRATEEXGST = round(this.f.FIXEDRATEINCGST.value / 1.1).toFixed(2);
   }
 }

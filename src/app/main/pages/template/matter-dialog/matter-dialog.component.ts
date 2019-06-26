@@ -52,146 +52,44 @@ export class MatterDialogComponentForTemplate implements OnInit {
   ) {
 
     this.matterFilterForm = this.fb.group({ MatterFilter: [''], UserFilter: [''], searchFilter: [''], InvoiceFilter: [''], });
-    this.ForHideShow=_data;
-    if(_data!='select_matter'){
-      this.title="View Template"
-      this.CheckCondition=_data.DATA.DOCUMENTS[0];
-      this.filefolder_Name=_data.DATA.DOCUMENTS[0].FILENAME;
-      console.log( this.filefolder_Name);
-      this.base_url=environment.ReportUrl;
-    }else{
-      console.log("data not in ");
-      this.title="Select Matter";
-    }
+    // this.title="View Template"
+   //need to call generate template api 
+   if(_data){
+     console.log("constructor ")
+    this.base_url=environment.ReportUrl;
+    this.selectMatter(_data);
+   }
+   
   }
 
-  ngOnInit() {
-    // this.data.currentMessage.subscribe(message =>{
-    //   console.log(message);
-    // });
-    console.log();
-
-    // localStorage.getItem('templateData');
-    this.getDropValue();
-    this.getMatterList();
-
-    // this.TemplateListDetails.getData('').subscribe(response => {
-    //   console.log(response);
-    //   if (response.CODE == 200 && response.STATUS == "success") {
-    //     // response.DATA.TEMPLATES.forEach(element => { 
-    //     //   // this.abc=i++; 
-    //     // });
-    //     // console.log(this.abc);
-
-    //   }
-    // }, err => {
-    //   this.isLoadingResults = false;
-    //   this.toastr.error(err);
-    // });
+  ngOnInit() { 
   }
-  getDropValue() {
-    let d = {};
-    this.Timersservice.GetUsers(d).subscribe(response => {
-      if (response.CODE == 200 && response.STATUS == "success") {
-        this.MatterDropData = response.DATA.USERS;
-      }
-    }, err => {
-      console.log(err);
-    });
-  }
-  selectMatterId(Row: any) {
-    this.currentMatterData = Row;
-  }
-  getMatterList() {
-    this.getList({});
-    this.pageSize = localStorage.getItem('lastPageSize');
-  }
+  
   get f() {
     return this.matterFilterForm.controls;
   }
-  MatterChange(value) {
-    this.filterVal.Active = value;
-    this.getList(this.filterVal);
-  }
-  onSearch(searchFilter: any) {
-    if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
-      this.filterVal.SearchString = this.f.searchFilter.value;
-      this.getList(this.filterVal);
-    }
-  }
-  MatterUserChange(value) {
-    this.filterVal.FeeEarner = value;
-    this.getList(this.filterVal);
-  }
-  getList(filterVal: any) {
-    this.isLoadingResults = true;
-    this.mattersService.getMatters(filterVal).subscribe(response => {
-      if (response.CODE == 200 && response.STATUS == "success") {
-        if (response.DATA.MATTERS[0]) {
-          this.highlightedRows = response.DATA.MATTERS[0].MATTERGUID;
-          this.currentMatterData = response.DATA.MATTERS[0];
-        }
-        this.getDataForTable = new MatTableDataSource(response.DATA.MATTERS);
-        this.getDataForTable.paginator = this.paginator;
-        this.getDataForTable.sort = this.sort;
-        this.isLoadingResults = false;
-      }
-    }, error => {
-      this.toastr.error(error);
-    });
-  }
-  onPaginateChange(event) {
-    this.pageSize = event.pageSize;
-    localStorage.setItem('lastPageSize', event.pageSize);
-  }
+  
   //select matter
-  selectMatter(Row: any = "") {
-    let data = JSON.parse(localStorage.getItem('templateData'));
-    // console.log(this.currentMatterData.MATTERGUID);
-    let passingData = {
-      'Context': "Matter",
-      'ContextGuid': this.currentMatterData.MATTERGUID,
-      "Type": "Template",
-      "Folder": '',
-      "Template": data.TEMPLATENAME
-    }
-    this.TemplateListDetails.getGenerateTemplate(passingData).subscribe(response => {
+  selectMatter(data) {
+    this.isLoadingResults = true;
+    console.log("matter called");
+    this.TemplateListDetails.getGenerateTemplate(data).subscribe(response => {
       console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         this.toastr.success('Template Generate successfully');
-        this.dialogRef.close(true);
-        this.dialog.open(MatterDialogComponentForTemplate,{
-          data:response
-        });
+
+        this.filefolder_Name=response.DATA.DOCUMENTS[0].FILENAME;
+        this.isLoadingResults = false;
+      }else if(response.CODE == 420 ){
+        this.isLoadingResults = false;
+        this.dialogRef.close();
       }
     }, error => {
+    
       this.toastr.error(error);
-      this.dialogRef.close(true);
+      this.dialogRef.close();
+    
     });
   }
-  // New matter Pop-up
-  AddNewmatterpopup() {
-    const dialogConfig = new MatDialogConfig();
-    const dialogRef = this.dialog.open(MatterPopupComponent, {
-      width: '100%',
-      disableClose: true,
-      data: {
-        action: 'new'
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => { });
-  }
-  // Edit matter Pop-up
-  EditNewmatterpopup() {
-    const dialogConfig = new MatDialogConfig();
-    const dialogRef = this.dialog.open(MatterPopupComponent, {
-      width: '100%',
-      disableClose: true,
-      data: {
-        action: 'edit'
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => { });
-  }
+ 
 }

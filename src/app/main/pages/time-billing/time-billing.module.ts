@@ -18,6 +18,7 @@ import {MatSortModule} from '@angular/material/sort';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker'
 import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
 
+
 const routes = [
   { path: '', redirectTo: '/time-billing/estimate', pathMatch: 'full', canActivate: [AuthGuard] },
   {
@@ -36,12 +37,13 @@ const routes = [
   }
 ];
 @NgModule({
+  
   declarations: [TimeBillingComponent, EstimateComponent, WorkInProgressComponent, MatterInvoicesComponent, ReceiptsCreditsComponent, MatterTrustComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     FuseSharedModule,
-
+   
     //mat 
     SatDatepickerModule, SatNativeDateModule,
     MatButtonModule,

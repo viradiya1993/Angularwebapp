@@ -50,7 +50,11 @@ export class ClientComponent implements OnInit {
     });
   }
   ContactMatter() {
-    const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true });
+    const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, {
+      width: '100%', disableClose: true, data: {
+        type: ""
+      }
+    });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.matterdetailForm.controls['FIRMGUID'].setValue(result.CONTACTGUID);

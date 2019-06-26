@@ -14,60 +14,68 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" class="example" fxFlex="25" class="pr-4">
                         <mat-label>Date</mat-label>
-                        <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" formControlName="date">
+                        <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" formControlName="INCOMEDATETEXT">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="25" class="pr-4">
                         <mat-label>Class</mat-label>
-                        <mat-select formControlName="classType">
-                            <mat-option value="WIP">Time Entry</mat-option>
-                            <mat-option value="Activity">Activity</mat-option>
-                            <mat-option value="Sundry">Sundry</mat-option>
+                        <mat-select formControlName="INCOMECLASS">
+                            <mat-option value="Income">Income</mat-option>
+                            <mat-option value="Capital">Capital</mat-option>
+                            <mat-option value="GST Refund"> GST Refund </mat-option>
+                            <mat-option value="Tax Refund">Tax Refund</mat-option>
+                            <mat-option value="Personal">Personal</mat-option>
+                            <mat-option value="Other">Other</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="25" class="pr-4">
                         <mat-label>Type</mat-label>
-                        <mat-select formControlName="type">
-                            <mat-option value="WIP">Time Entry</mat-option>
-                            <mat-option value="Activity">Activity</mat-option>
-                            <mat-option value="Sundry">Sundry</mat-option>
+                        <mat-select formControlName="INCOMETYPE">
+                            <mat-option value="Cash">Cash</mat-option>
+                            <mat-option value="Cheque">Cheque</mat-option>
+                            <mat-option value="Credit Card">Credit Card</mat-option>
+                            <mat-option value="Direct Deposit">Direct Deposit</mat-option>
+                            <mat-option value="Direct Withdrawal">Direct Withdrawal</mat-option>
+                            <mat-option value="Money Order">Money Order</mat-option>
+                            <mat-option value="Transfer">Transfer</mat-option>
+                            <mat-option value="Other">Other</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="25" class="pr-4">
                         <mat-label>Payor</mat-label>
-                        <mat-select formControlName="payor">
-                            <mat-option value="WIP">Time Entry</mat-option>
-                            <mat-option value="Activity">Activity</mat-option>
-                            <mat-option value="Sundry">Sundry</mat-option>
+                        <mat-select formControlName="PAYEE">
+                            <mat-option *ngFor="let val of getPayourarray" [value]="val.CONTACTGUID">{{val.CONTACTNAME}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" class="example pr-4" fxFlex="20">
                         <mat-label>Amount</mat-label>
-                        <input matInput formControlName="amount">
+                        <input matInput formControlName="AMOUNT">
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example pr-4" fxFlex="20">
                         <mat-label>GST Type</mat-label>
-                        <input matInput formControlName="gsttype">
+                        <mat-select formControlName="gsttype">
+                            <mat-option *ngFor="let val of gsttypeData" [value]="val.id">{{val.text}}</mat-option>
+                        </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example pr-4" fxFlex="20">
                         <mat-label>GST</mat-label>
-                        <input matInput formControlName="gst">
+                        <input matInput formControlName="GST">
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example pr-4" fxFlex="20">
                         <mat-label>Bank A/C</mat-label>
-                        <input matInput formControlName="bank_ac">
+                        <input matInput formControlName="BANKACCOUNTGUID" value="ACCAAAAAAAAAAAA4">
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example pr-4" fxFlex="20">
                         <mat-label>Income A/C</mat-label>
-                        <input matInput formControlName="income_ac">
+                        <input matInput formControlName="INCOMEACCOUNTGUID" value="ACCAAAAAAAAAAAA4">
                     </mat-form-field>
                 </div>
                 <mat-form-field appearance="outline" class="example pr-4" fxFlex="100">
-                    <mat-label>Notes</mat-label>
-                    <textarea matInput formControlName="notes"></textarea>
+                    <mat-label>Note</mat-label>
+                    <textarea matInput formControlName="NOTE"></textarea>
                 </mat-form-field>
 
             </form>

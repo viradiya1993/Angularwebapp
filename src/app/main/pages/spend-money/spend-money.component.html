@@ -2,10 +2,11 @@
     <div class="content" fxLayoutAlign="center">
         <div class="center p-24 more_tbl_clmn list_tbl_main" fusePerfectScrollbar>
             <div class="matter-serach-div sticky_search_div responsive_auto">
-                <form>
+                <form   name="form" [formGroup]="SepndMoneyForm">
                     <mat-form-field class="example" appearance="outline">
                         <mat-label>Show What?</mat-label>
-                        <mat-select (selectionChange)="SpendClassChange($event.value)">
+                        <mat-select name="MainClass" formControlName="MainClass" (selectionChange)="SpendClassChange($event.value)">
+                                <mat-option value="all">All Classes</mat-option>
                             <mat-option value="Expense">Expense</mat-option>
                             <mat-option value="Matter Expense">Matter Expence</mat-option>
                             <mat-option value="Capital">Capital</mat-option>
@@ -18,7 +19,8 @@
                     </mat-form-field>
                     <mat-form-field class="example" appearance="outline">
                         <mat-label>Incurred Date</mat-label>
-                        <mat-select>
+                        <mat-select (selectionChange)="SpendDateClassChnage($event.value)" >
+                                <mat-option value="Date Paid">Date Paid</mat-option>
                             <mat-option value="Incurred Date">Incurred Date</mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -30,7 +32,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="17.33">
                         <mat-label>Date Range</mat-label>
-                        <input matInput [satDatepicker]="picker2" (dateInput)="DateRange('input', $event)" (dateChange)="DateRange('change', $event)">
+                        <input matInput [satDatepicker]="picker2" (dateInput)="DateRange('input', $event)" (dateChange)="DateRange1('change', $event)">
                         <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
                         <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
                     </mat-form-field>

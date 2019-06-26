@@ -11,10 +11,12 @@
         </div>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
             <input class="sideText" matInput readonly placeholder="Date Received" formControlName="INVOICEDVALUEEXGST">
+            <span matPrefix>$&nbsp;</span>
         </mat-form-field>
         <div fxFlex="10"></div>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
             <input class="sideText"  matInput readonly placeholder="Date Received" formControlName="INVOICEDVALUEINCGST">
+            <span matPrefix>$&nbsp;</span>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -27,6 +29,7 @@
         <div fxFlex="10"></div>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
             <input class="sideText" matInput readonly placeholder="Date Received" formControlName="FIXEDRATEINCGSTTOTAL">
+            <span matPrefix>$&nbsp;</span>
         </mat-form-field>
     </div>
 
@@ -35,9 +38,11 @@
         <div fxFlex="20">Exceeded By :</div>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
             <input class="sideText" matInput readonly placeholder="Date Received" formControlName="FIXEDRATEEXGST">
+            <span matPrefix>$&nbsp;</span>
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
             <input class="sideText" matInput readonly placeholder="Date Received" formControlName="FIXEDRATEINCGST">
+            <span matPrefix>$&nbsp;</span>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="!isFixPrice">
@@ -49,9 +54,11 @@
         <div fxFlex="20">Exceeded By :</div>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
             <input class="sideText" matInput readonly placeholder="Date Received" formControlName="ESTIMATETOTOTALEXGST">
+            <span matPrefix>$&nbsp;</span>
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
             <input class="sideText" matInput readonly placeholder="Date Received" formControlName="ESTIMATETOTOTALINCGST">
+            <span matPrefix>$&nbsp;</span>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="!isMin">

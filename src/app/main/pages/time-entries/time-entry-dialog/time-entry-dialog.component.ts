@@ -152,7 +152,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
 
   }
   calcPE(val) {
-    this.PRICEVAL= this.f.PRICE.value.toFixed(2);
+    // this.PRICEVAL= parseFloat(this.f.PRICE.value).toFixed(2);
     this.PRICEINCGSTVAL = round(this.f.PRICE.value * 1.1).toFixed(2);
     
   }

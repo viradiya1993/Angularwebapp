@@ -88,7 +88,6 @@ const routes = [
         MatSortModule
     ],
     exports:[
-        ActivitiesComponent,
         MatTreeModule,
         CdkTableModule,
         CdkTreeModule,

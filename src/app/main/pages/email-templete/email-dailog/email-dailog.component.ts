@@ -36,7 +36,10 @@ export class EmailDailogComponent implements OnInit {
   Name = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   displayedColumns: string[] = ['Name', 'Description'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
-  options: string[] = ['One', 'Two', 'Three'];
+  To_options: string[] = ['<i:mc-email>', '<i:f-email>', '<i:mcs-email>','<i:s-email>'];
+  CC_options: string[] = ['<i:mc-email>', '<i:f-email>', '<i:mcs-email>','<i:s-email>'];
+  BCC_options: string[] = ['<i:mc-email>', '<i:f-email>', '<i:mcs-email>','<i:s-email>'];
+  SUb_options: string[] = ['<i:mc-email>', '<i:f-email>', '<i:mcs-email>','<i:s-email>'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   constructor(
@@ -70,8 +73,8 @@ export class EmailDailogComponent implements OnInit {
       attachment:[],
       text:[]
     });
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    //this.dataSource.paginator = this.paginator;
+    //this.dataSource.sort = this.sort;
   }
   //Email Save
   EmailSave(){

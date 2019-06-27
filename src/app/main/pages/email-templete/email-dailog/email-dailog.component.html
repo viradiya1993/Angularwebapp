@@ -11,18 +11,18 @@
       <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
           <form [formGroup]="EmailTemplete" fxLayout="column" fxFlex="1 0 auto" name="form">
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-              <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
-                <mat-label>Name</mat-label>
-                <input formControlName ="name" matInput   value="">
-              </mat-form-field>
-              <!-- <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
-                  <mat-label>To</mat-label>
-                  <input formControlName ="ToEmail" matInput   value="">
-              </mat-form-field> -->
-              <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
-                <input type="text" placeholder="Pick one" aria-label="Number" matInput [matAutocomplete]="auto">
+                <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                    <mat-label>Name</mat-label>
+                    <input name="CONTACTNAME" formControlName="name" matInput>
+                    <!-- <mat-icon matSuffix class="secondary-text">account_circle</mat-icon> -->
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">              
+              <mat-form-field appearance="outline" class="example" fxFlex="100" class="pr-4">
+                <mat-label>To</mat-label>
+                <input type="text" placeholder="Pick one" aria-label="Number" formControlName = "ToEmail" matInput [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option *ngFor="let option of options" [value]="option">
+                  <mat-option *ngFor="let option of To_options" [value]="option">
                     {{option}}
                   </mat-option>
                 </mat-autocomplete>
@@ -31,17 +31,32 @@
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                 <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
                   <mat-label>CC</mat-label>
-                  <input formControlName ="CCEmail" matInput   value="">
+                  <input type="text" placeholder="Pick one" aria-label="Number" formControlName = "CCEmail" matInput [matAutocomplete]="auto">
+                  <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of CC_options" [value]="option">
+                      {{option}}
+                    </mat-option>
+                  </mat-autocomplete>
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
                     <mat-label>BCC</mat-label>
-                    <input formControlName = "BCCEmail" matInput   value="">
+                    <input type="text" placeholder="Pick one" aria-label="Number" formControlName = "BCCEmail" matInput [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete">
+                      <mat-option *ngFor="let option of BCC_options" [value]="option">
+                        {{option}}
+                      </mat-option>
+                    </mat-autocomplete>
                 </mat-form-field>
             </div>
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                 <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
                   <mat-label>Subject</mat-label>
-                  <input formControlName ="subject" matInput   value="">
+                  <input type="text" placeholder="Pick one" aria-label="Number" formControlName = "subject" matInput [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete">
+                      <mat-option *ngFor="let option of SUb_options" [value]="option">
+                        {{option}}
+                      </mat-option>
+                    </mat-autocomplete>
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
                     <mat-label>Attachment</mat-label>
@@ -54,33 +69,29 @@
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                 <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                     <mat-label>Text</mat-label>
-                  <textarea  formControlName ="text"  matInput ></textarea>
+                  <textarea  formControlName = "text"  matInput ></textarea>
                 </mat-form-field>
                 <mat-table class="mat-elevation-z8" [dataSource]="dataSource" fxFlex="50" class="pr-4" matSort>
-                    <!-- Name Column -->
+                    
                     <ng-container matColumnDef="Name">
                       <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
                       <mat-cell *matCellDef="let element"> {{element.Name}} </mat-cell>
                     </ng-container>
-              
-                    <!-- Description Column -->
+                    
                     <ng-container matColumnDef="Description">
                       <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
                       <mat-cell *matCellDef="let element"> {{element.Description}} </mat-cell>
                     </ng-container>
 
-                      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-                      <mat-row [style.background]="highlightedRows == row.Name ? selectedColore : ''" 
-                        [ngClass]="highlightedRows == row.Name ? 'row-text-colore' : ''" 
-                        highlightedRows=row.Name mat-row *matRowDef="let row; columns: displayedColumns;"
-                        (click)="clicktable(row.Name);highlightedRows = row.Name "
-                        matRipple>
-                      </mat-row>
-                  </mat-table>	
+                    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                    <mat-row [style.background]="highlightedRows == row.Name ? selectedColore : ''" 
+                      [ngClass]="highlightedRows == row.Name ? 'row-text-colore' : ''" 
+                      highlightedRows=row.Name mat-row *matRowDef="let row; columns: displayedColumns;"
+                      (click)="clicktable(row.Name);highlightedRows = row.Name "
+                      matRipple>
+                    </mat-row>
+                </mat-table>	
             </div>
-            <!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-              <ckeditor  fxFlex="50"><p>Hello, world!</p>"</ckeditor>
-            </div>    -->
           </form>
       </div>
     </div>

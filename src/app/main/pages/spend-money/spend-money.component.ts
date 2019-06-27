@@ -32,6 +32,9 @@ export class SpendMoneyComponent implements OnInit {
   Spendmoneydata: any;
   pageSize: any;
   filterData:any=[];
+  filterDataforAllField:any=[];
+  forHideShowDateRangePicker: string;
+  DateType: any;
 
   constructor(
     private TableColumnsService: TableColumnsService,
@@ -46,14 +49,33 @@ export class SpendMoneyComponent implements OnInit {
   ngOnInit() {
 this.SepndMoneyForm=this._formBuilder.group({
   MainClass:[''],
+  DateRange:[''],
+  DateType:[''],
+  DayRange:['']
 })
 
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
-   this.filterData={'EXPENDITURECLASS':"Expense",'INCURREDSTARTDATE':'','INCURREDENDDATE':'',"PAIDSTARTDATE":'',
-  'PAIDENDDATE':''}
-  this.SepndMoneyForm.controls['MainClass'].setValue("Expense"); 
-    // let potData = { 'ITEMSTARTDATE': new Date() };
-    this.loadData(this.filterData);
+    this.forFirstTimeFilter();
+  }
+
+  forFirstTimeFilter(){
+    let currentDate=new Date();
+    let updatecurrentDate= new Date();
+    this.DateType='Incurred Date';
+    this.forHideShowDateRangePicker="hide";
+    updatecurrentDate.setDate(updatecurrentDate.getDate() + 30);
+    let begin = this.datepipe.transform(currentDate, 'dd/MM/yyyy');
+    let end = this.datepipe.transform(updatecurrentDate, 'dd/MM/yyyy');
+    this.filterData={'EXPENDITURECLASS':"Expense",'INCURREDSTARTDATE':begin,'INCURREDENDDATE':end,"PAIDSTARTDATE":'',
+    'PAIDENDDATE':''}
+    // this.filterData={'EXPENDITURECLASS':"Expense",'INCURREDSTARTDATE':'','INCURREDENDDATE':'',"PAIDSTARTDATE":'',
+    // 'PAIDENDDATE':''}
+    this.SepndMoneyForm.controls['MainClass'].setValue("Expense"); 
+    this.SepndMoneyForm.controls['DateType'].setValue("Incurred Date");
+    this.SepndMoneyForm.controls['DateRange'].setValue({ begin: currentDate, end: updatecurrentDate }); 
+    this.SepndMoneyForm.controls['DayRange'].setValue("Last 30 days"); 
+      // let potData = { 'ITEMSTARTDATE': new Date() };
+      this.loadData(this.filterData);
   }
 
   getTableFilter() {
@@ -74,7 +96,7 @@ this.SepndMoneyForm=this._formBuilder.group({
   }
 
   loadData(potData) {
-    console.log(potData) ;
+    console.log(potData);
     this.isLoadingResults = true;
     this.SpendmoneyService.SpendmoneyListData(potData).subscribe(response => {
       console.log(response);
@@ -89,16 +111,6 @@ this.SepndMoneyForm=this._formBuilder.group({
 
       }
       this.isLoadingResults = false;
-      // if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
-      //   if (response.DATA.INVOICES[0]) {
-      //     this.highlightedRows = response.DATA.INVOICES[0].INVOICEGUID;
-      //     this.currentMatterData = response.DATA.INVOICES[0];
-      //   }
-      //   this.Spendmoneydata = new MatTableDataSource(response.DATA.INVOICES)
-      //   this.Spendmoneydata.paginator = this.paginator;
-      //   this.Spendmoneydata.sort = this.sort;
-      // } 
-      // this.isLoadingResults = false;
     }, error => {
       this.toastr.error(error);
     });
@@ -139,28 +151,83 @@ this.SepndMoneyForm=this._formBuilder.group({
 
   }
   SpendClassChange(val) {
-    console.log(val)
-    this.filterData.EXPENDITURECLASS=val;
-    // let potData = { 'EXPENDITURECLASS':val };
-    this.loadData(this.filterData);
+    if(val=="all"){
+      this.filterDataforAllField={"EXPENDITURECLASS":val};
+      this.loadData(this.filterDataforAllField);
+    }else{
+      this.filterData.EXPENDITURECLASS=val;
+      this.loadData(this.filterData);
+    }
+  
+   
 
   }
   SpendDateClassChnage(val){
-
+    this.DateType=val;
+    let begin = this.datepipe.transform(this.f.DateRange.value.begin, 'dd/MM/yyyy');
+    let end = this.datepipe.transform(this.f.DateRange.value.end, 'dd/MM/yyyy');
+    this.CommonDatefun(begin,end);
+    this.loadData(this.filterData);
+  }
+  get f() {
+    //console.log(this.contactForm);
+    return this.SepndMoneyForm.controls;
   }
   DateRange1(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
     let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');
-    
-    // this.filterData={'EXPENDITURECLASS':"Expense",'ITEMSTARTDATE':'','ITEMENDDATE':'',"RECEIVEDSTARTDATE":'',
-    // 'RECEIVEDENDDATE':''}
-    this.filterData.RECEIVEDSTARTDATE=begin;
-    this.filterData.RECEIVEDENDDATE=end;
- 
- this.loadData(this.filterData);
+    this.CommonDatefun(begin,end)
+    this.loadData(this.filterData);
    
   }
   DateRange(a,b){
 
   }
+selectDayRange(val){
+let currentDate = new Date()
+let updatecurrentDate = new Date();
+let begin = this.datepipe.transform(currentDate, 'dd/MM/yyyy');
+
+if(val=="Last 7 days"){
+  updatecurrentDate.setDate(updatecurrentDate.getDate() + 7);
+  this.forHideShowDateRangePicker="hide";
+  this.SepndMoneyForm.controls['DateRange'].setValue({ begin: currentDate, end: updatecurrentDate });
 }
+else if(val=="Today"){
+  updatecurrentDate.setDate(updatecurrentDate.getDate() + 30);
+  this.forHideShowDateRangePicker="hide";
+  this.SepndMoneyForm.controls['DateRange'].setValue({ begin: currentDate, end: currentDate });
+}
+else if(val=="Last 30 days"){
+  updatecurrentDate.setDate(updatecurrentDate.getDate() + 30);
+  this.forHideShowDateRangePicker="hide";
+  this.SepndMoneyForm.controls['DateRange'].setValue({ begin: currentDate, end: updatecurrentDate });
+}
+else if(val=="Last 90 days"){
+  updatecurrentDate.setDate(updatecurrentDate.getDate() + 90);
+  this.forHideShowDateRangePicker="hide";
+  this.SepndMoneyForm.controls['DateRange'].setValue({ begin: currentDate, end: updatecurrentDate });
+}else if(val=="Date Range"){
+this.forHideShowDateRangePicker="show";
+
+}  
+let end = this.datepipe.transform(updatecurrentDate, 'dd/MM/yyyy');
+this.CommonDatefun(begin,end);
+ this.loadData(this.filterData); 
+ 
+}
+  CommonDatefun(begin,end){
+    if( this.DateType=='Incurred Date'){
+      this.filterData.INCURREDSTARTDATE=begin;
+      this.filterData.INCURREDENDDATE=end;
+      this.filterData.PAIDSTARTDATE="";
+      this.filterData.PAIDENDDATE="";
+    }else if(this.DateType=="Date Paid"){
+      this.filterData.INCURREDSTARTDATE="";
+      this.filterData.INCURREDENDDATE="";
+      this.filterData.PAIDSTARTDATE=begin;
+      this.filterData.PAIDENDDATE=end;
+    }
+  }
+}
+

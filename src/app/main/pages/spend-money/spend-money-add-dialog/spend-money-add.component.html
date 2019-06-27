@@ -20,8 +20,8 @@
                   <mat-form-field class="example" fxFlex="{{size}}" class="pr-4" appearance="outline">
                     <mat-label>Paid</mat-label>
                     <mat-select #value name="selected" [(ngModel)]="paidtype"  formControlName="Paid" (ngModelChange)="Paidtype($event)">
-                        <mat-option value="paid">paid</mat-option>  
-                        <mat-option value="unpaid">unpaid</mat-option> 
+                        <mat-option value="Paid">Paid</mat-option>  
+                        <mat-option value="Unpaid">Unpaid</mat-option> 
                     </mat-select>
                   </mat-form-field>
                   <mat-form-field appearance="outline" fxFlex="{{size}}" class="pr-4">
@@ -30,11 +30,11 @@
                     <mat-datepicker-toggle matSuffix [for]="DatePaid"></mat-datepicker-toggle>
                     <mat-datepicker #DatePaid></mat-datepicker> 
                   </mat-form-field>
-                  <mat-form-field appearance="outline" fxFlex="20" class="pr-4" *ngIf="action === 'edit'">
+                  <mat-form-field appearance="outline" fxFlex="20" class="pr-4" *ngIf=" dataTableHide =='yes'">
                     <mat-label>Amount</mat-label>
                     <input matInput formControlName="Amount">
                   </mat-form-field>
-                  <mat-form-field appearance="outline" fxFlex="20" class="pr-4" *ngIf="action === 'edit'">
+                  <mat-form-field  appearance="outline" fxFlex="20" class="pr-4"*ngIf="dataTableHide =='yes'">
                     <mat-label>GST</mat-label>
                     <input matInput formControlName="GST">
                   </mat-form-field>
@@ -48,21 +48,28 @@
                       <button id="bank" class="matternews" [disabled]="Bankhide"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                     </mat-icon>
                   </mat-form-field>                 
-                  <mat-form-field appearance="outline" fxFlex="60" class="pr-4">
-                    <mat-label *ngIf="classtype !=='matter Expence'">Notes</mat-label>
-                    <mat-label *ngIf="classtype =='matter Expence'">Invoice Text</mat-label>
+                  <mat-form-field appearance="outline" fxFlex="60" class="pr-4" >
+                    <mat-label *ngIf="classtype !='Matter Expense'">Notes</mat-label>
+                    <mat-label *ngIf="classtype ==='Matter Expense'">Invoice Text</mat-label>
                     <!-- <input matInput formControlName="Notes">
                     <mat-icon matSuffix >
                       <img src="assets/icons/web_app/icon_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                     </mat-icon> -->
-                    <textarea matInput></textarea>
+                    <textarea formControlName="Notes" matInput></textarea>
                   </mat-form-field>
               </div>
               <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                 <mat-form-field class="example" fxFlex="25" class="pr-4" appearance="outline">
                     <mat-label>Type</mat-label>
                     <mat-select #value name="selected" formControlName="Type">
-                      <mat-option>1</mat-option>
+                      <mat-option value="Cash">Cash</mat-option>
+                      <mat-option value="Cheque">Cheque</mat-option>
+                      <mat-option value="Credit Card">Credit Card</mat-option>
+                      <mat-option value="Direct Deposit">Direct Deposit</mat-option>
+                      <mat-option value="Direct Withdrawal">Direct Withdrawal</mat-option>
+                      <mat-option value="Money Order">Money Order</mat-option>
+                      <mat-option value="Transfer">Transfer</mat-option>
+                      <mat-option value="SilqPay">SilqPay</mat-option>
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
@@ -71,66 +78,108 @@
                 </mat-form-field>
                 <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
                   <mat-label>Payee</mat-label>
-                  <input matInput readonly formControlName="Payee">
-                  <mat-icon matSuffix (click)='ContactMatter()'>
-                      <img src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                  </mat-icon>
+                  <mat-select formControlName="Payee">
+                    <mat-option *ngFor="let val of getPayourarray" [value]="val">{{val}}</mat-option>
+                </mat-select>
                 </mat-form-field>
+                <mat-icon matSuffix (click)='ContactMatter()'>
+                  <img src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+              </mat-icon>
+
+
+
                 <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
                     <mat-label>Invoice #/Source Ref</mat-label>
                     <input matInput formControlName="Invoice">
                 </mat-form-field>
              </div>
               <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" >
-                  <section class="example-section">
+                  <section class="example-section" >
                     <mat-checkbox (change)="multilineCheckbox()" class="example-margin" formControlName="MultiLineExpense">Multi Line Expense</mat-checkbox> 
                   </section>
+                  <mat-dialog-actions align="end">
+                    <button [disabled]="saveMoneyItemBtn ==='show'" mat-button  (click)="AddMoneyItem()">
+                      <section class="large-button-container">
+                          <mat-icon class="main-icon">
+                              <img src="assets/icons/web_app/icon_letters_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                              </mat-icon>
+                          <div class="main-text">
+                              <span>Add</span>
+                          </div>
+                      </section>
+                       </button>
+                       <button [disabled]="saveMoneyItemBtn ==='show' || action !='edit'" mat-button  (click)="AddContactsDialog()">
+                        <section class="large-button-container">
+                            <mat-icon class="main-icon">
+                                <img src="assets/icons/web_app/icon_letters_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                </mat-icon>
+                            <div class="main-text">
+                                <span>Edit</span>
+                            </div>
+                        </section>
+                         </button>
+                         <button [disabled]="saveMoneyItemBtn ==='show' || action !='edit'" mat-button  (click)="AddContactsDialog()">
+                          <section class="large-button-container">
+                              <mat-icon class="main-icon">
+                                  <img src="assets/icons/web_app/icon_letters_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                  </mat-icon>
+                              <div class="main-text">
+                                  <span>Delete</span>
+                              </div>
+                          </section>
+                           </button>
+                </mat-dialog-actions>
               </div>
+
+
+              
+              <div *ngIf="action != 'edit'">No Data Available</div>
               <div class="example-containerdata" *ngIf="action === 'edit' && dataTableHide =='yes'">
                   <table mat-table #table [dataSource]="getDataForTable" [@animateStagger]="{value:'50'}" class="spen_money_update" matSort class="mat-elevation-z8">
-                      <ng-container matColumnDef="class">
-                          <th mat-header-cell *matHeaderCellDef mat-sort-header>class</th>
+                    <ng-container matColumnDef="AMOUNT">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header>AMOUNT</th>
                           <td mat-cell *matCellDef="let row">
                               <p class="job-title text-truncate">
-                                  {{row.class }}
+                                  {{row.AMOUNT }}
                               </p>
                           </td>
                       </ng-container>
-                      <ng-container matColumnDef="amount">
-                          <th mat-header-cell *matHeaderCellDef mat-sort-header>amount</th>
+                      <ng-container matColumnDef="EXPENDITURECLASS">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header>EXPENDITURECLASS</th>
                           <td mat-cell *matCellDef="let row">
                               <p class="company text-truncate">
-                                  {{row.amount }}
+                                  {{row.EXPENDITURECLASS }}
                               </p>
                           </td>
                       </ng-container>
-                      <ng-container matColumnDef="Gst">
-                          <th mat-header-cell *matHeaderCellDef mat-sort-header>Gst</th>
+                      <ng-container matColumnDef="GST">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header>GST</th>
                           <td mat-cell *matCellDef="let row">
                               <p class="company text-truncate">
-                                  {{row.Gst }}
+                                  {{row.GST }}
                               </p>
                           </td>
                       </ng-container>
-                      <ng-container matColumnDef="note">
-                          <th mat-header-cell *matHeaderCellDef mat-sort-header>note</th>
+                      <ng-container matColumnDef="NOTE">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header>NOTE</th>
                           <td mat-cell *matCellDef="let row">
                               <p class="company text-truncate">
-                                  {{row.note }}
+                                  {{row.NOTE }}
                               </p>
                           </td>
                       </ng-container>
                       <tr mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumnsTime; sticky: true"></tr>
-                      <tr mat-row [style.background]="highlightedRows == row.MATTERGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumnsTime;" [ngClass]="highlightedRows == row.MATTERGUID ? 'row-text-colore' : ''" class="contact" (click)="selectMatterId(row);highlightedRows = row.MATTERGUID"
+                      <tr mat-row [style.background]="highlightedRows == row.EXPENDITUREGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumnsTime;" [ngClass]="highlightedRows == row.EXPENDITUREGUID ? 'row-text-colore' : ''" class="contact" (click)="selectSpendMoneyId(row);highlightedRows = row.EXPENDITUREGUID"
                           matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                       </tr>
                   </table>
+                 
               </div>
-              <mat-paginator *ngIf="action === 'edit'" [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+              <mat-paginator *ngIf="action === 'edit' && dataTableHide =='yes'" [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
               <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                   <mat-form-field class="example" fxFlex="33.33" class="pr-4" appearance="outline">
                       <mat-label>Class</mat-label>
-                      <mat-select #value name="selected" formControlName="Class" [(ngModel)]="classtype" (ngModelChange)="Classtype($event)">
+                      <mat-select formControlName="Class" (ngModelChange)="Classtype($event)">
                         <mat-option value="Expense">Expense</mat-option>
                         <mat-option value="Matter Expense">Matter Expence</mat-option>
                         <mat-option value="Capital">Capital</mat-option>
@@ -157,60 +206,91 @@
                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" >
                   <mat-form-field class="example" fxFlex="25" class="pr-4" appearance="outline">
                       <mat-label>GST Type</mat-label>
-                      <mat-select #value name="selected"  formControlName="GSTType">
-                          <mat-option>1</mat-option>
+                      <mat-select    formControlName="GSTType" (ngModelChange)="GstTypeforSelect($event)">
+                          <mat-option value="10% GST">10% GST</mat-option>
+                          <mat-option value="No GST">No GST</mat-option>
+                          <mat-option value="LessThen 10% GST">LessThen 10% GST</mat-option>
+                          <mat-option *ngIf="classtype ==='Matter Expense'" value="No GST">No GST(Charge GST)</mat-option>
+                          <mat-option *ngIf="classtype ==='Matter Expense'" value="LessThen 10% GST">LessThen 10% GST(Charge GST)</mat-option>
                     </mat-select>
                   </mat-form-field>
                   <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
                       <mat-label>GST</mat-label>
                       <input matInput type="number" formControlName="GST1">
                   </mat-form-field>
-                  <mat-form-field appearance="outline" fxFlex="25" class="pr-4" *ngIf="action !== 'edit'">
+                  <mat-form-field *ngIf="dataTableHide !='yes'"  appearance="outline" fxFlex="25" class="pr-4">
                       <mat-label>Amount Ex GST</mat-label>
-                        <input matInput formControlName="AmountExGST">
+                        <input readonly matInput formControlName="AmountExGST">
                   </mat-form-field>
                   <!-- for expense *ngIf="classtype=='Expence' || classtype=='matter Expence' || classtype=='depreciation' || classtype=='other'" -->
                   <mat-form-field appearance="outline" fxFlex="25" class="pr-4" >
-                      <mat-label>Expense a/c </mat-label>
+                      <mat-label *ngIf="classtype=='Expense' || classtype=='Matter Expense' || classtype=='Description' ||classtype=='Others'">Expense a/c </mat-label>
+                      <mat-label *ngIf="classtype=='Capital'">Asset a/c </mat-label>
+                      <mat-label *ngIf="classtype=='Pay GST'">GST a/c </mat-label>
+                      <mat-label *ngIf="classtype=='Pay Tax'">Tax a/c</mat-label>
+                      <mat-label *ngIf="classtype=='Personal'">Equity a/ </mat-label>
+                      <!-- <mat-label *ngIf="classtype=='personal'">Expense a/c </mat-label> -->
                       <input matInput  formControlName="Expenseac">
                     <mat-icon matSuffix >
                       <button id="expac" class="matternews" [disabled]="expac"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                     </mat-icon>
                   </mat-form-field>
-                  <mat-form-field appearance="outline" class="pr-4" fxFlex="25" *ngIf="classtype=='capital'">
+                  <!-- <mat-form-field appearance="outline" class="pr-4" fxFlex="25" *ngIf="classtype=='capital'">
                       <mat-label>Asset a/c</mat-label>
                       <input matInput  formControlName="Assetacs">
                     <mat-icon matSuffix >
                       <button id="expac" class="matternews" [disabled]="expac"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                     </mat-icon>
-                  </mat-form-field>
-                  <mat-form-field appearance="outline" fxFlex="25" class="pr-4" *ngIf="classtype=='pay gst'">
+                  </mat-form-field> -->
+                  <!-- <mat-form-field appearance="outline" fxFlex="25" class="pr-4" *ngIf="classtype=='pay gst'">
                       <mat-label>GST a/c</mat-label>
                       <input matInput  formControlName="Gstac">
                     <mat-icon matSuffix >
                       <button id="expac" class="matternews" [disabled]="expac"> <img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                     </mat-icon>
-                  </mat-form-field>
-                  <mat-form-field appearance="outline" fxFlex="25" class="pr-4" *ngIf="classtype=='pay txt'">
+                  </mat-form-field> -->
+                  <!-- <mat-form-field appearance="outline" fxFlex="25" class="pr-4" *ngIf="classtype=='pay txt'">
                       <mat-label>Tax a/c</mat-label>
                       <input matInput  formControlName="taxac">
                     <mat-icon matSuffix >
                       <button id="expac" class="matternews" [disabled]="expac"> <img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                     </mat-icon>
-                  </mat-form-field>
-                  <mat-form-field appearance="outline" fxFlex="25" class="pr-4" *ngIf="classtype=='personal'">
+                  </mat-form-field> -->
+                  <!-- <mat-form-field appearance="outline" fxFlex="25" class="pr-4" *ngIf="classtype=='personal'">
                       <mat-label>Equity a/c</mat-label>
                       <input matInput  formControlName="Equityac">
                     <mat-icon matSuffix >
                       <button id="expac" class="matternews" [disabled]="expac"> <img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                     </mat-icon>
-                  </mat-form-field>
-                  <mat-form-field appearance="outline" fxFlex="25" class="pr-4" *ngIf="action === 'edit'">
+                  </mat-form-field> -->
+                  <mat-form-field appearance="outline" fxFlex="25" class="pr-4" *ngIf="dataTableHide=='yes'">
                       <mat-label>Note</mat-label>
                       <input matInput formControlName="Note">
                   </mat-form-field>
                   
                </div>
+               <mat-dialog-actions *ngIf="dataTableHide==='yes'" align="end" class="popup_ftr">
+                <button [disabled]="saveMoneyItemBtn != 'show'" mat-button  (click)="SaveItemDialog()">
+                  <section class="large-button-container">
+                      <mat-icon class="main-icon">
+                          <img src="assets/icons/web_app/icon_save_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                          </mat-icon>
+                      <div class="main-text">
+                          <span>Save</span>
+                      </div>
+                  </section>
+                   </button>
+                   <button [disabled]="saveMoneyItemBtn != 'show'" mat-button  (click)="CancelItemDialog()">
+                    <section class="large-button-container">
+                        <mat-icon class="main-icon">
+                            <img src="assets/icons/web_app/icon_generic_delete_small_o.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                            </mat-icon>
+                        <div class="main-text">
+                            <span>Cancel</span>
+                        </div>
+                    </section>
+                     </button>
+            </mat-dialog-actions>
             </form>
         </div>
     </div>
@@ -221,7 +301,7 @@
           <button mat-raised-button color="accent" *ngIf="action === 'edit'" (click)="deletespendmoney()">Delete</button>
       </div>
       <div class="right_popup_btn">
-        <button mat-raised-button color="accent" [disabled]="isspiner" *ngIf="action !== 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Add</button>
+        <button mat-raised-button color="accent" (click)="FinalSaveData()" [disabled]="isspiner" *ngIf="action !== 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Add</button>
         <button mat-raised-button color="accent" [disabled]="isspiner" *ngIf="action === 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Update</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don`t Save</button>
       </div>

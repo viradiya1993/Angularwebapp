@@ -15,4 +15,7 @@ export class SpendmoneyService {
   SpendmoneyListData(potData) {
     return this.http.post<any>(environment.APIEndpoint + 'GetExpenditure', potData);
   }
+  setSpendmonyData(potData) {
+    return this.http.post<any>(environment.APIEndpoint + 'SetExpenditure', potData);
+  }
 }

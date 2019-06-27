@@ -18,23 +18,28 @@
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="example" appearance="outline">
-                        <mat-label>Incurred Date</mat-label>
-                        <mat-select (selectionChange)="SpendDateClassChnage($event.value)" >
+                        <!-- <mat-label>Incurred Date</mat-label> -->
+                        <mat-select formControlName="DateType" (selectionChange)="SpendDateClassChnage($event.value)" >
                                 <mat-option value="Date Paid">Date Paid</mat-option>
                             <mat-option value="Incurred Date">Incurred Date</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field class="example" appearance="outline">
-                        <mat-label>Last 30 days</mat-label>
-                        <mat-select>
-                            <mat-option value="Last 30 days">Last 30 days</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" class="example" fxFlex="17.33">
+                  
+                    <mat-form-field  appearance="outline" class="example" fxFlex="17.33">
                         <mat-label>Date Range</mat-label>
-                        <input matInput [satDatepicker]="picker2" (dateInput)="DateRange('input', $event)" (dateChange)="DateRange1('change', $event)">
+                        <input [disabled]="forHideShowDateRangePicker == 'hide'" matInput formControlName="DateRange" [satDatepicker]="picker2" (dateInput)="DateRange('input', $event)" (dateChange)="DateRange1('change', $event)">
                         <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
                         <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
+                    </mat-form-field>
+                    <mat-form-field class="example" appearance="outline" >
+                        <!-- <mat-label>Last 30 days</mat-label> -->
+                        <mat-select (selectionChange)="selectDayRange($event.value)"  formControlName="DayRange" placeholder="Select Date Range">
+                            <mat-option value="Today">Today</mat-option>
+                            <mat-option value="Last 7 days">Last 7 days</mat-option>
+                            <mat-option value="Last 30 days">Last 30 days</mat-option>
+                            <mat-option value="Last 90 days">Last 90 days</mat-option>
+                            <mat-option value="Date Range">Date Range</mat-option>
+                        </mat-select>
                     </mat-form-field>
                     <mat-form-field class="example" appearance="outline">
                         <mat-label>Spend Total Inc</mat-label>

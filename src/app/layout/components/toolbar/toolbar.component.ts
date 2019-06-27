@@ -38,6 +38,7 @@ import { ActivityDialogComponent } from './../../../main/pages/activities/activi
 import { ChangePasswordComponent } from 'app/main/change-password/change-password.component';
 import { NewfilenoteComponent } from './../../../main/pages/newfilenote/newfilenote.component';
 import { DocumentDailogComponent } from './../../../main/pages/document-register/document-dailog/document-dailog.component';
+import { EmailDailogComponent } from './../../../main/pages/email-templete/email-dailog/email-dailog.component';
 
 
 @Component({
@@ -66,6 +67,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     activeSubMenu: any = '';
     isInvoice: any;
     greenTheme: any = false;
+    CreatDocumentChild: any;
 
 
 
@@ -593,8 +595,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             data: { action: 'new' }
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#refreshUserTab').click();
+            console.log(result);
         });
     }
 
@@ -609,8 +610,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#refreshUserTab').click();
+            console.log(result);
         });
     }
 
@@ -622,8 +622,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#refreshUserTab').click();
+            console.log(result);
         });
     }
 
@@ -638,8 +637,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#refreshUserTab').click();
+            console.log(result);
         });
     }
 
@@ -655,8 +653,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#ActivityTab').click();
+            console.log(result);
         });
     }
 
@@ -671,8 +668,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#ActivityTab').click();
+            console.log(result);
         });
     }
 
@@ -684,8 +680,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#ActivityTab').click();
+            console.log(result);
         });
     }
 
@@ -699,8 +694,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#ActivityTab').click();
+            console.log(result);
         });
     }
 
@@ -716,7 +710,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     //New File Note Dialog
     NewFileNote() {
-        console.log('New File Work!!!');
         const dialogRef = this.dialog.open(NewfilenoteComponent, {
 
         });
@@ -728,10 +721,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /* Document Register Module */
 
     // New Record Document
-    NewDocumnt(){
+    NewDocumnt() {
         const dialogRef = this.dialog.open(DocumentDailogComponent, {
             disableClose: true,
-            panelClass: 'Activity-dialog',
+            panelClass: 'Document-dialog',
             data: {
                 action: 'new',
             }
@@ -742,22 +735,21 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     // Edit Record Document
-    EditDocument(){
+    EditDocument() {
         const dialogRef = this.dialog.open(DocumentDailogComponent, {
             disableClose: true,
-            panelClass: 'Activity-dialog',
+            panelClass: 'Document-dialog',
             data: {
                 action: 'edit',
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#ActivityTab').click();
+            console.log(result);
         });
     }
 
     // Delete Record Document
-    DeleteDocument() : void{
+    DeleteDocument(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
@@ -769,45 +761,113 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     // Duplicate Record Document
-    DuplicateDocument(){
+    DuplicateDocument() {
         const dialogRef = this.dialog.open(DocumentDailogComponent, {
             disableClose: true,
-            panelClass: 'User-dialog',
+            panelClass: 'Document-dialog',
             data: {
                 action: 'Duplicate',
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#ActivityTab').click();
+            console.log(result);
         });
     }
 
     //Open Matter Folder
-    OpenMatter(){
-      console.log('Matter Folder Work!!!');
+    OpenMatter() {
+        console.log('Matter Folder Work!!!');
     }
 
     //Open Document
-    OpenDocument(){
-        console.log('Document  Work!!!');  
+    OpenDocument() {
+        console.log('Document  Work!!!');
     }
 
     //Load Document
-    LoadDocument(){
-     console.log('Load Document Work!!!');  
+    LoadDocument() {
+        console.log('Load Document Work!!!');
     }
 
     //PDF Document
-    PdfDocument(){
+    PdfDocument() {
         console.log('Pdf Document work!!!')
     }
 
     //Pdf Email Document
-    PdfEmailDocument(){
+    PdfEmailDocument() {
         console.log('Pdf Email Document Work!!!');
     }
+    /* Email Module */
 
+    //Email 
+    email() {
+        this.CreatDocumentChild = 'email';
+        console.log('email work!!!');
+    }
+
+    //SelectMatter 
+    SelectMatter() {
+        // alert('ok Work!!!');   
+        const dialogRef = this._matDialog.open(MatterReceiptDialogComponentForTemplate, {
+            width: '100%',
+            disableClose: true,
+            data: null
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    //New Email
+    NewEmailTemplete() {
+        const dialogRef = this.dialog.open(EmailDailogComponent, {
+            disableClose: true,
+            panelClass: 'Email-dialog',
+            data: {
+                action: 'new',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    //Edit Email
+    EditEmailTemplete() {
+        const dialogRef = this.dialog.open(EmailDailogComponent, {
+            disableClose: true,
+            panelClass: 'Email-dialog',
+            data: {
+                action: 'edit',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    //Copy Email
+    CopyEmailTemplete() {
+        const dialogRef = this.dialog.open(EmailDailogComponent, {
+            disableClose: true,
+            panelClass: 'Email-dialog',
+            data: {
+                action: 'copy',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    //Delete Email
+    DeleteEmailTemplete() {
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -848,11 +908,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 12;
         } else if (x[1] == "activities") {
             this.isTabShow = 13;
-        }
-        else if(x[1] == "document-register"){
+        } else if (x[1] == "document-register") {
             this.isTabShow = 14;
-        }
-        else {
+        } else {
             this.isTabShow = 1;
         }
     }
@@ -1021,50 +1079,26 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     // ******************************************END Invoice related funtion like create update delete view*********************************************
     //***********************************************************START Select Matter Contact*************************************************************************
-    // select matter contact
-    // SelectMatterContact() {
-    //     const dialogRef = this.dialog.open(MatterContactDailogComponent, {
-    //         width: '100%',
-    //         disableClose: true,
-    //         data: { action: 'new' }
-    //     });
-    //     dialogRef.afterClosed().subscribe(result => {
-    //         console.log(result);
-    //     });
-    //     //***********************************************************END Select Matter Contact*************************************************************************
-    // }
-    // TemplateClick(){
-    //     if (this.router.url=="/create-document/invoice") {
-    //         this.location.replaceState("/create-document/invoice");
-    //    } else if( this.router.url=="/create-document/matter") {
-    //     this.templateRoter='/create-document/matter';
-    //     // this.location.replaceState("/create-document/matter");
-    //    }else if( this.router.url=="/create-document/receive-money") {
-    //     this.location.replaceState("/create-document/receive-money");
-    //    }else if( this.router.url=="/create-document/contact") {
-    //     this.location.replaceState("/create-document/contact");
-    //    }
-    // }
     SelectMatterContact() {
         let templateData = JSON.parse(localStorage.getItem('templateData'));
-        if (this.router.url == "/create-document/invoice") {
+        if (this.router.url == "/create-document/invoice-template") {
             let invoiceGUid = localStorage.getItem('edit_invoice_id');
             let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
-        } else if (this.router.url == "/create-document/matter") {
+        } else if (this.router.url == "/create-document/matter-template") {
             let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
             let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }
-        } else if (this.router.url == "/create-document/receive-money") {
+        } else if (this.router.url == "/create-document/receive-money-template") {
             let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
             let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
-        } else if (this.router.url == "/create-document/contact") {
+        } else if (this.router.url == "/create-document/contact-template") {
             let ContactGuID = localStorage.getItem('contactGuid');
             let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
         }
-        //***********************************************************END Select Matter Contact*************************************************************************
     }
+    //***********************************************************END Select Matter Contact*************************************************************************
     ForDocDialogOpen(passdata) {
         const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, { width: '100%', disableClose: true, data: passdata });
         dialogRef.afterClosed().subscribe(result => {

@@ -4,10 +4,11 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatPaginator,MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material';
 import {MatSort} from '@angular/material';
+import {MatTableDataSource} from '@angular/material/table';
 import * as $ from 'jquery';
 import { MatterPopupComponent } from 'app/main/pages/matters/matter-popup/matter-popup.component';
 import { ContactDialogComponent } from './../../../main/pages/contact/contact-dialog/contact-dialog.component';
-import {MatTableDataSource} from '@angular/material/table';
+
 
 
 export interface PeriodicElement {

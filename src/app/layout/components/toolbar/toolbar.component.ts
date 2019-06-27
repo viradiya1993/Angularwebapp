@@ -38,6 +38,7 @@ import { ActivityDialogComponent } from './../../../main/pages/activities/activi
 import { ChangePasswordComponent } from 'app/main/change-password/change-password.component';
 import { NewfilenoteComponent } from './../../../main/pages/newfilenote/newfilenote.component';
 import { DocumentDailogComponent } from './../../../main/pages/document-register/document-dailog/document-dailog.component';
+import { EmailDailogComponent } from './../../../main/pages/email-templete/email-dailog/email-dailog.component';
 
 
 @Component({
@@ -66,6 +67,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     activeSubMenu: any = '';
     isInvoice: any;
     greenTheme: any = false;
+    CreatDocumentChild:any;
 
 
 
@@ -593,8 +595,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             data: { action: 'new' }
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#refreshUserTab').click();
+            console.log(result);
         });
     }
 
@@ -609,8 +610,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#refreshUserTab').click();
+            console.log(result);
         });
     }
 
@@ -622,8 +622,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#refreshUserTab').click();
+            console.log(result);
         });
     }
 
@@ -638,8 +637,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#refreshUserTab').click();
+            console.log(result);
         });
     }
 
@@ -655,8 +653,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#ActivityTab').click();
+            console.log(result);
         });
     }
 
@@ -671,8 +668,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#ActivityTab').click();
+            console.log(result);
         });
     }
 
@@ -684,8 +680,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#ActivityTab').click();
+            console.log(result);
         });
     }
 
@@ -699,8 +694,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#ActivityTab').click();
+            console.log(result);
         });
     }
 
@@ -716,7 +710,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     //New File Note Dialog
     NewFileNote() {
-        console.log('New File Work!!!');
         const dialogRef = this.dialog.open(NewfilenoteComponent, {
 
         });
@@ -731,7 +724,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     NewDocumnt(){
         const dialogRef = this.dialog.open(DocumentDailogComponent, {
             disableClose: true,
-            panelClass: 'Activity-dialog',
+            panelClass: 'Document-dialog',
             data: {
                 action: 'new',
             }
@@ -745,14 +738,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     EditDocument(){
         const dialogRef = this.dialog.open(DocumentDailogComponent, {
             disableClose: true,
-            panelClass: 'Activity-dialog',
+            panelClass: 'Document-dialog',
             data: {
                 action: 'edit',
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#ActivityTab').click();
+            console.log(result);
         });
     }
 
@@ -772,14 +764,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     DuplicateDocument(){
         const dialogRef = this.dialog.open(DocumentDailogComponent, {
             disableClose: true,
-            panelClass: 'User-dialog',
+            panelClass: 'Document-dialog',
             data: {
                 action: 'Duplicate',
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#ActivityTab').click();
+            console.log(result);
         });
     }
 
@@ -807,7 +798,76 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     PdfEmailDocument(){
         console.log('Pdf Email Document Work!!!');
     }
+    /* Email Module */
 
+     //Email 
+    email(){
+        this.CreatDocumentChild='email';
+        console.log('email work!!!');
+    }
+
+    //SelectMatter 
+    SelectMatter(){
+       // alert('ok Work!!!');   
+        const dialogRef = this._matDialog.open(MatterReceiptDialogComponentForTemplate, {
+             width: '100%',
+             disableClose: true,
+             data: null 
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        }); 
+    }
+    //New Email
+    NewEmailTemplete(){
+        const dialogRef = this.dialog.open(EmailDailogComponent, {
+            disableClose: true,
+            panelClass: 'Email-dialog',
+            data: {
+                action: 'new',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    //Edit Email
+    EditEmailTemplete(){
+        const dialogRef = this.dialog.open(EmailDailogComponent, {
+            disableClose: true,
+            panelClass: 'Email-dialog',
+            data: {
+                action: 'edit',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    //Copy Email
+    CopyEmailTemplete(){
+        const dialogRef = this.dialog.open(EmailDailogComponent, {
+            disableClose: true,
+            panelClass: 'Email-dialog',
+            data: {
+                action: 'copy',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    //Delete Email
+    DeleteEmailTemplete(){
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+           console.log(result);
+        });
+    }
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------

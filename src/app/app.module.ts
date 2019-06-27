@@ -47,7 +47,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { LicenceAgreementComponent } from './main/licence-agreement/licence-agreement.component';
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { ChangePasswordComponent } from './main/change-password/change-password.component';
-
+import { CKEditorModule } from 'ckeditor4-angular';
 
 //end
 const appRoutes: Routes = [
@@ -76,6 +76,7 @@ const appRoutes: Routes = [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
+        CKEditorModule,
         RouterModule.forRoot(appRoutes, { useHash: true }),
 
         TranslateModule.forRoot(),

@@ -18,6 +18,7 @@ import { ActivitiesModule } from './activities/activities.module';
 import { SortingDialogModule } from '../sorting-dialog/sorting-dialog.module';
 import { NewfilenoteModule } from './newfilenote/newfilenote.module';
 import { DocumentRegitser } from './document-register/document-register.module';
+import { EmailTemplete } from './email-templete/email-templete.module';
 
 
 
@@ -59,7 +60,8 @@ const appRoutes: Routes = [
     ActivitiesModule,
     SortingDialogModule,
     NewfilenoteModule,
-    DocumentRegitser
+    DocumentRegitser,
+    EmailTemplete
 
   ]
 })

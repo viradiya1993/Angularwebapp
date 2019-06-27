@@ -1054,6 +1054,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else if (this.router.url == "/create-document/matter") {
             let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
             let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }
+            this.ForDocDialogOpen(passdata);
         } else if (this.router.url == "/create-document/receive-money") {
             let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
             let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }

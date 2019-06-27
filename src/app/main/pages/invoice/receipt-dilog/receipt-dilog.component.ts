@@ -47,6 +47,7 @@ export class ReceiptDilogComponent implements OnInit {
   ShowData: any = [];
   matterData: any;
   @ViewChild(MatSort) sort: MatSort;
+  isEdit: boolean = false;
 
   constructor(
     private toastr: ToastrService,
@@ -61,12 +62,12 @@ export class ReceiptDilogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
     this.matterData = this._data.matterData;
+    this.isEdit = this._data.action == 'edit' ? true : false;
   }
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit() {
-    console.log(this._data);
     this.PrepareReceiptForm = this._formBuilder.group({
       INCOMECODE: [''],
       INCOMECLASS: ['Receipt'],
@@ -128,6 +129,8 @@ export class ReceiptDilogComponent implements OnInit {
           this.PrepareReceiptForm.controls['NOTE'].setValue(data.NOTE);
           this.PrepareReceiptForm.controls['PAYEE'].setValue(data.PAYEE);
         }
+      } else if (response.MESSAGE == "Not logged in") {
+        this.dialogRef.close(false);
       }
       this.isLoadingResults = false;
     }, err => {

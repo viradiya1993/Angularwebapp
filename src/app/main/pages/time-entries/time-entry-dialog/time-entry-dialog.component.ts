@@ -20,6 +20,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   private exportTime = { hour: 7, minute: 15, meriden: 'PM', format: 24 };
   LookupsList: any;
+  errorWarningData: any = {};
   userList: any;
   matterList: any = [];
   isspiner: boolean = false;
@@ -154,7 +155,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   calcPE(val) {
     // this.PRICEVAL= parseFloat(this.f.PRICE.value).toFixed(2);
     this.PRICEINCGSTVAL = round(this.f.PRICE.value * 1.1).toFixed(2);
-    
+
   }
   calcPI(val) {
     this.PRICEVAL = round(this.f.PRICEINCGST.value / 1.1).toFixed(2);
@@ -349,9 +350,10 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
         this.checkValidation(res.DATA.VALIDATIONS, PostTimeEntryData);
       } else if (res.CODE == 451 && res.STATUS == "warning") {
         this.checkValidation(res.DATA.VALIDATIONS, PostTimeEntryData);
-      } else {
-        if (res.CODE == 402 && res.STATUS == "error" && res.MESSAGE == "Not logged in")
-          this.dialogRef.close(false);
+      } else if (res.CODE == 450 && res.STATUS == "error") {
+        this.checkValidation(res.DATA.VALIDATIONS, PostTimeEntryData);
+      } else if (res.MESSAGE == "Not logged in") {
+        this.dialogRef.close(false);
       }
       this.isspiner = false;
     }, err => {
@@ -362,13 +364,21 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   checkValidation(bodyData: any, PostTimeEntryData: any) {
     let errorData: any = [];
     let warningData: any = [];
+    let tempError: any = [];
+    let tempWarning: any = [];
+    console.log(bodyData);
+    // errorData
     bodyData.forEach(function (value) {
-      if (value.VALUEVALID == 'NO')
+      if (value.VALUEVALID == 'NO') {
         errorData.push(value.ERRORDESCRIPTION);
-      else if (value.VALUEVALID == 'WARNING')
+        tempError[value.FIELDNAME] = value;
+      } else if (value.VALUEVALID == 'WARNING') {
+        tempWarning[value.FIELDNAME] = value;
         warningData.push(value.ERRORDESCRIPTION);
+      }
     });
-
+    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
+    console.log(this.errorWarningData);
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {

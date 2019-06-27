@@ -12,20 +12,36 @@ import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 import { MatterContactDailogComponent } from './matter-contact-dailog/matter-contact-dailog.component';
 import { MatterDialogComponentForTemplate } from './matter-dialog/matter-dialog.component';
-import {MatSortModule} from '@angular/material/sort';
-import {DragDropModule} from '@angular/cdk/drag-drop';
+import { MatSortModule } from '@angular/material/sort';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TemplateListComponent } from './template-list/template-list.component';
 
 const routes = [
-  { path: '', component: TemplateComponent, canActivate: [AuthGuard] },
-  { path: 'create-document/matter', component: TemplateComponent },
-  { path: 'create-document/invoice', component: TemplateComponent },
-  { path: 'create-document/receive-money', component: TemplateComponent },
-  { path: 'create-document/contact', component: TemplateComponent },
-
+  { path: '', redirectTo: '/create-document/matter-template', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/create-document/invoice-template', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/create-document/receive-money-template', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/create-document/contact-template', pathMatch: 'full', canActivate: [AuthGuard] },
+  {
+    path: '', component: TemplateComponent, children: [
+      { path: 'matter-template', component: TemplateListComponent },
+      { path: 'invoice-template', component: TemplateListComponent },
+      { path: 'receive-money-template', component: TemplateListComponent },
+      { path: 'contact-template', component: TemplateListComponent },
+      // {
+      //   path: 'work-in-progress', component: WorkInProgressComponent, children: [
+      //     { path: '', component: EstimateComponent },
+      //     { path: 'invoice', component: EstimateComponent },
+      //   ]
+      // },
+      // { path: 'matter-invoices', component: MatterInvoicesComponent },
+      // { path: 'receipts-credits', component: ReceiptsCreditsComponent },
+      // { path: 'matter-trust', component: MatterTrustComponent },
+    ], canActivate: [AuthGuard]
+  }
 ];
 @NgModule({
-  declarations: [TemplateComponent, MatterContactDailogComponent,MatterDialogComponentForTemplate],
-  entryComponents: [MatterContactDailogComponent,MatterDialogComponentForTemplate],
+  declarations: [TemplateComponent, MatterContactDailogComponent, MatterDialogComponentForTemplate, TemplateListComponent],
+  entryComponents: [MatterContactDailogComponent, MatterDialogComponentForTemplate],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -64,7 +80,7 @@ const routes = [
   exports: [
     TemplateComponent
   ],
-  providers: [ TemplateComponent ]
+  providers: [TemplateComponent]
 })
 export class TemplateModule { }
 

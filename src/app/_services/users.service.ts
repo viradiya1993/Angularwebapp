@@ -33,4 +33,10 @@ export class UsersService {
     }
     return this.httpClient.post<any>(environment.APIEndpoint + 'SetUserRate ', Data);
   }
+  GetActivityData(Data: any) {
+    if (Data == null) {
+      Data = {};
+    }
+    return this.httpClient.post<any>(environment.APIEndpoint + 'GetActivity', Data);
+  }
 }

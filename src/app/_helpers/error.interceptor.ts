@@ -23,35 +23,37 @@ export class ErrorInterceptor implements HttpInterceptor {
                         return true;
                     } else if (evt.body.CODE == 200 && evt.body.STATUS != "success") {
                         this.toasterService.error(evt.body.STATUS);
-                    } else if (evt.body.CODE == 450 && evt.body.STATUS == "error") {
-                        let bodyData = evt.body.DATA.VALIDATIONS;
-                        let errorData: any = [];
-                        let warningData: any = [];
-                        bodyData.forEach(function (value) {
-                            if (value.VALUEVALID == 'NO')
-                                errorData.push(value.ERRORDESCRIPTION);
-                            else if (value.VALUEVALID == 'WARNING')
-                                warningData.push(value.ERRORDESCRIPTION);
-                        });
-                        if (Object.keys(errorData).length != 0)
-                            this.toasterService.error(errorData);
-                        if (Object.keys(warningData).length != 0)
-                            this.toasterService.warning(warningData);
-                    } else if (evt.body.CODE == 451 && evt.body.STATUS == "warning") {
-                        let bodyData = evt.body.DATA.VALIDATIONS;
-                        let errorData: any = [];
-                        let warningData: any = [];
-                        bodyData.forEach(function (value) {
-                            if (value.VALUEVALID == 'NO')
-                                errorData.push(value.ERRORDESCRIPTION);
-                            else if (value.VALUEVALID == 'WARNING')
-                                warningData.push(value.ERRORDESCRIPTION);
-                        });
-                        if (Object.keys(errorData).length != 0)
-                            this.toasterService.error(errorData);
-                        if (Object.keys(warningData).length != 0)
-                            this.toasterService.warning(warningData);
-                    } else if ((evt.body.CODE > 400 && evt.body.CODE < 499) && (evt.body.STATUS == "error" || evt.body.RESPONSE == "error")) {
+                    }
+                    //  else if (evt.body.CODE == 450 && evt.body.STATUS == "error") {
+                    //     let bodyData = evt.body.DATA.VALIDATIONS;
+                    //     let errorData: any = [];
+                    //     let warningData: any = [];
+                    //     bodyData.forEach(function (value) {
+                    //         if (value.VALUEVALID == 'NO')
+                    //             errorData.push(value.ERRORDESCRIPTION);
+                    //         else if (value.VALUEVALID == 'WARNING')
+                    //             warningData.push(value.ERRORDESCRIPTION);
+                    //     });
+                    //     if (Object.keys(errorData).length != 0)
+                    //         this.toasterService.error(errorData);
+                    //     if (Object.keys(warningData).length != 0)
+                    //         this.toasterService.warning(warningData);
+                    // } else if (evt.body.CODE == 451 && evt.body.STATUS == "warning") {
+                    //     let bodyData = evt.body.DATA.VALIDATIONS;
+                    //     let errorData: any = [];
+                    //     let warningData: any = [];
+                    //     bodyData.forEach(function (value) {
+                    //         if (value.VALUEVALID == 'NO')
+                    //             errorData.push(value.ERRORDESCRIPTION);
+                    //         else if (value.VALUEVALID == 'WARNING')
+                    //             warningData.push(value.ERRORDESCRIPTION);
+                    //     });
+                    //     if (Object.keys(errorData).length != 0)
+                    //         this.toasterService.error(errorData);
+                    //     if (Object.keys(warningData).length != 0)
+                    //         this.toasterService.warning(warningData);
+                    // }
+                    else if ((evt.body.CODE > 400 && evt.body.CODE < 499) && (evt.body.STATUS == "error" || evt.body.RESPONSE == "error")) {
                         if (evt.body.MESSAGE == "Not logged in") {
                             this.authenticationService.ForcLogout();
                         } else {

@@ -1,5 +1,5 @@
 @import "src/@fuse/scss/fuse";
-#contact {
+#activities {
     .header {
         .search-wrapper {
             width: 100%;
@@ -26,10 +26,8 @@
     }
     .content {
         overflow: hidden;
-        
-        // margin-top: 10px;
         .example {
-            width: 18%;
+            width: 13%;
             padding: 10px;
             .sidebar {
                 &:not(.locked-open) {
@@ -37,16 +35,25 @@
                 }
             }
         }
+        .matter-serach-div {
+            // position: fixed;
+            // width: 600px;
+            // height: 200px;
+            // left: 50%;
+            // top: 0%;
+            // margin-left: -300px;
+        }
+    }
+    .mat-form-field.mat-form-field-type-mat-select .mat-form-field-infix {
+        display: inline-flex;
+        width: 300px !important;
+    }
+    .search {
+        width: 45% !important;
+        padding: 20px !important;
     }
 }
-#contact[_ngcontent-c25] .content[_ngcontent-c25] {
-    position: relative;
-    margin-top: 10px;
-}
-// .content[_ngcontent-c32] {
-//     position: relative;
-//     margin-top: 10px;
-// }
+
 .search {
     width: 45% !important;
     padding: 20px !important;
@@ -65,50 +72,23 @@ app-contact {
     z-index: 9999;
     left: 0;
 }
-.example-containerdata {
-    height: 400px;
-    overflow: auto;
-    margin-top: 10px;
+
+.sticky_search_remove_padding {
+    padding-left: 80px;
 }
 
-
-element.style {
-    // top: 0px;
-    // position: sticky;
-    // z-index: 100;
-    width: 100%;
+#contact .p-24.list_tbl_main {
+    // margin-top: 85px;
+    overflow: hidden;
 }
-.contact_right_action {
-    position: absolute;
-    right: 0;
-    top: 0;
-    background-color: #fff;
-    z-index: 101;
-    height: 55px;
-    border-top-right-radius: 10px;
-    margin-top: 10px;
-    margin-right: 11px;
-}  
-
-table {
-    width: 100%;
-}
-// .sticky_search_remove_padding {
-//     padding-left: 80px;
-// }
-
-// #contact .p-24.list_tbl_main {
-//     margin-top: 85px;
-//     overflow: hidden;
-// }
 
 .p-24.list_tbl_main {
     //margin-top: 110px;
     padding-top: 0 !important;
 }
+
 #contact .content {
     position: relative;
-    margin-top: 10px;
 }
 
 .mat-table.mat-table.ng-trigger.ng-trigger-animateStagger {
@@ -160,6 +140,15 @@ button#refreshContactTab {
 #contact .content .example {
     padding: 20px 10px;
 }
+
 th.mat-sort-header-sorted {
     color: black;
+}
+
+.mat-table {
+    width: 100%;
+}
+
+#refreshActivities {
+    display: none;
 }

@@ -18,7 +18,7 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
             <mat-label>Commencement Date</mat-label>
-            <input (dateInput)="CommencementDateClick('input', $event)" formControlName="COMMENCEMENTDATETEXTM" (dateChange)="CommencementDateClick('change', $event)" matInput [matDatepicker]="CommencementDate">
+            <input (dateInput)="CommencementDateClick('input', $event)" formControlName="COMMENCEMENTDATE" (dateChange)="CommencementDateClick('change', $event)" matInput [matDatepicker]="CommencementDate">
             <mat-datepicker-toggle matSuffix [for]="CommencementDate"></mat-datepicker-toggle>
             <mat-datepicker #CommencementDate></mat-datepicker>
         </mat-form-field>

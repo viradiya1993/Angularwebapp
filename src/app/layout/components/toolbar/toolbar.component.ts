@@ -78,6 +78,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     hideShowDoc: string;
     isDocumentGenerateHide: string;
     templateRoter: string;
+    spendMoneyMenu: string;
 
 
     constructor(
@@ -498,37 +499,49 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     // Edit spendmoney Pop-up
     Editspendmoneypopup() {
-        const dialogConfig = new MatDialogConfig();
-        const dialogRef = this.dialog.open(SpendMoneyAddComponent, {
-            width: '100%',
-            disableClose: true,
-            data: {
-                action: 'edit'
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => { });
+        let SendMoney_data=JSON.parse(localStorage.getItem('spendMoney_data'));
+        if(SendMoney_data==null){
+        this.toastr.error("No Data Selected");
+        }else{
+            const dialogConfig = new MatDialogConfig();
+            const dialogRef = this.dialog.open(SpendMoneyAddComponent, {
+                width: '100%',
+                disableClose: true,
+                data: {
+                    action: 'edit'
+                }
+            });
+            dialogRef.afterClosed().subscribe(result => { });
+        }
+       
     }
 
     // Delete matter Pop-up
     Deletespendmoneypopup(): void {
-        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-            disableClose: true,
-            width: '100%',
-        });
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-        this.confirmDialogRef.afterClosed().subscribe(result => {
-            // if (result) {
-            //     let MatterGUID = localStorage.getItem('');
-            //     let postData = { FormAction: "delete", MatterGUID: MatterGUID }
-            //     this._mattersService.AddNewMatter(postData).subscribe(res => {
-            //         if (res.STATUS == "success" && res.CODE == 200) {
-            //             $('#refreshTimeEntryTab').click();
-            //             this.toastr.success('Delete successfully');
-            //         }
-            //     });
-            // }
-            // this.confirmDialogRef = null;
-        });
+        let SendMoney_data=JSON.parse(localStorage.getItem('spendMoney_data'));
+        if(SendMoney_data==null){
+            this.toastr.error("No Data Selected");
+        }else{
+            this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+                disableClose: true,
+                width: '100%',
+            });
+            this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+            this.confirmDialogRef.afterClosed().subscribe(result => {
+                // if (result) {
+                //     let MatterGUID = localStorage.getItem('');
+                //     let postData = { FormAction: "delete", MatterGUID: MatterGUID }
+                //     this._mattersService.AddNewMatter(postData).subscribe(res => {
+                //         if (res.STATUS == "success" && res.CODE == 200) {
+                //             $('#refreshTimeEntryTab').click();
+                //             this.toastr.success('Delete successfully');
+                //         }
+                //     });
+                // }
+                // this.confirmDialogRef = null;
+            });
+        }
+        
     }
 
 
@@ -1074,6 +1087,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     clickToolbarbtn2() {
         this.isDocumentGenerateHide = "no";
     }
+    // spendmoneyMenubtn(){
+    // this.spendMoneyMenu="disabled"; 
+    // }
     // ******************************************END Invoice related funtion like create update delete view*********************************************
     //***********************************************************START Select Matter Contact*************************************************************************
     SelectMatterContact() {

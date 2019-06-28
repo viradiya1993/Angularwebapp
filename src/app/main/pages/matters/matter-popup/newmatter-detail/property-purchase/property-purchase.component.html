@@ -25,10 +25,18 @@
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <!-- <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Stamp Duty Due</mat-label>
             <input matInput type="number" formControlName="STAMPDUTYDATE">
+        </mat-form-field> -->
+
+        <mat-form-field appearance="outline" class="pr-4" fxFlex="33">
+            <mat-label>Stamp Duty Due</mat-label>
+            <input (dateInput)="StempDutyDateClick('input', $event)" formControlName="STAMPDUTYDATE" (dateChange)="StempDutyDateClick('change', $event)" matInput name="STAMPDUTYDATE" [matDatepicker]="STAMPDUTYDATE">
+            <mat-datepicker-toggle matSuffix [for]="STAMPDUTYDATE"></mat-datepicker-toggle>
+            <mat-datepicker #STAMPDUTYDATE></mat-datepicker>
         </mat-form-field>
+
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Deposit Bond</mat-label>
             <input matInput type="number" formControlName="DEPOSITBONDAMOUNT">

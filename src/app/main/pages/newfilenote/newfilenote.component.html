@@ -36,7 +36,7 @@
             </form>
         </div>
         <mat-dialog-actions align="end" class="popup_ftr">
-            <button mat-raised-button color="accent">Add</button>
+            <button mat-raised-button color="accent" (click)="SaveFileNote()">Add</button>
             <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
         </mat-dialog-actions>
     </div>

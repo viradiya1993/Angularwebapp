@@ -44,6 +44,7 @@ export class SpendMoneyComponent implements OnInit {
     private dialog: MatDialog,
     public datepipe: DatePipe,
   ) {
+    localStorage.removeItem('spendMoney_data');
     this.getTableFilter();
   }
   ngOnInit() {
@@ -51,7 +52,8 @@ this.SepndMoneyForm=this._formBuilder.group({
   MainClass:[''],
   DateRange:[''],
   DateType:[''],
-  DayRange:['']
+  DayRange:[''],
+  searchFilter:['']
 })
 
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
@@ -67,9 +69,9 @@ this.SepndMoneyForm=this._formBuilder.group({
     let begin = this.datepipe.transform(currentDate, 'dd/MM/yyyy');
     let end = this.datepipe.transform(updatecurrentDate, 'dd/MM/yyyy');
     this.filterData={'EXPENDITURECLASS':"Expense",'INCURREDSTARTDATE':begin,'INCURREDENDDATE':end,"PAIDSTARTDATE":'',
-    'PAIDENDDATE':''}
+    'PAIDENDDATE':'','SearchString':''}
     // this.filterData={'EXPENDITURECLASS':"Expense",'INCURREDSTARTDATE':'','INCURREDENDDATE':'',"PAIDSTARTDATE":'',
-    // 'PAIDENDDATE':''}
+    // 'PAIDENDDATE':'','SearchString':''}
     this.SepndMoneyForm.controls['MainClass'].setValue("Expense"); 
     this.SepndMoneyForm.controls['DateType'].setValue("Incurred Date");
     this.SepndMoneyForm.controls['DateRange'].setValue({ begin: currentDate, end: updatecurrentDate }); 
@@ -105,8 +107,11 @@ this.SepndMoneyForm=this._formBuilder.group({
         this.Spendmoneydata = new MatTableDataSource(response.DATA.EXPENDITURES)
         this.Spendmoneydata.paginator = this.paginator;
         if (response.DATA.EXPENDITURES[0]) {
+          localStorage.setItem('spendMoney_data', JSON.stringify(response.DATA.EXPENDITURES[0]));
           this.highlightedRows = response.DATA.EXPENDITURES[0].EXPENDITUREGUID;
           this.currentMatterData = response.DATA.EXPENDITURES[0].EXPENDITUREGUID;
+        }else{
+          // this.toastr.error("No Data Selected");
         }
 
       }
@@ -147,7 +152,21 @@ this.SepndMoneyForm=this._formBuilder.group({
       // }
     });
   }
-  onSearch(s) {
+  onSearch(searchFilter: any) {
+    if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
+
+      this.filterData.SearchString=this.f.searchFilter.value;
+      this.loadData(this.filterData);
+      // let filterVal = { 'Active': '', 'SearchString': this.f.searchFilter.value, 'FeeEarner': '', 'UninvoicedWork': '' };
+      // if (!localStorage.getItem('matter_filter')) {
+      //   // localStorage.setItem('matter_filter', JSON.stringify(filterVal));
+      // } else {
+      //   filterVal = JSON.parse(localStorage.getItem('matter_filter'));
+      //   filterVal.SearchString = this.f.searchFilter.value;
+      //   // localStorage.setItem('matter_filter', JSON.stringify(filterVal));
+      // }
+      // this.child.getMatterList(filterVal);
+    }
 
   }
   SpendClassChange(val) {

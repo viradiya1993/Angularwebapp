@@ -42,7 +42,6 @@ export class SpendMoneyAddComponent implements OnInit {
   expac: boolean;
   @ViewChild(MatSort) sort: MatSort;
   dataTableHide: string;
-  saveMoneyItemBtn: any;
   copyClassVal: any;
   copyMatterVal: any;
   copyAmountIncGSTVal: any;
@@ -50,6 +49,8 @@ export class SpendMoneyAddComponent implements OnInit {
   copyGST1Val: any;
   copyAmountExGSTVal: any;
   copyExpenseacVal: any;
+  Main3btn: string;
+  SubMain2btn: string;
   constructor(public dialogRef: MatDialogRef<SpendMoneyAddComponent>,
     @Inject(MAT_DIALOG_DATA) public _data: any,
     private _formBuilder: FormBuilder,
@@ -60,7 +61,7 @@ export class SpendMoneyAddComponent implements OnInit {
     this.action = _data.action;
     console.log(_data);
     this.dialogTitle = this.action === 'edit' ? 'Update Spend Money' : 'Add Spend Money';
-    
+    this.getPayee({});
   }
   forEditshowpopupData(){
    
@@ -90,6 +91,8 @@ export class SpendMoneyAddComponent implements OnInit {
     this.spendmoneyForm.controls['GST1'].setValue(SendMoney_data.GST); 
     this.spendmoneyForm.controls['AmountIncGST'].setValue(SendMoney_data.AMOUNT); 
     this.spendmoneyForm.controls['GSTType'].setValue("10% GST");
+    this.spendmoneyForm.controls['Amount'].setValue(SendMoney_data.AMOUNT);
+    this.spendmoneyForm.controls['GST'].setValue(SendMoney_data.GST);
     // this.spendmoneyForm.controls['Class'].setValue("Expense");
     this.Classtype(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
   }
@@ -111,19 +114,14 @@ export class SpendMoneyAddComponent implements OnInit {
     this.spendmoneyForm.controls['AmountIncGST'].setValue("0.00"); 
     this.spendmoneyForm.controls['GSTType'].setValue("10% GST");
   
-    this.spendmoneyForm.controls['Amount'].setValue(SendMoney_data.GST);
+    this.spendmoneyForm.controls['Amount'].setValue(SendMoney_data.AMOUNT);
     this.spendmoneyForm.controls['GST'].setValue(SendMoney_data.GST);
     this.Classtype("Expense");
   }
   ngOnInit() {
     //for Data Table hideshow 
-    this.saveMoneyItemBtn="show";
+    this.Main3btn='disabled';
     this.dataTableHide="false";
-
-    // this.getDataForTable = new MatTableDataSource([]);
-    // this.getDataForTable.paginator = this.paginator;
-    // this.getDataForTable.sort = this.sort;
-
     this.spendmoneyForm = this._formBuilder.group({
       DateIncurred: [''],
       Paid: [''],
@@ -158,7 +156,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['Matter'].disable();
       this.spendmoneyForm.controls['GST1'].disable();
       this.forEditshowpopupData();
-      this.getPayee({});
+     
     }else{
       this.forAddshowpopupData();
     }
@@ -347,7 +345,7 @@ export class SpendMoneyAddComponent implements OnInit {
     const dialogRef = this.MatDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // this.timeEntryForm.controls['MATTERGUID'].setValue(result.MATTERGUID);
+        //  this.timeEntryForm.controls['MATTERGUID'].setValue(result.MATTERGUID);
         // this.timeEntryForm.controls['matterautoVal'].setValue(result.SHORTNAME + ' : ' + result.MATTER);
         // this.matterChange('MatterGuid', result.MATTERGUID);
       }
@@ -396,9 +394,10 @@ export class SpendMoneyAddComponent implements OnInit {
     return this.spendmoneyForm.controls;
   }
   multilineCheckbox(){
-    this.saveMoneyItemBtn="hide";
     if(this.f.MultiLineExpense.value==true){
       this.dataTableHide="yes";
+      this.Main3btn='enable';
+      this.SubMain2btn='disabled';
       this.spendmoneyForm.controls['Class'].disable();
       this.spendmoneyForm.controls['GSTType'].disable();
       this.spendmoneyForm.controls['GST1'].disable();
@@ -406,7 +405,8 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['AmountIncGST'].disable();
       this.spendmoneyForm.controls['Expenseac'].disable();
     }else{
-      this.saveMoneyItemBtn="show";
+      this.Main3btn='disabled';
+      this.SubMain2btn='enable';
       this.dataTableHide="false";
       this.forCommonEnable();
        this.Classtype(this.classtype);
@@ -419,13 +419,13 @@ console.log(val);
   selectSpendMoneyId(row){
   }
   AddMoneyItem(){
-    this.saveMoneyItemBtn="show";
+    this.SubMain2btn='enable';
+    this.Main3btn='disabled';
     this.forCommonEnable();
     this.Classtype(this.classtype);
-   
   }
   SaveItemDialog(){
-    this.saveMoneyItemBtn="hide";
+    this.Main3btn='enable';
     //get all last data and show in table 
     // this.copyClassVal=this.f.Class.value;
     // this.copyMatterVal=this.f.Matter.value;
@@ -447,7 +447,6 @@ let passdata=[{EXPENDITURECLASS:this.f.Class.value,
      this.getDataForTable.sort = this.sort;
   }
   CancelItemDialog(){
-    this.saveMoneyItemBtn="hide";
   }
   forCommonEnable(){
     this.spendmoneyForm.controls['Class'].enable();

@@ -106,6 +106,7 @@ mat-dialog-actions {
 .timeentry_popup .mat-dialog-content {
     max-height: 550px;
 }
+
 .timeentry_popup {
     background-color: #fff;
     // width: 50%;
@@ -116,26 +117,30 @@ mat-dialog-actions {
     box-shadow: none;
     border-radius: 4px;
 }
+
 .mat-dialog-title {
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
 }
+
 .right_popup_btn .right_btn_child:last-child {
     margin-right: 0;
 }
+
 .popup_ftr {
     border-top: 1px solid #ccc;
     margin-top: 15px !important;
     padding: 12px 24px !important;
 }
+
 @media screen and (max-width: 1400px) {
     .timeentry_popup .mat-dialog-content {
         max-height: 450px;
     }
 }
+
 @media screen and (max-width: 900px) {
     .timeentry_popup {
         width: 95%;
     }
 }
-.sideText{ text-align: right; }

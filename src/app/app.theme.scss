@@ -528,6 +528,41 @@ mat-dialog-actions {
     }
 }
 
-.has-error {}
 
-.has-warning {}
+.has-error.mat-form-field-appearance-outline .mat-form-field-outline-start {
+    border: 1px solid red;
+    border-right: none;
+}
+.has-error.mat-form-field-appearance-outline .mat-form-field-outline-gap {
+    border-radius: .000001px;
+    border: 1px solid red;
+    border-left-style: none;
+    border-right-style: none;
+}
+.has-error.mat-form-field-appearance-outline .mat-form-field-outline-end {
+    border: 1px solid red;
+    border-left: none;
+}
+body.theme-default .has-error .mat-form-field-label {
+    color: red;
+}
+
+.has-warning.mat-form-field-appearance-outline .mat-form-field-outline-start {
+    border: 1px solid orange;
+    border-right: none;
+}
+.has-warning.mat-form-field-appearance-outline .mat-form-field-outline-gap {
+    border-radius: .000001px;
+    border: 1px solid orange;
+    border-left-style: none;
+    border-right-style: none;
+}
+.has-warning.mat-form-field-appearance-outline .mat-form-field-outline-end {
+    border: 1px solid orange;
+    border-left: none;
+}
+body.theme-default .has-warning .mat-form-field-label {
+    color: orange;
+}
+
+

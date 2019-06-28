@@ -10,7 +10,7 @@ export class FileNotesService {
   constructor(private http: HttpClient) { }
 
   getData(potData) {
-    return this.http.post<any>(environment.APIEndpoint + 'GetMatterFileNote', potData);
+    return this.http.post<any>(environment.APIEndpoint + 'GetFileNote', potData);
   }
   setFileNote(potData) {
     return this.http.post<any>(environment.APIEndpoint + 'SetFileNote', potData);

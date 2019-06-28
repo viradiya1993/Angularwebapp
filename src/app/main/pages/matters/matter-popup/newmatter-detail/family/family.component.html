@@ -23,19 +23,29 @@
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Marriage Country</mat-label>
             <input matInput formControlName="MARRIAGECOUNTRY">
-        </mat-form-field>
+        </mat-form-field>   
+
 
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Separation Date</mat-label>
-            <input (dateInput)="SeparationDateClick('input', $event)" formControlName="SEPARATIONDATETEXT" (dateChange)="SeparationDateClick('change', $event)" matInput [matDatepicker]="SeparationDate">
-            <mat-datepicker-toggle matSuffix [for]="SeparationDate"></mat-datepicker-toggle>
-            <mat-datepicker #SeparationDate></mat-datepicker>
+            <input (dateInput)="SeparationDateClick('input', $event)" formControlName="SEPARATIONDATE" (dateChange)="SeparationDateClick('change', $event)" matInput [matDatepicker]="SEPARATIONDATE">
+            <mat-datepicker-toggle matSuffix [for]="SEPARATIONDATE"></mat-datepicker-toggle>
+            <mat-datepicker #SEPARATIONDATE></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <!-- <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
             <mat-label>Date Filed For Divorce</mat-label>
             <input matInput type="number" formControlName="DATEFILEDFORDIVORCE">
+        </mat-form-field> -->
+
+
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+            <mat-label>Date Filed For Divorce</mat-label>
+            <input (dateInput)="DateFiledForDivorceDateClick('input', $event)" formControlName="DATEFILEDFORDIVORCE" (dateChange)="DateFiledForDivorceDateClick('change', $event)" matInput [matDatepicker]="DATEFILEDFORDIVORCE">
+            <mat-datepicker-toggle matSuffix [for]="DATEFILEDFORDIVORCE"></mat-datepicker-toggle>
+            <mat-datepicker #DATEFILEDFORDIVORCE></mat-datepicker>
         </mat-form-field>
+
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">

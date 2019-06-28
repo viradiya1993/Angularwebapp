@@ -203,14 +203,19 @@ export class ContactDialogComponent implements OnInit {
             this.contactForm.controls['REASONFORCHANGE'].setValue(getContactData.REASONFORCHANGE);
             //other
             this.contactForm.controls['GENDER'].setValue(getContactData.GENDER);
-            this.contactForm.controls['DATEOFBIRTH'].setValue(getContactData.DATEOFBIRTH);
+            let DATEOFBIRTH = getContactData.DATEOFBIRTH.split("/");
+            this.contactForm.controls['DATEOFBIRTH'].setValue(new Date(DATEOFBIRTH[1] + '/' + DATEOFBIRTH[0] + '/' + DATEOFBIRTH[2]));
+            let DATEOFDEATH = getContactData.DATEOFDEATH.split("/");
+            this.contactForm.controls['DATEOFDEATH'].setValue(new Date(DATEOFDEATH[1] + '/' + DATEOFDEATH[0] + '/' + DATEOFDEATH[2]));
+           
             this.contactForm.controls['MARITALSTATUS'].setValue(getContactData.MARITALSTATUS);
             this.contactForm.controls['SPOUSE'].setValue(getContactData.SPOUSE);
             this.contactForm.controls['NUMBEROFDEPENDANTS'].setValue(getContactData.NUMBEROFDEPENDANTS);
             this.contactForm.controls['BIRTHDAYREMINDER'].setValue(this.birthdayreminder);
             this.contactForm.controls['TOWNOFBIRTH'].setValue(getContactData.TOWNOFBIRTH);
             this.contactForm.controls['COUNTRYOFBIRTH'].setValue(getContactData.COUNTRYOFBIRTH);
-            this.contactForm.controls['DATEOFDEATH'].setValue(getContactData.DATEOFDEATH);
+              // this.contactForm.controls['DATEOFBIRTH'].setValue(getContactData.DATEOFBIRTH);
+            // this.contactForm.controls['DATEOFDEATH'].setValue(getContactData.DATEOFDEATH);
             this.contactForm.controls['CAUSEOFDEATH'].setValue(getContactData.CAUSEOFDEATH);
             //this.contactForm.valueChanges.subscribe(newVal => console.log(newVal))
             //address

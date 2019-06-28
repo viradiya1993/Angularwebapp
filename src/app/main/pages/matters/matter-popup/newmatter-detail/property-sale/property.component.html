@@ -51,7 +51,7 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field fxFlex="50" class="pr-4" appearance="outline">
             <mat-label>Status</mat-label>
-            <mat-select #value formControlName="ClientStatus">
+            <mat-select #value formControlName="CLIENTSTATUS">
                 <mat-option *ngFor="let optionval of statusData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
         </mat-form-field>

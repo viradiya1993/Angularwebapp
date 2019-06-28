@@ -93,19 +93,19 @@ export class NewfilenoteComponent implements OnInit {
   }
 
   setValue(passdata){
-
     this.isLoadingResults=true;
-    this.setfilenote.setFileNote({'FormAction':'insert','DATA':passdata}).subscribe(res => {
+    console.log({'FormAction':'insert',DATA:passdata});
+    this.setfilenote.setFileNote({'FormAction':'insert',DATA:passdata}).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.toastr.success('Save Success');
         this.isLoadingResults=false;
         this.dialogRef.close(true);
 
-      } else if (res.CODE == 402 && res.STATUS == "error" && res.MESSAGE == "Not logged in"){
+      } else if (res.CODE == 402  && res.MESSAGE == "Not logged in"){
         this.toastr.error(res.MESSAGE);
         this.isLoadingResults=false;
           this.dialogRef.close(false);
-      } else if(res.CODE == 450 && res.STATUS == "error"){
+      } else if(res.STATUS == "error"){
         this.toastr.error(res.MESSAGE);
         this.isLoadingResults=false;
    

@@ -409,9 +409,10 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
         this.dialogRef.close(true);
       } else if (res.CODE == 451 && res.STATUS == "warning") {
         this.toasterService.warning(this.successMsg);
-      } else {
-        if (res.CODE == 402 && res.STATUS == "error" && res.MESSAGE == "Not logged in")
-          this.dialogRef.close(false);
+      } else if (res.CODE == 450 && res.STATUS == "error") {
+        this.toasterService.warning(this.successMsg);
+      } else if (res.MESSAGE == "Not logged in") {
+        this.dialogRef.close(false);
       }
       this.isspiner = false;
     }, err => {

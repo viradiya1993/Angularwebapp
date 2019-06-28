@@ -11,24 +11,24 @@
         <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
             <form [formGroup]="activityForm" fxLayout="column" fxFlex="1 0 auto" name="form">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ACTIVITYTYPE,'has-warning':errorWarningData.Warning?.ACTIVITYTYPE}">
                         <mat-label>Actitity Type</mat-label>
                         <mat-select #value formControlName="ACTIVITYTYPE">
                             <mat-option value="Activity">Actitity</mat-option>
                             <mat-option value="Sundry">Sundry</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ACTIVITYID,'has-warning':errorWarningData.Warning?.ACTIVITYID}">
                         <mat-label>Sundry / Actitity</mat-label>
                         <input formControlName="ACTIVITYID" matInput>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DESCRIPTION,'has-warning':errorWarningData.Warning?.DESCRIPTION}">
                         <mat-label>Description</mat-label>
                         <input formControlName="DESCRIPTION" matInput>
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.GSTTYPE,'has-warning':errorWarningData.Warning?.GSTTYPE}">
                         <mat-label>Gst Type</mat-label>
                         <mat-select #value formControlName="GSTTYPE">
                             <mat-option value="GST Exclusive">GST Exclusive</mat-option>
@@ -36,14 +36,14 @@
                             <mat-option value="GST Free">GST Free</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.RATEPERUNIT,'has-warning':errorWarningData.Warning?.RATEPERUNIT}">
                         <mat-label>$/Unit</mat-label>
                         <input formControlName="RATEPERUNIT" class="sideText" matInput (focusout)="RatePerUnitVal()" [(ngModel)]="RATEPERUNIT">
                         <span class="currency_sign" matPrefix>$&nbsp;</span>
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.UNITDESCRIPTIONSINGLE,'has-warning':errorWarningData.Warning?.UNITDESCRIPTIONSINGLE}">
                         <mat-label>Unit Desc Single</mat-label>
                         <mat-select #value formControlName="UNITDESCRIPTIONSINGLE">
                             <mat-option value="unit">Unit</mat-option>
@@ -51,7 +51,7 @@
                             <mat-option value="item">Item</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.UNITDESCRIPTIONPLURAL,'has-warning':errorWarningData.Warning?.UNITDESCRIPTIONPLURAL}">
                         <mat-label>Unit Desc Plural</mat-label>
                         <mat-select #value formControlName="UNITDESCRIPTIONPLURAL">
                             <mat-option value="unit">Unit</mat-option>

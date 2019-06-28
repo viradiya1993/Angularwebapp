@@ -57,7 +57,8 @@ export class ErrorInterceptor implements HttpInterceptor {
                         if (evt.body.MESSAGE == "Not logged in") {
                             this.authenticationService.ForcLogout();
                         } else {
-                            this.toasterService.error(evt.body.MESSAGE);
+                            if (evt.body.MESSAGE != "Check the Validation Section for Errors/Warnings.")
+                                this.toasterService.error(evt.body.MESSAGE);
                         }
                     }
                 }

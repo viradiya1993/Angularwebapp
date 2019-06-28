@@ -646,14 +646,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     //NewActivityDialog
     AddActivityDialog() {
         const dialogRef = this.dialog.open(ActivityDialogComponent, {
-            disableClose: true,
-            panelClass: 'Activity-dialog',
-            data: {
-                action: 'new',
-            }
+            disableClose: true, panelClass: 'Activity-dialog', data: { action: 'new' }
         });
         dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+            if (result)
+                $('#refreshActivities').click();
         });
     }
 

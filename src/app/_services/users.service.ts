@@ -39,4 +39,10 @@ export class UsersService {
     }
     return this.httpClient.post<any>(environment.APIEndpoint + 'GetActivity', Data);
   }
+  SetActivityData(Data: any) {
+    if (Data == null) {
+      Data = {};
+    }
+    return this.httpClient.post<any>(environment.APIEndpoint + 'SetActivity', Data);
+  }
 }

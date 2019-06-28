@@ -67,7 +67,7 @@
                                     <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                                 </div>
                                 <div class="example-containerdata">
-                                    <table mat-table #table [dataSource]="WorkInProgressdata" matSort [@animateStagger]="{value:'50'}">
+                                    <table *ngIf="WorkInProgressdata" mat-table #table [dataSource]="WorkInProgressdata" matSort [@animateStagger]="{value:'50'}">
                                         <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
                                             <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header> {{ tempColobj[item].DESCRIPTION }}</th>
                                             <!-- <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>{{ tempColobj[item].DESCRIPTION }}</th> -->

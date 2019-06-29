@@ -68,11 +68,11 @@ this.SepndMoneyForm=this._formBuilder.group({
     updatecurrentDate.setDate(updatecurrentDate.getDate() + 30);
     let begin = this.datepipe.transform(currentDate, 'dd/MM/yyyy');
     let end = this.datepipe.transform(updatecurrentDate, 'dd/MM/yyyy');
-    this.filterData={'EXPENDITURECLASS':"Expense",'INCURREDSTARTDATE':begin,'INCURREDENDDATE':end,"PAIDSTARTDATE":'',
+    this.filterData={'EXPENDITURECLASS':"all",'INCURREDSTARTDATE':begin,'INCURREDENDDATE':end,"PAIDSTARTDATE":'',
     'PAIDENDDATE':'','SearchString':''}
     // this.filterData={'EXPENDITURECLASS':"Expense",'INCURREDSTARTDATE':'','INCURREDENDDATE':'',"PAIDSTARTDATE":'',
     // 'PAIDENDDATE':'','SearchString':''}
-    this.SepndMoneyForm.controls['MainClass'].setValue("Expense"); 
+    this.SepndMoneyForm.controls['MainClass'].setValue("all"); 
     this.SepndMoneyForm.controls['DateType'].setValue("Incurred Date");
     this.SepndMoneyForm.controls['DateRange'].setValue({ begin: currentDate, end: updatecurrentDate }); 
     this.SepndMoneyForm.controls['DayRange'].setValue("Last 30 days"); 
@@ -170,13 +170,15 @@ this.SepndMoneyForm=this._formBuilder.group({
 
   }
   SpendClassChange(val) {
-    if(val=="all"){
-      this.filterDataforAllField={"EXPENDITURECLASS":val};
-      this.loadData(this.filterDataforAllField);
-    }else{
-      this.filterData.EXPENDITURECLASS=val;
-      this.loadData(this.filterData);
-    }
+    this.filterData.EXPENDITURECLASS=val;
+    this.loadData(this.filterData);
+    // if(val=="all"){
+    //   this.filterDataforAllField={"EXPENDITURECLASS":val};
+    //   this.loadData(this.filterDataforAllField);
+    // }else{
+    //   this.filterData.EXPENDITURECLASS=val;
+    //  
+    // }
   
    
 

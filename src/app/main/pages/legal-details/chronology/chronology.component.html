@@ -33,7 +33,7 @@
                                 <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                             </div>
                             <div class="example-containerdata">
-                                <table mat-table #table [dataSource]="chronology_table" matSort [@animateStagger]="{value:'50'}">
+                                <table *ngIf="chronology_table" mat-table #table [dataSource]="chronology_table" matSort [@animateStagger]="{value:'50'}">
                                     <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
                                         <th mat-header-cell *matHeaderCellDef mat-sort-header class="header_title"> {{ tempColobj[item].DESCRIPTION }}</th>
                                         <td mat-cell *matCellDef="let row"> <span *ngIf="row[item]">{{row[item]}}</span> </td>

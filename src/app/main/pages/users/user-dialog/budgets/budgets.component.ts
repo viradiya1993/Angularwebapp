@@ -131,17 +131,14 @@ export class UserBudget {
     } else {
       this.dialogTitle = 'Edit Budget';
     }
-    this.Months=[];
+    this.Months = [];
     for (let i = 0; i < 12; i++) {
-      let nowdate = (new Date('July 01, 2014'));
-       //let d = nowdate.getDate();
-       console.log(nowdate);
-       nowdate.setMonth(nowdate.getMonth()+i);
-       this.Months.push(nowdate);
-       console.log(i);
-     }
-    
-    
+      let nowdate = (new Date());
+      nowdate = new Date(nowdate.getFullYear(), nowdate.getMonth(), 1);
+      nowdate.setMonth(nowdate.getMonth() + i);
+      this.Months.push(nowdate);
+    }
+    console.log(this.Months);
   }
 
   ngOnInit() {
@@ -150,11 +147,10 @@ export class UserBudget {
       ratehr: [],
       Year: [],
       ExGst: [],
-      june1:[],
+      june1: [],
       hoursyear: [],
       rateyear: [],
     });
-
   }
 
   // Year Hour
@@ -169,29 +165,18 @@ export class UserBudget {
     console.log("Year Gst work!!!");
     this.YearlyRate = val / 12
   }
- 
 
-  NowDate(value){
-    this.Months=[];
-    // console.log(value);
-    // console.log('-----');
+
+  NowDate(value) {
+    this.Months = [];
     let newdate = new Date(value);
-    for(let i = 0 ;i < 11;i++){
-      newdate.setMonth(newdate.getMonth()+1);
+    for (let i = 0; i < 11; i++) {
+      newdate.setMonth(newdate.getMonth() + 1);
       console.log(newdate);
-     // this.Months.push(newdate);
       this.Months.push(new Date(newdate[i]));
       console.log(i);
-      
+
     }
-    /* this.Months=[];
-    for (let i = 0; i < 12; i++){
-     let nowdate = value;
-     nowdate.setMonth(nowdate.getMonth()+i);
-     this.Months.push(nowdate);
-     console.log(i);
-    } */
-    //console.log(this.Months);
   }
 
   //Save Budget

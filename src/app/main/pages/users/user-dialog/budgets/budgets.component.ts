@@ -118,13 +118,12 @@ export class UserBudget {
   june1: any;
   Months: any = [];
   @Input() user_budget: FormGroup;
-  constructor
-    (
-      public dialogRef: MatDialogRef<UserBudget>,
-      @Inject(MAT_DIALOG_DATA) public data_2: any,
-      private _formBuilder: FormBuilder,
-      public datepipe: DatePipe
-    ) {
+  constructor(
+    public dialogRef: MatDialogRef<UserBudget>,
+    @Inject(MAT_DIALOG_DATA) public data_2: any,
+    private _formBuilder: FormBuilder,
+    public datepipe: DatePipe
+  ) {
     this.action_2 = data_2.action;
     if (this.action_2 === 'new') {
       this.dialogTitle = 'New Budget';
@@ -132,7 +131,7 @@ export class UserBudget {
       this.dialogTitle = 'Edit Budget';
     }
     this.Months = [];
-    for (let i = 0; i < 12; i++) {
+    for (let i = 1; i <= 12; i++) {
       let nowdate = (new Date());
       nowdate = new Date(nowdate.getFullYear(), nowdate.getMonth(), 1);
       nowdate.setMonth(nowdate.getMonth() + i);
@@ -143,7 +142,7 @@ export class UserBudget {
 
   ngOnInit() {
     this.user_budget = this._formBuilder.group({
-      Budgetdate: [],
+      Budgetdate: [new Date()],
       ratehr: [],
       Year: [],
       ExGst: [],
@@ -169,14 +168,13 @@ export class UserBudget {
 
   NowDate(value) {
     this.Months = [];
-    let newdate = new Date(value);
-    for (let i = 0; i < 11; i++) {
-      newdate.setMonth(newdate.getMonth() + 1);
-      console.log(newdate);
-      this.Months.push(new Date(newdate[i]));
-      console.log(i);
-
+    for (let i = 1; i <= 12; i++) {
+      let nowdate = (new Date(value));
+      nowdate = new Date(nowdate.getFullYear(), nowdate.getMonth(), 1);
+      nowdate.setMonth(nowdate.getMonth() + i);
+      this.Months.push(nowdate);
     }
+    console.log(this.Months);
   }
 
   //Save Budget

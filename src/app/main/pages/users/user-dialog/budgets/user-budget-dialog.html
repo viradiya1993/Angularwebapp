@@ -13,13 +13,6 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
                         <mat-label>Date</mat-label>
-                        <!-- <input (ngModelChange)="firstDate($event)" (dateInput)="budgetsChange('input', $event)" (dateChange)="budgetsChange('change', $event)" matInput  [matDatepicker]="picker3">
-                        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-                        <mat-datepicker #picker3></mat-datepicker> -->
-                        <!-- <input (dateInput)="budgetsChange('input', $event)"  (dateChange)="budgetsChange('change', $event)" matInput [matDatepicker]="picker3">
-                        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-                        <mat-datepicker #picker3></mat-datepicker> -->
-
                         <input (ngModelChange)="NowDate($event)" [formControlName]="'Budgetdate'" matInput [matDatepicker]="picker3">
                         <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                         <mat-datepicker #picker3></mat-datepicker>
@@ -44,9 +37,6 @@
                 </div>
                 <div *ngFor="let val of Months; index as i" of fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <div fxFlex="33" class="pr-4">{{val | date:'MMM d , y' }}</div>
-                    <!-- <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
-                        <input value="" [formControlName]="'june1'" matInput readonly>
-                    </mat-form-field> -->
                     <mat-form-field appearance="outline" fxFlex="" class="pr-4">
                         <input [(ngModel)]="YearlyHours" type="number" [formControlName]="'hoursyear'" matInput>
                         <mat-icon matSuffix class="secondary-text">julyhours</mat-icon>

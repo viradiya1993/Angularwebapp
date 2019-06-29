@@ -13,8 +13,8 @@
                                 <ng-container matColumnDef="TEMPLATETYPE">
                                     <th mat-header-cell *matHeaderCellDef></th>
                                     <td mat-cell *matCellDef="let row">
-                                        <img *ngIf="row.TEMPLATETYPE==='Template'" src="assets/icons/web_app/icon_template_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                        <img *ngIf="row.TEMPLATETYPE!='File'" src="assets/icons/web_app/folder.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                        <img *ngIf="row.TEMPLATETYPE ==='Template'" src="assets/icons/web_app/icon_template_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                        <img *ngIf="row.TEMPLATETYPE!='Template'" src="assets/icons/web_app/folder.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="TEMPLATENAME">

@@ -125,11 +125,12 @@ export class InvoiceComponent implements OnInit {
           this.highlightedRows = response.DATA.INVOICES[0].INVOICEGUID;
           this.currentInvoiceData = response.DATA.INVOICES[0];
         }
-        this.MatterInvoicesdata = new MatTableDataSource(response.DATA.INVOICES)
+        this.MatterInvoicesdata = new MatTableDataSource(response.DATA.INVOICES);
         this.MatterInvoicesdata.paginator = this.paginator;
         this.MatterInvoicesdata.sort = this.sort;
+        this.isLoadingResults = false;
       }
-      this.isLoadingResults = false;
+    
     }, error => {
       this.toastr.error(error);
     });

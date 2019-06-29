@@ -49,6 +49,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   QuantityTypeLabel: any = 'Quantity Type';
   currentTimeMatter: any = '';
   actiontype: string;
+  SetItemVal: string;
 
   constructor(
     public dialogRef: MatDialogRef<TimeEntryDialogComponent>,
@@ -91,7 +92,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     });
     this.calculateData.QuantityType = 'H';
     this.ITEMDATEModel = new Date();
-    this.timeEntryForm.controls['ITEMTYPE'].setValue('WIP');
+    this.timeEntryForm.controls['ITEMTYPE'].setValue('1');
     let userType = JSON.parse(localStorage.getItem('currentUser'));
     if (userType) {
       this.timeEntryForm.controls['FEEEARNER'].setValue(userType.UserId);
@@ -148,7 +149,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       let Qval = this.matterTimerData == '' ? 'Hours' : 'hh:mm';
       this.timeEntryForm.controls['QUANTITYTYPE'].setValue(Qval);
       this.timeEntryForm.controls['QUANTITY'].setValue(this.matterTimerData);
-      this.timeEntryForm.controls['ITEMTYPE'].setValue('WIP');
+      this.timeEntryForm.controls['ITEMTYPE'].setValue('1');
       this.matterChange('MatterGuid', this.currentTimeMatter);
     }
   }
@@ -177,7 +178,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
 
         // added by web19 19/06 
         this.matterChange('MatterGuid', response.DATA.WORKITEMS[0].MATTERGUID);
-        this.matterChange('QuantityType', response.DATA.WORKITEMS[0].QUANTITYTYPE);
+        this.matterChange('QUANTITYTYPE', response.DATA.WORKITEMS[0].QUANTITYTYPE);
         this.timeEntryForm.controls['matterautoVal'].setValue(response.DATA.WORKITEMS[0].SHORTNAME);
         ////
 
@@ -190,7 +191,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
           }
         });
         this.itemTypeChange(timeEntryData.ITEMTYPE);
-        if (timeEntryData.ITEMTYPE == "Activity" || timeEntryData.ITEMTYPE == "Sundry") {
+        if (timeEntryData.ITEMTYPE == "2" || timeEntryData.ITEMTYPE == "3") {
           this.timeEntryForm.controls['QUANTITYTYPE'].setValue(timeEntryData.FEETYPE);
         } else {
           this.timeEntryForm.controls['QUANTITYTYPE'].setValue(timeEntryData.QUANTITYTYPE);
@@ -290,6 +291,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.Timersservice.GetActivity({ "ActivityType": callType }).subscribe(res => {
         if (res.CODE == 200 && res.STATUS == "success") {
           this.ActivityList = res.DATA.ACTIVITIES;
+          console.log( this.ActivityList);
           this.isLoadingResults = false;
         }
       }, err => {
@@ -307,7 +309,13 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.timeEntryForm.controls['ADDITIONALTEXT'].setValue(value);
   }
   SaveClickTimeEntry() {
-
+    // if(this.f.ITEMTYPE.value =="WIP"){
+    //   this.SetItemVal="1";
+    // }else if(this.f.ITEMTYPE.value =="Activity"){
+    //   this.SetItemVal="2";
+    // }else if(this.f.ITEMTYPE.value =="Sundry"){
+    //   this.SetItemVal="3";
+    // }
     if (this.ITEMDATEVLAUE == "" || this.ITEMDATEVLAUE == null || this.ITEMDATEVLAUE == undefined) {
       this.ITEMDATEVLAUE = this.f.INVOICEDATE.value;
     }
@@ -316,13 +324,15 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       "ADDITIONALTEXT": this.f.ADDITIONALTEXT.value,
       "COMMENT": this.f.COMMENT.value,
       "FEEEARNER": this.f.FEEEARNER.value,
-      "ITEMTYPE": this.f.ITEMTYPE.value,
+      "ITEMTYPE":   this.f.ITEMTYPE.value ,
+      // "ITEMTYPEDESC": this.f.ITEMTYPE.value,
       "ITEMDATE": this.ITEMDATEVLAUE,
       "ITEMTIME": this.f.ITEMTIME.value,
       "MATTERGUID": this.f.MATTERGUID.value,
       "PRICE": this.f.PRICE.value,
       "PRICEINCGST": this.f.PRICEINCGST.value,
       "QUANTITY": this.f.QUANTITY.value,
+      "QUANTITYTYPE": this.f.QUANTITYTYPE.value,
       // "INVOICEGUID": "value",
       // "INVOICEORDER": "value",
       // "PRICECHARGED": "value",
@@ -331,7 +341,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       // "GSTCHARGED": "value",
       // "GSTTYPE": "value",
     }
-    if (this.f.ITEMTYPE.value == "Activity" || this.f.ITEMTYPE.value == "Sundry") {
+    if (this.f.ITEMTYPE.value == "2" || this.f.ITEMTYPE.value == "3") {
       PostData.FEETYPE = this.f.QUANTITYTYPE.value;
       PostData.QUANTITYTYPE = '';
     } else {

@@ -36,6 +36,10 @@ export class PropertyPurchaseComponent implements OnInit {
   ExchangeDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['EXCHANGEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
+  StempDutyDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.matterdetailForm.controls['STAMPDUTYDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
+
   SettlementDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['SETTLEMENTDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }

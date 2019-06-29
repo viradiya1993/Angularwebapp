@@ -35,4 +35,7 @@ export class FamilyComponent implements OnInit {
   ExpiryDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['ExpirationDate'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
+  DateFiledForDivorceDateClick(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.matterdetailForm.controls['DATEFILEDFORDIVORCE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
 }

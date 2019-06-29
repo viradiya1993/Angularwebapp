@@ -40,7 +40,7 @@ export class GeneralComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.matterdetailForm.controls['OWNERGUID'].setValue(result.USERGUID);
-        this.matterdetailForm.controls['OWNERGUIDTEXT'].setValue(result.FULLNAME);
+        this.matterdetailForm.controls['OWNERNAME'].setValue(result.FULLNAME);
       }
     });
   }

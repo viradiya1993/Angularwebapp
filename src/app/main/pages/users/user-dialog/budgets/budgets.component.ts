@@ -1,10 +1,10 @@
-import { Component, OnInit, Input, ViewChild, Inject } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Component, OnInit, Input, Inject } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatDialogRef, MatDialogConfig, MAT_DIALOG_DATA, MatDatepickerInputEvent } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DatePipe } from '@angular/common';
-import { formatDate } from "@angular/common";
+
 
 
 
@@ -131,7 +131,7 @@ export class UserBudget {
       this.dialogTitle = 'Edit Budget';
     }
     this.Months = [];
-    for (let i = 1; i <= 12; i++) {
+    for (let i = 0; i < 12; i++) {
       let nowdate = (new Date());
       nowdate = new Date(nowdate.getFullYear(), nowdate.getMonth(), 1);
       nowdate.setMonth(nowdate.getMonth() + i);
@@ -168,7 +168,7 @@ export class UserBudget {
 
   NowDate(value) {
     this.Months = [];
-    for (let i = 1; i <= 12; i++) {
+    for (let i = 0; i < 12; i++) {
       let nowdate = (new Date(value));
       nowdate = new Date(nowdate.getFullYear(), nowdate.getMonth(), 1);
       nowdate.setMonth(nowdate.getMonth() + i);

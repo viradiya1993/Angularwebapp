@@ -19,25 +19,25 @@
         </mat-radio-group>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="59" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="59" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.RATEPERHOUR,'has-warning':errorWarningData.Warning?.RATEPERHOUR}">
             <mat-label>Per Hours</mat-label>
             <input matInput type="number" formControlName="RATEPERHOUR">
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.RATEPERDAY,'has-warning':errorWarningData.Warning?.RATEPERDAY}">
             <mat-label>Per Day</mat-label>
             <input name="PerDay" matInput type="number" formControlName="RATEPERDAY">
             <mat-icon matSuffix class="secondary-text"></mat-icon>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
+        <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FIXEDRATEEXGST,'has-warning':errorWarningData.Warning?.FIXEDRATEEXGST}">
             <mat-label>Fixed Price</mat-label>
             <input class="sideText" numeric numericType="decimal" matInput name="FixedPrice" type="number" (keyup)="calcPE()" formControlName="FIXEDRATEEXGST" [(ngModel)]="FIXEDRATEEXGST">
             <span class="currency_sign" matPrefix>$&nbsp;</span>
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FIXEDRATEINCGST,'has-warning':errorWarningData.Warning?.FIXEDRATEINCGST}">
             <mat-label>Ex-GST</mat-label>
-            <input class="sideText"  numeric numericType="decimal" name="Ex-GST" matInput type="number" formControlName="FIXEDRATEINCGST" (keyup)="calcPI()" [(ngModel)]="FIXEDRATEINCGST">
+            <input class="sideText" numeric numericType="decimal" name="Ex-GST" matInput type="number" formControlName="FIXEDRATEINCGST" (keyup)="calcPI()" [(ngModel)]="FIXEDRATEINCGST">
             <span class="currency_sign" matPrefix>$&nbsp;</span>
             <mat-icon matSuffix class="secondary-text"></mat-icon>
         </mat-form-field>

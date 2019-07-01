@@ -12,6 +12,7 @@ export class ImmigrationComponent implements OnInit {
 
   constructor(private datepipe: DatePipe) { }
   @Input() matterdetailForm: FormGroup;
+  @Input() errorWarningData: any;
   ngOnInit() {
   }
   AnticipatedEntryClick(type: string, event: MatDatepickerInputEvent<Date>) {

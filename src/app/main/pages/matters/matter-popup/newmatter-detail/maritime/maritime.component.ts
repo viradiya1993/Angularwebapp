@@ -12,6 +12,7 @@ export class MaritimeComponent implements OnInit {
 
   constructor(private datepipe: DatePipe) { }
   @Input() matterdetailForm: FormGroup;
+  @Input() errorWarningData: any;
   ngOnInit() {
   }
   SettlementDateClick(type: string, event: MatDatepickerInputEvent<Date>) {

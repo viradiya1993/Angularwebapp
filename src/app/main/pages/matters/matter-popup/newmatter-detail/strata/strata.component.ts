@@ -13,6 +13,7 @@ export class StrataComponent implements OnInit {
   constructor(private datepipe: DatePipe) { }
 
   @Input() matterdetailForm: FormGroup;
+  @Input() errorWarningData: any;
   ngOnInit() {
   }
 

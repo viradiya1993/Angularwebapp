@@ -11,7 +11,7 @@ import { DatePipe } from '@angular/common';
 export class CompensationComponent implements OnInit {
 
   constructor(public datepipe: DatePipe) { }
-
+  @Input() errorWarningData: any;
   @Input() matterdetailForm: FormGroup;
 
   ngOnInit() {

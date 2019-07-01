@@ -1,32 +1,32 @@
 <div class=" one " fxLayout="column" [formGroup]="matterdetailForm">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.COHABITATIONDATE,'has-warning':errorWarningData.Warning?.COHABITATIONDATE}">
             <mat-label>Cohabitation Date</mat-label>
             <input (dateInput)="CohabitationDateClick('input', $event)" formControlName="COHABITATIONDATETEXT" (dateChange)="CohabitationDateClick('change', $event)" matInput [matDatepicker]="CohabitationDate">
             <mat-datepicker-toggle matSuffix [for]="CohabitationDate"></mat-datepicker-toggle>
             <mat-datepicker #CohabitationDate></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MARRIAGEDATE,'has-warning':errorWarningData.Warning?.MARRIAGEDATE}">
             <mat-label>Marriage Date</mat-label>
             <input (dateInput)="MarriageDateClick('input', $event)" formControlName="MARRIAGEDATETEXT" (dateChange)="MarriageDateClick('change', $event)" matInput [matDatepicker]="MarriageDate">
             <mat-datepicker-toggle matSuffix [for]="MarriageDate"></mat-datepicker-toggle>
             <mat-datepicker #MarriageDate></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MARRIAGEPLACE,'has-warning':errorWarningData.Warning?.MARRIAGEPLACE}">
             <mat-label>Marriage Place</mat-label>
             <input matInput formControlName="MARRIAGEPLACE">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MARRIAGECOUNTRY,'has-warning':errorWarningData.Warning?.MARRIAGECOUNTRY}">
             <mat-label>Marriage Country</mat-label>
             <input matInput formControlName="MARRIAGECOUNTRY">
-        </mat-form-field>   
+        </mat-form-field>
 
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.SEPARATIONDATE,'has-warning':errorWarningData.Warning?.SEPARATIONDATE}">
             <mat-label>Separation Date</mat-label>
             <input (dateInput)="SeparationDateClick('input', $event)" formControlName="SEPARATIONDATE" (dateChange)="SeparationDateClick('change', $event)" matInput [matDatepicker]="SEPARATIONDATE">
             <mat-datepicker-toggle matSuffix [for]="SEPARATIONDATE"></mat-datepicker-toggle>
@@ -39,7 +39,7 @@
         </mat-form-field> -->
 
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.VALUEODATEFILEDFORDIVORCEFASSETS,'has-warning':errorWarningData.Warning?.DATEFILEDFORDIVORCE}">
             <mat-label>Date Filed For Divorce</mat-label>
             <input (dateInput)="DateFiledForDivorceDateClick('input', $event)" formControlName="DATEFILEDFORDIVORCE" (dateChange)="DateFiledForDivorceDateClick('change', $event)" matInput [matDatepicker]="DATEFILEDFORDIVORCE">
             <mat-datepicker-toggle matSuffix [for]="DATEFILEDFORDIVORCE"></mat-datepicker-toggle>
@@ -48,48 +48,48 @@
 
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DIVORCEDATE,'has-warning':errorWarningData.Warning?.DIVORCEDATE}">
             <mat-label>Divorce Date</mat-label>
             <input (dateInput)="DivorceDateClick('input', $event)" formControlName="DIVORCEDATETEXT" (dateChange)="DivorceDateClick('change', $event)" matInput [matDatepicker]="DivorceDate">
             <mat-datepicker-toggle matSuffix [for]="DivorceDate"></mat-datepicker-toggle>
             <mat-datepicker #DivorceDate></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DIVORCEPLACE,'has-warning':errorWarningData.Warning?.DIVORCEPLACE}">
             <mat-label>Divorce Place</mat-label>
             <input matInput formControlName="DIVORCEPLACE">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DIVORCECOUNTRY,'has-warning':errorWarningData.Warning?.DIVORCECOUNTRY}">
             <mat-label>Divorce Country</mat-label>
             <input matInput formControlName="DIVORCECOUNTRY">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.NUMDEPENDANTS,'has-warning':errorWarningData.Warning?.NUMDEPENDANTS}">
             <mat-label>Num Dependants</mat-label>
             <input matInput type="number" formControlName="NUMDEPENDANTS">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MatterNo,'has-warning':errorWarningData.Warning?.MatterNo}">
             <mat-label>Court Matter #</mat-label>
             <input matInput formControlName="MatterNo">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FAMILYCOURTCLIENTID,'has-warning':errorWarningData.Warning?.FAMILYCOURTCLIENTID}">
             <mat-label>Cliend Id</mat-label>
             <input matInput formControlName="FAMILYCOURTCLIENTID">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ExpirationDate,'has-warning':errorWarningData.Warning?.ExpirationDate}">
             <mat-label>Expiry Date</mat-label>
             <input (dateInput)="ExpiryDateClick('input', $event)" formControlName="ExpirationDatetextF" (dateChange)="ExpiryDateClick('change', $event)" matInput name="ExpiryDate" [matDatepicker]="ExpiryDate">
             <mat-datepicker-toggle matSuffix [for]="ExpiryDate"></mat-datepicker-toggle>
             <mat-datepicker #ExpiryDate></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.EXPERTHEARINGDATE,'has-warning':errorWarningData.Warning?.EXPERTHEARINGDATE}">
             <mat-label>Hearing Date</mat-label>
             <input (dateInput)="HearingDateClick('input', $event)" formControlName="EXPERTHEARINGDATETEXTF" (dateChange)="HearingDateClick('change', $event)" matInput [matDatepicker]="HearingDate">
             <mat-datepicker-toggle matSuffix [for]="HearingDate"></mat-datepicker-toggle>

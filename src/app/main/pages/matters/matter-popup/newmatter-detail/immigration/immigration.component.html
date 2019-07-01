@@ -1,29 +1,29 @@
 <div class=" one " fxLayout="column" [formGroup]="matterdetailForm">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.VISATYPE,'has-warning':errorWarningData.Warning?.VISATYPE}">
             <mat-label>Visa Type</mat-label>
             <input matInput formControlName="VISATYPE">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.VALUEOFASSETS,'has-warning':errorWarningData.Warning?.VALUEOFASSETS}">
             <mat-label>Assets</mat-label>
             <input matInput type="number" formControlName="VALUEOFASSETS">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.VISASTATUS,'has-warning':errorWarningData.Warning?.VISASTATUS}">
             <mat-label>Visa Status</mat-label>
             <input matInput formControlName="VISASTATUS">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ANTICIPATEDDATEOFENTRY,'has-warning':errorWarningData.Warning?.ANTICIPATEDDATEOFENTRY}">
             <mat-label>Anticipated Entry</mat-label>
             <input (dateInput)="AnticipatedEntryClick('input', $event)" formControlName="ANTICIPATEDDATEOFENTRYTEXT" (dateChange)="AnticipatedEntryClick('change', $event)" matInput [matDatepicker]="AnticipatedEntry">
             <mat-datepicker-toggle matSuffix [for]="AnticipatedEntry"></mat-datepicker-toggle>
             <mat-datepicker #AnticipatedEntry></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.LODGEMENTDATE,'has-warning':errorWarningData.Warning?.LODGEMENTDATE}">
             <mat-label>Lodgement Date</mat-label>
             <input (dateInput)="LodgementDateClick('input', $event)" formControlName="LODGEMENTDATETEXT" (dateChange)="LodgementDateClick('change', $event)" matInput [matDatepicker]="LodgementDate">
             <mat-datepicker-toggle matSuffix [for]="LodgementDate"></mat-datepicker-toggle>
@@ -31,14 +31,14 @@
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.VISAEXPIRYDATE,'has-warning':errorWarningData.Warning?.VISAEXPIRYDATE}">
             <mat-label>Visa Expiry Date</mat-label>
             <input (dateInput)="VisaExpiryDateClick('input', $event)" formControlName="VISAEXPIRYDATETEXT" (dateChange)="VisaExpiryDateClick('change', $event)" matInput [matDatepicker]="VisaExpiryDate">
             <mat-datepicker-toggle matSuffix [for]="VisaExpiryDate"></mat-datepicker-toggle>
             <mat-datepicker #VisaExpiryDate></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DECISIONDUEDATE,'has-warning':errorWarningData.Warning?.DECISIONDUEDATE}">
             <mat-label>Decision Due Date</mat-label>
             <input (dateInput)="DecisionDueDateClick('input', $event)" formControlName="DECISIONDUEDATETEXT" (dateChange)="DecisionDueDateClick('change', $event)" matInput [matDatepicker]="DecisionDueDate">
             <mat-datepicker-toggle matSuffix [for]="DecisionDueDate"></mat-datepicker-toggle>

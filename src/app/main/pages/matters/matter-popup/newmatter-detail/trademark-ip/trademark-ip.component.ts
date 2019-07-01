@@ -11,6 +11,7 @@ export class TrademarkIPComponent implements OnInit {
   constructor() { }
 
   @Input() matterdetailForm: FormGroup;
+  @Input() errorWarningData: any;
   ngOnInit() {
   }
 

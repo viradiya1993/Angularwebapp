@@ -1,21 +1,21 @@
 <!-- [formGroup]="matterdetailForm" -->
 <div class=" one " fxLayout="column" [formGroup]="matterdetailForm">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ACCIDENTDATE,'has-warning':errorWarningData.Warning?.ACCIDENTDATE}">
             <mat-label>Accident Date</mat-label>
             <input (dateInput)="AccidentDateClick('input', $event)" formControlName="ACCIDENTDATETEXT" (dateChange)="AccidentDateClick('change', $event)" matInput [matDatepicker]="AccidentDate">
             <mat-datepicker-toggle matSuffix [for]="AccidentDate"></mat-datepicker-toggle>
             <mat-datepicker #AccidentDate></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ExpirationDate,'has-warning':errorWarningData.Warning?.ExpirationDate}">
             <mat-label>Expiry Date</mat-label>
             <input (dateInput)="ExpiryDateClick('input', $event)" formControlName="ExpirationDatetext" (dateChange)="ExpiryDateClick('change', $event)" matInput [matDatepicker]="ExpiryDate">
             <mat-datepicker-toggle matSuffix [for]="ExpiryDate"></mat-datepicker-toggle>
             <mat-datepicker #ExpiryDate></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DATEOFNOTICEOFINJURY,'has-warning':errorWarningData.Warning?.DATEOFNOTICEOFINJURY}">
             <mat-label>Notice of Injury</mat-label>
             <input (dateInput)="NoticeofInjuryClick('input', $event)" formControlName="DATEOFNOTICEOFINJURYTEXT" (dateChange)="NoticeofInjuryClick('change', $event)" matInput [matDatepicker]="NoticeofInjury">
             <mat-datepicker-toggle matSuffix [for]="NoticeofInjury"></mat-datepicker-toggle>
@@ -23,63 +23,63 @@
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PLACEOFINJURY,'has-warning':errorWarningData.Warning?.PLACEOFINJURY}">
             <mat-label>Place of Injury</mat-label>
             <input matInput formControlName="PLACEOFINJURY">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.INJURYDESCRIPTION,'has-warning':errorWarningData.Warning?.INJURYDESCRIPTION}">
             <mat-label>Injury Desc</mat-label>
             <input matInput type="number" formControlName="INJURYDESCRIPTION">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.HowDidInjuryOccur,'has-warning':errorWarningData.Warning?.HowDidInjuryOccur}">
             <mat-label>Cause of Injury</mat-label>
             <input matInput formControlName="HowDidInjuryOccur">
         </mat-form-field>
 
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="pr-4">
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.LITIGATIONFUNDER,'has-warning':errorWarningData.Warning?.LITIGATIONFUNDER}">
             <mat-label>Lit. Funder</mat-label>
             <input matInput formControlName="LITIGATIONFUNDER">
         </mat-form-field>
-        <section class="example-section" fxFlex="33" class="pr-4">
+        <section class="example-section" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.NUMBEROFSHARES,'has-warning':errorWarningData.Warning?.NUMBEROFSHARES}">
             <mat-checkbox formControlName="TRANSFERREDFROMOTHERSOLICITOR">Transferred From Other Client</mat-checkbox>
         </section>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.CLIENTNAME,'has-warning':errorWarningData.Warning?.CLIENTNAME}">
             <mat-label>Client Name</mat-label>
             <input matInput formControlName="CLIENTNAME">
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ESTIMATEDAWARD,'has-warning':errorWarningData.Warning?.ESTIMATEDAWARD}">
             <mat-label>Est. Award</mat-label>
             <input matInput type="number" formControlName="ESTIMATEDAWARD">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.CLAIMNUMBER,'has-warning':errorWarningData.Warning?.CLAIMNUMBER}">
             <mat-label>Claim Number</mat-label>
             <input matInput formControlName="CLAIMNUMBER">
         </mat-form-field>
 
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.INVESTIGATIONDATE,'has-warning':errorWarningData.Warning?.INVESTIGATIONDATE}">
             <mat-label>Investigation Date</mat-label>
             <input (dateInput)="InvestigationClick('input', $event)" formControlName="INVESTIGATIONDATETEXT" (dateChange)="InvestigationClick('change', $event)" matInput name="Investigation" [matDatepicker]="Investigation">
             <mat-datepicker-toggle matSuffix [for]="Investigation"></mat-datepicker-toggle>
             <mat-datepicker #Investigation></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.SETTLEMENTDATE,'has-warning':errorWarningData.Warning?.SETTLEMENTDATE}">
             <mat-label>Settlement Date</mat-label>
             <input (dateInput)="SettlementDateClick('input', $event)" formControlName="SETTLEMENTDATETEXT" (dateChange)="SettlementDateClick('change', $event)" matInput name="SettlementDate" [matDatepicker]="SettlementDate">
             <mat-datepicker-toggle matSuffix [for]="SettlementDate"></mat-datepicker-toggle>
             <mat-datepicker #SettlementDate></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.EXPERTHEARINGDATE,'has-warning':errorWarningData.Warning?.EXPERTHEARINGDATE}">
             <mat-label>Hearing Dates</mat-label>
             <input matInput formControlName="EXPERTHEARINGDATE">
         </mat-form-field>

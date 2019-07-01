@@ -13,6 +13,7 @@ export class MortgageFinanceComponent implements OnInit {
   constructor(private datepipe: DatePipe) { }
 
   @Input() matterdetailForm: FormGroup;
+  @Input() errorWarningData: any;
   ngOnInit() {
   }
   CommencementDateClick(type: string, event: MatDatepickerInputEvent<Date>) {

@@ -13,6 +13,7 @@ export class WillsEstateComponent implements OnInit {
   constructor(private datepipe: DatePipe) { }
 
   @Input() matterdetailForm: FormGroup;
+  @Input() errorWarningData: any;
   ngOnInit() {
   }
   DateofWillClick(type: string, event: MatDatepickerInputEvent<Date>) {

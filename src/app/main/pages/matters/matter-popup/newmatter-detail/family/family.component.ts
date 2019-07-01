@@ -14,6 +14,7 @@ export class FamilyComponent implements OnInit {
 
 
   @Input() matterdetailForm: FormGroup;
+  @Input() errorWarningData: any;
   ngOnInit() {
   }
 

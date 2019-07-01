@@ -14,21 +14,21 @@
         </section>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DATEEXECUTED,'has-warning':errorWarningData.Warning?.DATEEXECUTED}">
             <mat-label>Date Executed </mat-label>
             <input (dateInput)="DateExecutedClick('input', $event)" formControlName="DATEEXECUTEDTEXT" (dateChange)="DateExecutedClick('change', $event)" matInput [matDatepicker]="DateExecuted">
             <mat-datepicker-toggle matSuffix [for]="DateExecuted"></mat-datepicker-toggle>
             <mat-datepicker #DateExecuted></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.VALIDUNTIL,'has-warning':errorWarningData.Warning?.VALIDUNTIL}">
             <mat-label>Valid Until</mat-label>
             <input (dateInput)="ValidUntilClick('input', $event)" formControlName="VALIDUNTILTEXT" (dateChange)="ValidUntilClick('change', $event)" matInput [matDatepicker]="ValidUntil">
             <mat-datepicker-toggle matSuffix [for]="ValidUntil"></mat-datepicker-toggle>
             <mat-datepicker #ValidUntil></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.OPTIONDATE,'has-warning':errorWarningData.Warning?.OPTIONDATE}">
             <mat-label>Option Date</mat-label>
             <input (dateInput)="OptionDateClick('input', $event)" formControlName="OPTIONDATETEXT" (dateChange)="OptionDateClick('change', $event)" matInput [matDatepicker]="OptionDate">
             <mat-datepicker-toggle matSuffix [for]="OptionDate"></mat-datepicker-toggle>
@@ -36,19 +36,19 @@
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.OptionDescription,'has-warning':errorWarningData.Warning?.OptionDescription}">
             <mat-label>Term</mat-label>
             <input matInput formControlName="OptionDescription">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DISCLOSUREDATE,'has-warning':errorWarningData.Warning?.DISCLOSUREDATE}">
             <mat-label>Disclosure Date</mat-label>
             <input (dateInput)="DisclosureDateClick('input', $event)" formControlName="DISCLOSUREDATETEXT" (dateChange)="DisclosureDateClick('change', $event)" matInput [matDatepicker]="DisclosureDate">
             <mat-datepicker-toggle matSuffix [for]="DisclosureDate"></mat-datepicker-toggle>
             <mat-datepicker #DisclosureDate></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.REGISTEREDINFILEMAN,'has-warning':errorWarningData.Warning?.REGISTEREDINFILEMAN}">
             <mat-label>Registered Number</mat-label>
             <input matInput formControlName="REGISTEREDINFILEMAN">
         </mat-form-field>

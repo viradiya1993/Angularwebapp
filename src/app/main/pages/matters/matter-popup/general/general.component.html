@@ -1,29 +1,29 @@
 <div class="one" fxLayout="column" [formGroup]="matterdetailForm">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.REFERENCE,'has-warning':errorWarningData.Warning?.REFERENCE}">
             <mat-label>Client Reference</mat-label>
             <input name="ClientReference" formControlName="REFERENCE" matInput>
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.OTHERREFERENCE,'has-warning':errorWarningData.Warning?.OTHERREFERENCE}">
             <mat-label>Other Ref</mat-label>
             <input matInput formControlName="OTHERREFERENCE">
             <mat-icon matSuffix class="secondary-text"></mat-icon>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.COMMENCEMENTDATE,'has-warning':errorWarningData.Warning?.COMMENCEMENTDATE}">
             <mat-label>Commencement Date</mat-label>
             <input (dateInput)="CommencementDate('input', $event)" formControlName="COMMENCEMENTDATETEXT" (dateChange)="CommencementDate('change', $event)" matInput [matDatepicker]="picker1">
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
-        <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FEEAGREEMENTDATE,'has-warning':errorWarningData.Warning?.FEEAGREEMENTDATE}">
             <mat-label>Costs Agreement Date</mat-label>
             <input (dateInput)="CostsAgreementDate('input', $event)" formControlName="FeeAgreementDateText" (dateChange)="CostsAgreementDate('change', $event)" matInput name="CostsAgreementDate" [matDatepicker]="picker2">
             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>
         </mat-form-field>
-        <mat-form-field appearance="outline" class="example" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" class="example" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.COMPLETEDDATE,'has-warning':errorWarningData.Warning?.COMPLETEDDATE}">
             <mat-label>Completed Date</mat-label>
             <input (dateInput)="CompletedDate('input', $event)" formControlName="COMPLETEDDATETEXT" (dateChange)="CompletedDate('change', $event)" matInput name="CompletedDate" [matDatepicker]="picker3">
             <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
@@ -31,14 +31,14 @@
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="userType">
-        <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.OWNERGUID,'has-warning':errorWarningData.Warning?.OWNERGUID}">
             <mat-label>Matter Owner</mat-label>
             <input matInput readonly formControlName="OWNERNAME">
             <mat-icon matSuffix (click)="selectMatter();">
                 <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
             </mat-icon>
         </mat-form-field>
-        <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PRIMARYFEEEARNERGUID,'has-warning':errorWarningData.Warning?.PRIMARYFEEEARNERGUID}">
             <mat-label>Primary Fee Earner</mat-label>
             <input matInput readonly formControlName="PRIMARYFEEEARNERNAME">
             <mat-icon matSuffix (click)="selectFeeEarner();">
@@ -47,12 +47,12 @@
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
+        <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.EstimateFromTotalExGST,'has-warning':errorWarningData.Warning?.EstimateFromTotalExGST}">
             <mat-label>Estimate Minimum </mat-label>
             <input class="sideText" numeric numericType="decimal" matInput type="text" formControlName="EstimateFromTotalExGST" (keyup)="calcPE()" [(ngModel)]="PRICEVAL">
             <span class="currency_sign" matPrefix>$&nbsp;</span>
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PRICEVALGST,'has-warning':errorWarningData.Warning?.PRICEVALGST}">
             <mat-label>Ex-GST</mat-label>
             <input class="sideText" numeric numericType="decimal" name="Ex-GST" matInput type="text" formControlName="EstimateFromTotalIncGST" (keyup)="calcPI()" [(ngModel)]="PRICEVALGST">
             <mat-icon matSuffix class="secondary-text"></mat-icon>
@@ -60,7 +60,7 @@
         </mat-form-field>
     </div>
     <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+        <mat-form-field appearance="outline" fxFlex="100" [ngClass]="{'has-error':errorWarningData.Error?.NOTES,'has-warning':errorWarningData.Warning?.NOTES}">
             <mat-label>Notes</mat-label>
             <textarea matInput formControlName="NOTES"></textarea>
         </mat-form-field>

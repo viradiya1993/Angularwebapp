@@ -19,6 +19,7 @@ export class LitigationComponent implements OnInit {
   constructor(private datepipe: DatePipe, private _mattersService: MattersService) { }
 
   @Input() matterdetailForm: FormGroup;
+  @Input() errorWarningData: any;
   ngOnInit() {
     this._mattersService.getMattersClasstype({ 'LookupType': 'court' }).subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {

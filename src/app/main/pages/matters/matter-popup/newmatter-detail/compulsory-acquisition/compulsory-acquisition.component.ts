@@ -13,6 +13,7 @@ export class CompulsoryAcquisitionComponent implements OnInit {
   constructor(private MatDialog: MatDialog) { }
 
   @Input() matterdetailForm: FormGroup;
+  @Input() errorWarningData: any;
   ngOnInit() {
   }
   Matteraddress() {

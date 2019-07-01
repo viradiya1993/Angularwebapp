@@ -1,59 +1,59 @@
 <div class=" one " fxLayout="column" [formGroup]="matterdetailForm">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+        <mat-form-field appearance="outline" fxFlex="100" [ngClass]="{'has-error':errorWarningData.Error?.VESSELNAME,'has-warning':errorWarningData.Warning?.VESSELNAME}">
             <mat-label>Vessel Name</mat-label>
             <input matInput formControlName="VESSELNAME">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.VESSELFLAG,'has-warning':errorWarningData.Warning?.VESSELFLAG}">
             <mat-label> Flag </mat-label>
             <input matInput formControlName="VESSELFLAG">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.VESSELTYPE,'has-warning':errorWarningData.Warning?.VESSELTYPE}">
             <mat-label> Vessel Type</mat-label>
             <input matInput formControlName="VESSELTYPE">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.TONNAGE,'has-warning':errorWarningData.Warning?.TONNAGE}">
             <mat-label> Tonnage</mat-label>
             <input matInput formControlName="TONNAGE">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.VESSELMASTER,'has-warning':errorWarningData.Warning?.VESSELMASTER}">
             <mat-label> Master</mat-label>
             <input matInput formControlName="VESSELMASTER">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.VESSELLOCATION,'has-warning':errorWarningData.Warning?.VESSELLOCATION}">
             <mat-label> Location</mat-label>
             <input matInput formControlName="VESSELLOCATION">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PURCHASEPRICE,'has-warning':errorWarningData.Warning?.PURCHASEPRICE}">
             <mat-label> Purchase Price</mat-label>
             <input matInput type="number" formControlName="PURCHASEPRICE">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.INCIDENTDATE,'has-warning':errorWarningData.Warning?.INCIDENTDATE}">
             <mat-label>Incident Date</mat-label>
             <input (dateInput)="IncidentDateClick('input', $event)" formControlName="INCIDENTDATE" (dateChange)="IncidentDateClick('change', $event)" matInput [matDatepicker]="IncidentDate">
             <mat-datepicker-toggle matSuffix [for]="IncidentDate"></mat-datepicker-toggle>
             <mat-datepicker #IncidentDate></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.EXCHANGEDATE,'has-warning':errorWarningData.Warning?.EXCHANGEDATE}">
             <mat-label>Exchange Date</mat-label>
             <input (dateInput)="ExchangeDateClick('input', $event)" formControlName="EXCHANGEDATETEXTM" (dateChange)="ExchangeDateClick('change', $event)" matInput [matDatepicker]="ExchangeDate">
             <mat-datepicker-toggle matSuffix [for]="ExchangeDate"></mat-datepicker-toggle>
             <mat-datepicker #ExchangeDate></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.SETTLEMENTDATE,'has-warning':errorWarningData.Warning?.SETTLEMENTDATE}">
             <mat-label>Settlement Date</mat-label>
             <input (dateInput)="SettlementDateClick('input', $event)" formControlName="SETTLEMENTDATETEXTM" (dateChange)="SettlementDateClick('change', $event)" matInput name="SettlementDate" [matDatepicker]="SettlementDate">
             <mat-datepicker-toggle matSuffix [for]="SettlementDate"></mat-datepicker-toggle>

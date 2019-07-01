@@ -1,6 +1,6 @@
 <div class=" one " fxLayout="column" [formGroup]="matterdetailForm">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+        <mat-form-field appearance="outline" fxFlex="100" [ngClass]="{'has-error':errorWarningData.Error?.FolioIdentifier,'has-warning':errorWarningData.Warning?.FolioIdentifier}">
             <mat-label>Application Number</mat-label>
             <input matInput formControlName="FolioIdentifier">
         </mat-form-field>

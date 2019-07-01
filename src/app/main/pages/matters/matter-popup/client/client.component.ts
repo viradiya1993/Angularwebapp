@@ -23,6 +23,7 @@ export class ClientComponent implements OnInit {
   @Input() isEdit: any;
   @Input() isEditMatter: any;
   @Input() matterdetailForm: FormGroup;
+  @Input() errorWarningData: any;
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   constructor(
     private MatDialog: MatDialog,

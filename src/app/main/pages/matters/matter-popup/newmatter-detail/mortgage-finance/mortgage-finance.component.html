@@ -1,36 +1,36 @@
 <div class=" one " fxLayout="column" [formGroup]="matterdetailForm">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PRINCIPALADVANCED,'has-warning':errorWarningData.Warning?.PRINCIPALADVANCED}">
             <mat-label>Principal Advanced</mat-label>
             <input matInput type="number" formControlName="PRINCIPALADVANCED">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.INTERESTRATE,'has-warning':errorWarningData.Warning?.INTERESTRATE}">
             <mat-label>Interest Rate</mat-label>
             <input matInput type="number" formControlName="INTERESTRATE">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FOLIOIDENTIFIER,'has-warning':errorWarningData.Warning?.FOLIOIDENTIFIER}">
             <mat-label>Folio Identifier</mat-label>
             <input matInput formControlName="FOLIOIDENTIFIER">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.COMMENCEMENTDATE,'has-warning':errorWarningData.Warning?.COMMENCEMENTDATE}">
             <mat-label>Commencement Date</mat-label>
             <input (dateInput)="CommencementDateClick('input', $event)" formControlName="COMMENCEMENTDATE" (dateChange)="CommencementDateClick('change', $event)" matInput [matDatepicker]="CommencementDate">
             <mat-datepicker-toggle matSuffix [for]="CommencementDate"></mat-datepicker-toggle>
             <mat-datepicker #CommencementDate></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ExpirationDate,'has-warning':errorWarningData.Warning?.ExpirationDate}">
             <mat-label>Expirty Date</mat-label>
             <input (dateInput)="ExpirtyDateClick('input', $event)" formControlName="ExpirationDateTxtM" (dateChange)="ExpirtyDateClick('change', $event)" matInput [matDatepicker]="ExpirtyDate">
             <mat-datepicker-toggle matSuffix [for]="ExpirtyDate"></mat-datepicker-toggle>
             <mat-datepicker #ExpirtyDate></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DISCHARGEDATE,'has-warning':errorWarningData.Warning?.DISCHARGEDATE}">
             <mat-label>Disacharge Date</mat-label>
             <input (dateInput)="DisachargeDateClick('input', $event)" formControlName="DISCHARGEDATETEXTM" (dateChange)="DisachargeDateClick('change', $event)" matInput [matDatepicker]="DisachargeDate">
             <mat-datepicker-toggle matSuffix [for]="DisachargeDate"></mat-datepicker-toggle>
@@ -39,7 +39,7 @@
     </div>
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.SECURITYPROPERTY,'has-warning':errorWarningData.Warning?.SECURITYPROPERTY}">
             <mat-label>Security Property</mat-label>
             <textarea name="SecurityProperty" formControlName="SECURITYPROPERTY" matInput></textarea>
         </mat-form-field>

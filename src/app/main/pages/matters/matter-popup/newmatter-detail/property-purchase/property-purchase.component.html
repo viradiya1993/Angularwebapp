@@ -9,40 +9,35 @@
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" class="example pr-4" fxFlex="33">
+        <mat-form-field appearance="outline" class="example pr-4" fxFlex="33" [ngClass]="{'has-error':errorWarningData.Error?.PURCHASEPRICE,'has-warning':errorWarningData.Warning?.PURCHASEPRICE}">
             <mat-label>Purchase Price</mat-label>
             <input matInput type="number" formControlName="PURCHASEPRICE">
         </mat-form-field>
-        <mat-form-field appearance="outline" class="pr-4" fxFlex="33">
+        <mat-form-field appearance="outline" class="pr-4" fxFlex="33" [ngClass]="{'has-error':errorWarningData.Error?.EXCHANGEDATE,'has-warning':errorWarningData.Warning?.EXCHANGEDATE}">
             <mat-label>Exchange Date</mat-label>
             <input (dateInput)="ExchangeDateClick('input', $event)" formControlName="EXCHANGEDATETEXTPP" (dateChange)="ExchangeDateClick('change', $event)" matInput name="ExchangeDate" [matDatepicker]="ExchangeDate">
             <mat-datepicker-toggle matSuffix [for]="ExchangeDate"></mat-datepicker-toggle>
             <mat-datepicker #ExchangeDate></mat-datepicker>
         </mat-form-field>
-        <mat-form-field appearance="outline" class="example pr-4" fxFlex="34">
+        <mat-form-field appearance="outline" class="example pr-4" fxFlex="34" [ngClass]="{'has-error':errorWarningData.Error?.DEPOSITAMOUNT,'has-warning':errorWarningData.Warning?.DEPOSITAMOUNT}">
             <mat-label>Deposit</mat-label>
             <input matInput type="number" formControlName="DEPOSITAMOUNT">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <!-- <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
-            <mat-label>Stamp Duty Due</mat-label>
-            <input matInput type="number" formControlName="STAMPDUTYDATE">
-        </mat-form-field> -->
-
-        <mat-form-field appearance="outline" class="pr-4" fxFlex="33">
+        <mat-form-field appearance="outline" class="pr-4" fxFlex="33" [ngClass]="{'has-error':errorWarningData.Error?.STAMPDUTYDATE,'has-warning':errorWarningData.Warning?.STAMPDUTYDATE}">
             <mat-label>Stamp Duty Due</mat-label>
             <input (dateInput)="StempDutyDateClick('input', $event)" formControlName="STAMPDUTYDATE" (dateChange)="StempDutyDateClick('change', $event)" matInput name="STAMPDUTYDATE" [matDatepicker]="STAMPDUTYDATE">
             <mat-datepicker-toggle matSuffix [for]="STAMPDUTYDATE"></mat-datepicker-toggle>
             <mat-datepicker #STAMPDUTYDATE></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DEPOSITBONDAMOUNT,'has-warning':errorWarningData.Warning?.DEPOSITBONDAMOUNT}">
             <mat-label>Deposit Bond</mat-label>
             <input matInput type="number" formControlName="DEPOSITBONDAMOUNT">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.SETTLEMENTDATE,'has-warning':errorWarningData.Warning?.SETTLEMENTDATE}">
             <mat-label>Settlement Date</mat-label>
             <input (dateInput)="SettlementDateClick('input', $event)" formControlName="SETTLEMENTDATETEXTPP" (dateChange)="SettlementDateClick('change', $event)" matInput name="SettlementDate" [matDatepicker]="SettlementDate">
             <mat-datepicker-toggle matSuffix [for]="SettlementDate"></mat-datepicker-toggle>
@@ -50,33 +45,33 @@
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.STAMPDUTYAMOUNT,'has-warning':errorWarningData.Warning?.STAMPDUTYAMOUNT}">
             <mat-label>Stamp Duty</mat-label>
             <input matInput type="number" formControlName="STAMPDUTYAMOUNT">
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DATEPAID,'has-warning':errorWarningData.Warning?.DATEPAID}">
             <mat-label>Date Paid</mat-label>
             <input (dateInput)="DatePaidClick('input', $event)" formControlName="DATEPAIDTEXTPP" (dateChange)="DatePaidClick('change', $event)" matInput name="DatePaid" [matDatepicker]="DatePaid">
             <mat-datepicker-toggle matSuffix [for]="DatePaid"></mat-datepicker-toggle>
             <mat-datepicker #DatePaid></mat-datepicker>
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.BANKREFERENCE,'has-warning':errorWarningData.Warning?.BANKREFERENCE}">
             <mat-label>Bank Ref</mat-label>
             <input matInput formControlName="BANKREFERENCE">
         </mat-form-field>
     </div>
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.INITIALDEPOSIT,'has-warning':errorWarningData.Warning?.INITIALDEPOSIT}">
             <mat-label>Initial Deposit</mat-label>
             <input matInput type="number" formControlName="INITIALDEPOSIT">
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.BALANCEDEPOSIT,'has-warning':errorWarningData.Warning?.BALANCEDEPOSIT}">
             <mat-label>Balance Deposit</mat-label>
             <input matInput type="number" formControlName="BALANCEDEPOSIT">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.BALANCEDEPOSITDATE,'has-warning':errorWarningData.Warning?.BALANCEDEPOSITDATE}">
             <mat-label>Balance Deposit Date</mat-label>
             <input (dateInput)="BalanceDepositDateClick('input', $event)" formControlName="BALANCEDEPOSITDATETEXTPP" (dateChange)="BalanceDepositDateClick('change', $event)" matInput [matDatepicker]="BalanceDepositDate">
             <mat-datepicker-toggle matSuffix [for]="BalanceDepositDate"></mat-datepicker-toggle>
@@ -90,13 +85,13 @@
         </section>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+        <mat-form-field appearance="outline" fxFlex="100" [ngClass]="{'has-error':errorWarningData.Error?.SPECIALCONDITIONS,'has-warning':errorWarningData.Warning?.SPECIALCONDITIONS}">
             <mat-label>Special Conditions </mat-label>
             <textarea name="SecurityProperty" formControlName="SPECIALCONDITIONS" matInput></textarea>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="50">
+        <mat-form-field appearance="outline" fxFlex="50" [ngClass]="{'has-error':errorWarningData.Error?.ClientStatus,'has-warning':errorWarningData.Warning?.ClientStatus}">
             <mat-label> Status</mat-label>
             <mat-select #value formControlName="ClientStatus">
                 <mat-option *ngFor="let optionval of ClientStatusData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>

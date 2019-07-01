@@ -16,6 +16,7 @@ export class LeasingComponent implements OnInit {
   constructor(public MatDialog: MatDialog, private datepipe: DatePipe) { }
 
   @Input() matterdetailForm: FormGroup;
+  @Input() errorWarningData: any;
   ngOnInit() {
   }
   Matteraddress() {

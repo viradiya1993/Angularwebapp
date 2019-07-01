@@ -1,9 +1,9 @@
 <!-- [formGroup]="matterdetailForm" -->
 <div class=" one " fxLayout="column" [formGroup]="matterdetailForm">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+        <mat-form-field appearance="outline" fxFlex="100" [ngClass]="{'has-error':errorWarningData.Error?.FIRMGUID,'has-warning':errorWarningData.Warning?.FIRMGUID}">
             <mat-label>Client</mat-label>
-            <input matInput  formControlName="Clientmattertext">
+            <input matInput formControlName="Clientmattertext">
             <mat-icon matSuffix (click)='ContactMatter()'>
                 <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
             </mat-icon>

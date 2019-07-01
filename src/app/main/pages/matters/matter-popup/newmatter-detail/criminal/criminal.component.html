@@ -1,41 +1,41 @@
 <!-- [formGroup]="matterdetailForm" -->
 <div class=" one " fxLayout="column" [formGroup]="matterdetailForm">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.BRIEFSERVICEDATE,'has-warning':errorWarningData.Warning?.BRIEFSERVICEDATE}">
             <mat-label>Brief Service Date</mat-label>
             <input (dateInput)="BriefServiceDateClick('input', $event)" formControlName="BRIEFSERVICEDATETEXT" (dateChange)="BriefServiceDateClick('change', $event)" matInput [matDatepicker]="BriefServiceDate">
             <mat-datepicker-toggle matSuffix [for]="BriefServiceDate"></mat-datepicker-toggle>
             <mat-datepicker #BriefServiceDate></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.COMMITTALDATE,'has-warning':errorWarningData.Warning?.COMMITTALDATE}">
             <mat-label>Committal Date</mat-label>
             <input (dateInput)="CommittalDateClick('input', $event)" formControlName="COMMITTALDATETEXT" (dateChange)="CommittalDateClick('change', $event)" matInput [matDatepicker]="CommittalDate">
             <mat-datepicker-toggle matSuffix [for]="CommittalDate"></mat-datepicker-toggle>
             <mat-datepicker #CommittalDate></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.REPLYDATE,'has-warning':errorWarningData.Warning?.REPLYDATE}">
             <mat-label>Reply Date</mat-label>
             <input (dateInput)="ReplyDateClick('input', $event)" formControlName="REPLYDATETEXT" (dateChange)="ReplyDateClick('change', $event)" matInput name="ReplyDate" [matDatepicker]="ReplyDate">
             <mat-datepicker-toggle matSuffix [for]="ReplyDate"></mat-datepicker-toggle>
             <mat-datepicker #ReplyDate></mat-datepicker>
         </mat-form-field>
     </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" [ngClass]="{'has-error':errorWarningData.Error?.COHABITATIONDATE,'has-warning':errorWarningData.Warning?.COHABITATIONDATE}">
         <section class="example-section">
             <mat-checkbox class="example-margin" formControlName="JUVENILE">Juvenile</mat-checkbox>
             <mat-checkbox class="example-margin" formControlName="WAIVEROFCOMMITTAL">Waiver of Commital</mat-checkbox>
         </section>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.BAILDATE,'has-warning':errorWarningData.Warning?.BAILDATE}">
             <mat-label>Bail Date</mat-label>
             <input (dateInput)="BailDateClick('input', $event)" formControlName="BAILDATETEXT" (dateChange)="BailDateClick('change', $event)" matInput [matDatepicker]="BailDate">
             <mat-datepicker-toggle matSuffix [for]="BailDate"></mat-datepicker-toggle>
             <mat-datepicker #BailDate></mat-datepicker>
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.SENTENCINGDATE,'has-warning':errorWarningData.Warning?.SENTENCINGDATE}">
             <mat-label>Sentencing Date</mat-label>
             <input (dateInput)="SentencingDateClick('input', $event)" formControlName="SENTENCINGDATETEXT" (dateChange)="SentencingDateClick('change', $event)" matInput name="SentencingDate" [matDatepicker]="SentencingDate">
             <mat-datepicker-toggle matSuffix [for]="SentencingDate"></mat-datepicker-toggle>
@@ -43,17 +43,17 @@
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.BAILRESTRICTIONS,'has-warning':errorWarningData.Warning?.BAILRESTRICTIONS}">
             <mat-label>Bail Restrictions</mat-label>
             <input matInput formControlName="BAILRESTRICTIONS">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.OUTCOME,'has-warning':errorWarningData.Warning?.OUTCOME}">
             <mat-label>Outcome</mat-label>
             <input matInput formControlName="OUTCOME">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.SENTENCE,'has-warning':errorWarningData.Warning?.SENTENCE}">
             <mat-label>Sentence</mat-label>
             <input matInput formControlName="SENTENCE">
         </mat-form-field>
@@ -65,12 +65,12 @@
         </section>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="60" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="60" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MatterNo,'has-warning':errorWarningData.Warning?.MatterNo}">
             <mat-label>Court Matter #</mat-label>
             <input matInput formControlName="MatterNo">
         </mat-form-field>
 
-        <mat-form-field class="example" fxFlex="40" class="pr-4" appearance="outline">
+        <mat-form-field class="example" fxFlex="40" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.COURT,'has-warning':errorWarningData.Warning?.COURT}">
             <mat-label>Court</mat-label>
             <mat-select #value name="selected" formControlName="COURT">
                 <mat-option *ngFor="let optionval of CourtData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
@@ -78,21 +78,21 @@
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field class="example" fxFlex="33" class="pr-4" appearance="outline">
+        <mat-form-field class="example" fxFlex="33" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.DIVISION,'has-warning':errorWarningData.Warning?.DIVISION}">
             <mat-label>Division</mat-label>
             <mat-select #value name="selected" formControlName="DIVISION">
                 <mat-option *ngFor="let optionval of DivisionData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field class="example" fxFlex="33" class="pr-4" appearance="outline">
+        <mat-form-field class="example" fxFlex="33" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.CourtList,'has-warning':errorWarningData.Warning?.CourtList}">
             <mat-label>List</mat-label>
             <mat-select #value name="selected" formControlName="CourtList">
                 <mat-option *ngFor="let optionval of ListData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field class="example" fxFlex="34" class="pr-4" appearance="outline">
+        <mat-form-field class="example" fxFlex="34" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.REGISTRY,'has-warning':errorWarningData.Warning?.REGISTRY}">
             <mat-label>Registry</mat-label>
             <mat-select #value name="selected" formControlName="REGISTRY">
                 <mat-option *ngFor="let optionval of RegistryData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>

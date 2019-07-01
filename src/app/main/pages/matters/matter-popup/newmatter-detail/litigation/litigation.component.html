@@ -1,19 +1,19 @@
 <div class=" one " fxLayout="column" [formGroup]="matterdetailForm">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MatterNo,'has-warning':errorWarningData.Warning?.MatterNo}">
             <mat-label>Court Matter #</mat-label>
             <input matInput formControlName="MatterNo">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+        <mat-form-field class="example pr-4" fxFlex="50" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.COURT,'has-warning':errorWarningData.Warning?.COURT}">
             <mat-label>Court</mat-label>
             <mat-select #value name="selected" formControlName="COURT">
                 <mat-option *ngFor="let optionval of CourtData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+        <mat-form-field class="example pr-4" fxFlex="50" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.DIVISION,'has-warning':errorWarningData.Warning?.DIVISION}">
             <mat-label>Division</mat-label>
             <mat-select #value name="selected" formControlName="DIVISION">
                 <mat-option *ngFor="let optionval of DivisionData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
@@ -21,21 +21,21 @@
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field class="example pr-4" fxFlex="33" appearance="outline">
+        <mat-form-field class="example pr-4" fxFlex="33" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.CourtList,'has-warning':errorWarningData.Warning?.CourtList}">
             <mat-label>List</mat-label>
             <mat-select #value name="selected" formControlName="CourtList">
                 <mat-option *ngFor="let optionval of ListData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field class="example" fxFlex="33" class="pr-4" appearance="outline">
+        <mat-form-field class="example" fxFlex="33" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.REGISTRY,'has-warning':errorWarningData.Warning?.REGISTRY}">
             <mat-label>Registry</mat-label>
             <mat-select #value name="selected" formControlName="REGISTRY">
                 <mat-option *ngFor="let optionval of RegistryData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field class="example" fxFlex="34" class="pr-4" appearance="outline">
+        <mat-form-field class="example" fxFlex="34" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.ClientType,'has-warning':errorWarningData.Warning?.ClientType}">
             <mat-label>Client Type</mat-label>
             <mat-select #value formControlName="ClientType">
                 <mat-option *ngFor="let optionval of ClientTypeData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
@@ -43,60 +43,60 @@
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MATTERTITLEBELOW,'has-warning':errorWarningData.Warning?.MATTERTITLEBELOW}">
             <mat-label> Matter Title Below </mat-label>
             <input matInput formControlName="MATTERTITLEBELOW">
         </mat-form-field>
 
-        <mat-form-field class="example pr-4" fxFlex="33" appearance="outline">
+        <mat-form-field class="example pr-4" fxFlex="33" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.COURTBELOW,'has-warning':errorWarningData.Warning?.COURTBELOW}">
             <mat-label> Court Below </mat-label>
             <mat-select #value name="selected" formControlName="COURTBELOW">
                 <mat-option *ngFor="let optionval of CourtBelowData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34">
+        <mat-form-field appearance="outline" fxFlex="34" [ngClass]="{'has-error':errorWarningData.Error?.CASENUMBERBELOW,'has-warning':errorWarningData.Warning?.CASENUMBERBELOW}">
             <mat-label> Case # Below </mat-label>
             <input matInput formControlName="CASENUMBERBELOW">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DATEOFHEARINGS,'has-warning':errorWarningData.Warning?.DATEOFHEARINGS}">
             <mat-label>Date Of Hearings</mat-label>
             <input (dateInput)="DateOfHearingsClick('input', $event)" formControlName="DATEOFHEARINGSTEXT" (dateChange)="DateOfHearingsClick('change', $event)" matInput [matDatepicker]="DateOfHearings">
             <mat-datepicker-toggle matSuffix [for]="DateOfHearings"></mat-datepicker-toggle>
             <mat-datepicker #DateOfHearings></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MATERIALDATE,'has-warning':errorWarningData.Warning?.MATERIALDATE}">
             <mat-label>Material Date</mat-label>
             <input (dateInput)="MaterialDateClick('input', $event)" formControlName="MATERIALDATETEXT" (dateChange)="MaterialDateClick('change', $event)" matInput [matDatepicker]="MaterialDate">
             <mat-datepicker-toggle matSuffix [for]="MaterialDate"></mat-datepicker-toggle>
             <mat-datepicker #MaterialDate></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DECISION,'has-warning':errorWarningData.Warning?.DECISION}">
             <mat-label>Decision Of</mat-label>
             <input matInput formControlName="DECISION">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
+        <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.COSTESTIMATEIFWINEXGST,'has-warning':errorWarningData.Warning?.COSTESTIMATEIFWINEXGST}">
             <mat-label>Cost Estimate If Successful</mat-label>
             <input matInput type="number" formControlName="COSTESTIMATEIFWINEXGST">
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.CostEstimateIfWinIncGST,'has-warning':errorWarningData.Warning?.CostEstimateIfWinIncGST}">
             <mat-label>Inc-GST</mat-label>
             <input name="Inc-GST" matInput type="number" formControlName="CostEstimateIfWinIncGST">
             <mat-icon matSuffix class="secondary-text"></mat-icon>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
+        <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.CostEstimateIfFailExGST,'has-warning':errorWarningData.Warning?.CostEstimateIfFailExGST}">
             <mat-label>Cost Estimate If Unsuccessful</mat-label>
             <input matInput type="number" formControlName="CostEstimateIfFailExGST">
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.CostEstimateIfFailIncGST,'has-warning':errorWarningData.Warning?.CostEstimateIfFailIncGST}">
             <mat-label>Inc-GST</mat-label>
             <input name="Inc-GST2" matInput type="number" formControlName="CostEstimateIfFailIncGST">
             <mat-icon matSuffix class="secondary-text"></mat-icon>

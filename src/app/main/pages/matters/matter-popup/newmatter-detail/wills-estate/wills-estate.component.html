@@ -1,51 +1,51 @@
 <div class=" one " fxLayout="column" [formGroup]="matterdetailForm">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DATEOFWILL,'has-warning':errorWarningData.Warning?.DATEOFWILL}">
             <mat-label>Date of Will</mat-label>
             <input (dateInput)="DateofWillClick('input', $event)" formControlName="DATEOFWILLTEXT" (dateChange)="DateofWillClick('change', $event)" matInput name="DateofWill" [matDatepicker]="DateofWill">
             <mat-datepicker-toggle matSuffix [for]="DateofWill"></mat-datepicker-toggle>
             <mat-datepicker #DateofWill></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ESTATEGROSSVALUE,'has-warning':errorWarningData.Warning?.ESTATEGROSSVALUE}">
             <mat-label>Gross Value</mat-label>
             <input matInput type="number" formControlName="ESTATEGROSSVALUE">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ESTATENETVALUE,'has-warning':errorWarningData.Warning?.ESTATENETVALUE}">
             <mat-label>Net Value</mat-label>
             <input matInput type="number" formControlName="ESTATENETVALUE">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.NAMEOFTRUST,'has-warning':errorWarningData.Warning?.NAMEOFTRUST}">
             <mat-label>Name Of Trust</mat-label>
             <input matInput formControlName="NAMEOFTRUST">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.NAMEOFSUPERANNUATION,'has-warning':errorWarningData.Warning?.NAMEOFSUPERANNUATION}">
             <mat-label>Name Of Super fund</mat-label>
             <input matInput formControlName="NAMEOFSUPERANNUATION">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MatterNo,'has-warning':errorWarningData.Warning?.MatterNo}">
             <mat-label>Court Matter #</mat-label>
             <input matInput formControlName="MatterNo">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.NUMBEROFCODICILS,'has-warning':errorWarningData.Warning?.NUMBEROFCODICILS}">
             <mat-label># Of Codicils</mat-label>
             <input matInput type="number" formControlName="NUMBEROFCODICILS">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DATEOFCODICILS,'has-warning':errorWarningData.Warning?.DATEOFCODICILS}">
             <mat-label>Date/s of Codicil/s</mat-label>
             <input (dateInput)="DatDATEOFCODICILSTEXTClick('input', $event)" formControlName="DATEOFCODICILSTEXT" (dateChange)="DatDATEOFCODICILSTEXTClick('change', $event)" matInput [matDatepicker]="DatDATEOFCODICILSTEXT">
             <mat-datepicker-toggle matSuffix [for]="DatDATEOFCODICILSTEXT"></mat-datepicker-toggle>
             <mat-datepicker #DatDATEOFCODICILSTEXT></mat-datepicker>
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DateOfGrantOfRep,'has-warning':errorWarningData.Warning?.DateOfGrantOfRep}">
             <mat-label> Date of Grant of Representation</mat-label>
             <input (dateInput)="DateGrantRepresentationClick('input', $event)" formControlName="DateOfGrantOfReptext" (dateChange)="DateGrantRepresentationClick('change', $event)" matInput name="DateGrantRepresentation" [matDatepicker]="DateGrantRepresentation">
             <mat-datepicker-toggle matSuffix [for]="DateGrantRepresentation"></mat-datepicker-toggle>

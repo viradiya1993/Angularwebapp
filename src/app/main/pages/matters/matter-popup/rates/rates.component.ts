@@ -9,11 +9,13 @@ import { round } from 'lodash';
 })
 export class RatesComponent implements OnInit {
 
-  constructor() { }
   @Input() matterdetailForm: FormGroup;
   isDisabled: boolean = true;
   FIXEDRATEEXGST: any;
   FIXEDRATEINCGST: any;
+  @Input() errorWarningData: any;
+
+  constructor() { }
   ngOnInit() { }
   radioChange(event) {
     if (this.f.GSTTYPE.value == 'GST Free' || this.f.GSTTYPE.value == 'Export')

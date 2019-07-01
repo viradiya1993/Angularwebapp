@@ -11,20 +11,20 @@
         <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
             <form name="matterdetailForm" id="matterdetailForm" [formGroup]="matterdetailForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline">
+                    <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.MATTERCLASS,'has-warning':errorWarningData.Warning?.MATTERCLASS}">
                         <mat-label>Class</mat-label>
                         <mat-select #value name="selected" formControlName="MATTERCLASS" (ngModelChange)="Classtype($event)">
                             <mat-option *ngFor="let Classoption of Classdata" value="{{Classoption.LOOKUPGUID}}">{{Classoption.LOOKUPFULLVALUE}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="40">
+                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="40" [ngClass]="{'has-error':errorWarningData.Error?.SHORTNAME,'has-warning':errorWarningData.Warning?.SHORTNAME}">
                         <mat-label>Matter Num</mat-label>
                         <input matInput formControlName="SHORTNAME">
                     </mat-form-field>
                     <mat-checkbox formControlName="ACTIVE">Active Matter</mat-checkbox>
                 </div>
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-form-field appearance="outline" fxFlex="100" [ngClass]="{'has-error':errorWarningData.Error?.MATTER,'has-warning':errorWarningData.Warning?.MATTER}">
                         <mat-label>Matter Description</mat-label>
                         <textarea formControlName="MATTER" matInput></textarea>
                     </mat-form-field>
@@ -32,35 +32,35 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="min_height">
                     <mat-tab-group mat-align-tabs="start">
                         <mat-tab label="General">
-                            <app-general [matterdetailForm]="matterdetailForm" [userType]="userType"></app-general>
+                            <app-general [matterdetailForm]="matterdetailForm" [errorWarningData]="errorWarningData" [userType]="userType"></app-general>
                         </mat-tab>
                         <mat-tab label="Client & Corres">
-                            <app-client [matterdetailForm]="matterdetailForm" [isEditMatter]="isEditMatter" [isEdit]="isEdit" (CorrespondDetail)="corDetailBack($event)"></app-client>
+                            <app-client [errorWarningData]="errorWarningData" [matterdetailForm]="matterdetailForm" [isEditMatter]="isEditMatter" [isEdit]="isEdit" (CorrespondDetail)="corDetailBack($event)"></app-client>
                         </mat-tab>
                         <mat-tab label="Rates">
-                            <app-rates [matterdetailForm]="matterdetailForm"></app-rates>
+                            <app-rates [matterdetailForm]="matterdetailForm" [errorWarningData]="errorWarningData"></app-rates>
                         </mat-tab>
                         <mat-tab label="Details">
                             <div class="main-detail-tab">
-                                <app-commercial *ngIf="classtype=='19'" [matterdetailForm]="matterdetailForm"></app-commercial>
-                                <app-compensation *ngIf="classtype=='8' || classtype=='21' || classtype=='22' || classtype=='23' || classtype=='24' || classtype=='25' || classtype=='26' " [matterdetailForm]="matterdetailForm"></app-compensation>
-                                <app-compulsory-acquisition *ngIf="classtype=='9'" [matterdetailForm]="matterdetailForm"></app-compulsory-acquisition>
-                                <app-criminal *ngIf="classtype=='18'" [matterdetailForm]="matterdetailForm"></app-criminal>
-                                <app-family *ngIf="classtype=='10'" [matterdetailForm]="matterdetailForm"></app-family>
-                                <app-immigration *ngIf="classtype=='6'" [matterdetailForm]="matterdetailForm"></app-immigration>
-                                <app-leasing *ngIf="classtype=='11'" [matterdetailForm]="matterdetailForm"></app-leasing>
-                                <app-litigation *ngIf="classtype=='2'" [matterdetailForm]="matterdetailForm"></app-litigation>
-                                <app-maritime *ngIf="classtype=='20'" [matterdetailForm]="matterdetailForm"></app-maritime>
-                                <app-mortgage-finance *ngIf="classtype=='12'" [matterdetailForm]="matterdetailForm"></app-mortgage-finance>
-                                <app-property-purchase *ngIf="classtype=='4'" [matterdetailForm]="matterdetailForm"></app-property-purchase>
-                                <app-property *ngIf="classtype=='3'" [matterdetailForm]="matterdetailForm"></app-property>
-                                <app-strata *ngIf="classtype=='5'" [matterdetailForm]="matterdetailForm"></app-strata>
-                                <app-wills-estate *ngIf="classtype=='7'" [matterdetailForm]="matterdetailForm"></app-wills-estate>
-                                <app-trademark-ip *ngIf="classtype=='14'" [matterdetailForm]="matterdetailForm"></app-trademark-ip>
+                                <app-commercial *ngIf="classtype=='19'" [matterdetailForm]="matterdetailForm" [errorWarningData]="errorWarningData"></app-commercial>
+                                <app-compensation *ngIf="classtype=='8' || classtype=='21' || classtype=='22' || classtype=='23' || classtype=='24' || classtype=='25' || classtype=='26' " [matterdetailForm]="matterdetailForm" [errorWarningData]="errorWarningData"></app-compensation>
+                                <app-compulsory-acquisition *ngIf="classtype=='9'" [matterdetailForm]="matterdetailForm" [errorWarningData]="errorWarningData"></app-compulsory-acquisition>
+                                <app-criminal *ngIf="classtype=='18'" [matterdetailForm]="matterdetailForm" [errorWarningData]="errorWarningData"></app-criminal>
+                                <app-family *ngIf="classtype=='10'" [matterdetailForm]="matterdetailForm" [errorWarningData]="errorWarningData"></app-family>
+                                <app-immigration *ngIf="classtype=='6'" [matterdetailForm]="matterdetailForm" [errorWarningData]="errorWarningData"></app-immigration>
+                                <app-leasing *ngIf="classtype=='11'" [matterdetailForm]="matterdetailForm" [errorWarningData]="errorWarningData"></app-leasing>
+                                <app-litigation *ngIf="classtype=='2'" [matterdetailForm]="matterdetailForm" [errorWarningData]="errorWarningData"></app-litigation>
+                                <app-maritime *ngIf="classtype=='20'" [matterdetailForm]="matterdetailForm" [errorWarningData]="errorWarningData"></app-maritime>
+                                <app-mortgage-finance *ngIf="classtype=='12'" [matterdetailForm]="matterdetailForm" [errorWarningData]="errorWarningData"></app-mortgage-finance>
+                                <app-property-purchase *ngIf="classtype=='4'" [matterdetailForm]="matterdetailForm" [errorWarningData]="errorWarningData"></app-property-purchase>
+                                <app-property *ngIf="classtype=='3'" [matterdetailForm]="matterdetailForm" [errorWarningData]="errorWarningData"></app-property>
+                                <app-strata *ngIf="classtype=='5'" [matterdetailForm]="matterdetailForm" [errorWarningData]="errorWarningData"></app-strata>
+                                <app-wills-estate *ngIf="classtype=='7'" [matterdetailForm]="matterdetailForm" [errorWarningData]="errorWarningData"></app-wills-estate>
+                                <app-trademark-ip *ngIf="classtype=='14'" [matterdetailForm]="matterdetailForm" [errorWarningData]="errorWarningData"></app-trademark-ip>
                             </div>
                         </mat-tab>
                         <mat-tab label="Others">
-                            <app-others [matterdetailForm]="matterdetailForm"></app-others>
+                            <app-others [matterdetailForm]="matterdetailForm" [errorWarningData]="errorWarningData"></app-others>
                         </mat-tab>
                     </mat-tab-group>
                 </div>

@@ -11,12 +11,12 @@
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.CLIENTVALUATION,'has-warning':errorWarningData.Warning?.CLIENTVALUATION}">
             <mat-label>Client Valuation</mat-label>
             <input matInput type="number" formControlName="CLIENTVALUATION">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.AUTHORITYVALUATION,'has-warning':errorWarningData.Warning?.AUTHORITYVALUATION}">
             <mat-label>Auth. Valuation</mat-label>
             <input matInput type="number" formControlName="AUTHORITYVALUATION">
         </mat-form-field>

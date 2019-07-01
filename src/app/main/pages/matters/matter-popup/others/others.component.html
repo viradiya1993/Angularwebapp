@@ -1,18 +1,18 @@
 <div class=" one " fxLayout="column" [formGroup]="matterdetailForm">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MATTERTYPE,'has-warning':errorWarningData.Warning?.MATTERTYPE}">
             <mat-label>Matter Type</mat-label>
             <mat-select name="MatterType" formControlName="MATTERTYPE">
                 <mat-option *ngFor="let matter of MatterType" value="{{matter.LOOKUPFULLVALUE}}">{{matter.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.CLIENTSOURCE,'has-warning':errorWarningData.Warning?.CLIENTSOURCE}">
             <mat-label>Client Source</mat-label>
             <mat-select formControlName="CLIENTSOURCE">
                 <mat-option *ngFor="let Client of ClientSource" value="{{Client.LOOKUPFULLVALUE}}">{{Client.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FIELDOFLAW,'has-warning':errorWarningData.Warning?.FIELDOFLAW}">
             <mat-label>Field Of Law</mat-label>
             <mat-select formControlName="FIELDOFLAW">
                 <mat-option *ngFor="let Filed of FiledOfLaw" value="{{Filed.LOOKUPFULLVALUE}}">{{Filed.LOOKUPFULLVALUE}}</mat-option>
@@ -21,13 +21,13 @@
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" class="example" fxFlex="40" class="pr-4">
+        <mat-form-field appearance="outline" class="example" fxFlex="40" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.INDUSTRY,'has-warning':errorWarningData.Warning?.INDUSTRY}">
             <mat-label>Industry </mat-label>
             <mat-select formControlName="INDUSTRY">
                 <mat-option *ngFor="let Ins of Industry" value="{{Ins.LOOKUPFULLVALUE}}">{{Ins.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="outline" class="example" fxFlex="60" class="pr-4">
+        <mat-form-field appearance="outline" class="example" fxFlex="60" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.REFERRERGUID,'has-warning':errorWarningData.Warning?.REFERRERGUID}">
             <mat-label>Referrer</mat-label>
             <input matInput readonly formControlName="REFERRERGUIDTEXT">
             <mat-icon matSuffix (click)='ContactMatter()'>
@@ -36,11 +36,11 @@
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ARCHIVENO,'has-warning':errorWarningData.Warning?.ARCHIVENO}">
             <mat-label>Archive No </mat-label>
             <input matInput formControlName="ARCHIVENO">
         </mat-form-field>
-        <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ARCHIVEDATE,'has-warning':errorWarningData.Warning?.ARCHIVEDATE}">
             <mat-label>Archive Date</mat-label>
             <input (dateInput)="ArchiveDate('input', $event)" formControlName="ARCHIVEDATETEXT" (dateChange)="ArchiveDate('change', $event)" matInput [matDatepicker]="picker4">
             <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>

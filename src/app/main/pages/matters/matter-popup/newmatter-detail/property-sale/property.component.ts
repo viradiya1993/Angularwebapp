@@ -17,6 +17,7 @@ export class PropertyComponent implements OnInit {
   constructor(public MatDialog: MatDialog, private datepipe: DatePipe, private _mattersService: MattersService, ) { }
 
   @Input() matterdetailForm: FormGroup;
+  @Input() errorWarningData: any;
   ngOnInit() {
     this._mattersService.getMattersClasstype({ 'LookupType': 'Client Status' }).subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {

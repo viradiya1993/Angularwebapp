@@ -11,6 +11,7 @@ export class CommercialComponent implements OnInit {
   constructor() { }
 
   @Input() matterdetailForm: FormGroup;
+  @Input() errorWarningData: any;
   ngOnInit() {
   }
 

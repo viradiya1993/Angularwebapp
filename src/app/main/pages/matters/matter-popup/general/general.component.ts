@@ -15,11 +15,12 @@ export class GeneralComponent implements OnInit {
   @Input() matterdetailForm: FormGroup;
   //matterdetailForm: FormGroup;
   @Input() userType: any;
+  @Input() errorWarningData: any;
   PRICEVAL: any;
   PRICEVALGST: any;
   constructor(public datepipe: DatePipe, public MatDialog: MatDialog, private Timersservice: TimersService) {
-  // this.PRICEVALGST='$ '+ 0.00;
-  // this.PRICEVAL='$ '+0.00;
+    // this.PRICEVALGST='$ '+ 0.00;
+    // this.PRICEVAL='$ '+0.00;
   }
 
   CommencementDate(type: string, event: MatDatepickerInputEvent<Date>) {
@@ -32,8 +33,7 @@ export class GeneralComponent implements OnInit {
   CompletedDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['COMPLETEDDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-  ngOnInit() { 
-    
+  ngOnInit() {
   }
   selectMatter() {
     const dialogRef = this.MatDialog.open(UserSelectPopupComponent, { width: '100%', disableClose: true });
@@ -52,12 +52,12 @@ export class GeneralComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.matterdetailForm.controls['PRIMARYFEEEARNERGUID'].setValue(result.USERGUID);
-        this.matterdetailForm.controls['PRIMARYFEEEARNERGUIDTEXT'].setValue(result.FULLNAME);
+        this.matterdetailForm.controls['PRIMARYFEEEARNERNAME'].setValue(result.FULLNAME);
       }
     });
   }
   calcPE(val) {
-    
+
     this.PRICEVALGST = round(this.f.EstimateFromTotalExGST.value * 1.1).toFixed(2);
   }
   calcPI() {

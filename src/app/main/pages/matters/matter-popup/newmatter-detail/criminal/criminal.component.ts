@@ -19,6 +19,7 @@ export class CriminalComponent implements OnInit {
   }
 
   @Input() matterdetailForm: FormGroup;
+  @Input() errorWarningData: any;
   ngOnInit() {
     this._mattersService.getMattersClasstype({ 'LookupType': 'court' }).subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {

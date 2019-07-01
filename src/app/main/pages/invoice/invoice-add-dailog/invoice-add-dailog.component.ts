@@ -246,9 +246,9 @@ export class InvoiceAddDailogComponent implements OnInit {
     let errorData: any = [];
     let warningData: any = [];
     bodyData.forEach(function (value) {
-      if (value.VALUEVALID == 'NO')
+      if (value.VALUEVALID == 'No')
         errorData.push(value.ERRORDESCRIPTION);
-      else if (value.VALUEVALID == 'WARNING')
+      else if (value.VALUEVALID == 'Warning')
         warningData.push(value.ERRORDESCRIPTION);
     });
 

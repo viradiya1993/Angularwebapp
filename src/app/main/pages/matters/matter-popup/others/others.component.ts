@@ -15,15 +15,14 @@ export class OthersComponent implements OnInit {
   ClientSource: any[];
   Industry: any[];
   FiledOfLaw: any[];
+  @Input() errorWarningData: any;
+  @Input() matterdetailForm: FormGroup;
 
   constructor(
     public MatDialog: MatDialog,
     private _mattersService: MattersService,
     public datepipe: DatePipe
-  ) {
-  }
-
-  @Input() matterdetailForm: FormGroup;
+  ) { }
 
   ngOnInit() {
     this._mattersService.getMattersClasstype({ 'LookupType': 'Client Source' }).subscribe(responses => {

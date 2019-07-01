@@ -1,34 +1,34 @@
 <div class=" one " fxLayout="column" [formGroup]="matterdetailForm">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.STRATAPLANNUMBER,'has-warning':errorWarningData.Warning?.STRATAPLANNUMBER}">
             <mat-label>Strata Plan Number</mat-label>
             <input matInput formControlName="STRATAPLANNUMBER">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.EXPIRATIONDATE,'has-warning':errorWarningData.Warning?.EXPIRATIONDATE}">
             <mat-label>Expiration Date</mat-label>
             <input (dateInput)="ExpirationDateClick('input', $event)" formControlName="EXPIRATIONDATETEXT" (dateChange)="ExpirationDateClick('change', $event)" matInput name="ExpirationDate" [matDatepicker]="ExpirationDate">
             <mat-datepicker-toggle matSuffix [for]="ExpirationDate"></mat-datepicker-toggle>
             <mat-datepicker #ExpirationDate></mat-datepicker>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.LOTNUMBER,'has-warning':errorWarningData.Warning?.LOTNUMBER}">
             <mat-label>Lot Number</mat-label>
             <input matInput formControlName="LOTNUMBER">
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.BYLAWTYPE,'has-warning':errorWarningData.Warning?.BYLAWTYPE}">
             <mat-label>By Low Type</mat-label>
             <input matInput formControlName="BYLAWTYPE">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.BYLAWNO,'has-warning':errorWarningData.Warning?.BYLAWNO}">
             <mat-label>By Low No</mat-label>
             <input matInput formControlName="BYLAWNO">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.SPECIALRESOLUTIONDATE,'has-warning':errorWarningData.Warning?.SPECIALRESOLUTIONDATE}">
             <mat-label>Resolution Date</mat-label>
             <input (dateInput)="ResolutionDateClick('input', $event)" formControlName="SPECIALRESOLUTIONDATETEXT" (dateChange)="ResolutionDateClick('change', $event)" matInput name="ResolutionDate" [matDatepicker]="ResolutionDate">
             <mat-datepicker-toggle matSuffix [for]="ResolutionDate"></mat-datepicker-toggle>
@@ -36,17 +36,17 @@
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FOLIOIDENTIFIER,'has-warning':errorWarningData.Warning?.FOLIOIDENTIFIER}">
             <mat-label>Folio Identifier</mat-label>
             <input matInput formControlName="FOLIOIDENTIFIER">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.AGGREGATIONOFENTITLEMENT,'has-warning':errorWarningData.Warning?.AGGREGATIONOFENTITLEMENT}">
             <mat-label>Aggr. of Entitlement</mat-label>
             <input matInput formControlName="AGGREGATIONOFENTITLEMENT">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.TOTALUNITS,'has-warning':errorWarningData.Warning?.TOTALUNITS}">
             <mat-label>Total Units</mat-label>
             <input matInput formControlName="TOTALUNITS">
         </mat-form-field>

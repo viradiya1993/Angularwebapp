@@ -14,6 +14,7 @@ import * as $ from 'jquery';
 })
 export class MatterPopupComponent implements OnInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+  errorWarningData: any = {};
   Classdata: any[];
   active: any;
   isLoadingResults: boolean = false;
@@ -130,7 +131,7 @@ export class MatterPopupComponent implements OnInit {
             this.matterdetailForm.controls['HowDidInjuryOccur'].setValue(matterData.COMPENSATIONGROUP.HOWDIDINJURYOCCUR);
             this.matterdetailForm.controls['LITIGATIONFUNDER'].setValue(matterData.COMPENSATIONGROUP.LITIGATIONFUNDER);
             this.matterdetailForm.controls['CLIENTNAME'].setValue(matterData.LEGALDETAILS.CLIENTNAME);
-      
+
             this.matterdetailForm.controls['TRANSFERREDFROMOTHERSOLICITOR'].setValue(matterData.COMPENSATIONGROUP.TRANSFERREDFROMOTHERSOLICITOR);
             this.matterdetailForm.controls['ESTIMATEDAWARD'].setValue(matterData.COMPENSATIONGROUP.ESTIMATEDAWARD);
             this.matterdetailForm.controls['CLAIMNUMBER'].setValue(matterData.COMPENSATIONGROUP.CLAIMNUMBER);
@@ -331,7 +332,7 @@ export class MatterPopupComponent implements OnInit {
             if (matterData.VESSELGROUP.INCIDENTDATE) {
               let INCIDENTDATE1 = matterData.VESSELGROUP.INCIDENTDATE.split("/");
               this.matterdetailForm.controls['INCIDENTDATETEXTM'].setValue(new Date(INCIDENTDATE1[1] + '/' + INCIDENTDATE1[0] + '/' + INCIDENTDATE1[2]));
-             
+
               this.matterdetailForm.controls['INCIDENTDATE'].setValue(new Date(INCIDENTDATE1[1] + '/' + INCIDENTDATE1[0] + '/' + INCIDENTDATE1[2]));
             }
             if (matterData.CONVEYANCINGGROUP.EXCHANGEDATE) {
@@ -500,7 +501,7 @@ export class MatterPopupComponent implements OnInit {
       PRIMARYFEEEARNERGUID: [''],
       PRIMARYFEEEARNERNAME: [''],
       OWNERGUID: [''],
-      OWNERNAME:[''],
+      OWNERNAME: [''],
       FEEAGREEMENTDATE: [],
       FeeAgreementDateText: [],
       EstimateFromTotalExGST: [''],
@@ -980,12 +981,18 @@ export class MatterPopupComponent implements OnInit {
   checkValidation(bodyData: any, details: any) {
     let errorData: any = [];
     let warningData: any = [];
-    bodyData.forEach(function (value: { VALUEVALID: string; ERRORDESCRIPTION: any; }) {
-      if (value.VALUEVALID == 'NO')
+    let tempError: any = [];
+    let tempWarning: any = [];
+    bodyData.forEach(function (value: { VALUEVALID: string; ERRORDESCRIPTION: any; FIELDNAME: any; }) {
+      if (value.VALUEVALID == 'No') {
         errorData.push(value.ERRORDESCRIPTION);
-      else if (value.VALUEVALID == 'WARNING')
+        tempError[value.FIELDNAME] = value;
+      } else if (value.VALUEVALID == 'Warning') {
+        tempWarning[value.FIELDNAME] = value;
         warningData.push(value.ERRORDESCRIPTION);
+      }
     });
+    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
@@ -1018,21 +1025,12 @@ export class MatterPopupComponent implements OnInit {
         }
         this.saveCorDetail(response.DATA.MATTERGUID);
         this.isspiner = false;
-      } else {
-        let errorData: any = [];
-        let warningData: any = [];
-        let bodyData = response.DATA.VALIDATIONS;
-        bodyData.forEach(function (value: { VALUEVALID: string; ERRORDESCRIPTION: any; }) {
-          if (value.VALUEVALID == 'NO' || value.VALUEVALID == 'No')
-            errorData.push(value.ERRORDESCRIPTION);
-          else if (value.VALUEVALID == 'WARNING' || value.VALUEVALID == 'Warning')
-            warningData.push(value.ERRORDESCRIPTION);
-        });
-        if (Object.keys(errorData).length != 0)
-          this.toastr.error(errorData);
-        if (Object.keys(warningData).length != 0)
-          this.toastr.warning(errorData);
-        this.isspiner = false;
+      } else if (response.CODE == 451 && response.STATUS == "warning") {
+        this.toastr.warning(response.MESSAGE);
+      } else if (response.CODE == 450 && response.STATUS == "error") {
+        this.toastr.error(response.MESSAGE);
+      } else if (response.MESSAGE == "Not logged in") {
+        this.dialogRef.close(false);
       }
     }, error => {
       this.toastr.error(error);

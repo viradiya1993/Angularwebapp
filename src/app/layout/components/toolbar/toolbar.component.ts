@@ -38,7 +38,8 @@ import { ActivityDialogComponent } from './../../../main/pages/activities/activi
 import { ChangePasswordComponent } from 'app/main/change-password/change-password.component';
 import { NewfilenoteComponent } from './../../../main/pages/newfilenote/newfilenote.component';
 import { DocumentDailogComponent } from './../../../main/pages/document-register/document-dailog/document-dailog.component';
-import { EmailDailogComponent } from './../../../main/pages/email-templete/email-dailog/email-dailog.component';
+import { EmailDailogComponent } from './../../../main/pages/template/email-templete/email-dailog/email-dailog.component';
+import { PacksDailogComponent } from './../../../main/pages/template/packs/packs-dailog/packs-dailog.component';
 
 
 @Component({
@@ -68,6 +69,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     isInvoice: any;
     greenTheme: any = false;
     CreatDocumentChild: any;
+    
 
 
 
@@ -584,7 +586,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }
-
+    //Document function click
+    document(){
+        this.CreatDocumentChild="document";
+    }
     /* User Module Function's */
 
     // Add User Dialog
@@ -798,6 +803,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     PdfEmailDocument() {
         console.log('Pdf Email Document Work!!!');
     }
+
     /* Email Module */
 
     //Email 
@@ -859,6 +865,53 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //Delete Email
     DeleteEmailTemplete() {
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+
+    /* Packs Module */
+
+    //Packs
+    Packs(){
+     console.log('pack work!!!');
+     this.CreatDocumentChild = 'packs';  
+    }
+    // New Pack
+    NewPack(){
+        console.log('work!!1');
+        const dialogRef = this.dialog.open(PacksDailogComponent, {
+            disableClose: true,
+            panelClass: 'Pack-dialog',
+            data: {
+                action: 'new',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    //EditPack
+    EditPack(){
+        console.log('work!!2');
+        const dialogRef = this.dialog.open(PacksDailogComponent, {
+            disableClose: true,
+            panelClass: 'Pack-dialog',
+            data: {
+                action: 'edit',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    //DeletePack
+    DeletePack():void{
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
@@ -1088,6 +1141,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else if (this.router.url == "/create-document/matter-template") {
             let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
             let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }
+            this.ForDocDialogOpen(passdata);
         } else if (this.router.url == "/create-document/receive-money-template") {
             let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
             let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }

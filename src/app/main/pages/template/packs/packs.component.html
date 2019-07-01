@@ -1,0 +1,62 @@
+<div id="pack" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
+  <div class="content" fxLayoutAlign="center">
+    <div class="center p-24 more_tbl_clmn list_tbl_main" fusePerfectScrollbar>
+        <div class="matter-serach-div sticky_search_div responsive_auto">
+            <form [formGroup]="packForm">
+                <mat-form-field class="search" appearance="outline" fxFlex="50">
+                    <mat-label>Filter</mat-label>
+                    <input matInput placeholder="Filter"  formControlName="Filter">
+                </mat-form-field>
+                <mat-form-field class="search" appearance="outline" fxFlex="50">
+                    <mat-label>Search</mat-label>
+                    <input matInput placeholder="search"  formControlName="search" (keyup)='FilterSearch($event.target.value)'>
+                    <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+            </form>
+        </div>
+        <div class="content">
+          <div class="page-layout simple left-sidebar inner-sidebar">
+            <div fxLayoutAlign="center" class="content">
+              <div class="center more_tbl_clmn" fusePerfectScrollbar>
+                <div class="content">
+                  <div class="btn top_right_action_billing_position">
+                      <button mat-icon-button (click)="openDialog()" aria-label="More">
+                          <mat-icon class="secondary-text">more_vert</mat-icon>
+                      </button>
+                  </div>
+                  <div class="content">
+                    <div class="example-loading-shade" *ngIf="isLoadingResults">
+                        <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+                    </div>
+                    <div class="example-containerdata">
+                        <table mat-table #table [dataSource]="Packdata" matSort class="mat-elevation-z8">
+                          <ng-container matColumnDef="Order">
+                            <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>Order</th>
+                            <td mat-cell *matCellDef="let row"> {{row.Order}} </td>
+                          </ng-container>
+                          <ng-container matColumnDef="TempleteFile">
+                              <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>Templete File</th>
+                              <td mat-cell *matCellDef="let row"> {{row.TempleteFile}} </td>
+                          </ng-container>
+                          <ng-container matColumnDef="PromCopies">
+                              <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>Prom Copies</th>
+                              <td mat-cell *matCellDef="let row"> {{row.PromCopies}} </td>
+                          </ng-container>
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                          <tr [style.background]="highlightedRows == row.Order ? selectedColore : ''" 
+                            [ngClass]="highlightedRows == row.Order ? 'row-text-colore' : ''" 
+                            highlightedRows=row.Order mat-row *matRowDef="let row; columns: displayedColumns;"
+                            (click)="ClickPackTbl(row.Order);highlightedRows = row.Order " matRipple>
+                          </tr>
+                        </table>
+                        <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" showFirstLastButtons></mat-paginator>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

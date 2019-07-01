@@ -4,29 +4,44 @@ import { AuthGuard } from '../../../_guards';
 import { RouterModule } from '@angular/router';
 
 import { TemplateComponent } from './template.component';
+import { MatterContactDailogComponent } from './matter-contact-dailog/matter-contact-dailog.component';
+import { MatterDialogComponentForTemplate } from './matter-dialog/matter-dialog.component';
+import { EmailTempleteComponent } from './email-templete/email-templete.component';
+import { EmailDailogComponent } from './email-templete/email-dailog/email-dailog.component';
+import { PacksComponent } from './packs/packs.component';
+import { PacksDailogComponent } from './packs/packs-dailog/packs-dailog.component';
 
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
 import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, MatDatepickerModule, MatInputModule, MatMenuModule, MatTableModule, MatToolbarModule, MatSlideToggleModule, MatCardModule, MatSelectModule, MatPaginatorModule, MatAutocompleteModule, MatTabsModule, MatProgressSpinnerModule, MatDialogModule } from '@angular/material';
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
-import { MatterContactDailogComponent } from './matter-contact-dailog/matter-contact-dailog.component';
-import { MatterDialogComponentForTemplate } from './matter-dialog/matter-dialog.component';
+
 import { MatSortModule } from '@angular/material/sort';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TemplateListComponent } from './template-list/template-list.component';
+import { NewPacksDailogComponent } from './packs/new-packs-dailog/new-packs-dailog.component';
+
+
+
 
 const routes = [
   { path: '', redirectTo: '/create-document/matter-template', pathMatch: 'full', canActivate: [AuthGuard] },
   { path: '', redirectTo: '/create-document/invoice-template', pathMatch: 'full', canActivate: [AuthGuard] },
   { path: '', redirectTo: '/create-document/receive-money-template', pathMatch: 'full', canActivate: [AuthGuard] },
   { path: '', redirectTo: '/create-document/contact-template', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/create-document/email-templete', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/create-document/packs', pathMatch: 'full', canActivate: [AuthGuard] },
   {
     path: '', component: TemplateComponent, children: [
       { path: 'matter-template', component: TemplateListComponent },
       { path: 'invoice-template', component: TemplateListComponent },
       { path: 'receive-money-template', component: TemplateListComponent },
       { path: 'contact-template', component: TemplateListComponent },
+      { path: 'email-templete', component: EmailTempleteComponent },
+      { path: 'packs', component: PacksComponent },
+
+      
       // {
       //   path: 'work-in-progress', component: WorkInProgressComponent, children: [
       //     { path: '', component: EstimateComponent },
@@ -40,8 +55,9 @@ const routes = [
   }
 ];
 @NgModule({
-  declarations: [TemplateComponent, MatterContactDailogComponent, MatterDialogComponentForTemplate, TemplateListComponent],
-  entryComponents: [MatterContactDailogComponent, MatterDialogComponentForTemplate],
+  declarations: [TemplateComponent, MatterContactDailogComponent, MatterDialogComponentForTemplate, TemplateListComponent
+  ,EmailTempleteComponent,EmailDailogComponent, PacksComponent, PacksDailogComponent, NewPacksDailogComponent],
+  entryComponents: [MatterContactDailogComponent, MatterDialogComponentForTemplate ,EmailDailogComponent,PacksDailogComponent,NewPacksDailogComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

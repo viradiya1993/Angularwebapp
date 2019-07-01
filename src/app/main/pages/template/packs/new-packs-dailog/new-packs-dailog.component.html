@@ -1,0 +1,52 @@
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+  <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+</div>
+<div cdkDrag class="popup_main_div add_edit_contact_main" >
+  <h2 cdkDragHandle mat-dialog-title>{{dialogTitle}}
+    <button class="btn" mat-icon-button (click)="ClosePackTabl()"  [mat-dialog-close]="false" aria-label="Close dialog">
+      <mat-icon>close</mat-icon>
+    </button>
+  </h2>
+  <div mat-dialog-content class="mat-typography main">
+    <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+      <form [formGroup]="PackTbl" fxLayout="column" fxFlex="1 0 auto" name="form">
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+            <mat-label>Templete Type</mat-label>
+              <mat-select #value name="selected" (selectionChange)="TempleteChnage($event.value)" formControlName="TempleteType">
+                <mat-option value="Document">Document</mat-option>
+                <mat-option value="Email">Email</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+            <mat-label>Templete File</mat-label>
+              <mat-select #value name="selected" (selectionChange)="TempleteFileChnage($event.value)" formControlName="TempleteFile">
+                <mat-option value="1">Temp</mat-option>
+                <mat-option value="2">Temp</mat-option>
+              </mat-select>
+          </mat-form-field>
+          <mat-icon matSuffix (click)='SelectFile()'>
+            <img src="assets/icons/web_app/icon_letters_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+          </mat-icon>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+            <mat-label>Copies</mat-label>
+            <input formControlName ="Copies" type="number"  matInput>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+            <mat-label>Order</mat-label>
+            <input  formControlName ="Order" type="number"  matInput>
+          </mat-form-field>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <mat-checkbox formControlName="Prompt" >Prompt Before Printing</mat-checkbox>
+        </div>
+      </form>
+    </div>
+  </div>
+  <mat-dialog-actions align="end" class="popup_ftr">
+    <button mat-raised-button color="accent" (click)="PackSave()"[disabled]="isspiner" *ngIf="action !== 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Add Pack</button>
+    <button mat-raised-button color="accent" (click)="PackSave()" [disabled]="isspiner" *ngIf="action === 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Update Pack</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
+  </mat-dialog-actions>
+</div>

@@ -4,11 +4,11 @@
             <div class="matter-serach-div sticky_search_div responsive_auto">
                 <form [formGroup]="activitiesFilter">
                     <mat-form-field class="example" appearance="outline">
-                        <mat-label>Show What</mat-label>
-                        <mat-select #value name="selected" (selectionChange)="UserTypeChange($event)" formControlName="ACTIVE">
-                            <mat-option value="">All Users</mat-option>
-                            <mat-option value="1">Active Users</mat-option>
-                            <mat-option value="0">Inactive Users</mat-option>
+                        <mat-label>Type</mat-label>
+                        <mat-select #value name="selected" (selectionChange)="TypeChange($event)" formControlName="TYPE">
+                            <mat-option value="">All</mat-option>
+                            <mat-option value="Activities">Activities</mat-option>
+                            <mat-option value="Sundries">Sundries</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <button mat-raised-button type="button" color="primary" id="refreshActivities" (click)="loadData({});">Refresh</button>
@@ -35,7 +35,7 @@
                                                 <td mat-cell *matCellDef="let row"> <span *ngIf="row[item]">{{row[item]}}</span> </td>
                                             </ng-container>
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                            <tr mat-row [style.background]="highlightedRows == row.ACTIVITYGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" [ngClass]="highlightedRows == row.ACTIVITYGUID ? 'row-text-colore' : ''" class="contact" (click)="currentActivitieData = row;highlightedRows = row.ACTIVITYGUID"
+                                            <tr mat-row [style.background]="highlightedRows == row.ACTIVITYGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" [ngClass]="highlightedRows == row.ACTIVITYGUID ? 'row-text-colore' : ''" class="contact" (click)="setActiveData(row);currentActivitieData = row;highlightedRows = row.ACTIVITYGUID"
                                                 matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                             </tr>
                                         </table>

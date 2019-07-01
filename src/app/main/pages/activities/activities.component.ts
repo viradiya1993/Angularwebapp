@@ -41,13 +41,12 @@ export class ActivitiesComponent implements OnInit {
     private toastr: ToastrService) { }
   ngOnInit() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
-    this.activitiesFilter = this._formBuilder.group({ ACTIVE: [] });
+    this.activitiesFilter = this._formBuilder.group({ TYPE: [""] });
     this.getTableFilter();
-    this.loadData({});
+    this.loadData({ ACTIVITYTYPE: "" });
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('activities', '').subscribe(response => {
-      console.log(response);
+    this.TableColumnsService.getTableFilter('Activities', '').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
         this.displayedColumns = data.showcol;
@@ -64,12 +63,12 @@ export class ActivitiesComponent implements OnInit {
   }
   loadData(filterData) {
     this.isLoadingResults = true;
-    this._UsersService.GetActivityData({}).subscribe(response => {
-      console.log(response);
+    this._UsersService.GetActivityData(filterData).subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (response.DATA.ACTIVITIES[0]) {
           this.highlightedRows = response.DATA.ACTIVITIES[0].ACTIVITYGUID;
           this.Activitiesdata = response.DATA.ACTIVITIES[0];
+          localStorage.setItem('current_ActivityData', JSON.stringify(response.DATA.ACTIVITIES[0]));
         }
         this.Activitiesdata = new MatTableDataSource(response.DATA.ACTIVITIES);
         this.Activitiesdata.paginator = this.paginator;
@@ -86,7 +85,7 @@ export class ActivitiesComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'activities', 'list': '' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'Activities', 'list': '' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click
@@ -100,9 +99,15 @@ export class ActivitiesComponent implements OnInit {
           this.Activitiesdata.paginator = this.paginator;
           this.Activitiesdata.sort = this.sort;
         } else {
-          this.loadData(this.lastFilter);
+          this.loadData({ ACTIVITYTYPE: "" });
         }
       }
     });
+  }
+  TypeChange(EventVal: any) {
+    this.loadData({ ACTIVITYTYPE: EventVal.value });
+  }
+  setActiveData(rowData: any) {
+    localStorage.setItem('current_ActivityData', JSON.stringify(rowData));
   }
 }

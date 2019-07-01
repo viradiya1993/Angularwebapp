@@ -8,14 +8,13 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { Location } from '@angular/common';
 import { navigation } from 'app/navigation/navigation';
-import { AuthenticationService, ReportlistService, TimersService, MattersService, MatterInvoicesService, GetReceptData } from '../../../_services';
+import { AuthenticationService, ReportlistService, UsersService, TimersService, ContactService, MattersService, MatterInvoicesService, GetReceptData } from '../../../_services';
 import { Router } from '@angular/router';
 import { ContactDialogComponent } from './../../../main/pages/contact/contact-dialog/contact-dialog.component';
 import { LicenceAgreementComponent } from '../../../main/licence-agreement/licence-agreement.component';
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { ContactCorresDetailsComponent } from 'app/main/pages/contact/contact-corres-details/contact-corres-details.component';
-import { ContactService } from '../../../_services';
 import { ReportsComponent } from 'app/main/reports/reports.component';
 import { ToastrService } from 'ngx-toastr';
 import { TimeEntriesComponent } from 'app/main/pages/time-entries/time-entries.component';
@@ -93,6 +92,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         public _getContact: ContactService,
         private TimersServiceI: TimersService,
         private _mattersService: MattersService,
+        private _usersService: UsersService,
         private matterInvoicesService: MatterInvoicesService,
         private _router: Router,
         private _getReceptData: GetReceptData,
@@ -499,10 +499,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     // Edit spendmoney Pop-up
     Editspendmoneypopup() {
-        let SendMoney_data=JSON.parse(localStorage.getItem('spendMoney_data'));
-        if(SendMoney_data==null){
-        this.toastr.error("No Data Selected");
-        }else{
+        let SendMoney_data = JSON.parse(localStorage.getItem('spendMoney_data'));
+        if (SendMoney_data == null) {
+            this.toastr.error("No Data Selected");
+        } else {
             const dialogConfig = new MatDialogConfig();
             const dialogRef = this.dialog.open(SpendMoneyAddComponent, {
                 width: '100%',
@@ -513,15 +513,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             });
             dialogRef.afterClosed().subscribe(result => { });
         }
-       
+
     }
 
     // Delete matter Pop-up
     Deletespendmoneypopup(): void {
-        let SendMoney_data=JSON.parse(localStorage.getItem('spendMoney_data'));
-        if(SendMoney_data==null){
+        let SendMoney_data = JSON.parse(localStorage.getItem('spendMoney_data'));
+        if (SendMoney_data == null) {
             this.toastr.error("No Data Selected");
-        }else{
+        } else {
             this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
                 disableClose: true,
                 width: '100%',
@@ -541,7 +541,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 // this.confirmDialogRef = null;
             });
         }
-        
+
     }
 
 
@@ -669,16 +669,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     //EditActivityDialog
     EditActivityDialog() {
+        let ActivityData = JSON.parse(localStorage.getItem('current_ActivityData'));
         const dialogRef = this.dialog.open(ActivityDialogComponent, {
-            disableClose: true,
-            panelClass: 'Activity-dialog',
-            data: {
-                action: 'edit',
-            }
+            disableClose: true, panelClass: 'Activity-dialog', data: { action: 'edit', ACTIVITYGUID: ActivityData.ACTIVITYGUID }
         });
-
         dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+            if (result)
+                $('#refreshActivities').click();
         });
     }
 
@@ -690,21 +687,30 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+            if (result) {
+                let ActivityData = JSON.parse(localStorage.getItem('current_ActivityData'));
+                let postData = { FormAction: "delete", data: { ACTIVITYGUID: ActivityData.ACTIVITYGUID } }
+                this._usersService.SetActivityData(postData).subscribe(res => {
+                    if (res.STATUS == "success" && res.CODE == 200) {
+                        $('#refreshActivities').click();
+                        this.toastr.success('Delete successfully');
+                    }
+                });
+            }
+            this.confirmDialogRef = null;
         });
     }
 
     //DuplicateActivity
     DuplicateActivityDialog() {
+        let ActivityData = JSON.parse(localStorage.getItem('current_ActivityData'));
         const dialogRef = this.dialog.open(ActivityDialogComponent, {
             disableClose: true,
-            panelClass: 'User-dialog',
-            data: {
-                action: 'Duplicate',
-            }
+            panelClass: 'Activity-dialog', data: { action: 'Duplicate', ACTIVITYGUID: ActivityData.ACTIVITYGUID }
         });
         dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+            if (result)
+                $('#refreshActivities').click();
         });
     }
 

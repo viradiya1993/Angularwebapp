@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MatDialog } from '@angular/material';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { UsersService } from 'app/_services';
@@ -29,14 +29,13 @@ export class ActivityDialogComponent implements OnInit {
     private toastr: ToastrService,
     private _UsersService: UsersService,
     public _matDialog: MatDialog,
-
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.action = data.action;
     if (this.action === 'new') {
       this.dialogTitle = 'New Activity';
     } else if (this.action === 'edit') {
-      this.dialogTitle = 'Edit Activity';
+      this.dialogTitle = 'edit Activity';
     } else {
       this.dialogTitle = 'Duplicate Activity';
     }
@@ -53,6 +52,29 @@ export class ActivityDialogComponent implements OnInit {
       UNITDESCRIPTIONPLURAL: [''],
       UNITDESCRIPTIONSINGLE: ['']
     });
+    if (this.action == 'edit' || this.action == "Duplicate") {
+      this.activityForm.controls['ACTIVITYGUID'].setValue(this.data.ACTIVITYGUID);
+      this.isLoadingResults = true;
+      this._UsersService.GetActivityData({ ACTIVITYGUID: this.data.ACTIVITYGUID }).subscribe(response => {
+        if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
+          if (response.DATA.ACTIVITIES[0]) {
+            let activityData = response.DATA.ACTIVITIES[0];
+            this.activityForm.controls['ACTIVITYTYPE'].setValue(activityData.ACTIVITYTYPEDESC);
+            this.activityForm.controls['ACTIVITYID'].setValue(activityData.ACTIVITYID);
+            this.activityForm.controls['DESCRIPTION'].setValue(activityData.DESCRIPTION);
+            this.activityForm.controls['GSTTYPE'].setValue(activityData.GSTTYPEDESC);
+            this.activityForm.controls['RATEPERUNIT'].setValue(parseFloat(activityData.RATEPERUNIT).toFixed(2));
+            this.activityForm.controls['UNITDESCRIPTIONPLURAL'].setValue(activityData.UNITDESCRIPTIONPLURAL);
+            this.activityForm.controls['UNITDESCRIPTIONSINGLE'].setValue(activityData.UNITDESCRIPTIONSINGLE);
+          } else {
+            this.toastr.error('No data found please try again');
+          }
+        }
+        this.isLoadingResults = false;
+      }, error => {
+        this.toastr.error(error);
+      });
+    }
   }
   RatePerUnitVal() {
     this.RATEPERUNIT = parseFloat(this.f.RATEPERUNIT.value).toFixed(2);
@@ -72,10 +94,9 @@ export class ActivityDialogComponent implements OnInit {
       "UNITDESCRIPTIONSINGLE": this.f.UNITDESCRIPTIONSINGLE.value,
       "UNITDESCRIPTIONPLURAL": this.f.UNITDESCRIPTIONPLURAL.value,
     }
-
     this.successMsg = 'Save successfully';
-    let FormAction = this.action == 'Edit' ? 'update' : 'insert';
-    if (this.action == 'Edit') {
+    let FormAction = this.action == 'edit' ? 'update' : 'insert';
+    if (this.action == 'edit') {
       PostData.ACTIVITYGUID = this.f.ACTIVITYGUID.value;
       this.successMsg = 'Update successfully';
     }

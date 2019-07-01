@@ -45,19 +45,21 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.UNITDESCRIPTIONSINGLE,'has-warning':errorWarningData.Warning?.UNITDESCRIPTIONSINGLE}">
                         <mat-label>Unit Desc Single</mat-label>
-                        <mat-select #value formControlName="UNITDESCRIPTIONSINGLE">
+                        <input type="text" placeholder="Unit Desc Single" aria-label="Number" matInput formControlName="UNITDESCRIPTIONSINGLE" [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete">
                             <mat-option value="unit">Unit</mat-option>
                             <mat-option value="page">Page</mat-option>
                             <mat-option value="item">Item</mat-option>
-                        </mat-select>
+                        </mat-autocomplete>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.UNITDESCRIPTIONPLURAL,'has-warning':errorWarningData.Warning?.UNITDESCRIPTIONPLURAL}">
                         <mat-label>Unit Desc Plural</mat-label>
-                        <mat-select #value formControlName="UNITDESCRIPTIONPLURAL">
+                        <input type="text" placeholder="Unit Desc Plural" aria-label="Number" matInput formControlName="UNITDESCRIPTIONPLURAL" [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete">
                             <mat-option value="unit">Unit</mat-option>
                             <mat-option value="page">Page</mat-option>
                             <mat-option value="item">Item</mat-option>
-                        </mat-select>
+                        </mat-autocomplete>
                     </mat-form-field>
                 </div>
             </form>
@@ -66,6 +68,7 @@
     <mat-dialog-actions align="end" class="popup_ftr">
         <button mat-raised-button color="accent" (click)="saveActivity()" [disabled]="isspiner" *ngIf="action === 'new'"><mat-spinner *ngIf="isspiner"></mat-spinner>Add</button>
         <button mat-raised-button color="accent" (click)="saveActivity()" [disabled]="isspiner" *ngIf="action === 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Update</button>
+        <button mat-raised-button color="accent" (click)="saveActivity()" [disabled]="isspiner" *ngIf="action === 'Duplicate'"><mat-spinner *ngIf="isspiner"></mat-spinner>Duplicate</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
     </mat-dialog-actions>
 </div>

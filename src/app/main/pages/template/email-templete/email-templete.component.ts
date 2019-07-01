@@ -22,14 +22,14 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./email-templete.component.scss']
 })
 export class EmailTempleteComponent implements OnInit {
-  documentform: FormGroup;
+  EmailAllData: FormGroup;
   isLoadingResults: boolean = false;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   //console.log(selectedColore);
   Title = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   displayedColumns: string[] = ['Title'];
-  DocumentAllData = new MatTableDataSource(ELEMENT_DATA);
+  EmailDataTbl = new MatTableDataSource(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   constructor(
@@ -39,19 +39,24 @@ export class EmailTempleteComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.DocumentAllData.sort = this.sort;
-    this.DocumentAllData.paginator = this.paginator;
-    this.documentform = this._formBuilder.group({
+    this.EmailDataTbl.sort = this.sort;
+    this.EmailDataTbl.paginator = this.paginator;
+    this.EmailAllData = this._formBuilder.group({
       Filter:[],
       search:[]
     });
   }
   // FilterSearch
   FilterSearch(filterValue:any){
-    this.DocumentAllData.filter = filterValue;
+    this.EmailDataTbl.filter = filterValue;
   }
   //clicktitle
   clicktitle(value){
     console.log(value);
   }
+  //EmailDialog
+  EmailDialog(){
+    
+  }
 }
+

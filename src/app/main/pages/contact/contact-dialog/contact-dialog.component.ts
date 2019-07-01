@@ -15,6 +15,7 @@ import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/conf
 })
 export class ContactDialogComponent implements OnInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+  errorWarningData: any = {};
   action: string;
   //contact: string;
   dialogTitle: string;
@@ -207,14 +208,14 @@ export class ContactDialogComponent implements OnInit {
             this.contactForm.controls['DATEOFBIRTH'].setValue(new Date(DATEOFBIRTH[1] + '/' + DATEOFBIRTH[0] + '/' + DATEOFBIRTH[2]));
             let DATEOFDEATH = getContactData.DATEOFDEATH.split("/");
             this.contactForm.controls['DATEOFDEATH'].setValue(new Date(DATEOFDEATH[1] + '/' + DATEOFDEATH[0] + '/' + DATEOFDEATH[2]));
-           
+
             this.contactForm.controls['MARITALSTATUS'].setValue(getContactData.MARITALSTATUS);
             this.contactForm.controls['SPOUSE'].setValue(getContactData.SPOUSE);
             this.contactForm.controls['NUMBEROFDEPENDANTS'].setValue(getContactData.NUMBEROFDEPENDANTS);
             this.contactForm.controls['BIRTHDAYREMINDER'].setValue(this.birthdayreminder);
             this.contactForm.controls['TOWNOFBIRTH'].setValue(getContactData.TOWNOFBIRTH);
             this.contactForm.controls['COUNTRYOFBIRTH'].setValue(getContactData.COUNTRYOFBIRTH);
-              // this.contactForm.controls['DATEOFBIRTH'].setValue(getContactData.DATEOFBIRTH);
+            // this.contactForm.controls['DATEOFBIRTH'].setValue(getContactData.DATEOFBIRTH);
             // this.contactForm.controls['DATEOFDEATH'].setValue(getContactData.DATEOFDEATH);
             this.contactForm.controls['CAUSEOFDEATH'].setValue(getContactData.CAUSEOFDEATH);
             //this.contactForm.valueChanges.subscribe(newVal => console.log(newVal))
@@ -273,7 +274,7 @@ export class ContactDialogComponent implements OnInit {
   ondialogcloseClick(): void {
     this.dialogRef.close(false);
   }
- 
+
 
   onClick(value) {
   }
@@ -392,12 +393,18 @@ export class ContactDialogComponent implements OnInit {
   checkValidation(bodyData: any, details: any) {
     let errorData: any = [];
     let warningData: any = [];
+    let tempError: any = [];
+    let tempWarning: any = [];
     bodyData.forEach(function (value) {
-      if (value.VALUEVALID == 'NO')
+      if (value.VALUEVALID == 'NO') {
         errorData.push(value.ERRORDESCRIPTION);
-      else if (value.VALUEVALID == 'WARNING')
+        tempError[value.FIELDNAME] = value;
+      } else if (value.VALUEVALID == 'WARNING') {
         warningData.push(value.ERRORDESCRIPTION);
+        tempWarning[value.FIELDNAME] = value;
+      }
     });
+    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
@@ -430,10 +437,14 @@ export class ContactDialogComponent implements OnInit {
         }
         this.isspiner = false;
         this.dialogRef.close(true);
+      } else if (response.CODE == 451 && response.STATUS == "warning") {
+        this.toastr.warning(response.MESSAGE);
+        this.isspiner = false;
+      } else if (response.CODE == 450 && response.STATUS == "error") {
+        this.toastr.error(response.MESSAGE);
+        this.isspiner = false;
       } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
-      } else {
-        this.isspiner = false;
       }
     }, error => {
       this.toastr.error(error);

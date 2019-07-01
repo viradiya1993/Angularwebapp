@@ -1,12 +1,12 @@
 <div class=" one " [formGroup]="contactForm" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" class="example" fxFlex="49" class="pr-4">
+        <mat-form-field appearance="outline" class="example" fxFlex="49" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.GENDER,'has-warning':errorWarningData.Warning?.GENDER}">
             <mat-label>Gender</mat-label>
             <mat-select name="GENDER" [formControlName]="'GENDER'">
                 <mat-option [value]="val.Name" *ngFor="let val of common">{{val.Name}}</mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="outline" class="example" fxFlex="49" class="pr-4">
+        <mat-form-field appearance="outline" class="example" fxFlex="49" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DATEOFBIRTH,'has-warning':errorWarningData.Warning?.DATEOFBIRTH}">
             <input (dateInput)="choosedDateOfBirth('input', $event)" (dateChange)="choosedDateOfBirth('change', $event)" matInput name="DATEOFBIRTH" [formControlName]="'DATEOFBIRTH'" [matDatepicker]="picker" placeholder="Date Of Birth">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
@@ -15,40 +15,40 @@
         </mat-checkbox>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.TOWNOFBIRTH,'has-warning':errorWarningData.Warning?.TOWNOFBIRTH}">
             <mat-label>Town Of Birth</mat-label>
             <input name="TOWNOFBIRTH" [formControlName]="'TOWNOFBIRTH'" matInput>
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.COUNTRYOFBIRTH,'has-warning':errorWarningData.Warning?.COUNTRYOFBIRTH}">
             <mat-label>Country Of Birth</mat-label>
             <input name="COUNTRYOFBIRTH" [formControlName]="'COUNTRYOFBIRTH'" matInput>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
+        <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DATEOFDEATH,'has-warning':errorWarningData.Warning?.DATEOFDEATH}">
             <input (dateInput)="choosedDateOfDath('input', $event)" (dateChange)="choosedDateOfDath('change', $event)" matInput name="DATEOFDEATH" [formControlName]="'DATEOFDEATH'" [matDatepicker]="picker1" placeholder="Date Of Death">
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.CAUSEOFDEATH,'has-warning':errorWarningData.Warning?.CAUSEOFDEATH}">
             <mat-label>Cause Of Death</mat-label>
             <input name="CAUSEOFDEATH" [formControlName]="'CAUSEOFDEATH'" matInput>
             <mat-icon matSuffix class="secondary-text"></mat-icon>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MARITALSTATUS,'has-warning':errorWarningData.Warning?.MARITALSTATUS}">
             <mat-label>Marital Status</mat-label>
             <mat-select name="MARITALSTATUS" [formControlName]="'MARITALSTATUS'">
                 <mat-option [value]="val.Name" *ngFor="let val of status">{{val.Name}}</mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.SPOUSE,'has-warning':errorWarningData.Warning?.SPOUSE}">
             <mat-label>Spouse</mat-label>
             <input name="SPOUSE" [formControlName]="'SPOUSE'" matInput>
             <mat-icon matSuffix class="secondary-text"></mat-icon>
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.NUMBEROFDEPENDANTS,'has-warning':errorWarningData.Warning?.NUMBEROFDEPENDANTS}">
             <mat-label>Number Of Dependants</mat-label>
             <input name="NUMBEROFDEPENDANTS" [formControlName]="'NUMBEROFDEPENDANTS'" type="number" matInput>
             <mat-icon matSuffix class="secondary-text"></mat-icon>

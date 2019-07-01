@@ -16,6 +16,7 @@ export class PersonComponent implements OnInit {
 
   @Input() contactForm: FormGroup;
   @Input() editDataCompny: any;
+  @Input() errorWarningData: any;
   isContact: boolean = false;
   common: { Id: number; Name: string; }[];
   constructor(public _getContact: ContactService, public MatDialog: MatDialog) { }

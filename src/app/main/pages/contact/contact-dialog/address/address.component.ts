@@ -13,6 +13,7 @@ export class AddressComponent implements OnInit {
   isChecked: boolean = false;
   constructor() { }
   @Input() contactForm: FormGroup;
+  @Input() errorWarningData: any;
   ngOnInit() {
 
     // this.common = [

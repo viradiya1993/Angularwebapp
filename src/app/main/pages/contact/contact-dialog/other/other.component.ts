@@ -11,12 +11,12 @@ import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
   styleUrls: ['./other.component.scss'],
   providers: [
     {
-        provide: DateAdapter, useClass: AppDateAdapter
+      provide: DateAdapter, useClass: AppDateAdapter
     },
     {
-        provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
+      provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
     }
-    ]
+  ]
 })
 export class OtherComponent implements OnInit {
 
@@ -25,6 +25,7 @@ export class OtherComponent implements OnInit {
   status: { Id: number; Name: string; }[];
   constructor(public datepipe: DatePipe) { }
   @Input() contactForm: FormGroup;
+  @Input() errorWarningData: any;
 
   choosedDateOfBirth(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value, 'dd/MM/yyyy');

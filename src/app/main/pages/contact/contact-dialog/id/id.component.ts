@@ -10,6 +10,7 @@ export class IdComponent implements OnInit {
 
   constructor() { }
   @Input() contactForm: FormGroup;
+  @Input() errorWarningData: any;
   ngOnInit() {
   }
 

@@ -1,62 +1,62 @@
 <div class=" one " [formGroup]="contactForm" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PRACTICINGCERTIFICATENO,'has-warning':errorWarningData.Warning?.PRACTICINGCERTIFICATENO}">
             <mat-label>Practicing certificate No</mat-label>
             <input name="PRACTICINGCERTIFICATENO" [formControlName]="'PRACTICINGCERTIFICATENO'" matInput>
             <mat-icon matSuffix class="secondary-text">company</mat-icon>
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ACN,'has-warning':errorWarningData.Warning?.ACN}">
             <mat-label>Australian Company No</mat-label>
             <input name="ACN" [formControlName]="'ACN'" matInput>
             <mat-icon matSuffix class="secondary-text">company</mat-icon>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ABN,'has-warning':errorWarningData.Warning?.ABN}">
             <mat-label>Australian Business No</mat-label>
             <input name="ABN" [formControlName]="'ABN'" matInput>
             <mat-icon matSuffix class="secondary-text">company</mat-icon>
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.TFN,'has-warning':errorWarningData.Warning?.TFN}">
             <mat-label>Tax File No</mat-label>
             <input name="TFN" [formControlName]="'TFN'" matInput>
             <mat-icon matSuffix class="secondary-text">company</mat-icon>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.LICENCENO,'has-warning':errorWarningData.Warning?.LICENCENO}">
             <mat-label>Drivers Licence No</mat-label>
             <input name="LICENCENO" [formControlName]="'LICENCENO'" matInput>
             <mat-icon matSuffix class="secondary-text">company</mat-icon>
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.LICENCECOUNTRY,'has-warning':errorWarningData.Warning?.LICENCECOUNTRY}">
             <mat-label>Licence State/Country</mat-label>
             <input name="LICENCECOUNTRY" [formControlName]="'LICENCECOUNTRY'" matInput>
             <mat-icon matSuffix class="secondary-text">company</mat-icon>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.NATIONALIDENTITYNO,'has-warning':errorWarningData.Warning?.NATIONALIDENTITYNO}">
             <mat-label>National Identity No</mat-label>
             <input name="NATIONALIDENTITYNO" [formControlName]="'NATIONALIDENTITYNO'" matInput>
             <mat-icon matSuffix class="secondary-text">company</mat-icon>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.NATIONALIDENTITYCOUNTRY,'has-warning':errorWarningData.Warning?.NATIONALIDENTITYCOUNTRY}">
             <mat-label>National Identity Country</mat-label>
             <input name="NATIONALIDENTITYCOUNTRY" [formControlName]="'NATIONALIDENTITYCOUNTRY'" matInput>
             <mat-icon matSuffix class="secondary-text">company</mat-icon>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FAMILYCOURTLAWYERNO,'has-warning':errorWarningData.Warning?.FAMILYCOURTLAWYERNO}">
             <mat-label>Family Court Lawyer No</mat-label>
             <input name="FAMILYCOURTLAWYERNO" [formControlName]="'FAMILYCOURTLAWYERNO'" matInput>
             <mat-icon matSuffix class="secondary-text">company</mat-icon>
         </mat-form-field>
     </div>
     <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100">
+        <mat-form-field appearance="outline" fxFlex="100" [ngClass]="{'has-error':errorWarningData.Error?.NOTES,'has-warning':errorWarningData.Warning?.NOTES}">
             <mat-label>Notes</mat-label>
             <textarea name="NOTES" [formControlName]="'NOTES'" matInput></textarea>
         </mat-form-field>

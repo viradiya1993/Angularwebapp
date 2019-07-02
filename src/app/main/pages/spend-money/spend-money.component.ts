@@ -68,10 +68,10 @@ this.SepndMoneyForm=this._formBuilder.group({
     updatecurrentDate.setDate(updatecurrentDate.getDate() + 30);
     let begin = this.datepipe.transform(currentDate, 'dd/MM/yyyy');
     let end = this.datepipe.transform(updatecurrentDate, 'dd/MM/yyyy');
-    this.filterData={'EXPENDITURECLASS':"all",'INCURREDSTARTDATE':begin,'INCURREDENDDATE':end,"PAIDSTARTDATE":'',
-    'PAIDENDDATE':'','SearchString':''}
-    // this.filterData={'EXPENDITURECLASS':"Expense",'INCURREDSTARTDATE':'','INCURREDENDDATE':'',"PAIDSTARTDATE":'',
+    // this.filterData={'EXPENDITURECLASS':"all",'INCURREDSTARTDATE':begin,'INCURREDENDDATE':end,"PAIDSTARTDATE":'',
     // 'PAIDENDDATE':'','SearchString':''}
+    this.filterData={'EXPENDITURECLASS':"Expense",'INCURREDSTARTDATE':'','INCURREDENDDATE':'',"PAIDSTARTDATE":'',
+    'PAIDENDDATE':'','SearchString':''}
     this.SepndMoneyForm.controls['MainClass'].setValue("all"); 
     this.SepndMoneyForm.controls['DateType'].setValue("Incurred Date");
     this.SepndMoneyForm.controls['DateRange'].setValue({ begin: currentDate, end: updatecurrentDate }); 

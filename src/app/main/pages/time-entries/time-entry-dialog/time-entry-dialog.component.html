@@ -20,7 +20,6 @@
                                     <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                 </mat-icon>
                             </mat-form-field>
-
                             <mat-form-field fxFlex="50" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.ITEMTYPE,'has-warning':errorWarningData.Warning?.ITEMTYPE}">
                                 <mat-label>Type</mat-label>
                                 <mat-select formControlName="ITEMTYPE" (selectionChange)="itemTypeChange($event.value);">
@@ -29,6 +28,7 @@
                                     <mat-option value="3">Sundry</mat-option>
                                 </mat-select>
                             </mat-form-field>
+
 
                             <!-- <mat-form-field fxFlex="50" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.ITEMTYPE,'has-warning':errorWarningData.Warning?.ITEMTYPE}">
                                 <mat-label>Type</mat-label>

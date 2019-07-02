@@ -170,3 +170,15 @@ button.matternews {
 th.mat-sort-header-sorted {
     color: black;
 }
+.sideText {
+    text-align: right;
+}
+
+.card{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+mat-card.mat-card {
+    width: 100% !important;
+}

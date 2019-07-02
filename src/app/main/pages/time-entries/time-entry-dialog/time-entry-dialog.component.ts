@@ -49,7 +49,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   QuantityTypeLabel: any = 'Quantity Type';
   currentTimeMatter: any = '';
   actiontype: string;
-  SetItemVal: string;
 
   constructor(
     public dialogRef: MatDialogRef<TimeEntryDialogComponent>,
@@ -178,7 +177,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
 
         // added by web19 19/06 
         this.matterChange('MatterGuid', response.DATA.WORKITEMS[0].MATTERGUID);
-        this.matterChange('QUANTITYTYPE', response.DATA.WORKITEMS[0].QUANTITYTYPE);
+        this.matterChange('QuantityType', response.DATA.WORKITEMS[0].QUANTITYTYPE);
         this.timeEntryForm.controls['matterautoVal'].setValue(response.DATA.WORKITEMS[0].SHORTNAME);
         ////
 
@@ -285,13 +284,12 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   }
   itemTypeChange(value: any) {
     this.isLoadingResults = true;
-    if (value == 'Activity' || value == 'Sundry') {
-      this.QuantityTypeLabel = value == 'Activity' ? 'Activity' : 'Sundry';
-      let callType = value == 'Activity' ? 'Activity' : 'Sundries';
+    if (value == '2' || value == '3') {
+      this.QuantityTypeLabel = value == '2' ? 'Activity' : 'Sundry';
+      let callType = value == '2' ? 'Activity' : 'Sundries';
       this.Timersservice.GetActivity({ "ActivityType": callType }).subscribe(res => {
         if (res.CODE == 200 && res.STATUS == "success") {
           this.ActivityList = res.DATA.ACTIVITIES;
-          console.log( this.ActivityList);
           this.isLoadingResults = false;
         }
       }, err => {
@@ -309,13 +307,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.timeEntryForm.controls['ADDITIONALTEXT'].setValue(value);
   }
   SaveClickTimeEntry() {
-    // if(this.f.ITEMTYPE.value =="WIP"){
-    //   this.SetItemVal="1";
-    // }else if(this.f.ITEMTYPE.value =="Activity"){
-    //   this.SetItemVal="2";
-    // }else if(this.f.ITEMTYPE.value =="Sundry"){
-    //   this.SetItemVal="3";
-    // }
+
     if (this.ITEMDATEVLAUE == "" || this.ITEMDATEVLAUE == null || this.ITEMDATEVLAUE == undefined) {
       this.ITEMDATEVLAUE = this.f.INVOICEDATE.value;
     }
@@ -324,15 +316,13 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       "ADDITIONALTEXT": this.f.ADDITIONALTEXT.value,
       "COMMENT": this.f.COMMENT.value,
       "FEEEARNER": this.f.FEEEARNER.value,
-      "ITEMTYPE":   this.f.ITEMTYPE.value ,
-      // "ITEMTYPEDESC": this.f.ITEMTYPE.value,
+      "ITEMTYPE": this.f.ITEMTYPE.value,
       "ITEMDATE": this.ITEMDATEVLAUE,
       "ITEMTIME": this.f.ITEMTIME.value,
       "MATTERGUID": this.f.MATTERGUID.value,
       "PRICE": this.f.PRICE.value,
       "PRICEINCGST": this.f.PRICEINCGST.value,
       "QUANTITY": this.f.QUANTITY.value,
-      "QUANTITYTYPE": this.f.QUANTITYTYPE.value,
       // "INVOICEGUID": "value",
       // "INVOICEORDER": "value",
       // "PRICECHARGED": "value",
@@ -419,10 +409,9 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
         this.dialogRef.close(true);
       } else if (res.CODE == 451 && res.STATUS == "warning") {
         this.toasterService.warning(this.successMsg);
-      } else if (res.CODE == 450 && res.STATUS == "error") {
-        this.toasterService.warning(this.successMsg);
-      } else if (res.MESSAGE == "Not logged in") {
-        this.dialogRef.close(false);
+      } else {
+        if (res.CODE == 402 && res.STATUS == "error" && res.MESSAGE == "Not logged in")
+          this.dialogRef.close(false);
       }
       this.isspiner = false;
     }, err => {

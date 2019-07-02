@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation, Output, EventEmitter, Injectable, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation, Injectable, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import * as _ from 'lodash';
@@ -25,11 +25,9 @@ import { ReceiptDilogComponent } from 'app/main/pages/invoice/receipt-dilog/rece
 import { InvoiceDetailComponent } from 'app/main/pages/invoice/invoice-detail/invoice-detail.component';
 import { SpendMoneyAddComponent } from 'app/main/pages/spend-money/spend-money-add-dialog/spend-money-add.component';
 import { GeneralReceiptDilogComponent } from 'app/main/pages/receive-money/general-receipt-dilog/general-receipt-dilog.component';
-import { MatterContactDailogComponent } from 'app/main/pages/template/matter-contact-dailog/matter-contact-dailog.component';
 import { InstantInvoiceDailogComponent } from 'app/main/pages/invoice/instant-invoice-dailog/instant-invoice-dailog.component';
 import { InvoiceAddDailogComponent } from 'app/main/pages/invoice/invoice-add-dailog/invoice-add-dailog.component';
 import { MatterDialogComponentForTemplate } from 'app/main/pages/template/matter-dialog/matter-dialog.component';
-import { InvoiceDialogComponentForTemplate } from 'app/main/pages/invoice/select-invoice-dialog/select-invoice-dialog.component'
 import { MatterReceiptDialogComponentForTemplate } from 'app/main/pages/receive-money/matter-dialog/matter-dialog.component';
 
 import { UserDialogComponent } from './../../../main/pages/users/user-dialog/user-dialog.component';
@@ -68,7 +66,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     isInvoice: any;
     greenTheme: any = false;
     CreatDocumentChild: any;
-    
+
 
 
 
@@ -599,7 +597,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }
-   
+
     /* User Module Function's */
 
     // Add User Dialog
@@ -883,9 +881,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     /* Packs Module */
-    
+
     // New Pack
-    NewPack(){
+    NewPack() {
         console.log('work!!1');
         const dialogRef = this.dialog.open(PacksDailogComponent, {
             disableClose: true,
@@ -899,7 +897,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     //EditPack
-    EditPack(){
+    EditPack() {
         console.log('work!!2');
         const dialogRef = this.dialog.open(PacksDailogComponent, {
             disableClose: true,
@@ -913,7 +911,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     //DeletePack
-    DeletePack():void{
+    DeletePack(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',

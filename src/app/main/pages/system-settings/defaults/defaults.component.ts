@@ -11,6 +11,7 @@ import { SystemSetting } from './../../../../_services';
 })
 export class DefultsComponent implements OnInit {
   @Input() SettingForm: FormGroup;
+  @Input() errorWarningData: any;
   texVal:any=[];
   incomeTypeArray:any=[];
   matterclassArray:any=[];

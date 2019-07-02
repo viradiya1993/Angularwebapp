@@ -12,6 +12,7 @@ import { SystemSetting } from './../../../../_services';
 })
 export class TrustComponent implements OnInit {
   isLoadingResults: boolean;
+  @Input() errorWarningData: any;
   @Input() SettingForm: FormGroup;
 
   getDropDownValue: any=[];

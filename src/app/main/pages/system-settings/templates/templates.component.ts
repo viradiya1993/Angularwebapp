@@ -13,7 +13,7 @@ import { GenerateTemplatesDialoagComponent } from './gennerate-template-dialoag/
 })
 export class TemplatesComponent implements OnInit {
   @Input() SettingForm: FormGroup;
- 
+  @Input() errorWarningData: any;
   getTemplateArray:any=[];
   options: string[] = ['One', 'Two', 'Three'];
   getDropDownValue:any=[];

@@ -1,34 +1,25 @@
 
 <div class="one" [formGroup]="SettingForm" fxLayout="column">
-
- 
-  
-
-        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-            <mat-form-field appearance="outline"  fxFlex="100" class="pr-4">
-                <mat-label>Estimate Warning %</mat-label>
-                <input type="number" placeholder="Estimate Warning % " name="ESTIMATEWARNINGPERCENT" formControlName="ESTIMATEWARNINGPERCENT"  matInput>
-            </mat-form-field>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-            <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
-                <mat-label>Next Estimate Threshold </mat-label>
-                <input placeholder="Next Estimate Threshold " type="number" name="ESTIMATENEXTTHRESHOLD"  formControlName="ESTIMATENEXTTHRESHOLD" matInput>
-            </mat-form-field>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-            <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
-                <mat-label>Next Threshold Warning %</mat-label>
-                <input type="number" placeholder="Next Threshold Warning % " name="ESTIMATENEXTWARNINGPERCENT"  formControlName="ESTIMATENEXTWARNINGPERCENT" matInput>
-            </mat-form-field>
-        </div>
-
-        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-          
-                <mat-checkbox class="check_1" name="ALLOWESTIMATERANGE" formControlName="ALLOWESTIMATERANGE">Allow Estimate Range 
-                </mat-checkbox>
-       
-        </div>
-    
-        
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline"  fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ESTIMATEWARNINGPERCENT,'has-warning':errorWarningData.Warning?.ESTIMATEWARNINGPERCENT}">
+            <mat-label>Estimate Warning %</mat-label>
+            <input type="number" placeholder="Estimate Warning % " name="ESTIMATEWARNINGPERCENT" formControlName="ESTIMATEWARNINGPERCENT"  matInput>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ESTIMATENEXTTHRESHOLD,'has-warning':errorWarningData.Warning?.ESTIMATENEXTTHRESHOLD}">
+            <mat-label>Next Estimate Threshold </mat-label>
+            <input placeholder="Next Estimate Threshold " type="number" name="ESTIMATENEXTTHRESHOLD"  formControlName="ESTIMATENEXTTHRESHOLD" matInput>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ESTIMATENEXTWARNINGPERCENT,'has-warning':errorWarningData.Warning?.ESTIMATENEXTWARNINGPERCENT}">
+            <mat-label>Next Threshold Warning %</mat-label>
+            <input type="number" placeholder="Next Threshold Warning % " name="ESTIMATENEXTWARNINGPERCENT"  formControlName="ESTIMATENEXTWARNINGPERCENT" matInput>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-checkbox class="check_1" name="ALLOWESTIMATERANGE" formControlName="ALLOWESTIMATERANGE">Allow Estimate Range 
+        </mat-checkbox>
+    </div>
 </div>

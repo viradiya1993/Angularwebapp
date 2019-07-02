@@ -10,17 +10,16 @@ import { SystemSetting } from './../../../../_services';
   animations: fuseAnimations
 })
 export class ReginoalSettingComponent implements OnInit {
-
+  @Input() errorWarningData: any;
   @Input() SettingForm: FormGroup;
   getDropDownValue:any=[];
   constructor(private SystemSetting:SystemSetting) { }
-
   ngOnInit() {
     this.SystemSetting.getSystemSetting({}).subscribe(response=>{
       console.log(response);
       this.getDropDownValue=response.DATA.LISTS;
      
-       })
+      })
   }
 
 }

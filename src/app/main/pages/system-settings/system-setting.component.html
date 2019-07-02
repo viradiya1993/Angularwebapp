@@ -136,26 +136,23 @@
 
         <!-- CENTER -->
         <div class="center p-24 pb-56 pr-sm-92" fusePerfectScrollbar>
-
             <!-- CONTENT -->
             <div class="content">
-                 <form name="form" [formGroup]="SettingForm">
-                <app-name [SettingForm]="SettingForm" *ngIf="clickedBtn ==='name'"></app-name>
-                <app-business [SettingForm]="SettingForm" *ngIf="clickedBtn ==='business'"></app-business>
-                <app-defaults [SettingForm]="SettingForm" *ngIf="clickedBtn ==='defaults'"></app-defaults>
-                <app-estimates-setting [SettingForm]="SettingForm" *ngIf="clickedBtn ==='estimate'"> </app-estimates-setting>
-                <app-reginoal-setting [SettingForm]="SettingForm" *ngIf="clickedBtn ==='reginoal'"></app-reginoal-setting>
-                <app-trust [SettingForm]="SettingForm" *ngIf="clickedBtn ==='trust'"></app-trust>
-                <app-templates  [SettingForm]="SettingForm" *ngIf="clickedBtn ==='templates'"></app-templates>
-             
+                <form name="form" [formGroup]="SettingForm" >
+                    <app-name [errorWarningData]="errorWarningData" [SettingForm]="SettingForm" *ngIf="clickedBtn ==='name'"></app-name>
+                    <app-business [errorWarningData]="errorWarningData" [SettingForm]="SettingForm" *ngIf="clickedBtn ==='business'"></app-business>
+                    <app-defaults [errorWarningData]="errorWarningData" [SettingForm]="SettingForm" *ngIf="clickedBtn ==='defaults'"></app-defaults>
+                    <app-estimates-setting [errorWarningData]="errorWarningData"[SettingForm]="SettingForm" *ngIf="clickedBtn ==='estimate'"> </app-estimates-setting>
+                    <app-reginoal-setting [errorWarningData]="errorWarningData" [SettingForm]="SettingForm" *ngIf="clickedBtn ==='reginoal'"></app-reginoal-setting>
+                    <app-trust [errorWarningData]="errorWarningData" [SettingForm]="SettingForm" *ngIf="clickedBtn ==='trust'"></app-trust>
+                    <app-templates [errorWarningData]="errorWarningData" [SettingForm]="SettingForm" *ngIf="clickedBtn ==='templates'"></app-templates>
                 </form>
             </div>
             <mat-dialog-actions align="end" class="popup_ftr">
-                    <button mat-raised-button color="accent" (click)="save()">Save</button>
-                    <button mat-raised-button color="primary" class="btn_2" cdkFocusInitial>Don't Save</button>
-                </mat-dialog-actions>
+                <button mat-raised-button color="accent" [disabled]="isspiner" (click)="save()"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
+                <button mat-raised-button color="primary" class="btn_2" cdkFocusInitial>Don't Save</button>
+            </mat-dialog-actions>
             <!-- / CONTENT -->
-         
         </div>
         <!-- / CENTER --> 
        

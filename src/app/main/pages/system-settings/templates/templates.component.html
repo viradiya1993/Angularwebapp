@@ -1,7 +1,6 @@
 <div class="one" [formGroup]="SettingForm" fxLayout="column">
-
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.INVOICETEMPLATE,'has-warning':errorWarningData.Warning?.INVOICETEMPLATE}">
             <mat-label>Invoice Template</mat-label>
             <input type="text" placeholder="Invoice Template" aria-label="Number" matInput name="INVOICETEMPLATE" formControlName="INVOICETEMPLATE" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete">
@@ -13,7 +12,7 @@
         <mat-icon matSuffix (click)='SelectDocument()'>
             <img src="assets/icons/web_app/icon_letters_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
         </mat-icon>
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.RECEIPTTEMPLATE,'has-warning':errorWarningData.Warning?.RECEIPTTEMPLATE}">
             <mat-label>Receipt Template</mat-label>
             <input type="text" placeholder="Receipt Template" aria-label="Number" matInput name="RECEIPTTEMPLATE" formControlName="RECEIPTTEMPLATE" [matAutocomplete]="auto1">
             <mat-autocomplete #auto1="matAutocomplete">
@@ -27,20 +26,17 @@
         </mat-icon>
     </div>
     <div fxLayout="row" class="check" fxLayoutAlign="start center" fxFlex="1 0 auto">
-
         <mat-checkbox name="DONTGENERATERECEIPT" formControlName="DONTGENERATERECEIPT">Don't generate receipt
         </mat-checkbox>
-
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.SAVEDOCUMENTS,'has-warning':errorWarningData.Warning?.SAVEDOCUMENTS}">
             <mat-label>Save Document</mat-label>
             <mat-select name="SAVEDOCUMENTS" formControlName="SAVEDOCUMENTS" placeholder="Save Document ">
                 <mat-option *ngFor="let val of getDropDownValue.SAVEDOCUMENTS" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
-
             </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DIRECTORYSAVESTRATEGY,'has-warning':errorWarningData.Warning?.DIRECTORYSAVESTRATEGY}">
             <mat-label>Directory Save Strategy</mat-label>
             <mat-select name="DIRECTORYSAVESTRATEGY" formControlName="DIRECTORYSAVESTRATEGY" placeholder="Folder Naming strategy">
                 <mat-option *ngFor="let val of getDropDownValue.DIRECTORYSAVESTATEGY" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
@@ -48,25 +44,19 @@
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DEFAULTSUBFOLDERS,'has-warning':errorWarningData.Warning?.DEFAULTSUBFOLDERS}">
             <mat-label>Sub Folders</mat-label>
             <textarea name="DEFAULTSUBFOLDERS" formControlName="DEFAULTSUBFOLDERS" matInput placeholder="Sub Folders "></textarea>
         </mat-form-field>
-
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DOCUMENTSAVESTRATEGY,'has-warning':errorWarningData.Warning?.DOCUMENTSAVESTRATEGY}">
             <mat-label>Document Save Strategy</mat-label>
             <mat-select name="DOCUMENTSAVESTRATEGY" formControlName="DOCUMENTSAVESTRATEGY" placeholder="File naming strategy">
                 <mat-option *ngFor="let val of getDropDownValue.DOCUMENTSAVESTRATEGY" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
-
             </mat-select>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-
         <mat-checkbox class="check_1" name="TRACKDOCUMENTS" formControlName="TRACKDOCUMENTS">Record in Document Register
         </mat-checkbox>
-
     </div>
-
-
 </div>

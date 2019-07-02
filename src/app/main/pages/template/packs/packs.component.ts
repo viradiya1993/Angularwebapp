@@ -1,38 +1,22 @@
-import { Component, OnInit, Inject ,ViewChild,Injectable} from '@angular/core';
-import { MatDialogRef, MatDialog } from '@angular/material';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Component, OnInit, Injectable, ViewEncapsulation } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { MAT_DIALOG_DATA } from '@angular/material';
 import { Router } from '@angular/router';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator, MatDialogConfig } from '@angular/material';
-import { MatSort } from '@angular/material'
-import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component'
 import { MatterReceiptDialogComponentForTemplate } from 'app/main/pages/receive-money/matter-dialog/matter-dialog.component';
 //Tree Table
 
-import {CollectionViewer, SelectionChange} from '@angular/cdk/collections';
-import {FlatTreeControl} from '@angular/cdk/tree';
-import {BehaviorSubject, merge, Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
+import { CollectionViewer, SelectionChange } from '@angular/cdk/collections';
+import { FlatTreeControl } from '@angular/cdk/tree';
+import { BehaviorSubject, merge, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { fuseAnimations } from '@fuse/animations';
 
 
-// export interface PeriodicElement {
-//   Order: number;
-//   TempleteFile: any;
-//   PromCopies:number;
-// }
-// const ELEMENT_DATA: PeriodicElement[] = [
-//   { Order: 1, TempleteFile: 'Hydrogen',PromCopies:1},
-//   { Order: 2, TempleteFile: 'Helium',PromCopies:2},
-//   { Order: 3, TempleteFile: 'Lithium',PromCopies:3},
-//   { Order: 4, TempleteFile: 'Beryllium',PromCopies:4},
-
-// ]
 /** Flat node with expandable and level information */
 export class DynamicFlatNode {
   constructor(public item: string, public level = 1, public expandable = false,
-    public isLoading = false) {}
+    public isLoading = false) { }
 }
 /**
  * Database for dynamic data. When expanding a node in the tree, the data source will need to fetch
@@ -72,7 +56,7 @@ export class DynamicDataSource {
   }
 
   constructor(private _treeControl: FlatTreeControl<DynamicFlatNode>,
-              private _database: DynamicDatabase) {}
+    private _database: DynamicDatabase) { }
 
   connect(collectionViewer: CollectionViewer): Observable<DynamicFlatNode[]> {
     this._treeControl.expansionModel.onChange.subscribe(change => {
@@ -113,7 +97,7 @@ export class DynamicDataSource {
       } else {
         let count = 0;
         for (let i = index + 1; i < this.data.length
-          && this.data[i].level > node.level; i++, count++) {}
+          && this.data[i].level > node.level; i++ , count++) { }
         this.data.splice(index + 1, count);
       }
 
@@ -128,19 +112,16 @@ export class DynamicDataSource {
   selector: 'app-packs',
   templateUrl: './packs.component.html',
   styleUrls: ['./packs.component.scss'],
-  providers: [DynamicDatabase]
+  providers: [DynamicDatabase],
+  encapsulation: ViewEncapsulation.None,
+  animations: fuseAnimations
 })
 
 export class PacksComponent implements OnInit {
-  packForm:FormGroup;
+  packForm: FormGroup;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
-  // Order = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
-  // displayedColumns: string[] = ['Order', 'TempleteFile','PromCopies'];
-  // PackTbl = new MatTableDataSource(ELEMENT_DATA);
-  // confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>
-  // @ViewChild(MatPaginator) paginator: MatPaginator;
-  // @ViewChild(MatSort) sort: MatSort;
+
   constructor(
     public MatDialog: MatDialog,
     public dialog: MatDialog,
@@ -149,44 +130,41 @@ export class PacksComponent implements OnInit {
     private toastr: ToastrService,
     public _matDialog: MatDialog,
     database: DynamicDatabase
-  )
-  { 
+  ) {
     this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);
     this.dataSource = new DynamicDataSource(this.treeControl, database);
     this.dataSource.data = database.initialData();
   }
-    treeControl: FlatTreeControl<DynamicFlatNode>;
-    dataSource: DynamicDataSource;
-    getLevel = (node: DynamicFlatNode) => node.level;
-    isExpandable = (node: DynamicFlatNode) => node.expandable;
-    hasChild = (_: number, _nodeData: DynamicFlatNode) => _nodeData.expandable;
+  treeControl: FlatTreeControl<DynamicFlatNode>;
+  dataSource: DynamicDataSource;
+  getLevel = (node: DynamicFlatNode) => node.level;
+  isExpandable = (node: DynamicFlatNode) => node.expandable;
+  hasChild = (_: number, _nodeData: DynamicFlatNode) => _nodeData.expandable;
 
   ngOnInit() {
-    // this.PackTbl.paginator = this.paginator;
-    // this.PackTbl.sort = this.sort;
     this.packForm = this._formBuilder.group({
-      Filter:[],
-      search:[]
+      Filter: [],
+      search: []
     });
   }
   //SelectMatter
-  SelectMatter(){
+  SelectMatter() {
     const dialogRef = this._matDialog.open(MatterReceiptDialogComponentForTemplate, {
       width: '100%',
       disableClose: true,
       data: null
     });
     dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
+      console.log(result);
     });
   }
-  openDialog(){
-    
+  openDialog() {
+
   }
-  FilterSearch(filtervalue:any){
+  FilterSearch(filtervalue: any) {
     //this.PackTbl.filter = filtervalue;
   }
-  ClickPackTbl(value){
+  ClickPackTbl(value) {
     console.log(value);
   }
 }

@@ -105,37 +105,6 @@ export class TemplateListComponent implements OnInit {
 
       this.openDilog()
     }
-
-
-    //   if (this.router.url=="/create-document/invoice") {
-    //     // this._router.navigate(['/create-document/invoice']);
-    //     const dialogRef = this._matDialog.open(InvoiceDialogComponentForTemplate, {
-    //         width: '100%',
-    //         disableClose: true,
-    //         data: 'select_matter',
-
-    //     });
-    //     dialogRef.afterClosed().subscribe(result => { 
-    //         if (result) {
-    //             localStorage.setItem('set_active_matters', JSON.stringify(result));
-    //             // this.router.navigate(['time-billing/work-in-progress/invoice']);
-    //         }
-    //     });
-
-    // } else if( this.router.url=="/create-document/matter") {
-    //     const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
-    //         width: '100%',
-    //         disableClose: true,
-    //         data: 'select_matter'
-    //     });
-    //     dialogRef.afterClosed().subscribe(result => {
-    //         if (result) {
-    //             localStorage.setItem('set_active_matters', JSON.stringify(result));
-    //             // this.router.navigate(['time-billing/work-in-progress/invoice']);
-    //         }
-    //     });
-    // }
-
   }
   openDilog() {
     let templateData = JSON.parse(localStorage.getItem('templateData'));

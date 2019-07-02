@@ -1,124 +1,124 @@
 <div class="example-loading-shade" *ngIf="isLoadingResults">
     <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
-  </div>
-  <div class="popup_main_div add_edit_spendmoney_main" cdkDrag>
-    <h2 cdkDragHandle mat-dialog-title>{{dialogTitle}} 
+</div>
+<div class="popup_main_div add_edit_spendmoney_main" cdkDrag>
+    <h2 cdkDragHandle mat-dialog-title>{{dialogTitle}}
         <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
             <mat-icon>close</mat-icon>
         </button>
     </h2>
     <div mat-dialog-content class="mat-typography main">
         <div class=" one " fxLayout="column" fxLayoutAlign="start">
-            <form  fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form" [formGroup]="spendmoneyForm">
-              <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                  <mat-form-field appearance="outline" class="example" fxFlex="{{size}}" class="pr-4">
-                    <mat-label>Date Incurred</mat-label>
-                    <input (dateInput)="choosedDateForIncurred('input', $event)" (dateChange)="choosedDateForIncurred('change', $event)" matInput [matDatepicker]="DateIncurred" formControlName="DateIncurred">
-                    <mat-datepicker-toggle matSuffix  [for]="DateIncurred"></mat-datepicker-toggle>
-                    <mat-datepicker #DateIncurred></mat-datepicker>           
-                  </mat-form-field>
-                  <mat-form-field class="example" fxFlex="{{size}}" class="pr-4" appearance="outline">
-                    <mat-label>Paid</mat-label>
-                    <mat-select #value name="selected" [(ngModel)]="paidtype"  formControlName="Paid" (ngModelChange)="Paidtype($event)">
-                        <mat-option value="Paid">Paid</mat-option>  
-                        <mat-option value="Unpaid">Unpaid</mat-option> 
-                    </mat-select>
-                  </mat-form-field>
-                  <mat-form-field appearance="outline" fxFlex="{{size}}" class="pr-4">
-                    <mat-label>Date Paid</mat-label>
-                    <input (dateInput)="choosedDateForPaid('input', $event)" (dateChange)="choosedDateForPaid('change', $event)" matInput [matDatepicker]="DatePaid"  formControlName="DatePaid">
-                    <mat-datepicker-toggle matSuffix [for]="DatePaid"></mat-datepicker-toggle>
-                    <mat-datepicker #DatePaid></mat-datepicker> 
-                  </mat-form-field>
-                  <mat-form-field appearance="outline" fxFlex="20" class="pr-4" *ngIf=" dataTableHide =='yes'">
-                    <mat-label>Amount</mat-label>
-                    <input class="sideText" matInput formControlName="Amount">
-                    <span class="currency_sign" matPrefix>$&nbsp;</span>
-                  </mat-form-field>
-                  <mat-form-field  appearance="outline" fxFlex="20" class="pr-4"*ngIf="dataTableHide =='yes'">
-                    <mat-label>GST</mat-label>
-                    <input matInput formControlName="GST">
-                  </mat-form-field>
-              </div>
-              <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                  <mat-form-field appearance="outline" fxFlex="40" class="pr-4" >
-                    <mat-label *ngIf="classtype !=='depreciation'">Bank a/c</mat-label>
-                    <mat-label *ngIf="classtype=='depreciation'">Asset a/c</mat-label>
-                    <input matInput formControlName="Bankac">
-                    <mat-icon matSuffix >
-                      <button id="bank" class="matternews" [disabled]="Bankhide"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
-                    </mat-icon>
-                  </mat-form-field>                 
-                  <mat-form-field appearance="outline" fxFlex="60" class="pr-4" >
-                    <mat-label *ngIf="classtype !='Matter Expense'">Notes</mat-label>
-                    <mat-label *ngIf="classtype ==='Matter Expense'">Invoice Text</mat-label>
-                    <!-- <input matInput formControlName="Notes">
+            <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form" [formGroup]="spendmoneyForm">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" class="example" fxFlex="{{size}}" class="pr-4">
+                        <mat-label>Date Incurred</mat-label>
+                        <input (dateInput)="choosedDateForIncurred('input', $event)" (dateChange)="choosedDateForIncurred('change', $event)" matInput [matDatepicker]="DateIncurred" formControlName="DateIncurred">
+                        <mat-datepicker-toggle matSuffix [for]="DateIncurred"></mat-datepicker-toggle>
+                        <mat-datepicker #DateIncurred></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field class="example" fxFlex="{{size}}" class="pr-4" appearance="outline">
+                        <mat-label>Paid</mat-label>
+                        <mat-select #value name="selected" [(ngModel)]="paidtype" formControlName="Paid" (ngModelChange)="Paidtype($event)">
+                            <mat-option value="Paid">Paid</mat-option>
+                            <mat-option value="Unpaid">Unpaid</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="{{size}}" class="pr-4">
+                        <mat-label>Date Paid</mat-label>
+                        <input (dateInput)="choosedDateForPaid('input', $event)" (dateChange)="choosedDateForPaid('change', $event)" matInput [matDatepicker]="DatePaid" formControlName="DatePaid">
+                        <mat-datepicker-toggle matSuffix [for]="DatePaid"></mat-datepicker-toggle>
+                        <mat-datepicker #DatePaid></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="20" class="pr-4" *ngIf=" dataTableHide =='yes'">
+                        <mat-label>Amount</mat-label>
+                        <input class="sideText" matInput formControlName="Amount">
+                        <span class="currency_sign" matPrefix>$&nbsp;</span>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="20" class="pr-4" *ngIf="dataTableHide =='yes'">
+                        <mat-label>GST</mat-label>
+                        <input matInput formControlName="GST">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="40" class="pr-4">
+                        <mat-label *ngIf="classtype !=='depreciation'">Bank a/c</mat-label>
+                        <mat-label *ngIf="classtype=='depreciation'">Asset a/c</mat-label>
+                        <input matInput formControlName="Bankac">
+                        <mat-icon matSuffix>
+                            <button id="bank" class="matternews" [disabled]="Bankhide"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
+                        </mat-icon>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="60" class="pr-4">
+                        <mat-label *ngIf="classtype !='Matter Expense'">Notes</mat-label>
+                        <mat-label *ngIf="classtype ==='Matter Expense'">Invoice Text</mat-label>
+                        <!-- <input matInput formControlName="Notes">
                     <mat-icon matSuffix >
                       <img src="assets/icons/web_app/icon_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                     </mat-icon> -->
-                    <textarea formControlName="Notes" matInput></textarea>
-                  </mat-form-field>
-              </div>
-              <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <mat-form-field class="example" fxFlex="25" class="pr-4" appearance="outline">
-                    <mat-label>Type</mat-label>
-                    <mat-select #value name="selected" formControlName="Type">
-                      <mat-option value="Cash">Cash</mat-option>
-                      <mat-option value="Cheque">Cheque</mat-option>
-                      <mat-option value="Credit Card">Credit Card</mat-option>
-                      <mat-option value="Direct Deposit">Direct Deposit</mat-option>
-                      <mat-option value="Direct Withdrawal">Direct Withdrawal</mat-option>
-                      <mat-option value="Money Order">Money Order</mat-option>
-                      <mat-option value="Transfer">Transfer</mat-option>
-                      <mat-option value="SilqPay">SilqPay</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-                  <mat-label>Cheque No</mat-label>
-                  <input matInput formControlName="ChequeNo">
-                </mat-form-field>
-                
-                <!-- <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+                        <textarea formControlName="Notes" matInput></textarea>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field class="example" fxFlex="25" class="pr-4" appearance="outline">
+                        <mat-label>Type</mat-label>
+                        <mat-select #value name="selected" formControlName="Type">
+                            <mat-option value="Cash">Cash</mat-option>
+                            <mat-option value="Cheque">Cheque</mat-option>
+                            <mat-option value="Credit Card">Credit Card</mat-option>
+                            <mat-option value="Direct Deposit">Direct Deposit</mat-option>
+                            <mat-option value="Direct Withdrawal">Direct Withdrawal</mat-option>
+                            <mat-option value="Money Order">Money Order</mat-option>
+                            <mat-option value="Transfer">Transfer</mat-option>
+                            <mat-option value="SilqPay">SilqPay</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+                        <mat-label>Cheque No</mat-label>
+                        <input matInput formControlName="ChequeNo">
+                    </mat-form-field>
+
+                    <!-- <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
                   <mat-label>Payee</mat-label>
                   <mat-select formControlName="Payee">
                     <mat-option *ngFor="let val of getPayourarray" [value]="val">{{val}}</mat-option>
                 </mat-select>
                 </mat-form-field>
                  -->
-                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                  <mat-label>Payee</mat-label>
-                  <input type="text" placeholder="Invoice Template" aria-label="Number" matInput name="Payee" formControlName="Payee" [matAutocomplete]="auto">
-                  <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let val of getPayourarray" [value]="val">
-                      {{val}}
-                    </mat-option>
-                  </mat-autocomplete>
-              <!-- <mat-select name="INVOICETEMPLATE" formControlName="INVOICETEMPLATE"  placeholder="Invoice Template">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Payee</mat-label>
+                        <input type="text" placeholder="Invoice Template" aria-label="Number" matInput name="Payee" formControlName="Payee" [matAutocomplete]="auto">
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let val of getPayourarray" [value]="val">
+                                {{val}}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <!-- <mat-select name="INVOICETEMPLATE" formControlName="INVOICETEMPLATE"  placeholder="Invoice Template">
                       <mat-option *ngFor="let val of getDropDownValue.INVOICETEMPLATE" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
                    
                     </mat-select> -->
-                    
-      </mat-form-field>
+
+                    </mat-form-field>
 
 
 
-                <mat-icon matSuffix (click)='ContactMatter()'>
-                  <img src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-              </mat-icon>
+                    <mat-icon matSuffix (click)='ContactMatter()'>
+                        <img src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                    </mat-icon>
 
 
 
-                <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-                    <mat-label>Invoice #/Source Ref</mat-label>
-                    <input matInput formControlName="Invoice">
-                </mat-form-field>
-             </div>
-              <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" >
-                  <section class="example-section" >
-                    <mat-checkbox (change)="multilineCheckbox()" class="example-margin" formControlName="MultiLineExpense">Multi Line Expense</mat-checkbox> 
-                  </section>
-                  <mat-dialog-actions align="end">
-                    <button [disabled]="Main3btn ==='disabled'" mat-button  (click)="AddMoneyItem()">
+                    <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+                        <mat-label>Invoice #/Source Ref</mat-label>
+                        <input matInput formControlName="Invoice">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <section class="example-section">
+                        <mat-checkbox (change)="multilineCheckbox()" class="example-margin" formControlName="MultiLineExpense">Multi Line Expense</mat-checkbox>
+                    </section>
+                    <mat-dialog-actions align="end">
+                        <button [disabled]="Main3btn ==='disabled'" mat-button (click)="AddMoneyItem()">
                       <section class="large-button-container">
                           <mat-icon class="main-icon">
                               <img src="assets/icons/web_app/icon_letters_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -128,7 +128,7 @@
                           </div>
                       </section>
                        </button>
-                       <button [disabled]="Main3btn ==='disabled' || action !='edit'" mat-button  (click)="AddContactsDialog()">
+                        <button [disabled]="Main3btn ==='disabled' || action !='edit'" mat-button>
                         <section class="large-button-container">
                             <mat-icon class="main-icon">
                                 <img src="assets/icons/web_app/icon_letters_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -138,7 +138,7 @@
                             </div>
                         </section>
                          </button>
-                         <button [disabled]="Main3btn ==='disabled' || action !='edit'" mat-button  (click)="AddContactsDialog()">
+                        <button [disabled]="Main3btn ==='disabled' || action !='edit'" mat-button>
                           <section class="large-button-container">
                               <mat-icon class="main-icon">
                                   <img src="assets/icons/web_app/icon_letters_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -148,35 +148,35 @@
                               </div>
                           </section>
                            </button>
-                </mat-dialog-actions>
-              </div>
-              <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"  class="example-containerdata" *ngIf="dataTableHide =='yes'">
-                  <mat-card> 
-                
-                  <div class="customer mb-32" >
-                      <table  class="simple"  [@animateStagger]="{value:'50'}"   >
-                          <tr>
-                              <th>AMOUNT</th>
-                              <th>EXPENDITURECLASS</th> 
-                              <th>GST</th>
-                              <th>NOTE</th>
-                            </tr>  
-                        
-                          <tr *ngFor="let item of getDataForTable">
-                              <td >{{item.AMOUNT}}</td>
-                              <td >{{item.EXPENDITURECLASS}}</td>
-                              <td >{{item.GST}}</td>
-                              <td >{{item.NOTE}}</td>
-                              <td>
-                                  <mat-icon (click)="editElement(item)" class="pr-4">edit</mat-icon>
-                                  <mat-icon (click)="deleteElement(item)" class="pr-4">delete</mat-icon>
-                              </td>
-                          </tr>
-                         
-                      </table>
-                  </div>
-                </mat-card> 
-                <!-- <table [dataSource]="getDataForTable" mat-table #table [@animateStagger]="{value:'50'}" class="spen_money_update" matSort class="mat-elevation-z8">
+                    </mat-dialog-actions>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="example-containerdata" *ngIf="dataTableHide =='yes'">
+                    <mat-card>
+
+                        <div class="customer mb-32">
+                            <table class="simple" [@animateStagger]="{value:'50'}">
+                                <tr>
+                                    <th>AMOUNT</th>
+                                    <th>EXPENDITURECLASS</th>
+                                    <th>GST</th>
+                                    <th>NOTE</th>
+                                </tr>
+
+                                <tr *ngFor="let item of getDataForTable">
+                                    <td>{{item.AMOUNT}}</td>
+                                    <td>{{item.EXPENDITURECLASS}}</td>
+                                    <td>{{item.GST}}</td>
+                                    <td>{{item.NOTE}}</td>
+                                    <td>
+                                        <mat-icon (click)="editElement(item)" class="pr-4">edit</mat-icon>
+                                        <mat-icon (click)="deleteElement(item)" class="pr-4">delete</mat-icon>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </mat-card>
+                    <!-- <table [dataSource]="getDataForTable" mat-table #table [@animateStagger]="{value:'50'}" class="spen_money_update" matSort class="mat-elevation-z8">
                    <div *ngIf="action != 'edit'">No Data Available</div>
                     <ng-container matColumnDef="AMOUNT">
                           <th mat-header-cell *matHeaderCellDef >AMOUNT</th>
@@ -216,105 +216,105 @@
                       </tr>
                      
                   </table> -->
-              </div>
-              <!-- <mat-paginator *ngIf="action === 'edit' && dataTableHide =='yes'" [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator> -->
-              <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                  <mat-form-field class="example" fxFlex="33.33" class="pr-4" appearance="outline">
-                      <mat-label>Class</mat-label>
-                      <mat-select formControlName="Class" (ngModelChange)="Classtype($event)">
-                        <mat-option value="Expense">Expense</mat-option>
-                        <mat-option value="Matter Expense">Matter Expence</mat-option>
-                        <mat-option value="Capital">Capital</mat-option>
-                        <mat-option value="Pay GST">Pay GST</mat-option>
-                        <mat-option value="Pay Tax">Pay Tax</mat-option>
-                        <mat-option value="Personal">Personal</mat-option>
-                        <mat-option value="Description">Description</mat-option>
-                        <mat-option value="Others">Others</mat-option>
-                      </mat-select>
-                  </mat-form-field>
-                  <mat-form-field appearance="outline" fxFlex="33.33" class="pr-4">
-                    <mat-label>Matter</mat-label>
-                    <input matInput readonly formControlName="Matter">                    
-                      <mat-icon matSuffix >
-                        <button id="mattersnew" class="matternews menu-disabled" [disabled]="hide" (click)='selectMatter()'><img  src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                </div>
+                <!-- <mat-paginator *ngIf="action === 'edit' && dataTableHide =='yes'" [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator> -->
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field class="example" fxFlex="33.33" class="pr-4" appearance="outline">
+                        <mat-label>Class</mat-label>
+                        <mat-select formControlName="Class" (ngModelChange)="Classtype($event)">
+                            <mat-option value="Expense">Expense</mat-option>
+                            <mat-option value="Matter Expense">Matter Expence</mat-option>
+                            <mat-option value="Capital">Capital</mat-option>
+                            <mat-option value="Pay GST">Pay GST</mat-option>
+                            <mat-option value="Pay Tax">Pay Tax</mat-option>
+                            <mat-option value="Personal">Personal</mat-option>
+                            <mat-option value="Description">Description</mat-option>
+                            <mat-option value="Others">Others</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="33.33" class="pr-4">
+                        <mat-label>Matter</mat-label>
+                        <input matInput readonly formControlName="Matter">
+                        <mat-icon matSuffix>
+                            <button id="mattersnew" class="matternews menu-disabled" [disabled]="hide" (click)='selectMatter()'><img  src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                         </button>
-                      </mat-icon>
-                  </mat-form-field>
-                  <mat-form-field appearance="outline" fxFlex="33.33" class="pr-4">
-                      <mat-label>Amount Inc GST</mat-label>
-                      <span class="currency_sign" matPrefix>$&nbsp;</span>
-                      <input class="sideText" class="sideText" matInput type="number" formControlName="AmountIncGST" (keyup)="amountCal()" >
-                  </mat-form-field>
-               </div>
-               <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" >
-                  <mat-form-field class="example" fxFlex="25" class="pr-4" appearance="outline">
-                      <mat-label>GST Type</mat-label>
-                      <mat-select    formControlName="GSTType" (ngModelChange)="GstTypeforSelect($event)">
-                          <mat-option value="1.1">10% GST</mat-option>
-                          <mat-option value="No GST">No GST</mat-option>
-                          <mat-option value="LessThen 10% GST">LessThen 10% GST</mat-option>
-                          <mat-option *ngIf="classtype ==='Matter Expense'" value="No GST">No GST(Charge GST)</mat-option>
-                          <mat-option *ngIf="classtype ==='Matter Expense'" value="LessThen 10% GST">LessThen 10% GST(Charge GST)</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                  <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-                      <mat-label>GST</mat-label>
-                      <input class="sideText" [disabled]="GstTypeDiff =='LessThen 10% GST'" matInput type="number" formControlName="GST1"  (keyup)="GSTCalFun()" [(ngModel)]="GSTValAfterCal">
-                  </mat-form-field>
-                  <mat-form-field *ngIf="dataTableHide !='yes'"  appearance="outline" fxFlex="25" class="pr-4">
-                      <mat-label>Amount Ex GST</mat-label>
+                        </mat-icon>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="33.33" class="pr-4">
+                        <mat-label>Amount Inc GST</mat-label>
+                        <span class="currency_sign" matPrefix>$&nbsp;</span>
+                        <input class="sideText" class="sideText" matInput type="number" formControlName="AmountIncGST" (keyup)="amountCal()">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field class="example" fxFlex="25" class="pr-4" appearance="outline">
+                        <mat-label>GST Type</mat-label>
+                        <mat-select formControlName="GSTType" (ngModelChange)="GstTypeforSelect($event)">
+                            <mat-option value="1.1">10% GST</mat-option>
+                            <mat-option value="No GST">No GST</mat-option>
+                            <mat-option value="LessThen 10% GST">LessThen 10% GST</mat-option>
+                            <mat-option *ngIf="classtype ==='Matter Expense'" value="No GST">No GST(Charge GST)</mat-option>
+                            <mat-option *ngIf="classtype ==='Matter Expense'" value="LessThen 10% GST">LessThen 10% GST(Charge GST)</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+                        <mat-label>GST</mat-label>
+                        <input class="sideText" [disabled]="GstTypeDiff =='LessThen 10% GST'" matInput type="number" formControlName="GST1" (keyup)="GSTCalFun()" [(ngModel)]="GSTValAfterCal">
+                    </mat-form-field>
+                    <mat-form-field *ngIf="dataTableHide !='yes'" appearance="outline" fxFlex="25" class="pr-4">
+                        <mat-label>Amount Ex GST</mat-label>
                         <input class="sideText" matInput formControlName="AmountExGST" [(ngModel)]="GSTValForExGst">
                         <span class="currency_sign" matPrefix>$&nbsp;</span>
-                      </mat-form-field>
-                  <!-- for expense *ngIf="classtype=='Expence' || classtype=='matter Expence' || classtype=='depreciation' || classtype=='other'" -->
-                  <mat-form-field appearance="outline" fxFlex="25" class="pr-4" >
-                      <mat-label *ngIf="classtype=='Expense' || classtype=='Matter Expense' || classtype=='Description' ||classtype=='Others'">Expense a/c </mat-label>
-                      <mat-label *ngIf="classtype=='Capital'">Asset a/c </mat-label>
-                      <mat-label *ngIf="classtype=='Pay GST'">GST a/c </mat-label>
-                      <mat-label *ngIf="classtype=='Pay Tax'">Tax a/c</mat-label>
-                      <mat-label *ngIf="classtype=='Personal'">Equity a/ </mat-label>
-                      <!-- <mat-label *ngIf="classtype=='personal'">Expense a/c </mat-label> -->
-                      <input matInput  formControlName="Expenseac">
-                    <mat-icon matSuffix >
-                      <button id="expac" class="matternews" [disabled]="expac"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
-                    </mat-icon>
-                  </mat-form-field>
-                  <!-- <mat-form-field appearance="outline" class="pr-4" fxFlex="25" *ngIf="classtype=='capital'">
+                    </mat-form-field>
+                    <!-- for expense *ngIf="classtype=='Expence' || classtype=='matter Expence' || classtype=='depreciation' || classtype=='other'" -->
+                    <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+                        <mat-label *ngIf="classtype=='Expense' || classtype=='Matter Expense' || classtype=='Description' ||classtype=='Others'">Expense a/c </mat-label>
+                        <mat-label *ngIf="classtype=='Capital'">Asset a/c </mat-label>
+                        <mat-label *ngIf="classtype=='Pay GST'">GST a/c </mat-label>
+                        <mat-label *ngIf="classtype=='Pay Tax'">Tax a/c</mat-label>
+                        <mat-label *ngIf="classtype=='Personal'">Equity a/ </mat-label>
+                        <!-- <mat-label *ngIf="classtype=='personal'">Expense a/c </mat-label> -->
+                        <input matInput formControlName="Expenseac">
+                        <mat-icon matSuffix>
+                            <button id="expac" class="matternews" [disabled]="expac"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
+                        </mat-icon>
+                    </mat-form-field>
+                    <!-- <mat-form-field appearance="outline" class="pr-4" fxFlex="25" *ngIf="classtype=='capital'">
                       <mat-label>Asset a/c</mat-label>
                       <input matInput  formControlName="Assetacs">
                     <mat-icon matSuffix >
                       <button id="expac" class="matternews" [disabled]="expac"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                     </mat-icon>
                   </mat-form-field> -->
-                  <!-- <mat-form-field appearance="outline" fxFlex="25" class="pr-4" *ngIf="classtype=='pay gst'">
+                    <!-- <mat-form-field appearance="outline" fxFlex="25" class="pr-4" *ngIf="classtype=='pay gst'">
                       <mat-label>GST a/c</mat-label>
                       <input matInput  formControlName="Gstac">
                     <mat-icon matSuffix >
                       <button id="expac" class="matternews" [disabled]="expac"> <img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                     </mat-icon>
                   </mat-form-field> -->
-                  <!-- <mat-form-field appearance="outline" fxFlex="25" class="pr-4" *ngIf="classtype=='pay txt'">
+                    <!-- <mat-form-field appearance="outline" fxFlex="25" class="pr-4" *ngIf="classtype=='pay txt'">
                       <mat-label>Tax a/c</mat-label>
                       <input matInput  formControlName="taxac">
                     <mat-icon matSuffix >
                       <button id="expac" class="matternews" [disabled]="expac"> <img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                     </mat-icon>
                   </mat-form-field> -->
-                  <!-- <mat-form-field appearance="outline" fxFlex="25" class="pr-4" *ngIf="classtype=='personal'">
+                    <!-- <mat-form-field appearance="outline" fxFlex="25" class="pr-4" *ngIf="classtype=='personal'">
                       <mat-label>Equity a/c</mat-label>
                       <input matInput  formControlName="Equityac">
                     <mat-icon matSuffix >
                       <button id="expac" class="matternews" [disabled]="expac"> <img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                     </mat-icon>
                   </mat-form-field> -->
-                  <mat-form-field appearance="outline" fxFlex="25" class="pr-4" *ngIf="dataTableHide=='yes'">
-                      <mat-label>Note</mat-label>
-                      <input matInput formControlName="Note">
-                  </mat-form-field>
-                  
-               </div>
-               <mat-dialog-actions *ngIf="dataTableHide==='yes'" align="end" class="popup_ftr">
-                <button [disabled]="SubMain2btn === 'disabled'" mat-button  (click)="SaveItemDialog()">
+                    <mat-form-field appearance="outline" fxFlex="25" class="pr-4" *ngIf="dataTableHide=='yes'">
+                        <mat-label>Note</mat-label>
+                        <input matInput formControlName="Note">
+                    </mat-form-field>
+
+                </div>
+                <mat-dialog-actions *ngIf="dataTableHide==='yes'" align="end" class="popup_ftr">
+                    <button [disabled]="SubMain2btn === 'disabled'" mat-button (click)="SaveItemDialog()">
                   <section class="large-button-container">
                       <mat-icon class="main-icon">
                           <img src="assets/icons/web_app/icon_save_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -324,7 +324,7 @@
                       </div>
                   </section>
                    </button>
-                   <button [disabled]="SubMain2btn === 'disabled'" mat-button  (click)="CancelItemDialog()">
+                    <button [disabled]="SubMain2btn === 'disabled'" mat-button (click)="CancelItemDialog()">
                     <section class="large-button-container">
                         <mat-icon class="main-icon">
                             <img src="assets/icons/web_app/icon_generic_delete_small_o.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -334,21 +334,21 @@
                         </div>
                     </section>
                      </button>
-            </mat-dialog-actions>
+                </mat-dialog-actions>
             </form>
         </div>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
-       <!-- <div class="left_popup_btn">
+        <!-- <div class="left_popup_btn">
           <button mat-raised-button color="accent" *ngIf="action === 'edit'" (click)="Addspendmoney()">Add</button>
           <button mat-raised-button color="accent" *ngIf="action === 'edit'" (click)="Editspendmoney()">Edit</button>  
           <button mat-raised-button color="accent" *ngIf="action === 'edit'" (click)="deletespendmoney()">Delete</button>
       </div> -->
-      <div class="right_popup_btn">
-        <button mat-raised-button color="accent" (click)="FinalSaveData()" [disabled]="isspiner" *ngIf="action !== 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Add</button>
-        <button mat-raised-button color="accent"  (click)="FinalSaveData()" [disabled]="isspiner" *ngIf="action === 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Update</button>
-        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don`t Save</button>
-      </div>
+        <div class="right_popup_btn">
+            <button mat-raised-button color="accent" (click)="FinalSaveData()" [disabled]="isspiner" *ngIf="action !== 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Add</button>
+            <button mat-raised-button color="accent" (click)="FinalSaveData()" [disabled]="isspiner" *ngIf="action === 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Update</button>
+            <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don`t Save</button>
+        </div>
     </mat-dialog-actions>
-  </div>
-  <!-- </form> -->
+</div>
+<!-- </form> -->

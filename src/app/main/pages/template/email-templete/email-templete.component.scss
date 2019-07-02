@@ -1,5 +1,5 @@
 @import "src/@fuse/scss/fuse";
-#Emails {
+#email_templete {
     .header {
         .search-wrapper {
             width: 100%;
@@ -41,7 +41,6 @@
 
 app-email-templete {
     width: 100%;
-    padding-top: 15px;
 }
 
 .search {
@@ -49,30 +48,19 @@ app-email-templete {
     padding: 20px !important;
 }
 
-
 .sticky_search_div {
-    // position: fixed;
-    // top: 163px;
-    // padding-left: 300px;
     width: 100%;
     background-color: #f5f5f5;
     z-index: 9999;
     left: 0;
 }
 
-// .sticky_search_remove_padding {
-//     padding-left: 80px;
-// }
-// #Emails .p-24.list_tbl_main {
-//     margin-top: 85px;
-//     overflow: hidden;
-// }
 .p-24.list_tbl_main {
     //margin-top: 110px;
     padding-top: 0 !important;
 }
 
-#Emails .content {
+#contact .content {
     position: relative;
 }
 
@@ -114,7 +102,7 @@ app-email-templete {
 }
 
 table tr.highlight {
-    background-color: #4caf50 !important;
+    background-color: #4CAF50 !important;
     color: #ffffff;
 }
 
@@ -122,11 +110,10 @@ button#refreshContactTab {
     display: none;
 }
 
-#Emails .content .example {
+#contact .content .example {
     padding: 20px 10px;
 }
 
 th.mat-sort-header-sorted {
     color: black;
 }
-

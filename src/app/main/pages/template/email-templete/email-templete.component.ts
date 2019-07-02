@@ -20,13 +20,13 @@ const ELEMENT_DATA: PeriodicElement[] = [
   selector: 'app-email-templete',
   templateUrl: './email-templete.component.html',
   styleUrls: ['./email-templete.component.scss']
+  
 })
 export class EmailTempleteComponent implements OnInit {
   EmailAllData: FormGroup;
   isLoadingResults: boolean = false;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
-  //console.log(selectedColore);
   Title = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   displayedColumns: string[] = ['Title'];
   EmailDataTbl = new MatTableDataSource(ELEMENT_DATA);
@@ -58,5 +58,6 @@ export class EmailTempleteComponent implements OnInit {
   EmailDialog(){
     
   }
+  
 }
 

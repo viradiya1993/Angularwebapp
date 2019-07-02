@@ -39,9 +39,9 @@
     }
 }
 
-app-template-list {
-    margin-top: 30px;
+app-email-templete {
     width: 100%;
+    padding-top: 15px;
 }
 
 .search {
@@ -49,9 +49,6 @@ app-template-list {
     padding: 20px !important;
 }
 
-// app-contact {
-//     width: 100%;
-// }
 
 .sticky_search_div {
     // position: fixed;
@@ -66,7 +63,7 @@ app-template-list {
 // .sticky_search_remove_padding {
 //     padding-left: 80px;
 // }
-// #contact .p-24.list_tbl_main {
+// #Emails .p-24.list_tbl_main {
 //     margin-top: 85px;
 //     overflow: hidden;
 // }
@@ -75,7 +72,7 @@ app-template-list {
     padding-top: 0 !important;
 }
 
-#contact .content {
+#Emails .content {
     position: relative;
 }
 
@@ -117,7 +114,7 @@ app-template-list {
 }
 
 table tr.highlight {
-    background-color: #4CAF50 !important;
+    background-color: #4caf50 !important;
     color: #ffffff;
 }
 
@@ -125,10 +122,11 @@ button#refreshContactTab {
     display: none;
 }
 
-#contact .content .example {
+#Emails .content .example {
     padding: 20px 10px;
 }
 
 th.mat-sort-header-sorted {
     color: black;
 }
+

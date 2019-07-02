@@ -337,8 +337,6 @@
                                     <div class="light_label_txt">View</div>
                                 </section>
                                 <!-- //for 2nd  -->
-
-
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab" *ngIf="activeSubMenu=='receipts-credits'">
                                     <section class="ribbon-section">
@@ -1028,7 +1026,7 @@
                                     <section class="ribbon-section">
                                         <mat-nav-list>
                                             <!-- <button mat-button class="large-button"> -->
-                                            <a mat-list-item (click) = "document()"[routerLink]="'/create-document/matter-template'" [ngClass]="activeSubMenu =='matter-template' || activeSubMenu =='invoice-template' ||activeSubMenu =='receive-money-template' ||activeSubMenu =='contact-template' ? 'cmn_active_tab':''">
+                                            <a mat-list-item [routerLink]="'/create-document/matter-template'" [ngClass]="activeSubMenu =='matter-template'  ? 'cmn_active_tab':''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_letters_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
@@ -1037,7 +1035,7 @@
                                             <!-- </button> -->
 
                                             <!-- <button mat-button class="large-button"> -->
-                                            <a mat-list-item (click)="email()" [routerLink]="'/create-document/email-templete'">
+                                            <a mat-list-item [routerLink]="'/create-document/email-templete'"  [ngClass]="activeSubMenu =='email-templete' ? 'cmn_active_tab':''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_email_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
@@ -1045,7 +1043,7 @@
                                             </a>
                                             <!-- </button> -->
                                             <!-- <button mat-button class="large-button"> -->
-                                            <a mat-list-item (click)="Packs()" [routerLink]="'/create-document/packs'">
+                                            <a mat-list-item [routerLink]="'/create-document/packs'"  [ngClass]="activeSubMenu =='packs'  ? 'cmn_active_tab':''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_doc_pack_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
@@ -1058,7 +1056,8 @@
                                 </section>
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab">
-                                    <section class="ribbon-section" *ngIf="CreatDocumentChild !== 'email' && CreatDocumentChild !== 'packs'">
+                                        <!-- *ngIf="CreatDocumentChild !== 'email' && CreatDocumentChild !== 'packs'" -->
+                                    <section class="ribbon-section" *ngIf="activeSubMenu !='email-templete' && activeSubMenu !='packs' ">
                                         <button mat-button class="large-button" (click)="SelectMatterContact()" [disabled]="isDocumentGenerateHide =='yes'">
                                             <section class="large-button-container">
                                             <mat-icon class="main-icon"> 
@@ -1070,7 +1069,7 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section class="ribbon-section" *ngIf = "CreatDocumentChild === 'email'">
+                                    <section class="ribbon-section" *ngIf = "activeSubMenu === 'email-templete'">
                                         <button mat-button class="large-button" (click)="SelectMatter()" [disabled]="isDocumentGenerateHide =='yes'">
                                             <section class="large-button-container">
                                             <mat-icon class="main-icon"> 
@@ -1082,7 +1081,7 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section class="ribbon-section" *ngIf = "CreatDocumentChild === 'packs'">
+                                    <section class="ribbon-section" *ngIf = "activeSubMenu === 'packs'">
                                         <button mat-button class="large-button" (click)="SelectMatter()" [disabled]="isDocumentGenerateHide =='yes'">
                                             <section class="large-button-container">
                                             <mat-icon class="main-icon"> 
@@ -1097,7 +1096,7 @@
                                     <div class="light_label_txt">Generate</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
-                                <section class="group-section-tab action_tab" *ngIf="CreatDocumentChild === 'email'">
+                                <section class="group-section-tab action_tab" *ngIf="activeSubMenu === 'email-templete'">
                                     <section class="ribbon-section">
                                         <button mat-button (click)="NewEmailTemplete()" class="large-button">
                                             <section class="large-button-container">
@@ -1147,7 +1146,7 @@
                                     <div class="light_label_txt">Action</div>
                                 </section>
                                   <!-- Packs Start-->
-                                <section class="group-section-tab action_tab" *ngIf="CreatDocumentChild === 'packs'">
+                                <section class="group-section-tab action_tab" *ngIf="activeSubMenu === 'packs'">
                                     <section class="ribbon-section">
                                         <button mat-button (click)="NewPack()" class="large-button">
                                             <section class="large-button-container">

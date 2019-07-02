@@ -16,6 +16,7 @@ import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
 import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, MatDatepickerModule, MatInputModule, MatMenuModule, MatTableModule, MatToolbarModule, MatSlideToggleModule, MatCardModule, MatSelectModule, MatPaginatorModule, MatAutocompleteModule, MatTabsModule, MatProgressSpinnerModule, MatDialogModule } from '@angular/material';
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
+import {MatTreeModule} from '@angular/material/tree';
 
 import { MatSortModule } from '@angular/material/sort';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -91,10 +92,12 @@ const routes = [
 
     MaterialTimePickerModule,
     MatCheckboxModule,
-    MatSortModule
+    MatSortModule,
+    MatTreeModule
   ],
   exports: [
-    TemplateComponent
+    TemplateComponent,
+    MatTreeModule
   ],
   providers: [TemplateComponent]
 })

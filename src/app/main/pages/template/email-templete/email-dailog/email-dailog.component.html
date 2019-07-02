@@ -66,13 +66,13 @@
                     <img src="assets/icons/web_app/folder.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                 </mat-icon>
             </div>
+            <!-- New SrollBar -->
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4" id="text">
                     <mat-label>Text</mat-label>
                   <textarea  formControlName = "text"  matInput ></textarea>
                 </mat-form-field>
                 <mat-table class="mat-elevation-z8" [dataSource]="dataSource" fxFlex="50" class="pr-4" matSort>
-                    
                     <ng-container matColumnDef="Name">
                       <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
                       <mat-cell *matCellDef="let element"> {{element.Name}} </mat-cell>
@@ -90,7 +90,7 @@
                       (click)="clicktable(row.Name);highlightedRows = row.Name "
                       matRipple>
                     </mat-row>
-                </mat-table>	
+                </mat-table>
             </div>
           </form>
       </div>

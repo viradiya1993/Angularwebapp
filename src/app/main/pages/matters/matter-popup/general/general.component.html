@@ -49,7 +49,7 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.EstimateFromTotalExGST,'has-warning':errorWarningData.Warning?.EstimateFromTotalExGST}">
             <mat-label>Estimate Minimum </mat-label>
-            <input class="sideText" numeric numericType="decimal" matInput type="text" formControlName="EstimateFromTotalExGST" (keyup)="calcPE()" [(ngModel)]="PRICEVAL">
+            <input class="sideText" numeric numericType="decimal" matInput type="text" formControlName="EstimateFromTotalExGST" (keyup)="calcPE(event)" [(ngModel)]="PRICEVAL">
             <span class="currency_sign" matPrefix>$&nbsp;</span>
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PRICEVALGST,'has-warning':errorWarningData.Warning?.PRICEVALGST}">

@@ -121,7 +121,7 @@ export class PacksComponent implements OnInit {
   packForm: FormGroup;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
-
+  isLoadingResults: boolean = false;
   constructor(
     public MatDialog: MatDialog,
     public dialog: MatDialog,

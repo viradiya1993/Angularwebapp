@@ -716,9 +716,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     //Change Password Dialog
     ChangePass() {
-        const dialogRef = this.dialog.open(ChangePasswordComponent, {
-
-        });
+        const dialogRef = this.dialog.open(ChangePasswordComponent, { disableClose: true, panelClass: 'change-password' });
         dialogRef.afterClosed().subscribe(result => {
             console.log(result);
         });

@@ -1,5 +1,5 @@
 @import "src/@fuse/scss/fuse";
-#pack {
+#templates {
     .header {
         .search-wrapper {
             width: 100%;
@@ -26,8 +26,9 @@
     }
     .content {
         overflow: hidden;
+        // margin-top: 10px;
         .example {
-            width: 13%;
+            width: 18%;
             padding: 10px;
             .sidebar {
                 &:not(.locked-open) {
@@ -35,23 +36,12 @@
                 }
             }
         }
-        .matter-serach-div {
-            // position: fixed;
-            // width: 600px;
-            // height: 200px;
-            // left: 50%;
-            // top: 0%;
-            // margin-left: -300px;
-        }
     }
-    .mat-form-field.mat-form-field-type-mat-select .mat-form-field-infix {
-        display: inline-flex;
-        width: 300px !important;
-    }
-    .search {
-        width: 45% !important;
-        padding: 20px !important;
-    }
+}
+
+app-template-list {
+    margin-top: 30px;
+    width: 100%;
 }
 
 .search {
@@ -59,27 +49,11 @@
     padding: 20px !important;
 }
 
-app-contact {
-    width: 100%;
-}
-
 .sticky_search_div {
-    // position: fixed;
-    // top: 163px;
-    // padding-left: 300px;
     width: 100%;
     background-color: #f5f5f5;
     z-index: 9999;
     left: 0;
-}
-
-.sticky_search_remove_padding {
-    padding-left: 80px;
-}
-
-#pack .p-24.list_tbl_main {
-    // margin-top: 85px;
-    overflow: hidden;
 }
 
 .p-24.list_tbl_main {
@@ -87,7 +61,7 @@ app-contact {
     padding-top: 0 !important;
 }
 
-#pack .content {
+#contact .content {
     position: relative;
 }
 
@@ -143,12 +117,4 @@ button#refreshContactTab {
 
 th.mat-sort-header-sorted {
     color: black;
-}
-
-.mat-table {
-    width: 100%;
-}
-
-#refreshUser {
-    display: none;
 }

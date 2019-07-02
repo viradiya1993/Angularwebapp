@@ -599,10 +599,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }
-    //Document function click
-    document(){
-        this.CreatDocumentChild="document";
-    }
+   
     /* User Module Function's */
 
     // Add User Dialog
@@ -822,12 +819,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     /* Email Module */
 
-    //Email 
-    email() {
-        this.CreatDocumentChild = 'email';
-        console.log('email work!!!');
-    }
-
     //SelectMatter 
     SelectMatter() {
         // alert('ok Work!!!');   
@@ -892,12 +883,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     /* Packs Module */
-
-    //Packs
-    Packs(){
-     console.log('pack work!!!');
-     this.CreatDocumentChild = 'packs';  
-    }
+    
     // New Pack
     NewPack(){
         console.log('work!!1');

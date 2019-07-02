@@ -71,10 +71,11 @@ export class EmailDailogComponent implements OnInit {
       BCCEmail:[],
       subject:[],
       attachment:[],
-      text:[]
+      text:[],
+      text1:[]
     });
-    //this.dataSource.paginator = this.paginator;
-    //this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
   //Email Save
   EmailSave(){

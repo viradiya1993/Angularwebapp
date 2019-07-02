@@ -54,6 +54,10 @@ export class NewPacksDailogComponent implements OnInit {
   SelectFile(){
     console.log('SelectFile work!!');
   }
+  //PackSave
+  PackSave(){
+    
+  }
   //Close Pack Tabl 
   ClosePackTabl(){
     this.dialogRef.close(false);

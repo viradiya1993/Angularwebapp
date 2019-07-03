@@ -1246,7 +1246,7 @@
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
                                     <section [ngClass]="appPermissions[3]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[3]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="AddActivityDialog()">
+                                        <button mat-button [ngClass]="appPermissions[3]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="ActivityDialog('new')">
                                         <section class="large-button-container">
                                             <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_time_cost_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1258,7 +1258,7 @@
                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="EditActivityDialog()">
+                                        <button mat-button [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="ActivityDialog('edit')">
                                         <section class="large-button-container">
                                             <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_time_cost_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1270,7 +1270,7 @@
                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[3]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[3]?.Delete==0 ? 'disabled-click large-button' : 'large-button'" (click)="DeleteActivityDialog()">
+                                        <button mat-button [ngClass]="appPermissions[3]?.Delete==0 ? 'disabled-click large-button' : 'large-button'" (click)="ActivityDialog('Duplicate')">
                                         <section class="large-button-container">
                                             <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_time_cost_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">

@@ -8,7 +8,7 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { Location } from '@angular/common';
 import { navigation } from 'app/navigation/navigation';
-import { AuthenticationService, ReportlistService, UsersService, TimersService,SpendmoneyService, ContactService, MattersService, MatterInvoicesService, GetReceptData } from '../../../_services';
+import { AuthenticationService, ReportlistService, UsersService, TimersService, SpendmoneyService, ContactService, MattersService, MatterInvoicesService, GetReceptData } from '../../../_services';
 import { Router } from '@angular/router';
 import { ContactDialogComponent } from './../../../main/pages/contact/contact-dialog/contact-dialog.component';
 import { LicenceAgreementComponent } from '../../../main/licence-agreement/licence-agreement.component';
@@ -530,7 +530,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
             this.confirmDialogRef.afterClosed().subscribe(result => {
                 if (result) {
-                    let postData = { FormAction: "delete", DATA:{EXPENDITUREGUID: SendMoney_data.EXPENDITUREGUID} }
+                    let postData = { FormAction: "delete", DATA: { EXPENDITUREGUID: SendMoney_data.EXPENDITUREGUID } }
                     this.SpendmoneyService.setSpendmonyData(postData).subscribe(res => {
                         if (res.STATUS == "success" && res.CODE == 200) {
                             $('#refreshTimeEntryTab').click();
@@ -656,34 +656,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     /* Activity Module Function's */
 
-    //NewActivityDialog
-    AddActivityDialog() {
+    //add edit and duplicat ActivityDialog
+    ActivityDialog(actionType) {
+        let popupData: any = {};
+        if (actionType == "new") {
+            popupData = { action: actionType };
+        } else if (actionType == "edit" || actionType == "Duplicate") {
+            let ActivityData = JSON.parse(localStorage.getItem('current_ActivityData'));
+            popupData = { action: actionType, ACTIVITYGUID: ActivityData.ACTIVITYGUID };
+        }
         const dialogRef = this.dialog.open(ActivityDialogComponent, {
-            disableClose: true, panelClass: 'Activity-dialog', data: { action: 'new' }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#refreshActivities').click();
-        });
-    }
-
-    //EditActivityDialog
-    EditActivityDialog() {
-        let ActivityData = JSON.parse(localStorage.getItem('current_ActivityData'));
-        const dialogRef = this.dialog.open(ActivityDialogComponent, {
-            disableClose: true, panelClass: 'Activity-dialog', data: { action: 'edit', ACTIVITYGUID: ActivityData.ACTIVITYGUID }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#refreshActivities').click();
-        });
-    }
-    //DuplicateActivity
-    DuplicateActivityDialog() {
-        let ActivityData = JSON.parse(localStorage.getItem('current_ActivityData'));
-        const dialogRef = this.dialog.open(ActivityDialogComponent, {
-            disableClose: true,
-            panelClass: 'Activity-dialog', data: { action: 'Duplicate', ACTIVITYGUID: ActivityData.ACTIVITYGUID }
+            disableClose: true, panelClass: 'Activity-dialog', data: popupData
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result)

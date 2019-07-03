@@ -1,11 +1,10 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, Inject, ɵConsole } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MatPaginator, MatDialog, MatTableDataSource, MatDatepickerInputEvent, MAT_DIALOG_DATA } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { fuseAnimations } from '@fuse/animations';
 import { ContactSelectDialogComponent } from '../../contact/contact-select-dialog/contact-select-dialog.component';
-import { Pipe } from '@angular/compiler/src/core';
 import { MatterInvoicesService, GetReceptData, ContactService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { MatSort } from '@angular/material';
@@ -209,10 +208,12 @@ export class ReceiptDilogComponent implements OnInit {
     this.GetInvoiceForReceipt(data);
   }
   SaveReceipt() {
-    console.log(this.PrepareReceiptData);
-    this.PrepareReceiptData.forEach(element => {
+    console.log(this.PrepareReceiptData.data);
+    this.PrepareReceiptData.data.forEach(element => {
       this.invoiceGuidArray.push(element.INVOICEGUID)
     });
+    console.log(this.invoiceGuidArray);
+    return false;
     this.receiptData = JSON.parse(localStorage.getItem('receiptData'));
     console.log(this.receiptData);
     let data = {

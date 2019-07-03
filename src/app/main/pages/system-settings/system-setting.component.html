@@ -70,6 +70,13 @@
                                         <div class="title">Business</div>
                                     </a>
                                 </div>
+                               
+                                <div class="nav-item business" aria-label="frequently contacted">
+                                    <!-- [routerLink]="'/system-setting/business'" <button [queryParams]="{ calander: 'business' }"></button> -->
+                                    <a (click)="accountClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='account'}">
+                                        <div class="title">Account</div>
+                                    </a>
+                                </div>
 
                                 <div class="nav-item defaults" aria-label="starred">
                                     <a (click)="defaultsClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='defaults'}">
@@ -147,6 +154,7 @@
                 <app-reginoal-setting [SettingForm]="SettingForm" *ngIf="clickedBtn ==='reginoal'"></app-reginoal-setting>
                 <app-trust [SettingForm]="SettingForm" *ngIf="clickedBtn ==='trust'"></app-trust>
                 <app-templates  [SettingForm]="SettingForm" *ngIf="clickedBtn ==='templates'"></app-templates>
+                <!-- <app-account  [SettingForm]="SettingForm" *ngIf="clickedBtn ==='account'"></app-account> -->
              
                 </form>
             </div>

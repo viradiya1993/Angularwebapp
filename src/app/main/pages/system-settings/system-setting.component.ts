@@ -249,6 +249,13 @@ export class SystemSettingComponent implements OnInit {
     this.ForDataBind="Business";
     
   }
+  accountClick(){
+    this.location.replaceState("/system-setting/account");
+    this.clickedBtn="account";
+    this.ForDataBind="Account";
+    
+  }
+
   defaultsClick(){
     this.location.replaceState("/system-setting/defaults");
     this.clickedBtn="defaults";

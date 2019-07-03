@@ -15,7 +15,7 @@ import { LicenceAgreementComponent } from '../../../main/licence-agreement/licen
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { ContactCorresDetailsComponent } from 'app/main/pages/contact/contact-corres-details/contact-corres-details.component';
-import { ContactService } from '../../../_services';
+import { ContactService,SpendmoneyService } from '../../../_services';
 import { ReportsComponent } from 'app/main/reports/reports.component';
 import { ToastrService } from 'ngx-toastr';
 import { TimeEntriesComponent } from 'app/main/pages/time-entries/time-entries.component';
@@ -95,6 +95,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private _mattersService: MattersService,
         private matterInvoicesService: MatterInvoicesService,
         private _router: Router,
+        private SpendmoneyService: SpendmoneyService,
         private _getReceptData: GetReceptData,
         private location: Location
     ) {
@@ -528,17 +529,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             });
             this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
             this.confirmDialogRef.afterClosed().subscribe(result => {
-                // if (result) {
-                //     let SpendUID = localStorage.getItem('');
-                //     let postData = { FormAction: "delete", MatterGUID: SpendUID }
-                //     this._mattersService.AddNewMatter(postData).subscribe(res => {
-                //         if (res.STATUS == "success" && res.CODE == 200) {
-                //             $('#refreshTimeEntryTab').click();
-                //             this.toastr.success('Delete successfully');
-                //         }
-                //     });
-                // }
-                // this.confirmDialogRef = null;
+                if (result) {
+                    let postData = { FormAction: "delete", DATA:{EXPENDITUREGUID: SendMoney_data.EXPENDITUREGUID} }
+                    this.SpendmoneyService.setSpendmonyData(postData).subscribe(res => {
+                        if (res.STATUS == "success" && res.CODE == 200) {
+                            $('#refreshTimeEntryTab').click();
+                            this.toastr.success('Delete successfully');
+                        }
+                    });
+                }
+                this.confirmDialogRef = null;
             });
         }
         

@@ -37,7 +37,7 @@
                   </mat-form-field>
                   <mat-form-field  appearance="outline" fxFlex="20" class="pr-4"*ngIf="dataTableHide =='yes'">
                     <mat-label>GST</mat-label>
-                    <input matInput formControlName="GST">
+                    <input class="sideText" matInput formControlName="GST">
                   </mat-form-field>
               </div>
               <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -71,6 +71,8 @@
                       <mat-option value="Money Order">Money Order</mat-option>
                       <mat-option value="Transfer">Transfer</mat-option>
                       <mat-option value="SilqPay">SilqPay</mat-option>
+                      <mat-option value="EFT">EFT</mat-option>
+                      
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
@@ -128,9 +130,9 @@
                           </div>
                       </section>
                        </button>
-                       <button [disabled]="Main3btn ==='disabled' || action !='edit'" mat-button  (click)="AddContactsDialog()">
+                       <button [disabled]="Main3btn ==='disabled' || getDataForTable.length === 0 " mat-button  (click)="editElement()">
                         <section class="large-button-container">
-                            <mat-icon class="main-icon">
+                            <mat-icon  class="main-icon">
                                 <img src="assets/icons/web_app/icon_letters_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                 </mat-icon>
                             <div class="main-text">
@@ -138,7 +140,7 @@
                             </div>
                         </section>
                          </button>
-                         <button [disabled]="Main3btn ==='disabled' || action !='edit'" mat-button  (click)="AddContactsDialog()">
+                         <button [disabled]="Main3btn ==='disabled' || getDataForTable.length ===0" mat-button  (click)="deleteElement()">
                           <section class="large-button-container">
                               <mat-icon class="main-icon">
                                   <img src="assets/icons/web_app/icon_letters_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -150,10 +152,10 @@
                            </button>
                 </mat-dialog-actions>
               </div>
-              <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"  class="example-containerdata" *ngIf="dataTableHide =='yes'">
+              <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"  *ngIf="dataTableHide =='yes'">
                   <mat-card> 
                 
-                  <div class="customer mb-32" >
+                  <div class="customer" >
                       <table  class="simple"  [@animateStagger]="{value:'50'}"   >
                           <tr>
                               <th>AMOUNT</th>
@@ -161,16 +163,20 @@
                               <th>GST</th>
                               <th>NOTE</th>
                             </tr>  
-                        
-                          <tr *ngFor="let item of getDataForTable">
+                          <tr *ngFor="let item of getDataForTable; let index = index" (click)="editMoney(item ,index);highlightedRows=index" [style.background]="highlightedRows == index ? selectedColore : ''" [ngClass]="highlightedRows == index ? 'row-text-colore' : ''"
+                          matRipple [@animate]="{value:'*',params:{y:'100%'}}" >
                               <td >{{item.AMOUNT}}</td>
                               <td >{{item.EXPENDITURECLASS}}</td>
                               <td >{{item.GST}}</td>
                               <td >{{item.NOTE}}</td>
-                              <td>
-                                  <mat-icon (click)="editElement(item)" class="pr-4">edit</mat-icon>
-                                  <mat-icon (click)="deleteElement(item)" class="pr-4">delete</mat-icon>
-                              </td>
+                              <!-- <td>
+                                  <mat-icon (click)="editElement(index)" class="pr-4"> 
+                                    <img src="assets/icons/web_app/icon_letters_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                  </mat-icon>
+                                  <mat-icon (click)="deleteElement(index)" class="pr-4">
+                                      <img src="assets/icons/web_app/icon_letters_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                  </mat-icon>
+                              </td> -->
                           </tr>
                          
                       </table>
@@ -218,7 +224,7 @@
                   </table> -->
               </div>
               <!-- <mat-paginator *ngIf="action === 'edit' && dataTableHide =='yes'" [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator> -->
-              <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+              <div class="itemdetails" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                   <mat-form-field class="example" fxFlex="33.33" class="pr-4" appearance="outline">
                       <mat-label>Class</mat-label>
                       <mat-select formControlName="Class" (ngModelChange)="Classtype($event)">

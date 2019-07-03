@@ -10,8 +10,8 @@ import { FormGroup } from '@angular/forms';
 })
 export class EstimatesSettingComponent implements OnInit {
   @Input() SettingForm: FormGroup;
+  @Input() errorWarningData: any;
   constructor() { }
-
   ngOnInit() {
   }
 

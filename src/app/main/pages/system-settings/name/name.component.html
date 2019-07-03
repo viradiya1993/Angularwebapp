@@ -1,90 +1,87 @@
 <div [formGroup]="SettingForm" class="one" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-            <mat-form-field class="a" appearance="outline" fxFlex="100" class="pr-4">
-                <mat-label>Name</mat-label>
-                <input name="BARRISTERSNAME" formControlName="BARRISTERSNAME" matInput>
-                <mat-icon matSuffix class="secondary-text"></mat-icon>
-            </mat-form-field>
-        </div>
-        <h2>Address</h2>
-        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
-                    <mat-label>Street</mat-label>
-                    <input name="ADDRESS1" formControlName="ADDRESS1" matInput>
-                    <mat-icon matSuffix class="secondary-text"></mat-icon>
-                </mat-form-field>
-            </div>
-            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
-                        <mat-label>Suburb</mat-label>
-                        <input name="SUBURB" formControlName="SUBURB"  matInput>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
-                        <mat-label>State</mat-label>
-                        <input name="STATE" formControlName="STATE"   matInput>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
-                        <mat-label>Post Code</mat-label>
-                        <input name="POSTCODE" formControlName="POSTCODE"  matInput>
-                    </mat-form-field>
-                </div>
-
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        
-                        <mat-checkbox class="check_1" name="SAMECOPYADDRESS" formControlName="SAMECOPYADDRESS" (change)="triggerSomeEvent(SettingForm)" >Copy From Street Address  
-                        </mat-checkbox>
-                </div>
-
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                        <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
-                            <mat-label>Postal</mat-label>
-                            <input name="POSTALADDRESS1" formControlName="POSTALADDRESS1" matInput>
-                            <mat-icon matSuffix class="secondary-text"></mat-icon>
-                        </mat-form-field>
-                    </div>
-                    <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                            <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
-                                <mat-label>Suburb</mat-label>
-                                <input name="POSTALSUBURB" formControlName="POSTALSUBURB" matInput>
-                            </mat-form-field>
-                            <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
-                                <mat-label>State</mat-label>
-                                <input name="POSTALSTATE" formControlName="POSTALSTATE" matInput>
-                            </mat-form-field>
-                            <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
-                                <mat-label>Post Code</mat-label>
-                                <input name="POSTALPOSTCODE" formControlName="POSTALPOSTCODE" matInput>
-                            </mat-form-field>
-                        </div>
-                        <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                                    <mat-label>DX Number</mat-label>
-                                    <input name="DXNUMBER" formControlName="DXNUMBER" matInput>
-                                </mat-form-field>
-                                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                                    <mat-label>Suburb</mat-label>
-                                    <input name="DXSUBURB" formControlName="DXSUBURB" matInput>
-                                </mat-form-field>
-                            </div>
-                            <h2>Phone and  Email</h2>
-                            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                                        <mat-label>Phone 1</mat-label>
-                                        <input name="PHONE1" formControlName="PHONE1" matInput>
-                                    </mat-form-field>
-                                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                                        <mat-label>Phone 2</mat-label>
-                                        <input name="PHONE2" formControlName="PHONE2" matInput>
-                                    </mat-form-field>
-                                </div>
-                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                                            <mat-label>Fax 1</mat-label>
-                                            <input name="FAX1" formControlName="FAX1" matInput>
-                                        </mat-form-field>
-                                        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                                            <mat-label>Fax 2</mat-label>
-                                            <input name="FAX2" formControlName="FAX2" matInput>
-                                        </mat-form-field>
-                                    </div>
-                                </div>
+        <mat-form-field class="a" appearance="outline" fxFlex="100" class="pr-4"  [ngClass]="{'has-error':errorWarningData.Error?.BARRISTERSNAME,'has-warning':errorWarningData.Warning?.BARRISTERSNAME}"> 
+            <mat-label>Name</mat-label>
+            <input name="BARRISTERSNAME" formControlName="BARRISTERSNAME" matInput>
+            <mat-icon matSuffix class="secondary-text"></mat-icon>
+        </mat-form-field>
+    </div>
+    <h2>Address</h2>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"  [ngClass]="{'has-error':errorWarningData.Error?.ADDRESS1,'has-warning':errorWarningData.Warning?.ADDRESS1}">
+        <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+            <mat-label>Street</mat-label>
+            <input name="ADDRESS1" formControlName="ADDRESS1" matInput>
+            <mat-icon matSuffix class="secondary-text"></mat-icon>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.SUBURB,'has-warning':errorWarningData.Warning?.SUBURB}">
+            <mat-label>Suburb</mat-label>
+            <input name="SUBURB" formControlName="SUBURB"  matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.STATE,'has-warning':errorWarningData.Warning?.STATE}">
+            <mat-label>State</mat-label>
+            <input name="STATE" formControlName="STATE"   matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.POSTCODE,'has-warning':errorWarningData.Warning?.POSTCODE}">
+            <mat-label>Post Code</mat-label>
+            <input name="POSTCODE" formControlName="POSTCODE"  matInput>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-checkbox class="check_1" name="SAMECOPYADDRESS" formControlName="SAMECOPYADDRESS" (change)="triggerSomeEvent(SettingForm)" >Copy From Street Address  
+        </mat-checkbox>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.POSTALADDRESS1,'has-warning':errorWarningData.Warning?.POSTALADDRESS1}">
+            <mat-label>Postal</mat-label>
+            <input name="POSTALADDRESS1" formControlName="POSTALADDRESS1" matInput>
+            <mat-icon matSuffix class="secondary-text"></mat-icon>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.POSTALSUBURB,'has-warning':errorWarningData.Warning?.POSTALSUBURB}">
+            <mat-label>Suburb</mat-label>
+            <input name="POSTALSUBURB" formControlName="POSTALSUBURB" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.POSTALSTATE,'has-warning':errorWarningData.Warning?.POSTALSTATE}">
+            <mat-label>State</mat-label>
+            <input name="POSTALSTATE" formControlName="POSTALSTATE" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.POSTALPOSTCODE,'has-warning':errorWarningData.Warning?.POSTALPOSTCODE}">
+            <mat-label>Post Code</mat-label>
+            <input name="POSTALPOSTCODE" formControlName="POSTALPOSTCODE" matInput>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DXNUMBER,'has-warning':errorWarningData.Warning?.DXNUMBER}">
+            <mat-label>DX Number</mat-label>
+            <input name="DXNUMBER" formControlName="DXNUMBER" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DXSUBURB,'has-warning':errorWarningData.Warning?.DXSUBURB}">
+            <mat-label>Suburb</mat-label>
+            <input name="DXSUBURB" formControlName="DXSUBURB" matInput>
+        </mat-form-field>
+    </div>
+    <h2>Phone and  Email</h2>
+    <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PHONE1,'has-warning':errorWarningData.Warning?.PHONE1}">
+            <mat-label>Phone 1</mat-label>
+            <input name="PHONE1" formControlName="PHONE1" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PHONE2,'has-warning':errorWarningData.Warning?.PHONE2}">
+            <mat-label>Phone 2</mat-label>
+            <input name="PHONE2" formControlName="PHONE2" matInput>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FAX1,'has-warning':errorWarningData.Warning?.FAX1}">
+            <mat-label>Fax 1</mat-label>
+            <input name="FAX1" formControlName="FAX1" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FAX2,'has-warning':errorWarningData.Warning?.FAX2}">
+            <mat-label>Fax 2</mat-label>
+            <input name="FAX2" formControlName="FAX2" matInput>
+        </mat-form-field>
+    </div>
+</div>

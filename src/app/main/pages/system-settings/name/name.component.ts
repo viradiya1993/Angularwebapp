@@ -11,14 +11,15 @@ import { SystemSetting } from './../../../../_services';
 })
 export class NameComponent implements OnInit {
   @Input() SettingForm: FormGroup;
+  @Input() errorWarningData: any;
   addData:any=[];
   constructor(private SystemSetting:SystemSetting) { }
 
   ngOnInit() {
     this.SystemSetting.getSystemSetting({}).subscribe(response=>{
-      console.log(response);
+     // console.log(response);
       this.addData=response.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP
-      })
+    })
     
   }
   
@@ -26,7 +27,6 @@ export class NameComponent implements OnInit {
     let ADDRESS1 = this.SettingForm.get('ADDRESS1').value;
     let SUBURB = this.SettingForm.get('SUBURB').value;
     let STATE = this.SettingForm.get('STATE').value;
- 
     let POSTCODE = this.SettingForm.get('POSTCODE').value;
  
     if (f.value.SAMECOPYADDRESS == true) {

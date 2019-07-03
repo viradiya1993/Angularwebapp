@@ -9,6 +9,7 @@ import { SystemSetting } from './../../../../_services';
 })
 export class BusinessComponent implements OnInit {
   @Input() SettingForm: FormGroup;
+  @Input() errorWarningData: any;
   officeFormateArray:any=[];
   unitHRArray:any=[];
   getDropDownValue:any=[];

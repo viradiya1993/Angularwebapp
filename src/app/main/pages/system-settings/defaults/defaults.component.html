@@ -1,14 +1,14 @@
 
 <div class="one" [formGroup]="SettingForm" fxLayout="column">
             <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DEFAULTEXPENSETYPE,'has-warning':errorWarningData.Warning?.DEFAULTEXPENSETYPE}">
                             <mat-label>Defaults Expense</mat-label>
                         <mat-select  name="DEFAULTEXPENSETYPE" formControlName="DEFAULTEXPENSETYPE" placeholder="Defaults Expense">
                             <mat-option *ngFor="let val of getDropDownValue.DEFAULTEXPENSETYPE"  value="{{val.VALUE}}">{{val.VALUE}}</mat-option>
                             
                           </mat-select>
                     </mat-form-field>
-                    <mat-form-field   appearance="outline" fxFlex="34" class="pr-4">
+                    <mat-form-field   appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DEFAULTPAIDTYPE,'has-warning':errorWarningData.Warning?.DEFAULTPAIDTYPE}">
                             <mat-label>Default Paid Type</mat-label>
                         <mat-select name="DEFAULTPAIDTYPE" formControlName="DEFAULTPAIDTYPE" placeholder="Default Paid Type">
                             <mat-option value="0">Paid</mat-option>
@@ -16,7 +16,7 @@
                            
                           </mat-select>
                     </mat-form-field>
-                    <mat-form-field   appearance="outline" fxFlex="33" class="pr-4">
+                    <mat-form-field   appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DEFAULTINCOMETYPE,'has-warning':errorWarningData.Warning?.DEFAULTINCOMETYPE}">
                             <mat-label>Default Income Type</mat-label>
                         <mat-select name="DEFAULTINCOMETYPE" formControlName="DEFAULTINCOMETYPE" placeholder="Default Income Type">
                             <mat-option *ngFor="let val of getDropDownValue.DEFAULTINCOMETYPE"  value="{{val.VALUE}}">{{val.VALUE}}</mat-option>
@@ -26,7 +26,7 @@
                 </div>
 
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field  appearance="outline" fxFlex="100" class="pr-4">
+                    <mat-form-field  appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.SHORTNAMESTRATEGY,'has-warning':errorWarningData.Warning?.SHORTNAMESTRATEGY}">
                             <mat-label>Matter No. Strategy</mat-label>
                         <mat-select name="SHORTNAMESTRATEGY" formControlName="SHORTNAMESTRATEGY"  placeholder="Matter No. Strategy">
                             <mat-option *ngFor="let val of getDropDownValue.SHORTNAMESTRATEGY" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option> 
@@ -36,7 +36,7 @@
 
 
             <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.REQUIRECOSTAGREEMENT,'has-warning':errorWarningData.Warning?.REQUIRECOSTAGREEMENT}">
                             <mat-label>Cost Agreement</mat-label>
                         <mat-select  name="REQUIRECOSTAGREEMENT" formControlName="REQUIRECOSTAGREEMENT" placeholder="Cost Agreement">
                             <mat-option value="0">Not Requried</mat-option>
@@ -46,7 +46,7 @@
 
                     </mat-form-field>
                     
-                    <mat-form-field   appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-form-field   appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DEFAULTMATTERCLASS,'has-warning':errorWarningData.Warning?.DEFAULTMATTERCLASS}">
                             <mat-label>Default Matter Class</mat-label>
                         <mat-select name="DEFAULTMATTERCLASS" formControlName="DEFAULTMATTERCLASS" placeholder="Default Matter Class">
                             <mat-option *ngFor="let val of getDropDownValue.DEFAULTMATTERCLASS" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
@@ -55,7 +55,7 @@
                     </mat-form-field>
                 </div>
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field   appearance="outline" fxFlex="33" class="pr-4">
+                    <mat-form-field   appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.REQUIREMATTEROWNER,'has-warning':errorWarningData.Warning?.REQUIREMATTEROWNER}">
                             <mat-label>Matter Owner</mat-label>
                         <mat-select name="REQUIREMATTEROWNER" formControlName="REQUIREMATTEROWNER" placeholder="Matter Owner">
                             <mat-option value="0">Not Requried</mat-option>
@@ -64,7 +64,7 @@
                             
                           </mat-select>
                     </mat-form-field>
-                    <mat-form-field  appearance="outline" fxFlex="34" class="pr-4">
+                    <mat-form-field  appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.REQUIREFEEEARNER,'has-warning':errorWarningData.Warning?.REQUIREFEEEARNER}">
                             <mat-label>Matter Free Earner</mat-label>
                         <mat-select name="REQUIREFEEEARNER" formControlName="REQUIREFEEEARNER" placeholder="Matter Free Earner">
                             <mat-option value="0">Not Requried</mat-option>
@@ -73,7 +73,7 @@
                            
                           </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.SUNDRYFEEEARNER,'has-warning':errorWarningData.Warning?.SUNDRYFEEEARNER}">
                             <mat-label>Sundry Free Earner</mat-label>
                         <mat-select  name="SUNDRYFEEEARNER" formControlName="SUNDRYFEEEARNER" placeholder="Sundry Free Earner">
                             <mat-option *ngFor="let val of getDropDownValue.SUNDRYFEEEARNER" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>

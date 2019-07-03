@@ -45,8 +45,8 @@ export class ActivityDialogComponent implements OnInit {
     this.activityForm = this._formBuilder.group({
       ACTIVITYGUID: [''],
       ACTIVITYTYPE: [''],
-      ACTIVITYID: ['', Validators.required],
-      DESCRIPTION: ['', Validators.required],
+      ACTIVITYID: [''],
+      DESCRIPTION: [''],
       GSTTYPE: [''],
       RATEPERUNIT: ['', Validators.required],
       UNITDESCRIPTIONPLURAL: [''],

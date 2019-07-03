@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit,Input } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder,Validators} from '@angular/forms';
 import { SystemSetting } from './../../../_services';
 import { Location } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-system-setting',
@@ -22,8 +23,21 @@ export class SystemSettingComponent implements OnInit {
   texVal: any = [];
   clicked: any;
   clickedBtn: string;
+  isspiner: boolean = false;
+  errorWarningData: any = {};
+  confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+ 
 
-  constructor(private toastr: ToastrService, private location: Location, public router: Router, private route: ActivatedRoute, private SystemSetting: SystemSetting, private _formBuilder: FormBuilder, ) {
+  constructor(
+    private toastr: ToastrService,
+    private location: Location,
+    public router: Router,
+    private route: ActivatedRoute,
+    private SystemSetting: SystemSetting,
+    private _formBuilder: FormBuilder,
+    public _matDialog: MatDialog,
+  ) 
+  {
     // this.nameFunction();
     this.nameFunction();
   }
@@ -63,8 +77,6 @@ export class SystemSettingComponent implements OnInit {
       VENDORISLIABLEFORSETTLEMENTDATE: [''],
       USESINGLELINEEXPENSE: [''],
       RATEOVERRIDESEQUENCE: [''],
-
-
 
       // for defults
       DEFAULTEXPENSETYPE: [''],
@@ -276,6 +288,7 @@ export class SystemSettingComponent implements OnInit {
     return this.SettingForm.controls;
   }
   save() {
+    this.isspiner = true;
     console.log(this.f.DEFAULTTRUSTRECEIPTTYPE);
     let data = {
       //for name 
@@ -353,19 +366,74 @@ export class SystemSettingComponent implements OnInit {
       DEFAULTSUBFOLDERS: this.f.DEFAULTSUBFOLDERS.value,
       // DIRECTORYSAVESTATEGY:this.f.DIRECTORYSAVESTRATEGY.value,
     }
-    console.log(data);
-    let data1 = { FormAction: "insert", Data: data }
+  
+    let data1 = { FormAction: "insert", VALIDATEONLY: true, Data: data }
     this.SystemSetting.setSystemSetting(data1).subscribe(response => {
-      console.log(response);
-      if (response.CODE == 200) {
-        this.toastr.success('Data Update successfully');
-      }
-      // this.getVal(response);
-
+      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        this.checkValidation(response.DATA.VALIDATIONS, data1);
+      } else if (response.CODE == 451 && response.STATUS == "warning") {
+        this.checkValidation(response.DATA.VALIDATIONS, data1);
+      } else if (response.CODE == 450 && response.STATUS == "error") {
+        this.checkValidation(response.DATA.VALIDATIONS, data1);
+      } else {
+        this.isspiner = false;
+      }   
     }), error => {
+      this.isspiner = false;
       this.toastr.error(error);
     };
+  }
+  checkValidation(bodyData: any, data1: any) {
+    let errorData: any = [];
+    let warningData: any = [];
+    let tempError: any = [];
+    let tempWarning: any = [];
+    bodyData.forEach(function (value: { VALUEVALID: string; ERRORDESCRIPTION: any; FIELDNAME: any; }) {
+      if (value.VALUEVALID == 'No') {
+        errorData.push(value.ERRORDESCRIPTION);
+        tempError[value.FIELDNAME] = value;
+      } else if (value.VALUEVALID == 'Warning') {
+        tempWarning[value.FIELDNAME] = value;
+        warningData.push(value.ERRORDESCRIPTION);
+      }
+    });
+    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
+    if (Object.keys(errorData).length != 0)
+      this.toastr.error(errorData);
+    if (Object.keys(warningData).length != 0) {
+      this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+        disableClose: true,
+        width: '100%',
+        data: warningData
+      });
+      this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Save?';
+      this.confirmDialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.isspiner = true;
+          this.saveSettingData(data1);
+        }
+        this.confirmDialogRef = null;
+      });
+    }
+    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+      this.saveSettingData(data1);
+    this.isspiner = false;
+  }
 
+  saveSettingData(data1: any) {
+    data1.VALIDATEONLY = false;
+    this.SystemSetting.setSystemSetting(data1).subscribe(response => {
+      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        this.toastr.success('Update successfully');
+        this.isspiner = false;
+      } else if (response.CODE == 451 && response.STATUS == "warning") {
+        this.toastr.warning(response.MESSAGE);
+      } else if (response.CODE == 450 && response.STATUS == "error") {
+        this.toastr.error(response.MESSAGE);
+      } 
+    }, error => {
+      this.toastr.error(error);
+    });
   }
 
 }

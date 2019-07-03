@@ -1459,6 +1459,68 @@
                     </section>
                 </mat-tab>
                 <!-- Document Register tab End-->
+                 <!-- Chart Of Account tab Start-->
+                <mat-tab label="Chart of Accounts" *ngIf="isTabShow===15">
+                    <section class="ribbon-container legal_details_tab_main">
+                        <mat-card>
+                            <mat-card-content>
+                                <section class="group-section-tab action_tab">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="NewAccount()">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_add_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>New<br>Account</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="EditAccount()">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Edit<br>Account</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="DeleteAccount()">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Delete<br>Account</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="DuplicateAccount()">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_duplicate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Duplicate<br>Account</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <div class="light_label_txt">Action</div>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                            </mat-card-content>
+                        </mat-card>
+                    </section>
+                </mat-tab>
+                <!-- Chart Of Account tab End-->
                 <!-- contacts tab menu start -->
                 <!-- FILE menu start -->
                 <!-- <mat-tab label="FILE">
@@ -1546,7 +1608,6 @@
                                                </section>
                                             </button>
                                     </section>
-
                                     <section [ngClass]="appPermissions[7]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[7]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/invoice'">
                                                <section class="large-button-container">
@@ -1559,7 +1620,6 @@
                                                </section>
                                             </button>
                                     </section>
-
                                     <section [ngClass]="appPermissions[9]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[9]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/spend-money'">
                                                <section class="large-button-container">
@@ -1603,6 +1663,36 @@
                                     <div class="light_label_txt">Diary</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
+                                <!--Chart Account Start-->
+                                <section class="group-section-tab">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/chart-account'">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_receipt_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Chart Of<br>Accounts</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="ReconcileAC()">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_receipt_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Reconcile<br>Practice</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <div class="light_label_txt">Accounts</div>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                                <!-- Chart Account End -->
                             </mat-card-content>
                         </mat-card>
                     </section>

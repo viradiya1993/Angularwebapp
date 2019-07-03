@@ -26,8 +26,7 @@ export class SystemSettingComponent implements OnInit {
   isspiner: boolean = false;
   errorWarningData: any = {};
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
- 
-
+  
   constructor(
     private toastr: ToastrService,
     private location: Location,
@@ -217,7 +216,6 @@ export class SystemSettingComponent implements OnInit {
     this.SettingForm.controls['TRACKDOCUMENTS'].setValue(data.DATA.SYSTEM.DOCUMENTGROUP.TRACKDOCUMENTS);
 
   }
-
   nameFunction() {
     if (this.router.url == "/system-setting/business") {
       this.ForDataBind = "Business";
@@ -366,7 +364,6 @@ export class SystemSettingComponent implements OnInit {
       DEFAULTSUBFOLDERS: this.f.DEFAULTSUBFOLDERS.value,
       // DIRECTORYSAVESTATEGY:this.f.DIRECTORYSAVESTRATEGY.value,
     }
-  
     let data1 = { FormAction: "insert", VALIDATEONLY: true, Data: data }
     this.SystemSetting.setSystemSetting(data1).subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
@@ -417,7 +414,7 @@ export class SystemSettingComponent implements OnInit {
     }
     if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
       this.saveSettingData(data1);
-    this.isspiner = false;
+      this.isspiner = false;
   }
 
   saveSettingData(data1: any) {

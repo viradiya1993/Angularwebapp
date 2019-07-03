@@ -678,6 +678,18 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 $('#refreshActivities').click();
         });
     }
+    //DuplicateActivity
+    DuplicateActivityDialog() {
+        let ActivityData = JSON.parse(localStorage.getItem('current_ActivityData'));
+        const dialogRef = this.dialog.open(ActivityDialogComponent, {
+            disableClose: true,
+            panelClass: 'Activity-dialog', data: { action: 'Duplicate', ACTIVITYGUID: ActivityData.ACTIVITYGUID }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result)
+                $('#refreshActivities').click();
+        });
+    }
 
     //DeleteActivity
     DeleteActivityDialog(): void {
@@ -700,19 +712,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef = null;
         });
     }
-
-    //DuplicateActivity
-    DuplicateActivityDialog() {
-        let ActivityData = JSON.parse(localStorage.getItem('current_ActivityData'));
-        const dialogRef = this.dialog.open(ActivityDialogComponent, {
-            disableClose: true,
-            panelClass: 'Activity-dialog', data: { action: 'Duplicate', ACTIVITYGUID: ActivityData.ACTIVITYGUID }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#refreshActivities').click();
-        });
-    }
+    /* End Activity Module Function's */
 
     //Change Password Dialog
     ChangePass() {
@@ -1016,6 +1016,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
+                $('#refreshReceiceMoany').click();
             }
         });
     }

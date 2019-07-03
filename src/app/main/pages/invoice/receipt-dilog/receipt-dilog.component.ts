@@ -17,6 +17,9 @@ import { MatSort } from '@angular/material';
   animations: fuseAnimations
 })
 export class ReceiptDilogComponent implements OnInit {
+  AllocationAmout: any = 0;
+  AllocationData: any = [];
+  errorWarningData: any = {};
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   isShowchecked: string;
   getPayourarray: any = [];
@@ -32,21 +35,22 @@ export class ReceiptDilogComponent implements OnInit {
   receiptData: any;
   formaction: string;
   val: any;
-  displayedColumns: string[] = ['INVOICEDATE', 'INVOICETOTAL', 'AMOUNTOUTSTANDINGEXGST', 'MATTERGUID'];
+  displayedColumns: string[] = ['INVOICEDATE', 'INVOICETOTAL', 'AMOUNTOUTSTANDINGINCGST', 'MATTERGUID'];
   PrepareReceiptForm: FormGroup;
   PrepareReceiptData: any;
-  isspiner: boolean;
+  PrepareReceiptTemp: any;
+  isspiner: boolean = false;
   isLoadingResults: boolean = false;
   highlightedRows: any;
   currentInvoiceData: any;
   lastFilter: any;
-  invoiceGuidArray: any = [];
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   ShowData: any = [];
   matterData: any;
   @ViewChild(MatSort) sort: MatSort;
   isEdit: boolean = false;
+  AMOUNT: any = 0;
 
   constructor(
     private toastr: ToastrService,
@@ -207,16 +211,43 @@ export class ReceiptDilogComponent implements OnInit {
     }
     this.GetInvoiceForReceipt(data);
   }
+  revivedAmount() {
+    this.AMOUNT = parseFloat(this.f.AMOUNT.value).toFixed(2);
+  }
+  getClosetInvoiceForAllocation() {
+    var closest = 0;
+    let currentInvoiceId: any = "";
+    let lastindex = null;
+    if (Object.keys(this.PrepareReceiptTemp).length == 0) {
+      this.AllocationData.push({ INVOICEGUID: "", AMOUNTAPPLIED: this.AllocationAmout });
+      this.AllocationAmout = 0;
+    } else {
+      this.PrepareReceiptTemp.forEach((element, index) => {
+        if (closest == 0 || Math.abs(element.AMOUNTOUTSTANDINGINCGST - this.AllocationAmout) < Math.abs(closest - this.AllocationAmout)) {
+          if (this.AllocationAmout != 0 && this.AllocationAmout > 0) {
+            closest = Number(element.AMOUNTOUTSTANDINGINCGST);
+            currentInvoiceId = element.INVOICEGUID;
+            lastindex = index;
+          }
+        }
+      });
+      if (lastindex != null)
+        this.PrepareReceiptTemp.splice(lastindex, 1);
+      if (this.AllocationAmout != 0 && this.AllocationAmout > 0) {
+        closest = Number(this.AllocationAmout) > Number(closest) ? Number(closest) : Number(this.AllocationAmout);
+        this.AllocationAmout = this.AllocationAmout - closest;
+        this.AllocationData.push({ INVOICEGUID: currentInvoiceId, AMOUNTAPPLIED: closest });
+        this.getClosetInvoiceForAllocation();
+      }
+    }
+  }
   SaveReceipt() {
-    console.log(this.PrepareReceiptData.data);
-    this.PrepareReceiptData.data.forEach(element => {
-      this.invoiceGuidArray.push(element.INVOICEGUID)
-    });
-    console.log(this.invoiceGuidArray);
-    return false;
-    this.receiptData = JSON.parse(localStorage.getItem('receiptData'));
-    console.log(this.receiptData);
-    let data = {
+    this.isspiner = true;
+    this.AllocationData = [];
+    this.PrepareReceiptTemp = this.PrepareReceiptData.data;
+    this.AllocationAmout = Number(this.f.AMOUNT.value);
+    this.getClosetInvoiceForAllocation();
+    let AllocationDataInsert = {
       INCOMECODE: this.f.INCOMECODE.value,
       INCOMECLASS: this.f.INCOMECLASS.value,
       INCOMETYPE: this.f.INCOMETYPE.value,
@@ -225,24 +256,29 @@ export class ReceiptDilogComponent implements OnInit {
       PAYEE: this.f.PAYEE.value,
       AMOUNT: this.f.AMOUNT.value,
       GST: this.f.GST.value,
-      BANKACCOUNTGUID: this.f.BANKACCOUNTGUID.value,
-      INCOMEACCOUNTGUID: "",
+      BANKACCOUNTGUID: "ACCAAAAAAAAAAAA4",
+      // BANKACCOUNTGUID: this.f.BANKACCOUNTGUID.value,
+      INCOMEACCOUNTGUID: "ACCAAAAAAAAAAAA9",
       NOTE: this.f.NOTE.value,
       MATTERGUID: this.matterData.MATTERGUID,
       // CLERKFEE: "",
-      // ALLOCATIONS: [
-      //   INVOICEGUID: "",
-      //   AMOUNTAPPLIED : ""
-      // ]
+      ALLOCATIONS: this.AllocationData
     }
-    let matterPostData: any = { FormAction: 'insert', VALIDATEONLY: true, Data: data };
-    this.GetReceptData.setReceipt(matterPostData).subscribe(response => {
+    let setReceiptPostData: any = { FormAction: 'insert', VALIDATEONLY: true, DATA: AllocationDataInsert };
+    this.GetReceptData.setReceipt(setReceiptPostData).subscribe(response => {
+      if (response.DATA.INCOMECODE && response.DATA.INCOMECODE != "") {
+        this.PrepareReceiptForm.controls['INCOMECODE'].setValue(response.DATA.INCOMECODE);
+        AllocationDataInsert.INCOMECODE = response.DATA.INCOMECODE;
+      } else {
+        AllocationDataInsert.INCOMECODE = this.f.INCOMECODE.value;
+      }
+      setReceiptPostData = { FormAction: 'insert', VALIDATEONLY: true, DATA: AllocationDataInsert };
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        this.checkValidation(response.DATA.VALIDATIONS, data);
+        this.checkValidation(response.DATA.VALIDATIONS, setReceiptPostData);
       } else if (response.CODE == 451 && response.STATUS == "warning") {
-        this.checkValidation(response.DATA.VALIDATIONS, data);
+        this.checkValidation(response.DATA.VALIDATIONS, setReceiptPostData);
       } else if (response.CODE == 450 && response.STATUS == "error") {
-        this.checkValidation(response.DATA.VALIDATIONS, data);
+        this.checkValidation(response.DATA.VALIDATIONS, setReceiptPostData);
       } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
@@ -254,12 +290,20 @@ export class ReceiptDilogComponent implements OnInit {
   checkValidation(bodyData: any, details: any) {
     let errorData: any = [];
     let warningData: any = [];
+    let tempError: any = [];
+    let tempWarning: any = [];
     bodyData.forEach(function (value) {
-      if (value.VALUEVALID == 'NO')
+      if (value.VALUEVALID == 'No') {
         errorData.push(value.ERRORDESCRIPTION);
-      else if (value.VALUEVALID == 'WARNING')
-        warningData.push(value.ERRORDESCRIPTION);
+        tempError[value.FIELDNAME] = value;
+      } else if (value.VALUEVALID == 'Warning') {
+        if (value.FIELDNAME != "INCOMECODE") {
+          warningData.push(value.ERRORDESCRIPTION);
+        }
+        tempWarning[value.FIELDNAME] = value;
+      }
     });
+    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
@@ -284,24 +328,17 @@ export class ReceiptDilogComponent implements OnInit {
     data.VALIDATEONLY = false;
     this.GetReceptData.setReceipt(data).subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        if (this._data.action !== 'edit') {
-          this.toastr.success('Receipt save successfully');
-        } else {
-          this.toastr.success('Receipt update successfully');
-        }
+        this.toastr.success('Receipt save successfully');
         this.isspiner = false;
         this.dialogRef.close(true);
-      }
-      else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
-      }
-      else {
+      } else {
         this.isspiner = false;
       }
     }, error => {
       this.toastr.error(error);
     });
-
   }
   selectClient() {
     const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true, data: { type: '' } });

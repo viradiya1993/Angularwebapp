@@ -55,7 +55,7 @@ export class UsersComponent implements OnInit {
     this.loadData(this.lastFilter);
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('users', '').subscribe(response => {
+    this.TableColumnsService.getTableFilter('Users', '').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
         this.displayedColumns = data.showcol;
@@ -98,7 +98,7 @@ export class UsersComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'users', 'list': '' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'Users', 'list': '' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click

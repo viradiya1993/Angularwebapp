@@ -23,6 +23,7 @@ import { TrustComponent } from './trust/trust.component';
 import { TemplatesComponent } from './templates/templates.component';
 import { GenerateTemplatesDialoagComponent } from './templates/gennerate-template-dialoag/generate-template.component';
 import {MatSortModule} from '@angular/material/sort';
+import { AccountComponent } from './account/account.component';
 
 const routes = [
   { path: 'system-setting/name', component: SystemSettingComponent, canActivate: [AuthGuard] },
@@ -33,6 +34,7 @@ const routes = [
   { path: 'system-setting/trust',  component: SystemSettingComponent },
   { path: 'system-setting/templates', component: SystemSettingComponent },
   { path: 'system-setting/estimates', component: SystemSettingComponent },
+  { path: 'system-setting/account', component: SystemSettingComponent },
 ];
 @NgModule({  
   declarations: [
@@ -45,7 +47,8 @@ const routes = [
     EstimatesSettingComponent,
     ReginoalSettingComponent,
     TrustComponent,
-    TemplatesComponent
+    TemplatesComponent,
+    AccountComponent
    // SpendMoneyAddComponent,    
   ],
   entryComponents: [

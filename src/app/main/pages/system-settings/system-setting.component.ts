@@ -1,7 +1,7 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormBuilder,Validators} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SystemSetting } from './../../../_services';
 import { Location } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
@@ -26,7 +26,7 @@ export class SystemSettingComponent implements OnInit {
   isspiner: boolean = false;
   errorWarningData: any = {};
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
- 
+
 
   constructor(
     private toastr: ToastrService,
@@ -36,8 +36,7 @@ export class SystemSettingComponent implements OnInit {
     private SystemSetting: SystemSetting,
     private _formBuilder: FormBuilder,
     public _matDialog: MatDialog,
-  ) 
-  {
+  ) {
     // this.nameFunction();
     this.nameFunction();
   }
@@ -366,7 +365,7 @@ export class SystemSettingComponent implements OnInit {
       DEFAULTSUBFOLDERS: this.f.DEFAULTSUBFOLDERS.value,
       // DIRECTORYSAVESTATEGY:this.f.DIRECTORYSAVESTRATEGY.value,
     }
-  
+
     let data1 = { FormAction: "insert", VALIDATEONLY: true, Data: data }
     this.SystemSetting.setSystemSetting(data1).subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
@@ -377,7 +376,7 @@ export class SystemSettingComponent implements OnInit {
         this.checkValidation(response.DATA.VALIDATIONS, data1);
       } else {
         this.isspiner = false;
-      }   
+      }
     }), error => {
       this.isspiner = false;
       this.toastr.error(error);
@@ -430,7 +429,7 @@ export class SystemSettingComponent implements OnInit {
         this.toastr.warning(response.MESSAGE);
       } else if (response.CODE == 450 && response.STATUS == "error") {
         this.toastr.error(response.MESSAGE);
-      } 
+      }
     }, error => {
       this.toastr.error(error);
     });

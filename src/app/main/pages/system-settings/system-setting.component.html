@@ -63,11 +63,18 @@
                                         <span class="title">Name</span>
                                     </a>
                                 </div>
-                                
+
                                 <div class="nav-item business" aria-label="frequently contacted">
                                     <!-- [routerLink]="'/system-setting/business'" <button [queryParams]="{ calander: 'business' }"></button> -->
                                     <a (click)="businessClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='business'}">
                                         <div class="title">Business</div>
+                                    </a>
+                                </div>
+
+                                <div class="nav-item business" aria-label="frequently contacted">
+                                    <!-- [routerLink]="'/system-setting/business'" <button [queryParams]="{ calander: 'business' }"></button> -->
+                                    <a (click)="accountClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='account'}">
+                                        <div class="title">Account</div>
                                     </a>
                                 </div>
 
@@ -77,7 +84,7 @@
                                     </a>
                                 </div>
                                 <div class="nav-item estimate" aria-label="starred">
-                                    <a  (click)="estimateClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='estimate'}">
+                                    <a (click)="estimateClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='estimate'}">
                                         <div class="title">Estimates</div>
                                     </a>
                                 </div>
@@ -87,7 +94,7 @@
                                     </a>
                                 </div>
                                 <div class="nav-item trust" aria-label="starred">
-                                    <a (click)="trustClick()"  class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='trust'}">
+                                    <a (click)="trustClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='trust'}">
                                         <div class="title">Trust</div>
                                     </a>
                                 </div>
@@ -129,7 +136,7 @@
                 <!-- <contacts-main-sidebar [@animate]="{value:'*'}"></contacts-main-sidebar> -->
             </div>
             <!-- / SIDEBAR CONTENT -->
-           
+
 
         </fuse-sidebar>
         <!-- / SIDEBAR -->
@@ -138,11 +145,11 @@
         <div class="center p-24 pb-56 pr-sm-92" fusePerfectScrollbar>
             <!-- CONTENT -->
             <div class="content">
-                <form name="form" [formGroup]="SettingForm" >
+                <form name="form" [formGroup]="SettingForm">
                     <app-name [errorWarningData]="errorWarningData" [SettingForm]="SettingForm" *ngIf="clickedBtn ==='name'"></app-name>
                     <app-business [errorWarningData]="errorWarningData" [SettingForm]="SettingForm" *ngIf="clickedBtn ==='business'"></app-business>
                     <app-defaults [errorWarningData]="errorWarningData" [SettingForm]="SettingForm" *ngIf="clickedBtn ==='defaults'"></app-defaults>
-                    <app-estimates-setting [errorWarningData]="errorWarningData"[SettingForm]="SettingForm" *ngIf="clickedBtn ==='estimate'"> </app-estimates-setting>
+                    <app-estimates-setting [errorWarningData]="errorWarningData" [SettingForm]="SettingForm" *ngIf="clickedBtn ==='estimate'"> </app-estimates-setting>
                     <app-reginoal-setting [errorWarningData]="errorWarningData" [SettingForm]="SettingForm" *ngIf="clickedBtn ==='reginoal'"></app-reginoal-setting>
                     <app-trust [errorWarningData]="errorWarningData" [SettingForm]="SettingForm" *ngIf="clickedBtn ==='trust'"></app-trust>
                     <app-templates [errorWarningData]="errorWarningData" [SettingForm]="SettingForm" *ngIf="clickedBtn ==='templates'"></app-templates>
@@ -154,11 +161,11 @@
             </mat-dialog-actions>
             <!-- / CONTENT -->
         </div>
-        <!-- / CENTER --> 
-       
+        <!-- / CENTER -->
+
     </div>
     <!-- / CONTENT-->
-  
+
 </div>
 
 

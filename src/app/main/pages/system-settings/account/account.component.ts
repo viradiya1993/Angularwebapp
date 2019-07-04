@@ -2,6 +2,24 @@ import { Component, OnInit, Input } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
 import { SystemSetting } from './../../../../_services';
+import { AccountDialogComponent } from './account-edit-dialog/account-dialog.component';
+import { MatDialog } from '@angular/material';
+export interface PeriodicElement {
+  Description: string;
+  AccNoAccount: string;
+}
+const ELEMENT_DATA: PeriodicElement[] = [
+ 
+  {Description: "Receivable", AccNoAccount : 'Account Receivable'},
+  {Description: "Receivable", AccNoAccount : 'Account Receivable'},
+  {Description: "Receivable", AccNoAccount : 'Account Receivable'},
+  {Description: "Receivable", AccNoAccount : 'Account Receivable'},
+  {Description: "Receivable", AccNoAccount : 'Account Receivable'},
+  {Description: "Receivable", AccNoAccount : 'Account Receivable'},
+  {Description: "Receivable", AccNoAccount : 'Account Receivable'},
+  {Description: "Receivable", AccNoAccount : 'Account Receivable'},
+  
+];
 
 @Component({
   selector: 'app-account',
@@ -11,37 +29,28 @@ import { SystemSetting } from './../../../../_services';
 })
 export class AccountComponent implements OnInit {
   @Input() SettingForm: FormGroup;
+  displayedColumns: string[] = ['Description', 'AccNoAccount'];
+  dataSource = ELEMENT_DATA;
   addData:any=[];
-  constructor(private SystemSetting:SystemSetting) { }
+  constructor(private SystemSetting:SystemSetting, public dialog: MatDialog,) { }
 
   ngOnInit() {
-    // this.SystemSetting.getSystemSetting({}).subscribe(response=>{
-    //   console.log(response);
-    //   this.addData=response.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP
-    //   })
-    
+        
+  }
+  ondialogClick(){
+    const dialogRef = this.dialog.open(AccountDialogComponent, {
+      disableClose: true,
+      panelClass: '',
+      data: {
+          action: '',
+      }
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+  });
   }
   
-//   triggerSomeEvent(f) {
-//     let ADDRESS1 = this.SettingForm.get('ADDRESS1').value;
-//     let SUBURB = this.SettingForm.get('SUBURB').value;
-//     let STATE = this.SettingForm.get('STATE').value;
- 
-//     let POSTCODE = this.SettingForm.get('POSTCODE').value;
- 
-//     if (f.value.SAMECOPYADDRESS == true) {
-//       this.SettingForm.controls['POSTALADDRESS1'].setValue(ADDRESS1);
-//       this.SettingForm.controls['POSTALSUBURB'].setValue(SUBURB);
-//       this.SettingForm.controls['POSTALSTATE'].setValue(STATE);
-//       this.SettingForm.controls['POSTALPOSTCODE'].setValue(POSTCODE);
-//     } else {
-//           this.SettingForm.controls['POSTALADDRESS1'].setValue(this.addData.POSTALADDRESS1); 
-//           this.SettingForm.controls['POSTALPOSTCODE'].setValue(this.addData.POSTALPOSTCODE); 
-//           this.SettingForm.controls['POSTALSUBURB'].setValue(this.addData.POSTALSUBURB); 
-//           this.SettingForm.controls['POSTALSTATE'].setValue(this.addData.POSTALSTATE); 
-        
 
-//     }
-//   }
 
 }

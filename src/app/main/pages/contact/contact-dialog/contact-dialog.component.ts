@@ -1,16 +1,19 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AddContactService, ContactService } from './../../../../_services';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import { fuseAnimations } from '@fuse/animations';
 
 
 @Component({
   selector: 'app-contact-dialog',
   templateUrl: './contact-dialog.component.html',
-  styleUrls: ['./contact-dialog.component.scss']
+  styleUrls: ['./contact-dialog.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  animations: fuseAnimations
 })
 export class ContactDialogComponent implements OnInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;

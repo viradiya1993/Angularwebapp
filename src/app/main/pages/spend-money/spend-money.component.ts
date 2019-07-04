@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SpendmoneyService, TableColumnsService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
@@ -13,6 +13,7 @@ import { DatePipe } from '@angular/common';
   selector: 'app-spend-money',
   templateUrl: './spend-money.component.html',
   styleUrls: ['./spend-money.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
 export class SpendMoneyComponent implements OnInit {
@@ -68,10 +69,10 @@ this.SepndMoneyForm=this._formBuilder.group({
     updatecurrentDate.setDate(updatecurrentDate.getDate() - 30);
     let end = this.datepipe.transform(currentDate, 'dd/MM/yyyy');
     let begin = this.datepipe.transform(updatecurrentDate, 'dd/MM/yyyy');
-    // this.filterData={'EXPENDITURECLASS':"all",'INCURREDSTARTDATE':begin,'INCURREDENDDATE':end,"PAIDSTARTDATE":'',
-    // 'PAIDENDDATE':'','SearchString':''}
-    this.filterData={'EXPENDITURECLASS':"all",'INCURREDSTARTDATE':'','INCURREDENDDATE':'',"PAIDSTARTDATE":'',
+    this.filterData={'EXPENDITURECLASS':"all",'INCURREDSTARTDATE':begin,'INCURREDENDDATE':end,"PAIDSTARTDATE":'',
     'PAIDENDDATE':'','SearchString':''}
+    // this.filterData={'EXPENDITURECLASS':"all",'INCURREDSTARTDATE':'','INCURREDENDDATE':'',"PAIDSTARTDATE":'',
+    // 'PAIDENDDATE':'','SearchString':''}
     this.SepndMoneyForm.controls['MainClass'].setValue("all"); 
     this.SepndMoneyForm.controls['DateType'].setValue("Incurred Date");
     this.SepndMoneyForm.controls['DateRange'].setValue({ begin: currentDate, end: updatecurrentDate }); 
@@ -131,27 +132,49 @@ this.SepndMoneyForm=this._formBuilder.group({
     console.log(Row);
     localStorage.setItem('spendMoney_data', JSON.stringify(Row));
   }
+  // openDialog() {
+  //   const dialogConfig = new MatDialogConfig();
+  //   dialogConfig.width = '100%';
+  //   dialogConfig.disableClose = true;
+  //   dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'spend money', 'list': '' };
+  //   //open pop-up
+  //   const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
+  //   //Save button click
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     // if (result) {
+  //     //   this.displayedColumns = result.columObj;
+  //     //   this.ColumnsObj = result.columnameObj;
+  //     //   this.tempColobj = result.tempColobj;
+  //     //   if (!result.columObj) {
+  //     //     this.MatterInvoicesdata = new MatTableDataSource([]);
+  //     //     this.MatterInvoicesdata.paginator = this.paginator;
+  //     //     this.MatterInvoicesdata.sort = this.sort;
+  //     //   } else {
+  //     //     this.loadData();
+  //     //   }
+  //     // }
+  //   });
+  // }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'time and billing', 'list': '' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'spend money', 'list': '' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
-    //Save button click
     dialogRef.afterClosed().subscribe(result => {
-      // if (result) {
-      //   this.displayedColumns = result.columObj;
-      //   this.ColumnsObj = result.columnameObj;
-      //   this.tempColobj = result.tempColobj;
-      //   if (!result.columObj) {
-      //     this.MatterInvoicesdata = new MatTableDataSource([]);
-      //     this.MatterInvoicesdata.paginator = this.paginator;
-      //     this.MatterInvoicesdata.sort = this.sort;
-      //   } else {
-      //     this.loadData();
-      //   }
-      // }
+      if (result) {
+        this.tempColobj = result.tempColobj;
+        this.displayedColumns = result.columObj;
+        this.ColumnsObj = result.columnameObj;
+        if (!result.columObj) {
+          this.Spendmoneydata = new MatTableDataSource([]);
+          this.Spendmoneydata.paginator = this.paginator;
+          this.Spendmoneydata.sort = this.sort;
+        } else {
+          this.loadData(this.filterData);
+        }
+      }
     });
   }
   onSearch(searchFilter: any) {

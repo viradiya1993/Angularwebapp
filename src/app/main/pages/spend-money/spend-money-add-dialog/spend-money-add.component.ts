@@ -20,6 +20,7 @@ import { round } from 'lodash';
   animations: fuseAnimations
 })
 export class SpendMoneyAddComponent implements OnInit {
+  errorWarningData: any = {};
   dataSource: MatTableDataSource<UserData>;
   action: any;
   dialogTitle: string;
@@ -83,6 +84,52 @@ export class SpendMoneyAddComponent implements OnInit {
     this.dialogTitle = this.action === 'edit' ? 'Update Spend Money' : 'Add Spend Money';
     this.getPayee({});
   }
+  ngOnInit() {
+    //for Data Table hideshow 
+    this.Main3btn='disabled';
+    this.dataTableHide="false";
+    this.spendmoneyForm = this._formBuilder.group({
+      DateIncurred: [''],
+      Paid: [''],
+      DatePaid: [''],
+      Amount: [''],
+      GST: [''],
+      Bankac: [''],
+      Notes: [''],
+      Type: [''],
+      ChequeNo: [''],
+      Payee: [''],
+      Invoice: [''],
+      MultiLineExpense: [''],
+      Class: [''],
+      Matter: [''],
+      AmountIncGST: [''],
+      GSTType: [''],
+      GST1: [''],
+      AmountExGST: [''],
+      Expenseac: [''],
+      Note: [''],
+      Assetacs: [''],
+      Gstac: [''],
+      taxac: [''],
+      Equityac: [''],
+      DatePaidForSend:[''],
+      DateIncurredForSend:[''],
+      MatterGUID:['']
+     });
+
+    if (this.action == 'edit') {
+      this.size = 20;
+      $('#expac').addClass('menu-disabled');
+      this.expac = true;
+      // this.spendmoneyForm.controls['Matter'].disable();
+      this.forEditshowpopupData(); 
+    }else{
+      this.size = 20;
+      this.forAddshowpopupData();
+    }
+  }
+
   forEditshowpopupData(){
     let SendMoney_data=JSON.parse(localStorage.getItem('spendMoney_data'));
     this.getDataForTable =SendMoney_data.EXPENDITUREITEMS;
@@ -159,13 +206,6 @@ if(SendMoney_data.MULTILINE == 0 ){
     this.isItemSaveClicked ='no';
     this.getDataForTable = [];
     let SendMoney_data=JSON.parse(localStorage.getItem('spendMoney_data'));
-    
-    // let DateIncurred = SendMoney_data.DATE.split("/");
-    // let DATE = new Date(DateIncurred[1] + '/' + DateIncurred[0] + '/' + DateIncurred[2]);
-   
-    // let DatePaid = SendMoney_data.DATE.split("/");
-    // let ReceiveDATE = new Date(DatePaid[1] + '/' + DatePaid[0] + '/' + DatePaid[2]);
-
     this.spendmoneyForm.controls['DateIncurred'].setValue(new Date(), 'dd/MM/yyyy'); 
     this.spendmoneyForm.controls['DatePaid'].setValue(new Date(), 'dd/MM/yyyy'); 
      //for sending date 
@@ -182,55 +222,9 @@ if(SendMoney_data.MULTILINE == 0 ){
     this.spendmoneyForm.controls['GSTType'].setValue("1.1");
     this.GstTypeDiff="1.1"; 
     this.spendmoneyForm.controls['GST1'].disable();
-  
     // this.spendmoneyForm.controls['Amount'].setValue(SendMoney_data.AMOUNT);
     this.spendmoneyForm.controls['GST'].setValue(0.0);
     this.Classtype("Expense");
-  }
-  ngOnInit() {
-    //for Data Table hideshow 
-    this.Main3btn='disabled';
-    this.dataTableHide="false";
-    this.spendmoneyForm = this._formBuilder.group({
-      DateIncurred: [''],
-      Paid: [''],
-      DatePaid: [''],
-      Amount: [''],
-      GST: [''],
-      Bankac: [''],
-      Notes: [''],
-      Type: [''],
-      ChequeNo: [''],
-      Payee: [''],
-      Invoice: [''],
-      MultiLineExpense: [''],
-      Class: [''],
-      Matter: [''],
-      AmountIncGST: [''],
-      GSTType: [''],
-      GST1: [''],
-      AmountExGST: [''],
-      Expenseac: [''],
-      Note: [''],
-      Assetacs: [''],
-      Gstac: [''],
-      taxac: [''],
-      Equityac: [''],
-      DatePaidForSend:[''],
-      DateIncurredForSend:[''],
-      MatterGUID:['']
-     });
-
-    if (this.action == 'edit') {
-      this.size = 20;
-      $('#expac').addClass('menu-disabled');
-      this.expac = true;
-      this.spendmoneyForm.controls['Matter'].disable();
-      this.forEditshowpopupData(); 
-    }else{
-      this.size = 20;
-      this.forAddshowpopupData();
-    }
   }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
@@ -415,15 +409,8 @@ this.spendmoneyForm.controls['Payee'].setValue(result.CONTACTNAME);
     });
   }
   Addspendmoney() {
-    this.spendmoneyForm.controls['Class'].enable();
-    //this.spendmoneyForm.controls['Matter'].enable();
-    this.spendmoneyForm.controls['Expenseac'].enable();
-    this.spendmoneyForm.controls['AmountIncGST'].enable();
-    this.spendmoneyForm.controls['GSTType'].enable();
-    // this.spendmoneyForm.controls['GST1'].enable();
-    this.spendmoneyForm.controls['Assetacs'].enable();
-    this.spendmoneyForm.controls['Note'].enable();
-    //this.Classtype(this.classtype);
+    this.forCommonEnable();
+    
   }
   deletespendmoney() {
     this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
@@ -440,7 +427,7 @@ this.spendmoneyForm.controls['Payee'].setValue(result.CONTACTNAME);
   commmonDisabled(){
     this.spendmoneyForm.controls['Class'].disable();
     this.spendmoneyForm.controls['GSTType'].disable();
-    // this.spendmoneyForm.controls['GST1'].disable();
+    this.spendmoneyForm.controls['Matter'].disable();
     this.spendmoneyForm.controls['Note'].disable();
     this.spendmoneyForm.controls['AmountIncGST'].disable();
     this.spendmoneyForm.controls['Expenseac'].disable();
@@ -525,11 +512,15 @@ this.spendmoneyForm.controls['Payee'].setValue(result.CONTACTNAME);
   }
   selectSpendMoneyId(row){
   }
-  AddMoneyItem(){ 
+  commonEmptyFiild(){
     this.spendmoneyForm.controls['GSTType'].setValue("1.1");
     this.spendmoneyForm.controls['AmountIncGST'].setValue("0.00");
     this.spendmoneyForm.controls['GST1'].setValue("");
     this.spendmoneyForm.controls['AmountExGST'].setValue(" ");
+    this.spendmoneyForm.controls['Class'].setValue("Expense");
+  }
+  AddMoneyItem(){ 
+    this.commonEmptyFiild();
     this.GstTypeDiff="1.1"; 
     this.SubMain2btn='enable';
     this.Main3btn='disabled';
@@ -537,13 +528,6 @@ this.spendmoneyForm.controls['Payee'].setValue(result.CONTACTNAME);
     this.Classtype(this.classtype);
   }
   SaveItemDialog(){ 
-   //for action btn 
-    // if(this.action !='edit' && this.getDataForTable.length !=0 ){
-    //   console.log("enabled");
-    //   this.Main3btn='enable';
-    // }
-    this.FAmount=[];
-    this.FGst=[];
     this.isItemSaveClicked='yes';
     this.SubMain2btn='disabled';
     this.commmonDisabled();
@@ -568,30 +552,38 @@ else{
       SHORTNAME:this.f.Matter.value,
       NOTE:this.f.Note.value
     });
-    // console.log(this.getDataForTable);
-  // this.getDataForTable.filter = "";
-  this.getDataForTable.forEach(element => {
-    this.FAmount.push(element.AMOUNT); 
-    this.FGst.push(Number(element.GST)); 
-  });
-  this.FinalTotal= Number(this.FAmount.reduce(function (a = 0, b = 0) { return a + b; }, 0));
-  this.FinalTotalGST= Number(this.FGst.reduce(function (a = 0, b = 0) { return a + b; }, 0));
-  this.spendmoneyForm.controls['Amount'].setValue(this.FinalTotal);
-  this.spendmoneyForm.controls['GST'].setValue(this.FinalTotalGST);
+    this.globallyCalculation();
+  
   }  
+  this.highlightedRows=0;
+  this.editMoney(this.getDataForTable[0],0);
   }
-  // JustForCall(){ 
-  //   return {
-  //     EXPENDITURECLASS:this.f.Class.value,
-  //     AMOUNT:this.f.AmountIncGST.value,
-  //     GST:this.f.GST1.value,
-  //     EXPENDITUREGUID:'',
-  //   id:this.getDataForTable.length}; 
-  // }
+  globallyCalculation(){
+    console.log("globbally");
+    this.FAmount=[];
+    this.FGst=[];
+    this.getDataForTable.forEach(element => {
+      this.FAmount.push(element.AMOUNT); 
+      this.FGst.push(Number(element.GST)); 
+    });
+    this.FinalTotal= Number(this.FAmount.reduce(function (a = 0, b = 0) { return a + b; }, 0));
+    this.FinalTotalGST= Number(this.FGst.reduce(function (a = 0, b = 0) { return a + b; }, 0));
+    console.log( this.FinalTotal)
+    console.log( this.FinalTotalGST)
+    this.spendmoneyForm.controls['Amount'].setValue(this.FinalTotal);
+    this.spendmoneyForm.controls['GST'].setValue(this.FinalTotalGST);
+  }
   deleteElement(){
     this.getDataForTable.splice(this.INDEX,1);
+    this.globallyCalculation();
+    this.commonEmptyFiild();
+    this.commmonDisabled();
   }
   CancelItemDialog(){
+    this.SubMain2btn='disabled';
+    this.Main3btn='enable';
+    this.commmonDisabled();
+
   }
   amountCal(){
     let amount =this.f.AmountIncGST.value;
@@ -692,13 +684,11 @@ else{
       
   }else if(this.action =='edit' && SendMoney_data.MULTILINE == 0 && this.f.MultiLineExpense.value==true){
     this.commonSendMultiLineData();
-  }  
-if(this.f.MultiLineExpense.value==false){this.multicheckboxval= 0;
-}
-else if(this.getDataForTable.length == 1){ 
-  this.multicheckboxval= 0;
-} 
-else{this.multicheckboxval= 1;}
+  }
+  // for multiline   
+  if(this.f.MultiLineExpense.value==false){this.multicheckboxval= 0;}
+  else if(this.getDataForTable.length == 1){this.multicheckboxval= 0;} 
+  else{this.multicheckboxval= 1;}
     
 let Data={
       EXPENDITUREGUID:this.action == 'edit' ? SendMoney_data.EXPENDITUREGUID : " ",
@@ -750,12 +740,20 @@ let Data={
   checkValidation(bodyData: any, details: any) {
     let errorData: any = [];
     let warningData: any = [];
+    let tempError: any = [];
+    let tempWarning: any = [];
     bodyData.forEach(function (value) {
-      if (value.VALUEVALID == 'No')
+      if (value.VALUEVALID == 'No'){
         errorData.push(value.ERRORDESCRIPTION);
-      else if (value.VALUEVALID == 'WARNING')
+        tempError[value.FIELDNAME] = value;
+      }
+      else if (value.VALUEVALID == 'WARNING'){
+        tempWarning[value.FIELDNAME] = value;
         warningData.push(value.ERRORDESCRIPTION);
+      }
+     
     });
+    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
@@ -801,6 +799,13 @@ let Data={
   clicktitle(){
 
   }
+  Cashtype(val){
+  if(val=="Cheque"){
+    this.spendmoneyForm.controls['ChequeNo'].setValue("1"); 
+  }else{
+    this.spendmoneyForm.controls['ChequeNo'].setValue("0"); 
+  }
+  }
   editElement(){
   this.forCommonEnable();
   this.btnClickpurpose = "edit" ;
@@ -810,12 +815,12 @@ let Data={
 editMoney(row,index){
   this.MainData=row;
   this.INDEX=index;
- this.commmonDisabled();
-this.spendmoneyForm.controls['AmountIncGST'].setValue(row.AMOUNT);
-this.spendmoneyForm.controls['Class'].setValue(row.EXPENDITURECLASS);
-this.spendmoneyForm.controls['GST1'].setValue(row.GST);
-this.spendmoneyForm.controls['Note'].setValue(row.NOTE);
-this.spendmoneyForm.controls['Matter'].setValue(row.SHORTNAME);
+  this.spendmoneyForm.controls['AmountIncGST'].setValue(row.AMOUNT);
+  this.spendmoneyForm.controls['Class'].setValue(row.EXPENDITURECLASS);
+  this.spendmoneyForm.controls['GST1'].setValue(row.GST);
+  this.spendmoneyForm.controls['Note'].setValue(row.NOTE);
+  this.spendmoneyForm.controls['Matter'].setValue(row.SHORTNAME);
+  this.commmonDisabled();
   }
 }
 

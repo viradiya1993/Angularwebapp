@@ -2,9 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { AddContactService, ContactService, TableColumnsService } from './../../../../_services';
+import { AddContactService, ContactService } from './../../../../_services';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { Router } from '@angular/router';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 
@@ -27,8 +26,6 @@ export class ContactDialogComponent implements OnInit {
   knowbyothername: boolean;
   birthdayreminder: boolean;
   samesstreet: boolean;
-  postknowbyothername: any;
-  postbirthdayreminder: string;
   postsameasstreet: string;
   isLoadingResults: boolean = false;
   isspiner: boolean = false;
@@ -38,9 +35,7 @@ export class ContactDialogComponent implements OnInit {
 
   constructor(
     public MatDialog: MatDialog,
-    private TableColumnsService: TableColumnsService,
     public dialogRef: MatDialogRef<ContactDialogComponent>,
-    private router: Router,
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
     private Contact: ContactService,
@@ -49,14 +44,18 @@ export class ContactDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
     this.action = _data.action;
-    this.dialogTitle = this.action === 'edit' ? 'Edit Contact' : 'New Contact';
+    if (this.action === 'edit')
+      this.dialogTitle = 'Update Contact';
+    else if (this.action == 'duplicate')
+      this.dialogTitle = 'Duplicate Contact'
+    else
+      this.dialogTitle = 'New Contact';
   }
   common: Common[];
   nameSelected: string;
   value: number;
   contactForm: FormGroup;
   ngOnInit() {
-
     this.contactForm = this._formBuilder.group({
       //CONTACTGUID: ['', Validators.required],
       CONTACTNAME: ['', Validators.required],
@@ -135,16 +134,14 @@ export class ContactDialogComponent implements OnInit {
     ];
 
     this.nameSelected = "Person";
-    if (this.action === 'edit') {
+    if (this.action === 'edit' || this.action === 'duplicate') {
       this.isLoadingResults = true;
-      console.log(localStorage.getItem('contactGuid'));
       let contactguidforbody = { CONTACTGUID: localStorage.getItem('contactGuid') }
       this.Contact.getContact(contactguidforbody).subscribe(res => {
         if (res.MESSAGE == "Not logged in") {
           this.dialogRef.close(false);
         } else {
           if (res.DATA.CONTACTS[0]) {
-            console.log(res.DATA.CONTACTS[0]);
             let getContactData = res.DATA.CONTACTS[0];
             this.editDataCompny = (getContactData.COMPANYCONTACTGUID != '' && getContactData.COMPANYNAME != '') ? false : true;
             // console.log(this.editDataCompny);
@@ -158,8 +155,7 @@ export class ContactDialogComponent implements OnInit {
               this.contactForm.get('OTHERGIVENNAMES').disable();
               this.contactForm.get('OTHERFAMILYNAME').disable();
               this.contactForm.get('REASONFORCHANGE').disable();
-            }
-            else {
+            } else {
               this.knowbyothername = true;
               this.contactForm.get('OTHERGIVENNAMES').enable();
               this.contactForm.get('OTHERFAMILYNAME').enable();
@@ -271,13 +267,6 @@ export class ContactDialogComponent implements OnInit {
     }
   }
 
-  ondialogcloseClick(): void {
-    this.dialogRef.close(false);
-  }
-
-
-  onClick(value) {
-  }
 
   // convenience getter for easy access to form fields
   get f() {
@@ -294,17 +283,13 @@ export class ContactDialogComponent implements OnInit {
     // for edit contactGuid
     this.contactguid = this.action !== 'edit' ? "" : localStorage.getItem('getContact_edit');
     //for checkbox
-    this.check = this.f.ACTIVE.value == true ? "1" : "0";
-    this.postknowbyothername = this.f.KNOWNBYOTHERNAME.value == true ? "1" : "0";
-    this.postbirthdayreminder = this.f.BIRTHDAYREMINDER.value == true ? "1" : "0";
     this.postsameasstreet = this.f.SAMEASSTREET.value == true ? "1" : "0";
-    //let abc ={ FormAction: "insert"}
     let detailsdata = {
       CONTACTGUID: this.contactguid,
       //CONTACTGUID:this.f.CONTACTGUID.value,
       CONTACTNAME: this.f.CONTACTNAME.value,
       CONTACTTYPE: this.f.CONTACTTYPE.value,
-      ACTIVE: this.check,
+      ACTIVE: this.f.ACTIVE.value == true ? "1" : "0",
       //person
       COMPANYCONTACTGUID: this.f.COMPANYCONTACTGUID.value,
       POSITION: this.f.POSITION.value,
@@ -313,7 +298,7 @@ export class ContactDialogComponent implements OnInit {
       MIDDLENAMES: this.f.MIDDLENAMES.value,
       NAMELETTERS: this.f.NAMELETTERS.value,
       FAMILYNAME: this.f.FAMILYNAME.value,
-      KNOWNBYOTHERNAME: this.postknowbyothername,
+      KNOWNBYOTHERNAME: this.f.KNOWNBYOTHERNAME.value == true ? "1" : "0",
       OTHERFAMILYNAME: this.f.OTHERFAMILYNAME.value,
       OTHERGIVENNAMES: this.f.OTHERGIVENNAMES.value,
       REASONFORCHANGE: this.f.REASONFORCHANGE.value,
@@ -324,7 +309,7 @@ export class ContactDialogComponent implements OnInit {
       MARITALSTATUS: this.f.MARITALSTATUS.value,
       SPOUSE: this.f.SPOUSE.value,
       NUMBEROFDEPENDANTS: this.f.NUMBEROFDEPENDANTS.value,
-      BIRTHDAYREMINDER: this.postbirthdayreminder,
+      BIRTHDAYREMINDER: this.f.BIRTHDAYREMINDER.value == true ? "1" : "0",
       TOWNOFBIRTH: this.f.TOWNOFBIRTH.value,
       COUNTRYOFBIRTH: this.f.COUNTRYOFBIRTH.value,
       DATEOFDEATH: this.dateofdeath,

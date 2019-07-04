@@ -210,7 +210,149 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     }
 
-    //for binding
+
+    /* ---------------------------------------------------------------------help Licence start--------------------------------------------------------------------------  */
+    openLicence(Data) {
+        let w = Data == 'LI' ? '50%' : '25%';
+        const dialogRef = this.dialog.open(LicenceAgreementComponent, {
+            disableClose: true,
+            //width: w,
+            data: { action: Data }
+        });
+        dialogRef.afterClosed().subscribe(result => { });
+    }
+    /* ---------------------------------------------------------------------help Licence end--------------------------------------------------------------------------  */
+
+    /* ---------------------------------------------------------------------Contacts Start--------------------------------------------------------------------------  */
+    // for new contact dialog
+    ContactsDialog(actionType) {
+        let contactPopupData = {};
+        if (actionType == "new") {
+            contactPopupData = { action: actionType };
+        } else if (actionType == 'edit' || actionType == 'duplicate' || actionType == 'matter_contect') {
+            if (actionType == "matter_contect") {
+                let getMatterContactGuId = JSON.parse(localStorage.getItem('set_active_matters'));
+                localStorage.setItem('contactGuid', getMatterContactGuId.COMPANYCONTACTGUID);
+                actionType = "edit";
+                if (getMatterContactGuId.COMPANYCONTACTGUID == "") {
+                    this.toastr.error('CONTACTGUID not available');
+                    return false;
+                }
+            } else if (!localStorage.getItem('contactGuid') && actionType != "matter_contect") {
+                this.toastr.error("Please Select Contact");
+                return false;
+            }
+            contactPopupData = { action: actionType }
+        }
+        const dialogRef = this.dialog.open(ContactDialogComponent, {
+            disableClose: true, panelClass: 'contact-dialog', data: contactPopupData
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result)
+                $('#refreshContactTab').click();
+        });
+    }
+
+    openCorresDialog() {
+        let getMatterGuId = JSON.parse(localStorage.getItem('set_active_matters'));
+        const dialogRef = this.dialog.open(ContactCorresDetailsComponent, {
+            disableClose: true, width: '100%', data: getMatterGuId.MATTERGUID,
+        });
+        dialogRef.afterClosed().subscribe(result => { });
+    }
+    /* ---------------------------------------------------------------------Contacts End--------------------------------------------------------------------------  */
+    /* ---------------------------------------------------------------------Matter start--------------------------------------------------------------------------  */
+    matterpopup(actionType) {
+        let MaterPopupData = {};
+        if (actionType == "new") {
+            MaterPopupData = { action: actionType };
+        } else if (actionType == 'edit' || actionType == 'duplicate') {
+            if (!JSON.parse(localStorage.getItem('set_active_matters'))) {
+                this.toastr.error("Please Select Matter");
+                return false;
+            }
+            let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
+            MaterPopupData = { action: actionType, 'matterGuid': mattersData.MATTERGUID }
+        }
+        const dialogRef = this.dialog.open(MatterPopupComponent, {
+            width: '100%',
+            disableClose: true,
+            data: MaterPopupData
+        });
+        dialogRef.afterClosed().subscribe(result => { });
+    }
+    // Delete matter Pop-up
+    DeleteNewmatterpopup(): void {
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                let MatterData: any = JSON.parse(localStorage.getItem('set_active_matters'));
+                let postData = { FormAction: "delete", data: { MATTERGUID: MatterData.MATTERGUID } }
+                this._mattersService.AddNewMatter(postData).subscribe(res => {
+                    if (res.STATUS == "success" && res.CODE == 200) {
+                        $('#refreshMatterTab').click();
+                        this.toastr.success('Delete successfully');
+                    }
+                });
+            }
+            this.confirmDialogRef = null;
+        });
+    }
+    /* ---------------------------------------------------------------------Matter End--------------------------------------------------------------------------  */
+
+    /* ---------------------------------------------------------------------Activity Start--------------------------------------------------------------------------  */
+    //add edit and duplicat ActivityDialog
+    ActivityDialog(actionType) {
+        let popupData: any = {};
+        if (actionType == "new") {
+            popupData = { action: actionType };
+        } else if (actionType == "edit" || actionType == "Duplicate") {
+            let ActivityData = JSON.parse(localStorage.getItem('current_ActivityData'));
+            if (!ActivityData) {
+                this.toastr.error("Please Select Activity");
+                return false;
+            }
+            popupData = { action: actionType, ACTIVITYGUID: ActivityData.ACTIVITYGUID };
+        }
+        const dialogRef = this.dialog.open(ActivityDialogComponent, {
+            disableClose: true, panelClass: 'Activity-dialog', data: popupData
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result)
+                $('#refreshActivities').click();
+        });
+    }
+
+    //DeleteActivity
+    DeleteActivityDialog(): void {
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                let ActivityData = JSON.parse(localStorage.getItem('current_ActivityData'));
+                let postData = { FormAction: "delete", data: { ACTIVITYGUID: ActivityData.ACTIVITYGUID } }
+                this._usersService.SetActivityData(postData).subscribe(res => {
+                    if (res.STATUS == "success" && res.CODE == 200) {
+                        $('#refreshActivities').click();
+                        this.toastr.success('Delete successfully');
+                    }
+                });
+            }
+            this.confirmDialogRef = null;
+        });
+    }
+    /* ---------------------------------------------------------------------Activity End--------------------------------------------------------------------------  */
+
+
+
+
 
     /* ---------------------------------------------------------------------------start of timer add-------------------------------------------------------------------------  */
     toggleSidebarOpen(key) {
@@ -347,7 +489,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }
 
     }
-    //*----**************************************time enrt add start***************************************
     public addNewTimeEntry(Data: any, matterData: any) {
         const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '100%', disableClose: true, data: { 'edit': Data, 'matterData': matterData } });
         dialogRef.afterClosed().subscribe(result => {
@@ -355,74 +496,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 $('#refreshTimeEntryTab').click();
         });
     }
-    //*----**************************************time enrt add end***************************************
     /* ---------------------------------------------------------------------end of timer add--------------------------------------------------------------------------  */
-    // for new contact dialog
-    AddContactsDialog() {
-        const dialogRef = this.dialog.open(ContactDialogComponent, {
-            disableClose: true,
-            panelClass: 'contact-dialog',
-            data: {
-                action: 'new',
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#refreshContactTab').click();
-        });
-    }
 
-
-    /* ---------------------------------------------------------------------help Licence start--------------------------------------------------------------------------  */
-    openLicence(Data) {
-        let w = Data == 'LI' ? '50%' : '25%';
-        const dialogRef = this.dialog.open(LicenceAgreementComponent, {
-            disableClose: true,
-            //width: w,
-            data: { action: Data }
-        });
-        dialogRef.afterClosed().subscribe(result => { });
-    }
-    /* ---------------------------------------------------------------------help Licence end--------------------------------------------------------------------------  */
-
-
-    //client details from matter
-    ClientDetailsDialog() {
-        let getMatterContactGuId = JSON.parse(localStorage.getItem('set_active_matters'));
-        if (getMatterContactGuId.COMPANYCONTACTGUID == "") {
-            this.toastr.error('CONTACTGUID not available');
-        } else {
-            localStorage.setItem('contactGuid', getMatterContactGuId.COMPANYCONTACTGUID);
-            const dialogRef = this.dialog.open(ContactDialogComponent, { disableClose: true, data: { action: 'edit' } });
-            dialogRef.afterClosed().subscribe(result => { });
-        }
-    }
-
-    //edit Contact diloage
-    EditContactsDialog() {
-        if (!localStorage.getItem('contactGuid')) {
-            this.toastr.error("Please Select Contact");
-        } else {
-            const dialogRef = this.dialog.open(ContactDialogComponent, { disableClose: true, data: { action: 'edit' } });
-            dialogRef.afterClosed().subscribe(result => {
-                if (result)
-                    $('#refreshContactTab').click();
-            });
-        }
-
-    }
-
-
-    openCorresDialog() {
-        let getMatterGuId = JSON.parse(localStorage.getItem('set_active_matters'));
-        let getmatguid = getMatterGuId.MATTERGUID;
-        const dialogRef = this.dialog.open(ContactCorresDetailsComponent, {
-            disableClose: true,
-            width: '100%',
-            data: getmatguid,
-        });
-        dialogRef.afterClosed().subscribe(result => { });
-    }
 
     //Reportpopup open
     Reportpopup(ReportData) {
@@ -440,44 +515,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         //     this.toastr.error('Access Denied');
         // }
     }
-    /* ---------------------------------------------------------------------Matter start--------------------------------------------------------------------------  */
-    matterpopup(actionType) {
-        let MaterPopupData = {};
-        if (actionType == "new") {
-            MaterPopupData = { action: actionType };
-        } else if (actionType == 'edit' || actionType == 'duplicate') {
-            let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
-            MaterPopupData = { action: actionType, 'matterGuid': mattersData.MATTERGUID }
-        }
-        const dialogRef = this.dialog.open(MatterPopupComponent, {
-            width: '100%',
-            disableClose: true,
-            data: MaterPopupData
-        });
-        dialogRef.afterClosed().subscribe(result => { });
-    }
-    // Delete matter Pop-up
-    DeleteNewmatterpopup(): void {
-        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-            disableClose: true,
-            width: '100%',
-        });
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-        this.confirmDialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                let MatterData: any = JSON.parse(localStorage.getItem('set_active_matters'));
-                let postData = { FormAction: "delete", data: { MATTERGUID: MatterData.MATTERGUID } }
-                this._mattersService.AddNewMatter(postData).subscribe(res => {
-                    if (res.STATUS == "success" && res.CODE == 200) {
-                        $('#refreshMatterTab').click();
-                        this.toastr.success('Delete successfully');
-                    }
-                });
-            }
-            this.confirmDialogRef = null;
-        });
-    }
-    /* ---------------------------------------------------------------------Matter End--------------------------------------------------------------------------  */
     // Add Spend Money Pop-up
     Addspendmoneypopup() {
         const dialogConfig = new MatDialogConfig();
@@ -645,49 +682,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             console.log(result);
         });
     }
-
-    /* Activity Module Function's */
-
-    //add edit and duplicat ActivityDialog
-    ActivityDialog(actionType) {
-        let popupData: any = {};
-        if (actionType == "new") {
-            popupData = { action: actionType };
-        } else if (actionType == "edit" || actionType == "Duplicate") {
-            let ActivityData = JSON.parse(localStorage.getItem('current_ActivityData'));
-            popupData = { action: actionType, ACTIVITYGUID: ActivityData.ACTIVITYGUID };
-        }
-        const dialogRef = this.dialog.open(ActivityDialogComponent, {
-            disableClose: true, panelClass: 'Activity-dialog', data: popupData
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#refreshActivities').click();
-        });
-    }
-
-    //DeleteActivity
-    DeleteActivityDialog(): void {
-        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-            disableClose: true,
-            width: '100%',
-        });
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-        this.confirmDialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                let ActivityData = JSON.parse(localStorage.getItem('current_ActivityData'));
-                let postData = { FormAction: "delete", data: { ACTIVITYGUID: ActivityData.ACTIVITYGUID } }
-                this._usersService.SetActivityData(postData).subscribe(res => {
-                    if (res.STATUS == "success" && res.CODE == 200) {
-                        $('#refreshActivities').click();
-                        this.toastr.success('Delete successfully');
-                    }
-                });
-            }
-            this.confirmDialogRef = null;
-        });
-    }
-    /* End Activity Module Function's */
 
     //Change Password Dialog
     ChangePass() {

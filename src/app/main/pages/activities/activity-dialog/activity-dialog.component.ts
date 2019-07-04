@@ -35,7 +35,7 @@ export class ActivityDialogComponent implements OnInit {
     if (this.action === 'new') {
       this.dialogTitle = 'New Activity';
     } else if (this.action === 'edit') {
-      this.dialogTitle = 'edit Activity';
+      this.dialogTitle = 'Update Activity';
     } else {
       this.dialogTitle = 'Duplicate Activity';
     }

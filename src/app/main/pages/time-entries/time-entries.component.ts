@@ -108,7 +108,6 @@ export class TimeEntriesComponent implements OnInit {
   LoadData(Data) {
     this.isLoadingResults = true;
     this.Timersservice.getTimeEnrtyData(Data).subscribe(response => {
-      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.WORKITEMS[0]) {
           this.highlightedRows = response.DATA.WORKITEMS[0].WORKITEMGUID;

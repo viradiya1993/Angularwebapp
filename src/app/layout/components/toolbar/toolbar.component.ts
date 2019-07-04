@@ -440,27 +440,19 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         //     this.toastr.error('Access Denied');
         // }
     }
-    // New matter Pop-up
-    AddNewmatterpopup() {
-        const dialogConfig = new MatDialogConfig();
+    /* ---------------------------------------------------------------------Matter start--------------------------------------------------------------------------  */
+    matterpopup(actionType) {
+        let MaterPopupData = {};
+        if (actionType == "new") {
+            MaterPopupData = { action: actionType };
+        } else if (actionType == 'edit' || actionType == 'duplicate') {
+            let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
+            MaterPopupData = { action: actionType, 'matterGuid': mattersData.MATTERGUID }
+        }
         const dialogRef = this.dialog.open(MatterPopupComponent, {
             width: '100%',
             disableClose: true,
-            data: {
-                action: 'new'
-            }
-        });
-
-        dialogRef.afterClosed().subscribe(result => { });
-    }
-    // Edit matter Pop-up
-    EditNewmatterpopup() {
-        const dialogConfig = new MatDialogConfig();
-        let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
-        const dialogRef = this.dialog.open(MatterPopupComponent, {
-            width: '100%',
-            disableClose: true,
-            data: { action: 'edit', 'matterGuid': mattersData.MATTERGUID }
+            data: MaterPopupData
         });
         dialogRef.afterClosed().subscribe(result => { });
     }
@@ -485,7 +477,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef = null;
         });
     }
-
+    /* ---------------------------------------------------------------------Matter End--------------------------------------------------------------------------  */
     // Add Spend Money Pop-up
     Addspendmoneypopup() {
         const dialogConfig = new MatDialogConfig();

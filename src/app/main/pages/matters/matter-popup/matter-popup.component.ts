@@ -40,8 +40,16 @@ export class MatterPopupComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
     this.action = _data.action;
-    this.dialogTitle = this.action === 'edit' ? 'Edit Matter' : 'New Matter';
-    this.isEdit = _data.action === 'edit' ? true : false;
+    if (this.action === 'edit') {
+      this.dialogTitle = 'Edit Matter';
+      this.isEdit = true;
+    } else if (this.action == 'duplicate') {
+      this.dialogTitle = 'Duplicate Matter'
+      this.isEdit = true;
+    } else {
+      this.dialogTitle = 'New Matter';
+      this.isEdit = false;
+    }
     this.isEditMatter = this._data.matterGuid;
     this.classtype;
   }
@@ -61,7 +69,7 @@ export class MatterPopupComponent implements OnInit {
       }
       this.isLoadingResults = false;
     });
-    if (this.action === 'edit') {
+    if (this.action === 'edit' || this.action === 'duplicate') {
       this.isLoadingResults = true;
       this._mattersService.getMattersDetail({ MATTERGUID: this._data.matterGuid, 'GETALLFIELDS': true }).subscribe(response => {
         if (response.CODE === 200 && response.STATUS === 'success') {
@@ -734,11 +742,9 @@ export class MatterPopupComponent implements OnInit {
     this.classtype = value;
   }
   ondialogSaveClick(): void {
-    console.log(this.f.STAMPDUTYAMOUNT.value);
     this.FormAction = this.action !== 'edit' ? 'insert' : 'update';
     this.isspiner = true;
     let details: any = {
-      MATTERGUID: this.f.MATTERGUID.value,
       MATTERCLASS: this.f.MATTERCLASS.value,
       ACTIVE: this.f.ACTIVE.value == true ? 1 : 0,
       SHORTNAME: this.f.SHORTNAME.value,
@@ -762,6 +768,9 @@ export class MatterPopupComponent implements OnInit {
       ARCHIVENO: this.f.ARCHIVENO.value,
       ARCHIVEDATE: this.f.ARCHIVEDATE.value,
     };
+    if (this.action === 'edit') {
+      details.MATTERGUID = this.f.MATTERGUID.value;
+    }
     // general
     details.NOTES = this.f.NOTES.value;
     details.OWNERNAME = this.f.OWNERNAME.value;

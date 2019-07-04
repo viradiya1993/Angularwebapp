@@ -1,0 +1,21 @@
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+</div>
+<div cdkDrag class="popup_main_div add_edit_contact_main">
+    <h2 cdkDragHandle mat-dialog-title>Select Account
+        <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
+          <mat-icon>close</mat-icon>
+        </button>
+    </h2>
+    <div mat-dialog-content class="mat-typography main">
+      <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+
+      </div>
+    </div>
+    <mat-dialog-actions align="end" class="popup_ftr">
+        <button mat-raised-button color="accent" (click)="SelectAccount()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Select</button>
+        <button mat-raised-button color="accent" (click)="NewAccount()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>New Account</button>
+        <button mat-raised-button color="accent" (click)="EditAccount()" [disabled]="isspiner" ><mat-spinner *ngIf="isspiner"></mat-spinner>Edit Account</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
+    </mat-dialog-actions>
+</div>

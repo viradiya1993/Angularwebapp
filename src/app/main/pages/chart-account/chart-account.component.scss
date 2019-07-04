@@ -1,5 +1,5 @@
 @import "src/@fuse/scss/fuse";
-#users {
+#account {
     .header {
         .search-wrapper {
             width: 100%;
@@ -59,7 +59,7 @@
     padding: 20px !important;
 }
 
-app-users {
+app-chart-account {
     width: 100%;
 }
 
@@ -77,7 +77,7 @@ app-users {
     padding-left: 80px;
 }
 
-#users .p-24.list_tbl_main {
+#account .p-24.list_tbl_main {
     // margin-top: 85px;
     overflow: hidden;
 }
@@ -87,7 +87,7 @@ app-users {
     padding-top: 0 !important;
 }
 
-#users .content {
+#account .content {
     position: relative;
 }
 
@@ -137,7 +137,7 @@ button#refreshContactTab {
     display: none;
 }
 
-#users .content .example {
+#account .content .example {
     padding: 20px 10px;
 }
 
@@ -149,6 +149,23 @@ th.mat-sort-header-sorted {
     width: 100%;
 }
 
-#refreshUser {
+#refreshAccount {
     display: none;
+}
+
+// Tree Table Css
+.example-tree-invisible {
+    display: none;
+  }
+  
+.example-tree ul,
+.example-tree li {
+margin-top: 0;
+margin-bottom: 0;
+list-style-type: none;
+}
+
+table.simple {
+    margin-left: 27px !important;
+    margin-top: 12px !important;
 }

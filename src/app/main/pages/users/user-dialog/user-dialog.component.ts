@@ -19,6 +19,7 @@ export class UserDialogComponent implements OnInit {
   dialogTitle: string;
   isspiner: boolean = false;
   theCheckbox = true;
+  userForm: FormGroup;
   constructor(
     public MatDialog: MatDialog,
     public dialogRef: MatDialogRef<UserDialogComponent>,
@@ -38,7 +39,6 @@ export class UserDialogComponent implements OnInit {
     }
 
   }
-  userForm: FormGroup;
   ngOnInit() {
     this.userForm = this._formBuilder.group({
       username: ['', Validators.required],

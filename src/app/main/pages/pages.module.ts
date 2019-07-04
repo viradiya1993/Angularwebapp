@@ -13,11 +13,15 @@ import { SpendMoneyModule } from './spend-money/spend-money.module';
 import { ReceiveMoneyModule } from './receive-money/receive-money.module';
 import { TemplateModule } from './template/template.module';
 import { SystemSettingTemplateModule } from './system-settings/templates/templates.module';
-// import { NumericDirective } from './time-entries/time-entry-dialog/numericValidation.component';
 import { ActivitiesModule } from './activities/activities.module';
 import { SortingDialogModule } from '../sorting-dialog/sorting-dialog.module';
 import { NewfilenoteModule } from './newfilenote/newfilenote.module';
 import { DocumentRegitser } from './document-register/document-register.module';
+// import { ChartOfAccount } from './chart-account/chart-account.module';
+import { ChartOfAccount } from './chart-account/chart-account.module';
+import { SelectAccountModule } from './select-account/select-account.module';
+
+
 
 
 
@@ -35,6 +39,7 @@ const appRoutes: Routes = [
   { path: 'create-document', loadChildren: './template/template.module#TemplateModule' },
   { path: 'diary', loadChildren: './diary/diary.module#DiaryModule' },
   { path: 'document-register', loadChildren: './document-register/document-register.module#DocumentRegitser' },
+  { path: 'chart-account', loadChildren: './chart-account/chart-account.module#ChartOfAccount' }
 
   //added by web 19
   //  { path: ' ', loadChildren: './system-setting/system-settings.module#SystemSettingModule' },
@@ -60,9 +65,9 @@ const appRoutes: Routes = [
     ActivitiesModule,
     SortingDialogModule,
     NewfilenoteModule,
-    DocumentRegitser
-   
-
+    DocumentRegitser,
+    ChartOfAccount,
+    SelectAccountModule
   ]
 })
 export class PagesModule { }  

@@ -37,7 +37,8 @@ import { NewfilenoteComponent } from './../../../main/pages/newfilenote/newfilen
 import { DocumentDailogComponent } from './../../../main/pages/document-register/document-dailog/document-dailog.component';
 import { EmailDailogComponent } from './../../../main/pages/template/email-templete/email-dailog/email-dailog.component';
 import { PacksDailogComponent } from './../../../main/pages/template/packs/packs-dailog/packs-dailog.component';
-
+import { ChartAcDailogComponent } from './../../../main/pages/chart-account/chart-ac-dailog/chart-ac-dailog.component';
+import { SelectAccountComponent } from './../../../main/pages/select-account/select-account.component';
 
 @Component({
     selector: 'toolbar',
@@ -883,6 +884,70 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             console.log(result);
         });
     }
+
+    /* Chart Of Account Module Function's */
+
+    //NewAccount
+    NewAccount(){
+        const dialogRef = this.dialog.open(ChartAcDailogComponent, {
+            disableClose: true,
+            panelClass: 'ChartAc-dialog',
+            data: {
+                action: 'new',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+
+    //EditAccount
+    EditAccount(){
+        const dialogRef = this.dialog.open(ChartAcDailogComponent, {
+            disableClose: true,
+            panelClass: 'ChartAc-dialog',
+            data: {
+                action: 'edit',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    //DeleteAccount
+    DeleteAccount():void{
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    //DuplicateAccount
+    DuplicateAccount(){
+        const dialogRef = this.dialog.open(ChartAcDailogComponent, {
+            disableClose: true,
+            panelClass: 'ChartAc-dialog',
+            data: {
+                action: 'copy',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    //ReconcileAC
+    ReconcileAC(){
+        console.log('REcoun work!!!');
+        const dialogRef = this.dialog.open(SelectAccountComponent, {
+
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
@@ -925,7 +990,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 13;
         } else if (x[1] == "document-register") {
             this.isTabShow = 14;
-        } else {
+        } else if(x[1] == "chart-account"){
+            this.isTabShow = 15;
+        } 
+        else {
             this.isTabShow = 1;
         }
     }

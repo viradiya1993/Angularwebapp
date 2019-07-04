@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import { AuthGuard } from '../../../_guards';
 import { RouterModule } from '@angular/router';
 
-
-import { DocumentRegisterComponent } from './document-register.component';
-import { DocumentDailogComponent } from './document-dailog/document-dailog.component';
+import { ChartAccountComponent } from './chart-account.component';
+import { ChartAcDailogComponent } from './chart-ac-dailog/chart-ac-dailog.component';
+import { GeneralComponent } from './chart-ac-dailog/general/general.component';
+import { XeroComponent } from './chart-ac-dailog/xero/xero.component';
+import { MyobComponent } from './chart-ac-dailog/myob/myob.component';
 
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
@@ -30,23 +32,28 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {MatSortModule} from '@angular/material/sort';
 
 
+
 const routes = [
-    { path: 'document-register', component: DocumentRegisterComponent, canActivate: [AuthGuard] },  
+    { path: 'chart-account', component: ChartAccountComponent, canActivate: [AuthGuard] },  
 ];
 
 @NgModule({  
     declarations: [
-        DocumentRegisterComponent,
-        DocumentDailogComponent
+        ChartAccountComponent,
+        ChartAcDailogComponent,
+        GeneralComponent,
+        XeroComponent,
+        MyobComponent
     ],
-    entryComponents: [DocumentDailogComponent],
+    entryComponents: [
+      ChartAcDailogComponent,
+    ],
     imports: [
       CommonModule,
       RouterModule.forChild(routes),
       FuseSharedModule,
       FuseConfirmDialogModule,
       FuseSidebarModule,
-  
       MatButtonModule,
       MatCheckboxModule,
       MatDatepickerModule,
@@ -101,4 +108,4 @@ const routes = [
     bootstrap: [],
 })
 
-  export class DocumentRegitser { }
+export class ChartOfAccount { }

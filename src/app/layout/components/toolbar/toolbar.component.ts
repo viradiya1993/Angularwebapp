@@ -302,6 +302,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef = null;
         });
     }
+    //New File Note Dialog
+    NewFileNote() {
+        const dialogRef = this.dialog.open(NewfilenoteComponent, { width: '100%', disableClose: true });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
     /* ---------------------------------------------------------------------Matter End--------------------------------------------------------------------------  */
 
     /* ---------------------------------------------------------------------Activity Start--------------------------------------------------------------------------  */
@@ -689,19 +696,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
             console.log(result);
         });
-    }
-
-    //New File Note Dialog
-    NewFileNote() {
-        const dialogRef = this.dialog.open(NewfilenoteComponent, {
-
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
-    }
-
-    /* Document Register Module */
+    }/* Document Register Module */
 
     // New Record Document
     NewDocumnt() {

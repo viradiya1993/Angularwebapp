@@ -44,10 +44,10 @@ export class ActivityDialogComponent implements OnInit {
   ngOnInit() {
     this.activityForm = this._formBuilder.group({
       ACTIVITYGUID: [''],
-      ACTIVITYTYPE: [''],
+      ACTIVITYTYPE: ['Activity'],
       ACTIVITYID: [''],
       DESCRIPTION: [''],
-      GSTTYPE: [''],
+      GSTTYPE: ['GST Exclusive'],
       RATEPERUNIT: ['', Validators.required],
       UNITDESCRIPTIONPLURAL: [''],
       UNITDESCRIPTIONSINGLE: ['']

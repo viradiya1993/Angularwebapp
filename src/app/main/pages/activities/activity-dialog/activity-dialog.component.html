@@ -12,14 +12,14 @@
             <form [formGroup]="activityForm" fxLayout="column" fxFlex="1 0 auto" name="form">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ACTIVITYTYPE,'has-warning':errorWarningData.Warning?.ACTIVITYTYPE}">
-                        <mat-label>Actitity Type</mat-label>
+                        <mat-label>Activity Type</mat-label>
                         <mat-select #value formControlName="ACTIVITYTYPE">
-                            <mat-option value="Activity">Actitity</mat-option>
+                            <mat-option value="Activity">Activity</mat-option>
                             <mat-option value="Sundry">Sundry</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ACTIVITYID,'has-warning':errorWarningData.Warning?.ACTIVITYID}">
-                        <mat-label>Sundry / Actitity</mat-label>
+                        <mat-label>Sundry / Activity</mat-label>
                         <input formControlName="ACTIVITYID" matInput>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DESCRIPTION,'has-warning':errorWarningData.Warning?.DESCRIPTION}">

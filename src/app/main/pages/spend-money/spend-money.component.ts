@@ -68,10 +68,10 @@ this.SepndMoneyForm=this._formBuilder.group({
     updatecurrentDate.setDate(updatecurrentDate.getDate() - 30);
     let end = this.datepipe.transform(currentDate, 'dd/MM/yyyy');
     let begin = this.datepipe.transform(updatecurrentDate, 'dd/MM/yyyy');
-    // this.filterData={'EXPENDITURECLASS':"all",'INCURREDSTARTDATE':begin,'INCURREDENDDATE':end,"PAIDSTARTDATE":'',
-    // 'PAIDENDDATE':'','SearchString':''}
-    this.filterData={'EXPENDITURECLASS':"all",'INCURREDSTARTDATE':'','INCURREDENDDATE':'',"PAIDSTARTDATE":'',
+    this.filterData={'EXPENDITURECLASS':"all",'INCURREDSTARTDATE':begin,'INCURREDENDDATE':end,"PAIDSTARTDATE":'',
     'PAIDENDDATE':'','SearchString':''}
+    // this.filterData={'EXPENDITURECLASS':"all",'INCURREDSTARTDATE':'','INCURREDENDDATE':'',"PAIDSTARTDATE":'',
+    // 'PAIDENDDATE':'','SearchString':''}
     this.SepndMoneyForm.controls['MainClass'].setValue("all"); 
     this.SepndMoneyForm.controls['DateType'].setValue("Incurred Date");
     this.SepndMoneyForm.controls['DateRange'].setValue({ begin: currentDate, end: updatecurrentDate }); 
@@ -135,7 +135,7 @@ this.SepndMoneyForm=this._formBuilder.group({
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'time and billing', 'list': '' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'spend money', 'list': '' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
     //Save button click

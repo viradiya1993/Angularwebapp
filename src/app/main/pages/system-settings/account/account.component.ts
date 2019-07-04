@@ -2,6 +2,26 @@ import { Component, OnInit, Input } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
 import { SystemSetting } from './../../../../_services';
+import { AccountDialogComponent } from './account-edit-dialog/account-dialog.component';
+import { MatDialog } from '@angular/material';
+export interface PeriodicElement {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+}
+const ELEMENT_DATA: PeriodicElement[] = [
+  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
+  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
+  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
+  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
+  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
+  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
+  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
+  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
+  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
+  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
+];
 
 @Component({
   selector: 'app-account',
@@ -11,37 +31,28 @@ import { SystemSetting } from './../../../../_services';
 })
 export class AccountComponent implements OnInit {
   @Input() SettingForm: FormGroup;
+  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  dataSource = ELEMENT_DATA;
   addData:any=[];
-  constructor(private SystemSetting:SystemSetting) { }
+  constructor(private SystemSetting:SystemSetting, public dialog: MatDialog,) { }
 
   ngOnInit() {
-    // this.SystemSetting.getSystemSetting({}).subscribe(response=>{
-    //   console.log(response);
-    //   this.addData=response.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP
-    //   })
-    
+        
+  }
+  ondialogClick(){
+    const dialogRef = this.dialog.open(AccountDialogComponent, {
+      disableClose: true,
+      panelClass: '',
+      data: {
+          action: '',
+      }
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+  });
   }
   
-//   triggerSomeEvent(f) {
-//     let ADDRESS1 = this.SettingForm.get('ADDRESS1').value;
-//     let SUBURB = this.SettingForm.get('SUBURB').value;
-//     let STATE = this.SettingForm.get('STATE').value;
- 
-//     let POSTCODE = this.SettingForm.get('POSTCODE').value;
- 
-//     if (f.value.SAMECOPYADDRESS == true) {
-//       this.SettingForm.controls['POSTALADDRESS1'].setValue(ADDRESS1);
-//       this.SettingForm.controls['POSTALSUBURB'].setValue(SUBURB);
-//       this.SettingForm.controls['POSTALSTATE'].setValue(STATE);
-//       this.SettingForm.controls['POSTALPOSTCODE'].setValue(POSTCODE);
-//     } else {
-//           this.SettingForm.controls['POSTALADDRESS1'].setValue(this.addData.POSTALADDRESS1); 
-//           this.SettingForm.controls['POSTALPOSTCODE'].setValue(this.addData.POSTALPOSTCODE); 
-//           this.SettingForm.controls['POSTALSUBURB'].setValue(this.addData.POSTALSUBURB); 
-//           this.SettingForm.controls['POSTALSTATE'].setValue(this.addData.POSTALSTATE); 
-        
 
-//     }
-//   }
 
 }

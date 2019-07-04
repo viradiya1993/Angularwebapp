@@ -24,6 +24,7 @@ import { TemplatesComponent } from './templates/templates.component';
 import { GenerateTemplatesDialoagComponent } from './templates/gennerate-template-dialoag/generate-template.component';
 import {MatSortModule} from '@angular/material/sort';
 import { AccountComponent } from './account/account.component';
+import { AccountDialogComponent } from './account/account-edit-dialog/account-dialog.component';
 
 const routes = [
   { path: 'system-setting/name', component: SystemSettingComponent, canActivate: [AuthGuard] },
@@ -48,12 +49,14 @@ const routes = [
     ReginoalSettingComponent,
     TrustComponent,
     TemplatesComponent,
-    AccountComponent
+    AccountComponent,
+    AccountDialogComponent
    // SpendMoneyAddComponent,    
   ],
   entryComponents: [
     SystemSettingComponent,
-    GenerateTemplatesDialoagComponent
+    GenerateTemplatesDialoagComponent,
+    AccountDialogComponent
    // SpendMoneyAddComponent,
   ],
   imports: [
@@ -97,7 +100,8 @@ const routes = [
   ],
   exports: [
     SystemSettingComponent,
-    GenerateTemplatesDialoagComponent
+    GenerateTemplatesDialoagComponent,
+    AccountDialogComponent
   ]
 })
 export class SystemSettingModule { }

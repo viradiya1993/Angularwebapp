@@ -1,0 +1,132 @@
+@import "src/@fuse/scss/fuse";
+#templates {
+    .header {
+        .search-wrapper {
+            width: 100%;
+            max-width: 480px;
+            border-radius: 28px;
+            overflow: hidden;
+            @include mat-elevation(1);
+            .search {
+                width: 100%;
+                height: 48px;
+                line-height: 48px;
+                padding: 0 18px;
+                input {
+                    width: 100%;
+                    height: 48px;
+                    min-height: 48px;
+                    max-height: 48px;
+                    padding: 0 16px;
+                    border: none;
+                    outline: none;
+                }
+            }
+        }
+    }
+    .content {
+        overflow: hidden;
+        // margin-top: 10px;
+        .example {
+            width: 18%;
+            padding: 10px;
+            .sidebar {
+                &:not(.locked-open) {
+                    background: white;
+                }
+            }
+        }
+    }
+}
+
+app-account {
+    margin-top: 30px;
+    width: 100%;
+}
+
+.search {
+    width: 45% !important;
+    padding: 20px !important;
+}
+
+.sticky_search_div {
+    width: 100%;
+    background-color: #f5f5f5;
+    z-index: 9999;
+    left: 0;
+}
+
+.p-24.list_tbl_main {
+    //margin-top: 110px;
+    padding-top: 0 !important;
+}
+
+#contact .content {
+    position: relative;
+}
+
+.mat-table.mat-table.ng-trigger.ng-trigger-animateStagger {
+    width: 100%;
+    overflow: auto;
+    display: table;
+}
+
+.more_tbl_clmn mat-footer-row {
+    display: table;
+}
+
+.more_tbl_clmn .mat-header-cell,
+.more_tbl_clmn .mat-cell {
+    display: table-cell;
+    white-space: nowrap;
+    padding: 0 20px;
+    overflow: inherit;
+    position: sticky;
+}
+
+.more_tbl_clmn mat-header-row {
+    line-height: 56px;
+}
+
+.more_tbl_clmn mat-row {
+    line-height: 48px;
+}
+
+.more_tbl_clmn .mat-header-cell:last-child,
+.more_tbl_clmn .mat-cell:last-child {
+    padding-right: 70px;
+}
+
+.table tr.active td {
+    background-color: #123456 !important;
+    color: white;
+}
+
+table tr.highlight {
+    background-color: #4CAF50 !important;
+    color: #ffffff;
+}
+
+button#refreshContactTab {
+    display: none;
+}
+
+#contact .content .example {
+    padding: 20px 10px;
+}
+
+th.mat-sort-header-sorted {
+    color: black;
+}
+table.mat-elevation-z8.mat-table {
+    width: 100% !important;
+}
+.popup_ftr {
+    border-top: 1px solid #ccc;
+    margin-top: 15px !important;
+    padding: 12px 24px !important;
+}
+.popup_ftr {
+    padding: 24px;
+    // justify-content: flex-start;
+}

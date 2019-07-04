@@ -153,6 +153,7 @@
                     <app-reginoal-setting [errorWarningData]="errorWarningData" [SettingForm]="SettingForm" *ngIf="clickedBtn ==='reginoal'"></app-reginoal-setting>
                     <app-trust [errorWarningData]="errorWarningData" [SettingForm]="SettingForm" *ngIf="clickedBtn ==='trust'"></app-trust>
                     <app-templates [errorWarningData]="errorWarningData" [SettingForm]="SettingForm" *ngIf="clickedBtn ==='templates'"></app-templates>
+                    <app-account  *ngIf="clickedBtn ==='account'"></app-account>
                 </form>
             </div>
             <mat-dialog-actions align="end" class="popup_ftr">

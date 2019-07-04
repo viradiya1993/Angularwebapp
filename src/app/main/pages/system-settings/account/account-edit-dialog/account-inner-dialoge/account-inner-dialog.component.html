@@ -1,0 +1,96 @@
+<div class="popup_main_div corres_popup_main select_metter_main_div" cdkDrag>
+    <h2 cdkDragHandle mat-dialog-title>Edit Account
+        <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
+            <mat-icon>close</mat-icon>
+        </button>
+    </h2>
+    <div mat-dialog-content class="mat-typography">
+        <div class="example-loading-shade" *ngIf="isLoadingResults">
+            <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+        </div>
+        <div class="one select_matter_main_div">
+            <div class="center p-24 list_tbl_main more_tbl_clmn">
+                <div class="matter-serach-div sticky_search_div">
+                
+
+                </div>
+            </div>
+            <div class="example-containerdata"> 
+                    <table class="mat-table simple" [@animateStagger]="{value:'50'}">
+                            <thead class="mat-header-row" fxLayoutAlign="center center">
+                              <th class="mat-header-cell" fxFlex>Account Name</th>
+                              <th class="mat-header-cell" fxFlex="20">Type</th>
+                              <th class="mat-header-cell" fxFlex="20">Balance</th>
+                              <th class="mat-header-cell" fxFlex="20">Xero Code</th>
+                              <th class="mat-header-cell" fxFlex="20">MYOB Account</th>
+                            </thead>
+                          </table>
+                <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                    <mat-tree-node *matTreeNodeDef="let node" class="border-top">
+                              <div fxFlex fxLayoutAlign=" center">
+                                  <span *ngFor="let i of array(treeControl.getLevel(node))" class="indent"></span>
+                                  <button mat-icon-button disabled></button>
+                                  <span>{{node.item}} </span>
+                                  
+                              </div>
+                              <div fxFlex="20" class="text-center">
+                                  <button mat-button>
+                                      <span>{{node.item}} {{treeControl.getLevel(node)}}</span>
+                                  </button>
+                              </div>
+                              <div fxFlex="20" class="text-center">
+                                  <span class="pale">{{node.item}}</span>
+                              </div>
+                              <div fxFlex="20" class="text-center">{{node.item}}</div>
+                              <!-- <div fxFlex="10" class="text-center">
+                                  <button mat-icon-button>
+                                      <mat-icon>arrow_upward</mat-icon>
+                                  </button>
+                                  <button mat-icon-button>
+                                      <mat-icon>list</mat-icon>
+                                  </button>
+                              </div> -->
+                          </mat-tree-node>
+                  
+                          <mat-tree-node *matTreeNodeDef="let node; when: hasChild" class="border-top">
+                              <div fxFlex fxLayoutAlign=" center">
+                                  <span *ngFor="let i of array(treeControl.getLevel(node))" class="indent"></span>
+                                  <button mat-icon-button matTreeNodeToggle (click)="loadChildren(node)">
+                                      <mat-icon class="mat-icon-rtl-mirror">
+                                          {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                      </mat-icon>
+                                  </button>
+                                  <span>{{node.item}} </span>
+                                  
+                              </div>
+                              <div fxFlex="20" class="text-center">
+                                  <button mat-button>
+                                      <span>{{node.item}}</span>
+                                  </button>
+                              </div>
+                              <div fxFlex="20" class="text-center">
+                                  <span class="pale">{{node.item}}</span>
+                              </div>
+                              <div fxFlex="20" class="text-center">{{node.item}}</div>
+                              <!-- <div fxFlex="10" class="text-center">
+                                  <button mat-icon-button>
+                                      <mat-icon>arrow_upward</mat-icon>
+                                  </button>
+                                  <button mat-icon-button>
+                                      <mat-icon>list</mat-icon>
+                                  </button>
+                              </div> -->
+                          </mat-tree-node>
+                    
+                    
+                  </mat-tree>
+            </div>
+           
+        </div>
+    </div>
+    
+    <mat-dialog-actions align="end" class="popup_ftr contact_select_footer">
+        <button mat-raised-button [mat-dialog-close]="currentMatterData" color="accent">Save</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
+    </mat-dialog-actions>
+</div>

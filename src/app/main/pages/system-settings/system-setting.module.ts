@@ -25,7 +25,9 @@ import { GenerateTemplatesDialoagComponent } from './templates/gennerate-templat
 import {MatSortModule} from '@angular/material/sort';
 import { AccountComponent } from './account/account.component';
 import { AccountDialogComponent } from './account/account-edit-dialog/account-dialog.component';
-
+import { AccountInnerDialogComponent } from './account/account-edit-dialog/account-inner-dialoge/account-inner-dialog.component';
+// import { AccountInnerDialogComponent } from './account/account-edit-dialog/account-inner-dialog/account-inner-dialog.component';
+import {MatTreeModule} from '@angular/material/tree';
 const routes = [
   { path: 'system-setting/name', component: SystemSettingComponent, canActivate: [AuthGuard] },
   // { path: 'system-setting/name', component: SystemSettingComponent },
@@ -50,13 +52,15 @@ const routes = [
     TrustComponent,
     TemplatesComponent,
     AccountComponent,
-    AccountDialogComponent
+    AccountDialogComponent,
+    AccountInnerDialogComponent
    // SpendMoneyAddComponent,    
   ],
   entryComponents: [
     SystemSettingComponent,
     GenerateTemplatesDialoagComponent,
-    AccountDialogComponent
+    AccountDialogComponent,
+    AccountInnerDialogComponent
    // SpendMoneyAddComponent,
   ],
   imports: [
@@ -65,6 +69,7 @@ const routes = [
     FuseSharedModule,
     FuseConfirmDialogModule,
     FuseSidebarModule,
+    MatTreeModule,
 
     MatButtonModule,
     MatCheckboxModule,
@@ -101,7 +106,12 @@ const routes = [
   exports: [
     SystemSettingComponent,
     GenerateTemplatesDialoagComponent,
-    AccountDialogComponent
-  ]
+    AccountDialogComponent,
+    AccountInnerDialogComponent,
+    MatTreeModule
+    
+  
+  ],
+  bootstrap: [AccountInnerDialogComponent],
 })
 export class SystemSettingModule { }

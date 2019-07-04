@@ -684,13 +684,11 @@ else{
       
   }else if(this.action =='edit' && SendMoney_data.MULTILINE == 0 && this.f.MultiLineExpense.value==true){
     this.commonSendMultiLineData();
-  }  
-if(this.f.MultiLineExpense.value==false){this.multicheckboxval= 0;
-}
-else if(this.getDataForTable.length == 1){ 
-  this.multicheckboxval= 0;
-} 
-else{this.multicheckboxval= 1;}
+  }
+  // for multiline   
+  if(this.f.MultiLineExpense.value==false){this.multicheckboxval= 0;}
+  else if(this.getDataForTable.length == 1){this.multicheckboxval= 0;} 
+  else{this.multicheckboxval= 1;}
     
 let Data={
       EXPENDITUREGUID:this.action == 'edit' ? SendMoney_data.EXPENDITUREGUID : " ",

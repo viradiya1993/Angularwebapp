@@ -11,7 +11,15 @@
         <div class="one select_matter_main_div">
             <div class="center p-24 list_tbl_main more_tbl_clmn">
                 <div class="matter-serach-div sticky_search_div">
-                
+                        <form >
+                                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                        <mat-checkbox fxFlex="50" formControlName="showinactive">Show Inactive</mat-checkbox>
+                                        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                                                <mat-label>Search</mat-label>
+                                                <input matInput placeholder="filter" >
+                                        </mat-form-field>
+                                    </div>
+                            </form>
 
                 </div>
             </div>

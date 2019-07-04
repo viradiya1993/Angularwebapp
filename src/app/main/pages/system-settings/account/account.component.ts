@@ -10,19 +10,14 @@ export interface PeriodicElement {
 }
 const ELEMENT_DATA: PeriodicElement[] = [
  
-  {Description: "Receivable", AccNoAccount : 'Hydrogen'},
-  {Description: "Receivable", AccNoAccount : 'Hydrogen'},
-  {Description: "Receivable", AccNoAccount : 'Hydrogen'},
-  {Description: "Receivable", AccNoAccount : 'Hydrogen'},
-  {Description: "Receivable", AccNoAccount : 'Hydrogen'},
-  {Description: "Receivable", AccNoAccount : 'Hydrogen'},
-  {Description: "Receivable", AccNoAccount : 'Hydrogen'},
-  {Description: "Receivable", AccNoAccount : 'Hydrogen'},
-  {Description: "Receivable", AccNoAccount : 'Hydrogen'},
-  {Description: "Receivable", AccNoAccount : 'Hydrogen'},
-  {Description: "Receivable", AccNoAccount : 'Hydrogen'},
-  {Description: "Receivable", AccNoAccount : 'Hydrogen'},
-  {Description: "Receivable", AccNoAccount : 'Hydrogen'},
+  {Description: "Receivable", AccNoAccount : 'Account Receivable'},
+  {Description: "Receivable", AccNoAccount : 'Account Receivable'},
+  {Description: "Receivable", AccNoAccount : 'Account Receivable'},
+  {Description: "Receivable", AccNoAccount : 'Account Receivable'},
+  {Description: "Receivable", AccNoAccount : 'Account Receivable'},
+  {Description: "Receivable", AccNoAccount : 'Account Receivable'},
+  {Description: "Receivable", AccNoAccount : 'Account Receivable'},
+  {Description: "Receivable", AccNoAccount : 'Account Receivable'},
   
 ];
 

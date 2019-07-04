@@ -1,5 +1,5 @@
 <div id="templates" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
-    <div fxLayoutAlign="center" class="content">
+    <div fxLayoutAlign="center" class="">
         <div class="center p-24 more_tbl_clmn list_tbl_main" fusePerfectScrollbar>
             <div class="matter-serach-div sticky_search_div">
                 <!-- <mat-form-field appearance="outline" class="example">
@@ -13,13 +13,13 @@
                   <mat-icon matSuffix (click)="onSearch('Enter')">search</mat-icon>
               </mat-form-field> -->
             </div>
-            <div class="content">
-                <div class="content">
+            <div class="">
+                <div class="account_table">
                     <div class="example-loading-shade" *ngIf="isLoadingResults">
                         <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                     </div>
                     <div class="example-containerdata">
-                        <table [@animateStagger]="{value:'50'}" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                        <table [@animateStagger]="{value:'50'}" mat-table [dataSource]="dataSource" >
 
                             
                             <ng-container matColumnDef="Description">

@@ -53,7 +53,7 @@
 
                                 <div class="nav-item business" aria-label="frequently contacted">
                                     <!-- [routerLink]="'/system-setting/business'" <button [queryParams]="{ calander: 'business' }"></button> -->
-                                    <a class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='account'}">
+                                    <a (click)="accountClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='account'}">
                                         <div class="title">Account</div>
                                     </a>
                                 </div>

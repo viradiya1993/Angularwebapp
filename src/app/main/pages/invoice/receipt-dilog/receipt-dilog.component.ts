@@ -219,7 +219,8 @@ export class ReceiptDilogComponent implements OnInit {
     let currentInvoiceId: any = "";
     let lastindex = null;
     if (Object.keys(this.PrepareReceiptTemp).length == 0) {
-      this.AllocationData.push({ INVOICEGUID: "", AMOUNTAPPLIED: this.AllocationAmout });
+      if (this.AllocationAmout != 0)
+        this.AllocationData.push({ INVOICEGUID: "", AMOUNTAPPLIED: this.AllocationAmout });
       this.AllocationAmout = 0;
     } else {
       this.PrepareReceiptTemp.forEach((element, index) => {

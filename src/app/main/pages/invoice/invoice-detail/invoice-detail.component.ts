@@ -87,7 +87,6 @@ export class InvoiceDetailComponent implements OnInit {
           this.invoiceDetailForm.controls['INVOICETOTAL'].setValue(invoiceData.INVOICETOTAL);
           this.invoiceDetailForm.controls['AMOUNTOUTSTANDINGINCGST'].setValue(invoiceData.AMOUNTOUTSTANDINGINCGST);
           let FinalTotal = Number(invoiceData.INVOICETOTAL) + Number(invoiceData.GST);
-          console.log(FinalTotal);
           this.invoiceDetailForm.controls['AMOUNTTOTAL'].setValue(FinalTotal.toFixed(2));
           // get time entry data for specifc invoice 
           this.matterInvoicesService.GetWorkItemsData({ 'INVOICEGUID': this._data.INVOICEGUID }).subscribe(response => {

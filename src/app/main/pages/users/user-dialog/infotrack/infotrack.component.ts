@@ -9,6 +9,7 @@ export class InfotrackComponent implements OnInit {
 
   constructor() { }
   @Input() userForm: FormGroup;
+  @Input() errorWarningData: any;
   ngOnInit() {
   }
 

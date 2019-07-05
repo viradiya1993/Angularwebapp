@@ -1,11 +1,16 @@
-.one{
-    margin-top: 20px;   
+.one {
+    margin-top: 20px;
 }
 
-.checkbox{
+.checkbox {
     margin-left: 10px;
     width: 33%;
 }
-.mat-radio-button ~ .mat-radio-button {
+
+.mat-radio-button~.mat-radio-button {
     margin-left: 16px;
+}
+
+.sideText {
+    text-align: right;
 }

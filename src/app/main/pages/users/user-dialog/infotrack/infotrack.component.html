@@ -5,13 +5,13 @@
         </p>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.SEARCHUSERNAME,'has-warning':errorWarningData.Warning?.SEARCHUSERNAME}">
             <mat-label>User Name</mat-label>
-            <input name="usernameinfo" formControlName="usernameinfo" [formControlName]="'usernameinfo'" matInput>
+            <input formControlName="SEARCHUSERNAME" matInput>
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.SEARCHUSERPASSWORD,'has-warning':errorWarningData.Warning?.SEARCHUSERPASSWORD}">
             <mat-label>Password</mat-label>
-            <input name="passwordinfo" formControlName="passwordinfo" [formControlName]="'passwordinfo'" matInput>
+            <input formControlName="SEARCHUSERPASSWORD" matInput>
         </mat-form-field>
     </div>
 </div>

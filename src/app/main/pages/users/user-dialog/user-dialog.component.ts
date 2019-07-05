@@ -14,10 +14,11 @@ import { UsersService } from 'app/_services';
 export class UserDialogComponent implements OnInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   isLoadingResults: boolean = false;
+  errorWarningData: any = {};
   action: string;
   dialogTitle: string;
   isspiner: boolean = false;
-  theCheckbox = true;
+  phide: boolean = true;
   userForm: FormGroup;
   constructor(
     public MatDialog: MatDialog,
@@ -41,37 +42,54 @@ export class UserDialogComponent implements OnInit {
   }
   ngOnInit() {
     this.userForm = this._formBuilder.group({
-      ISACTIVE: [''],
-      username: ['', Validators.required],
-      fullname: ['', Validators.required],
-      password: ['', Validators.required],
-      isprocipal: [''],
+      ISACTIVE: [true],
+      ISPRINCIPAL: [''],
+      USERNAME: [''],
+      USERPASSWORD: [''],
+      FULLNAME: [''],
       // Fee Earner
+      PRACTICINGCERTIFICATENO: [''],
+      PHONE1: [''],
+      PHONE2: [''],
+      FAX1: [''],
+      FAX2: [''],
+      MOBILE: [''],
+      COMMENT: [''],
+      GSTTYPE: [''],
+      POSITION: [''],
+      EMAIL: [''],
+      RATEPERHOUR: [''],
+      RATEPERDAY: [''],
       feeearnerid: [''],
-      posotion: [''],
-      hours: [''],
-      day: [''],
-      // Redio left
-      ph1: [''],
-      ph2: [''],
-      fax1: [''],
-      fax2: [''],
-      mobile: [''],
-      pracno: [''],
-      comment: [''],
-      //Security
-      allowaccess: [''],
       //Info Track
-      usernameinfo: [''],
-      passwordinfo: ['']
-      //Budgets
+      SEARCHUSERNAME: [''],
+      SEARCHUSERPASSWORD: [''],
+
+      allowaccess: [''],
     });
     if (this.action === 'edit' || this.action === 'duplicate') {
       this.isLoadingResults = true;
       this._UsersService.getUserData({ USERGUID: this.data.USERGUID, 'GETALLFIELDS': true }).subscribe(response => {
         if (response.CODE === 200 && response.STATUS === 'success') {
           let userinfoData = response.DATA.USERS[0];
+          this.userForm.controls['USERNAME'].setValue(userinfoData.USERNAME);
+          this.userForm.controls['FULLNAME'].setValue(userinfoData.FULLNAME);
+          this.userForm.controls['USERPASSWORD'].setValue(userinfoData.USERPASSWORD);
           this.userForm.controls['ISACTIVE'].setValue(userinfoData.ISACTIVE == 1 ? true : false);
+          this.userForm.controls['ISPRINCIPAL'].setValue(userinfoData.ISPRINCIPAL == 1 ? true : false);
+          this.userForm.controls['PHONE1'].setValue(userinfoData.PHONE1);
+          this.userForm.controls['PHONE2'].setValue(userinfoData.PHONE2);
+          this.userForm.controls['MOBILE'].setValue(userinfoData.MOBILE);
+          this.userForm.controls['FAX2'].setValue(userinfoData.FAX2);
+          this.userForm.controls['FAX1'].setValue(userinfoData.FAX1);
+          this.userForm.controls['EMAIL'].setValue(userinfoData.EMAIL);
+          this.userForm.controls['COMMENT'].setValue(userinfoData.COMMENT);
+          this.userForm.controls['PRACTICINGCERTIFICATENO'].setValue(userinfoData.PRACTICINGCERTIFICATENO);
+          this.userForm.controls['POSITION'].setValue(userinfoData.POSITION);
+          this.userForm.controls['RATEPERHOUR'].setValue(userinfoData.RATEPERHOUR);
+          this.userForm.controls['RATEPERDAY'].setValue(userinfoData.RATEPERDAY);
+          this.userForm.controls['SEARCHUSERNAME'].setValue(userinfoData.SEARCHUSERNAME);
+          this.userForm.controls['SEARCHUSERPASSWORD'].setValue(userinfoData.SEARCHUSERPASSWORD);
         } else if (response.MESSAGE == "Not logged in") {
           this.dialogRef.close(false);
         }
@@ -87,24 +105,34 @@ export class UserDialogComponent implements OnInit {
   SaveUser(): void {
     this.isspiner = true;
     let data = {
-      INCOMECLASS: this.f.INCOMECLASS.value,
-      INCOMETYPE: this.f.INCOMETYPE.value,
-      // FIRMGUID: this.f.FIRMGUID.value,
-      INCOMEDATE: this.f.INCOMEDATE.value,
-      PAYEE: this.f.PAYEE.value,
-      AMOUNT: this.f.AMOUNT.value,
-      GST: this.f.GST.value,
-      BANKACCOUNTGUID: "ACCAAAAAAAAAAAA4",
-      INCOMEACCOUNTGUID: "ACCAAAAAAAAAAAA5",
-      NOTE: this.f.NOTE.value,
+      USERNAME: this.f.USERNAME.value,
+      FULLNAME: this.f.FULLNAME.value,
+      USERPASSWORD: this.f.USERPASSWORD.value,
+      ISACTIVE: this.f.ISACTIVE.value == true ? 1 : 0,
+      ISPRINCIPAL: this.f.ISPRINCIPAL.value == true ? 1 : 0,
+      PHONE1: this.f.PHONE1.value,
+      PHONE2: this.f.PHONE2.value,
+      MOBILE: this.f.MOBILE.value,
+      FAX2: this.f.FAX2.value,
+      FAX1: this.f.FAX1.value,
+      COMMENT: this.f.COMMENT.value,
+      PRACTICINGCERTIFICATENO: this.f.PRACTICINGCERTIFICATENO.value,
+      POSITION: this.f.POSITION.value,
+      RATEPERHOUR: this.f.RATEPERHOUR.value,
+      RATEPERDAY: this.f.RATEPERDAY.value,
+      EMAIL: this.f.EMAIL.value,
+      SEARCHUSERNAME: this.f.SEARCHUSERNAME.value,
+      SEARCHUSERPASSWORD: this.f.SEARCHUSERPASSWORD.value
     }
-    let matterPostData: any = { FormAction: 'insert', VALIDATEONLY: true, Data: data };
-    this._UsersService.SetUserData(matterPostData).subscribe(response => {
-      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        this.checkValidation(response.DATA.VALIDATIONS, data);
-      } else if (response.CODE == 451 && response.STATUS == "warning") {
-        this.checkValidation(response.DATA.VALIDATIONS, data);
-      } else if (response.MESSAGE == "Not logged in") {
+    let userPostData: any = { FormAction: 'insert', VALIDATEONLY: true, DATA: data };
+    this._UsersService.SetUserData(userPostData).subscribe(res => {
+      if (res.CODE == 200 && res.STATUS == "success") {
+        this.checkValidation(res.DATA.VALIDATIONS, userPostData);
+      } else if (res.CODE == 451 && res.STATUS == "warning") {
+        this.checkValidation(res.DATA.VALIDATIONS, userPostData);
+      } else if (res.CODE == 450 && res.STATUS == "error") {
+        this.checkValidation(res.DATA.VALIDATIONS, userPostData);
+      } else if (res.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
     }, error => {
@@ -115,23 +143,26 @@ export class UserDialogComponent implements OnInit {
   checkValidation(bodyData: any, details: any) {
     let errorData: any = [];
     let warningData: any = [];
+    let tempError: any = [];
+    let tempWarning: any = [];
     bodyData.forEach(function (value) {
-      if (value.VALUEVALID == 'NO')
+      if (value.VALUEVALID == 'No') {
         errorData.push(value.ERRORDESCRIPTION);
-      else if (value.VALUEVALID == 'WARNING')
+        tempError[value.FIELDNAME] = value;
+      } else if (value.VALUEVALID == 'Warning') {
+        tempWarning[value.FIELDNAME] = value;
         warningData.push(value.ERRORDESCRIPTION);
+      }
     });
+    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
-      this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-        disableClose: true,
-        width: '100%',
-        data: warningData
-      });
+      this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, { disableClose: true, width: '100%', data: warningData });
       this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Save?';
       this.confirmDialogRef.afterClosed().subscribe(result => {
         if (result) {
+          this.SaveUserAfterVAlidation(details);
           this.isspiner = true;
         }
         this.confirmDialogRef = null;
@@ -145,15 +176,17 @@ export class UserDialogComponent implements OnInit {
     data.VALIDATEONLY = false;
     this._UsersService.SetUserData(data).subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        this.toastr.success('Receipt save successfully');
+        this.toastr.success('User save successfully');
         this.isspiner = false;
         this.dialogRef.close(true);
-      }
-      else if (response.MESSAGE == "Not logged in") {
+      } else if (response.CODE == 451 && response.STATUS == "warning") {
+        this.toastr.warning(response.MESSAGE);
+      } else if (response.CODE == 450 && response.STATUS == "error") {
+        this.toastr.error(response.MESSAGE);
+      } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
-      } else {
-        this.isspiner = false;
       }
+      this.isspiner = false;
     }, error => {
       this.toastr.error(error);
     });

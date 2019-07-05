@@ -976,6 +976,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             console.log(result);
         });
     }
+
+    //Account Trasactions
+    Account_Tra(){
+      console.log('Account_Tra Work!!');
+    }
+    //Recouncile Account
+    Reconcile_ac_pra(){
+        console.log('Reconcile practice Work!!!');
+    }
     //ReconcileAC
     ReconcileAC(){
         console.log('REcoun work!!!');

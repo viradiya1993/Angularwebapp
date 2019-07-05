@@ -154,6 +154,7 @@ th.mat-sort-header-sorted {
 }
 
 // Tree Table Css
+
 .example-tree-invisible {
     display: none;
   }
@@ -165,7 +166,25 @@ margin-bottom: 0;
 list-style-type: none;
 }
 
-table.simple {
-    margin-left: 27px !important;
-    margin-top: 12px !important;
+// table.simple {
+//     margin-left: -60px !important;
+//     margin-top: -6px !important;
+// }
+
+.indent {
+    width: 20px;
+}
+  
+table {
+    width: 100%;
+}
+  
+th.mat-header-cell {
+    border: 0;
+    text-align: center;
+}
+
+.mat-header-row {
+    background-color: rgba(128, 128, 128, 0.1);
+    height: 5em;
 }

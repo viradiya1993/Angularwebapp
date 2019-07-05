@@ -35,9 +35,10 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class DocumentRegisterComponent implements OnInit {
   documentform: FormGroup;
   isLoadingResults: boolean = false;
+  highlightedRows:any;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
-  Userid = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
+  DocNo = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   displayedColumns: string[] = ['Date', 'DocNo','Description', 'DocumentName','Keywords'];
   DocumentAllData = new MatTableDataSource(ELEMENT_DATA);
   @ViewChild(MatPaginator) paginator: MatPaginator;

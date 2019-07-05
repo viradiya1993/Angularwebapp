@@ -138,3 +138,27 @@ mat-dialog-actions {
     //flex-direction: column;
     width: 100%;
 }
+
+//Table Css
+table.simple {
+    margin-top: 12px !important;
+}
+.indent {
+    width: 20px;
+}
+table {
+    width: 100%;
+}
+  
+th.mat-header-cell {
+    border: 0;
+}
+  
+.mat-header-row {
+    background-color: rgba(128, 128, 128, 0.1);
+    height: 5em;
+}
+body.theme-default .secondary-text {
+    color: rgba(0, 0, 0, 0.54);
+    margin-top: 35px;
+}

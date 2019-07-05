@@ -359,7 +359,37 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /* ---------------------------------------------------------------------Activity End--------------------------------------------------------------------------  */
 
 
-
+    /* ---------------------------------------------------------------------------USERS Start-------------------------------------------------------------------------  */
+    userDialog(actionType) {
+        let popupData: any = {};
+        if (actionType == "new") {
+            popupData = { action: actionType };
+        } else if (actionType == "edit" || actionType == "Duplicate") {
+            let ActiveUserData = JSON.parse(localStorage.getItem('current_user_Data'));
+            if (!ActiveUserData) {
+                this.toastr.error("Please Select User");
+                return false;
+            }
+            popupData = { action: actionType, USERGUID: ActiveUserData.USERGUID };
+        }
+        const dialogRef = this.dialog.open(UserDialogComponent, { disableClose: true, panelClass: 'User-dialog', data: popupData });
+        dialogRef.afterClosed().subscribe(result => {
+            // if (result)
+            // $('#refreshActivities').click();
+        });
+    }
+    //DeleteUser
+    DeleteUser(): void {
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    /* ---------------------------------------------------------------------------USERS End-------------------------------------------------------------------------  */
 
 
     /* ---------------------------------------------------------------------------start of timer add-------------------------------------------------------------------------  */
@@ -635,61 +665,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.complete();
     }
 
-    /* User Module Function's */
 
-    // Add User Dialog
-    AddNewUser() {
-        const dialogRef = this.dialog.open(UserDialogComponent, {
-            disableClose: true,
-            panelClass: 'User-dialog',
-            data: { action: 'new' }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
-    }
-
-    //EditUserDialog
-    EditUserDialog() {
-        const dialogRef = this.dialog.open(UserDialogComponent, {
-            disableClose: true,
-            panelClass: 'User-dialog',
-            data: {
-                action: 'edit',
-            }
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
-    }
-
-    //DeleteUser
-    DeleteUser(): void {
-        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-            disableClose: true,
-            width: '100%',
-        });
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-        this.confirmDialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
-    }
-
-    //DuplicateUserDialog
-
-    DuplicateUserDialog() {
-        const dialogRef = this.dialog.open(UserDialogComponent, {
-            disableClose: true,
-            panelClass: 'User-dialog',
-            data: {
-                action: 'Duplicate',
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
-    }
 
     //Change Password Dialog
     ChangePass() {
@@ -888,7 +864,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /* Chart Of Account Module Function's */
 
     //NewAccount
-    NewAccount(){
+    NewAccount() {
         const dialogRef = this.dialog.open(ChartAcDailogComponent, {
             disableClose: true,
             panelClass: 'ChartAc-dialog',
@@ -902,7 +878,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     //EditAccount
-    EditAccount(){
+    EditAccount() {
         const dialogRef = this.dialog.open(ChartAcDailogComponent, {
             disableClose: true,
             panelClass: 'ChartAc-dialog',
@@ -915,7 +891,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     //DeleteAccount
-    DeleteAccount():void{
+    DeleteAccount(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
@@ -926,7 +902,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     //DuplicateAccount
-    DuplicateAccount(){
+    DuplicateAccount() {
         const dialogRef = this.dialog.open(ChartAcDailogComponent, {
             disableClose: true,
             panelClass: 'ChartAc-dialog',
@@ -939,7 +915,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     //ReconcileAC
-    ReconcileAC(){
+    ReconcileAC() {
         console.log('REcoun work!!!');
         const dialogRef = this.dialog.open(SelectAccountComponent, {
 
@@ -990,9 +966,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 13;
         } else if (x[1] == "document-register") {
             this.isTabShow = 14;
-        } else if(x[1] == "chart-account"){
+        } else if (x[1] == "chart-account") {
             this.isTabShow = 15;
-        } 
+        }
         else {
             this.isTabShow = 1;
         }

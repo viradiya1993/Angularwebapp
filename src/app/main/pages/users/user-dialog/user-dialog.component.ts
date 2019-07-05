@@ -1,9 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MatDialog } from '@angular/material';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { Router } from '@angular/router';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { UsersService } from 'app/_services';
 
@@ -30,6 +29,7 @@ export class UserDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.action = data.action;
+    // this.action = data.USERGUID;
     if (this.action === 'new') {
       this.dialogTitle = 'New User';
     } else if (this.action === 'edit') {
@@ -41,10 +41,10 @@ export class UserDialogComponent implements OnInit {
   }
   ngOnInit() {
     this.userForm = this._formBuilder.group({
+      ISACTIVE: [''],
       username: ['', Validators.required],
       fullname: ['', Validators.required],
       password: ['', Validators.required],
-      active: [''],
       isprocipal: [''],
       // Fee Earner
       feeearnerid: [''],
@@ -66,6 +66,20 @@ export class UserDialogComponent implements OnInit {
       passwordinfo: ['']
       //Budgets
     });
+    if (this.action === 'edit' || this.action === 'duplicate') {
+      this.isLoadingResults = true;
+      this._UsersService.getUserData({ USERGUID: this.data.USERGUID, 'GETALLFIELDS': true }).subscribe(response => {
+        if (response.CODE === 200 && response.STATUS === 'success') {
+          let userinfoData = response.DATA.USERS[0];
+          this.userForm.controls['ISACTIVE'].setValue(userinfoData.ISACTIVE == 1 ? true : false);
+        } else if (response.MESSAGE == "Not logged in") {
+          this.dialogRef.close(false);
+        }
+        this.isLoadingResults = false;
+      }, error => {
+        this.toastr.error(error);
+      });
+    }
   }
   get f() {
     return this.userForm.controls;

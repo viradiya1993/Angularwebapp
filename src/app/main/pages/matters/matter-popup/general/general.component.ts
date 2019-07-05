@@ -1,9 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { TimersService } from 'app/_services';
 import { round } from 'lodash';
-import { MatDialog, MatDialogRef, MatDatepickerInputEvent } from '@angular/material';
+import { MatDialog, MatDatepickerInputEvent } from '@angular/material';
 import { UserSelectPopupComponent } from '../../user-select-popup/user-select-popup.component';
 
 @Component({
@@ -18,9 +17,7 @@ export class GeneralComponent implements OnInit {
   @Input() errorWarningData: any;
   PRICEVAL: any;
   PRICEVALGST: any;
-  constructor(public datepipe: DatePipe, public MatDialog: MatDialog, private Timersservice: TimersService) {
-    // this.PRICEVALGST='$ '+ 0.00;
-    // this.PRICEVAL='$ '+0.00;
+  constructor(public datepipe: DatePipe, public MatDialog: MatDialog) {
   }
 
   CommencementDate(type: string, event: MatDatepickerInputEvent<Date>) {

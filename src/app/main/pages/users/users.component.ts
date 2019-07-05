@@ -3,7 +3,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { MatSort } from '@angular/material';
 import * as $ from 'jquery';
 import { TableColumnsService, UsersService } from 'app/_services';
@@ -13,6 +13,7 @@ import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.c
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
 export class UsersComponent implements OnInit {
@@ -75,6 +76,9 @@ export class UsersComponent implements OnInit {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
   }
+  setActiveUserData(rowData: any) {
+    localStorage.setItem('current_user_Data', JSON.stringify(rowData));
+  }
   loadData(filterData) {
     this.isLoadingResults = true;
     this._UsersService.getUserData(filterData).subscribe(response => {
@@ -82,6 +86,7 @@ export class UsersComponent implements OnInit {
         if (response.DATA.USERS[0]) {
           this.highlightedRows = response.DATA.USERS[0].USERGUID;
           this.currentUserData = response.DATA.USERS[0];
+          localStorage.setItem('current_user_Data', JSON.stringify(response.DATA.USERS[0]));
         }
         this.Useralldata = new MatTableDataSource(response.DATA.USERS);
         this.Useralldata.paginator = this.paginator;

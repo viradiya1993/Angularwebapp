@@ -25,7 +25,7 @@
                                         <button mat-button (click)="matterpopup('new')" [ngClass]="appPermissions[1]?.Create==0 ? 'disabled-click large-button' : 'large-button'">
                                    <section class="large-button-container">
                                       <mat-icon class="main-icon" >
-                                          <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                          <img src="assets/icons/web_app/icon_matter_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                         </mat-icon>
                                       <div class="main-text"><span>New<br> Matters</span></div>
                                    </section>
@@ -35,7 +35,7 @@
                                         <button mat-button (click)="matterpopup('edit')" [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
                                     <section class="large-button-container">
                                         <mat-icon class="main-icon">
-                                                <img  src="assets/icons/web_app/icon_contact_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                <img  src="assets/icons/web_app/icon_matter_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                         </mat-icon>
                                         <div class="main-text">
                                             <span>Edit<br> Matters</span>
@@ -47,7 +47,7 @@
                                         <button mat-button (click)="DeleteNewmatterpopup()" [ngClass]="appPermissions[1]?.Delete==0 ? 'disabled-click large-button' : 'large-button'">
                                     <section class="large-button-container">
                                         <mat-icon class="main-icon">
-                                                <img  src="assets/icons/web_app/icon_contact_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                <img  src="assets/icons/web_app/icon_matter_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                         </mat-icon>
                                         <div class="main-text">
                                             <span>Delete<br> Matters</span>
@@ -1184,7 +1184,7 @@
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
                                     <section [ngClass]="appPermissions[3]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[3]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="AddNewUser()">
+                                        <button mat-button [ngClass]="appPermissions[3]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="userDialog('new')">
                                         <section class="large-button-container">
                                             <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_add_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1196,7 +1196,7 @@
                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="EditUserDialog()">
+                                        <button mat-button [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="userDialog('edit')">
                                         <section class="large-button-container">
                                             <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1220,7 +1220,7 @@
                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[3]?.duplicate==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="DuplicateUserDialog()">
+                                        <button mat-button [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="userDialog('duplicate')">
                                         <section class="large-button-container">
                                             <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_duplicate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1459,7 +1459,7 @@
                     </section>
                 </mat-tab>
                 <!-- Document Register tab End-->
-                 <!-- Chart Of Account tab Start-->
+                <!-- Chart Of Account tab Start-->
                 <mat-tab label="Chart of Accounts" *ngIf="isTabShow===15">
                     <section class="ribbon-container legal_details_tab_main">
                         <mat-card>

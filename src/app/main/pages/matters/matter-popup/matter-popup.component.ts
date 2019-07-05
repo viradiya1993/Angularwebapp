@@ -773,8 +773,6 @@ export class MatterPopupComponent implements OnInit {
     }
     // general
     details.NOTES = this.f.NOTES.value;
-    details.OWNERNAME = this.f.OWNERNAME.value;
-    details.PRIMARYFEEEARNERNAME = this.f.PRIMARYFEEEARNERNAME.value;
     details.COMMENCEMENTDATE = this.f.COMMENCEMENTDATE.value;
     details.REFERENCE = this.f.REFERENCE.value;
     details.OTHERREFERENCE = this.f.OTHERREFERENCE.value;

@@ -53,17 +53,15 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     public dialogRef: MatDialogRef<TimeEntryDialogComponent>,
     public MatDialog: MatDialog,
     private Timersservice: TimersService,
-    private MattersService: MattersService,
     private toastr: ToastrService,
     private _formBuilder: FormBuilder,
     private toasterService: ToastrService,
     public datepipe: DatePipe,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
-    console.log(_data.edit);
     if (_data.edit == 'Edit' || _data.edit == 'Add' || _data.edit == "Duplicate") {
       this.action = _data.edit;
-      if (this.action === 'edit') {
+      if (this.action === 'Edit') {
         this.dialogTitle = 'Update Time Entry';
       } else if (this.action == 'Duplicate') {
         this.dialogTitle = 'Duplicate Time Entry'

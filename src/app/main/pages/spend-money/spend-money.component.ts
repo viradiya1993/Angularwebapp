@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SpendmoneyService, TableColumnsService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
@@ -13,6 +13,7 @@ import { DatePipe } from '@angular/common';
   selector: 'app-spend-money',
   templateUrl: './spend-money.component.html',
   styleUrls: ['./spend-money.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
 export class SpendMoneyComponent implements OnInit {
@@ -65,12 +66,12 @@ this.SepndMoneyForm=this._formBuilder.group({
     let updatecurrentDate= new Date();
     this.DateType='Incurred Date';
     this.forHideShowDateRangePicker="hide";
-    updatecurrentDate.setDate(updatecurrentDate.getDate() + 30);
-    let begin = this.datepipe.transform(currentDate, 'dd/MM/yyyy');
-    let end = this.datepipe.transform(updatecurrentDate, 'dd/MM/yyyy');
+    updatecurrentDate.setDate(updatecurrentDate.getDate() - 30);
+    let end = this.datepipe.transform(currentDate, 'dd/MM/yyyy');
+    let begin = this.datepipe.transform(updatecurrentDate, 'dd/MM/yyyy');
     this.filterData={'EXPENDITURECLASS':"all",'INCURREDSTARTDATE':begin,'INCURREDENDDATE':end,"PAIDSTARTDATE":'',
     'PAIDENDDATE':'','SearchString':''}
-    // this.filterData={'EXPENDITURECLASS':"Expense",'INCURREDSTARTDATE':'','INCURREDENDDATE':'',"PAIDSTARTDATE":'',
+    // this.filterData={'EXPENDITURECLASS':"all",'INCURREDSTARTDATE':'','INCURREDENDDATE':'',"PAIDSTARTDATE":'',
     // 'PAIDENDDATE':'','SearchString':''}
     this.SepndMoneyForm.controls['MainClass'].setValue("all"); 
     this.SepndMoneyForm.controls['DateType'].setValue("Incurred Date");
@@ -122,34 +123,58 @@ this.SepndMoneyForm=this._formBuilder.group({
     this.pageSize = localStorage.getItem('lastPageSize');
   }
 
-
+  refreshSpendMoneyTab() {
+    this.loadData(this.filterData);
+  }
 
   editmatter(Row: any) {
     this.currentMatterData = Row;
     console.log(Row);
     localStorage.setItem('spendMoney_data', JSON.stringify(Row));
   }
+  // openDialog() {
+  //   const dialogConfig = new MatDialogConfig();
+  //   dialogConfig.width = '100%';
+  //   dialogConfig.disableClose = true;
+  //   dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'spend money', 'list': '' };
+  //   //open pop-up
+  //   const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
+  //   //Save button click
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     // if (result) {
+  //     //   this.displayedColumns = result.columObj;
+  //     //   this.ColumnsObj = result.columnameObj;
+  //     //   this.tempColobj = result.tempColobj;
+  //     //   if (!result.columObj) {
+  //     //     this.MatterInvoicesdata = new MatTableDataSource([]);
+  //     //     this.MatterInvoicesdata.paginator = this.paginator;
+  //     //     this.MatterInvoicesdata.sort = this.sort;
+  //     //   } else {
+  //     //     this.loadData();
+  //     //   }
+  //     // }
+  //   });
+  // }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
-    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'time and billing', 'list': '' };
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'spend money', 'list': '' };
     //open pop-up
     const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
-    //Save button click
     dialogRef.afterClosed().subscribe(result => {
-      // if (result) {
-      //   this.displayedColumns = result.columObj;
-      //   this.ColumnsObj = result.columnameObj;
-      //   this.tempColobj = result.tempColobj;
-      //   if (!result.columObj) {
-      //     this.MatterInvoicesdata = new MatTableDataSource([]);
-      //     this.MatterInvoicesdata.paginator = this.paginator;
-      //     this.MatterInvoicesdata.sort = this.sort;
-      //   } else {
-      //     this.loadData();
-      //   }
-      // }
+      if (result) {
+        this.tempColobj = result.tempColobj;
+        this.displayedColumns = result.columObj;
+        this.ColumnsObj = result.columnameObj;
+        if (!result.columObj) {
+          this.Spendmoneydata = new MatTableDataSource([]);
+          this.Spendmoneydata.paginator = this.paginator;
+          this.Spendmoneydata.sort = this.sort;
+        } else {
+          this.loadData(this.filterData);
+        }
+      }
     });
   }
   onSearch(searchFilter: any) {
@@ -183,11 +208,12 @@ this.SepndMoneyForm=this._formBuilder.group({
    
 
   }
+ 
   SpendDateClassChnage(val){
     this.DateType=val;
     let begin = this.datepipe.transform(this.f.DateRange.value.begin, 'dd/MM/yyyy');
     let end = this.datepipe.transform(this.f.DateRange.value.end, 'dd/MM/yyyy');
-    this.CommonDatefun(begin,end);
+    this.CommonDatefun(end,begin);
     this.loadData(this.filterData);
   }
   get f() {
@@ -197,7 +223,7 @@ this.SepndMoneyForm=this._formBuilder.group({
   DateRange1(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
     let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');
-    this.CommonDatefun(begin,end)
+    this.CommonDatefun(end,begin)
     this.loadData(this.filterData);
    
   }
@@ -210,24 +236,24 @@ let updatecurrentDate = new Date();
 let begin = this.datepipe.transform(currentDate, 'dd/MM/yyyy');
 
 if(val=="Last 7 days"){
-  updatecurrentDate.setDate(updatecurrentDate.getDate() + 7);
+  updatecurrentDate.setDate(updatecurrentDate.getDate() - 7);
   this.forHideShowDateRangePicker="hide";
-  this.SepndMoneyForm.controls['DateRange'].setValue({ begin: currentDate, end: updatecurrentDate });
+  this.SepndMoneyForm.controls['DateRange'].setValue({ begin: updatecurrentDate, end: currentDate });
 }
 else if(val=="Today"){
-  updatecurrentDate.setDate(updatecurrentDate.getDate() + 30);
+  updatecurrentDate.setDate(updatecurrentDate.getDate() - 30);
   this.forHideShowDateRangePicker="hide";
-  this.SepndMoneyForm.controls['DateRange'].setValue({ begin: currentDate, end: currentDate });
+  this.SepndMoneyForm.controls['DateRange'].setValue({  begin: updatecurrentDate, end: currentDate  });
 }
 else if(val=="Last 30 days"){
-  updatecurrentDate.setDate(updatecurrentDate.getDate() + 30);
+  updatecurrentDate.setDate(updatecurrentDate.getDate() - 30);
   this.forHideShowDateRangePicker="hide";
-  this.SepndMoneyForm.controls['DateRange'].setValue({ begin: currentDate, end: updatecurrentDate });
+  this.SepndMoneyForm.controls['DateRange'].setValue({  begin: updatecurrentDate, end: currentDate  });
 }
 else if(val=="Last 90 days"){
-  updatecurrentDate.setDate(updatecurrentDate.getDate() + 90);
+  updatecurrentDate.setDate(updatecurrentDate.getDate() - 90);
   this.forHideShowDateRangePicker="hide";
-  this.SepndMoneyForm.controls['DateRange'].setValue({ begin: currentDate, end: updatecurrentDate });
+  this.SepndMoneyForm.controls['DateRange'].setValue({  begin: updatecurrentDate, end: currentDate  });
 }else if(val=="Date Range"){
 this.forHideShowDateRangePicker="show";
 
@@ -235,19 +261,18 @@ this.forHideShowDateRangePicker="show";
 let end = this.datepipe.transform(updatecurrentDate, 'dd/MM/yyyy');
 this.CommonDatefun(begin,end);
  this.loadData(this.filterData); 
- 
 }
   CommonDatefun(begin,end){
     if( this.DateType=='Incurred Date'){
-      this.filterData.INCURREDSTARTDATE=begin;
-      this.filterData.INCURREDENDDATE=end;
+      this.filterData.INCURREDSTARTDATE=end;
+      this.filterData.INCURREDENDDATE=begin;
       this.filterData.PAIDSTARTDATE="";
       this.filterData.PAIDENDDATE="";
     }else if(this.DateType=="Date Paid"){
       this.filterData.INCURREDSTARTDATE="";
       this.filterData.INCURREDENDDATE="";
-      this.filterData.PAIDSTARTDATE=begin;
-      this.filterData.PAIDENDDATE=end;
+      this.filterData.PAIDSTARTDATE=end;
+      this.filterData.PAIDENDDATE=begin;
     }
   }
 }

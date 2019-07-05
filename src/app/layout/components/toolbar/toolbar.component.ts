@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation, Output, EventEmitter, Injectable, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation, Injectable, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import * as _ from 'lodash';
@@ -8,7 +8,7 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { Location } from '@angular/common';
 import { navigation } from 'app/navigation/navigation';
-import { AuthenticationService, ReportlistService, UsersService, TimersService, ContactService, MattersService, MatterInvoicesService, GetReceptData } from '../../../_services';
+import { AuthenticationService, ReportlistService, UsersService, TimersService, SpendmoneyService, ContactService, MattersService, MatterInvoicesService, GetReceptData } from '../../../_services';
 import { Router } from '@angular/router';
 import { ContactDialogComponent } from './../../../main/pages/contact/contact-dialog/contact-dialog.component';
 import { LicenceAgreementComponent } from '../../../main/licence-agreement/licence-agreement.component';
@@ -25,11 +25,9 @@ import { ReceiptDilogComponent } from 'app/main/pages/invoice/receipt-dilog/rece
 import { InvoiceDetailComponent } from 'app/main/pages/invoice/invoice-detail/invoice-detail.component';
 import { SpendMoneyAddComponent } from 'app/main/pages/spend-money/spend-money-add-dialog/spend-money-add.component';
 import { GeneralReceiptDilogComponent } from 'app/main/pages/receive-money/general-receipt-dilog/general-receipt-dilog.component';
-import { MatterContactDailogComponent } from 'app/main/pages/template/matter-contact-dailog/matter-contact-dailog.component';
 import { InstantInvoiceDailogComponent } from 'app/main/pages/invoice/instant-invoice-dailog/instant-invoice-dailog.component';
 import { InvoiceAddDailogComponent } from 'app/main/pages/invoice/invoice-add-dailog/invoice-add-dailog.component';
 import { MatterDialogComponentForTemplate } from 'app/main/pages/template/matter-dialog/matter-dialog.component';
-import { InvoiceDialogComponentForTemplate } from 'app/main/pages/invoice/select-invoice-dialog/select-invoice-dialog.component'
 import { MatterReceiptDialogComponentForTemplate } from 'app/main/pages/receive-money/matter-dialog/matter-dialog.component';
 
 import { UserDialogComponent } from './../../../main/pages/users/user-dialog/user-dialog.component';
@@ -69,7 +67,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     isInvoice: any;
     greenTheme: any = false;
     CreatDocumentChild: any;
-    
+
 
 
 
@@ -98,6 +96,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private _usersService: UsersService,
         private matterInvoicesService: MatterInvoicesService,
         private _router: Router,
+        private SpendmoneyService: SpendmoneyService,
         private _getReceptData: GetReceptData,
         private location: Location
     ) {
@@ -212,7 +211,156 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     }
 
-    //for binding
+
+    /* ---------------------------------------------------------------------help Licence start--------------------------------------------------------------------------  */
+    openLicence(Data) {
+        let w = Data == 'LI' ? '50%' : '25%';
+        const dialogRef = this.dialog.open(LicenceAgreementComponent, {
+            disableClose: true,
+            //width: w,
+            data: { action: Data }
+        });
+        dialogRef.afterClosed().subscribe(result => { });
+    }
+    /* ---------------------------------------------------------------------help Licence end--------------------------------------------------------------------------  */
+
+    /* ---------------------------------------------------------------------Contacts Start--------------------------------------------------------------------------  */
+    // for new contact dialog
+    ContactsDialog(actionType) {
+        let contactPopupData = {};
+        if (actionType == "new") {
+            contactPopupData = { action: actionType };
+        } else if (actionType == 'edit' || actionType == 'duplicate' || actionType == 'matter_contect') {
+            if (actionType == "matter_contect") {
+                let getMatterContactGuId = JSON.parse(localStorage.getItem('set_active_matters'));
+                localStorage.setItem('contactGuid', getMatterContactGuId.COMPANYCONTACTGUID);
+                actionType = "edit";
+                if (getMatterContactGuId.COMPANYCONTACTGUID == "") {
+                    this.toastr.error('CONTACTGUID not available');
+                    return false;
+                }
+            } else if (!localStorage.getItem('contactGuid') && actionType != "matter_contect") {
+                this.toastr.error("Please Select Contact");
+                return false;
+            }
+            contactPopupData = { action: actionType }
+        }
+        const dialogRef = this.dialog.open(ContactDialogComponent, {
+            disableClose: true, panelClass: 'contact-dialog', data: contactPopupData
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result)
+                $('#refreshContactTab').click();
+        });
+    }
+
+    openCorresDialog() {
+        let getMatterGuId = JSON.parse(localStorage.getItem('set_active_matters'));
+        const dialogRef = this.dialog.open(ContactCorresDetailsComponent, {
+            disableClose: true, width: '100%', data: getMatterGuId.MATTERGUID,
+        });
+        dialogRef.afterClosed().subscribe(result => { });
+    }
+    /* ---------------------------------------------------------------------Contacts End--------------------------------------------------------------------------  */
+    /* ---------------------------------------------------------------------Matter start--------------------------------------------------------------------------  */
+    matterpopup(actionType) {
+        let MaterPopupData = {};
+        if (actionType == "new") {
+            MaterPopupData = { action: actionType };
+        } else if (actionType == 'edit' || actionType == 'duplicate') {
+            if (!JSON.parse(localStorage.getItem('set_active_matters'))) {
+                this.toastr.error("Please Select Matter");
+                return false;
+            }
+            let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
+            MaterPopupData = { action: actionType, 'matterGuid': mattersData.MATTERGUID }
+        }
+        const dialogRef = this.dialog.open(MatterPopupComponent, {
+            width: '100%',
+            disableClose: true,
+            data: MaterPopupData
+        });
+        dialogRef.afterClosed().subscribe(result => { });
+    }
+    // Delete matter Pop-up
+    DeleteNewmatterpopup(): void {
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                let MatterData: any = JSON.parse(localStorage.getItem('set_active_matters'));
+                let postData = { FormAction: "delete", data: { MATTERGUID: MatterData.MATTERGUID } }
+                this._mattersService.AddNewMatter(postData).subscribe(res => {
+                    if (res.STATUS == "success" && res.CODE == 200) {
+                        $('#refreshMatterTab').click();
+                        this.toastr.success('Delete successfully');
+                    }
+                });
+            }
+            this.confirmDialogRef = null;
+        });
+    }
+    //New File Note Dialog
+    NewFileNote() {
+        const dialogRef = this.dialog.open(NewfilenoteComponent, { width: '100%', disableClose: true });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    /* ---------------------------------------------------------------------Matter End--------------------------------------------------------------------------  */
+
+    /* ---------------------------------------------------------------------Activity Start--------------------------------------------------------------------------  */
+    //add edit and duplicat ActivityDialog
+    ActivityDialog(actionType) {
+        let popupData: any = {};
+        if (actionType == "new") {
+            popupData = { action: actionType };
+        } else if (actionType == "edit" || actionType == "Duplicate") {
+            let ActivityData = JSON.parse(localStorage.getItem('current_ActivityData'));
+            if (!ActivityData) {
+                this.toastr.error("Please Select Activity");
+                return false;
+            }
+            popupData = { action: actionType, ACTIVITYGUID: ActivityData.ACTIVITYGUID };
+        }
+        const dialogRef = this.dialog.open(ActivityDialogComponent, {
+            disableClose: true, panelClass: 'Activity-dialog', data: popupData
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result)
+                $('#refreshActivities').click();
+        });
+    }
+
+    //DeleteActivity
+    DeleteActivityDialog(): void {
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                let ActivityData = JSON.parse(localStorage.getItem('current_ActivityData'));
+                let postData = { FormAction: "delete", data: { ACTIVITYGUID: ActivityData.ACTIVITYGUID } }
+                this._usersService.SetActivityData(postData).subscribe(res => {
+                    if (res.STATUS == "success" && res.CODE == 200) {
+                        $('#refreshActivities').click();
+                        this.toastr.success('Delete successfully');
+                    }
+                });
+            }
+            this.confirmDialogRef = null;
+        });
+    }
+    /* ---------------------------------------------------------------------Activity End--------------------------------------------------------------------------  */
+
+
+
+
 
     /* ---------------------------------------------------------------------------start of timer add-------------------------------------------------------------------------  */
     toggleSidebarOpen(key) {
@@ -349,7 +497,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }
 
     }
-    //*----**************************************time enrt add start***************************************
     public addNewTimeEntry(Data: any, matterData: any) {
         const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '100%', disableClose: true, data: { 'edit': Data, 'matterData': matterData } });
         dialogRef.afterClosed().subscribe(result => {
@@ -357,74 +504,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 $('#refreshTimeEntryTab').click();
         });
     }
-    //*----**************************************time enrt add end***************************************
     /* ---------------------------------------------------------------------end of timer add--------------------------------------------------------------------------  */
-    // for new contact dialog
-    AddContactsDialog() {
-        const dialogRef = this.dialog.open(ContactDialogComponent, {
-            disableClose: true,
-            panelClass: 'contact-dialog',
-            data: {
-                action: 'new',
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#refreshContactTab').click();
-        });
-    }
 
-
-    /* ---------------------------------------------------------------------help Licence start--------------------------------------------------------------------------  */
-    openLicence(Data) {
-        let w = Data == 'LI' ? '50%' : '25%';
-        const dialogRef = this.dialog.open(LicenceAgreementComponent, {
-            disableClose: true,
-            //width: w,
-            data: { action: Data }
-        });
-        dialogRef.afterClosed().subscribe(result => { });
-    }
-    /* ---------------------------------------------------------------------help Licence end--------------------------------------------------------------------------  */
-
-
-    //client details from matter
-    ClientDetailsDialog() {
-        let getMatterContactGuId = JSON.parse(localStorage.getItem('set_active_matters'));
-        if (getMatterContactGuId.COMPANYCONTACTGUID == "") {
-            this.toastr.error('CONTACTGUID not available');
-        } else {
-            localStorage.setItem('contactGuid', getMatterContactGuId.COMPANYCONTACTGUID);
-            const dialogRef = this.dialog.open(ContactDialogComponent, { disableClose: true, data: { action: 'edit' } });
-            dialogRef.afterClosed().subscribe(result => { });
-        }
-    }
-
-    //edit Contact diloage
-    EditContactsDialog() {
-        if (!localStorage.getItem('contactGuid')) {
-            this.toastr.error("Please Select Contact");
-        } else {
-            const dialogRef = this.dialog.open(ContactDialogComponent, { disableClose: true, data: { action: 'edit' } });
-            dialogRef.afterClosed().subscribe(result => {
-                if (result)
-                    $('#refreshContactTab').click();
-            });
-        }
-
-    }
-
-
-    openCorresDialog() {
-        let getMatterGuId = JSON.parse(localStorage.getItem('set_active_matters'));
-        let getmatguid = getMatterGuId.MATTERGUID;
-        const dialogRef = this.dialog.open(ContactCorresDetailsComponent, {
-            disableClose: true,
-            width: '100%',
-            data: getmatguid,
-        });
-        dialogRef.afterClosed().subscribe(result => { });
-    }
 
     //Reportpopup open
     Reportpopup(ReportData) {
@@ -442,52 +523,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         //     this.toastr.error('Access Denied');
         // }
     }
-    // New matter Pop-up
-    AddNewmatterpopup() {
-        const dialogConfig = new MatDialogConfig();
-        const dialogRef = this.dialog.open(MatterPopupComponent, {
-            width: '100%',
-            disableClose: true,
-            data: {
-                action: 'new'
-            }
-        });
-
-        dialogRef.afterClosed().subscribe(result => { });
-    }
-    // Edit matter Pop-up
-    EditNewmatterpopup() {
-        const dialogConfig = new MatDialogConfig();
-        let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
-        const dialogRef = this.dialog.open(MatterPopupComponent, {
-            width: '100%',
-            disableClose: true,
-            data: { action: 'edit', 'matterGuid': mattersData.MATTERGUID }
-        });
-        dialogRef.afterClosed().subscribe(result => { });
-    }
-    // Delete matter Pop-up
-    DeleteNewmatterpopup(): void {
-        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-            disableClose: true,
-            width: '100%',
-        });
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-        this.confirmDialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                let MatterData: any = JSON.parse(localStorage.getItem('set_active_matters'));
-                let postData = { FormAction: "delete", data: { MATTERGUID: MatterData.MATTERGUID } }
-                this._mattersService.AddNewMatter(postData).subscribe(res => {
-                    if (res.STATUS == "success" && res.CODE == 200) {
-                        $('#refreshMatterTab').click();
-                        this.toastr.success('Delete successfully');
-                    }
-                });
-            }
-            this.confirmDialogRef = null;
-        });
-    }
-
     // Add Spend Money Pop-up
     Addspendmoneypopup() {
         const dialogConfig = new MatDialogConfig();
@@ -531,17 +566,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             });
             this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
             this.confirmDialogRef.afterClosed().subscribe(result => {
-                // if (result) {
-                //     let MatterGUID = localStorage.getItem('');
-                //     let postData = { FormAction: "delete", MatterGUID: MatterGUID }
-                //     this._mattersService.AddNewMatter(postData).subscribe(res => {
-                //         if (res.STATUS == "success" && res.CODE == 200) {
-                //             $('#refreshTimeEntryTab').click();
-                //             this.toastr.success('Delete successfully');
-                //         }
-                //     });
-                // }
-                // this.confirmDialogRef = null;
+                if (result) {
+                    let postData = { FormAction: "delete", DATA: { EXPENDITUREGUID: SendMoney_data.EXPENDITUREGUID } }
+                    this.SpendmoneyService.setSpendmonyData(postData).subscribe(res => {
+                        if (res.STATUS == "success" && res.CODE == 200) {
+                            $('#refreshTimeEntryTab').click();
+                            this.toastr.success('Delete successfully');
+                        }
+                    });
+                }
+                this.confirmDialogRef = null;
             });
         }
 
@@ -600,7 +634,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }
-   
+
     /* User Module Function's */
 
     // Add User Dialog
@@ -657,87 +691,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
 
-    /* Activity Module Function's */
-
-    //NewActivityDialog
-    AddActivityDialog() {
-        const dialogRef = this.dialog.open(ActivityDialogComponent, {
-            disableClose: true, panelClass: 'Activity-dialog', data: { action: 'new' }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#refreshActivities').click();
-        });
-    }
-
-    //EditActivityDialog
-    EditActivityDialog() {
-        let ActivityData = JSON.parse(localStorage.getItem('current_ActivityData'));
-        const dialogRef = this.dialog.open(ActivityDialogComponent, {
-            disableClose: true, panelClass: 'Activity-dialog', data: { action: 'edit', ACTIVITYGUID: ActivityData.ACTIVITYGUID }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#refreshActivities').click();
-        });
-    }
-
-    //DeleteActivity
-    DeleteActivityDialog(): void {
-        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-            disableClose: true,
-            width: '100%',
-        });
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-        this.confirmDialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                let ActivityData = JSON.parse(localStorage.getItem('current_ActivityData'));
-                let postData = { FormAction: "delete", data: { ACTIVITYGUID: ActivityData.ACTIVITYGUID } }
-                this._usersService.SetActivityData(postData).subscribe(res => {
-                    if (res.STATUS == "success" && res.CODE == 200) {
-                        $('#refreshActivities').click();
-                        this.toastr.success('Delete successfully');
-                    }
-                });
-            }
-            this.confirmDialogRef = null;
-        });
-    }
-
-    //DuplicateActivity
-    DuplicateActivityDialog() {
-        let ActivityData = JSON.parse(localStorage.getItem('current_ActivityData'));
-        const dialogRef = this.dialog.open(ActivityDialogComponent, {
-            disableClose: true,
-            panelClass: 'Activity-dialog', data: { action: 'Duplicate', ACTIVITYGUID: ActivityData.ACTIVITYGUID }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#refreshActivities').click();
-        });
-    }
-
     //Change Password Dialog
     ChangePass() {
-        const dialogRef = this.dialog.open(ChangePasswordComponent, {
-
-        });
+        const dialogRef = this.dialog.open(ChangePasswordComponent, { disableClose: true, panelClass: 'change-password' });
         dialogRef.afterClosed().subscribe(result => {
             console.log(result);
         });
-    }
-
-    //New File Note Dialog
-    NewFileNote() {
-        const dialogRef = this.dialog.open(NewfilenoteComponent, {
-
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
-    }
-
-    /* Document Register Module */
+    }/* Document Register Module */
 
     // New Record Document
     NewDocumnt() {
@@ -884,9 +844,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     /* Packs Module */
-    
+
     // New Pack
-    NewPack(){
+    NewPack() {
+        console.log('work!!1');
         const dialogRef = this.dialog.open(PacksDailogComponent, {
             disableClose: true,
             panelClass: 'Pack-dialog',
@@ -899,7 +860,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     //EditPack
-    EditPack(){
+    EditPack() {
+        console.log('work!!2');
         const dialogRef = this.dialog.open(PacksDailogComponent, {
             disableClose: true,
             panelClass: 'Pack-dialog',
@@ -912,7 +874,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     //DeletePack
-    DeletePack():void{
+    DeletePack(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
@@ -1095,6 +1057,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
+                $('#refreshReceiceMoany').click();
             }
         });
     }

@@ -1,5 +1,5 @@
 @import "src/@fuse/scss/fuse";
-#email_templete {
+#templates {
     .header {
         .search-wrapper {
             width: 100%;
@@ -39,7 +39,8 @@
     }
 }
 
-app-email-templete {
+app-account {
+    margin-top: 30px;
     width: 100%;
 }
 
@@ -116,4 +117,33 @@ button#refreshContactTab {
 
 th.mat-sort-header-sorted {
     color: black;
+}
+table.mat-elevation-z8.mat-table {
+    width: 100% !important;
+}
+.popup_ftr {
+    border-top: 1px solid #ccc;
+    margin-top: 15px !important;
+    padding: 12px 24px !important;
+}
+.popup_ftr {
+    padding: 24px;
+    // justify-content: flex-start;
+}
+.account_table{
+    width: 100% !important; 
+}
+
+
+
+
+//
+.one {
+    margin-left: 20px;
+    margin-right: 15px; 
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+.btn_2{
+    margin-left: 12px !important;
 }

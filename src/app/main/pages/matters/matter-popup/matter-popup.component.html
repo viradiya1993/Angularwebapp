@@ -17,7 +17,7 @@
                             <mat-option *ngFor="let Classoption of Classdata" value="{{Classoption.LOOKUPGUID}}">{{Classoption.LOOKUPFULLVALUE}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="40" [ngClass]="{'has-error':errorWarningData.Error?.SHORTNAME,'has-warning':errorWarningData.Warning?.SHORTNAME}">
+                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="40" [ngClass]="{'has-error':errorWarningData.Error?.Shortname,'has-warning':errorWarningData.Warning?.Shortname}">
                         <mat-label>Matter Num</mat-label>
                         <input matInput formControlName="SHORTNAME">
                     </mat-form-field>

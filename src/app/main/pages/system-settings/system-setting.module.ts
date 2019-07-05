@@ -23,7 +23,11 @@ import { TrustComponent } from './trust/trust.component';
 import { TemplatesComponent } from './templates/templates.component';
 import { GenerateTemplatesDialoagComponent } from './templates/gennerate-template-dialoag/generate-template.component';
 import {MatSortModule} from '@angular/material/sort';
-
+import { AccountComponent } from './account/account.component';
+import { AccountDialogComponent } from './account/account-edit-dialog/account-dialog.component';
+import { AccountInnerDialogComponent } from './account/account-edit-dialog/account-inner-dialoge/account-inner-dialog.component';
+// import { AccountInnerDialogComponent } from './account/account-edit-dialog/account-inner-dialog/account-inner-dialog.component';
+import {MatTreeModule} from '@angular/material/tree';
 const routes = [
   { path: 'system-setting/name', component: SystemSettingComponent, canActivate: [AuthGuard] },
   // { path: 'system-setting/name', component: SystemSettingComponent },
@@ -33,6 +37,7 @@ const routes = [
   { path: 'system-setting/trust',  component: SystemSettingComponent },
   { path: 'system-setting/templates', component: SystemSettingComponent },
   { path: 'system-setting/estimates', component: SystemSettingComponent },
+  { path: 'system-setting/account', component: SystemSettingComponent },
 ];
 @NgModule({  
   declarations: [
@@ -45,12 +50,17 @@ const routes = [
     EstimatesSettingComponent,
     ReginoalSettingComponent,
     TrustComponent,
-    TemplatesComponent
+    TemplatesComponent,
+    AccountComponent,
+    AccountDialogComponent,
+    AccountInnerDialogComponent
    // SpendMoneyAddComponent,    
   ],
   entryComponents: [
     SystemSettingComponent,
-    GenerateTemplatesDialoagComponent
+    GenerateTemplatesDialoagComponent,
+    AccountDialogComponent,
+    AccountInnerDialogComponent
    // SpendMoneyAddComponent,
   ],
   imports: [
@@ -59,6 +69,7 @@ const routes = [
     FuseSharedModule,
     FuseConfirmDialogModule,
     FuseSidebarModule,
+    MatTreeModule,
 
     MatButtonModule,
     MatCheckboxModule,
@@ -94,7 +105,13 @@ const routes = [
   ],
   exports: [
     SystemSettingComponent,
-    GenerateTemplatesDialoagComponent
-  ]
+    GenerateTemplatesDialoagComponent,
+    AccountDialogComponent,
+    AccountInnerDialogComponent,
+    MatTreeModule
+    
+  
+  ],
+  bootstrap: [AccountInnerDialogComponent],
 })
 export class SystemSettingModule { }

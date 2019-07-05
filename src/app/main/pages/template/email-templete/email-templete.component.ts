@@ -1,26 +1,27 @@
-import { fuseAnimations } from '@fuse/animations';
-import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { MatPaginator,MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material';
-import {MatSort} from '@angular/material';
-import {MatTableDataSource} from '@angular/material/table';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatPaginator, } from '@angular/material';
+import { MatSort } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import * as $ from 'jquery';
+import { fuseAnimations } from '@fuse/animations';
 
 export interface PeriodicElement {
- Title:string;
+  Title: string;
 }
 const ELEMENT_DATA: PeriodicElement[] = [
-  {Title:'abc'},
-  {Title:'Def'},
-  {Title:'mmm'},
-  {Title:'000'},
+  { Title: 'abc' },
+  { Title: 'Def' },
+  { Title: 'mmm' },
+  { Title: '000' },
 ];
 @Component({
   selector: 'app-email-templete',
   templateUrl: './email-templete.component.html',
-  styleUrls: ['./email-templete.component.scss']
-  
+  styleUrls: ['./email-templete.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  animations: fuseAnimations
+
 })
 export class EmailTempleteComponent implements OnInit {
   EmailAllData: FormGroup;
@@ -34,30 +35,28 @@ export class EmailTempleteComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   constructor(
     private _formBuilder: FormBuilder,
-    private dialog: MatDialog,
-    private toastr: ToastrService,
   ) { }
 
   ngOnInit() {
     this.EmailDataTbl.sort = this.sort;
     this.EmailDataTbl.paginator = this.paginator;
     this.EmailAllData = this._formBuilder.group({
-      Filter:[],
-      search:[]
+      Filter: [],
+      search: []
     });
   }
   // FilterSearch
-  FilterSearch(filterValue:any){
+  FilterSearch(filterValue: any) {
     this.EmailDataTbl.filter = filterValue;
   }
   //clicktitle
-  clicktitle(value){
+  clicktitle(value) {
     console.log(value);
   }
   //EmailDialog
-  EmailDialog(){
-    
+  EmailDialog() {
+
   }
-  
+
 }
 

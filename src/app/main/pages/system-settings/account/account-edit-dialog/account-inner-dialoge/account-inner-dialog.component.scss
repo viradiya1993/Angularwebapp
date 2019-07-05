@@ -7,6 +7,10 @@ body.theme-yellow-light .mat-dialog-container {
     padding: 0;
 }
 
+.btn {
+    float: right;
+}
+
 // .popup_title_div {
 //     padding: 24px;
 //     background-color: #303540;
@@ -30,10 +34,11 @@ body.theme-yellow-light .mat-dialog-container {
     padding-bottom: 0 !important;
 }
 
-// .add_popup_padding {
-//     padding: 0 23px;
-//     line-height: 40px;
-// }
+.add_popup_padding {
+    padding: 0 23px;
+    line-height: 40px;
+}
+
 .close.mat-icon {
     font-size: 16px;
     line-height: 24px;
@@ -79,28 +84,14 @@ mat-icon.close_icon.mat-icon.material-icons.mat-icon-no-color {
     cursor: pointer;
 }
 
-.btn {
-    float: right;
+table {
+    width: 100%;
 }
 
-mat-dialog-actions {
-    button {
-        mat-spinner {
-            zoom: 0.2 !important;
-            position: absolute !important;
-            right: 0;
-            left: 0;
-            margin: auto;
-            top: 0;
-            bottom: 0;
-        }
-    }
-}
-
-.add_edit_receipt_main {
+.corres_popup_main {
     background-color: #fff;
     // width: 50%;
-    width: 850px;
+    width: 900px;
     margin: 0 auto;
     // box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
     // -webkit-box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
@@ -123,51 +114,115 @@ mat-dialog-actions {
     padding: 12px 24px !important;
 }
 
-@media screen and (max-width: 900px) {
-    .add_edit_receipt_main {
+@media screen and (max-width: 800px) {
+    .corres_popup_main {
         width: 95%;
     }
 }
 
-table.mat-table {
-    width: 100%;
+@media screen and (max-width: 568px) {
+    .corres_popup_main .left_popup_btn {
+        width: 30%;
+    }
+    .corres_popup_main .right_popup_btn {
+        width: 70%;
+    }
 }
 
-.invoice_receipt_main_div .example-containerdata {
-    height: 250px;
+#matters .p-24.list_tbl_main {
+    // margin-top: 110px;
+    margin-top: 95px;
+}
+
+.p-24.list_tbl_main {
+    margin-top: 110px;
+    padding-top: 0 !important;
+}
+
+.list_sidebar_padding h3.one {
+    margin: 0;
+}
+
+.list_sidebar_right_child {
+    margin-top: 110px;
+}
+
+#matters .list_sidebar_right_child {
+    margin-top: 95px;
+}
+
+.list_sidebar_right_child {
+    background-color: #fff !important;
+    border-radius: 8px;
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12) !important;
+    border-bottom: 1px solid #999;
+}
+
+.invoiceddrop {
+    width: 165px !important;
+    text-align: center !important;
+}
+
+.select_matter_main_div .sticky_search_div {
+    position: relative;
+    top: 0;
+    width: 100%;
+    background-color: transparent;
+    z-index: 9999;
+    left: 0;
+    padding: 0 0 9px 0;
+}
+
+.select_matter_main_div .sticky_search_div .mat-form-field {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    margin-right: 10px;
+}
+
+.select_matter_main_div .p-24.list_tbl_main {
+    margin-top: 0;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.select_matter_main_div .example-containerdata {
+    height: 300px;
     overflow: auto;
 }
 
-.unallocated_div .mat-form-field-wrapper {
-    padding-bottom: 0;
-    margin-bottom: 20px;
+.select_metter_main_div .mat-dialog-content {
+    max-height: 100%;
 }
 
-.total_amount_div .mat-form-field-wrapper {
-    padding-bottom: 0;
-    margin-left: 20px;
+.freeEarner {
+    width: 141px;
 }
 
-.unallocated_div .mat-form-field {
-    padding-left: 20px;
+.check_box {
+    float: right;
+    /* right: 50%; */
+    padding-right: 65px;
+    // padding-bottom: 20px;
 }
-
-.allocate_btn_div {
-    margin-bottom: 20px;
+table {
+    width: 100%;
+  }
+.left_popup_btn {    
+    width: 80%;
+    text-align: left;
 }
-
-.allocate_btn_div .mat-raised-button.mat-accent {
-    margin-left: 20px;
+.contact_select_footer {
+    display: inline-block;
+    width: 100%;
 }
-
-.invoice_receipt_main_div th.mat-header-cell:first-of-type {
-    padding-left: 0;
+.contact_select_footer .left_popup_btn {
+    width: 70%;
+    text-align: left;
+    float: left;
 }
-
-.sideText {
-    text-align: right;
-}
-
 th.mat-sort-header-sorted {
     color: black;
 }

@@ -19,7 +19,6 @@ import {MatRadioModule} from '@angular/material/radio';
 
 import {CdkTableModule} from '@angular/cdk/table';
 import {CdkTreeModule} from '@angular/cdk/tree';
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ScrollDispatchModule} from '@angular/cdk/scrolling';
 import {MatNativeDateModule} from '@angular/material/core';

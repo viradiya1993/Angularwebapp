@@ -40,6 +40,12 @@ export class AuthenticationService {
             }
         }));
     }
+    changePassword(postData) {
+        if (postData == null) {
+            postData = {};
+        }
+        return this.http.post<any>(environment.APIEndpoint + 'login', postData);
+    }
     notLogin() {
         const currentUser = this.currentUserValue;
         if (currentUser) {

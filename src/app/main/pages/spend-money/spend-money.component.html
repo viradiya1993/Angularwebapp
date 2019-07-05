@@ -2,38 +2,38 @@
     <div class="content" fxLayoutAlign="center">
         <div class="center p-24 more_tbl_clmn list_tbl_main" fusePerfectScrollbar>
             <div class="matter-serach-div sticky_search_div responsive_auto">
-                <form   name="form" [formGroup]="SepndMoneyForm">
+                <form name="form" [formGroup]="SepndMoneyForm">
                     <mat-form-field class="example" appearance="outline">
                         <mat-label>Show What?</mat-label>
                         <mat-select name="MainClass" formControlName="MainClass" (selectionChange)="SpendClassChange($event.value)">
-                                <mat-option value="all">All Classes</mat-option>
+                            <mat-option value="all">All Classes</mat-option>
                             <mat-option value="Expense">Expense</mat-option>
                             <mat-option value="Matter Expense">Matter Expence</mat-option>
                             <mat-option value="Capital">Capital</mat-option>
                             <mat-option value="Pay GST">Pay GST</mat-option>
                             <mat-option value="Pay Tax">Pay Tax</mat-option>
                             <mat-option value="Personal">Personal</mat-option>
-                            <mat-option value="Description">Description</mat-option>
+                            <mat-option value="Depreciation ">Depreciation</mat-option>
                             <mat-option value="Others">Others</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="example" appearance="outline">
                         <!-- <mat-label>Incurred Date</mat-label> -->
-                        <mat-select formControlName="DateType" (selectionChange)="SpendDateClassChnage($event.value)" >
-                                <mat-option value="Date Paid">Date Paid</mat-option>
+                        <mat-select formControlName="DateType" (selectionChange)="SpendDateClassChnage($event.value)">
+                            <mat-option value="Date Paid">Date Paid</mat-option>
                             <mat-option value="Incurred Date">Incurred Date</mat-option>
                         </mat-select>
                     </mat-form-field>
-                  
-                    <mat-form-field  appearance="outline" class="example" fxFlex="17.33">
+
+                    <mat-form-field appearance="outline" class="example" fxFlex="17.33">
                         <mat-label>Date Range</mat-label>
                         <input [disabled]="forHideShowDateRangePicker == 'hide'" matInput formControlName="DateRange" [satDatepicker]="picker2" (dateInput)="DateRange('input', $event)" (dateChange)="DateRange1('change', $event)">
                         <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
                         <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
                     </mat-form-field>
-                    <mat-form-field class="example" appearance="outline" >
+                    <mat-form-field class="example" appearance="outline">
                         <!-- <mat-label>Last 30 days</mat-label> -->
-                        <mat-select (selectionChange)="selectDayRange($event.value)"  formControlName="DayRange" placeholder="Select Date Range">
+                        <mat-select (selectionChange)="selectDayRange($event.value)" formControlName="DayRange" placeholder="Select Date Range">
                             <mat-option value="Today">Today</mat-option>
                             <mat-option value="Last 7 days">Last 7 days</mat-option>
                             <mat-option value="Last 30 days">Last 30 days</mat-option>
@@ -56,6 +56,9 @@
                     </mat-form-field>
                 </form>
             </div>
+
+            <button mat-raised-button color="primary" type="button" id="refreshSpendMoneyTab" (click)="refreshSpendMoneyTab();">Refresh</button>
+
             <div class="content fix_div_padding">
                 <!-- <div class="btn top_right_action_billing_one one">
                     <button mat-icon-button (click)="openDialog()" aria-label="More">

@@ -35,7 +35,7 @@ export class ActivityDialogComponent implements OnInit {
     if (this.action === 'new') {
       this.dialogTitle = 'New Activity';
     } else if (this.action === 'edit') {
-      this.dialogTitle = 'edit Activity';
+      this.dialogTitle = 'Update Activity';
     } else {
       this.dialogTitle = 'Duplicate Activity';
     }
@@ -44,10 +44,10 @@ export class ActivityDialogComponent implements OnInit {
   ngOnInit() {
     this.activityForm = this._formBuilder.group({
       ACTIVITYGUID: [''],
-      ACTIVITYTYPE: [''],
+      ACTIVITYTYPE: ['Activity'],
       ACTIVITYID: [''],
       DESCRIPTION: [''],
-      GSTTYPE: [''],
+      GSTTYPE: ['GST Exclusive'],
       RATEPERUNIT: ['', Validators.required],
       UNITDESCRIPTIONPLURAL: [''],
       UNITDESCRIPTIONSINGLE: ['']

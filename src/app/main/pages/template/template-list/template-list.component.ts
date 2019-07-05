@@ -109,89 +109,32 @@ export class TemplateListComponent implements OnInit {
   openDilog() {
     let templateData = JSON.parse(localStorage.getItem('templateData'));
     if (this.router.url == "/create-document/invoice-template") {
-      let invoiceGUid = localStorage.getItem('edit_invoice_id');
-      let passdata = {
-        'Context': "Invoice",
-        'ContextGuid': invoiceGUid,
-        "Type": "Template",
-        "Folder": '',
-        "Template": templateData.TEMPLATENAME
-      }
-      const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
-        width: '100%',
-        disableClose: true,
-        data: passdata,
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          localStorage.setItem('set_active_matters', JSON.stringify(result));
-
-        }
-      });
-
+        let invoiceGUid = localStorage.getItem('edit_invoice_id');
+        let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }
+        this.ForDocDialogOpen(passdata);
     } else if (this.router.url == "/create-document/matter-template") {
-      let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
-      let passdata = {
-        'Context': "Matter",
-        'ContextGuid': matterData.MATTERGUID,
-        "Type": "Template",
-        "Folder": '',
-        "Template": templateData.TEMPLATENAME
-      }
-      const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
-        width: '100%',
-        disableClose: true,
-        data: passdata
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          localStorage.setItem('set_active_matters', JSON.stringify(result));
-
-        }
-      });
-    } else if (this.router.url == "/create-document/receive-money-template") {
-      let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
-      let passdata = {
-        'Context': "Income",
-        'ContextGuid': ReceiptData.INCOMEGUID,
-        "Type": "Template",
-        "Folder": '',
-        "Template": templateData.TEMPLATENAME
-      }
-      const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
-        width: '100%',
-        disableClose: true,
-        data: passdata
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          localStorage.setItem('set_active_matters', JSON.stringify(result));
-
-        }
-      });
+        let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
+        let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }
+        this.ForDocDialogOpen(passdata);
+      } else if (this.router.url == "/create-document/receive-money-template") {
+        let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
+        let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }
+        this.ForDocDialogOpen(passdata);
     } else if (this.router.url == "/create-document/contact-template") {
-      let ContactGuID = localStorage.getItem('contactGuid');
-      let passdata = {
-        'Context': "Income",
-        'ContextGuid': ContactGuID,
-        "Type": "Template",
-        "Folder": '',
-        "Template": templateData.TEMPLATENAME
-      }
-      const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
-        width: '100%',
-        disableClose: true,
-        data: passdata
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          // localStorage.setItem('set_active_matters', JSON.stringify(result));
-
-        }
-      });
+        let ContactGuID = localStorage.getItem('contactGuid');
+        let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }
+        this.ForDocDialogOpen(passdata);
     }
-
-  }
+}
+//***********************************************************END Select Matter Contact*************************************************************************
+ForDocDialogOpen(passdata) {
+    const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, { width: '100%', disableClose: true, data: passdata });
+    dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+            // localStorage.setItem('set_active_matters', JSON.stringify(result));
+        }
+    });
+}
   ContactMatter() {
     const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, {
       width: '100%', disableClose: true, data: {

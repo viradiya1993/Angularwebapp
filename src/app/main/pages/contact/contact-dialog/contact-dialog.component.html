@@ -4,7 +4,7 @@
 
 <div cdkDrag class="popup_main_div add_edit_contact_main">
     <h2 cdkDragHandle mat-dialog-title>{{dialogTitle}}
-        <button class="btn" mat-icon-button (click)="ondialogcloseClick()" [mat-dialog-close]="false" aria-label="Close dialog">
+        <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
                     <mat-icon>close</mat-icon>
             </button>
     </h2>
@@ -13,7 +13,7 @@
             <form name="contactForm" id="contactForm" [formGroup]="contactForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.CONTACTTYPE,'has-warning':errorWarningData.Warning?.CONTACTTYPE}">
-                        <mat-select formControlName="CONTACTTYPE" #value name="selected" [(ngModel)]="nameSelected" (click)="onClick(value)">
+                        <mat-select formControlName="CONTACTTYPE" #value name="selected" [(ngModel)]="nameSelected">
                             <mat-option [value]="val.Name" *ngFor="let val of common">{{val.Name}}</mat-option>
                         </mat-select>
                     </mat-form-field>

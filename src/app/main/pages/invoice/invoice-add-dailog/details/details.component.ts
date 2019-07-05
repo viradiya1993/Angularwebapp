@@ -4,7 +4,7 @@ import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { TimersService } from 'app/_services';
 import { SelectionModel } from '@angular/cdk/collections';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material';
 
 
 @Component({
@@ -40,14 +40,17 @@ export class DetailsComponent implements OnInit {
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.invoiceData.data.length;
-    return numSelected === numRows;
+    if (this.invoiceData.data) {
+      const numSelected = this.selection.selected.length;
+      const numRows = this.invoiceData.data.length;
+      return numSelected === numRows;
+    }
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.isAllSelected() ? this.selection.clear() : this.invoiceData.data.forEach(row => this.selection.select(row));
+    if (this.invoiceData)
+      this.isAllSelected() ? this.selection.clear() : this.invoiceData.data.forEach(row => this.selection.select(row));
   }
   retuenData() {
     this.totalDataOut.emit(this.selection.selected);

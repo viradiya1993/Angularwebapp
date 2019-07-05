@@ -1,8 +1,8 @@
-<div class="example-loading-shade" *ngIf="isLoadingResults">
+<!-- <div class="example-loading-shade" *ngIf="isLoadingResults">
     <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
-</div>
+</div> -->
 <div cdkDrag class="popup_main_div add_edit_contact_main">
-    <h2 cdkDragHandle mat-dialog-title>File Note : 20140008
+    <h2 cdkDragHandle mat-dialog-title>File Note : {{ShortName}}
         <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
       <mat-icon>close</mat-icon>
     </button>
@@ -11,24 +11,24 @@
         <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
             <form [formGroup]="NewFileNote" fxLayout="column" fxFlex="1 0 auto" name="form">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" class="example" fxFlex="49" class="pr-4">
+                    <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.DATE,'has-warning':errorWarningData.Warning?.DATE}" appearance="outline" class="example" fxFlex="49" class="pr-4">
                         <mat-label>Date</mat-label>
                         <input (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" matInput name="DATEOFBIRTH" [formControlName]="'newfiledate'" [matDatepicker]="picker" placeholder="Date">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
 
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                    <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.TIME,'has-warning':errorWarningData.Warning?.TIME}" appearance="outline" fxFlex="33" class="pr-4">
                         <mat-label>Time</mat-label>
                         <input [formControlName]="'time'" name="'time'" matInput type="time">
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+                    <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.USERNAME,'has-warning':errorWarningData.Warning?.USERNAME}" appearance="outline" fxFlex="34" class="pr-4">
                         <mat-label>User</mat-label>
                         <input formControlName="User" matInput placeholder="User">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                    <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.NOTE,'has-warning':errorWarningData.Warning?.NOTE}" appearance="outline" fxFlex="100" class="pr-4">
                         <mat-label>Comment</mat-label>
                         <textarea name="comment" [formControlName]="'comment'" matInput></textarea>
                     </mat-form-field>
@@ -36,7 +36,7 @@
             </form>
         </div>
         <mat-dialog-actions align="end" class="popup_ftr">
-            <button mat-raised-button color="accent" (click)="SaveFileNote()">Add</button>
+            <button mat-raised-button color="accent" (click)="SaveFileNote()" [disabled]="isspiner" ><mat-spinner *ngIf="isspiner"></mat-spinner>Add</button>
             <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
         </mat-dialog-actions>
     </div>

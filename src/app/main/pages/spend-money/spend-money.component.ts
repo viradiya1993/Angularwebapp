@@ -69,11 +69,11 @@ this.SepndMoneyForm=this._formBuilder.group({
     updatecurrentDate.setDate(updatecurrentDate.getDate() - 30);
     let end = this.datepipe.transform(currentDate, 'dd/MM/yyyy');
     let begin = this.datepipe.transform(updatecurrentDate, 'dd/MM/yyyy');
-    this.filterData={'EXPENDITURECLASS':"all",'INCURREDSTARTDATE':begin,'INCURREDENDDATE':end,"PAIDSTARTDATE":'',
+    this.filterData={'EXPENDITURECLASS':" ",'INCURREDSTARTDATE':begin,'INCURREDENDDATE':end,"PAIDSTARTDATE":'',
     'PAIDENDDATE':'','SearchString':''}
     // this.filterData={'EXPENDITURECLASS':"all",'INCURREDSTARTDATE':'','INCURREDENDDATE':'',"PAIDSTARTDATE":'',
     // 'PAIDENDDATE':'','SearchString':''}
-    this.SepndMoneyForm.controls['MainClass'].setValue("all"); 
+    this.SepndMoneyForm.controls['MainClass'].setValue(" "); 
     this.SepndMoneyForm.controls['DateType'].setValue("Incurred Date");
     this.SepndMoneyForm.controls['DateRange'].setValue({ begin: currentDate, end: updatecurrentDate }); 
     this.SepndMoneyForm.controls['DayRange'].setValue("Last 30 days"); 
@@ -241,9 +241,9 @@ if(val=="Last 7 days"){
   this.SepndMoneyForm.controls['DateRange'].setValue({ begin: updatecurrentDate, end: currentDate });
 }
 else if(val=="Today"){
-  updatecurrentDate.setDate(updatecurrentDate.getDate() - 30);
+  // updatecurrentDate.setDate(updatecurrentDate.getDate() - 30);
   this.forHideShowDateRangePicker="hide";
-  this.SepndMoneyForm.controls['DateRange'].setValue({  begin: updatecurrentDate, end: currentDate  });
+  this.SepndMoneyForm.controls['DateRange'].setValue({  begin: currentDate, end: currentDate  });
 }
 else if(val=="Last 30 days"){
   updatecurrentDate.setDate(updatecurrentDate.getDate() - 30);

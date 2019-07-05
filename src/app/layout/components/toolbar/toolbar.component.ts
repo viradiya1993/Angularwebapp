@@ -33,12 +33,13 @@ import { MatterReceiptDialogComponentForTemplate } from 'app/main/pages/receive-
 import { UserDialogComponent } from './../../../main/pages/users/user-dialog/user-dialog.component';
 import { ActivityDialogComponent } from './../../../main/pages/activities/activity-dialog/activity-dialog.component';
 import { ChangePasswordComponent } from 'app/main/change-password/change-password.component';
-import { NewfilenoteComponent } from './../../../main/pages/newfilenote/newfilenote.component';
+
 import { DocumentDailogComponent } from './../../../main/pages/document-register/document-dailog/document-dailog.component';
 import { EmailDailogComponent } from './../../../main/pages/template/email-templete/email-dailog/email-dailog.component';
 import { PacksDailogComponent } from './../../../main/pages/template/packs/packs-dailog/packs-dailog.component';
 import { ChartAcDailogComponent } from './../../../main/pages/chart-account/chart-ac-dailog/chart-ac-dailog.component';
 import { SelectAccountComponent } from './../../../main/pages/select-account/select-account.component';
+import { FileNoteDialogComponent } from 'app/main/pages/matters/file-note-dialog/file-note-dialog.component';
 
 @Component({
     selector: 'toolbar',
@@ -305,7 +306,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //New File Note Dialog
     NewFileNote() {
-        const dialogRef = this.dialog.open(NewfilenoteComponent, { width: '100%', disableClose: true });
+        const dialogRef = this.dialog.open(FileNoteDialogComponent, { width: '100%', disableClose: true });
         dialogRef.afterClosed().subscribe(result => {
             console.log(result);
         });

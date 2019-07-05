@@ -47,6 +47,8 @@ import { NumericDirective } from './matter-popup/numericValidation.component';
 
 
 import {MatSortModule} from '@angular/material/sort';
+import { FileNoteDialogComponent } from './file-note-dialog/file-note-dialog.component';
+
 
 
 const routes = [
@@ -59,6 +61,7 @@ const routes = [
     MattersListComponent,
     MattersSortDetailComponent,
     MatterPopupComponent,
+    FileNoteDialogComponent,
     GeneralComponent,
     ClientComponent,
     RatesComponent,
@@ -127,6 +130,6 @@ const routes = [
     MattersComponent,
     DragDropModule
   ],
-  entryComponents: [MatterPopupComponent, MatterAddressPopupComponent, CorrespondDailogComponent, UserSelectPopupComponent]
+  entryComponents: [MatterPopupComponent,FileNoteDialogComponent, MatterAddressPopupComponent, CorrespondDailogComponent, UserSelectPopupComponent]
 })
 export class MattersModule { }

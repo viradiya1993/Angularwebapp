@@ -15,7 +15,7 @@ import { TemplateModule } from './template/template.module';
 import { SystemSettingTemplateModule } from './system-settings/templates/templates.module';
 import { ActivitiesModule } from './activities/activities.module';
 import { SortingDialogModule } from '../sorting-dialog/sorting-dialog.module';
-import { NewfilenoteModule } from './newfilenote/newfilenote.module';
+// import { NewfilenoteModule } from './newfilenote/newfilenote.module';
 import { DocumentRegitser } from './document-register/document-register.module';
 // import { ChartOfAccount } from './chart-account/chart-account.module';
 import { ChartOfAccount } from './chart-account/chart-account.module';
@@ -64,7 +64,7 @@ const appRoutes: Routes = [
     SystemSettingTemplateModule,
     ActivitiesModule,
     SortingDialogModule,
-    NewfilenoteModule,
+    // NewfilenoteModule,
     DocumentRegitser,
     ChartOfAccount,
     SelectAccountModule

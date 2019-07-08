@@ -12,13 +12,13 @@
         <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
             <form name="generalReceiptForm" id="generalReceiptForm" class="generalReceiptForm" [formGroup]="generalReceiptForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" class="example" fxFlex="25" class="pr-4">
+                    <mat-form-field appearance="outline" class="example" fxFlex="25" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.INCOMEDATE,'has-warning':errorWarningData.Warning?.INCOMEDATE}">
                         <mat-label>Date</mat-label>
                         <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" formControlName="INCOMEDATETEXT">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" class="example" fxFlex="25" class="pr-4">
+                    <mat-form-field appearance="outline" class="example" fxFlex="25" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.INCOMECLASS,'has-warning':errorWarningData.Warning?.INCOMECLASS}">
                         <mat-label>Class</mat-label>
                         <mat-select formControlName="INCOMECLASS">
                             <mat-option value="Income">Income</mat-option>
@@ -29,7 +29,7 @@
                             <mat-option value="Other">Other</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" class="example" fxFlex="25" class="pr-4">
+                    <mat-form-field appearance="outline" class="example" fxFlex="25" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.INCOMETYPE,'has-warning':errorWarningData.Warning?.INCOMETYPE}">
                         <mat-label>Type</mat-label>
                         <mat-select formControlName="INCOMETYPE">
                             <mat-option value="Cash">Cash</mat-option>
@@ -42,7 +42,7 @@
                             <mat-option value="Other">Other</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" class="example" fxFlex="25" class="pr-4">
+                    <mat-form-field appearance="outline" class="example" fxFlex="25" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PAYEE,'has-warning':errorWarningData.Warning?.PAYEE}">
                         <mat-label>Payor</mat-label>
                         <mat-select formControlName="PAYEE">
                             <mat-option *ngFor="let val of getPayourarray" [value]="val.CONTACTGUID">{{val.CONTACTNAME}}</mat-option>
@@ -50,30 +50,21 @@
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="30">
+                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="30" [ngClass]="{'has-error':errorWarningData.Error?.AMOUNT,'has-warning':errorWarningData.Warning?.AMOUNT}">
                         <mat-label>Amount</mat-label>
-                        <input matInput formControlName="AMOUNT">
+                        <input matInput class="sideText" type="number" formControlName="AMOUNT" [(ngModel)]="AMOUNT" (focusout)="amountVal()">
+                        <span class="currency_sign" matPrefix>$&nbsp;</span>
                     </mat-form-field>
-                    <!-- <mat-form-field appearance="outline" class="example pr-4" fxFlex="20">
-                        <mat-label>GST Type</mat-label>
-                        <mat-select formControlName="gsttype">
-                            <mat-option *ngFor="let val of gsttypeData" [value]="val.id">{{val.text}}</mat-option>
-                        </mat-select>
-                    </mat-form-field> -->
-                    <!-- <mat-form-field appearance="outline" class="example pr-4" fxFlex="20">
-                        <mat-label>GST</mat-label>
-                        <input matInput formControlName="GST">
-                    </mat-form-field> -->
-                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="35">
+                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="35" [ngClass]="{'has-error':errorWarningData.Error?.BANKACCOUNTGUID,'has-warning':errorWarningData.Warning?.BANKACCOUNTGUID}">
                         <mat-label>Bank A/C</mat-label>
                         <input matInput formControlName="BANKACCOUNTGUID" value="ACCAAAAAAAAAAAA4">
                     </mat-form-field>
-                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="35">
+                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="35" [ngClass]="{'has-error':errorWarningData.Error?.INCOMEACCOUNTGUID,'has-warning':errorWarningData.Warning?.INCOMEACCOUNTGUID}">
                         <mat-label>Income A/C</mat-label>
                         <input matInput formControlName="INCOMEACCOUNTGUID" value="ACCAAAAAAAAAAAA4">
                     </mat-form-field>
                 </div>
-                <mat-form-field appearance="outline" class="example pr-4" fxFlex="100">
+                <mat-form-field appearance="outline" class="example pr-4" fxFlex="100" [ngClass]="{'has-error':errorWarningData.Error?.NOTE,'has-warning':errorWarningData.Warning?.NOTE}">
                     <mat-label>Note</mat-label>
                     <textarea matInput formControlName="NOTE"></textarea>
                 </mat-form-field>

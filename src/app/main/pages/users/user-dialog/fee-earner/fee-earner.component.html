@@ -1,68 +1,75 @@
-<div class="one" [formGroup]="userForm"  fxLayout="column">
-  <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-          <mat-label>Fee Earner Id</mat-label>
-          <input name="feeearnerid" [formControlName]="'feeearnerid'" matInput>
-      </mat-form-field>
-      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-          <mat-label>Posotion</mat-label>
-          <input name="posotion" [formControlName]="'posotion'" matInput>
-      </mat-form-field>
-  </div>
-  <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-          <mat-label>$ /hr</mat-label>
-          <input type="number" name="hours" [formControlName]="'hours'" matInput>
-      </mat-form-field>
-      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-          <mat-label>$ /day</mat-label>
-          <input type="number" name="day" [formControlName]="'day'" matInput>
-      </mat-form-field>
-  </div>
-  <!-- Redio Button -->
-  <h3> GST Type</h3>
-  <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-      <mat-radio-group aria-label="GST Type" fxFlex="100" class="pr-4">
-          <mat-radio-button value="exclusive" checked>Exclusive</mat-radio-button>
-          <mat-radio-button value="inclusive">Inclusive</mat-radio-button>
-          <mat-radio-button value="free">Free</mat-radio-button>
-      </mat-radio-group>
-  </div>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-          <mat-label>Ph 1</mat-label>
-          <input name="ph1" [formControlName]="'ph1'" matInput>
-      </mat-form-field>
-      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-          <mat-label>Ph 2</mat-label>
-          <input name="ph2" [formControlName]="'ph2'" matInput>
-      </mat-form-field>
-  </div>
-  <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-          <mat-label>Fax 1</mat-label>
-          <input name="fax1" [formControlName]="'fax1'" matInput>
-      </mat-form-field>
-      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-          <mat-label>Fax 2</mat-label>
-          <input name="fax2" [formControlName]="'fax2'" matInput>
-      </mat-form-field>
-  </div>
-  <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-          <mat-label>Mobile</mat-label>
-          <input name="mobile" [formControlName]="'mobile'" matInput>
-      </mat-form-field>
-      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-          <mat-label>Practicinc Cert. No</mat-label>
-          <input name="pracno" [formControlName]="'pracno'" matInput>
-      </mat-form-field>
-  </div>
-  <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-          <mat-label>Comment</mat-label>
-        <textarea name="comment" [formControlName]="'comment'"  matInput ></textarea>
-      </mat-form-field>
-  </div>
+<div class="one" [formGroup]="userForm" fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.USERID,'has-warning':errorWarningData.Warning?.USERID}">
+            <mat-label>Fee Earner Id</mat-label>
+            <input formControlName="USERID" matInput>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.POSITION,'has-warning':errorWarningData.Warning?.POSITION}">
+            <mat-label>Posotion</mat-label>
+            <input formControlName="POSITION" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.RATEPERHOUR,'has-warning':errorWarningData.Warning?.RATEPERHOUR}">
+            <mat-label>$ /hr</mat-label>
+            <input type="number" class="sideText" (focusout)="RatePerHourVal()" formControlName="RATEPERHOUR" matInput>
+            <span class="currency_sign" matPrefix>$&nbsp;</span>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.RATEPERDAY,'has-warning':errorWarningData.Warning?.RATEPERDAY}">
+            <mat-label>$ /day</mat-label>
+            <input type="number" class="sideText" (focusout)="RatePerDayVal()" formControlName="RATEPERDAY" matInput>
+            <span class="currency_sign" matPrefix>$&nbsp;</span>
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field fxFlex="33" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.GSTTYPE,'has-warning':errorWarningData.Warning?.GSTTYPE}">
+            <mat-label>GST Type</mat-label>
+            <mat-select formControlName="GSTTYPE">
+                <mat-option value="GST Exclusive">TGST Exclusive</mat-option>
+                <mat-option value="GST Inclusive">GST Inclusive</mat-option>
+                <mat-option value="GST Free">GST Free</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PHONE1,'has-warning':errorWarningData.Warning?.PHONE1}">
+            <mat-label>Ph 1</mat-label>
+            <input ormControlName="PHONE1" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="30" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PHONE2,'has-warning':errorWarningData.Warning?.PHONE2}">
+            <mat-label>Ph 2</mat-label>
+            <input formControlName="PHONE2" matInput>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FAX1,'has-warning':errorWarningData.Warning?.FAX1}">
+            <mat-label>Fax 1</mat-label>
+            <input formControlName="FAX1" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FAX2,'has-warning':errorWarningData.Warning?.FAX2}">
+            <mat-label>Fax 2</mat-label>
+            <input formControlName="FAX2" matInput>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.EMAIL,'has-warning':errorWarningData.Warning?.EMAIL}">
+            <mat-label>Email</mat-label>
+            <input formControlName="EMAIL" matInput>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MOBILE,'has-warning':errorWarningData.Warning?.MOBILE}">
+            <mat-label>Mobile</mat-label>
+            <input formControlName="MOBILE" matInput>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PRACTICINGCERTIFICATENO,'has-warning':errorWarningData.Warning?.PRACTICINGCERTIFICATENO}">
+            <mat-label>Practicinc Cert. No</mat-label>
+            <input formControlName="PRACTICINGCERTIFICATENO" matInput>
+        </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.COMMENT,'has-warning':errorWarningData.Warning?.COMMENT}">
+            <mat-label>Comment</mat-label>
+            <textarea formControlName="COMMENT" matInput></textarea>
+        </mat-form-field>
+    </div>
 </div>

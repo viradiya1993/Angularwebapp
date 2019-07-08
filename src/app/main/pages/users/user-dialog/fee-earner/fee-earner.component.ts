@@ -10,8 +10,18 @@ export class FeeEarnerComponent implements OnInit {
 
   constructor() { }
   @Input() userForm: FormGroup;
+  @Input() errorWarningData: any;
   ngOnInit() {
-    
+
+  }
+  RatePerHourVal() {
+    this.userForm.controls['RATEPERHOUR'].setValue(parseFloat(this.f.RATEPERHOUR.value).toFixed(2));
+  }
+  RatePerDayVal() {
+    this.userForm.controls['RATEPERDAY'].setValue(parseFloat(this.f.RATEPERDAY.value).toFixed(2));
+  }
+  get f() {
+    return this.userForm.controls;
   }
 
 }

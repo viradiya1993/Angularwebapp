@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
-import { TableColumnsService, UsersService } from 'app/_services';
+import { TableColumnsService, MainAPiServiceService } from 'app/_services';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 
 
@@ -37,7 +37,7 @@ export class ActivitiesComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private dialog: MatDialog,
     private TableColumnsService: TableColumnsService,
-    private _UsersService: UsersService,
+    private _mainAPiServiceService: MainAPiServiceService,
     private toastr: ToastrService) { }
   ngOnInit() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
@@ -63,7 +63,7 @@ export class ActivitiesComponent implements OnInit {
   }
   loadData(filterData) {
     this.isLoadingResults = true;
-    this._UsersService.GetActivityData(filterData).subscribe(response => {
+    this._mainAPiServiceService.getSetData(filterData, 'GetActivity').subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (response.DATA.ACTIVITIES[0]) {
           this.highlightedRows = response.DATA.ACTIVITIES[0].ACTIVITYGUID;

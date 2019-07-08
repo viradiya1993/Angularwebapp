@@ -33,6 +33,5 @@ export * from './template-list.service';
 export * from './system-setting.service';
 
 
-//user
-export * from './users.service';
+//main
 export * from './main-api-service.service';

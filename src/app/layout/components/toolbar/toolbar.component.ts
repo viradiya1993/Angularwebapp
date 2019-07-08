@@ -8,7 +8,7 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { Location } from '@angular/common';
 import { navigation } from 'app/navigation/navigation';
-import { AuthenticationService, ReportlistService, UsersService, TimersService, SpendmoneyService, ContactService, MattersService, MatterInvoicesService, GetReceptData } from '../../../_services';
+import { AuthenticationService, ReportlistService, TimersService, SpendmoneyService, ContactService, MattersService, MatterInvoicesService, GetReceptData, MainAPiServiceService } from '../../../_services';
 import { Router } from '@angular/router';
 import { ContactDialogComponent } from './../../../main/pages/contact/contact-dialog/contact-dialog.component';
 import { LicenceAgreementComponent } from '../../../main/licence-agreement/licence-agreement.component';
@@ -43,7 +43,7 @@ import { FileNoteDialogComponent } from 'app/main/pages/matters/file-note-dialog
 import { BankingDialogComponent } from 'app/main/pages/banking/banking-dialog.component';
 
 import { GeneralDailogComponent } from './../../../main/pages/general-journal/general-dailog/general-dailog.component';
-import {ReportFilterComponent} from './../../../main/pages/general-journal/report-filter/report-filter.component';
+import { ReportFilterComponent } from './../../../main/pages/general-journal/report-filter/report-filter.component';
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -97,7 +97,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         public _getContact: ContactService,
         private TimersServiceI: TimersService,
         private _mattersService: MattersService,
-        private _usersService: UsersService,
+        private _mainAPiServiceService: MainAPiServiceService,
         private matterInvoicesService: MatterInvoicesService,
         private _router: Router,
         private SpendmoneyService: SpendmoneyService,
@@ -350,7 +350,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             if (result) {
                 let ActivityData = JSON.parse(localStorage.getItem('current_ActivityData'));
                 let postData = { FormAction: "delete", data: { ACTIVITYGUID: ActivityData.ACTIVITYGUID } }
-                this._usersService.SetActivityData(postData).subscribe(res => {
+                this._mainAPiServiceService.getSetData(postData, 'SetActivity').subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {
                         $('#refreshActivities').click();
                         this.toastr.success('Delete successfully');
@@ -568,10 +568,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-            if(result){
+            if (result) {
                 $('#refreshSpendMoneyTab').click();
             }
-         });
+        });
     }
     // Edit spendmoney Pop-up
     Editspendmoneypopup() {
@@ -587,11 +587,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                     action: 'edit'
                 }
             });
-            dialogRef.afterClosed().subscribe(result => { 
-                if(result){
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
                     $('#refreshSpendMoneyTab').click();
                 }
-                
+
             });
         }
 
@@ -929,12 +929,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     //Account Trasactions
-    Account_Tra(){
-     
+    Account_Tra() {
+
     }
     //Recouncile Account
-    Reconcile_ac_pra(){
-       
+    Reconcile_ac_pra() {
+
     }
     //ReconcileAC
     ReconcileAC() {
@@ -945,11 +945,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             console.log(result);
         });
     }
-    
+
     /* General Journal Module Function's */
-    
+
     //NewGeneral
-    NewGeneral(){
+    NewGeneral() {
         const dialogRef = this.dialog.open(GeneralDailogComponent, {
 
         });
@@ -958,7 +958,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     //ViewDetails
-    ViewDetails(){
+    ViewDetails() {
         const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
             width: '100%', disableClose: true,
             data: { action: 'add' }
@@ -970,15 +970,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     //DeleteGeneral
-    DeleteGeneral(){
+    DeleteGeneral() {
         console.log('DeleteGeneral Work!!');
     }
     //DuplicateGeneral
-    DuplicateGeneral(){
+    DuplicateGeneral() {
         console.log('DuplicateGeneral Work!!');
     }
     //PrintGj
-    PrintGj(){
+    PrintGj() {
         const dialogRef = this.dialog.open(ReportFilterComponent, {
 
         });
@@ -986,7 +986,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     //_____________________________________________________________________________________________________
 
-    BankingDialogOpen(){
+    BankingDialogOpen() {
         const dialogRef = this.dialog.open(BankingDialogComponent, {});
         dialogRef.afterClosed().subscribe(result => {
         });
@@ -1038,7 +1038,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 14;
         } else if (x[1] == "chart-account") {
             this.isTabShow = 15;
-        } else if(x[1] == "genral-journal"){
+        } else if (x[1] == "genral-journal") {
             this.isTabShow = 16;
         }
         else {

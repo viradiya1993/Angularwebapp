@@ -3,7 +3,7 @@ import { MatDialogRef, MatDialog } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { UsersService } from 'app/_services';
+import { MainAPiServiceService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -27,7 +27,7 @@ export class ActivityDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<ActivityDialogComponent>,
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private _UsersService: UsersService,
+    private _mainAPiServiceService: MainAPiServiceService,
     public _matDialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
@@ -55,7 +55,7 @@ export class ActivityDialogComponent implements OnInit {
     if (this.action == 'edit' || this.action == "Duplicate") {
       this.activityForm.controls['ACTIVITYGUID'].setValue(this.data.ACTIVITYGUID);
       this.isLoadingResults = true;
-      this._UsersService.GetActivityData({ ACTIVITYGUID: this.data.ACTIVITYGUID }).subscribe(response => {
+      this._mainAPiServiceService.getSetData({ ACTIVITYGUID: this.data.ACTIVITYGUID }, 'GetActivity').subscribe(response => {
         if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
           if (response.DATA.ACTIVITIES[0]) {
             let activityData = response.DATA.ACTIVITIES[0];
@@ -101,7 +101,7 @@ export class ActivityDialogComponent implements OnInit {
       this.successMsg = 'Update successfully';
     }
     let PostActivityData: any = { FormAction: FormAction, VALIDATEONLY: true, Data: PostData };
-    this._UsersService.SetActivityData(PostActivityData).subscribe(res => {
+    this._mainAPiServiceService.getSetData(PostActivityData, 'SetActivity').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.checkValidation(res.DATA.VALIDATIONS, PostActivityData);
       } else if (res.CODE == 451 && res.STATUS == "warning") {
@@ -153,7 +153,7 @@ export class ActivityDialogComponent implements OnInit {
   }
   saveActivityData(PostActivityData: any) {
     PostActivityData.VALIDATEONLY = false;
-    this._UsersService.SetActivityData(PostActivityData).subscribe(res => {
+    this._mainAPiServiceService.getSetData(PostActivityData, 'SetActivity').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.toastr.success(this.successMsg);
         this.dialogRef.close(true);

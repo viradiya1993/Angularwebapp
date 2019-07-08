@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-import { UsersService } from 'app/_services';
+import { MainAPiServiceService } from 'app/_services';
 
 @Component({
   selector: 'app-user-dialog',
@@ -28,7 +28,7 @@ export class UserDialogComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
     public _matDialog: MatDialog,
-    private _UsersService: UsersService,
+    private _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.action = data.action;
@@ -71,7 +71,7 @@ export class UserDialogComponent implements OnInit {
     });
     if (this.action === 'edit' || this.action === 'duplicate') {
       this.isLoadingResults = true;
-      this._UsersService.getUserData({ USERGUID: this.data.USERGUID, 'GETALLFIELDS': true }).subscribe(response => {
+      this._mainAPiServiceService.getSetData({ USERGUID: this.data.USERGUID, 'GETALLFIELDS': true }, 'GetUsers').subscribe(response => {
         if (response.CODE === 200 && response.STATUS === 'success') {
           let userinfoData = response.DATA.USERS[0];
           this.userPermission = userinfoData.PERMISSIONS;
@@ -131,7 +131,7 @@ export class UserDialogComponent implements OnInit {
       SEARCHUSERPASSWORD: this.f.SEARCHUSERPASSWORD.value
     }
     let userPostData: any = { FormAction: 'insert', VALIDATEONLY: true, DATA: data };
-    this._UsersService.SetUserData(userPostData).subscribe(res => {
+    this._mainAPiServiceService.getSetData(userPostData, 'SetUser').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.checkValidation(res.DATA.VALIDATIONS, userPostData);
       } else if (res.CODE == 451 && res.STATUS == "warning") {
@@ -180,7 +180,7 @@ export class UserDialogComponent implements OnInit {
   }
   SaveUserAfterVAlidation(data: any) {
     data.VALIDATEONLY = false;
-    this._UsersService.SetUserData(data).subscribe(response => {
+    this._mainAPiServiceService.getSetData(data, 'SetUser').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.toastr.success('User save successfully');
         this.isspiner = false;

@@ -6,7 +6,7 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { MatSort } from '@angular/material';
 import * as $ from 'jquery';
-import { TableColumnsService, UsersService } from 'app/_services';
+import { TableColumnsService, MainAPiServiceService } from 'app/_services';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 
 @Component({
@@ -38,7 +38,7 @@ export class UsersComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private dialog: MatDialog,
     private TableColumnsService: TableColumnsService,
-    private _UsersService: UsersService,
+    private _mainAPiServiceService: MainAPiServiceService,
     private toastr: ToastrService,
   ) {
     let filterData = JSON.parse(localStorage.getItem('users_filter'));
@@ -81,7 +81,7 @@ export class UsersComponent implements OnInit {
   }
   loadData(filterData) {
     this.isLoadingResults = true;
-    this._UsersService.getUserData(filterData).subscribe(response => {
+    this._mainAPiServiceService.getSetData(filterData, 'GetUsers').subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (response.DATA.USERS[0]) {
           this.highlightedRows = response.DATA.USERS[0].USERGUID;

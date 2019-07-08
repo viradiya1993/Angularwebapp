@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, Injectable } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
-import { SystemSetting } from '../../../../../../_services';
-import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
-import {FlatTreeControl} from '@angular/cdk/tree';
-import {BehaviorSubject, Observable} from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { MatTreeFlatDataSource, MatTreeFlattener, MatDialog } from '@angular/material';
+import { FlatTreeControl } from '@angular/cdk/tree';
+import { ChartAcDailogComponent } from '../chart-account/chart-ac-dailog/chart-ac-dailog.component';
+import { SelectBankingDialogComponent } from './select-banking-dialog/select-banking-dialog.component';
 
 
 const LOAD_MORE = 'LOAD_MORE';
@@ -87,16 +88,14 @@ export class LoadmoreDatabase {
 }
 
 @Component({
-  selector: 'app-account-inner-dialog',
-  templateUrl: './account-inner-dialog.component.html',
-  styleUrls: ['./account-inner-dialog.component.scss'],
+  selector: 'app-banking-dialog',
+  templateUrl: './banking-dialog.component.html',
+  styleUrls: ['./banking-dialog.component.scss'],
   animations: fuseAnimations,
   providers: [LoadmoreDatabase]
 })
-
-// const LOAD_MORE = 'LOAD_MORE';
-export class AccountInnerDialogComponent implements OnInit {
-  childrenChange = new BehaviorSubject<AccountInnerDialogComponent[]>([]);
+export class BankingDialogComponent implements OnInit {
+  childrenChange = new BehaviorSubject<BankingDialogComponent[]>([]);
   @Input() SettingForm: FormGroup;
   @Input() errorWarningData: any;
   highlightedRows: any;
@@ -111,7 +110,7 @@ export class AccountInnerDialogComponent implements OnInit {
   // Flat tree data source
   dataSource: MatTreeFlatDataSource<LoadmoreNode, LoadmoreFlatNode>;
 
-  constructor(private database: LoadmoreDatabase) {
+  constructor(public dialog: MatDialog,private database: LoadmoreDatabase) {
     this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel,
       this.isExpandable, this.getChildren);
 
@@ -155,6 +154,7 @@ export class AccountInnerDialogComponent implements OnInit {
   }
 
   loadChildren(node: LoadmoreFlatNode) {
+    console.log("abcd");
     this.database.loadMore(node.item, true);
   }
 
@@ -168,13 +168,26 @@ export class AccountInnerDialogComponent implements OnInit {
   ngOnInit() {
      
   }
+
+  AccountDialogOpen(val){
+    const dialogRef = this.dialog.open(ChartAcDailogComponent, {
+      disableClose: true,
+      panelClass: 'ChartAc-dialog',
+      data: {
+          action: val,
+      }
+    });
+        dialogRef.afterClosed().subscribe(result => {
+        }); 
+  }
   
-  openAccount(){
-
+  SelectDialogOpen(){
+    console.log("fdfh");
+    const dialogRef = this.dialog.open(SelectBankingDialogComponent, {
+   
+    });
+        dialogRef.afterClosed().subscribe(result => {
+        }); 
   }
-  accountrow(){
-    
-  }
-
 
 }

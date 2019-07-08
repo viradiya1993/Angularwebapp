@@ -70,7 +70,7 @@ this.SepndMoneyForm=this._formBuilder.group({
     let end = this.datepipe.transform(currentDate, 'dd/MM/yyyy');
     let begin = this.datepipe.transform(updatecurrentDate, 'dd/MM/yyyy');
     this.filterData={'EXPENDITURECLASS':" ",'INCURREDSTARTDATE':begin,'INCURREDENDDATE':end,"PAIDSTARTDATE":'',
-    'PAIDENDDATE':'','SearchString':''}
+    'PAIDENDDATE':'','Search':''}
     // this.filterData={'EXPENDITURECLASS':"all",'INCURREDSTARTDATE':'','INCURREDENDDATE':'',"PAIDSTARTDATE":'',
     // 'PAIDENDDATE':'','SearchString':''}
     this.SepndMoneyForm.controls['MainClass'].setValue(" "); 
@@ -99,12 +99,15 @@ this.SepndMoneyForm=this._formBuilder.group({
   }
 
   loadData(potData) {
-    console.log(potData);
     this.isLoadingResults = true;
     this.SpendmoneyService.SpendmoneyListData(potData).subscribe(response => {
-      console.log(response);
+  
       if (response.CODE == 200 && response.STATUS == "success") {
-        console.log("called");
+        // if(response.DATA.EXPENDITURES.length != 0){
+        
+
+        // }
+        
         this.Spendmoneydata = new MatTableDataSource(response.DATA.EXPENDITURES)
         this.Spendmoneydata.paginator = this.paginator;
         if (response.DATA.EXPENDITURES[0]) {
@@ -113,6 +116,7 @@ this.SepndMoneyForm=this._formBuilder.group({
           this.currentMatterData = response.DATA.EXPENDITURES[0].EXPENDITUREGUID;
         }else{
           // this.toastr.error("No Data Selected");
+          localStorage.removeItem("spendMoney_data ");
         }
 
       }
@@ -180,7 +184,7 @@ this.SepndMoneyForm=this._formBuilder.group({
   onSearch(searchFilter: any) {
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
 
-      this.filterData.SearchString=this.f.searchFilter.value;
+      this.filterData.Search=this.f.searchFilter.value;
       this.loadData(this.filterData);
       // let filterVal = { 'Active': '', 'SearchString': this.f.searchFilter.value, 'FeeEarner': '', 'UninvoicedWork': '' };
       // if (!localStorage.getItem('matter_filter')) {

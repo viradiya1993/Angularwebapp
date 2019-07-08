@@ -20,6 +20,7 @@ import { DocumentRegitser } from './document-register/document-register.module';
 // import { ChartOfAccount } from './chart-account/chart-account.module';
 import { ChartOfAccount } from './chart-account/chart-account.module';
 import { SelectAccountModule } from './select-account/select-account.module';
+import { BankingDialogModule } from './banking/banking-dialog.module';
 
 
 
@@ -64,6 +65,7 @@ const appRoutes: Routes = [
     SystemSettingTemplateModule,
     ActivitiesModule,
     SortingDialogModule,
+    BankingDialogModule,
     // NewfilenoteModule,
     DocumentRegitser,
     ChartOfAccount,

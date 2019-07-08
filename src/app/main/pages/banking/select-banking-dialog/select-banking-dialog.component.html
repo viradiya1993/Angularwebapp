@@ -1,0 +1,87 @@
+
+<div class="popup_main_div corres_popup_main select_metter_main_div" cdkDrag>
+    <h2 cdkDragHandle mat-dialog-title>Select Item To Bank 
+        <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
+            <mat-icon>close</mat-icon>
+        </button>
+    </h2>
+    <div mat-dialog-content class="mat-typography">
+        <div class="example-loading-shade" *ngIf="isLoadingResults">
+            <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+        </div>
+        <div class="one select_matter_main_div">
+            <div class="center p-24 list_tbl_main more_tbl_clmn">
+                <div class="matter-serach-div sticky_search_div">
+                        <!-- <form>
+                                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                        <mat-checkbox fxFlex="50" >Select All</mat-checkbox>
+                                    </div>
+                            </form> -->
+
+                </div>
+            </div>
+            <div class="example-containerdata"> 
+                <table [@animateStagger]="{value:'50'}" mat-table [dataSource]="dataSource" >
+
+                    <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef>
+                          <mat-checkbox (change)="$event ? masterToggle() : null"
+                                        [checked]="selection.hasValue() && isAllSelected()"
+                                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                        [aria-label]="checkboxLabel()">
+                          </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                          <mat-checkbox (click)="$event.stopPropagation(row)"
+                                        (change)="$event ? selection.toggle(row) : null"
+                                        [checked]="selection.isSelected(row)"
+                                        [aria-label]="checkboxLabel(row)">
+                          </mat-checkbox>
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef> No</th>
+                        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                      </ng-container>
+
+                    <ng-container matColumnDef="Type">
+                      <th mat-header-cell *matHeaderCellDef> Type</th>
+                      <td mat-cell *matCellDef="let element"> {{element.Type}} </td>
+                    </ng-container>
+                
+                    <ng-container matColumnDef="Date">
+                      <th mat-header-cell *matHeaderCellDef> Date </th>
+                      <td mat-cell *matCellDef="let element"> {{element.Date}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Amount">
+                        <th mat-header-cell *matHeaderCellDef> Amount </th>
+                        <td mat-cell *matCellDef="let element"> {{element.Amount}} </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="Payor">
+                        <th mat-header-cell *matHeaderCellDef> Payor </th>
+                        <td mat-cell *matCellDef="let element"> {{element.Payor}} </td>
+                      </ng-container>
+                  
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row  columns: displayedColumns;"
+                    matRipple [@animate]="{value:'*',params:{y:'100%'}}"></tr>
+                  </table> 
+            
+            </div>
+           
+        </div>
+    </div>
+    <!-- <mat-dialog-actions align="left" class="popup_ftr contact_select_footer">
+    <button mat-raised-button color="accent" (click)="SelectDialogOpen()" [disabled]="isspiner" ><mat-spinner *ngIf="isspiner"></mat-spinner>Select</button>
+    <button mat-raised-button color="accent" (click)="AccountDialogOpen('add')"  [disabled]="isspiner" ><mat-spinner *ngIf="isspiner"></mat-spinner>New Account</button>
+    <button mat-raised-button color="accent" (click)="AccountDialogOpen('edit')" [disabled]="isspiner" ><mat-spinner *ngIf="isspiner"></mat-spinner>Edit Account</button>
+</mat-dialog-actions> -->
+    <mat-dialog-actions align="end" class="popup_ftr contact_select_footer">
+        <button mat-raised-button [mat-dialog-close]="currentMatterData" color="accent">Select</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
+    </mat-dialog-actions>
+</div>

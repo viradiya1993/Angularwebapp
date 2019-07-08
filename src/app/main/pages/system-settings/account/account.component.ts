@@ -4,6 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { SystemSetting } from './../../../../_services';
 import { AccountDialogComponent } from './account-edit-dialog/account-dialog.component';
 import { MatDialog } from '@angular/material';
+
 export interface PeriodicElement {
   Description: string;
   AccNoAccount: string;
@@ -29,6 +30,10 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class AccountComponent implements OnInit {
   @Input() SettingForm: FormGroup;
+  highlightedRows: any;
+  theme_type = localStorage.getItem('theme_type');
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
+  contectTitle = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   displayedColumns: string[] = ['Description', 'AccNoAccount'];
   dataSource = ELEMENT_DATA;
   addData:any=[];
@@ -47,10 +52,12 @@ export class AccountComponent implements OnInit {
   });
 
   dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+    
   });
   }
-  
+  accountrow(val){
+
+  }
 
 
 }

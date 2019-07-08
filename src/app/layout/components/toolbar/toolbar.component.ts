@@ -40,6 +40,7 @@ import { PacksDailogComponent } from './../../../main/pages/template/packs/packs
 import { ChartAcDailogComponent } from './../../../main/pages/chart-account/chart-ac-dailog/chart-ac-dailog.component';
 import { SelectAccountComponent } from './../../../main/pages/select-account/select-account.component';
 import { FileNoteDialogComponent } from 'app/main/pages/matters/file-note-dialog/file-note-dialog.component';
+import { BankingDialogComponent } from 'app/main/pages/banking/banking-dialog.component';
 
 @Component({
     selector: 'toolbar',
@@ -564,7 +565,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 action: 'new'
             }
         });
-        dialogRef.afterClosed().subscribe(result => { });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                $('#refreshSpendMoneyTab').click();
+            }
+         });
     }
     // Edit spendmoney Pop-up
     Editspendmoneypopup() {
@@ -580,7 +585,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                     action: 'edit'
                 }
             });
-            dialogRef.afterClosed().subscribe(result => { });
+            dialogRef.afterClosed().subscribe(result => { 
+                if(result){
+                    $('#refreshSpendMoneyTab').click();
+                }
+                
+            });
         }
 
     }
@@ -601,7 +611,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                     let postData = { FormAction: "delete", DATA: { EXPENDITUREGUID: SendMoney_data.EXPENDITUREGUID } }
                     this.SpendmoneyService.setSpendmonyData(postData).subscribe(res => {
                         if (res.STATUS == "success" && res.CODE == 200) {
-                            $('#refreshTimeEntryTab').click();
+                            $('#refreshSpendMoneyTab').click();
                             this.toastr.success('Delete successfully');
                         }
                     });
@@ -870,7 +880,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             disableClose: true,
             panelClass: 'ChartAc-dialog',
             data: {
-                action: 'new',
+                action: 'add',
             }
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -926,14 +936,21 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //ReconcileAC
     ReconcileAC() {
-        console.log('REcoun work!!!');
-        const dialogRef = this.dialog.open(SelectAccountComponent, {
-
-        });
+        const dialogRef = this.dialog.open(SelectAccountComponent, {});
         dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
         });
     }
+
+    //_____________________________________________________________________________________________________
+
+    BankingDialogOpen(){
+        const dialogRef = this.dialog.open(BankingDialogComponent, {});
+        dialogRef.afterClosed().subscribe(result => {
+        });
+    }
+
+
+    //_____________________________________________________________________________________________________
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------

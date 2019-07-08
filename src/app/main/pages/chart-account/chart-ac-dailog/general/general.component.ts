@@ -8,6 +8,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class GeneralComponent implements OnInit {
   @Input() AccountForm: FormGroup;
+  theCheckbox = true;
   constructor() { }
   ngOnInit() {
   }

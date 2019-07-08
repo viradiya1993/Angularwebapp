@@ -22,74 +22,74 @@
             </form>
         </div>
         <div class="content">
-                <div class="page-layout simple left-sidebar inner-sidebar">
-                    <div fxLayoutAlign="center" class="content">
-                        <div class="center more_tbl_clmn" fusePerfectScrollbar>
+            <div class="page-layout simple left-sidebar inner-sidebar">
+                <div fxLayoutAlign="center" class="content">
+                    <div class="center more_tbl_clmn" fusePerfectScrollbar>
+                        <div class="content">
+                            <!-- <div class="btn top_right_action_billing_position">
+                                <button mat-icon-button (click)="openDialog()" aria-label="More">
+                                    <mat-icon class="secondary-text">more_vert</mat-icon>
+                                </button>
+                            </div> -->
                             <div class="content">
-                                <!-- <div class="btn top_right_action_billing_position">
-                                    <button mat-icon-button (click)="openDialog()" aria-label="More">
-                                        <mat-icon class="secondary-text">more_vert</mat-icon>
-                                    </button>
-                                </div> -->
-                                <div class="content">
-                                    <div class="example-loading-shade" *ngIf="isLoadingResults">
-                                        <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
-                                    </div>
-                                    <div class="example-containerdata">
-                                        <table class="mat-table simple" [@animateStagger]="{value:'50'}">
-                                            <thead class="mat-header-row" fxLayoutAlign="center center">
-                                                <th class="mat-header-cell" fxFlex="20">Account Name</th>
-                                                <th class="mat-header-cell" fxFlex="20">Balance</th>
-                                                <th class="mat-header-cell" fxFlex="20">Account Type</th>
-                                                <th class="mat-header-cell" fxFlex="20">BSB</th>
-                                                <th class="mat-header-cell" fxFlex="20">Bank Acc. No</th>
-                                            </thead>
-                                        </table>
-                                        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-                                            <mat-tree-node *matTreeNodeDef="let node" class="border-top">
-                                                <div fxFlex fxLayoutAlign=" center">
-                                                    <span *ngFor="let i of array(treeControl.getLevel(node))" class="indent"></span>
-                                                    <button mat-icon-button disabled></button>
-                                                    <span>{{node.item}} </span>
-                                                </div>
-                                                <div fxFlex="20" class="text-center">
-                                                    <span>{{node.item}} {{treeControl.getLevel(node)}}</span>
-                                                </div>
-                                                <div fxFlex="20" class="text-center">
-                                                    <span class="pale">{{node.item}}</span>
-                                                </div>
-                                                <div fxFlex="20" class="text-center">{{node.item}}</div>   
-                                                <div fxFlex="20" class="text-center">{{node.item}}</div>                                                 
-                                            </mat-tree-node>
-                                            <mat-tree-node *matTreeNodeDef="let node; when: hasChild" class="border-top">
-                                                <div fxFlex fxLayoutAlign=" center">
-                                                    <span *ngFor="let i of array(treeControl.getLevel(node))" class="indent"></span>
-                                                    <button mat-icon-button matTreeNodeToggle (click)="loadChildren(node)">
-                                                        <mat-icon class="mat-icon-rtl-mirror">
-                                                            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                                                        </mat-icon>
-                                                    </button>
-                                                    <span>{{node.item}} </span>
-                                                </div>
-                                                <div fxFlex="20" class="text-center">
-                                                    <button mat-button>
-                                                        <span>{{node.item}}</span>
-                                                    </button>
-                                                </div>
-                                                <div fxFlex="20" class="text-center">
-                                                    <span class="pale">{{node.item}}</span>
-                                                </div>
-                                                <div fxFlex="20" class="text-center">{{node.item}}</div>
-                                                <div fxFlex="20" class="text-center">{{node.item}}</div>
-                                            </mat-tree-node>
-                                        </mat-tree>
-                                    </div>
+                                <div class="example-loading-shade" *ngIf="isLoadingResults">
+                                    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+                                </div>
+                                <div class="example-containerdata">
+                                    <table class="mat-table simple" [@animateStagger]="{value:'50'}">
+                                        <thead class="mat-header-row" fxLayoutAlign="center center">
+                                            <th class="mat-header-cell" fxFlex="20">Account Name</th>
+                                            <th class="mat-header-cell" fxFlex="20">Balance</th>
+                                            <th class="mat-header-cell" fxFlex="20">Account Type</th>
+                                            <th class="mat-header-cell" fxFlex="20">BSB</th>
+                                            <th class="mat-header-cell" fxFlex="20">Bank Acc. No</th>
+                                        </thead>
+                                    </table>
+                                    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                                        <mat-tree-node *matTreeNodeDef="let node" class="border-top">
+                                            <div fxFlex fxLayoutAlign=" center">
+                                                <span *ngFor="let i of array(treeControl.getLevel(node))" class="indent"></span>
+                                                <button mat-icon-button disabled></button>
+                                                <span>{{node.item}} </span>
+                                            </div>
+                                            <div fxFlex="20" class="text-center">
+                                                <span>{{node.item}} {{treeControl.getLevel(node)}}</span>
+                                            </div>
+                                            <div fxFlex="20" class="text-center">
+                                                <span class="pale">{{node.item}}</span>
+                                            </div>
+                                            <div fxFlex="20" class="text-center">{{node.item}}</div>   
+                                            <div fxFlex="20" class="text-center">{{node.item}}</div>                                                 
+                                        </mat-tree-node>
+                                        <mat-tree-node *matTreeNodeDef="let node; when: hasChild" class="border-top">
+                                            <div fxFlex fxLayoutAlign=" center">
+                                                <span *ngFor="let i of array(treeControl.getLevel(node))" class="indent"></span>
+                                                <button mat-icon-button matTreeNodeToggle (click)="loadChildren(node)">
+                                                    <mat-icon class="mat-icon-rtl-mirror">
+                                                        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                                    </mat-icon>
+                                                </button>
+                                                <span>{{node.item}} </span>
+                                            </div>
+                                            <div fxFlex="20" class="text-center">
+                                                <button mat-button>
+                                                    <span>{{node.item}}</span>
+                                                </button>
+                                            </div>
+                                            <div fxFlex="20" class="text-center">
+                                                <span class="pale">{{node.item}}</span>
+                                            </div>
+                                            <div fxFlex="20" class="text-center">{{node.item}}</div>
+                                            <div fxFlex="20" class="text-center">{{node.item}}</div>
+                                        </mat-tree-node>
+                                    </mat-tree>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
+        </div> 
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
         <button mat-raised-button color="accent" (click)="SelectAccount()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Select</button>

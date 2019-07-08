@@ -1,8 +1,8 @@
 <div class="one" [formGroup]="userForm" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.feeearnerid,'has-warning':errorWarningData.Warning?.feeearnerid}">
+        <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.USERID,'has-warning':errorWarningData.Warning?.USERID}">
             <mat-label>Fee Earner Id</mat-label>
-            <input formControlName="feeearnerid" matInput>
+            <input formControlName="USERID" matInput>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">

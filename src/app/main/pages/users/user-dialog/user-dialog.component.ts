@@ -60,7 +60,7 @@ export class UserDialogComponent implements OnInit {
       EMAIL: [''],
       RATEPERHOUR: [''],
       RATEPERDAY: [''],
-      feeearnerid: [''],
+      USERID: [''],
       //Info Track
       SEARCHUSERNAME: [''],
       SEARCHUSERPASSWORD: [''],
@@ -72,8 +72,10 @@ export class UserDialogComponent implements OnInit {
       this._UsersService.getUserData({ USERGUID: this.data.USERGUID, 'GETALLFIELDS': true }).subscribe(response => {
         if (response.CODE === 200 && response.STATUS === 'success') {
           let userinfoData = response.DATA.USERS[0];
+          console.log(userinfoData.PERMISSIONS);
           this.userForm.controls['USERNAME'].setValue(userinfoData.USERNAME);
           this.userForm.controls['FULLNAME'].setValue(userinfoData.FULLNAME);
+          this.userForm.controls['USERID'].setValue(userinfoData.USERID);
           this.userForm.controls['USERPASSWORD'].setValue(userinfoData.USERPASSWORD);
           this.userForm.controls['ISACTIVE'].setValue(userinfoData.ISACTIVE == 1 ? true : false);
           this.userForm.controls['ISPRINCIPAL'].setValue(userinfoData.ISPRINCIPAL == 1 ? true : false);

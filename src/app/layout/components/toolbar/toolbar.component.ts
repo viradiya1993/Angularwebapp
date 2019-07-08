@@ -40,7 +40,8 @@ import { PacksDailogComponent } from './../../../main/pages/template/packs/packs
 import { ChartAcDailogComponent } from './../../../main/pages/chart-account/chart-ac-dailog/chart-ac-dailog.component';
 import { SelectAccountComponent } from './../../../main/pages/select-account/select-account.component';
 import { FileNoteDialogComponent } from 'app/main/pages/matters/file-note-dialog/file-note-dialog.component';
-
+import { GeneralDailogComponent } from './../../../main/pages/general-journal/general-dailog/general-dailog.component';
+import {ReportFilterComponent} from './../../../main/pages/general-journal/report-filter/report-filter.component';
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -918,16 +919,56 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     //Account Trasactions
     Account_Tra(){
-      console.log('Account_Tra Work!!');
+     
     }
     //Recouncile Account
     Reconcile_ac_pra(){
-        console.log('Reconcile practice Work!!!');
+       
     }
     //ReconcileAC
     ReconcileAC() {
-        console.log('REcoun work!!!');
-        const dialogRef = this.dialog.open(SelectAccountComponent, {
+        const dialogRef = this.dialog.open(ReceiptDilogComponent, {
+
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    
+    /* General Journal Module Function's */
+    
+    //NewGeneral
+    NewGeneral(){
+        const dialogRef = this.dialog.open(GeneralDailogComponent, {
+
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    //ViewDetails
+    ViewDetails(){
+        const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
+            width: '100%', disableClose: true,
+            data: { action: 'add' }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                $('#refreshReceiceMoany').click();
+            }
+        });
+    }
+    //DeleteGeneral
+    DeleteGeneral(){
+        console.log('DeleteGeneral Work!!');
+    }
+    //DuplicateGeneral
+    DuplicateGeneral(){
+        console.log('DuplicateGeneral Work!!');
+    }
+    //PrintGj
+    PrintGj(){
+        const dialogRef = this.dialog.open(ReportFilterComponent, {
 
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -978,6 +1019,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 14;
         } else if (x[1] == "chart-account") {
             this.isTabShow = 15;
+        } else if(x[1] == "genral-journal"){
+            this.isTabShow = 16;
         }
         else {
             this.isTabShow = 1;

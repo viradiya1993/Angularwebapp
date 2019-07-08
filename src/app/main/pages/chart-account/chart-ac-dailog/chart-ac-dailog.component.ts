@@ -18,6 +18,7 @@ export class ChartAcDailogComponent implements OnInit {
   dialogTitle: string;
   isspiner: boolean = false;
   AccountForm: FormGroup;
+  theCheckbox = true;
 
   constructor
   (
@@ -42,7 +43,12 @@ export class ChartAcDailogComponent implements OnInit {
   ngOnInit() {
     this.AccountForm = this._formBuilder.group({
       AccountClass:[''],
-      accountname:['',Validators.required]
+      accountname:['',Validators.required],
+      //General
+      accountNo:[''],
+      accounttype:[''],
+      ACTIVE:['']
+
     });
   }
   //Account Class Dropdown

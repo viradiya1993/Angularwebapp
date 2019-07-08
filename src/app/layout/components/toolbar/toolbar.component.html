@@ -1338,54 +1338,54 @@
                                 <section class="group-section-tab action_tab">
                                     <section class="ribbon-section">
                                         <button mat-button class="large-button" (click)="NewDocumnt()">
-                                        <section class="large-button-container">
-                                            <mat-icon class="main-icon">
-                                                <img src="assets/icons/web_app/icon_doc_reg_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                            </mat-icon>
-                                            <div class="main-text">
-                                                <span>New Doc<br>Record</span>
-                                            </div>
-                                        </section>
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_doc_reg_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>New Doc<br>Record</span>
+                                                </div>
+                                            </section>
                                         </button>
                                     </section>
                                     <section class="ribbon-section">
                                         <button mat-button class="large-button" (click)="EditDocument()">
-                                        <section class="large-button-container">
-                                            <mat-icon class="main-icon">
-                                                <img src="assets/icons/web_app/icon_doc_reg_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                            </mat-icon>
-                                            <div class="main-text">
-                                                <span>Edit Doc<br>Record</span>
-                                            </div>
-                                        </section>
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_doc_reg_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Edit Doc<br>Record</span>
+                                                </div>
+                                            </section>
                                         </button>
                                     </section>
                                     <section class="ribbon-section">
                                         <button mat-button class="large-button" (click)="DeleteDocument()">
-                                        <section class="large-button-container">
-                                            <mat-icon class="main-icon">
-                                                <img src="assets/icons/web_app/icon_doc_reg_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                            </mat-icon>
-                                            <div class="main-text">
-                                                <span>Delete Doc<br>Record</span>
-                                            </div>
-                                        </section>
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_doc_reg_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Delete Doc<br>Record</span>
+                                                </div>
+                                            </section>
                                         </button>
                                     </section>
                                     <section class="ribbon-section">
                                         <button mat-button class="large-button" (click)="DuplicateDocument()">
-                                        <section class="large-button-container">
-                                            <mat-icon class="main-icon">
-                                                <img src="assets/icons/web_app/icon_duplicate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                            </mat-icon>
-                                            <div class="main-text">
-                                                <span>Duplicate Doc<br>Record</span>
-                                            </div>
-                                        </section>
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_duplicate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Duplicate Doc<br>Record</span>
+                                                </div>
+                                            </section>
                                         </button>
                                     </section>
                                     <div class="light_label_txt">Action</div>
-                                </section>
+                                </section>                                
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab details_tab">
                                     <section class="ribbon-section">
@@ -1452,6 +1452,7 @@
                                         </section>
                                         </button>
                                     </section>
+                                    <div class="light_label_txt">Extras</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
                             </mat-card-content>
@@ -1549,6 +1550,84 @@
                     </section>
                 </mat-tab>
                 <!-- Chart Of Account tab End-->
+                <!-- General Journal tab Start-->
+                <mat-tab label="General Journal" *ngIf="isTabShow===16">
+                    <section class="ribbon-container legal_details_tab_main">
+                        <mat-card>
+                            <mat-card-content>
+                                <section class="group-section-tab details_tab">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="NewGeneral()">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_add_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>New</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="ViewDetails()">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>View<br>Details</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="DeleteGeneral()" disabled>
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Delete</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="DuplicateGeneral()" disabled>
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                   <img src="assets/icons/web_app/icon_duplicate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Duplicate</span>
+                                                </div>
+                                            </section> 
+                                        </button>                                         
+                                    </section>
+                                <div class="light_label_txt">Action</div>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                                <section class="group-section-tab action_tab">
+                                    <section class="ribbon-section">
+                                            <button mat-button class="large-button" (click)="PrintGj()">
+                                                <section class="large-button-container">
+                                                    <mat-icon class="main-icon">
+                                                        <img src="assets/icons/web_app/icon_print_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                    <div class="main-text">
+                                                        <span>Print<br>GJ</span>
+                                                    </div>
+                                                </section>
+                                            </button>
+                                    </section>
+                                    <div class="light_label_txt">Details</div>
+                                </section>
+                               <mat-divider vertical></mat-divider>
+                            </mat-card-content>
+                        </mat-card>
+                    </section>
+                </mat-tab>
+                <!-- General Journal tab End-->
                 <!-- contacts tab menu start -->
                 <!-- FILE menu start -->
                 <!-- <mat-tab label="FILE">
@@ -1586,10 +1665,7 @@
                             </mat-card-content>
                         </mat-card>
                     </section>
-                </mat-tab> -->
-
-                <!-- tab for user -->
-
+                </mat-tab> -->   
                 <!-- goto tab menu start -->
                 <mat-tab label="GO TO">
                     <section class="ribbon-container goto_tab_main" [style.width]="detailwidth">
@@ -1691,7 +1767,7 @@
                                     <div class="light_label_txt">Diary</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
-                                <!--Chart Account Start-->
+                                <!-- Account Section Start-->
                                 <section class="group-section-tab">
                                     <section class="ribbon-section">
                                         <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/chart-account'">
@@ -1717,10 +1793,22 @@
                                             </section>
                                         </button>
                                     </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/genral-journal'">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_receipt_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>General<br>Journal</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
                                     <div class="light_label_txt">Accounts</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
-                                <!-- Chart Account End -->
+                                <!-- Account Section End -->
                             </mat-card-content>
                         </mat-card>
                     </section>

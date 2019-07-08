@@ -1,0 +1,40 @@
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+</div>
+<div cdkDrag class="popup_main_div add_edit_contact_main">
+    <h2 cdkDragHandle mat-dialog-title>Report Filter
+        <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
+          <mat-icon>close</mat-icon>
+        </button>
+    </h2>
+    <div mat-dialog-content class="mat-typography main">
+      <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+          <form [formGroup]="FilterForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
+              <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                    <mat-label>Report General Journal</mat-label>
+                    <mat-select formControlName="GeneralJournal">
+                        <mat-option value="0">Last Month</mat-option>
+                        <mat-option value="1">Current Month</mat-option>
+                        <mat-option value="2">Last Quarter</mat-option>
+                        <mat-option value="3">Current Quarter</mat-option>
+                        <mat-option value="4">Last Financial Year</mat-option>
+                        <mat-option value="5">Current Financial Year</mat-option>
+                        <mat-option value="6">Data Range</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="">
+                    <mat-label>Date Range</mat-label>
+                    <input matInput placeholder="Choose a date" [satDatepicker]="picker2" formControlName="date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)">
+                    <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
+                    <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
+                </mat-form-field>
+              </div>
+          </form>
+      </div>
+    </div>
+    <mat-dialog-actions align="end" class="popup_ftr">
+        <button mat-raised-button color="accent" (click)="SaveFilter()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Select</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
+    </mat-dialog-actions>
+</div>

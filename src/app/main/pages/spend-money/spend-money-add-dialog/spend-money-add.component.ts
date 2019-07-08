@@ -500,8 +500,8 @@ this.Classtype(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
   }
   commonEmptyFiild(){
     this.spendmoneyForm.controls['GSTType'].setValue("1.1");
-    this.spendmoneyForm.controls['AmountIncGST'].setValue("0.00");
-    this.spendmoneyForm.controls['GST1'].setValue("0.00");
+    this.spendmoneyForm.controls['AmountIncGST'].setValue(0.00);
+    this.spendmoneyForm.controls['GST1'].setValue(0.00);
     this.spendmoneyForm.controls['AmountExGST'].setValue(" ");
     this.spendmoneyForm.controls['Class'].setValue("Expense");
     this.spendmoneyForm.controls['Note'].setValue(" ");
@@ -552,6 +552,7 @@ else{
       this.FAmount.push(element.AMOUNT); 
       this.FGst.push(Number(element.GST)); 
     });
+    console.log(this.FAmount);
     this.FinalTotal= Number(this.FAmount.reduce(function (a = 0, b = 0) { return a + b; }, 0));
     this.FinalTotalGST= Number(this.FGst.reduce(function (a = 0, b = 0) { return a + b; }, 0));
     this.spendmoneyForm.controls['Amount'].setValue(this.FinalTotal);

@@ -1,10 +1,10 @@
 import { FormGroup } from '@angular/forms';
-import {Component, Injectable,OnInit, Input } from '@angular/core';
-import {SelectionModel} from '@angular/cdk/collections';
-import {FlatTreeControl} from '@angular/cdk/tree';
-import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
-import {BehaviorSubject} from 'rxjs';
-import {ChangeDetectionStrategy} from '@angular/core';
+import { Component, Injectable, OnInit, Input } from '@angular/core';
+import { SelectionModel } from '@angular/cdk/collections';
+import { FlatTreeControl } from '@angular/cdk/tree';
+import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { BehaviorSubject } from 'rxjs';
+import { ChangeDetectionStrategy } from '@angular/core';
 
 /**
  * Node for to-do item
@@ -26,63 +26,31 @@ export class TodoItemFlatNode {
  */
 
 const TREE_DATA = {
-
-//General
-MatterDetails: [
-  'Access',
-  'Create',
-  'Edit',
-  'Delete',
-  'Window Report',
-  'Export Data',
-  'Tagging',
-  'View Balances'
-],
-DayBookTimeEntries: [
-  'Access',
-  'Create WIP',
-  'Create Disbursements',
-  'Edit',
-  'Delete',
-  'Window Report',
-  'Export Data',
-  'Override WIP Price',
-  'View Other Fee Earner Entries',
-  'Create WIP for Other Fee Earner',
-  'View WIP Totals'
-],
-Contacts:[
-  'Access',
-  'Create',
-  'Edit',
-  'Delete',
-  'Window Report',
-  'Export Data',
-  'Tagging'
-],
-Estimates:[
-  'Access',
-  'Create',
-  'Edit',
-  'Delete',
-  'Window Report',
-  'Export Data'
-],
-DocumentEmailGeneration:[
-  'Access',
-  'Generate Template',
-  'Create Template',
-  'Edit Template',
-  'Generate Pack',
-  'Create Pack',
-  'Edit Pack',
-  'Delete Pack',
-  'Generate Email',
-  'Create Email',
-  'Edit Email',
-  'Delete Email'
-],
-DocumentRegister:[
+  //General
+  MatterDetails: [
+    'Access',
+    'Create',
+    'Edit',
+    'Delete',
+    'Window Report',
+    'Export Data',
+    'Tagging',
+    'View Balances'
+  ],
+  DayBookTimeEntries: [
+    'Access',
+    'Create WIP',
+    'Create Disbursements',
+    'Edit',
+    'Delete',
+    'Window Report',
+    'Export Data',
+    'Override WIP Price',
+    'View Other Fee Earner Entries',
+    'Create WIP for Other Fee Earner',
+    'View WIP Totals'
+  ],
+  Contacts: [
     'Access',
     'Create',
     'Edit',
@@ -91,70 +59,101 @@ DocumentRegister:[
     'Export Data',
     'Tagging'
   ],
-//Transactions  
-Invoicing:[
-  'Access',
-  'Create',
-  'Delete',
-  'Window Report',
-  'Export Data',
-  'Tagging',
-  'Draft Invoice',
-  'Print',
-  'Write Off'
-],
-ReceiveMoney:[
-  'Access',
-  'Create',
-  'Edit',
-  'Delete',
-  'Print',
-  'Window Report',
-  'Export Data',
-  'Tagging'
-],
-SpendMoney:[
+  Estimates: [
     'Access',
     'Create',
     'Edit',
     'Delete',
     'Window Report',
     'Export Data'
-   ],
-//Legal
-Chronology:[
+  ],
+  DocumentEmailGeneration: [
+    'Access',
+    'Generate Template',
+    'Create Template',
+    'Edit Template',
+    'Generate Pack',
+    'Create Pack',
+    'Edit Pack',
+    'Delete Pack',
+    'Generate Email',
+    'Create Email',
+    'Edit Email',
+    'Delete Email'
+  ],
+  DocumentRegister: [
+    'Access',
+    'Create',
+    'Edit',
+    'Delete',
+    'Window Report',
+    'Export Data',
+    'Tagging'
+  ],
+  //Transactions  
+  Invoicing: [
+    'Access',
+    'Create',
+    'Delete',
+    'Window Report',
+    'Export Data',
+    'Tagging',
+    'Draft Invoice',
+    'Print',
+    'Write Off'
+  ],
+  ReceiveMoney: [
+    'Access',
+    'Create',
+    'Edit',
+    'Delete',
+    'Print',
+    'Window Report',
+    'Export Data',
+    'Tagging'
+  ],
+  SpendMoney: [
     'Access',
     'Create',
     'Edit',
     'Delete',
     'Window Report',
     'Export Data'
-],
-Topics:[
+  ],
+  //Legal
+  Chronology: [
     'Access',
     'Create',
     'Edit',
     'Delete',
     'Window Report',
     'Export Data'
-],
-Authorities:[
+  ],
+  Topics: [
     'Access',
     'Create',
     'Edit',
     'Delete',
     'Window Report',
     'Export Data'
-],
-FileNotes:[
+  ],
+  Authorities: [
     'Access',
     'Create',
     'Edit',
     'Delete',
     'Window Report',
     'Export Data'
-],
-SafeCustody:[
+  ],
+  FileNotes: [
+    'Access',
+    'Create',
+    'Edit',
+    'Delete',
+    'Window Report',
+    'Export Data'
+  ],
+  SafeCustody: [
     'Access',
     'Create',
     'Edit',
@@ -162,152 +161,152 @@ SafeCustody:[
     'Window Report',
     'Export Data',
     'Check In/Out'
-],
-SafeCustodyPacket:[
+  ],
+  SafeCustodyPacket: [
     'Access',
     'Create',
     'Edit',
     'Delete',
     'Window Report',
     'Export Data'
-],
-Searching:[
-  'Access',
-  'Create',
-  'Edit',
-  'Delete',
-  'Window Report',
-  'Export Data',
-  'Execute Search',
-  'Import Result',
-  'Download Result File',
-  'View Result Online'
-],
-//Diary and Tasks
-Dairy:[
-  'Access',
-  'Create',
-  'Edit',
-  'Delete',
-  'Personal'
-],
-Tasks:[
-  'Access',
-  'Create',
-  'Edit',
-  'Delete',
-  'Window Report',
-  'Export Data'
-],
-//Accounting
-ChartofAccounts:[
-  'Access',
-  'Create',
-  'Edit',
-  'Delete',
-  'Print',
-  'Window Report',
-  'Export Data',
-  'View Balances'
-],
-GeneralJournal:[
-  'Access',
-  'Create',
-  'Edit',
-  'Delete',
-  'Print',
-  'Window Report',
-  'Export Data'
-],
-OtherAccounting:[
-  'Bank Reconciliations',
-  'Account Transactions',
-  'Close Year Accounts',
-  'Export Accounts'
-],
-//Trust Accounts
-TrustMoney:[
-  'Access',
-  'Trust Receipt',
-  'Trust Withdrawal',
-  'Trust Transfer',
-  'Controlled Money Receipt',
-  'Controlled Money Withdrawal',
-  'Reversals',
-  'Statutory Deposite/Withdrawal',
-  'Allow Overdraws',
-  'End Of Months',
-  'Banking',
-  'Reconcile Trust Account',
-  'Window Report',
-  'Export Data'
-  
-],
-TrustChartofAccounts:[
-  'Access',
-  'Create',
-  'Edit',
-  'Delete',
-  'Print',
-  'Window Report',
-  'Export Data'
-],
-TrustGeneralJournal:[
-  'Access'
-],
-TrustReport:[
-  'Trail Balances',
-  'Audit Log',
-  'Overdraws Balances',
-  'Cashbook',
-  'Account Reconciliations',
-  'Ledgers',
-  'Trust Money Statements',
-  'Controlled Money Statements',
-  'Controlled Money Listing'
+  ],
+  Searching: [
+    'Access',
+    'Create',
+    'Edit',
+    'Delete',
+    'Window Report',
+    'Export Data',
+    'Execute Search',
+    'Import Result',
+    'Download Result File',
+    'View Result Online'
+  ],
+  //Diary and Tasks
+  Dairy: [
+    'Access',
+    'Create',
+    'Edit',
+    'Delete',
+    'Personal'
+  ],
+  Tasks: [
+    'Access',
+    'Create',
+    'Edit',
+    'Delete',
+    'Window Report',
+    'Export Data'
+  ],
+  //Accounting
+  ChartofAccounts: [
+    'Access',
+    'Create',
+    'Edit',
+    'Delete',
+    'Print',
+    'Window Report',
+    'Export Data',
+    'View Balances'
+  ],
+  GeneralJournal: [
+    'Access',
+    'Create',
+    'Edit',
+    'Delete',
+    'Print',
+    'Window Report',
+    'Export Data'
+  ],
+  OtherAccounting: [
+    'Bank Reconciliations',
+    'Account Transactions',
+    'Close Year Accounts',
+    'Export Accounts'
+  ],
+  //Trust Accounts
+  TrustMoney: [
+    'Access',
+    'Trust Receipt',
+    'Trust Withdrawal',
+    'Trust Transfer',
+    'Controlled Money Receipt',
+    'Controlled Money Withdrawal',
+    'Reversals',
+    'Statutory Deposite/Withdrawal',
+    'Allow Overdraws',
+    'End Of Months',
+    'Banking',
+    'Reconcile Trust Account',
+    'Window Report',
+    'Export Data'
 
-],
-//Reports
-AccountingReports:[
-  'Profit and Loss',
-  'Balance Sheet',
-  'General Journal',
-  'General Ledgers Summary',
-  'General Ledgers Details',
-  'Trail Balance'
-],
-ManagementReport:[
-  'Aged Debtors',
-  'Payments History',
-  'Individual Matter Finacials',
-  'Aged Matter Summary',
-  'Issued Invoices',
-  'Unbilled Work',
-  'Fee Earner Summary',
-  'GST Report',
-  'Snap Shot'
-  
-],
-//Setup
-System:[
-  'System Settings'
-],
-Users:[
-  'Access',
-  'Create',
-  'Edit',
-  'Delete',
-  'Window Report',
-  'Export Data'
-],
-ActivitiesSundries:[
-  'Access',
-  'Create',
-  'Edit',
-  'Delete',
-  'Window Report',
-  'Export Data'
-]
+  ],
+  TrustChartofAccounts: [
+    'Access',
+    'Create',
+    'Edit',
+    'Delete',
+    'Print',
+    'Window Report',
+    'Export Data'
+  ],
+  TrustGeneralJournal: [
+    'Access'
+  ],
+  TrustReport: [
+    'Trail Balances',
+    'Audit Log',
+    'Overdraws Balances',
+    'Cashbook',
+    'Account Reconciliations',
+    'Ledgers',
+    'Trust Money Statements',
+    'Controlled Money Statements',
+    'Controlled Money Listing'
+
+  ],
+  //Reports
+  AccountingReports: [
+    'Profit and Loss',
+    'Balance Sheet',
+    'General Journal',
+    'General Ledgers Summary',
+    'General Ledgers Details',
+    'Trail Balance'
+  ],
+  ManagementReport: [
+    'Aged Debtors',
+    'Payments History',
+    'Individual Matter Finacials',
+    'Aged Matter Summary',
+    'Issued Invoices',
+    'Unbilled Work',
+    'Fee Earner Summary',
+    'GST Report',
+    'Snap Shot'
+
+  ],
+  //Setup
+  System: [
+    'System Settings'
+  ],
+  Users: [
+    'Access',
+    'Create',
+    'Edit',
+    'Delete',
+    'Window Report',
+    'Export Data'
+  ],
+  ActivitiesSundries: [
+    'Access',
+    'Create',
+    'Edit',
+    'Delete',
+    'Window Report',
+    'Export Data'
+  ]
 
 };
 
@@ -318,10 +317,6 @@ ActivitiesSundries:[
  */
 @Injectable()
 export class ChecklistDatabase {
-
-  dataChange = new BehaviorSubject<TodoItemNode[]>([]);
-  get data(): TodoItemNode[] { return this.dataChange.value; }
-
   constructor() {
     this.initialize();
   }
@@ -334,7 +329,10 @@ export class ChecklistDatabase {
     // Notify the change.
     this.dataChange.next(data);
   }
-
+  dataChange = new BehaviorSubject<TodoItemNode[]>([]);
+  get data(): TodoItemNode[] {
+    return this.dataChange.value;
+  }
   /**
    * Build the file structure tree. The `value` is the Json object, or a sub-tree of a Json object.
    * The return value is the list of `TodoItemNode`.
@@ -367,13 +365,12 @@ export class ChecklistDatabase {
   providers: [ChecklistDatabase]
 })
 export class SecurityComponent implements OnInit {
-  dialogTitle: string;
   maincheckbox = true;
   @Input() userForm: FormGroup;
-  ngOnInit() {
-  }
+  @Input() userPermission: any;
+  ngOnInit() { }
 
-  allcheckbox(){
+  allcheckbox() {
     console.log("checkbox clicked");
   }
   flatNodeMap = new Map<TodoItemFlatNode, TodoItemNode>();
@@ -391,10 +388,10 @@ export class SecurityComponent implements OnInit {
   checklistSelection = new SelectionModel<TodoItemFlatNode>(true /* multiple */);
 
   constructor(private database: ChecklistDatabase) {
-    this.dialogTitle = 'General';
-    this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel,
-    this.isExpandable, this.getChildren);
+    this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel, this.isExpandable, this.getChildren);
+    console.log(this.treeFlattener);
     this.treeControl = new FlatTreeControl<TodoItemFlatNode>(this.getLevel, this.isExpandable);
+    console.log(this.treeControl);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
     database.dataChange.subscribe(data => {
       this.dataSource.data = data;
@@ -405,7 +402,7 @@ export class SecurityComponent implements OnInit {
   isExpandable = (node: TodoItemFlatNode) => node.expandable;
   getChildren = (node: TodoItemNode): TodoItemNode[] => node.children;
   hasChild = (_: number, _nodeData: TodoItemFlatNode) => _nodeData.expandable;
-  
+
 
   /**
    * Transformer to convert nested node to flat node. Record the nodes in maps for later use.
@@ -413,8 +410,8 @@ export class SecurityComponent implements OnInit {
   transformer = (node: TodoItemNode, level: number) => {
     const existingNode = this.nestedNodeMap.get(node);
     const flatNode = existingNode && existingNode.item === node.item
-        ? existingNode
-        : new TodoItemFlatNode();
+      ? existingNode
+      : new TodoItemFlatNode();
     flatNode.item = node.item;
     flatNode.level = level;
     flatNode.expandable = !!node.children;

@@ -20,6 +20,8 @@ export class UserDialogComponent implements OnInit {
   isspiner: boolean = false;
   phide: boolean = true;
   userForm: FormGroup;
+  userPermission: any;
+  USERGUID: any;
   constructor(
     public MatDialog: MatDialog,
     public dialogRef: MatDialogRef<UserDialogComponent>,
@@ -64,15 +66,17 @@ export class UserDialogComponent implements OnInit {
       //Info Track
       SEARCHUSERNAME: [''],
       SEARCHUSERPASSWORD: [''],
-
       allowaccess: [''],
+      USERGUID: [''],
     });
     if (this.action === 'edit' || this.action === 'duplicate') {
       this.isLoadingResults = true;
       this._UsersService.getUserData({ USERGUID: this.data.USERGUID, 'GETALLFIELDS': true }).subscribe(response => {
         if (response.CODE === 200 && response.STATUS === 'success') {
           let userinfoData = response.DATA.USERS[0];
-          console.log(userinfoData.PERMISSIONS);
+          this.userPermission = userinfoData.PERMISSIONS;
+          this.USERGUID = userinfoData.USERGUID;
+          this.userForm.controls['USERGUID'].setValue(userinfoData.USERGUID);
           this.userForm.controls['USERNAME'].setValue(userinfoData.USERNAME);
           this.userForm.controls['FULLNAME'].setValue(userinfoData.FULLNAME);
           this.userForm.controls['USERID'].setValue(userinfoData.USERID);

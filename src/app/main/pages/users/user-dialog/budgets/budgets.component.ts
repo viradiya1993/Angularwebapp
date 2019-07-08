@@ -4,17 +4,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DatePipe } from '@angular/common';
+import { MainAPiServiceService } from 'app/_services';
 
-
-
-
-export interface PeriodicElement {
-  PeriodStart: number;
-  TotalHours: string;
-  TotalDollars: number;
-
-}
-const ELEMENT_DATA: PeriodicElement[] = [
+const ELEMENT_DATA: any[] = [
   { PeriodStart: 1, TotalHours: 'Hydrogen', TotalDollars: 1.0079 },
   { PeriodStart: 2, TotalHours: 'Helium', TotalDollars: 4.0026 },
   { PeriodStart: 3, TotalHours: 'Lithium', TotalDollars: 6.941 },
@@ -44,13 +36,25 @@ export class BudgetsComponent implements OnInit {
 
 
   @Input() userForm: FormGroup;
+  @Input() USERGUID: any;
 
-  constructor(
-    public _matDialog: MatDialog,
-    public dialog: MatDialog) { }
+  constructor(public _matDialog: MatDialog, public dialog: MatDialog, private _mainAPiServiceService: MainAPiServiceService) { }
 
   ngOnInit() {
+    if (this.USERGUID != "") {
+      this._mainAPiServiceService.getSetData({ USERGUID: this.USERGUID, 'GETALLFIELDS': true }, 'getUserBudget').subscribe(response => {
+        console.log(response);
+        if (response.CODE === 200 && response.STATUS === 'success') {
+        } else if (response.MESSAGE == "Not logged in") {
+          this.dialogRef.close(false);
+        }
+        this.isLoadingResults = false;
+      }, error => {
+        console.log(error);
+      });
+    } else {
 
+    }
   }
   // All User Budget DilogBox
 
@@ -59,12 +63,10 @@ export class BudgetsComponent implements OnInit {
     const dialogRef = this.dialog.open(UserBudget, {
       disableClose: true,
       panelClass: 'UserBudget-dialog',
-      data: {
-        action: 'new',
-      }
+      data: { action: 'new', }
     });
     dialogRef.afterClosed().subscribe(result => {
-
+      console.log(result);
     });
   }
   //Edit User Budget
@@ -76,9 +78,7 @@ export class BudgetsComponent implements OnInit {
         action: 'edit',
       }
     });
-
     dialogRef.afterClosed().subscribe(result => {
-
     });
   }
 

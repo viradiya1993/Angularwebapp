@@ -45,4 +45,5 @@ export class UsersService {
     }
     return this.httpClient.post<any>(environment.APIEndpoint + 'SetActivity', Data);
   }
+
 }

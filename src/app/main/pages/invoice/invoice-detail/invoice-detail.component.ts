@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import * as $ from 'jquery';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-invoice-detail',
@@ -15,8 +15,8 @@ import {MatSort} from '@angular/material';
   styleUrls: ['./invoice-detail.component.scss'],
   encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
- 
-  
+
+
 })
 export class InvoiceDetailComponent implements OnInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
@@ -60,7 +60,7 @@ export class InvoiceDetailComponent implements OnInit {
       GST: [''],
       INVOICETOTAL: [''],
       AMOUNTOUTSTANDINGINCGST: [''],
-      AGENCYTOTAL: [''],
+      AMOUNTTOTAL: [''],
     });
     if (this._data.type == 'edit') {
       this.isLoadingResults = true;
@@ -76,28 +76,27 @@ export class InvoiceDetailComponent implements OnInit {
             this.invoiceDetailForm.controls['INVOICEDATE'].setValue(invoiceData.INVOICEDATE);
             let INVOICEDATET = invoiceData.INVOICEDATE.split("/");
             this.invoiceDetailForm.controls['INVOICEDATETEXT'].setValue(new Date(INVOICEDATET[1] + '/' + INVOICEDATET[0] + '/' + INVOICEDATET[2]));
-            // console.log('this.invoiceDetailForm.controls');
-            // console.log(abc);
           }
           if (invoiceData.DUEDATE) {
             this.invoiceDetailForm.controls['DUEDATE'].setValue(invoiceData.DUEDATE);
             let DUEDATE1 = invoiceData.DUEDATE.split("/");
             this.invoiceDetailForm.controls['DUEDATETEXT'].setValue(new Date(DUEDATE1[1] + '/' + DUEDATE1[0] + '/' + DUEDATE1[2]));
-            // console.log('this.invoiceDetailForm.controls');
-            // console.log(ab1);
           }
           this.invoiceDetailForm.controls['COMMENT'].setValue(invoiceData.COMMENT);
           this.invoiceDetailForm.controls['GST'].setValue(invoiceData.GST);
           this.invoiceDetailForm.controls['INVOICETOTAL'].setValue(invoiceData.INVOICETOTAL);
           this.invoiceDetailForm.controls['AMOUNTOUTSTANDINGINCGST'].setValue(invoiceData.AMOUNTOUTSTANDINGINCGST);
-          this.invoiceDetailForm.controls['AGENCYTOTAL'].setValue(invoiceData.AGENCYTOTAL);
-
+          let FinalTotal = Number(invoiceData.INVOICETOTAL) + Number(invoiceData.GST);
+          console.log(FinalTotal);
+          this.invoiceDetailForm.controls['AMOUNTTOTAL'].setValue(FinalTotal.toFixed(2));
           // get time entry data for specifc invoice 
           this.matterInvoicesService.GetWorkItemsData({ 'INVOICEGUID': this._data.INVOICEGUID }).subscribe(response => {
             if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
               this.invoiceDatasor = new MatTableDataSource(response.DATA.WORKITEMS);
               this.invoiceDatasor.paginator = this.paginator;
               this.invoiceDatasor.sort = this.sort;
+            } else if (response.MESSAGE == "Not logged in") {
+              this.dialogRef.close(false);
             }
           }, error => {
             this.toastr.error(error);
@@ -108,6 +107,8 @@ export class InvoiceDetailComponent implements OnInit {
               this.ReceiptsData = new MatTableDataSource(ReceiptAllocationData.DATA.RECEIPTALLOCATIONS);
               this.ReceiptsData.paginator = this.paginator1;
               this.ReceiptsData.sort = this.sort1;
+            } else if (response.MESSAGE == "Not logged in") {
+              this.dialogRef.close(false);
             }
           }, error => {
             this.toastr.error(error);
@@ -118,6 +119,8 @@ export class InvoiceDetailComponent implements OnInit {
               this.IntersetChatgesData = new MatTableDataSource(response.DATA.INVOICES);
               this.IntersetChatgesData.paginator = this.paginator2;
               this.IntersetChatgesData.sort = this.sort2;
+            } else if (response.MESSAGE == "Not logged in") {
+              this.dialogRef.close(false);
             }
           }, error => {
             this.toastr.error(error);
@@ -202,9 +205,12 @@ export class InvoiceDetailComponent implements OnInit {
         $('#refreshInvoiceTab').click();
         this.toastr.success('Update Success');
         this.dialogRef.close(true);
-      } else {
-        if (res.CODE == 402 && res.STATUS == "error" && res.MESSAGE == "Not logged in")
-          this.dialogRef.close(false);
+      } else if (res.CODE == 451 && res.STATUS == "warning") {
+        this.toastr.warning(res.MESSAGE);
+      } else if (res.CODE == 450 && res.STATUS == "error") {
+        this.toastr.error(res.MESSAGE);
+      } else if (res.MESSAGE == "Not logged in") {
+        this.dialogRef.close(false);
       }
       this.isspiner = false;
     }, err => {

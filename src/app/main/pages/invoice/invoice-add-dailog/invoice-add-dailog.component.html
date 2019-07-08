@@ -12,24 +12,24 @@
         <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
             <form name="addInvoiceForm" id="addInvoiceForm" [formGroup]="addInvoiceForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MATTER,'has-warning':errorWarningData.Warning?.MATTER}">
                         <mat-label>Matter</mat-label>
                         <input matInput readonly placeholder="Matter" formControlName="MATTER">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.InvoiceCode,'has-warning':errorWarningData.Warning?.InvoiceCode}">
                         <mat-label>Invoice No</mat-label>
                         <input matInput placeholder="Date Received" formControlName="INVOICECODE">
                     </mat-form-field>
 
-                    <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.INVOICEDATE,'has-warning':errorWarningData.Warning?.INVOICEDATE}">
                         <mat-label>Invoice Date</mat-label>
                         <input (ngModelChange)="firstDate($event)" (dateInput)="invoiceDateChange('input', $event)" formControlName="INVOICEDATETEXT" (dateChange)="invoiceDateChange('change', $event)" matInput [matDatepicker]="picker3">
                         <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                         <mat-datepicker #picker3></mat-datepicker>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DUEDATE,'has-warning':errorWarningData.Warning?.DUEDATE}">
                         <mat-label>Due Date</mat-label>
                         <input (dateInput)="dueDateChange('input', $event)" formControlName="DUEDATETEXT" (dateChange)="dueDateChange('change', $event)" matInput [matDatepicker]="picker">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

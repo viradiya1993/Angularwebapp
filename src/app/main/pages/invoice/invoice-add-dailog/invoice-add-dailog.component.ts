@@ -15,6 +15,7 @@ import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/conf
   animations: fuseAnimations
 })
 export class InvoiceAddDailogComponent implements OnInit {
+  errorWarningData: any = {};
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   addInvoiceForm: FormGroup;
   isLoadingResults: boolean = false;
@@ -227,6 +228,13 @@ export class InvoiceAddDailogComponent implements OnInit {
     }
     let PostInvoiceEntryData: any = { FormAction: 'insert', VALIDATEONLY: true, Data: PostData };
     this._matterInvoicesService.SetInvoiceData(PostInvoiceEntryData).subscribe(res => {
+      if (res.DATA.INVOICECODE && res.DATA.INVOICECODE != "") {
+        this.addInvoiceForm.controls['INVOICECODE'].setValue(res.DATA.INVOICECODE);
+        PostData.INVOICECODE = res.DATA.INVOICECODE;
+      } else {
+        PostData.INVOICECODE = this.f.INVOICECODE.value;
+      }
+      PostInvoiceEntryData = { FormAction: 'insert', VALIDATEONLY: true, Data: PostData };
       if (res.CODE == 200 && res.STATUS == "success") {
         this.checkValidation(res.DATA.VALIDATIONS, PostInvoiceEntryData);
       } else if (res.CODE == 451 && res.STATUS == "warning") {
@@ -245,13 +253,19 @@ export class InvoiceAddDailogComponent implements OnInit {
   checkValidation(bodyData: any, PostInvoiceEntryData: any) {
     let errorData: any = [];
     let warningData: any = [];
+    let tempError: any = [];
+    let tempWarning: any = [];
     bodyData.forEach(function (value) {
-      if (value.VALUEVALID == 'No')
+      if (value.VALUEVALID == 'No') {
         errorData.push(value.ERRORDESCRIPTION);
-      else if (value.VALUEVALID == 'Warning')
-        warningData.push(value.ERRORDESCRIPTION);
+        tempError[value.FIELDNAME] = value;
+      } else if (value.VALUEVALID == 'Warning') {
+        if (value.FIELDNAME != "InvoiceCode")
+          warningData.push(value.ERRORDESCRIPTION);
+        tempWarning[value.FIELDNAME] = value;
+      }
     });
-
+    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {

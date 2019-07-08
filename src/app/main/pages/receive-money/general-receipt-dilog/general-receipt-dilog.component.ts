@@ -16,6 +16,8 @@ import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/conf
 })
 export class GeneralReceiptDilogComponent implements OnInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+  AMOUNT: any;
+  errorWarningData: any = {};
   constructor(
     private toastr: ToastrService,
     private _formBuilder: FormBuilder,
@@ -72,6 +74,9 @@ export class GeneralReceiptDilogComponent implements OnInit {
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.generalReceiptForm.controls['INCOMEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
+  amountVal() {
+    this.AMOUNT = parseFloat(this.f.AMOUNT.value).toFixed(2);
+  }
   SaveGeneralReceipt() {
     this.isspiner = true;
     let data = {
@@ -102,15 +107,23 @@ export class GeneralReceiptDilogComponent implements OnInit {
       this.toastr.error(error);
     });
   }
+
   checkValidation(bodyData: any, details: any) {
     let errorData: any = [];
     let warningData: any = [];
+    let tempError: any = [];
+    let tempWarning: any = [];
     bodyData.forEach(function (value) {
-      if (value.VALUEVALID == 'NO')
+      if (value.VALUEVALID == 'No') {
         errorData.push(value.ERRORDESCRIPTION);
-      else if (value.VALUEVALID == 'WARNING')
-        warningData.push(value.ERRORDESCRIPTION);
+        tempError[value.FIELDNAME] = value;
+      } else if (value.VALUEVALID == 'Warning') {
+        if (value.FIELDNAME != "INCOMECODE")
+          warningData.push(value.ERRORDESCRIPTION);
+        tempWarning[value.FIELDNAME] = value;
+      }
     });
+    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
@@ -138,16 +151,17 @@ export class GeneralReceiptDilogComponent implements OnInit {
         this.toastr.success('Receipt save successfully');
         this.isspiner = false;
         this.dialogRef.close(true);
-      }
-      else if (response.MESSAGE == "Not logged in") {
+      } else if (response.CODE == 450 && response.STATUS == "error") {
+        this.toastr.error(response.MESSAGE);
+      } else if (response.CODE == 451 && response.STATUS == "warning") {
+        this.toastr.warning(response.MESSAGE);
+      } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
-      } else {
-        this.isspiner = false;
       }
+      this.isspiner = false;
     }, error => {
       this.toastr.error(error);
     });
-
   }
 
 

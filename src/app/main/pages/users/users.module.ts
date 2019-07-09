@@ -9,28 +9,27 @@ import { UserDialogComponent } from './user-dialog/user-dialog.component';
 import { FeeEarnerComponent } from './user-dialog/fee-earner/fee-earner.component';
 import { SecurityComponent } from './user-dialog/security/security.component';
 import { InfotrackComponent } from './user-dialog/infotrack/infotrack.component';
-import { BudgetsComponent,UserBudget} from './user-dialog/budgets/budgets.component';
+import { BudgetsComponent } from './user-dialog/budgets/budgets.component';
 
 
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
-import {MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, MatDatepickerModule, MatInputModule, MatMenuModule, MatTableModule, MatToolbarModule, MatSlideToggleModule, MatCardModule, MatSelectModule, MatPaginatorModule, MatAutocompleteModule, MatTabsModule, MatProgressSpinnerModule, MatDialogModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, MatDatepickerModule, MatInputModule, MatMenuModule, MatTableModule, MatToolbarModule, MatSlideToggleModule, MatCardModule, MatSelectModule, MatPaginatorModule, MatAutocompleteModule, MatTabsModule, MatProgressSpinnerModule, MatDialogModule } from '@angular/material';
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
-//import { SpendMoneyAddComponent } from './spend-money-add-dialog/spend-money-add.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatRadioModule } from '@angular/material/radio';
 
-import {CdkTableModule} from '@angular/cdk/table';
-import {CdkTreeModule} from '@angular/cdk/tree';
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ScrollDispatchModule} from '@angular/cdk/scrolling';
-import {MatNativeDateModule} from '@angular/material/core';
-import {MatTreeModule} from '@angular/material/tree';
+import { CdkTableModule } from '@angular/cdk/table';
+import { CdkTreeModule } from '@angular/cdk/tree';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatTreeModule } from '@angular/material/tree';
 import { ReactiveFormsModule } from '@angular/forms';
-import {MatSortModule} from '@angular/material/sort';
+import { MatSortModule } from '@angular/material/sort';
+import { UserBudgetDialogComponent } from './user-dialog/budgets/user-budget-dialog/user-budget-dialog.component';
 
 
 
@@ -40,7 +39,7 @@ const routes = [
   { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
 
 ];
-@NgModule({  
+@NgModule({
   declarations: [
     UsersComponent,
     UserDialogComponent,
@@ -48,16 +47,13 @@ const routes = [
     SecurityComponent,
     InfotrackComponent,
     BudgetsComponent,
-    UserBudget
-  
-   // SpendMoneyAddComponent,    
+    UserBudgetDialogComponent
   ],
   entryComponents: [
     UsersComponent,
     UserDialogComponent,
     BudgetsComponent,
-    UserBudget
-   // SpendMoneyAddComponent,
+    UserBudgetDialogComponent
   ],
   imports: [
     CommonModule,
@@ -104,7 +100,7 @@ const routes = [
     MatNativeDateModule,
     ReactiveFormsModule,
     MatSortModule
-   
+
   ],
   exports: [
     UsersComponent,
@@ -114,6 +110,6 @@ const routes = [
     ScrollDispatchModule,
     MatDatepickerModule
   ],
-  bootstrap: [UserBudget],
+  bootstrap: [],
 })
 export class UsersModule { }

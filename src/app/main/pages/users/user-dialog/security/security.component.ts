@@ -389,9 +389,9 @@ export class SecurityComponent implements OnInit {
 
   constructor(private database: ChecklistDatabase) {
     this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel, this.isExpandable, this.getChildren);
-    console.log(this.treeFlattener);
+    // console.log(this.treeFlattener);
     this.treeControl = new FlatTreeControl<TodoItemFlatNode>(this.getLevel, this.isExpandable);
-    console.log(this.treeControl);
+    // console.log(this.treeControl);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
     database.dataChange.subscribe(data => {
       this.dataSource.data = data;

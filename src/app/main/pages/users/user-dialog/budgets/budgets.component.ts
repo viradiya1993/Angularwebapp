@@ -1,188 +1,102 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatPaginator, MatSort } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { MainAPiServiceService } from 'app/_services';
+import { fuseAnimations } from '@fuse/animations';
+import { ToastrService } from 'ngx-toastr';
+import { UserBudgetDialogComponent } from './user-budget-dialog/user-budget-dialog.component';
 
-const ELEMENT_DATA: any[] = [
-  { PeriodStart: 1, TotalHours: 'Hydrogen', TotalDollars: 1.0079 },
-  { PeriodStart: 2, TotalHours: 'Helium', TotalDollars: 4.0026 },
-  { PeriodStart: 3, TotalHours: 'Lithium', TotalDollars: 6.941 },
-  { PeriodStart: 4, TotalHours: 'Beryllium', TotalDollars: 9.0122 },
-
-];
 @Component({
   selector: 'app-budgets',
   templateUrl: './budgets.component.html',
-  styleUrls: ['./budgets.component.scss']
+  styleUrls: ['./budgets.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  animations: fuseAnimations
 })
 export class BudgetsComponent implements OnInit {
   highlightedRows: any;
+  isLoadingResults: boolean = false;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
-  PeriodStart = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
-
-  isLoadingResults: boolean = false;
-  action: string;
-  dialogTitle: string;
-  isspiner: boolean = false;
-
+  userBudgets: any = [];
+  currentBudgets: any;
+  pageSize: any;
   public dialogRef: MatDialogRef<BudgetsComponent>;
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
-  displayedColumns: string[] = ['periodstart', 'totalhours', 'totaldollars'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
-
-
+  displayedColumns: string[] = ['PERIODSTART', 'TOTALBUDGETHOURS', 'TOTALBUDGETDOLLARS'];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   @Input() userForm: FormGroup;
   @Input() USERGUID: any;
 
-  constructor(public _matDialog: MatDialog, public dialog: MatDialog, private _mainAPiServiceService: MainAPiServiceService) { }
+  constructor(public _matDialog: MatDialog, public dialog: MatDialog, private _mainAPiServiceService: MainAPiServiceService, private _toastrService: ToastrService) { }
 
   ngOnInit() {
     if (this.USERGUID != "") {
-      this._mainAPiServiceService.getSetData({ USERGUID: this.USERGUID, 'GETALLFIELDS': true }, 'getUserBudget').subscribe(response => {
-        console.log(response);
-        if (response.CODE === 200 && response.STATUS === 'success') {
-        } else if (response.MESSAGE == "Not logged in") {
-          this.dialogRef.close(false);
-        }
-        this.isLoadingResults = false;
-      }, error => {
-        console.log(error);
-      });
+      this.loadData();
     } else {
-
+      this.userBudgets = new MatTableDataSource([]);
+      this.userBudgets.paginator = this.paginator;
+      this.userBudgets.sort = this.sort;
     }
+    this.pageSize = localStorage.getItem('lastPageSize');
   }
-  // All User Budget DilogBox
-
-  // New User Budget
-  new_budget() {
-    const dialogRef = this.dialog.open(UserBudget, {
-      disableClose: true,
-      panelClass: 'UserBudget-dialog',
-      data: { action: 'new', }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-    });
-  }
-  //Edit User Budget
-  edit_budget() {
-    const dialogRef = this.dialog.open(UserBudget, {
-      disableClose: true,
-      panelClass: 'UserBudget-dialog',
-      data: {
-        action: 'edit',
+  loadData() {
+    this.isLoadingResults = true;
+    this._mainAPiServiceService.getSetData({ USERGUID: this.USERGUID, 'GETALLFIELDS': true }, 'getUserBudget').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        if (response.DATA.USERBUDGETS[0]) {
+          this.highlightedRows = response.DATA.USERBUDGETS[0].USERBUDGETGUID;
+          this.currentBudgets = response.DATA.USERBUDGETS[0];
+          localStorage.setItem('current_budgets', JSON.stringify(response.DATA.USERBUDGETS[0]));
+        }
+        this.userBudgets = new MatTableDataSource(response.DATA.USERBUDGETS);
+        this.userBudgets.paginator = this.paginator;
+        this.userBudgets.sort = this.sort;
+        this.isLoadingResults = false;
+      } else if (response.MESSAGE == "Not logged in") {
+        this.dialogRef.close(false);
       }
-    });
-    dialogRef.afterClosed().subscribe(result => {
+    }, error => {
+      console.log(error);
     });
   }
-
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
+  }
   // Delete User Budget
   delete_budget(): void {
-    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-      disableClose: true,
-      width: '100%',
-    });
+    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, { disableClose: true, width: '100%' });
     this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
     this.confirmDialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      if (result) {
+        let budgetsData: any = JSON.parse(localStorage.getItem('current_budgets'));
+        let postData = { FormAction: "delete", DATA: { USERBUDGETGUID: budgetsData.USERBUDGETGUID } };
+        this._mainAPiServiceService.getSetData(postData, 'SetUserBudget').subscribe(res => {
+          if (res.STATUS == "success" && res.CODE == 200) {
+            this._toastrService.success('Delete successfully');
+            this.loadData();
+          }
+        });
+      }
+      this.confirmDialogRef = null;
     });
   }
-
-  //click Budget
-  clickbudget(val) {
-
-  }
-
-
-}
-
-@Component({
-  selector: 'user-budget-dialog',
-  templateUrl: 'user-budget-dialog.html',
-  styleUrls: ['user-budget-dialog.scss']
-})
-
-export class UserBudget {
-  isLoadingResults: boolean = false;
-  action_2: string;
-  dialogTitle: string;
-  isspiner: boolean = false;
-  YearlyHours: any;
-  YearlyRate: any;
-  june1: any;
-  Months: any = [];
-  @Input() user_budget: FormGroup;
-  constructor(
-    public dialogRef: MatDialogRef<UserBudget>,
-    @Inject(MAT_DIALOG_DATA) public data_2: any,
-    private _formBuilder: FormBuilder,
-    public datepipe: DatePipe
-  ) {
-    this.action_2 = data_2.action;
-    if (this.action_2 === 'new') {
-      this.dialogTitle = 'New Budget';
-    } else {
-      this.dialogTitle = 'Edit Budget';
-    }
-    this.Months = [];
-    for (let i = 0; i < 12; i++) {
-      let nowdate = (new Date());
-      nowdate = new Date(nowdate.getFullYear(), nowdate.getMonth(), 1);
-      nowdate.setMonth(nowdate.getMonth() + i);
-      this.Months.push(nowdate);
-    }
-    console.log(this.Months);
-  }
-
-  ngOnInit() {
-    this.user_budget = this._formBuilder.group({
-      Budgetdate: [new Date()],
-      ratehr: [],
-      Year: [],
-      ExGst: [],
-      june1: [],
-      hoursyear: [],
-      rateyear: [],
+  budgetDailog(actionType) {
+    const dialogRef = this.dialog.open(UserBudgetDialogComponent, {
+      disableClose: true, panelClass: 'UserBudget-dialog', data: { action: actionType, USERGUID: this.USERGUID }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result)
+        this.loadData();
     });
   }
-
-  // Year Hour
-  YearHour(val) {
-    console.log(val);
-    this.YearlyHours = val / 12
-    console.log("Year Hour work!!!");
-  }
-  //Year EX Gst
-  YearExGst(val) {
-    console.log(val);
-    console.log("Year Gst work!!!");
-    this.YearlyRate = val / 12
-  }
-
-
-  NowDate(value) {
-    this.Months = [];
-    for (let i = 0; i < 12; i++) {
-      let nowdate = (new Date(value));
-      nowdate = new Date(nowdate.getFullYear(), nowdate.getMonth(), 1);
-      nowdate.setMonth(nowdate.getMonth() + i);
-      this.Months.push(nowdate);
-    }
-    console.log(this.Months);
-  }
-
-  //Save Budget
-  ok_budget() {
-    alert('Save budget!!!');
-  }
-  // Close User Budget
-  CloseUserBudget(): void {
-    this.dialogRef.close(false);
+  setActiveBudget(val: any) {
+    this.currentBudgets = val;
+    localStorage.setItem('current_budgets', JSON.stringify(val));
   }
 }

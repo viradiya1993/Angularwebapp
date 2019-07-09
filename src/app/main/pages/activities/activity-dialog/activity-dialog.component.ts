@@ -28,7 +28,6 @@ export class ActivityDialogComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
     private _mainAPiServiceService: MainAPiServiceService,
-    public _matDialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.action = data.action;

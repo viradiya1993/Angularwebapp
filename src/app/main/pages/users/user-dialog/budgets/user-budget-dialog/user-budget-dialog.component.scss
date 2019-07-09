@@ -1,7 +1,7 @@
-.one{
+.one {
     margin-top: 15px !important;
-    margin-left: 20px !important; 
-    margin-right: 20px !important;  
+    margin-left: 20px !important;
+    margin-right: 20px !important;
 }
 
 body.theme-default .mat-dialog-container {
@@ -17,6 +17,7 @@ body.theme-yellow-light .mat-dialog-container {
     padding: 24px;
     background-color: #303540;
 }
+
 .mat-dialog-title {
     color: #fff;
     margin-bottom: 0;
@@ -112,28 +113,34 @@ mat-dialog-actions {
     box-shadow: none;
     border-radius: 4px;
 }
+
 .mat-dialog-title {
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
 }
+
 .right_popup_btn .right_btn_child:last-child {
     margin-right: 0;
 }
+
 .popup_ftr {
     border-top: 1px solid #ccc;
     margin-top: 15px !important;
     padding: 12px 24px !important;
 }
+
 @media screen and (max-width: 900px) {
     .add_edit_contact_main {
         width: 95%;
     }
 }
+
 .mat-tab-group {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
+
 // .mat-dialog-container {
 //     display: block;
 //     padding: 24px;
@@ -146,5 +153,6 @@ mat-dialog-actions {
 //     min-height: inherit;
 //     max-height: inherit;
 // }
-
-
+.sideText {
+    text-align: right;
+}

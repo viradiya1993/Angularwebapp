@@ -94,7 +94,7 @@ export class UserBudgetDialogComponent implements OnInit {
   get f() {
     return this.userBudget.controls;
   }
-  getTOTALBUDGETDOLLARS_12() {
+  MONTHBUDGETHOURS_GROUP() {
     let DataArray: any = [];
     let Obj = this.userBudget.value;
     for (let i = 1; i <= 12; i++) {
@@ -105,7 +105,7 @@ export class UserBudgetDialogComponent implements OnInit {
     }
     return DataArray;
   }
-  getMONTHBUDGETHOURS_12() {
+  MONTHBUDGETDOLLARS_GROUP() {
     let DataArray: any = [];
     let Obj = this.userBudget.value;
     for (let i = 1; i <= 12; i++) {
@@ -123,11 +123,9 @@ export class UserBudgetDialogComponent implements OnInit {
       "PERIODSTART": this.f.PERIODSTART.value,
       "TOTALBUDGETHOURS": this.f.TOTALBUDGETHOURS.value,
       "TOTALBUDGETDOLLARS": this.f.TOTALBUDGETDOLLARS.value,
-      "TOTALBUDGETDOLLARS_12": this.getTOTALBUDGETDOLLARS_12(),
-      "MONTHBUDGETHOURS_12": this.getMONTHBUDGETHOURS_12(),
+      "MONTHBUDGETHOURS_GROUP": this.MONTHBUDGETHOURS_GROUP(),
+      "MONTHBUDGETDOLLARS_GROUP": this.MONTHBUDGETDOLLARS_GROUP(),
     }
-    console.log(PostData);
-    return false;
     this.successMsg = 'Save successfully';
     let FormAction = this.action == 'edit' ? 'update' : 'insert';
     if (this.action == 'edit') {

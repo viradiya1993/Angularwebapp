@@ -552,7 +552,7 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section class = "ribbon-section">
+                                    <section class="ribbon-section">
                                         <button mat-button class="large-button" (click)="createInstantInvoice()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -565,9 +565,9 @@
                                         </button>
                                     </section>
                                     <div class="light_label_txt">Action</div>
-                                </section>    
-                                    <mat-divider vertical></mat-divider>
-                                <section class="group-section-tab action_tab" *ngIf="activeSubMenu=='matter-invoices' || activeSubMenu=='receipts-credits'">    
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                                <section class="group-section-tab action_tab" *ngIf="activeSubMenu=='matter-invoices' || activeSubMenu=='receipts-credits'">
                                     <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button class="large-button">
                                             <section class="large-button-container">
@@ -671,14 +671,14 @@
                                                 <span>Safe Custody</span>
                                             </a>
 
-                                            <a mat-list-item [routerLink]="'/legal-details/search'" [ngClass]="activeSubMenu =='safe-custody'?'cmn_active_tab':''">
+                                            <a mat-list-item [routerLink]="'/legal-details/search'" [ngClass]="activeSubMenu =='search'?'cmn_active_tab':''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/Search.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <span>Search</span>
                                             </a>
                                             <mat-divider vertical></mat-divider>
-                                           
+
                                         </mat-nav-list>
                                     </section>
                                     <div class="light_label_txt">View</div>
@@ -1739,7 +1739,7 @@
                         </mat-card>
                     </section>
                 </mat-tab>
-                
+
                 <!-- General Journal tab End-->
                 <!-- contacts tab menu start -->
                 <!-- FILE menu start -->
@@ -1786,7 +1786,7 @@
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
                                     <!-- <span class="action-section">Action</span> -->
-                                   
+
                                     <section [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button (click)="matterpopup('edit')" [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
                                     <section class="large-button-container">
@@ -1843,8 +1843,8 @@
                                     <div class="light_label_txt">Details</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
-                              
-                            
+
+
                             </mat-card-content>
                         </mat-card>
                     </section>
@@ -1881,7 +1881,7 @@
                                            </section>
                                         </button>
                                     </section>
-                                   
+
                                     <section [ngClass]="appPermissions[3]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[3]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/conflict-check'">
                                            <section class="large-button-container">
@@ -2042,9 +2042,9 @@
 
                 <!-- conflict-check -->
 
-              
+
                 <!-- conflict-check end -->
-                
+
                 <!-- help tab menu start -->
                 <mat-tab label="HELP">
                     <section class="ribbon-container help_tab_main" [style.width]="detailwidth">

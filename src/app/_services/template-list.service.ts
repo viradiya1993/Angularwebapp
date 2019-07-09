@@ -22,5 +22,17 @@ import { HttpClient } from '@angular/common/http';
     getData(d){
       return d;
     }
+
+    getEmailList(d){
+      return this.http.post<any>(environment.APIEndpoint + 'GetEmail', d);
+    }
+
+    getTemplateDropDown(d){
+      return this.http.post<any>(environment.APIEndpoint + 'TemplateFieldList', d);
+    }
+  
+    setEmail(d){
+      return this.http.post<any>(environment.APIEndpoint + 'SetEmail', d);
+    }
   
   }

@@ -14,6 +14,8 @@ import { AuthoritiesComponent } from './authorities/authorities.component';
 import { FileNotesComponent } from './file-notes/file-notes.component';
 import { SafecustodyComponent } from './safecustody/safecustody.component';
 import {MatSortModule} from '@angular/material/sort';
+import { SearchComponent } from './search/search.component';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker'
 
 const routes = [
   { path: '', redirectTo: '/legal-details/chronology', pathMatch: 'full', canActivate: [AuthGuard] },
@@ -22,14 +24,16 @@ const routes = [
       { path: 'chronology', component: ChronologyComponent },
       { path: 'authorities', component: AuthoritiesComponent },
       { path: 'file-notes', component: FileNotesComponent },
-      { path: 'safe-custody', component: SafecustodyComponent }
+      { path: 'safe-custody', component: SafecustodyComponent },
+      { path: 'search', component: SearchComponent }
     ], canActivate: [AuthGuard]
   }
 ];
 @NgModule({
-  declarations: [LegalDetailsComponent, ChronologyComponent, AuthoritiesComponent, FileNotesComponent, SafecustodyComponent],
+  declarations: [LegalDetailsComponent, ChronologyComponent, AuthoritiesComponent, FileNotesComponent, SafecustodyComponent,SearchComponent],
   imports: [
     CommonModule,
+    SatDatepickerModule, SatNativeDateModule,
     RouterModule.forChild(routes),
     FuseSharedModule,
     //mat 

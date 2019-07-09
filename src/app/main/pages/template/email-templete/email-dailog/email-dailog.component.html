@@ -11,14 +11,14 @@
       <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
           <form [formGroup]="EmailTemplete" fxLayout="column" fxFlex="1 0 auto" name="form">
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.NAME,'has-warning':errorWarningData.Warning?.NAME}" appearance="outline" fxFlex="100" class=" pr-4">
                     <mat-label>Name</mat-label>
                     <input name="CONTACTNAME" formControlName="name" matInput>
                     <!-- <mat-icon matSuffix class="secondary-text">account_circle</mat-icon> -->
                 </mat-form-field>
             </div>
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">              
-              <mat-form-field appearance="outline" class="example" fxFlex="100" class="pr-4">
+              <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.TOADDRESS,'has-warning':errorWarningData.Warning?.TOADDRESS}" appearance="outline" class="example" fxFlex="100" class="pr-4">
                 <mat-label>To</mat-label>
                 <input type="text" placeholder="Pick one" aria-label="Number" formControlName = "ToEmail" matInput [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete">
@@ -29,7 +29,7 @@
               </mat-form-field>
             </div>
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
+                <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.CCADDRESS,'has-warning':errorWarningData.Warning?.CCADDRESS}" appearance="outline" class="example" fxFlex="50" class="pr-4">
                   <mat-label>CC</mat-label>
                   <input type="text" placeholder="Pick one" aria-label="Number" formControlName = "CCEmail" matInput [matAutocomplete]="auto">
                   <mat-autocomplete #auto="matAutocomplete">
@@ -38,7 +38,7 @@
                     </mat-option>
                   </mat-autocomplete>
                 </mat-form-field>
-                <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
+                <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.BCCADDRESS,'has-warning':errorWarningData.Warning?.BCCADDRESS}" appearance="outline" class="example" fxFlex="50" class="pr-4">
                     <mat-label>BCC</mat-label>
                     <input type="text" placeholder="Pick one" aria-label="Number" formControlName = "BCCEmail" matInput [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete">
@@ -49,7 +49,7 @@
                 </mat-form-field>
             </div>
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
+                <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.SUBJECT,'has-warning':errorWarningData.Warning?.SUBJECT}" appearance="outline" class="example" fxFlex="50" class="pr-4">
                   <mat-label>Subject</mat-label>
                   <input type="text" placeholder="Pick one" aria-label="Number" formControlName = "subject" matInput [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete">
@@ -58,7 +58,7 @@
                       </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
-                <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
+                <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.ATTACHMENT,'has-warning':errorWarningData.Warning?.ATTACHMENT}" appearance="outline" class="example" fxFlex="50" class="pr-4">
                     <mat-label>Attachment</mat-label>
                     <input formControlName = "attachment" matInput   value="">
                 </mat-form-field>
@@ -67,30 +67,34 @@
                 </mat-icon>
             </div>
             <!-- New SrollBar -->
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <mat-form-field appearance="outline" fxFlex="50" class="pr-4" id="text">
+            <div fxLayout="row" fxLayoutAlign="start start" fxFlex="1 0 auto">
+                <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.TEXT_,'has-warning':errorWarningData.Warning?.TEXT_}" appearance="outline" fxFlex="50" class="pr-4" >
                     <mat-label>Text</mat-label>
-                  <textarea  formControlName = "text"  matInput ></textarea>
+                  <textarea  cdkTextareaAutosize
+                  cdkAutosizeMinRows="22"
+                  cdkAutosizeMaxRows="22" formControlName = "text"  matInput ></textarea>
                 </mat-form-field>
-                <mat-table class="mat-elevation-z8" [dataSource]="dataSource" fxFlex="50" class="pr-4" matSort>
-                    <ng-container matColumnDef="Name">
+                <div class="example-containerdata pr-4" fxFlex="50">
+                <mat-table class="" [dataSource]="InnerTableData"  matSort>
+                    <ng-container matColumnDef="NAME">
                       <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
-                      <mat-cell *matCellDef="let element"> {{element.Name}} </mat-cell>
+                      <mat-cell *matCellDef="let element"> {{element.NAME}} </mat-cell>
                     </ng-container>
                     
-                    <ng-container matColumnDef="Description">
+                    <ng-container matColumnDef="DESCRIPTION">
                       <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
-                      <mat-cell *matCellDef="let element"> {{element.Description}} </mat-cell>
+                      <mat-cell *matCellDef="let element"> {{element.DESCRIPTION}} </mat-cell>
                     </ng-container>
 
                     <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-                    <mat-row [style.background]="highlightedRows == row.Name ? selectedColore : ''" 
-                      [ngClass]="highlightedRows == row.Name ? 'row-text-colore' : ''" 
-                      highlightedRows=row.Name mat-row *matRowDef="let row; columns: displayedColumns;"
-                      (click)="clicktable(row.Name);highlightedRows = row.Name "
+                    <mat-row [style.background]="highlightedRows == index ? selectedColore : ''" 
+                      [ngClass]="highlightedRows == index ? 'row-text-colore' : ''" 
+                      highlightedRows=index mat-row *matRowDef="let row let index = index; columns: displayedColumns;"
+                      (click)="clicktable(row);highlightedRows =index "
                       matRipple>
                     </mat-row>
                 </mat-table>
+              </div>
             </div>
           </form>
       </div>

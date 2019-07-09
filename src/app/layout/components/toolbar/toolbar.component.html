@@ -607,9 +607,58 @@
                                                 </mat-icon>
                                                 <span>Safe Custody</span>
                                             </a>
+
+                                            <a mat-list-item [routerLink]="'/legal-details/search'" [ngClass]="activeSubMenu =='safe-custody'?'cmn_active_tab':''">
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/Search.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>Search</span>
+                                            </a>
+                                            <mat-divider vertical></mat-divider>
+                                           
                                         </mat-nav-list>
                                     </section>
                                     <div class="light_label_txt">View</div>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                                <section class="group-section-tab details_tab">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/time-billing'">
+                                   <section class="large-button-container">
+                                      <mat-icon class="main-icon">
+                                            <img src="assets/icons/web_app/icon_invoice_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                      </mat-icon>
+                                      <div class="main-text">
+                                         <span>Delete</span>
+                                      </div>
+                                   </section>
+                                </button>
+                                    </section>
+                                    <section class="ribbon-section" disabled>
+                                        <button mat-button class="large-button">
+                                   <section class="large-button-container">
+                                      <mat-icon class="main-icon">
+                                            <img class="menu-disabled" src="assets/icons/web_app/infotrack.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                      </mat-icon>
+                                      <div class="main-text">
+                                         <span>Start InfoTrack <br> Search</span>
+                                      </div>
+                                   </section>
+                                </button>
+                                    </section>
+                                    <section class="ribbon-section" disabled>
+                                        <button mat-button class="large-button">
+                                   <section class="large-button-container">
+                                      <mat-icon class="main-icon">
+                                            <img class="menu-disabled" src="assets/icons/web_app/icon_search_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                      </mat-icon>
+                                      <div class="main-text">
+                                         <span>Import CSV <br> Recoveries</span>
+                                      </div>
+                                   </section>
+                                </button>
+                                    </section>
+                                    <div class="light_label_txt">Action</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
                             </mat-card-content>
@@ -1046,7 +1095,7 @@
                                 <section class="group-section-tab action_tab">
                                     <!-- *ngIf="CreatDocumentChild !== 'email' && CreatDocumentChild !== 'packs'" -->
                                     <section class="ribbon-section" *ngIf="activeSubMenu !='email-templete' && activeSubMenu !='packs' ">
-                                        <button mat-button class="large-button" (click)="SelectMatterContact()" [disabled]="isDocumentGenerateHide =='yes'">
+                                        <button mat-button class="large-button" (click)="GenarateDocument()" [disabled]="isDocumentGenerateHide =='yes'">
                                             <section class="large-button-container">
                                             <mat-icon class="main-icon"> 
                                                 <img class="" src="assets/icons/web_app/icon_letters_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1058,7 +1107,7 @@
                                         </button>
                                     </section>
                                     <section class="ribbon-section" *ngIf="activeSubMenu === 'email-templete'">
-                                        <button mat-button class="large-button" (click)="SelectMatter()" [disabled]="isDocumentGenerateHide =='yes'">
+                                        <button mat-button class="large-button" (click)="GenarateEmail()" [disabled]="isDocumentGenerateHide =='yes'">
                                             <section class="large-button-container">
                                             <mat-icon class="main-icon"> 
                                                 <img class="" src="assets/icons/web_app/icon_email_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1086,7 +1135,7 @@
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab" *ngIf="activeSubMenu === 'email-templete'">
                                     <section class="ribbon-section">
-                                        <button mat-button (click)="NewEmailTemplete()" class="large-button">
+                                        <button mat-button (click)="EmailTempletePopUp('new')" class="large-button">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon" >
                                                     <img src="assets/icons/web_app/icon_email_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1096,7 +1145,7 @@
                                       </button>
                                     </section>
                                     <section class="ribbon-section">
-                                        <button mat-button (click)="EditEmailTemplete()" class="large-button">
+                                        <button mat-button (click)="EmailTempletePopUp('edit')" class="large-button">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                         <img  src="assets/icons/web_app/icon_email_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1627,6 +1676,7 @@
                         </mat-card>
                     </section>
                 </mat-tab>
+                
                 <!-- General Journal tab End-->
                 <!-- contacts tab menu start -->
                 <!-- FILE menu start -->
@@ -1666,6 +1716,78 @@
                         </mat-card>
                     </section>
                 </mat-tab> -->
+
+                <mat-tab label="CONFLICT CHECK" *ngIf="isTabShow===17">
+                    <section class="ribbon-container matter_tab_main" [style.width]="detailwidth">
+                        <mat-card>
+                            <mat-card-content>
+                                <section class="group-section-tab action_tab">
+                                    <!-- <span class="action-section">Action</span> -->
+                                   
+                                    <section [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button (click)="matterpopup('edit')" [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
+                                    <section class="large-button-container">
+                                        <mat-icon class="main-icon">
+                                                <img  src="assets/icons/web_app/Select.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                        </mat-icon>
+                                        <div class="main-text">
+                                            <span>Start</span>
+                                        </div>
+                                    </section>
+                                    </button>
+                                    </section>
+                                    <div class="light_label_txt">Action</div>
+                                </section>
+
+                                <mat-divider vertical></mat-divider>
+                                <section [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                    <button mat-button (click)="matterpopup('edit')" [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
+                                <section class="large-button-container">
+                                    <mat-icon class="main-icon">
+                                            <img  src="assets/icons/web_app/icon_matter_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                    </mat-icon>
+                                    <div class="main-text">
+                                        <span>Edit<br> Matters</span>
+                                    </div>
+                                </section>
+                                </button>
+                                </section>
+                                <section class="group-section-tab details_tab">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/time-billing'">
+                                    <section class="large-button-container">
+                                        <mat-icon class="main-icon">
+                                                <img src="assets/icons/web_app/icon_invoice_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                        </mat-icon>
+                                        <div class="main-text">
+                                            <span>Time &<br> Billing</span>
+                                        </div>
+                                    </section>
+                                </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/legal-details'">
+                                   <section class="large-button-container">
+                                      <mat-icon class="main-icon">
+                                            <img src="assets/icons/web_app/icon_authorities_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                      </mat-icon>
+                                      <div class="main-text">
+                                         <span>Legal<br> Details</span>
+                                      </div>
+                                   </section>
+                                </button>
+                                    </section>
+                                    <div class="light_label_txt">Details</div>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                              
+                            
+                            </mat-card-content>
+                        </mat-card>
+                    </section>
+                </mat-tab>
+
+
                 <!-- goto tab menu start -->
                 <mat-tab label="GO TO">
                     <section class="ribbon-container goto_tab_main" [style.width]="detailwidth">
@@ -1696,6 +1818,20 @@
                                            </section>
                                         </button>
                                     </section>
+                                   
+                                    <section [ngClass]="appPermissions[3]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[3]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/conflict-check'">
+                                           <section class="large-button-container">
+                                              <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/Select.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                              </mat-icon>
+                                              <div class="main-text">
+                                                 <span>Conflict<br>Check</span>
+                                              </div>
+                                           </section>
+                                        </button>
+                                    </section>
+
                                     <div class="light_label_txt">Management</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
@@ -1841,6 +1977,11 @@
                 </mat-tab>
                 <!-- report tab menu end -->
 
+                <!-- conflict-check -->
+
+              
+                <!-- conflict-check end -->
+                
                 <!-- help tab menu start -->
                 <mat-tab label="HELP">
                     <section class="ribbon-container help_tab_main" [style.width]="detailwidth">

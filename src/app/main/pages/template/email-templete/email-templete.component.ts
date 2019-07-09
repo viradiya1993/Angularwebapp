@@ -5,16 +5,10 @@ import { MatSort } from '@angular/material';
 import { MatTableDataSource } from '@angular/material/table';
 import * as $ from 'jquery';
 import { fuseAnimations } from '@fuse/animations';
+import { TemplateListDetails ,TableColumnsService } from 'app/_services';
+import { ToastrService } from 'ngx-toastr';
 
-export interface PeriodicElement {
-  Title: string;
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  { Title: 'abc' },
-  { Title: 'Def' },
-  { Title: 'mmm' },
-  { Title: '000' },
-];
+
 @Component({
   selector: 'app-email-templete',
   templateUrl: './email-templete.component.html',
@@ -25,29 +19,74 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class EmailTempleteComponent implements OnInit {
   EmailAllData: FormGroup;
+  tempColobj: any;
+  ColumnsObj: any;
+  TemplateEmaildata:any=[];
   isLoadingResults: boolean = false;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   Title = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
-  displayedColumns: string[] = ['Title'];
-  EmailDataTbl = new MatTableDataSource(ELEMENT_DATA);
+  displayedColumns: any = ['TYPEICON', 'NAME'];
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  highlightedRows: any;
+  pageSize: any;
   constructor(
     private _formBuilder: FormBuilder,
+    public TemplateListData: TemplateListDetails,
+    private toastr: ToastrService,
+    private TableColumnsService: TableColumnsService,
   ) { }
 
   ngOnInit() {
-    this.EmailDataTbl.sort = this.sort;
-    this.EmailDataTbl.paginator = this.paginator;
     this.EmailAllData = this._formBuilder.group({
-      Filter: [],
-      search: []
+      Filter: [''],
+      search: ['']
     });
+
+    this.LoadData({});
+    
+  }
+  // getTableFilter() {
+  //   this.TableColumnsService.getTableFilter('generate email', '').subscribe(response => {
+  //     console.log(response);
+  //     if (response.CODE == 200 && response.STATUS == "success") {
+  //       let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
+  //       this.tempColobj = data.tempColobj;
+  //       this.displayedColumns = data.showcol;
+  //       this.ColumnsObj = data.colobj;
+  //     }
+  //   }, error => {
+  //     this.toastr.error(error);
+  //   });
+  // }
+  LoadData(passdata){
+    this.isLoadingResults = true;
+    this.TemplateListData.getEmailList(passdata).subscribe(response => {
+        console.log(response);
+      if (response.CODE == 200 && response.STATUS == "success") {
+        this.TemplateEmaildata = new MatTableDataSource(response.DATA.EMAILS);
+        // this.editContact(response.DATA.TEMPLATES[0]);
+        this.TemplateEmaildata.paginator = this.paginator;
+        this.TemplateEmaildata.sort = this.sort;
+        if (response.DATA.EMAILS[0]) {
+         
+          localStorage.setItem('GenerateEmailData', JSON.stringify(response.DATA.EMAILS[0]));
+          this.highlightedRows = response.DATA.EMAILS[0].EMAILGUID;
+        }
+        this.isLoadingResults = false;
+      }
+    }, err => {
+
+      this.toastr.error(err);
+      this.isLoadingResults = false;
+    });
+    this.pageSize = localStorage.getItem('lastPageSize');
   }
   // FilterSearch
   FilterSearch(filterValue: any) {
-    this.EmailDataTbl.filter = filterValue;
+    // this.EmailDataTbl.filter = filterValue;
   }
   //clicktitle
   clicktitle(value) {

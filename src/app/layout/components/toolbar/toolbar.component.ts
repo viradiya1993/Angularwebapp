@@ -982,8 +982,22 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this.dialog.open(ReportFilterComponent, {
 
         });
+        dialogRef.afterClosed().subscribe(result => {
+           console.log(result);
+        });
     }
 
+    //PrepareReceipt
+    PrepareReceipt(){
+        const dialogRef = this._matDialog.open(ReceiptDilogComponent,{ 
+            width: '100%',
+            disableClose: true, 
+            data: {}
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
     //_____________________________________________________________________________________________________
 
     BankingDialogOpen(){
@@ -1071,7 +1085,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     createInstantInvoice() {
-        return false;
+       // return false;
         const dialogRef = this._matDialog.open(InstantInvoiceDailogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -1130,7 +1144,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-
+    
     ViewReceipt() {
         const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
             width: '100%', disableClose: true,

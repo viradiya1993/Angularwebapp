@@ -928,7 +928,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //ReconcileAC
     ReconcileAC() {
-        const dialogRef = this.dialog.open(ReceiptDilogComponent, {
+        const dialogRef = this.dialog.open(SelectAccountComponent, {
 
         });
         dialogRef.afterClosed().subscribe(result => {

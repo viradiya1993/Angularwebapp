@@ -770,43 +770,33 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /* Email Module */
 
     //SelectMatter 
-    SelectMatter() {
+    GenarateEmail() {
         // alert('ok Work!!!');   
-        const dialogRef = this._matDialog.open(MatterReceiptDialogComponentForTemplate, {
+        let templateEmailData = JSON.parse(localStorage.getItem('GenerateEmailData'));
+        let passdata = { "Type": "Email", "Template": templateEmailData.NAME }
+        const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
             width: '100%',
             disableClose: true,
-            data: null
+            data: passdata
         });
         dialogRef.afterClosed().subscribe(result => {
             console.log(result);
         });
     }
     //New Email
-    NewEmailTemplete() {
+    EmailTempletePopUp(val) {
         const dialogRef = this.dialog.open(EmailDailogComponent, {
             disableClose: true,
             panelClass: 'Email-dialog',
             data: {
-                action: 'new',
+                action: val,
             }
         });
         dialogRef.afterClosed().subscribe(result => {
             console.log(result);
         });
     }
-    //Edit Email
-    EditEmailTemplete() {
-        const dialogRef = this.dialog.open(EmailDailogComponent, {
-            disableClose: true,
-            panelClass: 'Email-dialog',
-            data: {
-                action: 'edit',
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
-    }
+
     //Copy Email
     CopyEmailTemplete() {
         const dialogRef = this.dialog.open(EmailDailogComponent, {
@@ -1041,8 +1031,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else if(x[1] == "genral-journal"){
             this.isTabShow = 16;
         }
+        else if(x[1] == "conflict-check"){
+            this.isTabShow = 17;
+        }
         else {
             this.isTabShow = 1;
+           
         }
     }
     setTab(event: any) {
@@ -1214,7 +1208,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     // }
     // ******************************************END Invoice related funtion like create update delete view*********************************************
     //***********************************************************START Select Matter Contact*************************************************************************
-    SelectMatterContact() {
+    GenarateDocument() {
         let templateData = JSON.parse(localStorage.getItem('templateData'));
         if (this.router.url == "/create-document/invoice-template") {
             let invoiceGUid = localStorage.getItem('edit_invoice_id');

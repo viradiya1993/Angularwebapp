@@ -22,6 +22,7 @@ import { ChartOfAccount } from './chart-account/chart-account.module';
 import { SelectAccountModule } from './select-account/select-account.module';
 import { BankingDialogModule } from './banking/banking-dialog.module';
 import { GeneralJoural } from './general-journal/general-journal.module';
+import { ConflictCheckModule } from './conflict-check/conflict-check.module';
 
 
 
@@ -54,6 +55,7 @@ const appRoutes: Routes = [
   declarations: [],
   imports: [
     CommonModule,
+    ConflictCheckModule,
     RouterModule.forChild(appRoutes),
     ContactModule,
     SystemSettingModule,

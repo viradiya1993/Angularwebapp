@@ -1,9 +1,6 @@
 @import "src/@fuse/scss/fuse";
-app-matter-invoices {
-    width: 100%;
-}
-
 #matter_invoice {
+    // margin-top: 95px;
     .header {
         .search-wrapper {
             width: 100%;
@@ -48,10 +45,14 @@ app-matter-invoices {
     padding: 20px !important;
 }
 
-//For Scoller add css
-// .mat-table.mat-table.ng-trigger.ng-trigger-animateStagger {
-//     width: 300%;
-// }
+app-matter-invoices {
+    width: 100%;
+}
+
+app-time-billing {
+    overflow-y: auto;
+}
+
 .mat-table {
     width: 100%;
 }
@@ -69,6 +70,17 @@ app-matter-invoices {
 .more_tbl_clmn .mat-cell:last-child {
     padding-right: 70px;
 }
-th.mat-sort-header-sorted {
-    color: black;
+
+.h2 {
+    margin-top: 13px !important;
+}
+// .matter-serach-div.sticky_search_div {
+//     margin-top: 18px !important;
+//     margin-left: 45px !important;
+// }
+.page-layout.carded>.top-bg.work_progress_height {
+    height: 86px;
+    th.mat-sort-header-sorted {
+        color: black;
+    }
 }

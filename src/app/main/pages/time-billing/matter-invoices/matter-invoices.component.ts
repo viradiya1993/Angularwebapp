@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialogConfig, MatDialog } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.component';
 import { MatterInvoicesService, TableColumnsService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
@@ -16,6 +17,7 @@ import {MatSort} from '@angular/material';
   animations: fuseAnimations
 })
 export class MatterInvoicesComponent implements OnInit {
+  MatterinvoiceForm: FormGroup;
   ColumnsObj: any = [];
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   displayedColumns: string[];
@@ -25,12 +27,21 @@ export class MatterInvoicesComponent implements OnInit {
   pageSize: any;
   isLoadingResults: boolean = false;
   constructor(private dialog: MatDialog,
+    private _formBuilder: FormBuilder,
     private MatterInvoices: MatterInvoicesService,
     private TableColumnsService: TableColumnsService,
     private toastr: ToastrService) { }
 
   MatterInvoicesdata;
   ngOnInit() {
+    this.MatterinvoiceForm = this._formBuilder.group({
+      matter:[],
+      Client:[],
+      invoicetotal:[],
+      recevived:[],
+      outstanding:[],
+      searchFilter:[]
+    });
     $('content').addClass('inner-scroll');
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
     this.getTableFilter();
@@ -90,5 +101,9 @@ export class MatterInvoicesComponent implements OnInit {
         }
       }
     });
+  }
+  //onSearch
+  onSearch(searchFilter:any){
+    console.log(searchFilter);
   }
 }

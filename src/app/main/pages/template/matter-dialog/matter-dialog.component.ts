@@ -39,6 +39,8 @@ export class MatterDialogComponentForTemplate implements OnInit {
   CheckCondition: any;
   ForHideShow: string;
   title: string;
+  filefolderUrl: any;
+  Title:any;
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
@@ -54,9 +56,10 @@ export class MatterDialogComponentForTemplate implements OnInit {
     this.matterFilterForm = this.fb.group({ MatterFilter: [''], UserFilter: [''], searchFilter: [''], InvoiceFilter: [''], });
     // this.title="View Template"
    //need to call generate template api 
-      if(_data){
+    if(_data){
     this.base_url=environment.ReportUrl;
     this.filefolder_Name=_data.Template;
+    this.Title =_data.Template == 'email' ? 'Email' :'Document';
     this.selectMatter(_data);
    }
    
@@ -74,7 +77,12 @@ export class MatterDialogComponentForTemplate implements OnInit {
     this.isLoadingResults = true;
     this.TemplateListDetails.getGenerateTemplate(data).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        this.toastr.success('success');       
+        this.toastr.success('success');
+        if(this._data.Type=="Template"){
+        this.filefolderUrl=response.DATA.DOCUMENTS[0].FILENAME;     
+        }else{
+         this.filefolderUrl=response.DATA.EMAILS[0].SUBJECT;        
+        }   
         this.isLoadingResults = false;
       }else if(response.CODE == 420 ){
         this.isLoadingResults = false;

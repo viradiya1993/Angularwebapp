@@ -34,7 +34,7 @@
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                             <tr [style.background]="highlightedRows == row.EMAILGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.EMAILGUID ? 'row-text-colore' : ''" highlightedRows=row.EMAILGUID  mat-row *matRowDef="let row; columns: displayedColumns;" (click)="clicktitle(row);highlightedRows = row.EMAILGUID "
-                                matRipple>
+                                matRipple (dblclick)='dblclickEmail(row)'>
                             </tr>
                         </table>
                         <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>

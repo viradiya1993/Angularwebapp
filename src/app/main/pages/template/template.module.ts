@@ -31,15 +31,29 @@ const routes = [
   { path: '', redirectTo: '/create-document/invoice-template', pathMatch: 'full', canActivate: [AuthGuard] },
   { path: '', redirectTo: '/create-document/receive-money-template', pathMatch: 'full', canActivate: [AuthGuard] },
   { path: '', redirectTo: '/create-document/contact-template', pathMatch: 'full', canActivate: [AuthGuard] },
-  { path: '', redirectTo: '/create-document/email-templete', pathMatch: 'full', canActivate: [AuthGuard] },
+
+  { path: '', redirectTo: '/create-document/email-matter-template', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/create-document/email-invoice-templete', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/create-document/email-contact-template', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/create-document/email-receive-money-template', pathMatch: 'full', canActivate: [AuthGuard] },
+
+
   { path: '', redirectTo: '/create-document/packs', pathMatch: 'full', canActivate: [AuthGuard] },
   {
     path: '', component: TemplateComponent, children: [
+      //for template 
       { path: 'matter-template', component: TemplateListComponent },
       { path: 'invoice-template', component: TemplateListComponent },
       { path: 'receive-money-template', component: TemplateListComponent },
       { path: 'contact-template', component: TemplateListComponent },
-      { path: 'email-templete', component: EmailTempleteComponent },
+
+      //for email template
+      { path: 'email-matter-template', component: EmailTempleteComponent },
+      { path: 'email-invoice-template', component: EmailTempleteComponent },
+      { path: 'email-contact-template', component: EmailTempleteComponent },
+      { path: 'email-receive-money-template', component: EmailTempleteComponent },
+
+      // { path: 'email-templete', component: EmailTempleteComponent },
       { path: 'packs', component: PacksComponent },
 
       

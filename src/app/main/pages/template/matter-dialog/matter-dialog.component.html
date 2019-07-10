@@ -1,5 +1,5 @@
 <div class="popup_main_div corres_popup_main select_metter_main_div" cdkDrag>
-    <h2 cdkDragHandle mat-dialog-title> Document Generated
+    <h2 cdkDragHandle mat-dialog-title> {{Title}} Generated
         <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog"><mat-icon>close</mat-icon></button>
     </h2>
 
@@ -14,7 +14,7 @@
                 <div class="middle">The {{filefolder_Name}} has been produced.</div>
             </div>
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="button">
-                <a href="{{this.base_url}}{{filefolder_Name}}" target="_blank">
+                <a href="{{this.base_url}}{{this.filefolderUrl}}" target="_blank">
                     <button mat-raised-button mat-dialog-close color="accent">Click here to view it</button>
                 </a>
             </div>

@@ -6,7 +6,8 @@
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
         <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
             <button mat-icon-button disabled></button>
-            <mat-checkbox (change)="allcheckbox()" class="checklist-leaf-node" [checked]="checklistSelection.isSelected(node)" (change)="checklistSelection.toggle(node);">{{node.item}}
+            <mat-checkbox (change)="allcheckbox()" class="checklist-leaf-node" [checked]="checklistSelection.isSelected(node)" (change)="checklistSelection.toggle(node);">
+                {{node.item}}
             </mat-checkbox>
         </mat-tree-node>
         <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>

@@ -20,7 +20,6 @@ export class UserDialogComponent implements OnInit {
   isspiner: boolean = false;
   phide: boolean = true;
   userForm: FormGroup;
-  userPermission: any;
   USERGUID: any;
   constructor(
     public MatDialog: MatDialog,
@@ -74,7 +73,7 @@ export class UserDialogComponent implements OnInit {
       this._mainAPiServiceService.getSetData({ USERGUID: this.data.USERGUID, 'GETALLFIELDS': true }, 'GetUsers').subscribe(response => {
         if (response.CODE === 200 && response.STATUS === 'success') {
           let userinfoData = response.DATA.USERS[0];
-          this.userPermission = userinfoData.PERMISSIONS;
+          this.permissionConvert(userinfoData.PERMISSIONS);
           this.USERGUID = userinfoData.USERGUID;
           this.userForm.controls['USERGUID'].setValue(userinfoData.USERGUID);
           this.userForm.controls['USERNAME'].setValue(userinfoData.USERNAME);
@@ -196,6 +195,20 @@ export class UserDialogComponent implements OnInit {
     }, error => {
       this.toastr.error(error);
     });
+  }
+  permissionConvert(tempData: any) {
+    let PermissionsCons = ['MATTER DETAILS', 'DAY BOOK / TIME ENTRIES', 'CONTACTS', 'ESTIMATES', 'DOCUMENT/EMAIL GENERATION', 'DOCUMENT REGISTER', 'INVOICING', 'RECEIVE MONEY', 'SPEND MONEY', 'CHRONOLOGY', 'TOPICS', 'AUTHORITIES', 'FILE NOTES', 'SAFE CUSTODY', 'SAFE CUSTODY PACKET', 'SEARCHING', 'DIARY', 'TASKS', 'CHART OF ACCOUNTS', 'GENERAL JOURNAL', 'OTHER ACCOUNTING', 'TRUST MONEY', 'TRUST CHART OF ACCOUNTS', 'TRUST GENERAL JOURNAL', 'TRUST REPORTS', 'ACCOUNTING REPORTS', 'MANAGEMENT REPORTS', 'SYSTEM', 'USERS', 'ACTIVITIES/SUNDRIES'];
+    let userPermissiontemp: any = {};
+    PermissionsCons.forEach(function (value) {
+      if (tempData[value]) {
+        let subPermissions: any = [];
+        tempData[value].forEach(function (value2) {
+          subPermissions.push(value2.NAME);
+        });
+        userPermissiontemp[value] = subPermissions;
+      }
+    });
+    localStorage.setItem('edit_userPermission', JSON.stringify(userPermissiontemp));
   }
 
 }

@@ -13,6 +13,7 @@ import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/conf
 })
 export class UserBudgetDialogComponent implements OnInit {
   Months: any = [];
+  budgetsData: any = [];
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   action: any;
   errorWarningData: any = {};
@@ -32,23 +33,12 @@ export class UserBudgetDialogComponent implements OnInit {
   ) {
     this.action = data.action;
     this.USERGUID = data.USERGUID;
-    if (this.action === 'new') {
-      this.dialogTitle = 'New Budget';
-      this.Months = [];
-      for (let i = 0; i < 12; i++) {
-        let nowdate = (new Date());
-        nowdate = new Date(nowdate.getFullYear(), nowdate.getMonth(), 1);
-        nowdate.setMonth(nowdate.getMonth() + i);
-        this.Months.push(nowdate);
-      }
-    } else {
-      this.dialogTitle = 'Edit Budget';
-    }
   }
 
   ngOnInit() {
     this.userBudget = this._formBuilder.group({
-      PERIODSTART: [new Date()],
+      PERIODSTARTTEXT: [new Date()],
+      PERIODSTART: [''],
       USERGUID: [this.USERGUID],
       USERBUDGETGUID: [],
       TOTALBUDGETHOURS: [],
@@ -79,9 +69,51 @@ export class UserBudgetDialogComponent implements OnInit {
       MONTHLYBUDGETUNITS_11: [],
       MONTHLYBUDGETUNITS_12: []
     });
+    console.log(this.action);
+    if (this.action == 'edit') {
+      this.dialogTitle = 'Edit Budget';
+      this.budgetsData = JSON.parse(localStorage.getItem('current_budgets'));
+      this.NowDate(new Date());
+      this.userBudget.controls['TOTALBUDGETHOURS'].setValue(parseFloat(this.budgetsData.TOTALBUDGETHOURS).toFixed(2));
+      this.userBudget.controls['TOTALBUDGETDOLLARS'].setValue(parseFloat(this.budgetsData.TOTALBUDGETDOLLARS).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETHOURS_1'].setValue(parseFloat(this.budgetsData.MONTHBUDGETHOURS_GROUP['MONTHBUDGETHOURS_1']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETHOURS_2'].setValue(parseFloat(this.budgetsData.MONTHBUDGETHOURS_GROUP['MONTHBUDGETHOURS_2']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETHOURS_3'].setValue(parseFloat(this.budgetsData.MONTHBUDGETHOURS_GROUP['MONTHBUDGETHOURS_3']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETHOURS_4'].setValue(parseFloat(this.budgetsData.MONTHBUDGETHOURS_GROUP['MONTHBUDGETHOURS_4']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETHOURS_5'].setValue(parseFloat(this.budgetsData.MONTHBUDGETHOURS_GROUP['MONTHBUDGETHOURS_5']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETHOURS_6'].setValue(parseFloat(this.budgetsData.MONTHBUDGETHOURS_GROUP['MONTHBUDGETHOURS_6']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETHOURS_7'].setValue(parseFloat(this.budgetsData.MONTHBUDGETHOURS_GROUP['MONTHBUDGETHOURS_7']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETHOURS_8'].setValue(parseFloat(this.budgetsData.MONTHBUDGETHOURS_GROUP['MONTHBUDGETHOURS_8']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETHOURS_9'].setValue(parseFloat(this.budgetsData.MONTHBUDGETHOURS_GROUP['MONTHBUDGETHOURS_9']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETHOURS_10'].setValue(parseFloat(this.budgetsData.MONTHBUDGETHOURS_GROUP['MONTHBUDGETHOURS_10']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETHOURS_11'].setValue(parseFloat(this.budgetsData.MONTHBUDGETHOURS_GROUP['MONTHBUDGETHOURS_11']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETHOURS_12'].setValue(parseFloat(this.budgetsData.MONTHBUDGETHOURS_GROUP['MONTHBUDGETHOURS_12']).toFixed(2));
+      this.userBudget.controls['MONTHLYBUDGETUNITS_1'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_1']).toFixed(2));
+      this.userBudget.controls['MONTHLYBUDGETUNITS_2'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_2']).toFixed(2));
+      this.userBudget.controls['MONTHLYBUDGETUNITS_3'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_3']).toFixed(2));
+      this.userBudget.controls['MONTHLYBUDGETUNITS_4'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_4']).toFixed(2));
+      this.userBudget.controls['MONTHLYBUDGETUNITS_5'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_5']).toFixed(2));
+      this.userBudget.controls['MONTHLYBUDGETUNITS_6'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_6']).toFixed(2));
+      this.userBudget.controls['MONTHLYBUDGETUNITS_7'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_7']).toFixed(2));
+      this.userBudget.controls['MONTHLYBUDGETUNITS_8'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_8']).toFixed(2));
+      this.userBudget.controls['MONTHLYBUDGETUNITS_9'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_9']).toFixed(2));
+      this.userBudget.controls['MONTHLYBUDGETUNITS_10'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_10']).toFixed(2));
+      this.userBudget.controls['MONTHLYBUDGETUNITS_11'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_11']).toFixed(2));
+      this.userBudget.controls['MONTHLYBUDGETUNITS_12'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_12']).toFixed(2));
+    } else {
+      this.dialogTitle = 'New Budget';
+      this.NowDate(new Date());
+      let PERIODSTARTtemp = (new Date());
+      PERIODSTARTtemp = new Date(PERIODSTARTtemp.getFullYear(), PERIODSTARTtemp.getMonth(), 1);
+      this.userBudget.controls['PERIODSTART'].setValue(this.datepipe.transform(PERIODSTARTtemp, 'dd/MM/yyyy'));
+    }
+
   }
 
   NowDate(value) {
+    let PERIODSTARTtemp = (new Date(value));
+    PERIODSTARTtemp = new Date(PERIODSTARTtemp.getFullYear(), PERIODSTARTtemp.getMonth(), 1);
+    this.userBudget.controls['PERIODSTART'].setValue(this.datepipe.transform(PERIODSTARTtemp, 'dd/MM/yyyy'));
     this.Months = [];
     for (let i = 0; i < 12; i++) {
       let nowdate = (new Date(value));
@@ -89,33 +121,59 @@ export class UserBudgetDialogComponent implements OnInit {
       nowdate.setMonth(nowdate.getMonth() + i);
       this.Months.push(nowdate);
     }
-    console.log(this.Months);
   }
   get f() {
     return this.userBudget.controls;
   }
   MONTHBUDGETHOURS_GROUP() {
-    let DataArray: any = [];
     let Obj = this.userBudget.value;
+    var O = {};
     for (let i = 1; i <= 12; i++) {
-      var O = {};
       let key = 'MONTHBUDGETHOURS_' + i;
       O[key] = Obj[key];
-      DataArray.push(O);
     }
-    return DataArray;
+    return O;
   }
   MONTHBUDGETDOLLARS_GROUP() {
-    let DataArray: any = [];
     let Obj = this.userBudget.value;
+    var O = {};
     for (let i = 1; i <= 12; i++) {
-      var O = {};
       let key = 'MONTHLYBUDGETUNITS_' + i;
       O[key] = Obj[key];
-      DataArray.push(O);
     }
-    return DataArray;
+    return O;
   }
+  dollaresOnCahneg() {
+    let TOTALBUDGETDOLLARS_TEMP: any = this.f.TOTALBUDGETDOLLARS.value / 12;
+    this.userBudget.controls['MONTHLYBUDGETUNITS_1'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHLYBUDGETUNITS_2'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHLYBUDGETUNITS_3'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHLYBUDGETUNITS_4'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHLYBUDGETUNITS_5'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHLYBUDGETUNITS_6'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHLYBUDGETUNITS_7'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHLYBUDGETUNITS_8'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHLYBUDGETUNITS_9'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHLYBUDGETUNITS_10'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHLYBUDGETUNITS_11'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHLYBUDGETUNITS_12'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+  }
+  hoursOnChange() {
+    let TOTALBUDGETHOURS_TEMP: any = this.f.TOTALBUDGETHOURS.value / 12;
+    this.userBudget.controls['MONTHBUDGETHOURS_1'].setValue(parseFloat(TOTALBUDGETHOURS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETHOURS_2'].setValue(parseFloat(TOTALBUDGETHOURS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETHOURS_3'].setValue(parseFloat(TOTALBUDGETHOURS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETHOURS_4'].setValue(parseFloat(TOTALBUDGETHOURS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETHOURS_5'].setValue(parseFloat(TOTALBUDGETHOURS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETHOURS_6'].setValue(parseFloat(TOTALBUDGETHOURS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETHOURS_7'].setValue(parseFloat(TOTALBUDGETHOURS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETHOURS_8'].setValue(parseFloat(TOTALBUDGETHOURS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETHOURS_9'].setValue(parseFloat(TOTALBUDGETHOURS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETHOURS_10'].setValue(parseFloat(TOTALBUDGETHOURS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETHOURS_11'].setValue(parseFloat(TOTALBUDGETHOURS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETHOURS_12'].setValue(parseFloat(TOTALBUDGETHOURS_TEMP).toFixed(2));
+  }
+
   saveBudget() {
     this.isspiner = true;
     let PostData: any = {

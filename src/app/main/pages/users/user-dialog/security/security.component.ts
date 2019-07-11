@@ -20,6 +20,7 @@ export class TodoItemFlatNode {
   item: string;
   level: number;
   expandable: boolean;
+  isCehck: boolean;
 }
 
 
@@ -54,7 +55,7 @@ export class SecurityComponent implements OnInit {
   }
   ngOnInit() {
     const data = this.buildFileTree(JSON.parse(localStorage.getItem('edit_userPermission')), 0);
-    console.log(data);
+    localStorage.removeItem('edit_userPermission');
     this.database.dataChange.next(data);
   }
   buildFileTree(obj: object, level: number): TodoItemNode[] {
@@ -64,10 +65,14 @@ export class SecurityComponent implements OnInit {
       node.item = key;
       if (value != null) {
         if (typeof value === 'object') {
-          node.children = this.buildFileTree(value, level + 1);
+          if (Object.keys(value).length == 2 && !Array.isArray(value)) {
+            node.item = value.NAME;
+            node.isCehck = value.VALUE == 1 ? true : false;
+          } else
+            node.children = this.buildFileTree(value, level + 1);
         } else {
-          node.item = value;
-          node.isCehck = true;
+          node.item = value.NAME;
+          node.isCehck = value.VALUE == 1 ? true : false;
         }
       }
       return accumulator.concat(node);
@@ -108,6 +113,7 @@ export class SecurityComponent implements OnInit {
       : new TodoItemFlatNode();
     flatNode.item = node.item;
     flatNode.level = level;
+    flatNode.isCehck = node.isCehck;
     flatNode.expandable = !!node.children;
     this.flatNodeMap.set(flatNode, node);
     this.nestedNodeMap.set(node, flatNode);

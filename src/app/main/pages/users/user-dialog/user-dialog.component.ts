@@ -73,7 +73,7 @@ export class UserDialogComponent implements OnInit {
       this._mainAPiServiceService.getSetData({ USERGUID: this.data.USERGUID, 'GETALLFIELDS': true }, 'GetUsers').subscribe(response => {
         if (response.CODE === 200 && response.STATUS === 'success') {
           let userinfoData = response.DATA.USERS[0];
-          this.permissionConvert(userinfoData.PERMISSIONS);
+          localStorage.setItem('edit_userPermission', JSON.stringify(userinfoData.PERMISSIONS));
           this.USERGUID = userinfoData.USERGUID;
           this.userForm.controls['USERGUID'].setValue(userinfoData.USERGUID);
           this.userForm.controls['USERNAME'].setValue(userinfoData.USERNAME);

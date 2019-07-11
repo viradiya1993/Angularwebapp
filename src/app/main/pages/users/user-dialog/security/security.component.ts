@@ -78,8 +78,8 @@ export class SecurityComponent implements OnInit {
       return accumulator.concat(node);
     }, []);
   }
-  allcheckbox() {
-    console.log("checkbox clicked");
+  allcheckbox(dataSource: any) {
+    console.log(dataSource);
   }
   flatNodeMap = new Map<TodoItemFlatNode, TodoItemNode>();
 

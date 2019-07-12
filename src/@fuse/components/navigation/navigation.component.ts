@@ -54,13 +54,15 @@ export class FuseNavigationComponent implements OnInit {
       { "ID": "diary", "TITLE": "Diary", "URL": "diary", "STAR": "" },
       { "ID": "invoice", "TITLE": "Invoice", "URL": "invoice", "STAR": "" },
       { "ID": "spend-money", "TITLE": "Spend money", "URL": "spend-money", "STAR": "" },
+      //added by web 19 
+      { "ID": "authorities", "TITLE": "Authorities", "URL": "authorities", "STAR": "" },
       { "ID": "receive-money", "TITLE": "Receive money", "URL": "receive-money", "STAR": "" }]
 
       this.GetFavouriteService.GetFavourite(postdata).subscribe(response => {
         if (response.CODE == 200 && response.STATUS == "success") {
+          console.log(response);
           if (response.DATA.FAVOURITES == '') {
             this.GetFavouriteService.setFavourite({ "FAVOURITES": Favouritelist }).subscribe(responses => {
-
               if (responses.CODE == 200 && responses.STATUS == "success") {
                 Favouritelist.forEach(items => {
                   this.page.push({ "ID": items.ID, "TITLE": items.TITLE, "URL": items.URL, "STAR": items.STAR, "type": "item", "icon": "icon_matter_d.ico" });

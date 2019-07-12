@@ -23,6 +23,7 @@ import { SelectAccountModule } from './select-account/select-account.module';
 import { BankingDialogModule } from './banking/banking-dialog.module';
 import { GeneralJoural } from './general-journal/general-journal.module';
 import { ConflictCheckModule } from './conflict-check/conflict-check.module';
+import { MainAuthoritiesModule } from './main-authorities/main-authorities.module';
 
 
 
@@ -38,6 +39,8 @@ const appRoutes: Routes = [
   { path: 'legal-details', loadChildren: './legal-details/legal-details.module#LegalDetailsModule' },
   { path: 'time-entries', loadChildren: './time-entries/time-entries.module#TimeEntriesModule' },
   { path: 'invoice', loadChildren: './invoice/invoice.module#InvoiceModule' },
+
+  { path: 'authorities', loadChildren: './main-authorities/main-authorities.module#MainAuthoritiesModule' },
   { path: 'spend-money', loadChildren: './spend-money/spend-money.module#SpendMoneyModule' },
   { path: 'receive-money', loadChildren: './receive-money/receive-money.module#ReceiveMoneyModule' },
   { path: 'create-document', loadChildren: './template/template.module#TemplateModule' },
@@ -64,6 +67,7 @@ const appRoutes: Routes = [
     TimeEntriesModule,
     DiaryModule,
     InvoiceModule,
+    MainAuthoritiesModule,
     SpendMoneyModule,
     ReceiveMoneyModule,
     TemplateModule,

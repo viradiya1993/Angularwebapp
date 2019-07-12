@@ -43,7 +43,8 @@ import { FileNoteDialogComponent } from 'app/main/pages/matters/file-note-dialog
 import { BankingDialogComponent } from 'app/main/pages/banking/banking-dialog.component';
 
 import { GeneralDailogComponent } from './../../../main/pages/general-journal/general-dailog/general-dailog.component';
-import { ReportFilterComponent } from './../../../main/pages/general-journal/report-filter/report-filter.component';
+import {ReportFilterComponent} from './../../../main/pages/general-journal/report-filter/report-filter.component';
+import { AuthorityDialogComponent } from 'app/main/pages/main-authorities/authority-dialog/authority-dialog.component';
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -83,6 +84,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     isDocumentGenerateHide: string;
     templateRoter: string;
     spendMoneyMenu: string;
+    emailrouting: string;
+    emailroutingtax: string;
+    TemplateUrlHandel: string;
 
 
     constructor(
@@ -770,10 +774,28 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /* Email Module */
 
     //SelectMatter 
+    
     GenarateEmail() {
-        // alert('ok Work!!!');   
-        let templateEmailData = JSON.parse(localStorage.getItem('GenerateEmailData'));
-        let passdata = { "Type": "Email", "Template": templateEmailData.NAME }
+        let templateData = JSON.parse(localStorage.getItem('GenerateEmailData'));
+        if (this.router.url == "/create-document/email-invoice-template") {
+            let invoiceGUid = localStorage.getItem('edit_invoice_id');
+            let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "Type": "Email", "Folder": '', "Template": templateData.NAME }
+            this.ForEmailDialogOpen(passdata);
+        } else if (this.router.url == "/create-document/email-matter-template") {
+            let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
+            let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Email", "Folder": '', "Template": templateData.NAME }
+            this.ForEmailDialogOpen(passdata);
+        } else if (this.router.url == "/create-document/email-receive-money-template") {
+            let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
+            let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Email", "Folder": '', "Template": templateData.NAME }
+            this.ForEmailDialogOpen(passdata);
+        } else if (this.router.url == "/create-document/email-contact-template") {
+            let ContactGuID = localStorage.getItem('contactGuid');
+            let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Template", "Email": '', "Template": templateData.NAME }
+            this.ForEmailDialogOpen(passdata);
+        }
+    }
+    ForEmailDialogOpen(passdata) {
         const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
             width: '100%',
             disableClose: true,
@@ -783,6 +805,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             console.log(result);
         });
     }
+
+
+
+
     //New Email
     EmailTempletePopUp(val) {
         const dialogRef = this.dialog.open(EmailDailogComponent, {
@@ -918,6 +944,45 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
 
+        //Authority dialoge 
+        AuthorityDialog(val){
+            const dialogRef = this.dialog.open(AuthorityDialogComponent, {
+                disableClose: true,
+                panelClass: 'ChartAc-dialog',
+                data: {
+                    action: val,
+                }
+            });
+            dialogRef.afterClosed().subscribe(result => {
+                console.log(result);
+            });
+        }
+
+
+        deleteAuthority(): void {
+            this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+                disableClose: true,
+                width: '100%',
+            });
+            this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+            this.confirmDialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    // let getContactGuId = localStorage.getItem('contactGuid');
+                    // let postData = { FormAction: "delete", data: { CONTACTGUID: getContactGuId } }
+                    // this._getContact.AddContactData(postData).subscribe(res => {
+                    //     if (res.STATUS == "success") {
+                    //         $('#refreshContactTab').click();
+                    //         this.toastr.success(res.STATUS);
+                    //     } else {
+                    //         this.toastr.error("You Can't Delete Contact Which One Is To Related to Matters");
+                    //     }
+                    // });;
+                }
+                this.confirmDialogRef = null;
+            });
+        }
+        //end of Authority dialoge 
+
     //Account Trasactions
     Account_Tra() {
 
@@ -1008,7 +1073,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     navBarSetting(value: any) {
+       
         let x = value.split("/");
+        // console.log(x[1]);
+        // console.log(x);
         this.activeSubMenu = x[2] ? x[2] : '';
         this.isInvoice = x[3] ? x[3] : '';
         if (x[1] == "matters" || x[1] == "") {
@@ -1029,9 +1097,31 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 8;
         } else if (x[1] == "receive-money") {
             this.isTabShow = 9;
-        } else if (x[1] == "create-document") {
+        } else if (x[1] == "create-document") { 
             this.activedocument = x[1];
             this.isTabShow = 10;
+
+            if(x[2] == "matter-template"){
+                this.emailroutingtax = 'Matter';
+                this.TemplateUrlHandel='/create-document/matter-template'
+                this.emailrouting='/create-document/email-matter-template';
+               
+            }
+            else if(x[2] == "invoice-template"  ){
+                this.emailroutingtax = 'Invoice';
+                this.TemplateUrlHandel='/create-document/invoice-template'
+                this.emailrouting='/create-document/email-invoice-template';
+            }
+            else if(x[2] == "contact-template" ){
+                this.emailroutingtax = 'Contact';
+                this.TemplateUrlHandel='/create-document/contact-template'
+                this.emailrouting='/create-document/email-contact-template';
+            }
+            else if(x[2] == "/create-document/email-receive-money-template" ){
+                this.emailroutingtax = 'Receipt';
+                this.TemplateUrlHandel='/create-document/receive-money-template'
+                this.emailrouting='/create-document/email-receive-money-template';
+            }
         } else if (x[1] == "system-setting") {
             this.isTabShow = 11;
         } else if (x[1] == "users") {
@@ -1047,11 +1137,29 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }
         else if(x[1] == "conflict-check"){
             this.isTabShow = 17;
+        } else if(x[1] == "authorities"){
+            this.isTabShow = 18;
         }
+        
+        // added by web19 09/07/19
+       
+        // else if(x[1] == "/create-document/matter-email-templete"){
+        //     this.emailrouting = 'matter';
+        // }
+        // else if(x[1] == "/create-document/invoice-email-templete'"){
+        //     this.emailrouting = 'invoice';
+        // }
+        // else if(x[1] == "/create-document/contact-email-templete'"){
+        //     this.emailrouting = 'contact';
+        // }
+        // else if(x[1] == "/create-document/receive-money-email-templete'"){
+        //     this.emailrouting = 'receivemoney';
+        // }
         else {
             this.isTabShow = 1;
            
         }
+        this.activeSubMenu=x[2];
     }
     setTab(event: any) {
         this.selectedIndex = 0;

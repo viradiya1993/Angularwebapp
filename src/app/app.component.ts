@@ -16,7 +16,7 @@ import { locale as navigationEnglish } from 'app/navigation/i18n/en';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { LicenceAgreementComponent } from './main/licence-agreement/licence-agreement.component';
 import { MatDialog } from '@angular/material';
-
+import * as moment from 'moment';
 @Component({
     selector: 'app',
     templateUrl: './app.component.html',

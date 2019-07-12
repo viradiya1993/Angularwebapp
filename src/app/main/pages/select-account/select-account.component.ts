@@ -1,4 +1,4 @@
-import { Component, OnInit,Injectable } from '@angular/core';
+import { Component, OnInit,Injectable,Inject} from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import {FlatTreeControl} from '@angular/cdk/tree';
@@ -6,7 +6,7 @@ import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {BehaviorSubject, Observable} from 'rxjs';
 import { MatDialog, MatDialogRef, MatDialogConfig,MAT_DIALOG_DATA } from '@angular/material';
 import { ChartAcDailogComponent } from './../../../main/pages/chart-account/chart-ac-dailog/chart-ac-dailog.component';
-
+import { Router } from '@angular/router';
 const LOAD_MORE = 'LOAD_MORE';
 /** Nested node */
 export class LoadmoreNode {
@@ -79,7 +79,8 @@ export class LoadmoreDatabase {
 export class SelectAccountComponent implements OnInit {
   isLoadingResults: boolean = false;
   AccountFrom:FormGroup;
-
+  action: string;
+  dialogTitle:string;
   nodeMap = new Map<string, LoadmoreFlatNode>();
   treeControl: FlatTreeControl<LoadmoreFlatNode>;
   treeFlattener: MatTreeFlattener<LoadmoreNode, LoadmoreFlatNode>;
@@ -87,7 +88,8 @@ export class SelectAccountComponent implements OnInit {
   constructor(private database: LoadmoreDatabase,
     public dialogRef: MatDialogRef<SelectAccountComponent>,
     private _formBuilder: FormBuilder,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router,
   ) 
   {
     this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel,
@@ -133,8 +135,10 @@ export class SelectAccountComponent implements OnInit {
     });
   }
   //SelectAccount
-  SelectAccount(){
-    console.log('Select Account Work!!');
+  SelectAccount(): void {
+    console.log('11111');
+    //this.router.navigate(['/account-reconciliation']);
+    this.dialogRef.close();
   }
   //NewAccount
   NewAccount(){
@@ -142,7 +146,7 @@ export class SelectAccountComponent implements OnInit {
       disableClose: true,
       panelClass: 'ChartAc-dialog',
       data: {
-          action: 'new',
+          action: 'add',
       }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -164,7 +168,7 @@ export class SelectAccountComponent implements OnInit {
   }
   //openDialog
   openDialog(){
-    console.log('openDialog work!!');
+   
   }
 
 }

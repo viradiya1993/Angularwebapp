@@ -44,6 +44,8 @@ import { BankingDialogComponent } from 'app/main/pages/banking/banking-dialog.co
 
 import { GeneralDailogComponent } from './../../../main/pages/general-journal/general-dailog/general-dailog.component';
 import { ReportFilterComponent } from './../../../main/pages/general-journal/report-filter/report-filter.component';
+import {ChronItemDailogComponent} from './../../../main/pages/legal-details/chronology/chron-item-dailog/chron-item-dailog.component';
+import {DairyDailogComponent} from './../../../main/pages/diary/dairy-dailog/dairy-dailog.component';
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -826,7 +828,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     // New Pack
     NewPack() {
-        console.log('work!!1');
         const dialogRef = this.dialog.open(PacksDailogComponent, {
             disableClose: true,
             panelClass: 'Pack-dialog',
@@ -840,7 +841,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //EditPack
     EditPack() {
-        console.log('work!!2');
         const dialogRef = this.dialog.open(PacksDailogComponent, {
             disableClose: true,
             panelClass: 'Pack-dialog',
@@ -996,7 +996,115 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
 
+    /** Chronology Module's Function's */
+    //NewChron
+    NewChron(){
+        const dialogRef = this.dialog.open(ChronItemDailogComponent, {
+            disableClose: true,
+            panelClass: 'Chrone-dialog',
+            data: {
+                action: 'new',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    //EditChron
+    EditChron(){
+        const dialogRef = this.dialog.open(ChronItemDailogComponent, {
+            disableClose: true,
+            panelClass: 'Chrone-dialog',
+            data: {
+                action: 'edit',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
 
+    }
+    //DeleteChron
+    DeleteChron(){
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    //DuplicateChron
+    DuplicateChron(){
+        const dialogRef = this.dialog.open(ChronItemDailogComponent, {
+            disableClose: true,
+            panelClass: 'Chrone-dialog',
+            data: {
+                action: 'duplicate',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+
+    }
+
+    /* Dairy Appointment Module's Function's **/
+
+    //NewAppointment
+    NewAppointment(){
+        const dialogRef = this.dialog.open(DairyDailogComponent, {
+            disableClose: true,
+            panelClass: 'Chrone-dialog',
+            data: {
+                action: 'new',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    //EditAppointment
+    EditAppointment(){
+
+        const dialogRef = this.dialog.open(DairyDailogComponent, {
+            disableClose: true,
+            panelClass: 'Chrone-dialog',
+            data: {
+                action: 'edit',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+
+    }
+    //DeleteAppointment
+    DeleteAppointment(){
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    //DuplicateAppointment
+    DuplicateAppointment(){
+
+        const dialogRef = this.dialog.open(DairyDailogComponent, {
+            disableClose: true,
+            panelClass: 'Chrone-dialog',
+            data: {
+                action: 'duplicate',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
     //_____________________________________________________________________________________________________
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
@@ -1048,9 +1156,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         else if(x[1] == "conflict-check"){
             this.isTabShow = 17;
         }
+        else if (x[1] == "account-reconciliation"){
+            this.isTabShow = 18;
+        }
         else {
             this.isTabShow = 1;
-           
         }
     }
     setTab(event: any) {

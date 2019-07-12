@@ -3,12 +3,10 @@ import { CommonModule } from '@angular/common';
 import { AuthGuard } from '../../../_guards';
 import { RouterModule } from '@angular/router';
 
-import { ChartAccountComponent } from './chart-account.component';
-import { ChartAcDailogComponent } from './chart-ac-dailog/chart-ac-dailog.component';
-import { GeneralComponent } from './chart-ac-dailog/general/general.component';
-import { XeroComponent } from './chart-ac-dailog/xero/xero.component';
-import { MyobComponent } from './chart-ac-dailog/myob/myob.component';
-import { BankDetailsComponent } from './chart-ac-dailog/bank-details/bank-details.component';
+
+import { AccountReconciliationComponent } from './account-reconciliation.component';
+import { RecounciliationItemComponent } from './recounciliation-item/recounciliation-item.component';
+import { PastBankingsComponent } from './past-bankings/past-bankings.component';
 
 import { FuseSharedModule } from '@fuse/shared.module';
 import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
@@ -25,7 +23,7 @@ import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
 import {CdkTableModule} from '@angular/cdk/table';
 import {CdkTreeModule} from '@angular/cdk/tree';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+//import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ScrollDispatchModule} from '@angular/cdk/scrolling';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatTreeModule} from '@angular/material/tree';
@@ -34,22 +32,29 @@ import {MatSortModule} from '@angular/material/sort';
 
 
 
+// const routes = [
+//     { path: 'account-reconciliation', component: AccountReconciliationComponent, canActivate: [AuthGuard] },  
+// ];
 
 const routes = [
-    { path: 'chart-account', component: ChartAccountComponent, canActivate: [AuthGuard] },  
+  { path: '', redirectTo: '/account-reconciliation/Account', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/account-reconciliation/past-banking', pathMatch: 'full', canActivate: [AuthGuard] },
+    {
+      path: '', component: AccountReconciliationComponent, children:[
+        { path: 'Account', component: RecounciliationItemComponent },
+        { path: 'past-banking', component: PastBankingsComponent },    
+      ],canActivate: [AuthGuard]
+    }
 ];
 
 @NgModule({  
     declarations: [
-        ChartAccountComponent,
-        ChartAcDailogComponent,
-        GeneralComponent,
-        XeroComponent,
-        MyobComponent,
-        BankDetailsComponent
+        AccountReconciliationComponent,
+        RecounciliationItemComponent,
+        PastBankingsComponent
     ],
     entryComponents: [
-      ChartAcDailogComponent,
+     
     ],
     imports: [
       CommonModule,
@@ -88,14 +93,14 @@ const routes = [
       MatRadioModule,
       // N level tree checkbox
       MatTreeModule,
-      BrowserAnimationsModule,
+     // BrowserAnimationsModule,
       CdkTableModule,
       CdkTreeModule,
       ScrollDispatchModule,
       MatNativeDateModule,
       ReactiveFormsModule,
       MatSortModule
-     
+    
     ],
     exports: [
       MatTreeModule,
@@ -111,4 +116,5 @@ const routes = [
     bootstrap: [],
 })
 
-export class ChartOfAccount { }
+
+export class AccountRecountciliation { }

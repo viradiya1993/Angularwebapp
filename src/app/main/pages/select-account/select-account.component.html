@@ -92,7 +92,7 @@
         </div> 
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
-        <button mat-raised-button color="accent" (click)="SelectAccount()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Select</button>
+        <button mat-raised-button color="accent" (click)="SelectAccount()" [routerLink]="['/account-reconciliation']" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Select</button>
         <button mat-raised-button color="accent" (click)="NewAccount()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>New Account</button>
         <button mat-raised-button color="accent" (click)="EditAccount()" [disabled]="isspiner" ><mat-spinner *ngIf="isspiner"></mat-spinner>Edit Account</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>

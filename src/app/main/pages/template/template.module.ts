@@ -40,18 +40,7 @@ const routes = [
       { path: 'receive-money-template', component: TemplateListComponent },
       { path: 'contact-template', component: TemplateListComponent },
       { path: 'email-templete', component: EmailTempleteComponent },
-      { path: 'packs', component: PacksComponent },
-
-      
-      // {
-      //   path: 'work-in-progress', component: WorkInProgressComponent, children: [
-      //     { path: '', component: EstimateComponent },
-      //     { path: 'invoice', component: EstimateComponent },
-      //   ]
-      // },
-      // { path: 'matter-invoices', component: MatterInvoicesComponent },
-      // { path: 'receipts-credits', component: ReceiptsCreditsComponent },
-      // { path: 'matter-trust', component: MatterTrustComponent },
+      { path: 'packs', component: PacksComponent },      
     ], canActivate: [AuthGuard]
   }
 ];
@@ -94,6 +83,7 @@ const routes = [
     MatCheckboxModule,
     MatSortModule,
     MatTreeModule
+   
   ],
   exports: [
     TemplateComponent,

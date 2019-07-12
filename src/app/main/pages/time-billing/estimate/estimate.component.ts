@@ -20,8 +20,8 @@ export class EstimateComponent implements OnInit {
   pageSize: any;
   tempColobj: any;
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator)paginator: MatPaginator;
+  @ViewChild(MatSort)sort: MatSort;
   isLoadingResults: boolean = false;
   ColumnsObj: any = [];
   constructor(private TableColumnsService: TableColumnsService,

@@ -115,7 +115,7 @@ export class EmailTempleteComponent implements OnInit {
         this.ForEmailDialogOpen(passdata);
     } else if (this.router.url == "/create-document/email-contact-template") {
         let ContactGuID = localStorage.getItem('contactGuid');
-        let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Template", "Email": '', "Template": templateData.NAME }
+        let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Email","Folder": '', "Template": templateData.NAME }
         this.ForEmailDialogOpen(passdata);
     }
     

@@ -41,6 +41,7 @@ const appRoutes: Routes = [
   { path: 'invoice', loadChildren: './invoice/invoice.module#InvoiceModule' },
 
   { path: 'authorities', loadChildren: './main-authorities/main-authorities.module#MainAuthoritiesModule' },
+  { path: 'searching', loadChildren: './main-searching/main-searching.module#MainSearchingModule' },
   { path: 'spend-money', loadChildren: './spend-money/spend-money.module#SpendMoneyModule' },
   { path: 'receive-money', loadChildren: './receive-money/receive-money.module#ReceiveMoneyModule' },
   { path: 'create-document', loadChildren: './template/template.module#TemplateModule' },

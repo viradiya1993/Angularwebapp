@@ -46,8 +46,8 @@ export class LoadmoreDatabase {
   dataMap = new Map<string, string[]>([
     ['SILQ App', ['1', '2', '3']],
     ['SILQ Web', ['4', '5', '6']],
-    ['1', ['7', '8']],
-    ['5', ['9', '10', '11', '12', '13', '14', '15', '16']],
+    ['SILQ Ios', ['1', '2', '3']],
+    ['SILQ Android', ['4', '5', '6']]
   ]);
 
   initialize() {

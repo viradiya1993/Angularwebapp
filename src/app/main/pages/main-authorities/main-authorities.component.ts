@@ -102,6 +102,7 @@ export class MainAuthoritiesComponent implements OnInit {
     this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel, this.isExpandable, this.getChildren);
     this.treeControl = new FlatTreeControl<LoadmoreFlatNode>(this.getLevel, this.isExpandable);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+    console.log(this.dataSource);
     database.dataChange.subscribe(data => {
       this.dataSource.data = data;
     });
@@ -132,8 +133,13 @@ export class MainAuthoritiesComponent implements OnInit {
   ngOnInit() {
     this.Accountlist = this._formBuilder.group({
       AccountType:[''],
-      searchFilter:['']
+      searchFilter:[''],
+      Matter:[''],
+      Client:['']
     });
+    let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
+    this.Accountlist.controls['Matter'].setValue(mattersData.MATTER);
+    this.Accountlist.controls['Client'].setValue(mattersData.CONTACTNAME);
   }
   //TypeOfAccounts Dropdown
   TypeOfAccounts(value){

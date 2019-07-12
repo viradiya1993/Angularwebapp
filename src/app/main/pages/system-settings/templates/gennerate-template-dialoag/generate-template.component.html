@@ -22,13 +22,16 @@
                                     <td mat-cell *matCellDef="let row"> {{row.TEMPLATENAME }} </td>
                                 </ng-container>
                                 <tr mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                <tr [style.background]="highlightedRows == row.TEMPLATENAME ? selectedColore : ''" [ngClass]="highlightedRows == row.TEMPLATENAME ? 'row-text-colore' : ''" highlightedRows=row.TEMPLATENAME mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectTemplate(row);highlightedRows = row.TEMPLATENAME "
-                                    matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                <tr [style.background]="highlightedRows == row.TEMPLATENAME ? selectedColore : ''" [ngClass]="highlightedRows == row.TEMPLATENAME ? 'row-text-colore' : ''" highlightedRows=row.TEMPLATENAME mat-row *matRowDef="let row; columns: displayedColumns;" (click)="FirstClickTemplate(row);highlightedRows = row.TEMPLATENAME "
+                                    matRipple [@animate]="{value:'*',params:{y:'100%'}}" (dblclick)='dblclickrow(row)'>
                                 </tr>
                             </table>
                 </div>
                 <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
             </div>
         </div>
-       
+        <mat-dialog-actions align="end" class="popup_ftr contact_select_footer">
+            <button mat-raised-button [mat-dialog-close]="currentMatterData" (click)="selectTemplate()" color="accent">Select</button>
+            <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
+        </mat-dialog-actions>
     </div>

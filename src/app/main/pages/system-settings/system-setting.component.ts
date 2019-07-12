@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { SystemSetting } from './../../../_services';
+import { SystemSetting, BehaviorService } from './../../../_services';
 import {Location} from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
@@ -28,12 +28,13 @@ export class SystemSettingComponent implements OnInit {
   isspiner: boolean = false;
   clickedBtn: string;
 
-  constructor(public _matDialog: MatDialog,private toastr: ToastrService,private location: Location,public router: Router,  private route: ActivatedRoute,private SystemSetting:SystemSetting,  private _formBuilder: FormBuilder,) { 
+  constructor(private behaviorService:BehaviorService,public _matDialog: MatDialog,private toastr: ToastrService,private location: Location,public router: Router,  private route: ActivatedRoute,private SystemSetting:SystemSetting,  private _formBuilder: FormBuilder,) { 
     // this.nameFunction();
     this.nameFunction();
   }
   
   ngOnInit() {
+  
     // this.button='name';
     // this.ForDataBind="Name";
     // this.router.url === '/login'

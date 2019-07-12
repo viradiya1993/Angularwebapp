@@ -791,7 +791,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.ForEmailDialogOpen(passdata);
         } else if (this.router.url == "/create-document/email-contact-template") {
             let ContactGuID = localStorage.getItem('contactGuid');
-            let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Template", "Email": '', "Template": templateData.NAME }
+            let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Email", "Folder": '', "Template": templateData.NAME }
             this.ForEmailDialogOpen(passdata);
         }
     }
@@ -1103,7 +1103,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 this.TemplateUrlHandel='/create-document/contact-template'
                 this.emailrouting='/create-document/email-contact-template';
             }
-            else if(x[2] == "/create-document/email-receive-money-template" ){
+            else if(x[2] == "receive-money-template" ){
                 this.emailroutingtax = 'Receipt';
                 this.TemplateUrlHandel='/create-document/receive-money-template'
                 this.emailrouting='/create-document/email-receive-money-template';
@@ -1125,6 +1125,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 17;
         } else if(x[1] == "authorities"){
             this.isTabShow = 18;
+        }else if(x[1] == "searching"){
+            this.isTabShow = 19;
         }
         
         // added by web19 09/07/19
@@ -1303,6 +1305,20 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
+
+    // Searching start
+    StartInfoDialog(){
+        const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                localStorage.setItem('set_active_matters', JSON.stringify(result));
+                this.router.navigate(['time-billing/work-in-progress/invoice']);
+            }
+        });
+    }
+   
+    // searching end
+
 
     //hidden button
     clickToolbarbtn() {

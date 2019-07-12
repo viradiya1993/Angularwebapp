@@ -52,7 +52,7 @@
               </mat-radio-group>
           </div>
           <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-              <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">                
+              <table mat-table [dataSource]="dataSource" matSort >                
                   <ng-container matColumnDef="Number">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Number</th>
                     <td mat-cell *matCellDef="let element">{{element.Number}}</td>

@@ -56,10 +56,11 @@ export class MatterDialogComponentForTemplate implements OnInit {
     this.matterFilterForm = this.fb.group({ MatterFilter: [''], UserFilter: [''], searchFilter: [''], InvoiceFilter: [''], });
     // this.title="View Template"
    //need to call generate template api 
+   console.log(_data);
     if(_data){
     this.base_url=environment.ReportUrl;
     this.filefolder_Name=_data.Template;
-    this.Title =_data.Template == 'email' ? 'Email' :'Document';
+    this.Title =_data.Type == 'Email' ? 'Email' :'Document';
     this.selectMatter(_data);
    }
    

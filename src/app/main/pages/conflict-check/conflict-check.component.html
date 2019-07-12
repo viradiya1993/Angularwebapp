@@ -18,13 +18,7 @@
                         <mat-checkbox class="check_top" fxFlex="16">Check WIP  </mat-checkbox>
                         <mat-checkbox class="check_top" fxFlex="16">Check File Notes </mat-checkbox>
                         <mat-checkbox class="check_top" fxFlex="16" >Check Chronology </mat-checkbox> 
-                   <!-- </div> -->
-                   <!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-checkbox fxFlex="25" >Check Matter/Contact  </mat-checkbox>
-                    <mat-checkbox  fxFlex="25">Check WIP  </mat-checkbox>
-                    <mat-checkbox  fxFlex="25">Check File Notes </mat-checkbox>
-                    <mat-checkbox fxFlex="25" >Check Chronology </mat-checkbox> 
-                    </div> -->
+                   
                     <button mat-raised-button color="primary" type="button" id="refreshContactTab" (click)="refreshContactTab();">Refresh</button>
                 </form>
             </div>
@@ -52,7 +46,7 @@
                             </tr>
                         </table> -->
                     </div>
-                    <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+                    <!-- <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator> -->
                 </div>
             </div>
         </div>

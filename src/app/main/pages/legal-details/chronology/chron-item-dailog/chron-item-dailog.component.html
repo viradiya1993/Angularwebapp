@@ -1,0 +1,122 @@
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+</div>
+<div cdkDrag class="popup_main_div add_edit_contact_main" >
+  <h2 cdkDragHandle mat-dialog-title>{{dialogTitle}}
+      <button class="btn" mat-icon-button  [mat-dialog-close]="false" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+  </h2>
+  <div mat-dialog-content class="mat-typography main">
+      <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+          <form [formGroup]="ChroneItem" fxLayout="column" fxFlex="1 0 auto" name="form">
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                    <mat-label>Format</mat-label>
+                      <mat-select #value name="selected" (selectionChange)="FormatChange($event.value)" formControlName="Format">
+                        <mat-option value="1">dd mm yyyy</mat-option>
+                        <mat-option value="2">mmmm yyyy</mat-option>
+                        <mat-option value="3">yyyy</mat-option>
+                        <mat-option value="4">yyyy-yyyyy</mat-option>
+                      </mat-select>
+                </mat-form-field>
+  
+                <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
+                    <mat-label>Date From</mat-label>
+                    <input (dateInput)="choosedDateFrom('input', $event)" (dateChange)="DateFrom('change', $event)" matInput  formControlName ="date" [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+  
+                <mat-form-field class="example" appearance="outline"  fxFlex="34" class="pr-4">
+                  <mat-label>Time From</mat-label>
+                  <input  matInput  formControlName ="time" type="number" readonly>
+                </mat-form-field>
+                
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
+                    <mat-label>Date To</mat-label>
+                    <input (dateInput)="choosedDateTo('input', $event)" (dateChange)="DateTo('change', $event)" matInput  formControlName ="dateto" [matDatepicker]="picker2" disabled>
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                  <mat-label>Reference</mat-label>
+                  <input  matInput  formControlName ="Reference">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+                  <mat-label>Brif Pg#</mat-label>
+                  <input  matInput  formControlName ="brif">
+                </mat-form-field>
+    
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">  
+                <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                  <mat-label>Witnesses</mat-label>
+                  <input  matInput  formControlName ="Witnesses">
+                </mat-form-field>
+
+                <mat-form-field class="example" appearance="outline"  fxFlex="33" class="pr-4">
+                  <mat-label>Time To</mat-label>
+                  <input  matInput  formControlName ="timeto" type="number" readonly>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+                  <mat-label>COMMENT</mat-label>
+                  <textarea formControlName="COMMENT" matInput></textarea>
+                </mat-form-field>
+                <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <mat-checkbox formControlName="Privileged">Privileged</mat-checkbox>    
+            </div>  
+
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+              
+              <mat-form-field class="example" appearance="outline"  fxFlex="33" class="pr-4">
+                <mat-label>Text</mat-label>
+                <input  matInput  formControlName ="text">
+              </mat-form-field>
+  
+              <mat-form-field class="example" appearance="outline"  fxFlex="33" class="pr-4">
+                <mat-label>Topic</mat-label>
+                <input  matInput  formControlName ="topic">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+                <mat-label>Event Agreed</mat-label>
+                  <mat-select #value name="selected" (selectionChange)="Event($event.value)" formControlName="eventAgereed">
+                    <mat-option value="1">Agreed</mat-option>
+                    <mat-option value="2">Disputed by Plaintiff</mat-option>
+                    <mat-option value="3">Disputed by Defendat</mat-option>
+                    <mat-option value="4">Uncertain - required investigation</mat-option>
+                  </mat-select>
+              </mat-form-field>
+
+            </div>
+             
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+              <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                <mat-label>Document Website</mat-label>
+                <input  matInput  formControlName ="document">
+              </mat-form-field>
+              
+              <mat-icon matSuffix (click)='selectDoc()'>
+                <img src="assets/icons/web_app/folder.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+              </mat-icon>
+            </div>
+
+          </form>
+      </div>
+  </div>
+  <mat-dialog-actions align="end" class="popup_ftr">
+      <button mat-raised-button color="accent" (click)="ChroneItemSave()" [disabled]="isspiner" *ngIf="action === 'new'"><mat-spinner *ngIf="isspiner"></mat-spinner>Add</button>
+      <button mat-raised-button color="accent" (click)="ChroneItemSave()" [disabled]="isspiner" *ngIf="action === 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Update</button>
+      <button mat-raised-button color="accent" (click)="ChroneItemSave()" [disabled]="isspiner" *ngIf="action !== 'new' && action !== 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Duplicate</button>
+      <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
+  </mat-dialog-actions>
+</div>

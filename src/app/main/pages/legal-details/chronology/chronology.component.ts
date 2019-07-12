@@ -6,6 +6,7 @@ import { ChronologyService, TableColumnsService } from './../../../../_services'
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import {MatSort} from '@angular/material';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class ChronologyComponent implements OnInit {
   ColumnsObj: any = [];
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   displayedColumns: string[];
+  SearchForm:FormGroup;
   //dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   isLoadingResults: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -27,9 +29,16 @@ export class ChronologyComponent implements OnInit {
   pageSize: any;
   tempColobj: any;
 
-  constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, private chronology_service: ChronologyService, private toastr: ToastrService) { }
+  constructor(private _formBuilder: FormBuilder,private dialog: MatDialog, private TableColumnsService: TableColumnsService, private chronology_service: ChronologyService, private toastr: ToastrService) { }
 
   ngOnInit() {
+    this.SearchForm = this._formBuilder.group({
+      Matter:[],
+      Client:[],
+      search:[],
+      foldervalue:[],
+      showfolder:[]
+    });
     $('content').addClass('inner-scroll');
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
     this.getTableFilter();

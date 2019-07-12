@@ -30,8 +30,8 @@ export class ActivitiesComponent implements OnInit {
   pageSize: any;
   Activitiesdata: any = [];
   lastFilter: any;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator)paginator: MatPaginator;
+  @ViewChild(MatSort)sort: MatSort;
 
   constructor(
     private _formBuilder: FormBuilder,

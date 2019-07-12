@@ -295,7 +295,7 @@ export class SystemSettingComponent implements OnInit {
     return this.SettingForm.controls;
   }
   save(){
-    console.log(this.f.DEFAULTTRUSTRECEIPTTYPE);
+    console.log(this.f);
     let data={
       //for name 
       BARRISTERSNAME:this.f.BARRISTERSNAME.value,

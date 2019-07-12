@@ -16,7 +16,7 @@ import { FuseConfirmDialogModule, FuseSidebarModule } from '@fuse/components';
 import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, MatDatepickerModule, MatInputModule, MatMenuModule, MatTableModule, MatToolbarModule, MatSlideToggleModule, MatCardModule, MatSelectModule, MatPaginatorModule, MatAutocompleteModule, MatTabsModule, MatProgressSpinnerModule, MatDialogModule } from '@angular/material';
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
-import {MatTreeModule} from '@angular/material/tree';
+import { MatTreeModule } from '@angular/material/tree';
 
 import { MatSortModule } from '@angular/material/sort';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -56,7 +56,7 @@ const routes = [
       // { path: 'email-templete', component: EmailTempleteComponent },
       { path: 'packs', component: PacksComponent },
 
-      
+
       // {
       //   path: 'work-in-progress', component: WorkInProgressComponent, children: [
       //     { path: '', component: EstimateComponent },
@@ -66,13 +66,15 @@ const routes = [
       // { path: 'matter-invoices', component: MatterInvoicesComponent },
       // { path: 'receipts-credits', component: ReceiptsCreditsComponent },
       // { path: 'matter-trust', component: MatterTrustComponent },
+      { path: 'email-templete', component: EmailTempleteComponent },
+      { path: 'packs', component: PacksComponent },
     ], canActivate: [AuthGuard]
   }
 ];
 @NgModule({
   declarations: [TemplateComponent, MatterContactDailogComponent, MatterDialogComponentForTemplate, TemplateListComponent
-  ,EmailTempleteComponent,EmailDailogComponent, PacksComponent, PacksDailogComponent, NewPacksDailogComponent],
-  entryComponents: [MatterContactDailogComponent, MatterDialogComponentForTemplate ,EmailDailogComponent,PacksDailogComponent,NewPacksDailogComponent],
+    , EmailTempleteComponent, EmailDailogComponent, PacksComponent, PacksDailogComponent, NewPacksDailogComponent],
+  entryComponents: [MatterContactDailogComponent, MatterDialogComponentForTemplate, EmailDailogComponent, PacksDailogComponent, NewPacksDailogComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -108,6 +110,7 @@ const routes = [
     MatCheckboxModule,
     MatSortModule,
     MatTreeModule
+
   ],
   exports: [
     TemplateComponent,

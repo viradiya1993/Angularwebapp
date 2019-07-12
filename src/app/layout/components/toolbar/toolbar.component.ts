@@ -43,8 +43,10 @@ import { FileNoteDialogComponent } from 'app/main/pages/matters/file-note-dialog
 import { BankingDialogComponent } from 'app/main/pages/banking/banking-dialog.component';
 
 import { GeneralDailogComponent } from './../../../main/pages/general-journal/general-dailog/general-dailog.component';
-import {ReportFilterComponent} from './../../../main/pages/general-journal/report-filter/report-filter.component';
 import { AuthorityDialogComponent } from 'app/main/pages/main-authorities/authority-dialog/authority-dialog.component';
+import { ReportFilterComponent } from './../../../main/pages/general-journal/report-filter/report-filter.component';
+import { ChronItemDailogComponent } from './../../../main/pages/legal-details/chronology/chron-item-dailog/chron-item-dailog.component';
+import { DairyDailogComponent } from './../../../main/pages/diary/dairy-dailog/dairy-dailog.component';
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -774,7 +776,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /* Email Module */
 
     //SelectMatter 
-    
+
     GenarateEmail() {
         let templateData = JSON.parse(localStorage.getItem('GenerateEmailData'));
         if (this.router.url == "/create-document/email-invoice-template") {
@@ -852,7 +854,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     // New Pack
     NewPack() {
-        console.log('work!!1');
         const dialogRef = this.dialog.open(PacksDailogComponent, {
             disableClose: true,
             panelClass: 'Pack-dialog',
@@ -866,7 +867,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //EditPack
     EditPack() {
-        console.log('work!!2');
         const dialogRef = this.dialog.open(PacksDailogComponent, {
             disableClose: true,
             panelClass: 'Pack-dialog',
@@ -944,44 +944,44 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
 
-        //Authority dialoge 
-        AuthorityDialog(val){
-            const dialogRef = this.dialog.open(AuthorityDialogComponent, {
-                disableClose: true,
-                panelClass: 'ChartAc-dialog',
-                data: {
-                    action: val,
-                }
-            });
-            dialogRef.afterClosed().subscribe(result => {
-                console.log(result);
-            });
-        }
+    //Authority dialoge 
+    AuthorityDialog(val) {
+        const dialogRef = this.dialog.open(AuthorityDialogComponent, {
+            disableClose: true,
+            panelClass: 'ChartAc-dialog',
+            data: {
+                action: val,
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
 
 
-        deleteAuthority(): void {
-            this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-                disableClose: true,
-                width: '100%',
-            });
-            this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-            this.confirmDialogRef.afterClosed().subscribe(result => {
-                if (result) {
-                    // let getContactGuId = localStorage.getItem('contactGuid');
-                    // let postData = { FormAction: "delete", data: { CONTACTGUID: getContactGuId } }
-                    // this._getContact.AddContactData(postData).subscribe(res => {
-                    //     if (res.STATUS == "success") {
-                    //         $('#refreshContactTab').click();
-                    //         this.toastr.success(res.STATUS);
-                    //     } else {
-                    //         this.toastr.error("You Can't Delete Contact Which One Is To Related to Matters");
-                    //     }
-                    // });;
-                }
-                this.confirmDialogRef = null;
-            });
-        }
-        //end of Authority dialoge 
+    deleteAuthority(): void {
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // let getContactGuId = localStorage.getItem('contactGuid');
+                // let postData = { FormAction: "delete", data: { CONTACTGUID: getContactGuId } }
+                // this._getContact.AddContactData(postData).subscribe(res => {
+                //     if (res.STATUS == "success") {
+                //         $('#refreshContactTab').click();
+                //         this.toastr.success(res.STATUS);
+                //     } else {
+                //         this.toastr.error("You Can't Delete Contact Which One Is To Related to Matters");
+                //     }
+                // });;
+            }
+            this.confirmDialogRef = null;
+        });
+    }
+    //end of Authority dialoge 
 
     //Account Trasactions
     Account_Tra() {
@@ -1038,15 +1038,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         });
         dialogRef.afterClosed().subscribe(result => {
-           console.log(result);
+            console.log(result);
         });
     }
 
     //PrepareReceipt
-    PrepareReceipt(){
-        const dialogRef = this._matDialog.open(ReceiptDilogComponent,{ 
+    PrepareReceipt() {
+        const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
             width: '100%',
-            disableClose: true, 
+            disableClose: true,
             data: {}
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -1061,7 +1061,115 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
 
+    /** Chronology Module's Function's */
+    //NewChron
+    NewChron() {
+        const dialogRef = this.dialog.open(ChronItemDailogComponent, {
+            disableClose: true,
+            panelClass: 'Chrone-dialog',
+            data: {
+                action: 'new',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    //EditChron
+    EditChron() {
+        const dialogRef = this.dialog.open(ChronItemDailogComponent, {
+            disableClose: true,
+            panelClass: 'Chrone-dialog',
+            data: {
+                action: 'edit',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
 
+    }
+    //DeleteChron
+    DeleteChron() {
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    //DuplicateChron
+    DuplicateChron() {
+        const dialogRef = this.dialog.open(ChronItemDailogComponent, {
+            disableClose: true,
+            panelClass: 'Chrone-dialog',
+            data: {
+                action: 'duplicate',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+
+    }
+
+    /* Dairy Appointment Module's Function's **/
+
+    //NewAppointment
+    NewAppointment() {
+        const dialogRef = this.dialog.open(DairyDailogComponent, {
+            disableClose: true,
+            panelClass: 'Chrone-dialog',
+            data: {
+                action: 'new',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    //EditAppointment
+    EditAppointment() {
+
+        const dialogRef = this.dialog.open(DairyDailogComponent, {
+            disableClose: true,
+            panelClass: 'Chrone-dialog',
+            data: {
+                action: 'edit',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+
+    }
+    //DeleteAppointment
+    DeleteAppointment() {
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
+    //DuplicateAppointment
+    DuplicateAppointment() {
+
+        const dialogRef = this.dialog.open(DairyDailogComponent, {
+            disableClose: true,
+            panelClass: 'Chrone-dialog',
+            data: {
+                action: 'duplicate',
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+        });
+    }
     //_____________________________________________________________________________________________________
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
@@ -1073,7 +1181,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     navBarSetting(value: any) {
-       
+
         let x = value.split("/");
         // console.log(x[1]);
         // console.log(x);
@@ -1097,30 +1205,30 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 8;
         } else if (x[1] == "receive-money") {
             this.isTabShow = 9;
-        } else if (x[1] == "create-document") { 
+        } else if (x[1] == "create-document") {
             this.activedocument = x[1];
             this.isTabShow = 10;
 
-            if(x[2] == "matter-template"){
+            if (x[2] == "matter-template") {
                 this.emailroutingtax = 'Matter';
-                this.TemplateUrlHandel='/create-document/matter-template'
-                this.emailrouting='/create-document/email-matter-template';
-               
+                this.TemplateUrlHandel = '/create-document/matter-template'
+                this.emailrouting = '/create-document/email-matter-template';
+
             }
-            else if(x[2] == "invoice-template"  ){
+            else if (x[2] == "invoice-template") {
                 this.emailroutingtax = 'Invoice';
-                this.TemplateUrlHandel='/create-document/invoice-template'
-                this.emailrouting='/create-document/email-invoice-template';
+                this.TemplateUrlHandel = '/create-document/invoice-template'
+                this.emailrouting = '/create-document/email-invoice-template';
             }
-            else if(x[2] == "contact-template" ){
+            else if (x[2] == "contact-template") {
                 this.emailroutingtax = 'Contact';
-                this.TemplateUrlHandel='/create-document/contact-template'
-                this.emailrouting='/create-document/email-contact-template';
+                this.TemplateUrlHandel = '/create-document/contact-template'
+                this.emailrouting = '/create-document/email-contact-template';
             }
-            else if(x[2] == "receive-money-template" ){
+            else if (x[2] == "receive-money-template") {
                 this.emailroutingtax = 'Receipt';
-                this.TemplateUrlHandel='/create-document/receive-money-template'
-                this.emailrouting='/create-document/email-receive-money-template';
+                this.TemplateUrlHandel = '/create-document/receive-money-template'
+                this.emailrouting = '/create-document/email-receive-money-template';
             }
         } else if (x[1] == "system-setting") {
             this.isTabShow = 11;
@@ -1135,16 +1243,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else if (x[1] == "genral-journal") {
             this.isTabShow = 16;
         }
-        else if(x[1] == "conflict-check"){
+        else if (x[1] == "conflict-check") {
             this.isTabShow = 17;
-        } else if(x[1] == "authorities"){
+        } else if (x[1] == "authorities") {
             this.isTabShow = 18;
-        }else if(x[1] == "searching"){
+        } else if (x[1] == "searching") {
             this.isTabShow = 19;
         }
-        
+
         // added by web19 09/07/19
-       
+
         // else if(x[1] == "/create-document/matter-email-templete"){
         //     this.emailrouting = 'matter';
         // }
@@ -1157,11 +1265,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         // else if(x[1] == "/create-document/receive-money-email-templete'"){
         //     this.emailrouting = 'receivemoney';
         // }
+        else if (x[1] == "account-reconciliation") {
+            this.isTabShow = 18;
+        }
         else {
             this.isTabShow = 1;
-           
         }
-        this.activeSubMenu=x[2];
+        this.activeSubMenu = x[2];
     }
     setTab(event: any) {
         this.selectedIndex = 0;
@@ -1189,7 +1299,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     createInstantInvoice() {
-       // return false;
+        // return false;
         const dialogRef = this._matDialog.open(InstantInvoiceDailogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -1248,7 +1358,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    
+
     ViewReceipt() {
         const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
             width: '100%', disableClose: true,
@@ -1321,7 +1431,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     // Searching start
-    StartInfoDialog(){
+    StartInfoDialog() {
         const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -1330,7 +1440,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-   
+
     // searching end
 
 

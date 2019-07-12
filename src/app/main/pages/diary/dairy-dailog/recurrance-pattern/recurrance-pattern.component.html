@@ -1,0 +1,140 @@
+<div class="one" [formGroup]="DairyForm" fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-radio-group name="RedioChnage"  formControlName="RedioChnage" aria-label="Select an option"  fxFlex="20" class="pr-4" (ngModelChange)="radiobtnclick()">
+                <mat-radio-button  value="Once">Once Only</mat-radio-button>
+        </mat-radio-group>
+        <mat-radio-group  name="RedioChnage" formControlName="RedioChnage"  aria-label="Select an option" fxFlex="20" class="pr-4" (ngModelChange)="radiobtnclick()">
+                <mat-radio-button  value="Daily" >Daily</mat-radio-button>
+        </mat-radio-group>
+        <mat-radio-group  name="RedioChnage" formControlName="RedioChnage" aria-label="Select an option"  fxFlex="20" class="pr-4"  (ngModelChange)="radiobtnclick()">
+                <mat-radio-button  value="Weekly">Weekly</mat-radio-button>
+        </mat-radio-group>
+        <mat-radio-group  name="RedioChnage" formControlName="RedioChnage" aria-label="Select an option"  fxFlex="20" class="pr-4"  (ngModelChange)="radiobtnclick()">
+                <mat-radio-button value="Monthly">Monthly</mat-radio-button>
+        </mat-radio-group>
+        <mat-radio-group  name="RedioChnage" formControlName="RedioChnage" aria-label="Select an option"  fxFlex="20" class="pr-4"  (ngModelChange)="radiobtnclick()">
+                <mat-radio-button  value="Yearly">Yearly</mat-radio-button>
+        </mat-radio-group>
+    </div>
+    <!-- Once   class="pr-4-->
+    <div class="Once" fxLayout="column"  *ngIf="RedioBtnValue ==='Once'">
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" >
+            <p id="Once">Pattern Details<br>The appointment will occur only once</p>
+        </div>  
+    </div>
+    <!-- Daily-->
+    <div class="Daily" fxLayout="column"  *ngIf="RedioBtnValue ==='Daily'">
+        <div fxLayout="row" fxLayoutAlign="start"><p id="Daily">Pattern Details</p></div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+            <mat-form-field class="example p-4 " fxFlex="100" appearance="outline">
+                <mat-label>Every</mat-label>
+                <input matInput type="number" formControlName="Every" value="1">
+            </mat-form-field>
+        </div>  
+    </div>
+    <!-- Weekly-->
+    <div class="Weekly" fxLayout="column" *ngIf="RedioBtnValue ==='Weekly'">
+        <div fxLayout="row" fxLayoutAlign="start" ><p id="Weekly">Pattern Details</p></div>
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+            <mat-form-field class="example p-4" fxFlex="100" appearance="outline" >
+                <mat-label>Every</mat-label>
+                <input matInput type="number"  formControlName="EveryWeekly" value="1">
+            </mat-form-field>
+        </div>
+        
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+            <mat-checkbox fxFlex="14.2">Monday</mat-checkbox>
+            <mat-checkbox fxFlex="14.2">Tuesday</mat-checkbox>
+            <mat-checkbox fxFlex="14.2">Wednesday</mat-checkbox>
+            <mat-checkbox fxFlex="14.2">Thursday</mat-checkbox>
+            <mat-checkbox fxFlex="14.2">Friday</mat-checkbox>
+            <mat-checkbox fxFlex="14.2">Saturaday</mat-checkbox>
+            <mat-checkbox fxFlex="14.2">Sunday</mat-checkbox>
+        </div>
+    </div> 
+    <!-- Monthly-->
+    <div class="Monthly" fxLayout="column"  *ngIf="RedioBtnValue ==='Monthly'">
+        <div fxLayout="row" fxLayoutAlign="start" ><p id="Monthly">Pattern Details</p></div>
+        
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">  
+
+            <mat-form-field class="example p-4" fxFlex="20" appearance="outline" >
+                <mat-label>Every</mat-label>
+                <input matInput type="number"  formControlName="EveryMonthly" value="1">
+            </mat-form-field>   
+
+            <mat-radio-group  name="RedioChnageDay" formControlName="RedioChnageDay" (ngModelChange)="radiobtnday()" aria-label="Select an option" fxFlex="20" class="pr-4">
+                <mat-radio-button  value="Fristday">The First Day</mat-radio-button>
+            </mat-radio-group>
+
+            <mat-radio-group  name="RedioChnageDay" formControlName="RedioChnageDay" (ngModelChange)="radiobtnday()" aria-label="Select an option" fxFlex="20" class="pr-4">
+                <mat-radio-button value="LastDay" >The Last Day</mat-radio-button>
+            </mat-radio-group>
+
+            <mat-radio-group  name="RedioChnageDay" formControlName="RedioChnageDay"  (ngModelChange)="radiobtnday()"  aria-label="Select an option" fxFlex="20" class="pr-4">
+                <mat-radio-button value="Day">The Day</mat-radio-button>
+            </mat-radio-group>
+    
+            <mat-radio-group name="RedioChnageDay" formControlName="RedioChnageDay"  (ngModelChange)="radiobtnday()" aria-label="Select an option"  fxFlex="20" class="pr-4">
+                <mat-radio-button value="The">The</mat-radio-button>
+            </mat-radio-group>
+        </div>    
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+            <mat-form-field class="example p-4" fxFlex="33" appearance="outline">            
+                    <input matInput type="number"  formControlName="EveryDay" value="0">
+            </mat-form-field>
+            
+            <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                <mat-select formControlName="countvalue">
+                    <mat-option value="First">First</mat-option>
+                    <mat-option value="Second">Second</mat-option>
+                    <mat-option value="Third">Third</mat-option>
+                    <mat-option value="Fourth">Fourth</mat-option>
+                    <mat-option value="Last">Last</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+                <mat-select formControlName="DaySelect">
+                    <mat-option value="Sun">Sun</mat-option>
+                    <mat-option value="Mon">Mon</mat-option>
+                    <mat-option value="Tue">Tue</mat-option>
+                    <mat-option value="Wed">Wed</mat-option>
+                    <mat-option value="Thu">Thu</mat-option>
+                    <mat-option value="Fri">Fri</mat-option>
+                    <mat-option value="Sat">Sat</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+     <!-- Yearly-->
+    <div class="Yearly" fxLayout="column"  *ngIf="RedioBtnValue ==='Yearly'">
+        <p id="Yearly">Pattern Details <br> The Recurrance wil occur on the anniversary of the appointment</p>
+    </div>
+
+    <!-- Last Section Start -->
+    <div class="LastSection" fxLayout="column"  *ngIf="RedioBtnValue ==='Daily' || RedioBtnValue ==='Weekly'|| RedioBtnValue ==='Monthly' || RedioBtnValue ==='Yearly'">
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">  
+            <mat-radio-group aria-label="Select an option" fxFlex="33" class="pr-4" (ngModelChange)="radiobtndate()" name="RedioDate" formControlName="RedioDate">
+                <mat-radio-button value="EndDate">No End Date</mat-radio-button>
+            </mat-radio-group>
+
+            <mat-radio-group aria-label="Select an option" fxFlex="33" class="pr-4" (ngModelChange)="radiobtndate()" name="RedioDate" formControlName="RedioDate">
+                <mat-radio-button value="EndBy" >End By</mat-radio-button>
+            </mat-radio-group>
+
+            <mat-form-field appearance="outline" class="example" fxFlex="34" class="pr-4">
+                <mat-label>Date</mat-label>
+                <input (dateInput)="choosedDate($event)" matInput  [matDatepicker]="picker" formControlName ="Date" >
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>    
+    </div>
+    <!-- Last Section End -->
+</div>
+
+
+      

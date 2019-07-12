@@ -1,0 +1,62 @@
+<div cdkDrag class="popup_main_div add_edit_contact_main">
+    <h2 cdkDragHandle mat-dialog-title>{{dialogTitle}}
+        <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
+          <mat-icon>close</mat-icon>
+        </button>
+    </h2>
+    <div mat-dialog-content class="mat-typography main">
+        <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+            <form [formGroup]="DairyForm" fxLayout="column" fxFlex="1 0 auto" name="form">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Subject</mat-label>
+                        <input  formControlName ="Subject" matInput>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Location</mat-label>
+                        <input  formControlName ="Location" matInput>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-checkbox formControlName="allday" (ngModelChange)="CheckAllDays($event)">All Day Event</mat-checkbox>
+                     <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                      &nbsp;&nbsp;
+                    <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
+                        <mat-label>Date</mat-label>
+                        <input (dateInput)="choosedDateFrom('input', $event)" (dateChange)="DateFrom('change', $event)" matInput  formControlName ="date" [matDatepicker]="picker">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4" *ngIf="CheckClick ==='No'">
+                        <mat-label>Start</mat-label>
+                        <mat-select formControlName="TimeSlot" (ngModelChange)="ChanageTimeSlot($event)">
+                            <mat-option *ngFor="let data of timeStops" value="{{data}}">{{data}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4" *ngIf="CheckClick==='No'">
+                        <mat-label>Finish</mat-label>
+                        <mat-select formControlName="TimeSlot2" (ngModelChange)="ChanageTimeSlot2($event)">
+                            <mat-option *ngFor="let data of timeStops" value="{{data}}">{{data}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                  <mat-tab-group mat-align-tabs="start">
+                    <mat-tab label="Details">
+                      <app-details [DairyForm]="DairyForm"></app-details>
+                    </mat-tab>
+                    <mat-tab label="Recurrance Pattern">
+                      <app-recurrance-pattern [DairyForm]="DairyForm"></app-recurrance-pattern>
+                    </mat-tab>
+                  </mat-tab-group> 
+                </div>
+            </form>
+        </div>
+    </div>
+    <mat-dialog-actions align="end" class="popup_ftr">
+        <button mat-raised-button color="accent" (click)="SaveAppointment()" [disabled]="isspiner" *ngIf="action === 'new'"><mat-spinner *ngIf="isspiner"></mat-spinner>Add</button>
+        <button mat-raised-button color="accent" (click)="SaveAppointment()" [disabled]="isspiner" *ngIf="action === 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Update</button>
+        <button mat-raised-button color="accent" (click)="SaveAppointment()" [disabled]="isspiner" *ngIf="action !== 'new' && action !== 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Duplicate</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
+    </mat-dialog-actions>
+</div>

@@ -23,8 +23,15 @@ import { SelectAccountModule } from './select-account/select-account.module';
 import { BankingDialogModule } from './banking/banking-dialog.module';
 import { GeneralJoural } from './general-journal/general-journal.module';
 import { ConflictCheckModule } from './conflict-check/conflict-check.module';
+<<<<<<< HEAD
 import { MainAuthoritiesModule } from './main-authorities/main-authorities.module';
+import { LegalDetailsModule } from './legal-details/legal-details.module';
+import { AccountRecountciliation } from './account-reconciliation/account-reconciliation.module';
 
+=======
+import { AccountRecountciliation } from './account-reconciliation/account-reconciliation.module';
+import{LegalDetailsModule} from './legal-details/legal-details.module';
+>>>>>>> origin/amit
 
 
 
@@ -48,7 +55,8 @@ const appRoutes: Routes = [
   { path: 'diary', loadChildren: './diary/diary.module#DiaryModule' },
   { path: 'document-register', loadChildren: './document-register/document-register.module#DocumentRegitser' },
   { path: 'chart-account', loadChildren: './chart-account/chart-account.module#ChartOfAccount' },
-  { path: 'genral-journal', loadChildren: './general-journal/general-journal.module' }
+  { path: 'genral-journal', loadChildren: './general-journal/general-journal.module#GeneralJoural' },
+  { path: 'account-reconciliation', loadChildren: './account-reconciliation/account-reconciliation.module#AccountRecountciliation' }
 
   //added by web 19
   //  { path: ' ', loadChildren: './system-setting/system-settings.module#SystemSettingModule' },
@@ -59,6 +67,7 @@ const appRoutes: Routes = [
   declarations: [],
   imports: [
     CommonModule,
+    LegalDetailsModule,
     ConflictCheckModule,
     RouterModule.forChild(appRoutes),
     ContactModule,
@@ -80,7 +89,8 @@ const appRoutes: Routes = [
     DocumentRegitser,
     ChartOfAccount,
     SelectAccountModule,
-    GeneralJoural
+    GeneralJoural,
+    AccountRecountciliation
   ]
 })
 export class PagesModule { }  

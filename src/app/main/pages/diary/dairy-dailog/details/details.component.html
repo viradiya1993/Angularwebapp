@@ -1,0 +1,57 @@
+<div class="one" [formGroup]="DairyForm"  fxLayout="column">
+        <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                    <mat-label>Type</mat-label>
+                    <mat-select formControlName="type">
+                        <mat-option value="Conference">Conference</mat-option>
+                        <mat-option value="Meeting">Meeting</mat-option>
+                        <mat-option value="CourtDate">Court Date</mat-option>
+                        <mat-option value="Preparation">Preparation</mat-option>
+                        <mat-option value="PhoneCell">Phone Cell</mat-option>
+                        <mat-option value="Reminder">Reminder</mat-option>
+                        <mat-option value="Other">Other</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <!-- &nbsp;&nbsp;&nbsp;&nbsp; -->
+            <mat-checkbox formControlName="Reminder" (ngModelChange)="CheckReminder($event)" [ngModel]="filter">Reminder</mat-checkbox>
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">  
+          <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+              <mat-label>Before Start</mat-label>
+              <mat-select formControlName="Beforestart">
+                  <mat-option value="30Minute">30 Minute</mat-option>
+                  <mat-option value="5Minute">5 Minute</mat-option>
+                  <mat-option value="10Minute">10 Minute</mat-option>
+                  <mat-option value="45Minute">45 Minute</mat-option>
+                  <mat-option value="1hour">1 hour</mat-option>
+                  <mat-option value="2hour">2 hour</mat-option>
+                  <mat-option value="3hour">3 hour</mat-option>
+                  <mat-option value="4hour">4 hour</mat-option>
+              </mat-select>
+          </mat-form-field>
+        </div>    
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+            <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                <mat-label>Category</mat-label>
+                <mat-select formControlName="Category" (ngModelChange)="ChnageCategory($event)">
+                    <mat-option value="Billable">Billable</mat-option>
+                    <mat-option value="Non-Billable">Non-Billable</mat-option>
+                    <mat-option value="Personal">Personal</mat-option>
+                    <mat-option value="Other">Other</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="example p-16" fxFlex="50" appearance="outline" >
+                <mat-label>Matter</mat-label>
+                <input formControlName="Matter" matInput>
+                <mat-icon matSuffix (click)='SelectMatter()' *ngIf="!isMatter">
+                    <img class="seticon" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                </mat-icon>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+            <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                <mat-label>Comment</mat-label>
+                <textarea formControlName="COMMENT" matInput></textarea>
+            </mat-form-field>
+        </div>
+</div>

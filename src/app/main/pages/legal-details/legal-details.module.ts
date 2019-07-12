@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { RouterModule } from '@angular/router';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { AuthGuard } from '../../../_guards';
-
+import {MatDialogModule} from '@angular/material/dialog';
 import { MatButtonModule, MatProgressSpinnerModule, MatPaginatorModule, MatCheckboxModule, MatTabsModule, MatExpansionModule, MatSlideToggleModule, MatCardModule, MatSelectModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule } from '@angular/material';
 
 import { LegalDetailsComponent } from './legal-details.component';
@@ -15,7 +15,8 @@ import { FileNotesComponent } from './file-notes/file-notes.component';
 import { SafecustodyComponent } from './safecustody/safecustody.component';
 import {MatSortModule} from '@angular/material/sort';
 import { SearchComponent } from './search/search.component';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker'
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
+import { ChronItemDailogComponent } from './chronology/chron-item-dailog/chron-item-dailog.component'
 
 const routes = [
   { path: '', redirectTo: '/legal-details/chronology', pathMatch: 'full', canActivate: [AuthGuard] },
@@ -30,7 +31,9 @@ const routes = [
   }
 ];
 @NgModule({
-  declarations: [LegalDetailsComponent, ChronologyComponent, AuthoritiesComponent, FileNotesComponent, SafecustodyComponent,SearchComponent],
+  declarations: [LegalDetailsComponent, ChronologyComponent, AuthoritiesComponent, FileNotesComponent, SafecustodyComponent,
+    SearchComponent, ChronItemDailogComponent],
+    entryComponents: [ChronItemDailogComponent],
   imports: [
     CommonModule,
     SatDatepickerModule, SatNativeDateModule,
@@ -38,6 +41,7 @@ const routes = [
     FuseSharedModule,
     //mat 
     MatButtonModule,
+    MatDialogModule,
     MatCheckboxModule,
     MatDatepickerModule,
     MatFormFieldModule,
@@ -54,10 +58,13 @@ const routes = [
     MatExpansionModule,
     MatTabsModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    DragDropModule
   ],
   exports: [
-    LegalDetailsComponent
-  ]
+    LegalDetailsComponent,
+    ChronItemDailogComponent
+  ],
+ 
 })
 export class LegalDetailsModule { }

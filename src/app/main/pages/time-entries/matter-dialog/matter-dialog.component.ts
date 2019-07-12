@@ -19,8 +19,8 @@ export class MatterDialogComponent implements OnInit {
   getDataForTable: any = [];
   highlightedRows: any;
   theme_type = localStorage.getItem('theme_type');
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator)paginator: MatPaginator;
+  @ViewChild(MatSort)sort: MatSort;
   matterFilterForm: FormGroup;
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   isLoadingResults: boolean = false;

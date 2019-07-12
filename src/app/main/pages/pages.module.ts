@@ -23,15 +23,10 @@ import { SelectAccountModule } from './select-account/select-account.module';
 import { BankingDialogModule } from './banking/banking-dialog.module';
 import { GeneralJoural } from './general-journal/general-journal.module';
 import { ConflictCheckModule } from './conflict-check/conflict-check.module';
-<<<<<<< HEAD
 import { MainAuthoritiesModule } from './main-authorities/main-authorities.module';
 import { LegalDetailsModule } from './legal-details/legal-details.module';
 import { AccountRecountciliation } from './account-reconciliation/account-reconciliation.module';
 
-=======
-import { AccountRecountciliation } from './account-reconciliation/account-reconciliation.module';
-import{LegalDetailsModule} from './legal-details/legal-details.module';
->>>>>>> origin/amit
 
 
 

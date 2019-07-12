@@ -119,13 +119,13 @@ export class SpendMoneyAddComponent implements OnInit {
      });
 
     if (this.action == 'edit') {
-      this.size = 20;
+      // this.size = 20;
       $('#expac').addClass('menu-disabled');
       this.expac = true;
       // this.spendmoneyForm.controls['Matter'].disable();
       this.forEditshowpopupData(); 
     }else{
-      this.size = 20;
+      // this.size = 20;
       this.forAddshowpopupData();
     }
   }
@@ -161,6 +161,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['GST1'].setValue(SendMoney_data.EXPENDITUREITEMS[0].GST.toString());  
       this.spendmoneyForm.controls['AmountIncGST'].setValue(SendMoney_data.EXPENDITUREITEMS[0].AMOUNT);
       this.spendmoneyForm.controls['Note'].setValue(SendMoney_data.EXPENDITUREITEMS[0].NOTE);
+      console.log(SendMoney_data.EXPENDITUREITEMS[0].SHORTNAME);
       this.spendmoneyForm.controls['Matter'].setValue(SendMoney_data.EXPENDITUREITEMS[0].SHORTNAME); 
 
       if(round(SendMoney_data.EXPENDITUREITEMS[0].AMOUNT/10) ==round(SendMoney_data.EXPENDITUREITEMS[0].GST)){
@@ -177,7 +178,6 @@ export class SpendMoneyAddComponent implements OnInit {
         this.GstTypeDiff="LessThen 10% GST";
         this.amountCal();
       }else{
-        console.log("3")
         this.amountCal();
       }
       
@@ -289,9 +289,10 @@ this.Classtype(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
         // this.spendmoneyForm.controls['GST1'].enable();     
       }
     } else if (Classvalue === 'Matter Expense') {
+      
       this.hide = false;
       this.expac = false;
-      this.spendmoneyForm.controls['Matter'].setValue('');
+      // this.spendmoneyForm.controls['Matter'].setValue('');
       this.spendmoneyForm.controls['MatterGUID'].setValue('');
       $("#mattersnew").removeClass("menu-disabled");
       this.spendmoneyForm.controls['Class'].enable();
@@ -432,6 +433,7 @@ this.Classtype(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
     this.spendmoneyForm.controls['Expenseac'].enable();
   }
   multilineCheckbox(){
+    this.size = 20;
     let SendMoney_data=JSON.parse(localStorage.getItem('spendMoney_data'));
     if(this.f.MultiLineExpense.value==true){
       this.dataTableHide="yes";
@@ -440,6 +442,7 @@ this.Classtype(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
      this.commmonDisabled();
     }
     else{
+      this.size = 33.33;
       this.Main3btn='disabled';
       this.SubMain2btn='enable';
       this.dataTableHide="false";

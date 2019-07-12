@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
 import { SystemSetting } from './../../../../_services';
 import { GenerateTemplatesDialoagComponent } from '../../system-settings/templates/gennerate-template-dialoag/generate-template.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-authority-dialog',
@@ -15,7 +15,17 @@ export class AuthorityDialogComponent implements OnInit {
   @Input() SettingForm: FormGroup;
   @Input() errorWarningData: any;
   addData:any=[];
-  constructor(public dialog: MatDialog) { }
+  title: any;
+  constructor(public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: any) {
+    if(data.action == 'edit'){
+    this.title='Edit';
+    }else if(data.action == 'copy'){
+      this.title='Copy';
+    }
+    else{
+      this.title='Add';
+    }
+   }
 
   ngOnInit() {
     

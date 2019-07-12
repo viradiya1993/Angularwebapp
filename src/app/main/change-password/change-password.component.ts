@@ -48,6 +48,7 @@ export class ChangePasswordComponent implements OnInit {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.toastr.success('Password update successfully');
         this.dialogRef.close(true);
+        this.authenticationService.ForcLogout();
         localStorage.setItem('session_token', res['DATA'].SESSIONTOKEN);
       } else if (res.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);

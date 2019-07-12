@@ -56,6 +56,7 @@ export class FuseNavigationComponent implements OnInit {
       { "ID": "spend-money", "TITLE": "Spend money", "URL": "spend-money", "STAR": "" },
       //added by web 19 
       { "ID": "authorities", "TITLE": "Authorities", "URL": "authorities", "STAR": "" },
+      { "ID": "searching", "TITLE": "Searching", "URL": "searching", "STAR": "" },
       { "ID": "receive-money", "TITLE": "Receive money", "URL": "receive-money", "STAR": "" }]
 
       this.GetFavouriteService.GetFavourite(postdata).subscribe(response => {

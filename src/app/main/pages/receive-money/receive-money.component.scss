@@ -1,5 +1,5 @@
 @import "src/@fuse/scss/fuse";
-#Invoice {
+#ReceiveMoney {
     .header {
         .search-wrapper {
             width: 100%;
@@ -57,7 +57,7 @@
 // .sticky_search_div .mat-form-field-wrapper {
 //     padding-bottom: 0 !important;
 // }
-#Invoice .sticky_search_div {
+#ReceiveMoney .sticky_search_div {
     // position: fixed;
     // top: 167px;
     // padding-left: 300px;
@@ -92,7 +92,7 @@
     margin-top: 110px;
 }
 
-#Invoice .list_tbl_main {
+#ReceiveMoney .list_tbl_main {
     //margin-top: 85px;
     padding-top: 0 !important;
 }
@@ -119,26 +119,26 @@ button#refreshTimeEntryTab {
     display: none;
 }
 
-#Invoice .content .example {
+#ReceiveMoney .content .example {
     padding: 20px 10px;
 }
 
-#Invoice .content {
+#ReceiveMoney .content {
     position: relative;
 }
 
 @media screen and (max-width: 1200px) {
-    #Invoice .sticky_search_div.responsive_auto .example {
+    #ReceiveMoney .sticky_search_div.responsive_auto .example {
         width: 15%;
     }
 }
 
 @media screen and (max-width: 991px) {
-    #Invoice .sticky_search_div.responsive_auto {
+    #ReceiveMoney .sticky_search_div.responsive_auto {
         overflow: auto;
         white-space: nowrap;
     }
-    #Invoice .sticky_search_div.responsive_auto .example {
+    #ReceiveMoney .sticky_search_div.responsive_auto .example {
         width: 20%;
     }
 }

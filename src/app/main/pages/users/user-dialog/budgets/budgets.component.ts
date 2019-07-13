@@ -91,6 +91,7 @@ export class BudgetsComponent implements OnInit {
       disableClose: true, panelClass: 'UserBudget-dialog', data: { action: actionType, USERGUID: this.USERGUID }
     });
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
       if (result)
         this.loadData();
     });

@@ -20,17 +20,21 @@
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-            <tr mat-row [style.background]="highlightedRows == row.USERBUDGETGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" [ngClass]="highlightedRows == row.USERBUDGETGUID ? 'row-text-colore' : ''" class="contact" (click)="setActiveBudget(row);currentBudgets = row;highlightedRows = row.USERBUDGETGUID"
-                matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+            <tr mat-row [style.background]="highlightedRows == row.USERBUDGETGUID ? selectedColore : ''"
+                *matRowDef="let row; columns: displayedColumns;"
+                [ngClass]="highlightedRows == row.USERBUDGETGUID ? 'row-text-colore' : ''" class="contact"
+                (click)="setActiveBudget(row);currentBudgets = row;highlightedRows = row.USERBUDGETGUID" matRipple
+                [@animate]="{value:'*',params:{y:'100%'}}">
             </tr>
         </table>
     </div>
-    <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)"
+        showFirstLastButtons></mat-paginator>
 </div>
 <div>
     <mat-dialog-actions align="end" class="popup_ftr">
         <button mat-raised-button color="accent" (click)="budgetDailog('new')" cdkFocusInitial>New Budget</button>
-        <button mat-raised-button color="primary" (click)="budgetDailog('edit')" cdkFocusInitial>Edit Budget</button>
-        <button mat-raised-button class="btn btn-primary" (click)="delete_budget()" cdkFocusInitial>Delete Budget</button>
+        <button mat-raised-button color="accent" (click)="budgetDailog('edit')" cdkFocusInitial>Edit Budget</button>
+        <button mat-raised-button class="accent" (click)="delete_budget()" cdkFocusInitial>Delete Budget</button>
     </mat-dialog-actions>
 </div>

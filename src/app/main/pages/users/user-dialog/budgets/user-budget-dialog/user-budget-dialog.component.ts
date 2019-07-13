@@ -56,24 +56,25 @@ export class UserBudgetDialogComponent implements OnInit {
       MONTHBUDGETHOURS_10: [],
       MONTHBUDGETHOURS_11: [],
       MONTHBUDGETHOURS_12: [],
-      MONTHLYBUDGETUNITS_1: [],
-      MONTHLYBUDGETUNITS_2: [],
-      MONTHLYBUDGETUNITS_3: [],
-      MONTHLYBUDGETUNITS_4: [],
-      MONTHLYBUDGETUNITS_5: [],
-      MONTHLYBUDGETUNITS_6: [],
-      MONTHLYBUDGETUNITS_7: [],
-      MONTHLYBUDGETUNITS_8: [],
-      MONTHLYBUDGETUNITS_9: [],
-      MONTHLYBUDGETUNITS_10: [],
-      MONTHLYBUDGETUNITS_11: [],
-      MONTHLYBUDGETUNITS_12: []
+      MONTHBUDGETDOLLARS_1: [],
+      MONTHBUDGETDOLLARS_2: [],
+      MONTHBUDGETDOLLARS_3: [],
+      MONTHBUDGETDOLLARS_4: [],
+      MONTHBUDGETDOLLARS_5: [],
+      MONTHBUDGETDOLLARS_6: [],
+      MONTHBUDGETDOLLARS_7: [],
+      MONTHBUDGETDOLLARS_8: [],
+      MONTHBUDGETDOLLARS_9: [],
+      MONTHBUDGETDOLLARS_10: [],
+      MONTHBUDGETDOLLARS_11: [],
+      MONTHBUDGETDOLLARS_12: []
     });
     console.log(this.action);
     if (this.action == 'edit') {
       this.dialogTitle = 'Edit Budget';
       this.budgetsData = JSON.parse(localStorage.getItem('current_budgets'));
       this.NowDate(new Date());
+      this.userBudget.controls['USERBUDGETGUID'].setValue(this.budgetsData.USERBUDGETGUID);
       this.userBudget.controls['TOTALBUDGETHOURS'].setValue(parseFloat(this.budgetsData.TOTALBUDGETHOURS).toFixed(2));
       this.userBudget.controls['TOTALBUDGETDOLLARS'].setValue(parseFloat(this.budgetsData.TOTALBUDGETDOLLARS).toFixed(2));
       this.userBudget.controls['MONTHBUDGETHOURS_1'].setValue(parseFloat(this.budgetsData.MONTHBUDGETHOURS_GROUP['MONTHBUDGETHOURS_1']).toFixed(2));
@@ -88,18 +89,18 @@ export class UserBudgetDialogComponent implements OnInit {
       this.userBudget.controls['MONTHBUDGETHOURS_10'].setValue(parseFloat(this.budgetsData.MONTHBUDGETHOURS_GROUP['MONTHBUDGETHOURS_10']).toFixed(2));
       this.userBudget.controls['MONTHBUDGETHOURS_11'].setValue(parseFloat(this.budgetsData.MONTHBUDGETHOURS_GROUP['MONTHBUDGETHOURS_11']).toFixed(2));
       this.userBudget.controls['MONTHBUDGETHOURS_12'].setValue(parseFloat(this.budgetsData.MONTHBUDGETHOURS_GROUP['MONTHBUDGETHOURS_12']).toFixed(2));
-      this.userBudget.controls['MONTHLYBUDGETUNITS_1'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_1']).toFixed(2));
-      this.userBudget.controls['MONTHLYBUDGETUNITS_2'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_2']).toFixed(2));
-      this.userBudget.controls['MONTHLYBUDGETUNITS_3'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_3']).toFixed(2));
-      this.userBudget.controls['MONTHLYBUDGETUNITS_4'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_4']).toFixed(2));
-      this.userBudget.controls['MONTHLYBUDGETUNITS_5'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_5']).toFixed(2));
-      this.userBudget.controls['MONTHLYBUDGETUNITS_6'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_6']).toFixed(2));
-      this.userBudget.controls['MONTHLYBUDGETUNITS_7'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_7']).toFixed(2));
-      this.userBudget.controls['MONTHLYBUDGETUNITS_8'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_8']).toFixed(2));
-      this.userBudget.controls['MONTHLYBUDGETUNITS_9'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_9']).toFixed(2));
-      this.userBudget.controls['MONTHLYBUDGETUNITS_10'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_10']).toFixed(2));
-      this.userBudget.controls['MONTHLYBUDGETUNITS_11'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_11']).toFixed(2));
-      this.userBudget.controls['MONTHLYBUDGETUNITS_12'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHLYBUDGETUNITS_12']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETDOLLARS_1'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHBUDGETDOLLARS_1']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETDOLLARS_2'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHBUDGETDOLLARS_2']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETDOLLARS_3'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHBUDGETDOLLARS_3']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETDOLLARS_4'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHBUDGETDOLLARS_4']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETDOLLARS_5'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHBUDGETDOLLARS_5']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETDOLLARS_6'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHBUDGETDOLLARS_6']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETDOLLARS_7'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHBUDGETDOLLARS_7']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETDOLLARS_8'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHBUDGETDOLLARS_8']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETDOLLARS_9'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHBUDGETDOLLARS_9']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETDOLLARS_10'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHBUDGETDOLLARS_10']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETDOLLARS_11'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHBUDGETDOLLARS_11']).toFixed(2));
+      this.userBudget.controls['MONTHBUDGETDOLLARS_12'].setValue(parseFloat(this.budgetsData.MONTHBUDGETDOLLARS_GROUP['MONTHBUDGETDOLLARS_12']).toFixed(2));
     } else {
       this.dialogTitle = 'New Budget';
       this.NowDate(new Date());
@@ -138,25 +139,25 @@ export class UserBudgetDialogComponent implements OnInit {
     let Obj = this.userBudget.value;
     var O = {};
     for (let i = 1; i <= 12; i++) {
-      let key = 'MONTHLYBUDGETUNITS_' + i;
+      let key = 'MONTHBUDGETDOLLARS_' + i;
       O[key] = Obj[key];
     }
     return O;
   }
   dollaresOnCahneg() {
     let TOTALBUDGETDOLLARS_TEMP: any = this.f.TOTALBUDGETDOLLARS.value / 12;
-    this.userBudget.controls['MONTHLYBUDGETUNITS_1'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
-    this.userBudget.controls['MONTHLYBUDGETUNITS_2'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
-    this.userBudget.controls['MONTHLYBUDGETUNITS_3'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
-    this.userBudget.controls['MONTHLYBUDGETUNITS_4'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
-    this.userBudget.controls['MONTHLYBUDGETUNITS_5'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
-    this.userBudget.controls['MONTHLYBUDGETUNITS_6'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
-    this.userBudget.controls['MONTHLYBUDGETUNITS_7'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
-    this.userBudget.controls['MONTHLYBUDGETUNITS_8'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
-    this.userBudget.controls['MONTHLYBUDGETUNITS_9'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
-    this.userBudget.controls['MONTHLYBUDGETUNITS_10'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
-    this.userBudget.controls['MONTHLYBUDGETUNITS_11'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
-    this.userBudget.controls['MONTHLYBUDGETUNITS_12'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETDOLLARS_1'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETDOLLARS_2'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETDOLLARS_3'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETDOLLARS_4'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETDOLLARS_5'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETDOLLARS_6'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETDOLLARS_7'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETDOLLARS_8'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETDOLLARS_9'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETDOLLARS_10'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETDOLLARS_11'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
+    this.userBudget.controls['MONTHBUDGETDOLLARS_12'].setValue(parseFloat(TOTALBUDGETDOLLARS_TEMP).toFixed(2));
   }
   hoursOnChange() {
     let TOTALBUDGETHOURS_TEMP: any = this.f.TOTALBUDGETHOURS.value / 12;
@@ -188,9 +189,10 @@ export class UserBudgetDialogComponent implements OnInit {
     let FormAction = this.action == 'edit' ? 'update' : 'insert';
     if (this.action == 'edit') {
       PostData.USERBUDGETGUID = this.f.USERBUDGETGUID.value;
+      this.budgetsData = JSON.parse(localStorage.getItem('current_budgets'));
       this.successMsg = 'Update successfully';
     }
-    let PostBudgetData: any = { FormAction: FormAction, VALIDATEONLY: true, Data: PostData };
+        let PostBudgetData: any = { FormAction: FormAction, VALIDATEONLY: true, Data: PostData };
     this._mainAPiServiceService.getSetData(PostBudgetData, 'SetUserBudget').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.checkValidation(res.DATA.VALIDATIONS, PostBudgetData);
@@ -243,7 +245,7 @@ export class UserBudgetDialogComponent implements OnInit {
   }
   saveBudgetData(PostBudgetData: any) {
     PostBudgetData.VALIDATEONLY = false;
-    this._mainAPiServiceService.getSetData(PostBudgetData, 'SetActivity').subscribe(res => {
+    this._mainAPiServiceService.getSetData(PostBudgetData, 'SetUserBudget').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.toastr.success(this.successMsg);
         this.dialogRef.close(true);

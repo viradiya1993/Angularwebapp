@@ -118,7 +118,6 @@ export class DairyDailogComponent implements OnInit {
        endTime.add(1, 'day');
     }
     var timeStops = [];
-  
     while(startTime <= endTime){
       timeStops.push(moment(startTime).format('HH:mm A'));
       startTime.add(15, 'minutes');

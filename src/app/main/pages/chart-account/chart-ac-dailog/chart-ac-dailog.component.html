@@ -45,9 +45,9 @@
       </div>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
-        <button mat-raised-button color="accent" (click)="SaveAccount()" [disabled]="isspiner" *ngIf="action === 'add'"><mat-spinner *ngIf="isspiner"></mat-spinner>Add</button>
+        <button mat-raised-button color="accent" (click)="SaveAccount()" [disabled]="isspiner" *ngIf="action === 'new'"><mat-spinner *ngIf="isspiner"></mat-spinner>Add</button>
         <button mat-raised-button color="accent" (click)="SaveAccount()" [disabled]="isspiner" *ngIf="action === 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Update</button>
-        <button mat-raised-button color="accent" (click)="SaveAccount()" [disabled]="isspiner" *ngIf="action === 'copy'"><mat-spinner *ngIf="isspiner"></mat-spinner>Duplicate</button>
+        <button mat-raised-button color="accent" (click)="SaveAccount()" [disabled]="isspiner" *ngIf="action === 'duplicate'"><mat-spinner *ngIf="isspiner"></mat-spinner>Duplicate</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
     </mat-dialog-actions>
 </div>

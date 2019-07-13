@@ -36,13 +36,23 @@ import {MatSortModule} from '@angular/material/sort';
 //     { path: 'account-reconciliation', component: AccountReconciliationComponent, canActivate: [AuthGuard] },  
 // ];
 
+// const routes = [
+//   { path: '', redirectTo: '/account-reconciliation/Account', pathMatch: 'full', canActivate: [AuthGuard] },
+//   { path: '', redirectTo: '/account-reconciliation/past-banking', pathMatch: 'full', canActivate: [AuthGuard] },
+//     {
+//       path: '', component: AccountReconciliationComponent, children:[
+//         { path: 'Account', component: RecounciliationItemComponent },
+//         { path: 'past-banking', component: PastBankingsComponent },    
+//       ],canActivate: [AuthGuard]
+//     }
+// ];
 const routes = [
-  { path: '', redirectTo: '/account-reconciliation/Account', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/account-reconciliation', pathMatch: 'full', canActivate: [AuthGuard] },
   { path: '', redirectTo: '/account-reconciliation/past-banking', pathMatch: 'full', canActivate: [AuthGuard] },
     {
       path: '', component: AccountReconciliationComponent, children:[
-        { path: 'Account', component: RecounciliationItemComponent },
-        { path: 'past-banking', component: PastBankingsComponent },    
+        { path: '', component: RecounciliationItemComponent },
+        { path: 'past-banking', component: PastBankingsComponent }    
       ],canActivate: [AuthGuard]
     }
 ];

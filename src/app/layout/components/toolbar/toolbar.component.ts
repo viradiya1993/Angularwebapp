@@ -74,7 +74,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     isInvoice: any;
     greenTheme: any = false;
     CreatDocumentChild: any;
-
+    
 
 
 
@@ -108,7 +108,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private _router: Router,
         private SpendmoneyService: SpendmoneyService,
         private _getReceptData: GetReceptData,
-        private location: Location
+        private location: Location,
+        public MatDialog: MatDialog
     ) {
         if (this.appPermissions == null) {
             this.appPermissions = [];
@@ -383,10 +384,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             popupData = { action: actionType, USERGUID: ActiveUserData.USERGUID };
         }
         const dialogRef = this.dialog.open(UserDialogComponent, { disableClose: true, panelClass: 'User-dialog', data: popupData });
-        dialogRef.afterClosed().subscribe(result => {
-            // if (result)
-            // $('#refreshActivities').click();
-        });
+        dialogRef.afterClosed().subscribe(result => {});
     }
     //DeleteUser
     DeleteUser(): void {
@@ -693,33 +691,20 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             console.log(result);
         });
     }/* Document Register Module */
-
-    // New Record Document
-    NewDocumnt() {
-        const dialogRef = this.dialog.open(DocumentDailogComponent, {
-            disableClose: true,
-            panelClass: 'Document-dialog',
-            data: {
-                action: 'new',
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
-    }
-
-    // Edit Record Document
-    EditDocument() {
-        const dialogRef = this.dialog.open(DocumentDailogComponent, {
-            disableClose: true,
-            panelClass: 'Document-dialog',
-            data: {
-                action: 'edit',
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
+   
+    DocumntPop(actionType){
+      let DcoumentPopdata = {}
+      if(actionType == 'new'){
+        DcoumentPopdata = {action:actionType}
+      }else if(actionType == 'edit' || actionType == 'duplicate'){
+        DcoumentPopdata = {action:actionType}
+      }
+      const dialogRef = this.dialog.open(DocumentDailogComponent, {
+        disableClose: true,
+        panelClass: 'Document-dialog',
+        data: DcoumentPopdata
+      });
+      dialogRef.afterClosed().subscribe(result => {});
     }
 
     // Delete Record Document
@@ -730,20 +715,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
-    }
-
-    // Duplicate Record Document
-    DuplicateDocument() {
-        const dialogRef = this.dialog.open(DocumentDailogComponent, {
-            disableClose: true,
-            panelClass: 'Document-dialog',
-            data: {
-                action: 'Duplicate',
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
             console.log(result);
         });
     }
@@ -811,33 +782,22 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
 
 
-    //New Email
-    EmailTempletePopUp(val) {
+    /* Email Module Function */
+    EmailTempletePopUp(actionType) {
+        let EmailPopdata = {}
+        if(actionType == 'new'){
+            EmailPopdata = {action:actionType}
+        }else if(actionType == 'edit' || actionType == 'copy'){
+            EmailPopdata = {action:actionType}
+        }
         const dialogRef = this.dialog.open(EmailDailogComponent, {
             disableClose: true,
             panelClass: 'Email-dialog',
-            data: {
-                action: val,
-            }
+            data: EmailPopdata
         });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
+        dialogRef.afterClosed().subscribe(result => {});
     }
 
-    //Copy Email
-    CopyEmailTemplete() {
-        const dialogRef = this.dialog.open(EmailDailogComponent, {
-            disableClose: true,
-            panelClass: 'Email-dialog',
-            data: {
-                action: 'copy',
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
-    }
     //Delete Email
     DeleteEmailTemplete() {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
@@ -850,34 +810,25 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
 
-    /* Packs Module */
-
-    // New Pack
-    NewPack() {
+    /* Packs Module Function */
+   
+    PackModule(actionType){
+       let PackPopdata = {}
+        if(actionType == 'new'){
+            PackPopdata = {action:actionType}
+        }else{
+            PackPopdata = {action:actionType}
+        }
         const dialogRef = this.dialog.open(PacksDailogComponent, {
             disableClose: true,
             panelClass: 'Pack-dialog',
-            data: {
-                action: 'new',
-            }
+            data: PackPopdata
         });
         dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+           
         });
     }
-    //EditPack
-    EditPack() {
-        const dialogRef = this.dialog.open(PacksDailogComponent, {
-            disableClose: true,
-            panelClass: 'Pack-dialog',
-            data: {
-                action: 'edit',
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
-    }
+   
     //DeletePack
     DeletePack(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
@@ -889,36 +840,31 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             console.log(result);
         });
     }
-
+    SelectMatter(){
+        const dialogRef = this.MatDialog.open(MatterDialogComponent, { 
+            width: '100%', 
+            disableClose: true,
+            data:{} 
+          });
+          dialogRef.afterClosed().subscribe(result => {});
+    }
     /* Chart Of Account Module Function's */
 
-    //NewAccount
-    NewAccount() {
+    AccountPop(actionType){
+        let AccountPopdata = {}
+        if(actionType == 'new'){
+            AccountPopdata = {action:actionType}
+        }else if (actionType == 'edit' || actionType == 'copy'){
+            AccountPopdata = {action:actionType}
+        }
         const dialogRef = this.dialog.open(ChartAcDailogComponent, {
             disableClose: true,
             panelClass: 'ChartAc-dialog',
-            data: {
-                action: 'add',
-            }
+            data:AccountPopdata
         });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
+        dialogRef.afterClosed().subscribe(result => {});
     }
-
-    //EditAccount
-    EditAccount() {
-        const dialogRef = this.dialog.open(ChartAcDailogComponent, {
-            disableClose: true,
-            panelClass: 'ChartAc-dialog',
-            data: {
-                action: 'edit',
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
-    }
+   
     //DeleteAccount
     DeleteAccount(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
@@ -926,23 +872,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             width: '100%',
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-        this.confirmDialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
+        this.confirmDialogRef.afterClosed().subscribe(result => {});
     }
-    //DuplicateAccount
-    DuplicateAccount() {
-        const dialogRef = this.dialog.open(ChartAcDailogComponent, {
-            disableClose: true,
-            panelClass: 'ChartAc-dialog',
-            data: {
-                action: 'copy',
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
-    }
+   
 
     //Authority dialoge 
     AuthorityDialog(val) {
@@ -1062,32 +994,21 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     /** Chronology Module's Function's */
-    //NewChron
-    NewChron() {
-        const dialogRef = this.dialog.open(ChronItemDailogComponent, {
-            disableClose: true,
-            panelClass: 'Chrone-dialog',
-            data: {
-                action: 'new',
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
-    }
-    //EditChron
-    EditChron() {
-        const dialogRef = this.dialog.open(ChronItemDailogComponent, {
-            disableClose: true,
-            panelClass: 'Chrone-dialog',
-            data: {
-                action: 'edit',
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
 
+    //NewChron
+    ChronPopup(actionType){
+        let ChronePopData = {}
+        if(actionType == 'new'){
+            ChronePopData = {action:actionType}
+        }else if(actionType == 'edit' || actionType == 'duplicate'){
+            ChronePopData = {action:actionType}
+        }
+        const dialogRef = this.dialog.open(ChronItemDailogComponent, {
+            disableClose: true,
+            panelClass: 'Chrone-dialog',
+            data:ChronePopData
+        });
+        dialogRef.afterClosed().subscribe(result => {});
     }
     //DeleteChron
     DeleteChron() {
@@ -1100,51 +1021,26 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             console.log(result);
         });
     }
-    //DuplicateChron
-    DuplicateChron() {
-        const dialogRef = this.dialog.open(ChronItemDailogComponent, {
-            disableClose: true,
-            panelClass: 'Chrone-dialog',
-            data: {
-                action: 'duplicate',
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
-
-    }
 
     /* Dairy Appointment Module's Function's **/
 
-    //NewAppointment
-    NewAppointment() {
+    //New - Edit - Duplicate Appointment Dialog
+    DiaryAppointment(actionType){
+        console.log(actionType);
+        let DiaryPopupData = {}
+        if(actionType == 'new'){
+            DiaryPopupData = {action:actionType};
+        }else if(actionType == 'edit' || actionType == 'duplicate'){
+            DiaryPopupData = {action:actionType};
+        }
         const dialogRef = this.dialog.open(DairyDailogComponent, {
             disableClose: true,
-            panelClass: 'Chrone-dialog',
-            data: {
-                action: 'new',
-            }
+            panelClass: 'Dairy-dialog',
+            data: DiaryPopupData
         });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
+        dialogRef.afterClosed().subscribe(result => { });
     }
-    //EditAppointment
-    EditAppointment() {
-
-        const dialogRef = this.dialog.open(DairyDailogComponent, {
-            disableClose: true,
-            panelClass: 'Chrone-dialog',
-            data: {
-                action: 'edit',
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
-
-    }
+    
     //DeleteAppointment
     DeleteAppointment() {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
@@ -1152,24 +1048,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             width: '100%',
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-        this.confirmDialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
+        this.confirmDialogRef.afterClosed().subscribe(result => {});
     }
-    //DuplicateAppointment
-    DuplicateAppointment() {
-
-        const dialogRef = this.dialog.open(DairyDailogComponent, {
-            disableClose: true,
-            panelClass: 'Chrone-dialog',
-            data: {
-                action: 'duplicate',
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
-    }
+    
+    
     //_____________________________________________________________________________________________________
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods

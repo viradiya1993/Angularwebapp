@@ -565,11 +565,11 @@ else{
 
   }
   Cashtype(val){
-  if(val=="Cheque"){
-    this.spendmoneyForm.controls['ChequeNo'].setValue("1"); 
-  }else{
-    this.spendmoneyForm.controls['ChequeNo'].setValue("0"); 
-  }
+    if(val=="Cheque"){
+      this.spendmoneyForm.controls['ChequeNo'].setValue("1"); 
+    }else{
+      this.spendmoneyForm.controls['ChequeNo'].setValue("0"); 
+    }
   }
   editElement(){
   this.forCommonEnable();

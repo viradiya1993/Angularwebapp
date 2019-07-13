@@ -31,11 +31,11 @@ export class ChartAcDailogComponent implements OnInit {
   ) 
   { 
     this.action = data.action;
-    if (this.action === 'add') {
+    if (this.action === 'new') {
       this.dialogTitle = 'New Account';
     } else if (this.action === 'edit') {
       this.dialogTitle = 'Update Account';
-    } else if(this.action === 'copy') {
+    } else if(this.action === 'duplicate') {
       this.dialogTitle = 'Duplicate Account';
     }
   }

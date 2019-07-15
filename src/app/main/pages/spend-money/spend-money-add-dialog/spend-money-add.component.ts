@@ -722,14 +722,15 @@ let Data={
     }else{
       this.FormAction="insert";
     }
+    
     this.Setata(Data);
+
     this.isItemSaveClicked ='no';
   }
   Setata(potData) {
     this.isspiner = true;
     let details = { FormAction: this.FormAction, VALIDATEONLY: true, Data: potData };
-    
-    this._mainAPiServiceService.getSetData(potData, 'SetExpenditure').subscribe(response => {
+    this._mainAPiServiceService.getSetData(details, 'SetExpenditure').subscribe(response => {
       //array empty of save item
       this.sendItem=[];
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {

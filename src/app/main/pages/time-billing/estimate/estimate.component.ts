@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.component';
-import { EstimateService, GetallcolumnsFilterService, TableColumnsService } from '../../../../_services';
+import {  GetallcolumnsFilterService, TableColumnsService, MainAPiServiceService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import {MatSort} from '@angular/material';
@@ -25,7 +25,8 @@ export class EstimateComponent implements OnInit {
   isLoadingResults: boolean = false;
   ColumnsObj: any = [];
   constructor(private TableColumnsService: TableColumnsService,
-    private dialog: MatDialog, private Estimate: EstimateService, private GetallcolumnsFilter: GetallcolumnsFilterService, private toastr: ToastrService) { }
+    private dialog: MatDialog, private GetallcolumnsFilter: GetallcolumnsFilterService, 
+    private _mainAPiServiceService: MainAPiServiceService,private toastr: ToastrService) { }
   Estimatedata;
   ngOnInit() {
     this.getTableFilter();
@@ -36,7 +37,7 @@ export class EstimateComponent implements OnInit {
   loadData() {
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
     this.isLoadingResults = true;
-    this.Estimate.MatterEstimatesData(potData).subscribe(res => {
+    this._mainAPiServiceService.getSetData(potData, 'GetMatterEstimates').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.Estimatedata = new MatTableDataSource(res.DATA.ESTIMATES)
         this.Estimatedata.paginator = this.paginator

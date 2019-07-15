@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef, MatDialog, MatDatepickerInputEvent } from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { FileNotesService } from 'app/_services';
+import {  MainAPiServiceService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
@@ -28,7 +28,7 @@ export class FileNoteDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<FileNoteDialogComponent>,
     private _formBuilder: FormBuilder,
     public datepipe: DatePipe,
-    public setfilenote: FileNotesService,
+    private _mainAPiServiceService: MainAPiServiceService,
     private toastr: ToastrService) {
   }
 
@@ -69,13 +69,15 @@ export class FileNoteDialogComponent implements OnInit {
   }
   setValue(passdata) {
     this.isspiner = true;
-    this.setfilenote.setFileNote({ 'FormAction': 'insert', DATA: passdata }).subscribe(res => {
+    let finalPassdata=
+    { 'FormAction': 'insert', DATA: passdata }
+    this._mainAPiServiceService.getSetData(finalPassdata, 'SetFileNote').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
-        this.checkValidation(res.DATA.VALIDATIONS, passdata);
+        this.checkValidation(res.DATA.VALIDATIONS, finalPassdata);
       } else if (res.CODE == 451 && res.STATUS == "warning") {
-        this.checkValidation(res.DATA.VALIDATIONS, passdata);
+        this.checkValidation(res.DATA.VALIDATIONS, finalPassdata);
       } else if (res.CODE == 450 && res.STATUS == "error") {
-        this.checkValidation(res.DATA.VALIDATIONS, passdata);
+        this.checkValidation(res.DATA.VALIDATIONS, finalPassdata);
       } else if (res.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
@@ -124,7 +126,7 @@ export class FileNoteDialogComponent implements OnInit {
   }
   FinalsaveFileNote(PostFileNoteData: any) {
     PostFileNoteData.VALIDATEONLY = false;
-    this.setfilenote.setFileNote({ 'FormAction': 'insert', DATA: PostFileNoteData }).subscribe(response => {
+    this._mainAPiServiceService.getSetData(PostFileNoteData, 'SetFileNote').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
           this.toastr.success('Note save successfully');
         this.isspiner = false;

@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, AfterViewInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatPaginator, MatTableDataSource, MatDialogConfig } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { MattersService, TimersService } from './../../../../_services';
+import {  TimersService, MainAPiServiceService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.component';
@@ -32,7 +32,7 @@ export class MatterDialogComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
-    private mattersService: MattersService,
+    private _mainAPiServiceService: MainAPiServiceService,
     private toastr: ToastrService,
     private Timersservice: TimersService
   ) {
@@ -79,7 +79,8 @@ export class MatterDialogComponent implements OnInit {
   }
   getList(filterVal: any) {
     this.isLoadingResults = true;
-    this.mattersService.getMatters(filterVal).subscribe(response => {
+    
+    this._mainAPiServiceService.getSetData(filterVal, 'GetMatter').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.MATTERS[0]) {
           this.highlightedRows = response.DATA.MATTERS[0].MATTERGUID;

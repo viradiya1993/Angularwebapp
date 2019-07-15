@@ -3,7 +3,7 @@ import { MatPaginator, MatTableDataSource, MatDialogConfig, MatDialog, MatDatepi
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { ToastrService } from 'ngx-toastr';
-import { WorkInProgressService, TableColumnsService } from '../../../../_services';
+import {  TableColumnsService, MainAPiServiceService } from '../../../../_services';
 import * as $ from 'jquery';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -28,7 +28,7 @@ export class WorkInProgressComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   isLoadingResults: boolean = false;
-  constructor(public datepipe: DatePipe, private dialog: MatDialog, private fb: FormBuilder, private WorkInProgress: WorkInProgressService, private TableColumnsService: TableColumnsService, private toastr: ToastrService) {
+  constructor(public datepipe: DatePipe, private dialog: MatDialog, private fb: FormBuilder,private _mainAPiServiceService: MainAPiServiceService, private TableColumnsService: TableColumnsService, private toastr: ToastrService) {
     this.lastFilter = JSON.parse(localStorage.getItem('Work_in_progress_filter'));
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.isShowDrop = currentUser.ProductType == "Barrister" ? false : true;
@@ -66,7 +66,7 @@ export class WorkInProgressComponent implements OnInit {
     potData.MatterGuid = this.currentMatter.MATTERGUID
     this.isLoadingResults = true;
     // let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
-    this.WorkInProgress.WorkInProgressData(potData).subscribe(res => {
+    this._mainAPiServiceService.getSetData(potData, 'GetWorkItems').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.WorkInProgressdata = new MatTableDataSource(res.DATA.WORKITEMS);
         this.WorkInProgressdata.paginator = this.paginator;

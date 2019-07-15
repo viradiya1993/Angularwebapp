@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-import { ChronologyService, TableColumnsService } from './../../../../_services';
+import { TableColumnsService, MainAPiServiceService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import {MatSort} from '@angular/material';
@@ -29,7 +29,8 @@ export class ChronologyComponent implements OnInit {
   pageSize: any;
   tempColobj: any;
 
-  constructor(private _formBuilder: FormBuilder,private dialog: MatDialog, private TableColumnsService: TableColumnsService, private chronology_service: ChronologyService, private toastr: ToastrService) { }
+  constructor(private _formBuilder: FormBuilder,private dialog: MatDialog, private TableColumnsService: TableColumnsService,
+  private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.SearchForm = this._formBuilder.group({
@@ -60,7 +61,7 @@ export class ChronologyComponent implements OnInit {
     this.isLoadingResults = true;
     //get chronology
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
-    this.chronology_service.getData(potData).subscribe(response => {
+    this._mainAPiServiceService.getSetData(potData, 'GetMatterChronology').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.chronology_table = new MatTableDataSource(response.DATA.CHRONOLOGIES);
         this.chronology_table.paginator = this.paginator;

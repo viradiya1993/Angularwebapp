@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { SpendmoneyService, TableColumnsService } from 'app/_services';
+import { TableColumnsService, MainAPiServiceService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import { MatTableDataSource, MatPaginator, MatDialogConfig, MatDialog, MatDatepickerInputEvent } from '@angular/material';
@@ -39,7 +39,7 @@ export class SpendMoneyComponent implements OnInit {
 
   constructor(
     private TableColumnsService: TableColumnsService,
-    private SpendmoneyService: SpendmoneyService,
+    private _mainAPiServiceService: MainAPiServiceService,
     private toastr: ToastrService,
     private _formBuilder: FormBuilder,
     private dialog: MatDialog,
@@ -100,7 +100,8 @@ this.SepndMoneyForm=this._formBuilder.group({
 
   loadData(potData) {
     this.isLoadingResults = true;
-    this.SpendmoneyService.SpendmoneyListData(potData).subscribe(response => {
+    
+    this._mainAPiServiceService.getSetData(potData, 'GetExpenditure').subscribe(response => {
   
       if (response.CODE == 200 && response.STATUS == "success") {
         // if(response.DATA.EXPENDITURES.length != 0){

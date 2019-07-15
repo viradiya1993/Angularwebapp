@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
-import { SystemSetting } from './../../../../_services';
 import { AccountDialogComponent } from './account-edit-dialog/account-dialog.component';
 import { MatDialog } from '@angular/material';
 
@@ -37,7 +36,7 @@ export class AccountComponent implements OnInit {
   displayedColumns: string[] = ['Description', 'AccNoAccount'];
   dataSource = ELEMENT_DATA;
   addData:any=[];
-  constructor(private SystemSetting:SystemSetting, public dialog: MatDialog,) { }
+  constructor( public dialog: MatDialog,) { }
 
   ngOnInit() {
         

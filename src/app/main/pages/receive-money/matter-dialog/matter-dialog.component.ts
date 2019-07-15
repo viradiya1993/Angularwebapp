@@ -1,12 +1,11 @@
 import { Component, OnInit, Inject, AfterViewInit, ViewChild, ViewEncapsulation, Input, ɵConsole } from '@angular/core';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatPaginator, MatTableDataSource, MatDialogConfig } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { MattersService, TimersService, TemplateListDetails } from './../../../../_services';
+import { TimersService, MainAPiServiceService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.component';
-import { ReceiptDilogComponent } from '../../invoice/receipt-dilog/receipt-dilog.component';
-// import { TemplateComponent } from '../template.component';
+
 import { MatSort } from '@angular/material';
 
 @Component({
@@ -36,10 +35,9 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
-    private mattersService: MattersService,
+    private _mainAPiServiceService: MainAPiServiceService,
     private toastr: ToastrService,
     private Timersservice: TimersService,
-    private TemplateListDetails: TemplateListDetails,
     public _matDialog: MatDialog,
     // private data:TemplateComponent
   ) {
@@ -88,7 +86,7 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
   }
   getList(filterVal: any) {
     this.isLoadingResults = true;
-    this.mattersService.getMatters(filterVal).subscribe(response => {
+    this._mainAPiServiceService.getSetData(filterVal, 'GetMatter').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.MATTERS[0]) {
           this.highlightedRows = response.DATA.MATTERS[0].MATTERGUID;

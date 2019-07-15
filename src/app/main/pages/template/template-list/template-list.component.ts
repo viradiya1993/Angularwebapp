@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
-import {  TemplateListDetails, TableColumnsService } from 'app/_services';
+import {  MainAPiServiceService } from 'app/_services';
 import { fuseAnimations } from '@fuse/animations';
 import * as $ from 'jquery';
 import { Router } from '@angular/router';
@@ -33,9 +33,8 @@ export class TemplateListComponent implements OnInit {
   @Output() matterDetail: EventEmitter<any> = new EventEmitter<any>();
   constructor(
     private toastr: ToastrService,
-    public TemplateListData: TemplateListDetails,
+    private _mainAPiServiceService: MainAPiServiceService,
     public MatDialog: MatDialog,
-    private TableColumnsService: TableColumnsService,
     private router: Router,
     public _matDialog: MatDialog,
   ) { }
@@ -49,7 +48,8 @@ export class TemplateListComponent implements OnInit {
   }
   LoadData(d) {
     this.isLoadingResults = true;
-    this.TemplateListData.getTemplateList(d).subscribe(response => {
+    
+    this._mainAPiServiceService.getSetData(d, 'TemplateList').subscribe(response => {
 
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Templatedata = new MatTableDataSource(response.DATA.TEMPLATES);

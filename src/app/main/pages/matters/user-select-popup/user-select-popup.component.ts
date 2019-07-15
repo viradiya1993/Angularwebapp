@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MatDatepickerInputEvent, MatPaginator, MatTableDataSource } from '@angular/material';
-import { TimersService } from 'app/_services';
+import {  MainAPiServiceService } from 'app/_services';
 import { fuseAnimations } from '@fuse/animations';
 
 @Component({
@@ -22,13 +22,14 @@ export class UserSelectPopupComponent implements OnInit {
   currentUserData: any;
   constructor(
     public MatDialog: MatDialog,
-    private Timersservice: TimersService,
+
+    private _mainAPiServiceService: MainAPiServiceService,
     public dialogRef: MatDialogRef<UserSelectPopupComponent>
   ) { }
 
   ngOnInit() {
     this.isLoadingResults = true;
-    this.Timersservice.GetUsers({ 'Active': 'yes' }).subscribe(response => {
+      this._mainAPiServiceService.getSetData({ 'Active': 'yes' }, 'GetUsers').subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (response.DATA.USERS[0]) {
           this.highlightedRows = response.DATA.USERS[0].USERGUID;

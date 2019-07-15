@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
-import { SystemSetting } from '../../../../../_services';
 import { MatDialog } from '@angular/material';
 import { AccountInnerDialogComponent } from './account-inner-dialoge/account-inner-dialog.component';
 
@@ -15,7 +14,7 @@ export class AccountDialogComponent implements OnInit {
   @Input() SettingForm: FormGroup;
   @Input() errorWarningData: any;
   addData:any=[];
-  constructor(private SystemSetting:SystemSetting,public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
      

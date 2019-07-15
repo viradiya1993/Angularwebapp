@@ -4,7 +4,7 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import * as $ from 'jquery';
 import { ToastrService } from 'ngx-toastr';
 import { isValid } from 'date-fns';
-import { TimersService, MattersService } from '../../../../_services'
+import { TimersService } from '../../../../_services'
 import { MatterPopupComponent } from '../matter-popup/matter-popup.component';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 @Component({
@@ -26,7 +26,7 @@ export class MattersSortDetailComponent implements OnInit {
     private toastr: ToastrService,
     private TimersServiceI: TimersService,
     public dialog: MatDialog,
-    private _mattersService: MattersService,
+
   ) { }
 
   ngOnInit() { }

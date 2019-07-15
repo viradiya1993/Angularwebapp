@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MatDialog, MatDatepickerInputEvent } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { fuseAnimations } from '@fuse/animations';
-import { MattersService } from 'app/_services';
+import { MainAPiServiceService } from 'app/_services';
 
 @Component({
   selector: 'app-instant-invoice-dailog',
@@ -30,7 +30,7 @@ export class InstantInvoiceDailogComponent implements OnInit {
     public dialogRef: MatDialogRef<InstantInvoiceDailogComponent>,
     public datepipe: DatePipe,
     public MatDialog: MatDialog,
-    private _mattersService: MattersService,
+    private _mainAPiServiceService: MainAPiServiceService
   ) { }
 
   ngOnInit() {
@@ -55,7 +55,7 @@ export class InstantInvoiceDailogComponent implements OnInit {
       INVOICECOMMENT: [''],
       ADDITIONALTEXT: [''],
     });
-    this._mattersService.getMattersClasstype({ 'LookupType': 'time entry' }).subscribe(responses => {
+    this._mainAPiServiceService.getSetData({ 'LookupType': 'time entry' }, 'GetLookups').subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.LookupsList = responses.DATA.LOOKUPS;
       }

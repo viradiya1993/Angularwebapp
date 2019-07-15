@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatterInvoicesService, TableColumnsService } from 'app/_services';
+import { TableColumnsService, MainAPiServiceService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import * as $ from 'jquery';
@@ -40,7 +40,7 @@ export class InvoiceComponent implements OnInit {
   MatterInvoicesdata;
 
   constructor(
-    private _MatterInvoicesService: MatterInvoicesService,
+    private _mainAPiServiceService: MainAPiServiceService,
     private toastr: ToastrService,
     private dialog: MatDialog,
     private TableColumnsService: TableColumnsService,
@@ -117,7 +117,8 @@ export class InvoiceComponent implements OnInit {
   }
   loadData(filterData) {
     this.isLoadingResults = true;
-    this._MatterInvoicesService.MatterInvoicesData(filterData).subscribe(response => {
+    
+    this._mainAPiServiceService.getSetData(filterData, 'GetInvoice').subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (response.DATA.INVOICES[0]) {
           localStorage.setItem('edit_invoice_id', response.DATA.INVOICES[0].INVOICEGUID);

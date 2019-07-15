@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ContactSelectDialogComponent } from '../../contact/contact-select-dialog/contact-select-dialog.component';
-import { MattersService } from 'app/_services';
+import { MainAPiServiceService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -15,7 +15,7 @@ export class CorrespondDailogComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     public MatDialog: MatDialog,
-    private _mattersService: MattersService,
+    private _mainAPiServiceService: MainAPiServiceService,
     public dialogRef: MatDialogRef<CorrespondDailogComponent>,
     private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public _data: any
@@ -107,8 +107,7 @@ export class CorrespondDailogComponent implements OnInit {
       MATTERGUID: this.f.MATTERGUID.value,
       MATTERCONTACTGUID: this.f.MATTERCONTACTGUID.value,
     }
-
-    this._mattersService.AddMatterContact({ FORMACTION: 'update', VALIDATEONLY: false, DATA: details }).subscribe(response => {
+    this._mainAPiServiceService.getSetData({ FORMACTION: 'update', VALIDATEONLY: false, DATA: details }, 'SetMatterContact').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.toastr.success('Matter Contact update successfully');
         this.isspiner = false;

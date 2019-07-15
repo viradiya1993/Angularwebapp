@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { fuseAnimations } from '@fuse/animations';
 import { ContactSelectDialogComponent } from '../../contact/contact-select-dialog/contact-select-dialog.component';
-import { MatterInvoicesService, GetReceptData, MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { MatSort } from '@angular/material';
 
@@ -58,8 +58,6 @@ export class ReceiptDilogComponent implements OnInit {
     public dialogRef: MatDialogRef<ReceiptDilogComponent>,
     public datepipe: DatePipe,
     public MatDialog: MatDialog,
-    private _MatterInvoicesService: MatterInvoicesService,
-    private GetReceptData: GetReceptData,
     public _matDialog: MatDialog,
     public _mainAPiServiceService:MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public _data: any
@@ -116,7 +114,8 @@ export class ReceiptDilogComponent implements OnInit {
   }
   setInvoiceForReceipt(INCOMEGUID) {
     this.isLoadingResults = true;
-    this.GetReceptData.getIncome({ INCOMEGUID: INCOMEGUID }).subscribe(response => {
+    let incomeGuid = { INCOMEGUID: INCOMEGUID }
+    this._mainAPiServiceService.getSetData(incomeGuid, 'SetIncome').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.INCOMEITEMS[0]) {
           localStorage.setItem('receiptData', JSON.stringify(response.DATA.INCOMEITEMS[0]));
@@ -141,7 +140,7 @@ export class ReceiptDilogComponent implements OnInit {
       this.toastr.error(err);
     });
     this.isLoadingResults = true;
-    this.GetReceptData.getRecept({ "RECEIPTGUID": INCOMEGUID }).subscribe(response => {
+    this._mainAPiServiceService.getSetData({ "RECEIPTGUID": INCOMEGUID }, 'GetReceiptAllocation').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.RECEIPTALLOCATIONS[0]) {
           this.highlightedRows = response.DATA.RECEIPTALLOCATIONS[0].INVOICEGUID;
@@ -162,7 +161,7 @@ export class ReceiptDilogComponent implements OnInit {
 
   GetInvoiceForReceipt(data) {
     this.isLoadingResults = true;
-    this._MatterInvoicesService.MatterInvoicesData(data).subscribe(response => {
+    this._mainAPiServiceService.getSetData(data, 'GetInvoice').subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (response.DATA.INVOICES[0]) {
           this.highlightedRows = response.DATA.INVOICES[0].INVOICEGUID;
@@ -266,7 +265,7 @@ export class ReceiptDilogComponent implements OnInit {
       ALLOCATIONS: this.AllocationData
     }
     let setReceiptPostData: any = { FormAction: 'insert', VALIDATEONLY: true, DATA: AllocationDataInsert };
-    this.GetReceptData.setReceipt(setReceiptPostData).subscribe(response => {
+    this._mainAPiServiceService.getSetData(setReceiptPostData, 'SetIncome').subscribe(response => {
       if (response.DATA.INCOMECODE && response.DATA.INCOMECODE != "") {
         this.PrepareReceiptForm.controls['INCOMECODE'].setValue(response.DATA.INCOMECODE);
         AllocationDataInsert.INCOMECODE = response.DATA.INCOMECODE;
@@ -327,7 +326,7 @@ export class ReceiptDilogComponent implements OnInit {
   }
   SaveReceiptAfterVAlidation(data: any) {
     data.VALIDATEONLY = false;
-    this.GetReceptData.setReceipt(data).subscribe(response => {
+    this._mainAPiServiceService.getSetData(data, 'SetIncome').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.toastr.success('Receipt save successfully');
         this.isspiner = false;

@@ -1,7 +1,7 @@
-import { Component, OnInit, Inject, AfterViewInit, ViewChild, ViewEncapsulation, Input } from '@angular/core';
-import { MatDialogRef, MatDialog, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatPaginator, MatTableDataSource, MatDialogConfig } from '@angular/material';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { MattersService, TimersService, TemplateListDetails, MatterInvoicesService } from './../../../../_services';
+import { Component, OnInit,  ViewChild, ViewEncapsulation, Input } from '@angular/core';
+import { MatDialogRef, MatDialog, MatPaginator, MatTableDataSource, MatDialogConfig } from '@angular/material';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { MainAPiServiceService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.component';
@@ -39,11 +39,8 @@ export class InvoiceDialogComponentForTemplate implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
-    private mattersService: MattersService,
     private toastr: ToastrService,
-    private Timersservice: TimersService,
-    private TemplateListDetails: TemplateListDetails,
-    private _MatterInvoicesService: MatterInvoicesService,
+    private _mainAPiServiceService: MainAPiServiceService,
     public _matDialog: MatDialog,
     public dialogRef: MatDialogRef<InvoiceDialogComponentForTemplate>,
    
@@ -59,7 +56,7 @@ export class InvoiceDialogComponentForTemplate implements OnInit {
     // this.getMatterList();
 
     this.isLoadingResults = true;
-    this._MatterInvoicesService.MatterInvoicesData(JSON.parse(localStorage.getItem('matter_invoice_filter'))).subscribe(response => {
+    this._mainAPiServiceService.getSetData(JSON.parse(localStorage.getItem('matter_invoice_filter')), 'GetInvoice').subscribe(response => {
       console.log(response);
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (response.DATA.INVOICES[0]) {
@@ -103,7 +100,7 @@ export class InvoiceDialogComponentForTemplate implements OnInit {
       "Folder": '',
       "Template": data.TEMPLATENAME
     }
-    this.TemplateListDetails.getGenerateTemplate(passingData).subscribe(response => {
+    this._mainAPiServiceService.getSetData(passingData, 'TemplateGenerate').subscribe(response => {
       console.log(response);
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.toastr.success('Template Generate successfully');

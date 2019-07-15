@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, Inject, ViewChild } from '@angula
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MatTableDataSource, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatPaginator, MatDialog, MatDialogRef } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
-import { MatterInvoicesService } from 'app/_services';
+import { MainAPiServiceService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
@@ -37,12 +37,12 @@ export class InvoiceDetailComponent implements OnInit {
   @ViewChild(MatSort) sort2: MatSort;
   constructor(
     private _formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public _data: any,
-    private matterInvoicesService: MatterInvoicesService,
     private toastr: ToastrService,
     public dialogRef: MatDialogRef<InvoiceDetailComponent>,
     public datepipe: DatePipe,
     public MatDialog: MatDialog,
+    private _mainAPiServiceService: MainAPiServiceService,
+    @Inject(MAT_DIALOG_DATA) public _data: any,
   ) { }
 
   ngOnInit() {
@@ -64,7 +64,8 @@ export class InvoiceDetailComponent implements OnInit {
     });
     if (this._data.type == 'edit') {
       this.isLoadingResults = true;
-      this.matterInvoicesService.MatterInvoicesData({ 'INVOICEGUID': this._data.INVOICEGUID }).subscribe(response => {
+      
+      this._mainAPiServiceService.getSetData({'INVOICEGUID': this._data.INVOICEGUID }, 'GetInvoice').subscribe(response => {
         if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
           let invoiceData = response.DATA.INVOICES[0];
           this.invoiceDetailForm.controls['CLIENTNAME'].setValue(invoiceData.CLIENTNAME);
@@ -89,7 +90,8 @@ export class InvoiceDetailComponent implements OnInit {
           let FinalTotal = Number(invoiceData.INVOICETOTAL) + Number(invoiceData.GST);
           this.invoiceDetailForm.controls['AMOUNTTOTAL'].setValue(FinalTotal.toFixed(2));
           // get time entry data for specifc invoice 
-          this.matterInvoicesService.GetWorkItemsData({ 'INVOICEGUID': this._data.INVOICEGUID }).subscribe(response => {
+            
+          this._mainAPiServiceService.getSetData({ 'INVOICEGUID': this._data.INVOICEGUID }, 'GetWorkItems').subscribe(response => {
             if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
               this.invoiceDatasor = new MatTableDataSource(response.DATA.WORKITEMS);
               this.invoiceDatasor.paginator = this.paginator;
@@ -101,7 +103,7 @@ export class InvoiceDetailComponent implements OnInit {
             this.toastr.error(error);
           });
           // get Receipts data.
-          this.matterInvoicesService.GetReceiptAllocationData({ 'INVOICEGUID': this._data.INVOICEGUID }).subscribe(ReceiptAllocationData => {
+          this._mainAPiServiceService.getSetData({ 'INVOICEGUID': this._data.INVOICEGUID }, 'GetReceiptAllocation').subscribe(ReceiptAllocationData => {
             if (ReceiptAllocationData.CODE == 200 && ReceiptAllocationData.STATUS == "success") {
               this.ReceiptsData = new MatTableDataSource(ReceiptAllocationData.DATA.RECEIPTALLOCATIONS);
               this.ReceiptsData.paginator = this.paginator1;
@@ -113,7 +115,7 @@ export class InvoiceDetailComponent implements OnInit {
             this.toastr.error(error);
           });
           // get Interest Charges data.
-          this.matterInvoicesService.MatterInvoicesData({ 'ParentInvoiceGuid': this._data.INVOICEGUID }).subscribe(response => {
+          this._mainAPiServiceService.getSetData({ 'ParentInvoiceGuid': this._data.INVOICEGUID }, 'GetInvoice').subscribe(response => {
             if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
               this.IntersetChatgesData = new MatTableDataSource(response.DATA.INVOICES);
               this.IntersetChatgesData.paginator = this.paginator2;
@@ -150,7 +152,7 @@ export class InvoiceDetailComponent implements OnInit {
       "DUEDATE": this.f.DUEDATE.value,
     }
     let PostInvoiceEntryData: any = { FormAction: 'update', VALIDATEONLY: true, Data: PostData };
-    this.matterInvoicesService.SetInvoiceData(PostInvoiceEntryData).subscribe(res => {
+    this._mainAPiServiceService.getSetData(PostInvoiceEntryData, 'SetInvoice').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.checkValidation(res.DATA.VALIDATIONS, PostInvoiceEntryData);
       } else if (res.CODE == 451 && res.STATUS == "warning") {
@@ -199,7 +201,7 @@ export class InvoiceDetailComponent implements OnInit {
   }
   saveInvoice(PostInvoiceEntryData: any) {
     PostInvoiceEntryData.VALIDATEONLY = false;
-    this.matterInvoicesService.SetInvoiceData(PostInvoiceEntryData).subscribe(res => {
+    this._mainAPiServiceService.getSetData(PostInvoiceEntryData, 'SetInvoice').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         $('#refreshInvoiceTab').click();
         this.toastr.success('Update Success');

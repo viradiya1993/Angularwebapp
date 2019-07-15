@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-import { MatterTrustService, TableColumnsService } from '../../../../_services';
+import { TableColumnsService, MainAPiServiceService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import {MatSort} from '@angular/material';
@@ -26,7 +26,7 @@ export class MatterTrustComponent implements OnInit {
 
   constructor(private dialog: MatDialog,
     private TableColumnsService: TableColumnsService,
-    private MatterTrust: MatterTrustService,
+    private _mainAPiServiceService: MainAPiServiceService,
     private toastr: ToastrService) { }
 
   MatterTrustdata;
@@ -51,7 +51,8 @@ export class MatterTrustComponent implements OnInit {
   loadData() {
     this.isLoadingResults = true;
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
-    this.MatterTrust.MatterTrustData(potData).subscribe(res => {
+    
+    this._mainAPiServiceService.getSetData(potData, 'GetTrustTransaction').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         let TRUSTTRANSACTIONS = res.DATA.TRUSTTRANSACTIONS == null ? [] : res.DATA.TRUSTTRANSACTIONS;
         this.MatterTrustdata = new MatTableDataSource(TRUSTTRANSACTIONS);

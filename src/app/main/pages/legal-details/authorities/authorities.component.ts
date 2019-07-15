@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, ViewChild, Output, EventEmitter }
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-import { AuthoritiesService, TableColumnsService } from './../../../../_services';
+import { TableColumnsService, MainAPiServiceService } from './../../../../_services';
 import * as $ from 'jquery';
 import {MatSort} from '@angular/material';
 @Component({
@@ -22,7 +22,8 @@ export class AuthoritiesComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   isLoadingResults: boolean = false;
 
-  constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, private authorities_service: AuthoritiesService) { }
+  constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, 
+    private _mainAPiServiceService: MainAPiServiceService) { }
   authorities_table;
   ngOnInit() {
     $('content').addClass('inner-scroll');
@@ -45,7 +46,7 @@ export class AuthoritiesComponent implements OnInit {
   LoadData() {
     this.isLoadingResults = true;
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
-    this.authorities_service.getData(potData).subscribe(response => {
+    this._mainAPiServiceService.getSetData(potData, 'GetMatterAuthority').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.authorities_table = new MatTableDataSource(response.DATA.MATTERAUTHORITIES);
         this.authorities_table.paginator = this.paginator;

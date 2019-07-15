@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ChronologyService } from 'app/_services/chronology.service';
 
 
 @Component({

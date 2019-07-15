@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MatDialog, MatDatepickerInputEvent } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { fuseAnimations } from '@fuse/animations';
-import { MattersService, MatterInvoicesService } from 'app/_services';
+import {  MainAPiServiceService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
@@ -36,7 +36,8 @@ export class InvoiceAddDailogComponent implements OnInit {
     public datepipe: DatePipe,
     public MatDialog: MatDialog,
     private toastr: ToastrService,
-    private _mattersService: MattersService, private _matterInvoicesService: MatterInvoicesService) { }
+    private _mainAPiServiceService: MainAPiServiceService,
+    ) { }
 
   ngOnInit() {
     this.isLoadingResults = true;
@@ -85,7 +86,8 @@ export class InvoiceAddDailogComponent implements OnInit {
       DISGSTAMOUNT: [''],
       DISUINAMOUNT: [''],
     });
-    this._mattersService.getMattersDetail({ MATTERGUID: matterDetail.MATTERGUID, GetAllFields: true }).subscribe(response => {
+   
+    this._mainAPiServiceService.getSetData({ MATTERGUID: matterDetail.MATTERGUID, GetAllFields: true }, 'GetMatter').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let matterDate = response.DATA.MATTERS[0];
         let inValEx = matterDate.SUMMARYTOTALS.INVOICEDVALUEEXGST;
@@ -227,7 +229,8 @@ export class InvoiceAddDailogComponent implements OnInit {
       "WORKITEMS": this.WORKITEMS
     }
     let PostInvoiceEntryData: any = { FormAction: 'insert', VALIDATEONLY: true, Data: PostData };
-    this._matterInvoicesService.SetInvoiceData(PostInvoiceEntryData).subscribe(res => {
+    
+    this._mainAPiServiceService.getSetData(PostInvoiceEntryData, 'SetInvoice').subscribe(res => {
       if (res.DATA.INVOICECODE && res.DATA.INVOICECODE != "") {
         this.addInvoiceForm.controls['INVOICECODE'].setValue(res.DATA.INVOICECODE);
         PostData.INVOICECODE = res.DATA.INVOICECODE;
@@ -290,7 +293,7 @@ export class InvoiceAddDailogComponent implements OnInit {
   }
   saveInvoice(PostInvoiceEntryData: any) {
     PostInvoiceEntryData.VALIDATEONLY = false;
-    this._matterInvoicesService.SetInvoiceData(PostInvoiceEntryData).subscribe(res => {
+    this._mainAPiServiceService.getSetData(PostInvoiceEntryData, 'SetInvoice').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.toastr.success('Save Success');
         this.dialogRef.close(true);

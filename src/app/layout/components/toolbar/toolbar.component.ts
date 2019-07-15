@@ -8,7 +8,7 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { Location } from '@angular/common';
 import { navigation } from 'app/navigation/navigation';
-import { AuthenticationService, ReportlistService, TimersService, SpendmoneyService,MattersService, MatterInvoicesService, GetReceptData, MainAPiServiceService } from '../../../_services';
+import { AuthenticationService,MainAPiServiceService, TimersService } from '../../../_services';
 import { Router } from '@angular/router';
 import { ContactDialogComponent } from './../../../main/pages/contact/contact-dialog/contact-dialog.component';
 import { LicenceAgreementComponent } from '../../../main/licence-agreement/licence-agreement.component';
@@ -98,15 +98,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private router: Router,
         public dialog: MatDialog,
         public _matDialog: MatDialog,
-        private reportlistService: ReportlistService,
         private toastr: ToastrService,
         private TimersServiceI: TimersService,
-        private _mattersService: MattersService,
+
+
+
+
+
+      
+
         private _mainAPiServiceService: MainAPiServiceService,
-        private matterInvoicesService: MatterInvoicesService,
         private _router: Router,
-        private SpendmoneyService: SpendmoneyService,
-        private _getReceptData: GetReceptData,
         private location: Location
     ) {
         if (this.appPermissions == null) {
@@ -125,7 +127,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.timerId = 'timer_' + this.currentUser.UserGuid;
         }
         //Report Listing
-        this.reportlistService.allreportlist({}).subscribe(res => {
+        this._mainAPiServiceService.getSetData({}, 'ReportList').subscribe(res => {
             if (res.CODE == 200 && res.STATUS == 'success') {
                 res.DATA.REPORTS.forEach(element => {
                     if (!this.ReportListObj[element.REPORTGROUP]) {
@@ -302,7 +304,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             if (result) {
                 let MatterData: any = JSON.parse(localStorage.getItem('set_active_matters'));
                 let postData = { FormAction: "delete", data: { MATTERGUID: MatterData.MATTERGUID } }
-                this._mattersService.AddNewMatter(postData).subscribe(res => {
+                this._mainAPiServiceService.getSetData(postData, 'SetMatter').subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {
                         $('#refreshMatterTab').click();
                         this.toastr.success('Delete successfully');
@@ -616,7 +618,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     let postData = { FormAction: "delete", DATA: { EXPENDITUREGUID: SendMoney_data.EXPENDITUREGUID } }
-                    this.SpendmoneyService.setSpendmonyData(postData).subscribe(res => {
+                     this._mainAPiServiceService.getSetData(postData, 'SetExpenditure').subscribe(res => {
                         if (res.STATUS == "success" && res.CODE == 200) {
                             $('#refreshSpendMoneyTab').click();
                             this.toastr.success('Delete successfully');
@@ -663,7 +665,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             if (result) {
                 let WORKITEMGUID = localStorage.getItem('edit_WORKITEMGUID');
                 let postData = { FormAction: "delete", data: { WorkItemGuid: WORKITEMGUID } }
-                this.TimersServiceI.SetWorkItems(postData).subscribe(res => {
+                
+                    this._mainAPiServiceService.getSetData(postData, 'SetWorkItems').subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {
                         $('#refreshTimeEntryTab').click();
                         this.toastr.success('Delete successfully');
@@ -1377,7 +1380,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             if (result) {
                 let INVOICEGUID = localStorage.getItem('edit_invoice_id');
                 let postData = { FormAction: "delete", DATA: { INVOICEGUID: INVOICEGUID } }
-                this.matterInvoicesService.SetInvoiceData(postData).subscribe(res => {
+                    this._mainAPiServiceService.getSetData(postData, 'SetInvoice').subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {
                         $('#refreshInvoiceTab').click();
                         this.toastr.success('Delete successfully');
@@ -1397,7 +1400,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             if (result) {
                 let receiptData = JSON.parse(localStorage.getItem('receiptData'));
                 let postData = { FormAction: "delete", DATA: { INCOMEGUID: receiptData.INCOMEGUID } };
-                this._getReceptData.setReceipt(postData).subscribe(res => {
+                this._mainAPiServiceService.getSetData(postData, 'SetIncome').subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {
                         $('#refreshReceiceMoany').click();
                         this.toastr.success('Delete successfully');

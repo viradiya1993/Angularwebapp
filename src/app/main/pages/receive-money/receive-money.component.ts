@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { TableColumnsService, MattersService, TimersService, GetReceptData } from '../../../_services';
+import { TableColumnsService, MainAPiServiceService } from '../../../_services';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
@@ -35,10 +35,8 @@ export class ReceiveMoneyComponent implements OnInit {
     private dialog: MatDialog,
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private Timersservice: TimersService,
-    private GetReceptData: GetReceptData,
+    public _mainAPiServiceService:MainAPiServiceService,
     public datepipe: DatePipe,
-    private _mattersService: MattersService,
   ) { }
   receiveMoneyForm: FormGroup;
   ngOnInit() {
@@ -70,7 +68,7 @@ export class ReceiveMoneyComponent implements OnInit {
   }
   forListing(data) {
     this.isLoadingResults = true;
-    this.GetReceptData.getIncome(data).subscribe(response => {
+    this._mainAPiServiceService.getSetData(data, 'GetIncome').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.INCOMEITEMS[0]) {
           localStorage.setItem('receiptData', JSON.stringify(response.DATA.INCOMEITEMS[0]));

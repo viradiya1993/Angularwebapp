@@ -2,11 +2,9 @@ import { Component, OnDestroy, OnInit, Output, ViewEncapsulation, EventEmitter, 
 
 import { fuseAnimations } from '@fuse/animations';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-
-//import { MattersService } from '../matters.service';
 import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.component';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
-import { MattersService, TableColumnsService } from '../../../../_services';
+import {  TableColumnsService, MainAPiServiceService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import {MatSort} from '@angular/material';
@@ -39,7 +37,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
 
   constructor(
     private dialog: MatDialog,
-    private _mattersService: MattersService,
+    private _mainAPiServiceService: MainAPiServiceService,
     private toastr: ToastrService,
     private TableColumnsService: TableColumnsService,
   ) {
@@ -103,7 +101,8 @@ export class MattersListComponent implements OnInit, OnDestroy {
   }
   getMatterList(data) {
     this.isLoadingResults = true;
-    this._mattersService.getMatters(data).subscribe(response => {
+    
+    this._mainAPiServiceService.getSetData(data, 'GetMatter').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.MATTERS[0]) {
           this.highlightedRows = response.DATA.MATTERS[0].MATTERGUID;

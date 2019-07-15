@@ -21,19 +21,19 @@
                     <mat-checkbox formControlName="allday" (ngModelChange)="CheckAllDays($event)">All Day Event</mat-checkbox>
                      <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
                       &nbsp;&nbsp;
-                    <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
+                    <mat-form-field appearance="outline" class="example" fxFlex="{{size}}" class="pr-4">
                         <mat-label>Date</mat-label>
                         <input (dateInput)="choosedDateFrom('input', $event)" (dateChange)="DateFrom('change', $event)" matInput  formControlName ="date" [matDatepicker]="picker">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4" *ngIf="CheckClick ==='No'">
+                    <mat-form-field appearance="outline" fxFlex="{{size}}" class="pr-4" *ngIf="CheckClick ==='No'">
                         <mat-label>Start</mat-label>
                         <mat-select formControlName="TimeSlot" (ngModelChange)="ChanageTimeSlot($event)">
                             <mat-option *ngFor="let data of timeStops" value="{{data}}">{{data}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4" *ngIf="CheckClick==='No'">
+                    <mat-form-field appearance="outline" fxFlex="{{size}}" class="pr-4" *ngIf="CheckClick==='No'">
                         <mat-label>Finish</mat-label>
                         <mat-select formControlName="TimeSlot2" (ngModelChange)="ChanageTimeSlot2($event)">
                             <mat-option *ngFor="let data of timeStops" value="{{data}}">{{data}}</mat-option>

@@ -18,7 +18,7 @@ import { MainAuthoritiesComponent } from './main-authorities.component';
 import {MatTreeModule} from '@angular/material/tree';
 import { AuthorityDialogComponent } from './authority-dialog/authority-dialog.component';
 const routes = [
-  { path: '', component: MainAuthoritiesComponent, canActivate: [AuthGuard] },
+  { path: 'authorities', component: MainAuthoritiesComponent, canActivate: [AuthGuard] },
 
 ];
 @NgModule({

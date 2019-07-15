@@ -1246,27 +1246,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         else if (x[1] == "conflict-check") {
             this.isTabShow = 17;
         } else if (x[1] == "authorities") {
+            console.log(x);
+            console.log(x[1])
             this.isTabShow = 18;
         } else if (x[1] == "searching") {
             this.isTabShow = 19;
         }
 
-        // added by web19 09/07/19
-
-        // else if(x[1] == "/create-document/matter-email-templete"){
-        //     this.emailrouting = 'matter';
-        // }
-        // else if(x[1] == "/create-document/invoice-email-templete'"){
-        //     this.emailrouting = 'invoice';
-        // }
-        // else if(x[1] == "/create-document/contact-email-templete'"){
-        //     this.emailrouting = 'contact';
-        // }
-        // else if(x[1] == "/create-document/receive-money-email-templete'"){
-        //     this.emailrouting = 'receivemoney';
-        // }
         else if (x[1] == "account-reconciliation") {
-            this.isTabShow = 18;
+            this.isTabShow = 20;
         }
         else {
             this.isTabShow = 1;

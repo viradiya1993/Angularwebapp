@@ -29,6 +29,7 @@ import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/conf
 })
 export class EmailDailogComponent implements OnInit {
   EmailTemplete:FormGroup;
+  rowdata:any=[];
   highlightedRows:any;
   InnerTableData:any=[];
   confirmDialogRef: any;
@@ -50,6 +51,7 @@ export class EmailDailogComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   FormAction: string;
+  GUID: string;
   constructor(
     public MatDialog: MatDialog,
     public dialogRef: MatDialogRef<EmailDailogComponent>,
@@ -120,15 +122,25 @@ export class EmailDailogComponent implements OnInit {
   }
   //clicktable
   clicktable(val){
- 
+ this.rowdata=val;
   }
   get f() {
     return this.EmailTemplete.controls;
   }
     //Email Save
     EmailSave(){
+      let ShowData =JSON.parse(localStorage.getItem('GenerateEmailData'));
+      // console.log(this.rowdata);
+      if(this.action=='edit'){
+        this.GUID=ShowData.EMAILGUID;
+        this.FormAction='update';
+      }else{
+        this.FormAction='insert';
+        this.GUID=" ";
+      }
       this.isspiner = true;
     let passdata={
+      EMAILGUID:this.GUID,
       ATTACHMENT:this.f.attachment.value,
       BCCADDRESS:this.f.BCCEmail.value,
       CCADDRESS:this.f.CCEmail.value,
@@ -136,13 +148,10 @@ export class EmailDailogComponent implements OnInit {
       SUBJECT:this.f.subject.value,
       TEXT:this.f.text.value,
       TOADDRESS:this.f.ToEmail.value,
+      
     }
    
-    if(this.action=='edit'){
-      this.FormAction='update';
-    }else{
-      this.FormAction='insert';
-    }
+    
     let details = { FormAction: this.FormAction, VALIDATEONLY: true, Data: passdata };
     this.TemplateListData.setEmail(details).subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {

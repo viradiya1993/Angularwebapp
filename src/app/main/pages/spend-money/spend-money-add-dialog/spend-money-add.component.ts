@@ -400,7 +400,7 @@ this.Classtype(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
     this.spendmoneyForm.controls['Payee'].setValue(result.CONTACTNAME);
     });
   }
-
+  
   public selectMatter() {
     const dialogRef = this.MatDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
     dialogRef.afterClosed().subscribe(result => {

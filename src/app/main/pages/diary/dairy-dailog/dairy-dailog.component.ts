@@ -19,6 +19,7 @@ export class DairyDailogComponent implements OnInit {
   dialogTitle: string;
   isspiner: boolean = false;
   CheckClick:any;
+  size: number;
   
   constructor(
     public MatDialog: MatDialog,
@@ -43,6 +44,7 @@ export class DairyDailogComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.size=33;
     this.CheckClick="No";
     this.DairyForm = this._formBuilder.group({
       Subject:[],
@@ -96,10 +98,13 @@ export class DairyDailogComponent implements OnInit {
   }
   //CheckAllDays
   CheckAllDays(value){
+   
     if(value == true){
       this.CheckClick="Yes";
+      this.size=100;
     }else{
       this.CheckClick="No";
+      this.size=33;
     }
    
   }

@@ -101,7 +101,7 @@ export class DocumentRegisterComponent implements OnInit {
     console.log(value);
   }
   //Click Doc
-  clickDoc(){
-
+  clickDoc(value){
+    console.log(value);
   }
 }

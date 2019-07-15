@@ -3,7 +3,7 @@ import { MatPaginator, MatTableDataSource, MatDialogConfig, MatDialog } from '@a
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.component';
-import { MatterInvoicesService, TableColumnsService } from '../../../../_services';
+import { TableColumnsService, MainAPiServiceService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import {MatSort} from '@angular/material';
@@ -28,7 +28,7 @@ export class MatterInvoicesComponent implements OnInit {
   isLoadingResults: boolean = false;
   constructor(private dialog: MatDialog,
     private _formBuilder: FormBuilder,
-    private MatterInvoices: MatterInvoicesService,
+    private _mainAPiServiceService: MainAPiServiceService,
     private TableColumnsService: TableColumnsService,
     private toastr: ToastrService) { }
 
@@ -55,7 +55,9 @@ export class MatterInvoicesComponent implements OnInit {
   loadData() {
     this.isLoadingResults = true;
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
-    this.MatterInvoices.MatterInvoicesData(potData).subscribe(res => {
+
+  
+    this._mainAPiServiceService.getSetData(potData, 'GetInvoice').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.MatterInvoicesdata = new MatTableDataSource(res.DATA.INVOICES)
         this.MatterInvoicesdata.paginator = this.paginator;

@@ -1,12 +1,12 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
-import { TemplateListDetails } from 'app/_services';
+import { MainAPiServiceService } from 'app/_services';
 import { MatTableDataSource, MatPaginator, MatDialogRef, MatDialog } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { MatterDialogComponentForTemplate } from 'app/main/pages/template/matter-dialog/matter-dialog.component';
 import { Router } from '@angular/router';
-// import { SystemSetting } from './../../../../_services';
+
 
 @Component({
   selector: 'app-generate-template',
@@ -28,7 +28,7 @@ export class GenerateTemplatesDialoagComponent implements OnInit {
   getRoeData:any=[];
 
   pageSize: any;
-  constructor(public TemplateListData: TemplateListDetails, private toastr: ToastrService,
+  constructor(private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService,
     public dialogRef: MatDialogRef<GenerateTemplatesDialoagComponent>,   public _matDialog: MatDialog,private router:Router ) { }
 
   ngOnInit() {
@@ -37,7 +37,7 @@ export class GenerateTemplatesDialoagComponent implements OnInit {
   LoadData(data){
     this.isLoadingResults = true;
 
-    this.TemplateListData.getTemplateList(data).subscribe(response => {
+    this._mainAPiServiceService.getSetData(data, 'TemplateList').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Templatedata = new MatTableDataSource(response.DATA.TEMPLATES);
 

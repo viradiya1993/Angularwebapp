@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { MatDialogRef, MatDialog, MatDatepickerInputEvent } from '@angular/material';
-import { GetReceptData, MainAPiServiceService } from 'app/_services';
+import {  MainAPiServiceService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -24,7 +24,6 @@ export class GeneralReceiptDilogComponent implements OnInit {
     public dialogRef: MatDialogRef<GeneralReceiptDilogComponent>,
     public datepipe: DatePipe,
     public MatDialog: MatDialog,
-    private _getReceptData: GetReceptData,
     public _matDialog: MatDialog,
     public _mainAPiServiceService: MainAPiServiceService
   ) { }
@@ -92,7 +91,7 @@ export class GeneralReceiptDilogComponent implements OnInit {
       NOTE: this.f.NOTE.value,
     }
     let matterPostData: any = { FormAction: 'insert', VALIDATEONLY: true, Data: data };
-    this._getReceptData.setReceipt(matterPostData).subscribe(response => {
+    this._mainAPiServiceService.getSetData(matterPostData, 'SetIncome').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
       } else if (response.CODE == 450 && response.STATUS == "error") {
@@ -146,7 +145,7 @@ export class GeneralReceiptDilogComponent implements OnInit {
   }
   SaveReceiptAfterVAlidation(data: any) {
     data.VALIDATEONLY = false;
-    this._getReceptData.setReceipt(data).subscribe(response => {
+    this._mainAPiServiceService.getSetData(data, 'SetIncome').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.toastr.success('Receipt save successfully');
         this.isspiner = false;

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { SystemSetting, BehaviorService } from './../../../_services';
+import { MainAPiServiceService } from './../../../_services';
 import {Location} from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
@@ -28,7 +28,8 @@ export class SystemSettingComponent implements OnInit {
   isspiner: boolean = false;
   clickedBtn: string;
 
-  constructor(private behaviorService:BehaviorService,public _matDialog: MatDialog,private toastr: ToastrService,private location: Location,public router: Router,  private route: ActivatedRoute,private SystemSetting:SystemSetting,  private _formBuilder: FormBuilder,) { 
+  constructor(private _mainAPiServiceService: MainAPiServiceService,public _matDialog: MatDialog,private toastr: ToastrService,private location: Location,
+    public router: Router,  private route: ActivatedRoute,  private _formBuilder: FormBuilder,) { 
     // this.nameFunction();
     this.nameFunction();
   }
@@ -121,7 +122,8 @@ export class SystemSettingComponent implements OnInit {
       TRACKDOCUMENTS:['']
      
     })
-    this.SystemSetting.getSystemSetting({}).subscribe(response=>{
+    
+    this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response=>{
       this.getVal(response);
       })
   }
@@ -373,7 +375,7 @@ export class SystemSettingComponent implements OnInit {
       // DIRECTORYSAVESTATEGY:this.f.DIRECTORYSAVESTRATEGY.value,
     }
     let data1 = { FormAction: "insert", VALIDATEONLY: true, Data: data }
-    this.SystemSetting.setSystemSetting(data1).subscribe(response => {
+    this._mainAPiServiceService.getSetData(data1, 'SetSystem').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, data1);
       } else if (response.CODE == 451 && response.STATUS == "warning") {
@@ -427,7 +429,7 @@ export class SystemSettingComponent implements OnInit {
 
   saveSettingData(data1: any) {
     data1.VALIDATEONLY = false;
-    this.SystemSetting.setSystemSetting(data1).subscribe(response => {
+    this._mainAPiServiceService.getSetData(data1, 'SetSystem').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.toastr.success('Update successfully');
         this.isspiner = false;

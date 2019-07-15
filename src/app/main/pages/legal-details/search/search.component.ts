@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-import { SafeCustodyService, TableColumnsService } from './../../../../_services';
+import { TableColumnsService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import {MatSort} from '@angular/material';
@@ -29,7 +29,7 @@ export class SearchComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
  
 
-  constructor(private _formBuilder: FormBuilder,private dialog: MatDialog, private TableColumnsService: TableColumnsService, private safeCustody_service: SafeCustodyService, private toastr: ToastrService) { }
+  constructor(private _formBuilder: FormBuilder,private dialog: MatDialog, private TableColumnsService: TableColumnsService,  private toastr: ToastrService) { }
   safeCustody_table;
   ngOnInit() {
     let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));

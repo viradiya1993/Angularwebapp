@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
-import { FormGroup } from '@angular/forms';
-import { SystemSetting } from './../../../../_services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material';
 

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-import { FileNotesService, TableColumnsService } from './../../../../_services';
+import { TableColumnsService, MainAPiServiceService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import {MatSort} from '@angular/material';
@@ -24,7 +24,8 @@ export class FileNotesComponent implements OnInit {
   pageSize: any;
   tempColobj: any;
 
-  constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, private fileNotes_service: FileNotesService, private toastr: ToastrService) { }
+  constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, 
+    private _mainAPiServiceService: MainAPiServiceService,private toastr: ToastrService) { }
   filenotes_table;
   ngOnInit() {
     $('content').addClass('inner-scroll');
@@ -35,8 +36,7 @@ export class FileNotesComponent implements OnInit {
   loadData() {
     this.isLoadingResults = true;
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
-    this.fileNotes_service.getData(potData).subscribe(response => {
-      console.log(response);
+    this._mainAPiServiceService.getSetData(potData, 'GetFileNote').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let FILENOTES = response.DATA.FILENOTES == null ? [] : response.DATA.FILENOTES;
         this.filenotes_table = new MatTableDataSource(FILENOTES);

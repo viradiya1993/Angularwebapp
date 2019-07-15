@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material';
 import { MatTableDataSource } from '@angular/material/table';
 import * as $ from 'jquery';
 import { fuseAnimations } from '@fuse/animations';
-import { TemplateListDetails ,TableColumnsService } from 'app/_services';
+import { TableColumnsService, MainAPiServiceService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { MatterDialogComponentForTemplate } from '../matter-dialog/matter-dialog.component';
 import { Router } from '@angular/router';
@@ -36,7 +36,7 @@ export class EmailTempleteComponent implements OnInit {
   pageSize: any;
   constructor(
     private _formBuilder: FormBuilder,
-    public TemplateListData: TemplateListDetails,
+    private _mainAPiServiceService: MainAPiServiceService,
     private toastr: ToastrService,
     private TableColumnsService: TableColumnsService,
     public _matDialog: MatDialog,
@@ -67,7 +67,7 @@ export class EmailTempleteComponent implements OnInit {
   // }
   LoadData(passdata){
     this.isLoadingResults = true;
-    this.TemplateListData.getEmailList(passdata).subscribe(response => {
+     this._mainAPiServiceService.getSetData(passdata, 'GetEmail').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.TemplateEmaildata = new MatTableDataSource(response.DATA.EMAILS);
         // this.editContact(response.DATA.TEMPLATES[0]);

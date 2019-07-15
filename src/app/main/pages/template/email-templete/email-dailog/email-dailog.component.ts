@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatDialogConfig } from '@angular/material';
 import { MatSort } from '@angular/material'
-import { TemplateListDetails } from 'app/_services';
+import {  MainAPiServiceService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 // export interface PeriodicElement {
@@ -55,19 +55,16 @@ export class EmailDailogComponent implements OnInit {
   constructor(
     public MatDialog: MatDialog,
     public dialogRef: MatDialogRef<EmailDailogComponent>,
-    private router: Router,
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
     public _matDialog: MatDialog,
-    public TemplateListData: TemplateListDetails,
+    private _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) 
   { 
     this.action = data.action;
 
   }
-
-
   ngOnInit() {
     this.EmailTemplete = this._formBuilder.group({
       name:[],
@@ -103,7 +100,7 @@ export class EmailDailogComponent implements OnInit {
   }
   innerTable(){
     this.isLoadingResults = true;
-    this.TemplateListData.getTemplateDropDown({"TEMPLATETYPE":'Email'}).subscribe(res=>{
+      this._mainAPiServiceService.getSetData({"TEMPLATETYPE":'Email'}, 'TemplateFieldList').subscribe(res=>{
       console.log(res);
       this.InnerTableData = new MatTableDataSource(res.DATA.FIELDS);
       this.InnerTableData.paginator = this.paginator;
@@ -153,7 +150,8 @@ export class EmailDailogComponent implements OnInit {
    
     
     let details = { FormAction: this.FormAction, VALIDATEONLY: true, Data: passdata };
-    this.TemplateListData.setEmail(details).subscribe(response => {
+   
+    this._mainAPiServiceService.getSetData(details, 'SetEmail').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, details);
       } else if (response.CODE == 451 && response.STATUS == "warning") {
@@ -210,7 +208,7 @@ export class EmailDailogComponent implements OnInit {
     }
     SetEmailData(data: any) {
       data.VALIDATEONLY = false;
-      this.TemplateListData.setEmail(data).subscribe(response => {
+      this._mainAPiServiceService.getSetData(data, 'SetEmail').subscribe(response => {
         if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
           if (this.action !== 'edit') {
             this.toastr.success(' save successfully');

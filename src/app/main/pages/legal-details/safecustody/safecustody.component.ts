@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-import { SafeCustodyService, TableColumnsService } from './../../../../_services';
+import { TableColumnsService, MainAPiServiceService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import {MatSort} from '@angular/material';
@@ -24,7 +24,7 @@ export class SafecustodyComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, private safeCustody_service: SafeCustodyService, private toastr: ToastrService) { }
+  constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService,  private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService) { }
   safeCustody_table;
   ngOnInit() {
     $('content').addClass('inner-scroll');
@@ -48,7 +48,7 @@ export class SafecustodyComponent implements OnInit {
     this.isLoadingResults = true;
     //get autorites  
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
-    this.safeCustody_service.getData(potData).subscribe(response => {
+    this._mainAPiServiceService.getSetData(potData, 'GetSafeCustody').subscribe(response =>{
       if (response.CODE == 200 && response.STATUS == "success") {
         this.safeCustody_table = new MatTableDataSource(response.DATA.SAFECUSTODIES);
         this.safeCustody_table.paginator = this.paginator;

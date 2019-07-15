@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { MatDatepickerInputEvent } from '@angular/material';
-import { MattersService } from 'app/_services';
+import {  MainAPiServiceService } from 'app/_services';
 
 @Component({
   selector: 'app-litigation',
@@ -16,37 +16,44 @@ export class LitigationComponent implements OnInit {
   ListData: any;
   ClientTypeData: any;
   CourtBelowData: any;
-  constructor(private datepipe: DatePipe, private _mattersService: MattersService) { }
+  constructor(private datepipe: DatePipe,
+    private _mainAPiServiceService: MainAPiServiceService ) { }
 
   @Input() matterdetailForm: FormGroup;
   @Input() errorWarningData: any;
   ngOnInit() {
-    this._mattersService.getMattersClasstype({ 'LookupType': 'court' }).subscribe(responses => {
+    
+    this._mainAPiServiceService.getSetData({ 'LookupType': 'court' }, 'GetLookups').subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.CourtData = responses.DATA.LOOKUPS;
       }
     });
-    this._mattersService.getMattersClasstype({ 'LookupType': 'division' }).subscribe(responses => {
+   
+    this._mainAPiServiceService.getSetData({ 'LookupType': 'division' }, 'GetLookups').subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.DivisionData = responses.DATA.LOOKUPS;
       }
     });
-    this._mattersService.getMattersClasstype({ 'LookupType': 'registry' }).subscribe(responses => {
+    
+    this._mainAPiServiceService.getSetData({ 'LookupType': 'registry' }, 'GetLookups').subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.RegistryData = responses.DATA.LOOKUPS;
       }
     });
-    this._mattersService.getMattersClasstype({ 'LookupType': 'Court List' }).subscribe(responses => {
+    
+    this._mainAPiServiceService.getSetData({ 'LookupType': 'Court List' }, 'GetLookups').subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.ListData = responses.DATA.LOOKUPS;
       }
     });
-    this._mattersService.getMattersClasstype({ 'LookupType': 'client type' }).subscribe(responses => {
+   
+    this._mainAPiServiceService.getSetData({ 'LookupType': 'client type' }, 'GetLookups').subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.ClientTypeData = responses.DATA.LOOKUPS;
       }
     });
-    this._mattersService.getMattersClasstype({ 'LookupType': 'court below' }).subscribe(responses => {
+    
+    this._mainAPiServiceService.getSetData({ 'LookupType': 'court below' }, 'GetLookups').subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.CourtBelowData = responses.DATA.LOOKUPS;
       }

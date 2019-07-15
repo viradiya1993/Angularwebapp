@@ -1,11 +1,10 @@
 import { Component, OnInit, Inject, AfterViewInit, ViewChild, ViewEncapsulation, Input } from '@angular/core';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatPaginator, MatTableDataSource, MatDialogConfig } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { MattersService, TimersService, TemplateListDetails } from './../../../../_services';
+import { MainAPiServiceService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
-import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.component';
-import { TemplateComponent } from '../template.component';
+
 import { environment } from 'environments/environment';
 import {MatSort} from '@angular/material';
 
@@ -44,10 +43,8 @@ export class MatterDialogComponentForTemplate implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
-    private mattersService: MattersService,
     private toastr: ToastrService,
-    private Timersservice: TimersService,
-    private TemplateListDetails: TemplateListDetails,
+    private _mainAPiServiceService: MainAPiServiceService,
     public dialogRef: MatDialogRef<MatterDialogComponentForTemplate>,
     @Inject(MAT_DIALOG_DATA) public _data: any
     // private data:TemplateComponent
@@ -76,7 +73,8 @@ export class MatterDialogComponentForTemplate implements OnInit {
   //select matter
   selectMatter(data) {
     this.isLoadingResults = true;
-    this.TemplateListDetails.getGenerateTemplate(data).subscribe(response => {
+   
+    this._mainAPiServiceService.getSetData(data, 'TemplateGenerate').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.toastr.success('success');
         if(this._data.Type=="Template"){

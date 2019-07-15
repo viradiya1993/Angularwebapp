@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
-import { SystemSetting } from './../../../../_services';
 import { GenerateTemplatesDialoagComponent } from '../../system-settings/templates/gennerate-template-dialoag/generate-template.component';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 

@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog, MatDatepickerInputEvent } from '@angular/material';
 import { ContactSelectDialogComponent } from '../../../contact/contact-select-dialog/contact-select-dialog.component';
 import { FormGroup } from '@angular/forms';
-import { MattersService } from 'app/_services';
+import {  MainAPiServiceService } from 'app/_services';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -20,27 +20,31 @@ export class OthersComponent implements OnInit {
 
   constructor(
     public MatDialog: MatDialog,
-    private _mattersService: MattersService,
+    private _mainAPiServiceService: MainAPiServiceService,
     public datepipe: DatePipe
   ) { }
 
   ngOnInit() {
-    this._mattersService.getMattersClasstype({ 'LookupType': 'Client Source' }).subscribe(responses => {
+   
+    this._mainAPiServiceService.getSetData({ 'LookupType': 'Client Source' }, 'GetLookups').subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.ClientSource = responses.DATA.LOOKUPS;
       }
     });
-    this._mattersService.getMattersClasstype({ 'LookupType': 'Matter Type' }).subscribe(responses => {
+  
+    this._mainAPiServiceService.getSetData({ 'LookupType': 'Matter Type' }, 'GetLookups').subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.MatterType = responses.DATA.LOOKUPS;
       }
     });
-    this._mattersService.getMattersClasstype({ 'LookupType': 'Industry' }).subscribe(responses => {
+   
+    this._mainAPiServiceService.getSetData({ 'LookupType': 'Industry' }, 'GetLookups').subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.Industry = responses.DATA.LOOKUPS;
       }
     });
-    this._mattersService.getMattersClasstype({ 'LookupType': 'Field Of Law' }).subscribe(responses => {
+    
+    this._mainAPiServiceService.getSetData({ 'LookupType': 'Field Of Law' }, 'GetLookups').subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.FiledOfLaw = responses.DATA.LOOKUPS;
       }

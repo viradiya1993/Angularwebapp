@@ -7,7 +7,7 @@ import { ContactSelectDialogComponent } from '../../contact/contact-select-dialo
 import { MatterDialogComponent } from '../../time-entries/matter-dialog/matter-dialog.component';
 import * as $ from 'jquery';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-import { SpendmoneyService, TableColumnsService, MainAPiServiceService } from 'app/_services';
+import {  MainAPiServiceService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { MatSort } from '@angular/material';
 import { DatePipe } from '@angular/common';
@@ -75,7 +75,6 @@ export class SpendMoneyAddComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<SpendMoneyAddComponent>,
     @Inject(MAT_DIALOG_DATA) public _data: any,
     private _formBuilder: FormBuilder,
-    private SpendmoneyService: SpendmoneyService,
     public MatDialog: MatDialog,
     private toastr: ToastrService,
     public _matDialog: MatDialog,public datepipe: DatePipe, public _mainAPiServiceService: MainAPiServiceService) {
@@ -729,7 +728,8 @@ let Data={
   Setata(potData) {
     this.isspiner = true;
     let details = { FormAction: this.FormAction, VALIDATEONLY: true, Data: potData };
-    this.SpendmoneyService.setSpendmonyData(details).subscribe(response => {
+    
+    this._mainAPiServiceService.getSetData(potData, 'SetExpenditure').subscribe(response => {
       //array empty of save item
       this.sendItem=[];
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
@@ -788,7 +788,7 @@ let Data={
   }
   saveSpendMoneyData(data: any) {
     data.VALIDATEONLY = false;
-    this.SpendmoneyService.setSpendmonyData(data).subscribe(response => {
+    this._mainAPiServiceService.getSetData(data, 'SetExpenditure').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         if (this.action !== 'edit') {
           this.toastr.success(' save successfully');

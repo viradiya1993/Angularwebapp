@@ -102,7 +102,7 @@ export class BankingDialogComponent implements OnInit {
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   addData:any=[];
-  // constructor(private SystemSetting:SystemSetting) { }
+  
 
   nodeMap = new Map<string, LoadmoreFlatNode>();
   treeControl: FlatTreeControl<LoadmoreFlatNode>;

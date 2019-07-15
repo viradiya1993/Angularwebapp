@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MattersService, TimersService } from '../../../../_services';
+import {  MainAPiServiceService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
@@ -31,7 +31,7 @@ export class MatterPopupComponent implements OnInit {
   CorrespondDetail: any = [];
 
   constructor(
-    private _mattersService: MattersService,
+    private _mainAPiServiceService: MainAPiServiceService,
     private toastr: ToastrService,
     private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<MatterPopupComponent>,
@@ -62,7 +62,8 @@ export class MatterPopupComponent implements OnInit {
     let UserData = JSON.parse(localStorage.getItem('currentUser')).ProductType;
     this.userType = UserData == 'Barrister' ? 0 : 1;
     this.matterFormBuild();
-    this._mattersService.getMattersClasstype({ 'LookupType': 'Matter Class' }).subscribe(responses => {
+   
+    this._mainAPiServiceService.getSetData({ 'LookupType': 'Matter Class' }, 'GetLookups').subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.Classdata = responses.DATA.LOOKUPS;
       } else if (responses.MESSAGE == "Not logged in") {
@@ -72,7 +73,9 @@ export class MatterPopupComponent implements OnInit {
     });
     if (this.action === 'edit' || this.action === 'duplicate') {
       this.isLoadingResults = true;
-      this._mattersService.getMattersDetail({ MATTERGUID: this._data.matterGuid, 'GETALLFIELDS': true }).subscribe(response => {
+
+     
+      this._mainAPiServiceService.getSetData({ MATTERGUID: this._data.matterGuid, 'GETALLFIELDS': true }, 'GetMatter').subscribe(response => {
         if (response.CODE === 200 && response.STATUS === 'success') {
           let matterData = response.DATA.MATTERS[0];
           this.classtype = matterData.MATTERCLASS;
@@ -963,7 +966,8 @@ export class MatterPopupComponent implements OnInit {
       details.MATTERNO = this.f.MatterNo.value;
     }
     let matterPostData: any = { FormAction: this.FormAction, VALIDATEONLY: true, Data: details };
-    this._mattersService.AddNewMatter(matterPostData).subscribe(response => {
+      
+      this._mainAPiServiceService.getSetData(matterPostData, 'SetMatter').subscribe(response => {
       if (response.DATA.SHORTNAME && response.DATA.SHORTNAME != "") {
         this.matterdetailForm.controls['SHORTNAME'].setValue(response.DATA.SHORTNAME);
         details.SHORTNAME = response.DATA.SHORTNAME;
@@ -1024,7 +1028,8 @@ export class MatterPopupComponent implements OnInit {
   }
   saveMatterData(data: any) {
     data.VALIDATEONLY = false;
-    this._mattersService.AddNewMatter(data).subscribe(response => {
+      
+    this._mainAPiServiceService.getSetData(data, 'SetMatter').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         if (this.action !== 'edit') {
           this.toastr.success('Matter save successfully');
@@ -1045,10 +1050,11 @@ export class MatterPopupComponent implements OnInit {
     });
   }
   saveCorDetail(MatterId: any) {
-    let matterService = this._mattersService;
+
+    let matterService = this._mainAPiServiceService;
     this.CorrespondDetail.forEach(function (value: { MATTERGUID: any; }) {
       value.MATTERGUID = MatterId;
-      matterService.AddMatterContact({ FORMACTION: 'insert', VALIDATEONLY: false, DATA: value }).subscribe((response: { CODE: number; STATUS: string; }) => {
+        matterService.getSetData({ FORMACTION: 'insert', VALIDATEONLY: false, DATA: value }, 'SetMatter').subscribe((response: { CODE: number; STATUS: string; }) => {
         if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         }
       }, (error: any) => { console.log(error); });

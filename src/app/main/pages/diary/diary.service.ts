@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { DiaryDataService } from '../../../_services';
+import {  MainAPiServiceService } from '../../../_services';
 
 @Injectable()
 export class DiaryService implements Resolve<any>
@@ -19,7 +19,7 @@ export class DiaryService implements Resolve<any>
     constructor(
         private _httpClient: HttpClient,
         private toastr: ToastrService,
-        private DiaryData: DiaryDataService
+        private _mainAPiServiceService: MainAPiServiceService,
     ) {
         // Set the defaults
         this.onEventsUpdated = new Subject();
@@ -58,7 +58,7 @@ export class DiaryService implements Resolve<any>
     getEvents(): Promise<any> {
         return new Promise((resolve, reject) => {
             let tempEvent: any[] = [];
-            this.DiaryData.DiaryData().subscribe(res => {
+            this._mainAPiServiceService.getSetData('', 'GetAppointment').subscribe(res => {
                 if (res.CODE == 200 && res.STATUS == "success") {
                     res.DATA.APPOINTMENTS.forEach(itemsdata => {
                         tempEvent.push({ start: dateformat(changeformat(itemsdata.DATE) + ' ' + itemsdata.TIME), title: '(' + this.tConvert(itemsdata.TIME) + ') -' + itemsdata.SUBJECT, allDay: false });

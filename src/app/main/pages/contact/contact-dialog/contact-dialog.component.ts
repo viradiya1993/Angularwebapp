@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { AddContactService, ContactService } from './../../../../_services';
+import { MainAPiServiceService } from './../../../../_services';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { fuseAnimations } from '@fuse/animations';
@@ -41,9 +41,8 @@ export class ContactDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<ContactDialogComponent>,
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private Contact: ContactService,
-    private addcontact: AddContactService,
     public _matDialog: MatDialog,
+    private _mainAPiServiceService:MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
     console.log(_data);
@@ -141,7 +140,7 @@ export class ContactDialogComponent implements OnInit {
     if (this.action === 'edit' || this.action === 'duplicate') {
       this.isLoadingResults = true;
       let contactguidforbody = { CONTACTGUID: localStorage.getItem('contactGuid') }
-      this.Contact.getContact(contactguidforbody).subscribe(res => {
+      this._mainAPiServiceService.getSetData(contactguidforbody, 'GetContact').subscribe(res => {
         if (res.MESSAGE == "Not logged in") {
           this.dialogRef.close(false);
         } else {
@@ -363,7 +362,7 @@ export class ContactDialogComponent implements OnInit {
       NOTES: this.f.NOTES.value
     }
     let details = { FormAction: this.FormAction, VALIDATEONLY: true, Data: detailsdata };
-    this.addcontact.AddContactData(details).subscribe(response => {
+    this._mainAPiServiceService.getSetData(details, 'SetContact').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, details);
       } else if (response.CODE == 451 && response.STATUS == "warning") {
@@ -417,7 +416,7 @@ export class ContactDialogComponent implements OnInit {
   }
   saveContectData(data: any) {
     data.VALIDATEONLY = false;
-    this.addcontact.AddContactData(data).subscribe(response => {
+    this._mainAPiServiceService.getSetData(data, 'SetContact').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         if (this.action !== 'edit') {
           this.toastr.success('Contact save successfully');

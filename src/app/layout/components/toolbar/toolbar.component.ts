@@ -8,7 +8,7 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { Location } from '@angular/common';
 import { navigation } from 'app/navigation/navigation';
-import { AuthenticationService, ReportlistService, TimersService, SpendmoneyService, ContactService, MattersService, MatterInvoicesService, GetReceptData, MainAPiServiceService } from '../../../_services';
+import { AuthenticationService, ReportlistService, TimersService, SpendmoneyService,MattersService, MatterInvoicesService, GetReceptData, MainAPiServiceService } from '../../../_services';
 import { Router } from '@angular/router';
 import { ContactDialogComponent } from './../../../main/pages/contact/contact-dialog/contact-dialog.component';
 import { LicenceAgreementComponent } from '../../../main/licence-agreement/licence-agreement.component';
@@ -100,7 +100,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         public _matDialog: MatDialog,
         private reportlistService: ReportlistService,
         private toastr: ToastrService,
-        public _getContact: ContactService,
         private TimersServiceI: TimersService,
         private _mattersService: MattersService,
         private _mainAPiServiceService: MainAPiServiceService,
@@ -641,7 +640,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             if (result) {
                 let getContactGuId = localStorage.getItem('contactGuid');
                 let postData = { FormAction: "delete", data: { CONTACTGUID: getContactGuId } }
-                this._getContact.AddContactData(postData).subscribe(res => {
+                this._mainAPiServiceService.getSetData(postData, 'SetContact').subscribe(res => {
                     if (res.STATUS == "success") {
                         $('#refreshContactTab').click();
                         this.toastr.success(res.STATUS);

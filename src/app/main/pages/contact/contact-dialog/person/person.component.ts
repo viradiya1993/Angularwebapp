@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { ContactService } from 'app/_services/contact.service';
 import { MatDialog } from '@angular/material';
 import { ContactSelectDialogComponent } from '../../contact-select-dialog/contact-select-dialog.component';
 
@@ -19,7 +18,7 @@ export class PersonComponent implements OnInit {
   @Input() errorWarningData: any;
   isContact: boolean = false;
   common: { Id: number; Name: string; }[];
-  constructor(public _getContact: ContactService, public MatDialog: MatDialog) { }
+  constructor(public MatDialog: MatDialog) { }
   /**
    * On init
    */

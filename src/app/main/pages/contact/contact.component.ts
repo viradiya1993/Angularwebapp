@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-import { ContactService, TableColumnsService } from '../../../_services';
+import {  TableColumnsService, MainAPiServiceService } from '../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -34,9 +34,9 @@ export class ContactComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private TableColumnsService: TableColumnsService,
-    private Contact: ContactService,
     private toastr: ToastrService,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private _mainAPiServiceService:MainAPiServiceService,
   ) {
     this.contactFilter = this._formBuilder.group({
       ContactType: ['all'],
@@ -84,8 +84,10 @@ export class ContactComponent implements OnInit {
     this.LoadData(this.filterVals);
   }
   LoadData(data) {
+    // GetContact
+    //  this._mainAPiServiceService.getSetData(postData, 'SetActivity').subscribe
     this.isLoadingResults = true;
-    this.Contact.ContactData(data).subscribe(response => {
+    this._mainAPiServiceService.getSetData(data, 'GetContact').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Contactdata = new MatTableDataSource(response.DATA.CONTACTS);
         this.Contactdata.sort = this.sort;

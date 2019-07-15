@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { MatDialogRef, MatDialog, MatDatepickerInputEvent } from '@angular/material';
-import { ContactService, GetReceptData } from 'app/_services';
+import { GetReceptData, MainAPiServiceService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -24,9 +24,9 @@ export class GeneralReceiptDilogComponent implements OnInit {
     public dialogRef: MatDialogRef<GeneralReceiptDilogComponent>,
     public datepipe: DatePipe,
     public MatDialog: MatDialog,
-    public _getContact: ContactService,
     private _getReceptData: GetReceptData,
     public _matDialog: MatDialog,
+    public _mainAPiServiceService: MainAPiServiceService
   ) { }
   generalReceiptForm: FormGroup;
   isspiner: boolean;
@@ -54,7 +54,7 @@ export class GeneralReceiptDilogComponent implements OnInit {
     this.getPayor({});
   }
   getPayor(postData) {
-    this._getContact.ContactData(postData).subscribe(response => {
+    this._mainAPiServiceService.getSetData(postData, 'GetContact').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.getPayourarray = response.DATA.CONTACTS;
         this.isLoadingResults = false;

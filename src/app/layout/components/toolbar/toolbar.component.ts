@@ -8,7 +8,7 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { Location } from '@angular/common';
 import { navigation } from 'app/navigation/navigation';
-import { AuthenticationService,MainAPiServiceService, TimersService } from '../../../_services';
+import { AuthenticationService, MainAPiServiceService, TimersService } from '../../../_services';
 import { Router } from '@angular/router';
 import { ContactDialogComponent } from './../../../main/pages/contact/contact-dialog/contact-dialog.component';
 import { LicenceAgreementComponent } from '../../../main/licence-agreement/licence-agreement.component';
@@ -74,7 +74,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     isInvoice: any;
     greenTheme: any = false;
     CreatDocumentChild: any;
-    
+
 
 
 
@@ -105,12 +105,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
 
 
-      
+
 
         private _mainAPiServiceService: MainAPiServiceService,
         private _router: Router,
-        private SpendmoneyService: SpendmoneyService,
-        private _getReceptData: GetReceptData,
         private location: Location,
         public MatDialog: MatDialog
     ) {
@@ -387,7 +385,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             popupData = { action: actionType, USERGUID: ActiveUserData.USERGUID };
         }
         const dialogRef = this.dialog.open(UserDialogComponent, { disableClose: true, panelClass: 'User-dialog', data: popupData });
-        dialogRef.afterClosed().subscribe(result => {});
+        dialogRef.afterClosed().subscribe(result => { });
     }
     //DeleteUser
     DeleteUser(): void {
@@ -618,7 +616,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     let postData = { FormAction: "delete", DATA: { EXPENDITUREGUID: SendMoney_data.EXPENDITUREGUID } }
-                     this._mainAPiServiceService.getSetData(postData, 'SetExpenditure').subscribe(res => {
+                    this._mainAPiServiceService.getSetData(postData, 'SetExpenditure').subscribe(res => {
                         if (res.STATUS == "success" && res.CODE == 200) {
                             $('#refreshSpendMoneyTab').click();
                             this.toastr.success('Delete successfully');
@@ -665,8 +663,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             if (result) {
                 let WORKITEMGUID = localStorage.getItem('edit_WORKITEMGUID');
                 let postData = { FormAction: "delete", data: { WorkItemGuid: WORKITEMGUID } }
-                
-                    this._mainAPiServiceService.getSetData(postData, 'SetWorkItems').subscribe(res => {
+
+                this._mainAPiServiceService.getSetData(postData, 'SetWorkItems').subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {
                         $('#refreshTimeEntryTab').click();
                         this.toastr.success('Delete successfully');
@@ -695,20 +693,20 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             console.log(result);
         });
     }/* Document Register Module */
-   
-    DocumntPop(actionType){
-      let DcoumentPopdata = {}
-      if(actionType == 'new'){
-        DcoumentPopdata = {action:actionType}
-      }else if(actionType == 'edit' || actionType == 'duplicate'){
-        DcoumentPopdata = {action:actionType}
-      }
-      const dialogRef = this.dialog.open(DocumentDailogComponent, {
-        disableClose: true,
-        panelClass: 'Document-dialog',
-        data: DcoumentPopdata
-      });
-      dialogRef.afterClosed().subscribe(result => {});
+
+    DocumntPop(actionType) {
+        let DcoumentPopdata = {}
+        if (actionType == 'new') {
+            DcoumentPopdata = { action: actionType }
+        } else if (actionType == 'edit' || actionType == 'duplicate') {
+            DcoumentPopdata = { action: actionType }
+        }
+        const dialogRef = this.dialog.open(DocumentDailogComponent, {
+            disableClose: true,
+            panelClass: 'Document-dialog',
+            data: DcoumentPopdata
+        });
+        dialogRef.afterClosed().subscribe(result => { });
     }
 
     // Delete Record Document
@@ -789,17 +787,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /* Email Module Function */
     EmailTempletePopUp(actionType) {
         let EmailPopdata = {}
-        if(actionType == 'new'){
-            EmailPopdata = {action:actionType}
-        }else if(actionType == 'edit' || actionType == 'copy'){
-            EmailPopdata = {action:actionType}
+        if (actionType == 'new') {
+            EmailPopdata = { action: actionType }
+        } else if (actionType == 'edit' || actionType == 'copy') {
+            EmailPopdata = { action: actionType }
         }
         const dialogRef = this.dialog.open(EmailDailogComponent, {
             disableClose: true,
             panelClass: 'Email-dialog',
             data: EmailPopdata
         });
-        dialogRef.afterClosed().subscribe(result => {});
+        dialogRef.afterClosed().subscribe(result => { });
     }
 
     //Delete Email
@@ -815,13 +813,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     /* Packs Module Function */
-   
-    PackModule(actionType){
-       let PackPopdata = {}
-        if(actionType == 'new'){
-            PackPopdata = {action:actionType}
-        }else{
-            PackPopdata = {action:actionType}
+
+    PackModule(actionType) {
+        let PackPopdata = {}
+        if (actionType == 'new') {
+            PackPopdata = { action: actionType }
+        } else {
+            PackPopdata = { action: actionType }
         }
         const dialogRef = this.dialog.open(PacksDailogComponent, {
             disableClose: true,
@@ -829,10 +827,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             data: PackPopdata
         });
         dialogRef.afterClosed().subscribe(result => {
-           
+
         });
     }
-   
+
     //DeletePack
     DeletePack(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
@@ -844,31 +842,31 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             console.log(result);
         });
     }
-    SelectMatter(){
-        const dialogRef = this.MatDialog.open(MatterDialogComponent, { 
-            width: '100%', 
+    SelectMatter() {
+        const dialogRef = this.MatDialog.open(MatterDialogComponent, {
+            width: '100%',
             disableClose: true,
-            data:{} 
-          });
-          dialogRef.afterClosed().subscribe(result => {});
+            data: {}
+        });
+        dialogRef.afterClosed().subscribe(result => { });
     }
     /* Chart Of Account Module Function's */
 
-    AccountPop(actionType){
+    AccountPop(actionType) {
         let AccountPopdata = {}
-        if(actionType == 'new'){
-            AccountPopdata = {action:actionType}
-        }else if (actionType == 'edit' || actionType == 'copy'){
-            AccountPopdata = {action:actionType}
+        if (actionType == 'new') {
+            AccountPopdata = { action: actionType }
+        } else if (actionType == 'edit' || actionType == 'copy') {
+            AccountPopdata = { action: actionType }
         }
         const dialogRef = this.dialog.open(ChartAcDailogComponent, {
             disableClose: true,
             panelClass: 'ChartAc-dialog',
-            data:AccountPopdata
+            data: AccountPopdata
         });
-        dialogRef.afterClosed().subscribe(result => {});
+        dialogRef.afterClosed().subscribe(result => { });
     }
-   
+
     //DeleteAccount
     DeleteAccount(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
@@ -876,9 +874,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             width: '100%',
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-        this.confirmDialogRef.afterClosed().subscribe(result => {});
+        this.confirmDialogRef.afterClosed().subscribe(result => { });
     }
-   
+
 
     //Authority dialoge 
     AuthorityDialog(val) {
@@ -1000,19 +998,19 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /** Chronology Module's Function's */
 
     //NewChron
-    ChronPopup(actionType){
+    ChronPopup(actionType) {
         let ChronePopData = {}
-        if(actionType == 'new'){
-            ChronePopData = {action:actionType}
-        }else if(actionType == 'edit' || actionType == 'duplicate'){
-            ChronePopData = {action:actionType}
+        if (actionType == 'new') {
+            ChronePopData = { action: actionType }
+        } else if (actionType == 'edit' || actionType == 'duplicate') {
+            ChronePopData = { action: actionType }
         }
         const dialogRef = this.dialog.open(ChronItemDailogComponent, {
             disableClose: true,
             panelClass: 'Chrone-dialog',
-            data:ChronePopData
+            data: ChronePopData
         });
-        dialogRef.afterClosed().subscribe(result => {});
+        dialogRef.afterClosed().subscribe(result => { });
     }
     //DeleteChron
     DeleteChron() {
@@ -1029,13 +1027,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /* Dairy Appointment Module's Function's **/
 
     //New - Edit - Duplicate Appointment Dialog
-    DiaryAppointment(actionType){
+    DiaryAppointment(actionType) {
         console.log(actionType);
         let DiaryPopupData = {}
-        if(actionType == 'new'){
-            DiaryPopupData = {action:actionType};
-        }else if(actionType == 'edit' || actionType == 'duplicate'){
-            DiaryPopupData = {action:actionType};
+        if (actionType == 'new') {
+            DiaryPopupData = { action: actionType };
+        } else if (actionType == 'edit' || actionType == 'duplicate') {
+            DiaryPopupData = { action: actionType };
         }
         const dialogRef = this.dialog.open(DairyDailogComponent, {
             disableClose: true,
@@ -1044,7 +1042,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => { });
     }
-    
+
     //DeleteAppointment
     DeleteAppointment() {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
@@ -1052,10 +1050,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             width: '100%',
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-        this.confirmDialogRef.afterClosed().subscribe(result => {});
+        this.confirmDialogRef.afterClosed().subscribe(result => { });
     }
-    
-    
+
+
     //_____________________________________________________________________________________________________
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
@@ -1264,7 +1262,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             if (result) {
                 let INVOICEGUID = localStorage.getItem('edit_invoice_id');
                 let postData = { FormAction: "delete", DATA: { INVOICEGUID: INVOICEGUID } }
-                    this._mainAPiServiceService.getSetData(postData, 'SetInvoice').subscribe(res => {
+                this._mainAPiServiceService.getSetData(postData, 'SetInvoice').subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {
                         $('#refreshInvoiceTab').click();
                         this.toastr.success('Delete successfully');

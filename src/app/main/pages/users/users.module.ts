@@ -7,8 +7,6 @@ import { RouterModule } from '@angular/router';
 import { UsersComponent } from './users.component';
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
 import { FeeEarnerComponent } from './user-dialog/fee-earner/fee-earner.component';
-import { SecurityComponent } from './user-dialog/security/security.component';
-import { InfotrackComponent } from './user-dialog/infotrack/infotrack.component';
 import { BudgetsComponent } from './user-dialog/budgets/budgets.component';
 
 
@@ -31,7 +29,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material/sort';
 import { UserBudgetDialogComponent } from './user-dialog/budgets/user-budget-dialog/user-budget-dialog.component';
 
-
+import { BehaviorService } from 'app/_services';
 
 
 
@@ -44,8 +42,6 @@ const routes = [
     UsersComponent,
     UserDialogComponent,
     FeeEarnerComponent,
-    SecurityComponent,
-    InfotrackComponent,
     BudgetsComponent,
     UserBudgetDialogComponent
   ],
@@ -102,6 +98,7 @@ const routes = [
     MatSortModule
 
   ],
+  providers: [BehaviorService],
   exports: [
     UsersComponent,
     MatTreeModule,

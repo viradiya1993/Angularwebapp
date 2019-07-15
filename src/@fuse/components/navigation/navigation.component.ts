@@ -61,7 +61,6 @@ export class FuseNavigationComponent implements OnInit {
 
       this.GetFavouriteService.GetFavourite(postdata).subscribe(response => {
         if (response.CODE == 200 && response.STATUS == "success") {
-          console.log(response);
           if (response.DATA.FAVOURITES == '') {
             this.GetFavouriteService.setFavourite({ "FAVOURITES": Favouritelist }).subscribe(responses => {
               if (responses.CODE == 200 && responses.STATUS == "success") {
@@ -131,7 +130,6 @@ export class FuseNavigationComponent implements OnInit {
 
   //For click
   onChange(values) {
-    console.log(values);
     this.page.forEach(items => {
       if (items.STAR == '') {
         if (items.TITLE == values) {

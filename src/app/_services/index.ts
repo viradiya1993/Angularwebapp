@@ -35,4 +35,4 @@ export * from './system-setting.service';
 
 //main
 export * from './main-api-service.service';
-export * from './behaviour.service';
+export * from './Behavior.service';

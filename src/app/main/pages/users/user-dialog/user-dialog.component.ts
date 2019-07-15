@@ -1,15 +1,18 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
+import { MatDialogRef, MatDialog, MatTabChangeEvent } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { MainAPiServiceService } from 'app/_services';
+import { fuseAnimations } from '@fuse/animations';
 
 @Component({
   selector: 'app-user-dialog',
   templateUrl: './user-dialog.component.html',
-  styleUrls: ['./user-dialog.component.scss']
+  styleUrls: ['./user-dialog.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  animations: fuseAnimations
 })
 export class UserDialogComponent implements OnInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
@@ -21,6 +24,8 @@ export class UserDialogComponent implements OnInit {
   phide: boolean = true;
   userForm: FormGroup;
   USERGUID: any;
+  userinfoDatah: any = [];
+  tempPermission: any;
   constructor(
     public MatDialog: MatDialog,
     public dialogRef: MatDialogRef<UserDialogComponent>,
@@ -73,7 +78,7 @@ export class UserDialogComponent implements OnInit {
       this._mainAPiServiceService.getSetData({ USERGUID: this.data.USERGUID, 'GETALLFIELDS': true }, 'GetUsers').subscribe(response => {
         if (response.CODE === 200 && response.STATUS === 'success') {
           let userinfoData = response.DATA.USERS[0];
-          localStorage.setItem('edit_userPermission', JSON.stringify(userinfoData.PERMISSIONS));
+          this.tempPermission = userinfoData.PERMISSIONS;
           this.USERGUID = userinfoData.USERGUID;
           this.userForm.controls['USERGUID'].setValue(userinfoData.USERGUID);
           this.userForm.controls['USERNAME'].setValue(userinfoData.USERNAME);
@@ -95,6 +100,7 @@ export class UserDialogComponent implements OnInit {
           this.userForm.controls['RATEPERDAY'].setValue(userinfoData.RATEPERDAY);
           this.userForm.controls['SEARCHUSERNAME'].setValue(userinfoData.SEARCHUSERNAME);
           this.userForm.controls['SEARCHUSERPASSWORD'].setValue(userinfoData.SEARCHUSERPASSWORD);
+
         } else if (response.MESSAGE == "Not logged in") {
           this.dialogRef.close(false);
         }
@@ -106,6 +112,24 @@ export class UserDialogComponent implements OnInit {
   }
   get f() {
     return this.userForm.controls;
+  }
+  onLinkClick(event: MatTabChangeEvent) {
+    if (event.index == 1) {
+      let tempPermission = this.tempPermission;
+      let PermissionsCons = ['MATTER DETAILS', 'DAY BOOK / TIME ENTRIES', 'CONTACTS', 'ESTIMATES', 'DOCUMENT/EMAIL GENERATION', 'DOCUMENT REGISTER', 'INVOICING', 'RECEIVE MONEY', 'SPEND MONEY', 'CHRONOLOGY', 'TOPICS', 'AUTHORITIES', 'FILE NOTES', 'SAFE CUSTODY', 'SAFE CUSTODY PACKET', 'SEARCHING', 'DIARY', 'TASKS', 'CHART OF ACCOUNTS', 'GENERAL JOURNAL', 'OTHER ACCOUNTING', 'TRUST MONEY', 'TRUST CHART OF ACCOUNTS', 'TRUST GENERAL JOURNAL', 'TRUST REPORTS', 'ACCOUNTING REPORTS', 'MANAGEMENT REPORTS', 'SYSTEM', 'USERS', 'ACTIVITIES/SUNDRIES'];
+      let userPermissiontemp: any = [];
+      PermissionsCons.forEach(function (value) {
+        if (tempPermission[value]) {
+          let subPermissions: any = [];
+          tempPermission[value].forEach(function (value2) {
+            subPermissions.push(value2.NAME);
+          });
+          userPermissiontemp[value] = subPermissions;
+        }
+      });
+      this.userinfoDatah = userPermissiontemp;
+      console.log(this.userinfoDatah);
+    }
   }
   SaveUser(): void {
     this.isspiner = true;
@@ -198,7 +222,7 @@ export class UserDialogComponent implements OnInit {
   }
   permissionConvert(tempData: any) {
     let PermissionsCons = ['MATTER DETAILS', 'DAY BOOK / TIME ENTRIES', 'CONTACTS', 'ESTIMATES', 'DOCUMENT/EMAIL GENERATION', 'DOCUMENT REGISTER', 'INVOICING', 'RECEIVE MONEY', 'SPEND MONEY', 'CHRONOLOGY', 'TOPICS', 'AUTHORITIES', 'FILE NOTES', 'SAFE CUSTODY', 'SAFE CUSTODY PACKET', 'SEARCHING', 'DIARY', 'TASKS', 'CHART OF ACCOUNTS', 'GENERAL JOURNAL', 'OTHER ACCOUNTING', 'TRUST MONEY', 'TRUST CHART OF ACCOUNTS', 'TRUST GENERAL JOURNAL', 'TRUST REPORTS', 'ACCOUNTING REPORTS', 'MANAGEMENT REPORTS', 'SYSTEM', 'USERS', 'ACTIVITIES/SUNDRIES'];
-    let userPermissiontemp: any = {};
+    let userPermissiontemp: any = [];
     PermissionsCons.forEach(function (value) {
       if (tempData[value]) {
         let subPermissions: any = [];
@@ -208,7 +232,7 @@ export class UserDialogComponent implements OnInit {
         userPermissiontemp[value] = subPermissions;
       }
     });
-    localStorage.setItem('edit_userPermission', JSON.stringify(userPermissiontemp));
+    this.userinfoDatah = userPermissiontemp;
   }
 
 }

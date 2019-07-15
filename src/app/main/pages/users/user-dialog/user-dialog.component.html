@@ -41,17 +41,54 @@
                     <mat-checkbox formControlName="ISPRINCIPAL">Is Principal</mat-checkbox>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-tab-group mat-align-tabs="start">
+                    <mat-tab-group mat-align-tabs="start" (selectedTabChange)="onLinkClick($event)">
                         <mat-tab label="Fee Earner">
                             <app-fee-earner [userForm]="userForm" [errorWarningData]="errorWarningData">
                             </app-fee-earner>
                         </mat-tab>
+
                         <mat-tab label="Security">
-                            <app-security [userForm]="userForm">
-                            </app-security>
+                            <div fxLayout="row" fxLayoutAlign="start center " fxFlex="1 0 auto">
+                                <br><br>
+                                {{userinfoDatah | json}}
+                                <mat-accordion class="faqs-accordion">
+                                    <mat-expansion-panel *ngFor="let Permission of userinfoDatah; let i = index"
+                                        [expanded]="step === i" (opened)="setStep(i)">
+                                        {{Permission | json}}
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title fxLayout="row" fxLayoutAlign="start center">
+                                                <mat-icon class="mr-12 s-20 secondary-text">help_outline</mat-icon>
+                                                {{i}}
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <!-- {{Permission.NAME}} -->
+                                        asdasdasd
+                                    </mat-expansion-panel>
+                                </mat-accordion>
+                            </div>
                         </mat-tab>
                         <mat-tab label="InfoTrack">
-                            <app-infotrack [userForm]="userForm" [errorWarningData]="errorWarningData"></app-infotrack>
+                            <div fxLayout="row" fxLayoutAlign="start center " fxFlex="1 0 auto">
+                                <p fxFlex="100">
+                                    Enter a username and password for the search provider if you want to use a
+                                    different<br>
+                                    login for this user.If nothing is provided here it will use the system defult login.
+                                </p>
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                <mat-form-field appearance="outline" fxFlex="100" class="pr-4"
+                                    [ngClass]="{'has-error':errorWarningData.Error?.SEARCHUSERNAME,'has-warning':errorWarningData.Warning?.SEARCHUSERNAME}">
+                                    <mat-label>User Name</mat-label>
+                                    <input formControlName="SEARCHUSERNAME" matInput>
+                                </mat-form-field>
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                <mat-form-field appearance="outline" fxFlex="100" class="pr-4"
+                                    [ngClass]="{'has-error':errorWarningData.Error?.SEARCHUSERPASSWORD,'has-warning':errorWarningData.Warning?.SEARCHUSERPASSWORD}">
+                                    <mat-label>Password</mat-label>
+                                    <input formControlName="SEARCHUSERPASSWORD" matInput>
+                                </mat-form-field>
+                            </div>
                         </mat-tab>
                         <mat-tab label="Budgets">
                             <app-budgets [userForm]="userForm" [USERGUID]="USERGUID"></app-budgets>

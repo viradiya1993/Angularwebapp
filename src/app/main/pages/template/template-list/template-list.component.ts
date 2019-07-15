@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
-import { ContactService, TemplateListDetails, TableColumnsService } from 'app/_services';
+import {  TemplateListDetails, TableColumnsService } from 'app/_services';
 import { fuseAnimations } from '@fuse/animations';
 import * as $ from 'jquery';
 import { Router } from '@angular/router';
@@ -33,7 +33,6 @@ export class TemplateListComponent implements OnInit {
   @Output() matterDetail: EventEmitter<any> = new EventEmitter<any>();
   constructor(
     private toastr: ToastrService,
-    public _getContact: ContactService,
     public TemplateListData: TemplateListDetails,
     public MatDialog: MatDialog,
     private TableColumnsService: TableColumnsService,

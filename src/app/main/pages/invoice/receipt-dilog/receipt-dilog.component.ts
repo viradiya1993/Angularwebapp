@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { fuseAnimations } from '@fuse/animations';
 import { ContactSelectDialogComponent } from '../../contact/contact-select-dialog/contact-select-dialog.component';
-import { MatterInvoicesService, GetReceptData, ContactService } from 'app/_services';
+import { MatterInvoicesService, GetReceptData, MainAPiServiceService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { MatSort } from '@angular/material';
 
@@ -60,8 +60,8 @@ export class ReceiptDilogComponent implements OnInit {
     public MatDialog: MatDialog,
     private _MatterInvoicesService: MatterInvoicesService,
     private GetReceptData: GetReceptData,
-    public _getContact: ContactService,
     public _matDialog: MatDialog,
+    public _mainAPiServiceService:MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
     this.matterData = this._data.matterData;
@@ -181,7 +181,7 @@ export class ReceiptDilogComponent implements OnInit {
     });
   }
   getPayor(postData) {
-    this._getContact.ContactData(postData).subscribe(response => {
+    this._mainAPiServiceService.getSetData(postData, 'GetContact').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         response.DATA.CONTACTS.forEach(element => {
           this.getPayourarray.push(element.CONTACTNAME);

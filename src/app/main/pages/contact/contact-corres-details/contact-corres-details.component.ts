@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation, Inject } from '@angula
 import { MatTableDataSource, MatPaginator, MatDialog, MatDialogRef } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { MattersService, ContactService } from './../../../../_services';
+import { MattersService} from './../../../../_services';
 import { ContactDialogComponent } from '../contact-dialog/contact-dialog.component';
 import { ToastrService } from 'ngx-toastr';
 import {MatSort} from '@angular/material';
@@ -29,7 +29,6 @@ export class ContactCorresDetailsComponent implements OnInit {
   isLoadingResults: boolean = false;
   pageSize: any;
   constructor(
-    public _getContact: ContactService,
     private _getMattersService: MattersService,
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<ContactCorresDetailsComponent>,

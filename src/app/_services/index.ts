@@ -13,7 +13,6 @@ export * from './matter-trust.service';
 export * from './matter-invoices.service';
 export * from './estimate.service';
 export * from './work-in-progress.service';
-export * from './contact.service';
 export * from './diary-data.service';
 export * from './timers.service';
 export * from './getallcolumns-filter.service';
@@ -21,7 +20,6 @@ export * from './reportlist.service';
 
 
 //add contact
-export * from './add-contact.service';
 export * from './reportfilter.service';
 export * from './get-favourite.service';
 export * from './table-columns.service';

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { ContactService, } from './../../../../_services';
+import {  MainAPiServiceService, } from './../../../../_services';
 import { MatTableDataSource, MatPaginator, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
@@ -37,7 +37,7 @@ export class ContactSelectDialogComponent implements OnInit {
     private fb: FormBuilder,
     public dialog: MatDialog,
     public _matDialog: MatDialog,
-    public _getContact: ContactService,
+    public _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
     this.SelectcontactForm = this.fb.group({ ContactType: ['Company'], startsWith: ['a'], ActiveContacts: ['1'], SEARCH: [''], });
@@ -68,7 +68,7 @@ export class ContactSelectDialogComponent implements OnInit {
   }
   loadContectData(postData) {
     this.isLoadingResults = true;
-    this._getContact.ContactData(postData).subscribe(response => {
+    this._mainAPiServiceService.getSetData(postData, 'GetContact').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Contactdata = new MatTableDataSource(response.DATA.CONTACTS);
         this.Contactdata.paginator = this.paginator;
@@ -125,7 +125,7 @@ export class ContactSelectDialogComponent implements OnInit {
       if (result) {
         let getContactGuId = localStorage.getItem('contactGuid');
         let postData = { FormAction: "delete", CONTACTGUID: getContactGuId }
-        this._getContact.AddContactData(postData).subscribe(res => {
+        this._mainAPiServiceService.getSetData(postData, 'SetContact').subscribe(res => {
           if (res.STATUS == "success") {
             $('#refreshContactTab').click();
             this.toastr.success(res.STATUS);

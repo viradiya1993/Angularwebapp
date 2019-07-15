@@ -3,60 +3,61 @@
         <div class="center p-24 more_tbl_clmn list_tbl_main" fusePerfectScrollbar>
             <div class="matter-serach-div sticky_search_div responsive_auto">
                 <form [formGroup]="AccountRecouncile"  fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
-                    <h2>1-1200 General Cheque Account</h2>
                     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                        <mat-form-field class="example" appearance="outline"  fxFlex="25">
+                        <mat-form-field class="example" appearance="outline"  fxFlex="16.66">
                             <mat-label>Last Reconciled Date</mat-label>
                             <input matInput  formControlName="ReconciledDate"> 
                         </mat-form-field>
-                        <mat-form-field class="example" appearance="outline"  fxFlex="25" >
+                        <mat-form-field class="example" appearance="outline"  fxFlex="16.66" >
                             <mat-label>Statement Closing Bal.</mat-label>
                             <input matInput  formControlName="Statement" type="number" value="$0.00">
                         </mat-form-field>
-                        <mat-form-field class="example" appearance="outline"  fxFlex="25">
+                        <mat-form-field class="example" appearance="outline"  fxFlex="16.66">
                             <mat-label>Bank Statement Date</mat-label>
                             <input (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDateOfBank('change', $event)" matInput  formControlName ="Bankdate" [matDatepicker]="picker">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
-                        <mat-form-field class="example" appearance="outline"  fxFlex="25">
+                        <mat-form-field class="example" appearance="outline"  fxFlex="16.66">
                             <mat-label>Calculated Closing Bal.</mat-label>
                             <input matInput  formControlName="closeBal"  value="$5,994.00">
                         </mat-form-field>
-                    </div>
-                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                        <mat-form-field class="example" appearance="outline"  fxFlex="25">
+                        <mat-form-field class="example" appearance="outline"  fxFlex="16.66">
                             <mat-label>Last Reconciled Balance</mat-label>
                             <input matInput  formControlName="LastBal" value="$5,994.00">
                         </mat-form-field>
-                        <mat-form-field class="example" appearance="outline"  fxFlex="25">
+                        <mat-form-field class="example" appearance="outline"  fxFlex="16.66">
                             <mat-label>Out of Balance</mat-label>
                             <input matInput  formControlName="OutBal" value="$5,994.00">
                         </mat-form-field>
-                        <mat-form-field class="example" appearance="outline"  fxFlex="25">
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                      
+                        <mat-form-field class="example" appearance="outline"  fxFlex="20">
                             <mat-label>Unpresented Deposites</mat-label>
                             <input matInput  formControlName="UnDeposite" value="$0.00">
                         </mat-form-field>
-                        <mat-form-field class="example" appearance="outline"  fxFlex="25">
+                        <mat-form-field class="example" appearance="outline"  fxFlex="20">
                             <mat-label>Prepared by</mat-label>
                             <input matInput  formControlName="PreBy" value="Diana Parkinson">
                         </mat-form-field>
-                    </div>
-                   <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                        <mat-form-field class="example" appearance="outline"  fxFlex="33">
+                        <mat-form-field class="example" appearance="outline"  fxFlex="20">
                             <mat-label>Unbanked Cash/Chqs</mat-label>
                             <input matInput  formControlName="UnbankedCase" value="$0.00">
                         </mat-form-field>
-                        <mat-form-field class="example" appearance="outline"  fxFlex="33">
+                        <mat-form-field class="example" appearance="outline"  fxFlex="20">
                             <mat-label>Unpresented Withdrawals</mat-label>
                             <input matInput  formControlName="UnWith" value="$0.00">
                         </mat-form-field>
-                        <mat-form-field class="search" appearance="outline" fxFlex="34">
+                        <mat-form-field class="search" appearance="outline" fxFlex="20">
                             <mat-label>Search</mat-label>
                             <input matInput placeholder="Search" (keydown)="onSearch($event)" formControlName="searchFilter">
                             <mat-icon matSuffix (click)="onSearch('Enter')">search</mat-icon>
                         </mat-form-field>
                     </div>
+                   <!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                       
+                    </div> -->
                 </form>
             </div>
             <div class="content">
@@ -73,8 +74,8 @@
                                     <div class="example-loading-shade" *ngIf="isLoadingResults">
                                         <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                                     </div>
-                                    <div class="example-containerdata">
-                                        <table mat-table [dataSource]="dataSource"  matSort class="mat-elevation-z8" class="mat-elevation-z8">
+                                    <!-- <div class="example-containerdata"> -->
+                                        <table mat-table [dataSource]="dataSource"  matSort >
 
                                             <!-- Checkbox Column -->
                                             <ng-container matColumnDef="select">
@@ -134,7 +135,7 @@
                                               (click)="clickAc(row.Chequeno);highlightedRows = row.Chequeno " (click)="selection.toggle(row)" matRipple>
                                             </tr>
                                           </table>
-                                    </div>
+                                    <!-- </div> -->
                                     <mat-paginator [pageSizeOptions]="[10, 20,50,100]"  showFirstLastButtons></mat-paginator>
                                 </div>
                             </div>

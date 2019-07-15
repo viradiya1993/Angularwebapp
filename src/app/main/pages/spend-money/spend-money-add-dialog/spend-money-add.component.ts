@@ -7,7 +7,7 @@ import { ContactSelectDialogComponent } from '../../contact/contact-select-dialo
 import { MatterDialogComponent } from '../../time-entries/matter-dialog/matter-dialog.component';
 import * as $ from 'jquery';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-import { SpendmoneyService, TableColumnsService, ContactService } from 'app/_services';
+import { SpendmoneyService, TableColumnsService, MainAPiServiceService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { MatSort } from '@angular/material';
 import { DatePipe } from '@angular/common';
@@ -78,7 +78,7 @@ export class SpendMoneyAddComponent implements OnInit {
     private SpendmoneyService: SpendmoneyService,
     public MatDialog: MatDialog,
     private toastr: ToastrService,
-    public _matDialog: MatDialog,public _getContact: ContactService, public datepipe: DatePipe, ) {
+    public _matDialog: MatDialog,public datepipe: DatePipe, public _mainAPiServiceService: MainAPiServiceService) {
     this.action = _data.action;
     
     this.dialogTitle = this.action === 'edit' ? 'Update Spend Money' : 'Add Spend Money';
@@ -235,7 +235,7 @@ this.Classtype(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
     localStorage.setItem('lastPageSize', event.pageSize);
   }
   getPayee(postData){
-    this._getContact.ContactData(postData).subscribe(response => {
+    this._mainAPiServiceService.getSetData(postData, 'GetContact').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         response.DATA.CONTACTS.forEach(element => {
           this.getPayourarray.push(element.CONTACTNAME);
@@ -400,7 +400,7 @@ this.Classtype(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
     this.spendmoneyForm.controls['Payee'].setValue(result.CONTACTNAME);
     });
   }
-
+  
   public selectMatter() {
     const dialogRef = this.MatDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
     dialogRef.afterClosed().subscribe(result => {

@@ -9,11 +9,9 @@
     </h2>
     <div mat-dialog-content class="mat-typography main">
         <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
-            <form name="userForm" id="userForm" [formGroup]="userForm" fxLayout="column" fxLayoutAlign="start"
-                fxFlex="1 0 auto" name="form">
+            <form name="userForm" id="userForm" [formGroup]="userForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4"
-                        [ngClass]="{'has-error':errorWarningData.Error?.USERNAME,'has-warning':errorWarningData.Warning?.USERNAME}">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.USERNAME,'has-warning':errorWarningData.Warning?.USERNAME}">
                         <mat-label>User Name</mat-label>
                         <input formControlName="USERNAME" matInput>
                     </mat-form-field>
@@ -22,16 +20,14 @@
                 </div>
 
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="100" class="pr-4"
-                        [ngClass]="{'has-error':errorWarningData.Error?.FULLNAME,'has-warning':errorWarningData.Warning?.FULLNAME}">
+                    <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FULLNAME,'has-warning':errorWarningData.Warning?.FULLNAME}">
                         <mat-label>Full Name</mat-label>
                         <input formControlName="FULLNAME" matInput>
                     </mat-form-field>
                 </div>
 
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4"
-                        [ngClass]="{'has-error':errorWarningData.Error?.USERPASSWORD,'has-warning':errorWarningData.Warning?.USERPASSWORD}">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.USERPASSWORD,'has-warning':errorWarningData.Warning?.USERPASSWORD}">
                         <mat-label>Password</mat-label>
                         <input formControlName="USERPASSWORD" matInput [type]="phide ? 'password' : 'text'">
                         <mat-icon matSuffix (click)="phide = !phide">{{phide ? 'visibility_off' : 'visibility'}}
@@ -49,11 +45,9 @@
 
                         <mat-tab label="Security">
                             <div fxLayout="row" fxLayoutAlign="start center " fxFlex="1 0 auto">
-                                <br><br>
-                                {{userinfoDatah | json}}
+                                <br><br> {{userinfoDatah | json}}
                                 <mat-accordion class="faqs-accordion">
-                                    <mat-expansion-panel *ngFor="let Permission of userinfoDatah; let i = index"
-                                        [expanded]="step === i" (opened)="setStep(i)">
+                                    <mat-expansion-panel *ngFor="let Permission of userinfoDatah; let i = index" [expanded]="step === i" (opened)="setStep(i)">
                                         {{Permission | json}}
                                         <mat-expansion-panel-header>
                                             <mat-panel-title fxLayout="row" fxLayoutAlign="start center">
@@ -70,23 +64,20 @@
                         <mat-tab label="InfoTrack">
                             <div fxLayout="row" fxLayoutAlign="start center " fxFlex="1 0 auto">
                                 <p fxFlex="100">
-                                    Enter a username and password for the search provider if you want to use a
-                                    different<br>
-                                    login for this user.If nothing is provided here it will use the system defult login.
+                                    Enter a username and password for the search provider if you want to use a different
+                                    <br> login for this user.If nothing is provided here it will use the system defult login.
                                 </p>
                             </div>
                             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                <mat-form-field appearance="outline" fxFlex="100" class="pr-4"
-                                    [ngClass]="{'has-error':errorWarningData.Error?.SEARCHUSERNAME,'has-warning':errorWarningData.Warning?.SEARCHUSERNAME}">
+                                <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.SEARCHUSERNAME,'has-warning':errorWarningData.Warning?.SEARCHUSERNAME}">
                                     <mat-label>User Name</mat-label>
                                     <input formControlName="SEARCHUSERNAME" matInput>
                                 </mat-form-field>
                             </div>
                             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                <mat-form-field appearance="outline" fxFlex="100" class="pr-4"
-                                    [ngClass]="{'has-error':errorWarningData.Error?.SEARCHUSERPASSWORD,'has-warning':errorWarningData.Warning?.SEARCHUSERPASSWORD}">
+                                <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.SEARCHPASSWORD,'has-warning':errorWarningData.Warning?.SEARCHPASSWORD}">
                                     <mat-label>Password</mat-label>
-                                    <input formControlName="SEARCHUSERPASSWORD" matInput>
+                                    <input formControlName="SEARCHPASSWORD" matInput>
                                 </mat-form-field>
                             </div>
                         </mat-tab>
@@ -105,8 +96,7 @@
         <button mat-raised-button color="accent" (click)="SaveUser()" [disabled]="isspiner" *ngIf="action === 'edit'">
             <mat-spinner *ngIf="isspiner"></mat-spinner>Update
         </button>
-        <button mat-raised-button color="accent" (click)="SaveUser()" [disabled]="isspiner"
-            *ngIf="action === 'Duplicate'">
+        <button mat-raised-button color="accent" (click)="SaveUser()" [disabled]="isspiner" *ngIf="action === 'Duplicate'">
             <mat-spinner *ngIf="isspiner"></mat-spinner>Duplicate
         </button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>

@@ -24,7 +24,7 @@ export class UserDialogComponent implements OnInit {
   phide: boolean = true;
   userForm: FormGroup;
   USERGUID: any;
-  userinfoDatah: any = [];
+  public userinfoDatah: any = [];
   tempPermission: any;
   constructor(
     public MatDialog: MatDialog,
@@ -69,7 +69,7 @@ export class UserDialogComponent implements OnInit {
       USERID: [''],
       //Info Track
       SEARCHUSERNAME: [''],
-      SEARCHUSERPASSWORD: [''],
+      SEARCHPASSWORD: [''],
       allowaccess: [''],
       USERGUID: [''],
     });
@@ -80,6 +80,7 @@ export class UserDialogComponent implements OnInit {
           let userinfoData = response.DATA.USERS[0];
           this.tempPermission = userinfoData.PERMISSIONS;
           this.USERGUID = userinfoData.USERGUID;
+          console.log(userinfoData);
           this.userForm.controls['USERGUID'].setValue(userinfoData.USERGUID);
           this.userForm.controls['USERNAME'].setValue(userinfoData.USERNAME);
           this.userForm.controls['FULLNAME'].setValue(userinfoData.FULLNAME);
@@ -99,7 +100,8 @@ export class UserDialogComponent implements OnInit {
           this.userForm.controls['RATEPERHOUR'].setValue(userinfoData.RATEPERHOUR);
           this.userForm.controls['RATEPERDAY'].setValue(userinfoData.RATEPERDAY);
           this.userForm.controls['SEARCHUSERNAME'].setValue(userinfoData.SEARCHUSERNAME);
-          this.userForm.controls['SEARCHUSERPASSWORD'].setValue(userinfoData.SEARCHUSERPASSWORD);
+          this.userForm.controls['SEARCHPASSWORD'].setValue(userinfoData.SEARCHPASSWORD);
+          this.userForm.controls['GSTTYPE'].setValue(userinfoData.GSTTYPE);
 
         } else if (response.MESSAGE == "Not logged in") {
           this.dialogRef.close(false);
@@ -118,27 +120,33 @@ export class UserDialogComponent implements OnInit {
       let tempPermission = this.tempPermission;
       let PermissionsCons = ['MATTER DETAILS', 'DAY BOOK / TIME ENTRIES', 'CONTACTS', 'ESTIMATES', 'DOCUMENT/EMAIL GENERATION', 'DOCUMENT REGISTER', 'INVOICING', 'RECEIVE MONEY', 'SPEND MONEY', 'CHRONOLOGY', 'TOPICS', 'AUTHORITIES', 'FILE NOTES', 'SAFE CUSTODY', 'SAFE CUSTODY PACKET', 'SEARCHING', 'DIARY', 'TASKS', 'CHART OF ACCOUNTS', 'GENERAL JOURNAL', 'OTHER ACCOUNTING', 'TRUST MONEY', 'TRUST CHART OF ACCOUNTS', 'TRUST GENERAL JOURNAL', 'TRUST REPORTS', 'ACCOUNTING REPORTS', 'MANAGEMENT REPORTS', 'SYSTEM', 'USERS', 'ACTIVITIES/SUNDRIES'];
       let userPermissiontemp: any = [];
-      PermissionsCons.forEach(function (value) {
+
+      PermissionsCons.forEach((value) => {
         if (tempPermission[value]) {
-          let subPermissions: any = [];
-          tempPermission[value].forEach(function (value2) {
+          let subPermissions = [];
+          tempPermission[value].forEach((value2) => {
             subPermissions.push(value2.NAME);
           });
           userPermissiontemp[value] = subPermissions;
         }
       });
-      this.userinfoDatah = userPermissiontemp;
+      setTimeout(() => {
+        this.userinfoDatah = userPermissiontemp;
+      }, 2000);
+
+      console.log(tempPermission);
       console.log(this.userinfoDatah);
     }
   }
   SaveUser(): void {
     this.isspiner = true;
-    let data = {
+    let data: any = {
       USERNAME: this.f.USERNAME.value,
+      USERID: this.f.USERID.value,
       FULLNAME: this.f.FULLNAME.value,
       USERPASSWORD: this.f.USERPASSWORD.value,
-      ISACTIVE: this.f.ISACTIVE.value == true ? 1 : 0,
-      ISPRINCIPAL: this.f.ISPRINCIPAL.value == true ? 1 : 0,
+      ISACTIVE: this.f.ISACTIVE.value ? 1 : 0,
+      ISPRINCIPAL: this.f.ISPRINCIPAL.value ? 1 : 0,
       PHONE1: this.f.PHONE1.value,
       PHONE2: this.f.PHONE2.value,
       MOBILE: this.f.MOBILE.value,
@@ -151,13 +159,16 @@ export class UserDialogComponent implements OnInit {
       RATEPERDAY: this.f.RATEPERDAY.value,
       EMAIL: this.f.EMAIL.value,
       SEARCHUSERNAME: this.f.SEARCHUSERNAME.value,
-      SEARCHUSERPASSWORD: this.f.SEARCHUSERPASSWORD.value
+      SEARCHPASSWORD: this.f.SEARCHPASSWORD.value,
+      GSTTYPE: this.f.GSTTYPE.value
     }
+    if (this.action === 'edit')
+      data.USERGUID = this.f.USERGUID.value;
     let userPostData: any = { FormAction: 'insert', VALIDATEONLY: true, DATA: data };
     this._mainAPiServiceService.getSetData(userPostData, 'SetUser').subscribe(res => {
-      if (res.CODE == 200 && res.STATUS == "success") {
+      if (res.CODE === 200 && res.STATUS == "success") {
         this.checkValidation(res.DATA.VALIDATIONS, userPostData);
-      } else if (res.CODE == 451 && res.STATUS == "warning") {
+      } else if (res.CODE === 451 && res.STATUS == "warning") {
         this.checkValidation(res.DATA.VALIDATIONS, userPostData);
       } else if (res.CODE == 450 && res.STATUS == "error") {
         this.checkValidation(res.DATA.VALIDATIONS, userPostData);

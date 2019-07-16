@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MatDialog, MatDatepickerInputEvent } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { fuseAnimations } from '@fuse/animations';
-import {  MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
@@ -37,7 +37,7 @@ export class InvoiceAddDailogComponent implements OnInit {
     public MatDialog: MatDialog,
     private toastr: ToastrService,
     private _mainAPiServiceService: MainAPiServiceService,
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.isLoadingResults = true;
@@ -86,7 +86,7 @@ export class InvoiceAddDailogComponent implements OnInit {
       DISGSTAMOUNT: [''],
       DISUINAMOUNT: [''],
     });
-   
+
     this._mainAPiServiceService.getSetData({ MATTERGUID: matterDetail.MATTERGUID, GetAllFields: true }, 'GetMatter').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let matterDate = response.DATA.MATTERS[0];
@@ -100,15 +100,18 @@ export class InvoiceAddDailogComponent implements OnInit {
         this.addInvoiceForm.controls['FIXEDRATEEXGSTTOTAL'].setValue(matterDate.CONVEYANCINGGROUP.TOTALDUE + matterDate.SUMMARYTOTALS.INVOICEDVALUEEXGST);
         this.addInvoiceForm.controls['FIXEDRATEINCGSTTOTAL'].setValue(matterDate.CONVEYANCINGGROUP.TOTALDUE + matterDate.SUMMARYTOTALS.INVOICEDVALUEINCGST);
         //fix
-        this.isFixPrice = ((inValEx > matterDate.BILLINGGROUP.FIXEDRATEEXGST || matterDate.BILLINGGROUP.FIXEDRATEEXGST <= 0) && (inValIN > matterDate.BILLINGGROUP.FIXEDRATEEXGST || matterDate.BILLINGGROUP.FIXEDRATEEXGST <= 0)) ? false : true;
+        this.isFixPrice = ((inValEx > matterDate.BILLINGGROUP.FIXEDRATEEXGST || matterDate.BILLINGGROUP.FIXEDRATEEXGST <= 0)
+          && (inValIN > matterDate.BILLINGGROUP.FIXEDRATEEXGST || matterDate.BILLINGGROUP.FIXEDRATEEXGST <= 0)) ? false : true;
         this.addInvoiceForm.controls['FIXEDRATEEXGST'].setValue(matterDate.BILLINGGROUP.FIXEDRATEEXGST);
         this.addInvoiceForm.controls['FIXEDRATEINCGST'].setValue(matterDate.BILLINGGROUP.FIXEDRATEINCGST);
         //Minimum
-        this.isMin = ((inValEx > matterDate.SUMMARYTOTALS.ESTIMATETOTOTALEXGST || matterDate.SUMMARYTOTALS.ESTIMATETOTOTALEXGST <= 0) && (inValIN > matterDate.SUMMARYTOTALS.ESTIMATETOTOTALINCGST || matterDate.SUMMARYTOTALS.ESTIMATETOTOTALINCGST <= 0)) ? false : true;
+        this.isMin = ((inValEx > matterDate.SUMMARYTOTALS.ESTIMATETOTOTALEXGST || matterDate.SUMMARYTOTALS.ESTIMATETOTOTALEXGST <= 0)
+          && (inValIN > matterDate.SUMMARYTOTALS.ESTIMATETOTOTALINCGST || matterDate.SUMMARYTOTALS.ESTIMATETOTOTALINCGST <= 0)) ? false : true;
         this.addInvoiceForm.controls['ESTIMATETOTOTALEXGST'].setValue(matterDate.SUMMARYTOTALS.ESTIMATETOTOTALEXGST);
         this.addInvoiceForm.controls['ESTIMATETOTOTALINCGST'].setValue(matterDate.SUMMARYTOTALS.ESTIMATETOTOTALINCGST);
         //Maximum
-        this.isMax = ((inValEx > matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALEXGST || matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALEXGST <= 0) && (inValIN > matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST || matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST <= 0)) ? false : true;
+        this.isMax = ((inValEx > matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALEXGST || matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALEXGST <= 0)
+          && (inValIN > matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST || matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST <= 0)) ? false : true;
         this.addInvoiceForm.controls['ESTIMATEFROMTOTALEXGST'].setValue(matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALEXGST);
         this.addInvoiceForm.controls['ESTIMATEFROMTOTALINCGST'].setValue(matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST);
       } else if (response.MESSAGE == "Not logged in") {
@@ -227,9 +230,9 @@ export class InvoiceAddDailogComponent implements OnInit {
       "FOREIGNCURRENCYID": "",
       "COMMENT": this.f.COMMENT.value,
       "WORKITEMS": this.WORKITEMS
-    }
+    };
     let PostInvoiceEntryData: any = { FormAction: 'insert', VALIDATEONLY: true, Data: PostData };
-    
+
     this._mainAPiServiceService.getSetData(PostInvoiceEntryData, 'SetInvoice').subscribe(res => {
       if (res.DATA.INVOICECODE && res.DATA.INVOICECODE != "") {
         this.addInvoiceForm.controls['INVOICECODE'].setValue(res.DATA.INVOICECODE);

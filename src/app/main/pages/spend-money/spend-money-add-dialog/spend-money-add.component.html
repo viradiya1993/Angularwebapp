@@ -235,34 +235,7 @@
                             <button id="expac" class="matternews" [disabled]="expac"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                         </mat-icon>
                     </mat-form-field>
-                    <!-- <mat-form-field appearance="outline" class="pr-4" fxFlex="25" *ngIf="classtype=='capital'">
-                      <mat-label>Asset a/c</mat-label>
-                      <input matInput  formControlName="Assetacs">
-                    <mat-icon matSuffix >
-                      <button id="expac" class="matternews" [disabled]="expac"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
-                    </mat-icon>
-                  </mat-form-field> -->
-                    <!-- <mat-form-field appearance="outline" fxFlex="25" class="pr-4" *ngIf="classtype=='pay gst'">
-                      <mat-label>GST a/c</mat-label>
-                      <input matInput  formControlName="Gstac">
-                    <mat-icon matSuffix >
-                      <button id="expac" class="matternews" [disabled]="expac"> <img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
-                    </mat-icon>
-                  </mat-form-field> -->
-                    <!-- <mat-form-field appearance="outline" fxFlex="25" class="pr-4" *ngIf="classtype=='pay txt'">
-                      <mat-label>Tax a/c</mat-label>
-                      <input matInput  formControlName="taxac">
-                    <mat-icon matSuffix >
-                      <button id="expac" class="matternews" [disabled]="expac"> <img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
-                    </mat-icon>
-                  </mat-form-field> -->
-                    <!-- <mat-form-field appearance="outline" fxFlex="25" class="pr-4" *ngIf="classtype=='personal'">
-                      <mat-label>Equity a/c</mat-label>
-                      <input matInput  formControlName="Equityac">
-                    <mat-icon matSuffix >
-                      <button id="expac" class="matternews" [disabled]="expac"> <img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
-                    </mat-icon>
-                  </mat-form-field> -->
+                  
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.NOTE,'has-warning':errorWarningData.Warning?.NOTE}" appearance="outline" fxFlex="25" class="pr-4" *ngIf="dataTableHide=='yes'">
                         <mat-label>Note</mat-label>
                         <input matInput formControlName="Note">

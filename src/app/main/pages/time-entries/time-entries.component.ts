@@ -106,6 +106,7 @@ export class TimeEntriesComponent implements OnInit {
     localStorage.setItem('edit_WORKITEMGUID', Data);
   }
   LoadData(Data) {
+    this.TimerData=[];
     this.isLoadingResults = true;
     this.Timersservice.getTimeEnrtyData(Data).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {

@@ -23,7 +23,7 @@ const routes = [
   {
     path: '', component: LegalDetailsComponent, children: [
       { path: 'chronology', component: ChronologyComponent },
-      { path: 'authorities', component: AuthoritiesComponent },
+      { path: 'authority', component: AuthoritiesComponent },
       { path: 'file-notes', component: FileNotesComponent },
       { path: 'safe-custody', component: SafecustodyComponent },
       { path: 'search', component: SearchComponent }

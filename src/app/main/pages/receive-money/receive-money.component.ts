@@ -67,6 +67,7 @@ export class ReceiveMoneyComponent implements OnInit {
     this.forListing(this.lastFilter);
   }
   forListing(data) {
+    this.receiveMoneydata=[];
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(data, 'GetIncome').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {

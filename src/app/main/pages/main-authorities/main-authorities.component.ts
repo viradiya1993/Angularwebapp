@@ -164,8 +164,6 @@ export class MainAuthoritiesComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
     // this.SearchForm.controls['Matter'].setValue(result);  
-    
-        
     });
   }
 //   const dialogRef = this.dialog.open(ContactDialogComponent, {

@@ -58,7 +58,7 @@ export class DiaryService implements Resolve<any>
     getEvents(): Promise<any> {
         return new Promise((resolve, reject) => {
             let tempEvent: any[] = [];
-            this._mainAPiServiceService.getSetData('', 'GetAppointment').subscribe(res => {
+            this._mainAPiServiceService.getSetData({}, 'GetAppointment').subscribe(res => {
                 if (res.CODE == 200 && res.STATUS == "success") {
                     res.DATA.APPOINTMENTS.forEach(itemsdata => {
                         tempEvent.push({ start: dateformat(changeformat(itemsdata.DATE) + ' ' + itemsdata.TIME), title: '(' + this.tConvert(itemsdata.TIME) + ') -' + itemsdata.SUBJECT, allDay: false });

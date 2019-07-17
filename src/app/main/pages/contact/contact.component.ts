@@ -7,6 +7,8 @@ import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatSort } from '@angular/material';
+import { Subscription } from 'rxjs/Subscription';
+
 
 @Component({
   selector: 'app-contact',
@@ -16,6 +18,7 @@ import { MatSort } from '@angular/material';
   animations: fuseAnimations
 })
 export class ContactComponent implements OnInit {
+  subscription: Subscription;
   highlightedRows: any;
   ColumnsObj = [];
   theme_type = localStorage.getItem('theme_type');
@@ -86,8 +89,9 @@ export class ContactComponent implements OnInit {
   LoadData(data) {
     // GetContact
     //  this._mainAPiServiceService.getSetData(postData, 'SetActivity').subscribe
+    this.Contactdata=[];
     this.isLoadingResults = true;
-    this._mainAPiServiceService.getSetData(data, 'GetContact').subscribe(response => {
+    this.subscription= this._mainAPiServiceService.getSetData(data, 'GetContact').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Contactdata = new MatTableDataSource(response.DATA.CONTACTS);
         this.Contactdata.sort = this.sort;
@@ -157,6 +161,9 @@ export class ContactComponent implements OnInit {
     this.LoadData(this.filterVals);
 
   }
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+  } 
 }
 
 

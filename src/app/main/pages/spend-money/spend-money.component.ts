@@ -99,16 +99,13 @@ this.SepndMoneyForm=this._formBuilder.group({
   }
 
   loadData(potData) {
-    this.isLoadingResults = true;
-    
+    this.Spendmoneydata=[];
+    this.isLoadingResults = true;  
     this._mainAPiServiceService.getSetData(potData, 'GetExpenditure').subscribe(response => {
-  
       if (response.CODE == 200 && response.STATUS == "success") {
         // if(response.DATA.EXPENDITURES.length != 0){
-        
-
         // }
-        
+
         this.Spendmoneydata = new MatTableDataSource(response.DATA.EXPENDITURES)
         this.Spendmoneydata.paginator = this.paginator;
         if (response.DATA.EXPENDITURES[0]) {

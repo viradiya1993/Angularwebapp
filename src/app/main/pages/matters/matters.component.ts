@@ -4,6 +4,7 @@ import * as $ from 'jquery';
 import { TimersService } from '../../../_services';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MattersListComponent } from './matters-list/matters-list.component';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-matters',
@@ -12,6 +13,7 @@ import { MattersListComponent } from './matters-list/matters-list.component';
   animations: fuseAnimations,
 })
 export class MattersComponent implements OnInit {
+  subscription: Subscription;
   @ViewChild(MattersListComponent) child: MattersListComponent;
   matterFilterForm: FormGroup;
   mattersDetail: any;

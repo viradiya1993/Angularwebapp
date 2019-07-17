@@ -8,6 +8,7 @@ import {  TableColumnsService, MainAPiServiceService } from '../../../../_servic
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import {MatSort} from '@angular/material';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -18,6 +19,7 @@ import {MatSort} from '@angular/material';
   animations: fuseAnimations
 })
 export class MattersListComponent implements OnInit, OnDestroy {
+  subscription: Subscription;
   [x: string]: any;
   highlightedRows: any;
   theme_type = localStorage.getItem('theme_type');
@@ -26,7 +28,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   ColumnsObj = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  mattersData: any;
+  mattersData: any = [];
   lastFilter = {};
   tempColobj: any;
   isLoadingResults: any = false;
@@ -71,8 +73,6 @@ export class MattersListComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void { }
-
   editmatter(matters) {
     this.matterDetail.emit(matters);
   }
@@ -100,9 +100,9 @@ export class MattersListComponent implements OnInit, OnDestroy {
     });
   }
   getMatterList(data) {
+    this.mattersData=[];
     this.isLoadingResults = true;
-    
-    this._mainAPiServiceService.getSetData(data, 'GetMatter').subscribe(response => {
+    this.subscription=this._mainAPiServiceService.getSetData(data, 'GetMatter').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.MATTERS[0]) {
           this.highlightedRows = response.DATA.MATTERS[0].MATTERGUID;
@@ -111,7 +111,6 @@ export class MattersListComponent implements OnInit, OnDestroy {
         this.mattersData = new MatTableDataSource(response.DATA.MATTERS);
         this.mattersData.paginator = this.paginator;
         this.mattersData.sort = this.sort;
-
         this.isLoadingResults = false;
       }
     }, error => {
@@ -119,6 +118,9 @@ export class MattersListComponent implements OnInit, OnDestroy {
     });
     this.pageSize = localStorage.getItem('lastPageSize');
   }
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+  } 
 
 }
 

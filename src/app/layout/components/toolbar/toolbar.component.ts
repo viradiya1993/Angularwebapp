@@ -129,6 +129,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }
         //Report Listing
         this._mainAPiServiceService.getSetData({}, 'ReportList').subscribe(res => {
+            console.log("tolbar");
+            console.log(res);
             if (res.CODE == 200 && res.STATUS == 'success') {
                 res.DATA.REPORTS.forEach(element => {
                     if (!this.ReportListObj[element.REPORTGROUP]) {
@@ -548,6 +550,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     //Reportpopup open
     Reportpopup(ReportData) {
+        console.log(ReportData);
         let type: number;
         if (ReportData.REPORTGROUP == 'Management')
             type = 27;
@@ -690,7 +693,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     ChangePass() {
         const dialogRef = this.dialog.open(ChangePasswordComponent, { disableClose: true, panelClass: 'change-password' });
         dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+       
         });
     }/* Document Register Module */
 
@@ -717,7 +720,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+       
         });
     }
 
@@ -777,7 +780,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             data: passdata
         });
         dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+         
         });
     }
 
@@ -808,7 +811,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+          
         });
     }
 
@@ -839,7 +842,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+       
         });
     }
     SelectMatter() {
@@ -888,7 +891,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+          
         });
     }
 
@@ -931,7 +934,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         });
         dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+          
         });
     }
 
@@ -943,7 +946,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         });
         dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+           
         });
     }
     //ViewDetails
@@ -972,7 +975,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         });
         dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+           
         });
     }
 
@@ -984,7 +987,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             data: {}
         });
         dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+           
         });
     }
     //_____________________________________________________________________________________________________
@@ -1020,7 +1023,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+           
         });
     }
 
@@ -1028,7 +1031,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     //New - Edit - Duplicate Appointment Dialog
     DiaryAppointment(actionType) {
-        console.log(actionType);
+       
         let DiaryPopupData = {}
         if (actionType == 'new') {
             DiaryPopupData = { action: actionType };
@@ -1130,8 +1133,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         else if (x[1] == "conflict-check") {
             this.isTabShow = 17;
         } else if (x[1] == "authorities") {
-            console.log(x);
-            console.log(x[1])
             this.isTabShow = 18;
         } else if (x[1] == "searching") {
             this.isTabShow = 19;

@@ -23,7 +23,7 @@
   
                 <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
                     <mat-label>Date From</mat-label>
-                    <input (dateInput)="choosedDateFrom('input', $event)" (dateChange)="DateFrom('change', $event)" matInput  formControlName ="date" [matDatepicker]="picker">
+                    <input (dateInput)="choosedDateFrom()" (dateChange)="DateFrom()" matInput  formControlName ="date" [matDatepicker]="picker">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
@@ -38,7 +38,7 @@
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                 <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
                     <mat-label>Date To</mat-label>
-                    <input (dateInput)="choosedDateTo('input', $event)" (dateChange)="DateTo('change', $event)" matInput  formControlName ="dateto" [matDatepicker]="picker2" disabled>
+                    <input (dateInput)="choosedDateTo()" (dateChange)="DateTo()" matInput  formControlName ="dateto" [matDatepicker]="picker2" disabled>
                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
@@ -89,7 +89,7 @@
 
               <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
                 <mat-label>Event Agreed</mat-label>
-                  <mat-select #value name="selected" (selectionChange)="Event($event.value)" formControlName="eventAgereed">
+                  <mat-select #value name="selected" (selectionChange)="Event()" formControlName="eventAgereed">
                     <mat-option value="1">Agreed</mat-option>
                     <mat-option value="2">Disputed by Plaintiff</mat-option>
                     <mat-option value="3">Disputed by Defendat</mat-option>

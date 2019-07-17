@@ -6,6 +6,8 @@ import { MainAPiServiceService } from './../../../../_services';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { fuseAnimations } from '@fuse/animations';
+import { Subscription } from 'rxjs';
+
 
 
 @Component({
@@ -16,6 +18,7 @@ import { fuseAnimations } from '@fuse/animations';
   animations: fuseAnimations
 })
 export class ContactDialogComponent implements OnInit {
+  subscription: Subscription;
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   errorWarningData: any = {};
   action: string;
@@ -362,7 +365,7 @@ export class ContactDialogComponent implements OnInit {
       NOTES: this.f.NOTES.value
     }
     let details = { FormAction: this.FormAction, VALIDATEONLY: true, Data: detailsdata };
-    this._mainAPiServiceService.getSetData(details, 'SetContact').subscribe(response => {
+    this.subscription=this._mainAPiServiceService.getSetData(details, 'SetContact').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, details);
       } else if (response.CODE == 451 && response.STATUS == "warning") {
@@ -416,7 +419,7 @@ export class ContactDialogComponent implements OnInit {
   }
   saveContectData(data: any) {
     data.VALIDATEONLY = false;
-    this._mainAPiServiceService.getSetData(data, 'SetContact').subscribe(response => {
+    this.subscription=this._mainAPiServiceService.getSetData(data, 'SetContact').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         if (this.action !== 'edit') {
           this.toastr.success('Contact save successfully');
@@ -440,6 +443,10 @@ export class ContactDialogComponent implements OnInit {
     localStorage.removeItem('DATEOFBIRTH');
     localStorage.removeItem('DATEOFDEATH');
   }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+  } 
 }
 
 export class Common {

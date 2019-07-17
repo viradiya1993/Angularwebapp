@@ -7,6 +7,8 @@ import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import {MatSort} from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.component';
+import { ContactDialogComponent } from '../../contact/contact-dialog/contact-dialog.component';
 
 
 @Component({
@@ -101,6 +103,25 @@ export class ChronologyComponent implements OnInit {
       }
     });
   }
-
+  SelectMatter(){
+    let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
+    let MaterPopupData = { action: 'edit', 'matterGuid': mattersData.MATTERGUID }
+    const dialogRef = this.dialog.open(MatterPopupComponent, {
+        disableClose: true, panelClass: 'contact-dialog', data: MaterPopupData
+    });
+    dialogRef.afterClosed().subscribe(result => {
+     
+    });
+  }
+  SelectContact(){
+    let contactPopupData = { action:'edit' };
+    const dialogRef = this.dialog.open(ContactDialogComponent, {
+        disableClose: true, panelClass: 'contact-dialog', data: contactPopupData
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    
+        
+    });
+  }
 
 }

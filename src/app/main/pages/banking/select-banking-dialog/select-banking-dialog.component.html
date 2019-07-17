@@ -6,9 +6,9 @@
         </button>
     </h2>
     <div mat-dialog-content class="mat-typography">
-        <div class="example-loading-shade" *ngIf="isLoadingResults">
+        <!-- <div class="example-loading-shade" *ngIf="isLoadingResults">
             <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
-        </div>
+        </div> -->
         <div class="one select_matter_main_div">
             <div class="center p-24 list_tbl_main more_tbl_clmn">
                 <div class="matter-serach-div sticky_search_div">
@@ -81,7 +81,7 @@
     <button mat-raised-button color="accent" (click)="AccountDialogOpen('edit')" [disabled]="isspiner" ><mat-spinner *ngIf="isspiner"></mat-spinner>Edit Account</button>
 </mat-dialog-actions> -->
     <mat-dialog-actions align="end" class="popup_ftr contact_select_footer">
-        <button mat-raised-button [mat-dialog-close]="currentMatterData" color="accent">Select</button>
+        <button mat-raised-button [mat-dialog-close]="" color="accent">Select</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
     </mat-dialog-actions>
 </div>

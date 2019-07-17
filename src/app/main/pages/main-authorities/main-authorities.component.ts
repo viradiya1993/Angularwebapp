@@ -102,7 +102,7 @@ export class MainAuthoritiesComponent implements OnInit {
     this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel, this.isExpandable, this.getChildren);
     this.treeControl = new FlatTreeControl<LoadmoreFlatNode>(this.getLevel, this.isExpandable);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-    console.log(this.dataSource);
+
     database.dataChange.subscribe(data => {
       this.dataSource.data = data;
     });

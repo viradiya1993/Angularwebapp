@@ -59,7 +59,7 @@ export class ChronItemDailogComponent implements OnInit {
 
   }
   //FormatChange
-  FormatChange(){
+  FormatChange(val){
 
   }
   //choosedDate

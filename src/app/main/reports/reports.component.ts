@@ -24,7 +24,7 @@ export class ReportsComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _mainAPiServiceService: MainAPiServiceService){
       //API Call
-     
+      console.log(data);
       if(data.ReportGenerateData){   
         this.PDF_Generation=data.ReportGenerateData;
         this.title=data.ReportGenerateData.title;
@@ -32,7 +32,7 @@ export class ReportsComponent implements OnInit {
       }else{ 
         this.isLoadingResults = true;
        
-        this._mainAPiServiceService.getSetData(this.data.REPORTID, 'ReportRequestFilter?reportId=').subscribe(response => {          
+        this._mainAPiServiceService.getSetForReport(this.data.REPORTID).subscribe(response => {          
           this.isLoadingResults = false;  
            if(response.CODE==200 && response.STATUS=='success'){
              this.responseData=response.DATA; 

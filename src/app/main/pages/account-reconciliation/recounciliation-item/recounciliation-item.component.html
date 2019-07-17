@@ -14,8 +14,8 @@
                         </mat-form-field>
                         <mat-form-field class="example" appearance="outline" fxFlex="16.66">
                             <mat-label>Bank Statement Date</mat-label>
-                            <input (dateInput)="choosedDate('input', $event)"
-                                (dateChange)="choosedDateOfBank('change', $event)" matInput formControlName="Bankdate"
+                            <input (dateInput)="choosedDate()"
+                                (dateChange)="choosedDateOfBank()" matInput formControlName="Bankdate"
                                 [matDatepicker]="picker">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
@@ -53,9 +53,9 @@
                         </mat-form-field>
                         <mat-form-field class="search" appearance="outline" fxFlex="20">
                             <mat-label>Search</mat-label>
-                            <input matInput placeholder="Search" (keydown)="onSearch($event)"
+                            <input matInput placeholder="Search" 
                                 formControlName="searchFilter">
-                            <mat-icon matSuffix (click)="onSearch('Enter')">search</mat-icon>
+                            <mat-icon matSuffix>search</mat-icon>
                         </mat-form-field>
                     </div>
                     <!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">

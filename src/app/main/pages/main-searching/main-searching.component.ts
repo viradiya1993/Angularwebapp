@@ -32,6 +32,10 @@ export class MainSearchingComponent implements OnInit {
     // this.SearchForm.controls['Matter'].setValue(result);  
     });
   }
-  
+  DateRange(){
 
+  }
+DateRange1(){
+  
+}
 }

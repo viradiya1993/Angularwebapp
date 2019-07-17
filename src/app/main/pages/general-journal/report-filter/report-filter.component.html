@@ -25,7 +25,7 @@
                 </mat-form-field>
                 <mat-form-field appearance="outline" fxFlex="50" class="">
                     <mat-label>Date Range</mat-label>
-                    <input matInput placeholder="Choose a date" [satDatepicker]="picker2" formControlName="date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)">
+                    <input matInput placeholder="Choose a date" [satDatepicker]="picker2" formControlName="date" (dateInput)="choosedDate()" (dateChange)="choosedDate()">
                     <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
                     <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
                 </mat-form-field>

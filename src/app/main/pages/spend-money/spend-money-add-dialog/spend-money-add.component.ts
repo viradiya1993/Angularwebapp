@@ -195,8 +195,8 @@ export class SpendMoneyAddComponent implements OnInit {
     this.spendmoneyForm.controls['DateIncurred'].setValue(new Date(), 'dd/MM/yyyy');
     this.spendmoneyForm.controls['DatePaid'].setValue(new Date(), 'dd/MM/yyyy');
     //for sending date 
-    this.spendmoneyForm.controls['DateIncurredForSend'].setValue(new Date(), 'dd/MM/yyyy');
-    this.spendmoneyForm.controls['DatePaidForSend'].setValue(new Date(), 'dd/MM/yyyy');
+    this.spendmoneyForm.controls['DateIncurredForSend'].setValue(this.datepipe.transform(new Date(), 'dd/MM/yyyy'));
+    this.spendmoneyForm.controls['DatePaidForSend'].setValue(this.datepipe.transform(new Date(), 'dd/MM/yyyy'));
     this.spendmoneyForm.controls['ChequeNo'].setValue("0");
     this.spendmoneyForm.controls['Type'].setValue("Cash");
     this.spendmoneyForm.controls['Class'].setValue("Expense");

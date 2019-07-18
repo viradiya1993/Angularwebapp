@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 
 import { UsersComponent } from './users.component';
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
-import { FeeEarnerComponent } from './user-dialog/fee-earner/fee-earner.component';
 import { BudgetsComponent } from './user-dialog/budgets/budgets.component';
 
 
@@ -41,7 +40,6 @@ const routes = [
   declarations: [
     UsersComponent,
     UserDialogComponent,
-    FeeEarnerComponent,
     BudgetsComponent,
     UserBudgetDialogComponent
   ],

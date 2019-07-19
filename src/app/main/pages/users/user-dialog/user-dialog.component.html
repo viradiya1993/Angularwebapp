@@ -9,7 +9,6 @@
     </h2>
     <div mat-dialog-content class="mat-typography main">
         <div class="one" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
-            {{userData |json}}
             <form name="userForm" id="userForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.USERNAME,'has-warning':errorWarningData.Warning?.USERNAME}">
@@ -38,7 +37,7 @@
                     <mat-checkbox [(ngModel)]="userData.ISPRINCIPAL" name="ISPRINCIPAL">Is Principal</mat-checkbox>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-tab-group mat-align-tabs="start" (selectedTabChange)="onLinkClick($event)">
+                    <mat-tab-group mat-align-tabs="start">
                         <mat-tab label="Fee Earner">
                             <div class="one" fxLayout="column">
                                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -120,15 +119,17 @@
                             <div fxLayout="row" fxLayoutAlign="start center " fxFlex="1 0 auto">
                                 <br><br>
                                 <mat-accordion class="faqs-accordion">
-                                    <mat-expansion-panel *ngFor="let Permission of userinfoDatah; let i = index" [expanded]="step === i">
+                                    <mat-expansion-panel *ngFor="let Permission of userinfoDatah; let i = index">
                                         <mat-expansion-panel-header>
                                             <mat-panel-title fxLayout="row" fxLayoutAlign="start center">
-                                                <mat-checkbox>{{Permission.key}}</mat-checkbox>
+                                                {{Permission.key}}
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
-                                        <div *ngFor="let checkboxVal of Permission.val;let i=index">
-                                            <!-- formControlName="{{Permission.key}}_{{checkboxVal.NAME}}" [(ngModel)]="checkboxVal.VALUE" -->
-                                            <mat-checkbox [(ngModel)]="Permission.isChecked" name="chk{{i}}">
+                                        <div>
+                                            <mat-checkbox> All </mat-checkbox>
+                                        </div>
+                                        <div *ngFor="let checkboxVal of Permission.val;let j = index">
+                                            <mat-checkbox [(ngModel)]="userinfoDatah[i]['val'][j].VALUE" name="userinfoDatah[i]['val'][j].NAME">
                                                 {{checkboxVal.NAME}}
                                             </mat-checkbox>
                                         </div>
@@ -157,7 +158,7 @@
                             </div>
                         </mat-tab>
                         <mat-tab label="Budgets">
-                            <app-budgets [USERGUID]="USERGUID"></app-budgets>
+                            <app-budgets [USERGUID]="userData.USERGUID"></app-budgets>
                         </mat-tab>
                     </mat-tab-group>
                 </div>

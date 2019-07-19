@@ -15,7 +15,12 @@ import { fuseAnimations } from '@fuse/animations';
   animations: fuseAnimations
 })
 export class UserDialogComponent implements OnInit {
-  public userData: any = { PERMISSIONS: {} };
+  public userData: any = {
+    "USERGUID": "", "USERID": "", "USERNAME": "", "USERPASSWORD": "", "FULLNAME": "", "ISACTIVE": 0,
+    "ISPRINCIPAL": 0, "RATEPERHOUR": "0", "RATEPERDAY": "0", "GSTTYPE": 0, "POSITION": "", "PHONE1": "", "PHONE2": "",
+    "FAX1": "", "FAX2": "", "MOBILE": "", "EMAIL": "", "PRACTICINGCERTIFICATENO": "",
+    "SEARCHUSERNAME": "", "COMMENT": ""
+  };
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   isLoadingResults = false;
   errorWarningData: any = {};
@@ -25,7 +30,6 @@ export class UserDialogComponent implements OnInit {
   phide = true;
   USERGUID: any;
   public userinfoDatah: any = [];
-  tempPermission: any;
   constructor(
     public dialogRef: MatDialogRef<UserDialogComponent>,
     private toastr: ToastrService,
@@ -34,7 +38,6 @@ export class UserDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.action = data.action;
-    // this.action = data.USERGUID;
     if (this.action === 'new') {
       this.dialogTitle = 'New User';
     } else if (this.action === 'edit') {
@@ -50,9 +53,8 @@ export class UserDialogComponent implements OnInit {
       this._mainAPiServiceService.getSetData({ USERGUID: this.data.USERGUID, 'GETALLFIELDS': true }, 'GetUsers').subscribe(response => {
         if (response.CODE === 200 && response.STATUS === 'success') {
           const userinfoData = response.DATA.USERS[0];
-          console.log(userinfoData);
-          this.tempPermission = userinfoData.PERMISSIONS;
-          this.USERGUID = userinfoData.USERGUID;
+          this.setPermissionsCons(userinfoData.PERMISSIONS);
+          delete userinfoData['PERMISSIONS'];
           this.userData = userinfoData;
         } else if (response.MESSAGE == "Not logged in") {
           this.dialogRef.close(false);
@@ -65,7 +67,8 @@ export class UserDialogComponent implements OnInit {
       this.isLoadingResults = true;
       this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: true, DATA: {} }, 'SetUser').subscribe(res => {
         if (res.CODE == 200 && res.STATUS == "success") {
-          this.tempPermission = res.DATA.DEFAULTVALUES.PERMISSIONS;
+          this.userData.USERGUID = res.DATA.USERGUID;
+          this.setPermissionsCons(res.DATA.DEFAULTVALUES.PERMISSIONS);
         } else if (res.MESSAGE === 'Not logged in') {
           this.dialogRef.close(false);
         }
@@ -75,46 +78,51 @@ export class UserDialogComponent implements OnInit {
   }
 
   RatePerHourVal() {
-    // this.userForm.controls['RATEPERHOUR'].setValue(parseFloat(this.f.RATEPERHOUR.value).toFixed(2));
+    this.userData.RATEPERHOUR = parseFloat(this.userData.RATEPERHOUR).toFixed(2);
   }
   RatePerDayVal() {
-    // this.userForm.controls['RATEPERDAY'].setValue(parseFloat(this.f.RATEPERDAY.value).toFixed(2));
+    this.userData.RATEPERDAY = parseFloat(this.userData.RATEPERDAY).toFixed(2);
   }
-  onLinkClick(event: MatTabChangeEvent) {
-    if (event.index === 1) {
-      const tempPermission = this.tempPermission;
-      const PermissionsCons = ['MATTER DETAILS', 'DAY BOOK / TIME ENTRIES', 'CONTACTS', 'ESTIMATES', 'DOCUMENT/EMAIL GENERATION', 'DOCUMENT REGISTER', 'INVOICING', 'RECEIVE MONEY', 'SPEND MONEY', 'CHRONOLOGY', 'TOPICS', 'AUTHORITIES', 'FILE NOTES', 'SAFE CUSTODY', 'SAFE CUSTODY PACKET', 'SEARCHING', 'DIARY', 'TASKS', 'CHART OF ACCOUNTS', 'GENERAL JOURNAL', 'OTHER ACCOUNTING', 'TRUST MONEY', 'TRUST CHART OF ACCOUNTS', 'TRUST GENERAL JOURNAL', 'TRUST REPORTS', 'ACCOUNTING REPORTS', 'MANAGEMENT REPORTS', 'SYSTEM', 'USERS', 'ACTIVITIES/SUNDRIES'];
-      const userPermissiontemp: any = [];
-      if (tempPermission) {
-        PermissionsCons.forEach((value) => {
-          if (tempPermission[value]) {
-            const subPermissions = [];
-            tempPermission[value].forEach((value2) => {
-              subPermissions.push(value2);
-            });
-            userPermissiontemp.push({ key: value, val: subPermissions });
-          }
-        });
-      }
-      this.userinfoDatah = userPermissiontemp;
+  setPermissionsCons(tempPermission) {
+    const PermissionsCons = ['MATTER DETAILS', 'DAY BOOK / TIME ENTRIES', 'CONTACTS', 'ESTIMATES', 'DOCUMENT/EMAIL GENERATION', 'DOCUMENT REGISTER', 'INVOICING', 'RECEIVE MONEY', 'SPEND MONEY', 'CHRONOLOGY', 'TOPICS', 'AUTHORITIES', 'FILE NOTES', 'SAFE CUSTODY', 'SAFE CUSTODY PACKET', 'SEARCHING', 'DIARY', 'TASKS', 'CHART OF ACCOUNTS', 'GENERAL JOURNAL', 'OTHER ACCOUNTING', 'TRUST MONEY', 'TRUST CHART OF ACCOUNTS', 'TRUST GENERAL JOURNAL', 'TRUST REPORTS', 'ACCOUNTING REPORTS', 'MANAGEMENT REPORTS', 'SYSTEM', 'USERS', 'ACTIVITIES/SUNDRIES'];
+    const userPermissiontemp: any = [];
+    if (tempPermission) {
+      PermissionsCons.forEach((value) => {
+        if (tempPermission[value]) {
+          const subPermissions = [];
+          tempPermission[value].forEach((value2) => {
+            subPermissions.push({ NAME: value2.NAME, VALUE: value2.VALUE == "1" ? true : false });
+          });
+          userPermissiontemp.push({ key: value, val: subPermissions });
+        }
+      });
     }
+    this.userinfoDatah = userPermissiontemp;
+  }
+  getPermissionsCons(permissionsData) {
+    const permissionsValue: any = {};
+    permissionsData.forEach((value) => {
+      const subPermissions = value.val;
+      let temp = [];
+      subPermissions.forEach((value2) => {
+        temp.push({ NAME: value2.NAME, VALUE: value2.VALUE == true ? "1" : "0" });
+      });
+      permissionsValue[value['key']] = temp;
+    });
+    return permissionsValue;
   }
   SaveUser() {
     this.isspiner = true;
-    if (this.action === 'edit') {
-      // data.USERGUID = this.f.USERGUID.value;
-    }
+    this.userData.PERMISSIONS = this.getPermissionsCons(this.userinfoDatah);
     const userPostData: any = { FormAction: 'insert', VALIDATEONLY: true, DATA: this.userData };
-    console.log(userPostData);
-    return false;
     this._mainAPiServiceService.getSetData(userPostData, 'SetUser').subscribe(res => {
-      if (res.CODE === 200 && res.STATUS === "success") {
+      if (res.CODE == 200 && res.STATUS == "success") {
         this.checkValidation(res.DATA.VALIDATIONS, userPostData);
-      } else if (res.CODE === 451 && res.STATUS === "warning") {
+      } else if (res.CODE == 451 && res.STATUS == "warning") {
         this.checkValidation(res.DATA.VALIDATIONS, userPostData);
-      } else if (res.CODE === 450 && res.STATUS === "error") {
+      } else if (res.CODE == 450 && res.STATUS == "error") {
         this.checkValidation(res.DATA.VALIDATIONS, userPostData);
-      } else if (res.MESSAGE === 'Not logged in') {
+      } else if (res.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
     }, error => {
@@ -137,6 +145,7 @@ export class UserDialogComponent implements OnInit {
       }
     });
     this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
+    console.log(this.errorWarningData);
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {

@@ -99,15 +99,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         public dialog: MatDialog,
         public _matDialog: MatDialog,
         private toastr: ToastrService,
-        private TimersServiceI: TimersService,
-
-
-
-
-
-
-
-        private _mainAPiServiceService: MainAPiServiceService,
+        private TimersServiceI: TimersService, private _mainAPiServiceService: MainAPiServiceService,
         private _router: Router,
         private location: Location,
         public MatDialog: MatDialog
@@ -129,8 +121,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }
         //Report Listing
         this._mainAPiServiceService.getSetData({}, 'ReportList').subscribe(res => {
-            console.log("tolbar");
-            console.log(res);
             if (res.CODE == 200 && res.STATUS == 'success') {
                 res.DATA.REPORTS.forEach(element => {
                     if (!this.ReportListObj[element.REPORTGROUP]) {
@@ -387,7 +377,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             popupData = { action: actionType, USERGUID: ActiveUserData.USERGUID };
         }
         const dialogRef = this.dialog.open(UserDialogComponent, { disableClose: true, panelClass: 'User-dialog', data: popupData });
-        dialogRef.afterClosed().subscribe(result => { });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                $('#refreshUser').click();
+            }
+        });
     }
     //DeleteUser
     DeleteUser(): void {
@@ -397,7 +391,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+            if (result) {
+                let ActiveUserData = JSON.parse(localStorage.getItem('current_user_Data'));
+                let postData = { FormAction: "delete", data: { USERGUID: ActiveUserData.USERGUID } }
+                this._mainAPiServiceService.getSetData(postData, 'SetUser').subscribe(res => {
+                    if (res.STATUS == "success" && res.CODE == 200) {
+                        $('#refreshUser').click();
+                        this.toastr.success('Delete successfully');
+                    }
+                });
+
+            }
         });
     }
     /* ---------------------------------------------------------------------------USERS End-------------------------------------------------------------------------  */
@@ -693,7 +697,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     ChangePass() {
         const dialogRef = this.dialog.open(ChangePasswordComponent, { disableClose: true, panelClass: 'change-password' });
         dialogRef.afterClosed().subscribe(result => {
-       
+
         });
     }/* Document Register Module */
 
@@ -720,7 +724,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
-       
+
         });
     }
 
@@ -780,7 +784,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             data: passdata
         });
         dialogRef.afterClosed().subscribe(result => {
-         
+
         });
     }
 
@@ -811,7 +815,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
-          
+
         });
     }
 
@@ -842,7 +846,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
-       
+
         });
     }
     SelectMatter() {
@@ -891,7 +895,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-          
+
         });
     }
 
@@ -934,7 +938,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         });
         dialogRef.afterClosed().subscribe(result => {
-          
+
         });
     }
 
@@ -946,7 +950,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         });
         dialogRef.afterClosed().subscribe(result => {
-           
+
         });
     }
     //ViewDetails
@@ -975,7 +979,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         });
         dialogRef.afterClosed().subscribe(result => {
-           
+
         });
     }
 
@@ -987,7 +991,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             data: {}
         });
         dialogRef.afterClosed().subscribe(result => {
-           
+
         });
     }
     //_____________________________________________________________________________________________________
@@ -1023,7 +1027,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
-           
+
         });
     }
 
@@ -1031,7 +1035,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     //New - Edit - Duplicate Appointment Dialog
     DiaryAppointment(actionType) {
-       
+
         let DiaryPopupData = {}
         if (actionType == 'new') {
             DiaryPopupData = { action: actionType };

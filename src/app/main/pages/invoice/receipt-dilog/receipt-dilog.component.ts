@@ -8,6 +8,7 @@ import { ContactSelectDialogComponent } from '../../contact/contact-select-dialo
 import { MainAPiServiceService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { MatSort } from '@angular/material';
+import { $ } from 'protractor';
 
 @Component({
   selector: 'app-receipt-dilog',
@@ -131,7 +132,7 @@ export class ReceiptDilogComponent implements OnInit {
           this.PrepareReceiptForm.controls['NOTE'].setValue(data.NOTE);
           this.PrepareReceiptForm.controls['PAYEE'].setValue(data.PAYEE);
         }
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == "Login Failure") {
         this.dialogRef.close(false);
       }
       this.isLoadingResults = false;
@@ -149,7 +150,7 @@ export class ReceiptDilogComponent implements OnInit {
         this.PrepareReceiptData = new MatTableDataSource(response.DATA.RECEIPTALLOCATIONS)
         this.PrepareReceiptData.paginator = this.paginator;
         this.PrepareReceiptData.sort = this.sort;
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == "Login Failure") {
         this.dialogRef.close(false);
       }
       this.isLoadingResults = false;
@@ -171,7 +172,7 @@ export class ReceiptDilogComponent implements OnInit {
         this.PrepareReceiptData.paginator = this.paginator;
         this.PrepareReceiptData.sort = this.sort;
         this.isLoadingResults = false;
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == "Login Failure") {
         this.dialogRef.close(false);
       }
     }, error => {
@@ -279,7 +280,7 @@ export class ReceiptDilogComponent implements OnInit {
         this.checkValidation(response.DATA.VALIDATIONS, setReceiptPostData);
       } else if (response.CODE == 450 && response.STATUS == "error") {
         this.checkValidation(response.DATA.VALIDATIONS, setReceiptPostData);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == "Login Failure") {
         this.dialogRef.close(false);
       }
     }, error => {
@@ -328,10 +329,12 @@ export class ReceiptDilogComponent implements OnInit {
     data.VALIDATEONLY = false;
     this._mainAPiServiceService.getSetData(data, 'SetIncome').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        // $('#refreshReceiceMoany').click();
         this.toastr.success('Receipt save successfully');
         this.isspiner = false;
+         
         this.dialogRef.close(true);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == "Login Failure") {
         this.dialogRef.close(false);
       } else {
         this.isspiner = false;

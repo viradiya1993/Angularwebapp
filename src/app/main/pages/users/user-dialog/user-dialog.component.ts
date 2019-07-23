@@ -101,7 +101,7 @@ export class UserDialogComponent implements OnInit {
           this.userForm.controls['SEARCHUSERNAME'].setValue(userinfoData.SEARCHUSERNAME);
           this.userForm.controls['SEARCHUSERPASSWORD'].setValue(userinfoData.SEARCHUSERPASSWORD);
 
-        } else if (response.MESSAGE == "Not logged in") {
+        } else if (response.MESSAGE == "Login Failure") {
           this.dialogRef.close(false);
         }
         this.isLoadingResults = false;
@@ -161,7 +161,7 @@ export class UserDialogComponent implements OnInit {
         this.checkValidation(res.DATA.VALIDATIONS, userPostData);
       } else if (res.CODE == 450 && res.STATUS == "error") {
         this.checkValidation(res.DATA.VALIDATIONS, userPostData);
-      } else if (res.MESSAGE == "Not logged in") {
+      } else if (res.MESSAGE == "Login Failure") {
         this.dialogRef.close(false);
       }
     }, error => {
@@ -212,7 +212,7 @@ export class UserDialogComponent implements OnInit {
         this.toastr.warning(response.MESSAGE);
       } else if (response.CODE == 450 && response.STATUS == "error") {
         this.toastr.error(response.MESSAGE);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == "Login Failure") {
         this.dialogRef.close(false);
       }
       this.isspiner = false;

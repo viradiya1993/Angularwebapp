@@ -21,12 +21,13 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="59" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.RATEPERHOUR,'has-warning':errorWarningData.Warning?.RATEPERHOUR}">
             <mat-label>Per Hours</mat-label>
-            <input matInput type="number" class="sideText" formControlName="RATEPERHOUR">
+            <input  class="sideText" matInput type="number" class="sideText" formControlName="RATEPERHOUR">
+            <span class="currency_sign" matPrefix>$&nbsp;</span>
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.RATEPERDAY,'has-warning':errorWarningData.Warning?.RATEPERDAY}">
             <mat-label>Per Day</mat-label>
-            <input name="PerDay" class="sideText" matInput type="number" formControlName="RATEPERDAY">
-            <mat-icon matSuffix class="secondary-text"></mat-icon>
+            <input  class="sideText" name="PerDay" class="sideText" matInput type="number" formControlName="RATEPERDAY">
+            <span class="currency_sign" matPrefix>$&nbsp;</span>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">

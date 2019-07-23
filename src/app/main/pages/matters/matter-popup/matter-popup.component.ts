@@ -44,11 +44,11 @@ export class MatterPopupComponent implements OnInit {
     if (this.action === 'edit') {
       this.dialogTitle = 'Update Matter';
       this.isEdit = true;
-    } else if (this.action == 'duplicate') {
-      this.dialogTitle = 'Duplicate Matter'
+    } else if (this.action == 'new') {
+      this.dialogTitle = 'NewMatter'
       this.isEdit = true;
     } else {
-      this.dialogTitle = 'New Matter';
+      this.dialogTitle = 'Duplicate Matte';
       this.isEdit = false;
     }
     this.isEditMatter = this._data.matterGuid;
@@ -66,7 +66,7 @@ export class MatterPopupComponent implements OnInit {
     this._mainAPiServiceService.getSetData({ 'LookupType': 'Matter Class' }, 'GetLookups').subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.Classdata = responses.DATA.LOOKUPS;
-      } else if (responses.MESSAGE == "Not logged in") {
+      } else if (responses.MESSAGE == "Login Failure") {
         this.dialogRef.close(false);
       }
       this.isLoadingResults = false;
@@ -484,7 +484,7 @@ export class MatterPopupComponent implements OnInit {
             this.matterdetailForm.controls['MatterNo'].setValue(matterData.LEGALDETAILS.MATTERNO);
           }
           this.isLoadingResults = false;
-        } else if (response.MESSAGE == "Not logged in") {
+        } else if (response.MESSAGE == "Login Failure") {
           this.dialogRef.close(false);
         }
       }, error => {
@@ -981,7 +981,7 @@ export class MatterPopupComponent implements OnInit {
         this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
       } else if (response.CODE == 450 && response.STATUS == "error") {
         this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == "Login Failure") {
         this.dialogRef.close(false);
       } else {
         this.isspiner = false;
@@ -1042,7 +1042,7 @@ export class MatterPopupComponent implements OnInit {
         this.toastr.warning(response.MESSAGE);
       } else if (response.CODE == 450 && response.STATUS == "error") {
         this.toastr.error(response.MESSAGE);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == "Login Failure") {
         this.dialogRef.close(false);
       }
     }, error => {

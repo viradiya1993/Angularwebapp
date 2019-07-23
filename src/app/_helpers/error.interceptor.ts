@@ -54,7 +54,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                     //         this.toasterService.warning(warningData);
                     // }
                     else if ((evt.body.CODE > 400 && evt.body.CODE < 499) && (evt.body.STATUS == "error" || evt.body.RESPONSE == "error")) {
-                        if (evt.body.MESSAGE == "Not logged in") {
+                        if (evt.body.MESSAGE == "Login Failure") {
                             this.authenticationService.ForcLogout();
                         } else {
                             if (evt.body.MESSAGE != "Check the Validation Section for Errors/Warnings.")

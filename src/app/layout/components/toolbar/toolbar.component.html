@@ -274,7 +274,7 @@
                                
                                 <section class="group-section-tab action_tab">
                                     <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="AuthorityDialog('new')" >
+                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'"  >
                                             <section class="large-button-container">
                                             <mat-icon class="main-icon"> 
                                                 <img class="" src="assets/icons/web_app/icon_authorities_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -316,7 +316,7 @@
                                         <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="AuthorityDialog('copy')">
                                             <section class="large-button-container">
                                             <mat-icon class="main-icon"> 
-                                                <img class="" src="assets/icons/web_app/icon_duplicate_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                <img class="" src="assets/icons/web_app/icon_duplicate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                             </mat-icon>
                                                 <div class="main-text">
                                                     <span>Duplicate<br> Authorities</span>
@@ -935,7 +935,7 @@
                                         <button mat-button class="large-button" (click)="DiaryAppointment('new')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
-                                                        <img class="menu-disabled" src="assets/icons/web_app/icon_diary_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                        <img class=" " src="assets/icons/web_app/icon_diary_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <div class="main-text">
                                                     <span>New <br> Appointment</span>
@@ -947,7 +947,7 @@
                                         <button mat-button class="large-button" (click)="DiaryAppointment('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
-                                                        <img class="menu-disabled" src="assets/icons/web_app/icon_diary_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                        <img class=" " src="assets/icons/web_app/icon_diary_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <div class="main-text">
                                                     <span>Edit <br> Appointment</span>
@@ -959,7 +959,7 @@
                                         <button mat-button class="large-button" (click)="DeleteAppointment()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
-                                                        <img class="menu-disabled" src="assets/icons/web_app/icon_diary_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                        <img class=" " src="assets/icons/web_app/icon_diary_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <div class="main-text">
                                                     <span>Delete <br> Appointment</span>
@@ -971,7 +971,7 @@
                                         <button mat-button class="large-button" (click)="DiaryAppointment('duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
-                                                        <img class="menu-disabled" src="assets/icons/web_app/icon_diary_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                        <img class=" " src="assets/icons/web_app/icon_diary_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <div class="main-text">
                                                     <span>Duplicate <br> Appointment</span>
@@ -1094,10 +1094,10 @@
                                         </button>
                                     </section>
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button" disabled>
+                                        <button mat-button class="large-button" (click)="ResumeTimePopup()" >
                                            <section class="large-button-container">
                                               <mat-icon class="main-icon">
-                                                    <img class="menu-disabled" src="assets/icons/web_app/icon_time_cost_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                    <img  src="assets/icons/web_app/icon_time_cost_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                               </mat-icon>
                                               <div class="main-text">
                                                  <span>Resume<br>Timer</span>
@@ -1853,7 +1853,7 @@
                                                     <img src="assets/icons/web_app/icon_receipt_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <div class="main-text">
-                                                    <span>Recouncile<br>Account</span>
+                                                    <span>Reconcile<br>Account</span>
                                                 </div>
                                             </section>
                                         </button>
@@ -2015,7 +2015,7 @@
                     </section>
                 </mat-tab>
                
-                <mat-tab label="ACCOUNTS RECOUNCILIATION" *ngIf="isTabShow===20">
+                <mat-tab label="ACCOUNTS RECONCILIATION" *ngIf="isTabShow===20">
                     <section class="ribbon-container legal_details_tab_main">
                         <mat-card>
                             <mat-card-content>
@@ -2026,7 +2026,7 @@
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_tagitem_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
-                                                <span>Recounciliation Item</span>
+                                                <span>Reconciliation Item</span>
                                             </a>
                                         </mat-nav-list>
                                     </section>
@@ -2075,7 +2075,7 @@
                                                     <img src="assets/icons/web_app/icon_save_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <div class="main-text">
-                                                    <span>Recouncile<br>Account</span>
+                                                    <span>Reconcile<br>Account</span>
                                                 </div>
                                             </section>
                                         </button>
@@ -2107,7 +2107,7 @@
                                                     <img src="assets/icons/web_app/icon_generic_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <div class="main-text">
-                                                    <span>Undo Last<br>Recounciliation</span>
+                                                    <span>Undo Last<br>Reconciliation</span>
                                                 </div>
                                             </section>
                                         </button>
@@ -2138,10 +2138,10 @@
                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="AuthorityDialog('edit')">
+                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" >
                                             <section class="large-button-container">
                                                     <mat-icon class="main-icon"> 
-                                                        <img class="" src="assets/icons/web_app/Search.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                        <img class="" src="assets/icons/web_app/icon_search_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                     </mat-icon>
                                                     <div class="main-text">
                                                         <span>Open<br>file</span>
@@ -2154,7 +2154,7 @@
                                             <button disabled mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="deleteAuthority()" >
                                                 <section class="large-button-container">
                                                     <mat-icon class="main-icon"> 
-                                                        <img class="" src="assets/icons/web_app/infotrack.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                        <img class="menu-disabled" src="assets/icons/web_app/infotrack.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                     </mat-icon>
                                                     <div class="main-text">
                                                         <span>View<br>Online</span>
@@ -2165,7 +2165,7 @@
 
 
                                         <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                            <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="AuthorityDialog('copy')">
+                                            <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" >
                                                 <section class="large-button-container">
                                                     <mat-icon class="main-icon"> 
                                                         <img class="" src="assets/icons/web_app/icon_search_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">

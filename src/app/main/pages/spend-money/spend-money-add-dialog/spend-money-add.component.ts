@@ -132,7 +132,6 @@ export class SpendMoneyAddComponent implements OnInit {
     //call first row and datatble -> start
     this.getDataForTable = SendMoney_data.EXPENDITUREITEMS;
     this.highlightedRows = 0;
-    this.editMoney(SendMoney_data.EXPENDITUREITEMS[0], 0);
     this.getDataForTable.paginator = this.paginator;
     this.getDataForTable.sort = this.sort;
 
@@ -147,6 +146,7 @@ export class SpendMoneyAddComponent implements OnInit {
     this.spendmoneyForm.controls['GST'].setValue(SendMoney_data.GST);
     // inner item 
     if (SendMoney_data.EXPENDITUREITEMS.length != 0) {
+      this.editMoney(SendMoney_data.EXPENDITUREITEMS[0], 0);
       this.spendmoneyForm.controls['Class'].setValue(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
       this.spendmoneyForm.controls['GST1'].setValue(SendMoney_data.EXPENDITUREITEMS[0].GST.toString());
       this.spendmoneyForm.controls['AmountIncGST'].setValue(SendMoney_data.EXPENDITUREITEMS[0].AMOUNT);
@@ -511,6 +511,10 @@ export class SpendMoneyAddComponent implements OnInit {
     this.globallyCalculation();
     this.commonEmptyFiild();
     this.commmonDisabled();
+    if(this.getDataForTable.length  != 0){
+      this.highlightedRows=0;
+      this.editMoney(this.getDataForTable[0], 0);
+    }
   }
   CancelItemDialog() {
     this.SubMain2btn = 'disabled';
@@ -657,7 +661,7 @@ export class SpendMoneyAddComponent implements OnInit {
         this.checkValidation(response.DATA.VALIDATIONS, details);
       } else if (response.CODE == 450 && response.STATUS == "error") {
         this.checkValidation(response.DATA.VALIDATIONS, details);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == "Login Failure") {
         this.dialogRef.close(false);
       } else {
         this.isspiner = false;
@@ -719,7 +723,7 @@ export class SpendMoneyAddComponent implements OnInit {
         this.toastr.warning(response.MESSAGE);
       } else if (response.CODE == 450 && response.STATUS == "error") {
         this.toastr.error(response.MESSAGE);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == "Login Failure") {
         this.dialogRef.close(false);
       }
       this.isspiner = false;

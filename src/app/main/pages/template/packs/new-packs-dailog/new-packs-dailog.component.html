@@ -12,14 +12,14 @@
       <form [formGroup]="PackTbl" fxLayout="column" fxFlex="1 0 auto" name="form">
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
           <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-            <mat-label>Templete Type</mat-label>
+            <mat-label>Template Type</mat-label>
               <mat-select #value name="selected" (selectionChange)="TempleteChnage($event.value)" formControlName="TempleteType">
                 <mat-option value="Document">Document</mat-option>
                 <mat-option value="Email">Email</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-            <mat-label>Templete File</mat-label>
+            <mat-label>Template File</mat-label>
               <mat-select #value name="selected" (selectionChange)="TempleteFileChnage($event.value)" formControlName="TempleteFile">
                 <mat-option value="1">Temp</mat-option>
                 <mat-option value="2">Temp</mat-option>

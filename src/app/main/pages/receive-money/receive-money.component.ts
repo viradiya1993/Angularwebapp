@@ -45,7 +45,7 @@ export class ReceiveMoneyComponent implements OnInit {
     if (JSON.parse(localStorage.getItem('recive_money_DateFilter'))) {
       this.lastFilter = JSON.parse(localStorage.getItem('recive_money_DateFilter'));
     } else {
-      this.lastFilter = { "INCOMECLASS": "Receipt", 'ItemDateStart': this.datepipe.transform(new Date(), 'dd/MM/yyyy'), 'ItemDateEnd': this.datepipe.transform(dt, 'dd/MM/yyyy') };
+      this.lastFilter = { "INCOMECLASS": "Receipt", 'ITEMSTARTDATE': this.datepipe.transform(new Date(), 'dd/MM/yyyy'), 'ITEMENDDATE': this.datepipe.transform(dt, 'dd/MM/yyyy') };
     }
 
     localStorage.setItem('recive_money_DateFilter', JSON.stringify(this.lastFilter));
@@ -57,10 +57,10 @@ export class ReceiveMoneyComponent implements OnInit {
       ReceiptsTotalEx: [''],
       ReceiveMoneyType: [''],
     });
-    if (this.lastFilter.ItemDateStart && this.lastFilter.ItemDateEnd) {
-      let Sd = new Date(this.lastFilter.ItemDateStart);
-      let ed = new Date(this.lastFilter.ItemDateEnd);
-      this.receiveMoneyForm.controls['DateRange'].setValue({ begin: Sd, end: ed });
+    if (this.lastFilter.ITEMSTARTDATE && this.lastFilter.ITEMENDDATE) {
+      // let Sd = new Date(this.lastFilter.ITEMSTARTDATE);
+      // let ed = new Date(this.lastFilter.ITEMENDDATE);
+      this.receiveMoneyForm.controls['DateRange'].setValue({begin: new Date(), end: dt});
     }
     this.receiveMoneyForm.controls['ShowWhat'].setValue(this.lastFilter.INCOMECLASS);
     this.getTableFilter();
@@ -101,8 +101,8 @@ export class ReceiveMoneyComponent implements OnInit {
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
     let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');
-    this.lastFilter.ItemDateStart = begin;
-    this.lastFilter.ItemDateEnd = end;
+    this.lastFilter.ITEMSTARTDATE = begin;
+    this.lastFilter.ITEMENDDATE = end;
 
     localStorage.setItem('recive_money_DateFilter', JSON.stringify(this.lastFilter));
     this.forListing(this.lastFilter);

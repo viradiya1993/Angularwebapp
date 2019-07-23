@@ -71,7 +71,12 @@ export class InstantInvoiceDailogComponent implements OnInit {
   LookupsChange(value: any) {
     this.addInvoiceForm.controls['ADDITIONALTEXT'].setValue(value);
   }
-  CompletedDate(s: any, ss: any) {
+  InvoiceStartDate(s: any, ss: any) {
 
   }
+  InvoiceDueDate(s: any, ss: any) {
+
+  }
+  
+  
 }

@@ -29,7 +29,7 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
   pageSize: any;
   currentMatterData: any;
   MatterDropData: any;
-  filterVal: any = { 'Active': 'ewew', 'FeeEarner': '', 'SearchString': '' };
+  filterVal: any = { 'Active': ' ', 'FeeEarner': '', 'SearchString': '' };
   @Input() mattersDetailData;
   isShowDrop: boolean = false;
   constructor(
@@ -43,7 +43,7 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
   ) {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.isShowDrop = currentUser.ProductType == "Barrister" ? false : true;
-    this.matterFilterForm = this.fb.group({ MatterFilter: [''], UserFilter: [''], searchFilter: [''], InvoiceFilter: [''], });
+    this.matterFilterForm = this.fb.group({ MatterFilter: [' '], UserFilter: [''], searchFilter: [''], InvoiceFilter: [''], });
   }
 
   ngOnInit() {

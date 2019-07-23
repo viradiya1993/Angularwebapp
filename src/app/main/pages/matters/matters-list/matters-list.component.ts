@@ -43,6 +43,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private TableColumnsService: TableColumnsService,
   ) {
+    this.mattersData=[];
     if (JSON.parse(localStorage.getItem('matter_filter'))) {
       this.lastFilter = JSON.parse(localStorage.getItem('matter_filter'));
     }
@@ -100,7 +101,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
     });
   }
   getMatterList(data) {
-    this.mattersData=[];
+    
     this.isLoadingResults = true;
     this.subscription=this._mainAPiServiceService.getSetData(data, 'GetMatter').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {

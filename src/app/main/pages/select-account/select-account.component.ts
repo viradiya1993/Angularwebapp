@@ -146,7 +146,7 @@ export class SelectAccountComponent implements OnInit {
       disableClose: true,
       panelClass: 'ChartAc-dialog',
       data: {
-          action: 'add',
+          action: 'new',
       }
     });
     dialogRef.afterClosed().subscribe(result => {

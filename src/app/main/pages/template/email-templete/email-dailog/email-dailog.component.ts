@@ -158,7 +158,7 @@ export class EmailDailogComponent implements OnInit {
         this.checkValidation(response.DATA.VALIDATIONS, details);
       } else if (response.CODE == 450 && response.STATUS == "error") {
         this.checkValidation(response.DATA.VALIDATIONS, details);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == "Login Failure") {
         this.dialogRef.close(false);
       } else {
         this.isspiner = false;
@@ -221,7 +221,7 @@ export class EmailDailogComponent implements OnInit {
           this.toastr.warning(response.MESSAGE);
         } else if (response.CODE == 450 && response.STATUS == "error") {
           this.toastr.error(response.MESSAGE);
-        } else if (response.MESSAGE == "Not logged in") {
+        } else if (response.MESSAGE == "Login Failure") {
           this.dialogRef.close(false);
         }
         this.isspiner = false;

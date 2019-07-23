@@ -49,7 +49,7 @@
                 </mat-form-field>
             </div>
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.SUBJECT,'has-warning':errorWarningData.Warning?.SUBJECT}" appearance="outline" class="example" fxFlex="50" class="pr-4">
+                <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.SUBJECT,'has-warning':errorWarningData.Warning?.SUBJECT}" appearance="outline" class="example" fxFlex="50" class="auto_drop_ghandel pr-4">
                   <mat-label>Subject</mat-label>
                   <input type="text" placeholder="Pick one" aria-label="Number" formControlName = "subject" matInput [matAutocomplete]="auto">
                     <mat-autocomplete #auto="matAutocomplete">
@@ -68,7 +68,7 @@
             </div>
             <!-- New SrollBar -->
             <div fxLayout="row" fxLayoutAlign="start start" fxFlex="1 0 auto">
-                <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.TEXT_,'has-warning':errorWarningData.Warning?.TEXT_}" appearance="outline" fxFlex="50" class="pr-4" >
+                <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.TEXT_,'has-warning':errorWarningData.Warning?.TEXT_}" appearance="outline" fxFlex="50" class=" pr-4" >
                     <mat-label>Text</mat-label>
                   <textarea  cdkTextareaAutosize
                   cdkAutosizeMinRows="22"

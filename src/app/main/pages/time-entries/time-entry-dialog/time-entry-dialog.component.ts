@@ -108,7 +108,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.Timersservice.GetLookupsData({}).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.LookupsList = res.DATA.LOOKUPS;
-      } else if (res.MESSAGE == "Login Failure") {
+      } else if (res.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       } else {
         this.LookupsList = [];
@@ -121,7 +121,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.Timersservice.GetUsers({}).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.userList = res.DATA.USERS;
-      } else if (res.MESSAGE == "Login Failure") {
+      } else if (res.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       } else {
         this.userList = [];
@@ -188,7 +188,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
         this.timeEntryForm.controls['PRICE'].setValue(timeEntryData.PRICE);
         this.timeEntryForm.controls['ADDITIONALTEXT'].setValue(timeEntryData.ADDITIONALTEXT);
         this.timeEntryForm.controls['COMMENT'].setValue(timeEntryData.COMMENT);
-      } else if (response.MESSAGE == "Login Failure") {
+      } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
       this.isLoadingResults = false;
@@ -324,7 +324,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
         this.checkValidation(res.DATA.VALIDATIONS, PostTimeEntryData);
       } else if (res.CODE == 450 && res.STATUS == "error") {
         this.checkValidation(res.DATA.VALIDATIONS, PostTimeEntryData);
-      } else if (res.MESSAGE == "Login Failure") {
+      } else if (res.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
       this.isspiner = false;
@@ -381,7 +381,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
         this.toasterService.warning(res.MESSAGE);
       } else if (res.CODE == 450 && res.STATUS == "error") {
         this.toasterService.warning(res.MESSAGE);
-      } else if (res.MESSAGE == "Login Failure") {
+      } else if (res.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
       this.isspiner = false;

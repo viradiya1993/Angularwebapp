@@ -57,7 +57,7 @@ export class GeneralReceiptDilogComponent implements OnInit {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.getPayourarray = response.DATA.CONTACTS;
         this.isLoadingResults = false;
-      } else if (response.MESSAGE == "Login Failure") {
+      } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       } else {
         this.isLoadingResults = false;
@@ -98,7 +98,7 @@ export class GeneralReceiptDilogComponent implements OnInit {
         this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
       } else if (response.CODE == 451 && response.STATUS == "warning") {
         this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
-      } else if (response.MESSAGE == "Login Failure") {
+      } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
     }, error => {
@@ -154,7 +154,7 @@ export class GeneralReceiptDilogComponent implements OnInit {
         this.toastr.error(response.MESSAGE);
       } else if (response.CODE == 451 && response.STATUS == "warning") {
         this.toastr.warning(response.MESSAGE);
-      } else if (response.MESSAGE == "Login Failure") {
+      } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
       this.isspiner = false;

@@ -78,7 +78,7 @@ export class FileNoteDialogComponent implements OnInit {
         this.checkValidation(res.DATA.VALIDATIONS, finalPassdata);
       } else if (res.CODE == 450 && res.STATUS == "error") {
         this.checkValidation(res.DATA.VALIDATIONS, finalPassdata);
-      } else if (res.MESSAGE == "Login Failure") {
+      } else if (res.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
       this.isspiner = false;
@@ -137,7 +137,7 @@ export class FileNoteDialogComponent implements OnInit {
       } else if (response.CODE == 450 && response.STATUS == "error") {
         this.toastr.error(response.MESSAGE);
         this.isspiner = false;
-      } else if (response.MESSAGE == "Login Failure") {
+      } else if (response.MESSAGE == "Not logged in") {
         this.isspiner = false;
         this.dialogRef.close(false);
       }

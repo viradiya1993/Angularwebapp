@@ -132,7 +132,7 @@ export class ReceiptDilogComponent implements OnInit {
           this.PrepareReceiptForm.controls['NOTE'].setValue(data.NOTE);
           this.PrepareReceiptForm.controls['PAYEE'].setValue(data.PAYEE);
         }
-      } else if (response.MESSAGE == "Login Failure") {
+      } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
       this.isLoadingResults = false;
@@ -150,7 +150,7 @@ export class ReceiptDilogComponent implements OnInit {
         this.PrepareReceiptData = new MatTableDataSource(response.DATA.RECEIPTALLOCATIONS)
         this.PrepareReceiptData.paginator = this.paginator;
         this.PrepareReceiptData.sort = this.sort;
-      } else if (response.MESSAGE == "Login Failure") {
+      } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
       this.isLoadingResults = false;
@@ -172,7 +172,7 @@ export class ReceiptDilogComponent implements OnInit {
         this.PrepareReceiptData.paginator = this.paginator;
         this.PrepareReceiptData.sort = this.sort;
         this.isLoadingResults = false;
-      } else if (response.MESSAGE == "Login Failure") {
+      } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
     }, error => {
@@ -280,7 +280,7 @@ export class ReceiptDilogComponent implements OnInit {
         this.checkValidation(response.DATA.VALIDATIONS, setReceiptPostData);
       } else if (response.CODE == 450 && response.STATUS == "error") {
         this.checkValidation(response.DATA.VALIDATIONS, setReceiptPostData);
-      } else if (response.MESSAGE == "Login Failure") {
+      } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
     }, error => {
@@ -334,7 +334,7 @@ export class ReceiptDilogComponent implements OnInit {
         this.isspiner = false;
          
         this.dialogRef.close(true);
-      } else if (response.MESSAGE == "Login Failure") {
+      } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       } else {
         this.isspiner = false;

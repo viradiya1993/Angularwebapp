@@ -200,7 +200,7 @@ export class UserBudgetDialogComponent implements OnInit {
         this.checkValidation(res.DATA.VALIDATIONS, PostBudgetData);
       } else if (res.CODE == 450 && res.STATUS == "error") {
         this.checkValidation(res.DATA.VALIDATIONS, PostBudgetData);
-      } else if (res.MESSAGE == "Login Failure") {
+      } else if (res.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
       this.isspiner = false;
@@ -253,7 +253,7 @@ export class UserBudgetDialogComponent implements OnInit {
         this.toastr.warning(this.successMsg);
       } else if (res.CODE == 450 && res.STATUS == "error") {
         this.toastr.error(res.STATUS);
-      } else if (res.MESSAGE == "Login Failure") {
+      } else if (res.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
       this.isspiner = false;

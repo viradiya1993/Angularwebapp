@@ -96,7 +96,7 @@ export class InvoiceDetailComponent implements OnInit {
               this.invoiceDatasor = new MatTableDataSource(response.DATA.WORKITEMS);
               this.invoiceDatasor.paginator = this.paginator;
               this.invoiceDatasor.sort = this.sort;
-            } else if (response.MESSAGE == "Login Failure") {
+            } else if (response.MESSAGE == "Not logged in") {
               this.dialogRef.close(false);
             }
           }, error => {
@@ -108,7 +108,7 @@ export class InvoiceDetailComponent implements OnInit {
               this.ReceiptsData = new MatTableDataSource(ReceiptAllocationData.DATA.RECEIPTALLOCATIONS);
               this.ReceiptsData.paginator = this.paginator1;
               this.ReceiptsData.sort = this.sort1;
-            } else if (response.MESSAGE == "Login Failure") {
+            } else if (response.MESSAGE == "Not logged in") {
               this.dialogRef.close(false);
             }
           }, error => {
@@ -120,14 +120,14 @@ export class InvoiceDetailComponent implements OnInit {
               this.IntersetChatgesData = new MatTableDataSource(response.DATA.INVOICES);
               this.IntersetChatgesData.paginator = this.paginator2;
               this.IntersetChatgesData.sort = this.sort2;
-            } else if (response.MESSAGE == "Login Failure") {
+            } else if (response.MESSAGE == "Not logged in") {
               this.dialogRef.close(false);
             }
           }, error => {
             this.toastr.error(error);
           });
           this.isLoadingResults = false;
-        } else if (response.MESSAGE == "Login Failure") {
+        } else if (response.MESSAGE == "Not logged in") {
           this.dialogRef.close(false);
         }
       }, error => {
@@ -159,7 +159,7 @@ export class InvoiceDetailComponent implements OnInit {
         this.checkValidation(res.DATA.VALIDATIONS, PostInvoiceEntryData);
       } else if (res.CODE == 450 && res.STATUS == "error") {
         this.checkValidation(res.DATA.VALIDATIONS, PostInvoiceEntryData);
-      } else if (res.MESSAGE == "Login Failure") {
+      } else if (res.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
       this.isspiner = false;
@@ -210,7 +210,7 @@ export class InvoiceDetailComponent implements OnInit {
         this.toastr.warning(res.MESSAGE);
       } else if (res.CODE == 450 && res.STATUS == "error") {
         this.toastr.error(res.MESSAGE);
-      } else if (res.MESSAGE == "Login Failure") {
+      } else if (res.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
       this.isspiner = false;

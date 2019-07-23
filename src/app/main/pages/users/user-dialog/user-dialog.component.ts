@@ -60,7 +60,7 @@ export class UserDialogComponent implements OnInit {
           this.setPermissionsCons(userinfoData.PERMISSIONS, 'edit');
           delete userinfoData['PERMISSIONS'];
           this.userData = userinfoData;
-        } else if (response.MESSAGE == "Login Failure") {
+        } else if (response.MESSAGE == "Not logged in") {
           this.dialogRef.close(false);
         }
         this.isLoadingResults = false;
@@ -73,7 +73,7 @@ export class UserDialogComponent implements OnInit {
         if (res.CODE == 200 && res.STATUS == "success") {
           this.userData.USERGUID = res.DATA.USERGUID;
           this.setPermissionsCons(res.DATA.DEFAULTVALUES.PERMISSIONS, 'add');
-        } else if (res.MESSAGE === 'Login Failure') {
+        } else if (res.MESSAGE === 'Not logged in') {
           this.dialogRef.close(false);
         }
       }, error => { this.toastr.error(error); });
@@ -129,7 +129,7 @@ export class UserDialogComponent implements OnInit {
         this.checkValidation(res.DATA.VALIDATIONS, userPostData);
       } else if (res.CODE == 450 && res.STATUS == "error") {
         this.checkValidation(res.DATA.VALIDATIONS, userPostData);
-      } else if (res.MESSAGE == 'Login Failure') {
+      } else if (res.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
     }, error => {
@@ -181,7 +181,7 @@ export class UserDialogComponent implements OnInit {
         this.toastr.warning(response.MESSAGE);
       } else if (response.CODE == 450 && response.STATUS == "error") {
         this.toastr.error(response.MESSAGE);
-      } else if (response.MESSAGE == "Login Failure") {
+      } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
       this.isspiner = false;

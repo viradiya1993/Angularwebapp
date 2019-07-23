@@ -100,7 +100,7 @@ export class ClientComponent implements OnInit {
     this._mainAPiServiceService.getSetData({ MATTERGUID: this.isEditMatter }, 'GetMatterContact').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.CorrespondEdit = response.DATA.MATTERCONTACTS;
-      } else if (response.MESSAGE == "Login Failure") {
+      } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
     }, error => {

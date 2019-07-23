@@ -114,7 +114,7 @@ export class InvoiceAddDailogComponent implements OnInit {
           && (inValIN > matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST || matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST <= 0)) ? false : true;
         this.addInvoiceForm.controls['ESTIMATEFROMTOTALEXGST'].setValue(matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALEXGST);
         this.addInvoiceForm.controls['ESTIMATEFROMTOTALINCGST'].setValue(matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST);
-      } else if (response.MESSAGE == "Login Failure") {
+      } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
     }, error => {
@@ -249,7 +249,7 @@ export class InvoiceAddDailogComponent implements OnInit {
         this.checkValidation(res.DATA.VALIDATIONS, PostInvoiceEntryData);
       } else if (res.CODE == 450 && res.STATUS == "error") {
         this.checkValidation(res.DATA.VALIDATIONS, PostInvoiceEntryData);
-      } else if (res.MESSAGE == "Login Failure") {
+      } else if (res.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
       this.isspiner = false;
@@ -303,7 +303,7 @@ export class InvoiceAddDailogComponent implements OnInit {
         this.toastr.success('Save Success');
         this.dialogRef.close(true);
       } else {
-        if (res.CODE == 402 && res.STATUS == "error" && res.MESSAGE == "Login Failure")
+        if (res.CODE == 402 && res.STATUS == "error" && res.MESSAGE == "Not logged in")
           this.dialogRef.close(false);
       }
       this.isspiner = false;

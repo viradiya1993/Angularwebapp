@@ -144,7 +144,7 @@ export class ContactDialogComponent implements OnInit {
       this.isLoadingResults = true;
       let contactguidforbody = { CONTACTGUID: localStorage.getItem('contactGuid') }
       this._mainAPiServiceService.getSetData(contactguidforbody, 'GetContact').subscribe(res => {
-        if (res.MESSAGE == "Login Failure") {
+        if (res.MESSAGE == "Not logged in") {
           this.dialogRef.close(false);
         } else {
           if (res.DATA.CONTACTS[0]) {
@@ -372,7 +372,7 @@ export class ContactDialogComponent implements OnInit {
         this.checkValidation(response.DATA.VALIDATIONS, details);
       } else if (response.CODE == 450 && response.STATUS == "error") {
         this.checkValidation(response.DATA.VALIDATIONS, details);
-      } else if (response.MESSAGE == "Login Failure") {
+      } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       } else {
         this.isspiner = false;
@@ -434,7 +434,7 @@ export class ContactDialogComponent implements OnInit {
       } else if (response.CODE == 450 && response.STATUS == "error") {
         this.toastr.error(response.MESSAGE);
         this.isspiner = false;
-      } else if (response.MESSAGE == "Login Failure") {
+      } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
     }, error => {

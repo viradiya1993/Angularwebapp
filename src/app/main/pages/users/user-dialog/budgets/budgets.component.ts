@@ -55,7 +55,7 @@ export class BudgetsComponent implements OnInit {
         this.userBudgets.paginator = this.paginator;
         this.userBudgets.sort = this.sort;
         this.isLoadingResults = false;
-      } else if (response.MESSAGE == "Login Failure") {
+      } else if (response.MESSAGE == "Not logged in") {
         this.dialogRef.close(false);
       }
     }, error => {

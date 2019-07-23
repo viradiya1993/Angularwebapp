@@ -26,6 +26,7 @@ export class UserDialogComponent implements OnInit {
   errorWarningData: any = {};
   action: string;
   dialogTitle: string;
+  dialogButton: string;
   isspiner = false;
   phide = true;
   USERGUID: any;
@@ -40,10 +41,13 @@ export class UserDialogComponent implements OnInit {
     this.action = data.action;
     if (this.action === 'new') {
       this.dialogTitle = 'New User';
+      this.dialogButton = "Add";
     } else if (this.action === 'edit') {
       this.dialogTitle = 'Update User';
+      this.dialogButton = "Update";
     } else {
       this.dialogTitle = 'Duplicate User';
+      this.dialogButton = "Duplicate";
     }
 
   }
@@ -53,7 +57,7 @@ export class UserDialogComponent implements OnInit {
       this._mainAPiServiceService.getSetData({ USERGUID: this.data.USERGUID, 'GETALLFIELDS': true }, 'GetUsers').subscribe(response => {
         if (response.CODE === 200 && response.STATUS === 'success') {
           const userinfoData = response.DATA.USERS[0];
-          this.setPermissionsCons(userinfoData.PERMISSIONS);
+          this.setPermissionsCons(userinfoData.PERMISSIONS, 'edit');
           delete userinfoData['PERMISSIONS'];
           this.userData = userinfoData;
         } else if (response.MESSAGE == "Login Failure") {
@@ -68,7 +72,7 @@ export class UserDialogComponent implements OnInit {
       this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: true, DATA: {} }, 'SetUser').subscribe(res => {
         if (res.CODE == 200 && res.STATUS == "success") {
           this.userData.USERGUID = res.DATA.USERGUID;
-          this.setPermissionsCons(res.DATA.DEFAULTVALUES.PERMISSIONS);
+          this.setPermissionsCons(res.DATA.DEFAULTVALUES.PERMISSIONS, 'add');
         } else if (res.MESSAGE === 'Login Failure') {
           this.dialogRef.close(false);
         }
@@ -83,7 +87,7 @@ export class UserDialogComponent implements OnInit {
   RatePerDayVal() {
     this.userData.RATEPERDAY = parseFloat(this.userData.RATEPERDAY).toFixed(2);
   }
-  setPermissionsCons(tempPermission) {
+  setPermissionsCons(tempPermission, type: any) {
     const PermissionsCons = ['MATTER DETAILS', 'DAY BOOK / TIME ENTRIES', 'CONTACTS', 'ESTIMATES', 'DOCUMENT/EMAIL GENERATION', 'DOCUMENT REGISTER', 'INVOICING', 'RECEIVE MONEY', 'SPEND MONEY', 'CHRONOLOGY', 'TOPICS', 'AUTHORITIES', 'FILE NOTES', 'SAFE CUSTODY', 'SAFE CUSTODY PACKET', 'SEARCHING', 'DIARY', 'TASKS', 'CHART OF ACCOUNTS', 'GENERAL JOURNAL', 'OTHER ACCOUNTING', 'TRUST MONEY', 'TRUST CHART OF ACCOUNTS', 'TRUST GENERAL JOURNAL', 'TRUST REPORTS', 'ACCOUNTING REPORTS', 'MANAGEMENT REPORTS', 'SYSTEM', 'USERS', 'ACTIVITIES/SUNDRIES'];
     const userPermissiontemp: any = [];
     if (tempPermission) {
@@ -91,7 +95,10 @@ export class UserDialogComponent implements OnInit {
         if (tempPermission[value]) {
           const subPermissions = [];
           tempPermission[value].forEach((value2) => {
-            subPermissions.push({ NAME: value2.NAME, VALUE: value2.VALUE == "1" ? true : false });
+            if (type == "add")
+              subPermissions.push({ NAME: value2.NAME, VALUE: false });
+            else
+              subPermissions.push({ NAME: value2.NAME, VALUE: value2.VALUE == "1" ? true : false });
           });
           userPermissiontemp.push({ key: value, val: subPermissions });
         }

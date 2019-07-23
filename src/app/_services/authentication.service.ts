@@ -52,13 +52,13 @@ export class AuthenticationService {
             this.router.navigate(['matters']);
             return false;
         }
-        // not logged in so return true
+        // Login Failure so return true
         return true;
     }
     logout() {
         // remove user from local storage to log user out
         this.http.get<any>(environment.APIEndpoint + 'Login?request=Logout').subscribe(loginResponse => {
-            if (loginResponse.MESSAGE == "Not logged in") {
+            if (loginResponse.MESSAGE == "Login Failure") {
                 localStorage.removeItem('currentUser');
                 localStorage.removeItem('app_permissions');
                 localStorage.removeItem('session_token');

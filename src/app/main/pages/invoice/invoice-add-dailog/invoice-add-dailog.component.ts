@@ -114,7 +114,7 @@ export class InvoiceAddDailogComponent implements OnInit {
           && (inValIN > matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST || matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST <= 0)) ? false : true;
         this.addInvoiceForm.controls['ESTIMATEFROMTOTALEXGST'].setValue(matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALEXGST);
         this.addInvoiceForm.controls['ESTIMATEFROMTOTALINCGST'].setValue(matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == "Login Failure") {
         this.dialogRef.close(false);
       }
     }, error => {
@@ -123,11 +123,13 @@ export class InvoiceAddDailogComponent implements OnInit {
     this.isLoadingResults = false;
   }
   invoiceDateChange(type: string, event: MatDatepickerInputEvent<Date>) {
+    console.log('1st one');
     this.addInvoiceForm.controls['INVOICEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
 
   firstDate(event) {
-    var dt = event;
+    console.log(event);
+    var dt = event._d;
     dt.setMonth(dt.getMonth() + 1);
     this.addInvoiceForm.controls['DUEDATETEXT'].setValue(new Date(dt));
     this.addInvoiceForm.controls['DUEDATE'].setValue(this.datepipe.transform(dt, 'dd/MM/yyyy'));
@@ -247,7 +249,7 @@ export class InvoiceAddDailogComponent implements OnInit {
         this.checkValidation(res.DATA.VALIDATIONS, PostInvoiceEntryData);
       } else if (res.CODE == 450 && res.STATUS == "error") {
         this.checkValidation(res.DATA.VALIDATIONS, PostInvoiceEntryData);
-      } else if (res.MESSAGE == "Not logged in") {
+      } else if (res.MESSAGE == "Login Failure") {
         this.dialogRef.close(false);
       }
       this.isspiner = false;
@@ -301,7 +303,7 @@ export class InvoiceAddDailogComponent implements OnInit {
         this.toastr.success('Save Success');
         this.dialogRef.close(true);
       } else {
-        if (res.CODE == 402 && res.STATUS == "error" && res.MESSAGE == "Not logged in")
+        if (res.CODE == 402 && res.STATUS == "error" && res.MESSAGE == "Login Failure")
           this.dialogRef.close(false);
       }
       this.isspiner = false;

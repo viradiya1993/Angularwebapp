@@ -107,7 +107,7 @@ export class ActivityDialogComponent implements OnInit {
         this.checkValidation(res.DATA.VALIDATIONS, PostActivityData);
       } else if (res.CODE == 450 && res.STATUS == "error") {
         this.checkValidation(res.DATA.VALIDATIONS, PostActivityData);
-      } else if (res.MESSAGE == "Not logged in") {
+      } else if (res.MESSAGE == "Login Failure") {
         this.dialogRef.close(false);
       }
       this.isspiner = false;
@@ -158,9 +158,11 @@ export class ActivityDialogComponent implements OnInit {
         this.dialogRef.close(true);
       } else if (res.CODE == 451 && res.STATUS == "warning") {
         this.toastr.warning(this.successMsg);
+        this.isspiner = false;
       } else if (res.CODE == 450 && res.STATUS == "error") {
         this.toastr.error(res.STATUS);
-      } else if (res.MESSAGE == "Not logged in") {
+        this.isspiner = false;
+      } else if (res.MESSAGE == "Login Failure") {
         this.dialogRef.close(false);
       }
       this.isspiner = false;

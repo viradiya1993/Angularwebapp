@@ -20,7 +20,7 @@
                                         <mat-select  placeholder="Topic">
                                             <mat-option value="Cost">Cost</mat-option>
                                             <mat-option value="Environmental">Environmental</mat-option>
-                                            <mat-option value="Limitations Peeriod">Cost</mat-option>
+                                            <mat-option value="Limitations Peeriod">Limitations</mat-option>
                                             <mat-option value="Negligence">Negligence</mat-option>
                                             <mat-option value="Litigation">Litigation</mat-option>
                                           
@@ -49,15 +49,15 @@
                                         <mat-label>Authority Web Site / File </mat-label>
                                         <input   matInput>
                                     </mat-form-field>
-
+                                    <mat-icon class="iconmargin" matSuffix (click)='openDocument()'>
+                                        <img src="assets/icons/web_app/icon_letters_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                    </mat-icon>
                                     <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                                             <mat-label>Reference</mat-label>
                                             <input   matInput>
     
                                         </mat-form-field>
-                                        <mat-icon class="iconmargin" matSuffix (click)='openDocument()'>
-                                                <img src="assets/icons/web_app/icon_letters_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                            </mat-icon>
+                                       
                         </div>
 
                         <div fxLayout="row" fxLayoutAlign="start start" fxFlex="1 0 auto">

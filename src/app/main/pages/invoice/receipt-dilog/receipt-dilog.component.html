@@ -14,25 +14,25 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="70" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FIRMGUID,'has-warning':errorWarningData.Warning?.FIRMGUID}">
                         <mat-label>Client</mat-label>
-                        <input matInput readonly placeholder="Client" formControlName="FIRMGUIDTEXT">
+                        <input matInput placeholder="Client" formControlName="FIRMGUIDTEXT">
                         <mat-icon matSuffix (click)='selectClient()' *ngIf="!isEdit">
                             <img src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                         </mat-icon>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="30" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.INCOMECODE,'has-warning':errorWarningData.Warning?.INCOMECODE}">
                         <mat-label>Receipt Code</mat-label>
-                        <input matInput placeholder="Receipt Code" formControlName="INCOMECODE">
+                        <input  matInput placeholder="Receipt Code" formControlName="INCOMECODE">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.INCOMEDATE,'has-warning':errorWarningData.Warning?.INCOMEDATE}">
-                        <input (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" formControlName="INCOMEDATETEXT" matInput [matDatepicker]="picker" placeholder="Choose a date" [readonly]="isEdit" [disabled]="isEdit">
+                        <input readonly (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" formControlName="INCOMEDATETEXT" matInput [matDatepicker]="picker" placeholder="Choose a date" [readonly]="isEdit" [disabled]="isEdit">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.AMOUNT,'has-warning':errorWarningData.Warning?.AMOUNT}">
                         <mat-label>Amount Received</mat-label>
-                        <input type="number" class="sideText" matInput placeholder="Amount Received" formControlName="AMOUNT" (focusout)="revivedAmount()" [(ngModel)]="AMOUNT">
+                        <input   type="number" class="sideText" matInput placeholder="Amount Received" formControlName="AMOUNT" (focusout)="revivedAmount()" [(ngModel)]="AMOUNT">
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.INCOMETYPE,'has-warning':errorWarningData.Warning?.INCOMETYPE}">
                         <mat-label>Income Type</mat-label>
@@ -59,25 +59,25 @@
                     </mat-form-field> -->
                     <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PAYEE,'has-warning':errorWarningData.Warning?.PAYEE}">
                         <mat-label>Payor</mat-label>
-                        <mat-select formControlName="PAYEE" [disabled]="isEdit">
+                        <mat-select  formControlName="PAYEE" [disabled]="isEdit">
                             <mat-option *ngFor="let val of getPayourarray" [value]="val">{{val}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.BANKACCOUNTGUID,'has-warning':errorWarningData.Warning?.BANKACCOUNTGUID}">
                         <mat-label>Bank Account</mat-label>
-                        <input matInput placeholder="Bank Account" value="ACCAAAAAAAAAAAA4" formControlName="BANKACCOUNTGUID">
+                        <input  matInput placeholder="Bank Account" value="ACCAAAAAAAAAAAA4" formControlName="BANKACCOUNTGUID">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.NOTE,'has-warning':errorWarningData.Warning?.NOTE}">
                         <mat-label>Note</mat-label>
-                        <textarea matInput formControlName="NOTE"></textarea>
+                        <textarea  matInput formControlName="NOTE"></textarea>
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
                         <mat-label>Show?</mat-label>
-                        <mat-select formControlName="SHOW" (ngModelChange)="onChangeShow($event)">
+                        <mat-select  formControlName="SHOW" (ngModelChange)="onChangeShow($event)">
                             <mat-option *ngFor="let val of ShowData" [value]="val.id">{{val.text}} </mat-option>
                         </mat-select>
                     </mat-form-field>

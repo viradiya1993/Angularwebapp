@@ -47,6 +47,7 @@ import { AuthorityDialogComponent } from 'app/main/pages/main-authorities/author
 import { ReportFilterComponent } from './../../../main/pages/general-journal/report-filter/report-filter.component';
 import { ChronItemDailogComponent } from './../../../main/pages/legal-details/chronology/chron-item-dailog/chron-item-dailog.component';
 import { DairyDailogComponent } from './../../../main/pages/diary/dairy-dailog/dairy-dailog.component';
+import { ResumeTimerComponent } from 'app/main/pages/time-entries/resume-timer/resume-timer.component';
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -542,6 +543,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }
 
     }
+    ResumeTimePopup(){
+        const dialogRef = this.dialog.open(ResumeTimerComponent, { width: '100%', disableClose: true, data: { 'edit':'', 'matterData': '' } });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result){
+            // $('#refreshTimeEntryTab').click();
+            }
+               
+        }); 
+    }
+
+
     public addNewTimeEntry(Data: any, matterData: any) {
         const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '100%', disableClose: true, data: { 'edit': Data, 'matterData': matterData } });
         dialogRef.afterClosed().subscribe(result => {
@@ -863,7 +875,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         let AccountPopdata = {}
         if (actionType == 'new') {
             AccountPopdata = { action: actionType }
-        } else if (actionType == 'edit' || actionType == 'copy') {
+        } else if (actionType == 'edit' || actionType == 'duplicate') {
             AccountPopdata = { action: actionType }
         }
         const dialogRef = this.dialog.open(ChartAcDailogComponent, {
@@ -1313,7 +1325,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 localStorage.setItem('set_active_matters', JSON.stringify(result));
-                this.router.navigate(['time-billing/work-in-progress/invoice']);
+                // this.router.navigate(['time-billing/work-in-progress/invoice']);
             }
         });
     }

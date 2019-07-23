@@ -11,7 +11,7 @@
       <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
           <form [formGroup]="ChroneItem" fxLayout="column" fxFlex="1 0 auto" name="form">
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                     <mat-label>Format</mat-label>
                       <mat-select #value name="selected" (selectionChange)="FormatChange($event.value)" formControlName="Format">
                         <mat-option value="1">dd mm yyyy</mat-option>
@@ -21,52 +21,63 @@
                       </mat-select>
                 </mat-form-field>
   
-                <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
+                <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
                     <mat-label>Date From</mat-label>
                     <input (dateInput)="choosedDateFrom()" (dateChange)="DateFrom()" matInput  formControlName ="date" [matDatepicker]="picker">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
   
-                <mat-form-field class="example" appearance="outline"  fxFlex="34" class="pr-4">
-                  <mat-label>Time From</mat-label>
-                  <input  matInput  formControlName ="time" type="number" readonly>
-                </mat-form-field>
+              
                 
             </div>
 
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
-                    <mat-label>Date To</mat-label>
-                    <input (dateInput)="choosedDateTo()" (dateChange)="DateTo()" matInput  formControlName ="dateto" [matDatepicker]="picker2" disabled>
-                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                    <mat-datepicker #picker2></mat-datepicker>
-                </mat-form-field>
+                <mat-form-field class="example" appearance="outline"  fxFlex="34" class="pr-4">
+                    <mat-label>Time From</mat-label>
+                    <input  matInput  formControlName ="time" type="number" readonly>
+                  </mat-form-field>
+                 
+                  <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
+                      <mat-label>Date To</mat-label>
+                      <input (dateInput)="choosedDateTo()" (dateChange)="DateTo()" matInput  formControlName ="dateto" [matDatepicker]="picker2" disabled>
+                      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                      <mat-datepicker #picker2></mat-datepicker>
+                  </mat-form-field>
+  
+                  <mat-form-field class="example" appearance="outline"  fxFlex="33" class="pr-4">
+                      <mat-label>Time To</mat-label>
+                      <input  matInput  formControlName ="timeto" type="number" readonly>
+                    </mat-form-field>
 
-                <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+               
+  
+
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                   <mat-label>Reference</mat-label>
                   <input  matInput  formControlName ="Reference">
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
-                  <mat-label>Brif Pg#</mat-label>
-                  <input  matInput  formControlName ="brif">
-                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Breif Pg#</mat-label>
+                    <input  matInput  formControlName ="brif">
+                  </mat-form-field>
+              
     
             </div>
 
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">  
-                <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                   <mat-label>Witnesses</mat-label>
                   <input  matInput  formControlName ="Witnesses">
                 </mat-form-field>
 
-                <mat-form-field class="example" appearance="outline"  fxFlex="33" class="pr-4">
-                  <mat-label>Time To</mat-label>
-                  <input  matInput  formControlName ="timeto" type="number" readonly>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+               
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                   <mat-label>COMMENT</mat-label>
                   <textarea formControlName="COMMENT" matInput></textarea>
                 </mat-form-field>
@@ -92,7 +103,7 @@
                   <mat-select #value name="selected" (selectionChange)="Event()" formControlName="eventAgereed">
                     <mat-option value="1">Agreed</mat-option>
                     <mat-option value="2">Disputed by Plaintiff</mat-option>
-                    <mat-option value="3">Disputed by Defendat</mat-option>
+                    <mat-option value="3">Disputed by Defendant</mat-option>
                     <mat-option value="4">Uncertain - required investigation</mat-option>
                   </mat-select>
               </mat-form-field>

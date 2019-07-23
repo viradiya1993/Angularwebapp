@@ -37,7 +37,7 @@ export class UserSelectPopupComponent implements OnInit {
         }
         this.getDataForTable = new MatTableDataSource(response.DATA.USERS);
         this.getDataForTable.paginator = this.paginator;
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == "Login Failure") {
         this.dialogRef.close(false);
       }
       this.isLoadingResults = false;

@@ -116,7 +116,7 @@ export class CorrespondDailogComponent implements OnInit {
         this.toastr.warning(response.MESSAGE);
       } else if (response.CODE == 450 && response.STATUS == "error") {
         this.toastr.error(response.MESSAGE);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == "Login Failure") {
         this.dialogRef.close(false);
       }
     }, (error: any) => {

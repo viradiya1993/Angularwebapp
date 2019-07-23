@@ -17,9 +17,9 @@ export class AuthorityDialogComponent implements OnInit {
   title: any;
   constructor(public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: any) {
     if(data.action == 'edit'){
-    this.title='Edit';
+    this.title='Update';
     }else if(data.action == 'copy'){
-      this.title='Copy';
+      this.title='Duplicate';
     }
     else{
       this.title='Add';

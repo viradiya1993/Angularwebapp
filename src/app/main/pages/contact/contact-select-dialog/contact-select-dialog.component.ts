@@ -79,7 +79,7 @@ export class ContactSelectDialogComponent implements OnInit {
           this.highlightedRows = response.DATA.CONTACTS[0].CONTACTGUID;
         }
         this.isLoadingResults = false;
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == "Login Failure") {
         this.dialogRef.close(false);
       }
     }, err => {

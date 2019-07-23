@@ -42,7 +42,7 @@ export class ContactCorresDetailsComponent implements OnInit {
     this.isLoadingResults = true;
     this.getin = { MatterGuid: this.getMatterGuid }
     this._mainAPiServiceService.getSetData(this.getin, 'GetMatterContact').subscribe(res => {
-      if (res.MESSAGE == "Not logged in") {
+      if (res.MESSAGE == "Login Failure") {
         this.dialogRef.close(false);
       } else {
         if (Object.keys(res.DATA.MATTERCONTACTS).length == 0) {

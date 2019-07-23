@@ -108,6 +108,7 @@ this.SepndMoneyForm=this._formBuilder.group({
 
         this.Spendmoneydata = new MatTableDataSource(response.DATA.EXPENDITURES)
         this.Spendmoneydata.paginator = this.paginator;
+        this.Spendmoneydata.sort = this.sort;
         if (response.DATA.EXPENDITURES[0]) {
           localStorage.setItem('spendMoney_data', JSON.stringify(response.DATA.EXPENDITURES[0]));
           this.highlightedRows = response.DATA.EXPENDITURES[0].EXPENDITUREGUID;

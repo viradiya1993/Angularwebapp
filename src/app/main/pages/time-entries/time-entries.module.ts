@@ -26,6 +26,7 @@ import { MatterDialogComponent } from './matter-dialog/matter-dialog.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NumericDirective } from './time-entry-dialog/numericValidation.component';
 import {MatSortModule} from '@angular/material/sort';
+ import { ResumeTimerComponent } from './resume-timer/resume-timer.component';
 const routes = [
   { path: '', component: TimeEntriesComponent, canActivate: [AuthGuard] }
 ];
@@ -35,7 +36,8 @@ const routes = [
     TimeEntriesComponent,
     TimeEntryDialogComponent,
     MatterDialogComponent,
-    NumericDirective
+    NumericDirective,
+    ResumeTimerComponent
     // SatDatepickerModule,
   ],
   imports: [
@@ -81,7 +83,8 @@ const routes = [
   ],
   entryComponents: [
     TimeEntryDialogComponent,
-    MatterDialogComponent
+    MatterDialogComponent,
+    ResumeTimerComponent
   ],
   exports: [
     TimeEntriesComponent

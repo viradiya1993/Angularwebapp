@@ -50,7 +50,7 @@ export class ChangePasswordComponent implements OnInit {
         this.dialogRef.close(true);
         this.authenticationService.ForcLogout();
         localStorage.setItem('session_token', res['DATA'].SESSIONTOKEN);
-      } else if (res.MESSAGE == "Not logged in") {
+      } else if (res.MESSAGE == "Login Failure") {
         this.dialogRef.close(false);
       }
       this.isspiner = false;

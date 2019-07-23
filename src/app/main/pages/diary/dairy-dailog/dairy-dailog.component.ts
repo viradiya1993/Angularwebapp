@@ -37,7 +37,7 @@ export class DairyDailogComponent implements OnInit {
     if(this.action === 'new'){
       this.dialogTitle = 'New Appointment';
     }else if(this.action === 'edit'){
-      this.dialogTitle = 'Edit Appointment';
+      this.dialogTitle = 'Update Appointment';
     }else{
       this.dialogTitle = 'Duplicate Appointment';
     }

@@ -8,7 +8,7 @@ import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { Location } from '@angular/common';
 import { navigation } from 'app/navigation/navigation';
-import { AuthenticationService, MainAPiServiceService, TimersService } from '../../../_services';
+import { AuthenticationService, MainAPiServiceService, TimersService, BehaviorService } from '../../../_services';
 import { Router } from '@angular/router';
 import { ContactDialogComponent } from './../../../main/pages/contact/contact-dialog/contact-dialog.component';
 import { LicenceAgreementComponent } from '../../../main/licence-agreement/licence-agreement.component';
@@ -103,8 +103,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private TimersServiceI: TimersService, private _mainAPiServiceService: MainAPiServiceService,
         private _router: Router,
         private location: Location,
-        public MatDialog: MatDialog
+        public MatDialog: MatDialog,
+        public behaviorService:BehaviorService
     ) {
+        //for navigation bar 
+      
+
         if (this.appPermissions == null) {
             this.appPermissions = [];
         }
@@ -1161,6 +1165,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 1;
         }
         this.activeSubMenu = x[2];
+
+        // console.log(this.router.url);
+        // this.behaviorService.navigation(this.router.url);
     }
     setTab(event: any) {
         this.selectedIndex = 0;

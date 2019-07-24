@@ -1040,10 +1040,14 @@ export class MatterPopupComponent implements OnInit {
         this.isspiner = false;
       } else if (response.CODE == 451 && response.STATUS == "warning") {
         this.toastr.warning(response.MESSAGE);
+        this.isspiner = false;
       } else if (response.CODE == 450 && response.STATUS == "error") {
         this.toastr.error(response.MESSAGE);
+        this.isspiner = false;
       } else if (response.MESSAGE == "Not logged in") {
+        this.isspiner = false;
         this.dialogRef.close(false);
+        
       }
     }, error => {
       this.toastr.error(error);

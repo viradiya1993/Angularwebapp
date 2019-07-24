@@ -12,4 +12,10 @@ export class BehaviorService {
   editPermission(newPermission: any) {
     this.userPermission$.next(newPermission);
   }
+
+  // navigation bar service 
+  
+  navigation(a){
+    this.userPermission$.next(a);
+  }
 }

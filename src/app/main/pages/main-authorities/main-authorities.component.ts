@@ -19,28 +19,56 @@ interface FoodNode {
   children?: FoodNode[];
 }
 
+// const TREE_DATA: FoodNode[] = [
+//   {
+//     name: 'Fruit',index:1,
+//     children: [
+//       {name: 'Apple',index:2},
+//       {name: 'Banana',index:3},
+//       {name: 'Fruit loops', index:4},
+//     ]
+//   }, {
+//     name: 'Vegetables',index:5,
+//     children: [
+//       {
+//         name: 'Green',index:6,
+//         children: [
+//           {name: 'Broccoli',index:7},
+//           {name: 'Brussel sprouts',index:8},
+//         ]
+//       }, {
+//         name: 'Orange',index:9,
+//         children: [
+//           {name: 'Pumpkins',index:10},
+//           {name: 'Carrots',index:11},
+//         ]
+//       },
+//     ]
+//   },
+// ];
+
 const TREE_DATA: FoodNode[] = [
   {
-    name: 'Fruit',index:1,
+    name: 'Fruit',
     children: [
-      {name: 'Apple',index:2},
-      {name: 'Banana',index:3},
-      {name: 'Fruit loops', index:4},
+      {name: 'Apple'},
+      {name: 'Banana'},
+      {name: 'Fruit loops'},
     ]
   }, {
-    name: 'Vegetables',index:5,
+    name: 'Vegetables',
     children: [
       {
-        name: 'Green',index:6,
+        name: 'Green',
         children: [
-          {name: 'Broccoli',index:7},
-          {name: 'Brussel sprouts',index:8},
+          {name: 'Broccoli'},
+          {name: 'Brussel sprouts'},
         ]
       }, {
-        name: 'Orange',index:9,
+        name: 'Orange',
         children: [
-          {name: 'Pumpkins',index:10},
-          {name: 'Carrots',index:11},
+          {name: 'Pumpkins'},
+          {name: 'Carrots'},
         ]
       },
     ]
@@ -65,9 +93,8 @@ export class MainAuthoritiesComponent implements OnInit {
   Accountlist: FormGroup;
   isLoadingResults: boolean = false;
   highlightedRows: any;
-  
+  arrayForIndex:any=[];
   theme_type = localStorage.getItem('theme_type');
- 
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   index = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   private _transformer = (node: FoodNode, level: number) => {
@@ -93,10 +120,28 @@ export class MainAuthoritiesComponent implements OnInit {
     private toastr: ToastrService,
   
   )
-  { 
+  {   
+       this.arrayForIndex=[];
+       this.showData(TREE_DATA,0,null);
        this.dataSource.data = TREE_DATA;
+       this.highlightedRows=1;  
   }
   
+  showData(element,level,parent)
+  {
+    element.forEach(x=>
+    {
+         //for index 
+      this.arrayForIndex.push({});
+      x.level=level
+      x.parent=parent
+      x.index=this.arrayForIndex.length;
+      // console.log(x.name,x.level,x.parent);
+      if (x.children)
+          this.showData(x.children,x.level+1,x.name)
+    })
+    
+  }
   
   ngOnInit() {
     this.Accountlist = this._formBuilder.group({
@@ -115,7 +160,6 @@ export class MainAuthoritiesComponent implements OnInit {
   }
   //openDialog
   openDialog(){
-
   }
   //selectTreeNode
   selectTreeNode(){
@@ -149,6 +193,5 @@ export class MainAuthoritiesComponent implements OnInit {
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
   editContact(val){
-
   }
 }

@@ -369,7 +369,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         let popupData: any = {};
         if (actionType == "new") {
             popupData = { action: actionType };
-        } else if (actionType == "edit" || actionType == "Duplicate") {
+        } else if (actionType == "edit" || actionType == "duplicate") {
             let ActiveUserData = JSON.parse(localStorage.getItem('current_user_Data'));
             if (!ActiveUserData) {
                 this.toastr.error("Please Select User");
@@ -543,14 +543,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }
 
     }
-    ResumeTimePopup(){
-        const dialogRef = this.dialog.open(ResumeTimerComponent, { width: '100%', disableClose: true, data: { 'edit':'', 'matterData': '' } });
+    ResumeTimePopup() {
+        const dialogRef = this.dialog.open(ResumeTimerComponent, { width: '100%', disableClose: true, data: { 'edit': '', 'matterData': '' } });
         dialogRef.afterClosed().subscribe(result => {
-            if (result){
-            // $('#refreshTimeEntryTab').click();
+            if (result) {
+                // $('#refreshTimeEntryTab').click();
             }
-               
-        }); 
+
+        });
     }
 
 

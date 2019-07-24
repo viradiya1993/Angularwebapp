@@ -120,6 +120,12 @@ export class UserDialogComponent implements OnInit {
   }
   SaveUser() {
     this.isspiner = true;
+    if (this.action === 'duplicate') {
+      delete this.userData['USERGUID'];
+      delete this.userData['STATUS'];
+      delete this.userData['ALLOWMOBILEACCESS'];
+      delete this.userData['SEARCHUSERPASSWORD'];
+    }
     this.userData.PERMISSIONS = this.getPermissionsCons(this.userinfoDatah);
     const userPostData: any = { FormAction: 'insert', VALIDATEONLY: true, DATA: this.userData };
     this._mainAPiServiceService.getSetData(userPostData, 'SetUser').subscribe(res => {
@@ -152,7 +158,6 @@ export class UserDialogComponent implements OnInit {
       }
     });
     this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
-    console.log(this.errorWarningData);
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {

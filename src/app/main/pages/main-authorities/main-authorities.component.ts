@@ -131,7 +131,7 @@ export class MainAuthoritiesComponent implements OnInit {
   {
     element.forEach(x=>
     {
-         //for index 
+        //for index 
       this.arrayForIndex.push({});
       x.level=level
       x.parent=parent
@@ -152,7 +152,7 @@ export class MainAuthoritiesComponent implements OnInit {
     });
     let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
     this.Accountlist.controls['Matter'].setValue(mattersData.MATTER);
-    this.Accountlist.controls['Client'].setValue(mattersData.CONTACTNAME);
+    this.Accountlist.controls['Client'].setValue(mattersData.CONTACTNAME); 
   }
   //TypeOfAccounts Dropdown
   TypeOfAccounts(value){

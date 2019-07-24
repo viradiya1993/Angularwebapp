@@ -308,6 +308,7 @@ export class ContactDialogComponent implements OnInit {
       OTHERFAMILYNAME: this.f.OTHERFAMILYNAME.value,
       OTHERGIVENNAMES: this.f.OTHERGIVENNAMES.value,
       REASONFORCHANGE: this.f.REASONFORCHANGE.value,
+      COMPANYNAME:this.f.COMPANYCONTACTGUIDTEXT.value,
 
       //others
       GENDER: this.f.GENDER.value,

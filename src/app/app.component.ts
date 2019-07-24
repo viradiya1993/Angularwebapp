@@ -121,14 +121,20 @@ export class AppComponent implements OnInit, OnDestroy {
     epicFunction() {
         this.deviceInfo = this.deviceService.getDeviceInfo();
         const isMobile = this.deviceService.isMobile();
-        if (isMobile) {
-            const dialogRef = this.dialog.open(LicenceAgreementComponent, {
-                disableClose: true,
-                width: '100%',
-                data: { action: 'MD' }
-            });
-            dialogRef.afterClosed().subscribe(result => { });
-        }
+
+        if (window.innerWidth < 1024) {
+            if (isMobile){
+                const dialogRef = this.dialog.open(LicenceAgreementComponent, {
+                    disableClose: true,
+                    width: '100%',
+                    data: { action: 'MD' }
+                });
+                dialogRef.afterClosed().subscribe(result => { });
+            }
+           
+                 } else {
+                 //
+              }
     }
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks

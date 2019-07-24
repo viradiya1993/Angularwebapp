@@ -33,7 +33,7 @@ export class ContactComponent implements OnInit {
   contactFilter: FormGroup;
   pageSize: any;
   selectedVal: any;
-  filterVals = { 'active': '1', 'FirstLetter': 'a', 'SEARCH': '', 'ContactType': '' };
+  filterVals = { 'active': 'all', 'FirstLetter': 'a', 'SEARCH': '', 'ContactType': 'all' };
   constructor(
     private dialog: MatDialog,
     private TableColumnsService: TableColumnsService,

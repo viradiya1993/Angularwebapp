@@ -88,7 +88,7 @@ export class ChartAccountComponent implements OnInit {
   dataSource: MatTreeFlatDataSource<LoadmoreNode, LoadmoreFlatNode>;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
-  index = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
+   index = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   
   constructor(
     private _formBuilder: FormBuilder,

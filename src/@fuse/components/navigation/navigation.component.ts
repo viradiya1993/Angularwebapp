@@ -39,7 +39,7 @@ export class FuseNavigationComponent implements OnInit {
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
     private _fuseNavigationService: FuseNavigationService,
-    public GetFavouriteService: GetFavouriteService,
+    public getFavouriteService: GetFavouriteService,
     private toastr: ToastrService
   ) {
 
@@ -59,10 +59,10 @@ export class FuseNavigationComponent implements OnInit {
       { "ID": "searching", "TITLE": "Searching", "URL": "searching", "STAR": "" },
       { "ID": "receive-money", "TITLE": "Receive money", "URL": "receive-money", "STAR": "" }]
 
-      this.GetFavouriteService.GetFavourite(postdata).subscribe(response => {
+      this.getFavouriteService.GetFavourite(postdata).subscribe(response => {
         if (response.CODE == 200 && response.STATUS == "success") {
           if (response.DATA.FAVOURITES == '') {
-            this.GetFavouriteService.setFavourite({ "FAVOURITES": Favouritelist }).subscribe(responses => {
+            this.getFavouriteService.setFavourite({ "FAVOURITES": Favouritelist }).subscribe(responses => {
               if (responses.CODE == 200 && responses.STATUS == "success") {
                 Favouritelist.forEach(items => {
                   this.page.push({ "ID": items.ID, "TITLE": items.TITLE, "URL": items.URL, "STAR": items.STAR, "type": "item", "icon": "icon_matter_d.ico" });
@@ -147,7 +147,7 @@ export class FuseNavigationComponent implements OnInit {
     let guid = JSON.parse(localStorage.getItem('currentUser'));
     if (guid) {
       let favouritedatas = { "FAVOURITES": this.page }
-      this.GetFavouriteService.setFavourite(favouritedatas).subscribe(response => {
+      this.getFavouriteService.setFavourite(favouritedatas).subscribe(response => {
         if (response.CODE == 200 && response.STATUS == "success") {
           // this.toastr.error(error);    
         }

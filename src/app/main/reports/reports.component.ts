@@ -206,7 +206,7 @@ export class ReportsComponent implements OnInit {
               }}
               //open pop-up
             this.dialog.open(ReportsComponent,{width:'100%',data:Data});
-        }else if(reportgenerateData.PDF_Generation.CODE==415 && reportgenerateData.PDF_Generation.STATUS=="error"){          
+        }else if(reportgenerateData.PDF_Generation.CODE==415 && reportgenerateData.PDF_Generation.STATUS=='error'){          
           this.toastr.error(reportgenerateData.PDF_Generation.MESSAGE);
           this.dialogRef.close(true);
         }

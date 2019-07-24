@@ -9,23 +9,21 @@
     </h2>
     <div mat-dialog-content class="mat-typography main">
         <div class=" one  mb-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
-            <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" >
+            <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <div class=" one  mb-24" fxLayout="column">
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                           
+
                             <mat-form-field appearance="outline" fxFlex="34" class="pr-4" appearance="outline">
                                 <mat-label>Date</mat-label>
-                                <input matInput [matDatepicker]="picker" placeholder="Choose a date"
-                                    (dateInput)="choosedDate('input', $event)"
-                                    (dateChange)="choosedDate('change', $event)">
+                                <input matInput [matDatepicker]="picker" placeholder="Choose a date">
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
                             </mat-form-field>
 
-                            <mat-form-field appearance="outline" fxFlex="33" class="pr-4" >
+                            <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                                 <mat-label>Time of day</mat-label>
-                                <mat-select (ngModelChange)="ChanageTimeSlot($event)">
+                                <mat-select>
                                     <mat-option *ngFor="let data of timeStops" value="{{data}}">{{data}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -34,11 +32,11 @@
                                 <mat-label>Time of day</mat-label>
                                 <input matInput>
                             </mat-form-field> -->
-                           
+
 
                             <mat-form-field fxFlex="34" class="pr-4" appearance="outline">
                                 <mat-label>Free Erner</mat-label>
-                                <mat-select (selectionChange)="itemTypeChange($event.value);">
+                                <mat-select>
                                     <mat-option value="WIP">Time Entry</mat-option>
                                     <mat-option value="Activity">Activity</mat-option>
                                     <mat-option value="Sundry">Sundry</mat-option>
@@ -56,7 +54,7 @@
 
                             <mat-form-field fxFlex="50" class="pr-4" appearance="outline">
                                 <mat-label>Type</mat-label>
-                                <mat-select (selectionChange)="itemTypeChange($event.value);">
+                                <mat-select>
                                     <mat-option value="1">Time Entry</mat-option>
                                     <mat-option value="2">Activity</mat-option>
                                     <mat-option value="3">Sundry</mat-option>
@@ -87,8 +85,7 @@
 
                             <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
                                 <mat-label>Notes</mat-label>
-                                <textarea cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5"
-                                    matInput></textarea>
+                                <textarea cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" matInput></textarea>
                             </mat-form-field>
 
                         </div>
@@ -99,8 +96,9 @@
         </div>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
-        <button mat-raised-button color="accent" (click)="SaveClickTimeEntry()" [disabled]="isspiner">
-            <mat-spinner *ngIf="isspiner"></mat-spinner>{{buttonText}}
+        <button mat-raised-button color="accent" [disabled]="isspiner">
+            <mat-spinner *ngIf="isspiner"></mat-spinner>
+            {{buttonText}}
         </button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
     </mat-dialog-actions>

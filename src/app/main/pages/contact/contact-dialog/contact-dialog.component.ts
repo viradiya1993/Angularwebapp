@@ -144,7 +144,7 @@ export class ContactDialogComponent implements OnInit {
       this.isLoadingResults = true;
       let contactguidforbody = { CONTACTGUID: localStorage.getItem('contactGuid') }
       this._mainAPiServiceService.getSetData(contactguidforbody, 'GetContact').subscribe(res => {
-        if (res.MESSAGE == "Not logged in") {
+        if (res.MESSAGE == 'Not logged in') {
           this.dialogRef.close(false);
         } else {
           if (res.DATA.CONTACTS[0]) {
@@ -369,11 +369,11 @@ export class ContactDialogComponent implements OnInit {
     this.subscription=this._mainAPiServiceService.getSetData(details, 'SetContact').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, details);
-      } else if (response.CODE == 451 && response.STATUS == "warning") {
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.checkValidation(response.DATA.VALIDATIONS, details);
-      } else if (response.CODE == 450 && response.STATUS == "error") {
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
         this.checkValidation(response.DATA.VALIDATIONS, details);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       } else {
         this.isspiner = false;
@@ -396,7 +396,7 @@ export class ContactDialogComponent implements OnInit {
         tempWarning[value.FIELDNAME] = value;
       }
     });
-    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
+    this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
@@ -429,13 +429,13 @@ export class ContactDialogComponent implements OnInit {
         }
         this.isspiner = false;
         this.dialogRef.close(true);
-      } else if (response.CODE == 451 && response.STATUS == "warning") {
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.toastr.warning(response.MESSAGE);
         this.isspiner = false;
-      } else if (response.CODE == 450 && response.STATUS == "error") {
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
         this.toastr.error(response.MESSAGE);
         this.isspiner = false;
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
     }, error => {

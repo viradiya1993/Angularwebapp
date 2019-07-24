@@ -378,9 +378,9 @@ export class SystemSettingComponent implements OnInit {
     this._mainAPiServiceService.getSetData(data1, 'SetSystem').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, data1);
-      } else if (response.CODE == 451 && response.STATUS == "warning") {
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.checkValidation(response.DATA.VALIDATIONS, data1);
-      } else if (response.CODE == 450 && response.STATUS == "error") {
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
         this.checkValidation(response.DATA.VALIDATIONS, data1);
       } else {
         this.isspiner = false;
@@ -404,7 +404,7 @@ export class SystemSettingComponent implements OnInit {
         warningData.push(value.ERRORDESCRIPTION);
       }
     });
-    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
+    this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
@@ -433,9 +433,9 @@ export class SystemSettingComponent implements OnInit {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.toastr.success('Update successfully');
         this.isspiner = false;
-      } else if (response.CODE == 451 && response.STATUS == "warning") {
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.toastr.warning(response.MESSAGE);
-      } else if (response.CODE == 450 && response.STATUS == "error") {
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
         this.toastr.error(response.MESSAGE);
       } 
     }, error => {

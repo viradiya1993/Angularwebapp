@@ -24,7 +24,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                     } else if (evt.body.CODE == 200 && evt.body.STATUS != "success") {
                         this.toasterService.error(evt.body.STATUS);
                     }
-                    //  else if (evt.body.CODE == 450 && evt.body.STATUS == "error") {
+                    //  else if (evt.body.CODE == 450 && evt.body.STATUS == 'error') {
                     //     let bodyData = evt.body.DATA.VALIDATIONS;
                     //     let errorData: any = [];
                     //     let warningData: any = [];
@@ -38,7 +38,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                     //         this.toasterService.error(errorData);
                     //     if (Object.keys(warningData).length != 0)
                     //         this.toasterService.warning(warningData);
-                    // } else if (evt.body.CODE == 451 && evt.body.STATUS == "warning") {
+                    // } else if (evt.body.CODE == 451 && evt.body.STATUS == 'warning') {
                     //     let bodyData = evt.body.DATA.VALIDATIONS;
                     //     let errorData: any = [];
                     //     let warningData: any = [];
@@ -53,8 +53,8 @@ export class ErrorInterceptor implements HttpInterceptor {
                     //     if (Object.keys(warningData).length != 0)
                     //         this.toasterService.warning(warningData);
                     // }
-                    else if ((evt.body.CODE > 400 && evt.body.CODE < 499) && (evt.body.STATUS == "error" || evt.body.RESPONSE == "error")) {
-                        if (evt.body.MESSAGE == "Not logged in") {
+                    else if ((evt.body.CODE > 400 && evt.body.CODE < 499) && (evt.body.STATUS == 'error' || evt.body.RESPONSE == 'error')) {
+                        if (evt.body.MESSAGE == 'Not logged in') {
                             this.authenticationService.ForcLogout();
                         } else {
                             if (evt.body.MESSAGE != "Check the Validation Section for Errors/Warnings.")

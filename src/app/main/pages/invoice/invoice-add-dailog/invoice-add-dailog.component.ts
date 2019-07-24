@@ -114,7 +114,7 @@ export class InvoiceAddDailogComponent implements OnInit {
           && (inValIN > matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST || matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST <= 0)) ? false : true;
         this.addInvoiceForm.controls['ESTIMATEFROMTOTALEXGST'].setValue(matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALEXGST);
         this.addInvoiceForm.controls['ESTIMATEFROMTOTALINCGST'].setValue(matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
     }, error => {
@@ -220,36 +220,36 @@ export class InvoiceAddDailogComponent implements OnInit {
   }
   SaveInvoice() {
     this.isspiner = true;
-    let PostData: any = {
+    const PostData: any = {
       // "INVOICEGUID": this.f.ADDITIONALTEXT.value,
-      "INVOICECODE": this.f.INVOICECODE.value,
-      "MATTERGUID": this.f.MATTERGUID.value,
-      "INVOICEDATE": this.f.INVOICEDATE.value,
-      "DUEDATE": this.f.DUEDATE.value,
-      "PRINTEDDATE": "",
-      "INVOICETOTAL": this.f.OVEINTOTAL.value,
-      "GST": this.f.OVEGSTTOTAL.value,
-      "FOREIGNCURRENCYID": "",
-      "COMMENT": this.f.COMMENT.value,
-      "WORKITEMS": this.WORKITEMS
+      INVOICECODE: this.f.INVOICECODE.value,
+      MATTERGUID: this.f.MATTERGUID.value,
+      INVOICEDATE: this.f.INVOICEDATE.value,
+      DUEDATE: this.f.DUEDATE.value,
+      PRINTEDDATE: '',
+      INVOICETOTAL: this.f.OVEINTOTAL.value,
+      GST: this.f.OVEGSTTOTAL.value,
+      FOREIGNCURRENCYID: '',
+      COMMENT: this.f.COMMENT.value,
+      WORKITEMS: this.WORKITEMS
     };
     let PostInvoiceEntryData: any = { FormAction: 'insert', VALIDATEONLY: true, Data: PostData };
 
     this._mainAPiServiceService.getSetData(PostInvoiceEntryData, 'SetInvoice').subscribe(res => {
-      if (res.DATA.INVOICECODE && res.DATA.INVOICECODE != "") {
+      if (res.DATA.INVOICECODE && res.DATA.INVOICECODE != '') {
         this.addInvoiceForm.controls['INVOICECODE'].setValue(res.DATA.INVOICECODE);
         PostData.INVOICECODE = res.DATA.INVOICECODE;
       } else {
         PostData.INVOICECODE = this.f.INVOICECODE.value;
       }
       PostInvoiceEntryData = { FormAction: 'insert', VALIDATEONLY: true, Data: PostData };
-      if (res.CODE == 200 && res.STATUS == "success") {
+      if (res.CODE == 200 && res.STATUS == 'success') {
         this.checkValidation(res.DATA.VALIDATIONS, PostInvoiceEntryData);
-      } else if (res.CODE == 451 && res.STATUS == "warning") {
+      } else if (res.CODE == 451 && res.STATUS == 'warning') {
         this.checkValidation(res.DATA.VALIDATIONS, PostInvoiceEntryData);
-      } else if (res.CODE == 450 && res.STATUS == "error") {
+      } else if (res.CODE == 450 && res.STATUS == 'error') {
         this.checkValidation(res.DATA.VALIDATIONS, PostInvoiceEntryData);
-      } else if (res.MESSAGE == "Not logged in") {
+      } else if (res.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
       this.isspiner = false;
@@ -273,7 +273,7 @@ export class InvoiceAddDailogComponent implements OnInit {
         tempWarning[value.FIELDNAME] = value;
       }
     });
-    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
+    this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
@@ -303,7 +303,7 @@ export class InvoiceAddDailogComponent implements OnInit {
         this.toastr.success('Save Success');
         this.dialogRef.close(true);
       } else {
-        if (res.CODE == 402 && res.STATUS == "error" && res.MESSAGE == "Not logged in")
+        if (res.CODE == 402 && res.STATUS == 'error' && res.MESSAGE == 'Not logged in')
           this.dialogRef.close(false);
       }
       this.isspiner = false;

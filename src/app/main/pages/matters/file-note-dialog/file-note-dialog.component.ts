@@ -74,11 +74,11 @@ export class FileNoteDialogComponent implements OnInit {
     this._mainAPiServiceService.getSetData(finalPassdata, 'SetFileNote').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.checkValidation(res.DATA.VALIDATIONS, finalPassdata);
-      } else if (res.CODE == 451 && res.STATUS == "warning") {
+      } else if (res.CODE == 451 && res.STATUS == 'warning') {
         this.checkValidation(res.DATA.VALIDATIONS, finalPassdata);
-      } else if (res.CODE == 450 && res.STATUS == "error") {
+      } else if (res.CODE == 450 && res.STATUS == 'error') {
         this.checkValidation(res.DATA.VALIDATIONS, finalPassdata);
-      } else if (res.MESSAGE == "Not logged in") {
+      } else if (res.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
       this.isspiner = false;
@@ -101,7 +101,7 @@ export class FileNoteDialogComponent implements OnInit {
         tempWarning[value.FIELDNAME] = value;
       }
     });
-    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
+    this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
@@ -131,13 +131,13 @@ export class FileNoteDialogComponent implements OnInit {
           this.toastr.success('Note save successfully');
         this.isspiner = false;
         this.dialogRef.close(false);
-      } else if (response.CODE == 451 && response.STATUS == "warning") {
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.toastr.warning(response.MESSAGE);
         this.isspiner = false;
-      } else if (response.CODE == 450 && response.STATUS == "error") {
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
         this.toastr.error(response.MESSAGE);
         this.isspiner = false;
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.isspiner = false;
         this.dialogRef.close(false);
       }

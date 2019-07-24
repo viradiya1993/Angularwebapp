@@ -66,7 +66,7 @@ export class MatterPopupComponent implements OnInit {
     this._mainAPiServiceService.getSetData({ 'LookupType': 'Matter Class' }, 'GetLookups').subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.Classdata = responses.DATA.LOOKUPS;
-      } else if (responses.MESSAGE == "Not logged in") {
+      } else if (responses.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
       this.isLoadingResults = false;
@@ -484,7 +484,7 @@ export class MatterPopupComponent implements OnInit {
             this.matterdetailForm.controls['MatterNo'].setValue(matterData.LEGALDETAILS.MATTERNO);
           }
           this.isLoadingResults = false;
-        } else if (response.MESSAGE == "Not logged in") {
+        } else if (response.MESSAGE == 'Not logged in') {
           this.dialogRef.close(false);
         }
       }, error => {
@@ -968,7 +968,7 @@ export class MatterPopupComponent implements OnInit {
     let matterPostData: any = { FormAction: this.FormAction, VALIDATEONLY: true, Data: details };
       
       this._mainAPiServiceService.getSetData(matterPostData, 'SetMatter').subscribe(response => {
-      if (response.DATA.SHORTNAME && response.DATA.SHORTNAME != "") {
+      if (response.DATA.SHORTNAME && response.DATA.SHORTNAME != '') {
         this.matterdetailForm.controls['SHORTNAME'].setValue(response.DATA.SHORTNAME);
         details.SHORTNAME = response.DATA.SHORTNAME;
       } else {
@@ -977,11 +977,11 @@ export class MatterPopupComponent implements OnInit {
       matterPostData = { FormAction: this.FormAction, VALIDATEONLY: true, Data: details };
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
-      } else if (response.CODE == 451 && response.STATUS == "warning") {
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
-      } else if (response.CODE == 450 && response.STATUS == "error") {
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
         this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       } else {
         this.isspiner = false;
@@ -1004,7 +1004,7 @@ export class MatterPopupComponent implements OnInit {
         warningData.push(value.ERRORDESCRIPTION);
       }
     });
-    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
+    this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
@@ -1038,13 +1038,13 @@ export class MatterPopupComponent implements OnInit {
         }
         this.saveCorDetail(response.DATA.MATTERGUID);
         this.isspiner = false;
-      } else if (response.CODE == 451 && response.STATUS == "warning") {
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.toastr.warning(response.MESSAGE);
         this.isspiner = false;
-      } else if (response.CODE == 450 && response.STATUS == "error") {
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
         this.toastr.error(response.MESSAGE);
         this.isspiner = false;
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.isspiner = false;
         this.dialogRef.close(false);
         

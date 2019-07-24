@@ -106,11 +106,11 @@ export class InvoiceDialogComponentForTemplate implements OnInit {
         this.toastr.success('Template Generate successfully');
         this.dialogRef.close(true);
       //   this.checkValidation(response.DATA.VALIDATIONS, passingData);
-      // } else if (response.CODE == 451 && response.STATUS == "warning") {
+      // } else if (response.CODE == 451 && response.STATUS == 'warning') {
       //   this.checkValidation(response.DATA.VALIDATIONS, passingData);
-      // } else if (response.CODE == 450 && response.STATUS == "error") {
+      // } else if (response.CODE == 450 && response.STATUS == 'error') {
       //   this.checkValidation(response.DATA.VALIDATIONS, passingData);
-      // } else if (response.MESSAGE == "Not logged in") {
+      // } else if (response.MESSAGE == 'Not logged in') {
       //   this.dialogRef.close(false);
       // } else {
       //   this.isspiner = false;
@@ -158,7 +158,7 @@ export class InvoiceDialogComponentForTemplate implements OnInit {
   //       this.toastr.success('Template Generate successfully');
   //       this.isspiner = false;
   //       this.dialogRef.close(true);
-  //     } else if (response.MESSAGE == "Not logged in") {
+  //     } else if (response.MESSAGE == 'Not logged in') {
   //       this.dialogRef.close(false);
   //     } else {
   //       this.isspiner = false;

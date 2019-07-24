@@ -132,7 +132,7 @@ export class ReceiptDilogComponent implements OnInit {
           this.PrepareReceiptForm.controls['NOTE'].setValue(data.NOTE);
           this.PrepareReceiptForm.controls['PAYEE'].setValue(data.PAYEE);
         }
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
       this.isLoadingResults = false;
@@ -150,7 +150,7 @@ export class ReceiptDilogComponent implements OnInit {
         this.PrepareReceiptData = new MatTableDataSource(response.DATA.RECEIPTALLOCATIONS)
         this.PrepareReceiptData.paginator = this.paginator;
         this.PrepareReceiptData.sort = this.sort;
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
       this.isLoadingResults = false;
@@ -172,7 +172,7 @@ export class ReceiptDilogComponent implements OnInit {
         this.PrepareReceiptData.paginator = this.paginator;
         this.PrepareReceiptData.sort = this.sort;
         this.isLoadingResults = false;
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
     }, error => {
@@ -267,7 +267,7 @@ export class ReceiptDilogComponent implements OnInit {
     }
     let setReceiptPostData: any = { FormAction: 'insert', VALIDATEONLY: true, DATA: AllocationDataInsert };
     this._mainAPiServiceService.getSetData(setReceiptPostData, 'SetIncome').subscribe(response => {
-      if (response.DATA.INCOMECODE && response.DATA.INCOMECODE != "") {
+      if (response.DATA.INCOMECODE && response.DATA.INCOMECODE != '') {
         this.PrepareReceiptForm.controls['INCOMECODE'].setValue(response.DATA.INCOMECODE);
         AllocationDataInsert.INCOMECODE = response.DATA.INCOMECODE;
       } else {
@@ -276,11 +276,11 @@ export class ReceiptDilogComponent implements OnInit {
       setReceiptPostData = { FormAction: 'insert', VALIDATEONLY: true, DATA: AllocationDataInsert };
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, setReceiptPostData);
-      } else if (response.CODE == 451 && response.STATUS == "warning") {
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.checkValidation(response.DATA.VALIDATIONS, setReceiptPostData);
-      } else if (response.CODE == 450 && response.STATUS == "error") {
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
         this.checkValidation(response.DATA.VALIDATIONS, setReceiptPostData);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
     }, error => {
@@ -304,7 +304,7 @@ export class ReceiptDilogComponent implements OnInit {
         tempWarning[value.FIELDNAME] = value;
       }
     });
-    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
+    this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
@@ -334,7 +334,7 @@ export class ReceiptDilogComponent implements OnInit {
         this.isspiner = false;
          
         this.dialogRef.close(true);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       } else {
         this.isspiner = false;

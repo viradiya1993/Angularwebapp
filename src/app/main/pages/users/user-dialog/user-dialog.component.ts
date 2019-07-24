@@ -60,7 +60,7 @@ export class UserDialogComponent implements OnInit {
           this.setPermissionsCons(userinfoData.PERMISSIONS, 'edit');
           delete userinfoData['PERMISSIONS'];
           this.userData = userinfoData;
-        } else if (response.MESSAGE == "Not logged in") {
+        } else if (response.MESSAGE == 'Not logged in') {
           this.dialogRef.close(false);
         }
         this.isLoadingResults = false;
@@ -131,9 +131,9 @@ export class UserDialogComponent implements OnInit {
     this._mainAPiServiceService.getSetData(userPostData, 'SetUser').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.checkValidation(res.DATA.VALIDATIONS, userPostData);
-      } else if (res.CODE == 451 && res.STATUS == "warning") {
+      } else if (res.CODE == 451 && res.STATUS == 'warning') {
         this.checkValidation(res.DATA.VALIDATIONS, userPostData);
-      } else if (res.CODE == 450 && res.STATUS == "error") {
+      } else if (res.CODE == 450 && res.STATUS == 'error') {
         this.checkValidation(res.DATA.VALIDATIONS, userPostData);
       } else if (res.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
@@ -157,7 +157,7 @@ export class UserDialogComponent implements OnInit {
         warningData.push(value.ERRORDESCRIPTION);
       }
     });
-    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
+    this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
@@ -182,11 +182,11 @@ export class UserDialogComponent implements OnInit {
         this.toastr.success('User save successfully');
         this.isspiner = false;
         this.dialogRef.close(true);
-      } else if (response.CODE == 451 && response.STATUS == "warning") {
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.toastr.warning(response.MESSAGE);
-      } else if (response.CODE == 450 && response.STATUS == "error") {
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
         this.toastr.error(response.MESSAGE);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
       this.isspiner = false;

@@ -108,7 +108,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.Timersservice.GetLookupsData({}).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.LookupsList = res.DATA.LOOKUPS;
-      } else if (res.MESSAGE == "Not logged in") {
+      } else if (res.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       } else {
         this.LookupsList = [];
@@ -121,7 +121,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.Timersservice.GetUsers({}).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.userList = res.DATA.USERS;
-      } else if (res.MESSAGE == "Not logged in") {
+      } else if (res.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       } else {
         this.userList = [];
@@ -188,7 +188,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
         this.timeEntryForm.controls['PRICE'].setValue(timeEntryData.PRICE);
         this.timeEntryForm.controls['ADDITIONALTEXT'].setValue(timeEntryData.ADDITIONALTEXT);
         this.timeEntryForm.controls['COMMENT'].setValue(timeEntryData.COMMENT);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
       this.isLoadingResults = false;
@@ -320,11 +320,11 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.Timersservice.SetWorkItems(PostTimeEntryData).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.checkValidation(res.DATA.VALIDATIONS, PostTimeEntryData);
-      } else if (res.CODE == 451 && res.STATUS == "warning") {
+      } else if (res.CODE == 451 && res.STATUS == 'warning') {
         this.checkValidation(res.DATA.VALIDATIONS, PostTimeEntryData);
-      } else if (res.CODE == 450 && res.STATUS == "error") {
+      } else if (res.CODE == 450 && res.STATUS == 'error') {
         this.checkValidation(res.DATA.VALIDATIONS, PostTimeEntryData);
-      } else if (res.MESSAGE == "Not logged in") {
+      } else if (res.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
       this.isspiner = false;
@@ -348,7 +348,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
         warningData.push(value.ERRORDESCRIPTION);
       }
     });
-    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
+    this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
@@ -377,11 +377,11 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.toasterService.success(this.successMsg);
         this.dialogRef.close(true);
-      } else if (res.CODE == 451 && res.STATUS == "warning") {
+      } else if (res.CODE == 451 && res.STATUS == 'warning') {
         this.toasterService.warning(res.MESSAGE);
-      } else if (res.CODE == 450 && res.STATUS == "error") {
+      } else if (res.CODE == 450 && res.STATUS == 'error') {
         this.toasterService.warning(res.MESSAGE);
-      } else if (res.MESSAGE == "Not logged in") {
+      } else if (res.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
       this.isspiner = false;

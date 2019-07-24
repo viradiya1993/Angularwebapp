@@ -33,7 +33,7 @@ export class BudgetsComponent implements OnInit {
   constructor(public _matDialog: MatDialog, public dialog: MatDialog, private _mainAPiServiceService: MainAPiServiceService, private _toastrService: ToastrService) { }
 
   ngOnInit() {
-    if (this.USERGUID != "") {
+    if (this.USERGUID != '') {
       this.loadData();
     } else {
       this.userBudgets = new MatTableDataSource([]);
@@ -55,7 +55,7 @@ export class BudgetsComponent implements OnInit {
         this.userBudgets.paginator = this.paginator;
         this.userBudgets.sort = this.sort;
         this.isLoadingResults = false;
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
     }, error => {

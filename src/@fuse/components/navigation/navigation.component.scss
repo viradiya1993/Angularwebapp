@@ -128,9 +128,16 @@ mat-icon.star.mat-icon.material-icons.mat-icon-no-color {
     height: 100%;
 }
 
+.material2 .nav .nav-item .nav-link {
+    float: left;
+    width: 90%;
+}
+
 @media screen and (max-width: 1440px) {
     .favourite_form_div {
         position: relative;
+        float: left;
+        width: 100%;
     }
     .favourite_form_div .listdata.ng-star-inserted {
         position: relative;
@@ -140,6 +147,8 @@ mat-icon.star.mat-icon.material-icons.mat-icon-no-color {
 @media screen and (max-height: 700px) {
     .favourite_form_div {
         position: relative;
+        float: left;
+        width: 100%;
     }
     .favourite_form_div .listdata.ng-star-inserted {
         position: relative;

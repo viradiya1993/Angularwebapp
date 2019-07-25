@@ -100,7 +100,7 @@
                         Override The Total
                     </div>
                     <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
-                        <input class="sideText" matInput placeholder="Date Received" [(ngModel)]="OVEEXTOTAL" formControlName="OVEEXTOTAL">
+                        <input class="sideText" matInput placeholder="Date Received" (focusout)="calculateOverrideTotal('ex')" [(ngModel)]="OVEEXTOTAL" formControlName="OVEEXTOTAL">
                         <span class="currency_sign" matPrefix>$&nbsp;</span>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
@@ -108,7 +108,7 @@
                         <span class="currency_sign" matPrefix>$&nbsp;</span>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
-                        <input class="sideText" matInput placeholder="Date Received" [(ngModel)]="OVEINTOTAL" formControlName="OVEINTOTAL">
+                        <input class="sideText" matInput placeholder="Date Received" (focusout)="calculateOverrideTotal('in')" [(ngModel)]="OVEINTOTAL" formControlName="OVEINTOTAL">
                         <span class="currency_sign" matPrefix>$&nbsp;</span>
                     </mat-form-field>
                 </div>

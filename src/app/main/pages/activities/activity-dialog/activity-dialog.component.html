@@ -19,8 +19,8 @@
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ACTIVITYID,'has-warning':errorWarningData.Warning?.ACTIVITYID}">
-                        <mat-label>Sundry / Activity</mat-label>
-                        <input formControlName="ACTIVITYID" matInput>
+                        <mat-label>Sundry / Activity Id</mat-label>
+                        <input formControlName="ACTIVITYID" matInput maxlength="10" uppercase>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DESCRIPTION,'has-warning':errorWarningData.Warning?.DESCRIPTION}">
                         <mat-label>Description</mat-label>

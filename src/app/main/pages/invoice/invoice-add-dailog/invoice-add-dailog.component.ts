@@ -24,6 +24,7 @@ export class InvoiceAddDailogComponent implements OnInit {
   isMin: any = true;
   isMax: any = true;
   ORIEXTOTAL: any = 0;
+  baseGstPercentage: any = 0;
   ORIGSTTOTAL: any = 0;
   ORIINTOTAL: any = 0;
   OVEEXTOTAL: any = 0;
@@ -193,6 +194,7 @@ export class InvoiceAddDailogComponent implements OnInit {
         SundryINTOTAL += Number(value.PRICEINCGST);
       }
     });
+    this.baseGstPercentage = 100 * TOTALGST / EXTOTAL;
     this.WORKITEMS = WORKITEMSData;
     this.ORIEXTOTAL = EXTOTAL.toFixed(2);
     this.ORIGSTTOTAL = TOTALGST.toFixed(2);
@@ -207,6 +209,18 @@ export class InvoiceAddDailogComponent implements OnInit {
     this.addInvoiceForm.controls['SundryEXTOTAL'].setValue(SundryEXTOTAL.toFixed(2));
     this.addInvoiceForm.controls['SundryINTOTAL'].setValue(SundryINTOTAL.toFixed(2));
     this.changeDiscountAmount({ 'amount': this.f.amount.value, 'Percentage': this.f.Percentage.value, 'Percentage_type': this.f.Percentage_type.value, 'GST_type': this.f.GST_type.value, 'Discount_type': this.f.Discount_type.value });
+  }
+  calculateOverrideTotal(type: any) {
+    if (type == "ex") {
+      const amountVal = this.f.OVEEXTOTAL.value;
+      const gstAmount = amountVal * this.baseGstPercentage / 100;
+      this.OVEGSTTOTAL = (Number(gstAmount)).toFixed(2);
+      const oveinamount = Number(amountVal) + Number(this.OVEGSTTOTAL);
+      this.OVEINTOTAL = oveinamount.toFixed(2);
+      this.OVEEXTOTAL = Number(amountVal).toFixed(2);
+    } else if (type == "in") {
+
+    }
   }
   selectDueDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.addInvoiceForm.controls['DUEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));

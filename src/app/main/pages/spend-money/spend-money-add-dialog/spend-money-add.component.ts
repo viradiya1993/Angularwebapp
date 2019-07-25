@@ -181,9 +181,9 @@ export class SpendMoneyAddComponent implements OnInit {
       if (SendMoney_data.EXPENDITUREITEMS.length != 0) {
         this.multilineCheckbox();
       }
-    } else { 
-        this.spendmoneyForm.controls['MultiLineExpense'].setValue(1);
-        this.multilineCheckbox();
+    } else {
+      this.spendmoneyForm.controls['MultiLineExpense'].setValue(1);
+      this.multilineCheckbox();
     }
     this.Classtype(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
   }
@@ -288,7 +288,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['MatterGUID'].setValue('');
       this.spendmoneyForm.controls['Matter'].disable();
       this.spendmoneyForm.controls['GSTType'].disable();
-      
+
     } else if (Classvalue === 'Personal') {
       this.hide = true;
       this.expac = false;
@@ -297,8 +297,8 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['MatterGUID'].setValue('');
       this.spendmoneyForm.controls['Matter'].disable();
       this.spendmoneyForm.controls['GSTType'].disable();
-     
-    
+
+
     } else if (Classvalue === 'Description') {
       this.hide = true;
       this.expac = false;
@@ -307,7 +307,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['MatterGUID'].setValue('');
       this.spendmoneyForm.controls['Matter'].disable();
       this.spendmoneyForm.controls['GSTType'].disable();
-   
+
     } else if (Classvalue === 'Others') {
       this.hide = true;
       this.expac = false;
@@ -374,15 +374,17 @@ export class SpendMoneyAddComponent implements OnInit {
       this.SubMain2btn = 'enable';
       this.dataTableHide = "false";
       if (this.action != 'edit') {
-        this.spendmoneyForm.controls['Class'].setValue(this.f.Class.value);
-        this.spendmoneyForm.controls['GST1'].setValue(this.f.GST1.value);
-        this.spendmoneyForm.controls['AmountExGST'].setValue(this.f.AmountExGST.value);
-        this.spendmoneyForm.controls['Note'].setValue(this.f.Note.value);
-        this.spendmoneyForm.controls['AmountIncGST'].setValue(this.f.AmountIncGST.value);
-        this.spendmoneyForm.controls['Expenseac'].setValue(this.f.Expenseac.value);
-      } else if (this.action == 'edit' && SendMoney_data.MULTILINE == 1) {
         this.commonEmptyFiild();
-      }
+        // this.spendmoneyForm.controls['Class'].setValue(this.f.Class.value);
+        // this.spendmoneyForm.controls['GST1'].setValue(this.f.GST1.value);
+        // this.spendmoneyForm.controls['AmountExGST'].setValue(this.f.AmountExGST.value);
+        // this.spendmoneyForm.controls['Note'].setValue(this.f.Note.value);
+        // this.spendmoneyForm.controls['AmountIncGST'].setValue(this.f.AmountIncGST.value);
+        // this.spendmoneyForm.controls['Expenseac'].setValue(this.f.Expenseac.value);
+      } 
+      // else if (this.action == 'edit' && SendMoney_data.MULTILINE == 1) {
+      //   this.commonEmptyFiild();
+      // }
       else {
         this.spendmoneyForm.controls['Class'].setValue(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
         this.spendmoneyForm.controls['GST1'].setValue(SendMoney_data.EXPENDITUREITEMS[0].GST.toString());
@@ -427,7 +429,8 @@ export class SpendMoneyAddComponent implements OnInit {
     this.spendmoneyForm.controls['GSTType'].setValue("1.1");
     this.spendmoneyForm.controls['AmountIncGST'].setValue(0.00);
     this.spendmoneyForm.controls['GST1'].setValue(0.00);
-    this.spendmoneyForm.controls['AmountExGST'].setValue(" ");
+    this.spendmoneyForm.controls['AmountExGST'].setValue(0.00);
+    this.GSTValForExGst=0.00;
     this.spendmoneyForm.controls['Class'].setValue("Expense");
     this.spendmoneyForm.controls['Note'].setValue(" ");
   }
@@ -511,8 +514,8 @@ export class SpendMoneyAddComponent implements OnInit {
     this.globallyCalculation();
     this.commonEmptyFiild();
     this.commmonDisabled();
-    if(this.getDataForTable.length  != 0){
-      this.highlightedRows=0;
+    if (this.getDataForTable.length != 0) {
+      this.highlightedRows = 0;
       this.editMoney(this.getDataForTable[0], 0);
     }
   }

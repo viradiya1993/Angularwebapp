@@ -87,7 +87,8 @@ export class InvoiceDetailComponent implements OnInit {
           this.invoiceDetailForm.controls['GST'].setValue(invoiceData.GST);
           this.invoiceDetailForm.controls['INVOICETOTAL'].setValue(invoiceData.INVOICETOTAL);
           this.invoiceDetailForm.controls['AMOUNTOUTSTANDINGINCGST'].setValue(invoiceData.AMOUNTOUTSTANDINGINCGST);
-          let FinalTotal = Number(invoiceData.INVOICETOTAL) + Number(invoiceData.GST);
+          // let FinalTotal = Number(invoiceData.INVOICETOTAL) + Number(invoiceData.GST);
+          let FinalTotal = Number(invoiceData.INVOICETOTAL);
           this.invoiceDetailForm.controls['AMOUNTTOTAL'].setValue(FinalTotal.toFixed(2));
           // get time entry data for specifc invoice 
             

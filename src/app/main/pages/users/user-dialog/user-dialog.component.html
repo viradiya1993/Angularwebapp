@@ -48,7 +48,7 @@
                                 </div>
                                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.POSITION,'has-warning':errorWarningData.Warning?.POSITION}">
-                                        <mat-label>Posotion</mat-label>
+                                        <mat-label>Position</mat-label>
                                         <input matInput [(ngModel)]="userData.POSITION" name="POSITION">
                                     </mat-form-field>
                                     <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.RATEPERHOUR,'has-warning':errorWarningData.Warning?.RATEPERHOUR}">
@@ -67,7 +67,7 @@
                                     <mat-form-field fxFlex="33" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.GSTTYPE,'has-warning':errorWarningData.Warning?.GSTTYPE}">
                                         <mat-label>GST Type</mat-label>
                                         <mat-select [(ngModel)]="userData.GSTTYPE" name="GSTTYPE">
-                                            <mat-option value="GST Exclusive">TGST Exclusive</mat-option>
+                                            <mat-option value="GST Exclusive">GST Exclusive</mat-option>
                                             <mat-option value="GST Inclusive">GST Inclusive</mat-option>
                                             <mat-option value="GST Free">GST Free</mat-option>
                                         </mat-select>
@@ -103,7 +103,7 @@
                                         <input matInput [(ngModel)]="userData.MOBILE" name="MOBILE">
                                     </mat-form-field>
                                     <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PRACTICINGCERTIFICATENO,'has-warning':errorWarningData.Warning?.PRACTICINGCERTIFICATENO}">
-                                        <mat-label>Practicinc Cert. No</mat-label>
+                                        <mat-label>Practicing Cert. No</mat-label>
                                         <input matInput [(ngModel)]="userData.PRACTICINGCERTIFICATENO" name="PRACTICINGCERTIFICATENO">
                                     </mat-form-field>
                                 </div>

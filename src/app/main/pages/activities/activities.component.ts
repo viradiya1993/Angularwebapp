@@ -23,6 +23,7 @@ export class ActivitiesComponent implements OnInit {
   displayedColumns: string[];
   ColumnsObj: any = [];
   tempColobj: any;
+  FilterVal:any=[];
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   highlightedRows: any;
@@ -32,6 +33,7 @@ export class ActivitiesComponent implements OnInit {
   lastFilter: any;
   @ViewChild(MatPaginator)paginator: MatPaginator;
   @ViewChild(MatSort)sort: MatSort;
+  
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -41,9 +43,19 @@ export class ActivitiesComponent implements OnInit {
     private toastr: ToastrService) { }
   ngOnInit() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
-    this.activitiesFilter = this._formBuilder.group({ TYPE: [""] });
+    this.activitiesFilter = this._formBuilder.group({ TYPE: [" "] });
     this.getTableFilter();
-    this.loadData({ ACTIVITYTYPE: "" });
+
+   
+  if(JSON.parse(localStorage.getItem('activity_filter'))){
+    this.FilterVal=JSON.parse(localStorage.getItem('activity_filter'));
+    this.activitiesFilter.controls['TYPE'].setValue(this.FilterVal.ACTIVITYTYPE);
+    this.loadData(this.FilterVal);
+  }else{
+     this.FilterVal=localStorage.setItem('activity_filter', JSON.stringify({ACTIVITYTYPE:' '}));
+     this.activitiesFilter.controls['TYPE'].setValue('');
+  }
+    this.loadData(this.FilterVal);
   }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('Activities', '').subscribe(response => {
@@ -105,7 +117,10 @@ export class ActivitiesComponent implements OnInit {
     });
   }
   TypeChange(EventVal: any) {
-    this.loadData({ ACTIVITYTYPE: EventVal.value });
+   let filterval= JSON.parse(localStorage.getItem('activity_filter'))
+   filterval.ACTIVITYTYPE=EventVal.value;
+    localStorage.setItem('activity_filter', JSON.stringify({ACTIVITYTYPE:EventVal.value}));
+    this.loadData(filterval);
   }
   setActiveData(rowData: any) {
     localStorage.setItem('current_ActivityData', JSON.stringify(rowData));

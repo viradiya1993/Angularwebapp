@@ -55,7 +55,6 @@
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PRICEVALGST,'has-warning':errorWarningData.Warning?.PRICEVALGST}">
             <mat-label>Ex-GST</mat-label>
             <input class="sideText" numeric numericType="decimal" name="Ex-GST" matInput type="text" formControlName="EstimateFromTotalIncGST" (keyup)="calcPI()" [(ngModel)]="PRICEVALGST">
-            <mat-icon matSuffix class="secondary-text"></mat-icon>
             <span class="currency_sign" matPrefix>$&nbsp;</span>
         </mat-form-field>
     </div>

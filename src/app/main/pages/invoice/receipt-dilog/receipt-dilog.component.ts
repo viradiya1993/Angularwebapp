@@ -116,7 +116,7 @@ export class ReceiptDilogComponent implements OnInit {
   setInvoiceForReceipt(INCOMEGUID) {
     this.isLoadingResults = true;
     let incomeGuid = { INCOMEGUID: INCOMEGUID }
-    this._mainAPiServiceService.getSetData(incomeGuid, 'SetIncome').subscribe(response => {
+    this._mainAPiServiceService.getSetData(incomeGuid, 'GetIncome').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.INCOMEITEMS[0]) {
           localStorage.setItem('receiptData', JSON.stringify(response.DATA.INCOMEITEMS[0]));

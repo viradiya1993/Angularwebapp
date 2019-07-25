@@ -218,3 +218,31 @@ div.middle {
     margin-top: 50px;
     margin-left: -42%;
 }
+
+.document_generated_main_div {
+    display: inline-block !important;
+    float: left;
+    width: 100%;
+    flex-direction: column !important;
+}
+.document_generated_main_first {
+    display: inline-block !important;
+    float: left;
+    width: 100%;
+    flex: auto !important;
+}
+.document_generated_main_first .middle {
+    margin-left: 0;
+    margin-top: 0;
+    float: left;
+    width: 100%;
+    flex-direction: column !important;
+}
+.document_generated_main_last {
+    float: left;
+    width: 100%;
+    text-align: center;
+    justify-content: center !important;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}

@@ -512,7 +512,7 @@ mat-spinner.mat-progress-spinner {
 }
 
 .currency_sign {
-    top: -4px;
+    top: -7px;
     position: relative;
 }
 
@@ -570,3 +570,14 @@ body .row-text-colore .mat-cell {
 }
 
 
+.value_width .mat-form-field-wrapper {
+    padding-bottom: 0;
+}
+
+.mat_field_btm_padding .mat-form-field-wrapper {
+    padding-bottom: 0;
+}
+body .mat-input-element {
+    position: relative;
+    bottom: 3px !important;
+}

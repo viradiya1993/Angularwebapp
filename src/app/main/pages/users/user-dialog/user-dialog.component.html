@@ -130,7 +130,7 @@
                                             <mat-checkbox name="{{Permission.key}}_{{i}}" (change)="AllCHecked($event, Permission.key)"> All </mat-checkbox>
                                         </div>
                                         <div *ngFor="let checkboxVal of Permission.val;let j = index">
-                                            <mat-checkbox (change)="isCheckboxChecked($event)" [(ngModel)]="userinfoDatah[i]['val'][j].VALUE" name="{{userinfoDatah[i]['val'][j].NAME}}">
+                                            <mat-checkbox (change)="isCheckboxChecked($event)" [(ngModel)]="userinfoDatah[i]['val'][j].VALUE" name="{{userinfoDatah[i]['val'][j].NAME}}_{{i}}_{{j}}">
                                                 {{checkboxVal.NAME}}
                                             </mat-checkbox>
                                         </div>

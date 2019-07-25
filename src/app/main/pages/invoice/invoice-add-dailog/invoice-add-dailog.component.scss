@@ -160,3 +160,16 @@ mat-tab-group.add-invoice-tab {
 .sideText {
     text-align: right;
 }
+
+.value_width {
+    padding: 10px 0;
+    text-align: center;
+}
+.label_width {
+    padding: 10px 0;
+}
+
+.value_label_parent {
+    display: flex;
+    align-items: center;
+}

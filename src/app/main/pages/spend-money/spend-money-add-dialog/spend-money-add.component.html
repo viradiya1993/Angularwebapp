@@ -33,7 +33,7 @@
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.AMOUNT,'has-warning':errorWarningData.Warning?.AMOUNT}" appearance="outline" fxFlex="{{size}}" class="pr-4" *ngIf=" dataTableHide =='yes'">
                         <mat-label>Amount</mat-label>
                         <input class="sideText" matInput formControlName="Amount">
-                        <span class="currency_sign" matPrefix>$&nbsp;</span>
+                        <span class="currency_sign" matPrefix>$ &nbsp;</span>
                     </mat-form-field>
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.GST,'has-warning':errorWarningData.Warning?.GST}" appearance="outline" fxFlex="{{size}}" class="pr-4" *ngIf="dataTableHide =='yes'">
                         <mat-label>GST</mat-label>
@@ -198,7 +198,7 @@
                     </mat-form-field>
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.AMOUNT,'has-warning':errorWarningData.Warning?.AMOUNT}" appearance="outline" fxFlex="33.33" class="pr-4">
                         <mat-label>Amount Inc GST</mat-label>
-                        <span class="currency_sign" matPrefix>$&nbsp;</span>
+                        <span class="currency_sign" matPrefix>$ &nbsp;</span>
                         <input class="sideText" class="sideText" matInput type="number" formControlName="AmountIncGST" (keyup)="amountCal()">
                     </mat-form-field>
                 </div>
@@ -220,7 +220,7 @@
                     <mat-form-field  *ngIf="dataTableHide !='yes'" appearance="outline" fxFlex="25" class="pr-4">
                         <mat-label>Amount Ex GST</mat-label>
                         <input class="sideText" matInput formControlName="AmountExGST" [(ngModel)]="GSTValForExGst">
-                        <span class="currency_sign" matPrefix>$&nbsp;</span>
+                        <span class="currency_sign" matPrefix>$ &nbsp;</span>
                     </mat-form-field>
                     <!-- for expense *ngIf="classtype=='Expence' || classtype=='matter Expence' || classtype=='depreciation' || classtype=='other'" -->
                     <mat-form-field  appearance="outline" fxFlex="25" class="pr-4">

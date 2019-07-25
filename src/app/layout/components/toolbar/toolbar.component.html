@@ -55,7 +55,7 @@
                                         </button>
                                     </section>
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button" (click)="matterpopup()">
+                                        <button mat-button class="large-button" (click)="matterpopup('duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                         <img src="assets/icons/web_app/icon_duplicate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -274,7 +274,7 @@
                                
                                 <section class="group-section-tab action_tab">
                                     <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'"  >
+                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'"  (click)="AuthorityDialog('add')">
                                             <section class="large-button-container">
                                             <mat-icon class="main-icon"> 
                                                 <img class="" src="assets/icons/web_app/icon_authorities_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">

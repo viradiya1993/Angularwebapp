@@ -48,7 +48,7 @@ export class MatterPopupComponent implements OnInit {
       this.dialogTitle = 'NewMatter'
       this.isEdit = true;
     } else {
-      this.dialogTitle = 'Duplicate Matte';
+      this.dialogTitle = 'Duplicate Matter';
       this.isEdit = false;
     }
     this.isEditMatter = this._data.matterGuid;

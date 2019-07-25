@@ -24,6 +24,7 @@ export class UserDialogComponent implements OnInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   isLoadingResults = false;
   errorWarningData: any = {};
+  userPermissiontemp: any = []
   action: string;
   dialogTitle: string;
   dialogButton: string;
@@ -89,7 +90,7 @@ export class UserDialogComponent implements OnInit {
   }
   setPermissionsCons(tempPermission, type: any) {
     const PermissionsCons = ['MATTER DETAILS', 'DAY BOOK / TIME ENTRIES', 'CONTACTS', 'ESTIMATES', 'DOCUMENT/EMAIL GENERATION', 'DOCUMENT REGISTER', 'INVOICING', 'RECEIVE MONEY', 'SPEND MONEY', 'CHRONOLOGY', 'TOPICS', 'AUTHORITIES', 'FILE NOTES', 'SAFE CUSTODY', 'SAFE CUSTODY PACKET', 'SEARCHING', 'DIARY', 'TASKS', 'CHART OF ACCOUNTS', 'GENERAL JOURNAL', 'OTHER ACCOUNTING', 'TRUST MONEY', 'TRUST CHART OF ACCOUNTS', 'TRUST GENERAL JOURNAL', 'TRUST REPORTS', 'ACCOUNTING REPORTS', 'MANAGEMENT REPORTS', 'SYSTEM', 'USERS', 'ACTIVITIES/SUNDRIES'];
-    const userPermissiontemp: any = [];
+    // const userPermissiontemp: any = [];
     if (tempPermission) {
       PermissionsCons.forEach((value) => {
         if (tempPermission[value]) {
@@ -100,11 +101,12 @@ export class UserDialogComponent implements OnInit {
             else
               subPermissions.push({ NAME: value2.NAME, VALUE: value2.VALUE == "1" ? true : false });
           });
-          userPermissiontemp.push({ key: value, val: subPermissions });
+          this.userPermissiontemp.push({ key: value, val: subPermissions });
         }
       });
     }
-    this.userinfoDatah = userPermissiontemp;
+    console.log(this.userPermissiontemp);
+    this.userinfoDatah = this.userPermissiontemp;
   }
   getPermissionsCons(permissionsData) {
     const permissionsValue: any = {};
@@ -194,5 +196,32 @@ export class UserDialogComponent implements OnInit {
       this.toastr.error(error);
     });
   }
+  isCheckboxChecked(val){
+// console.log(val);
+  }
+  AllCHecked(val,abc){
+    console.log(abc);
+    if(val.checked==true){
+      this.userPermissiontemp.forEach(element => {
+        if(abc == element.key){
+          element.val.forEach(element2 => {
+            console.log(element2);
+            element2.VALUE=true;
+          });
+        }
+      
+      });
+    }else{
+      this.userPermissiontemp.forEach(element => {
+        if(abc == element.key){
 
+          element.val.forEach(element2 => {
+            element2.VALUE=false;
+          });
+        }
+      });
+    }
+    // this.userPermissiontemp
+  console.log(val);
+  }
 }

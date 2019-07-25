@@ -96,16 +96,19 @@ export class ClientComponent implements OnInit {
     });
   }
   loadData() {
-    
-    this._mainAPiServiceService.getSetData({ MATTERGUID: this.isEditMatter }, 'GetMatterContact').subscribe(response => {
-      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        this.CorrespondEdit = response.DATA.MATTERCONTACTS;
-      } else if (response.MESSAGE == 'Not logged in') {
-        this.dialogRef.close(false);
-      }
-    }, error => {
-      console.log(error);
-    });
-  }
+    console.log( this.isEditMatter);
+    if(this.isEditMatter != undefined){
+      this._mainAPiServiceService.getSetData({ MATTERGUID: this.isEditMatter }, 'GetMatterContact').subscribe(response => {
+        if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+          this.CorrespondEdit = response.DATA.MATTERCONTACTS;
+        } else if (response.MESSAGE == 'Not logged in') {
+          this.dialogRef.close(false);
+        }
+      }, error => {
+        console.log(error);
+      });
+    }
+    }
+  
 
 }

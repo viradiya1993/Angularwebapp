@@ -203,11 +203,12 @@ export class UserDialogComponent implements OnInit {
     console.log(abc);
     if(val.checked==true){
       this.userPermissiontemp.forEach(element => {
-        if(abc == element.key){
+        if( element.key == abc){
           element.val.forEach(element2 => {
             console.log(element2);
             element2.VALUE=true;
           });
+          return
         }
       
       });

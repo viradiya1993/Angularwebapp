@@ -540,6 +540,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     addNewTimeEntryNew() {
         let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
         if (matterData.ACTIVE) {
+            console.log(matterData);
             this.addNewTimeEntry(matterData.MATTERGUID, '');
         } else {
             this.toastr.error("You cannot time entry for Inactive matter. Please select active matter and try again.");
@@ -559,6 +560,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
 
     public addNewTimeEntry(Data: any, matterData: any) {
+    
         const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '100%', disableClose: true, data: { 'edit': Data, 'matterData': matterData } });
         dialogRef.afterClosed().subscribe(result => {
             if (result)
@@ -820,7 +822,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             panelClass: 'Email-dialog',
             data: EmailPopdata
         });
-        dialogRef.afterClosed().subscribe(result => { });
+        dialogRef.afterClosed().subscribe(result => { 
+            if(result){
+                $('#refreshEmailTab').click();
+            }
+           
+        });
     }
 
     //Delete Email
@@ -831,7 +838,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
-
+            if (result) {
+                let EmailData: any = JSON.parse(localStorage.getItem('GenerateEmailData'));
+                let postData = { FormAction: "delete", data: { EMAILGUID: EmailData.EMAILGUID } }
+                this._mainAPiServiceService.getSetData(postData, 'SetEmail').subscribe(res => {
+                    if (res.STATUS == "success" && res.CODE == 200) {
+                        $('#refreshEmailTab').click();
+                        this.toastr.success('Delete successfully');
+                    }
+                });
+            }
+            this.confirmDialogRef = null;
         });
     }
 

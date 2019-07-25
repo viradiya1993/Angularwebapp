@@ -9,6 +9,7 @@ import { MatPaginator, MatDialogConfig } from '@angular/material';
 import { MatSort } from '@angular/material'
 import {  MainAPiServiceService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import { GenerateTemplatesDialoagComponent } from 'app/main/pages/system-settings/templates/gennerate-template-dialoag/generate-template.component';
 
 // export interface PeriodicElement {
 //   Name: string;
@@ -58,6 +59,7 @@ export class EmailDailogComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
     public _matDialog: MatDialog,
+   
     private _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) 
@@ -83,20 +85,25 @@ export class EmailDailogComponent implements OnInit {
       this.dialogTitle = 'New Email';
     }else if(this.action === 'edit'){
       this.dialogTitle = 'Edit Email';
-      let ShowData =JSON.parse(localStorage.getItem('GenerateEmailData'));
-      // this.GetData=ShowData;
-      this.EmailTemplete.controls['name'].setValue(ShowData.NAME);
-      this.EmailTemplete.controls['ToEmail'].setValue(ShowData.TOADDRESS);
-      this.EmailTemplete.controls['attachment'].setValue(ShowData.ATTACHMENT);
-      this.EmailTemplete.controls['BCCEmail'].setValue(ShowData.BCCADDRESS);
-      this.EmailTemplete.controls['CCEmail'].setValue(ShowData.CCADDRESS);
-      this.EmailTemplete.controls['subject'].setValue(ShowData.SUBJECT);
-      this.EmailTemplete.controls['text'].setValue(ShowData.TEXT_);
+      this.CommonEditDupData()
+   
     }else{
-      this.dialogTitle = 'Copy Document';
+      this.dialogTitle = 'Duplicate Document';
+      this.CommonEditDupData()
     }
 
     
+  }
+  CommonEditDupData(){
+    let ShowData =JSON.parse(localStorage.getItem('GenerateEmailData'));
+    // this.GetData=ShowData;
+    this.EmailTemplete.controls['name'].setValue(ShowData.NAME);
+    this.EmailTemplete.controls['ToEmail'].setValue(ShowData.TOADDRESS);
+    this.EmailTemplete.controls['attachment'].setValue(ShowData.ATTACHMENT);
+    this.EmailTemplete.controls['BCCEmail'].setValue(ShowData.BCCADDRESS);
+    this.EmailTemplete.controls['CCEmail'].setValue(ShowData.CCADDRESS);
+    this.EmailTemplete.controls['subject'].setValue(ShowData.SUBJECT);
+    this.EmailTemplete.controls['text'].setValue(ShowData.TEXT_);
   }
   innerTable(){
     this.isLoadingResults = true;
@@ -111,7 +118,20 @@ export class EmailDailogComponent implements OnInit {
   }
   //Dcoument Floder
   DcoumentFloder(){
-    console.log('DcoumentFloder work!!!');
+    // console.log('DcoumentFloder work!!!');
+
+    const dialogRef = this._matDialog.open(GenerateTemplatesDialoagComponent, {
+      disableClose: true,
+      panelClass: 'contact-dialog',
+      data: {
+          action: 'new',
+      }
+  });
+  dialogRef.afterClosed().subscribe(result => {
+    console.log(result);
+  this.EmailTemplete.controls['attachment'].setValue(result);  
+      
+  });
   }
   //CloseEmail
   CloseEmail(){

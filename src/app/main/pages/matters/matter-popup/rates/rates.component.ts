@@ -14,6 +14,8 @@ export class RatesComponent implements OnInit {
   FIXEDRATEEXGST: any;
   FIXEDRATEINCGST: any;
   @Input() errorWarningData: any;
+  RATEPERHOUR: any;
+  RATEPERDAY: string;
 
   constructor() { }
   ngOnInit() { }
@@ -33,5 +35,13 @@ export class RatesComponent implements OnInit {
   }
   calcPI() {
     this.FIXEDRATEEXGST = round(this.f.FIXEDRATEINCGST.value / 1.1).toFixed(2);
+  }
+
+  RatePerHourVal(){
+  this.RATEPERHOUR=parseFloat(this.f.RATEPERHOUR.value).toFixed(2);
+  }
+  RatePerDayVal(){
+    this.RATEPERDAY=parseFloat(this.f.RATEPERDAY.value).toFixed(2);
+
   }
 }

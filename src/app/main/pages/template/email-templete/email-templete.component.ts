@@ -130,7 +130,9 @@ export class EmailTempleteComponent implements OnInit {
        
     });
 }
-
+refreshEmailTab(){
+  this.LoadData({});
+}
 
 }
 

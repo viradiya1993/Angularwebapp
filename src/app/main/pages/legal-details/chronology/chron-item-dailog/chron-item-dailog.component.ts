@@ -30,7 +30,7 @@ export class ChronItemDailogComponent implements OnInit {
     if(this.action === 'new'){
       this.dialogTitle = 'New Chronology';
     }else if(this.action === 'edit'){
-      this.dialogTitle = 'Edit Chronology';
+      this.dialogTitle = 'Update Chronology';
     }else{
       this.dialogTitle = 'Duplicate Chronology';
     }

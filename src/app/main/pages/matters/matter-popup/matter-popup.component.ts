@@ -782,8 +782,8 @@ export class MatterPopupComponent implements OnInit {
     details.OTHERREFERENCE = this.f.OTHERREFERENCE.value;
     details.COMPLETEDDATE = this.f.COMPLETEDDATE.value;
     details.FEEAGREEMENTDATE = this.f.FEEAGREEMENTDATE.value;
-    details.EstimateFromTotalExGST = this.f.EstimateFromTotalIncGST.value;
-    details.EstimateFromTotalIncGST = this.f.EstimateFromTotalExGST.value;
+    details.EstimateFromTotalExGST = this.f.EstimateFromTotalExGST.value;
+    details.EstimateFromTotalIncGST = this.f.EstimateFromTotalIncGST.value;
     if (this.userType) {
       details.PRIMARYFEEEARNERGUID = this.f.PRIMARYFEEEARNERGUID.value;
       details.OWNERGUID = this.f.OWNERGUID.value;

@@ -558,7 +558,7 @@ export class SpendMoneyAddComponent implements OnInit {
     this.setMainAmount = Number(this.f.AmountIncGST.value);
     this.setMainGST = Number(this.f.GST1.value);
     this.sendItem.push({
-      AMOUNT: Number(this.f.AmountIncGST.value),
+      AMOUNT: Number(this.GSTValForExGst),
       EXPENDITURECLASS: this.f.Class.value,
       EXPENDITUREGUID: '',
       EXPENDITUREITEMGUID: "",

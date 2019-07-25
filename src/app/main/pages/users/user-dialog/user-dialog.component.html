@@ -130,7 +130,7 @@
                                             <mat-checkbox name="{{Permission.key}}_{{i}}" (change)="AllCHecked($event, Permission.key)"> All </mat-checkbox>
                                         </div>
                                         <div *ngFor="let checkboxVal of Permission.val;let j = index">
-                                            <mat-checkbox (change)="isCheckboxChecked($event)" [(ngModel)]="userinfoDatah[i]['val'][j].VALUE" name="{{userinfoDatah[i]['val'][j].NAME}}_{{i}}_{{j}}">
+                                            <mat-checkbox [(ngModel)]="userinfoDatah[i]['val'][j].VALUE" name="{{userinfoDatah[i]['val'][j].NAME}}_{{i}}_{{j}}">
                                                 {{checkboxVal.NAME}}
                                             </mat-checkbox>
                                         </div>
@@ -160,7 +160,39 @@
                             </div>
                         </mat-tab>
                         <mat-tab label="Budgets">
-                            <app-budgets [USERGUID]="userData.USERGUID"></app-budgets>
+                            <div class="one" fxLayout="column">
+                                <div class="example-containerdata">
+                                    <table mat-table #table [dataSource]="userBudgets" matSort [@animateStagger]="{value:'50'}">
+                                        <ng-container matColumnDef="PERIODSTART">
+                                            <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>Period Start</th>
+                                            <td mat-cell *matCellDef="let row"> {{row.PERIODSTART}} </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="TOTALBUDGETHOURS">
+                                            <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header> Total Hours</th>
+                                            <td mat-cell *matCellDef="let row"> {{row.TOTALBUDGETHOURS}} </td>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="TOTALBUDGETDOLLARS">
+                                            <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header> Total Dollars(Ex)</th>
+                                            <td mat-cell *matCellDef="let row"> {{row.TOTALBUDGETDOLLARS | currency}} </td>
+                                        </ng-container>
+
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                        <tr mat-row [style.background]="highlightedRows == row.USERBUDGETGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" [ngClass]="highlightedRows == row.USERBUDGETGUID ? 'row-text-colore' : ''" class="contact" (click)="setActiveBudget(row);currentBudgets = row;highlightedRows = row.USERBUDGETGUID"
+                                            matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                        </tr>
+                                    </table>
+                                </div>
+                                <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+                            </div>
+                            <div>
+                                <mat-dialog-actions align="end" class="popup_ftr">
+                                    <button mat-raised-button color="accent" *ngIf="isNewShow" (click)="budgetDailog('new')" cdkFocusInitial>New Budget</button>
+                                    <button mat-raised-button color="accent" *ngIf="action!='new'" (click)="budgetDailog('edit')" cdkFocusInitial>Edit Budget</button>
+                                    <button mat-raised-button class="accent" (click)="delete_budget()" cdkFocusInitial>Delete Budget</button>
+                                </mat-dialog-actions>
+                            </div>
                         </mat-tab>
                     </mat-tab-group>
                 </div>

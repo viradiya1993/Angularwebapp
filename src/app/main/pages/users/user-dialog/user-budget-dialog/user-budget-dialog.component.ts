@@ -69,7 +69,6 @@ export class UserBudgetDialogComponent implements OnInit {
       MONTHBUDGETDOLLARS_11: [],
       MONTHBUDGETDOLLARS_12: []
     });
-    console.log(this.action);
     if (this.action == 'edit') {
       this.dialogTitle = 'Edit Budget';
       this.budgetsData = JSON.parse(localStorage.getItem('current_budgets'));
@@ -185,29 +184,34 @@ export class UserBudgetDialogComponent implements OnInit {
       "MONTHBUDGETHOURS_GROUP": this.MONTHBUDGETHOURS_GROUP(),
       "MONTHBUDGETDOLLARS_GROUP": this.MONTHBUDGETDOLLARS_GROUP(),
     }
-    this.successMsg = 'Save successfully';
-    let FormAction = this.action == 'edit' ? 'update' : 'insert';
-    if (this.action == 'edit') {
-      PostData.USERBUDGETGUID = this.f.USERBUDGETGUID.value;
-      this.budgetsData = JSON.parse(localStorage.getItem('current_budgets'));
-      this.successMsg = 'Update successfully';
-    }
-        let PostBudgetData: any = { FormAction: FormAction, VALIDATEONLY: true, Data: PostData };
-    this._mainAPiServiceService.getSetData(PostBudgetData, 'SetUserBudget').subscribe(res => {
-      if (res.CODE == 200 && res.STATUS == "success") {
-        this.checkValidation(res.DATA.VALIDATIONS, PostBudgetData);
-      } else if (res.CODE == 451 && res.STATUS == 'warning') {
-        this.checkValidation(res.DATA.VALIDATIONS, PostBudgetData);
-      } else if (res.CODE == 450 && res.STATUS == 'error') {
-        this.checkValidation(res.DATA.VALIDATIONS, PostBudgetData);
-      } else if (res.MESSAGE == 'Not logged in') {
-        this.dialogRef.close(false);
+    if (this.USERGUID == "") {
+      PostData.USERBUDGETGUID = this.data.USERBUDGETGUIDIndex;
+      this.dialogRef.close(PostData);
+    } else {
+      this.successMsg = 'Save successfully';
+      let FormAction = this.action == 'edit' ? 'update' : 'insert';
+      if (this.action == 'edit') {
+        PostData.USERBUDGETGUID = this.f.USERBUDGETGUID.value;
+        this.budgetsData = JSON.parse(localStorage.getItem('current_budgets'));
+        this.successMsg = 'Update successfully';
       }
-      this.isspiner = false;
-    }, err => {
-      this.isspiner = false;
-      this.toastr.error(err);
-    });
+      let PostBudgetData: any = { FormAction: FormAction, VALIDATEONLY: true, Data: PostData };
+      this._mainAPiServiceService.getSetData(PostBudgetData, 'SetUserBudget').subscribe(res => {
+        if (res.CODE == 200 && res.STATUS == "success") {
+          this.checkValidation(res.DATA.VALIDATIONS, PostBudgetData);
+        } else if (res.CODE == 451 && res.STATUS == 'warning') {
+          this.checkValidation(res.DATA.VALIDATIONS, PostBudgetData);
+        } else if (res.CODE == 450 && res.STATUS == 'error') {
+          this.checkValidation(res.DATA.VALIDATIONS, PostBudgetData);
+        } else if (res.MESSAGE == 'Not logged in') {
+          this.dialogRef.close(false);
+        }
+        this.isspiner = false;
+      }, err => {
+        this.isspiner = false;
+        this.toastr.error(err);
+      });
+    }
   }
   checkValidation(bodyData: any, PostBudgetData: any) {
     let errorData: any = [];

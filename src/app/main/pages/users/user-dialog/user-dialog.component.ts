@@ -1,11 +1,11 @@
-import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
-import { MatDialogRef, MatDialog, MatTabChangeEvent } from '@angular/material';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
+import { MatDialogRef, MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { MainAPiServiceService } from 'app/_services';
 import { fuseAnimations } from '@fuse/animations';
+import { UserBudgetDialogComponent } from './user-budget-dialog/user-budget-dialog.component';
 
 @Component({
   selector: 'app-user-dialog',
@@ -15,14 +15,27 @@ import { fuseAnimations } from '@fuse/animations';
   animations: fuseAnimations
 })
 export class UserDialogComponent implements OnInit {
+  //START budget related variable 
+  USERBUDGETGUIDIndex: number = 1;
+  isNewShow: boolean = true;
+  highlightedRows: any;
+  isLoadingResults: boolean = false;
+  theme_type = localStorage.getItem('theme_type');
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
+  userBudgets: any = [];
+  tempuserBudgets: any = [];
+  currentBudgets: any;
+  pageSize: any;
+  displayedColumns: string[] = ['PERIODSTART', 'TOTALBUDGETHOURS', 'TOTALBUDGETDOLLARS'];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  //END budget related variable 
   public userData: any = {
     "USERGUID": "", "USERID": "", "USERNAME": "", "USERPASSWORD": "", "FULLNAME": "", "ISACTIVE": 0,
     "ISPRINCIPAL": 0, "RATEPERHOUR": "0", "RATEPERDAY": "0", "GSTTYPE": 0, "POSITION": "", "PHONE1": "", "PHONE2": "",
     "FAX1": "", "FAX2": "", "MOBILE": "", "EMAIL": "", "PRACTICINGCERTIFICATENO": "",
     "SEARCHUSERNAME": "", "COMMENT": ""
   };
-  confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
-  isLoadingResults = false;
   errorWarningData: any = {};
   userPermissiontemp: any = []
   action: string;
@@ -30,10 +43,11 @@ export class UserDialogComponent implements OnInit {
   dialogButton: string;
   isspiner = false;
   phide = true;
-  USERGUID: any;
   public userinfoDatah: any = [];
   constructor(
     public dialogRef: MatDialogRef<UserDialogComponent>,
+    public confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>,
+    public budgetDialogRef: MatDialogRef<UserBudgetDialogComponent>,
     private toastr: ToastrService,
     public _matDialog: MatDialog,
     private _mainAPiServiceService: MainAPiServiceService,
@@ -50,7 +64,6 @@ export class UserDialogComponent implements OnInit {
       this.dialogTitle = 'Duplicate User';
       this.dialogButton = "Duplicate";
     }
-
   }
   ngOnInit(): void {
     if (this.action === 'edit' || this.action === 'duplicate') {
@@ -68,11 +81,12 @@ export class UserDialogComponent implements OnInit {
       }, error => {
         this.toastr.error(error);
       });
+      this.loadData();
+      this.pageSize = localStorage.getItem('lastPageSize');
     } else {
       this.isLoadingResults = true;
       this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: true, DATA: {} }, 'SetUser').subscribe(res => {
         if (res.CODE == 200 && res.STATUS == "success") {
-          this.userData.USERGUID = res.DATA.USERGUID;
           this.setPermissionsCons(res.DATA.DEFAULTVALUES.PERMISSIONS, 'add');
         } else if (res.MESSAGE === 'Not logged in') {
           this.dialogRef.close(false);
@@ -81,7 +95,96 @@ export class UserDialogComponent implements OnInit {
       setTimeout(() => { this.isLoadingResults = false; }, 2000);
     }
   }
-
+  //start buget
+  loadData() {
+    this.isLoadingResults = true;
+    this._mainAPiServiceService.getSetData({ USERGUID: this.userData.USERGUID, 'GETALLFIELDS': true }, 'getUserBudget').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        if (response.DATA.USERBUDGETS[0]) {
+          this.highlightedRows = response.DATA.USERBUDGETS[0].USERBUDGETGUID;
+          this.currentBudgets = response.DATA.USERBUDGETS[0];
+          localStorage.setItem('current_budgets', JSON.stringify(response.DATA.USERBUDGETS[0]));
+        }
+        this.userBudgets = new MatTableDataSource(response.DATA.USERBUDGETS);
+        this.userBudgets.paginator = this.paginator;
+        this.userBudgets.sort = this.sort;
+        this.isLoadingResults = false;
+      } else if (response.MESSAGE == 'Not logged in') {
+        this.budgetDialogRef.close(false);
+      }
+    }, error => {
+      console.log(error);
+    });
+  }
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
+  }
+  // Delete User Budget
+  delete_budget(): void {
+    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, { disableClose: true, width: '100%' });
+    this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+    this.confirmDialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        let budgetsData: any = JSON.parse(localStorage.getItem('current_budgets'));
+        if (this.userData.USERGUID != '') {
+          let postData = { FormAction: "delete", DATA: { USERBUDGETGUID: budgetsData.USERBUDGETGUID } };
+          this._mainAPiServiceService.getSetData(postData, 'SetUserBudget').subscribe(res => {
+            if (res.STATUS == "success" && res.CODE == 200) {
+              this.toastr.success('Delete successfully');
+              this.loadData();
+            }
+          });
+        } else {
+          for (var i = 0; i < this.tempuserBudgets.length; i++) {
+            if (this.tempuserBudgets[i].USERBUDGETGUID == budgetsData.USERBUDGETGUID) {
+              this.tempuserBudgets.splice(i, 1);
+              i--;
+            }
+          }
+          this.isNewShow = true;
+          this.macktempBudgetDatatable();
+        }
+      }
+      this.confirmDialogRef = null;
+    });
+  }
+  macktempBudgetDatatable() {
+    if (this.tempuserBudgets[0]) {
+      this.highlightedRows = this.tempuserBudgets[0].USERBUDGETGUID;
+      this.currentBudgets = this.tempuserBudgets[0];
+      localStorage.setItem('current_budgets', JSON.stringify(this.tempuserBudgets[0]));
+      this.userBudgets = new MatTableDataSource(this.tempuserBudgets);
+      this.userBudgets.paginator = this.paginator;
+      this.userBudgets.sort = this.sort;
+    } else {
+      this.userBudgets = new MatTableDataSource([]);
+      this.userBudgets.paginator = this.paginator;
+      this.userBudgets.sort = this.sort;
+    }
+  }
+  budgetDailog(actionType) {
+    const budgetDialogRef = this._matDialog.open(UserBudgetDialogComponent, {
+      disableClose: true, panelClass: 'UserBudget-dialog', data: { action: actionType, USERGUID: this.userData.USERGUID, USERBUDGETGUIDIndex: this.USERBUDGETGUIDIndex }
+    });
+    budgetDialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result != true) {
+          this.tempuserBudgets.push(result);
+          this.USERBUDGETGUIDIndex = this.USERBUDGETGUIDIndex + 1;
+          this.macktempBudgetDatatable();
+          this.isNewShow = false;
+          console.log(this.isNewShow);
+        } else
+          this.loadData();
+      }
+    });
+  }
+  setActiveBudget(val: any) {
+    this.currentBudgets = val;
+    localStorage.setItem('current_budgets', JSON.stringify(val));
+  }
+  //END buget
   RatePerHourVal() {
     this.userData.RATEPERHOUR = parseFloat(this.userData.RATEPERHOUR).toFixed(2);
   }
@@ -107,6 +210,8 @@ export class UserDialogComponent implements OnInit {
     }
     this.userinfoDatah = this.userPermissiontemp;
   }
+
+
   getPermissionsCons(permissionsData) {
     const permissionsValue: any = {};
     permissionsData.forEach((value) => {
@@ -119,6 +224,9 @@ export class UserDialogComponent implements OnInit {
     });
     return permissionsValue;
   }
+
+
+
   SaveUser() {
     this.isspiner = true;
     if (this.action === 'duplicate') {
@@ -127,8 +235,13 @@ export class UserDialogComponent implements OnInit {
       delete this.userData['ALLOWMOBILEACCESS'];
       delete this.userData['SEARCHUSERPASSWORD'];
     }
+    delete this.userData['STATUS'];
+    delete this.userData['ALLOWMOBILEACCESS'];
+    delete this.userData['SEARCHUSERPASSWORD'];
+
+    const formAction = this.action == 'edit' ? 'update' : 'insert';
     this.userData.PERMISSIONS = this.getPermissionsCons(this.userinfoDatah);
-    const userPostData: any = { FormAction: 'insert', VALIDATEONLY: true, DATA: this.userData };
+    const userPostData: any = { FormAction: formAction, VALIDATEONLY: true, DATA: this.userData };
     this._mainAPiServiceService.getSetData(userPostData, 'SetUser').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.checkValidation(res.DATA.VALIDATIONS, userPostData);
@@ -180,9 +293,18 @@ export class UserDialogComponent implements OnInit {
     data.VALIDATEONLY = false;
     this._mainAPiServiceService.getSetData(data, 'SetUser').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        this.toastr.success('User save successfully');
-        this.isspiner = false;
-        this.dialogRef.close(true);
+        if (Object.keys(this.tempuserBudgets).length == 0) {
+          this.toastr.success('User save successfully');
+          this.isspiner = false;
+          this.dialogRef.close(true);
+        } else {
+          delete this.tempuserBudgets[0]['USERBUDGETGUID'];
+          this.tempuserBudgets[0].USERGUID = response.DATA.USERGUID;
+          this.saveBudgetData({ FormAction: 'insert', VALIDATEONLY: false, Data: this.tempuserBudgets[0] });
+          this.toastr.success('User save successfully');
+          this.isspiner = false;
+          this.dialogRef.close(true);
+        }
       } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.toastr.warning(response.MESSAGE);
       } else if (response.CODE == 450 && response.STATUS == 'error') {
@@ -195,9 +317,15 @@ export class UserDialogComponent implements OnInit {
       this.toastr.error(error);
     });
   }
-  isCheckboxChecked(val) {
-    // console.log(val);
+  saveBudgetData(PostBudgetData: any) {
+    this._mainAPiServiceService.getSetData(PostBudgetData, 'SetUserBudget').subscribe(res => {
+      if (res.CODE == 200 && res.STATUS == "success") {
+      }
+    }, err => {
+      this.toastr.error(err);
+    });
   }
+
   AllCHecked(val, type) {
     this.userinfoDatah.forEach(element => {
       if (element.key === type) {

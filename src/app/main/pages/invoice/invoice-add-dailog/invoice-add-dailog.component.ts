@@ -23,12 +23,12 @@ export class InvoiceAddDailogComponent implements OnInit {
   isFixPrice: any = true;
   isMin: any = true;
   isMax: any = true;
-  ORIEXTOTAL: any;
-  ORIGSTTOTAL: any;
-  ORIINTOTAL: any;
-  OVEEXTOTAL: any;
-  OVEGSTTOTAL: any;
-  OVEINTOTAL: any;
+  ORIEXTOTAL: any = 0;
+  ORIGSTTOTAL: any = 0;
+  ORIINTOTAL: any = 0;
+  OVEEXTOTAL: any = 0;
+  OVEGSTTOTAL: any = 0;
+  OVEINTOTAL: any = 0;
   WORKITEMS: any;
   constructor(
     private _formBuilder: FormBuilder,
@@ -123,12 +123,10 @@ export class InvoiceAddDailogComponent implements OnInit {
     this.isLoadingResults = false;
   }
   invoiceDateChange(type: string, event: MatDatepickerInputEvent<Date>) {
-    console.log('1st one');
     this.addInvoiceForm.controls['INVOICEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
 
   firstDate(event) {
-    console.log(event);
     var dt = event._d;
     dt.setMonth(dt.getMonth() + 1);
     this.addInvoiceForm.controls['DUEDATETEXT'].setValue(new Date(dt));
@@ -143,14 +141,14 @@ export class InvoiceAddDailogComponent implements OnInit {
     let dicountGst: number = 0;
     let Percentage: number = 0;
     if (event.Percentage_type == "Percentage") {
-      dicountex = (Number(event.Percentage) * Number(this.f.ORIEXTOTAL.value)) / 100;
-      dicountin = (Number(event.Percentage) * Number(this.f.ORIINTOTAL.value)) / 100;
-      dicountGst = (Number(event.Percentage) * Number(this.f.ORIGSTTOTAL.value)) / 100;
+      dicountex = (Number(event.Percentage) * Number(this.ORIEXTOTAL)) / 100;
+      dicountin = (Number(event.Percentage) * Number(this.ORIINTOTAL)) / 100;
+      dicountGst = (Number(event.Percentage) * Number(this.ORIGSTTOTAL)) / 100;
     } else {
-      Percentage = (Number(event.amount) * 100) / Number(this.f.ORIEXTOTAL.value);
-      dicountex = (Number(Percentage) * Number(this.f.ORIEXTOTAL.value)) / 100;;
-      dicountin = (Number(Percentage) * Number(this.f.ORIINTOTAL.value)) / 100;
-      dicountGst = (Number(Percentage) * Number(this.f.ORIGSTTOTAL.value)) / 100;
+      Percentage = (Number(event.amount) * 100) / Number(this.ORIEXTOTAL);
+      dicountex = (Number(Percentage) * Number(this.ORIEXTOTAL)) / 100;;
+      dicountin = (Number(Percentage) * Number(this.ORIINTOTAL)) / 100;
+      dicountGst = (Number(Percentage) * Number(this.ORIGSTTOTAL)) / 100;
     }
     this.addInvoiceForm.controls['DISEXAMOUNT'].setValue(dicountex.toFixed(2));
     this.addInvoiceForm.controls['DISGSTAMOUNT'].setValue(dicountGst.toFixed(2));
@@ -160,9 +158,9 @@ export class InvoiceAddDailogComponent implements OnInit {
       dicountGst = -Math.abs(dicountGst);
       dicountin = -Math.abs(dicountin);
     }
-    let exfinalTotal = Number(this.f.ORIEXTOTAL.value - dicountex);
-    let GSTfinalTotal = Number(this.f.ORIGSTTOTAL.value - dicountGst);
-    let infinalTotal = Number(this.f.ORIINTOTAL.value - dicountin);
+    let exfinalTotal = Number(this.ORIEXTOTAL - dicountex);
+    let GSTfinalTotal = Number(this.ORIGSTTOTAL - dicountGst);
+    let infinalTotal = Number(this.ORIINTOTAL - dicountin);
 
     this.addInvoiceForm.controls['OVEEXTOTAL'].setValue(exfinalTotal.toFixed(2));
     this.addInvoiceForm.controls['OVEGSTTOTAL'].setValue(GSTfinalTotal.toFixed(2));
@@ -208,6 +206,7 @@ export class InvoiceAddDailogComponent implements OnInit {
     this.addInvoiceForm.controls['ActivityINTOTAL'].setValue(ActivityINTOTAL.toFixed(2));
     this.addInvoiceForm.controls['SundryEXTOTAL'].setValue(SundryEXTOTAL.toFixed(2));
     this.addInvoiceForm.controls['SundryINTOTAL'].setValue(SundryINTOTAL.toFixed(2));
+    this.changeDiscountAmount({ 'amount': this.f.amount.value, 'Percentage': this.f.Percentage.value, 'Percentage_type': this.f.Percentage_type.value, 'GST_type': this.f.GST_type.value, 'Discount_type': this.f.Discount_type.value });
   }
   selectDueDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.addInvoiceForm.controls['DUEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));

@@ -1,7 +1,7 @@
 <div class="example-containerdata">
-    <table mat-table #table *ngIf="invoiceData" [dataSource]="invoiceData" [@animateStagger]="{value:'50'}" matSort >
+    <table mat-table #table *ngIf="invoiceData" [dataSource]="invoiceData" [@animateStagger]="{value:'50'}" matSort>
         <ng-container matColumnDef="select">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <th mat-header-cell *matHeaderCellDef>
                 <mat-checkbox (click)="retuenData();" (change)="$event ? masterToggle() : null;retuenData();" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
                 </mat-checkbox>
             </th>

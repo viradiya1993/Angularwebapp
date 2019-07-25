@@ -105,7 +105,6 @@ export class UserDialogComponent implements OnInit {
         }
       });
     }
-    console.log(this.userPermissiontemp);
     this.userinfoDatah = this.userPermissiontemp;
   }
   getPermissionsCons(permissionsData) {
@@ -196,32 +195,16 @@ export class UserDialogComponent implements OnInit {
       this.toastr.error(error);
     });
   }
-  isCheckboxChecked(val){
-// console.log(val);
+  isCheckboxChecked(val) {
+    // console.log(val);
   }
-  AllCHecked(val,abc){
-    console.log(abc);
-    if(val.checked==true){
-      this.userPermissiontemp.forEach(element => {
-        if(abc == element.key){
-          element.val.forEach(element2 => {
-            console.log(element2);
-            element2.VALUE=true;
-          });
-        }
-      
-      });
-    }else{
-      this.userPermissiontemp.forEach(element => {
-        if(abc == element.key){
-
-          element.val.forEach(element2 => {
-            element2.VALUE=false;
-          });
-        }
-      });
-    }
-    // this.userPermissiontemp
-  console.log(val);
+  AllCHecked(val, type) {
+    this.userinfoDatah.forEach(element => {
+      if (element.key === type) {
+        element.val.forEach(element2 => {
+          element2.VALUE = val.checked;
+        });
+      }
+    });
   }
 }

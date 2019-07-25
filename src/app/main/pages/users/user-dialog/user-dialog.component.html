@@ -121,16 +121,16 @@
                                 <br><br>
                                 <mat-accordion class="faqs-accordion">
                                     <mat-expansion-panel *ngFor="let Permission of userinfoDatah; let i = index">
-                                        <mat-expansion-panel-header >
+                                        <mat-expansion-panel-header>
                                             <mat-panel-title fxLayout="row" fxLayoutAlign="start center">
                                                 {{Permission.key}}
                                             </mat-panel-title>
                                         </mat-expansion-panel-header>
                                         <div>
-                                            <mat-checkbox (change)="AllCHecked($event, Permission.key)" > All </mat-checkbox>
+                                            <mat-checkbox name="{{Permission.key}}_{{i}}" (change)="AllCHecked($event, Permission.key)"> All </mat-checkbox>
                                         </div>
                                         <div *ngFor="let checkboxVal of Permission.val;let j = index">
-                                            <mat-checkbox (change)="isCheckboxChecked($event)"  [(ngModel)]="userinfoDatah[i]['val'][j].VALUE" name="userinfoDatah[i]['val'][j].NAME">
+                                            <mat-checkbox (change)="isCheckboxChecked($event)" [(ngModel)]="userinfoDatah[i]['val'][j].VALUE" name="{{userinfoDatah[i]['val'][j].NAME}}">
                                                 {{checkboxVal.NAME}}
                                             </mat-checkbox>
                                         </div>
@@ -138,7 +138,7 @@
                                 </mat-accordion>
                             </div>
                         </mat-tab>
-                         <!-- Security Tab  End-->
+                        <!-- Security Tab  End-->
                         <mat-tab label="InfoTrack">
                             <div fxLayout="row" fxLayoutAlign="start center " fxFlex="1 0 auto">
                                 <p fxFlex="100">

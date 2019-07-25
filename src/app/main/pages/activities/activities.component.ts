@@ -72,6 +72,10 @@ export class ActivitiesComponent implements OnInit {
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
+  } 
+  refreshActivities(){
+    let filterval= JSON.parse(localStorage.getItem('activity_filter'))
+    this.loadData(filterval);
   }
   loadData(filterData) {
     this.isLoadingResults = true;

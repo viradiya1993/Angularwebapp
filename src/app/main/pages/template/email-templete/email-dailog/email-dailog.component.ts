@@ -84,7 +84,7 @@ export class EmailDailogComponent implements OnInit {
     if(this.action === 'new'){
       this.dialogTitle = 'New Email';
     }else if(this.action === 'edit'){
-      this.dialogTitle = 'Edit Email';
+      this.dialogTitle = 'Update Email';
       this.CommonEditDupData()
    
     }else{

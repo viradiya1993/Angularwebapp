@@ -18,6 +18,7 @@ import { MatSort } from '@angular/material';
 })
 export class ReceiveMoneyComponent implements OnInit {
   tempColobj: any;
+  totalAountData: any = { SEARCHPASSWORD: 0, TOTALEXGST: 0 };
   ColumnsObj: any;
   isLoadingResults: boolean;
   displayedColumns: any = [];
@@ -35,7 +36,7 @@ export class ReceiveMoneyComponent implements OnInit {
     private dialog: MatDialog,
     private fb: FormBuilder,
     private toastr: ToastrService,
-    public _mainAPiServiceService:MainAPiServiceService,
+    public _mainAPiServiceService: MainAPiServiceService,
     public datepipe: DatePipe,
   ) { }
   receiveMoneyForm: FormGroup;
@@ -60,17 +61,18 @@ export class ReceiveMoneyComponent implements OnInit {
     if (this.lastFilter.ITEMSTARTDATE && this.lastFilter.ITEMENDDATE) {
       // let Sd = new Date(this.lastFilter.ITEMSTARTDATE);
       // let ed = new Date(this.lastFilter.ITEMENDDATE);
-      this.receiveMoneyForm.controls['DateRange'].setValue({begin: new Date(), end: dt});
+      this.receiveMoneyForm.controls['DateRange'].setValue({ begin: new Date(), end: dt });
     }
     this.receiveMoneyForm.controls['ShowWhat'].setValue(this.lastFilter.INCOMECLASS);
     this.getTableFilter();
     this.forListing(this.lastFilter);
   }
   forListing(data) {
-    this.receiveMoneydata=[];
+    this.receiveMoneydata = [];
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(data, 'GetIncome').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
+        this.totalAountData = { TOTALINCGST: response.DATA.TOTALINCGST, TOTALEXGST: response.DATA.TOTALEXGST };
         if (response.DATA.INCOMEITEMS[0]) {
           localStorage.setItem('receiptData', JSON.stringify(response.DATA.INCOMEITEMS[0]));
           this.highlightedRows = response.DATA.INCOMEITEMS[0].INCOMEGUID;

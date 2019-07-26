@@ -1150,14 +1150,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 this.emailrouting = '/create-document/email-invoice-template';
                 this.packrouting = '/create-document/packs-invoice-template';
             }
-            else if (x[2] == "contact-template" || x[2]=="email-contact-template" || x[2]=="packs-invoice-template") {
+            else if (x[2] == "contact-template" || x[2]=="email-contact-template" || x[2]=="packs-contact-template") {
                 this.emailroutingtax = 'Contact';
                 this.packroutingtax="Contact";
                 this.TemplateUrlHandel = '/create-document/contact-template'
                 this.emailrouting = '/create-document/email-contact-template';
                 this.packrouting = '/create-document/packs-contact-template';
             }
-            else if (x[2] == "receive-money-template" || x[2]=="email-receive-money-template" || x[2]=="packs-invoice-template") {
+            else if (x[2] == "receive-money-template" || x[2]=="email-receive-money-template" || x[2]=="packs-receive-money-template") {
                 this.emailroutingtax = 'Receipt';
                 this.packroutingtax="Receipt";
                 this.TemplateUrlHandel = '/create-document/receive-money-template'

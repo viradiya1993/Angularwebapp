@@ -1450,7 +1450,8 @@
                                     <div class="light_label_txt">Action</div>
                                 </section>
                                 <!-- Packs Start-->
-                                <section class="group-section-tab action_tab" *ngIf="activeSubMenu === 'packs'">
+                                <section class="group-section-tab action_tab" *ngIf="activeSubMenu ==='packs-matter-template' || activeSubMenu ==='packs-invoice-template' ||activeSubMenu ==='packs-contact-template' 
+                                ||activeSubMenu ==='packs-receive-money-template'">
                                     <section class="ribbon-section">
                                         <button mat-button (click)="PackModule('new')" class="large-button">
                                             <section class="large-button-container">

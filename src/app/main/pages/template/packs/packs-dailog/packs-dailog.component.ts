@@ -9,35 +9,28 @@ import { MatPaginator, MatDialogConfig } from '@angular/material';
 import { MatSort } from '@angular/material'
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component'
 import { NewPacksDailogComponent } from '../../packs/new-packs-dailog/new-packs-dailog.component';
+import { fuseAnimations } from '@fuse/animations';
 
-export interface PeriodicElement {
-  Order: number;
-  TempleteFile: any;
-  PromCopies:number;
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  { Order: 1, TempleteFile: 'Hydrogen',PromCopies:1},
-  { Order: 2, TempleteFile: 'Helium',PromCopies:2},
-  { Order: 3, TempleteFile: 'Lithium',PromCopies:3},
-  { Order: 4, TempleteFile: 'Beryllium',PromCopies:4},
 
-]
 @Component({
   selector: 'app-packs-dailog',
   templateUrl: './packs-dailog.component.html',
-  styleUrls: ['./packs-dailog.component.scss']
+  styleUrls: ['./packs-dailog.component.scss'],
+  animations: fuseAnimations,
 })
 export class PacksDailogComponent implements OnInit {
   PackDocument:FormGroup;
   isLoadingResults: boolean = false;
   action: string;
+  getDataForTable:any=[];
   dialogTitle: string;
   isspiner: boolean = false;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   Order = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
-  displayedColumns: string[] = ['Order', 'TempleteFile','PromCopies'];
-  DocumentPack = new MatTableDataSource(ELEMENT_DATA);
+  displayedColumns: string[] = ['Order', 'TempleteFile','Prom','Copies'];
+  DocumentPack:any=[];
+  // DocumentPack = new MatTableDataSource(ELEMENT_DATA);
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -57,6 +50,7 @@ export class PacksDailogComponent implements OnInit {
   }
 
   ngOnInit() {
+    
     this.DocumentPack.paginator = this.paginator;
     this.DocumentPack.sort = this.sort;
     this.PackDocument = this._formBuilder.group({
@@ -81,6 +75,7 @@ export class PacksDailogComponent implements OnInit {
 
   //Add Pack Item]
   AddPack(){
+    // this.getDataForTable=[];
     console.log('Add pack');
     const dialogRef = this.dialog.open(NewPacksDailogComponent, {
       disableClose: true,
@@ -90,6 +85,8 @@ export class PacksDailogComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
+      this.getDataForTable.push(result);
+      // this.DocumentPack = new MatTableDataSource(result);
         console.log(result);
     });
   }
@@ -123,6 +120,9 @@ export class PacksDailogComponent implements OnInit {
   //Close Pack
   ClosePack(){
     this.dialogRef.close(false);
+  }
+  rowdata(row){
+
   }
 
 }

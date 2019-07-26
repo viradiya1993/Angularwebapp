@@ -28,7 +28,7 @@
         </div>
       </form>
     </div>
-    <table mat-table [dataSource]="DocumentPack" matSort class="mat-elevation-z8">
+    <table mat-table [dataSource]="DocumentPack" matSort class="">
       <ng-container matColumnDef="Order">
           <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>Order</th>
           <td mat-cell *matCellDef="let row"> {{row.Order}} </td>

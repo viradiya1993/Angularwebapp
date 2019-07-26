@@ -11,6 +11,7 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { fuseAnimations } from '@fuse/animations';
+import { MainAPiServiceService } from 'app/_services';
 
 
 /** Flat node with expandable and level information */
@@ -123,13 +124,11 @@ export class PacksComponent implements OnInit {
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   isLoadingResults: boolean = false;
   constructor(
-    public MatDialog: MatDialog,
-    public dialog: MatDialog,
-    private router: Router,
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
     public _matDialog: MatDialog,
-    database: DynamicDatabase
+    database: DynamicDatabase,
+    private _mainAPiServiceService: MainAPiServiceService
   ) {
     this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);
     this.dataSource = new DynamicDataSource(this.treeControl, database);
@@ -146,6 +145,19 @@ export class PacksComponent implements OnInit {
       Filter: [],
       search: []
     });
+    this.loadData();
+  }
+  loadData() {
+    // this.isLoadingResults = true;
+    this._mainAPiServiceService.getSetData({}, 'GetKit').subscribe(res => {
+      console.log(res);
+      if (res.CODE == 200 && res.STATUS == "success") {
+
+      }
+    }, err => {
+      this.toastr.error(err);
+    });
+    // this.pageSize = localStorage.getItem('lastPageSize');
   }
   //SelectMatter
   SelectMatter() {
@@ -158,13 +170,7 @@ export class PacksComponent implements OnInit {
       console.log(result);
     });
   }
-  openDialog() {
-
-  }
   FilterSearch(filtervalue: any) {
     //this.PackTbl.filter = filtervalue;
   }
-  ClickPackTbl(value) {
-    console.log(value);
-  }
-}
+ }

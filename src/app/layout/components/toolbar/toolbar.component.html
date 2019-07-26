@@ -1344,11 +1344,11 @@
                                                 </mat-icon>
                                                 <span>Emails {{emailroutingtax}}</span>
                                             </a>                                         
-                                            <a mat-list-item [routerLink]="'/create-document/packs'" [ngClass]="activeSubMenu =='packs'  ? 'cmn_active_tab':''">
+                                            <a mat-list-item  [routerLink]="packrouting" [ngClass]="activeSubMenu =='packs'  ? 'cmn_active_tab':''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_doc_pack_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
-                                                <span>Packs</span>
+                                                <span>Packs {{packroutingtax}}</span>
                                             </a>
                                             <!-- </button> -->
                                         </mat-nav-list>
@@ -1384,7 +1384,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section class="ribbon-section" *ngIf="activeSubMenu === 'packs'">
+                                    <section class="ribbon-section" *ngIf="activeSubMenu ==='packs-matter-template' || activeSubMenu ==='packs-invoice-template' ||activeSubMenu ==='packs-contact-template' 
+                                    ||activeSubMenu ==='packs-receive-money-template'">
                                         <button mat-button class="large-button" (click)="SelectMatter()" [disabled]="isDocumentGenerateHide =='yes'">
                                             <section class="large-button-container">
                                             <mat-icon class="main-icon"> 
@@ -1450,7 +1451,8 @@
                                     <div class="light_label_txt">Action</div>
                                 </section>
                                 <!-- Packs Start-->
-                                <section class="group-section-tab action_tab" *ngIf="activeSubMenu === 'packs'">
+                                <section class="group-section-tab action_tab" *ngIf="activeSubMenu ==='packs-matter-template' || activeSubMenu ==='packs-invoice-template' ||activeSubMenu ==='packs-contact-template' 
+                                ||activeSubMenu ==='packs-receive-money-template'">
                                     <section class="ribbon-section">
                                         <button mat-button (click)="PackModule('new')" class="large-button">
                                             <section class="large-button-container">

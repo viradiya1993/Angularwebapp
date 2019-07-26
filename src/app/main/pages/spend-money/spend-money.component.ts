@@ -8,6 +8,7 @@ import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.c
 import * as $ from 'jquery';
 import { MatSort } from '@angular/material';
 import { DatePipe } from '@angular/common';
+import { stringify } from '@angular/core/src/render3/util';
 
 @Component({
   selector: 'app-spend-money',
@@ -32,10 +33,15 @@ export class SpendMoneyComponent implements OnInit {
   currentMatterData: any;
   Spendmoneydata: any;
   pageSize: any;
+  listingTotal:any=[];
   filterData: any = [];
   filterDataforAllField: any = [];
   forHideShowDateRangePicker: string;
   DateType: any;
+  whichtypedate: any;
+  whichtypedate2: any;
+  whichtypedate3: any;
+  whichtypedate4: any;
 
   constructor(
     private TableColumnsService: TableColumnsService,
@@ -54,7 +60,9 @@ export class SpendMoneyComponent implements OnInit {
       DateRange: [''],
       DateType: [''],
       DayRange: [''],
-      searchFilter: ['']
+      searchFilter: [''],
+      TOTALINCGST:[''],
+      TOTALEXGST:[''],
     })
 
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
@@ -62,6 +70,7 @@ export class SpendMoneyComponent implements OnInit {
   }
 
   forFirstTimeFilter() {
+
     let currentDate = new Date();
     let updatecurrentDate = new Date();
     this.DateType = 'Incurred Date';
@@ -69,18 +78,50 @@ export class SpendMoneyComponent implements OnInit {
     updatecurrentDate.setDate(updatecurrentDate.getDate() - 30);
     let end = this.datepipe.transform(currentDate, 'dd/MM/yyyy');
     let begin = this.datepipe.transform(updatecurrentDate, 'dd/MM/yyyy');
+
+  
     this.filterData = {
       'EXPENDITURECLASS': " ", 'INCURREDSTARTDATE': begin, 'INCURREDENDDATE': end, "PAIDSTARTDATE": '',
       'PAIDENDDATE': '', 'Search': ''
     }
-    // this.filterData={'EXPENDITURECLASS':"all",'INCURREDSTARTDATE':'','INCURREDENDDATE':'',"PAIDSTARTDATE":'',
-    // 'PAIDENDDATE':'','SearchString':''}
-    this.SepndMoneyForm.controls['MainClass'].setValue(" ");
-    this.SepndMoneyForm.controls['DateType'].setValue("Incurred Date");
-    this.SepndMoneyForm.controls['DateRange'].setValue({ begin: currentDate, end: updatecurrentDate });
-    this.SepndMoneyForm.controls['DayRange'].setValue("Last 30 days");
+    if(!localStorage.getItem("spendmoney_filter")){
+      localStorage.setItem('spendmoney_filter', JSON.stringify(this.filterData));
+    }else{
+      this.filterData =JSON.parse(localStorage.getItem("spendmoney_filter"))
+    }
+    this.SepndMoneyForm.controls['MainClass'].setValue(this.filterData.EXPENDITURECLASS);
+   
+    if(this.filterData.PAIDSTARTDATE=='' || this.filterData.PAIDENDDATE==''){
+      this.whichtypedate=this.filterData.INCURREDSTARTDATE;
+      this.whichtypedate2=this.filterData.INCURREDENDDATE;
+      this.SepndMoneyForm.controls['DateType'].setValue('Incurred Date');
+    }else{
+      this.whichtypedate=this.filterData.PAIDSTARTDATE;
+      this.whichtypedate2=this.filterData.PAIDENDDATE;
+      this.SepndMoneyForm.controls['DateType'].setValue('Date Paid');
+    }
+    let INCURREDSTARTDATE = this.whichtypedate.split("/");
+    let sendINCURREDSTARTDATE = new Date(INCURREDSTARTDATE[1] + '/' + INCURREDSTARTDATE[0] + '/' + INCURREDSTARTDATE[2]);
+    let INCURREDENDDATE = this.whichtypedate2.split("/");
+    let SensINCURREDENDDATE = new Date(INCURREDENDDATE[1] + '/' + INCURREDENDDATE[0] + '/' + INCURREDENDDATE[2]);
+    this.SepndMoneyForm.controls['DateRange'].setValue({ begin: sendINCURREDSTARTDATE, end: SensINCURREDENDDATE });
     // let potData = { 'ITEMSTARTDATE': new Date() };
-    this.loadData(this.filterData);
+
+    const date1 = sendINCURREDSTARTDATE;
+    const date2 = SensINCURREDENDDATE;
+    const diffTime = Math.abs(date2.getTime() - date1.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    if(diffDays==0){
+      this.SepndMoneyForm.controls['DayRange'].setValue("Today");
+    }else if(diffDays==7){
+      this.SepndMoneyForm.controls['DayRange'].setValue("Last 7 days");
+    }else if(diffDays==30){
+      this.SepndMoneyForm.controls['DayRange'].setValue("Last 30 days");
+    }else if(diffDays==90){
+      this.SepndMoneyForm.controls['DayRange'].setValue("Last 90 days");
+    }
+
+    this.loadData(this.filterData );
   }
 
   getTableFilter() {
@@ -105,8 +146,10 @@ export class SpendMoneyComponent implements OnInit {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(potData, 'GetExpenditure').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
+        
+        this.listingTotal= response.DATA;
 
-        this.Spendmoneydata = new MatTableDataSource(response.DATA.EXPENDITURES)
+        this.Spendmoneydata = new MatTableDataSource(response.DATA.EXPENDITURES);
         this.Spendmoneydata.paginator = this.paginator;
         this.Spendmoneydata.sort = this.sort;
         if (response.DATA.EXPENDITURES[0]) {
@@ -127,6 +170,7 @@ export class SpendMoneyComponent implements OnInit {
   }
 
   refreshSpendMoneyTab() {
+    this.filterData =JSON.parse(localStorage.getItem("spendmoney_filter"));
     this.loadData(this.filterData);
   }
 
@@ -153,15 +197,18 @@ export class SpendMoneyComponent implements OnInit {
           this.Spendmoneydata.paginator = this.paginator;
           this.Spendmoneydata.sort = this.sort;
         } else {
+          this.filterData =JSON.parse(localStorage.getItem("spendmoney_filter"));
           this.loadData(this.filterData);
         }
       }
     });
   }
   onSearch(searchFilter: any) {
+    this.filterData =JSON.parse(localStorage.getItem("spendmoney_filter"));
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
 
       this.filterData.Search = this.f.searchFilter.value;
+      localStorage.setItem('spendmoney_filter', JSON.stringify(this.filterData));
       this.loadData(this.filterData);
       // let filterVal = { 'Active': '', 'SearchString': this.f.searchFilter.value, 'FeeEarner': '', 'UninvoicedWork': '' };
       // if (!localStorage.getItem('matter_filter')) {
@@ -176,7 +223,9 @@ export class SpendMoneyComponent implements OnInit {
 
   }
   SpendClassChange(val) {
+    this.filterData =JSON.parse(localStorage.getItem("spendmoney_filter"));
     this.filterData.EXPENDITURECLASS = val;
+    localStorage.setItem('spendmoney_filter', JSON.stringify(this.filterData));
     this.loadData(this.filterData);
     // if(val=="all"){
     //   this.filterDataforAllField={"EXPENDITURECLASS":val};
@@ -191,10 +240,12 @@ export class SpendMoneyComponent implements OnInit {
   }
 
   SpendDateClassChnage(val) {
+   
     this.DateType = val;
     let begin = this.datepipe.transform(this.f.DateRange.value.begin, 'dd/MM/yyyy');
     let end = this.datepipe.transform(this.f.DateRange.value.end, 'dd/MM/yyyy');
     this.CommonDatefun(end, begin);
+    this.filterData =JSON.parse(localStorage.getItem("spendmoney_filter"));
     this.loadData(this.filterData);
   }
   get f() {
@@ -202,9 +253,11 @@ export class SpendMoneyComponent implements OnInit {
     return this.SepndMoneyForm.controls;
   }
   DateRange1(type: string, event: MatDatepickerInputEvent<Date>) {
+  
     let begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
     let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');
-    this.CommonDatefun(end, begin)
+    this.CommonDatefun(end, begin);
+    this.filterData =JSON.parse(localStorage.getItem("spendmoney_filter"));
     this.loadData(this.filterData);
 
   }
@@ -212,6 +265,7 @@ export class SpendMoneyComponent implements OnInit {
 
   }
   selectDayRange(val) {
+    this.filterData =JSON.parse(localStorage.getItem("spendmoney_filter"));
     let currentDate = new Date()
     let updatecurrentDate = new Date();
     let begin = this.datepipe.transform(currentDate, 'dd/MM/yyyy');
@@ -244,6 +298,7 @@ export class SpendMoneyComponent implements OnInit {
     this.loadData(this.filterData);
   }
   CommonDatefun(begin, end) {
+    this.filterData =JSON.parse(localStorage.getItem("spendmoney_filter"));
     if (this.DateType == 'Incurred Date') {
       this.filterData.INCURREDSTARTDATE = end;
       this.filterData.INCURREDENDDATE = begin;
@@ -255,6 +310,7 @@ export class SpendMoneyComponent implements OnInit {
       this.filterData.PAIDSTARTDATE = end;
       this.filterData.PAIDENDDATE = begin;
     }
+    localStorage.setItem('spendmoney_filter', JSON.stringify(this.filterData));
   }
 }
 

@@ -54,7 +54,11 @@ const routes = [
       { path: 'email-receive-money-template', component: EmailTempleteComponent },
 
       // { path: 'email-templete', component: EmailTempleteComponent },
-      { path: 'packs', component: PacksComponent },
+      // { path: 'packs', component: PacksComponent },
+      { path: 'packs-matter-template', component: PacksComponent },
+      { path: 'packs-invoice-template', component: PacksComponent },
+      { path: 'packs-contact-template', component: PacksComponent },
+      { path: 'packs-receive-money-template', component: PacksComponent },
 
 
       // {

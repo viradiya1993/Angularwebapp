@@ -43,11 +43,11 @@
                     </mat-form-field>
                     <mat-form-field class="example" appearance="outline">
                         <mat-label>Spend Total Inc</mat-label>
-                        <input matInput>
+                        <input [(ngModel)]="listingTotal.TOTALINCGST" formControlName="TOTALINCGST" matInput>
                     </mat-form-field>
                     <mat-form-field class="example" appearance="outline">
                         <mat-label>Spend Total Ex</mat-label>
-                        <input matInput>
+                        <input [(ngModel)]="listingTotal.TOTALEXGST" formControlName="TOTALEXGST" matInput>
                     </mat-form-field>
                     <mat-form-field class="example" appearance="outline">
                         <mat-label>Search</mat-label>

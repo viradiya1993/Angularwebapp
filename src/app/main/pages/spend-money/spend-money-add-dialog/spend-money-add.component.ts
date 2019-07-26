@@ -63,6 +63,8 @@ export class SpendMoneyAddComponent implements OnInit {
   setMainGST: number;
   multicheckboxval: number;
   isItemSaveClicked: string;
+  FinalExGSTAmount: number;
+  itemAmountExGST: number;
   constructor(public dialogRef: MatDialogRef<SpendMoneyAddComponent>,
     @Inject(MAT_DIALOG_DATA) public _data: any,
     private _formBuilder: FormBuilder,
@@ -119,7 +121,6 @@ export class SpendMoneyAddComponent implements OnInit {
 
   forEditshowpopupData() {
     let SendMoney_data = JSON.parse(localStorage.getItem('spendMoney_data'));
-
     let DatePaid = SendMoney_data.DATE.split("/");
     let DATE = new Date(DatePaid[1] + '/' + DatePaid[0] + '/' + DatePaid[2]);
     let DateIncurred = SendMoney_data.DATE.split("/");
@@ -142,7 +143,7 @@ export class SpendMoneyAddComponent implements OnInit {
     this.spendmoneyForm.controls['ChequeNo'].setValue(SendMoney_data.CHEQUENO);
     this.spendmoneyForm.controls['Type'].setValue(SendMoney_data.EXPENDITURETYPE);
     this.spendmoneyForm.controls['Payee'].setValue(SendMoney_data.PAYEE);
-    this.spendmoneyForm.controls['Amount'].setValue(SendMoney_data.AMOUNT);
+    this.spendmoneyForm.controls['Amount'].setValue(SendMoney_data.AMOUNT + SendMoney_data.GST);
     this.spendmoneyForm.controls['GST'].setValue(SendMoney_data.GST);
     // inner item 
     if (SendMoney_data.EXPENDITUREITEMS.length != 0) {
@@ -558,7 +559,7 @@ export class SpendMoneyAddComponent implements OnInit {
     this.setMainAmount = Number(this.f.AmountIncGST.value);
     this.setMainGST = Number(this.f.GST1.value);
     this.sendItem.push({
-      AMOUNT: Number(this.GSTValForExGst),
+      // AMOUNT: Number(this.f.AmountIncGST.value),
       EXPENDITURECLASS: this.f.Class.value,
       EXPENDITUREGUID: '',
       EXPENDITUREITEMGUID: "",
@@ -567,15 +568,19 @@ export class SpendMoneyAddComponent implements OnInit {
       MATTERGUID: this.f.MatterGUID.value,
       NOTE: this.f.Note.value,
       SHORTNAME: this.f.Matter.value,
-      WORKITEMGUID: ""
+      WORKITEMGUID: "",
+      AMOUNTEXGST:Number(this.GSTValForExGst)
     });
   }
   commonSendMultiLineData() {
     this.setMainAmount = this.FinalTotal;
     this.setMainGST = this.FinalTotalGST;
     this.getDataForTable.forEach(element => {
+
+      this.itemAmountExGST=Number(element.AMOUNT)-Number(element.GST);
+
       this.sendItem.push({
-        AMOUNT: Number(element.AMOUNT),
+        // AMOUNT: Number(element.AMOUNT),
         EXPENDITURECLASS: element.EXPENDITURECLASS,
         EXPENDITUREGUID: '',
         EXPENDITUREITEMGUID: "",
@@ -584,7 +589,8 @@ export class SpendMoneyAddComponent implements OnInit {
         MATTERGUID: element.MATTERGUID,
         NOTE: element.NOTE,
         SHORTNAME: element.SHORTNAME,
-        WORKITEMGUID: ""
+        WORKITEMGUID: "",
+        AMOUNTEXGST:this.itemAmountExGST
       })
     });
   }
@@ -603,7 +609,7 @@ export class SpendMoneyAddComponent implements OnInit {
       // first push and then get 
       // need to remove class from hml and show box 
       this.getDataForTable.push({
-        AMOUNT: Number(this.f.AmountIncGST.value),
+        // AMOUNT: Number(this.f.AmountIncGST.value),
         EXPENDITURECLASS: this.f.Class.value,
         EXPENDITUREGUID: '',
         EXPENDITUREITEMGUID: "",
@@ -612,7 +618,9 @@ export class SpendMoneyAddComponent implements OnInit {
         MATTERGUID: this.f.MatterGUID.value,
         NOTE: this.f.Note.value,
         SHORTNAME: this.f.Matter.value,
-        WORKITEMGUID: ""
+        WORKITEMGUID: "",
+        AMOUNTEXGST:this.GSTValForExGst
+        
       });
       this.commonSendMultiLineData();
 
@@ -627,6 +635,11 @@ export class SpendMoneyAddComponent implements OnInit {
     else if (this.getDataForTable.length == 1 || this.getDataForTable.length == 0) { this.multicheckboxval = 0; }
     else { this.multicheckboxval = 1; }
 
+    //ammount calculation 
+  
+     this.FinalExGSTAmount=this.setMainAmount- this.setMainGST;
+
+
     let Data = {
       EXPENDITUREGUID: this.action == 'edit' ? SendMoney_data.EXPENDITUREGUID : " ",
       EXPENDITURETYPE: this.f.Type.value,
@@ -634,7 +647,7 @@ export class SpendMoneyAddComponent implements OnInit {
       CHEQUENO: this.f.ChequeNo.value,
       PAYEE: this.f.Payee.value,
       MULTILINE: this.multicheckboxval,
-      AMOUNT: this.setMainAmount,
+      AMOUNT: this.FinalExGSTAmount,
       GST: this.setMainGST,
       RECEIVEDDATE: this.f.DateIncurredForSend.value,
       DATE: this.f.DatePaidForSend.value,

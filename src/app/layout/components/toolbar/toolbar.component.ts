@@ -90,6 +90,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     emailrouting: string;
     emailroutingtax: string;
     TemplateUrlHandel: string;
+    packroutingtax: string;
+    packrouting: string;
 
 
     constructor(
@@ -1133,26 +1135,34 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.activedocument = x[1];
             this.isTabShow = 10;
 
-            if (x[2] == "matter-template") {
+            if (x[2] == "matter-template" || x[2]=="email-matter-template" || x[2]=="packs-matter-template") {
                 this.emailroutingtax = 'Matter';
+                this.packroutingtax="Matter";
                 this.TemplateUrlHandel = '/create-document/matter-template'
                 this.emailrouting = '/create-document/email-matter-template';
+                this.packrouting = '/create-document/packs-matter-template';
 
             }
-            else if (x[2] == "invoice-template") {
+            else if (x[2] == "invoice-template" || x[2]=="email-invoice-template" || x[2]=="packs-invoice-template") {
                 this.emailroutingtax = 'Invoice';
+                this.packroutingtax="Invoice";
                 this.TemplateUrlHandel = '/create-document/invoice-template'
                 this.emailrouting = '/create-document/email-invoice-template';
+                this.packrouting = '/create-document/packs-invoice-template';
             }
-            else if (x[2] == "contact-template") {
+            else if (x[2] == "contact-template" || x[2]=="email-contact-template" || x[2]=="packs-invoice-template") {
                 this.emailroutingtax = 'Contact';
+                this.packroutingtax="Contact";
                 this.TemplateUrlHandel = '/create-document/contact-template'
                 this.emailrouting = '/create-document/email-contact-template';
+                this.packrouting = '/create-document/packs-contact-template';
             }
-            else if (x[2] == "receive-money-template") {
+            else if (x[2] == "receive-money-template" || x[2]=="email-receive-money-template" || x[2]=="packs-invoice-template") {
                 this.emailroutingtax = 'Receipt';
+                this.packroutingtax="Receipt";
                 this.TemplateUrlHandel = '/create-document/receive-money-template'
                 this.emailrouting = '/create-document/email-receive-money-template';
+                this.packrouting = '/create-document/packs-receive-money-template';
             }
         } else if (x[1] == "system-setting") {
             this.isTabShow = 11;

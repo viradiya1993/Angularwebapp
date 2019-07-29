@@ -9,7 +9,7 @@
     </h2>
     <div mat-dialog-content class="mat-typography main">
         <div class="one" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
-            <form name="userForm" id="userForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
+            <form name="userForm" id="userForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form" autocomplete="off">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.USERNAME,'has-warning':errorWarningData.Warning?.USERNAME}">
                         <mat-label>User Name</mat-label>

@@ -6,16 +6,11 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class BehaviorService {
-  public userPermission$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public matterInvoice$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(private http: HttpClient) { }
 
-  editPermission(newPermission: any) {
-    this.userPermission$.next(newPermission);
+  matterInvoiceData(matterInvoice: any) {
+    this.matterInvoice$.next(matterInvoice);
   }
 
-  // navigation bar service 
-  
-  navigation(a){
-    this.userPermission$.next(a);
-  }
 }

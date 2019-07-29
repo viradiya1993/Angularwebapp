@@ -106,10 +106,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private _router: Router,
         private location: Location,
         public MatDialog: MatDialog,
-        public behaviorService:BehaviorService
+        public behaviorService: BehaviorService
     ) {
         //for navigation bar 
-      
+
 
         if (this.appPermissions == null) {
             this.appPermissions = [];
@@ -562,7 +562,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
 
     public addNewTimeEntry(Data: any, matterData: any) {
-    
+
         const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '100%', disableClose: true, data: { 'edit': Data, 'matterData': matterData } });
         dialogRef.afterClosed().subscribe(result => {
             if (result)
@@ -824,11 +824,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             panelClass: 'Email-dialog',
             data: EmailPopdata
         });
-        dialogRef.afterClosed().subscribe(result => { 
-            if(result){
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
                 $('#refreshEmailTab').click();
             }
-           
+
         });
     }
 
@@ -1135,31 +1135,31 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.activedocument = x[1];
             this.isTabShow = 10;
 
-            if (x[2] == "matter-template" || x[2]=="email-matter-template" || x[2]=="packs-matter-template") {
+            if (x[2] == "matter-template" || x[2] == "email-matter-template" || x[2] == "packs-matter-template") {
                 this.emailroutingtax = 'Matter';
-                this.packroutingtax="Matter";
+                this.packroutingtax = "Matter";
                 this.TemplateUrlHandel = '/create-document/matter-template'
                 this.emailrouting = '/create-document/email-matter-template';
                 this.packrouting = '/create-document/packs-matter-template';
 
             }
-            else if (x[2] == "invoice-template" || x[2]=="email-invoice-template" || x[2]=="packs-invoice-template") {
+            else if (x[2] == "invoice-template" || x[2] == "email-invoice-template" || x[2] == "packs-invoice-template") {
                 this.emailroutingtax = 'Invoice';
-                this.packroutingtax="Invoice";
+                this.packroutingtax = "Invoice";
                 this.TemplateUrlHandel = '/create-document/invoice-template'
                 this.emailrouting = '/create-document/email-invoice-template';
                 this.packrouting = '/create-document/packs-invoice-template';
             }
-            else if (x[2] == "contact-template" || x[2]=="email-contact-template" || x[2]=="packs-contact-template") {
+            else if (x[2] == "contact-template" || x[2] == "email-contact-template" || x[2] == "packs-contact-template") {
                 this.emailroutingtax = 'Contact';
-                this.packroutingtax="Contact";
+                this.packroutingtax = "Contact";
                 this.TemplateUrlHandel = '/create-document/contact-template'
                 this.emailrouting = '/create-document/email-contact-template';
                 this.packrouting = '/create-document/packs-contact-template';
             }
-            else if (x[2] == "receive-money-template" || x[2]=="email-receive-money-template" || x[2]=="packs-receive-money-template") {
+            else if (x[2] == "receive-money-template" || x[2] == "email-receive-money-template" || x[2] == "packs-receive-money-template") {
                 this.emailroutingtax = 'Receipt';
-                this.packroutingtax="Receipt";
+                this.packroutingtax = "Receipt";
                 this.TemplateUrlHandel = '/create-document/receive-money-template'
                 this.emailrouting = '/create-document/email-receive-money-template';
                 this.packrouting = '/create-document/packs-receive-money-template';
@@ -1294,8 +1294,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     //Invoice Detail for invoice
-    InvoiceDetail() {
-        const dialogRef = this._matDialog.open(InvoiceDetailComponent, { width: '100%', disableClose: true, data: { 'type': 'edit', INVOICEGUID: localStorage.getItem('edit_invoice_id') } });
+    InvoiceDetail(isType) {
+        let INVOICEGUID = '';
+        if (isType == 'isTime') {
+            this.behaviorService.matterInvoice$.subscribe(matterInvoiceData => {
+                if (matterInvoiceData)
+                    INVOICEGUID = matterInvoiceData.INVOICEGUID;
+            });
+        } else {
+            localStorage.getItem('edit_invoice_id');
+        }
+        const dialogRef = this._matDialog.open(InvoiceDetailComponent, { width: '100%', disableClose: true, data: { 'type': 'edit', INVOICEGUID: INVOICEGUID } });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 console.log(result);
@@ -1303,7 +1312,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     //delete invoice
-    deleteInvoice(): void {
+    deleteInvoice(isType): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
@@ -1311,7 +1320,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
-                let INVOICEGUID = localStorage.getItem('edit_invoice_id');
+                let INVOICEGUID = '';
+                if (isType == 'isTime') {
+                    this.behaviorService.matterInvoice$.subscribe(matterInvoiceData => {
+                        if (matterInvoiceData)
+                            INVOICEGUID = matterInvoiceData.INVOICEGUID;
+                    });
+                } else {
+                    INVOICEGUID = localStorage.getItem('edit_invoice_id');
+                }
                 let postData = { FormAction: "delete", DATA: { INVOICEGUID: INVOICEGUID } }
                 this._mainAPiServiceService.getSetData(postData, 'SetInvoice').subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {

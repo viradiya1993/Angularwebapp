@@ -58,7 +58,8 @@
                                         <td mat-cell *matCellDef="let row"> <span *ngIf="row[item]">{{row[item]}}</span> </td>
                                     </ng-container>
                                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;let element;" (click)="editmatterInvoive(element);highlightedRows=element.INVOICEGUID" [style.background]="highlightedRows == element.INVOICEGUID ? selectedColore : ''" [ngClass]="highlightedRows == element.INVOICEGUID ? 'row-text-colore' : ''"
+                                        matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                     </tr>
                                 </table>
                             </div>

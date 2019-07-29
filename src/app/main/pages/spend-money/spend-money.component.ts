@@ -109,17 +109,26 @@ export class SpendMoneyComponent implements OnInit {
 
     const date1 = sendINCURREDSTARTDATE;
     const date2 = SensINCURREDENDDATE;
+    const date3 = new Date();
     const diffTime = Math.abs(date2.getTime() - date1.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-    if(diffDays==0){
-      this.SepndMoneyForm.controls['DayRange'].setValue("Today");
-    }else if(diffDays==7){
-      this.SepndMoneyForm.controls['DayRange'].setValue("Last 7 days");
-    }else if(diffDays==30){
-      this.SepndMoneyForm.controls['DayRange'].setValue("Last 30 days");
-    }else if(diffDays==90){
-      this.SepndMoneyForm.controls['DayRange'].setValue("Last 90 days");
+
+   const date4= this.datepipe.transform(date2, 'dd/MM/yyyy')
+   const date5= this.datepipe.transform(date3, 'dd/MM/yyyy')
+    if(date4 === date5){
+      if(diffDays==0){
+        this.SepndMoneyForm.controls['DayRange'].setValue("Today");
+      }else if(diffDays==7){
+        this.SepndMoneyForm.controls['DayRange'].setValue("Last 7 days");
+      }else if(diffDays==30){
+        this.SepndMoneyForm.controls['DayRange'].setValue("Last 30 days");
+      }else if(diffDays==90){
+        this.SepndMoneyForm.controls['DayRange'].setValue("Last 90 days");
+      }
+    }else{
+      this.SepndMoneyForm.controls['DayRange'].setValue("Date Range");
     }
+   
 
     this.loadData(this.filterData );
   }

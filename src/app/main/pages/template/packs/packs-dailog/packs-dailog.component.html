@@ -9,15 +9,15 @@
   </h2>
   <div mat-dialog-content class="mat-typography main">
     <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
-      <form [formGroup]="PackDocument" fxLayout="column" fxFlex="1 0 auto" name="form">
+      <form  fxLayout="column" fxFlex="1 0 auto" name="form">
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
           <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
               <mat-label>Pack Name</mat-label>
-              <input  formControlName="packName" matInput>
+              <input [(ngModel)]="MainKitData.KITNAME"  matInput>
           </mat-form-field>
           <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Context</mat-label>
-              <mat-select #value name="selected" (selectionChange)="ContextChnage($event.value)" formControlName="Context">
+              <mat-select [(ngModel)]="MainKitData.CONTEXT" #value name="selected" (selectionChange)="ContextChnage($event.value)" >
                 <mat-option value="Matter">Matter</mat-option>
                 <mat-option value="Invoice">Invoice</mat-option>
                 <mat-option value="Receipt">Receipt</mat-option>

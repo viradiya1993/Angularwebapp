@@ -9,11 +9,11 @@
   </h2>
   <div mat-dialog-content class="mat-typography main">
     <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
-      <form [formGroup]="PackTbl" fxLayout="column" fxFlex="1 0 auto" name="form">
+      <form  fxLayout="column" fxFlex="1 0 auto" name="form">
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-          <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+          <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.TEMPLATETYPE,'has-warning':errorWarningData.Warning?.TEMPLATETYPE}">
             <mat-label>Template Type</mat-label>
-              <mat-select #value name="selected" (selectionChange)="TempleteChnage($event.value)" formControlName="TempleteType">
+              <mat-select [(ngModel)]="KitItemData.TEMPLATETYPE" #value name="selected" (selectionChange)="TempleteChnage($event.value)" name="TempleteType">
                 <mat-option value="Document">Document</mat-option>
                 <mat-option value="Email">Email</mat-option>
             </mat-select>
@@ -29,9 +29,9 @@
           </mat-form-field> -->
 
 
-          <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+          <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.TEMPLATEFILE,'has-warning':errorWarningData.Warning?.TEMPLATEFILE}">
             <mat-label>Template File</mat-label>
-            <input type="text" placeholder="Template File" aria-label="Number" matInput  formControlName="TempleteFile" [matAutocomplete]="auto">
+            <input [(ngModel)]="KitItemData.TEMPLATEFILE" type="text" placeholder="Template File" aria-label="Number" matInput  name="TempleteFile" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete">
                 <mat-option *ngFor="let val of emailname" value="{{val.NAME}}">
                     {{val.NAME}}
@@ -47,14 +47,14 @@
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
           <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Copies</mat-label>
-            <input formControlName ="Copies" type="number"  matInput>
+            <input [(ngModel)]="KitItemData.COPIES" name ="Copies" type="number"  matInput>
           </mat-form-field>
-          <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+          <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ORDER,'has-warning':errorWarningData.Warning?.ORDER}">
             <mat-label>Order</mat-label>
-            <input  formControlName ="Order" type="number"  matInput>
+            <input [(ngModel)]="KitItemData.ORDER"  name ="Order" type="number"  matInput>
           </mat-form-field>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <mat-checkbox formControlName="Prompt" >Prompt Before Printing</mat-checkbox>
+          <mat-checkbox [(ngModel)]="KitItemData.PROMT" name="Prompt" >Prompt Before Printing</mat-checkbox>
         </div>
       </form>
     </div>

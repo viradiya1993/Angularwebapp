@@ -94,8 +94,8 @@ export class ContactComponent implements OnInit {
     this.subscription= this._mainAPiServiceService.getSetData(data, 'GetContact').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Contactdata = new MatTableDataSource(response.DATA.CONTACTS);
-        this.Contactdata.sort = this.sort;
         this.Contactdata.paginator = this.paginator;
+        this.Contactdata.sort = this.sort;
         if (response.DATA.CONTACTS[0]) {
           localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);
           this.highlightedRows = response.DATA.CONTACTS[0].CONTACTGUID;

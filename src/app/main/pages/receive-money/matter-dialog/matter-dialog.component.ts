@@ -85,6 +85,7 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
     this.getList(this.filterVal);
   }
   getList(filterVal: any) {
+    this.getDataForTable=[];
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(filterVal, 'GetMatter').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {

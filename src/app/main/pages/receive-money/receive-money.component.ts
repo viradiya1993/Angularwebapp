@@ -80,6 +80,7 @@ export class ReceiveMoneyComponent implements OnInit {
         }
         this.receiveMoneydata = new MatTableDataSource(response.DATA.INCOMEITEMS)
         this.receiveMoneydata.paginator = this.paginator;
+        this.receiveMoneydata.sort = this.sort;
       }
       this.isLoadingResults = false;
     }, err => {

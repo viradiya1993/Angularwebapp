@@ -114,6 +114,7 @@ export class ReceiptDilogComponent implements OnInit {
 
   }
   setInvoiceForReceipt(INCOMEGUID) {
+    this.PrepareReceiptData=[];
     this.isLoadingResults = true;
     let incomeGuid = { INCOMEGUID: INCOMEGUID }
     this._mainAPiServiceService.getSetData(incomeGuid, 'GetIncome').subscribe(response => {
@@ -161,6 +162,7 @@ export class ReceiptDilogComponent implements OnInit {
   }
 
   GetInvoiceForReceipt(data) {
+    this.PrepareReceiptData=[];
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(data, 'GetInvoice').subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {

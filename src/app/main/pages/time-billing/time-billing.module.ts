@@ -21,7 +21,7 @@ import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
 
 
 const routes = [
-  { path: '', redirectTo: '/time-billing/estimate', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/time-billing/work-in-progress', pathMatch: 'full', canActivate: [AuthGuard] },
   {
     path: '', component: TimeBillingComponent, children: [
       { path: 'estimate', component: EstimateComponent },

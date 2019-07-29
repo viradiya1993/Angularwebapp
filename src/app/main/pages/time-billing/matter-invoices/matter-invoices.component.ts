@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialogConfig, MatDialog } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
-import { FormGroup, FormBuilder } from '@angular/forms';
 import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.component';
 import { TableColumnsService, MainAPiServiceService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material';
 
 
 @Component({
@@ -17,7 +16,7 @@ import {MatSort} from '@angular/material';
   animations: fuseAnimations
 })
 export class MatterInvoicesComponent implements OnInit {
-  MatterinvoiceForm: FormGroup;
+  MatterinvoiceData = { invoicetotal: 0, recevived: 0, outstanding: 0 };
   ColumnsObj: any = [];
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   displayedColumns: string[];
@@ -27,21 +26,12 @@ export class MatterInvoicesComponent implements OnInit {
   pageSize: any;
   isLoadingResults: boolean = false;
   constructor(private dialog: MatDialog,
-    private _formBuilder: FormBuilder,
     private _mainAPiServiceService: MainAPiServiceService,
     private TableColumnsService: TableColumnsService,
     private toastr: ToastrService) { }
 
   MatterInvoicesdata;
   ngOnInit() {
-    this.MatterinvoiceForm = this._formBuilder.group({
-      matter:[],
-      Client:[],
-      invoicetotal:[],
-      recevived:[],
-      outstanding:[],
-      searchFilter:[]
-    });
     $('content').addClass('inner-scroll');
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
     this.getTableFilter();
@@ -55,11 +45,10 @@ export class MatterInvoicesComponent implements OnInit {
   loadData() {
     this.isLoadingResults = true;
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
-
-  
     this._mainAPiServiceService.getSetData(potData, 'GetInvoice').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
-        this.MatterInvoicesdata = new MatTableDataSource(res.DATA.INVOICES)
+        this.MatterinvoiceData = { invoicetotal: res.DATA.TOTALINVOICES, recevived: res.DATA.TOTALRECEIVED, outstanding: res.DATA.TOTALOUSTANDING };
+        this.MatterInvoicesdata = new MatTableDataSource(res.DATA.INVOICES);
         this.MatterInvoicesdata.paginator = this.paginator;
         this.MatterInvoicesdata.sort = this.sort;
       }
@@ -105,7 +94,7 @@ export class MatterInvoicesComponent implements OnInit {
     });
   }
   //onSearch
-  onSearch(searchFilter:any){
+  onSearch(searchFilter: any) {
     console.log(searchFilter);
   }
 }

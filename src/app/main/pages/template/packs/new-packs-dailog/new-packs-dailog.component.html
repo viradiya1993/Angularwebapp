@@ -18,14 +18,29 @@
                 <mat-option value="Email">Email</mat-option>
             </mat-select>
           </mat-form-field>
+
+<!-- 
           <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Template File</mat-label>
               <mat-select #value name="selected" (selectionChange)="TempleteFileChnage($event.value)" formControlName="TempleteFile">
                 <mat-option value="1">Temp</mat-option>
                 <mat-option value="2">Temp</mat-option>
               </mat-select>
-          </mat-form-field>
-          <mat-icon matSuffix (click)='SelectFile()'>
+          </mat-form-field> -->
+
+
+          <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+            <mat-label>Template File</mat-label>
+            <input type="text" placeholder="Template File" aria-label="Number" matInput  formControlName="TempleteFile" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let val of emailname" value="{{val.NAME}}">
+                    {{val.NAME}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+
+          <mat-icon matSuffix (click)='SelectFile()' *ngIf="this.TemplateType =='Document'">
             <img src="assets/icons/web_app/icon_letters_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
           </mat-icon>
         </div>

@@ -1,13 +1,14 @@
 import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA, MatDatepickerInputEvent } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { TimersService } from '../../../../_services';
+import { TimersService, BehaviorService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { DatePipe } from '@angular/common';
 import { MatterDialogComponent } from '../matter-dialog/matter-dialog.component';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { round } from 'lodash';
+import * as moment from 'moment';
 
 
 @Component({
@@ -18,6 +19,7 @@ import { round } from 'lodash';
 })
 export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+  timeStops: any = [];
   private exportTime = { hour: 7, minute: 15, meriden: 'PM', format: 24 };
   LookupsList: any;
   errorWarningData: any = {};
@@ -57,9 +59,9 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     private _formBuilder: FormBuilder,
     private toasterService: ToastrService,
     public datepipe: DatePipe,
+    private behaviorService: BehaviorService,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
-    console.log(_data);
     if (_data.edit == 'Edit' || _data.edit == 'Add' || _data.edit == "Duplicate") {
       this.action = _data.edit;
       if (this.action === 'Edit') {
@@ -78,8 +80,8 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   timeEntryForm: FormGroup;
   matterautoVal: any;
   ngOnInit() {
-   let maaterguid=JSON.parse(localStorage.getItem('set_active_matters'));
-  
+    this.timeStops = this.getTimeStops('01:00', '23:30');
+    let maaterguid = JSON.parse(localStorage.getItem('set_active_matters'));
     this.ActivityList = this.optionList;
     this.timeEntryForm = this._formBuilder.group({
       matterautoVal: [''],
@@ -143,6 +145,19 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.matterChange('MatterGuid', this.currentTimeMatter);
     }
   }
+  getTimeStops(start, end) {
+    var startTime = moment(start, 'hh:mm');
+    var endTime = moment(end, 'hh:mm');
+    if (endTime.isBefore(startTime)) {
+      endTime.add(1, 'day');
+    }
+    var timeStops = [];
+    while (startTime <= endTime) {
+      timeStops.push(moment(startTime).format('hh:mm A'));
+      startTime.add(30, 'minutes');
+    }
+    return timeStops;
+  }
   calcPE() {
     // this.PRICEVAL= parseFloat(this.f.PRICE.value).toFixed(2);
     this.PRICEINCGSTVAL = round(this.f.PRICE.value * 1.1).toFixed(2);
@@ -163,7 +178,15 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   }
   setTimeEntryData() {
     this.isLoadingResults = true;
-    this.Timersservice.getTimeEnrtyData({ 'WorkItemGuid': localStorage.getItem('edit_WORKITEMGUID') }).subscribe(response => {
+    let workerGuid;
+    this.behaviorService.workInProgress$.subscribe(workInProgressData => {
+      if (workInProgressData) {
+        workerGuid = workInProgressData.WORKITEMGUID;
+      } else {
+        workerGuid = localStorage.getItem('edit_WORKITEMGUID');
+      }
+    });
+    this.Timersservice.getTimeEnrtyData({ 'WorkItemGuid': workerGuid }).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         // added by web19 19/06 
         this.matterChange('MatterGuid', response.DATA.WORKITEMS[0].MATTERGUID);
@@ -180,7 +203,8 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
         this.timeEntryForm.controls['QUANTITY'].setValue(timeEntryData.QUANTITY);
         this.timeEntryForm.controls['MATTERGUID'].setValue(timeEntryData.MATTERGUID);
         this.timeEntryForm.controls['ITEMTYPE'].setValue(timeEntryData.ITEMTYPE);
-        this.timeEntryForm.controls['ITEMTIME'].setValue(timeEntryData.ITEMTIME);
+        let ttyData = moment(timeEntryData.ITEMTIME, 'hh:mm');
+        this.timeEntryForm.controls['ITEMTIME'].setValue(moment(ttyData).format('hh:mm A'));
         this.timeEntryForm.controls['FEEEARNER'].setValue(timeEntryData.FEEEARNER);
 
         let tempDate = timeEntryData.ITEMDATE.split("/");

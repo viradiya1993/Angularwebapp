@@ -7,10 +7,14 @@ import { HttpClient } from '@angular/common/http';
 })
 export class BehaviorService {
   public matterInvoice$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public workInProgress$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(private http: HttpClient) { }
 
   matterInvoiceData(matterInvoice: any) {
     this.matterInvoice$.next(matterInvoice);
+  }
+  setworkInProgressData(workInProgressData: any) {
+    this.workInProgress$.next(workInProgressData);
   }
 
 }

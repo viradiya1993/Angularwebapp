@@ -688,9 +688,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
-                let WORKITEMGUID = localStorage.getItem('edit_WORKITEMGUID');
+                let WORKITEMGUID;
+                this.behaviorService.workInProgress$.subscribe(workInProgressData => {
+                    if (workInProgressData) {
+                        WORKITEMGUID = workInProgressData.WORKITEMGUID;
+                    } else {
+                        WORKITEMGUID = localStorage.getItem('edit_WORKITEMGUID');
+                    }
+                });
                 let postData = { FormAction: "delete", data: { WorkItemGuid: WORKITEMGUID } }
-
                 this._mainAPiServiceService.getSetData(postData, 'SetWorkItems').subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {
                         $('#refreshTimeEntryTab').click();

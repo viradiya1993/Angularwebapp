@@ -49,7 +49,9 @@
                             <!-- <material-timepicker class="time_entry_picker" fxFlex="50" color="accent" label="Time Picker" appearance="outline"></material-timepicker> -->
                             <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ITEMTIME,'has-warning':errorWarningData.Warning?.ITEMTIME}">
                                 <mat-label>Time of day</mat-label>
-                                <input matInput formControlName="ITEMTIME">
+                                <mat-select formControlName="ITEMTIME">
+                                    <mat-option *ngFor="let data of timeStops" value="{{data}}">{{data}}</mat-option>
+                                </mat-select>
                             </mat-form-field>
                         </div>
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">

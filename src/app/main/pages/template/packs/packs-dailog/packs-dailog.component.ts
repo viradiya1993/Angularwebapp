@@ -10,6 +10,7 @@ import { MatSort } from '@angular/material'
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component'
 import { NewPacksDailogComponent } from '../../packs/new-packs-dailog/new-packs-dailog.component';
 import { fuseAnimations } from '@fuse/animations';
+import { MainAPiServiceService } from 'app/_services';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class PacksDailogComponent implements OnInit {
   PackDocument:FormGroup;
   isLoadingResults: boolean = false;
   action: string;
+  errorWarningData: any = {};
   getDataForTable:any=[];
   dialogTitle: string;
   isspiner: boolean = false;
@@ -34,6 +36,10 @@ export class PacksDailogComponent implements OnInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  
+  public MainKitData: any = {
+    "KITGUID": "", "KITNAME": "", "CONTEXT": "",
+  };
   constructor(
     public MatDialog: MatDialog,
     public dialog: MatDialog,
@@ -42,6 +48,7 @@ export class PacksDailogComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
     public _matDialog: MatDialog,
+    private _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) 
   { 
@@ -64,10 +71,7 @@ export class PacksDailogComponent implements OnInit {
     console.log(value);
   }
 
-  //Pack Save
-  PackSave(){
-    console.log('pack save work!!');
-  }
+ 
   //Click Pack Tbl
   ClickPackTbl(value){
     console.log(value);
@@ -85,7 +89,9 @@ export class PacksDailogComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.getDataForTable.push(result);
+      if(result != false){
+        this.getDataForTable.push(result);
+      }
       // this.DocumentPack = new MatTableDataSource(result);
         console.log(result);
     });
@@ -123,6 +129,94 @@ export class PacksDailogComponent implements OnInit {
   }
   rowdata(row){
 
+  }
+   //Pack Save
+   PackSave(){
+     let sendData={
+      KITGUID :this.MainKitData.KITGUID,
+      KITNAME:this.MainKitData.KITNAME,
+      CONTEXT:this.MainKitData.CONTEXT
+     }
+     let finalData={FormAction:'insert',DATA:sendData }
+     this._mainAPiServiceService.getSetData(finalData, 'SetKit').subscribe(response => {
+       
+       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+         this.checkValidation(response.DATA.VALIDATIONS, finalData);
+       } else if (response.CODE == 451 && response.STATUS == 'warning') {
+         this.checkValidation(response.DATA.VALIDATIONS, finalData);
+       } else if (response.CODE == 450 && response.STATUS == 'error') {
+         this.checkValidation(response.DATA.VALIDATIONS, finalData);
+       } else if (response.MESSAGE == 'Not logged in') {
+         this.dialogRef.close(false);
+       } else {
+         this.isspiner = false;
+       }
+        
+       }, err => {
+         this.toastr.error(err);
+      });
+
+  }
+  checkValidation(bodyData: any, details: any) {
+    let errorData: any = [];
+    let warningData: any = [];
+    let tempError: any = [];
+    let tempWarning: any = [];
+    bodyData.forEach(function (value) {
+      if (value.VALUEVALID == 'No') {
+        errorData.push(value.ERRORDESCRIPTION);
+        tempError[value.FIELDNAME] = value;
+      }
+      else if (value.VALUEVALID == 'Warning') {
+        tempWarning[value.FIELDNAME] = value;
+        warningData.push(value.ERRORDESCRIPTION);
+      }
+
+    });
+    this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
+    if (Object.keys(errorData).length != 0)
+      this.toastr.error(errorData);
+    if (Object.keys(warningData).length != 0) {
+      this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+        disableClose: true,
+        width: '100%',
+        data: warningData
+      });
+      this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Save?';
+      this.confirmDialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.isspiner = true;
+          this.kitItemData(details);
+        }
+        this.confirmDialogRef = null;
+      });
+    }
+    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+      this.kitItemData(details);
+    this.isspiner = false;
+  }
+  kitItemData(data: any) {
+    data.VALIDATEONLY = false;
+    this._mainAPiServiceService.getSetData(data, 'SetKit').subscribe(response => {
+      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        if (this.action !== 'edit') {
+          this.toastr.success(' save successfully');
+        } else {
+          this.toastr.success(' update successfully');
+        }
+        this.isspiner = false;
+        this.dialogRef.close(true);
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
+        this.toastr.warning(response.MESSAGE);
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
+        this.toastr.error(response.MESSAGE);
+      } else if (response.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      }
+      this.isspiner = false;
+    }, error => {
+      this.toastr.error(error);
+    });
   }
 
 }

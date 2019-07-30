@@ -37,9 +37,16 @@ export class MatterDialogComponentForTemplate implements OnInit {
   base_url: any;
   CheckCondition: any;
   ForHideShow: string;
+  filefolderUrlforEmail:any=[];
   title: string;
   filefolderUrl: any;
   Title:any;
+  emailToadd: any;
+  emailBCC: any;
+  emailCC: any;
+  emailSUBJECT: any;
+  emailCONTENT: any;
+  whichTypeTemplate: string;
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
@@ -58,6 +65,7 @@ export class MatterDialogComponentForTemplate implements OnInit {
     this.base_url=environment.ReportUrl;
     this.filefolder_Name=_data.Template;
     this.Title =_data.Type == 'Email' ? 'Email' :'Document';
+    this.Title='Email' ? this.whichTypeTemplate='email' :' Template';
     this.selectMatter(_data);
    }
    
@@ -78,9 +86,20 @@ export class MatterDialogComponentForTemplate implements OnInit {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.toastr.success('success');
         if(this._data.Type=="Template"){
+
+          // this.whichTypeTemplate="Template";
+          console.log('Template')
         this.filefolderUrl=response.DATA.DOCUMENTS[0].FILENAME;     
         }else{
-         this.filefolderUrl=response.DATA.EMAILS[0].SUBJECT;        
+          // this.whichTypeTemplate="email";
+        //  this.filefolderUrlforEmail=response.DATA.EMAILS[0].TOADDRESS;
+         this.emailToadd=response.DATA.EMAILS[0].TOADDRESS;
+         this.emailBCC=response.DATA.EMAILS[0].BCCADDRESS;
+         this.emailCC=response.DATA.EMAILS[0].CCADDRESS;
+         this.emailSUBJECT=response.DATA.EMAILS[0].SUBJECT;
+         this.emailCONTENT=response.DATA.EMAILS[0].CONTENT;
+
+        //  window.open("https://mail.google.com/mail/u/0/?view=cm&fs=1&to=someone@example.com&su=SUBJECT&body=BODY&bcc=someone.else@example.com&tf=1");        
         }   
         this.isLoadingResults = false;
       }else if(response.CODE == 420 ){

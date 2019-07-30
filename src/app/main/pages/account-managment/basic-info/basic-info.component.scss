@@ -1,0 +1,33 @@
+app-basic-info {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 0;
+    border-right: 1px solid;
+    overflow-y: auto;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+
+    .no-messages-text {
+        font-size: 24px;
+        font-weight: 300;
+    }
+
+    .app-basic-info {
+        position: relative;
+        margin-top: 200px;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+}
+.one {
+    margin-left: 20px;
+    margin-right: 15px; 
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+
+

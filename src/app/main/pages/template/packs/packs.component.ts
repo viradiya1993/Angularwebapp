@@ -11,41 +11,49 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { fuseAnimations } from '@fuse/animations';
-import { MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 
 interface FoodNode {
   name: string;
+  KITNAME:string;
+  CONTEXT:string;
+  KITGUID:string;
+  TEMPLATEFILE:string;
+  TEMPLATETYPEDESC:string;
   index?: number;
   children?: FoodNode[];
+  KITITEMS?:FoodNode[];
+
+
 }
 
-const TREE_DATA: FoodNode[] = [
-  {
-    name: 'Fruit',
-    children: [
-      { name: 'Apple' },
-      { name: 'Banana' },
-      { name: 'Fruit loops' },
-    ]
-  }, {
-    name: 'Vegetables',
-    children: [
-      {
-        name: 'Green',
-        children: [
-          { name: 'Broccoli' },
-          { name: 'Brussel sprouts' },
-        ]
-      }, {
-        name: 'Orange',
-        children: [
-          { name: 'Pumpkins' },
-          { name: 'Carrots' },
-        ]
-      },
-    ]
-  },
-];
+// const TREE_DATA: FoodNode[] = [
+//   {
+//     name: 'Fruit',
+//     children: [
+//       { name: 'Apple' },
+//       { name: 'Banana' },
+//       { name: 'Fruit loops' },
+//     ]
+//   }, {
+//     name: 'Vegetables',
+//     children: [
+//       {
+//         name: 'Green',
+//         children: [
+//           { name: 'Broccoli' },
+//           { name: 'Brussel sprouts' },
+//         ]
+//       }, {
+//         name: 'Orange',
+//         children: [
+//           { name: 'Pumpkins' },
+//           { name: 'Carrots' },
+//         ]
+//       },
+//     ]
+//   },
+// ];
 
 /** Flat node with expandable and level information */
 interface ExampleFlatNode {
@@ -68,11 +76,18 @@ export class PacksComponent implements OnInit {
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   isLoadingResults: boolean = false;
+  storeDataarray:any=[];
+  pageSize:any;
+  sendItemDataToPopup:any=[];
   arrayForIndex:any=[];
   private _transformer = (node: FoodNode, level: number) => {
     return {
-      expandable: !!node.children && node.children.length > 0,
-      name: node.name,
+      expandable: !!node.KITITEMS && node.KITITEMS.length > 0,
+      name: node.KITNAME,
+      Context:node.CONTEXT,
+      child:node.TEMPLATEFILE,
+      iconType:node.TEMPLATETYPEDESC,
+      KitGUid:node.KITGUID,
       index: node.index,
       level: level,
     };
@@ -82,7 +97,7 @@ export class PacksComponent implements OnInit {
     node => node.level, node => node.expandable);
 
   treeFlattener = new MatTreeFlattener(
-    this._transformer, node => node.level, node => node.expandable, node => node.children);
+    this._transformer, node => node.level, node => node.expandable, node => node.KITITEMS);
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
   highlightedRows: number;
@@ -90,13 +105,12 @@ export class PacksComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
     public _matDialog: MatDialog,
+    private behaviorService:BehaviorService,
   
     private _mainAPiServiceService: MainAPiServiceService
   ) {
-    this.arrayForIndex = [];
-    this.showData(TREE_DATA, 0, null);
-    this.dataSource.data = TREE_DATA;
-    this.highlightedRows = 1;
+    this.loadData();
+    
   }
   showData(element, level, parent) {
     element.forEach(x => {
@@ -104,8 +118,8 @@ export class PacksComponent implements OnInit {
       x.level = level
       x.parent = parent
       x.index = this.arrayForIndex.length;
-      if (x.children)
-        this.showData(x.children, x.level + 1, x.name);
+      if (x.KITITEMS)
+        this.showData(x.KITITEMS, x.level + 1, x.KITNAME);
     });
   }
  
@@ -115,20 +129,32 @@ export class PacksComponent implements OnInit {
       Filter: [],
       search: []
     });
-    this.loadData();
+    // this.loadData();
     this.treeControl.expandAll();
   }
   loadData() {
-    // this.isLoadingResults = true;
+    this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({}, 'GetKit').subscribe(res => {
       console.log(res);
       if (res.CODE == 200 && res.STATUS == "success") {
-
+        this.arrayForIndex = [];
+        this.storeDataarray=res.DATA.KITS;
+        this.showData(this.storeDataarray, 0, null);
+        this.dataSource.data =  this.storeDataarray;
+       console.log(res.DATA.KITS[0].KITGUID);
+        this.RowClick(res.DATA.KITS[0].KITGUID,'','');
+        this.highlightedRows = 1;
       }
+      this.isLoadingResults = false;
     }, err => {
       this.toastr.error(err);
+      this.isLoadingResults = false;
     });
-    // this.pageSize = localStorage.getItem('lastPageSize');
+    this.pageSize = localStorage.getItem('lastPageSize');
+  }
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
   }
   //SelectMatter
   SelectMatter() {
@@ -144,8 +170,15 @@ export class PacksComponent implements OnInit {
   FilterSearch(filtervalue: any) {
     //this.PackTbl.filter = filtervalue;
   }
-  editContact(val){
-
+  RowClick(kitguid,name,context){
+console.log("first row ");
+console.log(kitguid);
+    let data={kitguid:kitguid,name:name,context:context}
+    console.log(data);
+    if(kitguid!= undefined){
+      this.behaviorService.packsitems(data);
+    
+    }
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
  }

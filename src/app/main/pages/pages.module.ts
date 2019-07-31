@@ -26,6 +26,7 @@ import { ConflictCheckModule } from './conflict-check/conflict-check.module';
 import { MainAuthoritiesModule } from './main-authorities/main-authorities.module';
 import { LegalDetailsModule } from './legal-details/legal-details.module';
 import { AccountRecountciliation } from './account-reconciliation/account-reconciliation.module';
+import { AccountManagmentModule } from './account-managment/account-managment.module';
 
 
 
@@ -51,7 +52,9 @@ const appRoutes: Routes = [
   { path: 'document-register', loadChildren: './document-register/document-register.module#DocumentRegitser' },
   { path: 'chart-account', loadChildren: './chart-account/chart-account.module#ChartOfAccount' },
   { path: 'genral-journal', loadChildren: './general-journal/general-journal.module#GeneralJoural' },
-  { path: 'account-reconciliation', loadChildren: './account-reconciliation/account-reconciliation.module#AccountRecountciliation' }
+  { path: 'account-reconciliation', loadChildren: './account-reconciliation/account-reconciliation.module#AccountRecountciliation' },
+
+  { path: 'account-management', loadChildren: './account-managment/account-managment.module#AccountManagmentModule' }
 
   //added by web 19
   //  { path: ' ', loadChildren: './system-setting/system-settings.module#SystemSettingModule' },
@@ -62,6 +65,7 @@ const appRoutes: Routes = [
   declarations: [],
   imports: [
     CommonModule,
+    AccountManagmentModule,
     LegalDetailsModule,
     ConflictCheckModule,
     RouterModule.forChild(appRoutes),

@@ -8,6 +8,10 @@ import { HttpClient } from '@angular/common/http';
 export class BehaviorService {
   public matterInvoice$: BehaviorSubject<any> = new BehaviorSubject(null);
   public workInProgress$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public userPermission$: BehaviorSubject<any> = new BehaviorSubject(null);
+  //for packs
+  public packs$: BehaviorSubject<any> = new BehaviorSubject(null);
+  // public packGuid$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(private http: HttpClient) { }
 
   matterInvoiceData(matterInvoice: any) {
@@ -16,5 +20,10 @@ export class BehaviorService {
   setworkInProgressData(workInProgressData: any) {
     this.workInProgress$.next(workInProgressData);
   }
+
+  packsitems(d) {
+    this.packs$.next(d);
+  }
+
 
 }

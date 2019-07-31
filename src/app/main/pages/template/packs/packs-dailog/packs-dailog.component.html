@@ -1,23 +1,25 @@
 <div class="example-loading-shade" *ngIf="isLoadingResults">
   <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
 </div>
+<button mat-raised-button color="primary" type="button" id="refreshKitItemTab" (click)="refreshKitItemTab();">Refresh</button>
 <div cdkDrag class="popup_main_div add_edit_contact_main" >
-  <h2 cdkDragHandle mat-dialog-title>New Pack
+  <h2 cdkDragHandle mat-dialog-title>{{dialogTitle}}
     <button class="btn" mat-icon-button (click)="ClosePack()"  [mat-dialog-close]="false" aria-label="Close dialog">
       <mat-icon>close</mat-icon>
     </button>
   </h2>
+  
   <div mat-dialog-content class="mat-typography main">
     <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
       <form  fxLayout="column" fxFlex="1 0 auto" name="form">
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
           <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
               <mat-label>Pack Name</mat-label>
-              <input [(ngModel)]="MainKitData.KITNAME"  matInput>
+              <input [(ngModel)]="MainKitData.KITNAME"  name="KITNAME" matInput>
           </mat-form-field>
           <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Context</mat-label>
-              <mat-select [(ngModel)]="MainKitData.CONTEXT" #value name="selected" (selectionChange)="ContextChnage($event.value)" >
+              <mat-select [(ngModel)]="MainKitData.CONTEXT" name="CONTEXT" #value name="selected" (selectionChange)="ContextChnage($event.value)" >
                 <mat-option value="Matter">Matter</mat-option>
                 <mat-option value="Invoice">Invoice</mat-option>
                 <mat-option value="Receipt">Receipt</mat-option>
@@ -33,14 +35,15 @@
       <tr>
           <th>Order</th>
           <th>Templete File</th>
+          <th>Type</th>
           <th>Prom</th>
           <th>Copies</th>
       </tr>
       <tr *ngFor="let item of getDataForTable; let index = index" (click)="rowdata(item ,index);highlightedRows=index" [style.background]="highlightedRows == index ? selectedColore : ''" [ngClass]="highlightedRows == index ? 'row-text-colore' : ''" matRipple
           [@animate]="{value:'*',params:{y:'100%'}}">
-          <td>{{item.Order}}</td>
-          <td>{{item.TempleteFile}}</td>
-          <td>{{item.Prom}}</td>
+          <td>{{item.ORDER}}</td>
+          <td>{{item.TEMPLATEFILE}}</td>
+          <td>{{item.TEMPLATETYPEDESC}}</td>
           <td>{{item.Copies}}</td>
           <!-- <td>
         <mat-icon (click)="editElement(index)" class="pr-4"> 

@@ -10,7 +10,7 @@ import { MatSort } from '@angular/material'
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component'
 import { NewPacksDailogComponent } from '../../packs/new-packs-dailog/new-packs-dailog.component';
 import { fuseAnimations } from '@fuse/animations';
-import { MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 
 
 @Component({
@@ -32,6 +32,8 @@ export class PacksDailogComponent implements OnInit {
   Order = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   displayedColumns: string[] = ['Order', 'TempleteFile','Prom','Copies'];
   DocumentPack:any=[];
+  currentData:any=[];
+  highlightedRows: any;
   // DocumentPack = new MatTableDataSource(ELEMENT_DATA);
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -40,6 +42,10 @@ export class PacksDailogComponent implements OnInit {
   public MainKitData: any = {
     "KITGUID": "", "KITNAME": "", "CONTEXT": "",
   };
+  kitguid: any;
+  formAction: string;
+  Index: any;
+
   constructor(
     public MatDialog: MatDialog,
     public dialog: MatDialog,
@@ -49,20 +55,60 @@ export class PacksDailogComponent implements OnInit {
     private toastr: ToastrService,
     public _matDialog: MatDialog,
     private _mainAPiServiceService: MainAPiServiceService,
+    private behaviorService:BehaviorService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) 
   { 
     this.action = data.action;
     this.dialogTitle = this.action === 'edit' ? 'Edit Pack' : 'New Pack';
+    localStorage.setItem('packaction',this.action);
   }
 
   ngOnInit() {
-    
-    this.DocumentPack.paginator = this.paginator;
-    this.DocumentPack.sort = this.sort;
-    this.PackDocument = this._formBuilder.group({
-      packName:['',Validators.required],
-      Context:['']
+
+    // this.PackDocument = this._formBuilder.group({
+    //   packName:[''],
+    //   Context:['']
+    // });
+
+    if(this.action=="edit"){
+      this.behaviorService.packs$.subscribe(result => {
+        if(result){
+          console.log(result)
+          this.kitguid=result.kitguid;
+          this.MainKitData.KITNAME=result.name;
+          this.MainKitData.CONTEXT=result.context;
+          
+        }          
+      });
+      this.DocumentPack.paginator = this.paginator;
+      this.DocumentPack.sort = this.sort;
+      this.LoadData();
+    }else{
+      //
+    }
+  }
+
+  // refreshKitItemTab(){
+  //   if(this.action == "edit"){
+  //     console.log("fjksdfhjksdf");
+  //     this.LoadData();
+  //   }
+  // }
+  LoadData(){
+    this.isLoadingResults=true;
+    this.behaviorService.packs$.subscribe(result => {
+      if(result){
+        console.log(result)
+        this.kitguid=result.kitguid;
+        this._mainAPiServiceService.getSetData({KITGUID:this.kitguid}, 'GetKitItem').subscribe(res => {
+          this.getDataForTable=res.DATA.KITITEMS;
+          // this.MainKitData=
+          this.isLoadingResults=false;
+          this.highlightedRows=0;
+          this.rowdata(res.DATA.KITITEMS,'')
+        });       
+      }          
     });
   }
 
@@ -80,35 +126,46 @@ export class PacksDailogComponent implements OnInit {
   //Add Pack Item]
   AddPack(){
     // this.getDataForTable=[];
-    console.log('Add pack');
     const dialogRef = this.dialog.open(NewPacksDailogComponent, {
       disableClose: true,
       panelClass: 'AddPack-dialog',
       data: {
           action: 'new',
+          data:this.currentData
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result != false){
+      
+      if(result=='EditPack'){
+      this.LoadData();
+       }else if(result!=false){
         this.getDataForTable.push(result);
-      }
+       }
       // this.DocumentPack = new MatTableDataSource(result);
-        console.log(result);
+    
     });
   }
 
   //Edit Pack Item
   EditPack(){
-    console.log('Edit pack');
+   console.log(this.getDataForTable);
     const dialogRef = this.dialog.open(NewPacksDailogComponent, {
       disableClose: true,
       panelClass: 'EditPack-dialog',
       data: {
           action: 'edit',
+          data:this.currentData,
+          subdata:this.getDataForTable
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
+     if(result=='EditPack'){
+      this.LoadData();
+     }else if(result!=false){
+       this.getDataForTable[this.Index].ORDER = result.ORDER;
+       this.getDataForTable[this.Index].TEMPLATEFILE = result.TEMPLATEFILE;
+       this.getDataForTable[this.Index].TEMPLATETYPEDESC = result.TEMPLATETYPEDESC;
+     }
     });
   }
    //Delete Pack Item
@@ -120,24 +177,41 @@ export class PacksDailogComponent implements OnInit {
     });
     this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
     this.confirmDialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      if(result){
+
+        let sendadata={DATA:{
+          KITITEMGUID:this.currentData.KITITEMGUID,KITGUID:this.kitguid},
+          FormAction:"delete"}
+        this._mainAPiServiceService.getSetData(sendadata, 'SetKitItem').subscribe(res => {
+        
+          if (res.STATUS == "success") {
+
+              this.toastr.success(res.STATUS);
+          } else {
+            
+          }
+      });;
+
+      }
     });
   }
   //Close Pack
   ClosePack(){
     this.dialogRef.close(false);
   }
-  rowdata(row){
-
+  rowdata(row,index){
+    this.currentData=row;
+    this.Index=index;
   }
    //Pack Save
    PackSave(){
+    this.isspiner = true;
      let sendData={
-      KITGUID :this.MainKitData.KITGUID,
+      KITGUID :this.kitguid,
       KITNAME:this.MainKitData.KITNAME,
       CONTEXT:this.MainKitData.CONTEXT
      }
-     let finalData={FormAction:'insert',DATA:sendData }
+     let finalData={FormAction:this.action === 'edit'? 'update' :'insert',DATA:sendData,VALIDATEONLY: true }
      this._mainAPiServiceService.getSetData(finalData, 'SetKit').subscribe(response => {
        
        if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
@@ -199,6 +273,19 @@ export class PacksDailogComponent implements OnInit {
     data.VALIDATEONLY = false;
     this._mainAPiServiceService.getSetData(data, 'SetKit').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+
+        // if (Object.keys(this.tempuserBudgets).length == 0) {
+        //   this.toastr.success('User save successfully');
+        //   this.isspiner = false;
+        //   this.dialogRef.close(true);
+        // } else {
+        //   delete this.tempuserBudgets[0]['USERBUDGETGUID'];
+        //   this.tempuserBudgets[0].USERGUID = response.DATA.USERGUID;
+        //   this.saveBudgetData({ FormAction: 'insert', VALIDATEONLY: false, Data: this.tempuserBudgets[0] });
+        //   this.toastr.success('User save successfully');
+        //   this.isspiner = false;
+        //   this.dialogRef.close(true);
+        // }
         if (this.action !== 'edit') {
           this.toastr.success(' save successfully');
         } else {

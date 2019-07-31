@@ -7,6 +7,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class BehaviorService {
   public userPermission$: BehaviorSubject<any> = new BehaviorSubject(null);
+  //for packs
+  public packs$: BehaviorSubject<any> = new BehaviorSubject(null);
+  // public packGuid$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(private http: HttpClient) { }
 
   editPermission(newPermission: any) {
@@ -18,4 +21,10 @@ export class BehaviorService {
   navigation(a){
     this.userPermission$.next(a);
   }
+
+  packsitems(d){
+    this.packs$.next(d);
+  }
+  
+
 }

@@ -8,7 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatDialogConfig } from '@angular/material';
 import { MatSort } from '@angular/material'
 import { GenerateTemplatesDialoagComponent } from 'app/main/pages/system-settings/templates/gennerate-template-dialoag/generate-template.component';
-import { MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 
@@ -24,14 +24,18 @@ export class NewPacksDailogComponent implements OnInit {
   confirmDialogRef: any;
   action: string;
   emailname:any=[];
+  SendDataForNew:any=[];
 
   dialogTitle: string;
   isspiner: boolean = false;
   TemplateType: any;
 
   public KitItemData: any = {
-    "KITGUID": "", "ORDER": "", "TEMPLATEFILE": "", "TEMPLATETYPE": "", "KITITEMGUID": "", "COPIES":0,"PROMT":false 
+    "KITGUID": "", "ORDER": 0, "TEMPLATEFILE": "", "TEMPLATETYPE": "", "KITITEMGUID": "", "COPIES":0,"PROMT":false 
   };
+  formAction: string;
+  kitId: any;
+  kitguid: any;
   constructor(
     public MatDialog: MatDialog,
     public dialogRef: MatDialogRef<NewPacksDailogComponent>,
@@ -40,22 +44,48 @@ export class NewPacksDailogComponent implements OnInit {
     private toastr: ToastrService,
     private _mainAPiServiceService: MainAPiServiceService,
     public _matDialog: MatDialog,
+    private behaviorService:BehaviorService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    console.log(this.data);
     this.action = data.action;
     this.dialogTitle = this.action === 'edit' ? 'Edit Pack' : 'New Pack';
    }
 
   ngOnInit() {
-    
-    this.PackTbl = this._formBuilder.group({
-      TempleteType:[''],
-      TempleteFile:[''],
-      Copies:[''],
-      Order:[''],
-      Prompt:['']
-    });
+    // this.KitItemData.TEMPLATETYPE='0';
+    let mainaction =localStorage.getItem('packaction');
+    this.isLoadingResults=true;
+    if(mainaction == 'edit'){
+      if(this.action =="edit"){
+        this.isLoadingResults=true;
+        this._mainAPiServiceService.getSetData({KITITEMGUID:this.data.data.KITITEMGUID}, 'GetKitItem').subscribe(res => {
+         this.KitItemData.TEMPLATEFILE=res.DATA.KITITEMS[0].TEMPLATEFILE;
+         this.KitItemData.TEMPLATETYPE=res.DATA.KITITEMS[0].TEMPLATETYPE.toString();
+         this.KitItemData.ORDER=res.DATA.KITITEMS[0].ORDER;
+         this.KitItemData.KITGUID=res.DATA.KITITEMS[0].KITGUID;
+         this.KitItemData.KITITEMGUID=res.DATA.KITITEMS[0].KITITEMGUID;
+        //  this.KitItemData.TEMPLATEFILE=res.DATA.KITITEMS[0].TEMPLATEFILE;
+        this.isLoadingResults=false;
+        });
+     
+      }
+    }else{
+      if(this.action =='edit'){
+        this.KitItemData.TEMPLATEFILE=this.data.data.TEMPLATEFILE;
+        this.KitItemData.TEMPLATETYPE=this.data.data.TEMPLATETYPEDESC;
+        this.KitItemData.ORDER=this.data.data.ORDER;
+      }else{
+        console.log("insert");
+         this.KitItemData.TEMPLATETYPE = '0';
+        this.TempleteChnage(0);
+      }
+      
+     
+    }
 
+
+    this.isLoadingResults=false;
   // for template type dropdown
   this.templateFile();
 
@@ -64,7 +94,6 @@ export class NewPacksDailogComponent implements OnInit {
     this.emailname=[];
     this._mainAPiServiceService.getSetData({}, 'GetEmail').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        console.log(response);
         if (response.DATA.EMAILS[0]) {
              this.emailname=response.DATA.EMAILS
          //  localStorage.setItem('GenerateEmailData', JSON.stringify(response.DATA.EMAILS[0]));
@@ -84,7 +113,7 @@ export class NewPacksDailogComponent implements OnInit {
   //Templete Chnage Dropdown
   TempleteChnage(value){
     this.TemplateType=value;
-    if(value=="Document"){
+    if(value == 0){
       this.templateFile();
     }else{
       this.templateFilefordoc();
@@ -94,7 +123,6 @@ export class NewPacksDailogComponent implements OnInit {
   }    
   //Templete FileChnage Dropdown
   TempleteFileChnage(value){
-    console.log(value);
   }
   //Select File
   SelectFile(){
@@ -125,49 +153,86 @@ export class NewPacksDailogComponent implements OnInit {
 
 
   //PackSave
-  PackSave(){
-    let data={
-      TempleteType:this.KitItemData.TEMPLATETYPE,
-      TempleteFile:this.KitItemData.TEMPLATEFILE,
-      Copies:this.KitItemData.COPIES,
-      Order:this.KitItemData.ORDER,
-      Prom:this.KitItemData.PROMT
-
+  PackItemSave(){
+  let mainaction =localStorage.getItem('packaction');
+ 
+    if(this.KitItemData.TEMPLATEFILE==''||this.KitItemData.TEMPLATEFILE==null || this.KitItemData.TEMPLATEFILE==undefined){
+      this.toastr.error('TEMPLATEFILE Requried');
+      return;
+    }else if(this.KitItemData.TEMPLATETYPE==''||this.KitItemData.TEMPLATETYPE==null || this.KitItemData.TEMPLATETYPE==undefined){
+      this.toastr.error('TEMPLATETYPE Requried');
+      return;
     }
 
-    let SendData={
-        KITITEMGUID:this.KitItemData.KITITEMGUID,
-        KITGUID:this.KitItemData.KITGUID,
+
+    if(mainaction =='edit'){
+      this.behaviorService.packs$.subscribe(result => {
+        if(result){
+          this.kitguid=result.kitguid;
+        }          
+      });
+
+      if(this.action == 'edit'){
+        this.formAction="update";
+      }else{
+        this.formAction="insert";
+      }
+    }else{
+      //for add only
+      this.SendDataForNew={
         ORDER:this.KitItemData.ORDER,
         TEMPLATEFILE:this.KitItemData.TEMPLATEFILE,
-        TEMPLATETYPE:this.KitItemData.TEMPLATETYPE
+        TEMPLATETYPEDESC:this.KitItemData.TEMPLATETYPE == 0 ? "Document" : "Email"
+    }
+      if(this.action !='edit'){
+        this.formAction="insert";
+       
+          this.dialogRef.close(this.SendDataForNew);
+      }else{
+        this.formAction="update";
+        this.dialogRef.close(this.SendDataForNew);
+      }
+    
+       
+    }
+    let SendData={
+        KITITEMGUID:this.KitItemData.KITITEMGUID,
+        KITGUID:this.kitguid,
+        ORDER:this.KitItemData.ORDER,
+        TEMPLATEFILE:this.KitItemData.TEMPLATEFILE,
+        TEMPLATETYPE:Number(this.KitItemData.TEMPLATETYPE)
     }
 
-    let finalData={FormAction:'insert',DATA:SendData }
-    this._mainAPiServiceService.getSetData(finalData, 'SetKitItem').subscribe(response => {
-      console.log(response);
-      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        this.checkValidation(response.DATA.VALIDATIONS, finalData,data);
-      } else if (response.CODE == 451 && response.STATUS == 'warning') {
-        this.checkValidation(response.DATA.VALIDATIONS, finalData,data);
-      } else if (response.CODE == 450 && response.STATUS == 'error') {
-        this.checkValidation(response.DATA.VALIDATIONS, finalData,data);
-      } else if (response.MESSAGE == 'Not logged in') {
-        this.dialogRef.close(false);
-      } else {
-        this.isspiner = false;
-      }
-       
-      }, err => {
-        this.toastr.error(err);
-     });
-  
+    
+    if(mainaction =='edit'){
+      this.isspiner = true;
+      let finalData={FormAction:this.formAction,DATA:SendData ,VALIDATEONLY: true }
+      this._mainAPiServiceService.getSetData(finalData, 'SetKitItem').subscribe(response => {
+        console.log(response);
+        if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+          this.checkValidation(response.DATA.VALIDATIONS, finalData);
+        } else if (response.CODE == 451 && response.STATUS == 'warning') {
+          this.checkValidation(response.DATA.VALIDATIONS, finalData);
+        } else if (response.CODE == 450 && response.STATUS == 'error') {
+          this.checkValidation(response.DATA.VALIDATIONS, finalData);
+        } else if (response.MESSAGE == 'Not logged in') {
+          this.dialogRef.close(false);
+        } else {
+          this.isspiner = false;
+        }
+         
+        }, err => {
+          this.toastr.error(err);
+       });
+    
+    }
+    
    
 
 
     // this.dialogRef.close(data);
   }
-  checkValidation(bodyData: any, details: any,data) {
+  checkValidation(bodyData: any, details: any) {
     let errorData: any = [];
     let warningData: any = [];
     let tempError: any = [];
@@ -196,16 +261,16 @@ export class NewPacksDailogComponent implements OnInit {
       this.confirmDialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.isspiner = true;
-          this.kitItemData(details,data);
+          this.kitItemData(details);
         }
         this.confirmDialogRef = null;
       });
     }
     if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
-      this.kitItemData(details,data);
+      this.kitItemData(details);
     this.isspiner = false;
   }
-  kitItemData(data: any,val) {
+  kitItemData(data: any) {
     data.VALIDATEONLY = false;
     this._mainAPiServiceService.getSetData(data, 'SetKitItem').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
@@ -215,7 +280,7 @@ export class NewPacksDailogComponent implements OnInit {
           this.toastr.success(' update successfully');
         }
         this.isspiner = false;
-        this.dialogRef.close(val);
+        this.dialogRef.close("EditPack");
       } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.toastr.warning(response.MESSAGE);
       } else if (response.CODE == 450 && response.STATUS == 'error') {

@@ -1358,8 +1358,8 @@
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab">
                                     <!-- *ngIf="CreatDocumentChild !== 'email' && CreatDocumentChild !== 'packs'" -->
-                                    <section class="ribbon-section" *ngIf=" activeSubMenu ==='matter-template' || activeSubMenu ==='invoice-template' ||activeSubMenu ==='contact-template' 
-                                    ||activeSubMenu ==='receive-money-template'">
+                                    <section class="ribbon-section" *ngIf="activeSubMenu ==='matter-template' || activeSubMenu ==='invoice-template' ||activeSubMenu ==='ontact-template' 
+                                    ||activeSubMenu ==='receive-money-template' || packsToobar=='Template'">
                                         <button mat-button class="large-button" (click)="GenarateDocument()" [disabled]="isDocumentGenerateHide =='yes'">
                                             <section class="large-button-container">
                                             <mat-icon class="main-icon"> 
@@ -1372,7 +1372,7 @@
                                         </button>
                                     </section>
                                     <section class="ribbon-section"  *ngIf="activeSubMenu ==='email-matter-template' || activeSubMenu ==='email-invoice-template' ||activeSubMenu ==='email-contact-template' 
-                                    ||activeSubMenu ==='email-receive-money-template'">
+                                    ||activeSubMenu ==='email-receive-money-template' || packsToobar=='Email' ">
                                         <button mat-button class="large-button" (click)="GenarateEmail()" >
                                             <section class="large-button-container">
                                             <mat-icon class="main-icon"> 
@@ -1384,9 +1384,9 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section class="ribbon-section" *ngIf="activeSubMenu ==='packs-matter-template' || activeSubMenu ==='packs-invoice-template' ||activeSubMenu ==='packs-contact-template' 
-                                    ||activeSubMenu ==='packs-receive-money-template'">
-                                        <button mat-button class="large-button" (click)="SelectMatter()" [disabled]="isDocumentGenerateHide =='yes'">
+                                    <section class="ribbon-section"  *ngIf="(activeSubMenu ==='packs-matter-template' || activeSubMenu ==='packs-invoice-template' ||activeSubMenu ==='packs-contact-template' 
+                                    ||activeSubMenu ==='packs-receive-money-template') && packsToobar == 'Packs'">
+                                        <button mat-button class="large-button" (click)="GenaratePacks()" [disabled]="isDocumentGenerateHide =='yes'">
                                             <section class="large-button-container">
                                             <mat-icon class="main-icon"> 
                                                 <img class="" src="assets/icons/web_app/icon_doc_pack_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1401,7 +1401,7 @@
                                 </section>
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab" *ngIf="activeSubMenu ==='email-matter-template' || activeSubMenu ==='email-invoice-template' ||activeSubMenu ==='email-contact-template' 
-                                ||activeSubMenu ==='email-receive-money-template'">
+                                ||activeSubMenu ==='email-receive-money-template' || packsToobar=='Email'">
                                     <section class="ribbon-section">
                                         <button mat-button (click)="EmailTempletePopUp('new')" class="large-button">
                                             <section class="large-button-container">
@@ -1436,23 +1436,51 @@
                                             </section>
                                         </button>
                                     </section>
+                                    
+                                </section>
+
+                                    <section class="group-section-tab action_tab" *ngIf="activeSubMenu ==='matter-template' || activeSubMenu ==='invoice-template' ||activeSubMenu ==='ontact-template' 
+                                ||activeSubMenu ==='receive-money-template' || packsToobar=='Template'">
                                     <section class="ribbon-section">
-                                        <button mat-button (click)="DeleteEmailTemplete()" class="large-button">
+                                        <button mat-button  class="large-button">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon" >
+                                                    <img src="assets/icons/web_app/icon_letters_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text"><span>Edit<br> Template</span></div>
+                                            </section>
+                                      </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button  class="large-button">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
-                                                        <img class="" src="assets/icons/web_app/icon_email_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                        <img  src="assets/icons/web_app/icon_letters_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <div class="main-text">
-                                                    <span>Delete Email<br>Template</span>
+                                                    <span>Copy<br> Template</span>
                                                 </div>
                                             </section>
                                         </button>
                                     </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button  class="large-button">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                        <img  src="assets/icons/web_app/icon_letters_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Set<br>Letterhead</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+
                                     <div class="light_label_txt">Action</div>
                                 </section>
                                 <!-- Packs Start-->
-                                <section class="group-section-tab action_tab" *ngIf="activeSubMenu ==='packs-matter-template' || activeSubMenu ==='packs-invoice-template' ||activeSubMenu ==='packs-contact-template' 
-                                ||activeSubMenu ==='packs-receive-money-template'">
+                                <section class="group-section-tab action_tab" *ngIf="(activeSubMenu ==='packs-matter-template' || activeSubMenu ==='packs-invoice-template' ||activeSubMenu ==='packs-contact-template' 
+                                ||activeSubMenu ==='packs-receive-money-template') && packsToobar == 'Packs'">
                                     <section class="ribbon-section">
                                         <button mat-button (click)="PackModule('new')" class="large-button">
                                             <section class="large-button-container">
@@ -2565,4 +2593,5 @@
     <!-- <button mat-raised-button color="primary" type="button" id="spendmoneyMenubtn" (click)="spendmoneyMenubtn();">Refresh</button> -->
     <button mat-raised-button color="primary" type="button" id="clickToolbarbtn" (click)="clickToolbarbtn();">Refresh</button>
     <button mat-raised-button color="primary" type="button" id="clickToolbarbtn2" (click)="clickToolbarbtn2();">Refresh</button>
+    <button mat-raised-button color="primary" type="button" id="packsToolbarHide" (click)="packsToolbarHide();">Refresh</button>
 </mat-toolbar>

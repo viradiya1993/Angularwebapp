@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatDialogConfig } from '@angular/material';
 import { MatSort } from '@angular/material'
-import {  MainAPiServiceService } from 'app/_services';
+import {  MainAPiServiceService, BehaviorService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { GenerateTemplatesDialoagComponent } from 'app/main/pages/system-settings/templates/gennerate-template-dialoag/generate-template.component';
 
@@ -37,6 +37,7 @@ export class EmailDailogComponent implements OnInit {
   errorWarningData: any = {};
   isLoadingResults: boolean = false;
   action: string;
+  EmailtemplateData:any=[];
   dialogTitle: string;
   isspiner: boolean = false;
   GetData:any=[];
@@ -59,13 +60,18 @@ export class EmailDailogComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
     public _matDialog: MatDialog,
+    private behaviorService:BehaviorService,
    
     private _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) 
   { 
     this.action = data.action;
-
+    this.behaviorService.EmailGenerateData$.subscribe(result => {
+      if(result){
+        this.EmailtemplateData=result; 
+      }          
+    });
   }
   ngOnInit() {
     this.EmailTemplete = this._formBuilder.group({
@@ -95,15 +101,16 @@ export class EmailDailogComponent implements OnInit {
     
   }
   CommonEditDupData(){
-    let ShowData =JSON.parse(localStorage.getItem('GenerateEmailData'));
+   
+   
     // this.GetData=ShowData;
-    this.EmailTemplete.controls['name'].setValue(ShowData.NAME);
-    this.EmailTemplete.controls['ToEmail'].setValue(ShowData.TOADDRESS);
-    this.EmailTemplete.controls['attachment'].setValue(ShowData.ATTACHMENT);
-    this.EmailTemplete.controls['BCCEmail'].setValue(ShowData.BCCADDRESS);
-    this.EmailTemplete.controls['CCEmail'].setValue(ShowData.CCADDRESS);
-    this.EmailTemplete.controls['subject'].setValue(ShowData.SUBJECT);
-    this.EmailTemplete.controls['text'].setValue(ShowData.TEXT_);
+    this.EmailTemplete.controls['name'].setValue(this.EmailtemplateData.NAME);
+    this.EmailTemplete.controls['ToEmail'].setValue(this.EmailtemplateData.TOADDRESS);
+    this.EmailTemplete.controls['attachment'].setValue(this.EmailtemplateData.ATTACHMENT);
+    this.EmailTemplete.controls['BCCEmail'].setValue(this.EmailtemplateData.BCCADDRESS);
+    this.EmailTemplete.controls['CCEmail'].setValue(this.EmailtemplateData.CCADDRESS);
+    this.EmailTemplete.controls['subject'].setValue(this.EmailtemplateData.SUBJECT);
+    this.EmailTemplete.controls['text'].setValue(this.EmailtemplateData.TEXT_);
   }
   innerTable(){
     this.isLoadingResults = true;
@@ -146,10 +153,10 @@ export class EmailDailogComponent implements OnInit {
   }
     //Email Save
     EmailSave(){
-      let ShowData =JSON.parse(localStorage.getItem('GenerateEmailData'));
+     
       // console.log(this.rowdata);
       if(this.action=='edit'){
-        this.GUID=ShowData.EMAILGUID;
+        this.GUID=this.EmailtemplateData.EMAILGUID;
         this.FormAction='update';
       }else{
         this.FormAction='insert';

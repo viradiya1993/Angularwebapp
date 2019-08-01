@@ -65,7 +65,7 @@ export class MatterDialogComponentForTemplate implements OnInit {
     this.base_url=environment.ReportUrl;
     this.filefolder_Name=_data.Template;
     this.Title =_data.Type == 'Email' ? 'Email' :'Document';
-    this.Title='Email' ? this.whichTypeTemplate='email' :' Template';
+   this.whichTypeTemplate=_data.Type;
     this.selectMatter(_data);
    }
    
@@ -83,6 +83,7 @@ export class MatterDialogComponentForTemplate implements OnInit {
     this.isLoadingResults = true;
    
     this._mainAPiServiceService.getSetData(data, 'TemplateGenerate').subscribe(response => {
+      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         this.toastr.success('success');
         if(this._data.Type=="Template"){
@@ -90,7 +91,7 @@ export class MatterDialogComponentForTemplate implements OnInit {
           // this.whichTypeTemplate="Template";
           console.log('Template')
         this.filefolderUrl=response.DATA.DOCUMENTS[0].FILENAME;     
-        }else{
+        }else if(this._data.Type=="Email"){
           // this.whichTypeTemplate="email";
         //  this.filefolderUrlforEmail=response.DATA.EMAILS[0].TOADDRESS;
          this.emailToadd=response.DATA.EMAILS[0].TOADDRESS;
@@ -100,7 +101,7 @@ export class MatterDialogComponentForTemplate implements OnInit {
          this.emailCONTENT=response.DATA.EMAILS[0].CONTENT;
 
         //  window.open("https://mail.google.com/mail/u/0/?view=cm&fs=1&to=someone@example.com&su=SUBJECT&body=BODY&bcc=someone.else@example.com&tf=1");        
-        }   
+        } 
         this.isLoadingResults = false;
       }else if(response.CODE == 420 ){
         this.isLoadingResults = false;

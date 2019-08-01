@@ -8,6 +8,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import * as $ from 'jquery';
 import { MatterPopupComponent } from 'app/main/pages/matters/matter-popup/matter-popup.component';
 import { ContactDialogComponent } from './../../../main/pages/contact/contact-dialog/contact-dialog.component';
+import { MainAPiServiceService,TableColumnsService } from 'app/_services';
 
 
 
@@ -36,6 +37,8 @@ export class DocumentRegisterComponent implements OnInit {
   documentform: FormGroup;
   isLoadingResults: boolean = false;
   highlightedRows:any;
+  ColumnsObj = [];
+  tempColobj: any;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   DocNo = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
@@ -47,6 +50,8 @@ export class DocumentRegisterComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private dialog: MatDialog,
     private toastr: ToastrService,
+    private _mainAPiServiceService: MainAPiServiceService,
+    private TableColumnsService: TableColumnsService,
   ) 
   {}
 
@@ -60,9 +65,30 @@ export class DocumentRegisterComponent implements OnInit {
       foldervalue:[],
       showfolder:[]
     });
+    // this.getTableFilter()
+    this._mainAPiServiceService.getSetData({}, 'GetDocument').subscribe(res => {
+      if (res.CODE == 200 && res.STATUS == "success") {
+     
+      }
+    }, err => {
+      this.toastr.error(err);
+    });
     let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
     this.documentform.controls['matter'].setValue(mattersData.MATTER); 
   }
+
+  // getTableFilter() {
+  //   this.TableColumnsService.getTableFilter('document', '').subscribe(response => {
+  //     if (response.CODE == 200 && response.STATUS == "success") {
+  //       let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
+  //       this.displayedColumns = data.showcol;
+  //       this.ColumnsObj = data.colobj;
+  //       this.tempColobj = data.tempColobj;
+  //     }
+  //   }, error => {
+  //     this.toastr.error(error);
+  //   });
+  // }
  
   //DcoumentFloder
   DcoumentFloder(){

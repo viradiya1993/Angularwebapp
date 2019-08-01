@@ -47,15 +47,20 @@ export class NewPacksDailogComponent implements OnInit {
     private behaviorService:BehaviorService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    console.log(this.data);
+    console.log(data);
     this.action = data.action;
     this.dialogTitle = this.action === 'edit' ? 'Edit Pack' : 'New Pack';
+
+    this.behaviorService.packs$.subscribe(result => {
+      if(result){
+        this.kitguid=result.KITGUID;
+      }          
+    });
    }
 
   ngOnInit() {
     // this.KitItemData.TEMPLATETYPE='0';
     let mainaction =localStorage.getItem('packaction');
-    this.isLoadingResults=true;
     if(mainaction == 'edit'){
       if(this.action =="edit"){
         this.isLoadingResults=true;
@@ -73,10 +78,9 @@ export class NewPacksDailogComponent implements OnInit {
     }else{
       if(this.action =='edit'){
         this.KitItemData.TEMPLATEFILE=this.data.data.TEMPLATEFILE;
-        this.KitItemData.TEMPLATETYPE=this.data.data.TEMPLATETYPEDESC;
+        this.KitItemData.TEMPLATETYPE=this.data.data.TEMPLATETYPEDESC == "Document" ? '0' : '1';
         this.KitItemData.ORDER=this.data.data.ORDER;
       }else{
-        console.log("insert");
          this.KitItemData.TEMPLATETYPE = '0';
         this.TempleteChnage(0);
       }
@@ -85,7 +89,7 @@ export class NewPacksDailogComponent implements OnInit {
     }
 
 
-    this.isLoadingResults=false;
+    
   // for template type dropdown
   this.templateFile();
 
@@ -96,7 +100,6 @@ export class NewPacksDailogComponent implements OnInit {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.EMAILS[0]) {
              this.emailname=response.DATA.EMAILS
-         //  localStorage.setItem('GenerateEmailData', JSON.stringify(response.DATA.EMAILS[0]));
         }}
     }, err => {
        this.toastr.error(err);
@@ -166,11 +169,6 @@ export class NewPacksDailogComponent implements OnInit {
 
 
     if(mainaction =='edit'){
-      this.behaviorService.packs$.subscribe(result => {
-        if(result){
-          this.kitguid=result.kitguid;
-        }          
-      });
 
       if(this.action == 'edit'){
         this.formAction="update";
@@ -208,7 +206,6 @@ export class NewPacksDailogComponent implements OnInit {
       this.isspiner = true;
       let finalData={FormAction:this.formAction,DATA:SendData ,VALIDATEONLY: true }
       this._mainAPiServiceService.getSetData(finalData, 'SetKitItem').subscribe(response => {
-        console.log(response);
         if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
           this.checkValidation(response.DATA.VALIDATIONS, finalData);
         } else if (response.CODE == 451 && response.STATUS == 'warning') {

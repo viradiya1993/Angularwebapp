@@ -75,6 +75,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     isInvoice: any;
     greenTheme: any = false;
     CreatDocumentChild: any;
+    TemplateGenerateData: any = [];
 
 
 
@@ -92,6 +93,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     TemplateUrlHandel: string;
     packroutingtax: string;
     packrouting: string;
+    KitName: any;
+    KitGUid: any;
+    packsToobar: string;
+    EmailtemplateData: any = [];
 
 
     constructor(
@@ -109,6 +114,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         public behaviorService: BehaviorService
     ) {
         //for navigation bar 
+
 
 
         if (this.appPermissions == null) {
@@ -784,25 +790,60 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     //SelectMatter 
 
     GenarateEmail() {
-        let templateData = JSON.parse(localStorage.getItem('GenerateEmailData'));
-        if (this.router.url == "/create-document/email-invoice-template") {
+        this.behaviorService.EmailGenerateData$.subscribe(result => {
+            if (result) {
+                this.EmailtemplateData = result;
+            }
+        });
+
+
+        if (this.router.url == "/create-document/email-invoice-template" || this.router.url == "/create-document/packs-invoice-template") {
             let invoiceGUid = localStorage.getItem('edit_invoice_id');
-            let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "Type": "Email", "Folder": '', "Template": templateData.NAME }
+            let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
             this.ForEmailDialogOpen(passdata);
-        } else if (this.router.url == "/create-document/email-matter-template") {
+        } else if (this.router.url == "/create-document/email-matter-template" || this.router.url == "/create-document/packs-matter-template") {
             let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
-            let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Email", "Folder": '', "Template": templateData.NAME }
+            let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
             this.ForEmailDialogOpen(passdata);
-        } else if (this.router.url == "/create-document/email-receive-money-template") {
+        } else if (this.router.url == "/create-document/email-receive-money-template" || this.router.url == "/create-document/packs-receive-money-template") {
             let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
-            let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Email", "Folder": '', "Template": templateData.NAME }
+            let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
             this.ForEmailDialogOpen(passdata);
-        } else if (this.router.url == "/create-document/email-contact-template") {
+        } else if (this.router.url == "/create-document/email-contact-template" || this.router.url == "/create-document/packs-contact-template") {
             let ContactGuID = localStorage.getItem('contactGuid');
-            let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Email", "Folder": '', "Template": templateData.NAME }
+            let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
             this.ForEmailDialogOpen(passdata);
         }
     }
+
+    // Generate Packs 
+    GenaratePacks() {
+        this.behaviorService.packs$.subscribe(result => {
+            if (result) {
+                console.log("Helloooooooodsfkfjhdsfdsfjds");
+                this.KitName = result.name;
+            }
+        });
+        if (this.router.url == "/create-document/packs-invoice-template") {
+            let invoiceGUid = localStorage.getItem('edit_invoice_id');
+            let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "Type": "Pack", "Folder": '', "Template": this.KitName }
+            this.ForEmailDialogOpen(passdata);
+        } else if (this.router.url == "/create-document/packs-matter-template") {
+            let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
+            let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Pack", "Folder": '', "Template": this.KitName }
+            this.ForEmailDialogOpen(passdata);
+        } else if (this.router.url == "/create-document/packs-receive-money-template") {
+            let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
+            let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Pack", "Folder": '', "Template": this.KitName }
+            this.ForEmailDialogOpen(passdata);
+        } else if (this.router.url == "/create-document/packs-contact-template") {
+            let ContactGuID = localStorage.getItem('contactGuid');
+            let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Pack", "Folder": '', "Template": this.KitName }
+            this.ForEmailDialogOpen(passdata);
+        }
+    }
+
+
     ForEmailDialogOpen(passdata) {
         const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
             width: '100%',
@@ -840,6 +881,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     //Delete Email
     DeleteEmailTemplete() {
+        this.behaviorService.EmailGenerateData$.subscribe(result => {
+            if (result) {
+                this.EmailtemplateData = result;
+            }
+        });
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
@@ -847,8 +893,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
-                let EmailData: any = JSON.parse(localStorage.getItem('GenerateEmailData'));
-                let postData = { FormAction: "delete", data: { EMAILGUID: EmailData.EMAILGUID } }
+
+                let postData = { FormAction: "delete", data: { EMAILGUID: this.EmailtemplateData.EMAILGUID } }
                 this._mainAPiServiceService.getSetData(postData, 'SetEmail').subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {
                         $('#refreshEmailTab').click();
@@ -881,13 +927,26 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     //DeletePack
     DeletePack(): void {
+        this.behaviorService.packs$.subscribe(result => {
+            if (result) {
+                this.KitGUid = result.kitguid;
+            }
+        });
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
-
+            if (result) {
+                let postData = { FormAction: "delete", data: { KITGUID: this.KitGUid } }
+                this._mainAPiServiceService.getSetData(postData, 'SetKit').subscribe(res => {
+                    if (res.STATUS == "success" && res.CODE == 200) {
+                        $('#refreshKitTab').click();
+                        this.toastr.success('Delete successfully');
+                    }
+                });
+            }
         });
     }
     SelectMatter() {
@@ -1142,33 +1201,34 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 10;
 
             if (x[2] == "matter-template" || x[2] == "email-matter-template" || x[2] == "packs-matter-template") {
-                this.emailroutingtax = 'Matter';
-                this.packroutingtax = "Matter";
+
+
                 this.TemplateUrlHandel = '/create-document/matter-template'
                 this.emailrouting = '/create-document/email-matter-template';
                 this.packrouting = '/create-document/packs-matter-template';
+                this.packsToobar = 'Packs';
 
             }
             else if (x[2] == "invoice-template" || x[2] == "email-invoice-template" || x[2] == "packs-invoice-template") {
-                this.emailroutingtax = 'Invoice';
-                this.packroutingtax = "Invoice";
+
                 this.TemplateUrlHandel = '/create-document/invoice-template'
                 this.emailrouting = '/create-document/email-invoice-template';
                 this.packrouting = '/create-document/packs-invoice-template';
+                this.packsToobar = 'Packs';
             }
             else if (x[2] == "contact-template" || x[2] == "email-contact-template" || x[2] == "packs-contact-template") {
-                this.emailroutingtax = 'Contact';
-                this.packroutingtax = "Contact";
+
                 this.TemplateUrlHandel = '/create-document/contact-template'
                 this.emailrouting = '/create-document/email-contact-template';
                 this.packrouting = '/create-document/packs-contact-template';
+                this.packsToobar = 'Packs';
             }
             else if (x[2] == "receive-money-template" || x[2] == "email-receive-money-template" || x[2] == "packs-receive-money-template") {
-                this.emailroutingtax = 'Receipt';
-                this.packroutingtax = "Receipt";
+
                 this.TemplateUrlHandel = '/create-document/receive-money-template'
                 this.emailrouting = '/create-document/email-receive-money-template';
                 this.packrouting = '/create-document/packs-receive-money-template';
+                this.packsToobar = 'Packs';
             }
         } else if (x[1] == "system-setting") {
             this.isTabShow = 11;
@@ -1404,22 +1464,28 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     // ******************************************END Invoice related funtion like create update delete view*********************************************
     //***********************************************************START Select Matter Contact*************************************************************************
     GenarateDocument() {
-        let templateData = JSON.parse(localStorage.getItem('templateData'));
-        if (this.router.url == "/create-document/invoice-template") {
+
+
+        this.behaviorService.TemplateGenerateData$.subscribe(result => {
+            if (result) {
+                this.TemplateGenerateData = result;
+            }
+        });
+        if (this.router.url == "/create-document/invoice-template" || this.router.url == "/create-document/packs-invoice-template") {
             let invoiceGUid = localStorage.getItem('edit_invoice_id');
-            let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }
+            let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
-        } else if (this.router.url == "/create-document/matter-template") {
+        } else if (this.router.url == "/create-document/matter-template" || this.router.url == "/create-document/packs-matter-template") {
             let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
-            let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }
+            let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
-        } else if (this.router.url == "/create-document/receive-money-template") {
+        } else if (this.router.url == "/create-document/receive-money-template" || this.router.url == "/create-document/packs-receive-money-template") {
             let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
-            let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }
+            let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
-        } else if (this.router.url == "/create-document/contact-template") {
+        } else if (this.router.url == "/create-document/contact-template" || this.router.url == "/create-document/packs-contact-template") {
             let ContactGuID = localStorage.getItem('contactGuid');
-            let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }
+            let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
         }
     }
@@ -1431,6 +1497,25 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 // localStorage.setItem('set_active_matters', JSON.stringify(result));
             }
         });
+    }
+
+    packsToolbarHide() {
+        console.log("fsddshfjkdskhfjk")
+        this.behaviorService.packs$.subscribe(result => {
+            if (result != null) {
+                if (result.TEMPLATETYPEDESC == 'Email') {
+                    this.packsToobar = 'Email';
+
+                } else if (result.TEMPLATETYPEDESC == 'Template') {
+                    this.packsToobar = 'Template';
+                } else {
+                    this.packsToobar = 'Packs';
+                }
+            }
+
+
+        });
+
     }
 
 }

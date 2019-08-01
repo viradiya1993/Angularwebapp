@@ -11,6 +11,8 @@ export class BehaviorService {
   public userPermission$: BehaviorSubject<any> = new BehaviorSubject(null);
   //for packs
   public packs$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public EmailGenerateData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public TemplateGenerateData$: BehaviorSubject<any> = new BehaviorSubject(null);
   // public packGuid$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(private http: HttpClient) { }
 
@@ -24,6 +26,12 @@ export class BehaviorService {
   packsitems(d) {
     this.packs$.next(d);
   }
+  EmailGenerateData(d) {
+    this.EmailGenerateData$.next(d);
+  }
 
+  TemplateGenerateData(d) {
+    this.TemplateGenerateData$.next(d);
+  }
 
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit,  ViewChild, ViewEncapsulation, Input } from '@angular/core';
 import { MatDialogRef, MatDialog, MatPaginator, MatTableDataSource, MatDialogConfig } from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { MainAPiServiceService } from './../../../../_services';
+import { MainAPiServiceService, BehaviorService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.component';
@@ -32,6 +32,7 @@ export class InvoiceDialogComponentForTemplate implements OnInit {
   isLoadingResults: boolean = false;
   pageSize: any;
   currentInvoiceData: any;
+  TemplateGenerateData:any=[];
   // currentMatterData: any;
   MatterDropData: any;
   filterVal: any = { 'Active': '', 'FeeEarner': '', 'SearchString': '' };
@@ -43,12 +44,18 @@ export class InvoiceDialogComponentForTemplate implements OnInit {
     private _mainAPiServiceService: MainAPiServiceService,
     public _matDialog: MatDialog,
     public dialogRef: MatDialogRef<InvoiceDialogComponentForTemplate>,
+    public behaviorService:BehaviorService,
    
 
     // private data:TemplateComponent
   ) {
 
     this.matterFilterForm = this.fb.group({ MatterFilter: [''], UserFilter: [''], searchFilter: [''], InvoiceFilter: [''], });
+    this.behaviorService.TemplateGenerateData$.subscribe(result => {
+      if(result){
+        this.TemplateGenerateData=result; 
+      }          
+    });
   }
 
   ngOnInit() {
@@ -91,14 +98,14 @@ export class InvoiceDialogComponentForTemplate implements OnInit {
 
   }
   selectInvoicve() {
-    let data = JSON.parse(localStorage.getItem('templateData'));
+   
     //this.currentInvoiceData
     let passingData = {
       'Context': "Invoice",
       'ContextGuid': this.currentInvoiceData.INVOICEGUID,
       "Type": "Template",
       "Folder": '',
-      "Template": data.TEMPLATENAME
+      "Template":  this.TemplateGenerateData.TEMPLATENAME
     }
     this._mainAPiServiceService.getSetData(passingData, 'TemplateGenerate').subscribe(response => {
       console.log(response);

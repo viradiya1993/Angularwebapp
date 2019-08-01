@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, Injectable, ViewEncapsulation, ViewChild, AfterViewInit } from '@angular/core';
 import { MatDialog, MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -12,6 +12,7 @@ import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { fuseAnimations } from '@fuse/animations';
 import { MainAPiServiceService, BehaviorService } from 'app/_services';
+import * as $ from 'jquery';
 
 interface FoodNode {
   name: string;
@@ -22,7 +23,10 @@ interface FoodNode {
   TEMPLATETYPEDESC: string;
   index?: number;
   children?: FoodNode[];
-  KITITEMS?: FoodNode[];
+  KITITEMS?:FoodNode[];
+  MainList ?:FoodNode[];
+
+
 }
 
 // const TREE_DATA: FoodNode[] = [
@@ -68,24 +72,27 @@ interface ExampleFlatNode {
   animations: fuseAnimations
 })
 
-export class PacksComponent implements OnInit {
+export class PacksComponent implements OnInit,AfterViewInit {
   packForm: FormGroup;
   @ViewChild('tree') tree;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   isLoadingResults: boolean = false;
-  storeDataarray: any = [];
-  pageSize: any;
-  sendItemDataToPopup: any = [];
-  arrayForIndex: any = [];
+  storeDataarray:any=[];
+  MainKitArray:any=[];
+  pageSize:any;
+  sendItemDataToPopup:any=[];
+  arrayForIndex:any=[];
   private _transformer = (node: FoodNode, level: number) => {
     return {
       expandable: !!node.KITITEMS && node.KITITEMS.length > 0,
       name: node.KITNAME,
-      Context: node.CONTEXT,
-      child: node.TEMPLATEFILE,
-      iconType: node.TEMPLATETYPEDESC,
-      KitGUid: node.KITGUID,
+      kititem:node.KITITEMS,
+      Context:node.CONTEXT,
+      Main:node.MainList,
+      child:node.TEMPLATEFILE,
+      iconType:node.TEMPLATETYPEDESC,
+      KitGUid:node.KITGUID,
       index: node.index,
       level: level,
     };
@@ -111,10 +118,13 @@ export class PacksComponent implements OnInit {
 
   }
   showData(element, level, parent) {
+    
     element.forEach(x => {
+      // this.MainKitArray=x;
       this.arrayForIndex.push({});
       x.level = level
       x.parent = parent
+      x.MainList=x;
       x.index = this.arrayForIndex.length;
       if (x.KITITEMS)
         this.showData(x.KITITEMS, x.level + 1, x.KITNAME);
@@ -128,7 +138,13 @@ export class PacksComponent implements OnInit {
       search: []
     });
     // this.loadData();
+    
+  }
+  ngAfterViewInit() {
     this.treeControl.expandAll();
+  }
+  refreshKitTab(){
+    this.loadData();
   }
   loadData() {
     this.isLoadingResults = true;
@@ -138,9 +154,8 @@ export class PacksComponent implements OnInit {
         this.arrayForIndex = [];
         this.storeDataarray = res.DATA.KITS;
         this.showData(this.storeDataarray, 0, null);
-        this.dataSource.data = this.storeDataarray;
-        console.log(res.DATA.KITS[0].KITGUID);
-        this.RowClick(res.DATA.KITS[0].KITGUID, '', '');
+        this.dataSource.data =  this.storeDataarray;
+        this.RowClick(res.DATA.KITS[0]);
         this.highlightedRows = 1;
       }
       this.isLoadingResults = false;
@@ -162,21 +177,18 @@ export class PacksComponent implements OnInit {
       data: null
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      
     });
   }
   FilterSearch(filtervalue: any) {
     //this.PackTbl.filter = filtervalue;
   }
-  RowClick(kitguid, name, context) {
-    console.log("first row ");
-    console.log(kitguid);
-    let data = { kitguid: kitguid, name: name, context: context }
-    console.log(data);
-    if (kitguid != undefined) {
-      this.behaviorService.packsitems(data);
-
-    }
+  RowClick(main){
+    console.log(main);
+    $("#packsToolbarHide").click();
+    this.behaviorService.packsitems(main);
+    this.behaviorService.EmailGenerateData({'NAME':main.TEMPLATEFILE});
+    this.behaviorService.TemplateGenerateData({'TEMPLATENAME':main.TEMPLATEFILE});
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 }

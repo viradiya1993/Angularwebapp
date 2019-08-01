@@ -1,5 +1,5 @@
 <div class="popup_main_div corres_popup_main select_metter_main_div" cdkDrag>
-    <h2 cdkDragHandle mat-dialog-title> {{Title}} Generated
+    <h2 cdkDragHandle mat-dialog-title> {{whichTypeTemplate}} Generated
         <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog"><mat-icon>close</mat-icon></button>
     </h2>
 
@@ -27,13 +27,32 @@
         <div class="example-loading-shade" *ngIf="isLoadingResults">
             <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
         </div>
-        <div class="popup_body document_generated_main_div" *ngIf="whichTypeTemplate == 'email'">
+        <div class="popup_body document_generated_main_div" *ngIf="whichTypeTemplate == 'Email'">
 
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="document_generated_main_first">
                 <div class="middle" fxLayoutAlign="start center">The {{filefolder_Name}} has been produced.</div>
             </div>
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="button" class="document_generated_main_last">
                 <a href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=kalpesh@moontechnolabs.com&su={{this.emailSUBJECT}}&body={{this.emailCONTENT}}&bcc={{this.emailBCC}}&&cc={{this.emailCC}}&tf=1" target="_blank">
+                    <button mat-raised-button mat-dialog-close color="accent">Click here to view it</button>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div mat-dialog-content class="mat-typography" *ngIf="whichTypeTemplate == 'Pack'">
+        <div class="example-loading-shade" *ngIf="isLoadingResults">
+            <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+        </div>
+        <div class="popup_body document_generated_main_div">
+
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="document_generated_main_first">
+                <div class="middle" fxLayoutAlign="start center">The {{filefolder_Name}} has been produced.</div>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="button" class="document_generated_main_last">
+                <a href="{{this.base_url}}{{this.filefolderUrl}}" target="_blank">
                     <button mat-raised-button mat-dialog-close color="accent">Click here to view it</button>
                 </a>
             </div>

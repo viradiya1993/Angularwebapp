@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
-import { MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import { MatTableDataSource, MatPaginator, MatDialogRef, MatDialog } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { MatterDialogComponentForTemplate } from 'app/main/pages/template/matter-dialog/matter-dialog.component';
@@ -23,13 +23,15 @@ export class GenerateTemplatesDialoagComponent implements OnInit {
   isLoadingResults: boolean;
   Templatedata: any = [];
   getTemplateArray: any = [];
+  TemplateGenerateData:any=[];
   highlightedRows: any;
   getDropDownValue: any = [];
   getRoeData:any=[];
 
   pageSize: any;
   constructor(private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService,
-    public dialogRef: MatDialogRef<GenerateTemplatesDialoagComponent>,   public _matDialog: MatDialog,private router:Router ) { }
+    public dialogRef: MatDialogRef<GenerateTemplatesDialoagComponent>,   public _matDialog: MatDialog,private router:Router,
+    public behaviorService:BehaviorService ) { }
 
   ngOnInit() {
     this.LoadData({});
@@ -78,23 +80,26 @@ console.log("dbclick")
     }
   }
   openDilog() {
-    console.log("dialog called")
-    let templateData = JSON.parse(localStorage.getItem('templateData'));
+    this.behaviorService.TemplateGenerateData$.subscribe(result => {
+      if(result){
+        this.TemplateGenerateData=result; 
+      }          
+    });
     if (this.router.url == "/create-document/invoice-template") {
         let invoiceGUid = localStorage.getItem('edit_invoice_id');
-        let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }
+        let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
         this.ForDocDialogOpen(passdata);
     } else if (this.router.url == "/create-document/matter-template") {
         let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
-        let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }
+        let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
         this.ForDocDialogOpen(passdata);
       } else if (this.router.url == "/create-document/receive-money-template") {
         let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
-        let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }
+        let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
         this.ForDocDialogOpen(passdata);
     } else if (this.router.url == "/create-document/contact-template") {
         let ContactGuID = localStorage.getItem('contactGuid');
-        let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }
+        let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
         this.ForDocDialogOpen(passdata);
     }
 }

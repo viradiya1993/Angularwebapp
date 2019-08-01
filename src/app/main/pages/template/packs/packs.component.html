@@ -14,6 +14,7 @@
                     </mat-form-field>
                 </form>
             </div>
+            <button mat-raised-button color="primary" type="button" id="refreshKitTab" (click)="refreshKitTab();">Refresh</button>
             <div class="content">
                 <div class="page-layout simple left-sidebar inner-sidebar">
                     <div fxLayoutAlign="center" class="content">
@@ -35,11 +36,11 @@
                                         </table> -->
                                         <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
                                             <!-- This is the tree node template for leaf nodes -->
-                                            <mat-tree-node class="border-top" *matTreeNodeDef="let node" matTreeNodePadding [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index  (click)="RowClick(node.KitGUid,node.name,node.Context);highlightedRows = node.index "
+                                            <mat-tree-node class="border-top" *matTreeNodeDef="let node" matTreeNodePadding [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index  (click)="RowClick(node.Main);highlightedRows = node.index "
                                             matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                               <!-- use a disabled button to provide padding for tree leaf -->
                                               <button mat-icon-button disabled></button>
-                                              <span > <mat-icon>
+                                              <span > <mat-icon *ngIf="node.child == ''|| node.child == null || node.child == undifined">
                                                 <img src="assets/icons/web_app/icon_doc_pack_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                             </mat-icon> {{node.name}}</span>
                                               <span>
@@ -59,10 +60,10 @@
 
                                             </mat-tree-node>
                                             <!-- This is the tree node template for expandable nodes -->
-                                            <mat-tree-node class="border-top" *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding  [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index  (click)="RowClick(node.KitGUid,node.name,node.Context);highlightedRows = node.index "
+                                            <mat-tree-node class="border-top" *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding  [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index  (click)="RowClick(node.Main);highlightedRows = node.index "
                                             matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                               <button mat-icon-button matTreeNodeToggle
-                                                      [attr.aria-label]="'toggle ' + node.name" [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index  (click)="RowClick(node.KitGUid,node.name,node.Context);highlightedRows = node.index ">
+                                                      [attr.aria-label]="'toggle ' + node.name" [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index  (click)="RowClick(node.Main);highlightedRows = node.index ">
                                                 <mat-icon class="mat-icon-rtl-mirror" >
                                                   {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                                                 </mat-icon>

@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material';
 import { MatTableDataSource } from '@angular/material/table';
 import * as $ from 'jquery';
 import { fuseAnimations } from '@fuse/animations';
-import { TableColumnsService, MainAPiServiceService } from 'app/_services';
+import { TableColumnsService, MainAPiServiceService, BehaviorService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { MatterDialogComponentForTemplate } from '../matter-dialog/matter-dialog.component';
 import { Router } from '@angular/router';
@@ -23,6 +23,7 @@ export class EmailTempleteComponent implements OnInit {
   EmailAllData: FormGroup;
   tempColobj: any;
   ColumnsObj: any;
+  EmailtemplateData:any=[];
   TemplateEmaildata:any=[];
   isLoadingResults: boolean = false;
   theme_type = localStorage.getItem('theme_type');
@@ -41,6 +42,7 @@ export class EmailTempleteComponent implements OnInit {
     private TableColumnsService: TableColumnsService,
     public _matDialog: MatDialog,
     private router: Router,
+    private behaviorService:BehaviorService,
   ) { }
 
   ngOnInit() {
@@ -74,8 +76,7 @@ export class EmailTempleteComponent implements OnInit {
         this.TemplateEmaildata.paginator = this.paginator;
         this.TemplateEmaildata.sort = this.sort;
         if (response.DATA.EMAILS[0]) {
-         
-          localStorage.setItem('GenerateEmailData', JSON.stringify(response.DATA.EMAILS[0]));
+          this.behaviorService.EmailGenerateData(response.DATA.EMAILS[0]);
           this.highlightedRows = response.DATA.EMAILS[0].EMAILGUID;
         }
         this.isLoadingResults = false;
@@ -93,29 +94,35 @@ export class EmailTempleteComponent implements OnInit {
   }
   //clicktitle
   clicktitle(row) {
-    localStorage.setItem('GenerateEmailData', JSON.stringify(row));
+    this.behaviorService.EmailGenerateData(row);
+
   }
   //EmailDialog
   EmailDialog() {
 
   }
   dblclickEmail(row){
-    let templateData = JSON.parse(localStorage.getItem('GenerateEmailData'));
+
+    this.behaviorService.EmailGenerateData$.subscribe(result => {
+      if(result){
+        this.EmailtemplateData=result; 
+      }          
+    });
     if (this.router.url == "/create-document/email-invoice-template") {
         let invoiceGUid = localStorage.getItem('edit_invoice_id');
-        let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "Type": "Email", "Folder": '', "Template": templateData.NAME }
+        let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
         this.ForEmailDialogOpen(passdata);
     } else if (this.router.url == "/create-document/email-matter-template") {
         let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
-        let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Email", "Folder": '', "Template": templateData.NAME }
+        let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
         this.ForEmailDialogOpen(passdata);
     } else if (this.router.url == "/create-document/email-receive-money-template") {
         let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
-        let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Email", "Folder": '', "Template": templateData.NAME }
+        let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
         this.ForEmailDialogOpen(passdata);
     } else if (this.router.url == "/create-document/email-contact-template") {
         let ContactGuID = localStorage.getItem('contactGuid');
-        let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Email","Folder": '', "Template": templateData.NAME }
+        let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Email","Folder": '', "Template": this.EmailtemplateData.NAME }
         this.ForEmailDialogOpen(passdata);
     }
     

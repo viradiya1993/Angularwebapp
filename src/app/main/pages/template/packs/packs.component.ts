@@ -15,16 +15,14 @@ import { MainAPiServiceService, BehaviorService } from 'app/_services';
 
 interface FoodNode {
   name: string;
-  KITNAME:string;
-  CONTEXT:string;
-  KITGUID:string;
-  TEMPLATEFILE:string;
-  TEMPLATETYPEDESC:string;
+  KITNAME: string;
+  CONTEXT: string;
+  KITGUID: string;
+  TEMPLATEFILE: string;
+  TEMPLATETYPEDESC: string;
   index?: number;
   children?: FoodNode[];
-  KITITEMS?:FoodNode[];
-
-
+  KITITEMS?: FoodNode[];
 }
 
 // const TREE_DATA: FoodNode[] = [
@@ -76,18 +74,18 @@ export class PacksComponent implements OnInit {
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   isLoadingResults: boolean = false;
-  storeDataarray:any=[];
-  pageSize:any;
-  sendItemDataToPopup:any=[];
-  arrayForIndex:any=[];
+  storeDataarray: any = [];
+  pageSize: any;
+  sendItemDataToPopup: any = [];
+  arrayForIndex: any = [];
   private _transformer = (node: FoodNode, level: number) => {
     return {
       expandable: !!node.KITITEMS && node.KITITEMS.length > 0,
       name: node.KITNAME,
-      Context:node.CONTEXT,
-      child:node.TEMPLATEFILE,
-      iconType:node.TEMPLATETYPEDESC,
-      KitGUid:node.KITGUID,
+      Context: node.CONTEXT,
+      child: node.TEMPLATEFILE,
+      iconType: node.TEMPLATETYPEDESC,
+      KitGUid: node.KITGUID,
       index: node.index,
       level: level,
     };
@@ -105,12 +103,12 @@ export class PacksComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
     public _matDialog: MatDialog,
-    private behaviorService:BehaviorService,
-  
+    private behaviorService: BehaviorService,
+
     private _mainAPiServiceService: MainAPiServiceService
   ) {
     this.loadData();
-    
+
   }
   showData(element, level, parent) {
     element.forEach(x => {
@@ -122,7 +120,7 @@ export class PacksComponent implements OnInit {
         this.showData(x.KITITEMS, x.level + 1, x.KITNAME);
     });
   }
- 
+
 
   ngOnInit() {
     this.packForm = this._formBuilder.group({
@@ -138,11 +136,11 @@ export class PacksComponent implements OnInit {
       console.log(res);
       if (res.CODE == 200 && res.STATUS == "success") {
         this.arrayForIndex = [];
-        this.storeDataarray=res.DATA.KITS;
+        this.storeDataarray = res.DATA.KITS;
         this.showData(this.storeDataarray, 0, null);
-        this.dataSource.data =  this.storeDataarray;
-       console.log(res.DATA.KITS[0].KITGUID);
-        this.RowClick(res.DATA.KITS[0].KITGUID,'','');
+        this.dataSource.data = this.storeDataarray;
+        console.log(res.DATA.KITS[0].KITGUID);
+        this.RowClick(res.DATA.KITS[0].KITGUID, '', '');
         this.highlightedRows = 1;
       }
       this.isLoadingResults = false;
@@ -170,15 +168,15 @@ export class PacksComponent implements OnInit {
   FilterSearch(filtervalue: any) {
     //this.PackTbl.filter = filtervalue;
   }
-  RowClick(kitguid,name,context){
-console.log("first row ");
-console.log(kitguid);
-    let data={kitguid:kitguid,name:name,context:context}
+  RowClick(kitguid, name, context) {
+    console.log("first row ");
+    console.log(kitguid);
+    let data = { kitguid: kitguid, name: name, context: context }
     console.log(data);
-    if(kitguid!= undefined){
+    if (kitguid != undefined) {
       this.behaviorService.packsitems(data);
-    
+
     }
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
- }
+}

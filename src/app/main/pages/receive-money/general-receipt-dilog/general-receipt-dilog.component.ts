@@ -4,8 +4,9 @@ import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { MatDialogRef, MatDialog, MatDatepickerInputEvent } from '@angular/material';
-import {  MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import { BankingDialogComponent } from '../../banking/banking-dialog.component';
 
 @Component({
   selector: 'app-general-receipt-dilog',
@@ -24,7 +25,6 @@ export class GeneralReceiptDilogComponent implements OnInit {
     public dialogRef: MatDialogRef<GeneralReceiptDilogComponent>,
     public datepipe: DatePipe,
     public MatDialog: MatDialog,
-    public _matDialog: MatDialog,
     public _mainAPiServiceService: MainAPiServiceService
   ) { }
   generalReceiptForm: FormGroup;
@@ -126,7 +126,7 @@ export class GeneralReceiptDilogComponent implements OnInit {
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
-      this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+      this.confirmDialogRef = this.MatDialog.open(FuseConfirmDialogComponent, {
         disableClose: true,
         width: '100%',
         data: warningData
@@ -161,6 +161,12 @@ export class GeneralReceiptDilogComponent implements OnInit {
     }, error => {
       this.toastr.error(error);
     });
+  }
+  BankingDialogOpen(type: any) {
+    const dialogRef = this.MatDialog.open(BankingDialogComponent, {
+      disableClose: true, width: '100%', data: { AccountType: type }
+    });
+    dialogRef.afterClosed().subscribe(result => { });
   }
 
 

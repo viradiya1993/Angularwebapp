@@ -18,6 +18,13 @@ body.theme-yellow-light .mat-dialog-container {
     background-color: #303540;
 }
 
+button.matternews {
+    background: none;
+    border: none;
+    width: 150%;
+    cursor: pointer;
+}
+
 .mat-dialog-content {
     margin: 0;
     max-height: 450px;

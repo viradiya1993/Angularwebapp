@@ -1097,8 +1097,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //_____________________________________________________________________________________________________
 
-    BankingDialogOpen() {
-        const dialogRef = this.dialog.open(BankingDialogComponent, {});
+    BankingDialogOpen(type: any) {
+        const dialogRef = this.dialog.open(BankingDialogComponent, {
+            disableClose: true, width: '100%', data: { AccountType: type }
+        });
         dialogRef.afterClosed().subscribe(result => {
         });
     }

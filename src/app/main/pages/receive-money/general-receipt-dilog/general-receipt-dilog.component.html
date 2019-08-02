@@ -57,14 +57,14 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example pr-4" fxFlex="35" [ngClass]="{'has-error':errorWarningData.Error?.BANKACCOUNTGUID,'has-warning':errorWarningData.Warning?.BANKACCOUNTGUID}">
                         <mat-label>Bank A/C</mat-label>
-                        <input matInput formControlName="BANKACCOUNTGUID" value="ACCAAAAAAAAAAAA4">
+                        <input matInput formControlName="BANKACCOUNTGUIDTEXT" readonly>
                         <mat-icon matSuffix>
                             <button id="bank" class="matternews" (click)="BankingDialogOpen('BANK ACCOUNT')"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                         </mat-icon>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example pr-4" fxFlex="35" [ngClass]="{'has-error':errorWarningData.Error?.INCOMEACCOUNTGUID,'has-warning':errorWarningData.Warning?.INCOMEACCOUNTGUID}">
                         <mat-label>Income A/C</mat-label>
-                        <input matInput formControlName="INCOMEACCOUNTGUID" value="ACCAAAAAAAAAAAA4">
+                        <input matInput formControlName="INCOMEACCOUNTGUIDTEXT" readonly>
                         <mat-icon matSuffix>
                             <button id="bank" class="matternews" (click)="BankingDialogOpen('INCOME')"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                         </mat-icon>

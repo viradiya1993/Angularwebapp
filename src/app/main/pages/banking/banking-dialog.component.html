@@ -23,6 +23,8 @@
                     <!-- use a disabled button to provide padding for tree leaf -->
                     <button mat-icon-button disabled></button>
                     <span> {{node.name}}</span>
+                    <span fxFlex="50" class="text-center">{{node.MainList.OPENINGBALANCE | currency}}</span>
+                    <!-- <span fxFlex="20" *ngIf="node.MainList.OPENINGBALANCE>0" class="text-center">{{node.MainList.ACCOUNTTYPE}}</span> -->
                 </mat-tree-node>
                 <!-- This is the tree node template for expandable nodes -->
                 <mat-tree-node class="border-top" *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index
@@ -40,12 +42,13 @@
         </div>
     </div>
     <mat-dialog-actions align="left" class="popup_ftr contact_select_footer">
-        <button mat-raised-button color="accent" (click)="SelectDialogOpen()">Select</button>
+        <button mat-raised-button color="accent" [mat-dialog-close]="ACCOUNTGUIDsELECTED">Select</button>
+        <!-- <button mat-raised-button color="accent" [mat-dialog-close]="ACCOUNTGUIDsELECTED" (click)="SelectDialogOpen()">Select</button> -->
         <button mat-raised-button color="accent" (click)="AccountDialogOpen('new')">New Account</button>
         <button mat-raised-button color="accent" (click)="AccountDialogOpen('edit')">Edit Account</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
     </mat-dialog-actions>
-    <mat-dialog-actions align="end" class="popup_ftr contact_select_footer">
-        <button mat-raised-button [mat-dialog-close]="" color="accent">Save</button>
-        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
-    </mat-dialog-actions>
+    <!-- <mat-dialog-actions align="end" class="popup_ftr contact_select_footer">
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
+    </mat-dialog-actions> -->
 </div>

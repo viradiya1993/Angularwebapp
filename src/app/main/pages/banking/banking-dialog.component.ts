@@ -1,11 +1,10 @@
-import { Component, OnInit, Input, Injectable, ViewEncapsulation, ViewChild, Inject } from '@angular/core';
+import { FlatTreeControl } from '@angular/cdk/tree';
+import { Component, Inject, Injectable, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { MatDialog, MatDialogRef, MatTreeFlatDataSource, MatTreeFlattener, MAT_DIALOG_DATA } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
-import { FormGroup } from '@angular/forms';
-import { MatDialog, MatTreeFlattener, MatTreeFlatDataSource, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { BehaviorService, MainAPiServiceService } from 'app/_services';
 import { ChartAcDailogComponent } from '../chart-account/chart-ac-dailog/chart-ac-dailog.component';
 import { SelectBankingDialogComponent } from './select-banking-dialog/select-banking-dialog.component';
-import { MainAPiServiceService } from 'app/_services';
-import { FlatTreeControl } from '@angular/cdk/tree';
 
 interface FoodNode {
   name: string;
@@ -13,6 +12,8 @@ interface FoodNode {
   ACCOUNTCLASS: any;
   ACCOUNTNAME: any;
   ACCOUNTNUMBER: any;
+  SUBACCOUNTS: any;
+  MainList: any;
   index?: number;
   children?: FoodNode[];
 }
@@ -36,32 +37,31 @@ export class BankingDialogComponent implements OnInit {
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   isLoadingResults: boolean = false;
   storeDataarray: any = [];
-  accGUID:any=[];
+  accGUID: any = [];
   pageSize: any;
+  ACCOUNTGUIDsELECTED: any;
   arrayForIndex: any = [];
+
 
   private _transformer = (node: FoodNode, level: number) => {
     return {
-      expandable: !!node.children && node.children.length > 0,
+      expandable: !!node.SUBACCOUNTS && node.SUBACCOUNTS.length > 0,
       name: node.ACCOUNTCLASS + ' - ' + node.ACCOUNTNUMBER + '        ' + node.ACCOUNTNAME,
       ACCOUNTGUID: node.ACCOUNTGUID,
       index: node.index,
       level: level,
+      MainList: node.MainList
     };
   }
   treeControl = new FlatTreeControl<ExampleFlatNode>(node => node.level, node => node.expandable);
-  treeFlattener = new MatTreeFlattener(
-    this._transformer,
-    node => node.level,
-    node => node.expandable,
-    node => node.children
-  );
+  treeFlattener = new MatTreeFlattener(this._transformer, node => node.level, node => node.expandable, node => node.SUBACCOUNTS);
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
   highlightedRows: number;
 
   constructor(
     public dialog: MatDialog,
     private _mainAPiServiceService: MainAPiServiceService,
+    private behaviorService: BehaviorService,
     public dialogRef: MatDialogRef<BankingDialogComponent>, @Inject(MAT_DIALOG_DATA) public _data: any) {
     this.loadData(_data.AccountType);
   }
@@ -71,29 +71,17 @@ export class BankingDialogComponent implements OnInit {
   loadData(type: any) {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({ AccountClass: type }, 'GetAccount').subscribe(response => {
-      console.log(response)
       if (response.CODE == 200 && response.STATUS == "success") {
         this.arrayForIndex = [];
-        this.storeDataarray = response.DATA.ACTIVITIES;
+        if (response.DATA.ACCOUNTS[0].ACCOUNTGUID == "") {
+          this.storeDataarray = response.DATA.ACCOUNTS[0].SUBACCOUNTS;
+          this.ACCOUNTGUIDsELECTED = response.DATA.ACCOUNTS[0].SUBACCOUNTS;
+        } else {
+          this.storeDataarray = response.DATA.ACCOUNTS;
+        }
         this.showData(this.storeDataarray, 0, null);
-        // let tempArray = [];
-        // this.storeDataarray.forEach(x => {
-        //   if (x.PARENTGUID) {
-        //     x.children = [];
-        //     tempArray[x.ACCOUNTGUID] = x;
-        //   } else {
-        //     x.children = [];
-        //     if (tempArray[x.PARENTGUID])
-        //       tempArray[x.PARENTGUID].children.push(x);
-        //     else
-        //       tempArray[x.ACCOUNTGUID] = x;
-        //   }
-        // });
-        // this.storeDataarray = tempArray;
         this.dataSource.data = this.storeDataarray;
-        this.highlightedRows = 1;
-
-        console.log(this.accGUID);
+        // this.highlightedRows = 1;
       } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
@@ -105,30 +93,14 @@ export class BankingDialogComponent implements OnInit {
     this.pageSize = localStorage.getItem('lastPageSize');
   }
   showData(element, level, parent) {
-    this.accGUID=[];
     element.forEach(x => {
-      console.log(x);
-  
-      this.accGUID.push(x);
-
-      // this.accGUID.forEach(element => {
-        
-      //   if(element.PARENTGUID==x.ACCOUNTGUID){
-       
-      //   }
-      // });
-      // if(x.ACCOUNTGUID == x.PARENTGUID){
-      //   console.log("called");
-      //   console.log(x);
-      // }
-      // this.MainKitArray=x;
-      // this.arrayForIndex.push({});
-      // x.level = level
-      // x.parent = parent
-      // x.MainList=x;
-      // x.index = this.arrayForIndex.length;
-      // if (x.KITITEMS)
-      //   this.showData(x.KITITEMS, x.level + 1, x.KITNAME);
+      this.arrayForIndex.push({});
+      x.level = level
+      x.parent = parent
+      x.MainList = x;
+      x.index = this.arrayForIndex.length;
+      if (x.SUBACCOUNTS)
+        this.showData(x.SUBACCOUNTS, x.level + 1, x.ACCOUNTNAME);
     });
   }
   onPaginateChange(event) {
@@ -136,8 +108,8 @@ export class BankingDialogComponent implements OnInit {
     localStorage.setItem('lastPageSize', event.pageSize);
   }
   RowClick(node) {
-    console.log(node);
-    // this.behaviorService.packsitems(data);
+    node.AccountType = this._data.AccountType;
+    this.ACCOUNTGUIDsELECTED = node;
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
@@ -154,7 +126,6 @@ export class BankingDialogComponent implements OnInit {
   }
 
   SelectDialogOpen() {
-    console.log("fdfh");
     const dialogRef = this.dialog.open(SelectBankingDialogComponent, {
 
     });

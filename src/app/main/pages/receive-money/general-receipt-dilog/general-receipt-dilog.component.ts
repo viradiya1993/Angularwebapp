@@ -45,7 +45,9 @@ export class GeneralReceiptDilogComponent implements OnInit {
       // gsttype: [''],
       // GST: [''],
       BANKACCOUNTGUID: [''],
+      BANKACCOUNTGUIDTEXT: [''],
       INCOMEACCOUNTGUID: [''],
+      INCOMEACCOUNTGUIDTEXT: [''],
       NOTE: [''],
     });
     let INCOMEDATEVAL = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
@@ -166,7 +168,15 @@ export class GeneralReceiptDilogComponent implements OnInit {
     const dialogRef = this.MatDialog.open(BankingDialogComponent, {
       disableClose: true, width: '100%', data: { AccountType: type }
     });
-    dialogRef.afterClosed().subscribe(result => { });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.AccountType == "INCOME") {
+        this.generalReceiptForm.controls['INCOMEACCOUNTGUIDTEXT'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER);
+        this.generalReceiptForm.controls['INCOMEACCOUNTGUID'].setValue(result.ACCOUNTGUID);
+      } else {
+        this.generalReceiptForm.controls['BANKACCOUNTGUIDTEXT'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER);
+        this.generalReceiptForm.controls['BANKACCOUNTGUID'].setValue(result.ACCOUNTGUID);
+      }
+    });
   }
 
 

@@ -23,8 +23,8 @@ interface FoodNode {
   TEMPLATETYPEDESC: string;
   index?: number;
   children?: FoodNode[];
-  KITITEMS?:FoodNode[];
-  MainList ?:FoodNode[];
+  KITITEMS?: FoodNode[];
+  MainList?: FoodNode[];
 
 
 }
@@ -72,27 +72,27 @@ interface ExampleFlatNode {
   animations: fuseAnimations
 })
 
-export class PacksComponent implements OnInit,AfterViewInit {
+export class PacksComponent implements OnInit, AfterViewInit {
   packForm: FormGroup;
   @ViewChild('tree') tree;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   isLoadingResults: boolean = false;
-  storeDataarray:any=[];
-  MainKitArray:any=[];
-  pageSize:any;
-  sendItemDataToPopup:any=[];
-  arrayForIndex:any=[];
+  storeDataarray: any = [];
+  MainKitArray: any = [];
+  pageSize: any;
+  sendItemDataToPopup: any = [];
+  arrayForIndex: any = [];
   private _transformer = (node: FoodNode, level: number) => {
     return {
       expandable: !!node.KITITEMS && node.KITITEMS.length > 0,
       name: node.KITNAME,
-      kititem:node.KITITEMS,
-      Context:node.CONTEXT,
-      Main:node.MainList,
-      child:node.TEMPLATEFILE,
-      iconType:node.TEMPLATETYPEDESC,
-      KitGUid:node.KITGUID,
+      kititem: node.KITITEMS,
+      Context: node.CONTEXT,
+      Main: node.MainList,
+      child: node.TEMPLATEFILE,
+      iconType: node.TEMPLATETYPEDESC,
+      KitGUid: node.KITGUID,
       index: node.index,
       level: level,
     };
@@ -118,13 +118,12 @@ export class PacksComponent implements OnInit,AfterViewInit {
 
   }
   showData(element, level, parent) {
-    
     element.forEach(x => {
       // this.MainKitArray=x;
       this.arrayForIndex.push({});
       x.level = level
       x.parent = parent
-      x.MainList=x;
+      x.MainList = x;
       x.index = this.arrayForIndex.length;
       if (x.KITITEMS)
         this.showData(x.KITITEMS, x.level + 1, x.KITNAME);
@@ -138,12 +137,12 @@ export class PacksComponent implements OnInit,AfterViewInit {
       search: []
     });
     // this.loadData();
-    
+
   }
   ngAfterViewInit() {
     this.treeControl.expandAll();
   }
-  refreshKitTab(){
+  refreshKitTab() {
     this.loadData();
   }
   loadData() {
@@ -154,7 +153,7 @@ export class PacksComponent implements OnInit,AfterViewInit {
         this.arrayForIndex = [];
         this.storeDataarray = res.DATA.KITS;
         this.showData(this.storeDataarray, 0, null);
-        this.dataSource.data =  this.storeDataarray;
+        this.dataSource.data = this.storeDataarray;
         this.RowClick(res.DATA.KITS[0]);
         this.highlightedRows = 1;
       }
@@ -177,18 +176,18 @@ export class PacksComponent implements OnInit,AfterViewInit {
       data: null
     });
     dialogRef.afterClosed().subscribe(result => {
-      
+
     });
   }
   FilterSearch(filtervalue: any) {
     //this.PackTbl.filter = filtervalue;
   }
-  RowClick(main){
+  RowClick(main) {
     console.log(main);
     $("#packsToolbarHide").click();
     this.behaviorService.packsitems(main);
-    this.behaviorService.EmailGenerateData({'NAME':main.TEMPLATEFILE});
-    this.behaviorService.TemplateGenerateData({'TEMPLATENAME':main.TEMPLATEFILE});
+    this.behaviorService.EmailGenerateData({ 'NAME': main.TEMPLATEFILE });
+    this.behaviorService.TemplateGenerateData({ 'TEMPLATENAME': main.TEMPLATEFILE });
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 }

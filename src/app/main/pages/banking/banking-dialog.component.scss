@@ -207,22 +207,31 @@ table {
     padding-right: 65px;
     // padding-bottom: 20px;
 }
+
 table {
     width: 100%;
-  }
-.left_popup_btn {    
+}
+
+.left_popup_btn {
     width: 80%;
     text-align: left;
 }
+
 .contact_select_footer {
     display: inline-block;
     width: 100%;
 }
+
 .contact_select_footer .left_popup_btn {
     width: 70%;
     text-align: left;
     float: left;
 }
+
 th.mat-sort-header-sorted {
     color: black;
+}
+
+.row-text-colore span {
+    color: #fff;
 }

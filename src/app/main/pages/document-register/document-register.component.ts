@@ -11,27 +11,11 @@ import { ContactDialogComponent } from './../../../main/pages/contact/contact-di
 import { MainAPiServiceService,TableColumnsService } from 'app/_services';
 
 
-
-export interface PeriodicElement {
-  Date: number;
-  DocNo: number;
-  Description:string;
-  DocumentName: string;
-  Keywords: string;
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  {Date: 1, DocNo: 1,Description:'Fill Doc', DocumentName: 'Amit', Keywords: 'H'},
-  {Date: 2, DocNo: 2,Description:'Unfill Doc', DocumentName: 'Rajiv', Keywords: 'He'},
-  {Date: 3, DocNo: 3,Description:'Other Doc', DocumentName: 'Ankur', Keywords: 'Li'},
-  {Date: 4, DocNo: 4,Description:'No Doc', DocumentName: 'Kalpesh', Keywords: 'Be'},
-  {Date: 5, DocNo: 5,Description:'Yes Doec', DocumentName: 'Gunjan', Keywords: 'B'},
-  
-];
-
 @Component({
   selector: 'app-document-register',
   templateUrl: './document-register.component.html',
-  styleUrls: ['./document-register.component.scss']
+  styleUrls: ['./document-register.component.scss'],
+  animations: fuseAnimations
 })
 export class DocumentRegisterComponent implements OnInit {
   documentform: FormGroup;
@@ -39,11 +23,11 @@ export class DocumentRegisterComponent implements OnInit {
   highlightedRows:any;
   ColumnsObj = [];
   tempColobj: any;
+  displayedColumns:any;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   DocNo = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
-  displayedColumns: string[] = ['Date', 'DocNo','Description', 'DocumentName','Keywords'];
-  DocumentAllData = new MatTableDataSource(ELEMENT_DATA);
+  DocumentAllData:any=[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   constructor(
@@ -56,8 +40,7 @@ export class DocumentRegisterComponent implements OnInit {
   {}
 
   ngOnInit() {
-    this.DocumentAllData.sort = this.sort;
-    this.DocumentAllData.paginator = this.paginator;
+  
     this.documentform = this._formBuilder.group({
       matter:[],
       Client:[],
@@ -65,31 +48,42 @@ export class DocumentRegisterComponent implements OnInit {
       foldervalue:[],
       showfolder:[]
     });
-    // this.getTableFilter()
-    this._mainAPiServiceService.getSetData({}, 'GetDocument').subscribe(res => {
-      if (res.CODE == 200 && res.STATUS == "success") {
-     
-      }
-    }, err => {
-      this.toastr.error(err);
-    });
+    this.getTableFilter();
+    this.LoadData();
+   
     let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
     this.documentform.controls['matter'].setValue(mattersData.MATTER); 
   }
 
-  // getTableFilter() {
-  //   this.TableColumnsService.getTableFilter('document', '').subscribe(response => {
-  //     if (response.CODE == 200 && response.STATUS == "success") {
-  //       let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
-  //       this.displayedColumns = data.showcol;
-  //       this.ColumnsObj = data.colobj;
-  //       this.tempColobj = data.tempColobj;
-  //     }
-  //   }, error => {
-  //     this.toastr.error(error);
-  //   });
-  // }
- 
+  getTableFilter() {
+    this.TableColumnsService.getTableFilter('Matter Documents', '').subscribe(response => {
+      console.log(response);
+      if (response.CODE == 200 && response.STATUS == "success") {
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
+        this.displayedColumns = data.showcol;
+        this.ColumnsObj = data.colobj;
+        this.tempColobj = data.tempColobj;
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
+  }
+  LoadData(){
+    this.isLoadingResults=true;
+    this._mainAPiServiceService.getSetData({}, 'GetDocument').subscribe(res => {
+      if (res.CODE == 200 && res.STATUS == "success") {
+        this.DocumentAllData = new MatTableDataSource(res.DATA.DOCUMENTS);
+        this.DocumentAllData.sort = this.sort;
+        this.DocumentAllData.paginator = this.paginator;
+        this.highlightedRows=res.DATA.DOCUMENTS[0].DOCUMENTGUID;
+        this.isLoadingResults=false;
+      }
+    }, err => {
+      this.isLoadingResults=false;
+      this.toastr.error(err);
+
+    });
+  }
   //DcoumentFloder
   DcoumentFloder(){
     const dialogConfig = new MatDialogConfig();
@@ -129,5 +123,8 @@ export class DocumentRegisterComponent implements OnInit {
   //Click Doc
   clickDoc(value){
     console.log(value);
+  }
+  RowClick(row){
+console.log(row);
   }
 }

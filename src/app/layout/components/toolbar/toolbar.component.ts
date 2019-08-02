@@ -820,8 +820,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     GenaratePacks() {
         this.behaviorService.packs$.subscribe(result => {
             if (result) {
+                console.log(result);
                 console.log("Helloooooooodsfkfjhdsfdsfjds");
-                this.KitName = result.name;
+                this.KitName = result.KITNAME;
             }
         });
         if (this.router.url == "/create-document/packs-invoice-template") {

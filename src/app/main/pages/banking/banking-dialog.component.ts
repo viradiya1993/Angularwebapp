@@ -36,6 +36,7 @@ export class BankingDialogComponent implements OnInit {
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   isLoadingResults: boolean = false;
   storeDataarray: any = [];
+  accGUID:any=[];
   pageSize: any;
   arrayForIndex: any = [];
 
@@ -70,25 +71,29 @@ export class BankingDialogComponent implements OnInit {
   loadData(type: any) {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({ AccountClass: type }, 'GetAccount').subscribe(response => {
+      console.log(response)
       if (response.CODE == 200 && response.STATUS == "success") {
         this.arrayForIndex = [];
         this.storeDataarray = response.DATA.ACTIVITIES;
-        let tempArray = [];
-        this.storeDataarray.forEach(x => {
-          if (x.PARENTGUID) {
-            x.children = [];
-            tempArray[x.ACCOUNTGUID] = x;
-          } else {
-            x.children = [];
-            if (tempArray[x.PARENTGUID])
-              tempArray[x.PARENTGUID].children.push(x);
-            else
-              tempArray[x.ACCOUNTGUID] = x;
-          }
-        });
-        this.storeDataarray = tempArray;
+        this.showData(this.storeDataarray, 0, null);
+        // let tempArray = [];
+        // this.storeDataarray.forEach(x => {
+        //   if (x.PARENTGUID) {
+        //     x.children = [];
+        //     tempArray[x.ACCOUNTGUID] = x;
+        //   } else {
+        //     x.children = [];
+        //     if (tempArray[x.PARENTGUID])
+        //       tempArray[x.PARENTGUID].children.push(x);
+        //     else
+        //       tempArray[x.ACCOUNTGUID] = x;
+        //   }
+        // });
+        // this.storeDataarray = tempArray;
         this.dataSource.data = this.storeDataarray;
         this.highlightedRows = 1;
+
+        console.log(this.accGUID);
       } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
@@ -98,6 +103,33 @@ export class BankingDialogComponent implements OnInit {
       this.isLoadingResults = false;
     });
     this.pageSize = localStorage.getItem('lastPageSize');
+  }
+  showData(element, level, parent) {
+    this.accGUID=[];
+    element.forEach(x => {
+      console.log(x);
+  
+      this.accGUID.push(x);
+
+      // this.accGUID.forEach(element => {
+        
+      //   if(element.PARENTGUID==x.ACCOUNTGUID){
+       
+      //   }
+      // });
+      // if(x.ACCOUNTGUID == x.PARENTGUID){
+      //   console.log("called");
+      //   console.log(x);
+      // }
+      // this.MainKitArray=x;
+      // this.arrayForIndex.push({});
+      // x.level = level
+      // x.parent = parent
+      // x.MainList=x;
+      // x.index = this.arrayForIndex.length;
+      // if (x.KITITEMS)
+      //   this.showData(x.KITITEMS, x.level + 1, x.KITNAME);
+    });
   }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;

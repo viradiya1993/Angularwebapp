@@ -9,6 +9,7 @@ import { MainAPiServiceService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { MatSort } from '@angular/material';
 import { $ } from 'protractor';
+import { BankingDialogComponent } from '../../banking/banking-dialog.component';
 
 @Component({
   selector: 'app-receipt-dilog',
@@ -60,7 +61,7 @@ export class ReceiptDilogComponent implements OnInit {
     public datepipe: DatePipe,
     public MatDialog: MatDialog,
     public _matDialog: MatDialog,
-    public _mainAPiServiceService:MainAPiServiceService,
+    public _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
     this.matterData = this._data.matterData;
@@ -80,6 +81,7 @@ export class ReceiptDilogComponent implements OnInit {
       AMOUNT: [''],
       GST: [''],
       BANKACCOUNTGUID: [''],
+      BANKACCOUNTGUIDTEXT: [''],
       NOTE: [''],
       INCOMEACCOUNTGUID: ['', Validators.required],
       INCOMEACCOUNTGUIDTEXT: [''],
@@ -114,7 +116,7 @@ export class ReceiptDilogComponent implements OnInit {
 
   }
   setInvoiceForReceipt(INCOMEGUID) {
-    this.PrepareReceiptData=[];
+    this.PrepareReceiptData = [];
     this.isLoadingResults = true;
     let incomeGuid = { INCOMEGUID: INCOMEGUID }
     this._mainAPiServiceService.getSetData(incomeGuid, 'GetIncome').subscribe(response => {
@@ -160,9 +162,19 @@ export class ReceiptDilogComponent implements OnInit {
       this.toastr.error(err);
     });
   }
-
+  BankingDialogOpen(type: any) {
+    const dialogRef = this.MatDialog.open(BankingDialogComponent, {
+      disableClose: true, width: '100%', data: { AccountType: type }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.PrepareReceiptForm.controls['BANKACCOUNTGUIDTEXT'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER + ' ' + result.MainList.ACCOUNTNAME);
+        this.PrepareReceiptForm.controls['BANKACCOUNTGUID'].setValue(result.ACCOUNTGUID);
+      }
+    });
+  }
   GetInvoiceForReceipt(data) {
-    this.PrepareReceiptData=[];
+    this.PrepareReceiptData = [];
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(data, 'GetInvoice').subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
@@ -259,8 +271,7 @@ export class ReceiptDilogComponent implements OnInit {
       PAYEE: this.f.PAYEE.value,
       AMOUNT: this.f.AMOUNT.value,
       GST: this.f.GST.value,
-      BANKACCOUNTGUID: "ACCAAAAAAAAAAAA4",
-      // BANKACCOUNTGUID: this.f.BANKACCOUNTGUID.value,
+      BANKACCOUNTGUID: this.f.BANKACCOUNTGUID.value,
       INCOMEACCOUNTGUID: "ACCAAAAAAAAAAAA9",
       NOTE: this.f.NOTE.value,
       MATTERGUID: this.matterData.MATTERGUID,
@@ -334,7 +345,7 @@ export class ReceiptDilogComponent implements OnInit {
         // $('#refreshReceiceMoany').click();
         this.toastr.success('Receipt save successfully');
         this.isspiner = false;
-         
+
         this.dialogRef.close(true);
       } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);

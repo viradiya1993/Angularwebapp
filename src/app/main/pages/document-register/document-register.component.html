@@ -52,39 +52,16 @@
                                 <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                             </div>
                             <div class="example-containerdata">
-                                <table mat-table [dataSource]="DocumentAllData" matSort>
-                                  <ng-container matColumnDef="Date">
-                                      <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>Date</th>
-                                      <td mat-cell *matCellDef="let row"> {{row.Date}} </td>
-                                  </ng-container>
-                                  <ng-container matColumnDef="DocNo">
-                                    <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>Doc No</th>
-                                    <td mat-cell *matCellDef="let row"> {{row.DocNo}} </td>
-                                  </ng-container>
-                    
-                                  <ng-container matColumnDef="Description">
-                                      <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>Description</th>
-                                      <td mat-cell *matCellDef="let row"> {{row.Description}} </td>
-                                  </ng-container>
-                    
-                                  <ng-container matColumnDef="DocumentName">
-                                      <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>Document Name</th>
-                                      <td mat-cell *matCellDef="let row"> {{row.DocumentName}} </td>
-                                  </ng-container>
-                    
-                                  <ng-container matColumnDef="Keywords">
-                                      <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>Keywords</th>
-                                      <td mat-cell *matCellDef="let row"> {{row.Keywords}} </td>
-                                  </ng-container>
-                                  
-                                  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                  <tr [style.background]="highlightedRows == row.DocNo ? selectedColore : ''" 
-                                    [ngClass]="highlightedRows == row.DocNo ? 'row-text-colore' : ''" 
-                                    highlightedRows=row.DocNo mat-row *matRowDef="let row; columns: displayedColumns;"
-                                    (click)="clickDoc(row.DocNo);highlightedRows = row.DocNo " matRipple>
-                                  </tr>
+                                <table mat-table #table [dataSource]="DocumentAllData" matSort [@animateStagger]="{value:'50'}">
+                                    <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
+                                        <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header> {{ tempColobj[item].DESCRIPTION }}</th>
+                                        <td mat-cell *matCellDef="let row"> <span *ngIf="row[item]">{{row[item]}}</span> </td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;let element;" class="row" (click)="RowClick(row);highlightedRows=row.DOCUMENTGUID" [style.background]="highlightedRows == row.DOCUMENTGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.DOCUMENTGUID ? 'row-text-colore' : ''"
+                                        matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                    </tr>
                                 </table>
-                                <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
                             </div>
                               <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
                           </div>

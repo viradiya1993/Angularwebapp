@@ -615,13 +615,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     // Edit spendmoney Pop-up
     Editspendmoneypopup() {
 
-    this.behaviorService.SpendMoneyData$.subscribe(result => {
-        if(result){
-        this.SendMoney_dataGUID=result;
-          
-        }          
-      });
-       
+        this.behaviorService.SpendMoneyData$.subscribe(result => {
+            if (result) {
+                this.SendMoney_dataGUID = result;
+
+            }
+        });
+
         if (this.SendMoney_dataGUID == null) {
             this.toastr.error("No Data Selected");
         } else {
@@ -646,11 +646,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     // Delete matter Pop-up
     Deletespendmoneypopup(): void {
         this.behaviorService.SpendMoneyData$.subscribe(result => {
-            if(result){
-            this.SendMoney_dataGUID=result;
-            }          
-          });
-        if ( this.SendMoney_dataGUID == null) {
+            if (result) {
+                this.SendMoney_dataGUID = result;
+            }
+        });
+        if (this.SendMoney_dataGUID == null) {
             this.toastr.error("No Data Selected");
         } else {
             this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
@@ -660,7 +660,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
             this.confirmDialogRef.afterClosed().subscribe(result => {
                 if (result) {
-                    let postData = { FormAction: "delete", DATA: { EXPENDITUREGUID:  this.SendMoney_dataGUID.EXPENDITUREGUID } }
+                    let postData = { FormAction: "delete", DATA: { EXPENDITUREGUID: this.SendMoney_dataGUID.EXPENDITUREGUID } }
                     this._mainAPiServiceService.getSetData(postData, 'SetExpenditure').subscribe(res => {
                         if (res.STATUS == "success" && res.CODE == 200) {
                             $('#refreshSpendMoneyTab').click();

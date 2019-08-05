@@ -54,8 +54,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section class="ribbon-section">
-                                        <button mat-button class="large-button" (click)="matterpopup('duplicate')">
+                                    <section [ngClass]="appPermissions[1]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button (click)="matterpopup('duplicate')" [ngClass]="appPermissions[1]?.Create==0 ? 'disabled-click large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                         <img src="assets/icons/web_app/icon_duplicate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -136,7 +136,7 @@
                                                 </mat-icon>
                                                 <span>New Timer</span>
                                             </a>
-                                            <a mat-list-item (click)="NewFileNote()">
+                                            <a mat-list-item (click)="NewFileNote()" [ngClass]="appPermissions[13]?.Create==0 ? 'disabled-click-cursor' : ''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_filesnotes_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
@@ -211,8 +211,8 @@
                                         </section>
                                         </button>
                                     </section>
-                                    <section class="ribbon-section">
-                                        <button mat-button class="large-button" (click)="ContactsDialog('duplicate')">
+                                    <section [ngClass]="appPermissions[3]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="ContactsDialog('duplicate')">
                                         <section class="large-button-container">
                                             <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_duplicate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -509,8 +509,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section class="ribbon-section">
-                                        <button mat-button class="large-button" disabled>
+                                    <section class="ribbon-section" [ngClass]="appPermissions[2]?.Delete==0 ? 'disabled-click large-button' : 'large-button'">
+                                        <button mat-button [ngClass]="appPermissions[2]?.Create==0 ? 'large-button' : 'large-button'" disabled>
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                         <img class="menu-disabled" src="assets/icons/web_app/icon_time_cost_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -533,11 +533,11 @@
                                            </section>
                                         </button>
                                     </section>
-                                    <section class="ribbon-section">
-                                        <button mat-button class="large-button" disabled>
+                                    <section [ngClass]="appPermissions[2]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[2]?.Create==0 ? 'large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
-                                                    <img class="menu-disabled" src="assets/icons/web_app/icon_time_cost_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                    <img src="assets/icons/web_app/icon_time_cost_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <div class="main-text">
                                                     <span>Duplicate <br>Time Entry</span>
@@ -1069,8 +1069,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section class="ribbon-section">
-                                        <button mat-button class="large-button" (click)="addNewTimeEntry('Duplicate')">
+                                    <section [ngClass]="appPermissions[2]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[2]?.Create==0 ? 'large-button' : 'large-button'" (click)="addNewTimeEntry('Duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_duplicate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1081,18 +1081,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section class="ribbon-section">
-                                        <!-- <button mat-button class="large-button" disabled>
-                                                    <section class="large-button-container">
-                                                        <mat-icon class="main-icon">
-                                                                <img class="menu-disabled" src="assets/icons/web_app/icon_time_cost_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                                        </mat-icon>
-                                                        <div class="main-text">
-                                                            <span>New<br>Timer</span>
-                                                        </div>
-                                                    </section>
-                                                </button> -->
-                                        <button mat-button class="large-button">
+                                    <section [ngClass]="appPermissions[2]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[2]?.Create==0 ? 'large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                         <img src="assets/icons/web_app/icon_time_cost_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">

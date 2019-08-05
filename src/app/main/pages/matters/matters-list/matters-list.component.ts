@@ -4,10 +4,10 @@ import { fuseAnimations } from '@fuse/animations';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.component';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
-import {  TableColumnsService, MainAPiServiceService } from '../../../../_services';
+import { TableColumnsService, MainAPiServiceService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material';
 import { Subscription } from 'rxjs';
 
 
@@ -43,7 +43,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private TableColumnsService: TableColumnsService,
   ) {
-    this.mattersData=[];
+    this.mattersData = [];
     if (JSON.parse(localStorage.getItem('matter_filter'))) {
       this.lastFilter = JSON.parse(localStorage.getItem('matter_filter'));
     }
@@ -101,9 +101,8 @@ export class MattersListComponent implements OnInit, OnDestroy {
     });
   }
   getMatterList(data) {
-    
     this.isLoadingResults = true;
-    this.subscription=this._mainAPiServiceService.getSetData(data, 'GetMatter').subscribe(response => {
+    this.subscription = this._mainAPiServiceService.getSetData(data, 'GetMatter').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.MATTERS[0]) {
           this.highlightedRows = response.DATA.MATTERS[0].MATTERGUID;
@@ -113,15 +112,20 @@ export class MattersListComponent implements OnInit, OnDestroy {
         this.mattersData.paginator = this.paginator;
         this.mattersData.sort = this.sort;
         this.isLoadingResults = false;
+      } else if (response.CODE == 406 && response.MESSAGE == "Permission denied") {
+        this.mattersData = new MatTableDataSource([]);
+        this.mattersData.paginator = this.paginator;
+        this.mattersData.sort = this.sort;
+        this.isLoadingResults = false;
       }
     }, error => {
       this.toastr.error(error);
     });
     this.pageSize = localStorage.getItem('lastPageSize');
   }
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscription.unsubscribe();
-  } 
+  }
 
 }
 

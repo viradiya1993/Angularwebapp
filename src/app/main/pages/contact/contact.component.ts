@@ -105,6 +105,11 @@ export class ContactComponent implements OnInit, AfterViewInit {
           this.highlightedRows = response.DATA.CONTACTS[0].CONTACTGUID;
         }
         this.isLoadingResults = false;
+      } else if (response.CODE == 406 && response.MESSAGE == "Permission denied") {
+        this.Contactdata = new MatTableDataSource([]);
+        this.Contactdata.paginator = this.paginator;
+        this.Contactdata.sort = this.sort;
+        this.isLoadingResults = false;
       }
     }, err => {
       this.isLoadingResults = false;

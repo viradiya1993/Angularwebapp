@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import * as $ from 'jquery';
 import { TimersService } from '../../../_services';
@@ -23,7 +23,7 @@ export class MattersComponent implements OnInit {
   lastFilter: any;
 
 
-  constructor(private Timersservice: TimersService, private fb: FormBuilder) {
+  constructor(private Timersservice: TimersService, private fb: FormBuilder, private cd: ChangeDetectorRef) {
     let theme_type = localStorage.getItem('theme_type');
     if (theme_type != "theme-default") {
       $('body').addClass('theme-yellow-light').removeClass("theme-default");
@@ -101,6 +101,9 @@ export class MattersComponent implements OnInit {
       this.child.getMatterList({ 'Active': 'active', 'SearchString': '', 'FeeEarner': '', 'UninvoicedWork': 'All' });
     }
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
+  }
+  ngAfterViewInit() {
+    this.cd.detectChanges();
   }
   getDropValue() {
     let d = {};

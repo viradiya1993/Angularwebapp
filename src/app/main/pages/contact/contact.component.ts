@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-import {  TableColumnsService, MainAPiServiceService } from '../../../_services';
+import { TableColumnsService, MainAPiServiceService } from '../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs/Subscription';
   encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
-export class ContactComponent implements OnInit {
+export class ContactComponent implements OnInit, AfterViewInit {
   subscription: Subscription;
   highlightedRows: any;
   ColumnsObj = [];
@@ -39,7 +39,8 @@ export class ContactComponent implements OnInit {
     private TableColumnsService: TableColumnsService,
     private toastr: ToastrService,
     private _formBuilder: FormBuilder,
-    private _mainAPiServiceService:MainAPiServiceService,
+    private _mainAPiServiceService: MainAPiServiceService,
+    private cd: ChangeDetectorRef
   ) {
     this.contactFilter = this._formBuilder.group({
       ContactType: ['all'],
@@ -52,7 +53,6 @@ export class ContactComponent implements OnInit {
   Contactdata;
 
   ngOnInit() {
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.getTableFilter();
     if (JSON.parse(localStorage.getItem('contact_Filter'))) {
       this.filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
@@ -63,6 +63,10 @@ export class ContactComponent implements OnInit {
       localStorage.setItem('contact_Filter', JSON.stringify(this.filterVals));
     }
     this.LoadData(this.filterVals);
+  }
+  ngAfterViewInit() {
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
+    this.cd.detectChanges();
   }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
@@ -89,9 +93,9 @@ export class ContactComponent implements OnInit {
   LoadData(data) {
     // GetContact
     //  this._mainAPiServiceService.getSetData(postData, 'SetActivity').subscribe
-    this.Contactdata=[];
+    this.Contactdata = [];
     this.isLoadingResults = true;
-    this.subscription= this._mainAPiServiceService.getSetData(data, 'GetContact').subscribe(response => {
+    this.subscription = this._mainAPiServiceService.getSetData(data, 'GetContact').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Contactdata = new MatTableDataSource(response.DATA.CONTACTS);
         this.Contactdata.paginator = this.paginator;
@@ -161,9 +165,9 @@ export class ContactComponent implements OnInit {
     this.LoadData(this.filterVals);
 
   }
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscription.unsubscribe();
-  } 
+  }
 }
 
 

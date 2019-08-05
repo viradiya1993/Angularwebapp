@@ -13,7 +13,9 @@ export class BehaviorService {
   public packs$: BehaviorSubject<any> = new BehaviorSubject(null);
   public EmailGenerateData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public TemplateGenerateData$: BehaviorSubject<any> = new BehaviorSubject(null);
-  // public packGuid$: BehaviorSubject<any> = new BehaviorSubject(null);
+
+  public DocumentRegisterData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public SpendMoneyData$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(private http: HttpClient) { }
 
   matterInvoiceData(matterInvoice: any) {
@@ -34,5 +36,11 @@ export class BehaviorService {
     this.TemplateGenerateData$.next(d);
   }
 
+  DocumentRegisterData(d){
+    this.DocumentRegisterData$.next(d);
+  }
+  SpendMoneyData(d){
+    this.SpendMoneyData$.next(d);
+  }
 
 }

@@ -8,7 +8,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import * as $ from 'jquery';
 import { MatterPopupComponent } from 'app/main/pages/matters/matter-popup/matter-popup.component';
 import { ContactDialogComponent } from './../../../main/pages/contact/contact-dialog/contact-dialog.component';
-import { MainAPiServiceService,TableColumnsService } from 'app/_services';
+import { MainAPiServiceService,TableColumnsService, BehaviorService } from 'app/_services';
+import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class DocumentRegisterComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private dialog: MatDialog,
     private toastr: ToastrService,
+    private behaviorService: BehaviorService,
     private _mainAPiServiceService: MainAPiServiceService,
     private TableColumnsService: TableColumnsService,
   ) 
@@ -72,6 +74,7 @@ export class DocumentRegisterComponent implements OnInit {
     this.isLoadingResults=true;
     this._mainAPiServiceService.getSetData({}, 'GetDocument').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
+        this.behaviorService.DocumentRegisterData(res.DATA.DOCUMENTS[0]);
         this.DocumentAllData = new MatTableDataSource(res.DATA.DOCUMENTS);
         this.DocumentAllData.sort = this.sort;
         this.DocumentAllData.paginator = this.paginator;
@@ -107,14 +110,34 @@ export class DocumentRegisterComponent implements OnInit {
       });
     }
   }
+
+  DocumentDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '100%';
+    dialogConfig.disableClose = true;
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'matters', 'list': '' };
+    //open pop-up
+    const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
+    //Save button click
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.displayedColumns = result.columObj;
+        this.ColumnsObj = result.columnameObj;
+        this.tempColobj = result.tempColobj;
+        if (!result.columObj) {
+          this.DocumentAllData = new MatTableDataSource([]);
+          this.DocumentAllData.paginator = this.paginator;
+          this.DocumentAllData.sort = this.sort;
+        } else {
+          // this.getMatterList(this.lastFilter);
+        }
+      }
+    });
+  }
+
   //FilterSearch
   FilterSearch(filterValue:any){
     this.DocumentAllData.filter = filterValue;
-  }
-  //DocumentDialog
-
-  DocumentDialog(){
-    console.log('DocumentDialog Work!!');
   }
   //FloderChnage
   FloderChnage(value){

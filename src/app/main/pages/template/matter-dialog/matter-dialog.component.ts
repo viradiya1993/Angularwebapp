@@ -141,8 +141,8 @@ SendMain(val){
   var credits = '0';
   var subject = val.SUBJECT;
   var support_mail = val.TOADDRESS;
-  var mail_email = "gunjan@moontechnolabs.com";
-  var mail_id = "gunjan@moontechnolabs.com";
+  // var mail_email = "gunjan@moontechnolabs.com";
+  // var mail_id = "gunjan@moontechnolabs.com";
 
   var user_agent = browser;
   var newLine = escape("\n");

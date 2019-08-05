@@ -22,17 +22,15 @@ import { PaymentComponent } from './payment/payment.component';
 import {MatExpansionModule} from '@angular/material/expansion';
 
 const routes = [
-    { path: '', redirectTo: '/account-management/basicinfo', pathMatch: 'full', canActivate: [AuthGuard] },
-    {
-        path: '', component: AccountManagmentComponent, children: [
-          { path: 'basicinfo', component: AccountManagmentComponent },
-          { path: 'products', component: AccountManagmentComponent },
-          { path: 'receipts', component: AccountManagmentComponent },
-          { path: 'payment', component: AccountManagmentComponent },
-         
-        ], canActivate: [AuthGuard]
-      }
-//   { path: '', component:AccountManagmentComponent , canActivate: [AuthGuard] },
+
+  { path: 'account-management/basicinfo', component: AccountManagmentComponent, canActivate: [AuthGuard] },
+  // { path: 'system-setting/name', component: SystemSettingComponent },
+  { path: 'account-management/basicinfo', component: AccountManagmentComponent },
+  { path: 'account-management/products', component: AccountManagmentComponent },
+  { path: 'account-management/receipts', component: AccountManagmentComponent },
+  { path: 'account-management/payment',  component: AccountManagmentComponent },
+
+  // { path: '', component:AccountManagmentComponent , canActivate: [AuthGuard] },
 
 ];
 @NgModule({  

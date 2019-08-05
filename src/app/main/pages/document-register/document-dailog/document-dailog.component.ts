@@ -75,11 +75,20 @@ export class DocumentDailogComponent implements OnInit {
       DocumentName:[],
       Keywords:[]
     });
-
+    let begin = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
+    this.DocumentRegiData.GENERATEDATESEND=begin;
     if(this.action=='edit'){
       this.LoadData();
     }else{
-
+  
+      this._mainAPiServiceService.getSetData({DOCUMENTGUID: this.DocRegData.DOCUMENTGUID}, 'GetDocument').subscribe(res => {
+        if (res.CODE == 200 && res.STATUS == "success") {
+       
+          this.SendDataArray=res.DATA.DOCUMENTS[0];
+        }
+      }, err => {
+        this.toastr.error(err);
+      });
     }
       
 
@@ -134,8 +143,8 @@ export class DocumentDailogComponent implements OnInit {
   }
   //Document Save
   DocumentSave(){
-  
-console.log(this.SendDataArray);
+    this.isspiner = true;
+  let MatterData=JSON.parse(localStorage.getItem('set_active_matters'));
     if(this.action=="edit"){
         this.FormAction="update";
         this.DocGUID=this.SendDataArray.DOCUMENTGUID;
@@ -144,10 +153,9 @@ console.log(this.SendDataArray);
         this.FormAction="insert";
         this.DocGUID="";
     }
-
     let Data={
-      CONTEXT: " ",
-      CONTEXTGUID:" ",
+      CONTEXT: "Matter",
+      CONTEXTGUID:this.SendDataArray.CONTEXTGUID,
       DESCRIPTION: this.DocumentRegiData.DESCRIPTION_,
       DOCUMENTAUTHOR:this.DocumentRegiData.DOCUMENTAUTHOR,
       DOCUMENTCLASS: Number(this.DocumentRegiData.DOCUMENTCLASS),
@@ -160,7 +168,7 @@ console.log(this.SendDataArray);
       GENERATEDATE: this.DocumentRegiData.GENERATEDATESEND,
       GENERATETIME:this.DocumentRegiData.GENERATETIME,
       KEYWORDS: this.DocumentRegiData.KEYWORDS,
-      MATTERGUID: this.SendDataArray.MATTERGUID,
+      MATTERGUID: MatterData.MATTERGUID,
       TEMPLATENAME: this.SendDataArray.TEMPLATENAME,
 
     }

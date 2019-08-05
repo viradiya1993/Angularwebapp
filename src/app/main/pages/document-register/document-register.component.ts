@@ -54,7 +54,8 @@ export class DocumentRegisterComponent implements OnInit {
     this.LoadData();
    
     let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
-    this.documentform.controls['matter'].setValue(mattersData.MATTER); 
+    this.documentform.controls['matter'].setValue(mattersData.MATTER);
+    this.documentform.controls['Client'].setValue(mattersData.Client); 
   }
 
   getTableFilter() {

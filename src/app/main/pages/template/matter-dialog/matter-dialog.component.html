@@ -46,18 +46,19 @@
     </div>
 
 
-    <div mat-dialog-content class="mat-typography" *ngIf="whichTypeTemplate == 'Pack'">
-
+    <div mat-dialog-content class="mat-typography">
         <div class="example-loading-shade" *ngIf="isLoadingResults">
             <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
         </div>
-        <div class="popup_body document_generated_main_div">
-            <div class="middle" fxLayoutAlign="start center"><span>LOADING.......</span> </div>
+        <div class="popup_body document_generated_main_div"  *ngIf="whichTypeTemplate == 'Pack'">
+                
+                <!-- <span  fxLayoutAlign="start center">LOADING.......</span> -->
+
             <div *ngFor="let val of PacksDocument; let index = index" fxLayout="row" fxLayoutAlign="start center"
                 fxFlex="1 0 auto" class="document_generated_main_first">
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="button"
+                <div fxLayout="row" fxLayoutAlign="start start" fxFlex="1 0 auto" class="button"
                     class="document_generated_main_last">
-                    <div class="middle" fxLayoutAlign="start center"><span>{{index}} Document has been produced.</span>
+                    <div class="middle" fxLayoutAlign="start start"><span>{{index}} Document has been produced.</span>
                     </div>
                     <a href="{{this.base_url}}{{val.FILENAME}}" target="_blank">
                         <button mat-raised-button color="accent">Click here to view it</button>
@@ -66,9 +67,9 @@
             </div>
             <div *ngFor="let val of PacksEmail; let index = index" fxLayout="row" fxLayoutAlign="start center"
                 fxFlex="1 0 auto" class="document_generated_main_first">
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="button"
+                <div fxLayout="row" fxLayoutAlign="start start" fxFlex="1 0 auto" class="button"
                     class="document_generated_main_last">
-                    <div class="middle" fxLayoutAlign="start center"><span>{{index}} Email has been produced.</span>
+                    <div class="middle" fxLayoutAlign="start start"><span>{{index}} Email has been produced.</span>
                     </div>
                     <a target="_blank">
                         <button mat-raised-button (click)="SendMain(val)" color="accent">Click here to view it</button>

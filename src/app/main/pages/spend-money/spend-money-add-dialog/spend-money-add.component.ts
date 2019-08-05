@@ -7,11 +7,12 @@ import { ContactSelectDialogComponent } from '../../contact/contact-select-dialo
 import { MatterDialogComponent } from '../../time-entries/matter-dialog/matter-dialog.component';
 import * as $ from 'jquery';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-import { MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { MatSort } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { round } from 'lodash';
+import { BankingDialogComponent } from '../../banking/banking-dialog.component';
 @Component({
   selector: 'app-spend-money-add',
   templateUrl: './spend-money-add.component.html',
@@ -65,16 +66,26 @@ export class SpendMoneyAddComponent implements OnInit {
   isItemSaveClicked: string;
   FinalExGSTAmount: number;
   itemAmountExGST: number;
+  SendMoney_data: any=[];
+  SendMoney_dataGUID: any;
   constructor(public dialogRef: MatDialogRef<SpendMoneyAddComponent>,
     @Inject(MAT_DIALOG_DATA) public _data: any,
     private _formBuilder: FormBuilder,
     public MatDialog: MatDialog,
     private toastr: ToastrService,
+    public behaviorService:BehaviorService,
     public _matDialog: MatDialog, public datepipe: DatePipe, public _mainAPiServiceService: MainAPiServiceService) {
     this.action = _data.action;
 
     this.dialogTitle = this.action === 'edit' ? 'Update Spend Money' : 'Add Spend Money';
     this.getPayee({});
+
+    this.behaviorService.SpendMoneyData$.subscribe(result => {
+      if(result){
+      this.SendMoney_data=result;
+        
+      }          
+    });
   }
   ngOnInit() {
     //for Data Table hideshow 
@@ -98,6 +109,7 @@ export class SpendMoneyAddComponent implements OnInit {
       AmountIncGST: [''],
       GSTType: [''],
       GST1: [''],
+      BankacGUID:[''],
       AmountExGST: [''],
       Expenseac: [''],
       Note: [''],
@@ -107,12 +119,25 @@ export class SpendMoneyAddComponent implements OnInit {
       Equityac: [''],
       DatePaidForSend: [''],
       DateIncurredForSend: [''],
-      MatterGUID: ['']
+      MatterGUID: [''],
+      ExpenseacGUID:['']
     });
 
     if (this.action == 'edit') {
       $('#expac').addClass('menu-disabled');
       this.expac = true;
+      // this._mainAPiServiceService.getSetData({EXPENDITUREGUID:this.SendMoney_dataGUID.EXPENDITUREGUID}, 'GetExpenditure').subscribe(res => {
+      //   console.log(res);
+      //   this.SendMoney_data=res.DATA.EXPENDITURES[0]
+      //   if (res.CODE == 200 && res.STATUS == "success") {
+        
+      
+      //   }
+      //   // this.isLoadingResults = false;
+      // }, err => {
+      //   this.toastr.error(err);
+      //   // this.isLoadingResults = false;
+      // });
       this.forEditshowpopupData();
     } else {
       this.forAddshowpopupData();
@@ -120,49 +145,49 @@ export class SpendMoneyAddComponent implements OnInit {
   }
 
   forEditshowpopupData() {
-    let SendMoney_data = JSON.parse(localStorage.getItem('spendMoney_data'));
-    let DatePaid = SendMoney_data.DATE.split("/");
+    
+    let DatePaid = this.SendMoney_data.DATE.split("/");
     let DATE = new Date(DatePaid[1] + '/' + DatePaid[0] + '/' + DatePaid[2]);
-    let DateIncurred = SendMoney_data.DATE.split("/");
+    let DateIncurred = this.SendMoney_data.DATE.split("/");
     let ReceiveDATE = new Date(DateIncurred[1] + '/' + DateIncurred[0] + '/' + DateIncurred[2]);
     this.spendmoneyForm.controls['DateIncurred'].setValue(ReceiveDATE);
     this.spendmoneyForm.controls['DatePaid'].setValue(DATE);
     //for sending date 
-    this.spendmoneyForm.controls['DateIncurredForSend'].setValue(SendMoney_data.ReceiveDATE);
-    this.spendmoneyForm.controls['DatePaidForSend'].setValue(SendMoney_data.DATE);
+    this.spendmoneyForm.controls['DateIncurredForSend'].setValue(this.SendMoney_data.ReceiveDATE);
+    this.spendmoneyForm.controls['DatePaidForSend'].setValue(this.SendMoney_data.DATE);
     //call first row and datatble -> start
-    this.getDataForTable = SendMoney_data.EXPENDITUREITEMS;
+    this.getDataForTable = this.SendMoney_data.EXPENDITUREITEMS;
     this.highlightedRows = 0;
     this.getDataForTable.paginator = this.paginator;
     this.getDataForTable.sort = this.sort;
 
     this.spendmoneyForm.controls['GST1'].disable();
-    this.paidtype = SendMoney_data.STATUS
+    this.paidtype = this.SendMoney_data.STATUS
     //globally value set 
-    this.spendmoneyForm.controls['Notes'].setValue(SendMoney_data.NOTE);
-    this.spendmoneyForm.controls['ChequeNo'].setValue(SendMoney_data.CHEQUENO);
-    this.spendmoneyForm.controls['Type'].setValue(SendMoney_data.EXPENDITURETYPE);
-    this.spendmoneyForm.controls['Payee'].setValue(SendMoney_data.PAYEE);
-    this.spendmoneyForm.controls['Amount'].setValue(SendMoney_data.AMOUNT + SendMoney_data.GST);
-    this.spendmoneyForm.controls['GST'].setValue(SendMoney_data.GST);
+    this.spendmoneyForm.controls['Notes'].setValue(this.SendMoney_data.NOTE);
+    this.spendmoneyForm.controls['ChequeNo'].setValue(this.SendMoney_data.CHEQUENO);
+    this.spendmoneyForm.controls['Type'].setValue(this.SendMoney_data.EXPENDITURETYPE);
+    this.spendmoneyForm.controls['Payee'].setValue(this.SendMoney_data.PAYEE);
+    this.spendmoneyForm.controls['Amount'].setValue(this.SendMoney_data.AMOUNT + this.SendMoney_data.GST);
+    this.spendmoneyForm.controls['GST'].setValue(this.SendMoney_data.GST);
     // inner item 
-    if (SendMoney_data.EXPENDITUREITEMS.length != 0) {
-      this.editMoney(SendMoney_data.EXPENDITUREITEMS[0], 0);
-      this.spendmoneyForm.controls['Class'].setValue(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
-      this.spendmoneyForm.controls['GST1'].setValue(SendMoney_data.EXPENDITUREITEMS[0].GST.toString());
-      this.spendmoneyForm.controls['AmountIncGST'].setValue(SendMoney_data.EXPENDITUREITEMS[0].AMOUNT);
-      this.spendmoneyForm.controls['Note'].setValue(SendMoney_data.EXPENDITUREITEMS[0].NOTE);
-      this.spendmoneyForm.controls['Matter'].setValue(SendMoney_data.EXPENDITUREITEMS[0].SHORTNAME);
+    if (this.SendMoney_data.EXPENDITUREITEMS.length != 0) {
+      this.editMoney(this.SendMoney_data.EXPENDITUREITEMS[0], 0);
+      this.spendmoneyForm.controls['Class'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
+      this.spendmoneyForm.controls['GST1'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].GST.toString());
+      this.spendmoneyForm.controls['AmountIncGST'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT);
+      this.spendmoneyForm.controls['Note'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].NOTE);
+      this.spendmoneyForm.controls['Matter'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].SHORTNAME);
 
-      if (round(SendMoney_data.EXPENDITUREITEMS[0].AMOUNT / 10) == round(SendMoney_data.EXPENDITUREITEMS[0].GST)) {
+      if (round(this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT / 10) == round(this.SendMoney_data.EXPENDITUREITEMS[0].GST)) {
         this.spendmoneyForm.controls['GSTType'].setValue("1.1");
         this.GstTypeDiff = "1.1";
         this.amountCal();
-      } else if (SendMoney_data.EXPENDITUREITEMS[0].GST == 0) {
+      } else if (this.SendMoney_data.EXPENDITUREITEMS[0].GST == 0) {
         this.spendmoneyForm.controls['GSTType'].setValue("No GST");
         this.GstTypeDiff = "No GST";
         this.amountCal();
-      } else if (SendMoney_data.EXPENDITUREITEMS[0].AMOUNT / 10 != SendMoney_data.EXPENDITUREITEMS[0].GST) {
+      } else if (this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT / 10 != this.SendMoney_data.EXPENDITUREITEMS[0].GST) {
         this.spendmoneyForm.controls['GSTType'].setValue("LessThen 10% GST");
         this.GstTypeDiff = "LessThen 10% GST";
         this.amountCal();
@@ -177,21 +202,20 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['Note'].setValue(" ");
       this.spendmoneyForm.controls['Matter'].setValue(" ");
     }
-    if (SendMoney_data.MULTILINE == 0) {
+    if (this.SendMoney_data.MULTILINE == 0) {
       this.spendmoneyForm.controls['MultiLineExpense'].setValue(0);
-      if (SendMoney_data.EXPENDITUREITEMS.length != 0) {
+      if (this.SendMoney_data.EXPENDITUREITEMS.length != 0) {
         this.multilineCheckbox();
       }
     } else {
       this.spendmoneyForm.controls['MultiLineExpense'].setValue(1);
       this.multilineCheckbox();
     }
-    this.Classtype(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
+    this.Classtype(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
   }
   forAddshowpopupData() {
     this.isItemSaveClicked = 'no';
     this.getDataForTable = [];
-    // let SendMoney_data = JSON.parse(localStorage.getItem('spendMoney_data'));
 
     this.spendmoneyForm.controls['DateIncurred'].setValue(new Date(), 'dd/MM/yyyy');
     this.spendmoneyForm.controls['DatePaid'].setValue(new Date(), 'dd/MM/yyyy');
@@ -362,7 +386,7 @@ export class SpendMoneyAddComponent implements OnInit {
 
   multilineCheckbox() {
     this.size = 20;
-    let SendMoney_data = JSON.parse(localStorage.getItem('spendMoney_data'));
+
     if (this.f.MultiLineExpense.value == true) {
       this.dataTableHide = "yes";
       this.Main3btn = 'enable';
@@ -387,21 +411,21 @@ export class SpendMoneyAddComponent implements OnInit {
       //   this.commonEmptyFiild();
       // }
       else {
-        this.spendmoneyForm.controls['Class'].setValue(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
-        this.spendmoneyForm.controls['GST1'].setValue(SendMoney_data.EXPENDITUREITEMS[0].GST.toString());
-        this.spendmoneyForm.controls['Note'].setValue(SendMoney_data.EXPENDITUREITEMS[0].NOTE);
-        this.spendmoneyForm.controls['AmountIncGST'].setValue(SendMoney_data.EXPENDITUREITEMS[0].AMOUNT.toString());
+        this.spendmoneyForm.controls['Class'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
+        this.spendmoneyForm.controls['GST1'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].GST.toString());
+        this.spendmoneyForm.controls['Note'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].NOTE);
+        this.spendmoneyForm.controls['AmountIncGST'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT.toString());
         this.spendmoneyForm.controls['Expenseac'].setValue('');
-        this.spendmoneyForm.controls['AmountExGST'].setValue(SendMoney_data.EXPENDITUREITEMS[0].AMOUNT - SendMoney_data.EXPENDITUREITEMS[0].GST);
-        if (round(SendMoney_data.EXPENDITUREITEMS[0].AMOUNT / 10) == round(SendMoney_data.EXPENDITUREITEMS[0].GST)) {
+        this.spendmoneyForm.controls['AmountExGST'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT - this.SendMoney_data.EXPENDITUREITEMS[0].GST);
+        if (round(this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT / 10) == round(this.SendMoney_data.EXPENDITUREITEMS[0].GST)) {
           this.spendmoneyForm.controls['GSTType'].setValue("1.1");
           this.GstTypeDiff = "1.1"
           this.amountCal();
-        } else if (SendMoney_data.EXPENDITUREITEMS[0].GST == 0) {
+        } else if (this.SendMoney_data.EXPENDITUREITEMS[0].GST == 0) {
           this.spendmoneyForm.controls['GSTType'].setValue("No GST");
           this.GstTypeDiff = "No GST"
           this.amountCal();
-        } else if (SendMoney_data.EXPENDITUREITEMS[0].AMOUNT / 10 == SendMoney_data.EXPENDITUREITEMS[0].GST) {
+        } else if (this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT / 10 == this.SendMoney_data.EXPENDITUREITEMS[0].GST) {
           this.spendmoneyForm.controls['GSTType'].setValue("LessThen 10% GST");
           this.GstTypeDiff = "LessThen 10% GST"
           this.amountCal();
@@ -464,6 +488,7 @@ export class SpendMoneyAddComponent implements OnInit {
         AMOUNT: this.f.AmountIncGST.value,
         GST: this.f.GST1.value,
         EXPENDITUREGUID: '',
+        EXPENSEACCOUNTGUID:this.f.ExpenseacGUID.value,
         MATTERGUID: this.f.MatterGUID.value,
         SHORTNAME: this.f.Matter.value,
         NOTE: this.f.Note.value
@@ -508,6 +533,7 @@ export class SpendMoneyAddComponent implements OnInit {
     this.spendmoneyForm.controls['GST1'].setValue(row.GST);
     this.spendmoneyForm.controls['Note'].setValue(row.NOTE);
     this.spendmoneyForm.controls['Matter'].setValue(row.SHORTNAME);
+    // this.spendmoneyForm.controls['Expenseac'].setValue(row.SHORTNAME);
     this.commmonDisabled();
   }
   deleteElement() {
@@ -563,7 +589,7 @@ export class SpendMoneyAddComponent implements OnInit {
       EXPENDITURECLASS: this.f.Class.value,
       EXPENDITUREGUID: '',
       EXPENDITUREITEMGUID: "",
-      EXPENSEACCOUNTGUID: "",
+      EXPENSEACCOUNTGUID:this.f.ExpenseacGUID.value,
       GST: Number(this.f.GST1.value),
       MATTERGUID: this.f.MatterGUID.value,
       NOTE: this.f.Note.value,
@@ -576,15 +602,13 @@ export class SpendMoneyAddComponent implements OnInit {
     this.setMainAmount = this.FinalTotal;
     this.setMainGST = this.FinalTotalGST;
     this.getDataForTable.forEach(element => {
-
-      this.itemAmountExGST=Number(element.AMOUNT)-Number(element.GST);
-
-      this.sendItem.push({
+    this.itemAmountExGST=Number(element.AMOUNT)-Number(element.GST);
+    this.sendItem.push({
         // AMOUNT: Number(element.AMOUNT),
         EXPENDITURECLASS: element.EXPENDITURECLASS,
         EXPENDITUREGUID: '',
         EXPENDITUREITEMGUID: "",
-        EXPENSEACCOUNTGUID: "",
+        EXPENSEACCOUNTGUID:element.EXPENSEACCOUNTGUID,
         GST: Number(element.GST),
         MATTERGUID: element.MATTERGUID,
         NOTE: element.NOTE,
@@ -595,7 +619,6 @@ export class SpendMoneyAddComponent implements OnInit {
     });
   }
   FinalSaveData() {
-    let SendMoney_data = JSON.parse(localStorage.getItem('spendMoney_data'));
     if (this.action != 'edit' && this.f.MultiLineExpense.value == false) {
       this.CommonSendOneLineData();
 
@@ -603,9 +626,9 @@ export class SpendMoneyAddComponent implements OnInit {
       this.CommonSendOneLineData();
     } else if (this.action != 'edit' && this.f.MultiLineExpense.value == true && this.isItemSaveClicked == 'yes') {
       this.commonSendMultiLineData();
-    } else if (this.action == 'edit' && SendMoney_data.MULTILINE == 1 && this.f.MultiLineExpense.value == true) {
+    } else if (this.action == 'edit' && this.SendMoney_data.MULTILINE == 1 && this.f.MultiLineExpense.value == true) {
       this.commonSendMultiLineData();
-    } else if (this.action == 'edit' && SendMoney_data.MULTILINE == 1 && this.f.MultiLineExpense.value == false) {
+    } else if (this.action == 'edit' && this.SendMoney_data.MULTILINE == 1 && this.f.MultiLineExpense.value == false) {
       // first push and then get 
       // need to remove class from hml and show box 
       this.getDataForTable.push({
@@ -613,7 +636,7 @@ export class SpendMoneyAddComponent implements OnInit {
         EXPENDITURECLASS: this.f.Class.value,
         EXPENDITUREGUID: '',
         EXPENDITUREITEMGUID: "",
-        EXPENSEACCOUNTGUID: "",
+        EXPENSEACCOUNTGUID:this.f.ExpenseacGUID.value,
         GST: Number(this.f.GST1.value),
         MATTERGUID: this.f.MatterGUID.value,
         NOTE: this.f.Note.value,
@@ -624,10 +647,10 @@ export class SpendMoneyAddComponent implements OnInit {
       });
       this.commonSendMultiLineData();
 
-    } else if (this.action == 'edit' && SendMoney_data.MULTILINE == 0 && this.f.MultiLineExpense.value == false) {
+    } else if (this.action == 'edit' && this.SendMoney_data.MULTILINE == 0 && this.f.MultiLineExpense.value == false) {
       this.CommonSendOneLineData();
 
-    } else if (this.action == 'edit' && SendMoney_data.MULTILINE == 0 && this.f.MultiLineExpense.value == true) {
+    } else if (this.action == 'edit' && this.SendMoney_data.MULTILINE == 0 && this.f.MultiLineExpense.value == true) {
       this.commonSendMultiLineData();
     }
     // for multiline   
@@ -641,7 +664,7 @@ export class SpendMoneyAddComponent implements OnInit {
 
 
     let Data = {
-      EXPENDITUREGUID: this.action == 'edit' ? SendMoney_data.EXPENDITUREGUID : " ",
+      EXPENDITUREGUID: this.action == 'edit' ? this.SendMoney_data.EXPENDITUREGUID : " ",
       EXPENDITURETYPE: this.f.Type.value,
       STATUS: this.f.Paid.value,
       CHEQUENO: this.f.ChequeNo.value,
@@ -651,7 +674,7 @@ export class SpendMoneyAddComponent implements OnInit {
       GST: this.setMainGST,
       RECEIVEDDATE: this.f.DateIncurredForSend.value,
       DATE: this.f.DatePaidForSend.value,
-      BANKACCOUNTGUID: 'ACCAAAAAAAAAAAA4',
+      BANKACCOUNTGUID:this.f.BankacGUID.value,
       USERCODE: '',
       SOURCEREFERENCE: this.f.Invoice.value,
       NOTE: this.f.Notes.value,
@@ -745,6 +768,38 @@ export class SpendMoneyAddComponent implements OnInit {
       this.isspiner = false;
     }, error => {
       this.toastr.error(error);
+    });
+  }
+  BankingDialogOpen(type: any) {
+
+    if(type==''){
+      if(this.classtype =="Expense" || this.classtype =="Matter Expense" || this.classtype =="Description" ||this.classtype =="Others"){
+        type="EXPENSE";
+      }else if(this.classtype =="Capital"){
+        type="ASSET";
+      }else if(this.classtype =="Pay GST"){
+        type="INCOME";
+      }else if(this.classtype =="Pay Tax"){
+        type="INCOME";
+      }else if(this.classtype =="Personal"){
+        type="EQUITY";
+      }
+    }
+    const dialogRef = this.MatDialog.open(BankingDialogComponent, {
+      disableClose: true, width: '100%', data: { AccountType: type }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if(type=="EXPENSE"){
+          this.spendmoneyForm.controls['Expenseac'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER + ' ' + result.MainList.ACCOUNTNAME);
+          this.spendmoneyForm.controls['ExpenseacGUID'].setValue(result.ACCOUNTGUID);
+
+        }else {
+            this.spendmoneyForm.controls['Bankac'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER + ' ' + result.MainList.ACCOUNTNAME);
+            this.spendmoneyForm.controls['BankacGUID'].setValue(result.ACCOUNTGUID);
+        }
+       
+      }
     });
   }
 }

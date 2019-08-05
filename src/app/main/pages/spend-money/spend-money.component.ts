@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { TableColumnsService, MainAPiServiceService } from 'app/_services';
+import { TableColumnsService, MainAPiServiceService, BehaviorService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import { MatTableDataSource, MatPaginator, MatDialogConfig, MatDialog, MatDatepickerInputEvent } from '@angular/material';
@@ -50,8 +50,8 @@ export class SpendMoneyComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private dialog: MatDialog,
     public datepipe: DatePipe,
+    public behaviorService: BehaviorService
   ) {
-    localStorage.removeItem('spendMoney_data');
     this.getTableFilter();
   }
   ngOnInit() {
@@ -162,12 +162,11 @@ export class SpendMoneyComponent implements OnInit {
         this.Spendmoneydata.paginator = this.paginator;
         this.Spendmoneydata.sort = this.sort;
         if (response.DATA.EXPENDITURES[0]) {
-          localStorage.setItem('spendMoney_data', JSON.stringify(response.DATA.EXPENDITURES[0]));
+          this.behaviorService.SpendMoneyData(response.DATA.EXPENDITURES[0]);
           this.highlightedRows = response.DATA.EXPENDITURES[0].EXPENDITUREGUID;
           this.currentMatterData = response.DATA.EXPENDITURES[0].EXPENDITUREGUID;
         } else {
           // this.toastr.error("No Data Selected");
-          localStorage.removeItem("spendMoney_data ");
         }
 
       }
@@ -186,7 +185,7 @@ export class SpendMoneyComponent implements OnInit {
   editmatter(Row: any) {
     this.currentMatterData = Row;
     console.log(Row);
-    localStorage.setItem('spendMoney_data', JSON.stringify(Row));
+    this.behaviorService.SpendMoneyData(Row);
   }
 
   openDialog() {

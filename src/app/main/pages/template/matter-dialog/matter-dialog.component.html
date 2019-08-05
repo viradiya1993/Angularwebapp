@@ -35,7 +35,7 @@
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="document_generated_main_first">
                 <div class="middle" fxLayoutAlign="start center">The {{filefolder_Name}} has been produced.</div>
             </div>
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="button"
+            <div  *ngFor="let val of PacksEmail; let index = index"  fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="button"
                 class="document_generated_main_last">
                 <a target="_blank">
                     <button mat-raised-button (click)="SendMain(val)" color="accent">Click here to view it</button>

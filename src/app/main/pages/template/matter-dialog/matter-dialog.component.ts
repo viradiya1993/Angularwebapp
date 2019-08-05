@@ -96,11 +96,12 @@ export class MatterDialogComponentForTemplate implements OnInit {
 
         this.filefolderUrl=response.DATA.DOCUMENTS[0].FILENAME;     
         }else if(this._data.Type=="Email"){
-         this.emailToadd=response.DATA.EMAILS[0].TOADDRESS;
-         this.emailBCC=response.DATA.EMAILS[0].BCCADDRESS;
-         this.emailCC=response.DATA.EMAILS[0].CCADDRESS;
-         this.emailSUBJECT=response.DATA.EMAILS[0].SUBJECT;
-         this.emailCONTENT=response.DATA.EMAILS[0].CONTENT;
+          this.PacksEmail=response.DATA.EMAILS;
+        //  this.emailToadd=response.DATA.EMAILS[0].TOADDRESS;
+        //  this.emailBCC=response.DATA.EMAILS[0].BCCADDRESS;
+        //  this.emailCC=response.DATA.EMAILS[0].CCADDRESS;
+        //  this.emailSUBJECT=response.DATA.EMAILS[0].SUBJECT;
+        //  this.emailCONTENT=response.DATA.EMAILS[0].CONTENT;
         //  window.open("https://mail.google.com/mail/u/0/?view=cm&fs=1&to=someone@example.com&su=SUBJECT&body=BODY&bcc=someone.else@example.com&tf=1");        
         }else if(this._data.Type=="Pack"){
           this.IsLoading='false';
@@ -135,7 +136,7 @@ export class MatterDialogComponentForTemplate implements OnInit {
 
 
 SendMain(val){
-
+  console.log(val);
   var browser = "agent";
   var credits = '0';
   var subject = val.SUBJECT;

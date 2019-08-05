@@ -11,77 +11,77 @@
       <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
           <form [formGroup]="DocumentForm" fxLayout="column" fxFlex="1 0 auto" name="form">
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-              <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
+              <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.GENERATEDATE,'has-warning':errorWarningData.Warning?.GENERATEDATE}">
                 <mat-label>Date</mat-label>
-                <input (ngModelChange)="DocumentDate($event)" formControlName="Document" matInput [matDatepicker]="picker3">
+                <input  (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)"  [(ngModel)]="DocumentRegiData.GENERATEDATE"  formControlName="Document" matInput [matDatepicker]="picker3">
                 <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                 <mat-datepicker #picker3></mat-datepicker>
               </mat-form-field>
-              <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+              <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.GENERATETIME,'has-warning':errorWarningData.Warning?.GENERATETIME}">
                   <mat-label>Time</mat-label>
-                  <input  formControlName ="time" matInput type="time" format="HH:mm" value="06:10">
+                  <input [(ngModel)]="DocumentRegiData.GENERATETIME"  formControlName ="time" matInput  format="HH:mm" value="06:10">
               </mat-form-field>
-              <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+              <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DOCUMENTCLASS,'has-warning':errorWarningData.Warning?.DOCUMENTCLASS}">
                   <mat-label>Class</mat-label>
-                    <mat-select #value name="selected" (selectionChange)="ClassChange($event.value)" formControlName="Class">
-                      <mat-option value="1">External Document</mat-option>
-                      <mat-option value="2">Phone Call</mat-option>
-                      <mat-option value="3">Generated Document</mat-option>
-                      <mat-option value="4">Generated Email</mat-option>
-                      <mat-option value="5">Recevied Email</mat-option>
+                    <mat-select [(ngModel)]="DocumentRegiData.DOCUMENTCLASS" #value name="selected" (selectionChange)="ClassChange($event.value)" formControlName="Class">
+                      <mat-option value="0">External Document</mat-option>
+                      <mat-option value="1">Phone Call</mat-option>
+                      <mat-option value="2">Generated Document</mat-option>
+                      <mat-option value="3">Generated Email</mat-option>
+                      <mat-option value="4">Recevied Email</mat-option>
                   </mat-select>
               </mat-form-field>
             </div>
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-              <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+              <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DESCRIPTION_,'has-warning':errorWarningData.Warning?.DESCRIPTION_}">
                   <mat-label>Description</mat-label>
-                  <input  formControlName='Description' matInput>
+                  <input [(ngModel)]="DocumentRegiData.DESCRIPTION_"  formControlName='Description' matInput>
               </mat-form-field>
-              <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+              <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DRAFTSTATUS,'has-warning':errorWarningData.Warning?.DRAFTSTATUS}">
                   <mat-label>Draft Status</mat-label>
-                    <mat-select #value name="selected" (selectionChange)="  ($event.value)" formControlName="Draft">
-                      <mat-option value="1">Draft</mat-option>
-                      <mat-option value="2">Complete</mat-option>
+                    <mat-select [(ngModel)]="DocumentRegiData.DRAFTSTATUS" #value name="selected" (selectionChange)="  ($event.value)" formControlName="Draft">
+                      <mat-option value="0">Draft</mat-option>
+                      <mat-option value="1">Complete</mat-option>
                   </mat-select>
               </mat-form-field>
             </div>  
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-              <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+              <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DOCUMENTNUMBER,'has-warning':errorWarningData.Warning?.DOCUMENTNUMBER}">
                 <mat-label>Doc No</mat-label>
-                <input  formControlName='DocNo' value="0" matInput>
+                <input [(ngModel)]="DocumentRegiData.DOCUMENTNUMBER" formControlName='DocNo' value="0" matInput>
               </mat-form-field>
-              <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+              <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DOCUMENTTYPE,'has-warning':errorWarningData.Warning?.DOCUMENTTYPE}">
                 <mat-label>Type</mat-label>
-                  <mat-select #value name="selected" (selectionChange)="TypeChnage($event.value)" formControlName="Type">
-                    <mat-option value="1">Electronic Document</mat-option>
-                    <mat-option value="2">Web Page</mat-option>
-                    <mat-option value="3">Physical Document</mat-option>
-                    <mat-option value="4">Generated Email</mat-option>
-                    <mat-option value="5">Other</mat-option>
+                  <mat-select [(ngModel)]="DocumentRegiData.DOCUMENTTYPE" #value name="selected" (selectionChange)="TypeChnage($event.value)" formControlName="Type">
+                    <mat-option value="0">Electronic Document</mat-option>
+                    <mat-option value="1">Web Page</mat-option>
+                    <mat-option value="2">Physical Document</mat-option>
+                    <mat-option value="3">Generated Email</mat-option>
+                    <mat-option value="4">Other</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-              <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+              <mat-form-field appearance="outline" fxFlex="50" class="pr-4" >
                   <mat-label>Author</mat-label>
-                  <input  formControlName='author' value="Diana Parkinson (no password)" matInput>
+                  <input [(ngModel)]="DocumentRegiData.DOCUMENTAUTHOR" formControlName='author'  matInput>
               </mat-form-field>
               <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                   <mat-label>Recipients</mat-label>
-                  <input  formControlName='Recipients' value="" matInput>
+                  <input   formControlName='Recipients' value="" matInput>
               </mat-form-field>
             </div>
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-              <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+              <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DOCUMENTNAME,'has-warning':errorWarningData.Warning?.DOCUMENTNAME}">
                   <mat-label>Document Name</mat-label>
-                  <input  formControlName='DocumentName' value="" matInput>
+                  <input [(ngModel)]="DocumentRegiData.DOCUMENTNAME" formControlName='DocumentName' value="" matInput>
               </mat-form-field>
               <mat-icon matSuffix (click)='DcoumentFloder()'>
               <img src="assets/icons/web_app/folder.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
               </mat-icon>
-              <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+              <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.KEYWORDS,'has-warning':errorWarningData.Warning?.KEYWORDS}">
                   <mat-label>Keywords</mat-label>
-                  <input  formControlName='Keywords' value="" matInput>
+                  <input [(ngModel)]="DocumentRegiData.KEYWORDS"  formControlName='Keywords' value="" matInput>
               </mat-form-field>
             </div>
           </form>

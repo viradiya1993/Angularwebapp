@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import { DatePipe } from '@angular/common';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import { $ } from 'protractor';
 
 @Component({
   selector: 'app-document-dailog',
@@ -77,7 +78,7 @@ export class DocumentDailogComponent implements OnInit {
     });
     let begin = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
     this.DocumentRegiData.GENERATEDATESEND=begin;
-    if(this.action=='edit'){
+    if(this.action=='edit' || this.action=='duplicate'){
       this.LoadData();
     }else{
   
@@ -149,7 +150,7 @@ export class DocumentDailogComponent implements OnInit {
         this.FormAction="update";
         this.DocGUID=this.SendDataArray.DOCUMENTGUID;
        
-    }else{
+    }else if(this.action=='new' || this.action=='duplicate'){
         this.FormAction="insert";
         this.DocGUID="";
     }
@@ -236,12 +237,13 @@ export class DocumentDailogComponent implements OnInit {
     data.VALIDATEONLY = false;
     this._mainAPiServiceService.getSetData(data, 'SetDocument').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-  
+      
         if (this.action !== 'edit') {
           this.toastr.success(' save successfully');
         } else {
           this.toastr.success(' update successfully');
         }
+       
         this.isspiner = false;
         this.dialogRef.close(true);
       } else if (response.CODE == 451 && response.STATUS == 'warning') {

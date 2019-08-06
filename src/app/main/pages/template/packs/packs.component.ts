@@ -1,5 +1,5 @@
 import { Component, OnInit, Injectable, ViewEncapsulation, ViewChild, AfterViewInit } from '@angular/core';
-import { MatDialog, MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material';
+import { MatDialog, MatTreeFlattener, MatTreeFlatDataSource, MatPaginator } from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
@@ -82,6 +82,7 @@ export class PacksComponent implements OnInit, AfterViewInit {
   MainKitArray: any = [];
   pageSize: any;
   sendItemDataToPopup: any = [];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   arrayForIndex: any = [];
   private _transformer = (node: FoodNode, level: number) => {
     return {
@@ -105,6 +106,8 @@ export class PacksComponent implements OnInit, AfterViewInit {
     this._transformer, node => node.level, node => node.expandable, node => node.KITITEMS);
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  
+
   highlightedRows: number;
   constructor(
     private _formBuilder: FormBuilder,
@@ -115,7 +118,6 @@ export class PacksComponent implements OnInit, AfterViewInit {
     private _mainAPiServiceService: MainAPiServiceService
   ) {
     this.loadData();
-
   }
   showData(element, level, parent) {
     element.forEach(x => {
@@ -150,6 +152,7 @@ export class PacksComponent implements OnInit, AfterViewInit {
     this._mainAPiServiceService.getSetData({}, 'GetKit').subscribe(res => {
       console.log(res);
       if (res.CODE == 200 && res.STATUS == "success") {
+        // this.dataSource.paginator = this.paginator;
         this.arrayForIndex = [];
         this.storeDataarray = res.DATA.KITS;
         this.showData(this.storeDataarray, 0, null);

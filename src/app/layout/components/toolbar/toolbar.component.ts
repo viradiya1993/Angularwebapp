@@ -98,6 +98,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     packsToobar: string;
     EmailtemplateData: any = [];
     SendMoney_dataGUID: any;
+    DocRegData:any=[];
 
 
     constructor(
@@ -757,18 +758,38 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             panelClass: 'Document-dialog',
             data: DcoumentPopdata
         });
-        dialogRef.afterClosed().subscribe(result => { });
+        dialogRef.afterClosed().subscribe(result => { 
+            if(result)
+            $("#refreshDOCREGTab").click();
+        });
     }
 
     // Delete Record Document
     DeleteDocument(): void {
+        this.behaviorService.DocumentRegisterData$.subscribe(result => {
+            if(result){
+              this.DocRegData=result;
+              
+            }          
+          });
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
+            let getContactGuId = localStorage.getItem('contactGuid');
 
+         
+            let postData = { FormAction: "delete", data: { DOCUMENTGUID:  this.DocRegData.DOCUMENTGUID } }
+            this._mainAPiServiceService.getSetData(postData, 'SetDocument').subscribe(res => {
+                if (res.STATUS == "success") {
+                    $('#refreshDOCREGTab').click();
+                    this.toastr.success(res.STATUS);
+                } else {
+                    this.toastr.error("You Can't Delete Contact Which One Is To Related to Matters");
+                }
+            });;
         });
     }
 
@@ -942,7 +963,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     DeletePack(): void {
         this.behaviorService.packs$.subscribe(result => {
             if (result) {
-                this.KitGUid = result.kitguid;
+                console.log(result);
+                this.KitGUid = result.KITGUID;
             }
         });
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {

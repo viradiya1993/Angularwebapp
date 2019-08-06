@@ -1,4 +1,4 @@
-<div id="matters" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
+<div id="contact" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
   <div class="content">
     <div class="center p-24 list_tbl_main more_tbl_clmn">
       <div class="matter-serach-div sticky_search_div">
@@ -51,6 +51,7 @@
                             <div class="example-loading-shade" *ngIf="isLoadingResults">
                                 <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                             </div>
+                            <!-- <button mat-raised-button color="primary" type="button" id="refreshDOCREGTab" (click)="refreshDOCREGTab();">Refresh</button> -->
                             <div class="example-containerdata">
                                 <table mat-table #table [dataSource]="DocumentAllData" matSort [@animateStagger]="{value:'50'}">
                                     <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
@@ -63,7 +64,9 @@
                                     </tr>
                                 </table>
                             </div>
-                              <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+
+                            <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+                    
                           </div>
                       </div>
                   </div>

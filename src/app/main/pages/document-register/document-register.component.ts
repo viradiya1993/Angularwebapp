@@ -57,7 +57,9 @@ export class DocumentRegisterComponent implements OnInit {
     this.documentform.controls['matter'].setValue(mattersData.MATTER);
     this.documentform.controls['Client'].setValue(mattersData.Client); 
   }
-
+  refreshDOCREGTab(){
+    this.LoadData();
+  }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('Matter Documents', '').subscribe(response => {
       console.log(response);

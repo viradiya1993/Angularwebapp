@@ -395,6 +395,13 @@ mat-nav-list a.disabled-click-cursor {
     opacity: 0.5;
 }
 
+button.mat-menu-item.disabled-click-cursor {
+    pointer-events: none;
+    cursor: not-allowed !important;
+    text-decoration: none;
+    opacity: 0.5;
+}
+
 .disabled-click img {
     opacity: 0.5;
 }

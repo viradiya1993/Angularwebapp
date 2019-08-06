@@ -23,7 +23,7 @@ export class ActivitiesComponent implements OnInit {
   displayedColumns: string[];
   ColumnsObj: any = [];
   tempColobj: any;
-  FilterVal:any=[];
+  FilterVal: any = [];
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   highlightedRows: any;
@@ -31,9 +31,9 @@ export class ActivitiesComponent implements OnInit {
   pageSize: any;
   Activitiesdata: any = [];
   lastFilter: any;
-  @ViewChild(MatPaginator)paginator: MatPaginator;
-  @ViewChild(MatSort)sort: MatSort;
-  
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -46,15 +46,15 @@ export class ActivitiesComponent implements OnInit {
     this.activitiesFilter = this._formBuilder.group({ TYPE: [" "] });
     this.getTableFilter();
 
-   
-  if(JSON.parse(localStorage.getItem('activity_filter'))){
-    this.FilterVal=JSON.parse(localStorage.getItem('activity_filter'));
-    this.activitiesFilter.controls['TYPE'].setValue(this.FilterVal.ACTIVITYTYPE);
-    this.loadData(this.FilterVal);
-  }else{
-     this.FilterVal=localStorage.setItem('activity_filter', JSON.stringify({ACTIVITYTYPE:' '}));
-     this.activitiesFilter.controls['TYPE'].setValue('');
-  }
+
+    if (JSON.parse(localStorage.getItem('activity_filter'))) {
+      this.FilterVal = JSON.parse(localStorage.getItem('activity_filter'));
+      this.activitiesFilter.controls['TYPE'].setValue(this.FilterVal.ACTIVITYTYPE);
+      this.loadData(this.FilterVal);
+    } else {
+      this.FilterVal = localStorage.setItem('activity_filter', JSON.stringify({ ACTIVITYTYPE: ' ' }));
+      this.activitiesFilter.controls['TYPE'].setValue('');
+    }
     this.loadData(this.FilterVal);
   }
   getTableFilter() {
@@ -72,9 +72,9 @@ export class ActivitiesComponent implements OnInit {
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
-  } 
-  refreshActivities(){
-    let filterval= JSON.parse(localStorage.getItem('activity_filter'))
+  }
+  refreshActivities() {
+    let filterval = JSON.parse(localStorage.getItem('activity_filter'))
     this.loadData(filterval);
   }
   loadData(filterData) {
@@ -87,6 +87,10 @@ export class ActivitiesComponent implements OnInit {
           localStorage.setItem('current_ActivityData', JSON.stringify(response.DATA.ACTIVITIES[0]));
         }
         this.Activitiesdata = new MatTableDataSource(response.DATA.ACTIVITIES);
+        this.Activitiesdata.paginator = this.paginator;
+        this.Activitiesdata.sort = this.sort;
+      } else {
+        this.Activitiesdata = new MatTableDataSource([]);
         this.Activitiesdata.paginator = this.paginator;
         this.Activitiesdata.sort = this.sort;
       }
@@ -121,9 +125,9 @@ export class ActivitiesComponent implements OnInit {
     });
   }
   TypeChange(EventVal: any) {
-   let filterval= JSON.parse(localStorage.getItem('activity_filter'))
-   filterval.ACTIVITYTYPE=EventVal.value;
-    localStorage.setItem('activity_filter', JSON.stringify({ACTIVITYTYPE:EventVal.value}));
+    let filterval = JSON.parse(localStorage.getItem('activity_filter'))
+    filterval.ACTIVITYTYPE = EventVal.value;
+    localStorage.setItem('activity_filter', JSON.stringify({ ACTIVITYTYPE: EventVal.value }));
     this.loadData(filterval);
   }
   setActiveData(rowData: any) {

@@ -715,7 +715,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                         WORKITEMGUID = localStorage.getItem('edit_WORKITEMGUID');
                     }
                 });
-                let postData = { FormAction: "delete", data: { WorkItemGuid: WORKITEMGUID } }
+                let postData = { FormAction: "delete", data: { WORKITEMGUID: WORKITEMGUID } }
                 this._mainAPiServiceService.getSetData(postData, 'SetWorkItems').subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {
                         $('#refreshTimeEntryTab').click();
@@ -1317,6 +1317,22 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
+    NewTimeEntry(){
+        const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                const dialogRef = this.dialog.open(ResumeTimerComponent, { width: '100%', disableClose: true, data: { 'edit': '', 'matterData': '' } });
+            dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // $('#refreshTimeEntryTab').click();
+            }
+
+        });
+                // localStorage.setItem('set_active_matters', JSON.stringify(result));
+                // this.router.navigate(['time-billing/work-in-progress/invoice']);
+            }
+        });
+    }
     //web19
     isInvoiceClick() {
         this.clickedBtn = 'invoiceDoc';
@@ -1517,6 +1533,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
         } else if (this.router.url == "/create-document/receive-money-template" || this.router.url == "/create-document/packs-receive-money-template") {
+            console.log("money component ");
             let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
             let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);

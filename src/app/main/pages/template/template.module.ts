@@ -33,7 +33,7 @@ const routes = [
   { path: '', redirectTo: '/create-document/contact-template', pathMatch: 'full', canActivate: [AuthGuard] },
 
   { path: '', redirectTo: '/create-document/email-matter-template', pathMatch: 'full', canActivate: [AuthGuard] },
-  { path: '', redirectTo: '/create-document/email-invoice-templete', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/create-document/email-invoice-template', pathMatch: 'full', canActivate: [AuthGuard] },
   { path: '', redirectTo: '/create-document/email-contact-template', pathMatch: 'full', canActivate: [AuthGuard] },
   { path: '', redirectTo: '/create-document/email-receive-money-template', pathMatch: 'full', canActivate: [AuthGuard] },
 

@@ -80,7 +80,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   timeEntryForm: FormGroup;
   matterautoVal: any;
   ngOnInit() {
-    this.timeStops = this.getTimeStops('01:00', '23:30');
+    this.timeStops = this.getTimeStops('00:00', '23:30');
     let maaterguid = JSON.parse(localStorage.getItem('set_active_matters'));
     this.ActivityList = this.optionList;
     this.timeEntryForm = this._formBuilder.group({
@@ -104,11 +104,13 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.timeEntryForm.controls['ITEMTYPE'].setValue('1');
     let userType = JSON.parse(localStorage.getItem('currentUser'));
     if (userType) {
+      console.log("fhhfdkjdfhd");
       this.timeEntryForm.controls['FEEEARNER'].setValue(userType.UserId);
     }
     this.timeEntryForm.controls['QUANTITY'].setValue(0);
     this.isLoadingResults = true;
     this.Timersservice.GetLookupsData({}).subscribe(res => {
+     
       if (res.CODE == 200 && res.STATUS == "success") {
         this.LookupsList = res.DATA.LOOKUPS;
       } else if (res.MESSAGE == 'Not logged in') {
@@ -122,6 +124,8 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     });
     this.isLoadingResults = true;
     this.Timersservice.GetUsers({}).subscribe(res => {
+      console.log("893042304");
+      console.log(res);
       if (res.CODE == 200 && res.STATUS == "success") {
         this.userList = res.DATA.USERS;
       } else if (res.MESSAGE == 'Not logged in') {

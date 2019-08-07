@@ -431,6 +431,7 @@ export class SpendMoneyAddComponent implements OnInit {
     const dialogRef = this.MatDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        console.log(result);
         this.spendmoneyForm.controls['Matter'].setValue(result.MATTER);
         this.spendmoneyForm.controls['MatterGUID'].setValue(result.MATTERGUID);
       }
@@ -551,6 +552,8 @@ export class SpendMoneyAddComponent implements OnInit {
     if (this.btnClickpurpose == 'edit') {
       this.getDataForTable[this.INDEX].EXPENDITURECLASS = this.f.Class.value;
       this.getDataForTable[this.INDEX].GST = this.f.GST1.value;
+      this.getDataForTable[this.INDEX].EXPENSEACCOUNTGUID = this.f.ExpenseacGUID.value;
+      this.getDataForTable[this.INDEX].EXPENSEACCOUNT = this.f.Expenseac.value;
       this.getDataForTable[this.INDEX].AMOUNT = this.f.AmountIncGST.value;
       this.getDataForTable[this.INDEX].MATTERGUID = this.f.MatterGUID.value;
       this.getDataForTable[this.INDEX].SHORTNAME = this.f.Matter.value;
@@ -756,6 +759,9 @@ export class SpendMoneyAddComponent implements OnInit {
       NOTE: this.f.Notes.value,
       EXPENDITUREITEMS: this.sendItem
     }
+
+
+    console.log(this.sendItem);
     if (this.action == "edit") {
       this.FormAction = "update";
     } else {

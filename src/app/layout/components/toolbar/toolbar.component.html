@@ -1081,7 +1081,7 @@
                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[2]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[2]?.Create==0 ? 'large-button' : 'large-button'">
+                                        <button mat-button [ngClass]="appPermissions[2]?.Create==0 ? 'large-button' : 'large-button'" (click)="NewTimeEntry()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                         <img src="assets/icons/web_app/icon_time_cost_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1357,7 +1357,7 @@
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab">
                                     <!-- *ngIf="CreatDocumentChild !== 'email' && CreatDocumentChild !== 'packs'" -->
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="activeSubMenu ==='matter-template' || activeSubMenu ==='invoice-template' ||activeSubMenu ==='ontact-template' 
+                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="activeSubMenu ==='matter-template' || activeSubMenu ==='invoice-template' ||activeSubMenu ==='contact-template' 
                                     ||activeSubMenu ==='receive-money-template' || packsToobar=='Template'">
                                         <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="GenarateDocument()" [disabled]="isDocumentGenerateHide =='yes'">
                                             <section class="large-button-container">
@@ -1438,7 +1438,7 @@
 
                                 </section>
 
-                                <section class="group-section-tab action_tab" *ngIf="activeSubMenu ==='matter-template' || activeSubMenu ==='invoice-template' ||activeSubMenu ==='ontact-template' 
+                                <section class="group-section-tab action_tab" *ngIf="activeSubMenu ==='matter-template' || activeSubMenu ==='invoice-template' ||activeSubMenu ==='contact-template' 
                                 ||activeSubMenu ==='receive-money-template' || packsToobar=='Template'">
                                     <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">

@@ -15,7 +15,7 @@
                     <mat-form-field appearance="outline" fxFlex="70" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FIRMGUID,'has-warning':errorWarningData.Warning?.FIRMGUID}">
                         <mat-label>Client</mat-label>
                         <input matInput placeholder="Client" formControlName="FIRMGUIDTEXT">
-                        <mat-icon matSuffix (click)='selectClient()' *ngIf="!isEdit">
+                        <mat-icon matSuffix (click)='selectClient()' *ngIf="this._data.action !='editForTB' || this._data.action !='edit'">
                             <img src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                         </mat-icon>
                     </mat-form-field>

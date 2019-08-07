@@ -66,6 +66,7 @@ export class ReceiptDilogComponent implements OnInit {
   ) {
     this.matterData = this._data.matterData;
     this.isEdit = this._data.action == 'edit' ? true : false;
+    console.log(this._data)
   }
 
 
@@ -93,6 +94,7 @@ export class ReceiptDilogComponent implements OnInit {
       SHOW: [''],
       Unallocated: [''],
     });
+   ;
     this.getPayor({});
     let INCOMEDATEVAL = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
     this.PrepareReceiptForm.controls['INCOMEDATE'].setValue(INCOMEDATEVAL);
@@ -100,8 +102,10 @@ export class ReceiptDilogComponent implements OnInit {
     //for invoice
     if (this._data.action == 'editForTB' || this._data.action == 'edit') {
       this.receiptData = JSON.parse(localStorage.getItem('receiptData'));
+      let TBdata=JSON.parse(localStorage.getItem('TBreceiptData'));
       if (this._data.action == 'editForTB')
-        this.GetInvoiceForReceipt({ 'Outstanding': 'Yes' });
+      this.setInvoiceForReceipt(TBdata.INCOMEGUID);
+        // this.GetInvoiceForReceipt({ 'Outstanding': 'Yes' });
       else if (this._data.action == 'edit')
         this.setInvoiceForReceipt(this.receiptData.INCOMEGUID);
     } else if (this._data.action == 'add') {
@@ -122,12 +126,14 @@ export class ReceiptDilogComponent implements OnInit {
     });
   }
   setInvoiceForReceipt(INCOMEGUID) {
+    console.log(INCOMEGUID);
     this.PrepareReceiptData = [];
     this.isLoadingResults = true;
     let incomeGuid = { INCOMEGUID: INCOMEGUID }
     this._mainAPiServiceService.getSetData(incomeGuid, 'GetIncome').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.INCOMEITEMS[0]) {
+          console.log(response);
           localStorage.setItem('receiptData', JSON.stringify(response.DATA.INCOMEITEMS[0]));
           let data = response.DATA.INCOMEITEMS[0];
           this.PrepareReceiptForm.controls['INCOMECODE'].setValue(data.INCOMECODE);
@@ -137,9 +143,13 @@ export class ReceiptDilogComponent implements OnInit {
           this.PrepareReceiptForm.controls['AMOUNT'].setValue(data.AMOUNT);
           this.PrepareReceiptForm.controls['BANKACCOUNTGUID'].setValue(data.BANKACCOUNTGUID);
           this.PrepareReceiptForm.controls['FIRMGUID'].setValue(data.FIRMGUID);
+          this.PrepareReceiptForm.controls['FIRMGUIDTEXT'].setValue(data.PAYEE);
           this.PrepareReceiptForm.controls['INCOMETYPE'].setValue(data.INCOMETYPE);
           this.PrepareReceiptForm.controls['NOTE'].setValue(data.NOTE);
           this.PrepareReceiptForm.controls['PAYEE'].setValue(data.PAYEE);
+
+          this.ShowData.push({ id: 2, text: 'Show unpaid invoices for client : ' + data.PAYEE });
+          this.ShowData.push({ id: 3, text: 'Show all unpaid invoices' });
         }
       } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
@@ -167,6 +177,8 @@ export class ReceiptDilogComponent implements OnInit {
       this.isLoadingResults = false;
       this.toastr.error(err);
     });
+
+  
   }
   BankingDialogOpen(type: any) {
     const dialogRef = this.MatDialog.open(BankingDialogComponent, {

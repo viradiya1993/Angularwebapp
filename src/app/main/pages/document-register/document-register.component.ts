@@ -23,6 +23,7 @@ export class DocumentRegisterComponent implements OnInit {
   isLoadingResults: boolean = false;
   highlightedRows:any;
   ColumnsObj = [];
+  pageSize: any;
   tempColobj: any;
   displayedColumns:any;
   theme_type = localStorage.getItem('theme_type');
@@ -57,7 +58,9 @@ export class DocumentRegisterComponent implements OnInit {
     this.documentform.controls['matter'].setValue(mattersData.MATTER);
     this.documentform.controls['Client'].setValue(mattersData.Client); 
   }
-
+  refreshDOCREGTab(){
+    this.LoadData();
+  }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('Matter Documents', '').subscribe(response => {
       console.log(response);
@@ -70,6 +73,10 @@ export class DocumentRegisterComponent implements OnInit {
     }, error => {
       this.toastr.error(error);
     });
+  }
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
   }
   LoadData(){
     this.isLoadingResults=true;

@@ -1,5 +1,5 @@
 @import "src/@fuse/scss/fuse";
-#matters {
+#users {
     .header {
         .search-wrapper {
             width: 100%;
@@ -27,8 +27,7 @@
     .content {
         overflow: hidden;
         .example {
-            // width: 18%;
-            width: auto;
+            width: 13%;
             padding: 10px;
             .sidebar {
                 &:not(.locked-open) {
@@ -55,9 +54,15 @@
     }
 }
 
-// .sticky_search_div .mat-form-field-wrapper {
-//     padding-bottom: 0 !important;
-// }
+.search {
+    width: 45% !important;
+    padding: 20px !important;
+}
+
+document-register {
+    width: 100% !important;
+}
+
 .sticky_search_div {
     // position: fixed;
     // top: 163px;
@@ -67,56 +72,95 @@
     z-index: 9999;
     left: 0;
 }
-// .sticky_search_remove_padding {
-//     padding-left: 80px;
-// }
 
-// #matters .p-24.list_tbl_main {
-//     margin-top: 95px;
-//     overflow: hidden;
-// }
+.sticky_search_remove_padding {
+    padding-left: 80px;
+}
+
+#users .p-24.list_tbl_main {
+    // margin-top: 85px;
+    overflow: hidden;
+}
 
 .p-24.list_tbl_main {
-    // margin-top: 110px;
+    //margin-top: 110px;
     padding-top: 0 !important;
 }
 
-// .fix_div_padding {
-//     margin-top: 70px;
-// }
-.list_sidebar_padding {
-    // background-color: #fff;
-    // border-left: 1px solid #ccc;
+#users .content {
+    position: relative;
 }
 
-.list_sidebar_padding h3.one {
-    margin: 0;
-}
-
-.list_sidebar_right_child {
-    margin-top: 110px;
-}
-
-#matters .list_sidebar_right_child {
-    margin-top: 95px;
-}
-
-.list_sidebar_right_child {
-    background-color: #fff !important;
-    border-radius: 8px;
-    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12) !important;
-    border-bottom: 1px solid #999;
-}
-
-.invoiceddrop {
-    width: 165px !important;
-    text-align: center !important;
-}
-table {
+.mat-table.mat-table.ng-trigger.ng-trigger-animateStagger {
     width: 100%;
-  }
-  
-.mat-form-field {
-    font-size: 14px;
+    overflow: auto;
+    display: table;
+}
+
+.more_tbl_clmn mat-footer-row {
+    display: table;
+}
+
+.more_tbl_clmn .mat-header-cell,
+.more_tbl_clmn .mat-cell {
+    display: table-cell;
+    white-space: nowrap;
+    padding: 0 20px;
+    overflow: inherit;
+    position: sticky;
+}
+
+.more_tbl_clmn mat-header-row {
+    line-height: 56px;
+}
+
+.more_tbl_clmn mat-row {
+    line-height: 48px;
+}
+
+.more_tbl_clmn .mat-header-cell:last-child,
+.more_tbl_clmn .mat-cell:last-child {
+    padding-right: 70px;
+}
+
+.table tr.active td {
+    background-color: #123456 !important;
+    color: white;
+}
+
+table tr.highlight {
+    background-color: #4CAF50 !important;
+    color: #ffffff;
+}
+
+
+#users .content .example {
+    padding: 20px 10px;
+}
+
+th.mat-sort-header-sorted {
+    color: black;
+}
+
+.mat-table {
     width: 100%;
-  }
+}
+
+button#refreshDOCREGTab {
+    display: none;
+}
+@media screen and (max-width: 1200px) {
+    #users .sticky_search_div.responsive_auto .example {
+        width: 15%;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    #users .sticky_search_div.responsive_auto {
+        overflow: auto;
+        white-space: nowrap;
+    }
+    #users .sticky_search_div.responsive_auto .example {
+        width: 20%;
+    }
+}

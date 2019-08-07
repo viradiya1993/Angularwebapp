@@ -55,5 +55,5 @@ export class AccountManagmentComponent implements OnInit {
       this.clickbtn="Payment";
     }
    
-  }
+  } 
 }

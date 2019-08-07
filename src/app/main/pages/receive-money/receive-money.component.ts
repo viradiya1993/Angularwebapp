@@ -67,6 +67,9 @@ export class ReceiveMoneyComponent implements OnInit {
     this.getTableFilter();
     this.forListing(this.lastFilter);
   }
+  refreshReceiceMoany(){
+    this.forListing( this.lastFilter);
+  }
   forListing(data) {
     this.receiveMoneydata = [];
     this.isLoadingResults = true;

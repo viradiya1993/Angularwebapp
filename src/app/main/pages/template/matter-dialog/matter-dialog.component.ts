@@ -93,34 +93,32 @@ export class MatterDialogComponentForTemplate implements OnInit {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.toastr.success('success');
         if(this._data.Type=="Template"){
-
-        this.filefolderUrl=response.DATA.DOCUMENTS[0].FILENAME;     
+          var textSample= response.DATA.DOCUMENTS[0].FILENAME;
+          var uri = 'https://api2.silq.com.au/' + encodeURIComponent(textSample);
+          this.filefolderUrl=uri;     
         }else if(this._data.Type=="Email"){
           this.PacksEmail=response.DATA.EMAILS;
-        //  this.emailToadd=response.DATA.EMAILS[0].TOADDRESS;
-        //  this.emailBCC=response.DATA.EMAILS[0].BCCADDRESS;
-        //  this.emailCC=response.DATA.EMAILS[0].CCADDRESS;
-        //  this.emailSUBJECT=response.DATA.EMAILS[0].SUBJECT;
-        //  this.emailCONTENT=response.DATA.EMAILS[0].CONTENT;
-        //  window.open("https://mail.google.com/mail/u/0/?view=cm&fs=1&to=someone@example.com&su=SUBJECT&body=BODY&bcc=someone.else@example.com&tf=1");        
         }else if(this._data.Type=="Pack"){
           this.IsLoading='false';
-         
           //  this.packDoc="DOCUMENTS";
           if(response.DATA.DOCUMENTS.length > 0){
+            response.DATA.DOCUMENTS.forEach(element => {
+              var textSample=  element.FILENAME;
+              var uri = 'https://api2.silq.com.au/' + encodeURIComponent(textSample);
+              element.FILENAME=uri;
+            });
             this.PacksDocument=response.DATA.DOCUMENTS;
-            
           }else if(response.DATA.EMAILS.length > 0){
             console.log("email called");
             this.PacksEmail=response.DATA.EMAILS;
-            // this.packDoc="EMAILS";
-            
           }
         } 
         this.isLoadingResults = false;
       }else if(response.CODE == 420 ){
         this.isLoadingResults = false;
         this.dialogRef.close();
+      }else if (response.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
       }
     }, error => { 
       this.toastr.error(error);

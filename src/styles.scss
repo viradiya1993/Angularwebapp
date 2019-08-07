@@ -1,19 +1,43 @@
 // Import Fuse core library
 @import "@fuse/scss/core";
-
 // Import app.theme.scss
 @import "app/app.theme";
-
-
 //for toster
-
-
-// regular style toast 
-@import '~ngx-toastr/toastr.css';
- 
-
+// regular style toast
+@import "~ngx-toastr/toastr.css";
 //date rang picker
-@import '~saturn-datepicker/bundle.css';
-
-
+@import "~saturn-datepicker/bundle.css";
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+.disabled-click-cursor {
+    cursor: not-allowed !important;
+}
+
+mat-nav-list a.disabled-click-cursor {
+    pointer-events: none;
+    cursor: not-allowed !important;
+    text-decoration: none;
+    opacity: 0.5;
+}
+
+button.disabled-click-cursor {
+    pointer-events: none;
+    cursor: not-allowed !important;
+    text-decoration: none;
+    opacity: 0.5;
+}
+
+button.mat-menu-item.disabled-click-cursor {
+    pointer-events: none;
+    cursor: not-allowed !important;
+    text-decoration: none;
+    opacity: 0.5;
+}
+
+button:disabled {
+    cursor: not-allowed !important;
+}
+
+button.disabled-click {
+    pointer-events: none;
+    color: rgba(0, 0, 0, 0.26) !important;
+}

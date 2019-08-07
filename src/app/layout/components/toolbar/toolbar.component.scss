@@ -379,35 +379,8 @@ toolbar .ribbon-container .large-button .large-button-container .main-text {
     display: inline-block !important;
 }
 
-button.disabled-click {
-    pointer-events: none;
-    color: rgba(0, 0, 0, 0.26) !important;
-}
-
-.disabled-click-cursor {
-    cursor: not-allowed !important;
-}
-
-mat-nav-list a.disabled-click-cursor {
-    pointer-events: none;
-    cursor: not-allowed !important;
-    text-decoration: none;
-    opacity: 0.5;
-}
-
-button.mat-menu-item.disabled-click-cursor {
-    pointer-events: none;
-    cursor: not-allowed !important;
-    text-decoration: none;
-    opacity: 0.5;
-}
-
 .disabled-click img {
     opacity: 0.5;
-}
-
-button:disabled {
-    cursor: not-allowed !important;
 }
 
 button#clickToolbarbtn {

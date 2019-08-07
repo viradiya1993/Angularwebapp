@@ -121,6 +121,16 @@ export class InvoiceAddDailogComponent implements OnInit {
     }, error => {
       this.toastr.error(error);
     });
+    let PostInvoiceEntryData: any = { FormAction: 'default', VALIDATEONLY: false, Data: {} };
+
+    this._mainAPiServiceService.getSetData(PostInvoiceEntryData, 'SetInvoice').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        this.addInvoiceForm.controls['INVOICECODE'].setValue(response.DATA.DEFAULTVALUES.INVOICECODE)
+      }
+      console.log(response);
+    }, error => {
+      this.toastr.error(error);
+    });
     this.isLoadingResults = false;
   }
   invoiceDateChange(type: string, event: MatDatepickerInputEvent<Date>) {
@@ -249,12 +259,6 @@ export class InvoiceAddDailogComponent implements OnInit {
     let PostInvoiceEntryData: any = { FormAction: 'insert', VALIDATEONLY: true, Data: PostData };
 
     this._mainAPiServiceService.getSetData(PostInvoiceEntryData, 'SetInvoice').subscribe(res => {
-      if (res.DATA.INVOICECODE && res.DATA.INVOICECODE != '') {
-        this.addInvoiceForm.controls['INVOICECODE'].setValue(res.DATA.INVOICECODE);
-        PostData.INVOICECODE = res.DATA.INVOICECODE;
-      } else {
-        PostData.INVOICECODE = this.f.INVOICECODE.value;
-      }
       PostInvoiceEntryData = { FormAction: 'insert', VALIDATEONLY: true, Data: PostData };
       if (res.CODE == 200 && res.STATUS == 'success') {
         this.checkValidation(res.DATA.VALIDATIONS, PostInvoiceEntryData);

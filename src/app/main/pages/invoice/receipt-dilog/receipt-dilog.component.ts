@@ -113,7 +113,13 @@ export class ReceiptDilogComponent implements OnInit {
       this.ShowData.push({ id: 3, text: 'Show all unpaid invoices' });
       this.GetInvoiceForReceipt({ 'Outstanding': 'Yes' });
     }
-
+    this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: false, Data: {} }, 'SetIncome').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        this.PrepareReceiptForm.controls['INCOMECODE'].setValue(response.DATA.DEFAULTVALUES.INCOMECODE);
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
   }
   setInvoiceForReceipt(INCOMEGUID) {
     this.PrepareReceiptData = [];

@@ -2557,7 +2557,7 @@
                  <span>Preferences</span>
               </button>
 
-                <button [routerLink]="'/system-setting/name'" mat-menu-item [ngClass]="appPermissions[28]['System Settings']==0 ? 'disabled-click-cursor' : ''">
+                <button *ngIf="appPermissions[28]" [routerLink]="'/system-setting/name'" mat-menu-item [ngClass]="appPermissions[28]['System Settings']==0 ? 'disabled-click-cursor' : ''">
                  <span>System Setting</span>
                 </button>
 

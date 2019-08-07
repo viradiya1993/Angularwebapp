@@ -16,6 +16,7 @@ import { MatSort } from '@angular/material';
   animations: fuseAnimations
 })
 export class MatterReceiptDialogComponentForTemplate implements OnInit {
+  appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
   message: string;
   displayedColumns: string[] = ['matternumber', 'matter', 'client'];
   getDataForTable: any = [];
@@ -49,6 +50,8 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
   ngOnInit() {
     this.getDropValue();
     this.getMatterList();
+    if (this.appPermissions == null)
+      this.appPermissions = [];
   }
   getDropValue() {
     let d = {};
@@ -85,7 +88,7 @@ export class MatterReceiptDialogComponentForTemplate implements OnInit {
     this.getList(this.filterVal);
   }
   getList(filterVal: any) {
-    this.getDataForTable=[];
+    this.getDataForTable = [];
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(filterVal, 'GetMatter').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {

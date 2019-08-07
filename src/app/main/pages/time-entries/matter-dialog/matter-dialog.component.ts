@@ -1,11 +1,11 @@
 import { Component, OnInit, Inject, AfterViewInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatPaginator, MatTableDataSource, MatDialogConfig } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import {  TimersService, MainAPiServiceService } from './../../../../_services';
+import { TimersService, MainAPiServiceService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.component';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-matter-dialog',
@@ -15,12 +15,13 @@ import {MatSort} from '@angular/material';
   animations: fuseAnimations
 })
 export class MatterDialogComponent implements OnInit {
+  appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
   displayedColumns: string[] = ['matternumber', 'matter', 'client'];
   getDataForTable: any = [];
   highlightedRows: any;
   theme_type = localStorage.getItem('theme_type');
-  @ViewChild(MatPaginator)paginator: MatPaginator;
-  @ViewChild(MatSort)sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   matterFilterForm: FormGroup;
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   isLoadingResults: boolean = false;
@@ -40,6 +41,9 @@ export class MatterDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.appPermissions == null)
+      this.appPermissions = [];
+    console.log(this.appPermissions[1].Create == 0);
     this.getDropValue();
     this.getMatterList();
   }
@@ -79,7 +83,7 @@ export class MatterDialogComponent implements OnInit {
   }
   getList(filterVal: any) {
     this.isLoadingResults = true;
-    
+
     this._mainAPiServiceService.getSetData(filterVal, 'GetMatter').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.MATTERS[0]) {

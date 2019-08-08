@@ -22,6 +22,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TemplateListComponent } from './template-list/template-list.component';
 import { NewPacksDailogComponent } from './packs/new-packs-dailog/new-packs-dailog.component';
+import { InvoiceGenerateComponent } from './invoice-generate /invoice-generate.component';
 
 
 
@@ -77,8 +78,8 @@ const routes = [
 ];
 @NgModule({
   declarations: [TemplateComponent, MatterContactDailogComponent, MatterDialogComponentForTemplate, TemplateListComponent
-    , EmailTempleteComponent, EmailDailogComponent, PacksComponent, PacksDailogComponent, NewPacksDailogComponent],
-  entryComponents: [MatterContactDailogComponent, MatterDialogComponentForTemplate, EmailDailogComponent, PacksDailogComponent, NewPacksDailogComponent],
+    , EmailTempleteComponent, EmailDailogComponent, PacksComponent, PacksDailogComponent, NewPacksDailogComponent,InvoiceGenerateComponent],
+  entryComponents: [MatterContactDailogComponent, MatterDialogComponentForTemplate, EmailDailogComponent, PacksDailogComponent,InvoiceGenerateComponent, NewPacksDailogComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

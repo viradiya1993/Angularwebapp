@@ -13,8 +13,7 @@ export class ProductsComponent implements OnInit {
   ngOnInit() {
 
     this._mainAPiServiceService.getSetData({}, 'HOGetPurchases').subscribe(response=>{
-      // console.log(response);
-      console.log(response);
+  
      })
   }
 

@@ -11,7 +11,7 @@
                     </mat-form-field>
                     <mat-form-field class="example" appearance="outline" fxFlex="">
                         <mat-label>Search</mat-label>
-                        <input matInput placeholder="search" formControlName="search" (keyup)='FilterSearch($event.target.value)'>
+                        <input matInput placeholder="search" formControlName="search" (keydown)="FilterSearch($event)">
                         <mat-icon matSuffix>search</mat-icon>
                     </mat-form-field>
                 </form>

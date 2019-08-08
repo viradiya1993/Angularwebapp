@@ -3,7 +3,7 @@ import { MatDialog, MatTreeFlattener, MatTreeFlatDataSource, MatPaginator } from
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import { MatterReceiptDialogComponentForTemplate } from 'app/main/pages/receive-money/matter-dialog/matter-dialog.component';
+
 //Tree Table
 
 import { CollectionViewer, SelectionChange } from '@angular/cdk/collections';
@@ -13,6 +13,7 @@ import { map } from 'rxjs/operators';
 import { fuseAnimations } from '@fuse/animations';
 import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import * as $ from 'jquery';
+import { MatterDialogComponent } from '../../time-entries/matter-dialog/matter-dialog.component';
 
 interface FoodNode {
   name: string;
@@ -117,7 +118,7 @@ export class PacksComponent implements OnInit, AfterViewInit {
 
     private _mainAPiServiceService: MainAPiServiceService
   ) {
-    this.loadData();
+    this.loadData({});
   }
   showData(element, level, parent) {
     element.forEach(x => {
@@ -145,11 +146,11 @@ export class PacksComponent implements OnInit, AfterViewInit {
     this.treeControl.expandAll();
   }
   refreshKitTab() {
-    this.loadData();
+    this.loadData({});
   }
-  loadData() {
+  loadData(Data) {
     this.isLoadingResults = true;
-    this._mainAPiServiceService.getSetData({}, 'GetKit').subscribe(res => {
+    this._mainAPiServiceService.getSetData({INCLUDEKITITEMS:'Yes'}, 'GetKit').subscribe(res => {
       console.log(res);
       if (res.CODE == 200 && res.STATUS == "success") {
         // this.dataSource.paginator = this.paginator;
@@ -171,9 +172,18 @@ export class PacksComponent implements OnInit, AfterViewInit {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
   }
+  get f() {
+    //console.log(this.contactForm);
+    return this.packForm.controls;
+  }
+  FilterSearch(searchFilter: any) {
+    if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
+        this.loadData({ SEARCH:this.f.search.value})
+    }
+  }
   //SelectMatter
   SelectMatter() {
-    const dialogRef = this._matDialog.open(MatterReceiptDialogComponentForTemplate, {
+    const dialogRef = this._matDialog.open(MatterDialogComponent, {
       width: '100%',
       disableClose: true,
       data: null
@@ -182,9 +192,7 @@ export class PacksComponent implements OnInit, AfterViewInit {
 
     });
   }
-  FilterSearch(filtervalue: any) {
-    //this.PackTbl.filter = filtervalue;
-  }
+
   RowClick(main) {
     console.log(main);
     $("#packsToolbarHide").click();

@@ -28,7 +28,7 @@ import { GeneralReceiptDilogComponent } from 'app/main/pages/receive-money/gener
 import { InstantInvoiceDailogComponent } from 'app/main/pages/invoice/instant-invoice-dailog/instant-invoice-dailog.component';
 import { InvoiceAddDailogComponent } from 'app/main/pages/invoice/invoice-add-dailog/invoice-add-dailog.component';
 import { MatterDialogComponentForTemplate } from 'app/main/pages/template/matter-dialog/matter-dialog.component';
-import { MatterReceiptDialogComponentForTemplate } from 'app/main/pages/receive-money/matter-dialog/matter-dialog.component';
+
 
 import { UserDialogComponent } from './../../../main/pages/users/user-dialog/user-dialog.component';
 import { ActivityDialogComponent } from './../../../main/pages/activities/activity-dialog/activity-dialog.component';
@@ -1390,7 +1390,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     createReceipt() {
-        const dialogRef = this._matDialog.open(MatterReceiptDialogComponentForTemplate, { width: '100%', disableClose: true, data: null });
+        const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 const dialogRef = this._matDialog.open(ReceiptDilogComponent, {

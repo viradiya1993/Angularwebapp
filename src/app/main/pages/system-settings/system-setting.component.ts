@@ -122,14 +122,11 @@ export class SystemSettingComponent implements OnInit {
       TRACKDOCUMENTS:['']
      
     })
-    
     this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response=>{
       this.getVal(response);
       })
   }
   getVal(data){
-    console.log(data);
-    console.log(data.DATA.SYSTEM.BUSINESSGROUP.DEFAULTMATTERCLASS.toString());
   // for trust  
    this.SettingForm.controls['DEFAULTTRUSTRECEIPTTYPE'].setValue(data.DATA.SYSTEM.TRUSTGROUP.DEFAULTTRUSTRECEIPTTYPE.toString()); 
    this.SettingForm.controls['DEFAULTTRUSTWITHDRAWALTYPE'].setValue(data.DATA.SYSTEM.TRUSTGROUP.DEFAULTTRUSTWITHDRAWALTYPE.toString()); 
@@ -144,7 +141,7 @@ export class SystemSettingComponent implements OnInit {
    //for name 
    let name = JSON.parse(localStorage.getItem('currentUser'));
    name.UserName=data.DATA.SYSTEM.BARRISTERSNAME;
-   console.log(name);
+
    this.SettingForm.controls['BARRISTERSNAME'].setValue(data.DATA.SYSTEM.BARRISTERSNAME); 
    
    this.SettingForm.controls['ADDRESS1'].setValue(data.DATA.SYSTEM.ADDRESSGROUP.STREETADDRESSGROUP.ADDRESS1); 

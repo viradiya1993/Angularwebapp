@@ -150,7 +150,6 @@ export class SelectAccountComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
     });
   }
   //EditAccount
@@ -163,7 +162,6 @@ export class SelectAccountComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
     });
   }
   //openDialog

@@ -38,7 +38,6 @@ export class AuthorityDialogComponent implements OnInit {
         }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
     // this.SettingForm.controls['INVOICETEMPLATE'].setValue(result);  
         
     });

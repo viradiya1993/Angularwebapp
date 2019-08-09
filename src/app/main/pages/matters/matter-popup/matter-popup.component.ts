@@ -39,7 +39,6 @@ export class MatterPopupComponent implements OnInit {
     public _matDialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
-    console.log(_data);
     this.action = _data.action;
     if (this.action === 'edit') {
       this.dialogTitle = 'Update Matter';

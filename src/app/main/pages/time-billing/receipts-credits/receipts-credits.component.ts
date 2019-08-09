@@ -47,7 +47,7 @@ export class ReceiptsCreditsComponent implements OnInit {
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
     this._mainAPiServiceService.getSetData(potData, 'GetMatterReceipts').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
-        //  console.log(res.DATA.RECEIPTS);
+
         if (res.DATA.RECEIPTS.length != 0) {
           localStorage.setItem('TBreceiptData', JSON.stringify(res.DATA.RECEIPTS[0]));
           this.highlightedRows = res.DATA.RECEIPTS[0].INCOMEGUID;

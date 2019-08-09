@@ -31,7 +31,7 @@
             </div>
         </div>
         <mat-dialog-actions align="end" class="popup_ftr contact_select_footer">
-            <button mat-raised-button  (click)="selectTemplate()" color="accent">Select</button>
+            <button  [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor' : ''" mat-raised-button  (click)="selectTemplate()" color="accent">Select</button>
             <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
         </mat-dialog-actions>
     </div>

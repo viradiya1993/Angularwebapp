@@ -1,0 +1,136 @@
+body.theme-default .mat-dialog-container {
+    padding: 0;
+}
+
+//user 2
+body.theme-yellow-light .mat-dialog-container {
+    padding: 0;
+}
+
+// .popup_title_div {
+//     padding: 24px;
+//     background-color: #303540;
+// }
+.mat-dialog-title {
+    color: #fff;
+    margin-bottom: 0;
+    padding: 14px 24px;
+    background-color: #303540;
+}
+
+.mat-dialog-content {
+    margin: 0;
+    max-height: 450px;
+    padding: 24px 24px 0;
+}
+
+.remove_left_right_padding {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.add_popup_padding {
+    padding: 0 23px;
+    line-height: 40px;
+}
+
+.close.mat-icon {
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+}
+
+.mat-dialog-actions {
+    margin: 0;
+}
+
+.popup_body .form-errors-model {
+    padding-bottom: 0 !important;
+}
+
+.popup_ftr {
+    padding: 24px;
+    // justify-content: flex-start;
+}
+
+.popup_main_div .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 0.5em 0 0.5em 0;
+}
+
+.popup_main_div .mat-form-field-appearance-outline .mat-form-field-label {
+    top: 1.34375em;
+}
+
+.popup_main_div .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    -webkit-transform: translateY(-1.09375em) scale(0.75);
+    transform: translateY(-1.09375em) scale(0.75);
+}
+
+.popup_main_div .one {
+    margin-bottom: 0 !important;
+}
+
+.popup_main_div .mat-form-field-appearance-outline .mat-form-field-suffix {
+    top: 0;
+}
+
+mat-icon.close_icon.mat-icon.material-icons.mat-icon-no-color {
+    float: right;
+    cursor: pointer;
+}
+
+.btn {
+    float: right;
+}
+
+mat-dialog-actions {
+    mat-spinner {
+        zoom: 0.2;
+        position: absolute;
+        right: 0;
+        left: 0;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+    }
+}
+
+.add_edit_contact_main {
+    background-color: #fff;
+    // width: 50%;
+    width: 850px;
+    margin: 0 auto;
+    // box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+    // -webkit-box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+    box-shadow: none;
+    border-radius: 4px;
+}
+.mat-dialog-title {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+.right_popup_btn .right_btn_child:last-child {
+    margin-right: 0;
+}
+.popup_ftr {
+    border-top: 1px solid #ccc;
+    margin-top: 15px !important;
+    padding: 12px 24px !important;
+}
+@media screen and (max-width: 900px) {
+    .add_edit_contact_main {
+        width: 95%;
+    }
+}
+
+.mat-tab-group {
+  
+    width: 100%;
+}
+.mat-row.row-text-colore td {
+    color: #fff;
+}
+.auto_drop_ghandel{
+    position: relative !important;
+}

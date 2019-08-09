@@ -66,16 +66,16 @@ export class GenerateTemplatesDialoagComponent implements OnInit {
   }
  
   dblclickrow(data) {
-console.log("dbclick")
+
     if (data.TEMPLATETYPE == "Folder") {
-      console.log("folder")
+
       this.LoadData({ "Folder": data.TEMPLATENAME });
     } else if (data.TEMPLATETYPE == "Sub Folder") {
-      console.log("sub")
+
       this.LoadData({ "Sub Folder": data.TEMPLATENAME });
     }
     else {
-      console.log("else")
+
       this.openDilog()
     }
   }
@@ -105,7 +105,7 @@ console.log("dbclick")
 }
 //***********************************************************END Select Matter Contact*************************************************************************
 ForDocDialogOpen(passdata) {
-  console.log("popup");
+
     const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, { width: '100%', disableClose: true, data: passdata });
     dialogRef.afterClosed().subscribe(result => {
         if (result) {

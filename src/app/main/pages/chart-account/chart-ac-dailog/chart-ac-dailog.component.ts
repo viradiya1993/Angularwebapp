@@ -53,7 +53,7 @@ export class ChartAcDailogComponent implements OnInit {
   }
   //Account Class Dropdown
   AccountChange(value){
-    console.log(value);
+
   }
   //SaveAccount
   SaveAccount(){

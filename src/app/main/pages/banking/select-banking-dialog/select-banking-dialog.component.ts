@@ -62,7 +62,7 @@ export class SelectBankingDialogComponent implements OnInit {
     }
    
     rowSelected(val){
-console.log(val);
+
     }
  
 }

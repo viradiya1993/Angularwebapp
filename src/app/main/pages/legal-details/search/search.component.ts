@@ -108,7 +108,6 @@ export class SearchComponent implements OnInit {
         disableClose: true, panelClass: 'contact-dialog', data: MaterPopupData
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
     this.SearchForm.controls['Matter'].setValue(result);  
     
         
@@ -122,7 +121,6 @@ export class SearchComponent implements OnInit {
         disableClose: true, panelClass: 'contact-dialog', data: contactPopupData
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
     // this.SearchForm.controls['Client'].setValue(result);  
         
     });

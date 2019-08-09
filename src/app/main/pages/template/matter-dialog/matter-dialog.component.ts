@@ -64,7 +64,7 @@ export class MatterDialogComponentForTemplate implements OnInit {
     this.matterFilterForm = this.fb.group({ MatterFilter: [''], UserFilter: [''], searchFilter: [''], InvoiceFilter: [''], });
     // this.title="View Template"
    //need to call generate template api 
-   console.log(_data);
+
     if(_data){
       
     this.base_url=environment.ReportUrl;
@@ -89,7 +89,7 @@ export class MatterDialogComponentForTemplate implements OnInit {
     this.isLoadingResults = true;
    
     this._mainAPiServiceService.getSetData(data, 'TemplateGenerate').subscribe(response => {
-      console.log(response);
+  
       if (response.CODE == 200 && response.STATUS == "success") {
         this.toastr.success('success');
         if(this._data.Type=="Template"){
@@ -134,7 +134,7 @@ export class MatterDialogComponentForTemplate implements OnInit {
 
 
 SendMain(val){
-  console.log(val);
+
   var browser = "agent";
   var credits = '0';
   var subject = val.SUBJECT;

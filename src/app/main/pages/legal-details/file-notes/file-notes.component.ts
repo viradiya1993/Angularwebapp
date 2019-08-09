@@ -57,10 +57,8 @@ export class FileNotesComponent implements OnInit {
   getTableFilter() {
     this.TableColumnsService.getTableFilter('legal details', 'file notes').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        console.log(response)
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
         this.displayedColumns = data.showcol;
-        console.log(data.showcol)
         this.tempColobj = data.tempColobj;
         this.ColumnsObj = data.colobj;
       }

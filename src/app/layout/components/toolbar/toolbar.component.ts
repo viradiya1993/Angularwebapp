@@ -48,6 +48,9 @@ import { ReportFilterComponent } from './../../../main/pages/general-journal/rep
 import { ChronItemDailogComponent } from './../../../main/pages/legal-details/chronology/chron-item-dailog/chron-item-dailog.component';
 import { DairyDailogComponent } from './../../../main/pages/diary/dairy-dailog/dairy-dailog.component';
 import { ResumeTimerComponent } from 'app/main/pages/time-entries/resume-timer/resume-timer.component';
+import { CopyTemplateComponent } from 'app/main/pages/template/template-list/copy-template/copy-template.component';
+import { SetLetterHeadComponent } from 'app/main/pages/template/template-list/set-letterhead/set-letterhead.component';
+import { EditTemplateComponent } from 'app/main/pages/template/template-list/edit-template/edit-template.component';
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -1542,6 +1545,31 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
         }
+    }
+
+    CopyTemplatePopup(){
+        const dialogRef = this._matDialog.open(CopyTemplateComponent, { width: '100%', disableClose: true, });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // localStorage.setItem('set_active_matters', JSON.stringify(result));
+            }
+        });
+    }
+    SetLetterHeadPopup(){
+        const dialogRef = this._matDialog.open(SetLetterHeadComponent, { width: '100%', disableClose: true, });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // localStorage.setItem('set_active_matters', JSON.stringify(result));
+            }
+        });
+    }
+    EditTemplatePopup(){
+        const dialogRef = this._matDialog.open(EditTemplateComponent, { width: '100%', disableClose: true, });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // localStorage.setItem('set_active_matters', JSON.stringify(result));
+            }
+        });
     }
     //***********************************************************END Select Matter Contact*************************************************************************
     ForDocDialogOpen(passdata) {

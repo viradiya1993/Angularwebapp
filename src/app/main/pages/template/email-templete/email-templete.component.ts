@@ -94,26 +94,9 @@ export class EmailTempleteComponent implements OnInit {
   }
   // FilterSearch
   FilterSearch(searchFilter: any) {
-    // console.log(filtsearchFiltererValue);
-
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
-      console.log("djasd");
-      // let DATA={
-      //   SEARCH:this.f.search.value
-      // }
-      // this.filterData.Search = this.f.searchFilter.value;
         this.LoadData({ SEARCH:this.f.search.value})
-      // let filterVal = { 'Active': '', 'SearchString': this.f.searchFilter.value, 'FeeEarner': '', 'UninvoicedWork': '' };
-      // if (!localStorage.getItem('matter_filter')) {
-      //   // localStorage.setItem('matter_filter', JSON.stringify(filterVal));
-      // } else {
-      //   filterVal = JSON.parse(localStorage.getItem('matter_filter'));
-      //   filterVal.SearchString = this.f.searchFilter.value;
-      //   // localStorage.setItem('matter_filter', JSON.stringify(filterVal));
-      // }
-      // this.child.getMatterList(filterVal);
     }
-  
   }
   //clicktitle
   clicktitle(row) {

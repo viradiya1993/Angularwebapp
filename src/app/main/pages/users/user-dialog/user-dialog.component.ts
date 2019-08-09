@@ -174,7 +174,7 @@ export class UserDialogComponent implements OnInit {
           this.USERBUDGETGUIDIndex = this.USERBUDGETGUIDIndex + 1;
           this.macktempBudgetDatatable();
           this.isNewShow = false;
-          console.log(this.isNewShow);
+         
         } else
           this.loadData();
       }

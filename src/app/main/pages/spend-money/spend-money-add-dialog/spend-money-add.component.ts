@@ -431,7 +431,6 @@ export class SpendMoneyAddComponent implements OnInit {
     const dialogRef = this.MatDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         this.spendmoneyForm.controls['Matter'].setValue(result.MATTER);
         this.spendmoneyForm.controls['MatterGUID'].setValue(result.MATTERGUID);
       }
@@ -738,8 +737,7 @@ export class SpendMoneyAddComponent implements OnInit {
     else if (this.getDataForTable.length == 1 || this.getDataForTable.length == 0) { this.multicheckboxval = 0; }
     else { this.multicheckboxval = 1; }
 
-    //ammount calculation 
-  console.log(this.setMainGST);
+    //ammount calculation
      this.FinalExGSTAmount=this.setMainAmount- this.setMainGST;
 
     let Data = {
@@ -759,9 +757,6 @@ export class SpendMoneyAddComponent implements OnInit {
       NOTE: this.f.Notes.value,
       EXPENDITUREITEMS: this.sendItem
     }
-
-
-    console.log(this.sendItem);
     if (this.action == "edit") {
       this.FormAction = "update";
     } else {

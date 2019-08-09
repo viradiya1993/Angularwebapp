@@ -151,7 +151,7 @@ export class PacksComponent implements OnInit, AfterViewInit {
   loadData(Data) {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({INCLUDEKITITEMS:'Yes'}, 'GetKit').subscribe(res => {
-      console.log(res);
+  
       if (res.CODE == 200 && res.STATUS == "success") {
         // this.dataSource.paginator = this.paginator;
         this.arrayForIndex = [];

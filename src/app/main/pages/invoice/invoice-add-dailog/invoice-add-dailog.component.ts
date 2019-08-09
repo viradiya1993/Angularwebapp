@@ -127,7 +127,6 @@ export class InvoiceAddDailogComponent implements OnInit {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.addInvoiceForm.controls['INVOICECODE'].setValue(response.DATA.DEFAULTVALUES.INVOICECODE)
       }
-      console.log(response);
     }, error => {
       this.toastr.error(error);
     });

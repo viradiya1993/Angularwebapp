@@ -47,7 +47,7 @@ export class NewPacksDailogComponent implements OnInit {
     private behaviorService:BehaviorService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    console.log(data);
+
     this.action = data.action;
     this.dialogTitle = this.action === 'edit' ? 'Edit Pack' : 'New Pack';
 

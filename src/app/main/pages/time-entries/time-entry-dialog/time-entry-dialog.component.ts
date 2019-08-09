@@ -104,7 +104,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.timeEntryForm.controls['ITEMTYPE'].setValue('1');
     let userType = JSON.parse(localStorage.getItem('currentUser'));
     if (userType) {
-      console.log("fhhfdkjdfhd");
+      
       this.timeEntryForm.controls['FEEEARNER'].setValue(userType.UserId);
     }
     this.timeEntryForm.controls['QUANTITY'].setValue(0);

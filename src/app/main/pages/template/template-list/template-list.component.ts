@@ -62,7 +62,7 @@ export class TemplateListComponent implements OnInit {
 
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Templatedata = new MatTableDataSource(response.DATA.TEMPLATES);
-        console.log( this.Templatedata);
+    
         this.editContact(response.DATA.TEMPLATES[0]);
         
         this.Templatedata.paginator = this.paginator;

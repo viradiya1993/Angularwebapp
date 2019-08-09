@@ -23,6 +23,11 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TemplateListComponent } from './template-list/template-list.component';
 import { NewPacksDailogComponent } from './packs/new-packs-dailog/new-packs-dailog.component';
 import { InvoiceGenerateComponent } from './invoice-generate /invoice-generate.component';
+import { SetLetterHeadComponent } from './template-list/set-letterhead/set-letterhead.component';
+import { EditTemplateComponent } from './template-list/edit-template/edit-template.component';
+import { CopyTemplateComponent } from './template-list/copy-template/copy-template.component';
+import { FormatVariableComponent } from './template-list/edit-template/insert-with-formating/format-variable.component';
+import { NewFieldComponent } from './template-list/edit-template/new-field/new-field.component';
 
 
 
@@ -77,9 +82,14 @@ const routes = [
   }
 ];
 @NgModule({
-  declarations: [TemplateComponent, MatterContactDailogComponent, MatterDialogComponentForTemplate, TemplateListComponent
-    , EmailTempleteComponent, EmailDailogComponent, PacksComponent, PacksDailogComponent, NewPacksDailogComponent,InvoiceGenerateComponent],
-  entryComponents: [MatterContactDailogComponent, MatterDialogComponentForTemplate, EmailDailogComponent, PacksDailogComponent,InvoiceGenerateComponent, NewPacksDailogComponent],
+  declarations: [EditTemplateComponent,SetLetterHeadComponent,TemplateComponent, MatterContactDailogComponent, MatterDialogComponentForTemplate, TemplateListComponent
+    , EmailTempleteComponent, CopyTemplateComponent,EmailDailogComponent, PacksComponent, 
+    PacksDailogComponent, NewPacksDailogComponent,InvoiceGenerateComponent,FormatVariableComponent,NewFieldComponent],
+  
+  
+    entryComponents: [MatterContactDailogComponent, MatterDialogComponentForTemplate, 
+    EmailDailogComponent, PacksDailogComponent,InvoiceGenerateComponent,
+     NewPacksDailogComponent,SetLetterHeadComponent,EditTemplateComponent,CopyTemplateComponent,FormatVariableComponent,NewFieldComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

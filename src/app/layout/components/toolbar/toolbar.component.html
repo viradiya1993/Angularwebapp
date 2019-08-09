@@ -70,8 +70,8 @@
                                 </section>
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab details_tab">
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/time-billing'">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/time-billing'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                         <img src="assets/icons/web_app/icon_invoice_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -82,8 +82,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/legal-details'">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/legal-details'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                         <img src="assets/icons/web_app/icon_authorities_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -94,8 +94,8 @@
                                             </section>
                                          </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/document-register'">
+                                    <section [ngClass]="appPermissions[6]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[6]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/document-register'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                         <img src="assets/icons/web_app/icon_doc_reg_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -124,13 +124,13 @@
                                 <section class="group-section-tab extras_tab">
                                     <section class="ribbon-section">
                                         <mat-nav-list>
-                                            <a mat-list-item (click)="addNewTimeEntryNew('')">
+                                            <a mat-list-item *ngIf="appPermissions[2]" (click)="addNewTimeEntryNew('')" [ngClass]="appPermissions[2]['Create WIP']==0 ? 'disabled-click-cursor' : ''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_time_cost_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <span>New Time Entry</span>
                                             </a>
-                                            <a mat-list-item (click)="addTimerForMatter()">
+                                            <a mat-list-item *ngIf="appPermissions[2]" (click)="addTimerForMatter()" [ngClass]="appPermissions[2]['Create WIP']==0 ? 'disabled-click-cursor' : ''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_time_cost_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
@@ -146,13 +146,13 @@
                                     </section>
                                     <section class="ribbon-section">
                                         <mat-nav-list>
-                                            <a mat-list-item (click)="ContactsDialog('matter_contect')">
+                                            <a mat-list-item [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click-cursor' : ''" (click)="ContactsDialog('matter_contect')">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_client_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <span>Client Details</span>
                                             </a>
-                                            <a mat-list-item (click)="openCorresDialog()">
+                                            <a mat-list-item [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click-cursor' : ''" (click)="openCorresDialog()">
                                                 <mat-icon>
                                                     <mat-icon>
                                                         <img src="assets/icons/web_app/icon_contact_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -170,7 +170,7 @@
                     </section>
                 </mat-tab>
                 <!-- mattter tab menu end -->
-                <mat-tab label="CONTACT" *ngIf="isTabShow===2">
+                <mat-tab label="CONTACT" *ngIf="isTabShow===2">-
                     <section class="ribbon-container contact_tab_main">
                         <mat-card>
                             <mat-card-content>
@@ -254,9 +254,8 @@
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
-                                    <section [ngClass]="appPermissions[3]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/legal-details/authority'">
+                                    <section [ngClass]="appPermissions[12]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[12]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/legal-details/authority'">
                                                <section class="large-button-container">
                                                   <mat-icon class="main-icon">
                                                         <img src="assets/icons/web_app/icon_authorities_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -273,8 +272,8 @@
                                 <mat-divider vertical></mat-divider>
 
                                 <section class="group-section-tab action_tab">
-                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="AuthorityDialog('add')">
+                                    <section [ngClass]="appPermissions[12]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[12]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="AuthorityDialog('add')">
                                             <section class="large-button-container">
                                             <mat-icon class="main-icon"> 
                                                 <img  src="assets/icons/web_app/icon_authorities_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -285,8 +284,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="AuthorityDialog('edit')">
+                                    <section [ngClass]="appPermissions[12]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[12]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="AuthorityDialog('edit')">
                                             <section class="large-button-container">
                                             <mat-icon class="main-icon"> 
                                                 <img  src="assets/icons/web_app/icon_authorities_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -298,8 +297,8 @@
                                         </button>
                                     </section>
 
-                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="deleteAuthority()">
+                                    <section [ngClass]="appPermissions[12]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[12]?.Delete==0 ? 'disabled-click large-button' : 'large-button'" (click)="deleteAuthority()">
                                             <section class="large-button-container">
                                             <mat-icon class="main-icon"> 
                                                 <img  src="assets/icons/web_app/icon_authorities_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -312,8 +311,8 @@
                                     </section>
 
 
-                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="AuthorityDialog('copy')">
+                                    <section [ngClass]="appPermissions[12]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[12]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="AuthorityDialog('copy')">
                                             <section class="large-button-container">
                                             <mat-icon class="main-icon"> 
                                                 <img  src="assets/icons/web_app/icon_duplicate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -324,15 +323,12 @@
                                             </section>
                                         </button>
                                     </section>
-
-
                                     <div class="light_label_txt">Action</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab">
-                                    <section [ngClass]="appPermissions[3]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)">
+                                    <section [ngClass]="appPermissions[12]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[12]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)">
                                                <section class="large-button-container">
                                                   <mat-icon class="main-icon">
                                                         <img src="assets/icons/web_app/icon_authorities_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -361,8 +357,8 @@
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab details_tab">
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/legal-details'">
+                                    <section class="ribbon-section">
+                                        <button mat-button classs="large-button" (click)="setTab($event)" [routerLink]="'/legal-details'">
                                            <section class="large-button-container">
                                               <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_authorities_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -373,8 +369,8 @@
                                            </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" [routerLink]="'/document-register'">
+                                    <section class="ribbon-section">
+                                        <button mat-button [classs="large-button" [routerLink]="'/document-register'">
                                            <section class="large-button-container">
                                               <mat-icon class="main-icon">
                                                     <img class="menu-disabled" src="assets/icons/web_app/icon_doc_reg_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -391,19 +387,19 @@
                                 <section class="group-section-tab extras_tab">
                                     <section class="ribbon-section">
                                         <mat-nav-list>
-                                            <a mat-list-item [routerLink]="'/time-billing/estimate'" [ngClass]="activeSubMenu =='estimate'?'cmn_active_tab':''">
+                                            <a mat-list-item [ngClass]="appPermissions[4]?.Access==0 ? 'disabled-click-cursor' : ''" [routerLink]="'/time-billing/estimate'" [ngClass]="activeSubMenu =='estimate'?'cmn_active_tab':''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_estimate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <span>Estimate</span>
                                             </a>
-                                            <a mat-list-item [routerLink]="'/time-billing/work-in-progress'" [ngClass]="activeSubMenu =='work-in-progress'?'cmn_active_tab':''">
+                                            <a mat-list-item [ngClass]="appPermissions[2]?.Access==0 ? 'disabled-click-cursor' : ''" [routerLink]="'/time-billing/work-in-progress'" [ngClass]="activeSubMenu =='work-in-progress'?'cmn_active_tab':''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_time_cost_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <span>Work in Progress</span>
                                             </a>
-                                            <a mat-list-item [routerLink]="'/time-billing/matter-trust'" [ngClass]="activeSubMenu =='matter-trust'?'cmn_active_tab':''">
+                                            <a mat-list-item [ngClass]="appPermissions[2]?.Access==0 ? 'disabled-click-cursor' : ''" [routerLink]="'/time-billing/matter-trust'" [ngClass]="activeSubMenu =='matter-trust'?'cmn_active_tab':''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_trust_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
@@ -413,13 +409,13 @@
                                     </section>
                                     <section class="ribbon-section">
                                         <mat-nav-list>
-                                            <a mat-list-item [routerLink]="'/time-billing/matter-invoices'" [ngClass]="activeSubMenu =='matter-invoices'?'cmn_active_tab':''">
+                                            <a mat-list-item [ngClass]="appPermissions[7]?.Access==0 ? 'disabled-click-cursor' : ''" [routerLink]="'/time-billing/matter-invoices'" [ngClass]="activeSubMenu =='matter-invoices'?'cmn_active_tab':''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_invoice_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <span>Matter Invoices</span>
                                             </a>
-                                            <a mat-list-item [routerLink]="'/time-billing/receipts-credits'" [ngClass]="activeSubMenu =='receipts-credits'?'cmn_active_tab':''">
+                                            <a mat-list-item [ngClass]="appPermissions[8]?.Access==0 ? 'disabled-click-cursor' : ''" [routerLink]="'/time-billing/receipts-credits'" [ngClass]="activeSubMenu =='receipts-credits'?'cmn_active_tab':''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_receipt_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
@@ -432,8 +428,8 @@
                                 <!-- //for 2nd  -->
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab" *ngIf="activeSubMenu=='receipts-credits'">
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="createReceiptForTimeBilling()">
+                                    <section [ngClass]="appPermissions[8]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[8]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="createReceiptForTimeBilling()">
                                                 <section class="large-button-container">
                                                 <mat-icon class="main-icon"> 
                                                     <img  src="assets/icons/web_app/icon_receipt_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -444,8 +440,8 @@
                                                 </section>
                                          </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="ViewReceiptForTimeBilling()">
+                                    <section [ngClass]="appPermissions[8]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[8]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="ViewReceiptForTimeBilling()">
                                                 <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img  src="assets/icons/web_app/icon_receipt_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -456,8 +452,8 @@
                                                 </section>
                                             </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="deleteReceiceMoanyForTimeBilling()">
+                                    <section [ngClass]="appPermissions[8]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[8]?.Delete==0 ? 'disabled-click large-button' : 'large-button'" (click)="deleteReceiceMoanyForTimeBilling()">
                                                 <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img  src="assets/icons/web_app/icon_receipts_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -521,8 +517,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" disabled>
+                                    <section [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" disabled>
                                            <section class="large-button-container">
                                               <mat-icon class="main-icon">
                                                     <img class="menu-disabled" src="assets/icons/web_app/icon_time_cost_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -592,8 +588,8 @@
                                 <!-- start tag section  -->
                                 <mat-divider vertical *ngIf="activeSubMenu =='work-in-progress'"></mat-divider>
                                 <section class="group-section-tab details_tab">
-                                    <section [ngClass]="appPermissions[2]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="isInvoice != 'invoice' && activeSubMenu =='work-in-progress'">
-                                        <button mat-button [ngClass]="appPermissions[2]?.Create==0 ? 'large-button' : 'large-button'" [routerLink]="'/time-billing/work-in-progress/invoice'">
+                                    <section [ngClass]="appPermissions[7]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="isInvoice != 'invoice' && activeSubMenu =='work-in-progress'">
+                                        <button mat-button [ngClass]="appPermissions[7]?.Access==0 ? 'large-button' : 'large-button'" [routerLink]="'/time-billing/work-in-progress/invoice'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                         <img src="assets/icons/web_app/icon_invoice_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -604,8 +600,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[2]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="isInvoice == 'invoice' && activeSubMenu =='work-in-progress'">
-                                        <button mat-button [ngClass]="appPermissions[2]?.Create==0 ? 'large-button' : 'large-button'" [routerLink]="'/time-billing/work-in-progress'">
+                                    <section [ngClass]="appPermissions[2]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="isInvoice == 'invoice' && activeSubMenu =='work-in-progress'">
+                                        <button mat-button [ngClass]="appPermissions[2]?.Access==0 ? 'large-button' : 'large-button'" [routerLink]="'/time-billing/work-in-progress'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                         <img src="assets/icons/web_app/icon_time_cost_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -621,8 +617,8 @@
                                 <!-- end tag section  -->
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab" *ngIf="activeSubMenu=='matter-invoices'">
-                                    <section [ngClass]="appPermissions[7]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[7]?.Edit==0 ? 'large-button' : 'large-button'" (click)="InvoiceDetail('isTime');">
+                                    <section [ngClass]="appPermissions[7]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[7]?.Access==0 ? 'large-button' : 'large-button'" (click)="InvoiceDetail('isTime');">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img  src="assets/icons/web_app/icon_invoice_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -672,9 +668,9 @@
                                     <div class="light_label_txt">Action</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
-                                <section class="group-section-tab action_tab" >
+                                <section class="group-section-tab action_tab">
                                     <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button *ngIf="activeSubMenu=='receipts-credits'" mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
+                                        <button *ngIf="activeSubMenu=='receipts-credits'" mat-button [ngClass]="appPermissions[5]?.Access==0 ?  'disabled-click large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon"> 
                                                     <img  src="assets/icons/web_app/icon_print_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -721,8 +717,8 @@
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab details_tab">
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/time-billing'">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/time-billing'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                         <img src="assets/icons/web_app/icon_invoice_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -733,8 +729,8 @@
                                              </section>
                                          </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
+                                    <section [ngClass]="appPermissions[6]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[6]?.Access==0 ? 'disabled-click large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                         <img class="menu-disabled" src="assets/icons/web_app/icon_doc_reg_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -751,13 +747,13 @@
                                 <section class="group-section-tab extras_tab">
                                     <section class="ribbon-section">
                                         <mat-nav-list>
-                                            <a mat-list-item [routerLink]="'/legal-details/chronology'" [ngClass]="activeSubMenu =='chronology'?'cmn_active_tab':''">
+                                            <a mat-list-item [routerLink]="'/legal-details/chronology'" [ngClass]="activeSubMenu =='chronology'?'cmn_active_tab':''" [ngClass]="appPermissions[10]?.Access==0 ? 'disabled-click-cursor' : ''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_chronology_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <span>Chronology</span>
                                             </a>
-                                            <a mat-list-item [routerLink]="'/legal-details/authority'" [ngClass]="activeSubMenu =='authorities'?'cmn_active_tab':''">
+                                            <a mat-list-item [ngClass]="appPermissions[12]?.Access==0 ? 'disabled-click-cursor' : ''" [routerLink]="'/legal-details/authority'" [ngClass]="activeSubMenu =='authorities'?'cmn_active_tab':''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_authorities_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
@@ -773,20 +769,20 @@
                                     </section>
                                     <section class="ribbon-section">
                                         <mat-nav-list>
-                                            <a mat-list-item [routerLink]="'/legal-details/file-notes'" [ngClass]="activeSubMenu =='file-notes'?'cmn_active_tab':''">
+                                            <a mat-list-item [ngClass]="appPermissions[13]?.Access==0 ? 'disabled-click-cursor' : ''" [routerLink]="'/legal-details/file-notes'" [ngClass]="activeSubMenu =='file-notes'?'cmn_active_tab':''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_filesnotes_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <span>File Notes</span>
                                             </a>
-                                            <a mat-list-item [routerLink]="'/legal-details/safe-custody'" [ngClass]="activeSubMenu =='safe-custody'?'cmn_active_tab':''">
+                                            <a mat-list-item [ngClass]="appPermissions[14]?.Access==0 ? 'disabled-click-cursor' : ''" [routerLink]="'/legal-details/safe-custody'" [ngClass]="activeSubMenu =='safe-custody'?'cmn_active_tab':''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_safecustody_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <span>Safe Custody</span>
                                             </a>
 
-                                            <a mat-list-item [routerLink]="'/legal-details/search'" [ngClass]="activeSubMenu =='search'?'cmn_active_tab':''">
+                                            <a mat-list-item [ngClass]="appPermissions[16]?.Access==0 ? 'disabled-click-cursor' : ''" [routerLink]="'/legal-details/search'" [ngClass]="activeSubMenu =='search'?'cmn_active_tab':''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/Search.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
@@ -1102,8 +1098,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section class="ribbon-section">
-                                        <button mat-button class="large-button" (click)="ResumeTimePopup()">
+                                    <section [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="ResumeTimePopup()">
                                            <section class="large-button-container">
                                               <mat-icon class="main-icon">
                                                     <img  src="assets/icons/web_app/icon_time_cost_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1301,8 +1297,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="isMatterClick()" (click)="setTab($event)" [routerLink]="'/create-document/receive-money-template'">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="isMatterClick()" (click)="setTab($event)" [routerLink]="'/create-document/receive-money-template'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon"> 
                                                     <img  src="assets/icons/web_app/icon_letters_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1336,24 +1332,14 @@
                                                 </mat-icon>
                                                 <span>Templates</span>
                                             </a>
-                                            <!-- </button> -->
-
-                                            <!-- <button mat-button class="large-button"> -->
-                                            <!-- <a mat-list-item [routerLink]="'/create-document/email-templete'" [ngClass]="activeSubMenu =='email-templete' ? 'cmn_active_tab':''">
-                                                <mat-icon>
-                                                    <img src="assets/icons/web_app/icon_email_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <span>Emails</span>
-                                            </a> -->
-
                                             <!-- added by web 19  -->
-                                            <a mat-list-item [routerLink]="emailrouting">
+                                            <a [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor' : ''" mat-list-item [routerLink]="emailrouting">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_email_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <span>Emails {{emailroutingtax}}</span>
                                             </a>
-                                            <a mat-list-item [routerLink]="packrouting" [ngClass]="activeSubMenu =='packs'  ? 'cmn_active_tab':''">
+                                            <a [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor' : ''" mat-list-item [routerLink]="packrouting" [ngClass]="activeSubMenu =='packs'  ? 'cmn_active_tab':''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_doc_pack_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
@@ -1366,10 +1352,9 @@
                                 </section>
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab">
-                                    <!-- *ngIf="CreatDocumentChild !== 'email' && CreatDocumentChild !== 'packs'" -->
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="activeSubMenu ==='matter-template' || activeSubMenu ==='invoice-template' ||activeSubMenu ==='contact-template' 
+                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="activeSubMenu ==='matter-template' || activeSubMenu ==='invoice-template' ||activeSubMenu ==='contact-template' 
                                     ||activeSubMenu ==='receive-money-template' || packsToobar=='Template'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="GenarateDocument()" [disabled]="isDocumentGenerateHide =='yes'">
+                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="GenarateDocument()" [disabled]="isDocumentGenerateHide =='yes'">
                                             <section class="large-button-container">
                                             <mat-icon class="main-icon"> 
                                                 <img  src="assets/icons/web_app/icon_letters_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1380,9 +1365,9 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="activeSubMenu ==='email-matter-template' || activeSubMenu ==='email-invoice-template' ||activeSubMenu ==='email-contact-template' 
+                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="activeSubMenu ==='email-matter-template' || activeSubMenu ==='email-invoice-template' ||activeSubMenu ==='email-contact-template' 
                                     ||activeSubMenu ==='email-receive-money-template' || packsToobar=='Email' ">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="GenarateEmail()">
+                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="GenarateEmail()">
                                             <section class="large-button-container">
                                             <mat-icon class="main-icon"> 
                                                 <img  src="assets/icons/web_app/icon_email_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1393,9 +1378,9 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="(activeSubMenu ==='packs-matter-template' || activeSubMenu ==='packs-invoice-template' ||activeSubMenu ==='packs-contact-template' 
+                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="(activeSubMenu ==='packs-matter-template' || activeSubMenu ==='packs-invoice-template' ||activeSubMenu ==='packs-contact-template' 
                                     ||activeSubMenu ==='packs-receive-money-template') && packsToobar == 'Packs'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="GenaratePacks()" [disabled]="isDocumentGenerateHide =='yes'">
+                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="GenaratePacks()" [disabled]="isDocumentGenerateHide =='yes'">
                                             <section class="large-button-container">
                                             <mat-icon class="main-icon"> 
                                                 <img  src="assets/icons/web_app/icon_doc_pack_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1411,8 +1396,8 @@
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab" *ngIf="activeSubMenu ==='email-matter-template' || activeSubMenu ==='email-invoice-template' ||activeSubMenu ==='email-contact-template' 
                                 ||activeSubMenu ==='email-receive-money-template' || packsToobar=='Email'">
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button (click)="EmailTempletePopUp('new')" [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
+                                    <section [ngClass]="appPermissions[5]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button (click)="EmailTempletePopUp('new')" [ngClass]="appPermissions[5]?.Create==0 ? 'disabled-click large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon" >
                                                     <img src="assets/icons/web_app/icon_email_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1421,8 +1406,8 @@
                                             </section>
                                       </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button (click)="EmailTempletePopUp('edit')" [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
+                                    <section [ngClass]="appPermissions[5]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button (click)="EmailTempletePopUp('edit')" [ngClass]="appPermissions[5]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                         <img  src="assets/icons/web_app/icon_email_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1433,8 +1418,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button (click)="EmailTempletePopUp('copy')" [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
+                                    <section [ngClass]="appPermissions[5]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button (click)="EmailTempletePopUp('copy')" [ngClass]="appPermissions[5]?.Create==0 ? 'disabled-click large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                         <img  src="assets/icons/web_app/icon_email_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1450,8 +1435,8 @@
 
                                 <section class="group-section-tab action_tab" *ngIf="activeSubMenu ==='matter-template' || activeSubMenu ==='invoice-template' ||activeSubMenu ==='contact-template' 
                                 ||activeSubMenu ==='receive-money-template' || packsToobar=='Template'">
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="EditTemplatePopup()">
+                                    <section [ngClass]="appPermissions[5]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[5]?.Edit==0 ?  'disabled-click large-button' : 'large-button'" (click)="EditTemplatePopup()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon" >
                                                     <img src="assets/icons/web_app/icon_letters_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1460,8 +1445,8 @@
                                             </section>
                                       </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="CopyTemplatePopup()">
+                                    <section [ngClass]="appPermissions[5]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[5]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="CopyTemplatePopup()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                         <img  src="assets/icons/web_app/icon_letters_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1663,8 +1648,8 @@
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab details_tab">
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/legal-details'">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/legal-details'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_authorities_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1675,8 +1660,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/time-billing'">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/time-billing'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                         <img src="assets/icons/web_app/icon_invoice_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1691,8 +1676,8 @@
                                 </section>
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab">
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="DocumntPop('new')">
+                                    <section [ngClass]="appPermissions[6]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[6]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="DocumntPop('new')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_doc_reg_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1703,8 +1688,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="DocumntPop('edit')">
+                                    <section [ngClass]="appPermissions[6]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[6]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="DocumntPop('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_doc_reg_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1715,8 +1700,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="DeleteDocument()">
+                                    <section [ngClass]="appPermissions[6]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[6]?.Delete==0 ? 'disabled-click large-button' : 'large-button'" (click)="DeleteDocument()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_doc_reg_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1727,8 +1712,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="DocumntPop('duplicate')">
+                                    <section [ngClass]="appPermissions[6]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[6]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="DocumntPop('duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_duplicate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1821,8 +1806,8 @@
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="AccountPop('new')">
+                                    <section [ngClass]="appPermissions[19]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[19]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="AccountPop('new')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_add_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1833,8 +1818,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="AccountPop('edit')">
+                                    <section [ngClass]="appPermissions[19]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[19]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="AccountPop('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1845,8 +1830,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="DeleteAccount()">
+                                    <section [ngClass]="appPermissions[19]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[19]?.Delete==0 ? 'disabled-click large-button' : 'large-button'" (click)="DeleteAccount()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1857,8 +1842,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="AccountPop('duplicate')">
+                                    <section [ngClass]="appPermissions[19]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[19]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="AccountPop('duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_duplicate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1873,8 +1858,8 @@
                                 </section>
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab">
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="Account_Tra()">
+                                    <section [ngClass]="appPermissions[19]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[19]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="Account_Tra()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_arrowdown_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1885,8 +1870,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" (click)="isMatterClick()" [routerLink]="'/account-reconciliation'">
+                                    <section [ngClass]="appPermissions[19]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[19]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" (click)="isMatterClick()" [routerLink]="'/account-reconciliation'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_receipt_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1912,8 +1897,8 @@
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab details_tab">
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="NewGeneral()">
+                                    <section [ngClass]="appPermissions[20]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[20]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="NewGeneral()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_add_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1924,8 +1909,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="ViewDetails()">
+                                    <section [ngClass]="appPermissions[20]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[20]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="ViewDetails()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1936,8 +1921,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="DeleteGeneral()" disabled>
+                                    <section [ngClass]="appPermissions[20]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[20]?.Delete==0 ? 'disabled-click large-button' : 'large-button'" (click)="DeleteGeneral()" disabled>
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1948,8 +1933,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="DuplicateGeneral()" disabled>
+                                    <section [ngClass]="appPermissions[20]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[20]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="DuplicateGeneral()" disabled>
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                    <img src="assets/icons/web_app/icon_duplicate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1964,8 +1949,8 @@
                                 </section>
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab">
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="PrintGj()">
+                                    <section *ngIf="appPermissions[20]" [ngClass]="appPermissions[20]['Export Data']==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button *ngIf="appPermissions[20]" [ngClass]="appPermissions[20]['Export Data']==0 ? 'disabled-click large-button' : 'large-button'" (click)="PrintGj()">
                                                 <section class="large-button-container">
                                                     <mat-icon class="main-icon">
                                                         <img src="assets/icons/web_app/icon_print_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -2164,8 +2149,8 @@
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
-                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="StartInfoDialog()">
+                                    <section *ngIf="appPermissions[16]" [ngClass]="appPermissions[16]['Execute Search']==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button *ngIf="appPermissions[16]" mat-button [ngClass]="appPermissions[16]['Execute Search']==0 ? 'disabled-click large-button' : 'large-button'" (click)="StartInfoDialog()">
                                                 <section class="large-button-container">
                                                     <mat-icon class="main-icon"> 
                                                         <img  src="assets/icons/web_app/infotrack.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -2176,8 +2161,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'">
+                                    <section [ngClass]="appPermissions[16]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[16]?.Access==0 ? 'disabled-click large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                     <mat-icon class="main-icon"> 
                                                         <img  src="assets/icons/web_app/icon_search_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -2189,8 +2174,8 @@
                                             </button>
                                     </section>
 
-                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button disabled mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="deleteAuthority()">
+                                    <section [ngClass]="appPermissions[16]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button disabled mat-button [ngClass]="appPermissions[16]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="deleteAuthority()">
                                                 <section class="large-button-container">
                                                     <mat-icon class="main-icon"> 
                                                         <img class="menu-disabled" src="assets/icons/web_app/infotrack.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -2203,8 +2188,8 @@
                                     </section>
 
 
-                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'">
+                                    <section *ngIf="appPermissions[16]" [ngClass]="appPermissions[5]['Import Results']==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button *ngIf="appPermissions[16]" mat-button [ngClass]="appPermissions[5]['Import Results']==0 ? 'disabled-click large-button' : 'large-button'">
                                                 <section class="large-button-container">
                                                     <mat-icon class="main-icon"> 
                                                         <img  src="assets/icons/web_app/icon_search_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -2254,8 +2239,8 @@
                                         </button>
                                     </section>
 
-                                    <section [ngClass]="appPermissions[3]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[3]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/conflict-check'">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="setTab($event)" [routerLink]="'/conflict-check'">
                                            <section class="large-button-container">
                                               <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/Select.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -2340,8 +2325,8 @@
                                 <mat-divider vertical></mat-divider>
                                 <!-- Account Section Start-->
                                 <section class="group-section-tab">
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/chart-account'">
+                                    <section [ngClass]="appPermissions[19]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[19]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/chart-account'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_receipt_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -2364,8 +2349,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/genral-journal'">
+                                    <section [ngClass]="appPermissions[20]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[20]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/genral-journal'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_receipt_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -2422,11 +2407,6 @@
                     </section>
                 </mat-tab>
                 <!-- report tab menu end -->
-
-                <!-- conflict-check -->
-
-
-                <!-- conflict-check end -->
 
                 <!-- help tab menu start -->
                 <mat-tab label="HELP">

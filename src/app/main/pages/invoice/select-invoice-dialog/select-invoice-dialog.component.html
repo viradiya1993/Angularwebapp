@@ -74,8 +74,8 @@
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
         <div class="left_popup_btn">
-            <button mat-raised-button color="accent" (click)="AddNewInvoicepopup()">New Invoice</button>
-            <button mat-raised-button color="accent" (click)="EditNewInvoicepopup()">Edit Invoice</button>
+            <button mat-raised-button color="accent" (click)="AddNewInvoicepopup()" [ngClass]="appPermissions[7]?.Create==0 ? 'disabled-click-cursor' : ''">New Invoice</button>
+            <button mat-raised-button color="accent" (click)="EditNewInvoicepopup()" [ngClass]="appPermissions[7]?.Edit==0 ? 'disabled-click-cursor' : ''">Edit Invoice</button>
         </div>
         <div class="right_popup_btn">
             <button mat-raised-button (click)="selectInvoicve()" color="accent">Select</button>

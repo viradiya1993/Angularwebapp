@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import {  MainAPiServiceService, } from './../../../../_services';
+import { MainAPiServiceService, } from './../../../../_services';
 import { MatTableDataSource, MatPaginator, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
@@ -7,7 +7,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ContactDialogComponent } from '../contact-dialog/contact-dialog.component';
 import * as $ from 'jquery';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-contact-select-dialog',
@@ -17,6 +17,7 @@ import {MatSort} from '@angular/material';
 })
 export class ContactSelectDialogComponent implements OnInit {
   displayedColumns: string[] = ['CONTACTNAME', 'SUBURB'];
+  appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   highlightedRows: any;
@@ -46,6 +47,9 @@ export class ContactSelectDialogComponent implements OnInit {
     this.loadContectData(this.filterVals);
     if (this._data.type == "fromcontact") {
       this.SelectcontactForm.get('ContactType').disable();
+    }
+    if (this.appPermissions == null) {
+      this.appPermissions = [];
     }
   }
   Contactvalue(value) {

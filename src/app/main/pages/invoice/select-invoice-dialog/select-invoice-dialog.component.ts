@@ -1,4 +1,4 @@
-import { Component, OnInit,  ViewChild, ViewEncapsulation, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, Input } from '@angular/core';
 import { MatDialogRef, MatDialog, MatPaginator, MatTableDataSource, MatDialogConfig } from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MainAPiServiceService, BehaviorService } from './../../../../_services';
@@ -8,7 +8,7 @@ import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.co
 import { InvoiceAddDailogComponent } from '../invoice-add-dailog/invoice-add-dailog.component';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 // import { TemplateComponent } from '../template.component';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-select-invoice-dialog',
@@ -18,6 +18,7 @@ import {MatSort} from '@angular/material';
   animations: fuseAnimations
 })
 export class InvoiceDialogComponentForTemplate implements OnInit {
+  appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
   message: string;
   isspiner: boolean = false;
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
@@ -32,7 +33,7 @@ export class InvoiceDialogComponentForTemplate implements OnInit {
   isLoadingResults: boolean = false;
   pageSize: any;
   currentInvoiceData: any;
-  TemplateGenerateData:any=[];
+  TemplateGenerateData: any = [];
   // currentMatterData: any;
   MatterDropData: any;
   filterVal: any = { 'Active': '', 'FeeEarner': '', 'SearchString': '' };
@@ -44,21 +45,22 @@ export class InvoiceDialogComponentForTemplate implements OnInit {
     private _mainAPiServiceService: MainAPiServiceService,
     public _matDialog: MatDialog,
     public dialogRef: MatDialogRef<InvoiceDialogComponentForTemplate>,
-    public behaviorService:BehaviorService,
-   
+    public behaviorService: BehaviorService,
+
 
     // private data:TemplateComponent
   ) {
 
     this.matterFilterForm = this.fb.group({ MatterFilter: [''], UserFilter: [''], searchFilter: [''], InvoiceFilter: [''], });
     this.behaviorService.TemplateGenerateData$.subscribe(result => {
-      if(result){
-        this.TemplateGenerateData=result; 
-      }          
+      if (result) {
+        this.TemplateGenerateData = result;
+      }
     });
   }
 
   ngOnInit() {
+    this.appPermissions = [];
     // this.getDropValue();
     // this.getMatterList();
 
@@ -97,29 +99,29 @@ export class InvoiceDialogComponentForTemplate implements OnInit {
 
   }
   selectInvoicve() {
-   
+
     //this.currentInvoiceData
     let passingData = {
       'Context': "Invoice",
       'ContextGuid': this.currentInvoiceData.INVOICEGUID,
       "Type": "Template",
       "Folder": '',
-      "Template":  this.TemplateGenerateData.TEMPLATENAME
+      "Template": this.TemplateGenerateData.TEMPLATENAME
     }
     this._mainAPiServiceService.getSetData(passingData, 'TemplateGenerate').subscribe(response => {
       console.log(response);
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.toastr.success('Template Generate successfully');
         this.dialogRef.close(true);
-      //   this.checkValidation(response.DATA.VALIDATIONS, passingData);
-      // } else if (response.CODE == 451 && response.STATUS == 'warning') {
-      //   this.checkValidation(response.DATA.VALIDATIONS, passingData);
-      // } else if (response.CODE == 450 && response.STATUS == 'error') {
-      //   this.checkValidation(response.DATA.VALIDATIONS, passingData);
-      // } else if (response.MESSAGE == 'Not logged in') {
-      //   this.dialogRef.close(false);
-      // } else {
-      //   this.isspiner = false;
+        //   this.checkValidation(response.DATA.VALIDATIONS, passingData);
+        // } else if (response.CODE == 451 && response.STATUS == 'warning') {
+        //   this.checkValidation(response.DATA.VALIDATIONS, passingData);
+        // } else if (response.CODE == 450 && response.STATUS == 'error') {
+        //   this.checkValidation(response.DATA.VALIDATIONS, passingData);
+        // } else if (response.MESSAGE == 'Not logged in') {
+        //   this.dialogRef.close(false);
+        // } else {
+        //   this.isspiner = false;
       }
     }, error => {
       this.toastr.error(error);
@@ -172,7 +174,7 @@ export class InvoiceDialogComponentForTemplate implements OnInit {
   //   }, error => {
   //     this.toastr.error(error);
   //   });
-   
+
   // }
   // getMatterList() {
   //   this.getList(JSON.parse(localStorage.getItem('matter_invoice_filter')));

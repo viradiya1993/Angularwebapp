@@ -29,7 +29,6 @@ import { InstantInvoiceDailogComponent } from 'app/main/pages/invoice/instant-in
 import { InvoiceAddDailogComponent } from 'app/main/pages/invoice/invoice-add-dailog/invoice-add-dailog.component';
 import { MatterDialogComponentForTemplate } from 'app/main/pages/template/matter-dialog/matter-dialog.component';
 
-
 import { UserDialogComponent } from './../../../main/pages/users/user-dialog/user-dialog.component';
 import { ActivityDialogComponent } from './../../../main/pages/activities/activity-dialog/activity-dialog.component';
 import { ChangePasswordComponent } from 'app/main/change-password/change-password.component';
@@ -101,7 +100,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     packsToobar: string;
     EmailtemplateData: any = [];
     SendMoney_dataGUID: any;
-    DocRegData:any=[];
+    DocRegData: any = [];
 
 
     constructor(
@@ -761,20 +760,20 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             panelClass: 'Document-dialog',
             data: DcoumentPopdata
         });
-        dialogRef.afterClosed().subscribe(result => { 
-            if(result)
-            $("#refreshDOCREGTab").click();
+        dialogRef.afterClosed().subscribe(result => {
+            if (result)
+                $("#refreshDOCREGTab").click();
         });
     }
 
     // Delete Record Document
     DeleteDocument(): void {
         this.behaviorService.DocumentRegisterData$.subscribe(result => {
-            if(result){
-              this.DocRegData=result;
-              
-            }          
-          });
+            if (result) {
+                this.DocRegData = result;
+
+            }
+        });
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
@@ -783,8 +782,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.afterClosed().subscribe(result => {
             let getContactGuId = localStorage.getItem('contactGuid');
 
-         
-            let postData = { FormAction: "delete", data: { DOCUMENTGUID:  this.DocRegData.DOCUMENTGUID } }
+
+            let postData = { FormAction: "delete", data: { DOCUMENTGUID: this.DocRegData.DOCUMENTGUID } }
             this._mainAPiServiceService.getSetData(postData, 'SetDocument').subscribe(res => {
                 if (res.STATUS == "success") {
                     $('#refreshDOCREGTab').click();
@@ -1320,17 +1319,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    NewTimeEntry(){
+    NewTimeEntry() {
         const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 const dialogRef = this.dialog.open(ResumeTimerComponent, { width: '100%', disableClose: true, data: { 'edit': '', 'matterData': '' } });
-            dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                // $('#refreshTimeEntryTab').click();
-            }
+                dialogRef.afterClosed().subscribe(result => {
+                    if (result) {
+                        // $('#refreshTimeEntryTab').click();
+                    }
 
-        });
+                });
                 // localStorage.setItem('set_active_matters', JSON.stringify(result));
                 // this.router.navigate(['time-billing/work-in-progress/invoice']);
             }

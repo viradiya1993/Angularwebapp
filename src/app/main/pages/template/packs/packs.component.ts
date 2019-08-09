@@ -5,11 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { MatterReceiptDialogComponentForTemplate } from 'app/main/pages/receive-money/matter-dialog/matter-dialog.component';
 //Tree Table
-
-import { CollectionViewer, SelectionChange } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { BehaviorSubject, merge, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { fuseAnimations } from '@fuse/animations';
 import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import * as $ from 'jquery';
@@ -25,37 +21,8 @@ interface FoodNode {
   children?: FoodNode[];
   KITITEMS?: FoodNode[];
   MainList?: FoodNode[];
-
-
 }
 
-// const TREE_DATA: FoodNode[] = [
-//   {
-//     name: 'Fruit',
-//     children: [
-//       { name: 'Apple' },
-//       { name: 'Banana' },
-//       { name: 'Fruit loops' },
-//     ]
-//   }, {
-//     name: 'Vegetables',
-//     children: [
-//       {
-//         name: 'Green',
-//         children: [
-//           { name: 'Broccoli' },
-//           { name: 'Brussel sprouts' },
-//         ]
-//       }, {
-//         name: 'Orange',
-//         children: [
-//           { name: 'Pumpkins' },
-//           { name: 'Carrots' },
-//         ]
-//       },
-//     ]
-//   },
-// ];
 
 /** Flat node with expandable and level information */
 interface ExampleFlatNode {
@@ -106,7 +73,7 @@ export class PacksComponent implements OnInit, AfterViewInit {
     this._transformer, node => node.level, node => node.expandable, node => node.KITITEMS);
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-  
+
 
   highlightedRows: number;
   constructor(

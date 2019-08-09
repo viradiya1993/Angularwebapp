@@ -1391,7 +1391,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     createReceipt() {
         const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
             if (result) {
                 const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
                     width: '100%', disableClose: true,

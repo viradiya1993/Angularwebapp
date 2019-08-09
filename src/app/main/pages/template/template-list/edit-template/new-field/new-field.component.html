@@ -1,0 +1,76 @@
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+    <div cdkDrag class="popup_main_div add_edit_contact_main" >
+        <h2 cdkDragHandle mat-dialog-title>Edit Template 
+          <button class="btn" mat-icon-button (click)="closepopup()"  [mat-dialog-close]="false" aria-label="Close dialog">
+            <mat-icon>close</mat-icon>
+          </button>
+        </h2>
+        <div mat-dialog-content class="mat-typography main">
+          <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+              <form  fxLayout="column" fxFlex="1 0 auto" name="form">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field  appearance="outline" fxFlex="50" class=" pr-4">
+                                <mat-label> Name</mat-label>
+                                <input   matInput>
+                            </mat-form-field>
+                            <mat-form-field  appearance="outline" fxFlex="50" class=" pr-4">
+                                    <mat-label>Description</mat-label>
+                                    <input   matInput>
+                                </mat-form-field>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                <mat-form-field appearance="outline" fxFlex="50" class="pr-4" >
+                                        <mat-label>Field Type</mat-label>
+                                        <mat-select (selectionChange)="onChangeFieldType($event)"  placeholder="Field Type">
+                                            <mat-option  value="Question">Question</mat-option>
+                                            <mat-option  value="Calculated Field">Calculated Field</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" >
+                                            <mat-label>Entry Type</mat-label>
+                                            <mat-select [disabled]="VarValue=='CalculatedF'" placeholder="Entry Type">
+                                                <mat-option  value="Entry">Entry</mat-option>
+                                                <mat-option  value="Spin">Spin</mat-option>
+                                                <mat-option  value="Optional List">Optional List</mat-option>
+                                                <mat-option  value="Fixed List">Fixed List</mat-option>
+                                                <mat-option  value="Text">Text</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field  appearance="outline" fxFlex="50" class=" pr-4">
+                                        <mat-label> Question</mat-label>
+                                        <input [disabled]="VarValue=='CalculatedF'"   matInput>
+                                    </mat-form-field>
+                                    <mat-form-field  appearance="outline" fxFlex="50" class=" pr-4">
+                                            <mat-label>Formula/List</mat-label>
+                                            <input   matInput>
+                                        </mat-form-field>
+                                </div>
+
+                                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                        <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4">
+                                                <input (dateInput)="choosedDate()" (dateChange)="choosedDate()" matInput  [matDatepicker]="picker1" placeholder="Date Formate">
+                                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker1></mat-datepicker>
+                                            </mat-form-field>
+                                        <mat-form-field  appearance="outline" fxFlex="33" class=" pr-4">
+                                                <mat-label>Default Value</mat-label>
+                                                <input   matInput>
+                                            </mat-form-field>
+                                            <mat-checkbox  fxFlex="30" >Value Required</mat-checkbox>
+                                    </div>
+    
+              </form>
+          </div>
+          
+           
+        </div>
+        <mat-dialog-actions align="end" class="popup_ftr">
+            <button mat-raised-button color="accent" [mat-dialog-close]="false" cdkFocusInitial>Save</button>
+            <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
+        </mat-dialog-actions>
+    </div>

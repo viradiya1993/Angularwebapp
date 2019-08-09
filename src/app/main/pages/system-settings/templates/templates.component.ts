@@ -23,7 +23,6 @@ export class TemplatesComponent implements OnInit {
 
   ngOnInit() {
     this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response=>{
-      console.log(response);
       this.getDropDownValue=response.DATA.LISTS;
      
        })
@@ -40,7 +39,7 @@ export class TemplatesComponent implements OnInit {
       }
   });
   dialogRef.afterClosed().subscribe(result => {
-    console.log(result);
+
   this.SettingForm.controls['INVOICETEMPLATE'].setValue(result);  
       
   });

@@ -80,7 +80,6 @@ export class GeneralJournalComponent implements OnInit {
         data:{}
       });
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
       });
 
     }else {

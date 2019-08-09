@@ -96,7 +96,6 @@ export class ClientComponent implements OnInit {
     });
   }
   loadData() {
-    console.log( this.isEditMatter);
     if(this.isEditMatter != undefined){
       this._mainAPiServiceService.getSetData({ MATTERGUID: this.isEditMatter }, 'GetMatterContact').subscribe(response => {
         if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {

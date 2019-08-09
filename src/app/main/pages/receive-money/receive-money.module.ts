@@ -11,7 +11,6 @@ import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, 
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 import { GeneralReceiptDilogComponent } from './general-receipt-dilog/general-receipt-dilog.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import { MatterReceiptDialogComponentForTemplate } from './matter-dialog/matter-dialog.component';
 import { MatSortModule } from '@angular/material/sort';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker'
 import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
@@ -20,11 +19,11 @@ const routes = [
 
 ];
 @NgModule({
-  declarations: [ReceiveMoneyComponent, GeneralReceiptDilogComponent, MatterReceiptDialogComponentForTemplate],
-  entryComponents: [GeneralReceiptDilogComponent, MatterReceiptDialogComponentForTemplate],
+  declarations: [ReceiveMoneyComponent, GeneralReceiptDilogComponent],
+  entryComponents: [GeneralReceiptDilogComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes),
+    RouterModule.forChild(routes), 
     FuseSharedModule,
     FuseConfirmDialogModule,
     FuseSidebarModule,

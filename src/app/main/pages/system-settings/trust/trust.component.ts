@@ -21,7 +21,7 @@ export class TrustComponent implements OnInit {
   ngOnInit() {
    
     this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response=>{
-      console.log(response);
+
       this.getDropDownValue=response.DATA.LISTS;
     
       })

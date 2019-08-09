@@ -1,0 +1,24 @@
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+    <div cdkDrag class="popup_main_div add_edit_contact_main" >
+        <h2 cdkDragHandle mat-dialog-title>Edit Template 
+          <button class="btn" mat-icon-button (click)="closepopup()"  [mat-dialog-close]="false" aria-label="Close dialog">
+            <mat-icon>close</mat-icon>
+          </button>
+        </h2>
+        <div mat-dialog-content class="mat-typography main">
+          <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+              <form  fxLayout="column" fxFlex="1 0 auto" name="form">
+               
+    
+              </form>
+          </div>
+          
+           
+        </div>
+        <mat-dialog-actions align="end" class="popup_ftr">
+            <button mat-raised-button color="accent" [mat-dialog-close]="false" cdkFocusInitial>Save</button>
+            <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
+        </mat-dialog-actions>
+    </div>

@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { MatSort } from '@angular/material';
 import { MatterDialogComponentForTemplate } from '../matter-dialog/matter-dialog.component';
 import { ContactSelectDialogComponent } from '../../contact/contact-select-dialog/contact-select-dialog.component';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-template-list',
@@ -30,12 +31,14 @@ export class TemplateListComponent implements OnInit {
   isLoadingResults: boolean;
   pageSize: any;
   abc: number;
+  TemplateForm:FormGroup;
   parentMessage: any;
   @Output() matterDetail: EventEmitter<any> = new EventEmitter<any>();
   constructor(
     private toastr: ToastrService,
     private _mainAPiServiceService: MainAPiServiceService,
     public MatDialog: MatDialog,
+    private _formBuilder: FormBuilder,
     private router: Router,
     public _matDialog: MatDialog,
     private behaviorService:BehaviorService,
@@ -43,6 +46,10 @@ export class TemplateListComponent implements OnInit {
 
   ngOnInit() {
     // let i=0;
+    this.TemplateForm = this._formBuilder.group({
+      search: ['']
+    });
+
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.LoadData({})
 
@@ -55,7 +62,7 @@ export class TemplateListComponent implements OnInit {
 
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Templatedata = new MatTableDataSource(response.DATA.TEMPLATES);
-        console.log( this.Templatedata);
+    
         this.editContact(response.DATA.TEMPLATES[0]);
         
         this.Templatedata.paginator = this.paginator;
@@ -76,10 +83,13 @@ export class TemplateListComponent implements OnInit {
     });
     this.pageSize = localStorage.getItem('lastPageSize');
   }
-
+  get f() {
+    //console.log(this.contactForm);
+    return this.TemplateForm.controls;
+  }
   onSearch(searchFilter: any) {
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
-
+      this.LoadData({ SEARCH:this.f.search.value})
     }
   }
   editContact(Row: any) {

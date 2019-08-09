@@ -24,7 +24,7 @@ export class ReportsComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _mainAPiServiceService: MainAPiServiceService){
       //API Call
-      console.log(data);
+    
       if(data.ReportGenerateData){   
         this.PDF_Generation=data.ReportGenerateData;
         this.title=data.ReportGenerateData.title;
@@ -195,7 +195,7 @@ export class ReportsComponent implements OnInit {
        keydelete(ReportData);         
        //Api Report Generate 
        this._mainAPiServiceService.getSetData(ReportData, 'ReportGenerate').subscribe(reportgenerateData => {
-         console.log(reportgenerateData);
+       
         if(reportgenerateData.PDF_Generation.CODE==200 && reportgenerateData.PDF_Generation.STATUS=="success"){         
           this.dialogRef.close(true); 
           this.isLoadingResults = false;

@@ -12,8 +12,7 @@ export class ReceiptsComponent implements OnInit {
 
   ngOnInit() {
     this._mainAPiServiceService.getSetData({"ITEMDATESTART":"03/05/2010","ITEMDATEEND":"27/07/2019"}, 'HOGetReceipts').subscribe(response=>{
-      // console.log(response);
-      console.log(response);
+
      })
   }
 

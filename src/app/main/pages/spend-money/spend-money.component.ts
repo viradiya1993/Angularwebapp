@@ -184,7 +184,6 @@ export class SpendMoneyComponent implements OnInit {
 
   editmatter(Row: any) {
     this.currentMatterData = Row;
-    console.log(Row);
     this.behaviorService.SpendMoneyData(Row);
   }
 

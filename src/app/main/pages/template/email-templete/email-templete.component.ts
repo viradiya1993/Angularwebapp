@@ -88,9 +88,15 @@ export class EmailTempleteComponent implements OnInit {
     });
     this.pageSize = localStorage.getItem('lastPageSize');
   }
+  get f() {
+    //console.log(this.contactForm);
+    return this.EmailAllData.controls;
+  }
   // FilterSearch
-  FilterSearch(filterValue: any) {
-    // this.EmailDataTbl.filter = filterValue;
+  FilterSearch(searchFilter: any) {
+    if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
+        this.LoadData({ SEARCH:this.f.search.value})
+    }
   }
   //clicktitle
   clicktitle(row) {
@@ -101,6 +107,7 @@ export class EmailTempleteComponent implements OnInit {
   EmailDialog() {
 
   }
+
   dblclickEmail(row){
 
     this.behaviorService.EmailGenerateData$.subscribe(result => {

@@ -12,8 +12,7 @@ export class PaymentComponent implements OnInit {
 
   ngOnInit() {
     this._mainAPiServiceService.getSetData({}, 'HOGetPaymentDetailURL').subscribe(response=>{
-      // console.log(response);
-      console.log(response);
+   
      })
   }
 

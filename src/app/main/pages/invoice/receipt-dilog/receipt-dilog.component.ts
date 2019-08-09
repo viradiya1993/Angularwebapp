@@ -66,7 +66,6 @@ export class ReceiptDilogComponent implements OnInit {
   ) {
     this.matterData = this._data.matterData;
     this.isEdit = this._data.action == 'edit' ? true : false;
-    console.log(this._data)
   }
 
 
@@ -126,14 +125,12 @@ export class ReceiptDilogComponent implements OnInit {
     });
   }
   setInvoiceForReceipt(INCOMEGUID) {
-    console.log(INCOMEGUID);
     this.PrepareReceiptData = [];
     this.isLoadingResults = true;
     let incomeGuid = { INCOMEGUID: INCOMEGUID }
     this._mainAPiServiceService.getSetData(incomeGuid, 'GetIncome').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.INCOMEITEMS[0]) {
-          console.log(response);
           localStorage.setItem('receiptData', JSON.stringify(response.DATA.INCOMEITEMS[0]));
           let data = response.DATA.INCOMEITEMS[0];
           this.PrepareReceiptForm.controls['INCOMECODE'].setValue(data.INCOMECODE);

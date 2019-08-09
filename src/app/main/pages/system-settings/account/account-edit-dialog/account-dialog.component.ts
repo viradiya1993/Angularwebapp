@@ -30,7 +30,6 @@ export class AccountDialogComponent implements OnInit {
   });
 
   dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
   });
   }
 

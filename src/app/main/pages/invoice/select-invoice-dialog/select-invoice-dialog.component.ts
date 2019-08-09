@@ -64,7 +64,6 @@ export class InvoiceDialogComponentForTemplate implements OnInit {
 
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(JSON.parse(localStorage.getItem('matter_invoice_filter')), 'GetInvoice').subscribe(response => {
-      console.log(response);
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (response.DATA.INVOICES[0]) {
           localStorage.setItem('edit_invoice_id', response.DATA.INVOICES[0].INVOICEGUID);

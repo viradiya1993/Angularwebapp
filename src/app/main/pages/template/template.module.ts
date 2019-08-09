@@ -22,7 +22,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TemplateListComponent } from './template-list/template-list.component';
 import { NewPacksDailogComponent } from './packs/new-packs-dailog/new-packs-dailog.component';
-import { InvoiceGenerateComponent } from './invoice-generate /invoice-generate.component';
+import { InvoiceGenerateComponent } from './invoice-generate/invoice-generate.component';
 import { SetLetterHeadComponent } from './template-list/set-letterhead/set-letterhead.component';
 import { EditTemplateComponent } from './template-list/edit-template/edit-template.component';
 import { CopyTemplateComponent } from './template-list/copy-template/copy-template.component';

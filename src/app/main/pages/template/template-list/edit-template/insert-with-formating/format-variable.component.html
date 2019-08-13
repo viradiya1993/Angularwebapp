@@ -11,7 +11,220 @@
           <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
               <form  fxLayout="column" fxFlex="1 0 auto" name="form">
                
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+                  <p fxFlex="30" class=" pr-4">Exapmle</p>
+                  <p>{{dateForEx}}</p>
+                  <!-- <p>06/05/20119</p> mm/dd/yyyy
+                  <p>JUN 30,2014</p>mmm dd, yyyy
+                  <p>06/30/19</p>
+                  <p>06/30/19</p>
+                  <p>06/30/19</p> -->
+                  
+              </div>
+
+              <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+                  <mat-form-field appearance="outline" fxFlex="50" class="pr-4" >
+                      <mat-label>Type</mat-label>
+                      <mat-select name="Type" [(ngModel)]="FormatVarData.Type" (selectionChange)="onChangeType($event.value)" placeholder="Type">
+                          <mat-option  value="Date">Date</mat-option>
+                          <mat-option  value="Time">Time</mat-option>
+                          <mat-option  value="Number">Number</mat-option>
+                      </mat-select>
+                  </mat-form-field>
+              <mat-form-field  appearance="outline" fxFlex="50" class=" pr-4">
+                  <mat-label>Picture</mat-label>
+                  <input  placeholder="Picture" matInput>
+              </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-tab-group mat-align-tabs="start">
+                    <mat-tab *ngIf="MatTabName=='Date'" label="Date">
+                        <div class="one"  fxLayout="column">
+                        <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field appearance="outline" fxFlex="50" class="pr-4" >
+                                <mat-label>Format</mat-label>
+                                <mat-select  name="FormateForDate" [(ngModel)]="FormatVarData.FormateForDate" (selectionChange)="onChangeFormate($event.value)" placeholder="Format">
+                                    <mat-option  value="1">mm/dd/yy</mat-option>
+                                    <mat-option  value="2">mm/dd/yyyy</mat-option>
+                                    <mat-option  value="3">mmm dd,yyyy</mat-option>
+                                    <mat-option  value="4">mmmmmmmmm dd,yyyy</mat-option>
+                                    <mat-option  value="5">dd/mm/yy</mat-option>
+                                    <mat-option  value="6">dd/mm/yyyy</mat-option>
+
+                                    <mat-option  value="7">dd mmm yy</mat-option>
+                                    <mat-option  value="8">dd mmm yyyy</mat-option>
+                                    <mat-option  value="9">yy/mm/dd</mat-option>
+                                    <mat-option  value="10">yyyy/mm/dd</mat-option>
+                                    <mat-option  value="11">yymmdd</mat-option>
+                                    <mat-option  value="12">mm/yy</mat-option>
+                                    <mat-option  value="13">mm/yyyy</mat-option>
+                                    <mat-option  value="14">yy/mm</mat-option>
+                                    <mat-option  value="15">yyyy/mm</mat-option>
+                                    <mat-option  value="16">System Short Date</mat-option>
+                                    <mat-option  value="17">System Long Date</mat-option>
+                                    
+                                    <!-- <mat-option  value="Time">Time</mat-option>
+                                    <mat-option  value="Number">Number</mat-option> -->
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" fxFlex="50" class="pr-4" >
+                                <mat-label>Seperator</mat-label>
+                                <mat-select name="Seperator" [(ngModel)]="FormatVarData.Seperator"  (selectionChange)="onChangeSeperator($event.value)" placeholder="Seperator">
+                                    <mat-option  value="Standard">Standard</mat-option>
+                                    <mat-option  value="Period">Period</mat-option>
+                                    <mat-option  value="Dash">Dash</mat-option>
+                                    <mat-option  value="Space">Space</mat-option>
+                                    <mat-option  value="Comma">Comma</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                          </div>
+
+                          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+                              <mat-form-field appearance="outline" fxFlex="50" class="pr-4" >
+                                  <mat-label>Leading Characters</mat-label>
+                                  <mat-select name="LeadingChar" [(ngModel)]="FormatVarData.LeadingChar" (selectionChange)="onChangeLeadingChar($event.value)" placeholder="Leading Characters">
+                                      <mat-option  value="Zero">Zero</mat-option>
+                                      <mat-option  value="Blank">Blank</mat-option>
+                                      <mat-option  value="Asterisk">Asterisk</mat-option>
+                                  </mat-select>
+                              </mat-form-field>
+                              <mat-checkbox [(ngModel)]="FormatVarData.BlankWhenZero" name="BlankWhenZero"  fxFlex="50" >Blank With Zero</mat-checkbox>
+                        </div>
+                          </div>
+                    </mat-tab>
+                    <mat-tab *ngIf="MatTabName=='Time'" label="Time">
+                        <div class="one"  fxLayout="column">
+                            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                <mat-form-field appearance="outline" fxFlex="50" class="pr-4" >
+                                    <mat-label>Format</mat-label>
+                                    <mat-select name="FormateTime" [(ngModel)]="FormatVarData.FormateTime" (selectionChange)="onChangeFormateForTime($event.value)" placeholder="Format">
+                                        <mat-option  value="1">hh:mm</mat-option>
+                                        <mat-option  value="2">hhmm</mat-option>
+                                        <mat-option  value="3">hh:mmXM</mat-option>
+                                        <mat-option  value="4">hh:mm:ss</mat-option>
+                                        <mat-option  value="5">hhmmss</mat-option>
+                                        <mat-option  value="6">hh:mm:ssXM</mat-option>
+                                        <mat-option  value="7">Windows Short Time</mat-option>
+                                        <mat-option  value="8">Windows Short Time</mat-option>    
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="50" class="pr-4" >
+                                    <mat-label>Seperator</mat-label>
+                                    <mat-select name="Seperator" [(ngModel)]="FormatVarData.Seperator"  (selectionChange)="onChangeSeperator($event.value)"  placeholder="Seperator">
+                                        <mat-option  value="Standard">Standard</mat-option>
+                                        <mat-option  value="Period">Period</mat-option>
+                                        <mat-option  value="Dash">Dash</mat-option>
+                                        <mat-option  value="Space">Space</mat-option>
+                                        <mat-option  value="Comma">Comma</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                              </div>
     
+                              <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+    
+                                  <mat-form-field appearance="outline" fxFlex="50" class="pr-4" >
+                                      <mat-label>Leading Characters</mat-label>
+                                      <mat-select (selectionChange)="onChangeLeadingChar($event.value)" name="LeadingChar" [(ngModel)]="FormatVarData.LeadingChar"  placeholder="Leading Characters">
+                                          <mat-option  value="Zero">Zero</mat-option>
+                                          <mat-option  value="Blank">Blank</mat-option>
+                                          <mat-option  value="Asterisk">Asterisk</mat-option>
+                                      </mat-select>
+                                  </mat-form-field>
+                                  <mat-checkbox [(ngModel)]="FormatVarData.BlankWhenZero" name="BlankWhenZero"  fxFlex="50" >Blank With Zero</mat-checkbox>
+                            </div>
+                              </div>
+
+
+                    </mat-tab>
+
+                    <mat-tab *ngIf="MatTabName=='Number'" label="Number And Currency">
+                      <div class="one"  fxLayout="column">
+                          <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                             
+                            <mat-form-field  appearance="outline" fxFlex="50" class=" pr-4">
+                                  <mat-label>Size</mat-label>
+                                  <input type='number' placeholder="Size" matInput>
+                              </mat-form-field>
+
+                              <mat-form-field  appearance="outline" fxFlex="50" class=" pr-4">
+                                  <mat-label>Decimal Digits</mat-label>
+                                  <input type='number' placeholder="Decimal Digits" matInput>
+                              </mat-form-field>
+
+                
+                            </div>
+  
+                            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+  
+                                <mat-form-field appearance="outline" fxFlex="50" class="pr-4" >
+                                    <mat-label>Currency</mat-label>
+                                    <mat-select  placeholder="Currency">
+                                        <mat-option  value="None">None</mat-option>
+                                        <mat-option  value="Leading">Leading</mat-option>
+                                        <mat-option  value="Trailing">Trailing</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field  appearance="outline" fxFlex="50" class=" pr-4">
+                                    <mat-label>Symbol</mat-label>
+                                    <input value='$'  placeholder="Symbol" matInput>
+                                </mat-form-field>
+                          </div>
+
+                          <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field appearance="outline" fxFlex="50" class="pr-4" >
+                                <mat-label>Negative Sign</mat-label>
+                                <mat-select (selectionChange)="onChangeNavSign($event.value)"  placeholder="Negative Sign">
+                                    <mat-option  value="Brackets">Brackets</mat-option>
+                                    <mat-option  value="Leading">Leading</mat-option>
+                                    <mat-option  value="Trailing">Trailing</mat-option>
+                                    <mat-option  value="None">None</mat-option>
+                                    <!-- <mat-option  value="Time">Time</mat-option>
+                                    <mat-option  value="Number">Number</mat-option> -->
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" fxFlex="50" class="pr-4" >
+                                <mat-label>Decimal Seperator</mat-label>
+                                <mat-select  (selectionChange)="onChangeLeadingChar($event.value)" placeholder="Decimal Seperator">
+                                    <mat-option  value="Period">Period</mat-option>
+                                    <mat-option  value="Comma">Comma</mat-option>
+                                    <mat-option  value="None">None</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                              <mat-form-field appearance="outline" fxFlex="50" class="pr-4" >
+                                  <mat-label>Leading Character</mat-label>
+                                  <mat-select (selectionChange)="onChangeLeadingChar($event.value)"  placeholder="Leading Character">
+                                      <mat-option  value="clip">clip</mat-option>
+                                      <mat-option  value="Zero">Zero</mat-option>
+                                      <mat-option  value="Blank">Blank</mat-option>
+                                      <mat-option  value="Asterisk">Asterisk</mat-option>
+                                  </mat-select>
+                              </mat-form-field>
+                              <mat-form-field appearance="outline" fxFlex="50" class="pr-4" >
+                                  <mat-label>Grouping</mat-label>
+                                  <mat-select  (selectionChange)="onChangeLeadingChar($event.value)" placeholder="Grouping">
+                                      <mat-option  value="Space">Space</mat-option>
+                                      <mat-option  value="Period">Period</mat-option>
+                                      <mat-option  value="Comma">Comma</mat-option>
+                                      <mat-option  value="None">None</mat-option>
+                                  </mat-select>
+                              </mat-form-field>
+                            </div>
+                            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                <mat-checkbox name="ApplyHeaders"  fxFlex="100" >Blank With Zero</mat-checkbox>
+                            </div>
+                            </div>
+                    </mat-tab>
+
+                </mat-tab-group>
+            </div>
+
+
               </form>
           </div>
           

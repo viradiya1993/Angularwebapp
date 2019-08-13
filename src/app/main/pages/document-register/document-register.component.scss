@@ -1,5 +1,5 @@
 @import "src/@fuse/scss/fuse";
-#users {
+#DocReg {
     .header {
         .search-wrapper {
             width: 100%;
@@ -77,7 +77,7 @@ document-register {
     padding-left: 80px;
 }
 
-#users .p-24.list_tbl_main {
+#DocReg .p-24.list_tbl_main {
     // margin-top: 85px;
     overflow: hidden;
 }
@@ -87,7 +87,7 @@ document-register {
     padding-top: 0 !important;
 }
 
-#users .content {
+#DocReg .content {
     position: relative;
 }
 
@@ -134,7 +134,7 @@ table tr.highlight {
 }
 
 
-#users .content .example {
+#DocReg .content .example {
     padding: 20px 10px;
 }
 
@@ -150,17 +150,17 @@ button#refreshDOCREGTab {
     display: none;
 }
 @media screen and (max-width: 1200px) {
-    #users .sticky_search_div.responsive_auto .example {
+    #DocReg .sticky_search_div.responsive_auto .example {
         width: 15%;
     }
 }
 
 @media screen and (max-width: 991px) {
-    #users .sticky_search_div.responsive_auto {
+    #DocReg .sticky_search_div.responsive_auto {
         overflow: auto;
         white-space: nowrap;
     }
-    #users .sticky_search_div.responsive_auto .example {
+    #DocReg .sticky_search_div.responsive_auto .example {
         width: 20%;
     }
 }

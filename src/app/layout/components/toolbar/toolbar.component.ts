@@ -50,6 +50,7 @@ import { ResumeTimerComponent } from 'app/main/pages/time-entries/resume-timer/r
 import { CopyTemplateComponent } from 'app/main/pages/template/template-list/copy-template/copy-template.component';
 import { SetLetterHeadComponent } from 'app/main/pages/template/template-list/set-letterhead/set-letterhead.component';
 import { EditTemplateComponent } from 'app/main/pages/template/template-list/edit-template/edit-template.component';
+import { SafeCustodyDialogeComponent } from 'app/main/pages/legal-details/safecustody/safe-custody-dialog/safe-custody-dialog.component';
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -1513,6 +1514,35 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     clickToolbarbtn2() {
         this.isDocumentGenerateHide = "no";
     }
+
+    ////// safe custody poup
+
+    OpenNewSafeCustody(actionType){
+        let safeCustodyData = {}
+        if (actionType == 'new') {
+            safeCustodyData = { action: actionType }
+        } else if (actionType == 'edit' || actionType == 'copy') {
+            safeCustodyData = { action: actionType }
+        }
+        const dialogRef = this.dialog.open(SafeCustodyDialogeComponent, {
+            disableClose: true,
+            panelClass: 'Safe-Custody-dialog',
+            data: safeCustodyData
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // $('#refreshEmailTab').click();
+            }
+        });
+
+
+        // const dialogRef = this._matDialog.open(SafeCustodyDialogeComponent, { width: '100%', disableClose: true, });
+        // dialogRef.afterClosed().subscribe(result => {
+        //     if (result) {
+        //         // localStorage.setItem('set_active_matters', JSON.stringify(result));
+        //     }
+        // });
+    }
     // spendmoneyMenubtn(){
     // this.spendMoneyMenu="disabled"; 
     // }
@@ -1581,7 +1611,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     packsToolbarHide() {
-        console.log("fsddshfjkdskhfjk")
         this.behaviorService.packs$.subscribe(result => {
             if (result != null) {
                 if (result.TEMPLATETYPEDESC == 'Email') {

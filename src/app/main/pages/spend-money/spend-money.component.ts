@@ -113,8 +113,8 @@ export class SpendMoneyComponent implements OnInit {
     const diffTime = Math.abs(date2.getTime() - date1.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
 
-   const date4= this.datepipe.transform(date2, 'dd/MM/yyyy')
-   const date5= this.datepipe.transform(date3, 'dd/MM/yyyy')
+   const date4= this.datepipe.transform(date2, 'dd/MM/yyyy');
+   const date5= this.datepipe.transform(date3, 'dd/MM/yyyy');
     if(date4 === date5){
       if(diffDays==0){
         this.SepndMoneyForm.controls['DayRange'].setValue("Today");

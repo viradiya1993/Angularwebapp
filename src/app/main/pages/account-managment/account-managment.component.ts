@@ -21,7 +21,25 @@ export class AccountManagmentComponent implements OnInit {
 
   ngOnInit() {
     this.accountMngForm=this._formBuilder.group({
+      REGISTRATIONNAME:[''],
+      FIRSTNAME:[''],
+      MIDDLENAME:[''],
+      LASTNAME:[''],
+      ADDRESS:[''],
+      
+      SUBURB:[''],
+      ADDRESSSTATE:[''],
+      POSTCODE:[''],
+      PHONE:[''],
+      MOBILE:[''],
+      EMAIL:[''],
+      ACCOUNTSEMAIL:[''],
+      MANAGEREMAIL:[''],
+      TECHNICALEMAIL:[''],
+      REGISTEREDUNTIL:[''],
+      INTROPRICEUNTIL:[''],
 
+      
     })
   }
   basicInfoClick(){

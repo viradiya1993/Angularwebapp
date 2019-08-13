@@ -11,17 +11,17 @@ import { ContactDialogComponent } from './../../../main/pages/contact/contact-di
 import { MainAPiServiceService,TableColumnsService, BehaviorService } from 'app/_services';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 
-
 @Component({
   selector: 'app-document-register',
   templateUrl: './document-register.component.html',
   styleUrls: ['./document-register.component.scss'],
+  encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
 export class DocumentRegisterComponent implements OnInit {
   documentform: FormGroup;
   isLoadingResults: boolean = false;
-  highlightedRows:any;
+  highlightedRows:any;  
   ColumnsObj = [];
   pageSize: any;
   tempColobj: any;

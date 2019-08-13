@@ -33,7 +33,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
   contactFilter: FormGroup;
   pageSize: any;
   selectedVal: any;
-  filterVals = { 'active': 'all', 'FirstLetter': 'a', 'SEARCH': '', 'ContactType': 'all' };
+  filterVals = { 'active': 'all', 'FirstLetter': 'a', 'SEARCH': '', 'ContactType': '' };
   constructor(
     private dialog: MatDialog,
     private TableColumnsService: TableColumnsService,
@@ -43,9 +43,9 @@ export class ContactComponent implements OnInit, AfterViewInit {
     private cd: ChangeDetectorRef
   ) {
     this.contactFilter = this._formBuilder.group({
-      ContactType: ['all'],
-      active: ['all'],
-      FirstLetter: ['a'],
+      ContactType: [''],
+      active: [''],
+      FirstLetter: [''],
       search: [''],
     });
   }
@@ -56,8 +56,8 @@ export class ContactComponent implements OnInit, AfterViewInit {
     this.getTableFilter();
     if (JSON.parse(localStorage.getItem('contact_Filter'))) {
       this.filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
-      this.contactFilter.controls['active'].setValue(this.filterVals.active);
-      this.contactFilter.controls['ContactType'].setValue(this.filterVals.ContactType);
+      this.contactFilter.controls['active'].setValue(this.filterVals.active == '' ? "all" : this.filterVals.active);
+      this.contactFilter.controls['ContactType'].setValue(this.filterVals.ContactType == '' ? "all" : this.filterVals.ContactType);
       this.contactFilter.controls['FirstLetter'].setValue(this.filterVals.FirstLetter);
     } else {
       localStorage.setItem('contact_Filter', JSON.stringify(this.filterVals));
@@ -156,6 +156,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
     this.LoadData(this.filterVals);
   }
   ContactTypeChange(value) {
+    console.log(value);
     this.filterVals.ContactType = value == 'all' ? "" : value;
     localStorage.setItem('contact_Filter', JSON.stringify(this.filterVals));
     this.LoadData(this.filterVals);

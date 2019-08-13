@@ -40,9 +40,9 @@ export class GenerateTemplatesDialoagComponent implements OnInit {
     this.isLoadingResults = true;
 
     this._mainAPiServiceService.getSetData(data, 'TemplateList').subscribe(response => {
+      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Templatedata = new MatTableDataSource(response.DATA.TEMPLATES);
-
         this.Templatedata.paginator = this.paginator;
         if (response.DATA.TEMPLATES[0]) {
           // localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);

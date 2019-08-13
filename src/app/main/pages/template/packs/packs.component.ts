@@ -161,7 +161,6 @@ export class PacksComponent implements OnInit, AfterViewInit {
   }
 
   RowClick(main) {
-    console.log(main);
     $("#packsToolbarHide").click();
     this.behaviorService.packsitems(main);
     this.behaviorService.EmailGenerateData({ 'NAME': main.TEMPLATEFILE });

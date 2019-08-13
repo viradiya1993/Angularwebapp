@@ -1,5 +1,5 @@
 <div class="one" fxLayout="column">
-  <mat-accordion class="padding_class" >
+  <mat-accordion *ngFor="let val of ReceipttData"  class="padding_class" >
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -10,225 +10,39 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
       <div>
-        <p class="pr-4" fxFlex="80">Growth Plan - digital experience platform including 5 sites and 100,000 monthly
-          visits</p>
+        <p class="pr-4" fxFlex="80">Amount Received</p>
           
-          <p fxFlex="20"   class="pr-4">$200</p>
+          <p fxFlex="20" class="pr-4">{{val.AMOUNTRECEIVED}}</p>
           <hr/>
-        <!-- <mat-form-field fxFlex="20"  appearance="outline" class="pr-4">
-          <input value="$200" matInput placeholder="">
-        </mat-form-field> -->
       </div>
       <div>
-        <p class="pr-4" fxFlex="80">Multi-Site Legacy Discount </p>
-        <p fxFlex="20"   class="pr-4">$200</p>
+        <p class="pr-4" fxFlex="80">Date Received</p>
+        <p fxFlex="20"   class="pr-4">{{val.DATERECEIVED}}</p>
         <hr/>
-        <!-- <mat-form-field fxFlex="20"  appearance="outline" class="pr-4">
-          <input value="$200" matInput placeholder="">
-        </mat-form-field> -->
       </div>
       <div>
-        <p class="pr-4" fxFlex="80">5-Site Pack Legacy Discount </p>
-        <p fxFlex="20"   class="pr-4">$200</p>
+        <p class="pr-4" fxFlex="80">ExGST Amount </p>
+        <p fxFlex="20"   class="pr-4">{{val.EXGSTAMOUNT}}</p>
       </div>
       <div>
-        <p class="pr-4" fxFlex="80">Tax
+        <p class="pr-4" fxFlex="80">GST
         </p>
-        <p fxFlex="20"   class="pr-4">$200</p>
+        <p fxFlex="20"   class="pr-4">{{val.GST}}</p>
       </div>
       <div>
-        <p class="pr-4" fxFlex="80">Total</p>
-        <p fxFlex="20"   class="pr-4">$200</p>
+        <p class="pr-4" fxFlex="80">Payment Type</p>
+        <p fxFlex="20"   class="pr-4">{{val.PAYMENTTYPE}}</p>
       </div>
       <div>
-        <p class="pr-4" fxFlex="80">Paid by Visa ending in 2058 - 6/28/19 - Thank You </p>
-        <p fxFlex="20"   class="pr-4">$200</p>
+        <p class="pr-4" fxFlex="80">Receipt Code</p>
+        <p fxFlex="20"   class="pr-4">{{val.RECEIPTCODE}}</p>
       </div>
       <div>
-
-        <p class="pr-4" fxFlex="80">Amount Due </p>
-        <p fxFlex="20"   class="pr-4">$200</p>
-
-
       </div>
-
-
     </mat-expansion-panel>
 
   </mat-accordion>
 
-  <!-- for example -->
-  <mat-accordion class="padding_class" >
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Personal data
-        </mat-panel-title>
-        <mat-panel-description>
-          Type your name and age
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <div>
-        <p class="pr-4" fxFlex="80">Growth Plan - digital experience platform including 5 sites and 100,000 monthly
-          visits</p>
-         
-          <p fxFlex="20"   class="pr-4">$200</p>
-        
-        <!-- <mat-form-field fxFlex="20"  appearance="outline" class="pr-4">
-          <input value="$200" matInput placeholder="">
-        </mat-form-field> -->
-      </div>
-      <div>
-        <p class="pr-4" fxFlex="80">Multi-Site Legacy Discount </p>
-        <p fxFlex="20"   class="pr-4">$200</p>
-        <hr/>
-        <!-- <mat-form-field fxFlex="20"  appearance="outline" class="pr-4">
-          <input value="$200" matInput placeholder="">
-        </mat-form-field> -->
-      </div>
-      <div>
-        <p class="pr-4" fxFlex="80">5-Site Pack Legacy Discount </p>
-        <p fxFlex="20"   class="pr-4">$200</p>
-      </div>
-      <div>
-        <p class="pr-4" fxFlex="80">Tax
-        </p>
-        <p fxFlex="20"   class="pr-4">$200</p>
-      </div>
-      <div>
-        <p class="pr-4" fxFlex="80">Total</p>
-        <p fxFlex="20"   class="pr-4">$200</p>
-      </div>
-      <div>
-        <p class="pr-4" fxFlex="80">Paid by Visa ending in 2058 - 6/28/19 - Thank You </p>
-        <p fxFlex="20"   class="pr-4">$200</p>
-      </div>
-      <div>
-
-        <p class="pr-4" fxFlex="80">Amount Due </p>
-        <p fxFlex="20"   class="pr-4">$200</p>
-
-
-      </div>
-
-
-    </mat-expansion-panel>
-  </mat-accordion>
-
-  <mat-accordion class="padding_class" >
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Personal data
-        </mat-panel-title>
-        <mat-panel-description>
-          Type your name and age
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <div>
-        <p class="pr-4" fxFlex="80">Growth Plan - digital experience platform including 5 sites and 100,000 monthly
-          visits</p>
-          
-          <p fxFlex="20"   class="pr-4">$200</p>
-          <hr/>
-        <!-- <mat-form-field fxFlex="20"  appearance="outline" class="pr-4">
-          <input value="$200" matInput placeholder="">
-        </mat-form-field> -->
-      </div>
-      <div>
-        <p class="pr-4" fxFlex="80">Multi-Site Legacy Discount </p>
-        <p fxFlex="20"   class="pr-4">$200</p>
-        <hr/>
-        <!-- <mat-form-field fxFlex="20"  appearance="outline" class="pr-4">
-          <input value="$200" matInput placeholder="">
-        </mat-form-field> -->
-      </div>
-      <div>
-        <p class="pr-4" fxFlex="80">5-Site Pack Legacy Discount </p>
-        <p fxFlex="20"   class="pr-4">$200</p>
-      </div>
-      <div>
-        <p class="pr-4" fxFlex="80">Tax
-        </p>
-        <p fxFlex="20"   class="pr-4">$200</p>
-      </div>
-      <div>
-        <p class="pr-4" fxFlex="80">Total</p>
-        <p fxFlex="20"   class="pr-4">$200</p>
-      </div>
-      <div>
-        <p class="pr-4" fxFlex="80">Paid by Visa ending in 2058 - 6/28/19 - Thank You </p>
-        <p fxFlex="20"   class="pr-4">$200</p>
-      </div>
-      <div>
-
-        <p class="pr-4" fxFlex="80">Amount Due </p>
-        <p fxFlex="20"   class="pr-4">$200</p>
-
-
-      </div>
-
-
-    </mat-expansion-panel>
-
-  </mat-accordion>
-  <mat-accordion class="padding_class" >
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Personal data
-        </mat-panel-title>
-        <mat-panel-description>
-          Type your name and age
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <div>
-        <p class="pr-4" fxFlex="80">Growth Plan - digital experience platform including 5 sites and 100,000 monthly
-          visits</p>
-          
-          <p fxFlex="20"   class="pr-4">$200</p>
-          <hr/>
-        <!-- <mat-form-field fxFlex="20"  appearance="outline" class="pr-4">
-          <input value="$200" matInput placeholder="">
-        </mat-form-field> -->
-      </div>
-      <div>
-        <p class="pr-4" fxFlex="80">Multi-Site Legacy Discount </p>
-        <p fxFlex="20"   class="pr-4">$200</p>
-        <hr/>
-        <!-- <mat-form-field fxFlex="20"  appearance="outline" class="pr-4">
-          <input value="$200" matInput placeholder="">
-        </mat-form-field> -->
-      </div>
-      <div>
-        <p class="pr-4" fxFlex="80">5-Site Pack Legacy Discount </p>
-        <p fxFlex="20"   class="pr-4">$200</p>
-      </div>
-      <div>
-        <p class="pr-4" fxFlex="80">Tax
-        </p>
-        <p fxFlex="20"   class="pr-4">$200</p>
-      </div>
-      <div>
-        <p class="pr-4" fxFlex="80">Total</p>
-        <p fxFlex="20"   class="pr-4">$200</p>
-      </div>
-      <div>
-        <p class="pr-4" fxFlex="80">Paid by Visa ending in 2058 - 6/28/19 - Thank You </p>
-        <p fxFlex="20"   class="pr-4">$200</p>
-      </div>
-      <div>
-
-        <p class="pr-4" fxFlex="80">Amount Due </p>
-        <p fxFlex="20"   class="pr-4">$200</p>
-
-
-      </div>
-
-
-    </mat-expansion-panel>
-
-  </mat-accordion>
   
 
 </div>

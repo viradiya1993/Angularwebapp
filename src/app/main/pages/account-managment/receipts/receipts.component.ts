@@ -7,13 +7,14 @@ import { MainAPiServiceService } from 'app/_services';
   styleUrls: ['./receipts.component.scss']
 })
 export class ReceiptsComponent implements OnInit {
-
+  ReceipttData:any=[];
   constructor(private _mainAPiServiceService: MainAPiServiceService) { }
 
   ngOnInit() {
     this._mainAPiServiceService.getSetData({}, 'HOGetReceipts').subscribe(response => {
       // console.log(response);
       console.log(response);
+      this.ReceipttData=response.DATA.RECEIPTS;
     })
   }
 

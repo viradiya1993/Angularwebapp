@@ -50,6 +50,7 @@ import { ResumeTimerComponent } from 'app/main/pages/time-entries/resume-timer/r
 import { CopyTemplateComponent } from 'app/main/pages/template/template-list/copy-template/copy-template.component';
 import { SetLetterHeadComponent } from 'app/main/pages/template/template-list/set-letterhead/set-letterhead.component';
 import { EditTemplateComponent } from 'app/main/pages/template/template-list/edit-template/edit-template.component';
+import { WriteOffTimeEntryComponent } from 'app/main/pages/time-entries/write-off-time-entry/write-off-time-entry.component';
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -577,6 +578,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
             if (result)
                 $('#refreshTimeEntryTab').click();
+        });
+    }
+    WriteOffTimeEntry() {
+        const dialogRef = this._matDialog.open(WriteOffTimeEntryComponent, {
+            width: '100%', disableClose: true,
+            data: {}
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+            }
         });
     }
     /* ---------------------------------------------------------------------end of timer add--------------------------------------------------------------------------  */
@@ -1415,6 +1426,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
+
     //Invoice Detail for invoice
     InvoiceDetail(isType) {
         let INVOICEGUID = '';
@@ -1546,7 +1558,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }
     }
 
-    CopyTemplatePopup(){
+    CopyTemplatePopup() {
         const dialogRef = this._matDialog.open(CopyTemplateComponent, { width: '100%', disableClose: true, });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -1554,7 +1566,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    SetLetterHeadPopup(){
+    SetLetterHeadPopup() {
         const dialogRef = this._matDialog.open(SetLetterHeadComponent, { width: '100%', disableClose: true, });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -1562,7 +1574,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    EditTemplatePopup(){
+    EditTemplatePopup() {
         const dialogRef = this._matDialog.open(EditTemplateComponent, { width: '100%', disableClose: true, });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {

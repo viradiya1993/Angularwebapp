@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MainAPiServiceService } from 'app/_services';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-payment',
@@ -7,13 +8,19 @@ import { MainAPiServiceService } from 'app/_services';
   styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent implements OnInit {
-
-  constructor(private _mainAPiServiceService:MainAPiServiceService) { }
-
+  safeSrc: any = "";
+  isLoadingResults: boolean = false;
+  constructor(private sanitizer: DomSanitizer, private _mainAPiServiceService: MainAPiServiceService) { }
   ngOnInit() {
-    this._mainAPiServiceService.getSetData({}, 'HOGetPaymentDetailURL').subscribe(response=>{
-   
-     })
+    this.isLoadingResults = true;
+    this._mainAPiServiceService.getSetData({}, 'HOGetPaymentDetailURL').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(response.DATA.RETURNURL);
+        this.isLoadingResults = false;
+      } else {
+        this.isLoadingResults = false;
+      }
+    })
   }
 
 }

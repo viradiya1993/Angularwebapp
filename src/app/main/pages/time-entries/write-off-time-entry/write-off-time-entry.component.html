@@ -1,0 +1,64 @@
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+</div>
+<div class="popup_main_div write_off_time_entry_popup" cdkDrag>
+    <h2 cdkDragHandle mat-dialog-title> Write Off Item
+        <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
+            <mat-icon>close</mat-icon>
+        </button>
+    </h2>
+    <div mat-dialog-content class="mat-typography main">
+        <div class=" one  mb-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+            <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="WriteOffTimeEntry" id="WriteOffTimeEntry">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <div class=" one  mb-24" fxLayout="column">
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field appearance="outline" fxFlex="20" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.ITEMDATE,'has-warning':errorWarningData.Warning?.ITEMDATE}">
+                                <mat-label>Date</mat-label>
+                                <input matInput placeholder="Choose a date">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" fxFlex="20" class="pr-4" appearance="outline">
+                                <mat-label>Time of day</mat-label>
+                                <input matInput placeholder="Time of day">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" fxFlex="20" class="pr-4" appearance="outline">
+                                <mat-label>Fee Earner</mat-label>
+                                <input matInput placeholder="Fee Earner">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" fxFlex="20" class="pr-4" appearance="outline">
+                                <mat-label>Duration</mat-label>
+                                <input matInput placeholder="Duration">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" fxFlex="20" class="pr-4" appearance="outline">
+                                <mat-label>Type</mat-label>
+                                <input matInput placeholder="Type">
+                            </mat-form-field>
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field appearance="outline" fxFlex="20" class="pr-4" appearance="outline">
+                                <mat-label>Charge Ex-GST</mat-label>
+                                <input matInput placeholder="Charge Ex-GST">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" fxFlex="20" class="pr-4" appearance="outline">
+                                <mat-label>Charge In-GST</mat-label>
+                                <input matInput placeholder="Charge In-GST">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" fxFlex="30" class="pr-4" appearance="outline">
+                                <mat-label>Invoice Text</mat-label>
+                                <input matInput placeholder="Invoice Text">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" fxFlex="30" class="pr-4" appearance="outline">
+                                <mat-label>Notes</mat-label>
+                                <input matInput placeholder="Notes">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <mat-dialog-actions align="end" class="popup_ftr">
+        <button mat-raised-button color="accent" (click)="saveWriteOffTimeEntry()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
+    </mat-dialog-actions>
+</div>

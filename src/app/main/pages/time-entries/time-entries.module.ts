@@ -25,8 +25,9 @@ import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 import { MatterDialogComponent } from './matter-dialog/matter-dialog.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NumericDirective } from './time-entry-dialog/numericValidation.component';
-import {MatSortModule} from '@angular/material/sort';
- import { ResumeTimerComponent } from './resume-timer/resume-timer.component';
+import { MatSortModule } from '@angular/material/sort';
+import { ResumeTimerComponent } from './resume-timer/resume-timer.component';
+import { WriteOffTimeEntryComponent } from './write-off-time-entry/write-off-time-entry.component';
 const routes = [
   { path: '', component: TimeEntriesComponent, canActivate: [AuthGuard] }
 ];
@@ -37,7 +38,8 @@ const routes = [
     TimeEntryDialogComponent,
     MatterDialogComponent,
     NumericDirective,
-    ResumeTimerComponent
+    ResumeTimerComponent,
+    WriteOffTimeEntryComponent
     // SatDatepickerModule,
   ],
   imports: [
@@ -78,13 +80,14 @@ const routes = [
   //   // {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
   // ],
   providers: [
-    { provide: DateAdapter, useClass: AppDateAdapter},
-    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
+    { provide: DateAdapter, useClass: AppDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
   ],
   entryComponents: [
     TimeEntryDialogComponent,
     MatterDialogComponent,
-    ResumeTimerComponent
+    ResumeTimerComponent,
+    WriteOffTimeEntryComponent
   ],
   exports: [
     TimeEntriesComponent

@@ -370,7 +370,7 @@
                                         </button>
                                     </section>
                                     <section class="ribbon-section">
-                                        <button mat-button [classs="large-button" [routerLink]="'/document-register'">
+                                        <button mat-button classs="large-button" [routerLink]="'/document-register'">
                                            <section class="large-button-container">
                                               <mat-icon class="main-icon">
                                                     <img class="menu-disabled" src="assets/icons/web_app/icon_doc_reg_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1113,6 +1113,21 @@
                                     <div class="light_label_txt">Action</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
+                                <section class="group-section-tab extras_tab">
+                                    <section class="ribbon-section">
+                                        <mat-nav-list>
+                                            <a mat-list-item [ngClass]="appPermissions[7]?.Create==0 ? '' : ''" (click)="WriteOffTimeEntry()">
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_time_cost_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>Write off Work in Progress</span>
+                                            </a>
+                                            <!-- disabled-click-cursor -->
+                                        </mat-nav-list>
+                                    </section>
+                                    <div class="light_label_txt">Extras</div>
+                                </section>
+                                <mat-divider vertical></mat-divider>
                             </mat-card-content>
                         </mat-card>
                     </section>
@@ -1186,6 +1201,27 @@
                                         </button>
                                     </section>
                                     <div class="light_label_txt">Action</div>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                                <section class="group-section-tab extras_tab">
+                                    <section class="ribbon-section">
+                                        <mat-nav-list>
+                                            <a mat-list-item [ngClass]="appPermissions[7]?.Create==0 ? '' : ''" (click)="createInstantInvoice()">
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_invoice_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>Instant Invoice</span>
+                                            </a>
+                                            <!-- disabled-click-cursor -->
+                                            <a mat-list-item [ngClass]="appPermissions[7]?.Create==0 ? '' : ''" (click)="InvoiceDetail('')">
+                                                <mat-icon>
+                                                    <img src="assets/icons/web_app/icon_invoice_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <span>Write off Invoice</span>
+                                            </a>
+                                        </mat-nav-list>
+                                    </section>
+                                    <div class="light_label_txt">Extras</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
                             </mat-card-content>

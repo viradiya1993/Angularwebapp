@@ -1,0 +1,90 @@
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+</div>
+<div cdkDrag class="popup_main_div add_edit_contact_main">
+    <h2 cdkDragHandle mat-dialog-title>{{dialogTitle}}
+        <button class="btn" mat-icon-button (click)="closepopup()" [mat-dialog-close]="false" aria-label="Close dialog">
+            <mat-icon>close</mat-icon>
+        </button>
+    </h2>
+    <div mat-dialog-content class="mat-typography main">
+        <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+            <form fxLayout="column" fxFlex="1 0 auto" name="form">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
+                        <mat-label>Matter Num.</mat-label>
+                        <input name="TemplateName" matInput>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
+                        <mat-label>Owner</mat-label>
+                        <input name="TemplateName" matInput>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Packet</mat-label>
+                        <mat-select name="Seperator" placeholder="Seperator">
+                            <mat-option value="Standard">Standard</mat-option>
+                            <mat-option value="Period">Period</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Document Type</mat-label>
+                        <mat-select name="Seperator" placeholder="Seperator">
+                            <mat-option value="Standard">Standard</mat-option>
+                            <mat-option value="Period">Period</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
+                        <mat-label>Dscription</mat-label>
+                        <input name="TemplateName" matInput>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
+                        <mat-label>Document\Web Site</mat-label>
+                        <input name="TemplateName" matInput>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
+                        <input matInput [matDatepicker]="picker1" placeholder="Review Date">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
+                        <mat-label>Text</mat-label>
+                        <textarea cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" matInput></textarea>
+                    </mat-form-field>
+                </div>
+
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-tab-group mat-align-tabs="start">
+                        <mat-tab label="Person">
+                            <div class="one" fxLayout="column">
+                                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
+                                        <input matInput [matDatepicker]="picker2" placeholder="Date">
+                                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker2></mat-datepicker>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
+                                        <mat-label>Contact Name</mat-label>
+                                        <input value="Diana Parkinson (no password)" matInput>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <mat-dialog-actions align="end" class="popup_ftr">
+        <button mat-raised-button color="accent" [mat-dialog-close]="false" cdkFocusInitial>Save</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
+    </mat-dialog-actions>
+</div>

@@ -7,61 +7,61 @@
 
         <mat-form-field  appearance="outline" fxFlex="50" class="pr-4"  > 
             <mat-label>Registration name</mat-label>
-            <input  matInput>
+            <input formControlName="REGISTRATIONNAME" [(ngModel)]="BasicDetail.REGISTRATIONNAME" matInput>
         </mat-form-field>
     </div>
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field  appearance="outline" fxFlex="33" class="pr-4"  > 
             <mat-label>First Name</mat-label>
-            <input  matInput>
+            <input formControlName="FIRSTNAME" [(ngModel)]="BasicDetail.FIRSTNAME"  matInput>
         </mat-form-field>
 
         <mat-form-field  appearance="outline" fxFlex="34" class="pr-4"  > 
             <mat-label>Middle name</mat-label>
-            <input  matInput>
+            <input formControlName="MIDDLENAME" [(ngModel)]="BasicDetail.MIDDLENAME"  matInput>
         </mat-form-field>
 
 
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4"  > 
             <mat-label>Last name</mat-label>
-            <input  matInput>
+            <input formControlName="LASTNAME" [(ngModel)]="BasicDetail.LASTNAME" matInput>
         </mat-form-field>
     </div>
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field  appearance="outline" fxFlex="33" class="pr-4"  > 
             <mat-label>Address</mat-label>
-            <input  matInput>
+            <input formControlName="ADDRESS" [(ngModel)]="BasicDetail.ADDRESS" matInput>
         </mat-form-field>
 
         <mat-form-field  appearance="outline" fxFlex="34" class="pr-4"  > 
             <mat-label>Suburb</mat-label>
-            <input  matInput>
+            <input formControlName="SUBURB" [(ngModel)]="BasicDetail.SUBURB" matInput>
         </mat-form-field>
 
 
         <mat-form-field  appearance="outline" fxFlex="33" class="pr-4"  > 
             <mat-label>State</mat-label>
-            <input  matInput>
+            <input formControlName="ADDRESSSTATE" [(ngModel)]="BasicDetail.ADDRESSSTATE" matInput>
         </mat-form-field>
     </div>
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field  appearance="outline" fxFlex="33" class="pr-4"  > 
             <mat-label>Postcode</mat-label>
-            <input  matInput>
+            <input formControlName="POSTCODE" [(ngModel)]="BasicDetail.POSTCODE" matInput>
         </mat-form-field>
 
         <mat-form-field  appearance="outline" fxFlex="34" class="pr-4"  > 
             <mat-label>Phone</mat-label>
-            <input  matInput>
+            <input formControlName="PHONE" [(ngModel)]="BasicDetail.PHONE" matInput>
         </mat-form-field>
 
 
         <mat-form-field  appearance="outline" fxFlex="33" class="pr-4"  > 
             <mat-label>Mobile</mat-label>
-            <input  matInput>
+            <input formControlName="MOBILE" [(ngModel)]="BasicDetail.MOBILE" matInput>
         </mat-form-field>
     </div>
     
@@ -71,24 +71,36 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field  appearance="outline" fxFlex="50" class="pr-4"  > 
             <mat-label>General Email</mat-label>
-            <input  matInput>
+            <input formControlName="EMAIL" [(ngModel)]="BasicDetail.EMAIL" matInput>
         </mat-form-field>
 
         <mat-form-field  appearance="outline" fxFlex="50" class="pr-4"  > 
             <mat-label>Accounts Email</mat-label>
-            <input  matInput>
+            <input formControlName="ACCOUNTSEMAIL" [(ngModel)]="BasicDetail.ACCOUNTSEMAIL" matInput>
         </mat-form-field>
     </div>
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field  appearance="outline" fxFlex="50" class="pr-4"  > 
             <mat-label>Technical Email</mat-label>
-            <input  matInput>
+            <input formControlName="TECHNICALEMAIL" [(ngModel)]="BasicDetail.TECHNICALEMAIL"  matInput>
         </mat-form-field>
 
         <mat-form-field  appearance="outline" fxFlex="50" class="pr-4"  > 
             <mat-label>Manager Email</mat-label>
-            <input  matInput>
+            <input formControlName="MANAGEREMAIL" [(ngModel)]="BasicDetail.MANAGEREMAIL" matInput>
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field  appearance="outline" fxFlex="50" class="pr-4"  > 
+            <mat-label>Registered Until</mat-label>
+            <input formControlName="REGISTEREDUNTIL" [(ngModel)]="BasicDetail.REGISTEREDUNTIL" matInput>
+        </mat-form-field>
+
+        <mat-form-field  appearance="outline" fxFlex="50" class="pr-4"  > 
+            <mat-label>Intro Price Until</mat-label>
+            <input formControlName="INTROPRICEUNTIL" [(ngModel)]="BasicDetail.INTROPRICEUNTIL" matInput>
         </mat-form-field>
     </div>
 </div>

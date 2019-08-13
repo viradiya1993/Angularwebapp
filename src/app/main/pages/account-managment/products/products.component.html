@@ -1,55 +1,40 @@
 <div id="price-tables" class="page-layout simple fullwidth">
     <div class="price-tables" fxLayout="row wrap" fxLayoutAlign="start center">
-        <div class="price-table style-2 mat-elevation-z12" fxLayout="column">
+        
+        
+        <div *ngFor="let val of ProductData" class="price-table style-2 mat-elevation-z12" fxLayout="column">
 
-            <div class="badge green">Deactivate</div>
+            <div class="badge green">{{val.ACTIVE}}</div>
 
-            <div class="package-type mat-accent-fg">Product Name</div>
+            <div class="package-type mat-accent-fg">{{val.PRODUCT}}</div>
 
             <div class="price" fxLayout="row" fxLayoutAlign="center start">
                 <div class="currency">$</div>
-                <div class="value">299</div>
+                <div class="value">{{val.FULLRATE}}</div>
             </div>
 
-            <div class="period">Date First Registered</div>
+            <div class="period">PER {{val.PERIOD}}</div>
 
             <div class="terms" fxLayout="column" fxLayoutAlign="start center">
                 <div class="term">
-                    <span class="text-bold">20</span> Units
+                    <span class="text-bold">{{val.UNITS}}</span> Units
                 </div>
                 <div class="term">
-                    <span class="text-bold">200</span> Rate
+                    <span class="text-bold">{{val.FULLRATE}}</span> Full Rate
+                </div>
+                <div class="term">
+                    <span class="text-bold">{{val.INTRORATE}}</span> Intra Rate
+                </div>
+
+                <div class="term">
+                    <span class="text-bold">{{val.STARTDATE}}</span> Start Date 
                 </div>
             </div>
 
             <button mat-raised-button class="cta-button" color="accent">GET STARTED</button>
 
         </div>
-        <div class="price-table style-2 mat-elevation-z12" fxLayout="column">
-
-            <div class="badge green">Active</div>
-
-            <div class="package-type mat-accent-fg">Product Name</div>
-
-            <div class="price" fxLayout="row" fxLayoutAlign="center start">
-                <div class="currency">$</div>
-                <div class="value">299</div>
-            </div>
-
-            <div class="period">Date First Registered</div>
-
-            <div class="terms" fxLayout="column" fxLayoutAlign="start center">
-                <div class="term">
-                    <span class="text-bold">20</span> Units
-                </div>
-                <div class="term">
-                    <span class="text-bold">200</span> Rate
-                </div>
-            </div>
-
-            <button mat-raised-button class="cta-button" color="accent">GET STARTED</button>
-
-        </div>
+        
 
     </div>
 </div>

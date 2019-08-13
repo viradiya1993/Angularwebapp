@@ -65,7 +65,6 @@ export class PacksDailogComponent implements OnInit ,OnDestroy {
     this.action = data.action;
     this.dialogTitle = this.action === 'edit' ? 'Edit Pack' : 'New Pack';
     localStorage.setItem('packaction',this.action);
-
     this.behaviorService.packs$.subscribe(result => {
       if(result){
         this.kitguid=result.KITGUID;
@@ -117,13 +116,11 @@ export class PacksDailogComponent implements OnInit ,OnDestroy {
 
   //ContextChnage Dropwown
   ContextChnage(value){
-    console.log(value);
   }
 
  
   //Click Pack Tbl
   ClickPackTbl(value){
-    console.log(value);
   }
 
   //Add Pack Item]

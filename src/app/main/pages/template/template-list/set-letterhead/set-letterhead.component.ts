@@ -15,48 +15,60 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class SetLetterHeadComponent implements OnInit {
   @Input() SettingForm: FormGroup;
-  ALLTemplateData:any=[];
-  highlightedRows:any;
-  highlightedRows1:any;
+  ALLTemplateData: any = [];
+  highlightedRows: any;
+  highlightedRows1: any;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   Name = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   @Input() errorWarningData: any;
-  addData:any=[];
-  TemplateToChange:any=[];
-  SetLetterData={
-      'ExampleDoc':"example.com" , "ApplyHeaders":true, "ApplyFooters":true
+  addData: any = [];
+  TemplateToChange: any = [];
+  SetLetterData = {
+    'ExampleDoc': "example.com", "ApplyHeaders": true, "ApplyFooters": true
   }
-    ShowSection: string;
-    isLoadingResults: boolean;
-    INDEXOFTEMPCHANG: any;
-    INDEXOFTEMPALL: any;
-  constructor(private _mainAPiServiceService:MainAPiServiceService,private toastr: ToastrService,
-    public dialogRef: MatDialogRef<SetLetterHeadComponent>,public dialog: MatDialog) { }
+  ShowSection: string;
+  isLoadingResults: boolean;
+  INDEXOFTEMPCHANG: any;
+  INDEXOFTEMPALL: any;
+  constructor(private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService,
+    public dialogRef: MatDialogRef<SetLetterHeadComponent>, public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.ShowSection="Previous";
+    this.ShowSection = "Previous";
     this.LoadData({});
-    this.LoadData2({});
+    // this.LoadData2({});
     // this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response=>{
     //  // console.log(response);
     //   this.addData=response.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP
     // })
-    
+
   }
-  LoadData(data){
+  LoadData(data) {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(data, 'TemplateList').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         response.DATA.TEMPLATES.forEach(element => {
           this.ALLTemplateData.push(element);
-          // this.TemplateToChange.push(element);
+          this.TemplateToChange.push(element);
 
         });
+        // response.DATA.TEMPLATES.forEach(element => {
+        //  if(element.TEMPLATENAME !="Authority.dotx"){
+        //    element.splice(0,1);
+        //   this.TemplateToChange.push(element);
+        //  }
+         
+
+        // });
+        // response.DATA.TEMPLATES.forEach(function (item, index) {
+        //   if (index != 0)
+        //     this.TemplateToChange.push(item);
+        // });
         if (response.DATA.TEMPLATES[0]) {
           // localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);
-        this.highlightedRows = 0;
-        this.highlightedRows1=0
+          this.highlightedRows = 0;
+          this.highlightedRows1 = 0
         }
         this.isLoadingResults = false;
       }
@@ -66,78 +78,69 @@ export class SetLetterHeadComponent implements OnInit {
     });
     // this.pageSize = localStorage.getItem('lastPageSize');
   }
-  LoadData2(data){
-    this.isLoadingResults = true;
-    this._mainAPiServiceService.getSetData(data, 'TemplateList').subscribe(response => {
-      if (response.CODE == 200 && response.STATUS == "success") {
+  // LoadData2(data) {
+  //   this.isLoadingResults = true;
+  //   this._mainAPiServiceService.getSetData(data, 'TemplateList').subscribe(response => {
+  //     if (response.CODE == 200 && response.STATUS == "success") {
 
-        response.DATA.TEMPLATES.forEach(function(item, index, object) {
-          console.log(item);
-          console.log(index);
-          console.log(object);
-          if (item.TEMPLATENAME === 'Authority.dotx') {
-            object.splice(index, 1);
-          }
-          console.log(object);
-          object.forEach(element => {
-            this.TemplateToChange.push(element);
-          });
-          
-        });
-      
-        if (response.DATA.TEMPLATES[0]) {
-        this.highlightedRows1=0
-        }
-        this.isLoadingResults = false;
-      }
-    }, err => {
-      this.isLoadingResults = false;
-      this.toastr.error(err);
-    });
+  //       response.DATA.TEMPLATES.forEach(function (item, index) {
+  //         if (index != 0)
+  //           this.TemplateToChange.push(item);
+  //       });
 
+  //       if (response.DATA.TEMPLATES[0]) {
+  //         this.highlightedRows1 = 0
+  //       }
+  //       this.isLoadingResults = false;
+  //     }
+  //   }, err => {
+  //     this.isLoadingResults = false;
+  //     this.toastr.error(err);
+  //   });
+
+  // }
+
+  NextSetLetter() {
+    this.ShowSection = "Next";
   }
- 
-  NextSetLetter(){
-    this.ShowSection="Next";
+  PreviousSetLetter() {
+    this.ShowSection = "Previous";
   }
-  PreviousSetLetter(){
-      this.ShowSection="Previous";
-  }
-  closepopup(){
+  closepopup() {
     this.dialogRef.close(false);
   }
 
-  SelectDocument(){
+  SelectDocument() {
     console.log("clicked");
 
     const dialogRef = this.dialog.open(GenerateTemplatesDialoagComponent, {
       disableClose: true,
       panelClass: 'contact-dialog',
       data: {
-          action: '',
+        action: '',
       }
-  });
-  dialogRef.afterClosed().subscribe(result => {
- 
-//   this.SettingForm.controls['INVOICETEMPLATE'].setValue(result);  
-      
-  });
+    });
+    dialogRef.afterClosed().subscribe(result => {
+
+      //   this.SettingForm.controls['INVOICETEMPLATE'].setValue(result);  
+
+    });
   }
-  TempChange(item,index){
-     this.INDEXOFTEMPCHANG=index;
+  TempChange(item, index) {
+    this.INDEXOFTEMPCHANG = index;
     // this.TemplateToChange.splice(index,1);
   }
-  AllTempRow(val,index){
-    this.INDEXOFTEMPALL=index;
+  AllTempRow(val, index) {
+    this.INDEXOFTEMPALL = index;
   }
-  deleteElement(){
+  deleteElement() {
 
-    this.TemplateToChange.splice(this.INDEXOFTEMPCHANG,1);
-   
+    this.TemplateToChange.splice(this.INDEXOFTEMPCHANG, 1);
+
   }
-  AddAllRow(){
-    this.TemplateToChange=[];
-    this.LoadData2({})
+  AddAllRow() {
+    this.TemplateToChange = [];
+    // this.LoadData2({})
   }
 
 

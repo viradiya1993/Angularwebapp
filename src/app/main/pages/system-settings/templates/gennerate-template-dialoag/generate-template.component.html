@@ -22,7 +22,7 @@
                                     <td mat-cell *matCellDef="let row"> {{row.TEMPLATENAME }} </td>
                                 </ng-container>
                                 <tr mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                <tr [style.background]="highlightedRows == row.TEMPLATENAME ? selectedColore : ''" [ngClass]="highlightedRows == row.TEMPLATENAME ? 'row-text-colore' : ''" highlightedRows=row.TEMPLATENAME mat-row *matRowDef="let row; columns: displayedColumns;" (click)="FirstClickTemplate(row);highlightedRows = row.TEMPLATENAME "
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;" [style.background]="highlightedRows == row.TEMPLATENAME ? selectedColore : ''" [ngClass]="highlightedRows == row.TEMPLATENAME ? 'row-text-colore' : ''" highlightedRows=row.TEMPLATENAME  (click)="FirstClickTemplate(row);highlightedRows = row.TEMPLATENAME "
                                     matRipple [@animate]="{value:'*',params:{y:'100%'}}" (dblclick)='dblclickrow(row)'>
                                 </tr>
                             </table>
@@ -31,7 +31,7 @@
             </div>
         </div>
         <mat-dialog-actions align="end" class="popup_ftr contact_select_footer">
-            <button  [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor' : ''" mat-raised-button  (click)="selectTemplate()" color="accent">Select</button>
+            <button   mat-raised-button  (click)="selectTemplate()" color="accent">Select</button>
             <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
         </mat-dialog-actions>
     </div>

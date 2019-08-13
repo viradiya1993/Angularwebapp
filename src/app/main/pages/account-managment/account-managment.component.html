@@ -117,7 +117,7 @@
               <!-- <div class="example-containerdata"> -->
           <!-- CONTENT -->
           <div class="content">
-              <form [formGroup]="accountMngForm" name="form" >
+              <form  [formGroup]="accountMngForm" name="form" >
              <app-basic-info [accountMngForm]="accountMngForm"  *ngIf="clickbtn ==='Basic Information'"></app-basic-info>
              <app-products  *ngIf="clickbtn ==='Products'"></app-products>
              <app-receipts  *ngIf="clickbtn ==='Receipts'"></app-receipts>

@@ -7,13 +7,15 @@ import { MainAPiServiceService } from 'app/_services';
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit {
-
+  ProductData:any=[];
   constructor(private _mainAPiServiceService:MainAPiServiceService) { }
 
   ngOnInit() {
 
     this._mainAPiServiceService.getSetData({}, 'HOGetPurchases').subscribe(response=>{
-  
+      console.log(response);
+      this.ProductData=response.DATA.PURCHASES;
+
      })
   }
 

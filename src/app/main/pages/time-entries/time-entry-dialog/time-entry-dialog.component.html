@@ -90,8 +90,8 @@
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                             <mat-form-field fxFlex="100" class="pr-4" appearance="outline">
                                 <mat-label>Select Text</mat-label>
-                                <mat-select>
-                                    <mat-option *ngFor="let Lookups of LookupsList" (click)="LookupsChange(Lookups.LOOKUPFULLVALUE)" value="{{Lookups.LOOKUPGUID}}">{{Lookups.LOOKUPFULLVALUE}}</mat-option>
+                                <mat-select #LookupsSelect (selectionChange)='LookupsChange(LookupsSelect.value)' formControlName="ADDITIONALTEXTSELECT">
+                                    <mat-option *ngFor="let Lookups of LookupsList" [value]="Lookups.LOOKUPFULLVALUE">{{Lookups.LOOKUPFULLVALUE}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>

@@ -94,6 +94,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       PRICE: [''],
       PRICEINCGST: [''],
       ITEMTIME: [''],
+      ADDITIONALTEXTSELECT: [''],
       ADDITIONALTEXT: ['', Validators.required],
       COMMENT: [''],
       INVOICEDATE: [this.datepipe.transform(new Date(), 'dd/MM/yyyy')],
@@ -105,13 +106,13 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.timeEntryForm.controls['ITEMTYPE'].setValue('1');
     let userType = JSON.parse(localStorage.getItem('currentUser'));
     if (userType) {
-      
+
       this.timeEntryForm.controls['FEEEARNER'].setValue(userType.UserId);
     }
     this.timeEntryForm.controls['QUANTITY'].setValue(0);
     this.isLoadingResults = true;
     this.Timersservice.GetLookupsData({}).subscribe(res => {
-     
+
       if (res.CODE == 200 && res.STATUS == "success") {
         this.LookupsList = res.DATA.LOOKUPS;
       } else if (res.MESSAGE == 'Not logged in') {
@@ -125,8 +126,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     });
     this.isLoadingResults = true;
     this.Timersservice.GetUsers({}).subscribe(res => {
-      console.log("893042304");
-      console.log(res);
       if (res.CODE == 200 && res.STATUS == "success") {
         this.userList = res.DATA.USERS;
       } else if (res.MESSAGE == 'Not logged in') {
@@ -217,6 +216,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
         this.timeEntryForm.controls['PRICEINCGST'].setValue(timeEntryData.PRICEINCGST);
         this.timeEntryForm.controls['PRICE'].setValue(timeEntryData.PRICE);
         this.timeEntryForm.controls['ADDITIONALTEXT'].setValue(timeEntryData.ADDITIONALTEXT);
+        this.timeEntryForm.controls['ADDITIONALTEXTSELECT'].setValue(timeEntryData.ADDITIONALTEXT);
         this.timeEntryForm.controls['COMMENT'].setValue(timeEntryData.COMMENT);
       } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
@@ -281,6 +281,8 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
           this.timeEntryForm.controls['PRICE'].setValue(CalcWorkItemCharge.PRICE);
           this.timeEntryForm.controls['PRICEINCGST'].setValue(CalcWorkItemCharge.PRICEINCGST);
           this.isLoadingResults = false;
+        } else if (response.MESSAGE == 'Not logged in') {
+          this.dialogRef.close(false);
         }
       }, err => {
         this.isLoadingResults = false;

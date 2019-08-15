@@ -45,7 +45,7 @@ export class ContactDialogComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
     public _matDialog: MatDialog,
-    private _mainAPiServiceService:MainAPiServiceService,
+    private _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
     console.log(_data);
@@ -69,8 +69,9 @@ export class ContactDialogComponent implements OnInit {
       ACTIVE: [''],
       //person
       COMPANYCONTACTGUID: [''],
+      SALUTATION: [''],
       COMPANYCONTACTGUIDTEXT: [''],
-      POSITION: [''],
+      TITLE: [''],
       GIVENNAMES: [''],
       NAMETITLE: [''],
       MIDDLENAMES: [''],
@@ -80,6 +81,7 @@ export class ContactDialogComponent implements OnInit {
       OTHERFAMILYNAME: [''],
       OTHERGIVENNAMES: [''],
       REASONFORCHANGE: [''],
+      USEPARENTADDRESS: [''],
       //Other
       GENDER: [''],
       DATEOFBIRTH: [''],
@@ -192,9 +194,11 @@ export class ContactDialogComponent implements OnInit {
             this.contactForm.controls['CONTACTTYPE'].setValue(getContactData.CONTACTTYPE);
             this.contactForm.controls['COMPANYCONTACTGUID'].setValue(getContactData.COMPANYCONTACTGUID);
             this.contactForm.controls['COMPANYCONTACTGUIDTEXT'].setValue(getContactData.COMPANYNAME);
-            this.contactForm.controls['POSITION'].setValue(getContactData.POSITION);
+            this.contactForm.controls['TITLE'].setValue(getContactData.TITLE);
+            this.contactForm.controls['SALUTATION'].setValue(getContactData.SALUTATION);
             // this.contactForm.controls['ACTIVE'].setValue(getContactData.ACTIVE);
             this.contactForm.controls['ACTIVE'].setValue(this.active);
+            this.contactForm.controls['USEPARENTADDRESS'].setValue(getContactData.USEPARENTADDRESS == 0 ? false : true);
             this.contactForm.controls['GIVENNAMES'].setValue(getContactData.GIVENNAMES);
             this.contactForm.controls['NAMETITLE'].setValue(getContactData.NAMETITLE);
             this.contactForm.controls['MIDDLENAMES'].setValue(getContactData.MIDDLENAMES);
@@ -297,8 +301,10 @@ export class ContactDialogComponent implements OnInit {
       CONTACTTYPE: this.f.CONTACTTYPE.value,
       ACTIVE: this.f.ACTIVE.value == true ? "1" : "0",
       //person
+      USEPARENTADDRESS: this.f.USEPARENTADDRESS.value == true ? "1" : "0",
       COMPANYCONTACTGUID: this.f.COMPANYCONTACTGUID.value,
-      POSITION: this.f.POSITION.value,
+      TITLE: this.f.TITLE.value,
+      SALUTATION: this.f.SALUTATION.value,
       GIVENNAMES: this.f.GIVENNAMES.value,
       NAMETITLE: this.f.NAMETITLE.value,
       MIDDLENAMES: this.f.MIDDLENAMES.value,
@@ -308,7 +314,7 @@ export class ContactDialogComponent implements OnInit {
       OTHERFAMILYNAME: this.f.OTHERFAMILYNAME.value,
       OTHERGIVENNAMES: this.f.OTHERGIVENNAMES.value,
       REASONFORCHANGE: this.f.REASONFORCHANGE.value,
-      COMPANYNAME:this.f.COMPANYCONTACTGUIDTEXT.value,
+      COMPANYNAME: this.f.COMPANYCONTACTGUIDTEXT.value,
 
       //others
       GENDER: this.f.GENDER.value,
@@ -366,7 +372,7 @@ export class ContactDialogComponent implements OnInit {
       NOTES: this.f.NOTES.value
     }
     let details = { FormAction: this.FormAction, VALIDATEONLY: true, Data: detailsdata };
-    this.subscription=this._mainAPiServiceService.getSetData(details, 'SetContact').subscribe(response => {
+    this.subscription = this._mainAPiServiceService.getSetData(details, 'SetContact').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, details);
       } else if (response.CODE == 451 && response.STATUS == 'warning') {
@@ -420,7 +426,7 @@ export class ContactDialogComponent implements OnInit {
   }
   saveContectData(data: any) {
     data.VALIDATEONLY = false;
-    this.subscription=this._mainAPiServiceService.getSetData(data, 'SetContact').subscribe(response => {
+    this.subscription = this._mainAPiServiceService.getSetData(data, 'SetContact').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         if (this.action !== 'edit') {
           this.toastr.success('Contact save successfully');
@@ -445,9 +451,9 @@ export class ContactDialogComponent implements OnInit {
     localStorage.removeItem('DATEOFDEATH');
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscription.unsubscribe();
-  } 
+  }
 }
 
 export class Common {

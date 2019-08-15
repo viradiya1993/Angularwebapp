@@ -48,7 +48,6 @@ export class MatterPopupComponent implements OnInit {
       this.isEdit = true;
       this.isLoadingResults = true;
       this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: true, DATA: {} }, 'SetMatter').subscribe(res => {
-        console.log(res);
         if (res.CODE == 200 && res.STATUS == "success") {
         } else if (res.MESSAGE === 'Not logged in') {
           this.dialogRef.close(false);
@@ -88,7 +87,7 @@ export class MatterPopupComponent implements OnInit {
           let matterData = response.DATA.MATTERS[0];
           this.classtype = matterData.MATTERCLASS;
           this.matterdetailForm.controls['MATTERGUID'].setValue(matterData.MATTERGUID);
-          this.matterdetailForm.controls['ACTIVE'].setValue(matterData.ACTIVE_ == 1 ? true : false);
+          this.matterdetailForm.controls['ACTIVE'].setValue(matterData.ACTIVE == 1 ? true : false);
           this.matterdetailForm.controls['MATTERCLASS'].setValue(matterData.MATTERCLASS.toString());
           this.matterdetailForm.controls['SHORTNAME'].setValue(matterData.SHORTNAME);
           this.matterdetailForm.controls['MATTER'].setValue(matterData.MATTER);
@@ -132,8 +131,8 @@ export class MatterPopupComponent implements OnInit {
           }
           this.matterdetailForm.controls['REFERENCE'].setValue(matterData.REFERENCE);
           this.matterdetailForm.controls['OTHERREFERENCE'].setValue(matterData.OTHERREFERENCE);
-          this.matterdetailForm.controls['EstimateFromTotalExGST'].setValue(matterData.SUMMARYTOTALS.ESTIMATEFROMTOTALEXGST);
-          this.matterdetailForm.controls['EstimateFromTotalIncGST'].setValue(matterData.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST);
+          this.matterdetailForm.controls['ESTIMATEFROMTOTALEXGST'].setValue(matterData.SUMMARYTOTALS.ESTIMATEFROMTOTALEXGST);
+          this.matterdetailForm.controls['ESTIMATEFROMTOTALINCGST'].setValue(matterData.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST);
           this.matterdetailForm.controls['NOTES'].setValue(matterData.NOTES);
           if (this.userType) {
             this.matterdetailForm.controls['OWNERGUID'].setValue(matterData.OWNERGUID);
@@ -524,8 +523,8 @@ export class MatterPopupComponent implements OnInit {
       OWNERNAME: [''],
       FEEAGREEMENTDATE: [],
       FeeAgreementDateText: [],
-      EstimateFromTotalExGST: [''],
-      EstimateFromTotalIncGST: [''],
+      ESTIMATEFROMTOTALEXGST: [''],
+      ESTIMATEFROMTOTALINCGST: [''],
 
       // client
       FIRMGUID: [''],
@@ -790,8 +789,8 @@ export class MatterPopupComponent implements OnInit {
     details.OTHERREFERENCE = this.f.OTHERREFERENCE.value;
     details.COMPLETEDDATE = this.f.COMPLETEDDATE.value;
     details.FEEAGREEMENTDATE = this.f.FEEAGREEMENTDATE.value;
-    details.EstimateFromTotalExGST = this.f.EstimateFromTotalExGST.value;
-    details.EstimateFromTotalIncGST = this.f.EstimateFromTotalIncGST.value;
+    details.ESTIMATEFROMTOTALEXGST = this.f.ESTIMATEFROMTOTALEXGST.value;
+    details.ESTIMATEFROMTOTALINCGST = this.f.ESTIMATEFROMTOTALINCGST.value;
     if (this.userType) {
       details.PRIMARYFEEEARNERGUID = this.f.PRIMARYFEEEARNERGUID.value;
       details.OWNERGUID = this.f.OWNERGUID.value;

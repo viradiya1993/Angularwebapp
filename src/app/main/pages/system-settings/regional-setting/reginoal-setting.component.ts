@@ -12,14 +12,12 @@ import { MainAPiServiceService } from './../../../../_services';
 export class ReginoalSettingComponent implements OnInit {
   @Input() errorWarningData: any;
   @Input() SettingForm: FormGroup;
-  getDropDownValue:any=[];
-  constructor(private _mainAPiServiceService:MainAPiServiceService) { }
+  getDropDownValue: any = [];
+  constructor(private _mainAPiServiceService: MainAPiServiceService) { }
   ngOnInit() {
-    this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response=>{
-      console.log(response);
-      this.getDropDownValue=response.DATA.LISTS;
-     
-      })
+    this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response => {
+      this.getDropDownValue = response.DATA.LISTS;
+    })
   }
 
 }

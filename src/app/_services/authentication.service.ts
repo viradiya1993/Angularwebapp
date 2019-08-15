@@ -13,7 +13,6 @@ export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
 
-
     constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
@@ -49,7 +48,6 @@ export class AuthenticationService {
     notLogin() {
         const currentUser = this.currentUserValue;
         if (currentUser) {
-            this.router.navigate(['matters']);
             return false;
         }
         // Not logged in so return true
@@ -72,6 +70,15 @@ export class AuthenticationService {
                 this.currentUserSubject.next(null);
                 this.router.navigate(['login']);
             }
+        }, error => {
+            console.log(error);
+            this.toastr.error(error);
+        });
+    }
+    MaintainLicence() {
+        // remove user from local storage to log user out
+        this.http.get<any>(environment.APIEndpoint + 'Login?request=MaintainLicence').subscribe(loginResponse => {
+            // console.log(loginResponse);
         }, error => {
             console.log(error);
             this.toastr.error(error);

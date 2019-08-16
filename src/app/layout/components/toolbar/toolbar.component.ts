@@ -51,6 +51,7 @@ import { CopyTemplateComponent } from 'app/main/pages/template/template-list/cop
 import { SetLetterHeadComponent } from 'app/main/pages/template/template-list/set-letterhead/set-letterhead.component';
 import { EditTemplateComponent } from 'app/main/pages/template/template-list/edit-template/edit-template.component';
 import { SafeCustodyDialogeComponent } from 'app/main/pages/legal-details/safecustody/safe-custody-dialog/safe-custody-dialog.component';
+import { TrustMoneyDialogeComponent } from 'app/main/pages/Trust Accounts/trust-money/trust-money-dialoge/trust-money-dialoge.component';
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -856,8 +857,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     GenaratePacks() {
         this.behaviorService.packs$.subscribe(result => {
             if (result) {
-                console.log(result);
-                console.log("Helloooooooodsfkfjhdsfdsfjds");
                 this.KitName = result.KITNAME;
             }
         });
@@ -966,7 +965,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     DeletePack(): void {
         this.behaviorService.packs$.subscribe(result => {
             if (result) {
-                console.log(result);
                 this.KitGUid = result.KITGUID;
             }
         });
@@ -995,8 +993,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => { });
     }
-    /* Chart Of Account Module Function's */
-
     AccountPop(actionType) {
         let AccountPopdata = {}
         if (actionType == 'new') {
@@ -1011,7 +1007,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => { });
     }
-
     //DeleteAccount
     DeleteAccount(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
@@ -1021,10 +1016,21 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => { });
     }
-
-
     //Authority dialoge 
     AuthorityDialog(val) {
+        const dialogRef = this.dialog.open(AuthorityDialogComponent, {
+            disableClose: true,
+            panelClass: 'ChartAc-dialog',
+            data: {
+                action: val,
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+
+        });
+    }
+
+    SafeCustodyPopup(val) {
         const dialogRef = this.dialog.open(AuthorityDialogComponent, {
             disableClose: true,
             panelClass: 'ChartAc-dialog',
@@ -1294,6 +1300,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 20;
         } else if (x[1] == "account-management") {
             this.isTabShow = 21;
+        }else if (x[1] == "Safe-Custody") {
+            this.isTabShow = 22;
+        }else if (x[1] == "trust-money") {
+            this.isTabShow = 23;
+        }else if (x[1] == "trust-end-month") {
+            this.isTabShow = 24;
         }
         else {
             this.isTabShow = 1;
@@ -1594,6 +1606,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     EditTemplatePopup(){
         const dialogRef = this._matDialog.open(EditTemplateComponent, { width: '100%', disableClose: true, });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // localStorage.setItem('set_active_matters', JSON.stringify(result));
+            }
+        });
+    }
+    TrustMoneyPopup(val){
+        const dialogRef = this._matDialog.open(TrustMoneyDialogeComponent, { width: '100%', disableClose: true, 
+    data:{
+        action:val
+    }});
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 // localStorage.setItem('set_active_matters', JSON.stringify(result));

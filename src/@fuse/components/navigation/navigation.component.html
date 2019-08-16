@@ -31,6 +31,11 @@
                             <img *ngIf="pages.TITLE=='Generate document'" src="assets/icons/web_app/icon_letters_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                             <img *ngIf="pages.TITLE=='Authorities'" src="assets/icons/web_app/icon_authorities_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                             <img *ngIf="pages.TITLE=='Searching'" src="assets/icons/web_app/Search.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                            <img *ngIf="pages.TITLE=='Safe Custody'" src="assets/icons/web_app/icon_safecustody_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                            <img  *ngIf="pages.TITLE=='Trust Money'" src="assets/icons/web_app/icon_trust_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                            <img  *ngIf="pages.TITLE=='Trust End Of Month'" src="assets/icons/web_app/icon_trust_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+
+                            <img (click)="abc()"  *ngIf="pages.TITLE=='Trust Banking'" src="assets/icons/web_app/icon_trust_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                         </mat-icon>
                         <div class="side_bar_title">{{pages.TITLE}}</div>
                         <mat-icon class="star">{{pages.STAR}}</mat-icon>

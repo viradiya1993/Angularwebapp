@@ -74,4 +74,31 @@ export class AccountManagmentComponent implements OnInit {
     }
    
   } 
+  get f() {
+    return this.accountMngForm.controls;
+  }
+  SaveAccountDetails(){
+
+    let Data={
+      REGISTRATIONNAME:this.f.REGISTRATIONNAME.value,
+      FIRSTNAME:this.f.FIRSTNAME.value,
+      MIDDLENAME:this.f.MIDDLENAME.value,
+      LASTNAME:this.f.LASTNAME.value,
+      ADDRESS:this.f.ADDRESS.value,
+      
+      SUBURB:this.f.SUBURB.value,
+      ADDRESSSTATE:this.f.ADDRESSSTATE.value,
+      POSTCODE:this.f.POSTCODE.value,
+      PHONE:this.f.PHONE.value,
+      MOBILE:this.f.MOBILE.value,
+      EMAIL:this.f.EMAIL.value,
+      ACCOUNTSEMAIL:this.f.ACCOUNTSEMAIL.value,
+      MANAGEREMAIL:this.f.MANAGEREMAIL.value,
+      TECHNICALEMAIL:this.f.TECHNICALEMAIL.value,
+      REGISTEREDUNTIL:this.f.REGISTEREDUNTIL.value,
+      INTROPRICEUNTIL:this.f.INTROPRICEUNTIL.value,
+    }
+  }
+
+  
 }

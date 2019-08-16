@@ -134,9 +134,23 @@ mat-dialog-actions {
 .auto_drop_ghandel{
     position: relative !important;
 }
+.row-text-colore td {
+    color: #fff;
+}
 
-
-
-.Pad_tab{
+.item_pad{
     margin-top: 20px;
+}
+.icon_set {
+    margin-top: -10px;
+    margin-left: 20px;
+    /* margin-bottom: 13px; */
+}
+mat-card.mat-card {
+    width: 100% !important;
+    height: 170px !important;
+    overflow: auto !important;
+}
+.table.mat-elevation-z8{
+    width: 100% !important;
 }

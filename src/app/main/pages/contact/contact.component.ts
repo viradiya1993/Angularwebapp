@@ -58,7 +58,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
       this.filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
       this.contactFilter.controls['active'].setValue(this.filterVals.active == '' ? "all" : this.filterVals.active);
       this.contactFilter.controls['ContactType'].setValue(this.filterVals.ContactType == '' ? "all" : this.filterVals.ContactType);
-      this.contactFilter.controls['FirstLetter'].setValue(this.filterVals.FirstLetter);
+      this.contactFilter.controls['FirstLetter'].setValue(this.filterVals.FirstLetter == '' ? "-1" : this.filterVals.FirstLetter);
     } else {
       localStorage.setItem('contact_Filter', JSON.stringify(this.filterVals));
     }

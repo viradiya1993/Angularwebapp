@@ -141,7 +141,6 @@
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="dataTableHide =='yes'">
                     <mat-card>
-
                         <div class="customer">
                             <table class="simple" [@animateStagger]="{value:'50'}">
                                 <tr>
@@ -158,14 +157,7 @@
                                     <td>{{item.GST}}</td>
                                     <td>{{item.SHORTNAME}}</td>
                                     <td>{{item.NOTE}}</td>
-                                    <!-- <td>
-                                  <mat-icon (click)="editElement(index)" class="pr-4"> 
-                                    <img src="assets/icons/web_app/icon_letters_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                  </mat-icon>
-                                  <mat-icon (click)="deleteElement(index)" class="pr-4">
-                                      <img src="assets/icons/web_app/icon_letters_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                  </mat-icon>
-                              </td> -->
+
                                 </tr>
 
                             </table>

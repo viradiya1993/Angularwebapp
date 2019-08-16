@@ -1,6 +1,5 @@
 @import "src/@fuse/scss/fuse";
-#Safe_custody {
-    // margin-top: 95px;
+#EndMonth {
     .header {
         .search-wrapper {
             width: 100%;
@@ -44,17 +43,40 @@
     width: 45% !important;
     padding: 20px !important;
 }
-
-app-safecustody{
+.sticky_search_div {
+    // position: fixed;
+    // top: 163px;
+    // padding-left: 300px;
     width: 100%;
+    background-color: #f5f5f5;
+    z-index: 9999;
+    left: 0;
+}
+// .sticky_search_remove_padding {
+//     padding-left: 80px;
+// }
+
+// #contact .p-24.list_tbl_main {
+//     margin-top: 85px;
+//     overflow: hidden;
+// }
+
+.p-24.list_tbl_main {
+    //margin-top: 110px;
+    padding-top: 0 !important;
+}
+#EndMonth .content {
+    position: relative;
 }
 
-app-legal-details {
-    overflow-y: auto;
+.mat-table.mat-table.ng-trigger.ng-trigger-animateStagger {
+    width: 100%;
+    overflow: auto;
+    display: table;
 }
 
-.mat-table {
-    width: 100%;
+.more_tbl_clmn mat-footer-row {
+    display: table;
 }
 
 .more_tbl_clmn .mat-header-cell,
@@ -66,24 +88,42 @@ app-legal-details {
     position: sticky;
 }
 
+.more_tbl_clmn mat-header-row {
+    line-height: 56px;
+}
+
+.more_tbl_clmn mat-row {
+    line-height: 48px;
+}
+
 .more_tbl_clmn .mat-header-cell:last-child,
 .more_tbl_clmn .mat-cell:last-child {
     padding-right: 70px;
 }
 
-.h2 {
-    margin-top: 13px !important;
+.table tr.active td {
+    background-color: #123456 !important;
+    color: white;
 }
-// .matter-serach-div.sticky_search_div {
-//     margin-top: 18px !important;
-//     margin-left: 45px !important;
-// }
-.page-layout.carded>.top-bg.work_progress_height {
-    height: 86px;
-    th.mat-sort-header-sorted {
-        color: black;
+
+table tr.highlight {
+    background-color: #4CAF50 !important;
+    color: #ffffff;
+}
+
+button#refreshContactTab {
+    display: none;
+}
+
+#EndMonth .content .example {
+    padding: 20px 10px;
+}
+th.mat-sort-header-sorted {
+    color: black;
+}
+app-trust-end-of-month{
+width: 100% ;
+    app-end-month-histroy{
+        width: 100% !important;
     }
-}
-.set_icon{
-    margin-top: 18px;
 }

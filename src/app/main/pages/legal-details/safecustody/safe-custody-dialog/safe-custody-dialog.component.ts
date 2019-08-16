@@ -13,6 +13,9 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class SafeCustodyDialogeComponent implements OnInit {
   @Input() SettingForm: FormGroup;
+  highlightedRows: any;
+  theme_type = localStorage.getItem('theme_type');
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   @Input() errorWarningData: any;
   addData:any=[];
     action: any;
@@ -31,13 +34,11 @@ export class SafeCustodyDialogeComponent implements OnInit {
       
     }
 
-  ngOnInit() {
-      
+  ngOnInit() {  
     // this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response=>{
     //  // console.log(response);
     //   this.addData=response.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP
     // })
-    
   }
   closepopup(){
     this.dialogRef.close(false);

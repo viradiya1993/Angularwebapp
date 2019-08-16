@@ -145,7 +145,7 @@ export class PacksComponent implements OnInit, AfterViewInit {
   }
   FilterSearch(searchFilter: any) {
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
-        this.loadData({ SEARCH:this.f.search.value})
+        this.loadData({SEARCH:this.f.search.value})
     }
   }
   //SelectMatter

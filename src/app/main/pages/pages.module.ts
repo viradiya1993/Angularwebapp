@@ -27,6 +27,8 @@ import { MainAuthoritiesModule } from './main-authorities/main-authorities.modul
 import { LegalDetailsModule } from './legal-details/legal-details.module';
 import { AccountRecountciliation } from './account-reconciliation/account-reconciliation.module';
 import { AccountManagmentModule } from './account-managment/account-managment.module';
+import { MainSafeCustodyModule } from './main-safe-custody/main-safe-custody.module';
+import { TrustAccountsModule } from './Trust Accounts/trust-accounts.module';
 
 
 
@@ -39,6 +41,8 @@ import { AccountManagmentModule } from './account-managment/account-managment.mo
 const appRoutes: Routes = [
   { path: 'matters', loadChildren: './matters/matters.module#MattersModule' },
   { path: 'time-billing', loadChildren: './time-billing/time-billing.module#TimeBillingModule' },
+
+  { path: 'trust-end-month', loadChildren: './Trust Accounts/trust-accounts.module#TrustAccountsModule' },
   { path: 'legal-details', loadChildren: './legal-details/legal-details.module#LegalDetailsModule' },
   { path: 'time-entries', loadChildren: './time-entries/time-entries.module#TimeEntriesModule' },
   { path: 'invoice', loadChildren: './invoice/invoice.module#InvoiceModule' },
@@ -53,8 +57,8 @@ const appRoutes: Routes = [
   { path: 'chart-account', loadChildren: './chart-account/chart-account.module#ChartOfAccount' },
   { path: 'genral-journal', loadChildren: './general-journal/general-journal.module#GeneralJoural' },
   { path: 'account-reconciliation', loadChildren: './account-reconciliation/account-reconciliation.module#AccountRecountciliation' },
-
-  { path: 'account-management', loadChildren: './account-managment/account-managment.module#AccountManagmentModule' }
+  { path: 'account-management', loadChildren: './account-managment/account-managment.module#AccountManagmentModule' },
+  { path: 'Safe-Custody', loadChildren: './main-safe-custody/main-safe-custody.module#MainSafeCustodyModule' }
 
   //added by web 19
   //  { path: ' ', loadChildren: './system-setting/system-settings.module#SystemSettingModule' },
@@ -65,7 +69,9 @@ const appRoutes: Routes = [
   declarations: [],
   imports: [
     CommonModule,
+    TrustAccountsModule,
     AccountManagmentModule,
+    MainSafeCustodyModule,
     LegalDetailsModule,
     ConflictCheckModule,
     RouterModule.forChild(appRoutes),

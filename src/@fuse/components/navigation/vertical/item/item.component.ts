@@ -69,4 +69,7 @@ export class FuseNavVerticalItemComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }
+    abc(){
+        console.log("fjskdfjsdkljfkjdsl;f");
+    }
 }

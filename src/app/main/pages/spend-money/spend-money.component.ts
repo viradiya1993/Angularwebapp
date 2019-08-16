@@ -126,6 +126,7 @@ export class SpendMoneyComponent implements OnInit {
         this.SepndMoneyForm.controls['DayRange'].setValue("Last 90 days");
       }
     }else{
+      this.forHideShowDateRangePicker = "show";
       this.SepndMoneyForm.controls['DayRange'].setValue("Date Range");
     }
    

@@ -8,48 +8,85 @@
         </button>
     </h2>
     <div mat-dialog-content class="mat-typography main">
-        <div class=" one  mb-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <div class="one mb-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
             <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="WriteOffTimeEntry" id="WriteOffTimeEntry">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <div class=" one  mb-24" fxLayout="column">
+                    <div class="one mb-24" fxLayout="column">
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                            <mat-form-field appearance="outline" fxFlex="20" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.ITEMDATE,'has-warning':errorWarningData.Warning?.ITEMDATE}">
+                            <mat-form-field fxFlex="25" class="pr-4" appearance="outline">
                                 <mat-label>Date</mat-label>
                                 <input matInput placeholder="Choose a date">
                             </mat-form-field>
-                            <mat-form-field appearance="outline" fxFlex="20" class="pr-4" appearance="outline">
+                            <mat-form-field fxFlex="24" class="pr-4" appearance="outline">
                                 <mat-label>Time of day</mat-label>
                                 <input matInput placeholder="Time of day">
                             </mat-form-field>
-                            <mat-form-field appearance="outline" fxFlex="20" class="pr-4" appearance="outline">
+                            <mat-form-field fxFlex="24" appearance="outline" class="pr-4">
                                 <mat-label>Fee Earner</mat-label>
                                 <input matInput placeholder="Fee Earner">
                             </mat-form-field>
-                            <mat-form-field appearance="outline" fxFlex="20" class="pr-4" appearance="outline">
+                            <mat-form-field fxFlex="24" appearance="outline" class="pr-4">
                                 <mat-label>Duration</mat-label>
                                 <input matInput placeholder="Duration">
                             </mat-form-field>
-                            <mat-form-field appearance="outline" fxFlex="20" class="pr-4" appearance="outline">
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field fxFlex="32" appearance="outline" class="pr-4">
                                 <mat-label>Type</mat-label>
                                 <input matInput placeholder="Type">
                             </mat-form-field>
-                        </div>
-                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                            <mat-form-field appearance="outline" fxFlex="20" class="pr-4" appearance="outline">
+                            <mat-form-field fxFlex="32" class="pr-4" appearance="outline">
                                 <mat-label>Charge Ex-GST</mat-label>
                                 <input matInput placeholder="Charge Ex-GST">
                             </mat-form-field>
-                            <mat-form-field appearance="outline" fxFlex="20" class="pr-4" appearance="outline">
+                            <mat-form-field fxFlex="33" class="pr-4" appearance="outline">
                                 <mat-label>Charge In-GST</mat-label>
                                 <input matInput placeholder="Charge In-GST">
                             </mat-form-field>
-                            <mat-form-field appearance="outline" fxFlex="30" class="pr-4" appearance="outline">
+                        </div>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field fxFlex="49" appearance="outline" class="pr-4">
                                 <mat-label>Invoice Text</mat-label>
                                 <input matInput placeholder="Invoice Text">
                             </mat-form-field>
-                            <mat-form-field appearance="outline" fxFlex="30" class="pr-4" appearance="outline">
+                            <mat-form-field fxFlex="48" class="pr-4" appearance="outline">
                                 <mat-label>Notes</mat-label>
                                 <input matInput placeholder="Notes">
+                            </mat-form-field>
+                        </div>
+                        <mat-divider></mat-divider>
+                        <div class="value_label_parent">
+                            <div fxFlex="30" class="label_width">
+                                Amount to Write Off
+                            </div>
+                            <mat-form-field appearance="outline" fxFlex="20" class="value_width pr-4">
+                                <input matInput type="number" placeholder="Date Received">
+                            </mat-form-field>
+                            <div fxFlex="5" class="label_width"> </div>
+                            <mat-form-field appearance="outline" fxFlex="20" class="value_width pr-4">
+                                <input class="sideText" matInput readonly type="number" placeholder="Date Received">
+                                <span class="currency_sign" matPrefix>$&nbsp;</span>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" fxFlex="20" class="value_width pr-4">
+                                <input class="sideText" matInput readonly type="number" placeholder="Date Received">
+                                <span class="currency_sign" matPrefix>$&nbsp;</span>
+                            </mat-form-field>
+                        </div>
+                        <div class="value_label_parent">
+                            <div fxFlex="30" class="label_width">
+                                Amount Remainiiiing
+                            </div>
+                            <mat-form-field appearance="outline" fxFlex="20" class="value_width pr-4">
+                                <input matInput type="number" placeholder="Date Received">
+                            </mat-form-field>
+                            <div fxFlex="5" class="label_width"> </div>
+                            <mat-form-field appearance="outline" fxFlex="20" class="value_width pr-4">
+                                <input class="sideText" matInput readonly type="number" placeholder="Date Received">
+                                <span class="currency_sign" matPrefix>$&nbsp;</span>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" fxFlex="20" class="value_width pr-4">
+                                <input class="sideText" matInput readonly type="number" placeholder="Date Received">
+                                <span class="currency_sign" matPrefix>$&nbsp;</span>
                             </mat-form-field>
                         </div>
                     </div>

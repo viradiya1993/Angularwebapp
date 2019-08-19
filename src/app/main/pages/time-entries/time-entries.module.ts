@@ -18,7 +18,7 @@ import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
 
 
 
-import { MatDialogModule, MatTabsModule, MatProgressSpinnerModule, MatPaginatorModule, MatButtonModule, MatSelectModule, MatCardModule, MatSlideToggleModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule, MatAutocompleteModule } from '@angular/material';
+import { MatDialogModule, MatTabsModule, MatProgressSpinnerModule, MatPaginatorModule, MatButtonModule, MatSelectModule, MatCardModule, MatSlideToggleModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule, MatAutocompleteModule, MatDividerModule } from '@angular/material';
 
 import { TimeEntryDialogComponent } from './time-entry-dialog/time-entry-dialog.component';
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
@@ -65,6 +65,7 @@ const routes = [
     MatTabsModule,
     MatDialogModule,
     MatProgressSpinnerModule,
+    MatDividerModule,
 
     FuseSharedModule,
     FuseConfirmDialogModule,

@@ -13,11 +13,17 @@ export class ReginoalSettingComponent implements OnInit {
   @Input() errorWarningData: any;
   @Input() SettingForm: FormGroup;
   getDropDownValue: any = [];
+  countryList: any = [];
   constructor(private _mainAPiServiceService: MainAPiServiceService) { }
   ngOnInit() {
     this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response => {
       this.getDropDownValue = response.DATA.LISTS;
-    })
+    });
+    this._mainAPiServiceService.getSetData({ 'LookupType': 'Country List' }, 'GetLookups').subscribe(responses => {
+      if (responses.CODE === 200 && responses.STATUS === 'success') {
+        this.countryList = responses.DATA.LOOKUPS;
+      }
+    });
   }
 
 }

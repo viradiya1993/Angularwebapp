@@ -68,7 +68,7 @@ export class UserDialogComponent implements OnInit {
   ngOnInit(): void {
     if (this.action === 'edit' || this.action === 'duplicate') {
       this.isLoadingResults = true;
-      this._mainAPiServiceService.getSetData({ USERGUID: this.data.USERGUID, 'GETALLFIELDS': true }, 'GetUsers').subscribe(response => {
+      this._mainAPiServiceService.getSetData({ USERGUID: this.data.USERGUID, 'AllData': true }, 'GetUsers').subscribe(response => {
         if (response.CODE === 200 && response.STATUS === 'success') {
           const userinfoData = response.DATA.USERS[0];
           this.setPermissionsCons(userinfoData.PERMISSIONS, 'edit');
@@ -174,7 +174,7 @@ export class UserDialogComponent implements OnInit {
           this.USERBUDGETGUIDIndex = this.USERBUDGETGUIDIndex + 1;
           this.macktempBudgetDatatable();
           this.isNewShow = false;
-         
+
         } else
           this.loadData();
       }

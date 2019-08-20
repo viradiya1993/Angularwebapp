@@ -1039,7 +1039,7 @@
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab extras_tab">
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button" [routerLink]="'/diary'" [queryParams]="{ calander: 'day' }">                                         
+                                        <button mat-button class="large-button" (click)="setViewType('day')">                                         
                                             <section class="large-button-container">                                                                                                    
                                                     <mat-icon class="main-icon">
                                                         <img src="assets/icons/web_app/icon_diary_d.ico" aria-label="Today" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1051,7 +1051,7 @@
                                         </button>
                                     </section>
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button" [routerLink]="diary" [queryParams]="{ calander: 'week' }">
+                                        <button mat-button class="large-button" (click)="setViewType('week')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_diary_week_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1063,25 +1063,13 @@
                                         </button>
                                     </section>
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button" [routerLink]="diary" [queryParams]="{ calander: 'month' }">
+                                        <button mat-button class="large-button" (click)="setViewType('month')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_diary_month_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <div class="main-text">
                                                     <span>Month <br> View</span>
-                                                </div>
-                                            </section>
-                                        </button>
-                                    </section>
-                                    <section class="ribbon-section">
-                                        <button mat-button class="large-button" [routerLink]="diary" [queryParams]="{ calander: 'month' }">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_diary_month_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text">
-                                                    <span>Timeline</span>
                                                 </div>
                                             </section>
                                         </button>
@@ -1096,11 +1084,11 @@
                                                     <span>Time Scale ...</span>
                                                 </a>
                                                 <mat-menu #menu="matMenu">
-                                                    <button mat-menu-item>5 minutes</button>
-                                                    <button mat-menu-item>10 minutes</button>
-                                                    <button mat-menu-item>15 minutes</button>
-                                                    <button mat-menu-item>30 minutes</button>
-                                                    <button mat-menu-item>1 hour</button>
+                                                    <button mat-menu-item (click)="setTimeScale('12')">5 minutes</button>
+                                                    <button mat-menu-item (click)="setTimeScale('6')">10 minutes</button>
+                                                    <button mat-menu-item (click)="setTimeScale('4')">15 minutes</button>
+                                                    <button mat-menu-item (click)="setTimeScale('2')">30 minutes</button>
+                                                    <button mat-menu-item (click)="setTimeScale('1')">1 hour</button>
                                                 </mat-menu>
                                             </mat-nav-list>
                                         </section>

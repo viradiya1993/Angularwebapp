@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import {  MainAPiServiceService } from '../../../_services';
+import { MainAPiServiceService } from '../../../_services';
 
 @Injectable()
 export class DiaryService implements Resolve<any>

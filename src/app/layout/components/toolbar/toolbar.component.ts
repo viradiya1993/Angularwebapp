@@ -1210,6 +1210,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => { });
     }
+    setViewType(params: any) {
+        this.behaviorService.setCalanderViewType(params);
+    }
+    setTimeScale(params: any) {
+        this.behaviorService.setTimeScale(params);
+    }
 
 
     //_____________________________________________________________________________________________________
@@ -1529,7 +1535,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     ////// safe custody poup
 
-    OpenNewSafeCustody(actionType){
+    OpenNewSafeCustody(actionType) {
         let safeCustodyData = {}
         if (actionType == 'new') {
             safeCustodyData = { action: actionType }

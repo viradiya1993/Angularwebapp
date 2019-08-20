@@ -9,6 +9,8 @@ export class BehaviorService {
   public matterInvoice$: BehaviorSubject<any> = new BehaviorSubject(null);
   public workInProgress$: BehaviorSubject<any> = new BehaviorSubject(null);
   public userPermission$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public calanderViewType$: BehaviorSubject<any> = new BehaviorSubject('month');
+  public TimeScale$: BehaviorSubject<any> = new BehaviorSubject(1);
   //for packs
   public packs$: BehaviorSubject<any> = new BehaviorSubject(null);
   public EmailGenerateData$: BehaviorSubject<any> = new BehaviorSubject(null);
@@ -36,11 +38,17 @@ export class BehaviorService {
     this.TemplateGenerateData$.next(d);
   }
 
-  DocumentRegisterData(d){
+  DocumentRegisterData(d) {
     this.DocumentRegisterData$.next(d);
   }
-  SpendMoneyData(d){
+  SpendMoneyData(d) {
     this.SpendMoneyData$.next(d);
+  }
+  setCalanderViewType(d) {
+    this.calanderViewType$.next(d);
+  }
+  setTimeScale(d) {
+    this.TimeScale$.next(d);
   }
 
 }

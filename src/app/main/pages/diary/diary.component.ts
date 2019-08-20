@@ -8,6 +8,7 @@ import { DiaryEventModel } from './event.model';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import * as $ from 'jquery';
+import { BehaviorService } from 'app/_services';
 
 @Component({
     selector: 'app-diary',
@@ -24,6 +25,7 @@ export class DiaryComponent implements OnInit {
     refresh: Subject<any> = new Subject();
     selectedDay: any;
     view: string;
+    TimeScale: string;
     viewDate: Date;
     segmentIsValid: any;
 
@@ -31,20 +33,22 @@ export class DiaryComponent implements OnInit {
         private _calendarService: DiaryService,
         private route: ActivatedRoute,
         private _httpClient: HttpClient,
+        private behaviorService: BehaviorService
     ) {
-        this.route.queryParams.subscribe(params => {
-            if (params['calander']) {
-                this.view = params['calander'];
+        this.behaviorService.calanderViewType$.subscribe(result => {
+            if (result) {
+                this.view = result;
             }
-            else {
-                this.view = 'month';
+        });
+        this.behaviorService.TimeScale$.subscribe(result => {
+            if (result) {
+                this.TimeScale = result;
             }
         });
         // Set the defaults        
         this.viewDate = new Date();
         this.activeDayIsOpen = true;
         this.selectedDay = { date: startOfDay(new Date()) };
-
         /**
          * Get events from service/server
          */

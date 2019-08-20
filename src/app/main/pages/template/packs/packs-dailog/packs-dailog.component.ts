@@ -313,7 +313,7 @@ export class PacksDailogComponent implements OnInit ,OnDestroy {
   saveKitItem(data){
       this._mainAPiServiceService.getSetData(data, 'SetKitItem').subscribe(res => {
         if (res.CODE == 200 && res.STATUS == "success") {
-           $('#refreshKitTab').click();
+          
         }
       }, err => {
         this.toastr.error(err);

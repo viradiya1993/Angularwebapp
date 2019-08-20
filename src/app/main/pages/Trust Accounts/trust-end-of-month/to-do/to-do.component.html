@@ -1,1 +1,43 @@
-   <h1>To Do</h1>
+<div id="EndMonth" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
+   <div fxLayoutAlign="center" class="content">
+       <div class="center p-24 more_tbl_clmn list_tbl_main" fusePerfectScrollbar>
+           <div class="matter-serach-div sticky_search_div">
+               <form >
+             
+                   <mat-form-field appearance="outline" class="example">
+                       <mat-label>Filter</mat-label>
+                       <input matInput (keyup.enter)="onSearch($event)">
+                   </mat-form-field>
+                   <!-- <button mat-raised-button color="primary" type="button" id="refreshContactTab" (click)="refreshContactTab();">Refresh</button> -->
+               </form>
+           </div>
+           <div class="content">
+               <div class="btn contact_right_action one">
+                   <button mat-icon-button (click)="openDialog()" aria-label="More">
+                       <mat-icon class="secondary-text">more_vert</mat-icon>
+                   </button>
+               </div>
+               <div class="content">
+                   <div class="example-loading-shade" *ngIf="isLoadingResults">
+                       <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+                   </div>
+                   <div class="example-containerdata">
+                       <!-- <table  mat-table [dataSource]="Contactdata" matSort [@animateStagger]="{value:'50'}">
+                           <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
+                               <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header> {{ tempColobj[item].DESCRIPTION }}</th>
+                               <td mat-cell *matCellDef="let row">
+                                   <span *ngIf="row[item]">{{row[item]}}</span>
+                               </td>
+                           </ng-container>
+                           <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                           <tr [style.background]="highlightedRows == row.CONTACTGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.CONTACTGUID ? 'row-text-colore' : ''" highlightedRows=row.CONTACTGUID mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editContact(row.CONTACTGUID);highlightedRows = row.CONTACTGUID "
+                               matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                           </tr>
+                       </table> -->
+                   </div>
+                   <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+               </div>
+           </div>
+       </div>
+   </div>
+</div>

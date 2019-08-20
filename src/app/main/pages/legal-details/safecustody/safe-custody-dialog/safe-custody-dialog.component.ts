@@ -24,11 +24,12 @@ export class SafeCustodyDialogeComponent implements OnInit {
     public dialogRef: MatDialogRef<SafeCustodyDialogeComponent>,@Inject(MAT_DIALOG_DATA) public data: any) { 
 
         this.action = data.action;
-        if(this.action === 'new'){
+        if(this.action === 'new client'){
             this.dialogTitle = 'New Safe Custody';
           }else if(this.action === 'edit'){
             this.dialogTitle = 'Update Safe Custody';
-          }else{
+          }else if(this.action === 'new matter'){
+            this.dialogTitle = 'New Safe Custody';
             // this.dialogTitle = 'Duplicate Document';
           }
       

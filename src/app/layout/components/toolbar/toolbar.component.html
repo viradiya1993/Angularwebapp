@@ -353,7 +353,7 @@
                                 <mat-card-content>
                                     <section class="group-section-tab action_tab">
                                         <section [ngClass]="appPermissions[14]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                            <button mat-button [ngClass]="appPermissions[14]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/legal-details/authority'">
+                                            <button mat-button [ngClass]="appPermissions[14]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/legal-details/safe-custody'">
                                                    <section class="large-button-container">
                                                       <mat-icon class="main-icon">
                                                             <img src="assets/icons/web_app/icon_safecustody_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -384,7 +384,7 @@
     
                                     <section class="group-section-tab action_tab">
                                         <section [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                            <button mat-button [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="OpenNewSafeCustody('add')">
+                                            <button mat-button [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="OpenNewSafeCustody('new client')">
                                                 <section class="large-button-container">
                                                 <mat-icon class="main-icon"> 
                                                     <img  src="assets/icons/web_app/icon_safecustody_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -422,7 +422,7 @@
                                         </section>
     
                                         <section [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                                <button mat-button [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="OpenNewSafeCustody('add')">
+                                                <button mat-button [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="OpenNewSafeCustody('new matter')">
                                                     <section class="large-button-container">
                                                     <mat-icon class="main-icon"> 
                                                         <img  src="assets/icons/web_app/icon_safecustody_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -2662,6 +2662,86 @@
                     </section>
                 </mat-tab>
                 <!-- searching end  -->
+
+
+                <mat-tab label="TASK" *ngIf="isTabShow===25">
+                    <section class="ribbon-container contact_tab_main">
+                        <mat-card>
+                            <mat-card-content>
+                                <section class="group-section-tab action_tab">
+                                    <section *ngIf="appPermissions[18]" [ngClass]="appPermissions[18]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button *ngIf="appPermissions[18]" mat-button [ngClass]="appPermissions[18]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="TaskDialoge('new matter')">
+                                                <section class="large-button-container">
+                                                    <mat-icon class="main-icon"> 
+                                                        <img  src="assets/icons/web_app/icon_tasks_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                <div class="main-text">
+                                                    <span>New Matter <br>Task</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section [ngClass]="appPermissions[18]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[18]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="TaskDialoge('edit')">
+                                            <section class="large-button-container">
+                                                    <mat-icon class="main-icon"> 
+                                                        <img  src="assets/icons/web_app/icon_tasks_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                    <div class="main-text">
+                                                        <span>Edit<br>Task</span>
+                                                    </div>
+                                                </section>
+                                            </button>
+                                    </section>
+
+                                    <section [ngClass]="appPermissions[18]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button disabled mat-button [ngClass]="appPermissions[18]?.Delete==0 ? 'disabled-click large-button' : 'large-button'" (click)="deleteAuthority()">
+                                                <section class="large-button-container">
+                                                    <mat-icon class="main-icon"> 
+                                                        <img class="menu-disabled" src="assets/icons/web_app/icon_tasks_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                    <div class="main-text">
+                                                        <span>Delete<br>Task</span>
+                                                    </div>
+                                                </section>
+                                            </button>
+                                    </section>
+                                    <section *ngIf="appPermissions[18]" [ngClass]="appPermissions[18]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button *ngIf="appPermissions[18]" mat-button [ngClass]="appPermissions[18]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="TaskDialoge('new general')">
+                                                <section class="large-button-container">
+                                                    <mat-icon class="main-icon"> 
+                                                        <img  src="assets/icons/web_app/icon_tasks_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                <div class="main-text">
+                                                    <span>New General<br>Task</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section *ngIf="appPermissions[18]" [ngClass]="appPermissions[18]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button *ngIf="appPermissions[18]" mat-button [ngClass]="appPermissions[18]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="TaskDialoge('duplicate')">
+                                                <section class="large-button-container">
+                                                    <mat-icon class="main-icon"> 
+                                                        <img  src="assets/icons/web_app/icon_duplicate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Duplicate Matter<br>Task</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <div class="light_label_txt">Action</div>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                            </mat-card-content>
+                        </mat-card>
+                    </section>
+                </mat-tab>
+
+
+
+
+
                 <!-- goto tab menu start -->
                 <mat-tab label="GO TO">
                     <section class="ribbon-container goto_tab_main" [style.width]="detailwidth">
@@ -2774,6 +2854,20 @@
                                             </section>
                                         </button>
                                     </section>
+
+                                    <section [ngClass]="appPermissions[18]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[18]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/task'">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_tasks_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Task</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+
                                     <div class="light_label_txt">Diary</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>

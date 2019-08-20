@@ -11,9 +11,7 @@ import { MainAPiServiceService } from 'app/_services';
   animations: fuseAnimations
 })
 export class TrustEndOfMonthComponent implements OnInit {
-  @Input() SettingForm: FormGroup;
-  @Input() errorWarningData: any;
-  addData:any=[];
+  
   constructor(private _mainAPiServiceService:MainAPiServiceService) { }
 
   ngOnInit() {

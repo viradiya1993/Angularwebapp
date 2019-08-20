@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatterPopupComponent } from '../matters/matter-popup/matter-popup.component';
 import { MatDialog } from '@angular/material';
 import { MatterDialogComponent } from '../time-entries/matter-dialog/matter-dialog.component';
+import * as $ from 'jquery';
 
 
 @Component({
@@ -17,9 +18,10 @@ export class MainSearchingComponent implements OnInit {
   @Input() SettingForm: FormGroup;
   @Input() errorWarningData: any;
   addData:any=[];
-  constructor(private dialog: MatDialog,   private _formBuilder: FormBuilder,) { }
+  constructor(private dialog: MatDialog,private _formBuilder: FormBuilder,) { }
 
   ngOnInit() {
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.MainSearching = this._formBuilder.group({
       matterCheck: [''],
       active: [''],

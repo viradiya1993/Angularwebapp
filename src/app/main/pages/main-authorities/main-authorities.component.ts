@@ -108,8 +108,8 @@ export class MainAuthoritiesComponent implements OnInit {
         this.showData(x.children, x.level + 1, x.name);
     });
   }
-
   ngOnInit() {
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 50)) + 'px');
     this.Accountlist = this._formBuilder.group({
       AccountType: [''],
       searchFilter: [''],
@@ -148,12 +148,9 @@ export class MainAuthoritiesComponent implements OnInit {
       disableClose: true, panelClass: 'contact-dialog', data: contactPopupData
     });
     dialogRef.afterClosed().subscribe(result => {
-      // this.SearchForm.controls['Client'].setValue(result);  
-
     });
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
   editContact(val) {
-    // console.log(val)
   }
 }

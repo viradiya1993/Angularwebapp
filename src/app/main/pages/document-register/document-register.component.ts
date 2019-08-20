@@ -43,7 +43,7 @@ export class DocumentRegisterComponent implements OnInit {
   {}
 
   ngOnInit() {
-  
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 10)) + 'px');
     this.documentform = this._formBuilder.group({
       matter:[],
       Client:[],
@@ -53,7 +53,6 @@ export class DocumentRegisterComponent implements OnInit {
     });
     this.getTableFilter();
     this.LoadData();
-   
     let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
     this.documentform.controls['matter'].setValue(mattersData.MATTER);
     this.documentform.controls['Client'].setValue(mattersData.Client); 

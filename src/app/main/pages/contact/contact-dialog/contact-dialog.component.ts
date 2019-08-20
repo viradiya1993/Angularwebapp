@@ -63,6 +63,7 @@ export class ContactDialogComponent implements OnInit {
   contactForm: FormGroup;
   ngOnInit() {
     this.contactForm = this._formBuilder.group({
+      PreferedName:[''],
       //CONTACTGUID: ['', Validators.required],
       CONTACTNAME: ['', Validators.required],
       CONTACTTYPE: ['', Validators.required],
@@ -270,6 +271,8 @@ export class ContactDialogComponent implements OnInit {
           }
         }
       });
+    }else{
+      this.contactForm.controls['ACTIVE'].setValue(true);
     }
   }
 
@@ -448,6 +451,12 @@ export class ContactDialogComponent implements OnInit {
   ngOnDestroy(){
     this.subscription.unsubscribe();
   } 
+  TabClick(val){
+    console.log(this.f.CONTACTNAME.value)
+    this.contactForm.controls['FAMILYNAME'].setValue(this.f.CONTACTNAME.value);
+    this.contactForm.controls['PreferedName'].setValue(this.f.CONTACTNAME.value);
+console.log(val)
+  }
 }
 
 export class Common {

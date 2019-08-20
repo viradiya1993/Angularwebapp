@@ -6,7 +6,7 @@ import { MatterPopupComponent } from '../matters/matter-popup/matter-popup.compo
 import { MatDialog } from '@angular/material';
 import { MatterDialogComponent } from '../time-entries/matter-dialog/matter-dialog.component';
 import { ContactSelectDialogComponent } from '../contact/contact-select-dialog/contact-select-dialog.component';
-
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-main-safe-custody',
@@ -21,6 +21,7 @@ export class MainSafeCustodyComponent implements OnInit {
   constructor(private _mainAPiServiceService:MainAPiServiceService, private dialog: MatDialog,) { }
 
   ngOnInit() {
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 70)) + 'px');
     // this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response=>{
     //  // console.log(response);
     //   this.addData=response.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP

@@ -1,5 +1,5 @@
 @import "src/@fuse/scss/fuse";
-#DocReg {
+#task {
     .header {
         .search-wrapper {
             width: 100%;
@@ -59,11 +59,14 @@
     padding: 20px !important;
 }
 
-app-document-register {
-    width: 100% !important;
+app-main-authorities {
+    width: 100%;
 }
 
 .sticky_search_div {
+    // position: fixed;
+    // top: 163px;
+    // padding-left: 300px;
     width: 100%;
     background-color: #f5f5f5;
     z-index: 9999;
@@ -74,7 +77,7 @@ app-document-register {
     padding-left: 80px;
 }
 
-#DocReg .p-24.list_tbl_main {
+#task .p-24.list_tbl_main {
     // margin-top: 85px;
     overflow: hidden;
 }
@@ -84,7 +87,7 @@ app-document-register {
     padding-top: 0 !important;
 }
 
-#DocReg .content {
+#task .content {
     position: relative;
 }
 
@@ -130,8 +133,11 @@ table tr.highlight {
     color: #ffffff;
 }
 
+button#refreshContactTab {
+    display: none;
+}
 
-#DocReg .content .example {
+#task .content .example {
     padding: 20px 10px;
 }
 
@@ -143,21 +149,50 @@ th.mat-sort-header-sorted {
     width: 100%;
 }
 
-button#refreshDOCREGTab {
+// #refreshAccount {
+//     display: none;
+// }
+
+// Tree Table Css
+
+.example-tree-invisible {
     display: none;
-}
-@media screen and (max-width: 1200px) {
-    #DocReg .sticky_search_div.responsive_auto .example {
-        width: 15%;
-    }
+  }
+  
+.example-tree ul,
+.example-tree li {
+margin-top: 0;
+margin-bottom: 0;
+list-style-type: none;
 }
 
-@media screen and (max-width: 991px) {
-    #DocReg .sticky_search_div.responsive_auto {
-        overflow: auto;
-        white-space: nowrap;
-    }
-    #DocReg .sticky_search_div.responsive_auto .example {
-        width: 20%;
-    }
+// table.simple {
+//     margin-left: -60px !important;
+//     margin-top: -6px !important;
+// }
+
+.indent {
+    width: 20px;
 }
+  
+table {
+    width: 100%;
+}
+  
+th.mat-header-cell {
+    border: 0;
+    text-align: center;
+}
+
+.mat-header-row {
+    background-color: rgba(128, 128, 128, 0.1);
+    height: 5em;
+}
+
+.set_icon{
+    margin-top: 18px;
+}
+img.menu-disabled {
+    opacity: 0.5 !important;
+}
+//

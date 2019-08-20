@@ -11,6 +11,7 @@ import { MatterDialogComponentForTemplate } from '../matter-dialog/matter-dialog
 import { Router } from '@angular/router';
 
 
+
 @Component({
   selector: 'app-email-templete',
   templateUrl: './email-templete.component.html',
@@ -20,6 +21,7 @@ import { Router } from '@angular/router';
 
 })
 export class EmailTempleteComponent implements OnInit {
+
   EmailAllData: FormGroup;
   tempColobj: any;
   ColumnsObj: any;
@@ -46,6 +48,7 @@ export class EmailTempleteComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.EmailAllData = this._formBuilder.group({
       Filter: [''],
       search: ['']

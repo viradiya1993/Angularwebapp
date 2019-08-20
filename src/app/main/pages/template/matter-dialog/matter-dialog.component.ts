@@ -99,18 +99,8 @@ export class MatterDialogComponentForTemplate implements OnInit {
           this.PacksEmail = response.DATA.EMAILS;
         } else if (this._data.Type == "Pack") {
           this.IsLoading = 'false';
-          //  this.packDoc="DOCUMENTS";
-          if (response.DATA.DOCUMENTS.length > 0) {
-            // response.DATA.DOCUMENTS.forEach(element => {
-            //   var textSample = element.FILENAME;
-            //   var uri = 'https://api2.silq.com.au/' + encodeURIComponent(textSample);
-            //   element.FILENAME = uri;
-            // });
-            this.PacksDocument = response.DATA.DOCUMENTS;
-          } else if (response.DATA.EMAILS.length > 0) {
-            console.log("email called");
-            this.PacksEmail = response.DATA.EMAILS;
-          }
+          this.PacksEmail = response.DATA.EMAILS;
+          this.PacksDocument = response.DATA.DOCUMENTS;
         }
         this.isLoadingResults = false;
       } else if (response.CODE == 420) {

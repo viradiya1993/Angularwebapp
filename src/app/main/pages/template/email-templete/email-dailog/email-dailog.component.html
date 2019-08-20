@@ -66,14 +66,15 @@
             </div>
             <!-- New SrollBar -->
             <div fxLayout="row" fxLayoutAlign="start start" fxFlex="1 0 auto">
-                <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.TEXT_,'has-warning':errorWarningData.Warning?.TEXT_}" appearance="outline" fxFlex="50" class=" pr-4" >
+                <ckeditor formControlName = "text"   fxFlex="100" class=" pr-4" [editor]="Editor" data="<p>Hello, world!</p>"></ckeditor>
+                <!-- <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.TEXT_,'has-warning':errorWarningData.Warning?.TEXT_}" appearance="outline" fxFlex="50" class=" pr-4" >
                     <mat-label>Text</mat-label>
                   <textarea  cdkTextareaAutosize
                   cdkAutosizeMinRows="22"
                   cdkAutosizeMaxRows="22" formControlName = "text"  matInput ></textarea>
-                </mat-form-field>
-                <div class="example-containerdata pr-4" fxFlex="50">
-                <mat-table class="" [dataSource]="InnerTableData"  matSort>
+                </mat-form-field> -->
+                <!-- <div class="example-containerdata pr-4" > -->
+                <!-- <mat-table class="" [dataSource]="InnerTableData"  matSort>
                     <ng-container matColumnDef="NAME">
                       <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
                       <mat-cell *matCellDef="let element"> {{element.NAME}} </mat-cell>
@@ -91,8 +92,8 @@
                       (click)="clicktable(row);highlightedRows =index "
                       matRipple>
                     </mat-row>
-                </mat-table>
-              </div>
+                </mat-table> -->
+              <!-- </div> -->
             </div>
           </form>
       </div>

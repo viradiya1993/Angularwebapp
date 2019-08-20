@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthGuard } from '../../../_guards';
+// import { AuthGuard } from '../../../_guards';
 import { RouterModule } from '@angular/router';
 
 
@@ -16,31 +16,21 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, Sa
 import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
 
 import {MatTreeModule} from '@angular/material/tree';
-import { TrustMoneyComponent } from './trust-money/trust-money.component';
-import { TrustMoneyDialogeComponent } from './trust-money/trust-money-dialoge/trust-money-dialoge.component';
-import { TrustEndOfMonthComponent } from './trust-end-of-month/trust-end-of-month.component';
-import { EndOfMonthHistroyComponent } from './trust-end-of-month/end-month-histroy/end-month-histroy.component';
-import { ToDoComponent } from './trust-end-of-month/to-do/to-do.component';
+// import { TrustMoneyComponent } from './trust-money/trust-money.component';
+// import { TrustMoneyDialogeComponent } from './trust-money/trust-money-dialoge/trust-money-dialoge.component';
+// import { TrustEndOfMonthComponent } from './trust-end-of-month/trust-end-of-month.component';
+// import { EndOfMonthHistroyComponent } from './trust-end-of-month/end-month-histroy/end-month-histroy.component';
+// import { ToDoComponent } from './trust-end-of-month/to-do/to-do.component';
+import { AuthGuard } from 'app/_guards';
+import { TrustMoneyComponent } from './trust-money.component';
+import { TrustMoneyDialogeComponent } from './trust-money-dialoge/trust-money-dialoge.component';
 
 
 
 const routes = [
-{ path: 'trust-money', component: TrustMoneyComponent, canActivate: [AuthGuard] },
-
-  { path: '', redirectTo: '/trust-end-month/to-do', pathMatch: 'full', canActivate: [AuthGuard] },
-  {
-    path: '', component: TrustEndOfMonthComponent, children: [
-      { path: 'to-do', component: ToDoComponent },
-      { path: 'end-month-histroy', component: EndOfMonthHistroyComponent },
-
-   
-    ], canActivate: [AuthGuard]
-  // { path: 'trust-end-month/to-do', component: TrustEndOfMonthComponent, canActivate: [AuthGuard] },
-  // { path: 'trust-end-month/end-month-histroy', component: EndOfMonthHistroyComponent, canActivate: [AuthGuard] },
-}
-];
+{ path: 'trust-money', component: TrustMoneyComponent, canActivate: [AuthGuard] }];
 @NgModule({
-  declarations: [TrustMoneyComponent,TrustMoneyDialogeComponent,TrustEndOfMonthComponent,EndOfMonthHistroyComponent,ToDoComponent],
+  declarations: [TrustMoneyComponent,TrustMoneyDialogeComponent],
   entryComponents: [TrustMoneyDialogeComponent],
   imports: [
     CommonModule,
@@ -84,8 +74,9 @@ const routes = [
     TrustMoneyComponent
   ],
   providers: [
+    TrustMoneyComponent,
     {provide: DateAdapter, useClass: AppDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
   ],
 })
-export class TrustAccountsModule { }
+export class TrustMoneyModule { }

@@ -3,7 +3,6 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import * as _ from 'lodash';
 import * as $ from 'jquery';
-
 import { FuseConfigService } from '@fuse/services/config.service';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { Location } from '@angular/common';
@@ -40,7 +39,6 @@ import { ChartAcDailogComponent } from './../../../main/pages/chart-account/char
 import { SelectAccountComponent } from './../../../main/pages/select-account/select-account.component';
 import { FileNoteDialogComponent } from 'app/main/pages/matters/file-note-dialog/file-note-dialog.component';
 import { BankingDialogComponent } from 'app/main/pages/banking/banking-dialog.component';
-
 import { GeneralDailogComponent } from './../../../main/pages/general-journal/general-dailog/general-dailog.component';
 import { AuthorityDialogComponent } from 'app/main/pages/main-authorities/authority-dialog/authority-dialog.component';
 import { ReportFilterComponent } from './../../../main/pages/general-journal/report-filter/report-filter.component';
@@ -52,6 +50,8 @@ import { SetLetterHeadComponent } from 'app/main/pages/template/template-list/se
 import { EditTemplateComponent } from 'app/main/pages/template/template-list/edit-template/edit-template.component';
 import { SafeCustodyDialogeComponent } from 'app/main/pages/legal-details/safecustody/safe-custody-dialog/safe-custody-dialog.component';
 import { TrustMoneyDialogeComponent } from 'app/main/pages/Trust Accounts/trust-money/trust-money-dialoge/trust-money-dialoge.component';
+import { ContactSelectDialogComponent } from 'app/main/pages/contact/contact-select-dialog/contact-select-dialog.component';
+import { TaskDialogeComponent } from 'app/main/pages/Task/task-dialoge/task-dialoge.component';
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -80,10 +80,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     greenTheme: any = false;
     CreatDocumentChild: any;
     TemplateGenerateData: any = [];
-
-
-
-
     // Private
     private _unsubscribeAll: Subject<any>;
     activedocument: any;
@@ -103,8 +99,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     EmailtemplateData: any = [];
     SendMoney_dataGUID: any;
     DocRegData: any = [];
-
-
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
@@ -120,9 +114,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         public behaviorService: BehaviorService
     ) {
         //for navigation bar 
-
-
-
         if (this.appPermissions == null) {
             this.appPermissions = [];
         }
@@ -162,7 +153,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }, err => {
             this.toastr.error(err);
         });
-
         //addedby web19
         let val = localStorage.getItem('handelGenerateDoc');
         if (val == 'Folder') {
@@ -171,8 +161,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.hideShowDoc = 'no';
         }
     }
-
-
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
@@ -180,7 +168,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /**
      * On init
      */
-
     ngOnInit(): void {
         this.updateTimerCounter();
         this.displayMattterList();
@@ -191,50 +178,35 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.hiddenNavbar = settings.layout.navbar.hidden === true;
         });
     }
-
-    // ngAfterViewChecked() {
     ngAfterViewInit() {
         const wph = $(window).width();
         this.detailwidth = wph - 280 - 5 + 'px';
-
         if ($(window).width() >= 992 && $(window).width() < 1280) {
-
             const wph = $(window).width();
             this.detailwidth = wph - 65 + 'px';
-
             const nvh = 56;
             $('.mat-tab-header').css({ 'width': wph - nvh - 280 + 'px' });
         } else if ($(window).width() <= 991) {
-
             const wph = $(window).width();
             this.detailwidth = wph - 65 + 'px';
-
             const nvh = 56;
             $('.mat-tab-header').css({ 'width': wph - nvh - 160 + 'px' });
         }
-
         $(window).resize(function () {
-
             if ($(window).width() >= 992 && $(window).width() < 1280) {
-
                 const wph = $(window).width();
                 this.detailwidth = wph - 65 + 'px';
-
                 const nvh = 56;
                 $('.mat-tab-header').css({ 'width': wph - nvh - 280 + 'px' });
             } else if ($(window).width() <= 991) {
-
                 const wph = $(window).width();
                 this.detailwidth = wph - 65 + 'px';
-
                 const nvh = 56;
                 $('.mat-tab-header').css({ 'width': wph - nvh - 160 + 'px' });
             }
         });
 
     }
-
-
     /* ---------------------------------------------------------------------help Licence start--------------------------------------------------------------------------  */
     openLicence(Data) {
         let w = Data == 'LI' ? '50%' : '25%';
@@ -246,7 +218,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => { });
     }
     /* ---------------------------------------------------------------------help Licence end--------------------------------------------------------------------------  */
-
     /* ---------------------------------------------------------------------Contacts Start--------------------------------------------------------------------------  */
     // for new contact dialog
     ContactsDialog(actionType) {
@@ -276,7 +247,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 $('#refreshContactTab').click();
         });
     }
-
     openCorresDialog() {
         let getMatterGuId = JSON.parse(localStorage.getItem('set_active_matters'));
         const dialogRef = this.dialog.open(ContactCorresDetailsComponent, {
@@ -326,7 +296,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef = null;
         });
     }
-    //New File Note Dialog
     NewFileNote() {
         const dialogRef = this.dialog.open(FileNoteDialogComponent, { width: '100%', disableClose: true });
         dialogRef.afterClosed().subscribe(result => {
@@ -334,7 +303,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     /* ---------------------------------------------------------------------Matter End--------------------------------------------------------------------------  */
-
     /* ---------------------------------------------------------------------Activity Start--------------------------------------------------------------------------  */
     //add edit and duplicat ActivityDialog
     ActivityDialog(actionType) {
@@ -357,8 +325,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 $('#refreshActivities').click();
         });
     }
-
-    //DeleteActivity
     DeleteActivityDialog(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
@@ -380,8 +346,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     /* ---------------------------------------------------------------------Activity End--------------------------------------------------------------------------  */
-
-
     /* ---------------------------------------------------------------------------USERS Start-------------------------------------------------------------------------  */
     userDialog(actionType) {
         let popupData: any = {};
@@ -424,8 +388,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     /* ---------------------------------------------------------------------------USERS End-------------------------------------------------------------------------  */
-
-
     /* ---------------------------------------------------------------------------start of timer add-------------------------------------------------------------------------  */
     toggleSidebarOpen(key) {
         this.updateTimerCounter();
@@ -437,7 +399,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     addTimerForMatter() {
         this.TimersServiceI.addTimeEnrtS();
     }
-
     displayMattterList() {
         this.prevMatterArray = [];
         if (localStorage.getItem(this.timerId)) {
@@ -452,13 +413,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             });
         }
     }
-
     updateTimerCounter() {
         this.prevMatterArray = JSON.parse(localStorage.getItem(this.timerId));
         if (this.prevMatterArray)
             this.TotalTimer = this.prevMatterArray.length;
     }
-
     /*convert Secound to HMS*/
     secondsToHms(d: any) {
         d = Number(d);
@@ -467,7 +426,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         var seconds = ("00" + (d % 3600) % 60).slice(-2);
         return hours + ":" + minutes + ":" + seconds;
     }
-
     stopMatterBack(matterId: any) {
         clearTimeout(this.timerInterval);
         let tempArray: any[] = []
@@ -487,7 +445,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.prevMatterArray = tempArray;
         this.displayMattterList();
     }
-
     startMatterBack(matterId: any) {
         clearTimeout(this.timerInterval);
         this.currentTimer = 0;
@@ -514,7 +471,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.prevMatterArray = tempArray;
         this.displayMattterList();
     }
-
     startTimer(matterId: any) {
         if (localStorage.getItem('start_' + matterId)) {
             this.timerInterval = setInterval(() => {
@@ -524,11 +480,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }, 1000);
         }
     }
-
     stopTimer() {
         clearTimeout(this.timerInterval);
     }
-
     endMatterBack(matterId: any) {
         let AllTimer = JSON.parse(localStorage.getItem(this.timerId));
         let matterDataTime;
@@ -548,9 +502,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         localStorage.setItem(this.timerId, JSON.stringify(AllTimer));
         $('#sidebar_open_button').click();
         this.addNewTimeEntry(matterId, matterDataTime);
-
     }
-
     addNewTimeEntryNew() {
         let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
         if (matterData.ACTIVE) {
@@ -560,7 +512,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.toastr.error("You cannot time entry for Inactive matter. Please select active matter and try again.");
             return false;
         }
-
     }
     ResumeTimePopup() {
         const dialogRef = this.dialog.open(ResumeTimerComponent, { width: '100%', disableClose: true, data: { 'edit': '', 'matterData': '' } });
@@ -568,13 +519,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             if (result) {
                 // $('#refreshTimeEntryTab').click();
             }
-
         });
     }
-
-
     public addNewTimeEntry(Data: any, matterData: any) {
-
         const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '100%', disableClose: true, data: { 'edit': Data, 'matterData': matterData } });
         dialogRef.afterClosed().subscribe(result => {
             if (result)
@@ -582,8 +529,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     /* ---------------------------------------------------------------------end of timer add--------------------------------------------------------------------------  */
-
-
     //Reportpopup open
     Reportpopup(ReportData) {
         console.log(ReportData);
@@ -623,10 +568,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.behaviorService.SpendMoneyData$.subscribe(result => {
             if (result) {
                 this.SendMoney_dataGUID = result;
-
             }
         });
-
         if (this.SendMoney_dataGUID == null) {
             this.toastr.error("No Data Selected");
         } else {
@@ -642,13 +585,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 if (result) {
                     $('#refreshSpendMoneyTab').click();
                 }
-
             });
         }
-
     }
-
-    // Delete matter Pop-up
     Deletespendmoneypopup(): void {
         this.behaviorService.SpendMoneyData$.subscribe(result => {
             if (result) {
@@ -676,10 +615,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 this.confirmDialogRef = null;
             });
         }
-
     }
-
-
     deleteContact(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
@@ -702,7 +638,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef = null;
         });
     }
-
     deleteTimeEntry(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
@@ -739,17 +674,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this._unsubscribeAll.next();
         this._unsubscribeAll.complete();
     }
-
-
-
-    //Change Password Dialog
     ChangePass() {
         const dialogRef = this.dialog.open(ChangePasswordComponent, { disableClose: true, panelClass: 'change-password' });
         dialogRef.afterClosed().subscribe(result => {
 
         });
     }/* Document Register Module */
-
     DocumntPop(actionType) {
         let DcoumentPopdata = {}
         if (actionType == 'new') {
@@ -767,13 +697,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 $("#refreshDOCREGTab").click();
         });
     }
-
-    // Delete Record Document
     DeleteDocument(): void {
         this.behaviorService.DocumentRegisterData$.subscribe(result => {
             if (result) {
                 this.DocRegData = result;
-
             }
         });
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
@@ -783,8 +710,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
             let getContactGuId = localStorage.getItem('contactGuid');
-
-
             let postData = { FormAction: "delete", data: { DOCUMENTGUID: this.DocRegData.DOCUMENTGUID } }
             this._mainAPiServiceService.getSetData(postData, 'SetDocument').subscribe(res => {
                 if (res.STATUS == "success") {
@@ -796,44 +721,27 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             });;
         });
     }
-
-    //Open Matter Folder
     OpenMatter() {
         console.log('Matter Folder Work!!!');
     }
-
-    //Open Document
     OpenDocument() {
         console.log('Document  Work!!!');
     }
-
-    //Load Document
     LoadDocument() {
         console.log('Load Document Work!!!');
     }
-
-    //PDF Document
     PdfDocument() {
         console.log('Pdf Document work!!!')
     }
-
-    //Pdf Email Document
     PdfEmailDocument() {
         console.log('Pdf Email Document Work!!!');
     }
-
-    /* Email Module */
-
-    //SelectMatter 
-
     GenarateEmail() {
         this.behaviorService.EmailGenerateData$.subscribe(result => {
             if (result) {
                 this.EmailtemplateData = result;
             }
         });
-
-
         if (this.router.url == "/create-document/email-invoice-template" || this.router.url == "/create-document/packs-invoice-template") {
             let invoiceGUid = localStorage.getItem('edit_invoice_id');
             let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
@@ -852,8 +760,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.ForEmailDialogOpen(passdata);
         }
     }
-
-    // Generate Packs 
     GenaratePacks() {
         this.behaviorService.packs$.subscribe(result => {
             if (result) {
@@ -878,8 +784,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.ForEmailDialogOpen(passdata);
         }
     }
-
-
     ForEmailDialogOpen(passdata) {
         const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
             width: '100%',
@@ -890,11 +794,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         });
     }
-
-
-
-
-    /* Email Module Function */
     EmailTempletePopUp(actionType) {
         let EmailPopdata = {}
         if (actionType == 'new') {
@@ -914,8 +813,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         });
     }
-
-    //Delete Email
     DeleteEmailTemplete() {
         this.behaviorService.EmailGenerateData$.subscribe(result => {
             if (result) {
@@ -941,9 +838,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef = null;
         });
     }
-
-    /* Packs Module Function */
-
     PackModule(actionType) {
         let PackPopdata = {}
         if (actionType == 'new') {
@@ -957,11 +851,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             data: PackPopdata
         });
         dialogRef.afterClosed().subscribe(result => {
-
+            if (result) {
+                $('#refreshKitTab').click();
+            }
         });
     }
-
-    //DeletePack
     DeletePack(): void {
         this.behaviorService.packs$.subscribe(result => {
             if (result) {
@@ -1029,7 +923,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         });
     }
-
     SafeCustodyPopup(val) {
         const dialogRef = this.dialog.open(AuthorityDialogComponent, {
             disableClose: true,
@@ -1042,8 +935,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         });
     }
-
-
     deleteAuthority(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
@@ -1067,34 +958,25 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     //end of Authority dialoge 
-
     //Account Trasactions
     Account_Tra() {
-
     }
     //Recouncile Account
     Reconcile_ac_pra() {
-
     }
     //ReconcileAC
     ReconcileAC() {
         const dialogRef = this.dialog.open(SelectAccountComponent, {
-
         });
         dialogRef.afterClosed().subscribe(result => {
-
         });
     }
-
     /* General Journal Module Function's */
-
     //NewGeneral
     NewGeneral() {
         const dialogRef = this.dialog.open(GeneralDailogComponent, {
-
         });
         dialogRef.afterClosed().subscribe(result => {
-
         });
     }
     //ViewDetails
@@ -1126,7 +1008,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         });
     }
-
     //PrepareReceipt
     PrepareReceipt() {
         const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
@@ -1139,7 +1020,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     //_____________________________________________________________________________________________________
-
     BankingDialogOpen(type: any) {
         const dialogRef = this.dialog.open(BankingDialogComponent, {
             disableClose: true, width: '100%', data: { AccountType: type }
@@ -1147,9 +1027,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
         });
     }
-
     /** Chronology Module's Function's */
-
     //NewChron
     ChronPopup(actionType) {
         let ChronePopData = {}
@@ -1176,9 +1054,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         });
     }
-
     /* Dairy Appointment Module's Function's **/
-
     //New - Edit - Duplicate Appointment Dialog
     DiaryAppointment(actionType) {
 
@@ -1195,7 +1071,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => { });
     }
-
     //DeleteAppointment
     DeleteAppointment() {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
@@ -1205,23 +1080,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => { });
     }
-
-
     //_____________________________________________________________________________________________________
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
-
-
     logOutUser() {
         this.authenticationService.logout();
     }
-
     navBarSetting(value: any) {
-
         let x = value.split("/");
-        // console.log(x[1]);
-        // console.log(x);
         this.activeSubMenu = x[2] ? x[2] : '';
         this.isInvoice = x[3] ? x[3] : '';
         if (x[1] == "matters" || x[1] == "") {
@@ -1300,12 +1167,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 20;
         } else if (x[1] == "account-management") {
             this.isTabShow = 21;
-        }else if (x[1] == "Safe-Custody") {
+        } else if (x[1] == "Safe-Custody") {
             this.isTabShow = 22;
-        }else if (x[1] == "trust-money") {
+        } else if (x[1] == "trust-money") {
             this.isTabShow = 23;
-        }else if (x[1] == "trust-end-month") {
+        } else if (x[1] == "trust-end-month") {
             this.isTabShow = 24;
+        } else if (x[1] == "task") {
+            this.isTabShow = 25;
         }
         else {
             this.isTabShow = 1;
@@ -1321,7 +1190,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.selectedIndex = undefined;
         }, 500);
     }
-
     // ****************************************** START Invoice related funtion like create update delete view*********************************************
     selectMatterInvoice() {
         const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
@@ -1355,7 +1223,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     isMatterClick() {
         this.clickedBtn = 'matterDoc';
     }
-
     createInstantInvoice() {
         // return false;
         const dialogRef = this._matDialog.open(InstantInvoiceDailogComponent, { width: '100%', disableClose: true, data: null });
@@ -1365,7 +1232,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-
     createInvoice() {
         const dialogRef = this._matDialog.open(InvoiceAddDailogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
@@ -1374,7 +1240,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-
     createReceiptForTimeBilling() {
         const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
             width: '100%', disableClose: true,
@@ -1386,7 +1251,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-
     ViewReceiptForTimeBilling() {
         const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
             width: '100%', disableClose: true,
@@ -1399,11 +1263,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-
     deleteReceiceMoanyForTimeBilling() {
-
     }
-
     createReceipt() {
         const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
@@ -1416,7 +1277,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-
     ViewReceipt() {
         const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
             width: '100%', disableClose: true,
@@ -1495,7 +1355,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef = null;
         });
     }
-
     NewGeneralReceipt(): void {
         const dialogRef = this._matDialog.open(GeneralReceiptDilogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
@@ -1504,7 +1363,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-
     // Searching start
     StartInfoDialog() {
         const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
@@ -1515,23 +1373,61 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-
-    // searching end
-
-
-    //hidden button
+    //////// Start  Task///////////////////
+    TaskDialoge(val) {
+        if (val == 'new matter') {
+            const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    this.OpenTaskPopUp(val);
+                }
+            });
+        } else {
+            this.OpenTaskPopUp(val);
+        }
+    }
+    OpenTaskPopUp(actionType) {
+        let TaskPopdata = {}
+        if (actionType == 'new matter' || 'new general') {
+            TaskPopdata = { action: actionType }
+        } else if (actionType == 'edit' || actionType == 'duplicate') {
+            TaskPopdata = { action: actionType }
+        }
+        const dialogRef = this.dialog.open(TaskDialogeComponent, {
+            disableClose: true,
+            panelClass: 'Task-dialog',
+            data: TaskPopdata
+        });
+        dialogRef.afterClosed().subscribe(result => { });
+    }
+    //////// End  Task///////////////////
     clickToolbarbtn() {
         this.isDocumentGenerateHide = "yes";
     }
     clickToolbarbtn2() {
         this.isDocumentGenerateHide = "no";
     }
+    OpenNewSafeCustody(actionType) {
 
-    ////// safe custody poup
-
-    OpenNewSafeCustody(actionType){
+        if (actionType == 'new client') {
+            const dialogRef = this._matDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true, });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    this.SafeCustodyPoup(actionType);
+                }
+            });
+        } else {
+            const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    this.SafeCustodyPoup(actionType);
+                }
+            });
+        }
+    }
+    SafeCustodyPoup(actionType) {
         let safeCustodyData = {}
-        if (actionType == 'new') {
+        if (actionType == 'new client' || actionType == 'new matter') {
             safeCustodyData = { action: actionType }
         } else if (actionType == 'edit' || actionType == 'copy') {
             safeCustodyData = { action: actionType }
@@ -1543,17 +1439,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
+
                 // $('#refreshEmailTab').click();
             }
         });
-
-
-        // const dialogRef = this._matDialog.open(SafeCustodyDialogeComponent, { width: '100%', disableClose: true, });
-        // dialogRef.afterClosed().subscribe(result => {
-        //     if (result) {
-        //         // localStorage.setItem('set_active_matters', JSON.stringify(result));
-        //     }
-        // });
     }
     // spendmoneyMenubtn(){
     // this.spendMoneyMenu="disabled"; 
@@ -1561,8 +1450,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     // ******************************************END Invoice related funtion like create update delete view*********************************************
     //***********************************************************START Select Matter Contact*************************************************************************
     GenarateDocument() {
-
-
         this.behaviorService.TemplateGenerateData$.subscribe(result => {
             if (result) {
                 this.TemplateGenerateData = result;
@@ -1587,8 +1474,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.ForDocDialogOpen(passdata);
         }
     }
-
-    CopyTemplatePopup(){
+    CopyTemplatePopup() {
         const dialogRef = this._matDialog.open(CopyTemplateComponent, { width: '100%', disableClose: true, });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -1596,7 +1482,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    SetLetterHeadPopup(){
+    SetLetterHeadPopup() {
         const dialogRef = this._matDialog.open(SetLetterHeadComponent, { width: '100%', disableClose: true, });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -1604,7 +1490,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    EditTemplatePopup(){
+    EditTemplatePopup() {
         const dialogRef = this._matDialog.open(EditTemplateComponent, { width: '100%', disableClose: true, });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -1612,11 +1498,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    TrustMoneyPopup(val){
-        const dialogRef = this._matDialog.open(TrustMoneyDialogeComponent, { width: '100%', disableClose: true, 
-    data:{
-        action:val
-    }});
+    TrustMoneyPopup(val) {
+        const dialogRef = this._matDialog.open(TrustMoneyDialogeComponent, {
+            width: '100%', disableClose: true,
+            data: {
+                action: val
+            }
+        });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 // localStorage.setItem('set_active_matters', JSON.stringify(result));
@@ -1628,31 +1516,23 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, { width: '100%', disableClose: true, data: passdata });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                // localStorage.setItem('set_active_matters', JSON.stringify(result));
             }
         });
     }
-
     packsToolbarHide() {
         this.behaviorService.packs$.subscribe(result => {
             if (result != null) {
                 if (result.TEMPLATETYPEDESC == 'Email') {
                     this.packsToobar = 'Email';
-
                 } else if (result.TEMPLATETYPEDESC == 'Template') {
                     this.packsToobar = 'Template';
                 } else {
                     this.packsToobar = 'Packs';
                 }
             }
-
-
         });
-
     }
-
 }
-
 //2 pair Data Convert
 function chunks(arr, size = 3) {
     return arr.map((x, i) => i % size == 0 && arr.slice(i, i + size)).filter(x => x);

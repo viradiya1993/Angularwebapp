@@ -138,7 +138,7 @@ export class NewPacksDailogComponent implements OnInit {
   });
   dialogRef.afterClosed().subscribe(result => {
     this.KitItemData.TEMPLATEFILE=result;
-  this.PackTbl.controls['TempleteFile'].setValue(result);  
+ 
       
   });
   }

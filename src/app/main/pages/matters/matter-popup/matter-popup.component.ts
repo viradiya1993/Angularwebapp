@@ -49,8 +49,11 @@ export class MatterPopupComponent implements OnInit {
       this.isLoadingResults = true;
       this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: true, DATA: {} }, 'SetMatter').subscribe(res => {
         if (res.CODE == 200 && res.STATUS == "success") {
+          this.matterdetailForm.controls['SHORTNAME'].setValue(res.DATA.DEFAULTVALUES['SHORTNAME']);
         } else if (res.MESSAGE === 'Not logged in') {
           this.dialogRef.close(false);
+        } else {
+          this.matterdetailForm.controls['SHORTNAME'].setValue(res.DATA.DEFAULTVALUES['SHORTNAME']);
         }
       }, error => { this.toastr.error(error); });
       setTimeout(() => { this.isLoadingResults = false; }, 2000);
@@ -61,8 +64,6 @@ export class MatterPopupComponent implements OnInit {
     this.isEditMatter = this._data.matterGuid;
     this.classtype;
   }
-
-
   matterdetailForm: FormGroup;
   ngOnInit() {
     this.isLoadingResults = true;
@@ -225,15 +226,18 @@ export class MatterPopupComponent implements OnInit {
           } else if (matterData.MATTERCLASS == 10) {            // Details ->family
             this.matterdetailForm.controls['MARRIAGEPLACE'].setValue(matterData.FAMILYLAWGROUP.MARRIAGEPLACE);
             this.matterdetailForm.controls['MARRIAGECOUNTRY'].setValue(matterData.FAMILYLAWGROUP.MARRIAGECOUNTRY);
-
-            let DATEFILEDFORDIVORCE = matterData.FAMILYLAWGROUP.DATEFILEDFORDIVORCE.split("/");
-            this.matterdetailForm.controls['DATEFILEDFORDIVORCE'].setValue(new Date(DATEFILEDFORDIVORCE[1] + '/' + DATEFILEDFORDIVORCE[0] + '/' + DATEFILEDFORDIVORCE[2]));
             // this.matterdetailForm.controls['DATEFILEDFORDIVORCE'].setValue(matterData.FAMILYLAWGROUP.DATEFILEDFORDIVORCE);
             this.matterdetailForm.controls['DIVORCEPLACE'].setValue(matterData.FAMILYLAWGROUP.DIVORCEPLACE);
             this.matterdetailForm.controls['DIVORCECOUNTRY'].setValue(matterData.FAMILYLAWGROUP.DIVORCECOUNTRY);
             this.matterdetailForm.controls['NUMDEPENDANTS'].setValue(matterData.FAMILYLAWGROUP.NUMDEPENDANTS);
             this.matterdetailForm.controls['FAMILYCOURTCLIENTID'].setValue(matterData.FAMILYLAWGROUP.FAMILYCOURTCLIENTID);
             this.matterdetailForm.controls['MatterNo'].setValue(matterData.COMPULSORYACQUISITIONGROUP.MATTERNO);
+            // 
+            if (matterData.FAMILYLAWGROUP.DATEFILEDFORDIVORCE) {
+              let DATEFILEDFORDIVORCE = matterData.FAMILYLAWGROUP.DATEFILEDFORDIVORCE.split("/");
+              this.matterdetailForm.controls['DATEFILEDFORDIVORCETEXT'].setValue(new Date(DATEFILEDFORDIVORCE[1] + '/' + DATEFILEDFORDIVORCE[0] + '/' + DATEFILEDFORDIVORCE[2]));
+              this.matterdetailForm.controls['DATEFILEDFORDIVORCE'].setValue(matterData.FAMILYLAWGROUP.DATEFILEDFORDIVORCE);
+            }
             if (matterData.FAMILYLAWGROUP.COHABITATIONDATE) {
               let COHABITATIONDATE1 = matterData.FAMILYLAWGROUP.COHABITATIONDATE.split("/");
               this.matterdetailForm.controls['COHABITATIONDATETEXT'].setValue(new Date(COHABITATIONDATE1[1] + '/' + COHABITATIONDATE1[0] + '/' + COHABITATIONDATE1[2]));
@@ -351,8 +355,7 @@ export class MatterPopupComponent implements OnInit {
             if (matterData.VESSELGROUP.INCIDENTDATE) {
               let INCIDENTDATE1 = matterData.VESSELGROUP.INCIDENTDATE.split("/");
               this.matterdetailForm.controls['INCIDENTDATETEXTM'].setValue(new Date(INCIDENTDATE1[1] + '/' + INCIDENTDATE1[0] + '/' + INCIDENTDATE1[2]));
-
-              this.matterdetailForm.controls['INCIDENTDATE'].setValue(new Date(INCIDENTDATE1[1] + '/' + INCIDENTDATE1[0] + '/' + INCIDENTDATE1[2]));
+              this.matterdetailForm.controls['INCIDENTDATE'].setValue(matterData.VESSELGROUP.INCIDENTDATE);
             }
             if (matterData.CONVEYANCINGGROUP.EXCHANGEDATE) {
               let EXCHANGEDATE1 = matterData.CONVEYANCINGGROUP.EXCHANGEDATE.split("/");
@@ -374,10 +377,10 @@ export class MatterPopupComponent implements OnInit {
               this.matterdetailForm.controls['DISCHARGEDATETEXTM'].setValue(new Date(dcd1[1] + '/' + dcd1[0] + '/' + dcd1[2]));
               this.matterdetailForm.controls['DISCHARGEDATE'].setValue(matterData.MORTGAGEGROUP.DISCHARGEDATE);
             }
-            if (matterData.LEASINGGROUP.COMMENCEMENTDATE) {
-              let cd1 = matterData.LEASINGGROUP.COMMENCEMENTDATE.split("/");
+            if (matterData.MORTGAGEGROUP.COMMENCEMENTDATE) {
+              let cd1 = matterData.MORTGAGEGROUP.COMMENCEMENTDATE.split("/");
               this.matterdetailForm.controls['COMMENCEMENTDATETEXTM'].setValue(new Date(cd1[1] + '/' + cd1[0] + '/' + cd1[2]));
-              this.matterdetailForm.controls['COMMENCEMENTDATE'].setValue(matterData.LEASINGGROUP.COMMENCEMENTDATE);
+              this.matterdetailForm.controls['COMMENCEMENTDATE'].setValue(matterData.MORTGAGEGROUP.COMMENCEMENTDATE);
             }
             if (matterData.STRATAGROUP.EXPIRATIONDATE) {
               let ed2 = matterData.STRATAGROUP.EXPIRATIONDATE.split("/");
@@ -405,9 +408,11 @@ export class MatterPopupComponent implements OnInit {
               this.matterdetailForm.controls['EXCHANGEDATETEXTPP'].setValue(new Date(ed1[1] + '/' + ed1[0] + '/' + ed1[2]));
               this.matterdetailForm.controls['EXCHANGEDATE'].setValue(matterData.CONVEYANCINGGROUP.EXCHANGEDATE);
             }
-            let STAMPDUTYDATE = matterData.CONVEYANCINGGROUP.STAMPDUTYDATE.split("/");
-            this.matterdetailForm.controls['STAMPDUTYDATE'].setValue(new Date(STAMPDUTYDATE[1] + '/' + STAMPDUTYDATE[0] + '/' + STAMPDUTYDATE[2]));
-            // this.matterdetailForm.controls['STAMPDUTYDATE'].setValue(matterData.CONVEYANCINGGROUP.STAMPDUTYDATE);
+            if (matterData.CONVEYANCINGGROUP.STAMPDUTYDATE) {
+              let ed5 = matterData.CONVEYANCINGGROUP.STAMPDUTYDATE.split("/");
+              this.matterdetailForm.controls['STAMPDUTYDATETEXT'].setValue(new Date(ed5[1] + '/' + ed5[0] + '/' + ed5[2]));
+              this.matterdetailForm.controls['STAMPDUTYDATE'].setValue(matterData.CONVEYANCINGGROUP.STAMPDUTYDATE);
+            }
             this.matterdetailForm.controls['PURCHASEPRICE'].setValue(matterData.CONVEYANCINGGROUP.PURCHASEPRICE);
             this.matterdetailForm.controls['DEPOSITAMOUNT'].setValue(matterData.CONVEYANCINGGROUP.DEPOSITAMOUNT);
             this.matterdetailForm.controls['DEPOSITBONDAMOUNT'].setValue(matterData.CONVEYANCINGGROUP.DEPOSITBONDAMOUNT);
@@ -421,7 +426,7 @@ export class MatterPopupComponent implements OnInit {
             this.matterdetailForm.controls['CLIENTSTATUS'].setValue(matterData.LEGALDETAILS.CLIENTSTATUS);
             // Address3 = Address3;
           } else if (matterData.MATTERCLASS == 3) {   //Details -> property-sale 
-            this.matterdetailForm.controls['PURCHASEPRICE'].setValue(matterData.CONVEYANCINGGROUP.CLIENTSTATUS);
+            this.matterdetailForm.controls['PURCHASEPRICE'].setValue(matterData.CONVEYANCINGGROUP.PURCHASEPRICE);
             if (matterData.CONVEYANCINGGROUP.EXCHANGEDATE) {
               let tempdps1 = matterData.CONVEYANCINGGROUP.EXCHANGEDATE.split("/");
               this.matterdetailForm.controls['EXCHANGEDATETEXTPS'].setValue(new Date(tempdps1[1] + '/' + tempdps1[0] + '/' + tempdps1[2]));
@@ -600,6 +605,7 @@ export class MatterPopupComponent implements OnInit {
       SEPARATIONDATE: [''],
       SEPARATIONDATETEXT: [''],
       DATEFILEDFORDIVORCE: [''],
+      DATEFILEDFORDIVORCETEXT: [''],
       DIVORCEDATE: [''],
       DIVORCEDATETEXT: [''],
       DIVORCEPLACE: [''],
@@ -682,6 +688,7 @@ export class MatterPopupComponent implements OnInit {
       PURCHASEPRICE: [''],
       DEPOSITAMOUNT: [''],
       STAMPDUTYDATE: [''],
+      STAMPDUTYDATETEXT: [''],
       DEPOSITBONDAMOUNT: [''],
       STAMPDUTYAMOUNT: [''],
       DATEPAID: [''],
@@ -918,7 +925,7 @@ export class MatterPopupComponent implements OnInit {
     }
     else if (this.classtype == 4) {
       // Details ->property-purchase
-      details.Address3 = this.f.Address3.value;
+      // details.Address3 = this.f.Address3.value;
       details.PURCHASEPRICE = this.f.PURCHASEPRICE.value;
       details.DEPOSITAMOUNT = this.f.DEPOSITAMOUNT.value;
 
@@ -935,17 +942,17 @@ export class MatterPopupComponent implements OnInit {
       details.SPECIALCONDITIONS = this.f.SPECIALCONDITIONS.value;
       details.BUILDINGREPORTCOMPLETED = this.f.BUILDINGREPORTCOMPLETED.value == true ? 1 : 0;
       details.PESTREPORTCOMPLETED = this.f.PESTREPORTCOMPLETED.value == true ? 1 : 0;
-      details.CLIENTSTATUS = this.f.CLIENTSTATUS.value;
+      // details.CLIENTSTATUS = this.f.CLIENTSTATUS.value;
     } else if (this.classtype == 3) {
       //Details -> property-sale 
-      details.Address4 = this.f.Address4.value;
+      // details.Address4 = this.f.Address4.value;
       details.PURCHASEPRICE = this.f.PURCHASEPRICE.value;
       details.EXCHANGEDATE = this.f.EXCHANGEDATE.value;
       details.SETTLEMENTDATE = this.f.SETTLEMENTDATE.value;
       details.ADJUSTMENTDATE = this.f.ADJUSTMENTDATE.value;
       details.DATEPAID = this.f.DATEPAID.value;
       details.BANKREFERENCE = this.f.BANKREFERENCE.value;
-      details.CLIENTSTATUS = this.f.CLIENTSTATUS.value;
+      // details.CLIENTSTATUS = this.f.CLIENTSTATUS.value;
     } else if (this.classtype == 5) {
       //Details -> strata
       details.STRATAPLANNUMBER = this.f.STRATAPLANNUMBER.value;
@@ -975,12 +982,6 @@ export class MatterPopupComponent implements OnInit {
     let matterPostData: any = { FormAction: this.FormAction, VALIDATEONLY: true, Data: details };
 
     this._mainAPiServiceService.getSetData(matterPostData, 'SetMatter').subscribe(response => {
-      if (response.DATA.SHORTNAME && response.DATA.SHORTNAME != '') {
-        this.matterdetailForm.controls['SHORTNAME'].setValue(response.DATA.SHORTNAME);
-        details.SHORTNAME = response.DATA.SHORTNAME;
-      } else {
-        details.SHORTNAME = this.f.SHORTNAME.value;
-      }
       matterPostData = { FormAction: this.FormAction, VALIDATEONLY: true, Data: details };
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, matterPostData);

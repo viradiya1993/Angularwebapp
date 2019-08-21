@@ -942,7 +942,7 @@ export class MatterPopupComponent implements OnInit {
       details.SPECIALCONDITIONS = this.f.SPECIALCONDITIONS.value;
       details.BUILDINGREPORTCOMPLETED = this.f.BUILDINGREPORTCOMPLETED.value == true ? 1 : 0;
       details.PESTREPORTCOMPLETED = this.f.PESTREPORTCOMPLETED.value == true ? 1 : 0;
-      // details.CLIENTSTATUS = this.f.CLIENTSTATUS.value;
+      details.CLIENTSTATUS = this.f.CLIENTSTATUS.value;
     } else if (this.classtype == 3) {
       //Details -> property-sale 
       // details.Address4 = this.f.Address4.value;
@@ -952,7 +952,7 @@ export class MatterPopupComponent implements OnInit {
       details.ADJUSTMENTDATE = this.f.ADJUSTMENTDATE.value;
       details.DATEPAID = this.f.DATEPAID.value;
       details.BANKREFERENCE = this.f.BANKREFERENCE.value;
-      // details.CLIENTSTATUS = this.f.CLIENTSTATUS.value;
+      details.CLIENTSTATUS = this.f.CLIENTSTATUS.value;
     } else if (this.classtype == 5) {
       //Details -> strata
       details.STRATAPLANNUMBER = this.f.STRATAPLANNUMBER.value;

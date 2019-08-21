@@ -20,7 +20,7 @@ export class PropertyComponent implements OnInit {
   @Input() errorWarningData: any;
   ngOnInit() {
   
-    this._mainAPiServiceService.getSetData({ 'LookupType': 'Client Status' }, 'GetLookups').subscribe(responses => {
+    this._mainAPiServiceService.getSetData({ 'LookupType': 'client status' }, 'GetLookups').subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.statusData = responses.DATA.LOOKUPS;
       }

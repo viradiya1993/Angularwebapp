@@ -18,7 +18,7 @@ export class PropertyPurchaseComponent implements OnInit {
   @Input() errorWarningData: any;
   ngOnInit() {
    
-    this._mainAPiServiceService.getSetData({ 'LookupType': 'Client Status' }, 'GetLookups').subscribe(responses => {
+    this._mainAPiServiceService.getSetData({ 'LookupType': 'client status' }, 'GetLookups').subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.ClientStatusData = responses.DATA.LOOKUPS;
       }

@@ -47,7 +47,7 @@ export class InvoiceComponent implements OnInit {
     private fb: FormBuilder,
     public datepipe: DatePipe,
   ) {
-    this.matterInvoiceFilterForm = this.fb.group({ dateRang: [''], OUTSTANDING: [''], ENDDATE: [''], STARTDATE: [''] });
+    this.matterInvoiceFilterForm = this.fb.group({ dateRang: [''], OUTSTANDING: [''], ENDDATE: [''], STARTDATE: [''], Outstanding: [0], Received: [0], TOTAL: [0] });
     let filterData = JSON.parse(localStorage.getItem('matter_invoice_filter'));
     if (filterData) {
       this.lastFilter = JSON.parse(localStorage.getItem('matter_invoice_filter'));
@@ -116,10 +116,13 @@ export class InvoiceComponent implements OnInit {
     this.loadData(JSON.parse(localStorage.getItem('matter_invoice_filter')));
   }
   loadData(filterData) {
-    this.MatterInvoicesdata=[];
+    this.MatterInvoicesdata = [];
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(filterData, 'GetInvoice').subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
+        this.matterInvoiceFilterForm.controls['TOTAL'].setValue(response.DATA.TOTALINVOICES);
+        this.matterInvoiceFilterForm.controls['Received'].setValue(response.DATA.TOTALRECEIVED);
+        this.matterInvoiceFilterForm.controls['Outstanding'].setValue(response.DATA.TOTALOUSTANDING);
         if (response.DATA.INVOICES[0]) {
           localStorage.setItem('edit_invoice_id', response.DATA.INVOICES[0].INVOICEGUID);
           // localStorage.setItem('set_active_Invoices', JSON.stringify(response.DATA.INVOICES[0]));
@@ -131,7 +134,7 @@ export class InvoiceComponent implements OnInit {
         this.MatterInvoicesdata.sort = this.sort;
         this.isLoadingResults = false;
       }
-    
+
     }, error => {
       this.toastr.error(error);
     });

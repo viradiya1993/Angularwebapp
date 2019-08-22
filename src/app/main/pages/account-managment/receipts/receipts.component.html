@@ -1,48 +1,52 @@
 <div class="one" fxLayout="column">
-  <mat-accordion *ngFor="let val of ReceipttData"  class="padding_class" >
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Personal data
-        </mat-panel-title>
-        <mat-panel-description>
-          Type your name and age
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <div>
-        <p class="pr-4" fxFlex="80">Amount Received</p>
-          
-          <p fxFlex="20" class="pr-4">{{val.AMOUNTRECEIVED}}</p>
-          <hr/>
-      </div>
-      <div>
-        <p class="pr-4" fxFlex="80">Date Received</p>
-        <p fxFlex="20"   class="pr-4">{{val.DATERECEIVED}}</p>
-        <hr/>
-      </div>
-      <div>
-        <p class="pr-4" fxFlex="80">ExGST Amount </p>
-        <p fxFlex="20"   class="pr-4">{{val.EXGSTAMOUNT}}</p>
-      </div>
-      <div>
-        <p class="pr-4" fxFlex="80">GST
-        </p>
-        <p fxFlex="20"   class="pr-4">{{val.GST}}</p>
-      </div>
-      <div>
-        <p class="pr-4" fxFlex="80">Payment Type</p>
-        <p fxFlex="20"   class="pr-4">{{val.PAYMENTTYPE}}</p>
-      </div>
-      <div>
-        <p class="pr-4" fxFlex="80">Receipt Code</p>
-        <p fxFlex="20"   class="pr-4">{{val.RECEIPTCODE}}</p>
-      </div>
-      <div>
-      </div>
-    </mat-expansion-panel>
-
-  </mat-accordion>
-
-  
-
+    <div class="example-loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" class="example daterang-pik" fxFlex="40">
+            <mat-label>Date Range</mat-label>
+            <input matInput [satDatepicker]="picker2" readonly (dateChange)="choosedDate('change', $event)">
+            <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
+            <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
+        </mat-form-field>
+    </div>
+    <mat-accordion *ngFor="let val of ReceipttData" class="padding_class">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Personal data
+                </mat-panel-title>
+                <mat-panel-description> </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div>
+                <p class="pr-4" fxFlex="80">Amount Received</p>
+                <p fxFlex="20" class="pr-4">{{val.AMOUNTRECEIVED}}</p>
+                <hr/>
+            </div>
+            <div>
+                <p class="pr-4" fxFlex="80">Date Received</p>
+                <p fxFlex="20" class="pr-4">{{val.DATERECEIVED}}</p>
+                <hr/>
+            </div>
+            <div>
+                <p class="pr-4" fxFlex="80">ExGST Amount </p>
+                <p fxFlex="20" class="pr-4">{{val.EXGSTAMOUNT}}</p>
+            </div>
+            <div>
+                <p class="pr-4" fxFlex="80">GST
+                </p>
+                <p fxFlex="20" class="pr-4">{{val.GST}}</p>
+            </div>
+            <div>
+                <p class="pr-4" fxFlex="80">Payment Type</p>
+                <p fxFlex="20" class="pr-4">{{val.PAYMENTTYPE}}</p>
+            </div>
+            <div>
+                <p class="pr-4" fxFlex="80">Receipt Code</p>
+                <p fxFlex="20" class="pr-4">{{val.RECEIPTCODE}}</p>
+            </div>
+            <div>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
 </div>

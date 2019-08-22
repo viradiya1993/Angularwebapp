@@ -7,16 +7,20 @@ import { MainAPiServiceService } from 'app/_services';
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit {
-  ProductData:any=[];
-  constructor(private _mainAPiServiceService:MainAPiServiceService) { }
+  ProductData: any = [];
+  isLoadingResults: boolean = false;
+  constructor(private _mainAPiServiceService: MainAPiServiceService) { }
 
   ngOnInit() {
-
-    this._mainAPiServiceService.getSetData({}, 'HOGetPurchases').subscribe(response=>{
-      console.log(response);
-      this.ProductData=response.DATA.PURCHASES;
-
-     })
+    this.isLoadingResults = true;
+    this._mainAPiServiceService.getSetData({}, 'HOGetPurchases').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        this.ProductData = response.DATA.PURCHASES;
+        this.isLoadingResults = false;
+      } else {
+        this.isLoadingResults = false;
+      }
+    })
   }
 
 }

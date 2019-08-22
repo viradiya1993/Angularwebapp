@@ -1,20 +1,16 @@
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+</div>
 <div id="price-tables" class="page-layout simple fullwidth">
     <div class="price-tables" fxLayout="row wrap" fxLayoutAlign="start center">
-        
-        
         <div *ngFor="let val of ProductData" class="price-table style-2 mat-elevation-z12" fxLayout="column">
-
             <div class="badge green">{{val.ACTIVE}}</div>
-
             <div class="package-type mat-accent-fg">{{val.PRODUCT}}</div>
-
             <div class="price" fxLayout="row" fxLayoutAlign="center start">
                 <div class="currency">$</div>
                 <div class="value">{{val.FULLRATE}}</div>
             </div>
-
             <div class="period">PER {{val.PERIOD}}</div>
-
             <div class="terms" fxLayout="column" fxLayoutAlign="start center">
                 <div class="term">
                     <span class="text-bold">{{val.UNITS}}</span> Units
@@ -23,18 +19,13 @@
                     <span class="text-bold">{{val.FULLRATE}}</span> Full Rate
                 </div>
                 <div class="term">
-                    <span class="text-bold">{{val.INTRORATE}}</span> Intra Rate
+                    <span class="text-bold">{{val.INTRORATE}}</span> Intro Rate
                 </div>
-
                 <div class="term">
-                    <span class="text-bold">{{val.STARTDATE}}</span> Start Date 
+                    <span class="text-bold">{{val.STARTDATE}}</span> Start Date
                 </div>
             </div>
-
             <button mat-raised-button class="cta-button" color="accent">GET STARTED</button>
-
         </div>
-        
-
     </div>
 </div>

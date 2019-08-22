@@ -1,7 +1,7 @@
 <div class="example-loading-shade" *ngIf="isLoadingResults">
     <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
 </div>
-<div [formGroup]="accountMngForm" class="one" fxLayout="column">
+<div class="one" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Legal Entity</mat-label>
@@ -15,61 +15,61 @@
 
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Registration name</mat-label>
-            <input formControlName="REGISTRATIONNAME" [(ngModel)]="BasicDetail.REGISTRATIONNAME" matInput>
+            <input name="REGISTRATIONNAME" [(ngModel)]="BasicDetail.REGISTRATIONNAME" matInput>
         </mat-form-field>
     </div>
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>First Name</mat-label>
-            <input formControlName="FIRSTNAME" [(ngModel)]="BasicDetail.FIRSTNAME" matInput>
+            <input name="FIRSTNAME" [(ngModel)]="BasicDetail.FIRSTNAME" matInput>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
             <mat-label>Middle name</mat-label>
-            <input formControlName="MIDDLENAME" [(ngModel)]="BasicDetail.MIDDLENAME" matInput>
+            <input name="MIDDLENAME" [(ngModel)]="BasicDetail.MIDDLENAME" matInput>
         </mat-form-field>
 
 
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Last name</mat-label>
-            <input formControlName="LASTNAME" [(ngModel)]="BasicDetail.LASTNAME" matInput>
+            <input name="LASTNAME" [(ngModel)]="BasicDetail.LASTNAME" matInput>
         </mat-form-field>
     </div>
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Address</mat-label>
-            <input formControlName="ADDRESS" [(ngModel)]="BasicDetail.ADDRESS" matInput>
+            <input name="ADDRESS" [(ngModel)]="BasicDetail.ADDRESS" matInput>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
             <mat-label>Suburb</mat-label>
-            <input formControlName="SUBURB" [(ngModel)]="BasicDetail.SUBURB" matInput>
+            <input name="SUBURB" [(ngModel)]="BasicDetail.SUBURB" matInput>
         </mat-form-field>
 
 
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>State</mat-label>
-            <input formControlName="ADDRESSSTATE" [(ngModel)]="BasicDetail.ADDRESSSTATE" matInput>
+            <input name="ADDRESSSTATE" [(ngModel)]="BasicDetail.ADDRESSSTATE" matInput>
         </mat-form-field>
     </div>
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Postcode</mat-label>
-            <input formControlName="POSTCODE" [(ngModel)]="BasicDetail.POSTCODE" matInput>
+            <input name="POSTCODE" [(ngModel)]="BasicDetail.POSTCODE" matInput>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
             <mat-label>Phone</mat-label>
-            <input formControlName="PHONE" [(ngModel)]="BasicDetail.PHONE" matInput>
+            <input name="PHONE" [(ngModel)]="BasicDetail.PHONE" matInput>
         </mat-form-field>
 
 
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
             <mat-label>Mobile</mat-label>
-            <input formControlName="MOBILE" [(ngModel)]="BasicDetail.MOBILE" matInput>
+            <input name="MOBILE" [(ngModel)]="BasicDetail.MOBILE" matInput>
         </mat-form-field>
     </div>
 
@@ -79,36 +79,43 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>General Email</mat-label>
-            <input formControlName="EMAIL" [(ngModel)]="BasicDetail.EMAIL" matInput>
+            <input name="EMAIL" [(ngModel)]="BasicDetail.EMAIL" matInput>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Accounts Email</mat-label>
-            <input formControlName="ACCOUNTSEMAIL" [(ngModel)]="BasicDetail.ACCOUNTSEMAIL" matInput>
+            <input name="ACCOUNTSEMAIL" [(ngModel)]="BasicDetail.ACCOUNTSEMAIL" matInput>
         </mat-form-field>
     </div>
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Technical Email</mat-label>
-            <input formControlName="TECHNICALEMAIL" [(ngModel)]="BasicDetail.TECHNICALEMAIL" matInput>
+            <input name="TECHNICALEMAIL" [(ngModel)]="BasicDetail.TECHNICALEMAIL" matInput>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Manager Email</mat-label>
-            <input formControlName="MANAGEREMAIL" [(ngModel)]="BasicDetail.MANAGEREMAIL" matInput>
+            <input name="MANAGEREMAIL" [(ngModel)]="BasicDetail.MANAGEREMAIL" matInput>
         </mat-form-field>
     </div>
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Registered Until</mat-label>
-            <input formControlName="REGISTEREDUNTIL" [(ngModel)]="BasicDetail.REGISTEREDUNTIL" matInput>
+            <input name="REGISTEREDUNTIL" [(ngModel)]="BasicDetail.REGISTEREDUNTIL" matInput>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Intro Price Until</mat-label>
-            <input formControlName="INTROPRICEUNTIL" [(ngModel)]="BasicDetail.INTROPRICEUNTIL" matInput>
+            <input name="INTROPRICEUNTIL" [(ngModel)]="BasicDetail.INTROPRICEUNTIL" matInput>
         </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <div fxFlex="85"></div>
+        <div fxFlex="15">
+            <button class="mainbtn_size" mat-raised-button color="accent" style="margin-right: 10px;" (click)="saveBasicDetail()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
+            <button class="btn_2" mat-raised-button color="primary" cdkFocusInitial>Don't Save</button>
+        </div>
     </div>
 </div>

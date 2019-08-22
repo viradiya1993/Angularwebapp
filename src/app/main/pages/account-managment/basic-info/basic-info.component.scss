@@ -8,12 +8,10 @@ app-basic-info {
     overflow-y: auto;
     overflow: hidden;
     -webkit-overflow-scrolling: touch;
-
     .no-messages-text {
         font-size: 24px;
         font-weight: 300;
     }
-
     .app-basic-info {
         position: relative;
         margin-top: 200px;
@@ -22,12 +20,20 @@ app-basic-info {
         flex: 1;
     }
 }
+
 .one {
     margin-left: 20px;
-    margin-right: 15px; 
+    margin-right: 15px;
     margin-top: 20px;
     margin-bottom: 15px;
 }
 
-
-
+.mainbtn_size mat-spinner {
+    zoom: 0.2;
+    position: absolute;
+    right: 0;
+    left: 0;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+}

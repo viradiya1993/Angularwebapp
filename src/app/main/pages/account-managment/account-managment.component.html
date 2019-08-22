@@ -49,16 +49,15 @@
         </fuse-sidebar>
         <div class="center p-24 pb-56 pr-sm-92" fusePerfectScrollbar>
             <div class="content">
-                <form [formGroup]="accountMngForm" name="form">
-                    <app-basic-info [accountMngForm]="accountMngForm" *ngIf="clickbtn ==='Basic Information'"></app-basic-info>
+                <form name="accountMngForm">
+                    <app-basic-info *ngIf="clickbtn ==='Basic Information'"></app-basic-info>
                     <app-products *ngIf="clickbtn ==='Products'"></app-products>
                     <app-receipts *ngIf="clickbtn ==='Receipts'"></app-receipts>
                     <app-payment *ngIf="clickbtn ==='Payment'"></app-payment>
                 </form>
             </div>
             <mat-dialog-actions align="end" class="popup_ftr">
-                <button class="mainbtn_size" mat-raised-button color="accent">Save</button>
-                <button class="btn_2" mat-raised-button color="primary" cdkFocusInitial>Don't Save</button>
+
             </mat-dialog-actions>
         </div>
     </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
-import {Location} from '@angular/common';
+import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
@@ -12,66 +12,43 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class AccountManagmentComponent implements OnInit {
   clickbtn: string;
-  accountMngForm:FormGroup
 
-  constructor(private location: Location, private router:Router,private _formBuilder: FormBuilder) 
-  {
+  constructor(private location: Location, private router: Router, private _formBuilder: FormBuilder) {
     this.nameFunction();
-   }
+  }
 
   ngOnInit() {
-    this.accountMngForm=this._formBuilder.group({
-      REGISTRATIONNAME:[''],
-      FIRSTNAME:[''],
-      MIDDLENAME:[''],
-      LASTNAME:[''],
-      ADDRESS:[''],
-      
-      SUBURB:[''],
-      ADDRESSSTATE:[''],
-      POSTCODE:[''],
-      PHONE:[''],
-      MOBILE:[''],
-      EMAIL:[''],
-      ACCOUNTSEMAIL:[''],
-      MANAGEREMAIL:[''],
-      TECHNICALEMAIL:[''],
-      REGISTEREDUNTIL:[''],
-      INTROPRICEUNTIL:[''],
-
-      
-    })
   }
-  basicInfoClick(){
+  basicInfoClick() {
     this.location.replaceState("/account-management/basicinfo");
-    this.clickbtn="Basic Information";
+    this.clickbtn = "Basic Information";
   }
-  ProductClick(){
+  ProductClick() {
     this.location.replaceState("/account-management/products");
-    this.clickbtn="Products";
+    this.clickbtn = "Products";
   }
-  ReceiptsClick(){
+  ReceiptsClick() {
     this.location.replaceState("/account-management/receipts");
-    this.clickbtn="Receipts";
+    this.clickbtn = "Receipts";
   }
-  PaymentClick(){
+  PaymentClick() {
     this.location.replaceState("/account-management/payment");
-    this.clickbtn="Payment";
+    this.clickbtn = "Payment";
   }
 
-  nameFunction(){
-    if( this.router.url=="/account-management/basicinfo"){
-      this.clickbtn="Basic Information";
-    
-    }else if(this.router.url=="/account-management/products"){
-      this.clickbtn="Products";
+  nameFunction() {
+    if (this.router.url == "/account-management/basicinfo") {
+      this.clickbtn = "Basic Information";
+
+    } else if (this.router.url == "/account-management/products") {
+      this.clickbtn = "Products";
     }
-    else if(this.router.url=="/account-management/receipts"){
-      this.clickbtn="Receipts";
+    else if (this.router.url == "/account-management/receipts") {
+      this.clickbtn = "Receipts";
     }
-    else if(this.router.url=="/account-management/payment"){
-      this.clickbtn="Payment";
+    else if (this.router.url == "/account-management/payment") {
+      this.clickbtn = "Payment";
     }
-   
-  } 
+
+  }
 }

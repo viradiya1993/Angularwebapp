@@ -18,6 +18,7 @@ import { SearchComponent } from './search/search.component';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { ChronItemDailogComponent } from './chronology/chron-item-dailog/chron-item-dailog.component'
 import { SafeCustodyDialogeComponent } from './safecustody/safe-custody-dialog/safe-custody-dialog.component';
+import { legalDetailTaskComponent } from './legal-task/legal-task.component';
 
 const routes = [
   { path: '', redirectTo: '/legal-details/chronology', pathMatch: 'full', canActivate: [AuthGuard] },
@@ -26,13 +27,15 @@ const routes = [
       { path: 'chronology', component: ChronologyComponent },
       { path: 'authority', component: AuthoritiesComponent },
       { path: 'file-notes', component: FileNotesComponent },
+      { path: 'legal-detail-task', component: legalDetailTaskComponent },
       { path: 'safe-custody', component: SafecustodyComponent },
-      { path: 'search', component: SearchComponent }
+      { path: 'search', component: SearchComponent },
+     
     ], canActivate: [AuthGuard]
   }
 ];
 @NgModule({
-  declarations: [LegalDetailsComponent, ChronologyComponent, AuthoritiesComponent, FileNotesComponent, SafecustodyComponent,
+  declarations: [LegalDetailsComponent, legalDetailTaskComponent,ChronologyComponent, AuthoritiesComponent, FileNotesComponent, SafecustodyComponent,
     SearchComponent, ChronItemDailogComponent,SafeCustodyDialogeComponent],
     entryComponents: [ChronItemDailogComponent,SafeCustodyDialogeComponent],
   imports: [

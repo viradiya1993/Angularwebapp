@@ -18,7 +18,6 @@ import { TaskDialogeComponent } from './task-dialoge/task-dialoge.component';
 const routes = [
  
     { path: '', component: TaskComponent, canActivate: [AuthGuard] },
-
 ];
 @NgModule({
   declarations: [TaskComponent,TaskDialogeComponent],

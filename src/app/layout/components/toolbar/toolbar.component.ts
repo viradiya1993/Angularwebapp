@@ -100,6 +100,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     EmailtemplateData: any = [];
     SendMoney_dataGUID: any;
     DocRegData: any = [];
+    AccountGUID: any;
+    TaskData: any;
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
@@ -914,12 +916,26 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //DeleteAccount
     DeleteAccount(): void {
+        this.behaviorService.ChartAccountData$.subscribe(result => {
+            if(result){
+             this.AccountGUID=result.ACCOUNTGUID;
+            }          
+          });
+         
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-        this.confirmDialogRef.afterClosed().subscribe(result => { });
+        this.confirmDialogRef.afterClosed().subscribe(result => { 
+                let postData = { FormAction: "delete", DATA: { ACCOUNTGUID: this.AccountGUID } };
+                this._mainAPiServiceService.getSetData(postData, 'SetAccount').subscribe(res => {
+                    if (res.STATUS == "success" && res.CODE == 200) {
+                        $('#refreshChartACCTab').click();
+                        this.toastr.success('Delete successfully');
+                    }
+                });
+        });
     }
     //Authority dialoge 
     AuthorityDialog(val) {
@@ -1418,7 +1434,38 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             panelClass: 'Task-dialog',
             data: TaskPopdata
         });
-        dialogRef.afterClosed().subscribe(result => { });
+        dialogRef.afterClosed().subscribe(result => { 
+            if(result){
+                $("#refreshTask").click();
+            }
+        });
+    }
+    deleteTask(){
+        this.behaviorService.TaskData$.subscribe(result => {
+            if(result){
+              this.TaskData=result;
+            }          
+          });
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true, width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // let receiptData = JSON.parse(localStorage.getItem('receiptData'));
+                let postData = { FormAction: "delete", DATA: { TASKGUID: this.TaskData.TASKGUID } };
+                this._mainAPiServiceService.getSetData(postData, 'SetTask').subscribe(res => {
+                    if (res.STATUS == "success" && res.CODE == 200) {
+                        $("#refreshTask").click();
+                        this.toastr.success('Delete successfully');
+                    }
+                });
+            }
+            this.confirmDialogRef = null;
+        });
+
+
+
     }
     //////// End  Task///////////////////
     clickToolbarbtn() {
@@ -1436,18 +1483,20 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                     this.SafeCustodyPoup(actionType);
                 }
             });
-        } else {
+        } else if(actionType == 'new matter') {
             const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     this.SafeCustodyPoup(actionType);
                 }
             });
+        }else{
+            this.SafeCustodyPoup(actionType);
         }
     }
     SafeCustodyPoup(actionType) {
         let safeCustodyData = {}
-        if (actionType == 'new client' || actionType == 'new matter') {
+        if (actionType == 'new client' || actionType == 'new matter' || actionType == 'new') {
             safeCustodyData = { action: actionType }
         } else if (actionType == 'edit' || actionType == 'copy') {
             safeCustodyData = { action: actionType }

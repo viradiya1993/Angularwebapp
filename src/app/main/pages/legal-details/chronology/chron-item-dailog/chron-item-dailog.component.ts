@@ -16,6 +16,23 @@ export class ChronItemDailogComponent implements OnInit {
   action: string;
   dialogTitle: string;
   isspiner: boolean = false;
+
+  public ChronologyADD={
+      'Format':'',
+      "date":'',
+      "time":'',
+      "dateto":'',
+      "timeto":'',
+      "text":'',
+      "topic":'',
+      "COMMENT":'',
+      "Privileged":'',
+      "Reference":'',
+      "brif":'',
+      "Witnesses":'',
+      "eventAgereed":'',
+      "document":''
+  }
   constructor(
     public MatDialog: MatDialog,
     public dialogRef: MatDialogRef<ChronItemDailogComponent>,
@@ -56,6 +73,9 @@ export class ChronItemDailogComponent implements OnInit {
   }
   //ChroneItemSave
   ChroneItemSave(){
+
+    console.log(this.ChronologyADD);
+
 
   }
   //FormatChange

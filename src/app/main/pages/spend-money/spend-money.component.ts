@@ -160,6 +160,7 @@ export class SpendMoneyComponent implements OnInit {
         this.listingTotal= response.DATA;
 
         this.Spendmoneydata = new MatTableDataSource(response.DATA.EXPENDITURES);
+        console.log(this.Spendmoneydata);
         this.Spendmoneydata.paginator = this.paginator;
         this.Spendmoneydata.sort = this.sort;
         if (response.DATA.EXPENDITURES[0]) {

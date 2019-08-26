@@ -1,5 +1,8 @@
+
 @import "src/@fuse/scss/fuse";
-#pack {
+
+#chronetab {
+    // margin-top: 95px;
     .header {
         .search-wrapper {
             width: 100%;
@@ -39,39 +42,20 @@
     }
 }
 
-app-packs {
-    width: 100%;
-}
-
 .search {
     width: 45% !important;
     padding: 20px !important;
 }
 
-.sticky_search_div {
+app-legal-task {
+    width: 100% !important;
+}
+app-legal-details {
+    overflow-y: auto;
+}
+
+.mat-table {
     width: 100%;
-    background-color: #f5f5f5;
-    z-index: 9999;
-    left: 0;
-}
-
-.p-24.list_tbl_main {
-    //margin-top: 110px;
-    padding-top: 0 !important;
-}
-
-#contact .content {
-    position: relative;
-}
-
-.mat-table.mat-table.ng-trigger.ng-trigger-animateStagger {
-    width: 100%;
-    overflow: auto;
-    display: table;
-}
-
-.more_tbl_clmn mat-footer-row {
-    display: table;
 }
 
 .more_tbl_clmn .mat-header-cell,
@@ -83,47 +67,21 @@ app-packs {
     position: sticky;
 }
 
-.more_tbl_clmn mat-header-row {
-    line-height: 56px;
-}
-
-.more_tbl_clmn mat-row {
-    line-height: 48px;
-}
-
 .more_tbl_clmn .mat-header-cell:last-child,
 .more_tbl_clmn .mat-cell:last-child {
     padding-right: 70px;
 }
 
-.table tr.active td {
-    background-color: #123456 !important;
-    color: white;
-}
-
-table tr.highlight {
-    background-color: #4CAF50 !important;
-    color: #ffffff;
-}
-
-button#refreshContactTab {
-    display: none;
-}
-
-#contact .content .example {
-    padding: 20px 10px;
-}
-
-th.mat-sort-header-sorted {
-    color: black;
-}
-.row-text-colore span {
-    color: #fff;
-}
-.mat-header-row {
-    background-color: rgba(128, 128, 128, 0.1);
-    height: 5em;
-}
-button#refreshChartACCTab{
-    display: none;
+// .h2 {
+//     margin-top: 13px !important;
+// }
+// .matter-serach-div.sticky_search_div {
+//     margin-top: 18px !important;
+//     margin-left: 45px !important;
+// }
+.page-layout.carded>.top-bg.work_progress_height {
+    height: 86px;
+    th.mat-sort-header-sorted {
+        color: black;
+    }
 }

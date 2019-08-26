@@ -19,6 +19,7 @@ export class SystemSettingComponent implements OnInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   errorWarningData: any = {};
   a: string;
+  isLoadingResults: boolean = false;
   button:string;
   ForDataBind: any;
   SettingForm: FormGroup;
@@ -122,9 +123,27 @@ export class SystemSettingComponent implements OnInit {
       TRACKDOCUMENTS:['']
      
     })
-    this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response=>{
-      this.getVal(response);
-      })
+    this.loadData();
+    
+
+
+
+  }
+
+  loadData() {
+    this.isLoadingResults = true;
+    this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        
+        this.getVal(response);
+
+        this.isLoadingResults = false;
+      }
+      
+    }, error => {
+      this.toastr.error(error);
+    });
+  
   }
   getVal(data){
   // for trust  

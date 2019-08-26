@@ -21,7 +21,7 @@ export class MainSearchingComponent implements OnInit {
   constructor(private dialog: MatDialog,private _formBuilder: FormBuilder,) { }
 
   ngOnInit() {
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 80)) + 'px');
     this.MainSearching = this._formBuilder.group({
       matterCheck: [''],
       active: [''],

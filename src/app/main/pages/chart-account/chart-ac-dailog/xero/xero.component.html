@@ -1,3 +1,27 @@
-<p>
-  xero works!
-</p>
+<div class="one" [formGroup]="AccountForm"  fxLayout="column">
+    <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+        <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+            <mat-label>Select Xero Account and then link</mat-label>
+            <mat-select >
+                <mat-option value="0">Header</mat-option>
+                <mat-option value="1">Detail</mat-option>
+                <mat-option value="2">Bank Account</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    </div>
+    <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+     
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+            <mat-label>Xero Code</mat-label>
+            <input placeholder="Xero Code" matInput>
+          </mat-form-field>
+
+
+      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+          <mat-label>Xero Guid</mat-label>
+          <input  placeholder="Xero Guid"   matInput>
+        </mat-form-field>
+    </div>
+  </div>

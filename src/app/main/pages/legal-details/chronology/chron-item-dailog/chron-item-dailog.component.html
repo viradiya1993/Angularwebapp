@@ -13,7 +13,7 @@
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                 <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                     <mat-label>Format</mat-label>
-                      <mat-select #value name="selected" (selectionChange)="FormatChange($event.value)" formControlName="Format">
+                      <mat-select #value name="selected" (selectionChange)="FormatChange($event.value)"  [(ngModel)]="ChronologyADD.Format" formControlName="Format">
                         <mat-option value="1">dd mm yyyy</mat-option>
                         <mat-option value="2">mmmm yyyy</mat-option>
                         <mat-option value="3">yyyy</mat-option>
@@ -23,7 +23,7 @@
   
                 <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
                     <mat-label>Date From</mat-label>
-                    <input (dateInput)="choosedDateFrom()" (dateChange)="DateFrom()" matInput  formControlName ="date" [matDatepicker]="picker">
+                    <input (dateInput)="choosedDateFrom()" (dateChange)="DateFrom()" matInput [(ngModel)]="ChronologyADD.date"  formControlName ="date" [matDatepicker]="picker">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
@@ -35,19 +35,19 @@
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                 <mat-form-field class="example" appearance="outline"  fxFlex="34" class="pr-4">
                     <mat-label>Time From</mat-label>
-                    <input  matInput  formControlName ="time" type="number" readonly>
+                    <input  matInput [(ngModel)]="ChronologyADD.time"  formControlName ="time" type="number" readonly>
                   </mat-form-field>
                  
                   <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
                       <mat-label>Date To</mat-label>
-                      <input (dateInput)="choosedDateTo()" (dateChange)="DateTo()" matInput  formControlName ="dateto" [matDatepicker]="picker2" disabled>
+                      <input [(ngModel)]="ChronologyADD.dateto" (dateInput)="choosedDateTo()" (dateChange)="DateTo()" matInput  formControlName ="dateto" [matDatepicker]="picker2" disabled>
                       <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                       <mat-datepicker #picker2></mat-datepicker>
                   </mat-form-field>
   
                   <mat-form-field class="example" appearance="outline"  fxFlex="33" class="pr-4">
                       <mat-label>Time To</mat-label>
-                      <input  matInput  formControlName ="timeto" type="number" readonly>
+                      <input [(ngModel)]="ChronologyADD.timeto"  matInput  formControlName ="timeto" type="number" readonly>
                     </mat-form-field>
 
             </div>
@@ -58,12 +58,12 @@
 
                 <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                   <mat-label>Reference</mat-label>
-                  <input  matInput  formControlName ="Reference">
+                  <input  matInput [(ngModel)]="ChronologyADD.Reference" formControlName ="Reference">
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                     <mat-label>Breif Pg#</mat-label>
-                    <input  matInput  formControlName ="brif">
+                    <input  matInput [(ngModel)]="ChronologyADD.brif"  formControlName ="brif">
                   </mat-form-field>
               
     
@@ -73,34 +73,34 @@
 
                 <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                   <mat-label>Witnesses</mat-label>
-                  <input  matInput  formControlName ="Witnesses">
+                  <input  matInput [(ngModel)]="ChronologyADD.Witnesses"  formControlName ="Witnesses">
                 </mat-form-field>
 
                
                 <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                   <mat-label>COMMENT</mat-label>
-                  <textarea formControlName="COMMENT" matInput></textarea>
+                  <textarea [(ngModel)]="ChronologyADD.COMMENT" formControlName="COMMENT" matInput></textarea>
                 </mat-form-field>
                 <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <mat-checkbox formControlName="Privileged">Privileged</mat-checkbox>    
+                <mat-checkbox [(ngModel)]="ChronologyADD.Privileged" formControlName="Privileged">Privileged</mat-checkbox>    
             </div>  
 
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
               
               <mat-form-field class="example" appearance="outline"  fxFlex="33" class="pr-4">
                 <mat-label>Text</mat-label>
-                <input  matInput  formControlName ="text">
+                <input  matInput [(ngModel)]="ChronologyADD.text" formControlName ="text">
               </mat-form-field>
   
               <mat-form-field class="example" appearance="outline"  fxFlex="33" class="pr-4">
                 <mat-label>Topic</mat-label>
-                <input  matInput  formControlName ="topic">
+                <input  matInput [(ngModel)]="ChronologyADD.topic"  formControlName ="topic">
               </mat-form-field>
 
               <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
                 <mat-label>Event Agreed</mat-label>
-                  <mat-select #value name="selected" (selectionChange)="Event()" formControlName="eventAgereed">
+                  <mat-select #value name="selected" (selectionChange)="Event()" [(ngModel)]="ChronologyADD.eventAgereed" formControlName="eventAgereed">
                     <mat-option value="1">Agreed</mat-option>
                     <mat-option value="2">Disputed by Plaintiff</mat-option>
                     <mat-option value="3">Disputed by Defendant</mat-option>
@@ -113,7 +113,7 @@
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
               <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
                 <mat-label>Document Website</mat-label>
-                <input  matInput  formControlName ="document">
+                <input [(ngModel)]="ChronologyADD.document" matInput  formControlName ="document">
               </mat-form-field>
               
               <mat-icon matSuffix (click)='selectDoc()'>

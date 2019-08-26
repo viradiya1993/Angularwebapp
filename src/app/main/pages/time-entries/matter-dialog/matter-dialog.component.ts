@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, AfterViewInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatPaginator, MatTableDataSource, MatDialogConfig } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { TimersService, MainAPiServiceService } from './../../../../_services';
+import { TimersService, MainAPiServiceService, BehaviorService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.component';
@@ -19,10 +19,11 @@ export class MatterDialogComponent implements OnInit {
   displayedColumns: string[] = ['matternumber', 'matter', 'client'];
   getDataForTable: any = [];
   highlightedRows: any;
-  theme_type = localStorage.getItem('theme_type');
+  
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   matterFilterForm: FormGroup;
+  theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   isLoadingResults: boolean = false;
   pageSize: any;
@@ -35,6 +36,7 @@ export class MatterDialogComponent implements OnInit {
     private dialog: MatDialog,
     private _mainAPiServiceService: MainAPiServiceService,
     private toastr: ToastrService,
+    private behaviorService: BehaviorService,
     private Timersservice: TimersService
   ) {
     this.matterFilterForm = this.fb.group({ MatterFilter: [''], UserFilter: [''], searchFilter: [''], InvoiceFilter: [''], });
@@ -59,6 +61,7 @@ export class MatterDialogComponent implements OnInit {
   }
   selectMatterId(Row: any) {
     this.currentMatterData = Row;
+    this.behaviorService.MatterData(this.currentMatterData);
   }
   getMatterList() {
     this.getList({});
@@ -89,6 +92,7 @@ export class MatterDialogComponent implements OnInit {
         if (response.DATA.MATTERS[0]) {
           this.highlightedRows = response.DATA.MATTERS[0].MATTERGUID;
           this.currentMatterData = response.DATA.MATTERS[0];
+          this.behaviorService.MatterData(this.currentMatterData);
         }
         this.getDataForTable = new MatTableDataSource(response.DATA.MATTERS);
         this.getDataForTable.paginator = this.paginator;

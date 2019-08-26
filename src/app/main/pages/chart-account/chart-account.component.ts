@@ -1,74 +1,36 @@
 import { fuseAnimations } from '@fuse/animations';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Component, OnInit, ViewEncapsulation, ViewChild,Injectable,ViewContainerRef} from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material';
+import { Component, OnInit, ViewEncapsulation, ViewChild,Injectable,ViewContainerRef, Inject} from '@angular/core';
+import { MatPaginator, MatTableDataSource, MatDialogRef, MatDialog, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material';
 import { MatSort } from '@angular/material';
 import * as $ from 'jquery';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {MatTreeFlatDataSource, MatTreeFlattener,MatTreeNestedDataSource} from '@angular/material/tree';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 
-
-const LOAD_MORE = 'LOAD_MORE';
-export class LoadmoreNode {
-  childrenChange = new BehaviorSubject<LoadmoreNode[]>([]);
-  get children(): LoadmoreNode[] {
-    return this.childrenChange.value;
-  }
-  constructor(public item: string,public hasChildren = false,public loadMoreParentItem: string | null = null) {}
+interface FoodNode {
+  name: string;
+  ACCOUNTGUID: string;
+  ACCOUNTCLASS: any;
+  ACCOUNTNAME: any;
+  ACCOUNTNUMBER: any;
+  SUBACCOUNTS: any;
+  MainList: any;
+  acc:string;
+  parent:string;
+  index?: number;
+  par
+  children?: FoodNode[];
 }
-export class LoadmoreFlatNode {
-  constructor(public item: string,public level = 1,public expandable = false,public loadMoreParentItem: string | null = null) {}
+interface ExampleFlatNode {
+  expandable: boolean;
+  name: string;
+  level: number;
 }
 @Injectable()
-export class LoadmoreDatabase {
-  batchNumber = 5;
-  dataChange = new BehaviorSubject<LoadmoreNode[]>([]);
-  nodeMap = new Map<string, LoadmoreNode>();  
-  
-  /** The data */
-  rootLevelNodes: string[] = ['1-0000 Assets', '2-0000 Liabilities'];
-  dataMap = new Map<string, string[]>([
-    ['1-0000 Assets', ['1-1000 Current assets']],
-    ['2-0000 Liabilities', ['2-1000 Current Liablities']],
-    ['1-1000 Current assets', ['1-1200 General Cheque Account']],
-    ['2-1000 Current Liablities', ['1-1200 General Cheque Account']]
-  ]);
-
-  initialize() {
-    const data = this.rootLevelNodes.map(name => this._generateNode(name));
-    this.dataChange.next(data);
-  }  
-  loadMore(item: string, onlyFirstTime = false) {
-    if (!this.nodeMap.has(item) || !this.dataMap.has(item)) {
-      return;
-    }
-    const parent = this.nodeMap.get(item)!;
-    const children = this.dataMap.get(item)!;
-    if (onlyFirstTime && parent.children!.length > 0) {
-      return;
-    }
-    const newChildrenNumber = parent.children!.length + this.batchNumber;
-    const nodes = children.slice(0, newChildrenNumber)
-      .map(name => this._generateNode(name));
-    if (newChildrenNumber < children.length) {
-      nodes.push(new LoadmoreNode(LOAD_MORE, false, item));
-    }
-    parent.childrenChange.next(nodes);
-    this.dataChange.next(this.dataChange.value);
-  }
-
-  private _generateNode(item: string): LoadmoreNode {
-    if (this.nodeMap.has(item)) {
-      return this.nodeMap.get(item)!;
-    }
-    const result = new LoadmoreNode(item, this.dataMap.has(item));
-    this.nodeMap.set(item, result);
-    return result;
-  }
-}
 
 @Component({
   selector: 'app-chart-account',
@@ -76,63 +38,109 @@ export class LoadmoreDatabase {
   styleUrls: ['./chart-account.component.scss'],
   animations: fuseAnimations,
   encapsulation: ViewEncapsulation.None,
-  providers: [LoadmoreDatabase]
 })
 export class ChartAccountComponent implements OnInit {
-  Accountlist: FormGroup;
-  isLoadingResults: boolean = false;
-  highlightedRows: any;
-  nodeMap = new Map<string, LoadmoreFlatNode>();
-  treeControl: FlatTreeControl<LoadmoreFlatNode>;
-  treeFlattener: MatTreeFlattener<LoadmoreNode, LoadmoreFlatNode>;
-  dataSource: MatTreeFlatDataSource<LoadmoreNode, LoadmoreFlatNode>;
+  @ViewChild('tree') tree;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
-   index = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
+  isLoadingResults: boolean = false;
+  storeDataarray: any = [];
+  accGUID: any = [];
+  pageSize: any;
+  acc:any;
+  ACCOUNTGUIDsELECTED: any;
+  arrayForIndex: any = [];
   
-  constructor(
-    private _formBuilder: FormBuilder,
-    private dialog: MatDialog,
-    private toastr: ToastrService,
-    private database: LoadmoreDatabase
-  )
-  { 
-    this.treeFlattener = new MatTreeFlattener(this.transformer, this.getLevel, this.isExpandable, this.getChildren);
-    this.treeControl = new FlatTreeControl<LoadmoreFlatNode>(this.getLevel, this.isExpandable);
-    this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-    database.dataChange.subscribe(data => {
-      this.dataSource.data = data;
-    });
-    database.initialize();
+  private _transformer = (node: FoodNode, level: number) => {
+    return {
+      expandable: !!node.SUBACCOUNTS && node.SUBACCOUNTS.length > 0,
+      name: node.ACCOUNTCLASS + ' - ' + node.ACCOUNTNUMBER + '        ' + node.ACCOUNTNAME,
+      class:node.ACCOUNTNAME,
+      ACCOUNTGUID: node.ACCOUNTGUID,
+      index: node.index,
+      parent:node.parent,
+      level: level,
+      MainList: node.MainList
+    };
   }
-  getChildren = (node: LoadmoreNode): Observable<LoadmoreNode[]> => node.childrenChange;
-  transformer = (node: LoadmoreNode, level: number) => {
-    const existingNode = this.nodeMap.get(node.item);
-    if (existingNode) {
-      return existingNode;
-    }
-    const newNode = new LoadmoreFlatNode(node.item, level, node.hasChildren, node.loadMoreParentItem);
-    this.nodeMap.set(node.item, newNode);
-    return newNode;
+  treeControl = new FlatTreeControl<ExampleFlatNode>(node => node.level, node => node.expandable);
+  treeFlattener = new MatTreeFlattener(this._transformer, node => node.level, node => node.expandable, node => node.SUBACCOUNTS);
+  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  highlightedRows: number;
+  accClass: any;
+  public ChartData={
+    "AccountClass":'All'
   }
+filterData: { 'Search': string; 'AccountClass': any; };
 
-  getLevel = (node: LoadmoreFlatNode) => node.level;
-  isExpandable = (node: LoadmoreFlatNode) => node.expandable;
-  hasChild = (_: number, _nodeData: LoadmoreFlatNode) => _nodeData.expandable;
-  isLoadMore = (_: number, _nodeData: LoadmoreFlatNode) => _nodeData.item === LOAD_MORE;
-  loadChildren(node: LoadmoreFlatNode) {
-    this.database.loadMore(node.item, true);
-  }
-  array(n: number): any[] {
-    return Array(n);
+  constructor(
+    public dialog: MatDialog,
+    private _mainAPiServiceService: MainAPiServiceService,
+    private behaviorService: BehaviorService) {
+      
+      this.filterData = {
+       'Search': '', "AccountClass":"All"
+      }
+      if(!localStorage.getItem("chartAcc_filter")){
+        localStorage.setItem('chartAcc_filter', JSON.stringify(this.filterData));
+      }else{
+        this.filterData =JSON.parse(localStorage.getItem("chartAcc_filter"))
+      }
+      this.ChartData.AccountClass=this.filterData.AccountClass;
+      this.loadData(this.filterData);
   }
   
   ngOnInit() {
-    this.Accountlist = this._formBuilder.group({
-      AccountType:[''],
-      searchFilter:['']
+    this.acc="";
+  }
+  loadData(data: any) {
+    console.log(data);
+    this.isLoadingResults = true;
+    this._mainAPiServiceService.getSetData(data, 'GetAccount').subscribe(response => {
+      console.log(response);
+      if (response.CODE == 200 && response.STATUS == "success") {
+        this.arrayForIndex = [];
+        if (response.DATA.ACCOUNTS[0].ACCOUNTGUID == "") {
+          this.storeDataarray = response.DATA.ACCOUNTS[0].SUBACCOUNTS;
+          this.ACCOUNTGUIDsELECTED = response.DATA.ACCOUNTS[0].SUBACCOUNTS;
+        } else {
+          this.storeDataarray = response.DATA.ACCOUNTS;
+        }
+        this.showData(this.storeDataarray, 0, null);
+        this.dataSource.data = this.storeDataarray;
+        this.RowClick(response.DATA.ACCOUNTS[0].SUBACCOUNTS[0]);
+        this.highlightedRows = 1;
+      } else if (response.MESSAGE == 'Not logged in') {
+        // this.dialogRef.close(false);
+      }
+      this.isLoadingResults = false;
+    }, err => {
+      // this.toastr.error(err);
+      this.isLoadingResults = false;
     });
   }
+  showData(element, level, parent) {
+    element.forEach(x => {
+      this.arrayForIndex.push({});
+      x.level = level
+       x.parent = this.acc
+      x.MainList = x;
+      if(level == 0){
+        console.log('jisajdljlkas');
+        this.acc=x.ACCOUNTNAME
+        x.parent = null
+      }
+      x.index = this.arrayForIndex.length;
+      if (x.SUBACCOUNTS){
+        // console.log(x);
+        this.showData(x.SUBACCOUNTS, x.level + 1, x.ACCOUNTNAME);
+      }
+    
+       
+    });
+  }
+  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
   //TypeOfAccounts Dropdown
   TypeOfAccounts(value){
     console.log(value);
@@ -144,5 +152,25 @@ export class ChartAccountComponent implements OnInit {
   //selectTreeNode
   selectTreeNode(){
     console.log('selected Work!!!');
+  }
+  RowClick(val){
+    this.behaviorService.ChartAccountData(val);
+   
+  }
+  AccountClass(val){
+    this.filterData =JSON.parse(localStorage.getItem("chartAcc_filter"));
+    this.filterData.AccountClass = val;
+    localStorage.setItem('chartAcc_filter', JSON.stringify(this.filterData));
+    this.loadData(this.filterData)
+  }
+  refreshChartACCTab(){
+    this.loadData(this.filterData)
+  }
+  onPaginateChange(val){
+    console.log(val);
+    // console.log(this.storeDataarray);
+  }
+  FilterSearch(val){
+
   }
 }

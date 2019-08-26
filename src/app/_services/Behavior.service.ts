@@ -16,6 +16,10 @@ export class BehaviorService {
 
   public DocumentRegisterData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public SpendMoneyData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public ChartAccountData$: BehaviorSubject<any> = new BehaviorSubject(null);
+
+  public MatterData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public TaskData$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(private http: HttpClient) { }
 
   matterInvoiceData(matterInvoice: any) {
@@ -41,6 +45,15 @@ export class BehaviorService {
   }
   SpendMoneyData(d){
     this.SpendMoneyData$.next(d);
+  }
+  ChartAccountData(d){
+    this.ChartAccountData$.next(d);
+  }
+  MatterData(d){
+    this.MatterData$.next(d);
+  }
+  TaskData(d){
+    this.TaskData$.next(d);
   }
 
 }

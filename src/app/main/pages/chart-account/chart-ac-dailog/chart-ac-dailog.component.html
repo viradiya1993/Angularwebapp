@@ -11,11 +11,18 @@
       <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
         <form [formGroup]="AccountForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <!-- <mat-form-field appearance="outline" fxFlex="100" class="pr-4" disabled>
+                    <mat-label>Account Class</mat-label>
+                    <input formControlName ="AccountClass" matInput>
+                </mat-form-field> -->
               <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
                   <mat-label>Account Class</mat-label>
-                  <mat-select #value formControlName = "AccountClass" (selectionChange)="AccountChange($event)" disabled>
-                      <mat-option value="0">Expense</mat-option>
-                      <mat-option value="1">None-Expense</mat-option>
+                  <mat-select #value formControlName = "AccountClass" >
+                      <mat-option value="1">Assets</mat-option>
+                      <mat-option value="2">Liabilities</mat-option>
+                      <mat-option value="3">Equity</mat-option>
+                      <mat-option value="3">Income</mat-option>
+                      <mat-option value="4">Expenses</mat-option>
                   </mat-select>
               </mat-form-field>
             </div>  

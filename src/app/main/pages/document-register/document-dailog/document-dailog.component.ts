@@ -173,12 +173,8 @@ export class DocumentDailogComponent implements OnInit {
       TEMPLATENAME: this.SendDataArray.TEMPLATENAME,
 
     }
-    console.log(Data);
     let finalData={DATA:Data,FormAction:this.FormAction,VALIDATEONLY: true}
-  
-   
     this._mainAPiServiceService.getSetData(finalData, 'SetDocument').subscribe(response => {
-
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, finalData);
       } else if (response.CODE == 451 && response.STATUS == 'warning') {

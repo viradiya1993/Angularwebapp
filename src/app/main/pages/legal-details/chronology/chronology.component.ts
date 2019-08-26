@@ -32,7 +32,8 @@ export class ChronologyComponent implements OnInit {
   tempColobj: any;
 
   constructor(private _formBuilder: FormBuilder,private dialog: MatDialog, private TableColumnsService: TableColumnsService,
-  private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService) { }
+  private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService,
+  ) { }
 
   ngOnInit() {
     this.SearchForm = this._formBuilder.group({

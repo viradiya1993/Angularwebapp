@@ -8,41 +8,41 @@
         </button>
     </h2>
     <div mat-dialog-content class="mat-typography main">
-      <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
-        <form [formGroup]="AccountForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-              <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
-                  <mat-label>Account Class</mat-label>
-                  <mat-select #value formControlName = "AccountClass" (selectionChange)="AccountChange($event)" disabled>
-                      <mat-option value="0">Expense</mat-option>
-                      <mat-option value="1">None-Expense</mat-option>
-                  </mat-select>
-              </mat-form-field>
-            </div>  
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
-                    <mat-label>Account Name</mat-label>
-                    <input formControlName ="accountname" matInput>
-                </mat-form-field>
-            </div>
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-              <mat-tab-group mat-align-tabs="start">
-                <mat-tab label="General">
-                  <app-general [AccountForm]="AccountForm"></app-general>
-                </mat-tab>
-                <!-- <mat-tab label="Bank Details" *ngIf="action === 'edit'">
+        <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+            <form [formGroup]="AccountForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                        <mat-label>Account Class</mat-label>
+                        <mat-select #value formControlName="AccountClass" (selectionChange)="AccountChange($event)" disabled>
+                            <mat-option value="0">Expense</mat-option>
+                            <mat-option value="1">None-Expense</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                        <mat-label>Account Name</mat-label>
+                        <input formControlName="accountname" matInput>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-tab-group mat-align-tabs="start">
+                        <mat-tab label="General">
+                            <app-general [AccountForm]="AccountForm"></app-general>
+                        </mat-tab>
+                        <!-- <mat-tab label="Bank Details" *ngIf="action === 'edit'">
                   <app-bank-details [AccountForm]="AccountForm"></app-bank-details>
                 </mat-tab> -->
-                <mat-tab label="Xero">
-                  <app-xero [AccountForm]="AccountForm"></app-xero>
-                </mat-tab>
-                <mat-tab label="MYOB">
-                  <app-myob [AccountForm]="AccountForm"></app-myob>
-                </mat-tab>
-              </mat-tab-group> 
-            </div>
-        </form>
-      </div>
+                        <mat-tab label="Xero">
+                            <app-xero [AccountForm]="AccountForm"></app-xero>
+                        </mat-tab>
+                        <mat-tab label="MYOB">
+                            <app-myob [AccountForm]="AccountForm"></app-myob>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </form>
+        </div>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
         <button mat-raised-button color="accent" (click)="SaveAccount()" [disabled]="isspiner" *ngIf="action === 'new'"><mat-spinner *ngIf="isspiner"></mat-spinner>Add</button>

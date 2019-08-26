@@ -21,42 +21,41 @@ export class ChartAcDailogComponent implements OnInit {
   theCheckbox = true;
 
   constructor
-  (
-    public MatDialog: MatDialog,
-    public dialogRef: MatDialogRef<ChartAcDailogComponent>,
-    private _formBuilder: FormBuilder,
-    private toastr: ToastrService,
-    public _matDialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) 
-  { 
+    (
+      public MatDialog: MatDialog,
+      public dialogRef: MatDialogRef<ChartAcDailogComponent>,
+      private _formBuilder: FormBuilder,
+      private toastr: ToastrService,
+      public _matDialog: MatDialog,
+      @Inject(MAT_DIALOG_DATA) public data: any
+    ) {
     this.action = data.action;
     if (this.action === 'new') {
       this.dialogTitle = 'New Account';
     } else if (this.action === 'edit') {
       this.dialogTitle = 'Update Account';
-    } else if(this.action === 'duplicate') {
+    } else if (this.action === 'duplicate') {
       this.dialogTitle = 'Duplicate Account';
     }
   }
 
   ngOnInit() {
     this.AccountForm = this._formBuilder.group({
-      AccountClass:[''],
-      accountname:['',Validators.required],
+      AccountClass: [''],
+      accountname: ['', Validators.required],
       //General
-      accountNo:[''],
-      accounttype:[''],
-      ACTIVE:['']
+      accountNo: [''],
+      accounttype: [''],
+      ACTIVE: ['']
 
     });
   }
   //Account Class Dropdown
-  AccountChange(value){
+  AccountChange(value) {
 
   }
   //SaveAccount
-  SaveAccount(){
+  SaveAccount() {
     console.log('save account work!!');
   }
 

@@ -3,112 +3,106 @@
 </div>
 <div class="one" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.LEGALENTITY,'has-warning':errorWarningData.Warning?.LEGALENTITY}">
             <mat-label>Legal Entity</mat-label>
-            <input matInput>
+            <input matInput name="LEGALENTITY" [(ngModel)]="BasicDetail.LEGALENTITY">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.NAME,'has-warning':errorWarningData.Warning?.NAME}">
             <mat-label>Company Name</mat-label>
-            <input matInput>
+            <input matInput name="NAME" [(ngModel)]="BasicDetail.NAME">
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.REGISTRATIONNAME,'has-warning':errorWarningData.Warning?.REGISTRATIONNAME}">
             <mat-label>Registration name</mat-label>
             <input name="REGISTRATIONNAME" [(ngModel)]="BasicDetail.REGISTRATIONNAME" matInput>
         </mat-form-field>
     </div>
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FIRSTNAME,'has-warning':errorWarningData.Warning?.FIRSTNAME}">
             <mat-label>First Name</mat-label>
             <input name="FIRSTNAME" [(ngModel)]="BasicDetail.FIRSTNAME" matInput>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MIDDLENAME,'has-warning':errorWarningData.Warning?.MIDDLENAME}">
             <mat-label>Middle name</mat-label>
             <input name="MIDDLENAME" [(ngModel)]="BasicDetail.MIDDLENAME" matInput>
         </mat-form-field>
 
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.LASTNAME,'has-warning':errorWarningData.Warning?.LASTNAME}">
             <mat-label>Last name</mat-label>
             <input name="LASTNAME" [(ngModel)]="BasicDetail.LASTNAME" matInput>
         </mat-form-field>
     </div>
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ADDRESS,'has-warning':errorWarningData.Warning?.ADDRESS}">
             <mat-label>Address</mat-label>
             <input name="ADDRESS" [(ngModel)]="BasicDetail.ADDRESS" matInput>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.SUBURB,'has-warning':errorWarningData.Warning?.SUBURB}">
             <mat-label>Suburb</mat-label>
             <input name="SUBURB" [(ngModel)]="BasicDetail.SUBURB" matInput>
         </mat-form-field>
-
-
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ADDRESSSTATE,'has-warning':errorWarningData.Warning?.ADDRESSSTATE}">
             <mat-label>State</mat-label>
             <input name="ADDRESSSTATE" [(ngModel)]="BasicDetail.ADDRESSSTATE" matInput>
         </mat-form-field>
     </div>
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.POSTCODE,'has-warning':errorWarningData.Warning?.POSTCODE}">
             <mat-label>Postcode</mat-label>
             <input name="POSTCODE" [(ngModel)]="BasicDetail.POSTCODE" matInput>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PHONE,'has-warning':errorWarningData.Warning?.PHONE}">
             <mat-label>Phone</mat-label>
             <input name="PHONE" [(ngModel)]="BasicDetail.PHONE" matInput>
         </mat-form-field>
 
 
-        <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MOBILE,'has-warning':errorWarningData.Warning?.MOBILE}">
             <mat-label>Mobile</mat-label>
             <input name="MOBILE" [(ngModel)]="BasicDetail.MOBILE" matInput>
         </mat-form-field>
     </div>
-
-
-
-
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.EMAIL,'has-warning':errorWarningData.Warning?.EMAIL}">
             <mat-label>General Email</mat-label>
             <input name="EMAIL" [(ngModel)]="BasicDetail.EMAIL" matInput>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ACCOUNTSEMAIL,'has-warning':errorWarningData.Warning?.ACCOUNTSEMAIL}">
             <mat-label>Accounts Email</mat-label>
             <input name="ACCOUNTSEMAIL" [(ngModel)]="BasicDetail.ACCOUNTSEMAIL" matInput>
         </mat-form-field>
     </div>
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.TECHNICALEMAIL,'has-warning':errorWarningData.Warning?.TECHNICALEMAIL}">
             <mat-label>Technical Email</mat-label>
             <input name="TECHNICALEMAIL" [(ngModel)]="BasicDetail.TECHNICALEMAIL" matInput>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MANAGEREMAIL,'has-warning':errorWarningData.Warning?.MANAGEREMAIL}">
             <mat-label>Manager Email</mat-label>
             <input name="MANAGEREMAIL" [(ngModel)]="BasicDetail.MANAGEREMAIL" matInput>
         </mat-form-field>
     </div>
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.REGISTEREDUNTIL,'has-warning':errorWarningData.Warning?.REGISTEREDUNTIL}">
             <mat-label>Registered Until</mat-label>
-            <input name="REGISTEREDUNTIL" [(ngModel)]="BasicDetail.REGISTEREDUNTIL" matInput>
+            <input name="REGISTEREDUNTIL" [(ngModel)]="BasicDetail.REGISTEREDUNTIL" readonly matInput>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.INTROPRICEUNTIL,'has-warning':errorWarningData.Warning?.INTROPRICEUNTIL}">
             <mat-label>Intro Price Until</mat-label>
-            <input name="INTROPRICEUNTIL" [(ngModel)]="BasicDetail.INTROPRICEUNTIL" matInput>
+            <input name="INTROPRICEUNTIL" [(ngModel)]="BasicDetail.INTROPRICEUNTIL" readonly matInput>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">

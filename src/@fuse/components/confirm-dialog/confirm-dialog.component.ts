@@ -7,7 +7,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
     styleUrls: ['./confirm-dialog.component.scss']
 })
 export class FuseConfirmDialogComponent {
-    public confirmMessage: string;
+    public confirmMessage: string = "Are you sure you want to Save?";
     public confirmData: any;
     /**
      * Constructor

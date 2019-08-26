@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { MainAPiServiceService } from 'app/_services';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MatDialog, MatDatepickerInputEvent } from '@angular/material'
 import { ToastrService } from 'ngx-toastr';
+import { MAT_DIALOG_DATA } from '@angular/material';
+import { MainAPiServiceService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-import { MatDialogRef, MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-basic-info',
@@ -12,19 +13,18 @@ import { MatDialogRef, MatDialog } from '@angular/material';
 export class BasicInfoComponent implements OnInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   BasicDetail: any = {
-    BARRISTERID: '', LEGALENTITY: '', REGISTRATIONNAME: ' ', FIRSTNAME: ' ', MIDDLENAME: '', LASTNAME: '', ADDRESS: '', SUBURB: '', ADDRESSSTATE: '', POSTCODE: '',
+    LEGALENTITY: '', REGISTRATIONNAME: ' ', FIRSTNAME: ' ', MIDDLENAME: '', LASTNAME: '', ADDRESS: '', SUBURB: '', ADDRESSSTATE: '', POSTCODE: '',
     PHONE: '', MOBILE: '', EMAIL: '', ACCOUNTSEMAIL: '', MANAGEREMAIL: '', TECHNICALEMAIL: '', REGISTEREDUNTIL: '', INTROPRICEUNTIL: ''
   }
   isLoadingResults: boolean = false;
   isspiner: boolean = false;
-  errorWarningData: any;
+  errorWarningData: any = { "Error": [], 'Warning': [] };
   constructor(public MatDialog: MatDialog, private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({}, 'HOGetCustomerDetails').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        this.BasicDetail.BARRISTERID = response.DATA.CUSTOMERDATA.BARRISTERID;
         this.BasicDetail.REGISTRATIONNAME = response.DATA.CUSTOMERDATA.REGISTRATIONGROUP.REGISTRATIONNAME;
         this.BasicDetail.FIRSTNAME = response.DATA.CUSTOMERDATA.NAMEGROUP.FIRSTNAME;
         this.BasicDetail.MIDDLENAME = response.DATA.CUSTOMERDATA.NAMEGROUP.MIDDLENAME;
@@ -42,33 +42,29 @@ export class BasicInfoComponent implements OnInit {
         this.BasicDetail.TECHNICALEMAIL = response.DATA.CUSTOMERDATA.EMAILS.TECHNICALEMAIL;
         this.BasicDetail.REGISTEREDUNTIL = response.DATA.CUSTOMERDATA.REGISTRATIONGROUP.REGISTEREDUNTIL;
         this.BasicDetail.INTROPRICEUNTIL = response.DATA.CUSTOMERDATA.INTROPRICEUNTIL;
+        this.BasicDetail.NAME = response.DATA.CUSTOMERDATA.NAMEGROUP.NAME;
         this.isLoadingResults = false;
       } else {
         this.isLoadingResults = false;
       }
     });
   }
-
+  RegisteredUntilChange(type: string, event: MatDatepickerInputEvent<Date>) {
+    // this.matterdetailForm.controls['EXCHANGEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
   saveBasicDetail() {
     this.isspiner = true;
+    delete this.BasicDetail.REGISTEREDUNTIL;
+    delete this.BasicDetail.INTROPRICEUNTIL;
     let PostBasicDetail: any = { FormAction: 'update', VALIDATEONLY: true, Data: this.BasicDetail };
     this._mainAPiServiceService.getSetData(PostBasicDetail, 'HOSetCustomerDetails').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
-        this.toastr.success('Update successfully');
+        this.checkValidation(res.DATA.VALIDATIONS, PostBasicDetail);
       } else if (res.CODE == 451 && res.STATUS == 'warning') {
-        this.toastr.warning(res.STATUS);
-        this.isspiner = false;
+        this.checkValidation(res.DATA.VALIDATIONS, PostBasicDetail);
       } else if (res.CODE == 450 && res.STATUS == 'error') {
-        this.toastr.error(res.STATUS);
-        this.isspiner = false;
+        this.checkValidation(res.DATA.VALIDATIONS, PostBasicDetail);
       }
-      // if (res.CODE == 200 && res.STATUS == "success") {
-      //   this.checkValidation(res.DATA.VALIDATIONS, PostBasicDetail);
-      // } else if (res.CODE == 451 && res.STATUS == 'warning') {
-      //   this.checkValidation(res.DATA.VALIDATIONS, PostBasicDetail);
-      // } else if (res.CODE == 450 && res.STATUS == 'error') {
-      //   this.checkValidation(res.DATA.VALIDATIONS, PostBasicDetail);
-      // }
       this.isspiner = false;
     }, err => {
       this.isspiner = false;
@@ -89,11 +85,10 @@ export class BasicInfoComponent implements OnInit {
         warningData.push(value.ERRORDESCRIPTION);
       }
     });
-    this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
+    this.errorWarningData = { "Error": tempError, 'Warning': tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
-      this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Save?';
       this.confirmDialogRef = this.MatDialog.open(FuseConfirmDialogComponent, {
         disableClose: true, width: '100%', data: warningData
       });

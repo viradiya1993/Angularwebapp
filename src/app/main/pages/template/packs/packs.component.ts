@@ -102,6 +102,7 @@ export class PacksComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 50)) + 'px');
     this.packForm = this._formBuilder.group({
       Filter: [],
       search: []
@@ -145,7 +146,7 @@ export class PacksComponent implements OnInit, AfterViewInit {
   }
   FilterSearch(searchFilter: any) {
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
-        this.loadData({ SEARCH:this.f.search.value})
+        this.loadData({SEARCH:this.f.search.value})
     }
   }
   //SelectMatter

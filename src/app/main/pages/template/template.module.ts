@@ -27,10 +27,8 @@ import { EditTemplateComponent } from './template-list/edit-template/edit-templa
 import { CopyTemplateComponent } from './template-list/copy-template/copy-template.component';
 import { FormatVariableComponent } from './template-list/edit-template/insert-with-formating/format-variable.component';
 import { NewFieldComponent } from './template-list/edit-template/new-field/new-field.component';
-
-
-
-
+//  import { NgxEditorModule } from 'ngx-editor';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 const routes = [
   { path: '', redirectTo: '/create-document/matter-template', pathMatch: 'full', canActivate: [AuthGuard] },
   { path: '', redirectTo: '/create-document/invoice-template', pathMatch: 'full', canActivate: [AuthGuard] },
@@ -64,17 +62,6 @@ const routes = [
       { path: 'packs-invoice-template', component: PacksComponent },
       { path: 'packs-contact-template', component: PacksComponent },
       { path: 'packs-receive-money-template', component: PacksComponent },
-
-
-      // {
-      //   path: 'work-in-progress', component: WorkInProgressComponent, children: [
-      //     { path: '', component: EstimateComponent },
-      //     { path: 'invoice', component: EstimateComponent },
-      //   ]
-      // },
-      // { path: 'matter-invoices', component: MatterInvoicesComponent },
-      // { path: 'receipts-credits', component: ReceiptsCreditsComponent },
-      // { path: 'matter-trust', component: MatterTrustComponent },
       { path: 'email-templete', component: EmailTempleteComponent },
       { path: 'packs', component: PacksComponent },
     ], canActivate: [AuthGuard]
@@ -90,6 +77,8 @@ const routes = [
     EmailDailogComponent, PacksDailogComponent,
      NewPacksDailogComponent,SetLetterHeadComponent,EditTemplateComponent,CopyTemplateComponent,FormatVariableComponent,NewFieldComponent],
   imports: [
+    // NgxEditorModule,
+    CKEditorModule,
     CommonModule,
     RouterModule.forChild(routes),
     FuseSharedModule,

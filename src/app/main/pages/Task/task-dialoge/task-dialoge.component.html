@@ -1,0 +1,105 @@
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+</div>
+<div cdkDrag class="popup_main_div add_edit_contact_main" >
+    <h2 cdkDragHandle mat-dialog-title>{{title}}
+      <button class="btn" mat-icon-button (click)="closepopup()"  [mat-dialog-close]="false" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </h2>
+    <div mat-dialog-content class="mat-typography main">
+      <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+          <form  fxLayout="column" fxFlex="1 0 auto" name="form">
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field  appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>User</mat-label>
+                    <input placeholder="User"   matInput>
+                    <mat-icon  class="set_icon" matSuffix (click)='SelectMatter()'  >
+                            <img class="menu-disabled" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                        </mat-icon>
+                </mat-form-field>
+               
+                <mat-form-field  appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Matter</mat-label>
+                    <input placeholder="Matter"   matInput>
+                    <mat-icon class="set_icon" matSuffix (click)='SelectMatter()'  >
+                            <img class="menu-disabled" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                        </mat-icon>
+                </mat-form-field>
+                
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field fxFlex="50" class="example pr-4" appearance="outline">
+                            <mat-label>Status</mat-label>
+                            <mat-select>
+                                <mat-option value="Not Started">Not Started</mat-option>
+                                <mat-option value="In Progress">In Progress</mat-option>
+                                <mat-option value="Completed">Completed</mat-option>
+                                <mat-option value="Waiting on son">Waiting on somone else</mat-option>
+                                <mat-option value="Deferred">Deferred</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlex="50" class="example pr-4" appearance="outline">
+                                <mat-label>Priority</mat-label>
+                                <mat-select>
+                                    <mat-option value="Low">Low</mat-option>
+                                    <mat-option value="Medium">Medium</mat-option>
+                                    <mat-option value="high">high</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field  appearance="outline" fxFlex="50" class="pr-4">
+                            <mat-label>% complete</mat-label>
+                            <input placeholder="Matter" type="number"  matInput>
+                        </mat-form-field>
+
+            <mat-checkbox fxFlex="50"  class="check_1 pr-4" >Reminder </mat-checkbox>                
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4" >
+                            <input (dateInput)="choosedDateOfBirth('input', $event)" (dateChange)="choosedDateOfBirth('change', $event)" matInput [matDatepicker]="picker" placeholder="Reminder Date">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        
+                        <mat-form-field  appearance="outline" fxFlex="50" class="pr-4">
+                                <mat-label>Reminder Time</mat-label>
+                                <input placeholder="Reminder Time" type="time"  matInput>
+                            </mat-form-field>
+
+            </div>
+
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+             
+            <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4" >
+             <input (dateInput)="choosedDateOfBirth('input', $event)" (dateChange)="choosedDateOfBirth('change', $event)" matInput [matDatepicker]="picker2" placeholder="Reminder Date">
+             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+             <mat-datepicker #picker2></mat-datepicker>
+             </mat-form-field>
+
+             <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4" >
+                    <input (dateInput)="choosedDateOfBirth('input', $event)" (dateChange)="choosedDateOfBirth('change', $event)" matInput [matDatepicker]="picker3" placeholder="Reminder Date">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                    </mat-form-field>
+
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+            <mat-form-field  appearance="outline" fxFlex="100" class="pr-4">
+                    <mat-label>Description</mat-label>
+                    <input placeholder="Description"  matInput>
+                </mat-form-field>
+
+            </div>
+
+          </form>
+      </div>
+    </div>
+    <mat-dialog-actions align="end" class="popup_ftr">
+        <button mat-raised-button color="accent" [mat-dialog-close]="false" cdkFocusInitial>Save</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
+    </mat-dialog-actions>
+</div>

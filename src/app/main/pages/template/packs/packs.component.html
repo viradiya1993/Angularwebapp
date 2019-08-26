@@ -25,15 +25,6 @@
                                         <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                                     </div>
                                     <div class="example-containerdata">
-                                        <!-- <table class="mat-table simple" [@animateStagger]="{value:'50'}">
-                                            <thead class="mat-header-row" fxLayoutAlign="center center">
-                                                <th class="mat-header-cell" fxFlex>Account Name</th>
-                                                <th class="mat-header-cell" fxFlex="20">Type</th>
-                                                <th class="mat-header-cell" fxFlex="20">Balance</th>
-                                                <th class="mat-header-cell" fxFlex="20">Xero Code</th>
-                                                <th class="mat-header-cell" fxFlex="20">MYOB Account</th>
-                                            </thead>
-                                        </table> -->
                                         <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
                                             <!-- This is the tree node template for leaf nodes -->
                                             <mat-tree-node class="border-top" *matTreeNodeDef="let node" matTreeNodePadding [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index  (click)="RowClick(node.Main);highlightedRows = node.index "
@@ -50,14 +41,7 @@
                                                    <mat-icon matSuffix *ngIf="node.iconType =='Template'" >
                                                     <img src="assets/icons/web_app/icon_letters_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>{{node.child}}</span>
-                                              <!-- <div fxFlex="20" class="text-center">
-                                                <span class="pale">{{node.item}}</span>
-                                            </div> -->
-                                              <!-- <span fxFlex="20" class="text-center" >{{node.level}}</span>
-                                              <span fxFlex="20" class="text-center" >{{node.index}}</span>
-                                              <span fxFlex="20" class="text-center">{{node.parent}}</span> -->
-                                              <!-- <span fxFlex="20" class="text-center" >{{node.index}}</span> -->
-
+                                     
                                             </mat-tree-node>
                                             <!-- This is the tree node template for expandable nodes -->
                                             <mat-tree-node class="border-top" *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding  [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index  (click)="RowClick(node.Main);highlightedRows = node.index "
@@ -79,7 +63,7 @@
                                             </mat-tree-node>
                                           </mat-tree>
                                     </div>
-                                    <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+                                    <!-- <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator> -->
                                 </div>
                             </div>
                         </div>

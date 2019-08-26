@@ -27,22 +27,17 @@ import { MainAuthoritiesModule } from './main-authorities/main-authorities.modul
 import { LegalDetailsModule } from './legal-details/legal-details.module';
 import { AccountRecountciliation } from './account-reconciliation/account-reconciliation.module';
 import { AccountManagmentModule } from './account-managment/account-managment.module';
-
-
-
-
-
-
-
-
+import { TrustMoneyModule } from './Trust Accounts/trust-money/trust-money.module';
+import { TaskModule } from './Task/task.module';
 
 const appRoutes: Routes = [
   { path: 'matters', loadChildren: './matters/matters.module#MattersModule' },
+  { path: 'task', loadChildren: './Task/task.module#TaskModule' },
   { path: 'time-billing', loadChildren: './time-billing/time-billing.module#TimeBillingModule' },
+  { path: 'trust-end-month', loadChildren: './Trust Accounts/trust-end-of-month/trust-end-of-month.module#TrustEndOfMonthModule' },
   { path: 'legal-details', loadChildren: './legal-details/legal-details.module#LegalDetailsModule' },
   { path: 'time-entries', loadChildren: './time-entries/time-entries.module#TimeEntriesModule' },
   { path: 'invoice', loadChildren: './invoice/invoice.module#InvoiceModule' },
-
   { path: 'authorities', loadChildren: './main-authorities/main-authorities.module#MainAuthoritiesModule' },
   { path: 'searching', loadChildren: './main-searching/main-searching.module#MainSearchingModule' },
   { path: 'spend-money', loadChildren: './spend-money/spend-money.module#SpendMoneyModule' },
@@ -53,11 +48,8 @@ const appRoutes: Routes = [
   { path: 'chart-account', loadChildren: './chart-account/chart-account.module#ChartOfAccount' },
   { path: 'genral-journal', loadChildren: './general-journal/general-journal.module#GeneralJoural' },
   { path: 'account-reconciliation', loadChildren: './account-reconciliation/account-reconciliation.module#AccountRecountciliation' },
-
-  { path: 'account-management', loadChildren: './account-managment/account-managment.module#AccountManagmentModule' }
-
-  //added by web 19
-  //  { path: ' ', loadChildren: './system-setting/system-settings.module#SystemSettingModule' },
+  { path: 'account-management', loadChildren: './account-managment/account-managment.module#AccountManagmentModule' },
+  { path: 'Safe-Custody', loadChildren: './main-safe-custody/main-safe-custody.module#MainSafeCustodyModule' }
 ];
 
 
@@ -65,6 +57,8 @@ const appRoutes: Routes = [
   declarations: [],
   imports: [
     CommonModule,
+    TaskModule,
+    TrustMoneyModule,
     AccountManagmentModule,
     LegalDetailsModule,
     ConflictCheckModule,

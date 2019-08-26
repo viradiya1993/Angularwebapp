@@ -1,0 +1,147 @@
+@import "src/@fuse/scss/fuse";
+#TrustMoney {
+    .header {
+        .search-wrapper {
+            width: 100%;
+            max-width: 480px;
+            border-radius: 28px;
+            overflow: hidden;
+            @include mat-elevation(1);
+            .search {
+                width: 100%;
+                height: 48px;
+                line-height: 48px;
+                padding: 0 18px;
+                input {
+                    width: 100%;
+                    height: 48px;
+                    min-height: 48px;
+                    max-height: 48px;
+                    padding: 0 16px;
+                    border: none;
+                    outline: none;
+                }
+            }
+        }
+    }
+    .content {
+        overflow: hidden;
+        .example {
+            width: 13%;
+            padding: 10px;
+            .sidebar {
+                &:not(.locked-open) {
+                    background: white;
+                }
+            }
+        }
+        .matter-serach-div {
+            // position: fixed;
+            // width: 600px;
+            // height: 200px;
+            // left: 50%;
+            // top: 0%;
+            // margin-left: -300px;
+        }
+    }
+    .mat-form-field.mat-form-field-type-mat-select .mat-form-field-infix {
+        display: inline-flex;
+        width: 300px !important;
+    }
+    .search {
+        width: 45% !important;
+        padding: 20px !important;
+    }
+}
+
+// .sticky_search_div .mat-form-field-wrapper {
+//     padding-bottom: 0 !important;
+// }
+#TrustMoney .sticky_search_div {
+    // position: fixed;
+    // top: 167px;
+    // padding-left: 300px;
+    width: 100%;
+    background-color: #f5f5f5;
+    z-index: 9999;
+    left: 0;
+}
+// #Spendmoney .sticky_search_remove_padding {
+//     padding-left: 80px;
+// }
+
+.p-24.list_tbl_main {
+    //margin-top: 110px;
+    padding-top: 0 !important;
+}
+
+// .fix_div_padding {
+//     margin-top: 70px;
+// }
+.list_sidebar_padding {
+    // padding-top: 92px;
+    background-color: #fff;
+    border-left: 1px solid #ccc;
+}
+
+.list_sidebar_padding h3.one {
+    margin: 0;
+}
+
+.list_sidebar_right_child {
+    margin-top: 110px;
+}
+
+#TrustMoney .list_tbl_main {
+    // margin-top: 85px;
+    padding-top: 0 !important;
+}
+.mat-table {
+    width: 100%;
+}
+
+.more_tbl_clmn .mat-header-cell,
+.more_tbl_clmn .mat-cell {
+    display: table-cell;
+    white-space: nowrap;
+    padding: 0 20px;
+    overflow: inherit;
+    position: sticky;
+}
+
+.more_tbl_clmn .mat-header-cell:last-child,
+.more_tbl_clmn .mat-cell:last-child {
+    padding-right: 70px;
+}
+
+button#refreshTimeEntryTab {
+    display: none;
+}
+
+#TrustMoney .content .example {
+    padding: 20px 10px;
+}
+#TrustMoney .content {
+    position: relative;
+}
+
+@media screen and (max-width: 1200px) {
+    #TrustMoney .sticky_search_div.responsive_auto .example {
+        width: 15%;
+    }
+}
+@media screen and (max-width: 991px) {
+    #TrustMoney .sticky_search_div.responsive_auto {
+        overflow: auto;
+        white-space: nowrap;
+    }
+    #TrustMoney .sticky_search_div.responsive_auto .example {
+        width: 20%;
+    }
+}
+th.mat-sort-header-sorted {
+    color: black;
+}
+// button#refreshSpendMoneyTab {
+//     display: none;
+// }

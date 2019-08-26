@@ -10,7 +10,7 @@ import { MatSort } from '@angular/material'
 import {  MainAPiServiceService, BehaviorService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { GenerateTemplatesDialoagComponent } from 'app/main/pages/system-settings/templates/gennerate-template-dialoag/generate-template.component';
-
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 // export interface PeriodicElement {
 //   Name: string;
 //   Description: string;
@@ -29,6 +29,7 @@ import { GenerateTemplatesDialoagComponent } from 'app/main/pages/system-setting
   styleUrls: ['./email-dailog.component.scss']
 })
 export class EmailDailogComponent implements OnInit {
+  public Editor = ClassicEditor;
   EmailTemplete:FormGroup;
   rowdata:any=[];
   highlightedRows:any;
@@ -54,6 +55,7 @@ export class EmailDailogComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   FormAction: string;
   GUID: string;
+  htmlText: any;
   constructor(
     public MatDialog: MatDialog,
     public dialogRef: MatDialogRef<EmailDailogComponent>,
@@ -101,7 +103,7 @@ export class EmailDailogComponent implements OnInit {
     
   }
   CommonEditDupData(){
-   
+   console.log(this.EmailtemplateData);
    
     // this.GetData=ShowData;
     this.EmailTemplete.controls['name'].setValue(this.EmailtemplateData.NAME);
@@ -110,17 +112,18 @@ export class EmailDailogComponent implements OnInit {
     this.EmailTemplete.controls['BCCEmail'].setValue(this.EmailtemplateData.BCCADDRESS);
     this.EmailTemplete.controls['CCEmail'].setValue(this.EmailtemplateData.CCADDRESS);
     this.EmailTemplete.controls['subject'].setValue(this.EmailtemplateData.SUBJECT);
+    // this.htmlText=this.EmailtemplateData.TEXT_;
     this.EmailTemplete.controls['text'].setValue(this.EmailtemplateData.TEXT_);
   }
   innerTable(){
-    this.isLoadingResults = true;
+    // this.isLoadingResults = true;
       this._mainAPiServiceService.getSetData({"TEMPLATETYPE":'Email'}, 'TemplateFieldList').subscribe(res=>{
       console.log(res);
       this.InnerTableData = new MatTableDataSource(res.DATA.FIELDS);
       this.InnerTableData.paginator = this.paginator;
       this.InnerTableData.sort = this.sort;
       this.highlightedRows =0;
-      this.isLoadingResults = false;
+      // this.isLoadingResults = false;
     })
   }
   //Dcoument Floder
@@ -153,8 +156,6 @@ export class EmailDailogComponent implements OnInit {
   }
     //Email Save
     EmailSave(){
-     
-      // console.log(this.rowdata);
       if(this.action=='edit'){
         this.GUID=this.EmailtemplateData.EMAILGUID;
         this.FormAction='update';
@@ -171,8 +172,7 @@ export class EmailDailogComponent implements OnInit {
       NAME:this.f.name.value,
       SUBJECT:this.f.subject.value,
       TEXT:this.f.text.value,
-      TOADDRESS:this.f.ToEmail.value,
-      
+      TOADDRESS:this.f.ToEmail.value, 
     }
    
     

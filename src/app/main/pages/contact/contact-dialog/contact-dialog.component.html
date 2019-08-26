@@ -24,7 +24,7 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.CONTACTNAME,'has-warning':errorWarningData.Warning?.CONTACTNAME}">
                         <mat-label>Name</mat-label>
-                        <input name="CONTACTNAME" formControlName="CONTACTNAME" matInput>
+                        <input (focusout)="TabClick($event)" name="CONTACTNAME" formControlName="CONTACTNAME" matInput>
                         <!-- <mat-icon matSuffix class="secondary-text">account_circle</mat-icon> -->
                     </mat-form-field>
                 </div>

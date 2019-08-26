@@ -63,6 +63,7 @@ export class ContactDialogComponent implements OnInit {
   contactForm: FormGroup;
   ngOnInit() {
     this.contactForm = this._formBuilder.group({
+      PreferedName:[''],
       //CONTACTGUID: ['', Validators.required],
       CONTACTNAME: ['', Validators.required],
       CONTACTTYPE: ['', Validators.required],
@@ -274,6 +275,8 @@ export class ContactDialogComponent implements OnInit {
           }
         }
       });
+    }else{
+      this.contactForm.controls['ACTIVE'].setValue(true);
     }
   }
 

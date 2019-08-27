@@ -92,7 +92,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
   }
   LoadData(data) {
     // GetContact
-    //  this._mainAPiServiceService.getSetData(postData, 'SetActivity').subscribe
+    // this._mainAPiServiceService.getSetData(postData, 'SetActivity').subscribe
     this.Contactdata = [];
     this.isLoadingResults = true;
     this.subscription = this._mainAPiServiceService.getSetData(data, 'GetContact').subscribe(response => {
@@ -102,6 +102,8 @@ export class ContactComponent implements OnInit, AfterViewInit {
         this.Contactdata.sort = this.sort;
         if (response.DATA.CONTACTS[0]) {
           localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);
+          // localStorage.setItem('contactData',  JSON.stringify(response.DATA.CONTACTS[0]));
+          
           this.highlightedRows = response.DATA.CONTACTS[0].CONTACTGUID;
         }
         this.isLoadingResults = false;
@@ -120,8 +122,9 @@ export class ContactComponent implements OnInit, AfterViewInit {
 
 
   //for edit popup
-  editContact(val) {
+  editContact(val,row) {
     localStorage.setItem('contactGuid', val);
+    // localStorage.setItem('contactData',row);
   }
 
   openDialog() {

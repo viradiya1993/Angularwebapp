@@ -156,11 +156,8 @@ export class SpendMoneyComponent implements OnInit {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(potData, 'GetExpenditure').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        
         this.listingTotal= response.DATA;
-
         this.Spendmoneydata = new MatTableDataSource(response.DATA.EXPENDITURES);
-        console.log(this.Spendmoneydata);
         this.Spendmoneydata.paginator = this.paginator;
         this.Spendmoneydata.sort = this.sort;
         if (response.DATA.EXPENDITURES[0]) {

@@ -127,7 +127,6 @@ filterData: { 'Search': string; 'AccountClass': any; };
        x.parent = this.acc
       x.MainList = x;
       if(level == 0){
-        console.log('jisajdljlkas');
         this.acc=x.ACCOUNTNAME
         x.parent = null
       }

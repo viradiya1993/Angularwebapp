@@ -1437,6 +1437,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => { 
             if(result){
                 $("#refreshTask").click();
+                $("#refreshLegalTask").click();
             }
         });
     }

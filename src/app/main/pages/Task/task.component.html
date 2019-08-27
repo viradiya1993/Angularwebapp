@@ -35,18 +35,25 @@
                                     <mat-label>Matter</mat-label>
                                     <input formControlName="matter" readonly   matInput>
                                     <mat-icon class="set_icon" matSuffix (click)='SelectMatter()'  >
-                                            <img class="menu-disabled" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            <img class="{{ImgDisAb}}" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                         </mat-icon>
                                 </mat-form-field>
                                 
                                
                                 
-                                <mat-form-field appearance="outline" class="example" fxFlex="20">
+                                <!-- <mat-form-field appearance="outline" class="example" fxFlex="20">
                                         <mat-label>Date Range</mat-label>
-                                        <input   matInput  [satDatepicker]="picker2" (dateChange)="DateRange1('change', $event)" (dateInput)="DateRange('input', $event)"  (dateChange)="DateRange1()">
+                                        <input formControlName="DateRange"  matInput  [satDatepicker]="picker2" (dateChange)="DateRange1('change', $event)" (dateInput)="DateRange('input', $event)"  (dateChange)="DateRange1()">
                                         <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
                                         <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
-                                    </mat-form-field>
+                                    </mat-form-field> -->
+
+                                    <mat-form-field appearance="outline" class="example" fxFlex="17.33">
+                                            <mat-label>Date Range</mat-label>
+                                            <input  matInput formControlName="DateRange" [satDatepicker]="picker3" (dateInput)="DateRange('input', $event)" (dateChange)="DateRange1('change', $event)">
+                                            <sat-datepicker #picker3 [rangeMode]="true"> </sat-datepicker>
+                                            <sat-datepicker-toggle matSuffix [for]="picker3"></sat-datepicker-toggle>
+                                        </mat-form-field>
 
                                     <mat-form-field  fxFlex="20" appearance="outline" class="example">
                                         <mat-label>Filter</mat-label>

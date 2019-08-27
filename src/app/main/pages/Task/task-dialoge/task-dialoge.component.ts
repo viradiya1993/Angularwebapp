@@ -246,7 +246,7 @@ export class TaskDialogeComponent implements OnInit {
   forRimindCheck(){
     if(this.f.REMINDER.value==true || this.f.REMINDER.value == 1){
       this.RimindereDate=this.f.SendREMINDERDATE.value
-      this.RimindereTime=this.f.SendREMINDERTIME.value
+      this.RimindereTime=this.f.REMINDERTIME.value
     }else{
       this.RimindereDate="";
       this.RimindereTime="";
@@ -295,7 +295,7 @@ export class TaskDialogeComponent implements OnInit {
             REMINDERTIME:this.RimindereTime,
     }
     }
-    
+    this.isspiner = true;
     let finalData={DATA:data,FormAction:this.FormAction,VALIDATEONLY: true}
     this._mainAPiServiceService.getSetData(finalData, 'SetTask').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {

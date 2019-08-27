@@ -1,5 +1,4 @@
-
-
+<button mat-raised-button type="button" color="primary" id="refreshLegalTask" (click)="refreshLegalTask();">Refresh</button>
 <div id="matters_detail_div" class="page-layout carded fullwidth">
         <div class="top-bg accent work_progress_height"></div>
         <!-- CENTER   fxLayout="row" fxLayoutAlign="start center"-->
@@ -23,9 +22,9 @@
             </div>
             <div fxLayout="row" fxLayoutAlign="start center" class="matter-serach-div sticky_search_div">
                 <form name="form"   fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field class="example p-16" fxFlex="22" appearance="outline" >
+                    <mat-form-field  class="example p-16" fxFlex="22" appearance="outline" >
                         <mat-label>Matter</mat-label>
-                        <input  readonly  matInput>
+                        <input [(ngModel)]="legalTaskData.MatterName" name="MatterName"  readonly  matInput>
                     </mat-form-field>
                     
                     <mat-icon matSuffix (click)='SelectMatter()'  fxFlex="5">
@@ -34,7 +33,7 @@
                     
                     <mat-form-field class="example p-16" fxFlex="22" appearance="outline" >
                         <mat-label>Client</mat-label>
-                        <input  readonly  matInput>
+                        <input [(ngModel)]="legalTaskData.ContactName" name="ContactName" readonly  matInput>
                     </mat-form-field>
                    
                     <mat-icon matSuffix (click)='SelectContact()'  fxFlex="5">
@@ -48,7 +47,7 @@
                     </mat-form-field>
                 </form>
             </div>
-            <div id="chronetab" class="page-layout simple left-sidebar  inner-sidebar">
+            <div id="legalTasktab" class="page-layout simple left-sidebar  inner-sidebar">
                 <div fxLayoutAlign="center" class="content">
                     <div class="center more_tbl_clmn" fusePerfectScrollbar>
                         <div class="content">
@@ -69,8 +68,12 @@
                                                 <td mat-cell *matCellDef="let row"> <span *ngIf="row[item]">{{row[item]}}</span> </td>
                                             </ng-container>
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;let element;" class="row" (click)="RowClick(row);highlightedRows=row.TASKGUID" [style.background]="highlightedRows == row.TASKGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.TASKGUID ? 'row-text-colore' : ''"
+                                                matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                             </tr>
+                                            <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                            </tr> -->
                                         </table>
                                     </div>
                                 </div>

@@ -1,7 +1,6 @@
 
 @import "src/@fuse/scss/fuse";
-
-#chronetab {
+#legalTasktab {
     // margin-top: 95px;
     .header {
         .search-wrapper {
@@ -46,8 +45,7 @@
     width: 45% !important;
     padding: 20px !important;
 }
-
-app-legal-task {
+app-legal-task{
     width: 100% !important;
 }
 app-legal-details {
@@ -84,4 +82,8 @@ app-legal-details {
     th.mat-sort-header-sorted {
         color: black;
     }
+}
+
+button#refreshLegalTask{
+    display: none
 }

@@ -81,7 +81,7 @@
                                 </td>
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                            <tr [style.background]="highlightedRows == row.CONTACTGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.CONTACTGUID ? 'row-text-colore' : ''" highlightedRows=row.CONTACTGUID mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editContact(row.CONTACTGUID);highlightedRows = row.CONTACTGUID "
+                            <tr [style.background]="highlightedRows == row.CONTACTGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.CONTACTGUID ? 'row-text-colore' : ''" highlightedRows=row.CONTACTGUID mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editContact(row.CONTACTGUID, row);highlightedRows = row.CONTACTGUID "
                                 matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                             </tr>
                         </table>

@@ -1,14 +1,14 @@
 import { fuseAnimations } from '@fuse/animations';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Component, OnInit, ViewEncapsulation, ViewChild,Injectable,ViewContainerRef, Inject} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, Injectable, ViewContainerRef, Inject } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialogRef, MatDialog, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material';
 import { MatSort } from '@angular/material';
 import * as $ from 'jquery';
-import {NestedTreeControl} from '@angular/cdk/tree';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {FlatTreeControl} from '@angular/cdk/tree';
-import {MatTreeFlatDataSource, MatTreeFlattener,MatTreeNestedDataSource} from '@angular/material/tree';
+import { NestedTreeControl } from '@angular/cdk/tree';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { FlatTreeControl } from '@angular/cdk/tree';
+import { MatTreeFlatDataSource, MatTreeFlattener, MatTreeNestedDataSource } from '@angular/material/tree';
 import { MainAPiServiceService, BehaviorService } from 'app/_services';
 
 interface FoodNode {
@@ -19,8 +19,8 @@ interface FoodNode {
   ACCOUNTNUMBER: any;
   SUBACCOUNTS: any;
   MainList: any;
-  acc:string;
-  parent:string;
+  acc: string;
+  parent: string;
   index?: number;
   par
   children?: FoodNode[];
@@ -48,18 +48,18 @@ export class ChartAccountComponent implements OnInit {
   storeDataarray: any = [];
   accGUID: any = [];
   pageSize: any;
-  acc:any;
+  acc: any;
   ACCOUNTGUIDsELECTED: any;
   arrayForIndex: any = [];
-  
+
   private _transformer = (node: FoodNode, level: number) => {
     return {
       expandable: !!node.SUBACCOUNTS && node.SUBACCOUNTS.length > 0,
       name: node.ACCOUNTCLASS + ' - ' + node.ACCOUNTNUMBER + '        ' + node.ACCOUNTNAME,
-      class:node.ACCOUNTNAME,
+      class: node.ACCOUNTNAME,
       ACCOUNTGUID: node.ACCOUNTGUID,
       index: node.index,
-      parent:node.parent,
+      parent: node.parent,
       level: level,
       MainList: node.MainList
     };
@@ -69,36 +69,34 @@ export class ChartAccountComponent implements OnInit {
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
   highlightedRows: number;
   accClass: any;
-  public ChartData={
-    "AccountClass":'All'
+  public ChartData = {
+    "AccountClass": 'All'
   }
-filterData: { 'Search': string; 'AccountClass': any; };
+  filterData: { 'Search': string; 'AccountClass': any; };
 
   constructor(
     public dialog: MatDialog,
     private _mainAPiServiceService: MainAPiServiceService,
     private behaviorService: BehaviorService) {
-      
-      this.filterData = {
-       'Search': '', "AccountClass":"All"
-      }
-      if(!localStorage.getItem("chartAcc_filter")){
-        localStorage.setItem('chartAcc_filter', JSON.stringify(this.filterData));
-      }else{
-        this.filterData =JSON.parse(localStorage.getItem("chartAcc_filter"))
-      }
-      this.ChartData.AccountClass=this.filterData.AccountClass;
-      this.loadData(this.filterData);
+
+    this.filterData = {
+      'Search': '', "AccountClass": "All"
+    }
+    if (!localStorage.getItem("chartAcc_filter")) {
+      localStorage.setItem('chartAcc_filter', JSON.stringify(this.filterData));
+    } else {
+      this.filterData = JSON.parse(localStorage.getItem("chartAcc_filter"))
+    }
+    this.ChartData.AccountClass = this.filterData.AccountClass;
+    this.loadData(this.filterData);
   }
-  
+
   ngOnInit() {
-    this.acc="";
+    this.acc = "";
   }
   loadData(data: any) {
-    console.log(data);
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(data, 'GetAccount').subscribe(response => {
-      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         this.arrayForIndex = [];
         if (response.DATA.ACCOUNTS[0].ACCOUNTGUID == "") {
@@ -124,53 +122,52 @@ filterData: { 'Search': string; 'AccountClass': any; };
     element.forEach(x => {
       this.arrayForIndex.push({});
       x.level = level
-       x.parent = this.acc
+      x.parent = this.acc
       x.MainList = x;
-      if(level == 0){
-        console.log('jisajdljlkas');
-        this.acc=x.ACCOUNTNAME
+      if (level == 0) {
+        this.acc = x.ACCOUNTNAME
         x.parent = null
       }
       x.index = this.arrayForIndex.length;
-      if (x.SUBACCOUNTS){
+      if (x.SUBACCOUNTS) {
         // console.log(x);
         this.showData(x.SUBACCOUNTS, x.level + 1, x.ACCOUNTNAME);
       }
-    
-       
+
+
     });
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
   //TypeOfAccounts Dropdown
-  TypeOfAccounts(value){
+  TypeOfAccounts(value) {
     console.log(value);
   }
   //openDialog
-  openDialog(){
+  openDialog() {
 
   }
   //selectTreeNode
-  selectTreeNode(){
+  selectTreeNode() {
     console.log('selected Work!!!');
   }
-  RowClick(val){
+  RowClick(val) {
     this.behaviorService.ChartAccountData(val);
-   
+
   }
-  AccountClass(val){
-    this.filterData =JSON.parse(localStorage.getItem("chartAcc_filter"));
+  AccountClass(val) {
+    this.filterData = JSON.parse(localStorage.getItem("chartAcc_filter"));
     this.filterData.AccountClass = val;
     localStorage.setItem('chartAcc_filter', JSON.stringify(this.filterData));
     this.loadData(this.filterData)
   }
-  refreshChartACCTab(){
+  refreshChartACCTab() {
     this.loadData(this.filterData)
   }
-  onPaginateChange(val){
+  onPaginateChange(val) {
     console.log(val);
     // console.log(this.storeDataarray);
   }
-  FilterSearch(val){
+  FilterSearch(val) {
 
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit,Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -8,7 +8,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class GeneralComponent implements OnInit {
   @Input() AccountForm: FormGroup;
-  theCheckbox = true;
+  @Input() errorWarningData: any;
   constructor() { }
   ngOnInit() {
   }

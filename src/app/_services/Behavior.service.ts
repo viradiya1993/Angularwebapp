@@ -22,10 +22,15 @@ export class BehaviorService {
 
   public MatterData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public TaskData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  
+  public SysytemAccountData$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(private http: HttpClient) { }
 
   matterInvoiceData(matterInvoice: any) {
     this.matterInvoice$.next(matterInvoice);
+  }
+  SysytemAccountData(SysytemAccountData: any) {
+    this.SysytemAccountData$.next(SysytemAccountData);
   }
   setworkInProgressData(workInProgressData: any) {
     this.workInProgress$.next(workInProgressData);

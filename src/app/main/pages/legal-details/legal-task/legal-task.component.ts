@@ -7,7 +7,7 @@ import { MatTableDataSource, MatPaginator, MatSort, MatDialogConfig, MatDialog }
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.component';
 import { ContactDialogComponent } from '../../contact/contact-dialog/contact-dialog.component';
-
+import * as $ from 'jquery';
 @Component({
   selector: 'app-legal-task',
   templateUrl: './legal-task.component.html',
@@ -36,6 +36,8 @@ export class legalDetailTaskComponent implements OnInit {
   public behaviorService: BehaviorService) { }
 
   ngOnInit() {
+    $('content').addClass('inner-scroll');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 30)) + 'px');
     this.getTableFilter();
     this.LoadData();
  this.legalTaskData.MatterName=this.currentMatter.SHORTNAME;

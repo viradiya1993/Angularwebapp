@@ -31,6 +31,8 @@ export class MainSafeCustodyComponent implements OnInit {
 
   ngOnInit() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 70)) + 'px');
+    this.getTableFilter();
+    this.LoadData();
     // this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response=>{
     //  // console.log(response);
     //   this.addData=response.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP
@@ -58,6 +60,7 @@ export class MainSafeCustodyComponent implements OnInit {
     this.isLoadingResults=true;
     this._mainAPiServiceService.getSetData({}, 'GetSafeCustody').subscribe(res => {
       console.log(res);
+      return
       if (res.CODE == 200 && res.STATUS == "success") {
         // this.behaviorService.DocumentRegisterData(res.DATA.DOCUMENTS[0]);
         this.MainSafeCustodyData = new MatTableDataSource(res.DATA.DOCUMENTS);

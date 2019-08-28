@@ -18,7 +18,6 @@ import { DatePipe } from '@angular/common';
     animations: fuseAnimations
 })
 export class TaskComponent implements OnInit {
-    @Input() SettingForm: FormGroup;
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
   
@@ -33,7 +32,7 @@ export class TaskComponent implements OnInit {
     MainTask: FormGroup;
     TaskAllData:any=[];
     addData: any = [];
-    filterData: {'MATTERGUID':any,'STATUS':any; 'Search': string; 'USERGUID': any; 'DUEDATEFROM':any; 'DUEDATETO':any};
+    filterData: {'MATTERGUID':any,'STATUS':any; 'Search': string; 'USERGUID': any; 'DUEDATEFROM':any; 'DUEDATETO':any,"Matter":any};
     displayedColumns:any;
     highlightedRows: any;
   ImgDisAb: string;
@@ -47,7 +46,7 @@ export class TaskComponent implements OnInit {
         this.getTableFilter();
         this.getUserdata();
        this.LoadData({});
-     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 70)) + 'px');
+     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     
      this.MainTask = this._formBuilder.group({
             matterCheck: [''],
@@ -61,10 +60,10 @@ export class TaskComponent implements OnInit {
         });
 
         this.filterData = {
-          'MATTERGUID':'','Search': '', "USERGUID": '','DUEDATEFROM':'','DUEDATETO':'','STATUS':' '
+          'MATTERGUID':'','Search': '', "USERGUID": '','DUEDATEFROM':'','DUEDATETO':'','STATUS':' ',"Matter":''
          }
-         this.filterData.DUEDATEFROM=new Date();
-         this.filterData.DUEDATETO=new Date();
+        //  this.filterData.DUEDATEFROM=new Date();
+        //  this.filterData.DUEDATETO=new Date();
          if(!localStorage.getItem("task_filter")){
            localStorage.setItem('task_filter', JSON.stringify(this.filterData));
          }else{
@@ -73,18 +72,19 @@ export class TaskComponent implements OnInit {
          console.log(this.filterData);
         //  console.log(this.filterData.user);
         this.MainTask.controls['status'].setValue(this.filterData.STATUS);
+        this.MainTask.controls['matter'].setValue(this.filterData.Matter);
         // this.MainTask.controls['User'].setValue(this.filterData.user);
         let date = this.filterData.DUEDATEFROM.split("/");
         let putDate1 = new Date(date[1] + '/' + date[0] + '/' + date[2]);
         let date2 = this.filterData.DUEDATETO.split("/");
         let putDate2 = new Date(date2[1] + '/' + date2[0] + '/' + date2[2]);
-        this.MainTask.controls['DateRange'].setValue({begin:putDate1,end:putDate2});
-        // this.MainTask.controls['matter'].setValue();
-        this.MainTask.controls['matterCheck'].setValue(true);
-        this.MainTask.controls['matter'].disable();      
+        this.MainTask.controls['DateRange'].setValue({begin:putDate1,end:putDate2});       
         this.LoadData(this.filterData); 
-        this.CheckboxChecxed();
-    
+        if(this.filterData.Matter ==''){
+          this.MainTask.controls['matterCheck'].setValue(true);
+          this.MainTask.controls['matter'].disable();      
+          this.CheckboxChecxed();
+        }
       }
     getTableFilter() {
         this.TableColumnsService.getTableFilter('Tasks', '').subscribe(response => {
@@ -154,6 +154,7 @@ export class TaskComponent implements OnInit {
                     
                     this.filterData =JSON.parse(localStorage.getItem("task_filter"));
                     this.filterData.MATTERGUID = result.MATTERGUID;
+                    this.filterData.Matter = result.MATTER;
                     localStorage.setItem('task_filter', JSON.stringify(this.filterData));
                     this.LoadData(this.filterData);
                 }
@@ -171,6 +172,7 @@ export class TaskComponent implements OnInit {
               this.MainTask.controls['matter'].setValue(result.MATTER);
               this.filterData =JSON.parse(localStorage.getItem("task_filter"));
               this.filterData.MATTERGUID = result.MATTERGUID;
+              this.filterData.Matter = result.MATTER;
               localStorage.setItem('task_filter', JSON.stringify(this.filterData));
               this.LoadData(this.filterData);
             }
@@ -207,7 +209,7 @@ export class TaskComponent implements OnInit {
       console.log(value)
       this.filterData =JSON.parse(localStorage.getItem("task_filter"));
       this.filterData.USERGUID = value.USERGUID;
-      // this.filterData.user = value;
+      //  this.filterData.user = value;
       localStorage.setItem('task_filter', JSON.stringify(this.filterData));
       this.LoadData(this.filterData);
     }

@@ -217,7 +217,6 @@ export class TaskDialogeComponent implements OnInit {
       this.TaskForm.controls['REMINDERDATE'].disable();
     }
       
-  
     }
     SelectMatter() {
         const dialogRef = this.dialog.open(MatterDialogComponent, { width: '100%', disableClose: true });

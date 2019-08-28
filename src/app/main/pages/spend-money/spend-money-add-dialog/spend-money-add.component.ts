@@ -66,14 +66,14 @@ export class SpendMoneyAddComponent implements OnInit {
   isItemSaveClicked: string;
   FinalExGSTAmount: number;
   itemAmountExGST: number;
-  SendMoney_data: any=[];
+  SendMoney_data: any = [];
   SendMoney_dataGUID: any;
   constructor(public dialogRef: MatDialogRef<SpendMoneyAddComponent>,
     @Inject(MAT_DIALOG_DATA) public _data: any,
     private _formBuilder: FormBuilder,
     public MatDialog: MatDialog,
     private toastr: ToastrService,
-    public behaviorService:BehaviorService,
+    public behaviorService: BehaviorService,
     public _matDialog: MatDialog, public datepipe: DatePipe, public _mainAPiServiceService: MainAPiServiceService) {
     this.action = _data.action;
 
@@ -81,10 +81,10 @@ export class SpendMoneyAddComponent implements OnInit {
     this.getPayee({});
 
     this.behaviorService.SpendMoneyData$.subscribe(result => {
-      if(result){
-      this.SendMoney_data=result;
-        
-      }          
+      if (result) {
+        this.SendMoney_data = result;
+
+      }
     });
   }
   ngOnInit() {
@@ -109,7 +109,7 @@ export class SpendMoneyAddComponent implements OnInit {
       AmountIncGST: [''],
       GSTType: [''],
       GST1: [''],
-      BankacGUID:[''],
+      BankacGUID: [''],
       AmountExGST: [''],
       Expenseac: [''],
       Note: [''],
@@ -120,24 +120,13 @@ export class SpendMoneyAddComponent implements OnInit {
       DatePaidForSend: [''],
       DateIncurredForSend: [''],
       MatterGUID: [''],
-      ExpenseacGUID:['']
+      ExpenseacGUID: ['']
     });
 
     if (this.action == 'edit') {
       $('#expac').addClass('menu-disabled');
       this.expac = true;
-      // this._mainAPiServiceService.getSetData({EXPENDITUREGUID:this.SendMoney_dataGUID.EXPENDITUREGUID}, 'GetExpenditure').subscribe(res => {
-      //   console.log(res);
-      //   this.SendMoney_data=res.DATA.EXPENDITURES[0]
-      //   if (res.CODE == 200 && res.STATUS == "success") {
-        
-      
-      //   }
-      //   // this.isLoadingResults = false;
-      // }, err => {
-      //   this.toastr.error(err);
-      //   // this.isLoadingResults = false;
-      // });
+
       this.forEditshowpopupData();
     } else {
       this.forAddshowpopupData();
@@ -170,11 +159,11 @@ export class SpendMoneyAddComponent implements OnInit {
     this.spendmoneyForm.controls['Amount'].setValue(this.SendMoney_data.AMOUNT + this.SendMoney_data.GST);
     this.spendmoneyForm.controls['GST'].setValue(this.SendMoney_data.GST);
     this.spendmoneyForm.controls['BankacGUID'].setValue(this.SendMoney_data.BANKACCOUNTGUID);
-    
+
     // inner item 
     if (this.SendMoney_data.EXPENDITUREITEMS.length != 0) {
       this.editMoney(this.SendMoney_data.EXPENDITUREITEMS[0], 0);
-      
+
       this.spendmoneyForm.controls['Class'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
       this.spendmoneyForm.controls['GST1'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].GST.toString());
       this.spendmoneyForm.controls['AmountIncGST'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT);
@@ -242,7 +231,7 @@ export class SpendMoneyAddComponent implements OnInit {
   //   this.spendmoneyForm.controls['Amount'].setValue(this.SendMoney_data.AMOUNT + this.SendMoney_data.GST);
   //   this.spendmoneyForm.controls['GST'].setValue(this.SendMoney_data.GST);
   //   this.spendmoneyForm.controls['BankacGUID'].setValue(this.SendMoney_data.BANKACCOUNTGUID);
-    
+
   //   // inner item 
   //   if (this.SendMoney_data.EXPENDITUREITEMS.length != 0) {
   //     this.editMoney(this.SendMoney_data.EXPENDITUREITEMS[0], 0);
@@ -480,7 +469,7 @@ export class SpendMoneyAddComponent implements OnInit {
         // this.spendmoneyForm.controls['Note'].setValue(this.f.Note.value);
         // this.spendmoneyForm.controls['AmountIncGST'].setValue(this.f.AmountIncGST.value);
         // this.spendmoneyForm.controls['Expenseac'].setValue(this.f.Expenseac.value);
-      } 
+      }
       // else if (this.action == 'edit' && SendMoney_data.MULTILINE == 1) {
       //   this.commonEmptyFiild();
       // }
@@ -529,7 +518,7 @@ export class SpendMoneyAddComponent implements OnInit {
     this.spendmoneyForm.controls['AmountIncGST'].setValue(0.00);
     this.spendmoneyForm.controls['GST1'].setValue(0.00);
     this.spendmoneyForm.controls['AmountExGST'].setValue(0.00);
-    this.GSTValForExGst=0.00;
+    this.GSTValForExGst = 0.00;
     this.spendmoneyForm.controls['Class'].setValue("Expense");
     this.spendmoneyForm.controls['Note'].setValue(" ");
     this.spendmoneyForm.controls['Expenseac'].setValue(" ");
@@ -566,8 +555,8 @@ export class SpendMoneyAddComponent implements OnInit {
         AMOUNT: this.f.AmountIncGST.value,
         GST: this.f.GST1.value,
         EXPENDITUREGUID: '',
-        EXPENSEACCOUNTGUID:this.f.ExpenseacGUID.value,
-        EXPENSEACCOUNT:this.f.Expenseac.value,
+        EXPENSEACCOUNTGUID: this.f.ExpenseacGUID.value,
+        EXPENSEACCOUNT: this.f.Expenseac.value,
         MATTERGUID: this.f.MatterGUID.value,
         SHORTNAME: this.f.Matter.value,
         NOTE: this.f.Note.value
@@ -668,32 +657,32 @@ export class SpendMoneyAddComponent implements OnInit {
       EXPENDITURECLASS: this.f.Class.value,
       EXPENDITUREGUID: '',
       EXPENDITUREITEMGUID: "",
-      EXPENSEACCOUNTGUID:this.f.ExpenseacGUID.value,
+      EXPENSEACCOUNTGUID: this.f.ExpenseacGUID.value,
       GST: Number(this.f.GST1.value),
       MATTERGUID: this.f.MatterGUID.value,
       NOTE: this.f.Note.value,
       SHORTNAME: this.f.Matter.value,
       WORKITEMGUID: "",
-      AMOUNTEXGST:Number(this.GSTValForExGst)
+      AMOUNTEXGST: Number(this.GSTValForExGst)
     });
   }
   commonSendMultiLineData() {
     this.setMainAmount = this.FinalTotal;
     this.setMainGST = this.FinalTotalGST;
     this.getDataForTable.forEach(element => {
-    // this.itemAmountExGST=Number(element.AMOUNT)-Number(element.GST);
-    this.sendItem.push({
+      // this.itemAmountExGST=Number(element.AMOUNT)-Number(element.GST);
+      this.sendItem.push({
         // AMOUNT: Number(element.AMOUNT),
         EXPENDITURECLASS: element.EXPENDITURECLASS,
         EXPENDITUREGUID: '',
         EXPENDITUREITEMGUID: "",
-        EXPENSEACCOUNTGUID:element.EXPENSEACCOUNTGUID,
+        EXPENSEACCOUNTGUID: element.EXPENSEACCOUNTGUID,
         GST: Number(element.GST),
         MATTERGUID: element.MATTERGUID,
         NOTE: element.NOTE,
         SHORTNAME: element.SHORTNAME,
         WORKITEMGUID: "",
-        AMOUNTEXGST:Number(element.AMOUNT)-Number(element.GST)
+        AMOUNTEXGST: Number(element.AMOUNT) - Number(element.GST)
       })
     });
   }
@@ -715,14 +704,14 @@ export class SpendMoneyAddComponent implements OnInit {
         EXPENDITURECLASS: this.f.Class.value,
         EXPENDITUREGUID: '',
         EXPENDITUREITEMGUID: "",
-        EXPENSEACCOUNTGUID:this.f.ExpenseacGUID.value,
+        EXPENSEACCOUNTGUID: this.f.ExpenseacGUID.value,
         GST: Number(this.f.GST1.value),
         MATTERGUID: this.f.MatterGUID.value,
         NOTE: this.f.Note.value,
         SHORTNAME: this.f.Matter.value,
         WORKITEMGUID: "",
-        AMOUNTEXGST:this.GSTValForExGst
-        
+        AMOUNTEXGST: this.GSTValForExGst
+
       });
       this.commonSendMultiLineData();
 
@@ -738,7 +727,7 @@ export class SpendMoneyAddComponent implements OnInit {
     else { this.multicheckboxval = 1; }
 
     //ammount calculation
-     this.FinalExGSTAmount=this.setMainAmount- this.setMainGST;
+    this.FinalExGSTAmount = this.setMainAmount - this.setMainGST;
 
     let Data = {
       EXPENDITUREGUID: this.action == 'edit' ? this.SendMoney_data.EXPENDITUREGUID : " ",
@@ -748,10 +737,10 @@ export class SpendMoneyAddComponent implements OnInit {
       PAYEE: this.f.Payee.value,
       MULTILINE: this.multicheckboxval,
       AMOUNT: this.FinalExGSTAmount,
-      GST:(this.setMainGST).toFixed(2),
+      GST: (this.setMainGST).toFixed(2),
       RECEIVEDDATE: this.f.DateIncurredForSend.value,
       DATE: this.f.DatePaidForSend.value,
-      BANKACCOUNTGUID:this.f.BankacGUID.value,
+      BANKACCOUNTGUID: this.f.BankacGUID.value,
       USERCODE: '',
       SOURCEREFERENCE: this.f.Invoice.value,
       NOTE: this.f.Notes.value,
@@ -849,17 +838,17 @@ export class SpendMoneyAddComponent implements OnInit {
   }
   BankingDialogOpen(type: any) {
 
-    if(type==''){
-      if(this.classtype =="Expense" || this.classtype =="Matter Expense" || this.classtype =="Description" ||this.classtype =="Others"){
-        type="EXPENSE";
-      }else if(this.classtype =="Capital"){
-        type="ASSET";
-      }else if(this.classtype =="Pay GST"){
-        type="INCOME";
-      }else if(this.classtype =="Pay Tax"){
-        type="INCOME";
-      }else if(this.classtype =="Personal"){
-        type="EQUITY";
+    if (type == '') {
+      if (this.classtype == "Expense" || this.classtype == "Matter Expense" || this.classtype == "Description" || this.classtype == "Others") {
+        type = "EXPENSE";
+      } else if (this.classtype == "Capital") {
+        type = "ASSET";
+      } else if (this.classtype == "Pay GST") {
+        type = "INCOME";
+      } else if (this.classtype == "Pay Tax") {
+        type = "INCOME";
+      } else if (this.classtype == "Personal") {
+        type = "EQUITY";
       }
     }
     const dialogRef = this.MatDialog.open(BankingDialogComponent, {
@@ -867,15 +856,15 @@ export class SpendMoneyAddComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if(type=="EXPENSE"){
+        if (type == "EXPENSE") {
           this.spendmoneyForm.controls['Expenseac'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER + ' ' + result.MainList.ACCOUNTNAME);
           this.spendmoneyForm.controls['ExpenseacGUID'].setValue(result.ACCOUNTGUID);
 
-        }else {
-            this.spendmoneyForm.controls['Bankac'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER + ' ' + result.MainList.ACCOUNTNAME);
-            this.spendmoneyForm.controls['BankacGUID'].setValue(result.ACCOUNTGUID);
+        } else {
+          this.spendmoneyForm.controls['Bankac'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER + ' ' + result.MainList.ACCOUNTNAME);
+          this.spendmoneyForm.controls['BankacGUID'].setValue(result.ACCOUNTGUID);
         }
-       
+
       }
     });
   }

@@ -101,6 +101,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     SendMoney_dataGUID: any;
     DocRegData: any = [];
     AccountGUID: any;
+    chartAccountDetail: any;
     TaskData: any;
     constructor(
         private _fuseConfigService: FuseConfigService,
@@ -163,6 +164,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else {
             this.hideShowDoc = 'no';
         }
+        this.behaviorService.ChartAccountData$.subscribe(result => {
+            if (result) {
+                this.chartAccountDetail = result;
+                this.AccountGUID = result.ACCOUNTGUID;
+            }
+        });
     }
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
@@ -916,25 +923,19 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //DeleteAccount
     DeleteAccount(): void {
-        this.behaviorService.ChartAccountData$.subscribe(result => {
-            if(result){
-             this.AccountGUID=result.ACCOUNTGUID;
-            }          
-          });
-         
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-        this.confirmDialogRef.afterClosed().subscribe(result => { 
-                let postData = { FormAction: "delete", DATA: { ACCOUNTGUID: this.AccountGUID } };
-                this._mainAPiServiceService.getSetData(postData, 'SetAccount').subscribe(res => {
-                    if (res.STATUS == "success" && res.CODE == 200) {
-                        $('#refreshChartACCTab').click();
-                        this.toastr.success('Delete successfully');
-                    }
-                });
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            let postData = { FormAction: "delete", DATA: { ACCOUNTGUID: this.AccountGUID } };
+            this._mainAPiServiceService.getSetData(postData, 'SetAccount').subscribe(res => {
+                if (res.STATUS == "success" && res.CODE == 200) {
+                    $('#refreshChartACCTab').click();
+                    this.toastr.success('Delete successfully');
+                }
+            });
         });
     }
     //Authority dialoge 
@@ -985,12 +986,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     //end of Authority dialoge 
-    //Account Trasactions
-    Account_Tra() {
-    }
-    //Recouncile Account
-    Reconcile_ac_pra() {
-    }
     //ReconcileAC
     ReconcileAC() {
         const dialogRef = this.dialog.open(SelectAccountComponent, {
@@ -1434,19 +1429,19 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             panelClass: 'Task-dialog',
             data: TaskPopdata
         });
-        dialogRef.afterClosed().subscribe(result => { 
-            if(result){
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
                 $("#refreshTask").click();
                 $("#refreshLegalTask").click();
             }
         });
     }
-    deleteTask(){
+    deleteTask() {
         this.behaviorService.TaskData$.subscribe(result => {
-            if(result){
-              this.TaskData=result;
-            }          
-          });
+            if (result) {
+                this.TaskData = result;
+            }
+        });
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true, width: '100%',
         });
@@ -1484,14 +1479,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                     this.SafeCustodyPoup(actionType);
                 }
             });
-        } else if(actionType == 'new matter') {
+        } else if (actionType == 'new matter') {
             const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     this.SafeCustodyPoup(actionType);
                 }
             });
-        }else{
+        } else {
             this.SafeCustodyPoup(actionType);
         }
     }

@@ -14,9 +14,7 @@
                         </mat-form-field>
                         <mat-form-field class="example" appearance="outline" fxFlex="16.66">
                             <mat-label>Bank Statement Date</mat-label>
-                            <input (dateInput)="choosedDate()"
-                                (dateChange)="choosedDateOfBank()" matInput formControlName="Bankdate"
-                                [matDatepicker]="picker">
+                            <input (dateInput)="choosedDate()" (dateChange)="choosedDateOfBank()" matInput formControlName="Bankdate" [matDatepicker]="picker">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
@@ -53,8 +51,7 @@
                         </mat-form-field>
                         <mat-form-field class="search" appearance="outline" fxFlex="20">
                             <mat-label>Search</mat-label>
-                            <input matInput placeholder="Search" 
-                                formControlName="searchFilter">
+                            <input matInput placeholder="Search" formControlName="searchFilter">
                             <mat-icon matSuffix>search</mat-icon>
                         </mat-form-field>
                     </div>
@@ -78,69 +75,20 @@
                                         <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                                     </div>
                                     <div class="example-containerdata">
-                                        <table mat-table [dataSource]="dataSource" matSort>
-
-                                            <!-- Checkbox Column -->
-                                            <ng-container matColumnDef="select">
-                                                <th mat-header-cell *matHeaderCellDef>
-                                                    <mat-checkbox (change)="$event ? masterToggle() : null"
-                                                        [checked]="selection.hasValue() && isAllSelected()"
-                                                        [indeterminate]="selection.hasValue() && !isAllSelected()"
-                                                        [aria-label]="checkboxLabel()">
-                                                    </mat-checkbox>
-                                                </th>
+                                        <table mat-table [dataSource]="ReconciliationData" matSort [@animateStagger]="{value:'50'}">
+                                            <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
+                                                <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header> {{ tempColobj[item].DESCRIPTION }}</th>
                                                 <td mat-cell *matCellDef="let row">
-                                                    <mat-checkbox (click)="$event.stopPropagation()"
-                                                        (change)="$event ? selection.toggle(row) : null"
-                                                        [checked]="selection.isSelected(row)"
-                                                        [aria-label]="checkboxLabel(row)">
-                                                    </mat-checkbox>
+                                                    <span *ngIf="row[item]">{{row[item]}}</span>
                                                 </td>
                                             </ng-container>
-
-
-                                            <ng-container matColumnDef="Chequeno">
-                                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Cheque No </th>
-                                                <td mat-cell *matCellDef="let element"> {{element.Chequeno}} </td>
-                                            </ng-container>
-
-
-                                            <ng-container matColumnDef="Chequetotal">
-                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Cheque Total
-                                                </th>
-                                                <td mat-cell *matCellDef="let element"> {{element.Chequetotal}} </td>
-                                            </ng-container>
-
-
-                                            <ng-container matColumnDef="Description">
-                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-                                                <td mat-cell *matCellDef="let element"> {{element.Description}} </td>
-                                            </ng-container>
-
-
-                                            <ng-container matColumnDef="Withdrawals">
-                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Withdrawals </th>
-                                                <td mat-cell *matCellDef="let element"> {{element.Withdrawals}} </td>
-                                            </ng-container>
-
-                                            <ng-container matColumnDef="Deposite">
-                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Deposite </th>
-                                                <td mat-cell *matCellDef="let element"> {{element.Deposite}} </td>
-                                            </ng-container>
-
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                            <tr [style.background]="highlightedRows == row.Chequeno ? selectedColore : ''"
-                                                [ngClass]="highlightedRows == row.Chequeno ? 'row-text-colore' : ''"
-                                                highlightedRows=row.Chequeno mat-row
-                                                *matRowDef="let row; columns: displayedColumns;"
-                                                (click)="clickAc(row.Chequeno);highlightedRows = row.Chequeno "
-                                                (click)="selection.toggle(row)" matRipple>
+                                            <tr [style.background]="highlightedRows == row.RECONCILIATIONGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.RECONCILIATIONGUID ? 'row-text-colore' : ''" highlightedRows=row.RECONCILIATIONGUID mat-row *matRowDef="let row; columns: displayedColumns;"
+                                                (click)="editBanking(row.RECONCILIATIONGUID, row);highlightedRows = row.RECONCILIATIONGUID " matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                             </tr>
                                         </table>
-                                        <!-- </div> -->
-                                        <mat-paginator [pageSizeOptions]="[10, 20,50,100]" showFirstLastButtons>
-                                        </mat-paginator>
                                     </div>
+                                    <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
                                 </div>
                             </div>
                         </div>

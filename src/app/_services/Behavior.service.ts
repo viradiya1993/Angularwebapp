@@ -18,7 +18,7 @@ export class BehaviorService {
 
   public DocumentRegisterData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public SpendMoneyData$: BehaviorSubject<any> = new BehaviorSubject(null);
-  public ChartAccountData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public ChartAccountData$: BehaviorSubject<any> = new BehaviorSubject(JSON.parse(localStorage.getItem('ChartAccountData')));
 
   public MatterData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public TaskData$: BehaviorSubject<any> = new BehaviorSubject(null);

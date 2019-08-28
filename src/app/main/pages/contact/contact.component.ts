@@ -103,7 +103,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
         if (response.DATA.CONTACTS[0]) {
           localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);
           // localStorage.setItem('contactData',  JSON.stringify(response.DATA.CONTACTS[0]));
-          
+
           this.highlightedRows = response.DATA.CONTACTS[0].CONTACTGUID;
         }
         this.isLoadingResults = false;
@@ -122,7 +122,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
 
 
   //for edit popup
-  editContact(val,row) {
+  editContact(val, row) {
     localStorage.setItem('contactGuid', val);
     // localStorage.setItem('contactData',row);
   }

@@ -2430,8 +2430,8 @@
                                 </section>
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab">
-                                    <section [ngClass]="appPermissions[19]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[19]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="Account_Tra()">
+                                    <section [ngClass]="chartAccountDetail?.ACCOUNTTYPE!=3 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="chartAccountDetail?.ACCOUNTTYPE!=3 ? 'disabled-click large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_arrowdown_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -2442,8 +2442,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[19]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[19]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" (click)="isMatterClick()" [routerLink]="'/account-reconciliation'">
+                                    <section [ngClass]="chartAccountDetail?.ACCOUNTTYPE!=3 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="chartAccountDetail?.ACCOUNTTYPE!=3 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/account-reconciliation'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_receipt_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -2618,7 +2618,7 @@
                                 <section class="group-section-tab extras_tab">
                                     <section class="ribbon-section">
                                         <mat-nav-list>
-                                            <a mat-list-item [routerLink]="'/account-reconciliation'" [ngClass]="activeSubMenu =='account-reconciliation'  ? 'cmn_active_tab':''">
+                                            <a mat-list-item [routerLink]="'/account-reconciliation/reconciliation-item'" [ngClass]="activeSubMenu =='reconciliation-item'  ? 'cmn_active_tab':''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_tagitem_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>

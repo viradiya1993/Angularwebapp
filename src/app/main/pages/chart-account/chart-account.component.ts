@@ -14,6 +14,7 @@ import { MainAPiServiceService, BehaviorService } from 'app/_services';
 interface FoodNode {
   name: string;
   ACCOUNTGUID: string;
+  ACCOUNTTYPE: string;
   ACCOUNTCLASS: any;
   ACCOUNTNAME: any;
   ACCOUNTNUMBER: any;
@@ -58,6 +59,7 @@ export class ChartAccountComponent implements OnInit {
       name: node.ACCOUNTCLASS + ' - ' + node.ACCOUNTNUMBER + '        ' + node.ACCOUNTNAME,
       class: node.ACCOUNTNAME,
       ACCOUNTGUID: node.ACCOUNTGUID,
+      ACCOUNTTYPE: node.ACCOUNTTYPE,
       index: node.index,
       parent: node.parent,
       level: level,
@@ -138,21 +140,9 @@ export class ChartAccountComponent implements OnInit {
     });
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
-  //TypeOfAccounts Dropdown
-  TypeOfAccounts(value) {
-    console.log(value);
-  }
-  //openDialog
-  openDialog() {
-
-  }
-  //selectTreeNode
-  selectTreeNode() {
-    console.log('selected Work!!!');
-  }
   RowClick(val) {
     this.behaviorService.ChartAccountData(val);
-
+    localStorage.setItem('ChartAccountData', JSON.stringify({ "name": val.name, "class": val.class, "ACCOUNTGUID": val.ACCOUNTGUID, "ACCOUNTTYPE": val.ACCOUNTTYPE, "index": val.index, "parent": val.parent, "level": val.level }));
   }
   AccountClass(val) {
     this.filterData = JSON.parse(localStorage.getItem("chartAcc_filter"));
@@ -163,10 +153,7 @@ export class ChartAccountComponent implements OnInit {
   refreshChartACCTab() {
     this.loadData(this.filterData)
   }
-  onPaginateChange(val) {
-    console.log(val);
-    // console.log(this.storeDataarray);
-  }
+
   FilterSearch(val) {
 
   }

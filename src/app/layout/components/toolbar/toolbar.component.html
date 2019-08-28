@@ -1139,7 +1139,7 @@
                                                         <img class="menu-disabled" src="assets/icons/web_app/icon_doc_reg_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <div class="main-text">
-                                                    <span>Document <br> Register</span>
+                                                    <span>Document <br>Register</span>
                                                 </div>
                                             </section>
                                         </button>
@@ -1248,11 +1248,6 @@
                                     <div class="light_label_txt">Action</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
-
-
-
-
-
                                 <section class="group-section-tab details_tab" *ngIf="activeSubMenu ==='safe-custody'">
                                     <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="OpenNewSafeCustody('new')" (click)="setTab($event)">
@@ -1270,7 +1265,7 @@
                                         <button mat-button class="large-button" (click)="OpenNewSafeCustody('edit')">
                                    <section class="large-button-container">
                                       <mat-icon class="main-icon">
-                                            <img class="menu-disabled" src="assets/icons/web_app/icon_safecustody_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            <img class="" src="assets/icons/web_app/icon_safecustody_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                       </mat-icon>
                                       <div class="main-text">
                                         <span>Edit Safe <br/>Custody</span>
@@ -1280,7 +1275,7 @@
                                         <button mat-button class="large-button">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
-                                                        <img class="menu-disabled" src="assets/icons/web_app/icon_safecustody_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                        <img class="" src="assets/icons/web_app/icon_safecustody_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <div class="main-text">
                                                     <span>Delete Safe <br/>Custody</span>
@@ -1306,7 +1301,7 @@
                                                 </section>
                                             </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[18]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                    <section [ngClass]="appPermissions[18]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[18]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="TaskDialoge('edit')" (click)="setTab($event)">
                                                     <section class="large-button-container">
                                                         <mat-icon class="main-icon">
@@ -1316,7 +1311,7 @@
                                                             <span>Edit <br/>Task</span>
                                                         </div>
                                                     </section>
-                                                </button>
+                                        </button>
                                     </section>
                                     <section [ngClass]="appPermissions[18]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[18]?.Delete==0 ? 'disabled-click large-button' : 'large-button'" (click)="OpenNewSafeCustody('new')" (click)="setTab($event)">

@@ -1478,7 +1478,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     OpenNewSafeCustody(actionType) {
 
         if (actionType == 'new client') {
-            const dialogRef = this._matDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true, });
+            const dialogRef = this._matDialog.open(ContactSelectDialogComponent, { width:'100%',disableClose: true, 
+            data:{
+                type:null
+              } });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     this.SafeCustodyPoup(actionType);

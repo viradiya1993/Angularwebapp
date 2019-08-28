@@ -30,14 +30,15 @@ export class AccountDialogComponent implements OnInit {
         console.log(result);
         this.accountDialoge=result;
       }
-    this._mainAPiServiceService.getSetData({ACCOUNTGUIDNAME:result.ACCOUNTGUIDNAME}, 'GetSystem').subscribe(response=>{
-     console.log(response);
+
+  });
+    this._mainAPiServiceService.getSetData({ACCOUNTGUIDNAME: this.accountDialoge.ACCOUNTGUIDNAME}, 'GetSystem').subscribe(response=>{
+    console.log(response);
       // this.getDropDownValue=response.DATA.LISTS;
-       
+  
       // this.getMatterClass(response);
      
        })
-  });
   this.accDialoge.Name=this.accountDialoge.DESCRIPTION
   this.accDialoge.AccNo=this.accountDialoge.ACCOUNTNO;
   this.accDialoge.AccType=this.accountDialoge.ACCOUNTTYPE

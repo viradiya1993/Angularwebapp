@@ -81,7 +81,9 @@ export class RecounciliationItemComponent implements OnInit {
       this.selection.clear() :
       this.ReconciliationData.data.forEach(row => this.selection.select(row));
   }
-
+  helloFunction() {
+    console.log(this.selection.selected);
+  }
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: any): string {
     if (!row) {

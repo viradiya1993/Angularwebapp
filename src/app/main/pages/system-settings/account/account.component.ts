@@ -20,6 +20,7 @@ export class AccountComponent implements OnInit {
   isLoadingResults: boolean = false;
   accountData:any=[];
   pageSize: any;
+  PassArray:any=[];
   FinalList:any=[];
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
@@ -70,11 +71,12 @@ export class AccountComponent implements OnInit {
   });
 
   dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      console.log(this.INDEX);
-      console.log(this.FinalList)
       this.FinalList.data[this.INDEX].ACCOUNTNAME=result[0].ACCOUNTNAME;
       this.FinalList.data[this.INDEX].ACCOUNTNO=result[0].ACCOUNTNUMBER;
+      this.FinalList.data[this.INDEX].ACCOUNTGUID=result[0].ACCOUNTGUID
+      this.PassArray.push(this.FinalList.data[this.INDEX]);
+      this.behaviorService.SysytemAccountData(this.PassArray);
+
   });
   }
   accountrow(val,index){
@@ -82,14 +84,14 @@ export class AccountComponent implements OnInit {
   this.behaviorService.SysytemAccountData(val);
   }
   save(){
-    let data1 = { FormAction: "update", VALIDATEONLY: true, Data:this.FinalList.data[this.INDEX] }
-    this._mainAPiServiceService.getSetData(data1, 'SetSystem').subscribe(response=>{
-     console.log(response);
-      // this.getDropDownValue=response.DATA.LISTS;
+    // let data1 = { FormAction: "update", VALIDATEONLY: true, Data:this.FinalList.data[this.INDEX] }
+    // this._mainAPiServiceService.getSetData(data1, 'SetSystem').subscribe(response=>{
+    //  console.log(response);
+    //   // this.getDropDownValue=response.DATA.LISTS;
        
-      // this.getMatterClass(response);
+    //   // this.getMatterClass(response);
      
-       })
+    //    })
   }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;

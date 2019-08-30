@@ -33,9 +33,8 @@ export class TrustMoneyDialogeComponent implements OnInit {
   displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   selection = new SelectionModel<PeriodicElement>(true, []);
-
-  @Input() SettingForm: FormGroup;
-  @Input() errorWarningData: any;
+  
+  isLoadingResults: boolean = false;
   TrustMoneyData={
       "PaymentType":"Cheque", "CheckBox":false
   }

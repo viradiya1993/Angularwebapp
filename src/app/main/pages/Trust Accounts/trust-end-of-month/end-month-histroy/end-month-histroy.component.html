@@ -6,21 +6,21 @@
                   
                         <mat-form-field appearance="outline" class="example">
                             <mat-label>Filter</mat-label>
-                            <input matInput (keyup.enter)="onSearch($event)">
+                            <input matInput >
                         </mat-form-field>
                         <!-- <button mat-raised-button color="primary" type="button" id="refreshContactTab" (click)="refreshContactTab();">Refresh</button> -->
                     </form>
                 </div>
                 <div class="content">
                     <div class="btn contact_right_action one">
-                        <button mat-icon-button (click)="openDialog()" aria-label="More">
+                        <button mat-icon-button  aria-label="More">
                             <mat-icon class="secondary-text">more_vert</mat-icon>
                         </button>
                     </div>
                     <div class="content">
-                        <div class="example-loading-shade" *ngIf="isLoadingResults">
+                        <!-- <div class="example-loading-shade" *ngIf="isLoadingResults">
                             <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
-                        </div>
+                        </div> -->
                         <div class="example-containerdata">
                             <!-- <table  mat-table [dataSource]="Contactdata" matSort [@animateStagger]="{value:'50'}">
                                 <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
@@ -35,7 +35,7 @@
                                 </tr>
                             </table> -->
                         </div>
-                        <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+                        <!-- <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator> -->
                     </div>
                 </div>
             </div>

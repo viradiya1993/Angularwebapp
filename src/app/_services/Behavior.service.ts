@@ -24,10 +24,15 @@ export class BehaviorService {
   public TaskData$: BehaviorSubject<any> = new BehaviorSubject(null);
   
   public SysytemAccountData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public UserDropDownData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  
   constructor(private http: HttpClient) { }
 
   matterInvoiceData(matterInvoice: any) {
     this.matterInvoice$.next(matterInvoice);
+  }
+  UserDropDownData(UserDropDownData: any) {
+    this.UserDropDownData$.next(UserDropDownData);
   }
   SysytemAccountData(SysytemAccountData: any) {
     this.SysytemAccountData$.next(SysytemAccountData);

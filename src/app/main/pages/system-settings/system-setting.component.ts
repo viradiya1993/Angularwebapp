@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { MainAPiServiceService } from './../../../_services';
+import { MainAPiServiceService, BehaviorService } from './../../../_services';
 import {Location} from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
@@ -22,17 +22,28 @@ export class SystemSettingComponent implements OnInit {
   isLoadingResults: boolean = false;
   button:string;
   ForDataBind: any;
+  SetAccountArray:any=[];
   SettingForm: FormGroup;
   view: any;
+  accountDialoge:any=[];
   texVal:any=[];
   clicked: any;
+  
   isspiner: boolean = false;
   clickedBtn: string;
+  StoreName: any;
 
   constructor(private _mainAPiServiceService: MainAPiServiceService,public _matDialog: MatDialog,private toastr: ToastrService,private location: Location,
-    public router: Router,  private route: ActivatedRoute,  private _formBuilder: FormBuilder,) { 
+    public router: Router,  private route: ActivatedRoute,  private _formBuilder: FormBuilder,public behaviorService:BehaviorService) { 
     // this.nameFunction();
     this.nameFunction();
+    this.behaviorService.SysytemAccountData$.subscribe(result => {
+      if (result) {
+     
+        this.accountDialoge=result;
+      }
+
+  });
   }
   
   ngOnInit() {
@@ -313,6 +324,18 @@ export class SystemSettingComponent implements OnInit {
     return this.SettingForm.controls;
   }
   save(){
+
+    this.accountDialoge.forEach(element => {
+   
+    this.StoreName=element.ACCOUNTGUIDNAME;
+    console.log(this.StoreName=element.ACCOUNTGUID);
+    // this.abc.push({abc:"jkdjs"})
+    let key=element.ACCOUNTGUIDNAME;
+    let val=element.ACCOUNTGUID;
+    let tData:any={};
+    tData[key]=val;
+    this.SetAccountArray=tData;
+    });
     let data={
       //for name 
       BARRISTERSNAME:this.f.BARRISTERSNAME.value,
@@ -401,8 +424,16 @@ export class SystemSettingComponent implements OnInit {
         DOCUMENTSAVESTRATEGY:this.f.DOCUMENTSAVESTRATEGY.value,
         TRACKDOCUMENTS:this.f.TRACKDOCUMENTS.value,
       },
+      // ACCOUNTSGROUP:{
+        
+      //   ACCOUNTGUIDNAME :this.accountDialoge.ACCOUNTGUIDNAME,
+      //   ACCOUNTNO:this.accountDialoge.ACCOUNTNO,
+      //   ACCOUNTNAME:this.accountDialoge.ACCOUNTNAME
+      // }
+      ACCOUNTSGROUP:this.SetAccountArray,
+
     }
-    let data1 = { FormAction: "insert", VALIDATEONLY: true, Data: data }
+    let data1 = { FormAction: "update", VALIDATEONLY: true, Data: data }
     this._mainAPiServiceService.getSetData(data1, 'SetSystem').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, data1);

@@ -14,6 +14,8 @@ import * as $ from 'jquery';
 export class TrustMoneyComponent implements OnInit {
   @Input() SettingForm: FormGroup;
   @Input() errorWarningData: any;
+  isLoadingResults: boolean = false;
+  pageSize: any;
   addData:any=[];
   constructor(private _mainAPiServiceService:MainAPiServiceService) { }
 
@@ -25,7 +27,14 @@ export class TrustMoneyComponent implements OnInit {
     // })
     
   }
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
+  }
   
+  selectDayRange(val){
+
+  }
  
 
 }

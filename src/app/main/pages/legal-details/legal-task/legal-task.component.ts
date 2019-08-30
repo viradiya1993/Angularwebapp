@@ -27,10 +27,13 @@ export class legalDetailTaskComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   Task_table:any=[];
+  GetUSERS:any=[];
   pageSize: any;
+  filterData:any=[];
   public legalTaskData ={
-    "MatterName":'',"ContactName":'',"Search": ''
+    "MatterName":'',"ContactName":'',"Search": '','Status':''
   }
+  MainTaskFilterData: any;
   constructor(private _mainAPiServiceService:MainAPiServiceService,
   private toastr: ToastrService,private dialog: MatDialog,private TableColumnsService: TableColumnsService,
   public behaviorService: BehaviorService) { }
@@ -39,11 +42,34 @@ export class legalDetailTaskComponent implements OnInit {
     $('content').addClass('inner-scroll');
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 30)) + 'px');
     this.getTableFilter();
-    this.LoadData();
- this.legalTaskData.MatterName=this.currentMatter.SHORTNAME;
- this.legalTaskData.ContactName=this.currentMatter.CONTACTNAME;
+   
+    this.getUserdata();
+    this.MainTaskFilterData=JSON.parse(localStorage.getItem("task_filter"));
+    this.filterData = {
+      'MATTERGUID': this.currentMatter.MATTERGUID,  'STATUS': ' ' 
+    }
+    if (!localStorage.getItem("task_filter_legal")) {
+      localStorage.setItem('task_filter_legal', JSON.stringify(this.filterData));
+    }else {
+      this.filterData = JSON.parse(localStorage.getItem("task_filter_legal"));
+    }
+    this.LoadData(this.filterData);
+    this.legalTaskData.MatterName=this.currentMatter.MATTER;
+    this.legalTaskData.ContactName=this.currentMatter.CONTACTNAME;
   }
-  
+  getUserdata() {
+    this._mainAPiServiceService.getSetData({ 'Active':'yes' },'GetUsers').subscribe(response => {
+      console.log(response);
+      if(response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
+        // this.GetUSERS = response.DATA.USERS;
+        // if()
+        let check= JSON.parse(localStorage.getItem("task_filter_legal"));
+        this.behaviorService.UserDropDownData(response.DATA.USERS[0]);
+       
+        
+      }
+    });
+  }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('legal details', 'tasks').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
@@ -56,10 +82,10 @@ export class legalDetailTaskComponent implements OnInit {
       this.toastr.error(error);
     });
   }
-  LoadData() {
+  LoadData(data){
     this.Task_table=[];
     this.isLoadingResults = true;
-    this._mainAPiServiceService.getSetData({MATTERGUID:this.currentMatter.MATTERGUID}, 'GetTask').subscribe(response => {
+    this._mainAPiServiceService.getSetData(data, 'GetTask').subscribe(response => {
         console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Task_table = new MatTableDataSource(response.DATA.TASKS);
@@ -99,7 +125,9 @@ export class legalDetailTaskComponent implements OnInit {
           this.Task_table.paginator = this.paginator;
           this.Task_table.sort = this.sort;
         } else {
-          this.LoadData();
+          this.filterData = JSON.parse(localStorage.getItem("task_filter_legal"));
+          this.LoadData(this.filterData);
+          // this.LoadData();
         }
       }
     });
@@ -124,14 +152,25 @@ export class legalDetailTaskComponent implements OnInit {
         
     });
   }
+  selectStatus(val){
+    this.filterData = JSON.parse(localStorage.getItem("task_filter_legal"));
+    this.filterData.STATUS = val;
+    localStorage.setItem('task_filter_legal',JSON.stringify(this.filterData));
+    this.LoadData(this.filterData);
+  }
+  FilterSearch(val){
+    this.Task_table.filter = val;
+  }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
   }
   RowClick(row){
     console.log(row);
+    this.behaviorService.TaskData(row);
   }
   refreshLegalTask(){
-    this.LoadData();
+    this.filterData = JSON.parse(localStorage.getItem("task_filter_legal"));
+    this.LoadData(this.filterData);
   }
 }

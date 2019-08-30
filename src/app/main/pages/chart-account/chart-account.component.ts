@@ -109,7 +109,8 @@ export class ChartAccountComponent implements OnInit {
         }
         this.showData(this.storeDataarray, 0, null);
         this.dataSource.data = this.storeDataarray;
-        this.RowClick(response.DATA.ACCOUNTS[0].SUBACCOUNTS[0]);
+        if (response.DATA.ACCOUNTS[0].SUBACCOUNTS)
+          this.RowClick(response.DATA.ACCOUNTS[0].SUBACCOUNTS[0]);
         this.highlightedRows = 1;
       } else if (response.MESSAGE == 'Not logged in') {
         // this.dialogRef.close(false);

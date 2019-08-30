@@ -3,10 +3,9 @@ import { MatDialogRef, MatDialog } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { Router } from '@angular/router';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { BehaviorService, MainAPiServiceService } from 'app/_services';
-
+import * as $ from 'jquery';
 @Component({
   selector: 'app-chart-ac-dailog',
   templateUrl: './chart-ac-dailog.component.html',
@@ -14,6 +13,7 @@ import { BehaviorService, MainAPiServiceService } from 'app/_services';
 })
 export class ChartAcDailogComponent implements OnInit {
   successMsg: any;
+  accountType: any;
   errorWarningData: any = {};
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   isLoadingResults: boolean = false;
@@ -24,17 +24,16 @@ export class ChartAcDailogComponent implements OnInit {
   AccountData: any = [];
   theCheckbox = true;
 
-  constructor
-    (
-      public MatDialog: MatDialog,
-      public dialogRef: MatDialogRef<ChartAcDailogComponent>,
-      private _formBuilder: FormBuilder,
-      private toastr: ToastrService,
-      private behaviorService: BehaviorService,
-      public _matDialog: MatDialog,
-      private _mainAPiServiceService: MainAPiServiceService,
-      @Inject(MAT_DIALOG_DATA) public data: any
-    ) {
+  constructor(
+    public MatDialog: MatDialog,
+    public dialogRef: MatDialogRef<ChartAcDailogComponent>,
+    private _formBuilder: FormBuilder,
+    private toastr: ToastrService,
+    private behaviorService: BehaviorService,
+    public _matDialog: MatDialog,
+    private _mainAPiServiceService: MainAPiServiceService,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
     this.action = data.action;
     if (this.action === 'new') {
       this.dialogTitle = 'New Account';
@@ -48,22 +47,46 @@ export class ChartAcDailogComponent implements OnInit {
 
   ngOnInit() {
     this.AccountForm = this._formBuilder.group({
+      ACCOUNTGUID: [''],
       ACCOUNTCLASS: [''],
       ACCOUNTNAME: ['', Validators.required],
       //General
       ACCOUNTNUMBER: ['1-'],
       ACCOUNTTYPE: [''],
       ACTIVE: [''],
+      //EXPORTINFO 
       MYOBEXPORTACCOUNT: [''],
+      //bank BANKDETAILS 
+      BANKNAME: [''],
+      BANKADDRESS: [''],
+      BANKBSB: [''],
+      BANKACCOUNTNUMBER: [''],
+      BANKTERM: [''],
+      BANKINTERESTRATE: [''],
     });
-    if (this.action == "edit") {
+    if (this.action == "edit" || this.action == 'duplicate') {
       this.isLoadingResults = true;
       this._mainAPiServiceService.getSetData({ ACCOUNTGUID: this.AccountData.ACCOUNTGUID }, 'GetAccount').subscribe(res => {
         if (res.CODE == 200 && res.STATUS == "success") {
-          this.AccountForm.controls['ACCOUNTCLASS'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTCLASS);
+          if (this.action != 'duplicate') {
+            this.AccountForm.controls['ACCOUNTGUID'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTGUID);
+          }
+          this.AccountForm.controls['ACCOUNTCLASS'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTCLASSNAME);          // toString()
           this.AccountForm.controls['ACCOUNTNAME'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTNAME);
+          //General
           this.AccountForm.controls['ACCOUNTNUMBER'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTCLASS + ' - ' + res.DATA.ACCOUNTS[0].ACCOUNTNUMBER);
-          this.AccountForm.controls['ACCOUNTTYPE'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTTYPE.toString());
+          this.AccountForm.controls['ACCOUNTTYPE'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTTYPENAME);          // toString()
+          this.accountType = res.DATA.ACCOUNTS[0].ACCOUNTTYPENAME;
+          this.AccountForm.controls['ACTIVE'].setValue(res.DATA.ACCOUNTS[0].ACTIVE);
+          //EXPORTINFO
+          this.AccountForm.controls['MYOBEXPORTACCOUNT'].setValue(res.DATA.ACCOUNTS[0].EXPORTINFO['MYOBEXPORTACCOUNT']);
+          //BANKDETAILS
+          this.AccountForm.controls['BANKNAME'].setValue(res.DATA.ACCOUNTS[0].BANKDETAILS['BANKNAME']);
+          this.AccountForm.controls['BANKADDRESS'].setValue(res.DATA.ACCOUNTS[0].BANKDETAILS['BANKADDRESS']);
+          this.AccountForm.controls['BANKBSB'].setValue(res.DATA.ACCOUNTS[0].BANKDETAILS['BANKBSB']);
+          this.AccountForm.controls['BANKACCOUNTNUMBER'].setValue(res.DATA.ACCOUNTS[0].BANKDETAILS['BANKACCOUNTNUMBER']);
+          this.AccountForm.controls['BANKTERM'].setValue(res.DATA.ACCOUNTS[0].BANKDETAILS['BANKTERM']);
+          this.AccountForm.controls['BANKINTERESTRATE'].setValue(res.DATA.ACCOUNTS[0].BANKDETAILS['BANKINTERESTRATE']);
         } else if (res.MESSAGE == 'Not logged in') {
           this.dialogRef.close(false);
         }
@@ -82,18 +105,25 @@ export class ChartAcDailogComponent implements OnInit {
   SaveAccount() {
     this.isspiner = true;
     let PostData: any = {
-      "ACCOUNTCLASS": this.f.ACCOUNTCLASS.value,
-      "ACCOUNTNAME": this.f.ACCOUNTNAME.value,
-
-      "ACCOUNTNUMBER": this.f.ACCOUNTNUMBER.value,
-      "ACCOUNTTYPE": this.f.ACCOUNTTYPE.value,
-      "ACTIVE": this.f.ACTIVE.value,
-      "MYOBEXPORTACCOUNT": this.f.MYOBEXPORTACCOUNT.value,
+      ACCOUNTCLASS: this.f.ACCOUNTCLASS.value,
+      ACCOUNTNAME: this.f.ACCOUNTNAME.value,
+      ACCOUNTNUMBER: this.f.ACCOUNTNUMBER.value,
+      ACCOUNTTYPE: this.f.ACCOUNTTYPE.value,
+      ACTIVE: this.f.ACTIVE.value,
+      MYOBEXPORTACCOUNT: this.f.MYOBEXPORTACCOUNT.value,
+      BANKDETAILS: {
+        BANKNAME: this.f.BANKNAME.value,
+        BANKADDRESS: this.f.BANKADDRESS.value,
+        BANKBSB: this.f.BANKBSB.value,
+        BANKACCOUNTNUMBER: this.f.BANKACCOUNTNUMBER.value,
+        BANKTERM: this.f.BANKTERM.value,
+        BANKINTERESTRATE: this.f.BANKINTERESTRATE.value,
+      }
     }
     this.successMsg = 'Save successfully';
     let FormAction = this.action == 'edit' ? 'update' : 'insert';
     if (this.action == 'edit') {
-      PostData.ACTIVITYGUID = this.f.ACTIVITYGUID.value;
+      PostData.ACCOUNTGUID = this.f.ACCOUNTGUID.value;
       this.successMsg = 'Update successfully';
     }
     let PostAccountData: any = { FormAction: FormAction, VALIDATEONLY: true, Data: PostData };
@@ -148,11 +178,15 @@ export class ChartAcDailogComponent implements OnInit {
       this.saveAccountData(PostAccountData);
     this.isspiner = false;
   }
+  onACCOUNTTYPE(value) {
+    this.accountType = value;
+  }
   saveAccountData(PostAccountData: any) {
     PostAccountData.VALIDATEONLY = false;
     this._mainAPiServiceService.getSetData(PostAccountData, 'SetAccount').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.toastr.success(this.successMsg);
+        $('#refreshChartACCTab').click();
         this.dialogRef.close(true);
       } else if (res.CODE == 451 && res.STATUS == 'warning') {
         this.toastr.warning(this.successMsg);
@@ -169,8 +203,4 @@ export class ChartAcDailogComponent implements OnInit {
       this.toastr.error(err);
     });
   }
-  FilterSearch(val) {
-
-  }
-
 }

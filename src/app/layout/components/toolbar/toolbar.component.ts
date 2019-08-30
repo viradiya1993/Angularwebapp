@@ -929,13 +929,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
-            let postData = { FormAction: "delete", DATA: { ACCOUNTGUID: this.AccountGUID } };
-            this._mainAPiServiceService.getSetData(postData, 'SetAccount').subscribe(res => {
-                if (res.STATUS == "success" && res.CODE == 200) {
-                    $('#refreshChartACCTab').click();
-                    this.toastr.success('Delete successfully');
-                }
-            });
+            if (result) {
+                let postData = { FormAction: "delete", DATA: { ACCOUNTGUID: this.AccountGUID } };
+                this._mainAPiServiceService.getSetData(postData, 'SetAccount').subscribe(res => {
+                    if (res.STATUS == "success" && res.CODE == 200) {
+                        $('#refreshChartACCTab').click();
+                        this.toastr.success('Delete successfully');
+                    }
+                });
+            }
         });
     }
     //Authority dialoge 
@@ -1473,10 +1475,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     OpenNewSafeCustody(actionType) {
 
         if (actionType == 'new client') {
-            const dialogRef = this._matDialog.open(ContactSelectDialogComponent, { width:'100%',disableClose: true, 
-            data:{
-                type:null
-              } });
+            const dialogRef = this._matDialog.open(ContactSelectDialogComponent, {
+                width: '100%', disableClose: true,
+                data: {
+                    type: null
+                }
+            });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     this.SafeCustodyPoup(actionType);

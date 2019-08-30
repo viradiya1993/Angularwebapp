@@ -129,7 +129,7 @@ app-recounciliation-item {
 }
 
 table tr.highlight {
-    background-color: #4CAF50 !important;
+    background-color: #4caf50 !important;
     color: #ffffff;
 }
 
@@ -140,7 +140,6 @@ button#refreshContactTab {
 // #AccountRecouncile .content .example {
 //     padding: 20px 10px;
 // }
-
 th.mat-sort-header-sorted {
     color: black;
 }
@@ -153,8 +152,10 @@ th.mat-sort-header-sorted {
     display: none;
 }
 
-h2{
+h2 {
     margin-left: 13px;
 }
 
-
+.sideText {
+    text-align: right;
+}

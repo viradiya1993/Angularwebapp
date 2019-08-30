@@ -1421,7 +1421,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         let TaskPopdata = {}
         if (actionType == 'new matter' || 'new general') {
             TaskPopdata = { action: actionType }
-        } else if (actionType == 'edit' || actionType == 'duplicate') {
+        } else if (actionType == 'edit' || actionType == 'copy' || actionType == 'copy legal' || actionType == 'edit legal') {
             TaskPopdata = { action: actionType }
         }
         const dialogRef = this.dialog.open(TaskDialogeComponent, {
@@ -1437,6 +1437,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     deleteTask() {
+        console.log("djlsad;");
         this.behaviorService.TaskData$.subscribe(result => {
             if (result) {
                 this.TaskData = result;
@@ -1453,6 +1454,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 this._mainAPiServiceService.getSetData(postData, 'SetTask').subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {
                         $("#refreshTask").click();
+                        $("#refreshLegalTask").click();
                         this.toastr.success('Delete successfully');
                     }
                 });

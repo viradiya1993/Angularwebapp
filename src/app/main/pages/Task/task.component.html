@@ -12,7 +12,7 @@
                                         <mat-option value="Not Started">Not Started</mat-option>
                                         <mat-option value="In Progress">In Progress</mat-option>
                                         <mat-option value="Completed">Completed</mat-option>
-                                        <mat-option value="Waiting on son">Waiting on son</mat-option>
+                                        <mat-option value="Waiting on someone else">Waiting on someone else</mat-option>
                                         <mat-option value="Deferred">Deferred</mat-option>
                                     </mat-select>
                                 </mat-form-field>
@@ -20,7 +20,7 @@
                                 <mat-form-field  fxFlex="20" class="example" appearance="outline">
                                     <mat-label>User</mat-label>
                                     <mat-select  (selectionChange)="selectUsers($event.value)"  formControlName="User">
-                                        <mat-option *ngFor="let val of GetUSERS"  [value]="val">{{val.USERNAME}}</mat-option>
+                                        <mat-option *ngFor="let val of GetUSERS" [value]="val.USERNAME" >{{val.USERNAME}}</mat-option>
                                         <!-- <mat-option value="None">None</mat-option>
                                         <mat-option value="CSP">CSP</mat-option>
                                         <mat-option value="DLP">DLP</mat-option>
@@ -37,10 +37,7 @@
                                     <mat-icon class="set_icon" matSuffix (click)='SelectMatter()'  >
                                             <img class="{{ImgDisAb}}" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                         </mat-icon>
-                                </mat-form-field>
-                                
-                               
-                                
+                                </mat-form-field> 
                                 <!-- <mat-form-field appearance="outline" class="example" fxFlex="20">
                                         <mat-label>Date Range</mat-label>
                                         <input formControlName="DateRange"  matInput  [satDatepicker]="picker2" (dateChange)="DateRange1('change', $event)" (dateInput)="DateRange('input', $event)"  (dateChange)="DateRange1()">

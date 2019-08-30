@@ -14,6 +14,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class SafeCustodyDialogeComponent implements OnInit {
   @Input() SettingForm: FormGroup;
   highlightedRows: any;
+  isLoadingResults: boolean = false;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   @Input() errorWarningData: any;

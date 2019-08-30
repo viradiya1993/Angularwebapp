@@ -110,7 +110,11 @@ export class EmailTempleteComponent implements OnInit {
   EmailDialog() {
 
   }
-
+  onPaginateChange(event) {
+    console.log(event);
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
+  }
   dblclickEmail(row){
 
     this.behaviorService.EmailGenerateData$.subscribe(result => {

@@ -22,7 +22,7 @@
             </div>
             <div fxLayout="row" fxLayoutAlign="start center" class="matter-serach-div sticky_search_div">
                 <form name="form"   fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field  class="example p-16" fxFlex="22" appearance="outline" >
+                    <mat-form-field  class="example p-16" fxFlex="20" appearance="outline" >
                         <mat-label>Matter</mat-label>
                         <input [(ngModel)]="legalTaskData.MatterName" name="MatterName"  readonly  matInput>
                     </mat-form-field>
@@ -31,7 +31,7 @@
                         <img class="seticon" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                     </mat-icon>
                     
-                    <mat-form-field class="example p-16" fxFlex="22" appearance="outline" >
+                    <mat-form-field class="example p-16" fxFlex="20" appearance="outline" >
                         <mat-label>Client</mat-label>
                         <input [(ngModel)]="legalTaskData.ContactName" name="ContactName" readonly  matInput>
                     </mat-form-field>
@@ -39,12 +39,29 @@
                     <mat-icon matSuffix (click)='SelectContact()'  fxFlex="5">
                         <img class="seticon" src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                     </mat-icon>
-    
-                    <mat-form-field class="example p-16" fxFlex="22" appearance="outline" >
+                    <mat-form-field fxFlex="20" class="example" appearance="outline">
+                        <mat-label>Status</mat-label>
+                        <mat-select (selectionChange)="selectStatus($event.value)"  name="Status" [(ngModel)]="legalTaskData.Status">
+                            <mat-option value=" ">All</mat-option>
+                            <mat-option value="Incomplete">Incomplete</mat-option>
+                            <mat-option value="Not Started">Not Started</mat-option>
+                            <mat-option value="In Progress">In Progress</mat-option>
+                            <mat-option value="Completed">Completed</mat-option>
+                            <mat-option value="Waiting on someone else">Waiting on someone else</mat-option>
+                            <mat-option value="Deferred">Deferred</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="search" appearance="outline" fxFlex="20">
+                        <mat-label>Search</mat-label>
+                        <input matInput placeholder="search"   (keyup)='FilterSearch($event.target.value)'>
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+                    <!-- <mat-form-field class="example p-16" fxFlex="22" appearance="outline" >
                         <mat-label>Search</mat-label>
                         <input matInput placeholder="search"   >
                         <mat-icon matSuffix>search</mat-icon>
-                    </mat-form-field>
+                    </mat-form-field> -->
                 </form>
             </div>
             <div id="legalTasktab" class="page-layout simple left-sidebar  inner-sidebar">

@@ -56,12 +56,11 @@ export class AccountDialogComponent implements OnInit {
         this.accDialoge.AccNo = result.name;
         this.accDialoge.AccNo = result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER + ' ' + result.MainList.ACCOUNTNAME;
         this.SendArray.push({ACCOUNTNUMBER:result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER,
-        ACCOUNTNAME: result.MainList.ACCOUNTNAME})
+        ACCOUNTNAME: result.MainList.ACCOUNTNAME,ACCOUNTGUID:result.MainList.ACCOUNTGUID})
       }
     });
 }
 SaveClick(){
-  console.log(this.SendArray);
   this.dialogRef.close(this.SendArray);
 }
 

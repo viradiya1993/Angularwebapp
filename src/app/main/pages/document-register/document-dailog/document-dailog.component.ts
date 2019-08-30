@@ -48,7 +48,7 @@ export class DocumentDailogComponent implements OnInit {
     if(this.action === 'new'){
       this.dialogTitle = 'New Document';
     }else if(this.action === 'edit'){
-      this.dialogTitle = 'Edit Document';
+      this.dialogTitle = 'Update Document';
     }else{
       this.dialogTitle = 'Duplicate Document';
     }

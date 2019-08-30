@@ -117,7 +117,6 @@ export class DocumentRegisterComponent implements OnInit {
       });
     }
   }
-
   DocumentDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
@@ -144,7 +143,7 @@ export class DocumentRegisterComponent implements OnInit {
 
   //FilterSearch
   FilterSearch(filterValue:any){
-    this.DocumentAllData.filter = filterValue;
+    // this.DocumentAllData.filter = filterValue;
   }
   //FloderChnage
   FloderChnage(value){

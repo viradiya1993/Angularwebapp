@@ -123,6 +123,23 @@ export class SpendMoneyAddComponent implements OnInit {
       ExpenseacGUID: ['']
     });
 
+    this.isLoadingResults = true;
+    this._mainAPiServiceService.getSetData({EXPENDITUREGUID:this.SendMoney_data.EXPENDITUREGUID}, 'GetExpenditure').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") { 
+        console.log(response);
+        this.behaviorService.SpendMoneyData(response.DATA.EXPENDITURES[0]);
+        // this.addData=response.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP
+
+      }else if (response.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      }
+      this.isLoadingResults = false;
+    }, error => {
+      this.toastr.error(error);
+    });
+
+
+
     if (this.action == 'edit') {
       $('#expac').addClass('menu-disabled');
       this.expac = true;

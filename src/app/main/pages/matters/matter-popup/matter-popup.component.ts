@@ -44,7 +44,7 @@ export class MatterPopupComponent implements OnInit {
       this.dialogTitle = 'Update Matter';
       this.isEdit = true;
     } else if (this.action == 'new') {
-      this.dialogTitle = 'NewMatter'
+      this.dialogTitle = 'New Matter'
       this.isEdit = true;
       this.isLoadingResults = true;
       this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: true, DATA: {} }, 'SetMatter').subscribe(res => {

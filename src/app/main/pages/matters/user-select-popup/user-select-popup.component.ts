@@ -11,7 +11,7 @@ import { fuseAnimations } from '@fuse/animations';
   animations: fuseAnimations
 })
 export class UserSelectPopupComponent implements OnInit {
-  displayedColumns: string[] = ['USERID', 'FULLNAME'];
+  displayedColumns: string[] = ['USERID', 'USERNAME'];
   getDataForTable: any = [];
   highlightedRows: any;
   theme_type = localStorage.getItem('theme_type');

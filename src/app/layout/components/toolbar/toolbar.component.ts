@@ -729,16 +729,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
-            let getContactGuId = localStorage.getItem('contactGuid');
-            let postData = { FormAction: "delete", data: { DOCUMENTGUID: this.DocRegData.DOCUMENTGUID } }
-            this._mainAPiServiceService.getSetData(postData, 'SetDocument').subscribe(res => {
-                if (res.STATUS == "success") {
-                    $('#refreshDOCREGTab').click();
-                    this.toastr.success(res.STATUS);
-                } else {
-                    this.toastr.error("You Can't Delete Contact Which One Is To Related to Matters");
-                }
-            });;
+            if(result){
+                let postData = { FormAction: "delete", data: { DOCUMENTGUID: this.DocRegData.DOCUMENTGUID } }
+                this._mainAPiServiceService.getSetData(postData, 'SetDocument').subscribe(res => {
+                    if (res.STATUS == "success" && res.CODE == 200) {
+                        $('#refreshDOCREGTab').click();
+                        this.toastr.success('Delete successfully');
+                    }
+                });;
+            }
+      
         });
     }
     OpenMatter() {

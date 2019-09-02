@@ -155,8 +155,8 @@ export class DocumentDailogComponent implements OnInit {
         this.DocGUID="";
     }
     let Data={
-      CONTEXT: "Matter",
-      CONTEXTGUID:this.SendDataArray.CONTEXTGUID,
+      // CONTEXT: "Matter",
+      // CONTEXTGUID:this.SendDataArray.CONTEXTGUID,
       DESCRIPTION: this.DocumentRegiData.DESCRIPTION_,
       DOCUMENTAUTHOR:this.DocumentRegiData.DOCUMENTAUTHOR,
       DOCUMENTCLASS: Number(this.DocumentRegiData.DOCUMENTCLASS),

@@ -25,7 +25,7 @@ export class AccountDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<AccountDialogComponent>,private _mainAPiServiceService:MainAPiServiceService,) { }
 
   ngOnInit() {
-    this.behaviorService.SysytemAccountData$.subscribe(result => {
+    this.behaviorService.SysytemAccountDIalogData$.subscribe(result => {
       if (result) {
         console.log(result);
         this.accountDialoge=result;
@@ -33,7 +33,7 @@ export class AccountDialogComponent implements OnInit {
 
   });
     this._mainAPiServiceService.getSetData({ACCOUNTGUIDNAME: this.accountDialoge.ACCOUNTGUIDNAME}, 'GetSystem').subscribe(response=>{
-    console.log(response);
+    // console.log(response);
       // this.getDropDownValue=response.DATA.LISTS;
   
       // this.getMatterClass(response);

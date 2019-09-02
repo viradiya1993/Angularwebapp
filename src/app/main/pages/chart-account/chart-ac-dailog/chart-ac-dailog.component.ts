@@ -60,13 +60,15 @@ export class ChartAcDailogComponent implements OnInit {
       BANKNAME: [''],
       BANKADDRESS: [''],
       BANKBSB: [''],
+      SForSendACCNO:[''],
       BANKACCOUNTNUMBER: [''],
       BANKTERM: [''],
       BANKINTERESTRATE: [''],
     });
     if (this.action == "edit" || this.action == 'duplicate') {
       this.isLoadingResults = true;
-      this._mainAPiServiceService.getSetData({ ACCOUNTGUID: this.AccountData.ACCOUNTGUID }, 'GetAccount').subscribe(res => {
+      this._mainAPiServiceService.getSetData({ACCOUNTGUID:this.AccountData.ACCOUNTGUID },'GetAccount').subscribe(res => {
+        console.log(res);
         if (res.CODE == 200 && res.STATUS == "success") {
           if (this.action != 'duplicate') {
             this.AccountForm.controls['ACCOUNTGUID'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTGUID);
@@ -74,6 +76,7 @@ export class ChartAcDailogComponent implements OnInit {
           this.AccountForm.controls['ACCOUNTCLASS'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTCLASSNAME);          // toString()
           this.AccountForm.controls['ACCOUNTNAME'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTNAME);
           //General
+          this.AccountForm.controls['SForSendACCNO'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTNUMBER); 
           this.AccountForm.controls['ACCOUNTNUMBER'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTCLASS + ' - ' + res.DATA.ACCOUNTS[0].ACCOUNTNUMBER);
           this.AccountForm.controls['ACCOUNTTYPE'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTTYPENAME);          // toString()
           this.accountType = res.DATA.ACCOUNTS[0].ACCOUNTTYPENAME;
@@ -107,11 +110,11 @@ export class ChartAcDailogComponent implements OnInit {
     let PostData: any = {
       ACCOUNTCLASS: this.f.ACCOUNTCLASS.value,
       ACCOUNTNAME: this.f.ACCOUNTNAME.value,
-      ACCOUNTNUMBER: this.f.ACCOUNTNUMBER.value,
+      ACCOUNTNUMBER: this.f.SForSendACCNO.value,
       ACCOUNTTYPE: this.f.ACCOUNTTYPE.value,
       ACTIVE: this.f.ACTIVE.value,
       MYOBEXPORTACCOUNT: this.f.MYOBEXPORTACCOUNT.value,
-      BANKDETAILS: {
+      BANKDETAILS:{
         BANKNAME: this.f.BANKNAME.value,
         BANKADDRESS: this.f.BANKADDRESS.value,
         BANKBSB: this.f.BANKBSB.value,
@@ -120,6 +123,7 @@ export class ChartAcDailogComponent implements OnInit {
         BANKINTERESTRATE: this.f.BANKINTERESTRATE.value,
       }
     }
+    console.log(PostData);
     this.successMsg = 'Save successfully';
     let FormAction = this.action == 'edit' ? 'update' : 'insert';
     if (this.action == 'edit') {

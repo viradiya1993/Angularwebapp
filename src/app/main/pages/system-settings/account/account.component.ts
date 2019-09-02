@@ -43,11 +43,11 @@ export class AccountComponent implements OnInit {
         this.FinalList = new MatTableDataSource(res.DATA.LISTS.SYSTEMACCOUNTS);
         this.FinalList.sort = this.sort;
         this.FinalList.paginator = this.paginator;
+        // this.behaviorService.SysytemAccountData(this.FinalList.data);
         if (res.CODE == 200 && res.STATUS == "success") {
           if (res.DATA.LISTS.SYSTEMACCOUNTS[0]) {
-
             this.accountrow(res.DATA.LISTS.SYSTEMACCOUNTS[0],0)
-            // this.behaviorService.SysytemAccountData(res.DATA.LISTS.SYSTEMACCOUNTS[0]);
+            this.behaviorService.SysytemAccountData(res.DATA.LISTS.SYSTEMACCOUNTS);
             this.highlightedRows=0;
           } else {
             // this.toastr.error("No Data Selected");
@@ -71,17 +71,21 @@ export class AccountComponent implements OnInit {
   });
 
   dialogRef.afterClosed().subscribe(result => {
+    if(result.length > 0 ){
       this.FinalList.data[this.INDEX].ACCOUNTNAME=result[0].ACCOUNTNAME;
       this.FinalList.data[this.INDEX].ACCOUNTNO=result[0].ACCOUNTNUMBER;
       this.FinalList.data[this.INDEX].ACCOUNTGUID=result[0].ACCOUNTGUID
-      this.PassArray.push(this.FinalList.data[this.INDEX]);
-      this.behaviorService.SysytemAccountData(this.PassArray);
+    }
+     
+      // console.log(this.FinalList.data[this.INDEX]);
+      //  this.PassArray.push(this.FinalList.data);
+      this.behaviorService.SysytemAccountData(this.FinalList.data);
 
   });
   }
   accountrow(val,index){
   this.INDEX=index;
-  this.behaviorService.SysytemAccountData(val);
+  this.behaviorService.SysytemAccountDIalogData(val);
   }
   save(){
     // let data1 = { FormAction: "update", VALIDATEONLY: true, Data:this.FinalList.data[this.INDEX] }

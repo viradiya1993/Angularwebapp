@@ -28,18 +28,17 @@ export class SystemSettingComponent implements OnInit {
   accountDialoge:any=[];
   texVal:any=[];
   clicked: any;
-  
   isspiner: boolean = false;
   clickedBtn: string;
   StoreName: any;
-
   constructor(private _mainAPiServiceService: MainAPiServiceService,public _matDialog: MatDialog,private toastr: ToastrService,private location: Location,
     public router: Router,  private route: ActivatedRoute,  private _formBuilder: FormBuilder,public behaviorService:BehaviorService) { 
-    // this.nameFunction();
+    //this.nameFunction();
     this.nameFunction();
     this.behaviorService.SysytemAccountData$.subscribe(result => {
       if (result) {
-     
+        console.log("hjfdhgfhdshjf");
+        console.log(result);
         this.accountDialoge=result;
       }
 
@@ -324,17 +323,17 @@ export class SystemSettingComponent implements OnInit {
     return this.SettingForm.controls;
   }
   save(){
-
+this.SetAccountArray=[];
     this.accountDialoge.forEach(element => {
-   
-    this.StoreName=element.ACCOUNTGUIDNAME;
-    console.log(this.StoreName=element.ACCOUNTGUID);
+     console.log(element);
+    // this.StoreName=element.ACCOUNTGUIDNAME;
+    // console.log(this.StoreName=element.ACCOUNTGUID);
     // this.abc.push({abc:"jkdjs"})
     let key=element.ACCOUNTGUIDNAME;
     let val=element.ACCOUNTGUID;
     let tData:any={};
     tData[key]=val;
-    this.SetAccountArray=tData;
+    this.SetAccountArray.push(tData);
     });
     let data={
       //for name 
@@ -430,8 +429,9 @@ export class SystemSettingComponent implements OnInit {
       //   ACCOUNTNO:this.accountDialoge.ACCOUNTNO,
       //   ACCOUNTNAME:this.accountDialoge.ACCOUNTNAME
       // }
-      ACCOUNTSGROUP:this.SetAccountArray,
+      ACCOUNTSGROUP:this.SetAccountArray
 
+      
     }
     let data1 = { FormAction: "update", VALIDATEONLY: true, Data: data }
     this._mainAPiServiceService.getSetData(data1, 'SetSystem').subscribe(response => {

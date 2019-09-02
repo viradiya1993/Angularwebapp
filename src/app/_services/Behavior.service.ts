@@ -24,6 +24,7 @@ export class BehaviorService {
   public TaskData$: BehaviorSubject<any> = new BehaviorSubject(null);
   
   public SysytemAccountData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public SysytemAccountDIalogData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public UserDropDownData$: BehaviorSubject<any> = new BehaviorSubject(null);
   
   constructor(private http: HttpClient) { }
@@ -37,6 +38,10 @@ export class BehaviorService {
   SysytemAccountData(SysytemAccountData: any) {
     this.SysytemAccountData$.next(SysytemAccountData);
   }
+  SysytemAccountDIalogData(SysytemAccountDIalogData: any) {
+    this.SysytemAccountDIalogData$.next(SysytemAccountDIalogData);
+  }
+  
   setworkInProgressData(workInProgressData: any) {
     this.workInProgress$.next(workInProgressData);
   }
@@ -73,5 +78,6 @@ export class BehaviorService {
   setTimeScale(d) {
     this.TimeScale$.next(d);
   }
+
 
 }

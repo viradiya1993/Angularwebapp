@@ -9,22 +9,6 @@ import { MainAPiServiceService, BehaviorService, TableColumnsService } from 'app
 import { Subscription } from 'rxjs';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 
-export interface PeriodicElement {
-  Chequeno: number;
-  Chequetotal: number;
-  Description: string;
-  Withdrawals: number;
-  Deposite: number;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { Chequeno: 1, Chequetotal: 200, Description: 'abc', Withdrawals: 200, Deposite: 800 },
-  { Chequeno: 2, Chequetotal: 400, Description: 'jkd', Withdrawals: 400, Deposite: 600 },
-  { Chequeno: 3, Chequetotal: 600, Description: 'abc', Withdrawals: 500, Deposite: 200 },
-  { Chequeno: 4, Chequetotal: 300, Description: 'def', Withdrawals: 600, Deposite: 100 },
-  { Chequeno: 5, Chequetotal: 500, Description: 'lor', Withdrawals: 700, Deposite: 500 },
-];
-
 @Component({
   selector: 'app-recounciliation-item',
   templateUrl: './recounciliation-item.component.html',
@@ -37,6 +21,10 @@ export class RecounciliationItemComponent implements OnInit {
   subscription: Subscription;
   isLoadingResults: boolean = false;
   pageSize: any;
+  DebitAmount: any = [];
+  CraditAmount: any = [];
+  FirstTimeWithDrawTotal: any = [];
+  FirstTimeWithDrawTotalArray: any = [];
   AccountRecouncile: FormGroup;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -45,6 +33,8 @@ export class RecounciliationItemComponent implements OnInit {
   displayedColumns: string[];
   tempColobj: any;
   ColumnsObj = [];
+  CalculatedClosingBalnce: number;
+  DepositBalnce: number;
 
   constructor(private dialog: MatDialog, private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService, private _formBuilder: FormBuilder, public behaviorService: BehaviorService, private TableColumnsService: TableColumnsService, ) { }
   ngOnInit() {
@@ -74,15 +64,43 @@ export class RecounciliationItemComponent implements OnInit {
     const numRows = this.ReconciliationData.data.length;
     return numSelected === numRows;
   }
-
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
+    // console.log("fjkdhhf");
+    // console.log(this.selection.selected);
     this.isAllSelected() ?
       this.selection.clear() :
       this.ReconciliationData.data.forEach(row => this.selection.select(row));
+    this.GloballyCal();
+    console.log(this.selection.selected);
+  }
+  get f() {
+    //console.log(this.contactForm);
+    return this.AccountRecouncile.controls;
+  }
+  GloballyCal() {
+    this.DebitAmount = [];
+    this.CraditAmount = [];
+    this.selection.selected.forEach(element => {
+      this.DebitAmount.push(element.DEBITAMOUNT);
+      this.CraditAmount.push(element.CREDITAMOUNT);
+      this.CalculatedClosingBalnce = Number(this.DebitAmount.reduce(function (a = 0, b = 0) { return a + b; }, 0));
+      this.DepositBalnce = Number(this.CraditAmount.reduce(function (a = 0, b = 0) { return a + b; }, 0));
+    });
+    if (this.selection.selected.length == 0) {
+      this.CalculatedClosingBalnce = 0;
+      this.DepositBalnce = 0;
+    }
+    let finalTotal = Number(this.f.LASTRECONCILEDBALANCE.value) + this.CalculatedClosingBalnce;
+    let deposit = Number(this.DepositBalnce).toFixed(2);
+    this.AccountRecouncile.controls['UnDeposite'].setValue(deposit);
+    this.AccountRecouncile.controls['calculatedClosingBalance'].setValue(finalTotal);
   }
   helloFunction() {
-    console.log(this.selection.selected);
+    console.log(this.selection);
+    this.GloballyCal();
+    this.FirstTimeCal('');
+    // this.SelectedItemArray.push(this.selection.selected)
   }
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: any): string {
@@ -111,12 +129,25 @@ export class RecounciliationItemComponent implements OnInit {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
   }
-
+  FirstTimeCal(data) {
+    if (data != '') {
+      data.forEach(element => {
+        this.FirstTimeWithDrawTotalArray.push(element.CREDITAMOUNT);
+        this.FirstTimeWithDrawTotal = Number(this.FirstTimeWithDrawTotalArray.reduce(function (a = 0, b = 0) { return a + b; }, 0));
+        // this.DepositBalnce = Number(this.CraditAmount.reduce(function (a = 0, b = 0) { return a + b; }, 0));
+      });
+    }
+    let FinalVal = (this.FirstTimeWithDrawTotal - this.f.UnDeposite.value).toFixed(2);
+    this.AccountRecouncile.controls['UnWith'].setValue(FinalVal);
+  }
   LoadData(data) {
     this.ReconciliationData = [];
     this.isLoadingResults = true;
     this.subscription = this._mainAPiServiceService.getSetData(data, 'GetReconciliationItems').subscribe(response => {
+      console.log(response);
+
       if (response.CODE == 200 && response.STATUS == "success") {
+        this.FirstTimeCal(response.DATA.RECONCILIATIONITEMS);
         this.ReconciliationData = new MatTableDataSource(response.DATA.RECONCILIATIONITEMS);
         this.AccountRecouncile.controls['LASTRECONCILEDDATE'].setValue(response.DATA.LASTRECONCILEDDATE);
         this.AccountRecouncile.controls['LASTRECONCILEDBALANCE'].setValue(response.DATA.LASTRECONCILEDBALANCE);

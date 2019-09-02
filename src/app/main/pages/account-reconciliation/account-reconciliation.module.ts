@@ -35,6 +35,7 @@ const routes = [
   {
     path: '', component: AccountReconciliationComponent, children: [
       { path: 'reconciliation-item', component: RecounciliationItemComponent },
+      { path: 'past-banking', component: PastBankingsComponent },
       { path: 'past-banking', component: PastBankingsComponent }
     ], canActivate: [AuthGuard]
   }

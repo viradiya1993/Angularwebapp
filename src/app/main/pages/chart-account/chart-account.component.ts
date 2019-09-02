@@ -156,6 +156,6 @@ export class ChartAccountComponent implements OnInit {
   }
 
   FilterSearch(val) {
-
+  this.storeDataarray.filter = val;
   }
 }

@@ -578,7 +578,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                $('#refreshSpendMoneyTab').click();                
+                $('#refreshSpendMoneyTab').click();
                 $('#refreshRecouncilItem').click();
                 // this.behaviorService.ChartAccountData$.subscribe(result => {
                 //     if (result) {
@@ -589,7 +589,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 // this._mainAPiServiceService.getSetData({AccountGuid: this.chartAccountDetail.ACCOUNTGUID}, 'GetReconciliationItems').subscribe(res => {
                 //     if (res.STATUS == "success" && res.CODE == 200) {
                 //         $('#refreshTimeEntryTab').click();
-                       
+
                 //         this.toastr.success('Delete successfully');
                 //     }
                 // });;
@@ -744,7 +744,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
-            if(result){
+            if (result) {
                 let postData = { FormAction: "delete", data: { DOCUMENTGUID: this.DocRegData.DOCUMENTGUID } }
                 this._mainAPiServiceService.getSetData(postData, 'SetDocument').subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {
@@ -753,7 +753,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                     }
                 });;
             }
-      
+
         });
     }
     OpenMatter() {
@@ -1404,9 +1404,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
 
-    
-    NewGeneralReceipt(): void {
-        const dialogRef = this._matDialog.open(GeneralReceiptDilogComponent, { width: '100%', disableClose: true, data: null });
+
+    NewGeneralReceipt(type: any): void {
+        const dialogRef = this._matDialog.open(GeneralReceiptDilogComponent, { width: '100%', disableClose: true, data: { 'type': type, 'Id': '' } });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 $('#refreshReceiceMoany').click();
@@ -1420,8 +1420,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 localStorage.setItem('set_active_matters', JSON.stringify(result));
-               
-                
+
+
                 // this.router.navigate(['time-billing/work-in-progress/invoice']);
             }
         });

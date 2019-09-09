@@ -53,10 +53,11 @@ export class RecounciliationItemComponent implements OnInit {
     this.behaviorService.ChartAccountData$.subscribe(result => {
       if (result) {
         this.chartAccountDetail = result;
-        this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID });
+       
       }
     });
     this.getTableFilter();
+    // this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID });
     this.LoadData({ AccountGuid: "ACCAAAAAAAAAAAA4", 'BankStatementDate': "3/09/2019" });
     // this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID });
   }
@@ -67,8 +68,6 @@ export class RecounciliationItemComponent implements OnInit {
   }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    // console.log("fjkdhhf");
-    // console.log(this.selection.selected);
     this.isAllSelected() ?
       this.selection.clear() :
       this.ReconciliationData.data.forEach(row => this.selection.select(row));
@@ -76,7 +75,6 @@ export class RecounciliationItemComponent implements OnInit {
  
   }
   get f() {
-    //console.log(this.contactForm);
     return this.AccountRecouncile.controls;
   }
   GloballyCal() {
@@ -144,7 +142,6 @@ export class RecounciliationItemComponent implements OnInit {
     this.ReconciliationData = [];
     this.isLoadingResults = true;
     this.subscription = this._mainAPiServiceService.getSetData(data, 'GetReconciliationItems').subscribe(response => {
-      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         this.FirstTimeCal(response.DATA.RECONCILIATIONITEMS);
         this.ReconciliationData = new MatTableDataSource(response.DATA.RECONCILIATIONITEMS);

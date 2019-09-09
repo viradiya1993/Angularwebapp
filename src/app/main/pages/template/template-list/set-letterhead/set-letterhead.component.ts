@@ -137,7 +137,4 @@ export class SetLetterHeadComponent implements OnInit {
     this.TemplateToChange = [];
     // this.LoadData2({})
   }
-
-
-
 }

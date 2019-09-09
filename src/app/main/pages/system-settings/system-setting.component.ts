@@ -315,8 +315,8 @@ export class SystemSettingComponent implements OnInit {
     return this.SettingForm.controls;
   }
   save() {
+    let tempArrayAccountGroup :any={};
     this.SetAccountArray = [];
-
     let data = {
       //for name 
       BARRISTERSNAME: this.f.BARRISTERSNAME.value,
@@ -415,17 +415,10 @@ export class SystemSettingComponent implements OnInit {
       // console.log(element);
       let key = element.ACCOUNTGUIDNAME;
       let val = element.ACCOUNTGUID;
-      let tData: any = {};
-      tData["key"] = key;
-      tData["key2"] = val;
-      // this.SetAccountArray.push(tData); 
-      console.log(tData);
-      let data3 = tData.key
-      let data4= tData.key2
-      data['ACCOUNTSGROUP'].push({"hello":val});
+      tempArrayAccountGroup[key] = val;
     });
+    data['ACCOUNTSGROUP']=tempArrayAccountGroup;
     // data.ACCOUNTSGROUP.push(this.SetAccountArray)
-    alert(data.ACCOUNTSGROUP);
     console.log(this.abc);
     let data1 = { FormAction: "update", VALIDATEONLY: true, Data: data }
     this._mainAPiServiceService.getSetData(data1, 'SetSystem').subscribe(response => {

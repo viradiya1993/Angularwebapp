@@ -78,8 +78,9 @@ export class ChartAcDailogComponent implements OnInit {
           //General
           this.AccountForm.controls['SForSendACCNO'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTNUMBER); 
           this.AccountForm.controls['ACCOUNTNUMBER'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTCLASS + ' - ' + res.DATA.ACCOUNTS[0].ACCOUNTNUMBER);
-          this.AccountForm.controls['ACCOUNTTYPE'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTTYPENAME);          // toString()
           this.accountType = res.DATA.ACCOUNTS[0].ACCOUNTTYPENAME;
+          this.AccountForm.controls['ACCOUNTTYPE'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTTYPENAME);          // toString()
+        
           this.AccountForm.controls['ACTIVE'].setValue(res.DATA.ACCOUNTS[0].ACTIVE);
           //EXPORTINFO
           this.AccountForm.controls['MYOBEXPORTACCOUNT'].setValue(res.DATA.ACCOUNTS[0].EXPORTINFO['MYOBEXPORTACCOUNT']);
@@ -117,9 +118,9 @@ export class ChartAcDailogComponent implements OnInit {
     let PostData: any = {
       ACCOUNTCLASS: this.f.ACCOUNTCLASS.value,
       ACCOUNTNAME: this.f.ACCOUNTNAME.value,
-      ACCOUNTNUMBER: this.f.SForSendACCNO.value,
+      ACCOUNTNUMBER: this.f.ACCOUNTNUMBER.value,
       ACCOUNTTYPE: this.sendtype,
-      ACCOUNTTYPENAME:this.f.ACCOUNTTYPENAME.value,
+      // ACCOUNTTYPENAME:this.f.ACCOUNTTYPENAME.value,
       ACTIVE: this.f.ACTIVE.value,
       MYOBEXPORTACCOUNT: this.f.MYOBEXPORTACCOUNT.value,
       BANKDETAILS:{

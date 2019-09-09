@@ -43,9 +43,9 @@
                                     <mat-checkbox formControlName="ACTIVE">Active Account</mat-checkbox>
                                 </div>
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field appearance="outline" fxFlex="" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ACCOUNTTYPENAME,'has-warning':errorWarningData.Warning?.ACCOUNTTYPENAME}">
+                                    <mat-form-field appearance="outline" fxFlex="" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ACCOUNTTYPE,'has-warning':errorWarningData.Warning?.ACCOUNTTYPE}">
                                         <mat-label>Account Type</mat-label>
-                                        <mat-select formControlName="ACCOUNTTYPENAME" (selectionChange)="onACCOUNTTYPE($event.value)">
+                                        <mat-select formControlName="ACCOUNTTYPE" (selectionChange)="onACCOUNTTYPE($event.value)">
                                            <mat-option value="Header">Header</mat-option>
                                             <mat-option value="Detail">Detail</mat-option>
                                             <mat-option value="Bank Account">Bank Account</mat-option>

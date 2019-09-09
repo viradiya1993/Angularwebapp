@@ -1,5 +1,5 @@
 @import "src/@fuse/scss/fuse";
-#AccountRecouncile {
+#PastRecouncil {
     .header {
         .search-wrapper {
             width: 100%;
@@ -59,7 +59,7 @@
     padding: 20px !important;
 }
 
-app-recounciliation-item {
+app-past-reconciliation {
     width: 100%;
 }
 
@@ -77,7 +77,7 @@ app-recounciliation-item {
     padding-left: 80px;
 }
 
-#AccountRecouncile .p-24.list_tbl_main {
+#PastRecouncil .p-24.list_tbl_main {
     // margin-top: 85px;
     overflow: hidden;
 }
@@ -87,7 +87,7 @@ app-recounciliation-item {
     padding-top: 0 !important;
 }
 
-#AccountRecouncile .content {
+#PastRecouncil .content {
     position: relative;
 }
 
@@ -129,7 +129,7 @@ app-recounciliation-item {
 }
 
 table tr.highlight {
-    background-color: #4caf50 !important;
+    background-color: #4CAF50 !important;
     color: #ffffff;
 }
 
@@ -137,9 +137,10 @@ button#refreshContactTab {
     display: none;
 }
 
-// #AccountRecouncile .content .example {
+// #PastBanking .content .example {
 //     padding: 20px 10px;
 // }
+
 th.mat-sort-header-sorted {
     color: black;
 }
@@ -148,14 +149,12 @@ th.mat-sort-header-sorted {
     width: 100%;
 }
 
-#refreshRecouncilItem {
+#refreshAccount {
     display: none;
 }
 
-h2 {
+h2{
     margin-left: 13px;
 }
 
-.sideText {
-    text-align: right;
-}
+

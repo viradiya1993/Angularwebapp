@@ -578,7 +578,22 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                $('#refreshSpendMoneyTab').click();
+                $('#refreshSpendMoneyTab').click();                
+                $('#refreshRecouncilItem').click();
+                // this.behaviorService.ChartAccountData$.subscribe(result => {
+                //     if (result) {
+                //       this.chartAccountDetail = result;
+                //     //   this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID });
+                //     }
+                //   });
+                // this._mainAPiServiceService.getSetData({AccountGuid: this.chartAccountDetail.ACCOUNTGUID}, 'GetReconciliationItems').subscribe(res => {
+                //     if (res.STATUS == "success" && res.CODE == 200) {
+                //         $('#refreshTimeEntryTab').click();
+                       
+                //         this.toastr.success('Delete successfully');
+                //     }
+                // });;
+
             }
         });
     }
@@ -1388,11 +1403,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef = null;
         });
     }
+
+    
     NewGeneralReceipt(): void {
         const dialogRef = this._matDialog.open(GeneralReceiptDilogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 $('#refreshReceiceMoany').click();
+                $('#refreshRecouncilItem').click();
             }
         });
     }
@@ -1402,6 +1420,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 localStorage.setItem('set_active_matters', JSON.stringify(result));
+               
+                
                 // this.router.navigate(['time-billing/work-in-progress/invoice']);
             }
         });

@@ -23,7 +23,7 @@ export class ChartAcDailogComponent implements OnInit {
   AccountForm: FormGroup;
   AccountData: any = [];
   theCheckbox = true;
-
+  sendtype: number;
   constructor(
     public MatDialog: MatDialog,
     public dialogRef: MatDialogRef<ChartAcDailogComponent>,
@@ -44,7 +44,6 @@ export class ChartAcDailogComponent implements OnInit {
     }
     this.behaviorService.ChartAccountData$.subscribe(result => { if (result) { this.AccountData = result; } });
   }
-
   ngOnInit() {
     this.AccountForm = this._formBuilder.group({
       ACCOUNTGUID: [''],
@@ -54,6 +53,7 @@ export class ChartAcDailogComponent implements OnInit {
       ACCOUNTNUMBER: ['1-'],
       ACCOUNTTYPE: [''],
       ACTIVE: [''],
+      ACCOUNTTYPENAME:[''],
       //EXPORTINFO 
       MYOBEXPORTACCOUNT: [''],
       //bank BANKDETAILS 
@@ -106,12 +106,20 @@ export class ChartAcDailogComponent implements OnInit {
   }
   //SaveAccount
   SaveAccount() {
+  if(this.f.ACCOUNTTYPE.value == 'Header'){
+    this.sendtype=1;
+  }else if(this.f.ACCOUNTTYPE.value == 'Detail'){
+    this.sendtype=2;
+  }else if(this.f.ACCOUNTTYPE.value == 'Bank Account'){
+    this.sendtype=3;
+  }
     this.isspiner = true;
     let PostData: any = {
       ACCOUNTCLASS: this.f.ACCOUNTCLASS.value,
       ACCOUNTNAME: this.f.ACCOUNTNAME.value,
       ACCOUNTNUMBER: this.f.SForSendACCNO.value,
-      ACCOUNTTYPE: this.f.ACCOUNTTYPE.value,
+      ACCOUNTTYPE: this.sendtype,
+      ACCOUNTTYPENAME:this.f.ACCOUNTTYPENAME.value,
       ACTIVE: this.f.ACTIVE.value,
       MYOBEXPORTACCOUNT: this.f.MYOBEXPORTACCOUNT.value,
       BANKDETAILS:{
@@ -123,9 +131,8 @@ export class ChartAcDailogComponent implements OnInit {
         BANKINTERESTRATE: this.f.BANKINTERESTRATE.value,
       }
     }
-    console.log(PostData);
     this.successMsg = 'Save successfully';
-    let FormAction = this.action == 'edit' ? 'update' : 'insert';
+      let FormAction = this.action == 'edit' ? 'update' : 'insert';
     if (this.action == 'edit') {
       PostData.ACCOUNTGUID = this.f.ACCOUNTGUID.value;
       this.successMsg = 'Update successfully';
@@ -146,7 +153,6 @@ export class ChartAcDailogComponent implements OnInit {
       this.isspiner = false;
       this.toastr.error(err);
     });
-
   }
   checkValidation(bodyData: any, PostAccountData: any) {
     let errorData: any = [];

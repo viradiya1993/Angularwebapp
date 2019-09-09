@@ -53,10 +53,11 @@ export class RecounciliationItemComponent implements OnInit {
     this.behaviorService.ChartAccountData$.subscribe(result => {
       if (result) {
         this.chartAccountDetail = result;
+        this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID });
       }
     });
     this.getTableFilter();
-    this.LoadData({ AccountGuid: "ACCAAAAAAAAAAAA4", 'BankStatementDate': "30/11/2015" });
+    this.LoadData({ AccountGuid: "ACCAAAAAAAAAAAA4", 'BankStatementDate': "3/09/2019" });
     // this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID });
   }
   isAllSelected() {
@@ -72,7 +73,7 @@ export class RecounciliationItemComponent implements OnInit {
       this.selection.clear() :
       this.ReconciliationData.data.forEach(row => this.selection.select(row));
     this.GloballyCal();
-    console.log(this.selection.selected);
+ 
   }
   get f() {
     //console.log(this.contactForm);
@@ -97,7 +98,6 @@ export class RecounciliationItemComponent implements OnInit {
     this.AccountRecouncile.controls['calculatedClosingBalance'].setValue(finalTotal);
   }
   helloFunction() {
-    console.log(this.selection);
     this.GloballyCal();
     this.FirstTimeCal('');
     // this.SelectedItemArray.push(this.selection.selected)
@@ -145,7 +145,6 @@ export class RecounciliationItemComponent implements OnInit {
     this.isLoadingResults = true;
     this.subscription = this._mainAPiServiceService.getSetData(data, 'GetReconciliationItems').subscribe(response => {
       console.log(response);
-
       if (response.CODE == 200 && response.STATUS == "success") {
         this.FirstTimeCal(response.DATA.RECONCILIATIONITEMS);
         this.ReconciliationData = new MatTableDataSource(response.DATA.RECONCILIATIONITEMS);
@@ -184,10 +183,13 @@ export class RecounciliationItemComponent implements OnInit {
           this.ReconciliationData.paginator = this.paginator;
           this.ReconciliationData.sort = this.sort;
         } else {
-          this.LoadData({ AccountGuid: "ACCAAAAAAAAAAAA4", 'BankStatementDate': "30/11/2015" });
+          this.LoadData({ AccountGuid: "ACCAAAAAAAAAAAA4", 'BankStatementDate': "3/09/2019" });
           // this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID });
         }
       }
     });
+  }
+  refreshRecouncilItem(){
+    this.LoadData({ AccountGuid: "ACCAAAAAAAAAAAA4", 'BankStatementDate': "3/09/2019" }); 
   }
 }

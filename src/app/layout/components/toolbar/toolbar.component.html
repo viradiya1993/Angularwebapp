@@ -2620,7 +2620,7 @@
                                                 <span>Reconciliation Item</span>
                                             </a>
 
-                                            <a mat-list-item [routerLink]="'/account-reconciliation/reconciliation-item'" [ngClass]="activeSubMenu =='reconciliation-item'  ? 'cmn_active_tab':''">
+                                            <a mat-list-item [routerLink]="'/account-reconciliation/past-reconciliation'" [ngClass]="activeSubMenu =='past-reconciliation'  ? 'cmn_active_tab':''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_tagitem_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
@@ -2641,7 +2641,7 @@
                                     <div class="light_label_txt">View</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
-                                <section class="group-section-tab extras_tab" *ngIf="activeSubMenu !== 'past-banking'">
+                                <section class="group-section-tab extras_tab" *ngIf="activeSubMenu == 'reconciliation-item'">
                                     <section [ngClass]="appPermissions[9]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button (click)="Addspendmoneypopup()" mat-button [ngClass]="appPermissions[9]?.Create==0 ? 'disabled-click large-button' : 'large-button'">
                                             <section class="large-button-container">
@@ -2696,6 +2696,35 @@
                                     </section>
                                     <div class="light_label_txt">Details</div>
                                 </section>
+
+                                <section class="group-section-tab extras_tab" *ngIf="activeSubMenu === 'past-reconciliation'">
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_print_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Print Bank <br>Rec Report</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_print_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Print Bank <br>with details</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <div class="light_label_txt">Details</div>
+                                </section>
+
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab extras_tab" *ngIf="activeSubMenu !== 'past-banking'">
                                     <section class="ribbon-section">
@@ -2858,10 +2887,6 @@
                     </section>
                 </mat-tab>
 
-
-
-
-
                 <!-- goto tab menu start -->
                 <mat-tab label="GO TO">
                     <section class="ribbon-container goto_tab_main" [style.width]="detailwidth">
@@ -3005,8 +3030,9 @@
                                             </section>
                                         </button>
                                     </section>
+                                    <!-- (click)="ReconcileAC()" -->
                                     <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="ReconcileAC()">
+                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="BankingDialogOpen('BANK ACCOUNT')" >
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_receipt_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">

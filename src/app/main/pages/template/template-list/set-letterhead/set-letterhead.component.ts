@@ -6,7 +6,6 @@ import { MatDialogRef, MatDialog } from '@angular/material';
 import { GenerateTemplatesDialoagComponent } from 'app/main/pages/system-settings/templates/gennerate-template-dialoag/generate-template.component';
 import { ToastrService } from 'ngx-toastr';
 
-
 @Component({
   selector: 'app-set-letterhead',
   templateUrl: './set-letterhead.component.html',
@@ -121,9 +120,7 @@ export class SetLetterHeadComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-
-      //   this.SettingForm.controls['INVOICETEMPLATE'].setValue(result);  
-
+    //this.SettingForm.controls['INVOICETEMPLATE'].setValue(result);  
     });
   }
   TempChange(item, index) {
@@ -134,9 +131,7 @@ export class SetLetterHeadComponent implements OnInit {
     this.INDEXOFTEMPALL = index;
   }
   deleteElement() {
-
     this.TemplateToChange.splice(this.INDEXOFTEMPCHANG, 1);
-
   }
   AddAllRow() {
     this.TemplateToChange = [];

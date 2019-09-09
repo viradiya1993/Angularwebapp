@@ -23,36 +23,32 @@ export class AccountDialogComponent implements OnInit {
   }
   constructor(public dialog: MatDialog,public behaviorService:BehaviorService,
     public dialogRef: MatDialogRef<AccountDialogComponent>,private _mainAPiServiceService:MainAPiServiceService,) { }
-
   ngOnInit() {
     this.behaviorService.SysytemAccountDIalogData$.subscribe(result => {
       if (result) {
-        console.log(result);
+        // console.log(result);
         this.accountDialoge=result;
       }
-
   });
     this._mainAPiServiceService.getSetData({ACCOUNTGUIDNAME: this.accountDialoge.ACCOUNTGUIDNAME}, 'GetSystem').subscribe(response=>{
-    // console.log(response);
-      // this.getDropDownValue=response.DATA.LISTS;
-  
-      // this.getMatterClass(response);
-     
-       })
-  this.accDialoge.Name=this.accountDialoge.DESCRIPTION
+      if(response.CODE=='200' || response.STATUS=="success"){
+      }
+      else if (response.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      }
+       });
+  this.accDialoge.Name=this.accountDialoge.DESCRIPTION;
   this.accDialoge.AccNo=this.accountDialoge.ACCOUNTNO;
   this.accDialoge.AccType=this.accountDialoge.ACCOUNTTYPE
   }
   openAccount(type){
     this.SendArray=[];
-    console.log(type);
     const dialogRef = this.dialog.open(BankingDialogComponent, {
-      disableClose: true, width: '100%', data: { AccountType: type }
+      disableClose: true, width: '100%', data: {AccountType: type }
     });
-    // this.accDialoge.AccNo=result.name;
+    //this.accDialoge.AccNo=result.name;
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         this.accDialoge.AccNo = result.name;
         this.accDialoge.AccNo = result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER + ' ' + result.MainList.ACCOUNTNAME;
         this.SendArray.push({ACCOUNTNUMBER:result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER,
@@ -63,6 +59,4 @@ export class AccountDialogComponent implements OnInit {
 SaveClick(){
   this.dialogRef.close(this.SendArray);
 }
-
-
 }

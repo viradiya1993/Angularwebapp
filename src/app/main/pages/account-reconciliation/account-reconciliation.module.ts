@@ -29,6 +29,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatTreeModule } from '@angular/material/tree';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material/sort';
+import { PastReconciliationComponent } from './past-reconciliation/past-reconciliation.component';
 
 const routes = [
   { path: '', redirectTo: '/account-reconciliation/reconciliation-item', pathMatch: 'full', canActivate: [AuthGuard] },
@@ -36,13 +37,14 @@ const routes = [
     path: '', component: AccountReconciliationComponent, children: [
       { path: 'reconciliation-item', component: RecounciliationItemComponent },
       { path: 'past-banking', component: PastBankingsComponent },
-      { path: 'past-banking', component: PastBankingsComponent }
+      { path: 'past-reconciliation', component: PastReconciliationComponent }
     ], canActivate: [AuthGuard]
   }
 ];
 
 @NgModule({
   declarations: [
+    PastReconciliationComponent,
     AccountReconciliationComponent,
     RecounciliationItemComponent,
     PastBankingsComponent

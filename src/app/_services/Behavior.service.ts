@@ -26,11 +26,15 @@ export class BehaviorService {
   public SysytemAccountData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public SysytemAccountDIalogData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public UserDropDownData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public FileNotesData$: BehaviorSubject<any> = new BehaviorSubject(null);
   
   constructor(private http: HttpClient) { }
 
   matterInvoiceData(matterInvoice: any) {
     this.matterInvoice$.next(matterInvoice);
+  }
+  FileNotesData(FileNotesData: any) {
+    this.FileNotesData$.next(FileNotesData);
   }
   UserDropDownData(UserDropDownData: any) {
     this.UserDropDownData$.next(UserDropDownData);

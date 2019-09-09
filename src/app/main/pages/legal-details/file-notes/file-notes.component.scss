@@ -1,9 +1,7 @@
 @import "src/@fuse/scss/fuse";
-app-file-notes {
-    width: 100%;
-}
 
-#filenotes {
+#chronetab {
+    // margin-top: 95px;
     .header {
         .search-wrapper {
             width: 100%;
@@ -48,10 +46,13 @@ app-file-notes {
     padding: 20px !important;
 }
 
-//For Scoller add css
-// mat-table.mat-table.ng-trigger.ng-trigger-animateStagger {
-//     width: 300%;
-// }
+app-file-notes {
+    width: 100%;
+}
+app-legal-details {
+    overflow-y: auto;
+}
+
 .mat-table {
     width: 100%;
 }
@@ -69,6 +70,20 @@ app-file-notes {
 .more_tbl_clmn .mat-cell:last-child {
     padding-right: 70px;
 }
-th.mat-sort-header-sorted {
-    color: black;
+
+// .h2 {
+//     margin-top: 13px !important;
+// }
+// .matter-serach-div.sticky_search_div {
+//     margin-top: 18px !important;
+//     margin-left: 45px !important;
+// }
+.page-layout.carded>.top-bg.work_progress_height {
+    height: 86px;
+    th.mat-sort-header-sorted {
+        color: black;
+    }
+}
+button#refreshFileNote{
+    display: none;
 }

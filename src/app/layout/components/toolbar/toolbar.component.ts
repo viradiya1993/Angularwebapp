@@ -103,6 +103,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     AccountGUID: any;
     chartAccountDetail: any;
     TaskData: any;
+    FileNotesData: any;
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
@@ -306,12 +307,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef = null;
         });
     }
-    NewFileNote() {
-        const dialogRef = this.dialog.open(FileNoteDialogComponent, { width: '100%', disableClose: true });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
-        });
-    }
+    
     /* ---------------------------------------------------------------------Matter End--------------------------------------------------------------------------  */
     /* ---------------------------------------------------------------------Activity Start--------------------------------------------------------------------------  */
     //add edit and duplicat ActivityDialog
@@ -566,63 +562,57 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         //     this.toastr.error('Access Denied');
         // }
     }
-    // Add Spend Money Pop-up
-    Addspendmoneypopup() {
-        const dialogConfig = new MatDialogConfig();
-        const dialogRef = this.dialog.open(SpendMoneyAddComponent, {
-            width: '100%',
+    //// File PopUp 
+    FileNotePopup(actionType){
+        let FileNotePopdata = {}
+        if (actionType == 'new') {
+            FileNotePopdata = { action: actionType }
+        } else if (actionType == 'edit' || actionType == 'duplicate') {
+            FileNotePopdata = { action: actionType }
+        }
+        const dialogRef = this.dialog.open(FileNoteDialogComponent, {
             disableClose: true,
-            data: {
-                action: 'new'
-            }
+            panelClass: 'Document-dialog',
+            data: FileNotePopdata
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                $('#refreshSpendMoneyTab').click();                
-                $('#refreshRecouncilItem').click();
-                // this.behaviorService.ChartAccountData$.subscribe(result => {
-                //     if (result) {
-                //       this.chartAccountDetail = result;
-                //     //   this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID });
-                //     }
-                //   });
-                // this._mainAPiServiceService.getSetData({AccountGuid: this.chartAccountDetail.ACCOUNTGUID}, 'GetReconciliationItems').subscribe(res => {
-                //     if (res.STATUS == "success" && res.CODE == 200) {
-                //         $('#refreshTimeEntryTab').click();
-                       
-                //         this.toastr.success('Delete successfully');
-                //     }
-                // });;
 
+            if (result){
+                console.log(result);
+                $('#refreshFileNote').click();
             }
+           
         });
     }
-    // Edit spendmoney Pop-up
-    Editspendmoneypopup() {
-
-        this.behaviorService.SpendMoneyData$.subscribe(result => {
+    DeleteFileNotes(){
+        this.behaviorService.FileNotesData$.subscribe(result => {
             if (result) {
-                this.SendMoney_dataGUID = result;
+                this.FileNotesData = result;
             }
         });
-        if (this.SendMoney_dataGUID == null) {
+        if (this.FileNotesData == null) {
             this.toastr.error("No Data Selected");
         } else {
-            const dialogConfig = new MatDialogConfig();
-            const dialogRef = this.dialog.open(SpendMoneyAddComponent, {
-                width: '100%',
+            this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
                 disableClose: true,
-                data: {
-                    action: 'edit'
-                }
+                width: '100%',
             });
-            dialogRef.afterClosed().subscribe(result => {
+            this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+            this.confirmDialogRef.afterClosed().subscribe(result => {
                 if (result) {
-                    $('#refreshSpendMoneyTab').click();
+                    let postData = { FormAction: "delete", DATA: { FILENOTEGUID: this.FileNotesData.FILENOTEGUID } }
+                    this._mainAPiServiceService.getSetData(postData, 'SetFileNote').subscribe(res => {
+                        if (res.STATUS == "success" && res.CODE == 200) {
+                            $('#refreshFileNote').click();
+                            this.toastr.success('Delete successfully');
+                        }
+                    });
                 }
+                this.confirmDialogRef = null;
             });
         }
     }
+
     Deletespendmoneypopup(): void {
         this.behaviorService.SpendMoneyData$.subscribe(result => {
             if (result) {
@@ -651,6 +641,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             });
         }
     }
+        //// Duplicate Spend Money
+
+
     deleteContact(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
@@ -732,6 +725,27 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 $("#refreshDOCREGTab").click();
         });
     }
+        ///Spend Money 
+     
+        spendmoneypopup(actionType){
+            let SpendMoneyPopdata = {}
+            if (actionType == 'new') {
+                SpendMoneyPopdata = { action: actionType }
+            } else if (actionType == 'edit' || actionType == 'duplicate') {
+                SpendMoneyPopdata = { action: actionType }
+            }
+            const dialogRef = this.dialog.open(SpendMoneyAddComponent, {
+                disableClose: true,
+                panelClass: 'SpendMoney-dialog',
+                data: SpendMoneyPopdata
+            });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result)
+                    $("#refreshSpendMoneyTab").click();
+                    $('#refreshRecouncilItem').click();
+            });
+        }
+
     DeleteDocument(): void {
         this.behaviorService.DocumentRegisterData$.subscribe(result => {
             if (result) {

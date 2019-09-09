@@ -77,13 +77,19 @@ export class SpendMoneyAddComponent implements OnInit {
     public _matDialog: MatDialog, public datepipe: DatePipe, public _mainAPiServiceService: MainAPiServiceService) {
     this.action = _data.action;
 
-    this.dialogTitle = this.action === 'edit' ? 'Update Spend Money' : 'Add Spend Money';
+    // this.dialogTitle = this.action === 'edit' ? 'Update Spend Money' : 'Add Spend Money';
+    if(this.action === 'new'){
+      this.dialogTitle = 'Add Spend Money ';
+    }else if(this.action === 'edit'){
+      this.dialogTitle = 'Update Spend Money';
+    }else{
+      this.dialogTitle = 'Duplicate Spend Money';
+    }
     this.getPayee({});
 
     this.behaviorService.SpendMoneyData$.subscribe(result => {
       if (result) {
         this.SendMoney_data = result;
-
       }
     });
   }
@@ -123,7 +129,7 @@ export class SpendMoneyAddComponent implements OnInit {
       ExpenseacGUID: ['']
     });
 
-    if (this.action == 'edit') {
+    if (this.action != 'new') {
       $('#expac').addClass('menu-disabled');
       this.expac = true;
       this.isLoadingResults = true;
@@ -143,15 +149,17 @@ export class SpendMoneyAddComponent implements OnInit {
       this.forAddshowpopupData();
     }
   }
-  forEditshowpopupData() {
+  forEditshowpopupData() {    
     let DatePaid = this.SendMoney_data.DATE.split("/");
     let DATE = new Date(DatePaid[1] + '/' + DatePaid[0] + '/' + DatePaid[2]);
-    let DateIncurred = this.SendMoney_data.DATE.split("/");
+    let DateIncurred = this.SendMoney_data.RECEIVEDDATE.split("/");
     let ReceiveDATE = new Date(DateIncurred[1] + '/' + DateIncurred[0] + '/' + DateIncurred[2]);
+    console.log(this.SendMoney_data.DATE);
+    console.log(this.SendMoney_data.ReceiveDATE);
     this.spendmoneyForm.controls['DateIncurred'].setValue(ReceiveDATE);
     this.spendmoneyForm.controls['DatePaid'].setValue(DATE);
     //for sending date 
-    this.spendmoneyForm.controls['DateIncurredForSend'].setValue(this.SendMoney_data.ReceiveDATE);
+    this.spendmoneyForm.controls['DateIncurredForSend'].setValue(this.SendMoney_data.RECEIVEDDATE);
     this.spendmoneyForm.controls['DatePaidForSend'].setValue(this.SendMoney_data.DATE);
     //call first row and datatble -> start
     this.getDataForTable = this.SendMoney_data.EXPENDITUREITEMS;
@@ -343,12 +351,12 @@ export class SpendMoneyAddComponent implements OnInit {
     if (Classvalue === 'Expense') {
       this.spendmoneyForm.controls['Matter'].setValue('');
       this.spendmoneyForm.controls['MatterGUID'].setValue('');
-      if (this.action != 'edit') {
+      if (this.action == 'new') {
         this.hide = true;
         $("#mattersnew").addClass("menu-disabled");
         this.spendmoneyForm.controls['Matter'].disable();
 
-      } else if (this.action === 'edit') {
+      } else if (this.action != 'new') {
         this.hide = true;
         this.expac = false;
         $("#mattersnew").addClass("menu-disabled");
@@ -470,7 +478,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.Main3btn = 'disabled';
       this.SubMain2btn = 'enable';
       this.dataTableHide = "false";
-      if (this.action != 'edit') {
+      if (this.action == 'new') {
         this.commonEmptyFiild();
         // this.spendmoneyForm.controls['Class'].setValue(this.f.Class.value);
         // this.spendmoneyForm.controls['GST1'].setValue(this.f.GST1.value);
@@ -694,15 +702,15 @@ export class SpendMoneyAddComponent implements OnInit {
     });
   }
   FinalSaveData() {
-    if (this.action != 'edit' && this.f.MultiLineExpense.value == false) {
+    if (this.action == 'new'  && this.f.MultiLineExpense.value == false) {
       this.CommonSendOneLineData();
-    } else if (this.action != 'edit' && this.f.MultiLineExpense.value == true && this.isItemSaveClicked == 'no') {
+    } else if (this.action == 'new' && this.f.MultiLineExpense.value == true && this.isItemSaveClicked == 'no') {
       this.CommonSendOneLineData();
-    } else if (this.action != 'edit' && this.f.MultiLineExpense.value == true && this.isItemSaveClicked == 'yes') {
+    } else if (this.action == 'new' && this.f.MultiLineExpense.value == true && this.isItemSaveClicked == 'yes') {
       this.commonSendMultiLineData();
-    } else if (this.action == 'edit' && this.SendMoney_data.MULTILINE == 1 && this.f.MultiLineExpense.value == true) {
+    } else if (this.action != 'new' && this.SendMoney_data.MULTILINE == 1 && this.f.MultiLineExpense.value == true) {
       this.commonSendMultiLineData();
-    } else if (this.action == 'edit' && this.SendMoney_data.MULTILINE == 1 && this.f.MultiLineExpense.value == false) {
+    } else if (this.action != 'new' && this.SendMoney_data.MULTILINE == 1 && this.f.MultiLineExpense.value == false) {
       // first push and then get 
       // need to remove class from hml and show box 
       this.getDataForTable.push({
@@ -719,10 +727,10 @@ export class SpendMoneyAddComponent implements OnInit {
         AMOUNTEXGST: this.GSTValForExGst
       });
       this.commonSendMultiLineData();
-    } else if (this.action == 'edit' && this.SendMoney_data.MULTILINE == 0 && this.f.MultiLineExpense.value == false) {
+    } else if (this.action != 'new' && this.SendMoney_data.MULTILINE == 0 && this.f.MultiLineExpense.value == false) {
       this.CommonSendOneLineData();
 
-    } else if (this.action == 'edit' && this.SendMoney_data.MULTILINE == 0 && this.f.MultiLineExpense.value == true) {
+    } else if (this.action != 'new' && this.SendMoney_data.MULTILINE == 0 && this.f.MultiLineExpense.value == true) {
       this.commonSendMultiLineData();
     }
     // for multiline   
@@ -740,17 +748,19 @@ export class SpendMoneyAddComponent implements OnInit {
       MULTILINE: this.multicheckboxval,
       AMOUNT: this.FinalExGSTAmount,
       GST: (this.setMainGST).toFixed(2),
-      RECEIVEDDATE: this.f.DateIncurredForSend.value,
+
       DATE: this.f.DatePaidForSend.value,
+      RECEIVEDDATE: this.f.DateIncurredForSend.value,
       BANKACCOUNTGUID: this.f.BankacGUID.value,
       USERCODE: '',
       SOURCEREFERENCE: this.f.Invoice.value,
       NOTE: this.f.Notes.value,
       EXPENDITUREITEMS: this.sendItem
     }
+    console.log(Data);
     if (this.action == "edit") {
       this.FormAction = "update";
-    } else {
+    } else if(this.action == "new" || this.action == "duplicate") {
       this.FormAction = "insert";
     }
     this.Setata(Data);

@@ -1286,6 +1286,64 @@
 
                                     <div class="light_label_txt">Action</div>
                                 </section>
+
+                                <!--  2 start -->
+                                <mat-divider vertical></mat-divider>
+                                <section class="group-section-tab details_tab" *ngIf="activeSubMenu ==='file-notes'">
+                                    <section [ngClass]="appPermissions[13]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[13]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="FileNotePopup('new')" (click)="setTab($event)">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                        <img src="assets/icons/web_app/icon_filesnotes_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>New  <br/>Note</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section [ngClass]="appPermissions[13]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" >
+                                        <button mat-button [ngClass]="appPermissions[13]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="FileNotePopup('edit')">
+                                   <section class="large-button-container">
+                                      <mat-icon class="main-icon">
+                                            <img class="" src="assets/icons/web_app/icon_filesnotes_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                      </mat-icon>
+                                      <div class="main-text">
+                                        <span>Edit <br/>Note</span>
+                                      </div>
+                                   </section>
+                                </button>
+                                       
+                                    </section>
+                                    <section [ngClass]="appPermissions[13]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button [ngClass]="appPermissions[13]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="DeleteFileNotes()" mat-button class="large-button">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                        <img class="" src="assets/icons/web_app/icon_filesnotes_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Delete <br/>Note</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+
+                                    <section [ngClass]="appPermissions[13]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button [ngClass]="appPermissions[13]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="FileNotePopup('duplicate')" mat-button class="large-button">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                        <img class="" src="assets/icons/web_app/icon_duplicate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Duplicate <br/>Note</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+
+                                    <div class="light_label_txt">Action</div>
+                                </section>
+                                <!--  2 end  -->
                                 <mat-divider vertical></mat-divider>
 
                                 <section class="group-section-tab details_tab" *ngIf="activeSubMenu ==='legal-detail-task'">
@@ -1767,7 +1825,7 @@
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
                                     <section [ngClass]="appPermissions[9]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button [disabled]="spendMoneyMenu =='disabled'" mat-button [ngClass]="appPermissions[9]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="Addspendmoneypopup()">
+                                        <button [disabled]="spendMoneyMenu =='disabled'" mat-button [ngClass]="appPermissions[9]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="spendmoneypopup('new')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon"> 
                                                     <img  src="assets/icons/web_app/icon_expenses_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1779,7 +1837,7 @@
                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[9]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button [disabled]="spendMoneyMenu =='disabled'" mat-button [ngClass]="appPermissions[9]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="Editspendmoneypopup()">
+                                        <button [disabled]="spendMoneyMenu =='disabled'" mat-button [ngClass]="appPermissions[9]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="spendmoneypopup('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img  src="assets/icons/web_app/icon_expenses_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1802,6 +1860,20 @@
                                             </section>
                                         </button>
                                     </section>
+
+                                    <section [ngClass]="appPermissions[9]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[9]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="spendmoneypopup('duplicate')">
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_duplicate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                            <div class="main-text">
+                                                <span>Duplicate<br> Contact</span>
+                                            </div>
+                                        </section>
+                                        </button>
+                                    </section>
+
                                     <div class="light_label_txt">Action</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>

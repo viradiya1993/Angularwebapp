@@ -6,7 +6,7 @@
                     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                             <mat-form-field fxFlex="33" class="example" appearance="outline">
                                     <mat-label>Status</mat-label>
-                                    <mat-select formControlName="status"  >
+                                    <mat-select (selectionChange)="selectStatus($event.value)" formControlName="status"  >
                                         <mat-option value="all">All</mat-option>
                                         <mat-option value="Expense">Incomplete</mat-option>
                                         <mat-option value="Capital">Pending</mat-option>
@@ -21,7 +21,7 @@
                                     <mat-label>Matter</mat-label>
                                     <input formControlName="matter" readonly   matInput>
                                     <mat-icon class="set_icon" matSuffix (click)='SelectMatter()'  >
-                                            <img class="menu-disabled" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            <img class="{{ImgDisAb}}" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                         </mat-icon>
                                 </mat-form-field>
                                 
@@ -29,7 +29,7 @@
                                 
                                 <mat-form-field appearance="outline" class="example" fxFlex="33">
                                         <mat-label>Date Range</mat-label>
-                                        <input  matInput  [satDatepicker]="picker2" (dateInput)="DateRange()" (dateChange)="DateRange1()">
+                                        <input  matInput formControlName="DateRange"  [satDatepicker]="picker2" (dateInput)="DateRange('input', $event)" (dateChange)="DateRange1('change', $event)">
                                         <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
                                         <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
                                     </mat-form-field>
@@ -49,12 +49,21 @@
                                     </button>
                                 </div>
                                 <div class="content">
-                                    <!-- <div class="example-loading-shade" *ngIf="isLoadingResults">
+                                    <div class="example-loading-shade" *ngIf="isLoadingResults">
                                         <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
-                                    </div> -->
+                                    </div>
                                     <div class="example-containerdata">
-                                        
-                                            <!-- table view  -->
+                                             <table mat-table #table [dataSource]="MainSafeCustodyData" matSort [@animateStagger]="{value:'50'}">
+                                                <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
+                                                    <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header> {{ tempColobj[item].DESCRIPTION }}</th>
+                                                    <td mat-cell *matCellDef="let row"> <span *ngIf="row[item]">{{row[item]}}</span> </td>
+                                                </ng-container>
+                                                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                                <tr mat-row [style.background]="highlightedRows == row.INCOMEGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" [ngClass]="highlightedRows == row.INCOMEGUID ? 'row-text-colore' : ''" class="contact" (click)="selectMatterId(row);highlightedRows = row.INCOMEGUID"
+                                                    matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                                </tr>
+    
+                                            </table>
                                         
                                     </div>
                                 </div>

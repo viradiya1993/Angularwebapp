@@ -45,6 +45,7 @@ export class legalDetailTaskComponent implements OnInit {
 
     this.getUserdata();
     this.MainTaskFilterData = JSON.parse(localStorage.getItem("task_filter"));
+    
     this.filterData = {
       'MATTERGUID': this.currentMatter.MATTERGUID, 'STATUS': ' '
     }

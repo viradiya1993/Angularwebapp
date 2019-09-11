@@ -512,7 +512,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     addNewTimeEntryNew() {
         let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
         if (matterData.ACTIVE) {
-            console.log(matterData);
             this.addNewTimeEntry(matterData.MATTERGUID, '');
         } else {
             this.toastr.error("You cannot time entry for Inactive matter. Please select active matter and try again.");
@@ -520,11 +519,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }
     }
     ResumeTimePopup() {
-        const dialogRef = this.dialog.open(ResumeTimerComponent, { width: '100%', disableClose: true, data: { 'edit': '', 'matterData': '' } });
+        const dialogRef = this.dialog.open(ResumeTimerComponent, { width: '100%', disableClose: true });
         dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                // $('#refreshTimeEntryTab').click();
-            }
+            if (result) { }
         });
     }
     public addNewTimeEntry(Data: any, matterData: any) {

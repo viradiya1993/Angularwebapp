@@ -24,22 +24,15 @@
                             <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                                 <mat-label>Time of day</mat-label>
                                 <mat-select>
-                                    <mat-option *ngFor="let data of timeStops" value="{{data}}">{{data}}</mat-option>
+                                    <mat-option *ngFor="let time of timeStops" value="{{time}}">{{time}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <!-- <material-timepicker class="time_entry_picker" fxFlex="50" color="accent" label="Time Picker" appearance="outline"></material-timepicker> -->
-                            <!-- <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
-                                <mat-label>Time of day</mat-label>
-                                <input matInput>
-                            </mat-form-field> -->
-
-
                             <mat-form-field fxFlex="34" class="pr-4" appearance="outline">
                                 <mat-label>Free Erner</mat-label>
                                 <mat-select>
                                     <mat-option value="CSP">CSP</mat-option>
                                     <mat-option value="DLP">DLP</mat-option>
-                                  
+
                                 </mat-select>
                             </mat-form-field>
                         </div>

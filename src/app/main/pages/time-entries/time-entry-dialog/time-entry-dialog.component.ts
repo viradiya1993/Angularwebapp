@@ -20,7 +20,6 @@ import * as moment from 'moment';
 export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   timeStops: any = [];
-  private exportTime = { hour: 7, minute: 15, meriden: 'PM', format: 24 };
   LookupsList: any;
   errorWarningData: any = {};
   userList: any;
@@ -106,7 +105,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.timeEntryForm.controls['ITEMTYPE'].setValue('1');
     let userType = JSON.parse(localStorage.getItem('currentUser'));
     if (userType) {
-
       this.timeEntryForm.controls['FEEEARNER'].setValue(userType.UserId);
     }
     this.timeEntryForm.controls['QUANTITY'].setValue(0);

@@ -19,7 +19,7 @@ export class MatterDialogComponent implements OnInit {
   displayedColumns: string[] = ['matternumber', 'matter', 'client'];
   getDataForTable: any = [];
   highlightedRows: any;
-  
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   matterFilterForm: FormGroup;
@@ -45,7 +45,6 @@ export class MatterDialogComponent implements OnInit {
   ngOnInit() {
     if (this.appPermissions == null)
       this.appPermissions = [];
-    console.log(this.appPermissions[1].Create == 0);
     this.getDropValue();
     this.getMatterList();
   }

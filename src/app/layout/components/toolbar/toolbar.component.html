@@ -136,7 +136,7 @@
                                                 </mat-icon>
                                                 <span>New Timer</span>
                                             </a>
-                                            <a mat-list-item (click)="NewFileNote()" [ngClass]="appPermissions[13]?.Create==0 ? 'disabled-click-cursor' : ''">
+                                            <a mat-list-item (click)="FileNotePopup('new')" [ngClass]="appPermissions[13]?.Create==0 ? 'disabled-click-cursor' : ''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_filesnotes_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
@@ -1947,7 +1947,7 @@
                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[8]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[8]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="NewGeneralReceipt('add')">
+                                        <button mat-button [ngClass]="appPermissions[8]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="NewGeneralReceipt('new')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img  src="assets/icons/web_app/icon_receipt_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">

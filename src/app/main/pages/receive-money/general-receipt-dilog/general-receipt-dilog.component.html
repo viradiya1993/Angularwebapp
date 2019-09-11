@@ -23,6 +23,7 @@
                         <mat-select formControlName="INCOMECLASS">
                             <mat-option value="Income">Income</mat-option>
                             <mat-option value="Capital">Capital</mat-option>
+                            <mat-option value="Receipt">Receipt</mat-option>
                             <mat-option value="GST Refund"> GST Refund </mat-option>
                             <mat-option value="Tax Refund">Tax Refund</mat-option>
                             <mat-option value="Personal">Personal</mat-option>
@@ -44,8 +45,8 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="25" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PAYEE,'has-warning':errorWarningData.Warning?.PAYEE}">
                         <mat-label>Payor</mat-label>
-                        <mat-select formControlName="PAYEE">
-                            <mat-option *ngFor="let val of getPayourarray" [value]="val.CONTACTGUID">{{val.CONTACTNAME}}</mat-option>
+                        <mat-select (selectionChange)="PayeeTypeChange($event.value)" formControlName="PAYEE">
+                            <mat-option *ngFor="let val of getPayourarray" [value]="val.CONTACTNAME">{{val.CONTACTNAME}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>

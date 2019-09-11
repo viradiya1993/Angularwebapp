@@ -98,7 +98,6 @@ export class DocumentDailogComponent implements OnInit {
    LoadData(){
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({DOCUMENTGUID: this.DocRegData.DOCUMENTGUID}, 'GetDocument').subscribe(res => {
-      console.log(res);
       if (res.CODE == 200 && res.STATUS == "success") {
         this.SendDataArray=res.DATA.DOCUMENTS[0];
         this.DocumentRegiData.GENERATETIME=res.DATA.DOCUMENTS[0].GENERATETIME;
@@ -155,8 +154,8 @@ export class DocumentDailogComponent implements OnInit {
         this.DocGUID="";
     }
     let Data={
-      // CONTEXT: "Matter",
-      // CONTEXTGUID:this.SendDataArray.CONTEXTGUID,
+      CONTEXT: "Matter",
+      CONTEXTGUID:this.SendDataArray.CONTEXTGUID,
       DESCRIPTION: this.DocumentRegiData.DESCRIPTION_,
       DOCUMENTAUTHOR:this.DocumentRegiData.DOCUMENTAUTHOR,
       DOCUMENTCLASS: Number(this.DocumentRegiData.DOCUMENTCLASS),

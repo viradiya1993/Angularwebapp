@@ -154,6 +154,5 @@ export class DocumentRegisterComponent implements OnInit {
     console.log(value);
   }
   RowClick(row){
-console.log(row);
   }
 }

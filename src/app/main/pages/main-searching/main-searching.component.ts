@@ -5,6 +5,8 @@ import { MatterPopupComponent } from '../matters/matter-popup/matter-popup.compo
 import { MatDialog } from '@angular/material';
 import { MatterDialogComponent } from '../time-entries/matter-dialog/matter-dialog.component';
 import * as $ from 'jquery';
+import { MainAPiServiceService } from 'app/_services';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -15,10 +17,12 @@ import * as $ from 'jquery';
 })
 export class MainSearchingComponent implements OnInit {
   MainSearching:FormGroup;
-  @Input() SettingForm: FormGroup;
   @Input() errorWarningData: any;
+  isLoadingResults: boolean = false;
   addData:any=[];
-  constructor(private dialog: MatDialog,private _formBuilder: FormBuilder,) { }
+  constructor(private dialog: MatDialog,private _formBuilder: FormBuilder,
+  private _mainAPiServiceService: MainAPiServiceService,
+  private toastr: ToastrService,) { }
 
   ngOnInit() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 80)) + 'px');
@@ -29,10 +33,35 @@ export class MainSearchingComponent implements OnInit {
       matter:['']
     
     });
+    this.LoadData();
     this.MainSearching.controls['matterCheck'].setValue(true);
     this.MainSearching.controls['status'].setValue('all');
     this.MainSearching.controls['matter'].disable();
   }
+  LoadData() {
+  
+      this.isLoadingResults = true;
+      this._mainAPiServiceService.getSetData({}, 'GetCostRecovery').subscribe(res => {
+        console.log(res);
+        // this.TaskAllData = new MatTableDataSource(res.DATA.TASKS);
+        // this.TaskAllData.sort = this.sort;
+        // this.TaskAllData.paginator = this.paginator;
+        if (res.CODE == 200 && res.STATUS == "success") {
+          if (res.DATA.TASKS[0]) {
+            // this.behaviorService.TaskData(res.DATA.TASKS[0]);
+            // this.highlightedRows = res.DATA.TASKS[0].TASKGUID;
+          } else {
+            // this.toastr.error("No Data Selected");
+          }
+          this.isLoadingResults = false;
+        }
+      }, err => {
+        this.isLoadingResults = false;
+        this.toastr.error(err);
+  
+      });
+      // this.pageSize = localStorage.getItem('lastPageSize');
+    }
   get f() {
     //console.log(this.contactForm);
     return this.MainSearching.controls;

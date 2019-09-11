@@ -22,16 +22,19 @@ export class BehaviorService {
 
   public MatterData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public TaskData$: BehaviorSubject<any> = new BehaviorSubject(null);
-  
+
   public SysytemAccountData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public SysytemAccountDIalogData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public UserDropDownData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public FileNotesData$: BehaviorSubject<any> = new BehaviorSubject(null);
-  
+  public ActiveSubMenu$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(private http: HttpClient) { }
 
   matterInvoiceData(matterInvoice: any) {
     this.matterInvoice$.next(matterInvoice);
+  }
+  SetActiveSubMenu(activeSubMenu: any) {
+    this.ActiveSubMenu$.next(activeSubMenu);
   }
   FileNotesData(FileNotesData: any) {
     this.FileNotesData$.next(FileNotesData);
@@ -45,7 +48,7 @@ export class BehaviorService {
   SysytemAccountDIalogData(SysytemAccountDIalogData: any) {
     this.SysytemAccountDIalogData$.next(SysytemAccountDIalogData);
   }
-  
+
   setworkInProgressData(workInProgressData: any) {
     this.workInProgress$.next(workInProgressData);
   }

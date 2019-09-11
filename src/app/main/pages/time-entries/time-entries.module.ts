@@ -29,7 +29,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { ResumeTimerComponent } from './resume-timer/resume-timer.component';
 import { WriteOffTimeEntryComponent } from './write-off-time-entry/write-off-time-entry.component';
 const routes = [
-  { path: '', component: TimeEntriesComponent, canActivate: [AuthGuard] }
+  // { path: '', component: TimeEntriesComponent, canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/time-entries/full-time-entries', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: 'time-entries/full-time-entries', component: TimeEntriesComponent, canActivate: [AuthGuard] },
+  { path: 'time-entries/quick-time-entries', component: TimeEntriesComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

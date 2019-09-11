@@ -2,12 +2,14 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig, MatDatepickerInputEvent } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from '../../sorting-dialog/sorting-dialog.component';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { TimersService, TableColumnsService } from '../../../_services';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TimersService, TableColumnsService, BehaviorService } from '../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common'
 import * as $ from 'jquery';
 import { MatSort } from '@angular/material';
+import { MatterDialogComponent } from './matter-dialog/matter-dialog.component';
+import * as moment from 'moment';
 
 
 @Component({
@@ -19,13 +21,20 @@ import { MatSort } from '@angular/material';
 })
 export class TimeEntriesComponent implements OnInit {
   TimeEnrtyForm: FormGroup;
+  quickTimeEntriesForm: FormGroup;
+  ActiveTab: any;
   pageSize: any;
+  errorWarningData: any = {};
   isLoadingResults: boolean = false;
   displayedColumns: string[];
   ColumnsObj = [];
+  timeStops: any = [];
+  userList: any;
+  LookupsList: any;
   TimerData;
   TimerDropData: any;
   isShowDrop: boolean;
+  ActivityList: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   lastFilter: any;
@@ -33,6 +42,7 @@ export class TimeEntriesComponent implements OnInit {
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   tempColobj: any;
+  isspiner: boolean = false;
   constructor(
     private dialog: MatDialog,
     private fb: FormBuilder,
@@ -40,6 +50,7 @@ export class TimeEntriesComponent implements OnInit {
     private Timersservice: TimersService,
     public datepipe: DatePipe,
     private TableColumnsService: TableColumnsService,
+    private behaviorService: BehaviorService
   ) {
     this.lastFilter = JSON.parse(localStorage.getItem('time_entries_filter'));
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -68,11 +79,54 @@ export class TimeEntriesComponent implements OnInit {
       this.lastFilter = { 'FeeEarner': '', 'Invoiced': "", 'ItemDateStart': this.datepipe.transform(new Date(), 'dd/MM/yyyy'), 'ItemDateEnd': this.datepipe.transform(dt, 'dd/MM/yyyy') };
       localStorage.setItem('time_entries_filter', JSON.stringify(this.lastFilter));
     }
-
   }
 
   ngOnInit() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
+    this.behaviorService.ActiveSubMenu$.subscribe(result => { this.ActiveTab = result; });
+    if (this.ActiveTab == 'quick-time-entries') {
+      this.quickTimeEntriesForm = this.fb.group({
+        matterautoVal: [''],
+        MATTERGUID: ['', Validators.required],
+        ITEMTYPE: [''],
+        QUANTITYTYPE: ['Hours'],
+        ITEMDATE: ['', Validators.required],
+        FEEEARNER: [''],
+        QUANTITY: [''],
+        PRICE: [''],
+        PRICEINCGST: [''],
+        ITEMTIME: [''],
+        ADDITIONALTEXTSELECT: [''],
+        ADDITIONALTEXT: ['', Validators.required],
+        COMMENT: [''],
+        INVOICEDATE: [this.datepipe.transform(new Date(), 'dd/MM/yyyy')],
+      });
+      this.timeStops = this.getTimeStops('00:00', '23:30');
+      this.Timersservice.GetUsers({}).subscribe(res => {
+        if (res.CODE == 200 && res.STATUS == "success") {
+          this.userList = res.DATA.USERS;
+        } else {
+          this.userList = [];
+        }
+      }, err => {
+        this.toastr.error(err);
+      });
+      this.ActivityList = [
+        { 'ACTIVITYID': 'hh:mm', 'DESCRIPTION': 'hh:mm' }, { 'ACTIVITYID': 'Hours', 'DESCRIPTION': 'Hours' },
+        { 'ACTIVITYID': 'Minutes', 'DESCRIPTION': 'Minutes' }, { 'ACTIVITYID': 'Days', 'DESCRIPTION': 'Days' },
+        { 'ACTIVITYID': 'Units', 'DESCRIPTION': 'Units' }, { 'ACTIVITYID': 'Fixed', 'DESCRIPTION': 'Fixed' }
+      ];
+      this.Timersservice.GetLookupsData({}).subscribe(res => {
+        if (res.CODE == 200 && res.STATUS == "success") {
+          this.LookupsList = res.DATA.LOOKUPS;
+        } else {
+          this.LookupsList = [];
+        }
+        this.isLoadingResults = false;
+      }, err => {
+        this.toastr.error(err);
+      });
+    }
     this.getTableFilter();
     let d = {};
     this.Timersservice.GetUsers(d).subscribe(res => {
@@ -83,6 +137,32 @@ export class TimeEntriesComponent implements OnInit {
       console.log(err);
     });
     this.LoadData(this.lastFilter);
+  }
+  SaveQuickTimeEntry() {
+    this.isspiner = true;
+  }
+  getTimeStops(start, end) {
+    var startTime = moment(start, 'hh:mm');
+    var endTime = moment(end, 'hh:mm');
+    if (endTime.isBefore(startTime)) {
+      endTime.add(1, 'day');
+    }
+    var timeStops = [];
+    while (startTime <= endTime) {
+      timeStops.push(moment(startTime).format('hh:mm A'));
+      startTime.add(30, 'minutes');
+    }
+    return timeStops;
+  }
+  public selectMatter() {
+    const dialogRef = this.dialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.quickTimeEntriesForm.controls['MATTERGUID'].setValue(result.MATTERGUID);
+        this.quickTimeEntriesForm.controls['matterautoVal'].setValue(result.SHORTNAME + ' : ' + result.MATTER);
+        // this.matterChange('MatterGuid', result.MATTERGUID);
+      }
+    });
   }
   refreshTab() {
     this.LoadData(this.lastFilter);
@@ -106,7 +186,7 @@ export class TimeEntriesComponent implements OnInit {
     localStorage.setItem('edit_WORKITEMGUID', Data);
   }
   LoadData(Data) {
-    this.TimerData=[];
+    this.TimerData = [];
     this.isLoadingResults = true;
     this.Timersservice.getTimeEnrtyData(Data).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {

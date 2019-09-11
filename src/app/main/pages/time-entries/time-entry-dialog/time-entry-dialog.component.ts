@@ -112,7 +112,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.timeEntryForm.controls['QUANTITY'].setValue(0);
     this.isLoadingResults = true;
     this.Timersservice.GetLookupsData({}).subscribe(res => {
-
       if (res.CODE == 200 && res.STATUS == "success") {
         this.LookupsList = res.DATA.LOOKUPS;
       } else if (res.MESSAGE == 'Not logged in') {

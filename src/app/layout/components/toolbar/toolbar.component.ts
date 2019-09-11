@@ -307,7 +307,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef = null;
         });
     }
-    
+
     /* ---------------------------------------------------------------------Matter End--------------------------------------------------------------------------  */
     /* ---------------------------------------------------------------------Activity Start--------------------------------------------------------------------------  */
     //add edit and duplicat ActivityDialog
@@ -563,7 +563,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         // }
     }
     //// File PopUp 
-    FileNotePopup(actionType){
+    FileNotePopup(actionType) {
         let FileNotePopdata = {}
         if (actionType == 'new') {
             FileNotePopdata = { action: actionType }
@@ -577,14 +577,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => {
 
-            if (result){
+            if (result) {
                 console.log(result);
                 $('#refreshFileNote').click();
             }
-           
+
         });
     }
-    DeleteFileNotes(){
+    DeleteFileNotes() {
         this.behaviorService.FileNotesData$.subscribe(result => {
             if (result) {
                 this.FileNotesData = result;
@@ -641,7 +641,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             });
         }
     }
-        //// Duplicate Spend Money
+    //// Duplicate Spend Money
 
 
     deleteContact(): void {
@@ -725,26 +725,26 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 $("#refreshDOCREGTab").click();
         });
     }
-        ///Spend Money 
-     
-        spendmoneypopup(actionType){
-            let SpendMoneyPopdata = {}
-            if (actionType == 'new') {
-                SpendMoneyPopdata = { action: actionType }
-            } else if (actionType == 'edit' || actionType == 'duplicate') {
-                SpendMoneyPopdata = { action: actionType }
-            }
-            const dialogRef = this.dialog.open(SpendMoneyAddComponent, {
-                disableClose: true,
-                panelClass: 'SpendMoney-dialog',
-                data: SpendMoneyPopdata
-            });
-            dialogRef.afterClosed().subscribe(result => {
-                if (result)
-                    $("#refreshSpendMoneyTab").click();
-                    $('#refreshRecouncilItem').click();
-            });
+    ///Spend Money 
+
+    spendmoneypopup(actionType) {
+        let SpendMoneyPopdata = {}
+        if (actionType == 'new') {
+            SpendMoneyPopdata = { action: actionType }
+        } else if (actionType == 'edit' || actionType == 'duplicate') {
+            SpendMoneyPopdata = { action: actionType }
         }
+        const dialogRef = this.dialog.open(SpendMoneyAddComponent, {
+            disableClose: true,
+            panelClass: 'SpendMoney-dialog',
+            data: SpendMoneyPopdata
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result)
+                $("#refreshSpendMoneyTab").click();
+            $('#refreshRecouncilItem').click();
+        });
+    }
 
     DeleteDocument(): void {
         this.behaviorService.DocumentRegisterData$.subscribe(result => {
@@ -1241,8 +1241,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 1;
         }
         this.activeSubMenu = x[2];
-
-        // console.log(this.router.url);
+        this.behaviorService.SetActiveSubMenu(this.activeSubMenu);
+        // console.log(this.activeSubMenu);
         // this.behaviorService.navigation(this.router.url);
     }
     setTab(event: any) {

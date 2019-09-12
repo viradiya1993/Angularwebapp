@@ -28,7 +28,7 @@ export class MainSearchingComponent implements OnInit {
   pageSize: any;
   displayedColumns: string[];
   tempColobj: any;
-  filterData: { 'MATTERGUID': any, 'STATUS': any; 'Search': string;  'DUEDATEFROM': any; 'DUEDATETO': any, "Matter": any };
+  filterData: { 'MATTERGUID': any, 'STATUS': any; 'Search': string;  'OrderedDateFrom': any; 'OrderedDateTo': any, "Matter": any };
   ImgDisAb: string;
   constructor(private dialog: MatDialog,private _formBuilder: FormBuilder,
   private _mainAPiServiceService: MainAPiServiceService,private TableColumnsService: TableColumnsService,
@@ -47,7 +47,7 @@ export class MainSearchingComponent implements OnInit {
     });
    
     this.filterData = {
-      'MATTERGUID': '', 'Search': '', 'DUEDATEFROM': '', 'DUEDATETO': '', 'STATUS': ' ', "Matter": ''
+      'MATTERGUID': '', 'Search': '', 'OrderedDateFrom': '', 'OrderedDateTo': '', 'STATUS': ' ', "Matter": ''
     }
     //  this.filterData.DUEDATEFROM=new Date();
     //  this.filterData.DUEDATETO=new Date();
@@ -58,9 +58,9 @@ export class MainSearchingComponent implements OnInit {
     }
     this.MainSearching.controls['status'].setValue(this.filterData.STATUS);
     this.MainSearching.controls['matter'].setValue(this.filterData.Matter);
-    let date = this.filterData.DUEDATEFROM.split("/");
+    let date = this.filterData.OrderedDateFrom.split("/");
     let putDate1 = new Date(date[1] + '/' + date[0] + '/' + date[2]);
-    let date2 = this.filterData.DUEDATETO.split("/");
+    let date2 = this.filterData.OrderedDateTo.split("/");
     let putDate2 = new Date(date2[1] + '/' + date2[0] + '/' + date2[2]);
     this.MainSearching.controls['DateRange'].setValue({ begin: putDate1, end: putDate2 });
     if (this.filterData.MATTERGUID == '') {
@@ -186,8 +186,8 @@ CheckboxChecxed(){
     let begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
     let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');
     this.filterData = JSON.parse(localStorage.getItem("search_filter"));
-    this.filterData.DUEDATEFROM = begin;
-    this.filterData.DUEDATETO = end;
+    this.filterData.OrderedDateFrom = begin;
+    this.filterData.OrderedDateTo = end;
     localStorage.setItem('search_filter', JSON.stringify(this.filterData));
     this.LoadData(this.filterData);
   }

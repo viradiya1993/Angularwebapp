@@ -9,7 +9,6 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatSort } from '@angular/material';
 import { Subscription } from 'rxjs/Subscription';
 
-
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
@@ -17,6 +16,7 @@ import { Subscription } from 'rxjs/Subscription';
   encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
+
 export class ContactComponent implements OnInit, AfterViewInit {
   subscription: Subscription;
   highlightedRows: any;
@@ -119,14 +119,11 @@ export class ContactComponent implements OnInit, AfterViewInit {
     });
     this.pageSize = localStorage.getItem('lastPageSize');
   }
-
-
   //for edit popup
   editContact(val, row) {
     localStorage.setItem('contactGuid', val);
     // localStorage.setItem('contactData',row);
   }
-
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';

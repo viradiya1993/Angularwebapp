@@ -64,7 +64,8 @@ export class ChronologyComponent implements OnInit {
     this.isLoadingResults = true;
     //get chronology
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
-    this._mainAPiServiceService.getSetData(potData, 'GetMatterChronology').subscribe(response => {
+    this._mainAPiServiceService.getSetData(potData, 'SetChronology').subscribe(response => {
+      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         this.chronology_table = new MatTableDataSource(response.DATA.CHRONOLOGIES);
         this.chronology_table.paginator = this.paginator;

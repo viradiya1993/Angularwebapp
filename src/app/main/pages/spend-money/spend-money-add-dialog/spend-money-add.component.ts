@@ -13,6 +13,7 @@ import { MatSort } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { round } from 'lodash';
 import { BankingDialogComponent } from '../../banking/banking-dialog.component';
+
 @Component({
   selector: 'app-spend-money-add',
   templateUrl: './spend-money-add.component.html',
@@ -78,11 +79,11 @@ export class SpendMoneyAddComponent implements OnInit {
     this.action = _data.action;
 
     // this.dialogTitle = this.action === 'edit' ? 'Update Spend Money' : 'Add Spend Money';
-    if(this.action === 'new'){
+    if (this.action === 'new') {
       this.dialogTitle = 'Add Spend Money ';
-    }else if(this.action === 'edit'){
+    } else if (this.action === 'edit') {
       this.dialogTitle = 'Update Spend Money';
-    }else{
+    } else {
       this.dialogTitle = 'Duplicate Spend Money';
     }
     this.getPayee({});
@@ -128,7 +129,6 @@ export class SpendMoneyAddComponent implements OnInit {
       MatterGUID: [''],
       ExpenseacGUID: ['']
     });
-
     if (this.action != 'new') {
       $('#expac').addClass('menu-disabled');
       this.expac = true;
@@ -149,13 +149,11 @@ export class SpendMoneyAddComponent implements OnInit {
       this.forAddshowpopupData();
     }
   }
-  forEditshowpopupData() {    
+  forEditshowpopupData() {
     let DatePaid = this.SendMoney_data.DATE.split("/");
     let DATE = new Date(DatePaid[1] + '/' + DatePaid[0] + '/' + DatePaid[2]);
     let DateIncurred = this.SendMoney_data.RECEIVEDDATE.split("/");
     let ReceiveDATE = new Date(DateIncurred[1] + '/' + DateIncurred[0] + '/' + DateIncurred[2]);
-    console.log(this.SendMoney_data.DATE);
-    console.log(this.SendMoney_data.ReceiveDATE);
     this.spendmoneyForm.controls['DateIncurred'].setValue(ReceiveDATE);
     this.spendmoneyForm.controls['DatePaid'].setValue(DATE);
     //for sending date 
@@ -167,7 +165,6 @@ export class SpendMoneyAddComponent implements OnInit {
     this.highlightedRows = 0;
     this.getDataForTable.paginator = this.paginator;
     this.getDataForTable.sort = this.sort;
-
     this.spendmoneyForm.controls['GST1'].disable();
     this.paidtype = this.SendMoney_data.STATUS
     //globally value set 
@@ -178,7 +175,6 @@ export class SpendMoneyAddComponent implements OnInit {
     this.spendmoneyForm.controls['Amount'].setValue(this.SendMoney_data.AMOUNT + this.SendMoney_data.GST);
     this.spendmoneyForm.controls['GST'].setValue(this.SendMoney_data.GST);
     this.spendmoneyForm.controls['BankacGUID'].setValue(this.SendMoney_data.BANKACCOUNTGUID);
-
     // inner item 
     if (this.SendMoney_data.EXPENDITUREITEMS.length != 0) {
       this.editMoney(this.SendMoney_data.EXPENDITUREITEMS[0], 0);
@@ -702,7 +698,7 @@ export class SpendMoneyAddComponent implements OnInit {
     });
   }
   FinalSaveData() {
-    if (this.action == 'new'  && this.f.MultiLineExpense.value == false) {
+    if (this.action == 'new' && this.f.MultiLineExpense.value == false) {
       this.CommonSendOneLineData();
     } else if (this.action == 'new' && this.f.MultiLineExpense.value == true && this.isItemSaveClicked == 'no') {
       this.CommonSendOneLineData();
@@ -760,7 +756,7 @@ export class SpendMoneyAddComponent implements OnInit {
     console.log(Data);
     if (this.action == "edit") {
       this.FormAction = "update";
-    } else if(this.action == "new" || this.action == "duplicate") {
+    } else if (this.action == "new" || this.action == "duplicate") {
       this.FormAction = "insert";
     }
     this.Setata(Data);

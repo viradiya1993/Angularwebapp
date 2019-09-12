@@ -104,6 +104,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     chartAccountDetail: any;
     TaskData: any;
     FileNotesData: any;
+    conflictData: any;
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
@@ -277,6 +278,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 return false;
             }
             let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
+            
             MaterPopupData = { action: actionType, 'matterGuid': mattersData.MATTERGUID }
         }
         const dialogRef = this.dialog.open(MatterPopupComponent, {
@@ -924,6 +926,23 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 });
             }
         });
+    }
+    ConflictStart(){
+        // this.behaviorService.ConflictMainData$.subscribe(result => {
+        //     if (result) {
+        //         console.log(result);
+        //         this.conflictData = result;
+        //     }
+        // });
+
+        $('#refreshConflict').click();
+        // this._mainAPiServiceService.getSetData(this.conflictData, 'GetConflictCheck').subscribe(res => {
+        //     console.log(res);
+        //     if (res.STATUS == "success" && res.CODE == 200) {
+
+        //         // this.toastr.success('Delete successfully');
+        //     }
+        // });
     }
     SelectMatter() {
         const dialogRef = this.MatDialog.open(MatterDialogComponent, {

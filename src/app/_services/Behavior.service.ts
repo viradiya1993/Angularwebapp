@@ -28,10 +28,15 @@ export class BehaviorService {
   public UserDropDownData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public FileNotesData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public ActiveSubMenu$: BehaviorSubject<any> = new BehaviorSubject(null);
+
+  public ConflictMainData$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(private http: HttpClient) { }
 
   matterInvoiceData(matterInvoice: any) {
     this.matterInvoice$.next(matterInvoice);
+  }
+  ConflictMainData(ConflictMainData: any) {
+    this.ConflictMainData$.next(ConflictMainData);
   }
   SetActiveSubMenu(activeSubMenu: any) {
     this.ActiveSubMenu$.next(activeSubMenu);

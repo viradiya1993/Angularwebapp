@@ -1,8 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MainAPiServiceService, BehaviorService, TimersService } from './../../../../_services';
 import * as moment from 'moment';
+import { MatDialogRef, MatDatepickerInputEvent, MatDialog } from '@angular/material';
+import { ToastrService } from 'ngx-toastr';
+import { DatePipe } from '@angular/common';
+import { round } from 'lodash';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-resume-timer',
@@ -11,18 +16,51 @@ import * as moment from 'moment';
   animations: fuseAnimations
 })
 export class ResumeTimerComponent implements OnInit {
+  confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   resumeTimerForm: FormGroup;
   errorWarningData: any = {};
+  successMsg = 'Time entry update successfully';
   timeStops: any = [];
   isLoadingResults: any = false;
   isspiner: any = false;
-  buttonText = 'Add';
+  userList: any;
+  matterShortName: any;
+  ActivityList: any = [
+    { 'ACTIVITYID': 'hh:mm', 'DESCRIPTION': 'hh:mm' },
+    { 'ACTIVITYID': 'Hours', 'DESCRIPTION': 'Hours' },
+    { 'ACTIVITYID': 'Minutes', 'DESCRIPTION': 'Minutes' },
+    { 'ACTIVITYID': 'Days', 'DESCRIPTION': 'Days' },
+    { 'ACTIVITYID': 'Units', 'DESCRIPTION': 'Units' },
+    { 'ACTIVITYID': 'Fixed', 'DESCRIPTION': 'Fixed' }
+  ];
+  LookupsList: any = [];
   calculateData: any = { MatterGuid: '', QuantityType: '', Quantity: '', FeeEarner: '', FeeType: '' };
-  constructor(private _mainAPiServiceService: MainAPiServiceService, private behaviorService: BehaviorService, private Timersservice: TimersService) {
+  constructor(public dialogRef: MatDialogRef<ResumeTimerComponent>,
+    public MatDialog: MatDialog,
+    private _mainAPiServiceService: MainAPiServiceService,
+    private behaviorService: BehaviorService,
+    private _formBuilder: FormBuilder,
+    private toastr: ToastrService, public datepipe: DatePipe,
+    private Timersservice: TimersService) {
     this.timeStops = this.getTimeStops('01:00', '23:59');
   }
 
   ngOnInit() {
+    this.resumeTimerForm = this._formBuilder.group({
+      MATTERGUID: ['', Validators.required],
+      ITEMTYPE: [''],
+      QUANTITYTYPE: ['Hours'],
+      ITEMDATE: ['', Validators.required],
+      ITEMDATETEXT: [''],
+      FEEEARNER: [''],
+      QUANTITY: [''],
+      PRICE: [''],
+      PRICEINCGST: [''],
+      ITEMTIME: [''],
+      ADDITIONALTEXTSELECT: [''],
+      ADDITIONALTEXT: ['', Validators.required],
+      COMMENT: [''],
+    });
     this.isLoadingResults = true;
     let workerGuid;
     this.behaviorService.workInProgress$.subscribe(workInProgressData => {
@@ -32,43 +70,81 @@ export class ResumeTimerComponent implements OnInit {
         workerGuid = localStorage.getItem('edit_WORKITEMGUID');
       }
     });
+    this.isLoadingResults = true;
+    this.Timersservice.GetUsers({}).subscribe(res => {
+      if (res.CODE == 200 && res.STATUS == "success") {
+        this.userList = res.DATA.USERS;
+      } else if (res.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      } else {
+        this.userList = [];
+      }
+      this.isLoadingResults = false;
+    }, err => {
+      this.toastr.error(err);
+    });
+    this.isLoadingResults = true;
+    this.Timersservice.GetLookupsData({}).subscribe(res => {
+      if (res.CODE == 200 && res.STATUS == "success") {
+        this.LookupsList = res.DATA.LOOKUPS;
+      } else if (res.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      } else {
+        this.LookupsList = [];
+      }
+      this.isLoadingResults = false;
+    }, err => {
+      this.toastr.error(err);
+    });
     this.Timersservice.getTimeEnrtyData({ 'WorkItemGuid': workerGuid }).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        console.log(response.DATA);
-        // this.matterChange('MatterGuid', response.DATA.WORKITEMS[0].MATTERGUID);
-        // this.matterChange('QuantityType', response.DATA.WORKITEMS[0].QUANTITYTYPE);
-        // this.timeEntryForm.controls['matterautoVal'].setValue(response.DATA.WORKITEMS[0].SHORTNAME);
-        // localStorage.setItem('edit_WORKITEMGUID', response.DATA.WORKITEMS[0].WORKITEMGUID);
-        // let timeEntryData = response.DATA.WORKITEMS[0];
-        // this.itemTypeChange(timeEntryData.ITEMTYPE);
-        // if (timeEntryData.ITEMTYPE == "2" || timeEntryData.ITEMTYPE == "3") {
-        //   this.timeEntryForm.controls['QUANTITYTYPE'].setValue(timeEntryData.FEETYPE);
-        // } else {
-        //   this.timeEntryForm.controls['QUANTITYTYPE'].setValue(timeEntryData.QUANTITYTYPE);
-        // }
-        // this.timeEntryForm.controls['QUANTITY'].setValue(timeEntryData.QUANTITY);
-        // this.timeEntryForm.controls['MATTERGUID'].setValue(timeEntryData.MATTERGUID);
-        // this.timeEntryForm.controls['ITEMTYPE'].setValue(timeEntryData.ITEMTYPE);
-        // let ttyData = moment(timeEntryData.ITEMTIME, 'hh:mm');
-        // this.timeEntryForm.controls['ITEMTIME'].setValue(moment(ttyData).format('hh:mm A'));
-        // this.timeEntryForm.controls['FEEEARNER'].setValue(timeEntryData.FEEEARNER);
-
-        // let tempDate = timeEntryData.ITEMDATE.split("/");
-        // this.ITEMDATEModel = new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]);
-        // this.timeEntryForm.controls['PRICEINCGST'].setValue(timeEntryData.PRICEINCGST);
-        // this.timeEntryForm.controls['PRICE'].setValue(timeEntryData.PRICE);
-        // this.timeEntryForm.controls['ADDITIONALTEXT'].setValue(timeEntryData.ADDITIONALTEXT);
-        // this.timeEntryForm.controls['ADDITIONALTEXTSELECT'].setValue(timeEntryData.ADDITIONALTEXT);
-        // this.timeEntryForm.controls['COMMENT'].setValue(timeEntryData.COMMENT);
+        let timeEntryData = response.DATA.WORKITEMS[0];
+        let isT: boolean = timeEntryData.QUANTITYTYPE == "hh:mm" || timeEntryData.QUANTITYTYPE == "Hours" || timeEntryData.QUANTITYTYPE == "Minutes";
+        if (!isT && timeEntryData.INVOICEGUID == "") {
+          this.toastr.error("You can not resume a timer");
+          this.dialogRef.close(false);
+          return false;
+        }
+        this.matterChange('MatterGuid', response.DATA.WORKITEMS[0].MATTERGUID);
+        this.matterChange('QuantityType', response.DATA.WORKITEMS[0].QUANTITYTYPE);
+        this.matterShortName = response.DATA.WORKITEMS[0].SHORTNAME;
+        localStorage.setItem('edit_WORKITEMGUID', response.DATA.WORKITEMS[0].WORKITEMGUID);
+        if (timeEntryData.ITEMTYPE == "2" || timeEntryData.ITEMTYPE == "3") {
+          this.resumeTimerForm.controls['QUANTITYTYPE'].setValue(timeEntryData.FEETYPE);
+        } else {
+          this.resumeTimerForm.controls['QUANTITYTYPE'].setValue(timeEntryData.QUANTITYTYPE);
+        }
+        this.resumeTimerForm.controls['QUANTITY'].setValue(timeEntryData.QUANTITY);
+        this.resumeTimerForm.controls['MATTERGUID'].setValue(timeEntryData.MATTERGUID);
+        this.resumeTimerForm.controls['ITEMTYPE'].setValue(timeEntryData.ITEMTYPE);
+        let ttyData = moment(timeEntryData.ITEMTIME, 'hh:mm');
+        this.resumeTimerForm.controls['ITEMTIME'].setValue(moment(ttyData).format('hh:mm A'));
+        this.resumeTimerForm.controls['FEEEARNER'].setValue(timeEntryData.FEEEARNER);
+        let tempDate = timeEntryData.ITEMDATE.split("/");
+        this.resumeTimerForm.controls['ITEMDATE'].setValue(timeEntryData.ITEMDATE);
+        this.resumeTimerForm.controls['ITEMDATETEXT'].setValue(new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]));
+        this.resumeTimerForm.controls['PRICEINCGST'].setValue(timeEntryData.PRICEINCGST);
+        this.resumeTimerForm.controls['PRICE'].setValue(timeEntryData.PRICE);
+        this.resumeTimerForm.controls['ADDITIONALTEXT'].setValue(timeEntryData.ADDITIONALTEXT);
+        this.resumeTimerForm.controls['ADDITIONALTEXTSELECT'].setValue(timeEntryData.ADDITIONALTEXT);
+        this.resumeTimerForm.controls['COMMENT'].setValue(timeEntryData.COMMENT);
       } else if (response.MESSAGE == 'Not logged in') {
-        // this.dialogRef.close(false);
+        this.dialogRef.close(false);
       }
       this.isLoadingResults = false;
     }, err => {
       this.isLoadingResults = false;
-      // this.toastr.error(err);
+      this.toastr.error(err);
     });
-
+  }
+  calcPE() {
+    this.resumeTimerForm.controls['PRICEINCGST'].setValue(round(this.f.PRICE.value * 1.1).toFixed(2));
+  }
+  calcPI() {
+    this.resumeTimerForm.controls['PRICE'].setValue(round(this.f.PRICEINCGST.value / 1.1).toFixed(2));
+  }
+  resumeDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.resumeTimerForm.controls['ITEMDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
   getTimeStops(start, end) {
     const startTime = moment(start, 'HH:mm');
@@ -132,16 +208,111 @@ export class ResumeTimerComponent implements OnInit {
           // this.timeEntryForm.controls['PRICEINCGST'].setValue(CalcWorkItemCharge.PRICEINCGST);
           this.isLoadingResults = false;
         } else if (response.MESSAGE == 'Not logged in') {
-          // this.dialogRef.close(false);
+          this.dialogRef.close(false);
         }
       }, err => {
         this.isLoadingResults = false;
-        // this.toastr.error(err);
+        this.toastr.error(err);
       });
     }
   }
   get f() {
     return this.resumeTimerForm.controls;
+  }
+  SaveClickTimeEntry() {
+    this.isspiner = true;
+    let PostData: any = {
+      ADDITIONALTEXT: this.f.ADDITIONALTEXT.value,
+      COMMENT: this.f.COMMENT.value,
+      FEEEARNER: this.f.FEEEARNER.value,
+      ITEMTYPE: this.f.ITEMTYPE.value,
+      ITEMDATE: this.f.ITEMDATE.value,
+      ITEMTIME: this.f.ITEMTIME.value,
+      MATTERGUID: this.f.MATTERGUID.value,
+      PRICE: this.f.PRICE.value,
+      PRICEINCGST: this.f.PRICEINCGST.value,
+      QUANTITY: this.f.QUANTITY.value,
+      WorkItemGuid: localStorage.getItem('edit_WORKITEMGUID')
+    }
+    if (this.f.ITEMTYPE.value == "2" || this.f.ITEMTYPE.value == "3") {
+      PostData.FEETYPE = this.f.QUANTITYTYPE.value;
+      PostData.QUANTITYTYPE = '';
+    } else {
+      PostData.QUANTITYTYPE = this.f.QUANTITYTYPE.value;
+    }
+    let PostTimeEntryData: any = { FormAction: 'update', VALIDATEONLY: true, Data: PostData };
+    this.Timersservice.SetWorkItems(PostTimeEntryData).subscribe(res => {
+      if (res.CODE == 200 && res.STATUS == "success") {
+        this.checkValidation(res.DATA.VALIDATIONS, PostTimeEntryData);
+      } else if (res.CODE == 451 && res.STATUS == 'warning') {
+        this.checkValidation(res.DATA.VALIDATIONS, PostTimeEntryData);
+      } else if (res.CODE == 450 && res.STATUS == 'error') {
+        this.checkValidation(res.DATA.VALIDATIONS, PostTimeEntryData);
+      } else if (res.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      }
+      this.isspiner = false;
+    }, err => {
+      this.isspiner = false;
+      this.toastr.error(err);
+    });
+  }
+  checkValidation(bodyData: any, PostTimeEntryData: any) {
+    let errorData: any = [];
+    let warningData: any = [];
+    let tempError: any = [];
+    let tempWarning: any = [];
+    // errorData
+    bodyData.forEach(function (value) {
+      if (value.VALUEVALID == 'NO') {
+        errorData.push(value.ERRORDESCRIPTION);
+        tempError[value.FIELDNAME] = value;
+      } else if (value.VALUEVALID == 'WARNING') {
+        tempWarning[value.FIELDNAME] = value;
+        warningData.push(value.ERRORDESCRIPTION);
+      }
+    });
+    this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
+    if (Object.keys(errorData).length != 0)
+      this.toastr.error(errorData);
+    if (Object.keys(warningData).length != 0) {
+      // this.toastr.warning(warningData);
+      this.confirmDialogRef = this.MatDialog.open(FuseConfirmDialogComponent, {
+        disableClose: true,
+        width: '100%',
+        data: warningData
+      });
+      this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Save?';
+      this.confirmDialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.isspiner = true;
+          this.saveTimeEntry(PostTimeEntryData);
+        }
+        this.confirmDialogRef = null;
+      });
+    }
+    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+      this.saveTimeEntry(PostTimeEntryData);
+    this.isspiner = false;
+  }
+  saveTimeEntry(PostTimeEntryData: any) {
+    PostTimeEntryData.VALIDATEONLY = false;
+    this.Timersservice.SetWorkItems(PostTimeEntryData).subscribe(res => {
+      if (res.CODE == 200 && res.STATUS == "success") {
+        this.toastr.success(this.successMsg);
+        this.dialogRef.close(true);
+      } else if (res.CODE == 451 && res.STATUS == 'warning') {
+        this.toastr.warning(res.MESSAGE);
+      } else if (res.CODE == 450 && res.STATUS == 'error') {
+        this.toastr.warning(res.MESSAGE);
+      } else if (res.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      }
+      this.isspiner = false;
+    }, err => {
+      this.isspiner = false;
+      this.toastr.error(err);
+    });
   }
 
 

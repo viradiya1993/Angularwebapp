@@ -2,97 +2,85 @@
     <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
 </div>
 <div class="popup_main_div timeentry_popup" cdkDrag>
-    <h2 cdkDragHandle mat-dialog-title> Timer
+    <h2 cdkDragHandle mat-dialog-title> Timer : {{matterShortName}}
         <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
             <mat-icon>close</mat-icon>
         </button>
     </h2>
     <div mat-dialog-content class="mat-typography main">
         <div class=" one  mb-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
-            <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+            <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="resumeTimerForm" id="resumeTimerForm" [formGroup]="resumeTimerForm">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <div class=" one  mb-24" fxLayout="column">
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-
-                            <mat-form-field appearance="outline" fxFlex="34" class="pr-4" appearance="outline">
+                            <mat-form-field appearance="outline" fxFlex="20" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.ITEMDATE,'has-warning':errorWarningData.Warning?.ITEMDATE}">
                                 <mat-label>Date</mat-label>
-                                <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+                                <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateInput)="resumeDate('input', $event)" (dateChange)="resumeDate('change', $event)" formControlName="ITEMDATETEXT">
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
                             </mat-form-field>
-
                             <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                                 <mat-label>Time of day</mat-label>
-                                <mat-select>
+                                <mat-select formControlName="ITEMTIME">
                                     <mat-option *ngFor="let time of timeStops" value="{{time}}">{{time}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                             <mat-form-field fxFlex="34" class="pr-4" appearance="outline">
                                 <mat-label>Free Erner</mat-label>
-                                <mat-select>
-                                    <mat-option value="CSP">CSP</mat-option>
-                                    <mat-option value="DLP">DLP</mat-option>
-
+                                <mat-select formControlName="FEEEARNER" (selectionChange)="matterChange('FeeEarner',$event.value)">
+                                    <mat-option *ngFor="let user of userList" value="{{user.USERID}}">{{user.FULLNAME}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
-
-
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-
                             <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                                 <mat-label>Duration</mat-label>
-                                <input type='number' matInput>
+                                <input matInput formControlName="QUANTITY" (focusout)="matterChange('Quantity',$event.value)">
                             </mat-form-field>
-
                             <mat-form-field fxFlex="50" class="pr-4" appearance="outline">
                                 <mat-label>Type</mat-label>
-                                <mat-select>
-                                    <mat-option value="1">Time Entry</mat-option>
-                                    <mat-option value="2">Activity</mat-option>
-                                    <mat-option value="3">Sundry</mat-option>
+                                <mat-select formControlName="QUANTITYTYPE" (selectionChange)="matterChange('QuantityType',$event.value)">
+                                    <mat-option *ngFor="let Activity of ActivityList" value="{{Activity.ACTIVITYID}}">{{Activity.DESCRIPTION}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
-
                         </div>
-
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                            <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                                <mat-label>Charge Ex-GST</mat-label>
-                                <input type='number' matInput>
+                            <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PRICE,'has-warning':errorWarningData.Warning?.PRICE}">
+                                <mat-label>Price (Ex GST)</mat-label>
+                                <input class="sideText" type="text" numeric numericType="decimal" matInput formControlName="PRICE" (keyup)="calcPE()" [(ngModel)]="PRICEVAL">
+                                <span class="currency_sign" matPrefix>$&nbsp;</span>
+                                <mat-icon matSuffix class="secondary-text">currency</mat-icon>
                             </mat-form-field>
-
-                            <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                                <mat-label>Charge Inc-GST</mat-label>
-                                <input type='number' matInput>
+                            <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PRICEINCGST,'has-warning':errorWarningData.Warning?.PRICEINCGST}">
+                                <mat-label>Price (Inc GST)</mat-label>
+                                <input class="sideText" type="text" numeric numericType="decimal" matInput formControlName="PRICEINCGST" (keyup)="calcPI()" [(ngModel)]="PRICEINCGSTVAL">
+                                <span class="currency_sign" matPrefix>$&nbsp;</span>
+                                <mat-icon matSuffix class="secondary-text">currency</mat-icon>
                             </mat-form-field>
-
                         </div>
-
-
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                            <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                            <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
                                 <mat-label>Invoice Text</mat-label>
-                                <input matInput>
+                                <mat-select #LookupsSelect (selectionChange)='LookupsChange(LookupsSelect.value)' formControlName="ADDITIONALTEXTSELECT">
+                                    <mat-option *ngFor="let Lookups of LookupsList" [value]="Lookups.LOOKUPFULLVALUE">{{Lookups.LOOKUPFULLVALUE}}</mat-option>
+                                </mat-select>
                             </mat-form-field>
-
-                            <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
-                                <mat-label>Notes</mat-label>
-                                <textarea cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" matInput></textarea>
-                            </mat-form-field>
-
                         </div>
-
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field appearance="outline" fxFlex="100" class=" pr-4">
+                                <mat-label>Notes</mat-label>
+                                <textarea cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" matInput formControlName="COMMENT"></textarea>
+                            </mat-form-field>
+                        </div>
                     </div>
                 </div>
             </form>
         </div>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
-        <button mat-raised-button color="accent" [disabled]="isspiner">
-            <mat-spinner *ngIf="isspiner"></mat-spinner>
-            {{buttonText}}
-        </button>
+        <button mat-raised-button color="accent">Start</button>
+        <button mat-raised-button color="accent" disabled>Stop</button>
+        <button mat-raised-button color="accent" [disabled]="isspiner" (click)="saveTimeEntry()"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
     </mat-dialog-actions>
 </div>

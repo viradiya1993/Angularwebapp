@@ -21,7 +21,6 @@ export class QuickPanelComponent implements OnInit, OnDestroy {
 
 
     ngOnInit(): void {
-        this.eventsData.push({ 'matter_id': 'demo', 'time': 0, 'isStart': true });
     }
     ngOnDestroy(): void {
         this._unsubscribeAll.next();

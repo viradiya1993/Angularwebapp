@@ -112,7 +112,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         public dialog: MatDialog,
         public _matDialog: MatDialog,
         private toastr: ToastrService,
-        private TimersServiceI: TimersService, private _mainAPiServiceService: MainAPiServiceService,
+        private TimersServiceI: TimersService,
+        private _mainAPiServiceService: MainAPiServiceService,
         private _router: Router,
         private location: Location,
         public MatDialog: MatDialog,
@@ -403,7 +404,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     addTimerForMatter() {
-        this.TimersServiceI.addTimeEnrtS();
+        this.TimersServiceI.addTimeEnrtS('');
     }
     displayMattterList() {
         this.prevMatterArray = [];
@@ -411,7 +412,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             let timerObj = JSON.parse(localStorage.getItem(this.timerId));
             clearTimeout(this.timerInterval);
             timerObj.forEach(items => {
-                this.prevMatterArray.push({ 'matter_id': items.matter_id, 'matterguid': items.matterguid, 'time': this.secondsToHms(items.time), 'isStart': items.isStart });
+                this.prevMatterArray.push({ 'WORKITEMGUID': items.WORKITEMGUID, 'matter_id': items.matter_id, 'matterguid': items.matterguid, 'time': this.secondsToHms(items.time), 'isStart': items.isStart });
                 if (localStorage.getItem('start_' + items.matter_id) && items.isStart) {
                     this.currentTimer = localStorage.getItem('start_' + items.matter_id);
                     this.startTimer(items.matter_id);
@@ -492,22 +493,29 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     endMatterBack(matterId: any) {
         let AllTimer = JSON.parse(localStorage.getItem(this.timerId));
         let matterDataTime;
+        let WORKITEMGUID;
         for (var i = AllTimer.length - 1; i >= 0; --i) {
             if (AllTimer[i].matterguid == matterId) {
                 if (localStorage.getItem('start_' + AllTimer[i].matter_id)) {
                     clearTimeout(this.timerInterval);
                     matterDataTime = this.secondsToHms(localStorage.getItem('start_' + AllTimer[i].matter_id));
+                    WORKITEMGUID = AllTimer[i].WORKITEMGUID;
                     localStorage.removeItem('start_' + AllTimer[i].matter_id);
                     this.currentTimer = 0;
                 } else {
                     matterDataTime = this.secondsToHms(AllTimer[i].time);
+                    WORKITEMGUID = AllTimer[i].WORKITEMGUID;
                 }
                 AllTimer.splice(i, 1);
             }
         }
         localStorage.setItem(this.timerId, JSON.stringify(AllTimer));
         $('#sidebar_open_button').click();
-        this.addNewTimeEntry(matterId, matterDataTime);
+        if (WORKITEMGUID && WORKITEMGUID != '') {
+            this.ResumeTimePopup('resume', { time: matterDataTime, WORKITEMGUID: WORKITEMGUID });
+        } else {
+            this.addNewTimeEntry(matterId, matterDataTime);
+        }
     }
     addNewTimeEntryNew() {
         let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
@@ -518,13 +526,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             return false;
         }
     }
-    ResumeTimePopup() {
-        const dialogRef = this.dialog.open(ResumeTimerComponent, { width: '100%', disableClose: true });
+    ResumeTimePopup(type: any, timerData: any) {
+        const dialogRef = this.dialog.open(ResumeTimerComponent, { width: '100%', disableClose: true, data: { 'type': type, 'matterData': timerData } });
         dialogRef.afterClosed().subscribe(result => {
-            if (result) { }
+            if (result) {
+                $('#refreshTimeEntryTab').click();
+            }
         });
     }
-    public addNewTimeEntry(Data: any, matterData: any) {
+    addNewTimeEntry(Data: any, matterData: any) {
         const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '100%', disableClose: true, data: { 'edit': Data, 'matterData': matterData } });
         dialogRef.afterClosed().subscribe(result => {
             if (result)
@@ -533,11 +543,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     WriteOffTimeEntry() {
         const dialogRef = this._matDialog.open(WriteOffTimeEntryComponent, {
-            width: '100%', disableClose: true,
-            data: {}
+            width: '100%', disableClose: true, data: {}
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
+                $('#refreshTimeEntryTab').click();
             }
         });
     }

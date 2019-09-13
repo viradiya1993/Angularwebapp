@@ -1,13 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { MainAPiServiceService, BehaviorService, TimersService } from './../../../../_services';
+import { BehaviorService, TimersService } from './../../../../_services';
 import * as moment from 'moment';
-import { MatDialogRef, MatDatepickerInputEvent, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDatepickerInputEvent, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { round } from 'lodash';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import { MatterDialogComponent } from '../matter-dialog/matter-dialog.component';
 
 @Component({
   selector: 'app-resume-timer',
@@ -18,6 +19,7 @@ import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/conf
 export class ResumeTimerComponent implements OnInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   resumeTimerForm: FormGroup;
+  timerTime: any;
   errorWarningData: any = {};
   successMsg = 'Time entry update successfully';
   timeStops: any = [];
@@ -25,6 +27,7 @@ export class ResumeTimerComponent implements OnInit {
   isspiner: any = false;
   userList: any;
   matterShortName: any;
+  ActiveTimerData: any = { SHORTNAME: '', MATTERGUID: '', secound: '', WORKITEMGUID: '' };
   ActivityList: any = [
     { 'ACTIVITYID': 'hh:mm', 'DESCRIPTION': 'hh:mm' },
     { 'ACTIVITYID': 'Hours', 'DESCRIPTION': 'Hours' },
@@ -37,17 +40,19 @@ export class ResumeTimerComponent implements OnInit {
   calculateData: any = { MatterGuid: '', QuantityType: '', Quantity: '', FeeEarner: '', FeeType: '' };
   constructor(public dialogRef: MatDialogRef<ResumeTimerComponent>,
     public MatDialog: MatDialog,
-    private _mainAPiServiceService: MainAPiServiceService,
     private behaviorService: BehaviorService,
     private _formBuilder: FormBuilder,
     private toastr: ToastrService, public datepipe: DatePipe,
-    private Timersservice: TimersService) {
+    private Timersservice: TimersService,
+    @Inject(MAT_DIALOG_DATA) public resumeTimerData: any
+  ) {
     this.timeStops = this.getTimeStops('01:00', '23:59');
   }
 
   ngOnInit() {
     this.resumeTimerForm = this._formBuilder.group({
       MATTERGUID: ['', Validators.required],
+      matterautoVal: [''],
       ITEMTYPE: [''],
       QUANTITYTYPE: ['Hours'],
       ITEMDATE: ['', Validators.required],
@@ -63,13 +68,17 @@ export class ResumeTimerComponent implements OnInit {
     });
     this.isLoadingResults = true;
     let workerGuid;
-    this.behaviorService.workInProgress$.subscribe(workInProgressData => {
-      if (workInProgressData) {
-        workerGuid = workInProgressData.WORKITEMGUID;
-      } else {
-        workerGuid = localStorage.getItem('edit_WORKITEMGUID');
-      }
-    });
+    if (this.resumeTimerData.type != 'resume') {
+      this.behaviorService.workInProgress$.subscribe(workInProgressData => {
+        if (workInProgressData) {
+          workerGuid = workInProgressData.WORKITEMGUID;
+        } else {
+          workerGuid = localStorage.getItem('edit_WORKITEMGUID');
+        }
+      });
+    } else {
+      workerGuid = this.resumeTimerData.matterData.WORKITEMGUID;
+    }
     this.isLoadingResults = true;
     this.Timersservice.GetUsers({}).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
@@ -96,6 +105,7 @@ export class ResumeTimerComponent implements OnInit {
     }, err => {
       this.toastr.error(err);
     });
+
     this.Timersservice.getTimeEnrtyData({ 'WorkItemGuid': workerGuid }).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let timeEntryData = response.DATA.WORKITEMS[0];
@@ -105,6 +115,31 @@ export class ResumeTimerComponent implements OnInit {
           this.dialogRef.close(false);
           return false;
         }
+        let QUANTITYTEM: any;
+        if (this.resumeTimerData.type == 'resume') {
+          this.timerTime = this.resumeTimerData.matterData.time;
+          let a = this.timerTime.split(':');
+          (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+          if (timeEntryData.QUANTITYTYPE == "Hours") {
+            QUANTITYTEM = (+a[0]) + ((+a[1]) / 60) + ((+a[2]) / 3600)
+          } else if (timeEntryData.QUANTITYTYPE == 'Minutes') {
+            QUANTITYTEM = ((+a[0]) * 60) + ((+a[1])) + '.' + a[2]
+          } else {
+            QUANTITYTEM = this.timerTime;
+          }
+        } else if (timeEntryData.QUANTITYTYPE == "Hours") {
+          QUANTITYTEM = timeEntryData.QUANTITY;
+          this.timerTime = this.secondsToHms(timeEntryData.QUANTITY * 60 * 60);
+        } else if (timeEntryData.QUANTITYTYPE == 'Minutes') {
+          QUANTITYTEM = timeEntryData.QUANTITY;
+          this.timerTime = this.secondsToHms(timeEntryData.QUANTITY * 60);
+        } else {
+          QUANTITYTEM = timeEntryData.QUANTITY;
+          this.timerTime = timeEntryData.QUANTITY + ':00';
+        }
+        let a = this.timerTime.split(':');
+        let seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+        this.ActiveTimerData = { SHORTNAME: timeEntryData.SHORTNAME, MATTERGUID: timeEntryData.MATTERGUID, secound: seconds, WORKITEMGUID: timeEntryData.WORKITEMGUID };
         this.matterChange('MatterGuid', response.DATA.WORKITEMS[0].MATTERGUID);
         this.matterChange('QuantityType', response.DATA.WORKITEMS[0].QUANTITYTYPE);
         this.matterShortName = response.DATA.WORKITEMS[0].SHORTNAME;
@@ -114,7 +149,8 @@ export class ResumeTimerComponent implements OnInit {
         } else {
           this.resumeTimerForm.controls['QUANTITYTYPE'].setValue(timeEntryData.QUANTITYTYPE);
         }
-        this.resumeTimerForm.controls['QUANTITY'].setValue(timeEntryData.QUANTITY);
+        this.resumeTimerForm.controls['matterautoVal'].setValue(timeEntryData.SHORTNAME + ' : ');
+        this.resumeTimerForm.controls['QUANTITY'].setValue(QUANTITYTEM);
         this.resumeTimerForm.controls['MATTERGUID'].setValue(timeEntryData.MATTERGUID);
         this.resumeTimerForm.controls['ITEMTYPE'].setValue(timeEntryData.ITEMTYPE);
         let ttyData = moment(timeEntryData.ITEMTIME, 'hh:mm');
@@ -128,6 +164,7 @@ export class ResumeTimerComponent implements OnInit {
         this.resumeTimerForm.controls['ADDITIONALTEXT'].setValue(timeEntryData.ADDITIONALTEXT);
         this.resumeTimerForm.controls['ADDITIONALTEXTSELECT'].setValue(timeEntryData.ADDITIONALTEXT);
         this.resumeTimerForm.controls['COMMENT'].setValue(timeEntryData.COMMENT);
+
       } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
@@ -136,6 +173,13 @@ export class ResumeTimerComponent implements OnInit {
       this.isLoadingResults = false;
       this.toastr.error(err);
     });
+  }
+  secondsToHms(d: any) {
+    d = Number(d);
+    var hours = Math.floor(d / 3600) < 10 ? ("00" + Math.floor(d / 3600)).slice(-2) : Math.floor(d / 3600);
+    var minutes = ("00" + Math.floor((d % 3600) / 60)).slice(-2);
+    var seconds = ("00" + (d % 3600) % 60).slice(-2);
+    return hours + ":" + minutes + ":" + seconds;
   }
   calcPE() {
     this.resumeTimerForm.controls['PRICEINCGST'].setValue(round(this.f.PRICE.value * 1.1).toFixed(2));
@@ -161,7 +205,7 @@ export class ResumeTimerComponent implements OnInit {
   }
   matterChange(key: any, event: any) {
     if (key == "MatterGuid") {
-      // this.timeEntryForm.controls['MATTERGUID'].setValue(event);
+      this.resumeTimerForm.controls['MATTERGUID'].setValue(event);
       this.calculateData.MatterGuid = event;
     } else if (key == "FeeEarner") {
       this.calculateData.FeeEarner = event;
@@ -204,8 +248,8 @@ export class ResumeTimerComponent implements OnInit {
       this.Timersservice.calculateWorkItems(this.calculateData).subscribe(response => {
         if (response.CODE == 200 && response.STATUS == "success") {
           let CalcWorkItemCharge = response.DATA;
-          // this.timeEntryForm.controls['PRICE'].setValue(CalcWorkItemCharge.PRICE);
-          // this.timeEntryForm.controls['PRICEINCGST'].setValue(CalcWorkItemCharge.PRICEINCGST);
+          this.resumeTimerForm.controls['PRICE'].setValue(CalcWorkItemCharge.PRICE);
+          this.resumeTimerForm.controls['PRICEINCGST'].setValue(CalcWorkItemCharge.PRICEINCGST);
           this.isLoadingResults = false;
         } else if (response.MESSAGE == 'Not logged in') {
           this.dialogRef.close(false);
@@ -218,6 +262,19 @@ export class ResumeTimerComponent implements OnInit {
   }
   get f() {
     return this.resumeTimerForm.controls;
+  }
+  LookupsChange(val: any) {
+    this.resumeTimerForm.controls['ADDITIONALTEXT'].setValue(val);
+  }
+  public selectMatter() {
+    const dialogRef = this.MatDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.resumeTimerForm.controls['MATTERGUID'].setValue(result.MATTERGUID);
+        this.resumeTimerForm.controls['matterautoVal'].setValue(result.SHORTNAME + ' : ' + result.MATTER);
+        this.matterChange('MatterGuid', result.MATTERGUID);
+      }
+    });
   }
   SaveClickTimeEntry() {
     this.isspiner = true;
@@ -313,6 +370,10 @@ export class ResumeTimerComponent implements OnInit {
       this.isspiner = false;
       this.toastr.error(err);
     });
+  }
+  startTimer() {
+    this.Timersservice.addTimeEnrtS(this.ActiveTimerData);
+    this.dialogRef.close(false);
   }
 
 

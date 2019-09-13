@@ -35,7 +35,7 @@ export class MattersSortDetailComponent implements OnInit {
     this.matterCloseD.emit(event);
   }
   addTimeEnrt() {
-    this.TimersServiceI.addTimeEnrtS();
+    this.TimersServiceI.addTimeEnrtS('');
   }
   AddNewmatterpopup() {
     const dialogConfig = new MatDialogConfig();

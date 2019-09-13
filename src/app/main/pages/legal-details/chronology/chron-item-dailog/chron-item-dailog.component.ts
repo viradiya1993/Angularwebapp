@@ -56,8 +56,8 @@ export class ChronItemDailogComponent implements OnInit {
   ngOnInit() {
     this.ChroneItem = this._formBuilder.group({
       Format:[],
-      date:[],
-      time:[],
+      dateForm:[],
+      timeForm:[],
       dateto:[],
       timeto:[],
       text:[],
@@ -78,9 +78,45 @@ export class ChronItemDailogComponent implements OnInit {
 
 
   }
+  commonOdd(){
+    this.ChroneItem.controls['dateForm'].enable();
+    this.ChroneItem.controls['timeForm'].disable();
+     this.ChroneItem.controls['dateto'].disable();
+     this.ChroneItem.controls['timeto'].disable();
+  }
+  commonEven(){
+    this.ChroneItem.controls['dateForm'].enable();
+    this.ChroneItem.controls['dateto'].enable();
+    this.ChroneItem.controls['timeForm'].disable();
+     this.ChroneItem.controls['timeto'].disable();
+  }
   //FormatChange
   FormatChange(val){
 
+  if(val=='1'){
+    this.commonOdd();
+   
+  }else if(val=='2'){
+    this.commonEven();
+  }else if(val=='3'){
+    this.commonOdd();
+  }else if(val=='4'){
+    this.commonEven();
+  }else if(val=='5'){
+    this.commonOdd();
+  }else if(val=='6'){
+    this.commonEven();
+  }else if(val=='7'){
+    this.ChroneItem.controls['dateForm'].enable();
+    this.ChroneItem.controls['timeForm'].enable();
+    this.ChroneItem.controls['dateto'].disable();
+     this.ChroneItem.controls['timeto'].disable();
+  }else if(val=='8'){
+    this.ChroneItem.controls['dateForm'].enable();
+    this.ChroneItem.controls['timeForm'].enable();
+    this.ChroneItem.controls['timeto'].enable();
+    this.ChroneItem.controls['dateto'].disable();
+  }
   }
   //choosedDate
   choosedDateFrom(){

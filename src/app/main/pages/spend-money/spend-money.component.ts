@@ -211,15 +211,7 @@ export class SpendMoneyComponent implements OnInit {
       this.filterData.Search = this.f.searchFilter.value;
       localStorage.setItem('spendmoney_filter', JSON.stringify(this.filterData));
       this.loadData(this.filterData);
-      // let filterVal = { 'Active': '', 'SearchString': this.f.searchFilter.value, 'FeeEarner': '', 'UninvoicedWork': '' };
-      // if (!localStorage.getItem('matter_filter')) {
-      //   // localStorage.setItem('matter_filter', JSON.stringify(filterVal));
-      // } else {
-      //   filterVal = JSON.parse(localStorage.getItem('matter_filter'));
-      //   filterVal.SearchString = this.f.searchFilter.value;
-      //   // localStorage.setItem('matter_filter', JSON.stringify(filterVal));
-      // }
-      // this.child.getMatterList(filterVal);
+     
     }
   }
   SpendClassChange(val) {

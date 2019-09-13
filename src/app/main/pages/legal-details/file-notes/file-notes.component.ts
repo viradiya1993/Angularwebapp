@@ -48,12 +48,19 @@ export class FileNotesComponent implements OnInit {
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
     this._mainAPiServiceService.getSetData(potData, 'GetFileNote').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        // let FILENOTES = response.DATA.FILENOTES == null ? [] : response.DATA.FILENOTES;
-        this.filenotes_table = new MatTableDataSource( response.DATA.FILENOTES);
+        this.filenotes_table = new MatTableDataSource(response.DATA.FILENOTES);
         this.filenotes_table.paginator = this.paginator;
         this.filenotes_table.sort = this.sort;
-        this.highlightedRows = response.DATA.FILENOTES[0].FILENOTEGUID;
-        this.RowClick(response.DATA.FILENOTES[0])
+        if (response.DATA.FILENOTES[0]) {
+       
+          this.highlightedRows = response.DATA.FILENOTES[0].FILENOTEGUID;
+          this.RowClick(response.DATA.FILENOTES[0])
+          //this.highlightedRows = response.DATA.TASKS[0].TASKGUID;
+        } else {
+          //this.toastr.error("No Data Selected");
+        }
+        // let FILENOTES = response.DATA.FILENOTES == null ? [] : response.DATA.FILENOTES;
+      
        
       }
       this.isLoadingResults = false;

@@ -2,11 +2,11 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-// import { ChronologyService, TableColumnsService } from './../../../../_services';
+
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import {MatSort} from '@angular/material';
-import { MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 
 @Component({
   selector: 'app-conflict-check',
@@ -28,17 +28,29 @@ export class ConflictCheckComponent implements OnInit {
   highlightedRows: any;
   ConflictData:any=[];
   pageSize: any;
-  
-  constructor(private dialog: MatDialog,  private toastr: ToastrService,
-    private _mainAPiServiceService: MainAPiServiceService,) { }
-
-  ngOnInit() {
-  this.LoadData();
+  StartbtnSendData={
+    "NameToCheck":'',"CheckWIP":"","CheckFilesNotes":"","CheckChronologies":""
   }
-  LoadData() {
+  ConflictNGData:any=[];
+ 
+  constructor(private dialog: MatDialog,  private toastr: ToastrService,
+    private _mainAPiServiceService: MainAPiServiceService,  public behaviorService: BehaviorService) {
+      this.ConflictNGData={
+        "NameToCheck":'',"CheckWIP":false,"CheckFilesNotes":false,"CheckChronologies":false,"Search":''
+      }
+     }
+  ngOnInit() {
+   
+  this.LoadData({});
+  this.StartbtnSendData.CheckWIP=this.ConflictNGData.CheckWIP;
+  this.StartbtnSendData.CheckFilesNotes=this.ConflictNGData.CheckFilesNotes;
+  this.StartbtnSendData.CheckChronologies=this.ConflictNGData.CheckChronologies;
+  this.behaviorService.ConflictMainData(this.StartbtnSendData);
+  }
+  LoadData(data) {
     this.ConflictData=[];
     this.isLoadingResults = true;
-    this._mainAPiServiceService.getSetData({}, 'GetConflictCheck').subscribe(res => {
+    this._mainAPiServiceService.getSetData(data, 'GetConflictCheck').subscribe(res => {
       console.log(res);
       this.ConflictData = new MatTableDataSource(res.DATA.RECONCILIATIONITEMS);
       this.ConflictData.sort = this.sort;
@@ -46,6 +58,7 @@ export class ConflictCheckComponent implements OnInit {
       if (res.CODE == 200 && res.STATUS == "success") {
         if (res.DATA.RECONCILIATIONITEMS[0]) {
           //this.behaviorService.TaskData(res.DATA.TASKS[0]);
+          this.RowClick(res.DATA.RECONCILIATIONITEMS[0]);
          this.highlightedRows = res.DATA.RECONCILIATIONITEMS[0].MATTERGUID;
         } else {
           // this.toastr.error("No Data Selected");
@@ -60,10 +73,42 @@ export class ConflictCheckComponent implements OnInit {
   this.pageSize = localStorage.getItem('lastPageSize');
   }
   RowClick(val){
-    // console.log(val);
+  console.log(val);
+  localStorage.setItem('set_active_matters',JSON.stringify({MATTERGUID:val.MATTERGUID,SHORTNAME:val.SHORTNAME}))
+  // let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
+
   }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
+  }
+  nameClick(){
+    this.StartbtnSendData.NameToCheck=this.ConflictNGData.NameToCheck;
+    this.behaviorService.ConflictMainData(this.StartbtnSendData);
+  }
+  CheckWPI(){
+    this.StartbtnSendData.CheckWIP=this.ConflictNGData.CheckWIP;
+   
+    this.behaviorService.ConflictMainData(this.StartbtnSendData);
+  }
+  CheckFileNote(){
+    this.StartbtnSendData.CheckFilesNotes=this.ConflictNGData.CheckFilesNotes;
+    
+    this.behaviorService.ConflictMainData(this.StartbtnSendData);
+  }
+  CheckChronology(){
+    this.StartbtnSendData.CheckChronologies=this.ConflictNGData.CheckChronologies;
+  
+    this.behaviorService.ConflictMainData(this.StartbtnSendData);
+  }
+  refreshConflict(){
+    this.LoadData(this.StartbtnSendData);
+  }
+  onSearch(searchFilter: any) {
+    console.log(searchFilter);
+
+    //this.filterVals.SEARCH = this.f.search.value;
+   this.LoadData({Search:this.ConflictNGData.Search});
+
   }
 }

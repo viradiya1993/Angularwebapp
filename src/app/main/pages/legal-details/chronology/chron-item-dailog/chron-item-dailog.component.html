@@ -14,16 +14,21 @@
                 <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                     <mat-label>Format</mat-label>
                       <mat-select #value name="selected" (selectionChange)="FormatChange($event.value)"  [(ngModel)]="ChronologyADD.Format" formControlName="Format">
-                        <mat-option value="1">dd mm yyyy</mat-option>
-                        <mat-option value="2">mmmm yyyy</mat-option>
-                        <mat-option value="3">yyyy</mat-option>
-                        <mat-option value="4">yyyy-yyyyy</mat-option>
+                        <mat-option value="1">dd mmm yyyy</mat-option>
+                        <mat-option value="2">dd mmm yyyy - dd mmm yyyy </mat-option>
+                        <mat-option value="3">mmm yyyy
+                        </mat-option>
+                        <mat-option value="4">mmm yyyy - mmm yyyy</mat-option>
+                        <mat-option value="5">yyy</mat-option>
+                        <mat-option value="6">yyy - yyy</mat-option>
+                        <mat-option value="7">dd mmm yyyy hh:mm</mat-option>
+                        <mat-option value="8">dd mmm yyyy hh:mm - hh:mm</mat-option>
                       </mat-select>
                 </mat-form-field>
   
                 <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
                     <mat-label>Date From</mat-label>
-                    <input (dateInput)="choosedDateFrom()" (dateChange)="DateFrom()" matInput [(ngModel)]="ChronologyADD.date"  formControlName ="date" [matDatepicker]="picker">
+                    <input (dateInput)="choosedDateFrom()" (dateChange)="DateFrom()" matInput [(ngModel)]="ChronologyADD.date"  formControlName ="dateForm" [matDatepicker]="picker">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
@@ -35,7 +40,7 @@
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                 <mat-form-field class="example" appearance="outline"  fxFlex="34" class="pr-4">
                     <mat-label>Time From</mat-label>
-                    <input  matInput [(ngModel)]="ChronologyADD.time"  formControlName ="time" type="number" readonly>
+                    <input  matInput [(ngModel)]="ChronologyADD.time"  formControlName ="timeForm" type="number" readonly>
                   </mat-form-field>
                  
                   <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">

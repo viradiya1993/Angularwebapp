@@ -56,7 +56,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     private Timersservice: TimersService,
     private toastr: ToastrService,
     private _formBuilder: FormBuilder,
-    private toasterService: ToastrService,
     public datepipe: DatePipe,
     private behaviorService: BehaviorService,
     @Inject(MAT_DIALOG_DATA) public _data: any
@@ -404,12 +403,12 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     PostTimeEntryData.VALIDATEONLY = false;
     this.Timersservice.SetWorkItems(PostTimeEntryData).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
-        this.toasterService.success(this.successMsg);
+        this.toastr.success(this.successMsg);
         this.dialogRef.close(true);
       } else if (res.CODE == 451 && res.STATUS == 'warning') {
-        this.toasterService.warning(res.MESSAGE);
+        this.toastr.warning(res.MESSAGE);
       } else if (res.CODE == 450 && res.STATUS == 'error') {
-        this.toasterService.warning(res.MESSAGE);
+        this.toastr.warning(res.MESSAGE);
       } else if (res.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }

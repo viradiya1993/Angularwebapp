@@ -1710,7 +1710,7 @@
                                         </button>
                                     </section>
                                     <section *ngIf="activeSubMenu!='quick-time-entries'" [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="ResumeTimePopup()">
+                                        <button mat-button [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="ResumeTimePopup('startTimer','')">
                                            <section class="large-button-container">
                                               <mat-icon class="main-icon">
                                                     <img  src="assets/icons/web_app/icon_time_cost_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">

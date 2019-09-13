@@ -2,14 +2,13 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-import { TableColumnsService, MainAPiServiceService } from './../../../../_services';
+import { TableColumnsService, MainAPiServiceService, BehaviorService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import {MatSort} from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.component';
 import { ContactDialogComponent } from '../../contact/contact-dialog/contact-dialog.component';
-
 
 @Component({
   selector: 'app-chronology',
@@ -30,12 +29,15 @@ export class ChronologyComponent implements OnInit {
   chronology_table;
   pageSize: any;
   tempColobj: any;
-
+  highlightedRows: any;
+  theme_type = localStorage.getItem('theme_type');
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   constructor(private _formBuilder: FormBuilder,private dialog: MatDialog, private TableColumnsService: TableColumnsService,
-  private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService,
+  private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService,public behaviorService: BehaviorService
   ) { }
 
   ngOnInit() {
+
     this.SearchForm = this._formBuilder.group({
       Matter:[],
       Client:[],
@@ -43,6 +45,8 @@ export class ChronologyComponent implements OnInit {
       foldervalue:[],
       showfolder:[]
     });
+    this.SearchForm.controls['Matter'].setValue(this.currentMatter.MATTER);
+    this.SearchForm.controls['Client'].setValue(this.currentMatter.CLIENT);
     $('content').addClass('inner-scroll');
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
     this.getTableFilter();
@@ -61,15 +65,23 @@ export class ChronologyComponent implements OnInit {
     });
   }
   LoadData() {
+    this.chronology_table=[];
     this.isLoadingResults = true;
     //get chronology
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
-    this._mainAPiServiceService.getSetData(potData, 'SetChronology').subscribe(response => {
+    this._mainAPiServiceService.getSetData({'MatterGuid': this.currentMatter.MATTERGUID }, 'GetChronology').subscribe(response => {
       console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         this.chronology_table = new MatTableDataSource(response.DATA.CHRONOLOGIES);
         this.chronology_table.paginator = this.paginator;
         this.chronology_table.sort = this.sort;
+        if (response.DATA.CHRONOLOGIES[0]) {
+          this.RowClick(response.DATA.CHRONOLOGIES[0])
+          this.highlightedRows = response.DATA.CHRONOLOGIES[0].CHRONOLOGYGUID;
+      
+        } else {
+              this.toastr.error("No Data Selected");
+        }    
       }
       this.isLoadingResults = false;
     }, error => {
@@ -124,6 +136,16 @@ export class ChronologyComponent implements OnInit {
     
         
     });
+  }
+
+  RowClick(val){
+    this.behaviorService.LegalChronologyData(val);
+  }
+  refreshLegalChronology(){
+  this.LoadData();
+  }
+  FilterSearch(filterValue:any){
+    this.chronology_table.filter = filterValue;
   }
 
 }

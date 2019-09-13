@@ -9,10 +9,10 @@
                         <input (keyup)="nameClick()" [(ngModel)]="ConflictNGData.NameToCheck" name="NameToCheck" matInput >
                     </mat-form-field>
                     
-                    <mat-form-field fxFlex="16" class="example" appearance="outline">
+                    <!-- <mat-form-field fxFlex="16" class="example" appearance="outline">
                             <mat-label>Filter</mat-label>
                             <input [(ngModel)]="ConflictNGData.Search" name="Search" (keyup.enter)="onSearch($event)" matInput >
-                        </mat-form-field>
+                        </mat-form-field> -->
 
                         <mat-checkbox disabled checked='true' class="check_top" fxFlex="16" >Check Matter/Contact  </mat-checkbox>
                         <mat-checkbox (change)="CheckWPI()" [(ngModel)]="ConflictNGData.CheckWIP" name="CheckWIP" class="check_top" fxFlex="16">Check WIP </mat-checkbox>

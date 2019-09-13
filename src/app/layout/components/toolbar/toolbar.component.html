@@ -26,7 +26,7 @@
                                                 <mat-icon class="main-icon" >
                                                     <img src="assets/icons/web_app/icon_matter_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                     </mat-icon>
-                                                <div class="main-text"><span>New<br> Matters</span></div>
+                                                <div class="main-text"><span>New<br> Matter</span></div>
                                             </section>
                                         </button>
                                     </section>
@@ -37,7 +37,7 @@
                                                         <img  src="assets/icons/web_app/icon_matter_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <div class="main-text">
-                                                    <span>Edit<br> Matters</span>
+                                                    <span>Edit<br> Matter</span>
                                                 </div>
                                             </section>
                                         </button>
@@ -49,7 +49,7 @@
                                                         <img  src="assets/icons/web_app/icon_matter_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <div class="main-text">
-                                                    <span>Delete<br> Matters</span>
+                                                    <span>Delete<br> Matter</span>
                                                 </div>
                                             </section>
                                         </button>
@@ -61,7 +61,7 @@
                                                         <img src="assets/icons/web_app/icon_duplicate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <div class="main-text">
-                                                    <span>Duplicate<br> Matters</span>
+                                                    <span>Duplicate<br> Matter</span>
                                                 </div>
                                             </section>
                                         </button>
@@ -113,7 +113,7 @@
                                                     <img  src="assets/icons/web_app/icon_letters_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <div class="main-text">
-                                                    <span>Document <br> Template</span>
+                                                    <span>Document <br> Templates</span>
                                                 </div>
                                             </section>
                                         </button>
@@ -279,7 +279,7 @@
                                                 <img  src="assets/icons/web_app/icon_authorities_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                             </mat-icon>
                                                 <div class="main-text">
-                                                    <span>New <br>Authorities</span>
+                                                    <span>New <br>Authority</span>
                                                 </div>
                                             </section>
                                         </button>
@@ -291,7 +291,7 @@
                                                 <img  src="assets/icons/web_app/icon_authorities_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                             </mat-icon>
                                                 <div class="main-text">
-                                                    <span>Edit<br> Authorities</span>
+                                                    <span>Edit<br> Authority</span>
                                                 </div>
                                             </section>
                                         </button>
@@ -304,7 +304,7 @@
                                                 <img  src="assets/icons/web_app/icon_authorities_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                             </mat-icon>
                                                 <div class="main-text">
-                                                    <span>Delete<br> Authorities</span>
+                                                    <span>Delete<br> Authority</span>
                                                 </div>
                                             </section>
                                         </button>
@@ -318,7 +318,7 @@
                                                 <img  src="assets/icons/web_app/icon_duplicate_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                             </mat-icon>
                                                 <div class="main-text">
-                                                    <span>Duplicate<br> Authorities</span>
+                                                    <span>Duplicate<br> Authority</span>
                                                 </div>
                                             </section>
                                         </button>
@@ -2671,20 +2671,20 @@
                                 </section>
                                 <mat-divider vertical></mat-divider>
                                 <section [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                    <button mat-button (click)="matterpopup('edit')" [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
+                                    <button [disabled]="disconflictToolbar=='yes'" mat-button (click)="matterpopup('edit')" [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
                                 <section class="large-button-container">
                                     <mat-icon class="main-icon">
                                             <img  src="assets/icons/web_app/icon_matter_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                     </mat-icon>
                                     <div class="main-text">
-                                        <span>Edit<br> Matters</span>
+                                        <span>Edit<br> Matter</span>
                                     </div>
                                 </section>
                                 </button>
                                 </section>
                                 <section class="group-section-tab details_tab">
                                     <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/time-billing'">
+                                        <button [disabled]="disconflictToolbar=='yes'" mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/time-billing'">
                                     <section class="large-button-container">
                                         <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_invoice_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -2696,7 +2696,7 @@
                                 </button>
                                     </section>
                                     <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/legal-details'">
+                                        <button [disabled]="disconflictToolbar=='yes'" mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/legal-details'">
                                    <section class="large-button-container">
                                       <mat-icon class="main-icon">
                                             <img src="assets/icons/web_app/icon_authorities_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -3141,7 +3141,7 @@
                                     </section>
                                     <!-- (click)="ReconcileAC()" -->
                                     <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="BankingDialogOpen('BANK ACCOUNT')">
+                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="BankingDialogOpen('Reconclie Practice')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_receipt_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -3363,7 +3363,7 @@
                 </button>
 
                 <button [ngClass]="appPermissions[30]?.Access==0 ? 'disabled-click-cursor' : ''" [routerLink]="'/activities'" mat-menu-item>
-                    <span>Activites Sundries</span>
+                    <span>Activities & Sundries</span>
                 </button>
 
                 <button mat-menu-item (click)="ChangePass()">

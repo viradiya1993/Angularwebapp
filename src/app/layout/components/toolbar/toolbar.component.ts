@@ -105,6 +105,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     TaskData: any;
     FileNotesData: any;
     conflictData: any;
+    ChronologyLegalData: any;
+    disconflictToolbar: string;
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
@@ -119,6 +121,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         public MatDialog: MatDialog,
         public behaviorService: BehaviorService
     ) {
+        //for Disabled enabled
+        this.behaviorService.ConflictDataList$.subscribe(result => {
+            if (result == null) {
+               this.disconflictToolbar='yes';
+            }else{
+                this.disconflictToolbar='no';
+            }
+        });
+
+
         //for navigation bar 
         if (this.appPermissions == null) {
             this.appPermissions = [];
@@ -546,7 +558,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /* ---------------------------------------------------------------------end of timer add--------------------------------------------------------------------------  */
     //Reportpopup open
     Reportpopup(ReportData) {
-        console.log(ReportData);
+    
         let type: number;
         if (ReportData.REPORTGROUP == 'Management')
             type = 27;
@@ -577,7 +589,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
 
             if (result) {
-                console.log(result);
+             
                 $('#refreshFileNote').click();
             }
 
@@ -1110,17 +1122,43 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             panelClass: 'Chrone-dialog',
             data: ChronePopData
         });
-        dialogRef.afterClosed().subscribe(result => { });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                $('#refreshLegalChronology').click();
+            }
+         });
     }
+
+
+    
     //DeleteChron
     DeleteChron() {
+        this.behaviorService.LegalChronologyData$.subscribe(result => {
+            if (result) {
+                this.ChronologyLegalData = result;
+            }
+        });
+
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
-
+            console.log(result);
+            if (result) {
+                console.log("Inn")
+                let postData = { FormAction: "delete", data: { CHRONOLOGYGUID: this.ChronologyLegalData.CHRONOLOGYGUID } }
+                this._mainAPiServiceService.getSetData(postData, 'SetChronology').subscribe(res => {
+                    if (res.STATUS == "success") {
+                        $('#refreshLegalChronology').click();
+                        this.toastr.success(res.STATUS);
+                    } else {
+                        this.toastr.error("You Can't Delete Contact Which One Is To Related to Matters");
+                    }
+                });;
+            }
+            this.confirmDialogRef = null;
         });
     }
     /* Dairy Appointment Module's Function's **/
@@ -1305,7 +1343,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this._matDialog.open(InstantInvoiceDailogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                console.log(result);
+              
             }
         });
     }
@@ -1313,7 +1351,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this._matDialog.open(InvoiceAddDailogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                console.log(result);
+              
             }
         });
     }
@@ -1380,7 +1418,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this._matDialog.open(InvoiceDetailComponent, { width: '100%', disableClose: true, data: { 'type': 'edit', INVOICEGUID: INVOICEGUID } });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                console.log(result);
+             
             }
         });
     }
@@ -1489,7 +1527,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     deleteTask() {
-        console.log("djlsad;");
+      
         this.behaviorService.TaskData$.subscribe(result => {
             if (result) {
                 this.TaskData = result;
@@ -1588,7 +1626,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
         } else if (this.router.url == "/create-document/receive-money-template" || this.router.url == "/create-document/packs-receive-money-template") {
-            console.log("money component ");
+            
             let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
             let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);

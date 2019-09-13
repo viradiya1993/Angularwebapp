@@ -38,6 +38,7 @@ export class RecounciliationItemComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService, private _formBuilder: FormBuilder, public behaviorService: BehaviorService, private TableColumnsService: TableColumnsService, ) { }
   ngOnInit() {
+    this.ReconciliationData = [];
     let userdata = JSON.parse(localStorage.getItem('currentUser'));
     this.AccountRecouncile = this._formBuilder.group({
       LASTRECONCILEDDATE: [''],
@@ -52,6 +53,7 @@ export class RecounciliationItemComponent implements OnInit {
     });
     this.behaviorService.ChartAccountData$.subscribe(result => {
       if (result) {
+        console.log(result);
         this.chartAccountDetail = result;
        
       }
@@ -145,11 +147,11 @@ export class RecounciliationItemComponent implements OnInit {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.FirstTimeCal(response.DATA.RECONCILIATIONITEMS);
         this.ReconciliationData = new MatTableDataSource(response.DATA.RECONCILIATIONITEMS);
+        this.ReconciliationData.paginator = this.paginator;
+        this.ReconciliationData.sort = this.sort;
         this.AccountRecouncile.controls['LASTRECONCILEDDATE'].setValue(response.DATA.LASTRECONCILEDDATE);
         this.AccountRecouncile.controls['LASTRECONCILEDBALANCE'].setValue(response.DATA.LASTRECONCILEDBALANCE);
         this.AccountRecouncile.controls['calculatedClosingBalance'].setValue(response.DATA.LASTRECONCILEDBALANCE);
-        this.ReconciliationData.paginator = this.paginator;
-        this.ReconciliationData.sort = this.sort;
         this.isLoadingResults = false;
       } else if (response.CODE == 406 && response.MESSAGE == "Permission denied") {
         this.ReconciliationData = new MatTableDataSource([]);

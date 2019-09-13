@@ -36,7 +36,7 @@ export class ConflictCheckComponent implements OnInit {
   constructor(private dialog: MatDialog,  private toastr: ToastrService,
     private _mainAPiServiceService: MainAPiServiceService,  public behaviorService: BehaviorService) {
       this.ConflictNGData={
-        "NameToCheck":'',"CheckWIP":false,"CheckFilesNotes":false,"CheckChronologies":false,"Search":''
+        "NameToCheck":'',"CheckWIP":true,"CheckFilesNotes":true,"CheckChronologies":true
       }
      }
   ngOnInit() {
@@ -57,10 +57,12 @@ export class ConflictCheckComponent implements OnInit {
       this.ConflictData.paginator = this.paginator;
       if (res.CODE == 200 && res.STATUS == "success") {
         if (res.DATA.RECONCILIATIONITEMS[0]) {
-          //this.behaviorService.TaskData(res.DATA.TASKS[0]);
+          this.behaviorService.ConflictDataList(res.DATA.RECONCILIATIONITEMS[0]);
           this.RowClick(res.DATA.RECONCILIATIONITEMS[0]);
          this.highlightedRows = res.DATA.RECONCILIATIONITEMS[0].MATTERGUID;
         } else {
+          console.log("nulllll");
+          this.behaviorService.ConflictDataList(null);
           // this.toastr.error("No Data Selected");
         }
         this.isLoadingResults = false;
@@ -73,7 +75,6 @@ export class ConflictCheckComponent implements OnInit {
   this.pageSize = localStorage.getItem('lastPageSize');
   }
   RowClick(val){
-  console.log(val);
   localStorage.setItem('set_active_matters',JSON.stringify({MATTERGUID:val.MATTERGUID,SHORTNAME:val.SHORTNAME}))
   // let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
 

@@ -28,12 +28,19 @@ export class BehaviorService {
   public UserDropDownData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public FileNotesData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public ActiveSubMenu$: BehaviorSubject<any> = new BehaviorSubject(null);
-
   public ConflictMainData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public ConflictDataList$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public LegalChronologyData$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(private http: HttpClient) { }
 
   matterInvoiceData(matterInvoice: any) {
     this.matterInvoice$.next(matterInvoice);
+  }
+  ConflictDataList(ConflictDataList: any) {
+    this.ConflictDataList$.next(ConflictDataList);
+  }
+  LegalChronologyData(LegalChronologyData: any) {
+    this.LegalChronologyData$.next(LegalChronologyData);
   }
   ConflictMainData(ConflictMainData: any) {
     this.ConflictMainData$.next(ConflictMainData);

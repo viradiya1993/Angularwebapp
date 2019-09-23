@@ -112,7 +112,6 @@ export class MattersListComponent implements OnInit, OnDestroy {
         this.mattersData = new MatTableDataSource(response.DATA.MATTERS);
         this.mattersData.paginator = this.paginator;
         this.mattersData.sort = this.sort;
-
         this.isLoadingResults = false;
       }
     }, error => {

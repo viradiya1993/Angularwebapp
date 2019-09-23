@@ -19,6 +19,7 @@
             <tr mat-row *matRowDef="let matter; columns: displayedColumns;let element;" class="matter" (click)="editmatter(matter);highlightedRows=matter.MATTERGUID" [style.background]="highlightedRows == matter.MATTERGUID ? selectedColore : ''" [ngClass]="highlightedRows == matter.MATTERGUID ? 'row-text-colore' : ''"
                 matRipple [@animate]="{value:'*',params:{y:'100%'}}">
             </tr>
+            
         </table>
     </div>
     <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>

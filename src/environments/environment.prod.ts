@@ -6,3 +6,4 @@ export const environment = {
     APIKEY: 'SNGMTUEEB2AJBFC9',
     // APIEndpoint: 'https://api.silq.com.au/'
 };
+

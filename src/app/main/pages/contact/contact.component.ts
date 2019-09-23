@@ -32,6 +32,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
   isLoadingResults: boolean = false;
   contactFilter: FormGroup;
   pageSize: any;
+  Contactdata;
   selectedVal: any;
   filterVals = { 'active': 'all', 'FirstLetter': 'a', 'SEARCH': '', 'ContactType': '' };
   constructor(
@@ -50,7 +51,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
     });
   }
 
-  Contactdata;
+ 
 
   ngOnInit() {
     this.getTableFilter();
@@ -74,6 +75,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
   }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('contacts', '').subscribe(response => {
+      //console.log(response);return;
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
         this.tempColobj = data.tempColobj;

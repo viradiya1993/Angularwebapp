@@ -45,7 +45,7 @@ export class PastBankingsComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator)paginator: MatPaginator;
-  constructor(private _formBuilder: FormBuilder,) { }
+  constructor(private _formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
@@ -53,7 +53,6 @@ export class PastBankingsComponent implements OnInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.PastBanking = this._formBuilder.group({
-     
       searchFilter:[]
     });
   }
@@ -66,7 +65,12 @@ export class PastBankingsComponent implements OnInit {
     
   }
   //onSearch
-  onSearch(){
-    
+  onSearch(searchFilter:any){
+    if (searchFilter['key'] === "Enter" || searchFilter == 'Enter'){
+          console.log('Search work!!');
+    }
+  }
+  get f() {
+    return this.dataSource;
   }
 }

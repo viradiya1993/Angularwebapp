@@ -83,7 +83,7 @@ export class InvoiceComponent implements OnInit {
   }
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
-    let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');
+    let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');  
     this.lastFilter = JSON.parse(localStorage.getItem('matter_invoice_filter'));
     if (this.lastFilter) {
       this.lastFilter.STARTDATE = begin;
@@ -95,6 +95,7 @@ export class InvoiceComponent implements OnInit {
     }
     this.loadData(JSON.parse(localStorage.getItem('matter_invoice_filter')));
   }
+
   getTableFilter() {
     this.TableColumnsService.getTableFilter('invoices', '').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {

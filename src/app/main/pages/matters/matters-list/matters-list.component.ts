@@ -6,10 +6,11 @@ import { MatDialog, MatDialogConfig } from '@angular/material';
 //import { MattersService } from '../matters.service';
 import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.component';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
-import { MattersService, TableColumnsService } from '../../../../_services';
+import { TableColumnsService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import {MatSort} from '@angular/material';
+import { MattersService } from 'app/_services/matters.service';
 
 
 @Component({

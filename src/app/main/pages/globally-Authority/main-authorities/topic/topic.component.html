@@ -1,0 +1,74 @@
+<div id="account" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
+        <div class="content" fxLayoutAlign="center">
+            <div class="center p-24 more_tbl_clmn list_tbl_main" fusePerfectScrollbar>
+                <div class="matter-serach-div sticky_search_div responsive_auto">
+                    <form>
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                              
+                          
+                        </div>  
+                        <button mat-raised-button type="button" color="primary" id="refresMainTopic" (click)="refresMainTopic();">Refresh</button>
+                    </form>
+                </div>
+                <div class="content">
+                    <div class="page-layout simple left-sidebar inner-sidebar">
+                        <div fxLayoutAlign="center" class="content">
+                            <div class="center more_tbl_clmn" fusePerfectScrollbar>
+                                <div class="content">
+                                    <div class="btn top_right_action_billing_position">
+                                        <button mat-icon-button aria-label="More">
+                                            <mat-icon class="secondary-text">more_vert</mat-icon>
+                                        </button>
+                                    </div>
+                                    <div class="content">
+                                        <div class="example-loading-shade" *ngIf="isLoadingResults">
+                                            <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+                                        </div>
+                                        <div class="example-containerdata">
+                                            <table class="mat-table simple" [@animateStagger]="{value:'50'}">
+                                                <thead class="mat-header-row" fxLayoutAlign="center center">
+                                                    <th class="mat-header-cell" fxFlex>Topic</th>
+                                                   
+                                                </thead>
+                                            </table>
+                                            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                                                <!-- This is the tree node template for leaf nodes -->
+                                                <mat-tree-node class="border-top" *matTreeNodeDef="let node" matTreeNodePadding [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index  (click)="editContact(node);highlightedRows = node.index "
+                                                matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                                  <!-- use a disabled button to provide padding for tree leaf -->
+                                                  <button mat-icon-button disabled></button>
+                                                  <span >{{node.name}}</span>
+                                                  <!-- <div fxFlex="20" class="text-center">
+                                                    <span class="pale">{{node.item}}</span>
+                                                </div> -->
+                                                  <!-- <span fxFlex="20" class="text-center1" >{{node.AUTHORITY}}</span> -->
+                                                  <!-- <span fxFlex="20"  class="text-center1" >{{node.index}}</span>
+                                                  <span fxFlex="20" class="text-center1">{{node.parent}}</span> -->
+                                                  <!-- <span fxFlex="20" class="text-center" >{{node.index}}</span> -->
+                                                </mat-tree-node>
+                                                <!-- This is the tree node template for expandable nodes -->
+                                                <mat-tree-node class="border-top" *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding  [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index  (click)="editContact(node);highlightedRows = node.index "
+                                                matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                                  <button mat-icon-button matTreeNodeToggle
+                                                          [attr.aria-label]="'toggle ' + node.name" [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index  (click)="editContact(node);highlightedRows = node.index ">
+                                                    <mat-icon class="mat-icon-rtl-mirror" >
+                                                      {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                                    </mat-icon>
+                                                  </button>
+                                                  <span>{{node.name}}</span>
+                                                  <!-- <span fxFlex="50" class="text-center" >{{node.AUTHORITY}}</span> -->
+                                                  <!-- <span fxFlex="50" class="text-center">{{node.index}}</span>
+                                                  <span fxFlex="50" class="text-center">{{node.parent}}</span> -->
+                                                  <!-- <span fxFlex="20" class="text-center">{{node.index}}</span> -->
+                                                </mat-tree-node>
+                                              </mat-tree>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

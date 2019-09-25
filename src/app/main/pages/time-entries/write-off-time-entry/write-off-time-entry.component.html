@@ -63,32 +63,34 @@
                                 Amount to Write Off
                             </div>
                             <mat-form-field appearance="outline" fxFlex="20" class="value_width pr-4">
-                                <input matInput type="number" placeholder="Date Received">
+                                    <!-- <mat-label>Amount to Write Off</mat-label> -->
+                                <input type="{{typeInput}}" [(ngModel)]="AmmountWirteOff" formControlName="AmmountWirteOff"  maxlength="" (focusout)="calcWriteOff()" matInput  placeholder="Amount to Write Off">
                             </mat-form-field>
                             <div fxFlex="5" class="label_width"> </div>
-                            <mat-form-field appearance="outline" fxFlex="20" class="value_width pr-4">
-                                <input class="sideText" matInput readonly type="number" placeholder="Date Received">
+                            <mat-form-field appearance="outline" fxFlex="20" class="value_width pr-4">   
+                                <input disabled class="sideText" matInput readonly type="number" value="0.00" placeholder="Amount to Write Off">
                                 <span class="currency_sign" matPrefix>$&nbsp;</span>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="20" class="value_width pr-4">
-                                <input class="sideText" matInput readonly type="number" placeholder="Date Received">
+                                <input disabled class="sideText" matInput readonly type="number" value="0.00" placeholder="Amount to Write Off">
                                 <span class="currency_sign" matPrefix>$&nbsp;</span>
                             </mat-form-field>
                         </div>
                         <div class="value_label_parent">
                             <div fxFlex="30" class="label_width">
-                                Amount Remainiiiing
+                                Amount Remaining
                             </div>
                             <mat-form-field appearance="outline" fxFlex="20" class="value_width pr-4">
-                                <input matInput type="number" placeholder="Date Received">
+                                    <!-- <mat-label>Amount Remainiiiing</mat-label> -->
+                                <input type="{{typeInput}}" (focusout)="calcReamingOff()" [(ngModel)]="AmmountRemaing" formControlName="AmmountRemaining" matInput placeholder="Amount Remainiiiing">
                             </mat-form-field>
                             <div fxFlex="5" class="label_width"> </div>
                             <mat-form-field appearance="outline" fxFlex="20" class="value_width pr-4">
-                                <input class="sideText" matInput readonly type="number" placeholder="Date Received">
+                                <input disabled class="sideText" matInput readonly type="number" value="0.00" placeholder="Amount Remainiiiing">
                                 <span class="currency_sign" matPrefix>$&nbsp;</span>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="20" class="value_width pr-4">
-                                <input class="sideText" matInput readonly type="number" placeholder="Date Received">
+                                <input disabled class="sideText" matInput readonly type="number" value="0.00" placeholder="Amount Remainiiiing">
                                 <span class="currency_sign" matPrefix>$&nbsp;</span>
                             </mat-form-field>
                         </div>
@@ -98,7 +100,7 @@
         </div>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
-        <button mat-raised-button color="accent" (click)="saveWriteOffTimeEntry()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
+        <button mat-raised-button color="accent" (click)="SaveClickTimeEntry()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
     </mat-dialog-actions>
 </div>

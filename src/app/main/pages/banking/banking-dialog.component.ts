@@ -84,7 +84,8 @@ export class BankingDialogComponent implements OnInit {
         }
         this.showData(this.storeDataarray, 0, null);
         this.dataSource.data = this.storeDataarray;
-        // this.highlightedRows = 1;
+        this.RowClick(this.storeDataarray[0]);
+        this.highlightedRows = 1;
       } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
@@ -114,7 +115,24 @@ export class BankingDialogComponent implements OnInit {
     node.AccountType = this._data.AccountType; 
     this.ACCOUNTGUIDsELECTED = node;
     this.isDisabledselect=node.MainList.ACCOUNTTYPENAME;
-    // this.abcd=node;
+    console.log(this.isDisabledselect);
+    if(this._data.FromWhere=='systemSetting'){
+      this.isDisabledselect='Bank Account';
+    }else if(this._data.FromWhere =='spendMonyExpense' && this._data.AccountType=="EXPENSE"){
+      console.log("hjfjhgk");
+      if(node.MainList.ACCOUNTTYPENAME=='Detail'){
+        this.isDisabledselect='Bank Account';
+      }else{
+        this.isDisabledselect='None Bank Account'; 
+      }
+    }else if(this._data.FromWhere =='generalReceiptIncome' && this._data.AccountType=="INCOME"){
+      if(node.MainList.ACCOUNTTYPENAME=='Detail'){
+        this.isDisabledselect='Bank Account';
+      }else{
+        this.isDisabledselect='None Bank Account'; 
+      }
+    }
+    // generalReceiptIncome this.abcd=node;
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
@@ -127,6 +145,9 @@ export class BankingDialogComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.loadData(this._data.AccountType);
+      }
     });
   }
  

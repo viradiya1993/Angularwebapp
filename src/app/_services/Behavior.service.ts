@@ -31,10 +31,28 @@ export class BehaviorService {
   public ConflictMainData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public ConflictDataList$: BehaviorSubject<any> = new BehaviorSubject(null);
   public LegalChronologyData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public MainTimeEntryData$: BehaviorSubject<any> = new BehaviorSubject(null);
+
+  public matterClassData$: BehaviorSubject<any> = new BehaviorSubject(null);
+
+  public MainAuthorityData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public MainTopicData$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(private http: HttpClient) { }
 
-  matterInvoiceData(matterInvoice: any) {
-    this.matterInvoice$.next(matterInvoice);
+  matterInvoiceData(matterClassData: any) {
+    this.matterInvoice$.next(matterClassData);
+  }
+  MainTopicData(MainTopicData: any) {
+    this.MainTopicData$.next(MainTopicData);
+  }
+  matterClassData(matterInvoice: any) {
+    this.matterClassData$.next(matterInvoice);
+  }
+  MainAuthorityData(MainAuthorityData: any) {
+    this.MainAuthorityData$.next(MainAuthorityData);
+  }
+  MainTimeEntryData(MainTimeEntryData: any) {
+    this.MainTimeEntryData$.next(MainTimeEntryData);
   }
   ConflictDataList(ConflictDataList: any) {
     this.ConflictDataList$.next(ConflictDataList);

@@ -115,5 +115,8 @@ export class FileNotesComponent implements OnInit {
   refreshFileNote(){
     this.loadData();
   }
+  FilterSearch(filterValue:any){
+    this.filenotes_table.filter = filterValue;
+  }
 }
 

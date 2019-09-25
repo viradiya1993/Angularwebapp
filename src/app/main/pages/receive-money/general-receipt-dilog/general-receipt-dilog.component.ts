@@ -215,7 +215,7 @@ this.action=_data.type;
   }
   BankingDialogOpen(type: any) {
     const dialogRef = this.MatDialog.open(BankingDialogComponent, {
-      disableClose: true, width: '100%', data: { AccountType: type }
+      disableClose: true, width: '100%', data: { AccountType: type ,FromWhere:'generalReceiptIncome' }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result.AccountType == "INCOME") {

@@ -45,7 +45,7 @@ export class MainSearchingComponent implements OnInit {
       matter:[''],
       DateRange:['']
     });
-   
+    
     this.filterData = {
       'MATTERGUID': '', 'Search': '', 'OrderedDateFrom': '', 'OrderedDateTo': '', 'STATUS': ' ', "Matter": ''
     }

@@ -37,7 +37,7 @@
                                 </mat-select>
                             </mat-form-field>
                             <mat-form-field fxFlex="34" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.FEEEARNER,'has-warning':errorWarningData.Warning?.FEEEARNER}">
-                                <mat-label>Free Erner</mat-label>
+                                <mat-label>Free Earner</mat-label>
                                 <mat-select formControlName="FEEEARNER" (selectionChange)="matterChange('FeeEarner',$event.value)">
                                     <mat-option *ngFor="let user of userList" value="{{user.USERID}}">{{user.FULLNAME}}</mat-option>
                                 </mat-select>

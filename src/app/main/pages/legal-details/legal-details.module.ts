@@ -19,6 +19,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, Sa
 import { ChronItemDailogComponent } from './chronology/chron-item-dailog/chron-item-dailog.component'
 import { SafeCustodyDialogeComponent } from './safecustody/safe-custody-dialog/safe-custody-dialog.component';
 import { legalDetailTaskComponent } from './legal-task/legal-task.component';
+import {MatTreeModule} from '@angular/material/tree';
 
 const routes = [
   { path: '', redirectTo: '/legal-details/chronology', pathMatch: 'full', canActivate: [AuthGuard] },
@@ -43,6 +44,7 @@ const routes = [
     SatDatepickerModule, SatNativeDateModule,
     RouterModule.forChild(routes),
     FuseSharedModule,
+    MatTreeModule,
     //mat 
     MatButtonModule,
     MatDialogModule,

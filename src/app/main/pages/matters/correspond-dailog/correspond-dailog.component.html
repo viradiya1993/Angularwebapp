@@ -14,8 +14,8 @@
                     <mat-form-field class="example" fxFlex="33" class="pr-4" appearance="outline">
                         <mat-label>Contact Type</mat-label>
                         <mat-select #value name="selected" formControlName="TYPE">
-                            <mat-option value="General">General</mat-option>
-                            <mat-option value="Plaintiff">Plaintiff</mat-option>
+                            <mat-option *ngFor="let val of CorrspondClassData" [value]="val.LOOKUPFULLVALUE">{{val.LOOKUPFULLVALUE}}</mat-option>
+                            <!-- <mat-option value="Plaintiff">Plaintiff</mat-option>
                             <mat-option value="Defendant">Defendant</mat-option>
                             <mat-option value="Claimant">Claimant</mat-option>
                             <mat-option value="Cross Defendant">Cross Defendant</mat-option>
@@ -35,7 +35,7 @@
                             <mat-option value="Bank">Bank</mat-option>
                             <mat-option value="Broker">Broker</mat-option>
                             <mat-option value="Agent">Agent</mat-option>
-                            <mat-option value="Strata Manager">Strata Manager</mat-option>
+                            <mat-option value="Strata Manager">Strata Manager</mat-option> -->
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">

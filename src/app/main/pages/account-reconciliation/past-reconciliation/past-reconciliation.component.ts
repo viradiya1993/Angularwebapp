@@ -103,4 +103,8 @@ export class PastReconciliationComponent implements OnInit {
       }
     });
   }
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
+  }
 }

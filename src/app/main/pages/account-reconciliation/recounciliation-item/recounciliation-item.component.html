@@ -32,13 +32,13 @@
 
                         <mat-form-field class="example" appearance="outline" fxFlex="16.66">
                             <mat-label>Statement Closing Bal.</mat-label>
-                            <input matInput formControlName="statementClosingBalance" type="number" class="sideText">
+                            <input (focusout)="statmentClosingBal()" matInput formControlName="statementClosingBalance" type="number" class="sideText">
                             <span class="currency_sign" matPrefix>$&nbsp;</span>
                         </mat-form-field>
 
                         <mat-form-field class="example" appearance="outline" fxFlex="16.66">
                             <mat-label>Calculated Closing Balance</mat-label>
-                            <input matInput formControlName="calculatedClosingBalance" readonly class="sideText">
+                            <input  matInput formControlName="calculatedClosingBalance" readonly class="sideText">
                             <span class="currency_sign" matPrefix>$&nbsp;</span>
                         </mat-form-field>
 

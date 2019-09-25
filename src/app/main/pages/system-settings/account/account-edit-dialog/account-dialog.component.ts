@@ -44,7 +44,7 @@ export class AccountDialogComponent implements OnInit {
   openAccount(type){
     this.SendArray=[];
     const dialogRef = this.dialog.open(BankingDialogComponent, {
-      disableClose: true, width: '100%', data: {AccountType: type }
+      disableClose: true, width: '100%', data: {AccountType: type ,FromWhere:'systemSetting' }
     });
     //this.accDialoge.AccNo=result.name;
     dialogRef.afterClosed().subscribe(result => {

@@ -2,12 +2,20 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+// export const environment = {
+//     production: false,
+//     hmr: false,
+//     // APIEndpoint: 'https://api.silq.com.au/',
+//     APIEndpoint: 'https://api2.silq.com.au/',
+//     ReportUrl: 'https://api2.silq.com.au',
+//     APIKEY: 'SNGMTUEEB2AJBFC9',
+// };
 export const environment = {
     production: false,
     hmr: false,
     // APIEndpoint: 'https://api.silq.com.au/',
-    APIEndpoint: 'https://api2.silq.com.au/',
-    ReportUrl: 'https://api2.silq.com.au',
+    APIEndpoint: 'https://apitest.silq.com.au/',
+    ReportUrl: 'https://apitest.silq.com.au',
     APIKEY: 'SNGMTUEEB2AJBFC9',
 };
 

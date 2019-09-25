@@ -24,10 +24,10 @@ export class RecounciliationItemComponent implements OnInit {
   pageSize: any;
   DebitAmount: any = [];
   CraditAmount: any = [];
-  SendRecouncileArray:any=[];
+  SendRecouncileArray: any = [];
   FirstTimeWithDrawTotal: any = [];
   FirstTimeWithDrawTotalArray: any = [];
-  FirstTimeDipositeTotalArray:any=[];
+  FirstTimeDipositeTotalArray: any = [];
   AccountRecouncile: FormGroup;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -57,11 +57,10 @@ export class RecounciliationItemComponent implements OnInit {
     });
     this.behaviorService.ChartAccountData$.subscribe(result => {
       if (result) {
-        console.log(result);
         this.chartAccountDetail = result;
-       
       }
     });
+<<<<<<< HEAD
     // let sendDate = this.chartAccountDetail.MainList.RECONCILEDGROUP.LASTRECONCILEDDATE.split("/");
     // let getdate= new Date(sendDate[1] + '/' + sendDate[0] + '/' + sendDate[2]),y = getdate.getFullYear(), m = getdate.getMonth();;;
     // var lastDay = new Date(y, m + 1, 0);
@@ -73,6 +72,19 @@ export class RecounciliationItemComponent implements OnInit {
     // this.statmentClosingBal();
     this.getTableFilter();
     this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID ,'BankStatementDate':'30/11/2015'});
+=======
+    let sendDate = this.chartAccountDetail.MainList.RECONCILEDGROUP.LASTRECONCILEDDATE.split("/");
+    let getdate = new Date(sendDate[1] + '/' + sendDate[0] + '/' + sendDate[2]), y = getdate.getFullYear(), m = getdate.getMonth();;;
+    var lastDay = new Date(y, m + 1, 0);
+    this.AccountRecouncile.controls['Bankdate'].setValue(lastDay);
+    this.getTableFilter();
+    // // this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID });
+    this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID, 'BankStatementDate': this.datepipe.transform(lastDay, 'dd/MM/yyyy') });
+    // localStorage.setItem('recouncileItem')
+    // this.AccountRecouncile.controls['statementClosingBalance'].setValue(0.00);
+    // this.statmentClosingBal();
+    // this.LoadData({ AccountGuid: "ACCAAAAAAAAAAAA4", 'BankStatementDate': '30/11/2015' });
+>>>>>>> 01882d06f6ab5e57dd3e3daca3ae699b23c346db
   }
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -86,9 +98,9 @@ export class RecounciliationItemComponent implements OnInit {
       this.ReconciliationData.data.forEach(row => this.selection.select(row));
     this.GloballyCal();
     this.SendRecouncileArray.push(this.selection.selected);
-    this.behaviorService.RecouncileItemSendSetData({"BankStatementDate":"30/11/2015","ClosingBalance":this.f.statementClosingBalance.value,"item":this.selection.selected})
+    this.behaviorService.RecouncileItemSendSetData({ "BankStatementDate": "30/11/2015", "ClosingBalance": this.f.statementClosingBalance.value, "item": this.selection.selected })
 
- 
+
   }
   get f() {
     return this.AccountRecouncile.controls;
@@ -119,7 +131,7 @@ export class RecounciliationItemComponent implements OnInit {
     this.FirstTimeCal('');
     console.log(this.selection.selected);
     // this.SendRecouncileArray.push(this.selection.selected);
-    this.behaviorService.RecouncileItemSendSetData({"BankStatementDate":"30/11/2015","ClosingBalance":this.f.statementClosingBalance.value,"item": this.selection.selected})
+    this.behaviorService.RecouncileItemSendSetData({ "BankStatementDate": "30/11/2015", "ClosingBalance": this.f.statementClosingBalance.value, "item": this.selection.selected })
     // this.SelectedItemArray.push(this.selection.selected)
   }
   /** The label for the checkbox on the passed row */
@@ -129,9 +141,9 @@ export class RecounciliationItemComponent implements OnInit {
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
-  statmentClosingBal(){
- let val =Number(this.f.statementClosingBalance.value) - Number(this.f.calculatedClosingBalance.value);
- this.AccountRecouncile.controls['OutBal'].setValue(val);
+  statmentClosingBal() {
+    let val = Number(this.f.statementClosingBalance.value) - Number(this.f.calculatedClosingBalance.value);
+    this.AccountRecouncile.controls['OutBal'].setValue(val);
   }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('Reconciliation', 'Reconciliation').subscribe(response => {
@@ -156,10 +168,10 @@ export class RecounciliationItemComponent implements OnInit {
   FirstTimeCal(data) {
     if (data != '') {
       data.forEach(element => {
-        
+
         this.FirstTimeWithDrawTotalArray.push(element.DEBITAMOUNT);
         this.FirstTimeWithDrawTotal = Number(this.FirstTimeWithDrawTotalArray.reduce(function (a = 0, b = 0) { return a + b; }, 0));
-        
+
         this.FirstTimeDipositeTotalArray.push(element.CREDITAMOUNT);
         this.FirstTimeDipositeTotal = Number(this.FirstTimeDipositeTotalArray.reduce(function (a = 0, b = 0) { return a + b; }, 0));
 
@@ -168,7 +180,7 @@ export class RecounciliationItemComponent implements OnInit {
     }
     let FinalValWithdrawl = (this.FirstTimeWithDrawTotal - this.f.UnWith.value).toFixed(2);
     let FinalValdeposit = (this.FirstTimeDipositeTotal - this.f.UnDeposite.value).toFixed(2);
-    
+
     this.AccountRecouncile.controls['UnWith'].setValue(FinalValWithdrawl);
     this.AccountRecouncile.controls['UnDeposite'].setValue(FinalValdeposit);
   }
@@ -176,7 +188,6 @@ export class RecounciliationItemComponent implements OnInit {
     this.ReconciliationData = [];
     this.isLoadingResults = true;
     this.subscription = this._mainAPiServiceService.getSetData(data, 'GetReconciliationItems').subscribe(response => {
-      console.log(response); 
       if (response.CODE == 200 && response.STATUS == "success") {
         this.FirstTimeCal(response.DATA.RECONCILIATIONITEMS);
         this.ReconciliationData = new MatTableDataSource(response.DATA.RECONCILIATIONITEMS);
@@ -185,7 +196,7 @@ export class RecounciliationItemComponent implements OnInit {
         this.AccountRecouncile.controls['LASTRECONCILEDDATE'].setValue(response.DATA.LASTRECONCILEDDATE);
         this.AccountRecouncile.controls['LASTRECONCILEDBALANCE'].setValue(response.DATA.LASTRECONCILEDBALANCE);
         this.AccountRecouncile.controls['calculatedClosingBalance'].setValue(response.DATA.LASTRECONCILEDBALANCE);
-        
+
         this.AccountRecouncile.controls['statementClosingBalance'].setValue(0.00);
         this.statmentClosingBal();
         this.AccountRecouncile.controls['OutBal'].setValue(response.DATA.LASTRECONCILEDBALANCE);
@@ -225,7 +236,7 @@ export class RecounciliationItemComponent implements OnInit {
       }
     });
   }
-  refreshRecouncilItem(){
-    this.LoadData({ AccountGuid: "ACCAAAAAAAAAAAA4", 'BankStatementDate': "3/09/2019" }); 
+  refreshRecouncilItem() {
+    this.LoadData({ AccountGuid: "ACCAAAAAAAAAAAA4", 'BankStatementDate': "3/09/2019" });
   }
 }

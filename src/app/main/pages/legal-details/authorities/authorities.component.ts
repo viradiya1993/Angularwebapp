@@ -4,7 +4,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { TableColumnsService, MainAPiServiceService, BehaviorService } from './../../../../_services';
 import * as $ from 'jquery';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { ToastrService } from 'ngx-toastr';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
@@ -14,9 +14,9 @@ interface FoodNode {
   index?: number;
   children?: FoodNode[];
   SUBTOPICS?: FoodNode[];
-  TOPICNAME:string;
-  AUTHORITY:string;
-  AUTHORITIES?:FoodNode[];
+  TOPICNAME: string;
+  AUTHORITY: string;
+  AUTHORITIES?: FoodNode[];
   MainList?: FoodNode[];
 }
 /** Flat node with expandable and level information */
@@ -24,7 +24,7 @@ interface ExampleFlatNode {
   expandable: boolean;
   name: string;
   level: number;
-  AUTHORITY:string;
+  AUTHORITY: string;
 }
 @Component({
   selector: 'app-authorities',
@@ -39,31 +39,31 @@ export class AuthoritiesComponent implements OnInit {
   displayedColumns: string[];
   pageSize: any;
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
-  authorities_table:any=[];
+  authorities_table: any = [];
   tempColobj: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   isLoadingResults: boolean = false;
-  storeDataarray:any=[];
+  storeDataarray: any = [];
   highlightedRows: any;
-  
-  public LegalAuthority={
-    Matter:this.currentMatter.MATTER,Contact:this.currentMatter.CLIENT
+
+  public LegalAuthority = {
+    Matter: this.currentMatter.MATTER, Contact: this.currentMatter.CLIENT
   }
-   errorWarningData: any = { "Error": [], 'Warning': [] };
+  errorWarningData: any = { "Error": [], 'Warning': [] };
   arrayForIndex: any = [];
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   index = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   private _transformer = (node: FoodNode, level: number) => {
     return {
-      expandable: !!node.AUTHORITIES && node.AUTHORITIES.length > 0 ,
+      expandable: !!node.AUTHORITIES && node.AUTHORITIES.length > 0,
       name: node.TOPICNAME,
       SUBTOPICS: node.SUBTOPICS,
-      AUTHORITY:node.AUTHORITY,
-      AUTHORITIES:node.AUTHORITIES,
+      AUTHORITY: node.AUTHORITY,
+      AUTHORITIES: node.AUTHORITIES,
       // Context: node.CONTEXT,
-       Main: node.MainList,
+      Main: node.MainList,
       // child: node.TEMPLATEFILE,
       // iconType: node.TEMPLATETYPEDESC,
       // KitGUid: node.KITGUID,
@@ -83,22 +83,22 @@ export class AuthoritiesComponent implements OnInit {
   LegalAuthorityToolbar: any;
   secondauthodata: any;
   // pageSize: string;
-  
-  constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, 
-    private _mainAPiServiceService: MainAPiServiceService,  private toastr: ToastrService,public behaviorService: BehaviorService,
-    public _matDialog: MatDialog,) { 
 
-      this.behaviorService.LegalAuthorityData$.subscribe(result => {
-        if (result) {
+  constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService,
+    private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService, public behaviorService: BehaviorService,
+    public _matDialog: MatDialog, ) {
+
+    this.behaviorService.LegalAuthorityData$.subscribe(result => {
+      if (result) {
         this.LegalAuthorityData = result;
-        }
-      });
-      this.behaviorService.LegalAuthorityToolbar$.subscribe(result => {
-        if (result) {
+      }
+    });
+    this.behaviorService.LegalAuthorityToolbar$.subscribe(result => {
+      if (result) {
         this.LegalAuthorityToolbar = result;
-        }
-      });
-    }
+      }
+    });
+  }
 
   ngOnInit() {
     $('content').addClass('inner-scroll');
@@ -127,15 +127,15 @@ export class AuthoritiesComponent implements OnInit {
       x.MainList = x;
       x.index = this.arrayForIndex.length;
       if (x.AUTHORITIES)
-      this.showData(x.AUTHORITIES, x.level + 1,x.AUTHORITY);
+        this.showData(x.AUTHORITIES, x.level + 1, x.AUTHORITY);
       if (x.SUBTOPICS)
-      this.showData(x.SUBTOPICS,x.level + 1, x.TOPICNAME);
-        // this.showData(x.SUBTOPICS, x.level + 1, x.TOPICNAME);
+        this.showData(x.SUBTOPICS, x.level + 1, x.TOPICNAME);
+      // this.showData(x.SUBTOPICS, x.level + 1, x.TOPICNAME);
     });
   }
   LoadData() {
     this.isLoadingResults = true;
-    let potData = {'MatterGuid': this.currentMatter.MATTERGUID };
+    let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
     this._mainAPiServiceService.getSetData(potData, 'GetMatterAuthority').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.authorities_table = new MatTableDataSource(response.DATA.MATTERAUTHORITIES);
@@ -145,8 +145,8 @@ export class AuthoritiesComponent implements OnInit {
           this.RowClick(response.DATA.MATTERAUTHORITIES[0]);
           this.highlightedRows2 = response.DATA.MATTERAUTHORITIES[0].AUTHORITYGUID;
         }
-        else{
-        
+        else {
+
         }
       }
       this.isLoadingResults = false;
@@ -155,23 +155,23 @@ export class AuthoritiesComponent implements OnInit {
     });
     this.pageSize = localStorage.getItem('lastPageSize');
 
-      this.isLoadingResults = true;
-      this._mainAPiServiceService.getSetData({}, 'GetAuthority').subscribe(res => {
-    
-        if ((res.CODE == 200 || res.CODE == '200') && res.STATUS == "success") {
-          this.arrayForIndex = [];
-           this.storeDataarray = res.DATA.TOPICS;
-           this.showData(this.storeDataarray, 0, null);
-           this.dataSource.data = this.storeDataarray;
-           this.editContact(this.storeDataarray[0]);
-          this.highlightedRows = 1;
-        }
-        this.isLoadingResults = false;
-      }, err => {
-        this.toastr.error(err);
-        this.isLoadingResults = false;
-      });
-      this.pageSize = localStorage.getItem('lastPageSize');
+    this.isLoadingResults = true;
+    this._mainAPiServiceService.getSetData({}, 'GetAuthority').subscribe(res => {
+
+      if ((res.CODE == 200 || res.CODE == '200') && res.STATUS == "success") {
+        this.arrayForIndex = [];
+        this.storeDataarray = res.DATA.TOPICS;
+        this.showData(this.storeDataarray, 0, null);
+        this.dataSource.data = this.storeDataarray;
+        this.editContact(this.storeDataarray[0]);
+        this.highlightedRows = 1;
+      }
+      this.isLoadingResults = false;
+    }, err => {
+      this.toastr.error(err);
+      this.isLoadingResults = false;
+    });
+    this.pageSize = localStorage.getItem('lastPageSize');
   }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
@@ -205,64 +205,68 @@ export class AuthoritiesComponent implements OnInit {
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
-  editContact(val){
+  editContact(val) {
     this.behaviorService.LegalAuthorityData(val);
   }
-  RowClick(val){
-    this.secondauthodata=val;
+  RowClick(val) {
+    this.secondauthodata = val;
     this.behaviorService.LegalAuthorityForSubAuthToolbar(val);
   }
-  refreshLegalAuthorityADD(){
-    if(this.LegalAuthorityToolbar == 'add'){
+  refreshLegalAuthorityADD() {
+    if (this.LegalAuthorityToolbar == 'add') {
       this.LegalAuthorityData.Main.AUTHORITYGUID
-      let Data ={
-        MATTERAUTHORITYGUID:'',
-        MATTERGUID:this.currentMatter.MATTERGUID,
-        AUTHORITYGUID:this.LegalAuthorityData.Main.AUTHORITYGUID
+      let Data = {
+        MATTERAUTHORITYGUID: '',
+        MATTERGUID: this.currentMatter.MATTERGUID,
+        AUTHORITYGUID: this.LegalAuthorityData.Main.AUTHORITYGUID
       }
-      let finalData = {DATA: Data,FormAction:'insert',VALIDATEONLY: true};
+      let finalData = { DATA: Data, FormAction: 'insert', VALIDATEONLY: true };
       // let finalData = { DATA: data, FormAction: this.FormAction, VALIDATEONLY: true }
       // this._mainAPiServiceService.getSetData(potData, 'SetMatterAuthority').subscribe(response => {
-        this._mainAPiServiceService.getSetData(finalData, 'SetMatterAuthority').subscribe(response => {
-          if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-            this.checkValidation(response.DATA.VALIDATIONS, finalData);
-          } else if (response.CODE == 451 && response.STATUS == 'warning') {
-            this.checkValidation(response.DATA.VALIDATIONS, finalData);
-          } else if (response.CODE == 450 && response.STATUS == 'error') {
-            this.checkValidation(response.DATA.VALIDATIONS, finalData);
-          } else if (response.MESSAGE == 'Not logged in') {
-            // this.dialogRef.close(false);
-          } else {
-            // this.isspiner = false;
-          }
-    
-        }, err => {
-          this.toastr.error(err);
-        });
-  
-    }else if(this.LegalAuthorityToolbar == 'delete'){
+      this._mainAPiServiceService.getSetData(finalData, 'SetMatterAuthority').subscribe(response => {
+        if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+          this.checkValidation(response.DATA.VALIDATIONS, finalData);
+        } else if (response.CODE == 451 && response.STATUS == 'warning') {
+          this.checkValidation(response.DATA.VALIDATIONS, finalData);
+        } else if (response.CODE == 450 && response.STATUS == 'error') {
+          this.checkValidation(response.DATA.VALIDATIONS, finalData);
+        } else if (response.MESSAGE == 'Not logged in') {
+          // this.dialogRef.close(false);
+        } else {
+          // this.isspiner = false;
+        }
+
+      }, err => {
+        this.toastr.error(err);
+      });
+
+    } else if (this.LegalAuthorityToolbar == 'delete') {
       this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
         disableClose: true,
         width: '100%',
-    });
-    this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-    this.confirmDialogRef.afterClosed().subscribe(result => {
+      });
+      this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+      this.confirmDialogRef.afterClosed().subscribe(result => {
         if (result) {
-            let MatterData: any = JSON.parse(localStorage.getItem('set_active_matters'));
-            let postData = { FormAction: "delete", DATA: { MATTERAUTHORITYGUID:this.secondauthodata.MATTERAUTHORITYGUID,
-            MATTERGUID:this.currentMatter.MATTERGUID,AUTHORITYGUID: this.secondauthodata.AUTHORITYGUID} }
-            this._mainAPiServiceService.getSetData(postData, 'SetMatterAuthority').subscribe(res => {
-                if (res.STATUS == "success" && res.CODE == 200) {
-                    // $('#refreshMatterTab').click();
-                    this.LoadData();
-                    this.toastr.success('Delete successfully');
-                }
-            });
+          let MatterData: any = JSON.parse(localStorage.getItem('set_active_matters'));
+          let postData = {
+            FormAction: "delete", DATA: {
+              MATTERAUTHORITYGUID: this.secondauthodata.MATTERAUTHORITYGUID,
+              MATTERGUID: this.currentMatter.MATTERGUID, AUTHORITYGUID: this.secondauthodata.AUTHORITYGUID
+            }
+          }
+          this._mainAPiServiceService.getSetData(postData, 'SetMatterAuthority').subscribe(res => {
+            if (res.STATUS == "success" && res.CODE == 200) {
+              // $('#refreshMatterTab').click();
+              this.LoadData();
+              this.toastr.success('Delete successfully');
+            }
+          });
         }
         this.confirmDialogRef = null;
-    });
+      });
     }
-    
+
   }
   checkValidation(bodyData: any, details: any) {
     let errorData: any = [];
@@ -292,7 +296,7 @@ export class AuthoritiesComponent implements OnInit {
       this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Save?';
       this.confirmDialogRef.afterClosed().subscribe(result => {
         if (result) {
-         
+
           this.taskSaveData(details);
         }
         this.confirmDialogRef = null;
@@ -311,7 +315,7 @@ export class AuthoritiesComponent implements OnInit {
         this.toastr.warning(response.MESSAGE);
       } else if (response.CODE == 450 && response.STATUS == 'error') {
         this.toastr.error(response.MESSAGE);
-      } else if (response.MESSAGE == 'Not logged in') {   
+      } else if (response.MESSAGE == 'Not logged in') {
       }
     }, error => {
       this.toastr.error(error);

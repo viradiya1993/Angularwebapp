@@ -55,9 +55,7 @@ export class DocumentDailogComponent implements OnInit {
 
     this.behaviorService.DocumentRegisterData$.subscribe(result => {
       if(result){
-        this.DocRegData=result;
-       console.log(result);
-        
+        this.DocRegData=result;        
       }          
     });
   }

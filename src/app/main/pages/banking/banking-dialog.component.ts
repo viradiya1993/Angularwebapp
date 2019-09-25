@@ -65,7 +65,7 @@ export class BankingDialogComponent implements OnInit {
     public dialog: MatDialog,
     private _mainAPiServiceService: MainAPiServiceService,
     private behaviorService: BehaviorService,
-    public dialogRef: MatDialogRef<BankingDialogComponent>, @Inject(MAT_DIALOG_DATA) public _data: any,private router: Router,) {
+    public dialogRef: MatDialogRef<BankingDialogComponent>, @Inject(MAT_DIALOG_DATA) public _data: any, private router: Router, ) {
     this.loadData(_data.AccountType);
   }
   ngOnInit() {
@@ -97,7 +97,7 @@ export class BankingDialogComponent implements OnInit {
     this.pageSize = localStorage.getItem('lastPageSize');
   }
   showData(element, level, parent) {
-      element.forEach(x => {
+    element.forEach(x => {
       this.arrayForIndex.push({});
       x.level = level
       x.parent = parent
@@ -112,24 +112,22 @@ export class BankingDialogComponent implements OnInit {
     localStorage.setItem('lastPageSize', event.pageSize);
   }
   RowClick(node) {
-    node.AccountType = this._data.AccountType; 
+    node.AccountType = this._data.AccountType;
     this.ACCOUNTGUIDsELECTED = node;
-    this.isDisabledselect=node.MainList.ACCOUNTTYPENAME;
-    console.log(this.isDisabledselect);
-    if(this._data.FromWhere=='systemSetting'){
-      this.isDisabledselect='Bank Account';
-    }else if(this._data.FromWhere =='spendMonyExpense' && this._data.AccountType=="EXPENSE"){
-      console.log("hjfjhgk");
-      if(node.MainList.ACCOUNTTYPENAME=='Detail'){
-        this.isDisabledselect='Bank Account';
-      }else{
-        this.isDisabledselect='None Bank Account'; 
+    this.isDisabledselect = node.MainList.ACCOUNTTYPENAME;
+    if (this._data.FromWhere == 'systemSetting') {
+      this.isDisabledselect = 'Bank Account';
+    } else if (this._data.FromWhere == 'spendMonyExpense' && this._data.AccountType == "EXPENSE") {
+      if (node.MainList.ACCOUNTTYPENAME == 'Detail') {
+        this.isDisabledselect = 'Bank Account';
+      } else {
+        this.isDisabledselect = 'None Bank Account';
       }
-    }else if(this._data.FromWhere =='generalReceiptIncome' && this._data.AccountType=="INCOME"){
-      if(node.MainList.ACCOUNTTYPENAME=='Detail'){
-        this.isDisabledselect='Bank Account';
-      }else{
-        this.isDisabledselect='None Bank Account'; 
+    } else if (this._data.FromWhere == 'generalReceiptIncome' && this._data.AccountType == "INCOME") {
+      if (node.MainList.ACCOUNTTYPENAME == 'Detail') {
+        this.isDisabledselect = 'Bank Account';
+      } else {
+        this.isDisabledselect = 'None Bank Account';
       }
     }
     // generalReceiptIncome this.abcd=node;
@@ -145,12 +143,12 @@ export class BankingDialogComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(result){
+      if (result) {
         this.loadData(this._data.AccountType);
       }
     });
   }
- 
+
   SelectDialogOpen() {
     const dialogRef = this.dialog.open(SelectBankingDialogComponent, {
 
@@ -158,13 +156,13 @@ export class BankingDialogComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
     });
   }
-  SelectClick(val){
-    if(this._data.AccountType=='Reconclie Practice'){
+  SelectClick(val) {
+    if (this._data.AccountType == 'Reconclie Practice') {
       this.behaviorService.ChartAccountData(val);
       localStorage.setItem('ChartAccountData', JSON.stringify({ "name": val.name, "class": val.class, "ACCOUNTGUID": val.ACCOUNTGUID, "ACCOUNTTYPE": val.ACCOUNTTYPE, "index": val.index, "parent": val.parent, "level": val.level }));
-      this.router.navigate(['account-reconciliation/reconciliation-item']); 
+      this.router.navigate(['account-reconciliation/reconciliation-item']);
     }
-    
+
 
   }
 

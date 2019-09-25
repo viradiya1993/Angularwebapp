@@ -5,7 +5,7 @@ import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.c
 
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material';
 import { MainAPiServiceService, BehaviorService } from 'app/_services';
 
 @Component({
@@ -21,37 +21,36 @@ export class ConflictCheckComponent implements OnInit {
   ColumnsObj: any = [];
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   isLoadingResults: boolean = false;
-  displayedColumns: string[] = ['CHRONOLOGYCONFLICT', 'COMPLETEDDATE', 'CONTACTCONFLICT', 'DATE','DETAILS', 'FILENOTECONFLICT',
-   'MATDESCCONFLICT','MATTER', 'MATTERGUID', 'RESULTID', 'SHORTNAME', 'WIPCONFLICT'];
+  displayedColumns: string[] = ['CHRONOLOGYCONFLICT', 'COMPLETEDDATE', 'CONTACTCONFLICT', 'DATE', 'DETAILS', 'FILENOTECONFLICT',
+    'MATDESCCONFLICT', 'MATTER', 'MATTERGUID', 'RESULTID', 'SHORTNAME', 'WIPCONFLICT'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   highlightedRows: any;
-  ConflictData:any=[];
+  ConflictData: any = [];
   pageSize: any;
-  StartbtnSendData={
-    "NameToCheck":'',"CheckWIP":"","CheckFilesNotes":"","CheckChronologies":""
+  StartbtnSendData = {
+    "NameToCheck": '', "CheckWIP": "", "CheckFilesNotes": "", "CheckChronologies": ""
   }
-  ConflictNGData:any=[];
- 
-  constructor(private dialog: MatDialog,  private toastr: ToastrService,
-    private _mainAPiServiceService: MainAPiServiceService,  public behaviorService: BehaviorService) {
-      this.ConflictNGData={
-        "NameToCheck":'',"CheckWIP":true,"CheckFilesNotes":true,"CheckChronologies":true
-      }
-     }
+  ConflictNGData: any = [];
+
+  constructor(private dialog: MatDialog, private toastr: ToastrService,
+    private _mainAPiServiceService: MainAPiServiceService, public behaviorService: BehaviorService) {
+    this.ConflictNGData = {
+      "NameToCheck": '', "CheckWIP": true, "CheckFilesNotes": true, "CheckChronologies": true
+    }
+  }
   ngOnInit() {
-   
-  this.LoadData({});
-  this.StartbtnSendData.CheckWIP=this.ConflictNGData.CheckWIP;
-  this.StartbtnSendData.CheckFilesNotes=this.ConflictNGData.CheckFilesNotes;
-  this.StartbtnSendData.CheckChronologies=this.ConflictNGData.CheckChronologies;
-  this.behaviorService.ConflictMainData(this.StartbtnSendData);
+
+    this.LoadData({});
+    this.StartbtnSendData.CheckWIP = this.ConflictNGData.CheckWIP;
+    this.StartbtnSendData.CheckFilesNotes = this.ConflictNGData.CheckFilesNotes;
+    this.StartbtnSendData.CheckChronologies = this.ConflictNGData.CheckChronologies;
+    this.behaviorService.ConflictMainData(this.StartbtnSendData);
   }
   LoadData(data) {
-    this.ConflictData=[];
+    this.ConflictData = [];
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(data, 'GetConflictCheck').subscribe(res => {
-      console.log(res);
       this.ConflictData = new MatTableDataSource(res.DATA.RECONCILIATIONITEMS);
       this.ConflictData.sort = this.sort;
       this.ConflictData.paginator = this.paginator;
@@ -59,9 +58,8 @@ export class ConflictCheckComponent implements OnInit {
         if (res.DATA.RECONCILIATIONITEMS[0]) {
           this.behaviorService.ConflictDataList(res.DATA.RECONCILIATIONITEMS[0]);
           this.RowClick(res.DATA.RECONCILIATIONITEMS[0]);
-         this.highlightedRows = res.DATA.RECONCILIATIONITEMS[0].MATTERGUID;
+          this.highlightedRows = res.DATA.RECONCILIATIONITEMS[0].MATTERGUID;
         } else {
-          console.log("nulllll");
           this.behaviorService.ConflictDataList(null);
           // this.toastr.error("No Data Selected");
         }
@@ -72,44 +70,41 @@ export class ConflictCheckComponent implements OnInit {
       this.toastr.error(err);
 
     });
-  this.pageSize = localStorage.getItem('lastPageSize');
+    this.pageSize = localStorage.getItem('lastPageSize');
   }
-  RowClick(val){
-  localStorage.setItem('set_active_matters',JSON.stringify({MATTERGUID:val.MATTERGUID,SHORTNAME:val.SHORTNAME}))
-  // let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
+  RowClick(val) {
+    localStorage.setItem('set_active_matters', JSON.stringify({ MATTERGUID: val.MATTERGUID, SHORTNAME: val.SHORTNAME }))
+    // let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
 
   }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
   }
-  nameClick(){
-    this.StartbtnSendData.NameToCheck=this.ConflictNGData.NameToCheck;
+  nameClick() {
+    this.StartbtnSendData.NameToCheck = this.ConflictNGData.NameToCheck;
     this.behaviorService.ConflictMainData(this.StartbtnSendData);
   }
-  CheckWPI(){
-    this.StartbtnSendData.CheckWIP=this.ConflictNGData.CheckWIP;
-   
+  CheckWPI() {
+    this.StartbtnSendData.CheckWIP = this.ConflictNGData.CheckWIP;
+
     this.behaviorService.ConflictMainData(this.StartbtnSendData);
   }
-  CheckFileNote(){
-    this.StartbtnSendData.CheckFilesNotes=this.ConflictNGData.CheckFilesNotes;
-    
+  CheckFileNote() {
+    this.StartbtnSendData.CheckFilesNotes = this.ConflictNGData.CheckFilesNotes;
+
     this.behaviorService.ConflictMainData(this.StartbtnSendData);
   }
-  CheckChronology(){
-    this.StartbtnSendData.CheckChronologies=this.ConflictNGData.CheckChronologies;
-  
+  CheckChronology() {
+    this.StartbtnSendData.CheckChronologies = this.ConflictNGData.CheckChronologies;
+
     this.behaviorService.ConflictMainData(this.StartbtnSendData);
   }
-  refreshConflict(){
+  refreshConflict() {
     this.LoadData(this.StartbtnSendData);
   }
   onSearch(searchFilter: any) {
-    console.log(searchFilter);
-
-    //this.filterVals.SEARCH = this.f.search.value;
-   this.LoadData({Search:this.ConflictNGData.Search});
+    this.LoadData({ Search: this.ConflictNGData.Search });
 
   }
 }

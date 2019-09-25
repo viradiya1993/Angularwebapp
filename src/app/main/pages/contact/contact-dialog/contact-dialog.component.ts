@@ -63,7 +63,7 @@ export class ContactDialogComponent implements OnInit {
   contactForm: FormGroup;
   ngOnInit() {
     this.contactForm = this._formBuilder.group({
-      PreferedName:[''],
+      PreferedName: [''],
       //CONTACTGUID: ['', Validators.required],
       CONTACTNAME: ['', Validators.required],
       CONTACTTYPE: ['', Validators.required],
@@ -153,7 +153,6 @@ export class ContactDialogComponent implements OnInit {
           if (res.DATA.CONTACTS[0]) {
             let getContactData = res.DATA.CONTACTS[0];
             this.editDataCompny = (getContactData.COMPANYCONTACTGUID != '' && getContactData.COMPANYNAME != '') ? false : true;
-            // console.log(this.editDataCompny);
             localStorage.setItem('getContact_edit', getContactData.CONTACTGUID);
             this.nameSelected = getContactData.CONTACTTYPE;
             this.active = getContactData.ACTIVE == 0 ? false : true;
@@ -275,7 +274,7 @@ export class ContactDialogComponent implements OnInit {
           }
         }
       });
-    }else{
+    } else {
       this.contactForm.controls['ACTIVE'].setValue(true);
     }
   }

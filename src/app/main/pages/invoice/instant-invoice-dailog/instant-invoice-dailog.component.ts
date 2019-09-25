@@ -47,12 +47,12 @@ export class InstantInvoiceDailogComponent implements OnInit {
     var dt = new Date();
     dt.setMonth(dt.getMonth() + 1);
     this.addInvoiceForm = this._formBuilder.group({
-      INVOICEDATETEXT: [this.datepipe.transform(new Date(),'dd/MM/yyyy')],
+      INVOICEDATETEXT: [this.datepipe.transform(new Date(), 'dd/MM/yyyy')],
       INVOICEDATE: [new Date()],
-      DUEDATETEXT: [this.datepipe.transform(dt,'dd/MM/yyyy')],
+      DUEDATETEXT: [this.datepipe.transform(dt, 'dd/MM/yyyy')],
       DUEDATE: [dt],
       MATTERGUID: [this.matterDetail.MATTERGUID],
-      QUANTITYTYPE:[''],
+      QUANTITYTYPE: [''],
       client: [this.matterDetail.CONTACTNAME],
       matter: [this.matterDetail.MATTER],
       Invoiceno: [''],
@@ -95,67 +95,64 @@ export class InstantInvoiceDailogComponent implements OnInit {
 
   }
   InvoiceDueDate(type: string, event: MatDatepickerInputEvent<Date>) {
-  let begin = this.datepipe.transform(event.value, 'dd/MM/yyyy');
-  this.addInvoiceForm.controls['DUEDATETEXT'].setValue(begin);
+    let begin = this.datepipe.transform(event.value, 'dd/MM/yyyy');
+    this.addInvoiceForm.controls['DUEDATETEXT'].setValue(begin);
   }
-    calcTotalEXGST(){
-    this.GstVal =  Number(this.TotalExGst) * 10 / 100;
-    this.TotalIncGst =  (Number(this.GstVal) + Number(this.TotalExGst)).toFixed(2);
+  calcTotalEXGST() {
+    this.GstVal = Number(this.TotalExGst) * 10 / 100;
+    this.TotalIncGst = (Number(this.GstVal) + Number(this.TotalExGst)).toFixed(2);
   }
   get f() {
     return this.addInvoiceForm.controls;
   }
-  calcTotalINGST(){
-    let ExGSt =Number(this.TotalIncGst)/1.1;
-    this.TotalExGst= (ExGSt).toFixed(2);
-    this.GstVal= (Number(this.TotalIncGst)-Number(ExGSt)).toFixed(2);
+  calcTotalINGST() {
+    let ExGSt = Number(this.TotalIncGst) / 1.1;
+    this.TotalExGst = (ExGSt).toFixed(2);
+    this.GstVal = (Number(this.TotalIncGst) - Number(ExGSt)).toFixed(2);
 
   }
 
-  SaveInstaceInvoice(){
-    console.log("fjfd");
-    console.log(this.f.INVOICEDATETEXT.value)
-    console.log(this.f.DUEDATETEXT.value)
-  let SendData={
-  INVOICEGUID:'',
-  INVOICECODE:this.f.Invoiceno.value,
-  MATTERGUID:this.matterDetail.MATTERGUID,
-  INVOICEDATE:this.f.INVOICEDATETEXT.value,
-  DUEDATE:this.f.DUEDATETEXT.value,
-  INVOICETOTAL:this.TotalExGst,
-  GST:this.GstVal,
-  COMMENT:this.f.INVOICECOMMENT.value,
-  PRINTEDDATE:'',
-  FOREIGNCURRENCYID:'',
-  WORKITEMS:{
-    FEEEARNER:'',
-    QUANTITY:this.f.QUANTITY.value,
-    QUANTITYTYPE:this.f.QUANTITYTYPE.value,
-    ADDITIONALTEXT:this.f.ADDITIONALTEXT.value,
-  }
-    
+  SaveInstaceInvoice() {
+    let SendData = {
+      INVOICEGUID: '',
+      INVOICECODE: this.f.Invoiceno.value,
+      MATTERGUID: this.matterDetail.MATTERGUID,
+      INVOICEDATE: this.f.INVOICEDATETEXT.value,
+      DUEDATE: this.f.DUEDATETEXT.value,
+      INVOICETOTAL: this.TotalExGst,
+      GST: this.GstVal,
+      COMMENT: this.f.INVOICECOMMENT.value,
+      PRINTEDDATE: '',
+      FOREIGNCURRENCYID: '',
+      WORKITEMS: {
+        FEEEARNER: '',
+        QUANTITY: this.f.QUANTITY.value,
+        QUANTITYTYPE: this.f.QUANTITYTYPE.value,
+        ADDITIONALTEXT: this.f.ADDITIONALTEXT.value,
+      }
 
-  
 
-  }
-  this.isspiner = true;
-  let finalData = { DATA: SendData, FormAction: 'insert', VALIDATEONLY: true }
-  this._mainAPiServiceService.getSetData(finalData, 'SetInvoice').subscribe(response => {
-    if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-      this.checkValidation(response.DATA.VALIDATIONS, finalData);
-    } else if (response.CODE == 451 && response.STATUS == 'warning') {
-      this.checkValidation(response.DATA.VALIDATIONS, finalData);
-    } else if (response.CODE == 450 && response.STATUS == 'error') {
-      this.checkValidation(response.DATA.VALIDATIONS, finalData);
-    } else if (response.MESSAGE == 'Not logged in') {
-      this.dialogRef.close(false);
-    } else {
-      this.isspiner = false;
+
+
     }
+    this.isspiner = true;
+    let finalData = { DATA: SendData, FormAction: 'insert', VALIDATEONLY: true }
+    this._mainAPiServiceService.getSetData(finalData, 'SetInvoice').subscribe(response => {
+      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        this.checkValidation(response.DATA.VALIDATIONS, finalData);
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
+        this.checkValidation(response.DATA.VALIDATIONS, finalData);
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
+        this.checkValidation(response.DATA.VALIDATIONS, finalData);
+      } else if (response.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      } else {
+        this.isspiner = false;
+      }
 
-  }, err => {
-    this.toastr.error(err);
-  });
+    }, err => {
+      this.toastr.error(err);
+    });
 
   }
   checkValidation(bodyData: any, details: any) {
@@ -195,11 +192,11 @@ export class InstantInvoiceDailogComponent implements OnInit {
       this.InstantInvoiceData(details);
     this.isspiner = false;
   }
-    InstantInvoiceData(data: any) {
+  InstantInvoiceData(data: any) {
     data.VALIDATEONLY = false;
     this._mainAPiServiceService.getSetData(data, 'SetInvoice').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-          this.toastr.success(' save successfully');
+        this.toastr.success(' save successfully');
         this.isspiner = false;
         this.dialogRef.close(true);
       } else if (response.CODE == 451 && response.STATUS == 'warning') {
@@ -214,5 +211,5 @@ export class InstantInvoiceDailogComponent implements OnInit {
       this.toastr.error(error);
     });
   }
-  
+
 }

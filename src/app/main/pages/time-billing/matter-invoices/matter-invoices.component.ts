@@ -108,6 +108,5 @@ export class MatterInvoicesComponent implements OnInit {
   }
   //onSearch
   onSearch(searchFilter: any) {
-    console.log(searchFilter);
   }
 }

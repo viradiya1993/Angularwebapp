@@ -194,12 +194,8 @@ export class filterNames implements PipeTransform {
     if (!nameToFilter) return [];
     nameToFilter = nameToFilter.toLowerCase();
     return page.filter(it => {
-      //console.log(it);
       return it.TITLE.toLowerCase().includes(nameToFilter);
     });
-  }
-  abc(){
-    console.log("vvgdsfgdsgfjsdhfj");
   }
 }
 

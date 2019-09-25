@@ -143,6 +143,7 @@ export class ChartAccountComponent implements OnInit {
   RowClick(val) {
     this.behaviorService.ChartAccountData(val);
     localStorage.setItem('ChartAccountData', JSON.stringify({ "name": val.name, "class": val.class, "ACCOUNTGUID": val.ACCOUNTGUID, "ACCOUNTTYPE": val.ACCOUNTTYPE, "index": val.index, "parent": val.parent, "level": val.level }));
+    // localStorage.setItem('ChartAccountData', JSON.stringify(val));
   }
   AccountClass(val) {
     this.filterData = JSON.parse(localStorage.getItem("chartAcc_filter"));

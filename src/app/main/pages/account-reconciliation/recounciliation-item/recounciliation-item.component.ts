@@ -8,6 +8,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { MainAPiServiceService, BehaviorService, TableColumnsService } from 'app/_services';
 import { Subscription } from 'rxjs';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-recounciliation-item',
@@ -23,6 +24,7 @@ export class RecounciliationItemComponent implements OnInit {
   pageSize: any;
   DebitAmount: any = [];
   CraditAmount: any = [];
+  SendRecouncileArray: any = [];
   FirstTimeWithDrawTotal: any = [];
   FirstTimeWithDrawTotalArray: any = [];
   FirstTimeDipositeTotalArray: any = [];
@@ -38,7 +40,7 @@ export class RecounciliationItemComponent implements OnInit {
   DepositBalnce: number;
   FirstTimeDipositeTotal: number;
 
-  constructor(private dialog: MatDialog, private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService, private _formBuilder: FormBuilder, public behaviorService: BehaviorService, private TableColumnsService: TableColumnsService, ) { }
+  constructor(private dialog: MatDialog, public datepipe: DatePipe, private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService, private _formBuilder: FormBuilder, public behaviorService: BehaviorService, private TableColumnsService: TableColumnsService, ) { }
   ngOnInit() {
     this.ReconciliationData = [];
     let userdata = JSON.parse(localStorage.getItem('currentUser'));
@@ -58,13 +60,17 @@ export class RecounciliationItemComponent implements OnInit {
         this.chartAccountDetail = result;
       }
     });
+    // let sendDate = this.chartAccountDetail.MainList.RECONCILEDGROUP.LASTRECONCILEDDATE.split("/");
+    // let getdate= new Date(sendDate[1] + '/' + sendDate[0] + '/' + sendDate[2]),y = getdate.getFullYear(), m = getdate.getMonth();;;
+    // var lastDay = new Date(y, m + 1, 0);
+    // this.AccountRecouncile.controls['Bankdate'].setValue(lastDay);
     this.getTableFilter();
-    // this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID });
-    this.LoadData({ AccountGuid: "ACCAAAAAAAAAAAA4", 'BankStatementDate': "3/09/2019" });
+    // // this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID });
+    // this.LoadData({ AccountGuid: "ACCAAAAAAAAAAAA4", 'BankStatementDate': this.datepipe.transform(lastDay, 'dd/MM/yyyy')});    
     // localStorage.setItem('recouncileItem')
     // this.AccountRecouncile.controls['statementClosingBalance'].setValue(0.00);
     // this.statmentClosingBal();
-    // this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID });
+    this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID, 'BankStatementDate': '30/11/2015' });
   }
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -77,6 +83,9 @@ export class RecounciliationItemComponent implements OnInit {
       this.selection.clear() :
       this.ReconciliationData.data.forEach(row => this.selection.select(row));
     this.GloballyCal();
+    this.SendRecouncileArray.push(this.selection.selected);
+    this.behaviorService.RecouncileItemSendSetData({ "BankStatementDate": "30/11/2015", "ClosingBalance": this.f.statementClosingBalance.value, "item": this.selection.selected })
+
 
   }
   get f() {
@@ -106,6 +115,9 @@ export class RecounciliationItemComponent implements OnInit {
   helloFunction() {
     this.GloballyCal();
     this.FirstTimeCal('');
+    console.log(this.selection.selected);
+    // this.SendRecouncileArray.push(this.selection.selected);
+    this.behaviorService.RecouncileItemSendSetData({ "BankStatementDate": "30/11/2015", "ClosingBalance": this.f.statementClosingBalance.value, "item": this.selection.selected })
     // this.SelectedItemArray.push(this.selection.selected)
   }
   /** The label for the checkbox on the passed row */
@@ -133,7 +145,7 @@ export class RecounciliationItemComponent implements OnInit {
     });
   }
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
   }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;

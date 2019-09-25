@@ -18,10 +18,15 @@ export class WriteOffTimeEntryComponent implements OnInit {
   isspiner: boolean = false;
   isLoadingResults: boolean = false;
   errorWarningData: any = {};
+  timeEntryData:any=[];
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   writeOffTimerForm: FormGroup;
   successMsg = 'Update success';
   matterShortName: any;
+  firstTime: number;
+  AmmountRemaing: any;
+  AmmountWirteOff: any;
+  typeInput: string;
   constructor(public dialogRef: MatDialogRef<WriteOffTimeEntryComponent>,
     public MatDialog: MatDialog,
     private behaviorService: BehaviorService,
@@ -47,6 +52,9 @@ export class WriteOffTimeEntryComponent implements OnInit {
       ADDITIONALTEXTSELECT: [''],
       ADDITIONALTEXT: ['', Validators.required],
       COMMENT: [''],
+      AmmountRemaing:[''],
+      AmmountWirteOff:['']
+
     });
     this.isLoadingResults = true;
     let workerGuid;
@@ -58,8 +66,10 @@ export class WriteOffTimeEntryComponent implements OnInit {
       }
     });
     this.isLoadingResults = true;
-    this.Timersservice.getTimeEnrtyData({ 'WorkItemGuid': workerGuid }).subscribe(response => {
+    this.Timersservice.getTimeEnrtyData({'WorkItemGuid': workerGuid }).subscribe(response => {
+      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
+        this.timeEntryData=response.DATA.WORKITEMS[0];
         let timeEntryData = response.DATA.WORKITEMS[0];
         this.matterShortName = response.DATA.WORKITEMS[0].SHORTNAME;
         localStorage.setItem('edit_WORKITEMGUID', timeEntryData.WORKITEMGUID);
@@ -85,6 +95,23 @@ export class WriteOffTimeEntryComponent implements OnInit {
         this.writeOffTimerForm.controls['ADDITIONALTEXT'].setValue(timeEntryData.ADDITIONALTEXT);
         this.writeOffTimerForm.controls['ADDITIONALTEXTSELECT'].setValue(timeEntryData.ADDITIONALTEXT);
         this.writeOffTimerForm.controls['COMMENT'].setValue(timeEntryData.COMMENT);
+       
+        if(timeEntryData.QUANTITYTYPE == "hh:mm"){
+          var hms = timeEntryData.QUANTITY;   // your input string
+          console.log(hms);
+          var a = hms.split(':'); // split it at the colons
+          console.log(a);
+          var seconds = (+Number(a[0])) * 60 * 60 + Number((+a[1])) * 60; 
+          console.log(seconds);
+          this.firstTime=seconds;
+          // console.log(seconds);
+          this.typeInput='time';
+        }else if(timeEntryData.QUANTITYTYPE != 'hh:mm'){
+          this.typeInput='number';
+          this.AmmountWirteOff=timeEntryData.QUANTITY;
+          this.AmmountRemaing=0.00;
+          this.firstTime=timeEntryData.QUANTITY;
+        }
       } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
@@ -93,6 +120,39 @@ export class WriteOffTimeEntryComponent implements OnInit {
       this.isLoadingResults = false;
       this.toastr.error(err);
     });
+  }
+  calcWriteOff(){
+    if(this.timeEntryData.QUANTITYTYPE == 'hh:mm'){
+        var hms = this.AmmountWirteOff;   // your input string
+          var a = hms.split(':'); // split it at the colons
+          var seconds = (+Number(a[0])) * 60 * 60 + Number((+a[1])) * 60; 
+          // this.firstTime=seconds;
+          if(this.firstTime < seconds){
+            this.AmmountWirteOff=0;
+            this.AmmountRemaing=0;
+          }else{
+            this.AmmountRemaing=this.secondsToHms(this.firstTime - seconds);
+          }
+    }
+    else{
+      if(this.firstTime < this.AmmountWirteOff){
+           this.AmmountWirteOff=0;
+           this.AmmountRemaing=0;
+      }else{
+        this.AmmountRemaing=this.firstTime-this.AmmountWirteOff;
+      }
+
+    }
+   
+  }
+  calcReamingOff(){
+  }
+  secondsToHms(d: any) {
+    d = Number(d);
+    var hours = Math.floor(d / 3600) < 10 ? ("00" + Math.floor(d / 3600)).slice(-2) : Math.floor(d / 3600);
+    var minutes = ("00" + Math.floor((d % 3600) / 60)).slice(-2);
+    var seconds = ("00" + (d % 3600) % 60).slice(-2);
+    return hours + ":" + minutes + ":" + seconds;
   }
   get f() {
     return this.writeOffTimerForm.controls;
@@ -110,6 +170,8 @@ export class WriteOffTimeEntryComponent implements OnInit {
       PRICE: this.f.PRICE.value,
       PRICEINCGST: this.f.PRICEINCGST.value,
       QUANTITY: this.f.QUANTITY.value,
+      WRITEOFFQUANTITY:this.AmmountWirteOff,
+      REMAININGQUANTITY:this.AmmountRemaing,
       WorkItemGuid: localStorage.getItem('edit_WORKITEMGUID')
     }
     if (this.f.ITEMTYPE.value == "2" || this.f.ITEMTYPE.value == "3") {
@@ -118,7 +180,7 @@ export class WriteOffTimeEntryComponent implements OnInit {
     } else {
       PostData.QUANTITYTYPE = this.f.QUANTITYTYPE.value;
     }
-    let PostTimeEntryData: any = { FormAction: 'update', VALIDATEONLY: true, Data: PostData };
+    let PostTimeEntryData: any = { FormAction: 'write off', VALIDATEONLY: true, Data: PostData };
     this.Timersservice.SetWorkItems(PostTimeEntryData).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.checkValidation(res.DATA.VALIDATIONS, PostTimeEntryData);

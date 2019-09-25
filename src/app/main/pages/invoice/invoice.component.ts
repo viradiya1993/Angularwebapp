@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { TableColumnsService, MainAPiServiceService } from 'app/_services';
+import { TableColumnsService, MainAPiServiceService, BehaviorService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import * as $ from 'jquery';
@@ -43,6 +43,7 @@ export class InvoiceComponent implements OnInit {
     private _mainAPiServiceService: MainAPiServiceService,
     private toastr: ToastrService,
     private dialog: MatDialog,
+    private behaviorService: BehaviorService,
     private TableColumnsService: TableColumnsService,
     private fb: FormBuilder,
     public datepipe: DatePipe,
@@ -72,7 +73,7 @@ export class InvoiceComponent implements OnInit {
     return this.matterInvoiceFilterForm.controls;
   }
   ngOnInit() {
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
+    $('.example-containerdata').css('height',($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.getTableFilter();
     this.loadData(JSON.parse(localStorage.getItem('matter_invoice_filter')));
   }
@@ -124,6 +125,7 @@ export class InvoiceComponent implements OnInit {
         this.matterInvoiceFilterForm.controls['Received'].setValue(response.DATA.TOTALRECEIVED);
         this.matterInvoiceFilterForm.controls['Outstanding'].setValue(response.DATA.TOTALOUSTANDING);
         if (response.DATA.INVOICES[0]) {
+          this.behaviorService.matterInvoiceData(response.DATA.INVOICES[0])
           localStorage.setItem('edit_invoice_id', response.DATA.INVOICES[0].INVOICEGUID);
           // localStorage.setItem('set_active_Invoices', JSON.stringify(response.DATA.INVOICES[0]));
           this.highlightedRows = response.DATA.INVOICES[0].INVOICEGUID;
@@ -142,6 +144,7 @@ export class InvoiceComponent implements OnInit {
   }
   selectInvoice(Row: any) {
     localStorage.setItem('edit_invoice_id', Row.INVOICEGUID);
+    this.behaviorService.matterInvoiceData(Row);
     // localStorage.setItem('set_active_Invoices', JSON.stringify(Row));
     this.currentInvoiceData = Row;
   }

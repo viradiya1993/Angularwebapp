@@ -49,16 +49,16 @@ export class FuseNavigationComponent implements OnInit {
     if (guid) {
       let postdata = { 'USERGUID': guid.UserGuid };
       let Favouritelist = [{ "ID": "matters", "TITLE": "Matters", "URL": "matters", "STAR": "" },
-      { "ID": "contact", "TITLE": "Contact", "URL": "contact", "STAR": "" },
+      { "ID": "contact", "TITLE": "Contacts", "URL": "contact", "STAR": "" },
       { "ID": "time_entries", "TITLE": "Time entries", "URL": "time-entries", "STAR": "" },
       { "ID": "diary", "TITLE": "Diary", "URL": "diary", "STAR": "" },
-      { "ID": "invoice", "TITLE": "Invoice", "URL": "invoice", "STAR": "" },
+      { "ID": "invoice", "TITLE": "Invoices", "URL": "invoice", "STAR": "" },
       { "ID": "spend-money", "TITLE": "Spend money", "URL": "spend-money", "STAR": "" },
       { "ID": "authorities", "TITLE": "Authorities", "URL": "authorities", "STAR": "" },
       { "ID": "searching", "TITLE": "Searching", "URL": "searching", "STAR": "" },
       { "ID": "Safe-Custody", "TITLE": "Safe Custody", "URL": "Safe-Custody", "STAR": "" },
       { "ID": "trust-money", "TITLE": "Trust Money", "URL": "trust-money", "STAR": "" },
-      { "ID": "trust-banking", "TITLE": "Trust Banking", "URL": "", "STAR": "" },
+      // { "ID": "trust-banking", "TITLE": "Trust Banking", "URL": "", "STAR": "" },
       { "ID": "trust-end-month", "TITLE": "Trust End Of Month", "URL": "trust-end-month", "STAR": "" },
       { "ID": "receive-money", "TITLE": "Receive money", "URL": "receive-money", "STAR": "" }]
 

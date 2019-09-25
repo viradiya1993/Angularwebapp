@@ -858,7 +858,7 @@ export class SpendMoneyAddComponent implements OnInit {
       }
     }
     const dialogRef = this.MatDialog.open(BankingDialogComponent, {
-      disableClose: true, width: '100%', data: { AccountType: type }
+      disableClose: true, width: '100%', data: { AccountType: type ,FromWhere:'spendMonyExpense' }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

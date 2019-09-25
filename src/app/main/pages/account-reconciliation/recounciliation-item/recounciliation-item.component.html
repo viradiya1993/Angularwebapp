@@ -1,8 +1,15 @@
 <button mat-raised-button type="button" color="primary" id="refreshRecouncilItem" (click)="refreshRecouncilItem();">Refresh</button>
+
+<div class="nameCount">
+    {{this.chartAccountDetail.name}}
+</div>
 <div id="AccountRecouncile" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
+      
     <div class="content" fxLayoutAlign="center">
+           
         <div class="center p-24 more_tbl_clmn list_tbl_main" fusePerfectScrollbar>
             <div class="matter-serach-div sticky_search_div responsive_auto">
+              
                 <form [formGroup]="AccountRecouncile" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
                     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                         <mat-form-field class="example" appearance="outline" fxFlex="16.66">
@@ -25,13 +32,13 @@
 
                         <mat-form-field class="example" appearance="outline" fxFlex="16.66">
                             <mat-label>Statement Closing Bal.</mat-label>
-                            <input matInput formControlName="statementClosingBalance" type="number" class="sideText">
+                            <input (focusout)="statmentClosingBal()" matInput formControlName="statementClosingBalance" type="number" class="sideText">
                             <span class="currency_sign" matPrefix>$&nbsp;</span>
                         </mat-form-field>
 
                         <mat-form-field class="example" appearance="outline" fxFlex="16.66">
                             <mat-label>Calculated Closing Balance</mat-label>
-                            <input matInput formControlName="calculatedClosingBalance" readonly class="sideText">
+                            <input  matInput formControlName="calculatedClosingBalance" readonly class="sideText">
                             <span class="currency_sign" matPrefix>$&nbsp;</span>
                         </mat-form-field>
 
@@ -44,12 +51,12 @@
                     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                         <mat-form-field class="example" appearance="outline" fxFlex="20">
                             <mat-label>Unpresented Deposits</mat-label>
-                            <input matInput formControlName="UnDeposite" class="sideText">
+                            <input readonly matInput formControlName="UnDeposite" class="sideText">
                             <span class="currency_sign" matPrefix>$&nbsp;</span>
                         </mat-form-field>
                         <mat-form-field class="example" appearance="outline" fxFlex="20">
                             <mat-label>Unpresented Withdrawals</mat-label>
-                            <input matInput formControlName="UnWith" class="sideText">
+                            <input readonly matInput formControlName="UnWith" class="sideText">
                             <span class="currency_sign" matPrefix>$&nbsp;</span>
                         </mat-form-field>
                         <mat-form-field class="example" appearance="outline" fxFlex="20">

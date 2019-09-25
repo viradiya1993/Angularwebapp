@@ -53,6 +53,7 @@ export class ResumeTimerComponent implements OnInit {
     this.resumeTimerForm = this._formBuilder.group({
       MATTERGUID: ['', Validators.required],
       matterautoVal: [''],
+      INVOICEGUID:[''],
       ITEMTYPE: [''],
       QUANTITYTYPE: ['Hours'],
       ITEMDATE: ['', Validators.required],
@@ -106,7 +107,7 @@ export class ResumeTimerComponent implements OnInit {
       this.toastr.error(err);
     });
 
-    this.Timersservice.getTimeEnrtyData({ 'WorkItemGuid': workerGuid }).subscribe(response => {
+    this.Timersservice.getTimeEnrtyData({'WorkItemGuid': workerGuid }).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let timeEntryData = response.DATA.WORKITEMS[0];
         let isT: boolean = timeEntryData.QUANTITYTYPE == "hh:mm" || timeEntryData.QUANTITYTYPE == "Hours" || timeEntryData.QUANTITYTYPE == "Minutes";
@@ -153,6 +154,7 @@ export class ResumeTimerComponent implements OnInit {
         this.resumeTimerForm.controls['QUANTITY'].setValue(QUANTITYTEM);
         this.resumeTimerForm.controls['MATTERGUID'].setValue(timeEntryData.MATTERGUID);
         this.resumeTimerForm.controls['ITEMTYPE'].setValue(timeEntryData.ITEMTYPE);
+        this.resumeTimerForm.controls['INVOICEGUID'].setValue(timeEntryData.INVOICEGUID);
         let ttyData = moment(timeEntryData.ITEMTIME, 'hh:mm');
         this.resumeTimerForm.controls['ITEMTIME'].setValue(moment(ttyData).format('hh:mm A'));
         this.resumeTimerForm.controls['FEEEARNER'].setValue(timeEntryData.FEEEARNER);
@@ -281,6 +283,7 @@ export class ResumeTimerComponent implements OnInit {
     let PostData: any = {
       ADDITIONALTEXT: this.f.ADDITIONALTEXT.value,
       COMMENT: this.f.COMMENT.value,
+      // INVOICEGUID:this.f.INVOICEGUID.value,
       FEEEARNER: this.f.FEEEARNER.value,
       ITEMTYPE: this.f.ITEMTYPE.value,
       ITEMDATE: this.f.ITEMDATE.value,

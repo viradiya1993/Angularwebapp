@@ -4,25 +4,25 @@
               <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
           </div>
           <div class="example-containerdata">
-              <table [@animateStagger]="{value:'50'}" mat-table [dataSource]="FinalList" >
+              <table [@animateStagger]="{value:'50'}" mat-table [dataSource]="FinalList" matSort>
                   <ng-container matColumnDef="ACCOUNTNO">
-                    <th mat-header-cell *matHeaderCellDef> ACCOUNTNO</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ACCOUNTNO</th>
                     <td mat-cell *matCellDef="let element"> {{element.ACCOUNTNO}} </td>
                   </ng-container>
                   <ng-container matColumnDef="DESCRIPTION">
-                    <th mat-header-cell *matHeaderCellDef> DESCRIPTION </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> DESCRIPTION </th>
                     <td mat-cell *matCellDef="let element"> {{element.DESCRIPTION}} </td>
                   </ng-container>
                   <ng-container matColumnDef="ACCOUNTTYPE">
-                    <th mat-header-cell *matHeaderCellDef> ACCOUNTTYPE </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ACCOUNTTYPE </th>
                     <td mat-cell *matCellDef="let element"> {{element.ACCOUNTTYPE}} </td>
                   </ng-container>
                   <ng-container matColumnDef="ACCOUNTGUIDNAME">
-                    <th mat-header-cell *matHeaderCellDef> ACCOUNTGUIDNAME </th>
+                    <th mat-header-cell *matHeaderCellDef  mat-sort-header> ACCOUNTGUIDNAME </th>
                     <td mat-cell *matCellDef="let element"> {{element.ACCOUNTGUIDNAME}} </td>
                   </ng-container>
                   <ng-container matColumnDef="ACCOUNTNAME">
-                    <th mat-header-cell *matHeaderCellDef> ACCOUNTNAME </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ACCOUNTNAME </th>
                     <td mat-cell *matCellDef="let element"> {{element.ACCOUNTNAME}} </td>
                   </ng-container>
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

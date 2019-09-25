@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ContactSelectDialogComponent } from '../../contact/contact-select-dialog/contact-select-dialog.component';
-import { MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -18,9 +18,18 @@ export class CorrespondDailogComponent implements OnInit {
     private _mainAPiServiceService: MainAPiServiceService,
     public dialogRef: MatDialogRef<CorrespondDailogComponent>,
     private toastr: ToastrService,
+    public behaviorService: BehaviorService,
     @Inject(MAT_DIALOG_DATA) public _data: any
-  ) { }
+  ) { 
+    this.behaviorService.matterClassData$.subscribe(result => {
+      if (result) {
+        this.MatterClassData =result.LOOKUPFULLVALUE;
+      }
+    });
+  }
   correspondForm: FormGroup;
+  MatterClassData:any=[];
+  CorrspondClassData:any=[];
   isLoadingResults: boolean = false;
   isspiner: boolean = false;
   isEditData = this._data.type == "edit" ? true : false;
@@ -53,7 +62,14 @@ export class CorrespondDailogComponent implements OnInit {
       this.correspondForm.controls['MATTERGUID'].setValue(editData.MATTERGUID);
       this.correspondForm.controls['TYPE'].setValue(editData.TYPE);
       this.correspondForm.controls['MATTERCONTACTGUID'].setValue(editData.MATTERCONTACTGUID);
-    }
+    }  
+      this.isLoadingResults=true;
+      this._mainAPiServiceService.getSetData({'LookupType': 'contact role', 'MatterClass' :this.MatterClassData}, 'GetLookups').subscribe(responses => {
+      if (responses.CODE === 200 && responses.STATUS === 'success') {
+         this.CorrspondClassData = responses.DATA.LOOKUPS;
+         this.isLoadingResults=false;
+      }
+    });
   }
   get f() {
     return this.correspondForm.controls;

@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MainAPiServiceService } from '../../../../_services';
+import { MainAPiServiceService, BehaviorService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
@@ -37,6 +37,7 @@ export class MatterPopupComponent implements OnInit {
     public dialogRef: MatDialogRef<MatterPopupComponent>,
     public datepipe: DatePipe,
     public _matDialog: MatDialog,
+    public behaviorService: BehaviorService,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
     this.action = _data.action;
@@ -74,6 +75,7 @@ export class MatterPopupComponent implements OnInit {
     this._mainAPiServiceService.getSetData({ 'LookupType': 'Matter Class' }, 'GetLookups').subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.Classdata = responses.DATA.LOOKUPS;
+        console.log(responses);
       } else if (responses.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
@@ -758,6 +760,8 @@ export class MatterPopupComponent implements OnInit {
   }
   Classtype(value: any) {
     this.classtype = value;
+    let val = this.Classdata.find(c => c['LOOKUPGUID'] == value)
+    this.behaviorService.matterClassData(val);
   }
   ondialogSaveClick(): void {
     this.FormAction = this.action !== 'edit' ? 'insert' : 'update';

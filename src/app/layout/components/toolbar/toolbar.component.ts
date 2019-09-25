@@ -40,7 +40,7 @@ import { SelectAccountComponent } from './../../../main/pages/select-account/sel
 import { FileNoteDialogComponent } from 'app/main/pages/matters/file-note-dialog/file-note-dialog.component';
 import { BankingDialogComponent } from 'app/main/pages/banking/banking-dialog.component';
 import { GeneralDailogComponent } from './../../../main/pages/general-journal/general-dailog/general-dailog.component';
-import { AuthorityDialogComponent } from 'app/main/pages/main-authorities/authority-dialog/authority-dialog.component';
+// import { AuthorityDialogComponent } from 'app/main/pages/main-authorities/authority-dialog/authority-dialog.component';
 import { ReportFilterComponent } from './../../../main/pages/general-journal/report-filter/report-filter.component';
 import { ChronItemDailogComponent } from './../../../main/pages/legal-details/chronology/chron-item-dailog/chron-item-dailog.component';
 import { DairyDailogComponent } from './../../../main/pages/diary/dairy-dailog/dairy-dailog.component';
@@ -53,6 +53,10 @@ import { SafeCustodyDialogeComponent } from 'app/main/pages/legal-details/safecu
 import { TrustMoneyDialogeComponent } from 'app/main/pages/Trust Accounts/trust-money/trust-money-dialoge/trust-money-dialoge.component';
 import { ContactSelectDialogComponent } from 'app/main/pages/contact/contact-select-dialog/contact-select-dialog.component';
 import { TaskDialogeComponent } from 'app/main/pages/Task/task-dialoge/task-dialoge.component';
+import { WriteOffInvoiceComponent } from 'app/main/pages/invoice/newWriteOffInvoice/newWriteOffInvoice.component';
+// import { TopicDialogComponent } from 'app/main/pages/main-authorities/topic/topic-dialog/topic-dialog.component';
+import { AuthorityDialogComponent } from 'app/main/pages/globally-Authority/main-authorities/authority-dialog/authority-dialog.component';
+import { TopicDialogComponent } from 'app/main/pages/globally-Authority/main-authorities/topic/topic-dialog/topic-dialog.component';
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -61,6 +65,11 @@ import { TaskDialogeComponent } from 'app/main/pages/Task/task-dialoge/task-dial
 })
 @Injectable()
 export class ToolbarComponent implements OnInit, OnDestroy {
+    MainAuthorityData: any;
+    activeMenu: any;
+    TopicMaindata: any;
+    LegalAuthorityData: any;
+    [x: string]: any;
     appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
     @ViewChild(TimeEntriesComponent) TimeEntrieschild: TimeEntriesComponent;
     horizontalNavbar: boolean; isTabShow: number = 1; rightNavbar: boolean; hiddenNavbar: boolean; navigation: any; selectedLanguage: any; selectedIndex: number;
@@ -105,6 +114,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     TaskData: any;
     FileNotesData: any;
     conflictData: any;
+    ChronologyLegalData: any;
+    disconflictToolbar: string;
+    DisEnTimeEntryToolbar: string;
+    timeEntryData: any;
+    DisMainAuthorityToolbar: string;
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
@@ -120,6 +134,38 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         public MatDialog: MatDialog,
         public behaviorService: BehaviorService
     ) {
+        //for Disabled enabled
+        this.behaviorService.ConflictDataList$.subscribe(result => {
+            if (result == null) {this.disconflictToolbar='yes';}else{this.disconflictToolbar='no';}});
+            
+        this.behaviorService.MainTimeEntryData$.subscribe(result => {
+            this.timeEntryData=result;
+            if(result !=null){
+                if (result.INVOICEGUID == "-1" || result.INVOICEGUID == -1) 
+                {
+                this.DisEnTimeEntryToolbar='undo';
+                }else{
+                this.DisEnTimeEntryToolbar='write_off';
+            }
+            }
+        });
+        this.behaviorService.MainAuthorityData$.subscribe(result => {
+            this.MainAuthorityData=result;
+            if(result !=null){
+                if (result.AUTHORITY != undefined) 
+                {
+                this.DisMainAuthorityToolbar='Autho_yes';
+                }else{
+                this.DisMainAuthorityToolbar='Autho_no';
+            }
+            }
+        });
+        this.behaviorService.MainAuthorityData$.subscribe(result => {
+           if(result!=null){
+               this.LegalAuthorityData=result;
+           }
+        });
+
         //for navigation bar 
         if (this.appPermissions == null) {
             this.appPermissions = [];
@@ -553,10 +599,21 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
+
+    UndoWriteOffTimeEntry() {
+        let postData = { FormAction: "undo write off", DATA: { WORKITEMGUID: this.timeEntryData.WORKITEMGUID } }
+        this.TimersServiceI.SetWorkItems(postData).subscribe(res => {
+        console.log(res);
+            if (res.STATUS == "success" && res.CODE == 200) {
+                $('#refreshTimeEntryTab').click();
+                this.toastr.success('Undo successfully');
+            }
+        });
+    }
     /* ---------------------------------------------------------------------end of timer add--------------------------------------------------------------------------  */
     //Reportpopup open
     Reportpopup(ReportData) {
-        console.log(ReportData);
+    
         let type: number;
         if (ReportData.REPORTGROUP == 'Management')
             type = 27;
@@ -587,7 +644,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
 
             if (result) {
-                console.log(result);
+             
                 $('#refreshFileNote').click();
             }
 
@@ -1005,7 +1062,24 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
         dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                $("#refresMainAuthority").click();
+            }
+        });
+    }
 
+    TopicDialog(val) {
+        const dialogRef = this.dialog.open(TopicDialogComponent, {
+            disableClose: true,
+            panelClass: 'ChartAc-dialog',
+            data: {
+                action: val,
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                $("#refresMainTopic").click();
+            }
         });
     }
     SafeCustodyPopup(val) {
@@ -1028,16 +1102,42 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
-                // let getContactGuId = localStorage.getItem('contactGuid');
-                // let postData = { FormAction: "delete", data: { CONTACTGUID: getContactGuId } }
-                // this._getContact.AddContactData(postData).subscribe(res => {
-                //     if (res.STATUS == "success") {
-                //         $('#refreshContactTab').click();
-                //         this.toastr.success(res.STATUS);
-                //     } else {
-                //         this.toastr.error("You Can't Delete Contact Which One Is To Related to Matters");
-                //     }
-                // });;
+                let postData = { FormAction: "delete", data: { AUTHORITYGUID: this.MainAuthorityData.AUTHORITYGUID } }
+                this._mainAPiServiceService.getSetData(postData, 'SetAuthority').subscribe(res => {
+                    if (res.STATUS == "success") {
+                        $('#refresMainAuthority').click();
+                        this.toastr.success(res.STATUS);
+                    } else {
+                        this.toastr.error("You Can't Delete Contact Which One Is To Related to Matters");
+                    }
+                });;
+            }
+            this.confirmDialogRef = null;
+        });
+    }
+
+    DeleteTopicData(): void {
+        this.behaviorService.MainTopicData$.subscribe(result => {
+           if(result){
+            this.TopicMaindata=result
+            }
+        });
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                let postData = { FormAction: "delete", data: { TOPICGUID: this.TopicMaindata.TOPICGUID } }
+                this._mainAPiServiceService.getSetData(postData, 'SetTopic').subscribe(res => {
+                    if (res.STATUS == "success") {
+                        $('#refresMainTopic').click();
+                        this.toastr.success(res.STATUS);
+                    } else {
+                        this.toastr.error("You Can't Delete Contact Which One Is To Related to Matters");
+                    }
+                });;
             }
             this.confirmDialogRef = null;
         });
@@ -1120,17 +1220,41 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             panelClass: 'Chrone-dialog',
             data: ChronePopData
         });
-        dialogRef.afterClosed().subscribe(result => { });
+        dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                $('#refreshLegalChronology').click();
+            }
+         });
     }
+
+
+    
     //DeleteChron
     DeleteChron() {
+        this.behaviorService.LegalChronologyData$.subscribe(result => {
+            if (result) {
+                this.ChronologyLegalData = result;
+            }
+        });
+
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
-
+            if (result) {
+                let postData = { FormAction: "delete", data: { CHRONOLOGYGUID: this.ChronologyLegalData.CHRONOLOGYGUID } }
+                this._mainAPiServiceService.getSetData(postData, 'SetChronology').subscribe(res => {
+                    if (res.STATUS == "success") {
+                        $('#refreshLegalChronology').click();
+                        this.toastr.success(res.STATUS);
+                    } else {
+                        this.toastr.error("You Can't Delete Contact Which One Is To Related to Matters");
+                    }
+                });;
+            }
+            this.confirmDialogRef = null;
         });
     }
     /* Dairy Appointment Module's Function's **/
@@ -1176,6 +1300,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     navBarSetting(value: any) {
         let x = value.split("/");
+        this.activeMenu = x[1]
         this.activeSubMenu = x[2] ? x[2] : '';
         this.isInvoice = x[3] ? x[3] : '';
         if (x[1] == "matters" || x[1] == "") {
@@ -1311,19 +1436,37 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.clickedBtn = 'matterDoc';
     }
     createInstantInvoice() {
+        if(this.router.url !='/matters'){
+            const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    localStorage.setItem('set_active_matters', JSON.stringify(result));
+                    // this.router.navigate(['time-billing/work-in-progress/invoice']);
+                    const dialogRef = this._matDialog.open(InstantInvoiceDailogComponent, { width: '100%', disableClose: true, data: null });
+                    dialogRef.afterClosed().subscribe(result => {
+                        if (result) {
+                          
+                        }
+                    });
+                }
+            });
+        }else{
+            const dialogRef = this._matDialog.open(InstantInvoiceDailogComponent, { width: '100%', disableClose: true, data: null });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                  
+                }
+            });
+        }
+      
         // return false;
-        const dialogRef = this._matDialog.open(InstantInvoiceDailogComponent, { width: '100%', disableClose: true, data: null });
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                console.log(result);
-            }
-        });
+      
     }
     createInvoice() {
         const dialogRef = this._matDialog.open(InvoiceAddDailogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                console.log(result);
+              
             }
         });
     }
@@ -1375,9 +1518,32 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-
+    InvoiceWriteoff(){
+        let INVOICEGUID = '';
+              this.behaviorService.matterInvoice$.subscribe(matterInvoiceData => {
+                if (matterInvoiceData)
+                    INVOICEGUID = matterInvoiceData.INVOICEGUID;
+            });
+        const dialogRef = this._matDialog.open(WriteOffInvoiceComponent, { width: '100%', disableClose: true, data: { 'type': 'edit', INVOICEGUID: INVOICEGUID } });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+              
+            }
+        });  
+    }
     //Invoice Detail for invoice
     InvoiceDetail(isType) {
+        // let INVOICEGUID = '';
+        //       this.behaviorService.matterInvoice$.subscribe(matterInvoiceData => {
+        //         if (matterInvoiceData)
+        //             INVOICEGUID = matterInvoiceData.INVOICEGUID;
+        //     });
+        // const dialogRef = this._matDialog.open(WriteOffInvoiceComponent, { width: '100%', disableClose: true, data: { 'type': 'edit', INVOICEGUID: INVOICEGUID } });
+        // dialogRef.afterClosed().subscribe(result => {
+        //     if (result) {
+              
+        //     }
+        // });
         let INVOICEGUID = '';
         if (isType == 'isTime') {
             this.behaviorService.matterInvoice$.subscribe(matterInvoiceData => {
@@ -1390,7 +1556,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this._matDialog.open(InvoiceDetailComponent, { width: '100%', disableClose: true, data: { 'type': 'edit', INVOICEGUID: INVOICEGUID } });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                console.log(result);
+             
             }
         });
     }
@@ -1499,7 +1665,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     deleteTask() {
-        console.log("djlsad;");
+      
         this.behaviorService.TaskData$.subscribe(result => {
             if (result) {
                 this.TaskData = result;
@@ -1598,7 +1764,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
         } else if (this.router.url == "/create-document/receive-money-template" || this.router.url == "/create-document/packs-receive-money-template") {
-            console.log("money component ");
+            
             let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
             let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);

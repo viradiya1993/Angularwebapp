@@ -23,6 +23,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatSortModule} from '@angular/material/sort';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker'
 import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
+import { WriteOffInvoiceComponent } from './newWriteOffInvoice/newWriteOffInvoice.component';
 
 
 const routes = [
@@ -40,13 +41,16 @@ const routes = [
     SummaryComponent,
     DetailsComponent,
     DiscountIncreaseComponent,
+    WriteOffInvoiceComponent,
+    
   ],
   entryComponents: [
     ReceiptDilogComponent,
     InvoiceDetailComponent,
     InstantInvoiceDailogComponent,
     InvoiceAddDailogComponent,
-    InvoiceDialogComponentForTemplate
+    InvoiceDialogComponentForTemplate,
+    WriteOffInvoiceComponent
   ],
   imports: [
     CommonModule,

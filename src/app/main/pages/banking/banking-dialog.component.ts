@@ -5,6 +5,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { BehaviorService, MainAPiServiceService } from 'app/_services';
 import { ChartAcDailogComponent } from '../chart-account/chart-ac-dailog/chart-ac-dailog.component';
 import { SelectBankingDialogComponent } from './select-banking-dialog/select-banking-dialog.component';
+import { Router } from '@angular/router';
 
 interface FoodNode {
   name: string;
@@ -57,12 +58,14 @@ export class BankingDialogComponent implements OnInit {
   treeFlattener = new MatTreeFlattener(this._transformer, node => node.level, node => node.expandable, node => node.SUBACCOUNTS);
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
   highlightedRows: number;
+  isDisabledselect: any;
+  abcd: any;
 
   constructor(
     public dialog: MatDialog,
     private _mainAPiServiceService: MainAPiServiceService,
     private behaviorService: BehaviorService,
-    public dialogRef: MatDialogRef<BankingDialogComponent>, @Inject(MAT_DIALOG_DATA) public _data: any) {
+    public dialogRef: MatDialogRef<BankingDialogComponent>, @Inject(MAT_DIALOG_DATA) public _data: any,private router: Router,) {
     this.loadData(_data.AccountType);
   }
   ngOnInit() {
@@ -81,7 +84,8 @@ export class BankingDialogComponent implements OnInit {
         }
         this.showData(this.storeDataarray, 0, null);
         this.dataSource.data = this.storeDataarray;
-        // this.highlightedRows = 1;
+        this.RowClick(this.storeDataarray[0]);
+        this.highlightedRows = 1;
       } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
@@ -93,7 +97,7 @@ export class BankingDialogComponent implements OnInit {
     this.pageSize = localStorage.getItem('lastPageSize');
   }
   showData(element, level, parent) {
-    element.forEach(x => {
+      element.forEach(x => {
       this.arrayForIndex.push({});
       x.level = level
       x.parent = parent
@@ -108,8 +112,27 @@ export class BankingDialogComponent implements OnInit {
     localStorage.setItem('lastPageSize', event.pageSize);
   }
   RowClick(node) {
-    node.AccountType = this._data.AccountType;
+    node.AccountType = this._data.AccountType; 
     this.ACCOUNTGUIDsELECTED = node;
+    this.isDisabledselect=node.MainList.ACCOUNTTYPENAME;
+    console.log(this.isDisabledselect);
+    if(this._data.FromWhere=='systemSetting'){
+      this.isDisabledselect='Bank Account';
+    }else if(this._data.FromWhere =='spendMonyExpense' && this._data.AccountType=="EXPENSE"){
+      console.log("hjfjhgk");
+      if(node.MainList.ACCOUNTTYPENAME=='Detail'){
+        this.isDisabledselect='Bank Account';
+      }else{
+        this.isDisabledselect='None Bank Account'; 
+      }
+    }else if(this._data.FromWhere =='generalReceiptIncome' && this._data.AccountType=="INCOME"){
+      if(node.MainList.ACCOUNTTYPENAME=='Detail'){
+        this.isDisabledselect='Bank Account';
+      }else{
+        this.isDisabledselect='None Bank Account'; 
+      }
+    }
+    // generalReceiptIncome this.abcd=node;
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
@@ -122,15 +145,27 @@ export class BankingDialogComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.loadData(this._data.AccountType);
+      }
     });
   }
-
+ 
   SelectDialogOpen() {
     const dialogRef = this.dialog.open(SelectBankingDialogComponent, {
 
     });
     dialogRef.afterClosed().subscribe(result => {
     });
+  }
+  SelectClick(val){
+    if(this._data.AccountType=='Reconclie Practice'){
+      this.behaviorService.ChartAccountData(val);
+      localStorage.setItem('ChartAccountData', JSON.stringify({ "name": val.name, "class": val.class, "ACCOUNTGUID": val.ACCOUNTGUID, "ACCOUNTTYPE": val.ACCOUNTTYPE, "index": val.index, "parent": val.parent, "level": val.level }));
+      this.router.navigate(['account-reconciliation/reconciliation-item']); 
+    }
+    
+
   }
 
 }

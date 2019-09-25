@@ -36,11 +36,27 @@ export class BehaviorService {
   public matterClassData$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   public MainAuthorityData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public LegalAuthorityData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public LegalAuthorityToolbar$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public LegalAuthorityForSubAuthToolbar$: BehaviorSubject<any> = new BehaviorSubject(null);
   public MainTopicData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public RecouncileItemSendSetData$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(private http: HttpClient) { }
 
   matterInvoiceData(matterClassData: any) {
     this.matterInvoice$.next(matterClassData);
+  }
+  RecouncileItemSendSetData(RecouncileItemSendSetData: any) {
+    this.RecouncileItemSendSetData$.next(RecouncileItemSendSetData);
+  }
+  LegalAuthorityToolbar(LegalAuthorityToolbar: any) {
+    this.LegalAuthorityToolbar$.next(LegalAuthorityToolbar);
+  }
+  LegalAuthorityForSubAuthToolbar(LegalAuthorityForSubAuthToolbar: any) {
+    this.LegalAuthorityForSubAuthToolbar$.next(LegalAuthorityForSubAuthToolbar);
+  }
+  LegalAuthorityData(LegalAuthorityData: any) {
+    this.LegalAuthorityData$.next(LegalAuthorityData);
   }
   MainTopicData(MainTopicData: any) {
     this.MainTopicData$.next(MainTopicData);

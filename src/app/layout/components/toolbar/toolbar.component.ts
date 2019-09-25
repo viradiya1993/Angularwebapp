@@ -69,6 +69,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     activeMenu: any;
     TopicMaindata: any;
     LegalAuthorityData: any;
+    LegalAuthotool: string;
+    LegalAuthoritySubAuthata: any;
+    LegalSubAuthotool: any;
+    mainlegalAuthWebUrl: any;
+    recouncileItemdata: any;
     [x: string]: any;
     appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
     @ViewChild(TimeEntriesComponent) TimeEntrieschild: TimeEntriesComponent;
@@ -136,36 +141,58 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     ) {
         //for Disabled enabled
         this.behaviorService.ConflictDataList$.subscribe(result => {
-            if (result == null) {this.disconflictToolbar='yes';}else{this.disconflictToolbar='no';}});
-            
-        this.behaviorService.MainTimeEntryData$.subscribe(result => {
-            this.timeEntryData=result;
-            if(result !=null){
-                if (result.INVOICEGUID == "-1" || result.INVOICEGUID == -1) 
-                {
-                this.DisEnTimeEntryToolbar='undo';
-                }else{
-                this.DisEnTimeEntryToolbar='write_off';
-            }
-            }
-        });
-        this.behaviorService.MainAuthorityData$.subscribe(result => {
-            this.MainAuthorityData=result;
-            if(result !=null){
-                if (result.AUTHORITY != undefined) 
-                {
-                this.DisMainAuthorityToolbar='Autho_yes';
-                }else{
-                this.DisMainAuthorityToolbar='Autho_no';
-            }
-            }
-        });
-        this.behaviorService.MainAuthorityData$.subscribe(result => {
-           if(result!=null){
-               this.LegalAuthorityData=result;
-           }
+            if (result == null) { this.disconflictToolbar = 'yes'; } else { this.disconflictToolbar = 'no'; }
         });
 
+        this.behaviorService.MainTimeEntryData$.subscribe(result => {
+            this.timeEntryData = result; if (result != null) {
+                if (result.INVOICEGUID == "-1" || result.INVOICEGUID == -1) {
+                    this.DisEnTimeEntryToolbar = 'undo';
+                } else { this.DisEnTimeEntryToolbar = 'write_off'; }
+            }
+        });
+
+        this.behaviorService.MainAuthorityData$.subscribe(result => {
+        this.MainAuthorityData = result;
+            if (result != null) {
+                if (result.AUTHORITY != undefined) { this.DisMainAuthorityToolbar = 'Autho_yes'; }
+                else { this.DisMainAuthorityToolbar = 'Autho_no'; }
+            }
+        });
+        // this.behaviorService.MainAuthorityData$.subscribe(result => {
+        // //    if(result!=null){
+        // //     this.LegalAuthorityData=result;
+        // //        if(result.AUTHORITY!=undefined){
+        // //            this.LegalAuthotool='addMatterHide';
+        // //        }else{
+        // //         this.LegalAuthotool='';
+        // //        }
+
+        // //    }
+        // });
+        this.behaviorService.LegalAuthorityData$.subscribe(result => {
+            if (result != null) {
+            this.LegalAuthorityData = result;
+                if (result.AUTHORITY != undefined) {
+                    this.mainlegalAuthWebUrl = result.Main.WEBADDRESS;
+                    this.LegalAuthotool = 'addMatterHide';
+                } else {
+                    this.mainlegalAuthWebUrl = "";
+                    this.LegalAuthotool = '';
+                }
+            }
+        });
+
+        this.behaviorService.LegalAuthorityForSubAuthToolbar$.subscribe(result => {
+            if (result != null) {
+                this.LegalAuthoritySubAuthata = result;
+                if (result.WEBADDRESS != '') {
+                    this.LegalSubAuthotool = result.WEBADDRESS;
+                } else {
+                    this.LegalSubAuthotool = '';
+                }
+            } 
+        });
         //for navigation bar 
         if (this.appPermissions == null) {
             this.appPermissions = [];
@@ -325,7 +352,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 return false;
             }
             let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
-            
+
             MaterPopupData = { action: actionType, 'matterGuid': mattersData.MATTERGUID }
         }
         const dialogRef = this.dialog.open(MatterPopupComponent, {
@@ -334,6 +361,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             data: MaterPopupData
         });
         dialogRef.afterClosed().subscribe(result => { });
+    }
+    AddAuthorityFromLegal(val) {
+        this.behaviorService.LegalAuthorityToolbar(val);
+        $('#refreshLegalAuthorityADD').click();
     }
     // Delete matter Pop-up
     DeleteNewmatterpopup(): void {
@@ -603,17 +634,59 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     UndoWriteOffTimeEntry() {
         let postData = { FormAction: "undo write off", DATA: { WORKITEMGUID: this.timeEntryData.WORKITEMGUID } }
         this.TimersServiceI.SetWorkItems(postData).subscribe(res => {
-        console.log(res);
+            console.log(res);
             if (res.STATUS == "success" && res.CODE == 200) {
                 $('#refreshTimeEntryTab').click();
                 this.toastr.success('Undo successfully');
             }
         });
     }
+    RecouncileAccount(){
+        this.behaviorService.RecouncileItemSendSetData$.subscribe(result => {
+          console.log(result);  
+          this.recouncileItemdata=result
+        });
+        let postData= {
+            BankStatementDate:this.recouncileItemdata.BankStatementDate,
+            ClosingBalance:this.recouncileItemdata.BankStatementDate,
+            // RECONCILIATIONGUID :'',
+            // ACCOUNTGUID:'',
+            // PERIODENDDATE:'',
+            // RECONCILEDDATE:'',
+            // STARTINGBALANCE:'',
+            // DEPOSITS:'',
+            // WITHDRAWALS:'',
+            // UNPRESENTEDDEPOSITS:'',
+            // UNPRESENTEDWITHDRAWALS:'',
+            // ENDINGBALANCE:'',
+            // PREPAREDBY:'',
+            RECONCILIATIONITEMS :[
+                this.recouncileItemdata.item
+            ]
+                
+                // ITEMDATE:'',
+                // DEBITAMOUNT:'',
+                // CREDITAMOUNT:'',
+                // LINKTYPE:'',
+                // LINKGUID:'',
+                // JOURNALGUID:'',
+           
+        }
+        let sendData={
+            DATA:postData ,FormAction:'insert'
+        }
+        this._mainAPiServiceService.getSetData(sendData, 'SetReconciliation').subscribe(res => {
+            console.log(res);
+            if (res.STATUS == "success" && res.CODE == 200) {
+                // $('#refreshSpendMoneyTab').click();
+                this.toastr.success('Update successfully');
+            }
+        });
+    }
     /* ---------------------------------------------------------------------end of timer add--------------------------------------------------------------------------  */
     //Reportpopup open
     Reportpopup(ReportData) {
-    
+
         let type: number;
         if (ReportData.REPORTGROUP == 'Management')
             type = 27;
@@ -644,7 +717,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
 
             if (result) {
-             
+
                 $('#refreshFileNote').click();
             }
 
@@ -994,7 +1067,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    ConflictStart(){
+    ConflictStart() {
         // this.behaviorService.ConflictMainData$.subscribe(result => {
         //     if (result) {
         //         console.log(result);
@@ -1062,7 +1135,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-            if(result){
+            if (result) {
                 $("#refresMainAuthority").click();
             }
         });
@@ -1077,7 +1150,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-            if(result){
+            if (result) {
                 $("#refresMainTopic").click();
             }
         });
@@ -1118,8 +1191,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     DeleteTopicData(): void {
         this.behaviorService.MainTopicData$.subscribe(result => {
-           if(result){
-            this.TopicMaindata=result
+            if (result) {
+                this.TopicMaindata = result
             }
         });
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
@@ -1221,14 +1294,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             data: ChronePopData
         });
         dialogRef.afterClosed().subscribe(result => {
-            if(result){
+            if (result) {
                 $('#refreshLegalChronology').click();
             }
-         });
+        });
     }
 
 
-    
+
     //DeleteChron
     DeleteChron() {
         this.behaviorService.LegalChronologyData$.subscribe(result => {
@@ -1436,7 +1509,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.clickedBtn = 'matterDoc';
     }
     createInstantInvoice() {
-        if(this.router.url !='/matters'){
+        if (this.router.url != '/matters') {
             const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
@@ -1445,28 +1518,28 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                     const dialogRef = this._matDialog.open(InstantInvoiceDailogComponent, { width: '100%', disableClose: true, data: null });
                     dialogRef.afterClosed().subscribe(result => {
                         if (result) {
-                          
+
                         }
                     });
                 }
             });
-        }else{
+        } else {
             const dialogRef = this._matDialog.open(InstantInvoiceDailogComponent, { width: '100%', disableClose: true, data: null });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
-                  
+
                 }
             });
         }
-      
+
         // return false;
-      
+
     }
     createInvoice() {
         const dialogRef = this._matDialog.open(InvoiceAddDailogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-              
+
             }
         });
     }
@@ -1518,18 +1591,18 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    InvoiceWriteoff(){
+    InvoiceWriteoff() {
         let INVOICEGUID = '';
-              this.behaviorService.matterInvoice$.subscribe(matterInvoiceData => {
-                if (matterInvoiceData)
-                    INVOICEGUID = matterInvoiceData.INVOICEGUID;
-            });
+        this.behaviorService.matterInvoice$.subscribe(matterInvoiceData => {
+            if (matterInvoiceData)
+                INVOICEGUID = matterInvoiceData.INVOICEGUID;
+        });
         const dialogRef = this._matDialog.open(WriteOffInvoiceComponent, { width: '100%', disableClose: true, data: { 'type': 'edit', INVOICEGUID: INVOICEGUID } });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-              
+
             }
-        });  
+        });
     }
     //Invoice Detail for invoice
     InvoiceDetail(isType) {
@@ -1541,7 +1614,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         // const dialogRef = this._matDialog.open(WriteOffInvoiceComponent, { width: '100%', disableClose: true, data: { 'type': 'edit', INVOICEGUID: INVOICEGUID } });
         // dialogRef.afterClosed().subscribe(result => {
         //     if (result) {
-              
+
         //     }
         // });
         let INVOICEGUID = '';
@@ -1556,7 +1629,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this._matDialog.open(InvoiceDetailComponent, { width: '100%', disableClose: true, data: { 'type': 'edit', INVOICEGUID: INVOICEGUID } });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-             
+
             }
         });
     }
@@ -1665,7 +1738,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     deleteTask() {
-      
+
         this.behaviorService.TaskData$.subscribe(result => {
             if (result) {
                 this.TaskData = result;
@@ -1764,7 +1837,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
         } else if (this.router.url == "/create-document/receive-money-template" || this.router.url == "/create-document/packs-receive-money-template") {
-            
+
             let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
             let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);

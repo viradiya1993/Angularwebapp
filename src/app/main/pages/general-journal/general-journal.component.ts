@@ -73,7 +73,7 @@ export class GeneralJournalComponent implements OnInit {
     // this._mainAPiServiceService.getSetData(postData, 'SetActivity').subscribe
     this.generalJournal = [];
     // this.isLoadingResults = true;
-    this._mainAPiServiceService.getSetData({}, 'GetJournal').subscribe(response => {
+    this._mainAPiServiceService.getSetData({JOURNALTYPE:''}, 'GetJournal').subscribe(response => {
       console.log(response);
       return;
       if (response.CODE == 200 && response.STATUS == "success") {

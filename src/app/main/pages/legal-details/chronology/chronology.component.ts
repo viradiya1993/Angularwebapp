@@ -5,7 +5,7 @@ import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.c
 import { TableColumnsService, MainAPiServiceService, BehaviorService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.component';
 import { ContactDialogComponent } from '../../contact/contact-dialog/contact-dialog.component';
@@ -21,7 +21,7 @@ export class ChronologyComponent implements OnInit {
   ColumnsObj: any = [];
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   displayedColumns: string[];
-  SearchForm:FormGroup;
+  SearchForm: FormGroup;
   //dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   isLoadingResults: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -32,18 +32,18 @@ export class ChronologyComponent implements OnInit {
   highlightedRows: any;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
-  constructor(private _formBuilder: FormBuilder,private dialog: MatDialog, private TableColumnsService: TableColumnsService,
-  private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService,public behaviorService: BehaviorService
+  constructor(private _formBuilder: FormBuilder, private dialog: MatDialog, private TableColumnsService: TableColumnsService,
+    private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService, public behaviorService: BehaviorService
   ) { }
 
   ngOnInit() {
 
     this.SearchForm = this._formBuilder.group({
-      Matter:[],
-      Client:[],
-      search:[],
-      foldervalue:[],
-      showfolder:[]
+      Matter: [],
+      Client: [],
+      search: [],
+      foldervalue: [],
+      showfolder: []
     });
     this.SearchForm.controls['Matter'].setValue(this.currentMatter.MATTER);
     this.SearchForm.controls['Client'].setValue(this.currentMatter.CLIENT);
@@ -65,12 +65,11 @@ export class ChronologyComponent implements OnInit {
     });
   }
   LoadData() {
-    this.chronology_table=[];
+    this.chronology_table = [];
     this.isLoadingResults = true;
     //get chronology
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
-    this._mainAPiServiceService.getSetData({'MatterGuid': this.currentMatter.MATTERGUID }, 'GetChronology').subscribe(response => {
-      console.log(response);
+    this._mainAPiServiceService.getSetData({ 'MatterGuid': this.currentMatter.MATTERGUID }, 'GetChronology').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.chronology_table = new MatTableDataSource(response.DATA.CHRONOLOGIES);
         this.chronology_table.paginator = this.paginator;
@@ -78,10 +77,10 @@ export class ChronologyComponent implements OnInit {
         if (response.DATA.CHRONOLOGIES[0]) {
           this.RowClick(response.DATA.CHRONOLOGIES[0])
           this.highlightedRows = response.DATA.CHRONOLOGIES[0].CHRONOLOGYGUID;
-      
+
         } else {
-              this.toastr.error("No Data Selected");
-        }    
+          this.toastr.error("No Data Selected");
+        }
       }
       this.isLoadingResults = false;
     }, error => {
@@ -117,34 +116,34 @@ export class ChronologyComponent implements OnInit {
       }
     });
   }
-  SelectMatter(){
+  SelectMatter() {
     let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
     let MaterPopupData = { action: 'edit', 'matterGuid': mattersData.MATTERGUID }
     const dialogRef = this.dialog.open(MatterPopupComponent, {
-        disableClose: true, panelClass: 'contact-dialog', data: MaterPopupData
+      disableClose: true, panelClass: 'contact-dialog', data: MaterPopupData
     });
     dialogRef.afterClosed().subscribe(result => {
-     
+
     });
   }
-  SelectContact(){
-    let contactPopupData = { action:'edit' };
+  SelectContact() {
+    let contactPopupData = { action: 'edit' };
     const dialogRef = this.dialog.open(ContactDialogComponent, {
-        disableClose: true, panelClass: 'contact-dialog', data: contactPopupData
+      disableClose: true, panelClass: 'contact-dialog', data: contactPopupData
     });
     dialogRef.afterClosed().subscribe(result => {
-    
-        
+
+
     });
   }
 
-  RowClick(val){
+  RowClick(val) {
     this.behaviorService.LegalChronologyData(val);
   }
-  refreshLegalChronology(){
-  this.LoadData();
+  refreshLegalChronology() {
+    this.LoadData();
   }
-  FilterSearch(filterValue:any){
+  FilterSearch(filterValue: any) {
     this.chronology_table.filter = filterValue;
   }
 

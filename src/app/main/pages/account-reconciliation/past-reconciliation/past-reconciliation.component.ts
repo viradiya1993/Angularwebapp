@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatSort, MatPaginator, MatDialog, MatTableDataSource, MatDialogConfig } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
-import { MainAPiServiceService, BehaviorService,TableColumnsService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService, TableColumnsService } from 'app/_services';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component'
 @Component({
@@ -25,7 +25,7 @@ export class PastReconciliationComponent implements OnInit {
   displayedColumns: string[];
   tempColobj: any;
   ColumnsObj = [];
-  PastRECData:any=[];
+  PastRECData: any = [];
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService, private _formBuilder: FormBuilder, public behaviorService: BehaviorService, private TableColumnsService: TableColumnsService, ) { }
@@ -37,7 +37,7 @@ export class PastReconciliationComponent implements OnInit {
       }
     });
     this.getTableFilter();
-    this.LoadData({AccountGuid: "ACCAAAAAAAAAAAA4" });
+    this.LoadData({ AccountGuid: "ACCAAAAAAAAAAAA4" });
     // this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID });
   }
   getTableFilter() {
@@ -55,16 +55,14 @@ export class PastReconciliationComponent implements OnInit {
   LoadData(data) {
     this.bankingPastData = [];
     this.isLoadingResults = true;
-    this.subscription = this._mainAPiServiceService.getSetData(data,'GetReconciliation').subscribe(response => {
-         console.log(response);
-      
+    this.subscription = this._mainAPiServiceService.getSetData(data, 'GetReconciliation').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-       this.PastRECData = new MatTableDataSource(response.DATA.RECONCILIATIONS);
-         this.PastRECData.paginator = this.paginator;
-         this.PastRECData.sort = this.sort;
+        this.PastRECData = new MatTableDataSource(response.DATA.RECONCILIATIONS);
+        this.PastRECData.paginator = this.paginator;
+        this.PastRECData.sort = this.sort;
         if (response.DATA.RECONCILIATIONS[0]) {
           // localStorage.setItem('BANKINGGUID', response.DATA.BANKINGS[0].BANKINGGUID);
-         this.highlightedRows = response.DATA.RECONCILIATIONS[0].RECONCILIATIONGUID;
+          this.highlightedRows = response.DATA.RECONCILIATIONS[0].RECONCILIATIONGUID;
         }
         this.isLoadingResults = false;
       } else if (response.CODE == 406 && response.MESSAGE == "Permission denied") {
@@ -79,7 +77,7 @@ export class PastReconciliationComponent implements OnInit {
     });
     this.pageSize = localStorage.getItem('lastPageSize');
   }
-  editBanking(val){
+  editBanking(val) {
 
   }
   openDialog() {

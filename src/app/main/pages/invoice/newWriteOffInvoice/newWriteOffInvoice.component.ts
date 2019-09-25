@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
-import {  MainAPiServiceService } from './../../../../_services';
+import { MainAPiServiceService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
@@ -14,44 +14,43 @@ import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/conf
 })
 export class WriteOffInvoiceComponent implements OnInit {
   isLoadingResults: boolean = false;
-  addData:any=[];
+  addData: any = [];
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   errorWarningData: any = { "Error": [], 'Warning': [] };
   isspiner: boolean = false;
-   WriteOffInvoice:any={}
-  constructor(private _mainAPiServiceService:MainAPiServiceService,
+  WriteOffInvoice: any = {}
+  constructor(private _mainAPiServiceService: MainAPiServiceService,
     private toastr: ToastrService,
     public dialogRef: MatDialogRef<WriteOffInvoiceComponent>,
-    @Inject(MAT_DIALOG_DATA) public _data: any,public _matDialog: MatDialog,) { }
+    @Inject(MAT_DIALOG_DATA) public _data: any, public _matDialog: MatDialog, ) { }
 
   ngOnInit() {
-    this.WriteOffInvoice={
-      INVOICECODE:'',INVOICEDATE:'',DUEDATE:'',TOTALINVOICES:'',AMOUNTOUTSTANDINGEXGST:'',TOTALOUSTANDING:'',SendInvoiceDate:''
+    this.WriteOffInvoice = {
+      INVOICECODE: '', INVOICEDATE: '', DUEDATE: '', TOTALINVOICES: '', AMOUNTOUTSTANDINGEXGST: '', TOTALOUSTANDING: '', SendInvoiceDate: ''
     }
-  this.EditPopUpOPen();
+    this.EditPopUpOPen();
   }
   EditPopUpOPen() {
     this.isLoadingResults = true;
-    this._mainAPiServiceService.getSetData( {'INVOICEGUID': this._data.INVOICEGUID } , 'GetInvoice').subscribe(res => {
-      console.log(res);
-      if ((res.CODE == 200 ||  res.CODE == '200'  ) && res.STATUS == "success") {
-        this.WriteOffInvoice.INVOICECODE=res.DATA.INVOICES[0].INVOICECODE;
+    this._mainAPiServiceService.getSetData({ 'INVOICEGUID': this._data.INVOICEGUID }, 'GetInvoice').subscribe(res => {
+      if ((res.CODE == 200 || res.CODE == '200') && res.STATUS == "success") {
+        this.WriteOffInvoice.INVOICECODE = res.DATA.INVOICES[0].INVOICECODE;
         let DueDate = res.DATA.INVOICES[0].DUEDATE.split("/");
         let DUE = new Date(DueDate[1] + '/' + DueDate[0] + '/' + DueDate[2]);
-        this.WriteOffInvoice.DUEDATE=DUE;
+        this.WriteOffInvoice.DUEDATE = DUE;
         let InvoiceDate = res.DATA.INVOICES[0].INVOICEDATE.split("/");
         let date = new Date(InvoiceDate[1] + '/' + InvoiceDate[0] + '/' + InvoiceDate[2]);
-        this.WriteOffInvoice.INVOICEDATE=date;
-       this.WriteOffInvoice.SendInvoiceDate=res.DATA.INVOICES[0].INVOICEDATE
-        this.WriteOffInvoice.AMOUNTOUTSTANDINGEXGST=res.DATA.INVOICES[0].AMOUNTOUTSTANDINGEXGST;
-        this.WriteOffInvoice.TOTALINVOICES=res.DATA.TOTALINVOICES;
-        this.WriteOffInvoice.TOTALOUSTANDING=res.DATA.TOTALOUSTANDING;
+        this.WriteOffInvoice.INVOICEDATE = date;
+        this.WriteOffInvoice.SendInvoiceDate = res.DATA.INVOICES[0].INVOICEDATE
+        this.WriteOffInvoice.AMOUNTOUTSTANDINGEXGST = res.DATA.INVOICES[0].AMOUNTOUTSTANDINGEXGST;
+        this.WriteOffInvoice.TOTALINVOICES = res.DATA.TOTALINVOICES;
+        this.WriteOffInvoice.TOTALOUSTANDING = res.DATA.TOTALOUSTANDING;
         // this.TaskForm.controls['DUEDATE'].setValue(DUE);
         // this.TaskForm.controls['SendDUEDATE'].setValue(res.DATA.TASKS[0].DUEDATE);
         // let StartDate = res.DATA.TASKS[0].STARTDATE.split("/");
         // let Start = new Date(StartDate[1] + '/' + StartDate[0] + '/' + StartDate[2]);
         // this.TaskForm.controls['STARTDATE'].setValue(Start);
-       
+
       } else if (res.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
@@ -62,16 +61,16 @@ export class WriteOffInvoiceComponent implements OnInit {
     });
   }
 
-  saveWriteOff(){
-    let matterdata=JSON.parse(localStorage.getItem('set_active_matters'));
-    let data={
-      INVOICEGUID:this._data.INVOICEGUID,
-      MATTERGUID:matterdata.MATTERGUID,
-      WRITEOFFDATE:this.WriteOffInvoice.SendInvoiceDate,
-      WRITEOFFAMOUNT:this.WriteOffInvoice.AMOUNTOUTSTANDINGEXGST
+  saveWriteOff() {
+    let matterdata = JSON.parse(localStorage.getItem('set_active_matters'));
+    let data = {
+      INVOICEGUID: this._data.INVOICEGUID,
+      MATTERGUID: matterdata.MATTERGUID,
+      WRITEOFFDATE: this.WriteOffInvoice.SendInvoiceDate,
+      WRITEOFFAMOUNT: this.WriteOffInvoice.AMOUNTOUTSTANDINGEXGST
     }
     this.isspiner = true;
-    let finalData = { DATA: data, FormAction:'write off', VALIDATEONLY: true }
+    let finalData = { DATA: data, FormAction: 'write off', VALIDATEONLY: true }
     this._mainAPiServiceService.getSetData(finalData, 'SetInvoice').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, finalData);
@@ -130,7 +129,7 @@ export class WriteOffInvoiceComponent implements OnInit {
     data.VALIDATEONLY = false;
     this._mainAPiServiceService.getSetData(data, 'SetInvoice').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-          this.toastr.success(' save successfully');
+        this.toastr.success(' save successfully');
         this.isspiner = false;
         this.dialogRef.close(true);
       } else if (response.CODE == 451 && response.STATUS == 'warning') {
@@ -145,5 +144,5 @@ export class WriteOffInvoiceComponent implements OnInit {
       this.toastr.error(error);
     });
   }
-  
+
 }

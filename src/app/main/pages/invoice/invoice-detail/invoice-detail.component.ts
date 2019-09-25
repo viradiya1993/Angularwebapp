@@ -64,9 +64,7 @@ export class InvoiceDetailComponent implements OnInit {
     });
     if (this._data.type == 'edit') {
       this.isLoadingResults = true;
-      
-      this._mainAPiServiceService.getSetData({'INVOICEGUID': this._data.INVOICEGUID }, 'GetInvoice').subscribe(response => {
-        console.log(response)
+      this._mainAPiServiceService.getSetData({ 'INVOICEGUID': this._data.INVOICEGUID }, 'GetInvoice').subscribe(response => {
         if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
           let invoiceData = response.DATA.INVOICES[0];
           this.invoiceDetailForm.controls['CLIENTNAME'].setValue(invoiceData.CLIENTNAME);
@@ -92,7 +90,7 @@ export class InvoiceDetailComponent implements OnInit {
           let FinalTotal = Number(invoiceData.INVOICETOTAL);
           this.invoiceDetailForm.controls['AMOUNTTOTAL'].setValue(FinalTotal.toFixed(2));
           // get time entry data for specifc invoice 
-            
+
           this._mainAPiServiceService.getSetData({ 'INVOICEGUID': this._data.INVOICEGUID }, 'GetWorkItems').subscribe(response => {
             if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
               this.invoiceDatasor = new MatTableDataSource(response.DATA.WORKITEMS);

@@ -45,7 +45,7 @@ export class legalDetailTaskComponent implements OnInit {
 
     this.getUserdata();
     this.MainTaskFilterData = JSON.parse(localStorage.getItem("task_filter"));
-    
+
     this.filterData = {
       'MATTERGUID': this.currentMatter.MATTERGUID, 'STATUS': ' '
     }
@@ -60,7 +60,6 @@ export class legalDetailTaskComponent implements OnInit {
   }
   getUserdata() {
     this._mainAPiServiceService.getSetData({ 'Active': 'yes' }, 'GetUsers').subscribe(response => {
-      console.log(response);
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         // this.GetUSERS = response.DATA.USERS;
         // if()

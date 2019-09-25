@@ -32,6 +32,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
   isLoadingResults: boolean = false;
   contactFilter: FormGroup;
   pageSize: any;
+  Contactdata;
   selectedVal: any;
   filterVals = { 'active': 'all', 'FirstLetter': 'a', 'SEARCH': '', 'ContactType': '' };
   constructor(
@@ -50,7 +51,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
     });
   }
 
-  Contactdata;
+
 
   ngOnInit() {
     this.getTableFilter();
@@ -156,7 +157,6 @@ export class ContactComponent implements OnInit, AfterViewInit {
     this.LoadData(this.filterVals);
   }
   ContactTypeChange(value) {
-    console.log(value);
     this.filterVals.ContactType = value == 'all' ? "" : value;
     localStorage.setItem('contact_Filter', JSON.stringify(this.filterVals));
     this.LoadData(this.filterVals);

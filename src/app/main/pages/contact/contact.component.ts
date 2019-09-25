@@ -51,7 +51,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
     });
   }
 
- 
+
 
   ngOnInit() {
     this.getTableFilter();
@@ -75,7 +75,6 @@ export class ContactComponent implements OnInit, AfterViewInit {
   }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('contacts', '').subscribe(response => {
-      //console.log(response);return;
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
         this.tempColobj = data.tempColobj;
@@ -158,7 +157,6 @@ export class ContactComponent implements OnInit, AfterViewInit {
     this.LoadData(this.filterVals);
   }
   ContactTypeChange(value) {
-    console.log(value);
     this.filterVals.ContactType = value == 'all' ? "" : value;
     localStorage.setItem('contact_Filter', JSON.stringify(this.filterVals));
     this.LoadData(this.filterVals);

@@ -110,7 +110,7 @@
                                 <td mat-cell *matCellDef="let row"> <span *ngIf="row[item]">{{row[item]}}</span> </td>
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editTimeEntry(row);highlightedRows=row.WORKITEMGUID" [style.background]="highlightedRows == row.WORKITEMGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.WORKITEMGUID ? 'row-text-colore' : ''"
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editTimeEntry(row);highlightedRows=row.WORKITEMGUID" [style.background]="highlightedRows == row.WORKITEMGUID ? selectedColore : ''" [ngClass]="{'row-text-colore':highlightedRows == row.WORKITEMGUID,'has-orange-row':row.INVOICEGUID=='-1'}"
                                 matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                             </tr>
                         </table>

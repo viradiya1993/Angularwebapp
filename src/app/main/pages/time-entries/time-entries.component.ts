@@ -339,7 +339,6 @@ export class TimeEntriesComponent implements OnInit {
     return this.TimeEnrtyForm.controls;
   }
   editTimeEntry(Data: any) {
-    console.log(Data);
     this.behaviorService.MainTimeEntryData(Data);
     localStorage.setItem('edit_WORKITEMGUID', Data.WORKITEMGUID);
   }
@@ -348,13 +347,6 @@ export class TimeEntriesComponent implements OnInit {
     this.isLoadingResults = true;
     this.Timersservice.getTimeEnrtyData(Data).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-      // response.DATA.WORKITEMS.forEach(element => {
-      //   // console.log(element)
-      //   if(element.INVOICEGUID== -1){
-      //     console.log(" -1 has been printed");
-      //     this.selectedColore= '#FFA500';
-      //   }
-      // });
         if (response.DATA.WORKITEMS[0]) {
           this.behaviorService.MainTimeEntryData(response.DATA.WORKITEMS[0]);
           this.highlightedRows = response.DATA.WORKITEMS[0].WORKITEMGUID;

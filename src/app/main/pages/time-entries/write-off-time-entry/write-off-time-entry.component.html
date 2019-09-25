@@ -63,16 +63,16 @@
                                 Amount to Write Off
                             </div>
                             <mat-form-field appearance="outline" fxFlex="20" class="value_width pr-4">
-                                    <!-- <mat-label>Amount to Write Off</mat-label> -->
-                                <input type="{{typeInput}}" [(ngModel)]="AmmountWirteOff" formControlName="AmmountWirteOff"  maxlength="" (focusout)="calcWriteOff()" matInput  placeholder="Amount to Write Off">
+                                <!-- <mat-label>Amount to Write Off</mat-label> -->
+                                <input type="number" formControlName="AmmountWirteOff" maxlength="" (focusout)="calcWriteOff('wo')" matInput placeholder="Amount to Write Off">
                             </mat-form-field>
                             <div fxFlex="5" class="label_width"> </div>
-                            <mat-form-field appearance="outline" fxFlex="20" class="value_width pr-4">   
-                                <input disabled class="sideText" matInput readonly type="number" value="0.00" placeholder="Amount to Write Off">
+                            <mat-form-field appearance="outline" fxFlex="20" class="value_width pr-4">
+                                <input disabled class="sideText" matInput readonly type="number" formControlName="WirteOffExAmount" placeholder="Amount to Write Off">
                                 <span class="currency_sign" matPrefix>$&nbsp;</span>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="20" class="value_width pr-4">
-                                <input disabled class="sideText" matInput readonly type="number" value="0.00" placeholder="Amount to Write Off">
+                                <input disabled class="sideText" matInput readonly type="number" formControlName="WirteOffInAmount" placeholder="Amount to Write Off">
                                 <span class="currency_sign" matPrefix>$&nbsp;</span>
                             </mat-form-field>
                         </div>
@@ -81,16 +81,16 @@
                                 Amount Remaining
                             </div>
                             <mat-form-field appearance="outline" fxFlex="20" class="value_width pr-4">
-                                    <!-- <mat-label>Amount Remainiiiing</mat-label> -->
-                                <input type="{{typeInput}}" (focusout)="calcReamingOff()" [(ngModel)]="AmmountRemaing" formControlName="AmmountRemaining" matInput placeholder="Amount Remainiiiing">
+                                <!-- <mat-label>Amount Remainiiiing</mat-label> -->
+                                <input type="number" (focusout)="calcWriteOff('re')" formControlName="AmmountRemaing" matInput placeholder="Amount Remainiiiing">
                             </mat-form-field>
                             <div fxFlex="5" class="label_width"> </div>
                             <mat-form-field appearance="outline" fxFlex="20" class="value_width pr-4">
-                                <input disabled class="sideText" matInput readonly type="number" value="0.00" placeholder="Amount Remainiiiing">
+                                <input disabled class="sideText" matInput readonly type="number" formControlName="RemainingExAmount" placeholder="Amount Remainiiiing">
                                 <span class="currency_sign" matPrefix>$&nbsp;</span>
                             </mat-form-field>
                             <mat-form-field appearance="outline" fxFlex="20" class="value_width pr-4">
-                                <input disabled class="sideText" matInput readonly type="number" value="0.00" placeholder="Amount Remainiiiing">
+                                <input disabled class="sideText" matInput readonly type="number" formControlName="RemainingInAmount" placeholder="Amount Remainiiiing">
                                 <span class="currency_sign" matPrefix>$&nbsp;</span>
                             </mat-form-field>
                         </div>

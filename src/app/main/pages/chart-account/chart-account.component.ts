@@ -133,7 +133,6 @@ export class ChartAccountComponent implements OnInit {
       }
       x.index = this.arrayForIndex.length;
       if (x.SUBACCOUNTS) {
-        // console.log(x);
         this.showData(x.SUBACCOUNTS, x.level + 1, x.ACCOUNTNAME);
       }
 
@@ -142,7 +141,6 @@ export class ChartAccountComponent implements OnInit {
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
   RowClick(val) {
-    console.log(val)
     this.behaviorService.ChartAccountData(val);
     localStorage.setItem('ChartAccountData', JSON.stringify({ "name": val.name, "class": val.class, "ACCOUNTGUID": val.ACCOUNTGUID, "ACCOUNTTYPE": val.ACCOUNTTYPE, "index": val.index, "parent": val.parent, "level": val.level }));
   }
@@ -157,6 +155,6 @@ export class ChartAccountComponent implements OnInit {
   }
 
   FilterSearch(val) {
-  this.storeDataarray.filter = val;
+    this.storeDataarray.filter = val;
   }
 }

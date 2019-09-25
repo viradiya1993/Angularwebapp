@@ -36,7 +36,6 @@ export class RecurrancePatternComponent implements OnInit {
   }
   //radiobtnday
   radiobtnday(){
-    console.log(this.f.RedioChnageDay.value);
     if(this.f.RedioChnageDay.value == 'Day'){
         this.DairyForm.controls['EveryDay'].enable();
         this.DairyForm.controls['countvalue'].disable();

@@ -109,7 +109,6 @@ export class InvoiceDialogComponentForTemplate implements OnInit {
       "Template": this.TemplateGenerateData.TEMPLATENAME
     }
     this._mainAPiServiceService.getSetData(passingData, 'TemplateGenerate').subscribe(response => {
-      console.log(response);
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.toastr.success('Template Generate successfully');
         this.dialogRef.close(true);

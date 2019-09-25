@@ -31,9 +31,6 @@ export class AddressComponent implements OnInit {
   }
 
   triggerSomeEvent(f) {
-
-
-    // console.log(f.value.SAMEASSTREET);
     //this.isDisabled = !this.isDisabled;
     if (f.value.SAMEASSTREET == true) {
       let add1 = this.contactForm.get('ADDRESS1').value;

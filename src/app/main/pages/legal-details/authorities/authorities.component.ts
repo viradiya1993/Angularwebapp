@@ -4,7 +4,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { TableColumnsService, MainAPiServiceService } from './../../../../_services';
 import * as $ from 'jquery';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { ToastrService } from 'ngx-toastr';
 
@@ -13,9 +13,9 @@ interface FoodNode {
   index?: number;
   children?: FoodNode[];
   SUBTOPICS?: FoodNode[];
-  TOPICNAME:string;
-  AUTHORITY:string;
-  AUTHORITIES?:FoodNode[];
+  TOPICNAME: string;
+  AUTHORITY: string;
+  AUTHORITIES?: FoodNode[];
   MainList?: FoodNode[];
 }
 /** Flat node with expandable and level information */
@@ -23,7 +23,7 @@ interface ExampleFlatNode {
   expandable: boolean;
   name: string;
   level: number;
-  AUTHORITY:string;
+  AUTHORITY: string;
 }
 @Component({
   selector: 'app-authorities',
@@ -41,26 +41,26 @@ export class AuthoritiesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   isLoadingResults: boolean = false;
-  storeDataarray:any=[];
+  storeDataarray: any = [];
   highlightedRows: any;
-  
-  public LegalAuthority={
-    Matter:this.currentMatter.MATTER,Contact:this.currentMatter.CLIENT
+
+  public LegalAuthority = {
+    Matter: this.currentMatter.MATTER, Contact: this.currentMatter.CLIENT
   }
- 
+
   arrayForIndex: any = [];
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   index = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   private _transformer = (node: FoodNode, level: number) => {
     return {
-      expandable: !!node.AUTHORITIES && node.AUTHORITIES.length > 0 ,
+      expandable: !!node.AUTHORITIES && node.AUTHORITIES.length > 0,
       name: node.TOPICNAME,
       SUBTOPICS: node.SUBTOPICS,
-      AUTHORITY:node.AUTHORITY,
-      AUTHORITIES:node.AUTHORITIES,
+      AUTHORITY: node.AUTHORITY,
+      AUTHORITIES: node.AUTHORITIES,
       // Context: node.CONTEXT,
-       Main: node.MainList,
+      Main: node.MainList,
       // child: node.TEMPLATEFILE,
       // iconType: node.TEMPLATETYPEDESC,
       // KitGUid: node.KITGUID,
@@ -79,8 +79,8 @@ export class AuthoritiesComponent implements OnInit {
   highlightedRows2: any;
   // pageSize: string;
 
-  constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, 
-    private _mainAPiServiceService: MainAPiServiceService,  private toastr: ToastrService,) { }
+  constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService,
+    private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService, ) { }
   authorities_table;
   ngOnInit() {
     $('content').addClass('inner-scroll');
@@ -109,17 +109,16 @@ export class AuthoritiesComponent implements OnInit {
       x.MainList = x;
       x.index = this.arrayForIndex.length;
       if (x.AUTHORITIES)
-      this.showData(x.AUTHORITIES, x.level + 1,x.AUTHORITY);
+        this.showData(x.AUTHORITIES, x.level + 1, x.AUTHORITY);
       if (x.SUBTOPICS)
-      this.showData(x.SUBTOPICS,x.level + 1, x.TOPICNAME);
-        // this.showData(x.SUBTOPICS, x.level + 1, x.TOPICNAME);
+        this.showData(x.SUBTOPICS, x.level + 1, x.TOPICNAME);
+      // this.showData(x.SUBTOPICS, x.level + 1, x.TOPICNAME);
     });
   }
   LoadData() {
     this.isLoadingResults = true;
-    let potData = {'MatterGuid': this.currentMatter.MATTERGUID };
+    let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
     this._mainAPiServiceService.getSetData(potData, 'GetMatterAuthority').subscribe(response => {
-      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         this.authorities_table = new MatTableDataSource(response.DATA.MATTERAUTHORITIES);
         this.authorities_table.paginator = this.paginator;
@@ -127,8 +126,8 @@ export class AuthoritiesComponent implements OnInit {
         if (response.DATA.MATTERAUTHORITIES[0]) {
           this.highlightedRows2 = response.DATA.MATTERAUTHORITIES[0].AUTHORITYGUID;
         }
-        else{
-        
+        else {
+
         }
       }
       this.isLoadingResults = false;
@@ -137,23 +136,23 @@ export class AuthoritiesComponent implements OnInit {
     });
     this.pageSize = localStorage.getItem('lastPageSize');
 
-      this.isLoadingResults = true;
-      this._mainAPiServiceService.getSetData({}, 'GetAuthority').subscribe(res => {
-    
-        if ((res.CODE == 200 || res.CODE == '200') && res.STATUS == "success") {
-          this.arrayForIndex = [];
-           this.storeDataarray = res.DATA.TOPICS;
-           this.showData(this.storeDataarray, 0, null);
-           this.dataSource.data = this.storeDataarray;
-           this.editContact(this.storeDataarray[0]);
-          this.highlightedRows = 1;
-        }
-        this.isLoadingResults = false;
-      }, err => {
-        this.toastr.error(err);
-        this.isLoadingResults = false;
-      });
-      this.pageSize = localStorage.getItem('lastPageSize');
+    this.isLoadingResults = true;
+    this._mainAPiServiceService.getSetData({}, 'GetAuthority').subscribe(res => {
+
+      if ((res.CODE == 200 || res.CODE == '200') && res.STATUS == "success") {
+        this.arrayForIndex = [];
+        this.storeDataarray = res.DATA.TOPICS;
+        this.showData(this.storeDataarray, 0, null);
+        this.dataSource.data = this.storeDataarray;
+        this.editContact(this.storeDataarray[0]);
+        this.highlightedRows = 1;
+      }
+      this.isLoadingResults = false;
+    }, err => {
+      this.toastr.error(err);
+      this.isLoadingResults = false;
+    });
+    this.pageSize = localStorage.getItem('lastPageSize');
   }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
@@ -187,10 +186,10 @@ export class AuthoritiesComponent implements OnInit {
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
-  editContact(val){
+  editContact(val) {
     console.log(val);
   }
-  RowClick(val){
+  RowClick(val) {
     console.log(val);
   }
 }

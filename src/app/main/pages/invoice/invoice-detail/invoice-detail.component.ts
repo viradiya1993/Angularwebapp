@@ -71,7 +71,8 @@ export class InvoiceDetailComponent implements OnInit {
           this.invoiceDetailForm.controls['SHORTNAME'].setValue(invoiceData.SHORTNAME);
           this.invoiceDetailForm.controls['MATTERGUID'].setValue(invoiceData.MATTERGUID);
           this.invoiceDetailForm.controls['INVOICEGUID'].setValue(invoiceData.INVOICEGUID);
-          this.invoiceDetailForm.controls['INVOICECODE'].setValue(invoiceData.INVOICECODE);
+          let temInvoice = invoiceData.INVOICECODE;
+          this.invoiceDetailForm.controls['INVOICECODE'].setValue(temInvoice.toString().padStart(8, "0"));
           if (invoiceData.INVOICEDATE) {
             this.invoiceDetailForm.controls['INVOICEDATE'].setValue(invoiceData.INVOICEDATE);
             let INVOICEDATET = invoiceData.INVOICEDATE.split("/");

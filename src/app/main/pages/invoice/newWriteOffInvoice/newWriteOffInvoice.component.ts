@@ -34,7 +34,8 @@ export class WriteOffInvoiceComponent implements OnInit {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({ 'INVOICEGUID': this._data.INVOICEGUID }, 'GetInvoice').subscribe(res => {
       if ((res.CODE == 200 || res.CODE == '200') && res.STATUS == "success") {
-        this.WriteOffInvoice.INVOICECODE = res.DATA.INVOICES[0].INVOICECODE;
+        let temInvoice = res.DATA.INVOICES[0].INVOICECODE;
+        this.WriteOffInvoice.INVOICECODE = temInvoice.toString().padStart(8, "0");
         let DueDate = res.DATA.INVOICES[0].DUEDATE.split("/");
         let DUE = new Date(DueDate[1] + '/' + DueDate[0] + '/' + DueDate[2]);
         this.WriteOffInvoice.DUEDATE = DUE;

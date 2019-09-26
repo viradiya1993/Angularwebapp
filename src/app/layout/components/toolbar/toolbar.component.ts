@@ -104,9 +104,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     templateRoter: string;
     spendMoneyMenu: string;
     emailrouting: string;
-    emailroutingtax: string;
     TemplateUrlHandel: string;
-    packroutingtax: string;
     packrouting: string;
     KitName: any;
     KitGUid: any;
@@ -153,7 +151,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
 
         this.behaviorService.MainAuthorityData$.subscribe(result => {
-        this.MainAuthorityData = result;
+            this.MainAuthorityData = result;
             if (result != null) {
                 if (result.AUTHORITY != undefined) { this.DisMainAuthorityToolbar = 'Autho_yes'; }
                 else { this.DisMainAuthorityToolbar = 'Autho_no'; }
@@ -172,7 +170,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         // });
         this.behaviorService.LegalAuthorityData$.subscribe(result => {
             if (result != null) {
-            this.LegalAuthorityData = result;
+                this.LegalAuthorityData = result;
                 if (result.AUTHORITY != undefined) {
                     this.mainlegalAuthWebUrl = result.Main.WEBADDRESS;
                     this.LegalAuthotool = 'addMatterHide';
@@ -191,7 +189,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 } else {
                     this.LegalSubAuthotool = '';
                 }
-            } 
+            }
         });
         //for navigation bar 
         if (this.appPermissions == null) {
@@ -641,14 +639,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    RecouncileAccount(){
+    RecouncileAccount() {
         this.behaviorService.RecouncileItemSendSetData$.subscribe(result => {
-          console.log(result);  
-          this.recouncileItemdata=result
+            console.log(result);
+            this.recouncileItemdata = result
         });
-        let postData= {
-            BankStatementDate:this.recouncileItemdata.BankStatementDate,
-            ClosingBalance:this.recouncileItemdata.BankStatementDate,
+        let postData = {
+            BankStatementDate: this.recouncileItemdata.BankStatementDate,
+            ClosingBalance: this.recouncileItemdata.BankStatementDate,
             // RECONCILIATIONGUID :'',
             // ACCOUNTGUID:'',
             // PERIODENDDATE:'',
@@ -660,20 +658,20 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             // UNPRESENTEDWITHDRAWALS:'',
             // ENDINGBALANCE:'',
             // PREPAREDBY:'',
-            RECONCILIATIONITEMS :[
+            RECONCILIATIONITEMS: [
                 this.recouncileItemdata.item
             ]
-                
-                // ITEMDATE:'',
-                // DEBITAMOUNT:'',
-                // CREDITAMOUNT:'',
-                // LINKTYPE:'',
-                // LINKGUID:'',
-                // JOURNALGUID:'',
-           
+
+            // ITEMDATE:'',
+            // DEBITAMOUNT:'',
+            // CREDITAMOUNT:'',
+            // LINKTYPE:'',
+            // LINKGUID:'',
+            // JOURNALGUID:'',
+
         }
-        let sendData={
-            DATA:postData ,FormAction:'insert'
+        let sendData = {
+            DATA: postData, FormAction: 'insert'
         }
         this._mainAPiServiceService.getSetData(sendData, 'SetReconciliation').subscribe(res => {
             console.log(res);
@@ -1438,7 +1436,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 14;
         } else if (x[1] == "chart-account") {
             this.isTabShow = 15;
-        } else if (x[1] == "genral-journal") {
+        } else if (x[1] == "general-journal") {
             this.isTabShow = 16;
         }
         else if (x[1] == "conflict-check") {

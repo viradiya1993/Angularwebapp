@@ -30,7 +30,7 @@ import { ReportFilterComponent } from './report-filter/report-filter.component';
 
 
 const routes = [
-    { path: 'genral-journal', component: GeneralJournalComponent, canActivate: [AuthGuard] },  
+    { path: 'general-journal', component: GeneralJournalComponent, canActivate: [AuthGuard] },  
 ];
 
 @NgModule({  

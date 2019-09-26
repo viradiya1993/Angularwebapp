@@ -48,7 +48,6 @@ export class ContactDialogComponent implements OnInit {
     private _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
-    console.log(_data);
     this.action = _data.action;
     if (this.action === 'edit')
       this.dialogTitle = 'Update Contact';
@@ -68,6 +67,8 @@ export class ContactDialogComponent implements OnInit {
       CONTACTNAME: ['', Validators.required],
       CONTACTTYPE: ['', Validators.required],
       ACTIVE: [''],
+      //Company
+      POSITION: [],
       //person
       COMPANYCONTACTGUID: [''],
       SALUTATION: [''],
@@ -208,7 +209,9 @@ export class ContactDialogComponent implements OnInit {
             this.contactForm.controls['OTHERFAMILYNAME'].setValue(getContactData.OTHERFAMILYNAME);
             this.contactForm.controls['OTHERGIVENNAMES'].setValue(getContactData.OTHERGIVENNAMES);
             this.contactForm.controls['REASONFORCHANGE'].setValue(getContactData.REASONFORCHANGE);
-            //other
+            //Company
+            this.contactForm.controls['POSITION'].setValue(getContactData.POSITION);
+            //Other
             this.contactForm.controls['GENDER'].setValue(getContactData.GENDER);
             let DATEOFBIRTH = getContactData.DATEOFBIRTH.split("/");
             this.contactForm.controls['DATEOFBIRTH'].setValue(new Date(DATEOFBIRTH[1] + '/' + DATEOFBIRTH[0] + '/' + DATEOFBIRTH[2]));
@@ -318,6 +321,8 @@ export class ContactDialogComponent implements OnInit {
       REASONFORCHANGE: this.f.REASONFORCHANGE.value,
       COMPANYNAME: this.f.COMPANYCONTACTGUIDTEXT.value,
 
+      //Company
+      POSITION: this.f.POSITION.value,
       //others
       GENDER: this.f.GENDER.value,
       DATEOFBIRTH: this.dateofbirth,

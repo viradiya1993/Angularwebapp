@@ -2,29 +2,13 @@ import { fuseAnimations } from '@fuse/animations';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { MatPaginator,MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material';
-import {MatSort} from '@angular/material';
-import {MatTableDataSource} from '@angular/material/table';
-import * as $ from 'jquery';
-import {ReceiptDilogComponent} from './../invoice/receipt-dilog/receipt-dilog.component';
-import { MainAPiServiceService } from 'app/_services';
+import { MatPaginator, MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material';
+import { MatSort } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
+import { MainAPiServiceService, TableColumnsService } from 'app/_services';
+import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 
-export interface PeriodicElement {
-  Date: number;
-  Description:string;
-  Account: number;
-  DebitAmount: string;
 
-  CreditAmount: string;
-  ReconciledBankSlip:string;
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  {Date: 1, Description:'Payment',Account:1, DebitAmount: 'Amit', CreditAmount: 'H',ReconciledBankSlip:'abc'},
-  {Date: 2, Description:'Unfill Doc',Account:2, DebitAmount: 'Rajiv', CreditAmount: 'He',ReconciledBankSlip:'abc'},
-  {Date: 3, Description:'Other Doc',Account:3, DebitAmount: 'Ankur', CreditAmount: 'Li',ReconciledBankSlip:'abc'},
-  {Date: 4, Description:'No Doc', Account:4,DebitAmount: 'Kalpesh', CreditAmount: 'Be',ReconciledBankSlip:'abc'},
-  {Date: 5, Description:'Yes Doec',Account:5, DebitAmount: 'Gunjan', CreditAmount: 'B',ReconciledBankSlip:'abc'},
-];
 
 @Component({
   selector: 'app-general-journal',
@@ -34,19 +18,21 @@ const ELEMENT_DATA: PeriodicElement[] = [
   animations: fuseAnimations
 })
 export class GeneralJournalComponent implements OnInit {
-  GeneralForm: FormGroup;
-  isLoadingResults: boolean = false;
-  highlightedRows:any;
-  generalJournal:any=[];
+  highlightedRows: any;
+  ColumnsObj = [];
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
-  Date = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
-  displayedColumns: string[] = ['Date', 'Description','Account', 'DebitAmount','CreditAmount','ReconciledBankSlip'];
-  GeneralAllData = new MatTableDataSource(ELEMENT_DATA);
+  contectTitle = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
+  displayedColumns: string[];
+  tempColobj: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor( 
-    private _formBuilder: FormBuilder,
+  isLoadingResults: boolean = false;
+  pageSize: any;
+  generalJournalData: any = [];
+  filterVals = { 'searching': '', 'ShowReceipts': false, 'ShowInvoices': true, 'ShowReceiveMoney': true, 'ShowSpendMoney': true, 'ShowGeneralJournal': true };
+  constructor(
+    private TableColumnsService: TableColumnsService,
     private dialog: MatDialog,
     private toastr: ToastrService,
     public _matDialog: MatDialog,
@@ -54,32 +40,35 @@ export class GeneralJournalComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.GeneralAllData.sort = this.sort;
-    this.GeneralAllData.paginator = this.paginator;
-    this.GeneralForm = this._formBuilder.group({
-      date:[new Date()],
-      searchFilter:[''],
-      Receipts:[],
-      Invoice:[],
-      ReceiveMoney:[],
-      SpendMoney:[],
-      GeneralJournal:[]
-    });
+    this.getTableFilter();
     this.LoadData();
-  
+  }
+  changeValueOfCheckbox() {
+    this.LoadData();
+  }
+  getTableFilter() {
+    this.TableColumnsService.getTableFilter('general-journal', '').subscribe(response => {
+      console.log(response);
+      if (response.CODE == 200 && response.STATUS == "success") {
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
+        this.tempColobj = data.tempColobj;
+        this.displayedColumns = data.showcol;
+        this.ColumnsObj = data.colobj;
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
   }
   LoadData() {
-    // GetContact
-    // this._mainAPiServiceService.getSetData(postData, 'SetActivity').subscribe
-    this.generalJournal = [];
-    // this.isLoadingResults = true;
-    this._mainAPiServiceService.getSetData({JOURNALTYPE:''}, 'GetJournal').subscribe(response => {
+    this.generalJournalData = [];
+    this.isLoadingResults = true;
+    this._mainAPiServiceService.getSetData(this.filterVals, 'GetJournal').subscribe(response => {
       console.log(response);
       return;
       if (response.CODE == 200 && response.STATUS == "success") {
-        this.generalJournal = new MatTableDataSource(response.DATA.CONTACTS);
-        this.generalJournal.paginator = this.paginator;
-        this.generalJournal.sort = this.sort;
+        this.generalJournalData = new MatTableDataSource(response.DATA.CONTACTS);
+        this.generalJournalData.paginator = this.paginator;
+        this.generalJournalData.sort = this.sort;
         if (response.DATA.CONTACTS[0]) {
           // localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);
           // localStorage.setItem('contactData',  JSON.stringify(response.DATA.CONTACTS[0]));
@@ -88,9 +77,9 @@ export class GeneralJournalComponent implements OnInit {
         }
         this.isLoadingResults = false;
       } else if (response.CODE == 406 && response.MESSAGE == "Permission denied") {
-        this.generalJournal = new MatTableDataSource([]);
-        this.generalJournal.paginator = this.paginator;
-        this.generalJournal.sort = this.sort;
+        this.generalJournalData = new MatTableDataSource([]);
+        this.generalJournalData.paginator = this.paginator;
+        this.generalJournalData.sort = this.sort;
         this.isLoadingResults = false;
       }
     }, err => {
@@ -99,33 +88,28 @@ export class GeneralJournalComponent implements OnInit {
     });
     // this.pageSize = localStorage.getItem('lastPageSize');
   }
-  //choosedDate
-  choosedDate(){
 
-  }
-  //GeneralDialog
-  GeneralDialog(){}
-
-  //onSearch
-  onSearch(searchFilter:any){
-    console.log(searchFilter);
-  }
-  openDialog(val){
-    if(val.Description == 'Payment'){
-      const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
-        width: '100%', disableClose: true,
-        data:{}
-      });
-      dialogRef.afterClosed().subscribe(result => {
-      });
-
-    }else {
-    
-    }
-  }
-
-//ClickGeneral
-  ClickGeneral(val){
-    console.log(val.Description);
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '100%';
+    dialogConfig.disableClose = true;
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'contacts', 'list': '' };
+    //open pop-up
+    const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
+    //Save button click
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.tempColobj = result.tempColobj;
+        this.displayedColumns = result.columObj;
+        this.ColumnsObj = result.columnameObj;
+        if (!result.columObj) {
+          this.generalJournalData = new MatTableDataSource([]);
+          this.generalJournalData.paginator = this.paginator;
+          this.generalJournalData.sort = this.sort;
+        } else {
+          this.LoadData();
+        }
+      }
+    });
   }
 }

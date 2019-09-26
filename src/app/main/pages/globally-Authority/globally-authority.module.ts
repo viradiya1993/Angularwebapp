@@ -32,10 +32,10 @@ import { TopicComponent } from './main-authorities/topic/topic.component';
 //   { path: 'authorities/topic', component: TopicComponent, canActivate: [AuthGuard] },
 // ];
 const routes = [
-    { path: '', redirectTo: '/authorities/authorities', pathMatch: 'full', canActivate: [AuthGuard] },
+    { path: '', redirectTo: '/authorities/full-authorities', pathMatch: 'full', canActivate: [AuthGuard] },
     {
       path: '', component: GloballyAuthorityComponent, children: [
-        { path: 'authorities', component: MainAuthoritiesComponent },
+        { path: 'full-authorities', component: MainAuthoritiesComponent },
         { path: 'topic', component: TopicComponent },
       ], canActivate: [AuthGuard]
   }

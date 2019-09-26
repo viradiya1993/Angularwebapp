@@ -42,7 +42,9 @@ export class ChartAcDailogComponent implements OnInit {
     } else if (this.action === 'duplicate') {
       this.dialogTitle = 'Duplicate Account';
     }
-    this.behaviorService.ChartAccountData$.subscribe(result => { if (result) { this.AccountData = result; } });
+    this.behaviorService.ChartAccountData$.subscribe(result => { if (result) {
+      console.log(result);
+       this.AccountData = result; } });
   }
   ngOnInit() {
     this.AccountForm = this._formBuilder.group({
@@ -66,6 +68,7 @@ export class ChartAcDailogComponent implements OnInit {
       BANKINTERESTRATE: [''],
     });
     if (this.action == "edit" || this.action == 'duplicate') {
+      console.log("fgjhjkghkjdf");
       this.isLoadingResults = true;
       this._mainAPiServiceService.getSetData({ACCOUNTGUID:this.AccountData.ACCOUNTGUID },'GetAccount').subscribe(res => {
         console.log(res);

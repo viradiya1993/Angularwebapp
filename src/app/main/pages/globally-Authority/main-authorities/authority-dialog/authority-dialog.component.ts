@@ -49,22 +49,9 @@ export class AuthorityDialogComponent implements OnInit {
 
    }
   ngOnInit() {
-    this.isLoadingResults=true;
-    this._mainAPiServiceService.getSetData({}, 'GetTopic').subscribe(responses => {
-      if (responses.CODE === 200 && responses.STATUS === 'success') {
-        responses.DATA.TOPICS.forEach(element => {
-            this.MainTopicClass.push(element);
-            if(element.SUBTOPICS){
-              element.SUBTOPICS.forEach(element2 => {
-                this.MainTopicClass.push(element2);
-              });
-              
-            }
-        });
-        this.isspiner = false;
-      }
-    });
+    this.forTopic();
     if(this.action=='edit' || this.action=='duplicate'){
+      this.isLoadingResults=true;
       this._mainAPiServiceService.getSetData({TOPICGUID:this.AuthoDialogeData.Main.TOPICGUID}, 'GetTopic').subscribe(responses => {
         if (responses.CODE === 200 && responses.STATUS === 'success') {
           this.authorityDialoge.TOPICNAME = responses.DATA.TOPICS[0].TOPICNAME;
@@ -75,7 +62,6 @@ export class AuthorityDialogComponent implements OnInit {
         }
         this.isLoadingResults = false;
       });
-
       this._mainAPiServiceService.getSetData({AUTHORITYGUID:this.AuthoDialogeData.Main.AUTHORITYGUID}, 'GetAuthority').subscribe(responses => {
         if (responses.CODE === 200 && responses.STATUS === 'success') {
           this.authorityDialoge.AUTHORITY=responses.DATA.AUTHORITIES[0].AUTHORITY;
@@ -94,6 +80,23 @@ export class AuthorityDialogComponent implements OnInit {
       });
          
     }      
+  }
+  forTopic(){
+    this.isLoadingResults=true;
+    this._mainAPiServiceService.getSetData({}, 'GetTopic').subscribe(responses => {
+      if (responses.CODE === 200 && responses.STATUS === 'success') {
+        responses.DATA.TOPICS.forEach(element => {
+            this.MainTopicClass.push(element);
+            if(element.SUBTOPICS){
+              element.SUBTOPICS.forEach(element2 => {
+                this.MainTopicClass.push(element2);
+              });
+              
+            }
+        });
+        this.isLoadingResults = false;
+      }
+    });
   }
   openDocument(){
     const dialogRef = this._matDialog.open(GenerateTemplatesDialoagComponent, {

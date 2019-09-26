@@ -153,23 +153,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
 
         this.behaviorService.MainAuthorityData$.subscribe(result => {
-        this.MainAuthorityData = result;
+            console.log(result);
+            this.MainAuthorityData = result;
             if (result != null) {
-                if (result.AUTHORITY != undefined) { this.DisMainAuthorityToolbar = 'Autho_yes'; }
-                else { this.DisMainAuthorityToolbar = 'Autho_no'; }
+                if (result.AUTHORITY != undefined) { 
+                    if(result.AUTHORITY.WEBADDRESS !=''){
+                        this.mainlegalAuthWebUrl = result.Main.WEBADDRESS;
+                    }else{ this.mainlegalAuthWebUrl = ''}
+                    this.DisMainAuthorityToolbar = 'Autho_yes'; }
+                else { this.DisMainAuthorityToolbar = 'Autho_no'; this.mainlegalAuthWebUrl='' }
             }
         });
-        // this.behaviorService.MainAuthorityData$.subscribe(result => {
-        // //    if(result!=null){
-        // //     this.LegalAuthorityData=result;
-        // //        if(result.AUTHORITY!=undefined){
-        // //            this.LegalAuthotool='addMatterHide';
-        // //        }else{
-        // //         this.LegalAuthotool='';
-        // //        }
-
-        // //    }
-        // });
         this.behaviorService.LegalAuthorityData$.subscribe(result => {
             if (result != null) {
             this.LegalAuthorityData = result;
@@ -649,28 +643,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         let postData= {
             BankStatementDate:this.recouncileItemdata.BankStatementDate,
             ClosingBalance:this.recouncileItemdata.BankStatementDate,
-            // RECONCILIATIONGUID :'',
-            // ACCOUNTGUID:'',
-            // PERIODENDDATE:'',
-            // RECONCILEDDATE:'',
-            // STARTINGBALANCE:'',
-            // DEPOSITS:'',
-            // WITHDRAWALS:'',
-            // UNPRESENTEDDEPOSITS:'',
-            // UNPRESENTEDWITHDRAWALS:'',
-            // ENDINGBALANCE:'',
-            // PREPAREDBY:'',
             RECONCILIATIONITEMS :[
                 this.recouncileItemdata.item
             ]
-                
-                // ITEMDATE:'',
-                // DEBITAMOUNT:'',
-                // CREDITAMOUNT:'',
-                // LINKTYPE:'',
-                // LINKGUID:'',
-                // JOURNALGUID:'',
-           
         }
         let sendData={
             DATA:postData ,FormAction:'insert'
@@ -679,8 +654,27 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             console.log(res);
             if (res.STATUS == "success" && res.CODE == 200) {
                 // $('#refreshSpendMoneyTab').click();
-                this.toastr.success('Update successfully');
+                this.toastr.success('Save successfully');
             }
+        });
+    }
+    undoRecouncilebtn(){
+
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to undo the last recouncilitaion? This will reverse the last recuncilition!';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                let postData = { FormAction: "delete", DATA: { AccountGuid: this.AccountGUID } }
+                this._mainAPiServiceService.getSetData(postData, 'SetReconciliation').subscribe(res => {
+                    if (res.STATUS == "success" && res.CODE == 200) {
+                        this.toastr.success('Delete successfully');
+                    }
+                });
+            }
+            this.confirmDialogRef = null;
         });
     }
     /* ---------------------------------------------------------------------end of timer add--------------------------------------------------------------------------  */
@@ -879,9 +873,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             data: SpendMoneyPopdata
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result)
+            if (result){
                 $("#refreshSpendMoneyTab").click();
-            $('#refreshRecouncilItem').click();
+                $('#refreshRecouncilItem').click();
+            }
+             
         });
     }
 
@@ -1175,7 +1171,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
-                let postData = { FormAction: "delete", data: { AUTHORITYGUID: this.MainAuthorityData.AUTHORITYGUID } }
+                let postData = { FormAction: "delete", data: { AUTHORITYGUID: this.MainAuthorityData.Main.AUTHORITYGUID } }
                 this._mainAPiServiceService.getSetData(postData, 'SetAuthority').subscribe(res => {
                     if (res.STATUS == "success") {
                         $('#refresMainAuthority').click();
@@ -1188,7 +1184,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef = null;
         });
     }
-
     DeleteTopicData(): void {
         this.behaviorService.MainTopicData$.subscribe(result => {
             if (result) {
@@ -1202,7 +1197,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
-                let postData = { FormAction: "delete", data: { TOPICGUID: this.TopicMaindata.TOPICGUID } }
+                let postData = { FormAction: "delete", data: { TOPICGUID: this.TopicMaindata.Main.TOPICGUID } }
                 this._mainAPiServiceService.getSetData(postData, 'SetTopic').subscribe(res => {
                     if (res.STATUS == "success") {
                         $('#refresMainTopic').click();

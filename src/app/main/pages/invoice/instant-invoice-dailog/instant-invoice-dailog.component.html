@@ -75,15 +75,15 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                         <mat-label>Total (Ex-GST)</mat-label>
-                        <input [(ngModel)]="TotalExGst" (focusout)="calcTotalEXGST()" matInput placeholder="Date Received" formControlName="Totalexgst">
+                        <input [(ngModel)]="TotalExGst" (focusout)="calcTotalEXGST()" matInput placeholder="Total (Ex-GST)" formControlName="Totalexgst">
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                         <mat-label>GST</mat-label>
-                        <input [(ngModel)]="GstVal" matInput readonly placeholder="Date Received" formControlName="GST">
+                        <input [(ngModel)]="GstVal" matInput readonly placeholder="GST" formControlName="GST">
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                         <mat-label>Total (Inc-GST)</mat-label>
-                        <input [(ngModel)]="TotalIncGst" (focusout)="calcTotalINGST()" matInput placeholder="Date Received" formControlName="Totalincgst">
+                        <input [(ngModel)]="TotalIncGst" (focusout)="calcTotalINGST()" matInput placeholder="Total (Inc-GST)" formControlName="Totalincgst">
                     </mat-form-field>
                 </div>
             </form>

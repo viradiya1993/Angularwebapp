@@ -43,6 +43,9 @@ export class InstantInvoiceDailogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    // this.TotalExGst=0.00;
+    // this.GstVal=0.00;
+    // this.TotalExGst=0.00;
     this.isLoadingResults = true;
     var dt = new Date();
     dt.setMonth(dt.getMonth() + 1);
@@ -99,16 +102,27 @@ export class InstantInvoiceDailogComponent implements OnInit {
     this.addInvoiceForm.controls['DUEDATETEXT'].setValue(begin);
   }
   calcTotalEXGST() {
-    this.GstVal = Number(this.TotalExGst) * 10 / 100;
-    this.TotalIncGst = (Number(this.GstVal) + Number(this.TotalExGst)).toFixed(2);
+    if(this.TotalExGst==undefined){
+      this.GstVal=0.00;
+      this.TotalIncGst=0.00; 
+    }else{
+      this.GstVal = Number(this.TotalExGst) * 10 / 100;
+      this.TotalIncGst = (Number(this.GstVal) + Number(this.TotalExGst)).toFixed(2);
+    }
   }
   get f() {
     return this.addInvoiceForm.controls;
   }
   calcTotalINGST() {
-    let ExGSt = Number(this.TotalIncGst) / 1.1;
-    this.TotalExGst = (ExGSt).toFixed(2);
-    this.GstVal = (Number(this.TotalIncGst) - Number(ExGSt)).toFixed(2);
+    if(this.TotalExGst==undefined){
+      this.TotalExGst=0.00;
+      this.GstVal =0.00;
+    }else{
+      let ExGSt = Number(this.TotalIncGst) / 1.1;
+      this.TotalExGst = (ExGSt).toFixed(2);
+      this.GstVal = (Number(this.TotalIncGst) - Number(ExGSt)).toFixed(2);
+    }
+    
 
   }
 

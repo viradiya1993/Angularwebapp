@@ -2,7 +2,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, ViewEncapsulation, ViewChild, Injectable, ViewContainerRef } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatDialogRef, MatDialog, MatDialogConfig, MatDatepickerInputEvent } from '@angular/material';
 import { MatSort } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MainAPiServiceService, BehaviorService, TableColumnsService } from 'app/_services';
@@ -39,6 +39,7 @@ export class RecounciliationItemComponent implements OnInit {
   CalculatedClosingBalnce: number;
   DepositBalnce: number;
   FirstTimeDipositeTotal: number;
+  lastDay: any;
 
   constructor(private dialog: MatDialog, public datepipe: DatePipe, private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService, private _formBuilder: FormBuilder, public behaviorService: BehaviorService, private TableColumnsService: TableColumnsService, ) { }
   ngOnInit() {
@@ -60,31 +61,15 @@ export class RecounciliationItemComponent implements OnInit {
         this.chartAccountDetail = result;
       }
     });
-<<<<<<< HEAD
-    // let sendDate = this.chartAccountDetail.MainList.RECONCILEDGROUP.LASTRECONCILEDDATE.split("/");
-    // let getdate= new Date(sendDate[1] + '/' + sendDate[0] + '/' + sendDate[2]),y = getdate.getFullYear(), m = getdate.getMonth();;;
-    // var lastDay = new Date(y, m + 1, 0);
-    // this.AccountRecouncile.controls['Bankdate'].setValue(lastDay);
-    // this.getTableFilter();
-    // this.LoadData({ AccountGuid: "ACCAAAAAAAAAAAA4", 'BankStatementDate': this.datepipe.transform(lastDay, 'dd/MM/yyyy')});    
-    // localStorage.setItem('recouncileItem')
-    // this.AccountRecouncile.controls['statementClosingBalance'].setValue(0.00);
-    // this.statmentClosingBal();
-    this.getTableFilter();
-    this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID ,'BankStatementDate':'30/11/2015'});
-=======
     let sendDate = this.chartAccountDetail.MainList.RECONCILEDGROUP.LASTRECONCILEDDATE.split("/");
     let getdate = new Date(sendDate[1] + '/' + sendDate[0] + '/' + sendDate[2]), y = getdate.getFullYear(), m = getdate.getMonth();;;
-    var lastDay = new Date(y, m + 1, 0);
-    this.AccountRecouncile.controls['Bankdate'].setValue(lastDay);
+       let lateday = new Date(y, m + 1, 0);
+       this.lastDay=this.datepipe.transform(this.lastDay, 'dd/MM/yyyy')
+    this.AccountRecouncile.controls['Bankdate'].setValue(this.lastDay);
     this.getTableFilter();
-    // // this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID });
-    this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID, 'BankStatementDate': this.datepipe.transform(lastDay, 'dd/MM/yyyy') });
-    // localStorage.setItem('recouncileItem')
-    // this.AccountRecouncile.controls['statementClosingBalance'].setValue(0.00);
-    // this.statmentClosingBal();
+    this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID, 'BankStatementDate': this.datepipe.transform(this.lastDay, 'dd/MM/yyyy') });
+  
     // this.LoadData({ AccountGuid: "ACCAAAAAAAAAAAA4", 'BankStatementDate': '30/11/2015' });
->>>>>>> 01882d06f6ab5e57dd3e3daca3ae699b23c346db
   }
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -230,13 +215,19 @@ export class RecounciliationItemComponent implements OnInit {
           this.ReconciliationData.paginator = this.paginator;
           this.ReconciliationData.sort = this.sort;
         } else {
-          this.LoadData({ AccountGuid: "ACCAAAAAAAAAAAA4", 'BankStatementDate': "3/09/2019" });
+          this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID, 'BankStatementDate': this.lastDay });
+          // this.LoadData({ AccountGuid: "ACCAAAAAAAAAAAA4", 'BankStatementDate': "3/09/2019" });
           // this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID });
         }
       }
     });
   }
   refreshRecouncilItem() {
-    this.LoadData({ AccountGuid: "ACCAAAAAAAAAAAA4", 'BankStatementDate': "3/09/2019" });
+    this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID, 'BankStatementDate': this.lastDay });
+    // this.LoadData({ AccountGuid: "ACCAAAAAAAAAAAA4", 'BankStatementDate': "3/09/2019" });
+  }
+  BankchoosedDate(type: string, event: MatDatepickerInputEvent<Date>){
+    this.lastDay= this.datepipe.transform(event.value, 'dd/MM/yyyy');
+    this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID, 'BankStatementDate':  this.lastDay });
   }
 }

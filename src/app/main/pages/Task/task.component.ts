@@ -74,6 +74,7 @@ export class TaskComponent implements OnInit {
     this.MainTask.controls['status'].setValue(this.filterData.STATUS);
     this.MainTask.controls['matter'].setValue(this.filterData.Matter);
     this.MainTask.controls['User'].setValue(this.filterData.user);
+    this.selectUsers(this.filterData.user);
     let date = this.filterData.DUEDATEFROM.split("/");
     let putDate1 = new Date(date[1] + '/' + date[0] + '/' + date[2]);
     let date2 = this.filterData.DUEDATETO.split("/");
@@ -212,8 +213,10 @@ export class TaskComponent implements OnInit {
     });
   }
   selectUsers(value) {
+    console.log(value);
     this.filterData = JSON.parse(localStorage.getItem("task_filter"));
     let val = this.GetUSERS.find(c => c['USERNAME'] == value)
+console.log(val);
     this.filterData.USERGUID = val.USERGUID;
     this.filterData.user = value;
     this.behaviorService.UserDropDownData(val);

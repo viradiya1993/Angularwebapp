@@ -71,7 +71,8 @@ export class InstantInvoiceDailogComponent implements OnInit {
 
     this._mainAPiServiceService.getSetData(PostInvoiceEntryData, 'SetInvoice').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        this.addInvoiceForm.controls['Invoiceno'].setValue(response.DATA.DEFAULTVALUES.INVOICECODE)
+        let temInvoice = response.DATA.DEFAULTVALUES.INVOICECODE;
+        this.addInvoiceForm.controls['Invoiceno'].setValue(temInvoice.toString().padStart(8, "0"));
       }
     }, error => {
       this.toastr.error(error);

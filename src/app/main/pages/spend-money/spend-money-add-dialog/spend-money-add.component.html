@@ -41,12 +41,12 @@
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field  appearance="outline" fxFlex="40" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="40" class="pr-4">
                         <mat-label *ngIf="classtype !=='depreciation'">Bank a/c</mat-label>
                         <mat-label *ngIf="classtype=='depreciation'">Asset a/c</mat-label>
                         <input matInput formControlName="Bankac">
                         <mat-icon matSuffix>
-                            <button id="bank" class="matternews" (click)="BankingDialogOpen('BANK ACCOUNT')" ><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
+                            <button id="bank" class="matternews" (click)="BankingDialogOpen('BANK ACCOUNT')"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                         </mat-icon>
                     </mat-form-field>
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.NOTE,'has-warning':errorWarningData.Warning?.NOTE}" appearance="outline" fxFlex="60" class="pr-4">
@@ -88,15 +88,11 @@
                                 {{val}}
                             </mat-option>
                         </mat-autocomplete>
-
+                        <mat-icon matSuffix>
+                            <button id="mattersnew" class="matternews" (click)='ContactMatter()'><img  src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                            </button>
+                        </mat-icon>
                     </mat-form-field>
-
-
-                    <mat-icon matSuffix (click)='ContactMatter()'  fxFlex="5">
-                        <img class="seticon" src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                    </mat-icon>
-
-
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.SOURCEREFERENCE,'has-warning':errorWarningData.Warning?.SOURCEREFERENCE}" appearance="outline" fxFlex="27" class="pr-4">
                         <mat-label>Invoice #/Source Ref</mat-label>
                         <input matInput formControlName="Invoice">
@@ -163,7 +159,7 @@
                             </table>
                         </div>
                     </mat-card>
-                  
+
                 </div>
                 <!-- <mat-paginator *ngIf="action === 'edit' && dataTableHide =='yes'" [pageSizeOptions]="[10, 20 ,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator> -->
                 <div class="itemdetails" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -195,7 +191,7 @@
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field  class="example" fxFlex="25" class="pr-4" appearance="outline">
+                    <mat-form-field class="example" fxFlex="25" class="pr-4" appearance="outline">
                         <mat-label>GST Type</mat-label>
                         <mat-select formControlName="GSTType" (ngModelChange)="GstTypeforSelect($event)">
                             <mat-option value="1.1">10% GST</mat-option>
@@ -209,13 +205,13 @@
                         <mat-label>GST</mat-label>
                         <input class="sideText" [disabled]="GstTypeDiff =='LessThen 10% GST'" matInput type="number" formControlName="GST1" (keyup)="GSTCalFun()" [(ngModel)]="GSTValAfterCal">
                     </mat-form-field>
-                    <mat-form-field  *ngIf="dataTableHide !='yes'" appearance="outline" fxFlex="25" class="pr-4">
+                    <mat-form-field *ngIf="dataTableHide !='yes'" appearance="outline" fxFlex="25" class="pr-4">
                         <mat-label>Amount Ex GST</mat-label>
                         <input class="sideText" matInput formControlName="AmountExGST" [(ngModel)]="GSTValForExGst">
                         <span class="currency_sign" matPrefix>$ &nbsp;</span>
                     </mat-form-field>
                     <!-- for expense *ngIf="classtype=='Expence' || classtype=='matter Expence' || classtype=='depreciation' || classtype=='other'" -->
-                    <mat-form-field  appearance="outline" fxFlex="25" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
                         <mat-label *ngIf="classtype=='Expense' || classtype=='Matter Expense' || classtype=='Description' ||classtype=='Others'">Expense a/c </mat-label>
                         <mat-label *ngIf="classtype=='Capital'">Asset a/c </mat-label>
                         <mat-label *ngIf="classtype=='Pay GST'">GST a/c </mat-label>
@@ -227,7 +223,7 @@
                             <button id="expac" class="matternews" (click)="BankingDialogOpen('')" [disabled]="expac"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                         </mat-icon>
                     </mat-form-field>
-                  
+
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.NOTE,'has-warning':errorWarningData.Warning?.NOTE}" appearance="outline" fxFlex="25" class="pr-4" *ngIf="dataTableHide=='yes'">
                         <mat-label>Note</mat-label>
                         <input matInput formControlName="Note">

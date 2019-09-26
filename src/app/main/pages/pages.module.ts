@@ -47,7 +47,7 @@ const appRoutes: Routes = [
   { path: 'diary', loadChildren: './diary/diary.module#DiaryModule' },
   { path: 'document-register', loadChildren: './document-register/document-register.module#DocumentRegitser' },
   { path: 'chart-account', loadChildren: './chart-account/chart-account.module#ChartOfAccount' },
-  { path: 'genral-journal', loadChildren: './general-journal/general-journal.module#GeneralJoural' },
+  { path: 'general-journal', loadChildren: './general-journal/general-journal.module#GeneralJoural' },
   { path: 'account-reconciliation', loadChildren: './account-reconciliation/account-reconciliation.module#AccountRecountciliation' },
   { path: 'account-management', loadChildren: './account-managment/account-managment.module#AccountManagmentModule' },
   { path: 'Safe-Custody', loadChildren: './main-safe-custody/main-safe-custody.module#MainSafeCustodyModule' }

@@ -18,13 +18,13 @@ import { InvoiceDialogComponentForTemplate } from './select-invoice-dialog/selec
 import { SummaryComponent } from './invoice-add-dailog/summary/summary.component';
 import { DetailsComponent } from './invoice-add-dailog/details/details.component';
 import { DiscountIncreaseComponent } from './invoice-add-dailog/discount-increase/discount-increase.component';
-import {MatDividerModule} from '@angular/material/divider';
-import {DragDropModule} from '@angular/cdk/drag-drop';
-import {MatSortModule} from '@angular/material/sort';
+import { MatDividerModule } from '@angular/material/divider';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatSortModule } from '@angular/material/sort';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker'
 import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
 import { WriteOffInvoiceComponent } from './newWriteOffInvoice/newWriteOffInvoice.component';
-
+import { InvoiceNumberPipe } from './invoicenumber.pipe'
 
 const routes = [
   { path: '', component: InvoiceComponent, canActivate: [AuthGuard] },
@@ -42,7 +42,7 @@ const routes = [
     DetailsComponent,
     DiscountIncreaseComponent,
     WriteOffInvoiceComponent,
-    
+    InvoiceNumberPipe
   ],
   entryComponents: [
     ReceiptDilogComponent,
@@ -89,10 +89,10 @@ const routes = [
     DragDropModule,
     MatSortModule
   ],
-providers: [
-  {provide: DateAdapter, useClass: AppDateAdapter},
-  {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
-],
+  providers: [
+    { provide: DateAdapter, useClass: AppDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
+  ],
   exports: [
     InvoiceComponent
   ]

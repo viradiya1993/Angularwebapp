@@ -33,9 +33,9 @@
               </mat-form-field>
             </div>
             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-              <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DESCRIPTION_,'has-warning':errorWarningData.Warning?.DESCRIPTION_}">
+              <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DESCRIPTION,'has-warning':errorWarningData.Warning?.DESCRIPTION}">
                   <mat-label>Description</mat-label>
-                  <input [(ngModel)]="DocumentRegiData.DESCRIPTION_"  formControlName='Description' matInput>
+                  <input [(ngModel)]="DocumentRegiData.DESCRIPTION"  formControlName='Description' matInput>
               </mat-form-field>
               <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DRAFTSTATUS,'has-warning':errorWarningData.Warning?.DRAFTSTATUS}">
                   <mat-label>Draft Status</mat-label>

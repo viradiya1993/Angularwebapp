@@ -25,7 +25,7 @@ export class DocumentDailogComponent implements OnInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>
   isspiner: boolean = false;
   public DocumentRegiData: any = {
-    "GENERATEDATE": " ", "GENERATETIME": "", "DOCUMENTCLASS": 0,"DESCRIPTION_":"","DRAFTSTATUS":0,"DOCUMENTNUMBER":0,"DOCUMENTTYPE":0,"DOCUMENTNAME":'',
+    "GENERATEDATE": " ", "GENERATETIME": "", "DOCUMENTCLASS": 0,"DESCRIPTION":"","DRAFTSTATUS":0,"DOCUMENTNUMBER":0,"DOCUMENTTYPE":0,"DOCUMENTNAME":'',
     "KEYWORDS":'',"GENERATEDATESEND":" ","DOCUMENTAUTHOR":"Diana Parkinson (no password)"
   };
   FormAction: string;
@@ -99,7 +99,7 @@ export class DocumentDailogComponent implements OnInit {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.SendDataArray=res.DATA.DOCUMENTS[0];
         this.DocumentRegiData.GENERATETIME=res.DATA.DOCUMENTS[0].GENERATETIME;
-        this.DocumentRegiData.DESCRIPTION_=res.DATA.DOCUMENTS[0].DESCRIPTION_;
+        this.DocumentRegiData.DESCRIPTION=res.DATA.DOCUMENTS[0].DESCRIPTION;
         this.DocumentRegiData.DOCUMENTNUMBER=res.DATA.DOCUMENTS[0].DOCUMENTNUMBER;
         this.DocumentRegiData.DOCUMENTNAME=res.DATA.DOCUMENTS[0].DOCUMENTNAME;
         this.DocumentRegiData.KEYWORDS=res.DATA.DOCUMENTS[0].KEYWORDS;
@@ -154,7 +154,7 @@ export class DocumentDailogComponent implements OnInit {
     let Data={
       CONTEXT: "Matter",
       CONTEXTGUID:this.SendDataArray.CONTEXTGUID,
-      DESCRIPTION: this.DocumentRegiData.DESCRIPTION_,
+      DESCRIPTION: this.DocumentRegiData.DESCRIPTION,
       DOCUMENTAUTHOR:this.DocumentRegiData.DOCUMENTAUTHOR,
       DOCUMENTCLASS: Number(this.DocumentRegiData.DOCUMENTCLASS),
       DOCUMENTGUID: this.DocGUID,

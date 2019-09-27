@@ -6,14 +6,14 @@
                     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                         <mat-form-field appearance="outline" fxFlex="50" class="">
                             <mat-label>Date Range</mat-label>
-                            <input matInput placeholder="Choose a date" [satDatepicker]="picker2" (dateInput)="choosedDate()" (dateChange)="choosedDate()">
+                            <input matInput placeholder="Choose a date" [satDatepicker]="picker2" >
                             <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
                             <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
                         </mat-form-field>
                         <mat-form-field class="search" appearance="outline" fxFlex="50">
                             <mat-label>Search</mat-label>
-                            <input matInput placeholder="Search" (keydown)="onSearch($event)" name="searching" [(ngModel)]="filterVals.searching">
-                            <mat-icon matSuffix (click)="onSearch('Enter')">search</mat-icon>
+                            <input matInput placeholder="Search" name="searching" [(ngModel)]="filterVals.searching">
+                            <mat-icon matSuffix >search</mat-icon>
                         </mat-form-field>
                         <mat-checkbox name="ShowReceipts" [checked]="filterVals.ShowReceipts" [(ngModel)]="filterVals.ShowReceipts" (change)="changeValueOfCheckbox()">Receipts</mat-checkbox>&nbsp;&nbsp;&nbsp;
                         <mat-checkbox name="ShowInvoices" [checked]="filterVals.ShowInvoices" [(ngModel)]="filterVals.ShowInvoices" (change)="changeValueOfCheckbox()">Invoice</mat-checkbox>&nbsp;&nbsp;&nbsp;
@@ -47,7 +47,7 @@
                             </tr>
                         </table>
                     </div>
-                    <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+                    <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" showFirstLastButtons></mat-paginator>
                 </div>
             </div>
         </div>

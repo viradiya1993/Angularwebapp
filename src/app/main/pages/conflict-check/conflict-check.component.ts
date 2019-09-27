@@ -28,6 +28,7 @@ export class ConflictCheckComponent implements OnInit {
   highlightedRows: any;
   ConflictData: any = [];
   pageSize: any;
+  tempColobj: any;
   StartbtnSendData = {
     "NameToCheck": '', "CheckWIP": "", "CheckFilesNotes": "", "CheckChronologies": ""
   }
@@ -72,6 +73,7 @@ export class ConflictCheckComponent implements OnInit {
     });
     this.pageSize = localStorage.getItem('lastPageSize');
   }
+  
   RowClick(val) {
     localStorage.setItem('set_active_matters', JSON.stringify({ MATTERGUID: val.MATTERGUID, SHORTNAME: val.SHORTNAME }))
     // let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
@@ -104,7 +106,7 @@ export class ConflictCheckComponent implements OnInit {
     this.LoadData(this.StartbtnSendData);
   }
   onSearch(searchFilter: any) {
-    this.LoadData({ Search: this.ConflictNGData.Search });
+    this.LoadData({Search: this.ConflictNGData.Search });
 
   }
 }

@@ -2,8 +2,8 @@
 <div class="one" [formGroup]="SettingForm" fxLayout="column">
             <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DEFAULTEXPENSETYPE,'has-warning':errorWarningData.Warning?.DEFAULTEXPENSETYPE}">
-                            <mat-label>Defaults Expense</mat-label>
-                        <mat-select  name="DEFAULTEXPENSETYPE" formControlName="DEFAULTEXPENSETYPE" placeholder="Defaults Expense">
+                            <mat-label>Default Expense</mat-label>
+                        <mat-select  name="DEFAULTEXPENSETYPE" formControlName="DEFAULTEXPENSETYPE" placeholder="Default Expense">
                             <mat-option *ngFor="let val of getDropDownValue.DEFAULTEXPENSETYPE"  value="{{val.VALUE}}">{{val.VALUE}}</mat-option>
                             
                           </mat-select>

@@ -106,74 +106,80 @@ export class ResumeTimerComponent implements OnInit {
     }, err => {
       this.toastr.error(err);
     });
-
-    this.Timersservice.getTimeEnrtyData({ 'WorkItemGuid': workerGuid }).subscribe(response => {
-      if (response.CODE == 200 && response.STATUS == "success") {
-        let timeEntryData = response.DATA.WORKITEMS[0];
-        let isT: boolean = timeEntryData.QUANTITYTYPE == "hh:mm" || timeEntryData.QUANTITYTYPE == "Hours" || timeEntryData.QUANTITYTYPE == "Minutes";
-        if (!isT && timeEntryData.INVOICEGUID == "") {
-          this.toastr.error("You can not resume a timer");
-          this.dialogRef.close(false);
-          return false;
-        }
-        let QUANTITYTEM: any;
-        if (this.resumeTimerData.type == 'resume') {
-          this.timerTime = this.resumeTimerData.matterData.time;
-          let a = this.timerTime.split(':');
-          (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
-          if (timeEntryData.QUANTITYTYPE == "Hours") {
-            QUANTITYTEM = (+a[0]) + ((+a[1]) / 60) + ((+a[2]) / 3600)
-          } else if (timeEntryData.QUANTITYTYPE == 'Minutes') {
-            QUANTITYTEM = ((+a[0]) * 60) + ((+a[1])) + '.' + a[2]
-          } else {
-            QUANTITYTEM = this.timerTime;
+    if (this.resumeTimerData.type !== 'new') {
+      this.Timersservice.getTimeEnrtyData({ 'WorkItemGuid': workerGuid }).subscribe(response => {
+        if (response.CODE == 200 && response.STATUS == "success") {
+          let timeEntryData = response.DATA.WORKITEMS[0];
+          let isT: boolean = timeEntryData.QUANTITYTYPE == "hh:mm" || timeEntryData.QUANTITYTYPE == "Hours" || timeEntryData.QUANTITYTYPE == "Minutes";
+          if (!isT && timeEntryData.INVOICEGUID == "") {
+            this.toastr.error("You can not resume a timer");
+            this.dialogRef.close(false);
+            return false;
           }
-        } else if (timeEntryData.QUANTITYTYPE == "Hours") {
-          QUANTITYTEM = timeEntryData.QUANTITY;
-          this.timerTime = this.secondsToHms(timeEntryData.QUANTITY * 60 * 60);
-        } else if (timeEntryData.QUANTITYTYPE == 'Minutes') {
-          QUANTITYTEM = timeEntryData.QUANTITY;
-          this.timerTime = this.secondsToHms(timeEntryData.QUANTITY * 60);
-        } else {
-          QUANTITYTEM = timeEntryData.QUANTITY;
-          this.timerTime = timeEntryData.QUANTITY + ':00';
+          let QUANTITYTEM: any;
+          if (this.resumeTimerData.type == 'resume') {
+            this.timerTime = this.resumeTimerData.matterData.time;
+            let a = this.timerTime.split(':');
+            (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+            if (timeEntryData.QUANTITYTYPE == "Hours") {
+              QUANTITYTEM = (+a[0]) + ((+a[1]) / 60) + ((+a[2]) / 3600)
+            } else if (timeEntryData.QUANTITYTYPE == 'Minutes') {
+              QUANTITYTEM = ((+a[0]) * 60) + ((+a[1])) + '.' + a[2]
+            } else {
+              QUANTITYTEM = this.timerTime;
+            }
+          } else if (timeEntryData.QUANTITYTYPE == "Hours") {
+            QUANTITYTEM = timeEntryData.QUANTITY;
+            this.timerTime = this.secondsToHms(timeEntryData.QUANTITY * 60 * 60);
+          } else if (timeEntryData.QUANTITYTYPE == 'Minutes') {
+            QUANTITYTEM = timeEntryData.QUANTITY;
+            this.timerTime = this.secondsToHms(timeEntryData.QUANTITY * 60);
+          } else {
+            QUANTITYTEM = timeEntryData.QUANTITY;
+            this.timerTime = timeEntryData.QUANTITY + ':00';
+          }
+          let a = this.timerTime.split(':');
+          let seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
+          this.ActiveTimerData = { SHORTNAME: timeEntryData.SHORTNAME, MATTERGUID: timeEntryData.MATTERGUID, secound: seconds, WORKITEMGUID: timeEntryData.WORKITEMGUID };
+          this.matterChange('MatterGuid', response.DATA.WORKITEMS[0].MATTERGUID);
+          this.matterShortName = response.DATA.WORKITEMS[0].SHORTNAME;
+          localStorage.setItem('edit_WORKITEMGUID', response.DATA.WORKITEMS[0].WORKITEMGUID);
+          if (timeEntryData.ITEMTYPE == "2" || timeEntryData.ITEMTYPE == "3") {
+            this.resumeTimerForm.controls['QUANTITYTYPE'].setValue(timeEntryData.FEETYPE);
+          } else {
+            this.resumeTimerForm.controls['QUANTITYTYPE'].setValue(timeEntryData.QUANTITYTYPE);
+          }
+          this.resumeTimerForm.controls['matterautoVal'].setValue(timeEntryData.SHORTNAME + ' : ');
+          this.resumeTimerForm.controls['QUANTITY'].setValue(QUANTITYTEM);
+          this.resumeTimerForm.controls['MATTERGUID'].setValue(timeEntryData.MATTERGUID);
+          this.resumeTimerForm.controls['ITEMTYPE'].setValue(timeEntryData.ITEMTYPE);
+          this.resumeTimerForm.controls['INVOICEGUID'].setValue(timeEntryData.INVOICEGUID);
+          let ttyData = moment(timeEntryData.ITEMTIME, 'hh:mm');
+          this.resumeTimerForm.controls['ITEMTIME'].setValue(moment(ttyData).format('hh:mm A'));
+          this.resumeTimerForm.controls['FEEEARNER'].setValue(timeEntryData.FEEEARNER);
+          let tempDate = timeEntryData.ITEMDATE.split("/");
+          this.resumeTimerForm.controls['ITEMDATE'].setValue(timeEntryData.ITEMDATE);
+          this.resumeTimerForm.controls['ITEMDATETEXT'].setValue(new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]));
+          this.resumeTimerForm.controls['PRICEINCGST'].setValue(timeEntryData.PRICEINCGST);
+          this.resumeTimerForm.controls['PRICE'].setValue(timeEntryData.PRICE);
+          this.resumeTimerForm.controls['ADDITIONALTEXT'].setValue(timeEntryData.ADDITIONALTEXT);
+          this.resumeTimerForm.controls['ADDITIONALTEXTSELECT'].setValue(timeEntryData.ADDITIONALTEXT);
+          this.resumeTimerForm.controls['COMMENT'].setValue(timeEntryData.COMMENT);
+          this.matterChange('QuantityType', response.DATA.WORKITEMS[0].QUANTITYTYPE);
+        } else if (response.MESSAGE == 'Not logged in') {
+          this.dialogRef.close(false);
         }
-        let a = this.timerTime.split(':');
-        let seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
-        this.ActiveTimerData = { SHORTNAME: timeEntryData.SHORTNAME, MATTERGUID: timeEntryData.MATTERGUID, secound: seconds, WORKITEMGUID: timeEntryData.WORKITEMGUID };
-        this.matterChange('MatterGuid', response.DATA.WORKITEMS[0].MATTERGUID);
-        this.matterShortName = response.DATA.WORKITEMS[0].SHORTNAME;
-        localStorage.setItem('edit_WORKITEMGUID', response.DATA.WORKITEMS[0].WORKITEMGUID);
-        if (timeEntryData.ITEMTYPE == "2" || timeEntryData.ITEMTYPE == "3") {
-          this.resumeTimerForm.controls['QUANTITYTYPE'].setValue(timeEntryData.FEETYPE);
-        } else {
-          this.resumeTimerForm.controls['QUANTITYTYPE'].setValue(timeEntryData.QUANTITYTYPE);
-        }
-        this.resumeTimerForm.controls['matterautoVal'].setValue(timeEntryData.SHORTNAME + ' : ');
-        this.resumeTimerForm.controls['QUANTITY'].setValue(QUANTITYTEM);
-        this.resumeTimerForm.controls['MATTERGUID'].setValue(timeEntryData.MATTERGUID);
-        this.resumeTimerForm.controls['ITEMTYPE'].setValue(timeEntryData.ITEMTYPE);
-        this.resumeTimerForm.controls['INVOICEGUID'].setValue(timeEntryData.INVOICEGUID);
-        let ttyData = moment(timeEntryData.ITEMTIME, 'hh:mm');
-        this.resumeTimerForm.controls['ITEMTIME'].setValue(moment(ttyData).format('hh:mm A'));
-        this.resumeTimerForm.controls['FEEEARNER'].setValue(timeEntryData.FEEEARNER);
-        let tempDate = timeEntryData.ITEMDATE.split("/");
-        this.resumeTimerForm.controls['ITEMDATE'].setValue(timeEntryData.ITEMDATE);
-        this.resumeTimerForm.controls['ITEMDATETEXT'].setValue(new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]));
-        this.resumeTimerForm.controls['PRICEINCGST'].setValue(timeEntryData.PRICEINCGST);
-        this.resumeTimerForm.controls['PRICE'].setValue(timeEntryData.PRICE);
-        this.resumeTimerForm.controls['ADDITIONALTEXT'].setValue(timeEntryData.ADDITIONALTEXT);
-        this.resumeTimerForm.controls['ADDITIONALTEXTSELECT'].setValue(timeEntryData.ADDITIONALTEXT);
-        this.resumeTimerForm.controls['COMMENT'].setValue(timeEntryData.COMMENT);
-        this.matterChange('QuantityType', response.DATA.WORKITEMS[0].QUANTITYTYPE);
-      } else if (response.MESSAGE == 'Not logged in') {
-        this.dialogRef.close(false);
-      }
-      this.isLoadingResults = false;
-    }, err => {
-      this.isLoadingResults = false;
-      this.toastr.error(err);
-    });
+        this.isLoadingResults = false;
+      }, err => {
+        this.isLoadingResults = false;
+        this.toastr.error(err);
+      });
+    } else {
+      this.matterShortName = this.resumeTimerData.matterData.SHORTNAME;
+      this.resumeTimerForm.controls['matterautoVal'].setValue(this.resumeTimerData.matterData.SHORTNAME + ' : ' + this.resumeTimerData.matterData.MATTER);
+      this.resumeTimerForm.controls['MATTERGUID'].setValue(this.resumeTimerData.matterData.MATTERGUID);
+      this.timerTime = "00:00:00";
+    }
   }
   secondsToHms(d: any) {
     d = Number(d);
@@ -245,8 +251,6 @@ export class ResumeTimerComponent implements OnInit {
     }
     this.calculateData.Quantity = this.f.QUANTITY.value;
     if (this.calculateData.MatterGuid != '' && this.calculateData.Quantity != '' && (this.calculateData.QuantityType != '' || this.calculateData.FeeType != '')) {
-      console.log('here');
-      console.log(this.calculateData);
       this.isLoadingResults = true;
       this.Timersservice.calculateWorkItems(this.calculateData).subscribe(response => {
         if (response.CODE == 200 && response.STATUS == "success") {
@@ -301,7 +305,8 @@ export class ResumeTimerComponent implements OnInit {
     } else {
       PostData.QUANTITYTYPE = this.f.QUANTITYTYPE.value;
     }
-    let PostTimeEntryData: any = { FormAction: 'update', VALIDATEONLY: true, Data: PostData };
+    let formAction = this.resumeTimerData.type == 'new' ? 'insert' : 'update';
+    let PostTimeEntryData: any = { FormAction: formAction, VALIDATEONLY: true, Data: PostData };
     this.Timersservice.SetWorkItems(PostTimeEntryData).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.checkValidation(res.DATA.VALIDATIONS, PostTimeEntryData);

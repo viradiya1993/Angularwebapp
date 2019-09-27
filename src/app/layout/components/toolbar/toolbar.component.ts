@@ -153,12 +153,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.behaviorService.MainAuthorityData$.subscribe(result => {
             this.MainAuthorityData = result;
             if (result != null) {
-                if (result.AUTHORITY != undefined) { 
-                    if(result.AUTHORITY.WEBADDRESS !=''){
+                if (result.AUTHORITY != undefined) {
+                    if (result.AUTHORITY.WEBADDRESS != '') {
                         this.mainlegalAuthWebUrl = result.Main.WEBADDRESS;
-                    }else{ this.mainlegalAuthWebUrl = ''}
-                    this.DisMainAuthorityToolbar = 'Autho_yes'; }
-                else { this.DisMainAuthorityToolbar = 'Autho_no'; this.mainlegalAuthWebUrl='' }
+                    } else { this.mainlegalAuthWebUrl = '' }
+                    this.DisMainAuthorityToolbar = 'Autho_yes';
+                }
+                else { this.DisMainAuthorityToolbar = 'Autho_no'; this.mainlegalAuthWebUrl = '' }
             }
         });
         this.behaviorService.LegalAuthorityData$.subscribe(result => {
@@ -674,7 +675,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    undoRecouncilebtn(){
+    undoRecouncilebtn() {
 
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
@@ -889,11 +890,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             data: SpendMoneyPopdata
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result){
+            if (result) {
                 $("#refreshSpendMoneyTab").click();
                 $('#refreshRecouncilItem').click();
             }
-             
+
         });
     }
 
@@ -1500,10 +1501,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                const dialogRef = this.dialog.open(ResumeTimerComponent, { width: '100%', disableClose: true, data: { 'edit': '', 'matterData': '' } });
+                const dialogRef = this.dialog.open(ResumeTimerComponent, { width: '100%', disableClose: true, data: { 'type': 'new', 'matterData': result } });
                 dialogRef.afterClosed().subscribe(result => {
                     if (result) {
-                        // $('#refreshTimeEntryTab').click();
+                        $('#refreshTimeEntryTab').click();
                     }
 
                 });

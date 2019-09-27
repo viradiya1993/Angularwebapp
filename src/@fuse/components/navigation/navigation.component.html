@@ -22,15 +22,20 @@
                     <mat-list-item *ngIf="pages.TITLE !='Spend money' && pages.TITLE !='Receive money'" role="listitem" (click)="onChange(pages.TITLE)">
                         <mat-icon>
                             <img *ngIf="pages.TITLE=='Matters'" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                            <img *ngIf="pages.TITLE=='Contact'" src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                            <img *ngIf="pages.TITLE=='Contacts'" src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                             <img *ngIf="pages.TITLE=='Time entries'" src="assets/icons/web_app/icon_time_cost_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                             <img *ngIf="pages.TITLE=='Diary'" src="assets/icons/web_app/icon_diary_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                            <img *ngIf="pages.TITLE=='Invoice'" src="assets/icons/web_app/icon_invoice_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                            <img *ngIf="pages.TITLE=='Invoices'" src="assets/icons/web_app/icon_invoice_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                             <img *ngIf="pages.TITLE=='Spend money'" src="assets/icons/web_app/icon_expenses_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                             <img *ngIf="pages.TITLE=='Receive money'" src="assets/icons/web_app/icon_receipt_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                             <img *ngIf="pages.TITLE=='Generate document'" src="assets/icons/web_app/icon_letters_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                             <img *ngIf="pages.TITLE=='Authorities'" src="assets/icons/web_app/icon_authorities_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                             <img *ngIf="pages.TITLE=='Searching'" src="assets/icons/web_app/Search.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                            <img *ngIf="pages.TITLE=='Safe Custody'" src="assets/icons/web_app/icon_safecustody_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                            <img *ngIf="pages.TITLE=='Trust Money'" src="assets/icons/web_app/icon_trust_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                            <img *ngIf="pages.TITLE=='Trust End Of Month'" src="assets/icons/web_app/icon_trust_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+
+                            <img *ngIf="pages.TITLE=='Trust Banking'" src="assets/icons/web_app/icon_trust_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                         </mat-icon>
                         <div class="side_bar_title">{{pages.TITLE}}</div>
                         <mat-icon class="star">{{pages.STAR}}</mat-icon>

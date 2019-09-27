@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
-import { SystemSetting } from './../../../../_services';
+import { MainAPiServiceService } from './../../../../_services';
 
 @Component({
   selector: 'app-reginoal-setting',
@@ -12,14 +12,18 @@ import { SystemSetting } from './../../../../_services';
 export class ReginoalSettingComponent implements OnInit {
   @Input() errorWarningData: any;
   @Input() SettingForm: FormGroup;
-  getDropDownValue:any=[];
-  constructor(private SystemSetting:SystemSetting) { }
+  getDropDownValue: any = [];
+  countryList: any = [];
+  constructor(private _mainAPiServiceService: MainAPiServiceService) { }
   ngOnInit() {
-    this.SystemSetting.getSystemSetting({}).subscribe(response=>{
-      console.log(response);
-      this.getDropDownValue=response.DATA.LISTS;
-     
-      })
+    this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response => {
+      this.getDropDownValue = response.DATA.LISTS;
+    });
+    this._mainAPiServiceService.getSetData({ 'LookupType': 'Country List' }, 'GetLookups').subscribe(responses => {
+      if (responses.CODE === 200 && responses.STATUS === 'success') {
+        this.countryList = responses.DATA.LOOKUPS;
+      }
+    });
   }
 
 }

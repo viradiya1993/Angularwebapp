@@ -60,55 +60,55 @@
                     </mat-tab-group>
                 </div>
                 <!-- tab detail end -->
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <div fxFlex="40" style="text-align: right; padding-right: 19px !important;">
+                <div class="value_label_parent">
+                    <div fxFlex="40" class="label_width">
                         Discount
                     </div>
-                    <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="20" class="value_width">
                         <input class="sideText" matInput readonly formControlName="DISEXAMOUNT">
                         <span class="currency_sign" matPrefix>$&nbsp;</span>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="20" class="value_width">
                         <input class="sideText" matInput readonly formControlName="DISGSTAMOUNT">
                         <span class="currency_sign" matPrefix>$&nbsp;</span>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="20" class="value_width">
                         <input class="sideText" matInput readonly formControlName="DISUINAMOUNT">
                         <span class="currency_sign" matPrefix>$&nbsp;</span>
                     </mat-form-field>
                 </div>
                 <mat-divider></mat-divider>
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <div fxFlex="40" style="text-align: right; padding-right: 19px !important;">
+                <div class="value_label_parent">
+                    <div fxFlex="40" class="label_width">
                         Original Total
                     </div>
-                    <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="20" class="value_width">
                         <input class="sideText" matInput readonly placeholder="Date Received" [(ngModel)]="ORIEXTOTAL" formControlName="ORIEXTOTAL">
                         <span class="currency_sign" matPrefix>$&nbsp;</span>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="20" class="value_width">
                         <input class="sideText" matInput readonly placeholder="Date Received" [(ngModel)]="ORIGSTTOTAL" formControlName="ORIGSTTOTAL">
                         <span class="currency_sign" matPrefix>$&nbsp;</span>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="20" class="value_width">
                         <input class="sideText" matInput readonly placeholder="Date Received" [(ngModel)]="ORIINTOTAL" formControlName="ORIINTOTAL">
                         <span class="currency_sign" matPrefix>$&nbsp;</span>
                     </mat-form-field>
                 </div>
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <div fxFlex="40" style="text-align: right;padding-right: 19px !important;">
+                <div class="value_label_parent">
+                    <div fxFlex="40" class="label_width">
                         Override The Total
                     </div>
-                    <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
-                        <input class="sideText" matInput placeholder="Date Received" [(ngModel)]="OVEEXTOTAL" formControlName="OVEEXTOTAL">
+                    <mat-form-field appearance="outline" fxFlex="20" class="value_width">
+                        <input class="sideText" matInput placeholder="Date Received" (focusout)="calculateOverrideTotal('ex')" [(ngModel)]="OVEEXTOTAL" formControlName="OVEEXTOTAL">
                         <span class="currency_sign" matPrefix>$&nbsp;</span>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="20" class="value_width">
                         <input class="sideText" matInput readonly placeholder="Date Received" [(ngModel)]="OVEGSTTOTAL" formControlName="OVEGSTTOTAL">
                         <span class="currency_sign" matPrefix>$&nbsp;</span>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="20" class="pr-4">
-                        <input class="sideText" matInput placeholder="Date Received" [(ngModel)]="OVEINTOTAL" formControlName="OVEINTOTAL">
+                    <mat-form-field appearance="outline" fxFlex="20" class="value_width">
+                        <input class="sideText" matInput placeholder="Date Received" (focusout)="calculateOverrideTotal('in')" [(ngModel)]="OVEINTOTAL" formControlName="OVEINTOTAL">
                         <span class="currency_sign" matPrefix>$&nbsp;</span>
                     </mat-form-field>
                 </div>

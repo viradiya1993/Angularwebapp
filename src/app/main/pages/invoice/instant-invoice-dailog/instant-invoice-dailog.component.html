@@ -24,18 +24,18 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                         <mat-label>Invoice No</mat-label>
-                        <input matInput placeholder="Date Received" formControlName="Invoiceno">
+                        <input matInput placeholder="Invoive No" formControlName="Invoiceno">
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
                         <mat-label>Invoice Date</mat-label>
-                        <input (dateInput)="CompletedDate('input', $event)" formControlName="INVOICEDATETEXT" (dateChange)="CompletedDate('change', $event)" matInput [matDatepicker]="picker3">
+                        <input (dateInput)="InvoiceStartDate('input', $event)" formControlName="INVOICEDATE" (dateChange)="InvoiceStartDate('change', $event)" matInput [matDatepicker]="picker3">
                         <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                         <mat-datepicker #picker3></mat-datepicker>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                         <mat-label>Due Date</mat-label>
-                        <input (dateInput)="CompletedDate('input', $event)" formControlName="DUEDATETEXT" (dateChange)="CompletedDate('change', $event)" matInput [matDatepicker]="picker">
+                        <input (dateInput)="InvoiceDueDate('input', $event)" formControlName="DUEDATE" (dateChange)="InvoiceDueDate('change', $event)" matInput [matDatepicker]="picker">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
@@ -43,11 +43,11 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                         <mat-label>Duration</mat-label>
-                        <input matInput placeholder="Duration" formControlName="Duration">
+                        <input matInput placeholder="Duration" formControlName="QUANTITY">
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                         <mat-label>Type</mat-label>
-                        <mat-select>
+                        <mat-select formControlName="QUANTITYTYPE"  >
                             <mat-option *ngFor="let option of optionList" value="{{option.ACTIVITYID}}">{{option.DESCRIPTION}}</mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -75,22 +75,23 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                         <mat-label>Total (Ex-GST)</mat-label>
-                        <input matInput placeholder="Date Received" formControlName="Totalexgst">
+                        <input [(ngModel)]="TotalExGst" (focusout)="calcTotalEXGST()" matInput placeholder="Total (Ex-GST)" formControlName="Totalexgst">
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                         <mat-label>GST</mat-label>
-                        <input matInput readonly placeholder="Date Received" formControlName="GST">
+                        <input [(ngModel)]="GstVal" matInput readonly placeholder="GST" formControlName="GST">
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
                         <mat-label>Total (Inc-GST)</mat-label>
-                        <input matInput placeholder="Date Received" formControlName="Totalincgst">
+                        <input [(ngModel)]="TotalIncGst" (focusout)="calcTotalINGST()" matInput placeholder="Total (Inc-GST)" formControlName="Totalincgst">
                     </mat-form-field>
                 </div>
             </form>
         </div>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
-        <button mat-raised-button color="accent" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
+        <button mat-raised-button color="accent" (click)="SaveInstaceInvoice()" [disabled]="isspiner"><mat-spinner style=" zoom: 0.2;position: absolute;right: 0;left: 0;
+            margin: auto;top: 0;bottom: 0;" *ngIf="isspiner"></mat-spinner>Save</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don`t Save</button>
     </mat-dialog-actions>
 </div>

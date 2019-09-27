@@ -40,10 +40,9 @@
                 <mat-icon matSuffix (click)='SelectContact()'  fxFlex="5">
                     <img class="seticon" src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                 </mat-icon>
-
                 <mat-form-field class="example p-16" fxFlex="23" appearance="outline">
                     <mat-label>Status</mat-label>
-                    <mat-select formControlName="status">
+                    <mat-select (selectionChange)="selectStatus($event.value)" formControlName="status">
                         <mat-option value="All">All</mat-option>
                         <mat-option value="Incomplete">Incomplete</mat-option>
                         <mat-option value="Pending">Pending</mat-option>
@@ -52,12 +51,10 @@
                         <mat-option value="Error">Error</mat-option>
                     </mat-select>
                 </mat-form-field>
-
                 <mat-form-field class="example p-16" fxFlex="22" appearance="outline" >
                     <mat-label>Search</mat-label>
-                    <input formControlName="Search" readonly  matInput>
+                    <input formControlName="Search" matInput>
                 </mat-form-field>
-              
             </form>
         </div>
         <div id="searchtab" class="page-layout simple left-sidebar  inner-sidebar">
@@ -65,7 +62,7 @@
                 <div class="center more_tbl_clmn" fusePerfectScrollbar>
                     <div class="content">
                         <div class="btn top_right_action_billing_position">
-                            <button mat-icon-button (click)="openDialog()" aria-label="More">
+                            <button mat-icon-button  aria-label="More" (click)="openDialog()">
                                 <mat-icon class="secondary-text">more_vert</mat-icon>
                             </button>
                         </div>
@@ -75,7 +72,7 @@
                                     <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                                 </div>
                                 <div class="example-containerdata">
-                                    <!-- <table *ngIf="WorkInProgressdata" mat-table #table [dataSource]="WorkInProgressdata" matSort [@animateStagger]="{value:'50'}">
+                                    <table mat-table #table [dataSource]="Search_table" matSort [@animateStagger]="{value:'50'}">
                                         <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
                                             <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header> {{ tempColobj[item].DESCRIPTION }}</th>
                                          
@@ -84,7 +81,7 @@
                                         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                                         <tr mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                         </tr>
-                                    </table> -->
+                                    </table>
                                 </div>
                             </div>
                         </div>

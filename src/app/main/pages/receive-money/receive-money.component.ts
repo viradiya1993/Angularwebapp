@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { TableColumnsService, MattersService, TimersService, GetReceptData } from '../../../_services';
+import { TableColumnsService, MainAPiServiceService } from '../../../_services';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
@@ -18,6 +18,7 @@ import { MatSort } from '@angular/material';
 })
 export class ReceiveMoneyComponent implements OnInit {
   tempColobj: any;
+  totalAountData: any = { SEARCHPASSWORD: 0, TOTALEXGST: 0 };
   ColumnsObj: any;
   isLoadingResults: boolean;
   displayedColumns: any = [];
@@ -35,10 +36,8 @@ export class ReceiveMoneyComponent implements OnInit {
     private dialog: MatDialog,
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private Timersservice: TimersService,
-    private GetReceptData: GetReceptData,
+    public _mainAPiServiceService: MainAPiServiceService,
     public datepipe: DatePipe,
-    private _mattersService: MattersService,
   ) { }
   receiveMoneyForm: FormGroup;
   ngOnInit() {
@@ -47,7 +46,7 @@ export class ReceiveMoneyComponent implements OnInit {
     if (JSON.parse(localStorage.getItem('recive_money_DateFilter'))) {
       this.lastFilter = JSON.parse(localStorage.getItem('recive_money_DateFilter'));
     } else {
-      this.lastFilter = { "INCOMECLASS": "Receipt", 'ItemDateStart': this.datepipe.transform(new Date(), 'dd/MM/yyyy'), 'ItemDateEnd': this.datepipe.transform(dt, 'dd/MM/yyyy') };
+      this.lastFilter = { "INCOMECLASS": "Receipt", 'ITEMSTARTDATE': this.datepipe.transform(new Date(), 'dd/MM/yyyy'), 'ITEMENDDATE': this.datepipe.transform(dt, 'dd/MM/yyyy') };
     }
 
     localStorage.setItem('recive_money_DateFilter', JSON.stringify(this.lastFilter));
@@ -59,19 +58,24 @@ export class ReceiveMoneyComponent implements OnInit {
       ReceiptsTotalEx: [''],
       ReceiveMoneyType: [''],
     });
-    if (this.lastFilter.ItemDateStart && this.lastFilter.ItemDateEnd) {
-      let Sd = new Date(this.lastFilter.ItemDateStart);
-      let ed = new Date(this.lastFilter.ItemDateEnd);
-      this.receiveMoneyForm.controls['DateRange'].setValue({ begin: Sd, end: ed });
+    if (this.lastFilter.ITEMSTARTDATE && this.lastFilter.ITEMENDDATE) {
+      // let Sd = new Date(this.lastFilter.ITEMSTARTDATE);
+      // let ed = new Date(this.lastFilter.ITEMENDDATE);
+      this.receiveMoneyForm.controls['DateRange'].setValue({ begin: new Date(), end: dt });
     }
     this.receiveMoneyForm.controls['ShowWhat'].setValue(this.lastFilter.INCOMECLASS);
     this.getTableFilter();
     this.forListing(this.lastFilter);
   }
+  refreshReceiceMoany(){
+    this.forListing( this.lastFilter);
+  }
   forListing(data) {
+    this.receiveMoneydata = [];
     this.isLoadingResults = true;
-    this.GetReceptData.getIncome(data).subscribe(response => {
+    this._mainAPiServiceService.getSetData(data, 'GetIncome').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
+        this.totalAountData = { TOTALINCGST: response.DATA.TOTALINCGST, TOTALEXGST: response.DATA.TOTALEXGST };
         if (response.DATA.INCOMEITEMS[0]) {
           localStorage.setItem('receiptData', JSON.stringify(response.DATA.INCOMEITEMS[0]));
           this.highlightedRows = response.DATA.INCOMEITEMS[0].INCOMEGUID;
@@ -79,6 +83,7 @@ export class ReceiveMoneyComponent implements OnInit {
         }
         this.receiveMoneydata = new MatTableDataSource(response.DATA.INCOMEITEMS)
         this.receiveMoneydata.paginator = this.paginator;
+        this.receiveMoneydata.sort = this.sort;
       }
       this.isLoadingResults = false;
     }, err => {
@@ -102,8 +107,8 @@ export class ReceiveMoneyComponent implements OnInit {
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
     let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');
-    this.lastFilter.ItemDateStart = begin;
-    this.lastFilter.ItemDateEnd = end;
+    this.lastFilter.ITEMSTARTDATE = begin;
+    this.lastFilter.ITEMENDDATE = end;
 
     localStorage.setItem('recive_money_DateFilter', JSON.stringify(this.lastFilter));
     this.forListing(this.lastFilter);

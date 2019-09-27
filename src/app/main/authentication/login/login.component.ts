@@ -57,6 +57,7 @@ export class LoginComponent implements OnInit {
       if (data) {
         this.isspiner = false;
         this._AppPermissionsService.applictionSetting(JSON.parse(localStorage.getItem('Login_response')));
+        setInterval(() => this.authenticationService.MaintainLicence(), 60000);
         this.router.navigate(['matters']);
       } else {
         this.isspiner = false;

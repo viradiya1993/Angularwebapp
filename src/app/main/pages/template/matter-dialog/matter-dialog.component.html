@@ -1,30 +1,78 @@
-<div class="popup_main_div corres_popup_main select_metter_main_div" cdkDrag>
-    <h2 cdkDragHandle mat-dialog-title> {{Title}} Generated
-        <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog"><mat-icon>close</mat-icon></button>
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+</div>
+<div cdkDrag class="popup_main_div add_edit_contact_main">
+    <h2 cdkDragHandle mat-dialog-title>{{whichTypeTemplate}} Generated
+        <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
+            <mat-icon>close</mat-icon>
+        </button>
     </h2>
+    <div mat-dialog-content class="mat-typography main">
+        <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+            <!--  -->
+            <div fxLayout="column" fxFlex="1 0 auto" name="form" class="TemplatePopup"
+                *ngIf="whichTypeTemplate == 'Template'">
 
+                <div class="pr-4" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <div fxFlex="70" class="middle" fxLayoutAlign="start start"><span>The {{filefolder_Name}} has been
+                            produced.</span>
+                    </div>
 
-    <div mat-dialog-content class="mat-typography">
-        <div class="example-loading-shade" *ngIf="isLoadingResults">
-            <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
-        </div>
-        <div class="popup_body">
-
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <div fxLayoutAlign="start center">The {{filefolder_Name}} has been produced.</div>
+                    <!-- <a href="{{this.base_url}}{{this.filefolderUrl}}" target="_blank">
+                        <button mat-raised-button mat-dialog-close color="accent">Click here to view it</button>
+                    </a> -->
+                    <a fxFlex="30" href="{{this.base_url}}{{this.filefolderUrl}}" target="_blank">
+                        <button mat-raised-button mat-dialog-close color="accent">Click here to view it</button>
+                    </a>
+                </div>
             </div>
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="button">
-                <a href="{{this.base_url}}{{this.filefolderUrl}}" target="_blank">
-                    <button mat-raised-button mat-dialog-close color="accent">Click here to view it</button>
-                </a>
+            <div fxLayout="column" fxFlex="1 0 auto" name="form" class="TemplatePopup"
+                *ngIf="whichTypeTemplate == 'Email'">
+                <div *ngIf="IsLoading =='true'" class="pr-4" fxLayout="row" fxLayoutAlign="start center"
+                fxFlex="1 0 auto">
+                <div fxFlex="70" class="middle" fxLayoutAlign="start center">
+                    <h2>Loading..........</h2>
+                </div>
             </div>
-
+                <div *ngFor="let val of PacksEmail; let index = index"  class="pr-4" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <div fxFlex="70" class="middle" fxLayoutAlign="start start"><span>The {{filefolder_Name}} has been
+                            produced.</span>
+                    </div>
+                    <a target="_blank">
+                        <button mat-raised-button (click)="SendMain(val)" color="accent">Click here to view it</button>
+                    </a>
+                </div>
+            </div>
+            <!--  -->
+            <div fxLayout="column" fxFlex="1 0 auto" name="form" class="TemplatePopup"
+                *ngIf="whichTypeTemplate == 'Pack'">
+                <div *ngIf="IsLoading =='true'" class="pr-4" fxLayout="row" fxLayoutAlign="start center"
+                    fxFlex="1 0 auto">
+                    <div fxFlex="70" class="middle" fxLayoutAlign="start center">
+                        <h2>Loading..........</h2>
+                    </div>
+                </div>
+                <div class="pr-4" *ngFor="let val of PacksDocument; let index = index" fxLayout="row"
+                    fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <div fxFlex="70" class="middle" fxLayoutAlign="start start"><span>{{index}} Document has been
+                            produced.</span>
+                    </div>
+                    <a class="btn_mrg" fxFlex="30" href="{{this.base_url}}{{val.FILENAME}}" target="_blank">
+                        <button mat-raised-button color="accent">Click here to view it</button>
+                    </a>
+                </div>
+                <div class="pr-4" *ngFor="let val of PacksEmail; let index = index" fxLayout="row"
+                    fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <div fxFlex="70" class="middle" fxLayoutAlign="start start"><span>{{index}} Email has been
+                            produced.</span></div>
+                    <a class="btn_mrg" target="_blank" fxFlex="30">
+                        <button mat-raised-button (click)="SendMain(val)" color="accent">Click here to view it</button>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
-
     <mat-dialog-actions align="end" class="popup_ftr">
-        <div class="right_popup_btn">
-            <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
-        </div>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
     </mat-dialog-actions>
 </div>

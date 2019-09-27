@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { MatDialog, MatDatepickerInputEvent } from '@angular/material';
 import { MatterAddressPopupComponent } from '../matter-address-popup/matter-address-popup.component';
 import { DatePipe } from '@angular/common';
-import { MattersService } from 'app/_services';
+import {  MainAPiServiceService } from 'app/_services';
 
 @Component({
   selector: 'app-property-purchase',
@@ -12,12 +12,13 @@ import { MattersService } from 'app/_services';
 })
 export class PropertyPurchaseComponent implements OnInit {
   ClientStatusData: any;
-  constructor(public MatDialog: MatDialog, private _mattersService: MattersService, private datepipe: DatePipe) { }
+  constructor(public MatDialog: MatDialog,  private _mainAPiServiceService: MainAPiServiceService, private datepipe: DatePipe) { }
 
   @Input() matterdetailForm: FormGroup;
   @Input() errorWarningData: any;
   ngOnInit() {
-    this._mattersService.getMattersClasstype({ 'LookupType': 'Client Status' }).subscribe(responses => {
+   
+    this._mainAPiServiceService.getSetData({ 'LookupType': 'client status' }, 'GetLookups').subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.ClientStatusData = responses.DATA.LOOKUPS;
       }

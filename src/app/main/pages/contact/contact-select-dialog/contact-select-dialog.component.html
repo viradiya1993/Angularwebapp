@@ -74,7 +74,7 @@
                 </div>
             </div>
             <div class="example-containerdata">
-                <table mat-table #table [dataSource]="Contactdata" [@animateStagger]="{value:'50'}" matSort class="mat-elevation-z8">
+                <table mat-table #table [dataSource]="Contactdata" [@animateStagger]="{value:'50'}" matSort class="">
                     <ng-container matColumnDef="CONTACTNAME">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Contact name</th>
                         <td mat-cell *matCellDef="let row">
@@ -102,11 +102,11 @@
     </div>
     <mat-dialog-actions align="end" class="popup_ftr contact_select_footer">
         <div class="left_popup_btn">
-            <button mat-raised-button color="accent" (click)="AddContactsDialog()">New Contact</button>
-            <button mat-raised-button color="accent" (click)="EditContactsDialog()">Edit Contact</button>
-            <button mat-raised-button color="accent" (click)="deleteContact()">Delete Contact</button>
+            <button mat-raised-button color="accent" (click)="AddContactsDialog()" [ngClass]="appPermissions[3]?.Create==0 ? 'disabled-click-cursor' : ''">New Contact</button>
+            <button mat-raised-button color="accent" (click)="EditContactsDialog()" [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click-cursor' : ''">Edit Contact</button>
+            <button mat-raised-button color="accent" (click)="deleteContact()" [ngClass]="appPermissions[3]?.Delete==0 ? 'disabled-click-cursor' : ''">Delete Contact</button>
         </div>
-        <button mat-raised-button [mat-dialog-close]="currentMatterData" color="accent">Select</button>
+        <button [ngClass]="appPermissions[3]?.Access==0 ? 'disabled-click-cursor' : ''" mat-raised-button [mat-dialog-close]="currentMatterData" color="accent">Select</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
     </mat-dialog-actions>
 </div>

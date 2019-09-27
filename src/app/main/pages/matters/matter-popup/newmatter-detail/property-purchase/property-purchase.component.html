@@ -27,9 +27,9 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" class="pr-4" fxFlex="33" [ngClass]="{'has-error':errorWarningData.Error?.STAMPDUTYDATE,'has-warning':errorWarningData.Warning?.STAMPDUTYDATE}">
             <mat-label>Stamp Duty Due</mat-label>
-            <input (dateInput)="StempDutyDateClick('input', $event)" formControlName="STAMPDUTYDATE" (dateChange)="StempDutyDateClick('change', $event)" matInput name="STAMPDUTYDATE" [matDatepicker]="STAMPDUTYDATE">
-            <mat-datepicker-toggle matSuffix [for]="STAMPDUTYDATE"></mat-datepicker-toggle>
-            <mat-datepicker #STAMPDUTYDATE></mat-datepicker>
+            <input (dateInput)="StempDutyDateClick('input', $event)" formControlName="STAMPDUTYDATETEXT" (dateChange)="StempDutyDateClick('change', $event)" matInput [matDatepicker]="STAMPDUTYDATESELECT">
+            <mat-datepicker-toggle matSuffix [for]="STAMPDUTYDATESELECT"></mat-datepicker-toggle>
+            <mat-datepicker #STAMPDUTYDATESELECT></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DEPOSITBONDAMOUNT,'has-warning':errorWarningData.Warning?.DEPOSITBONDAMOUNT}">
@@ -39,7 +39,7 @@
 
         <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.SETTLEMENTDATE,'has-warning':errorWarningData.Warning?.SETTLEMENTDATE}">
             <mat-label>Settlement Date</mat-label>
-            <input (dateInput)="SettlementDateClick('input', $event)" formControlName="SETTLEMENTDATETEXTPP" (dateChange)="SettlementDateClick('change', $event)" matInput name="SettlementDate" [matDatepicker]="SettlementDate">
+            <input (dateInput)="SettlementDateClick('input', $event)" formControlName="SETTLEMENTDATETEXTPP" (dateChange)="SettlementDateClick('change', $event)" matInput [matDatepicker]="SettlementDate">
             <mat-datepicker-toggle matSuffix [for]="SettlementDate"></mat-datepicker-toggle>
             <mat-datepicker #SettlementDate></mat-datepicker>
         </mat-form-field>
@@ -91,9 +91,9 @@
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="50" [ngClass]="{'has-error':errorWarningData.Error?.ClientStatus,'has-warning':errorWarningData.Warning?.ClientStatus}">
+        <mat-form-field appearance="outline" fxFlex="50" [ngClass]="{'has-error':errorWarningData.Error?.CLIENTSTATUS,'has-warning':errorWarningData.Warning?.CLIENTSTATUS}">
             <mat-label> Status</mat-label>
-            <mat-select #value formControlName="ClientStatus">
+            <mat-select #value formControlName="CLIENTSTATUS">
                 <mat-option *ngFor="let optionval of ClientStatusData" value="{{optionval.LOOKUPGUID}}">{{optionval.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
         </mat-form-field>

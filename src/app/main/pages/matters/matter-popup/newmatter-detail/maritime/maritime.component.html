@@ -41,7 +41,7 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.INCIDENTDATE,'has-warning':errorWarningData.Warning?.INCIDENTDATE}">
             <mat-label>Incident Date</mat-label>
-            <input (dateInput)="IncidentDateClick('input', $event)" formControlName="INCIDENTDATE" (dateChange)="IncidentDateClick('change', $event)" matInput [matDatepicker]="IncidentDate">
+            <input (dateInput)="IncidentDateClick('input', $event)" formControlName="INCIDENTDATETEXTM" (dateChange)="IncidentDateClick('change', $event)" matInput [matDatepicker]="IncidentDate">
             <mat-datepicker-toggle matSuffix [for]="IncidentDate"></mat-datepicker-toggle>
             <mat-datepicker #IncidentDate></mat-datepicker>
         </mat-form-field>

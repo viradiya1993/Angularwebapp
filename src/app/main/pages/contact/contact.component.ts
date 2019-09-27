@@ -1,12 +1,13 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-import { ContactService, TableColumnsService } from '../../../_services';
+import { TableColumnsService, MainAPiServiceService } from '../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatSort } from '@angular/material';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-contact',
@@ -15,7 +16,9 @@ import { MatSort } from '@angular/material';
   encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
-export class ContactComponent implements OnInit {
+
+export class ContactComponent implements OnInit, AfterViewInit {
+  subscription: Subscription;
   highlightedRows: any;
   ColumnsObj = [];
   theme_type = localStorage.getItem('theme_type');
@@ -31,36 +34,40 @@ export class ContactComponent implements OnInit {
   pageSize: any;
   Contactdata;
   selectedVal: any;
-  filterVals = { 'active': '1', 'FirstLetter': 'a', 'SEARCH': '', 'ContactType': '' };
+  filterVals = { 'active': 'all', 'FirstLetter': 'a', 'SEARCH': '', 'ContactType': '' };
   constructor(
     private dialog: MatDialog,
     private TableColumnsService: TableColumnsService,
-    private Contact: ContactService,
     private toastr: ToastrService,
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private _mainAPiServiceService: MainAPiServiceService,
+    private cd: ChangeDetectorRef
   ) {
     this.contactFilter = this._formBuilder.group({
-      ContactType: ['all'],
-      active: ['all'],
-      FirstLetter: ['a'],
+      ContactType: [''],
+      active: [''],
+      FirstLetter: [''],
       search: [''],
     });
   }
 
- 
+
 
   ngOnInit() {
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.getTableFilter();
     if (JSON.parse(localStorage.getItem('contact_Filter'))) {
       this.filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
-      this.contactFilter.controls['active'].setValue(this.filterVals.active);
-      this.contactFilter.controls['ContactType'].setValue(this.filterVals.ContactType);
-      this.contactFilter.controls['FirstLetter'].setValue(this.filterVals.FirstLetter);
+      this.contactFilter.controls['active'].setValue(this.filterVals.active == '' ? "all" : this.filterVals.active);
+      this.contactFilter.controls['ContactType'].setValue(this.filterVals.ContactType == '' ? "all" : this.filterVals.ContactType);
+      this.contactFilter.controls['FirstLetter'].setValue(this.filterVals.FirstLetter == '' ? "-1" : this.filterVals.FirstLetter);
     } else {
       localStorage.setItem('contact_Filter', JSON.stringify(this.filterVals));
     }
     this.LoadData(this.filterVals);
+  }
+  ngAfterViewInit() {
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
+    this.cd.detectChanges();
   }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
@@ -68,7 +75,6 @@ export class ContactComponent implements OnInit {
   }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('contacts', '').subscribe(response => {
-      //console.log(response);return;
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
         this.tempColobj = data.tempColobj;
@@ -86,16 +92,26 @@ export class ContactComponent implements OnInit {
     this.LoadData(this.filterVals);
   }
   LoadData(data) {
+    // GetContact
+    // this._mainAPiServiceService.getSetData(postData, 'SetActivity').subscribe
+    this.Contactdata = [];
     this.isLoadingResults = true;
-    this.Contact.ContactData(data).subscribe(response => {
+    this.subscription = this._mainAPiServiceService.getSetData(data, 'GetContact').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Contactdata = new MatTableDataSource(response.DATA.CONTACTS);
-        this.Contactdata.sort = this.sort;
         this.Contactdata.paginator = this.paginator;
+        this.Contactdata.sort = this.sort;
         if (response.DATA.CONTACTS[0]) {
           localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);
+          // localStorage.setItem('contactData',  JSON.stringify(response.DATA.CONTACTS[0]));
+
           this.highlightedRows = response.DATA.CONTACTS[0].CONTACTGUID;
         }
+        this.isLoadingResults = false;
+      } else if (response.CODE == 406 && response.MESSAGE == "Permission denied") {
+        this.Contactdata = new MatTableDataSource([]);
+        this.Contactdata.paginator = this.paginator;
+        this.Contactdata.sort = this.sort;
         this.isLoadingResults = false;
       }
     }, err => {
@@ -104,13 +120,11 @@ export class ContactComponent implements OnInit {
     });
     this.pageSize = localStorage.getItem('lastPageSize');
   }
-
-
   //for edit popup
-  editContact(val) {
+  editContact(val, row) {
     localStorage.setItem('contactGuid', val);
+    // localStorage.setItem('contactData',row);
   }
-
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
@@ -156,6 +170,9 @@ export class ContactComponent implements OnInit {
     this.filterVals.SEARCH = this.f.search.value;
     this.LoadData(this.filterVals);
 
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
 

@@ -49,7 +49,7 @@
             <mat-checkbox fxFlex="14.2">Wednesday</mat-checkbox>
             <mat-checkbox fxFlex="14.2">Thursday</mat-checkbox>
             <mat-checkbox fxFlex="14.2">Friday</mat-checkbox>
-            <mat-checkbox fxFlex="14.2">Saturaday</mat-checkbox>
+            <mat-checkbox fxFlex="14.2">Saturday</mat-checkbox>
             <mat-checkbox fxFlex="14.2">Sunday</mat-checkbox>
         </div>
     </div> 
@@ -115,17 +115,18 @@
     </div>
 
     <!-- Last Section Start -->
+   
     <div class="LastSection" fxLayout="column"  *ngIf="RedioBtnValue ==='Daily' || RedioBtnValue ==='Weekly'|| RedioBtnValue ==='Monthly' || RedioBtnValue ==='Yearly'">
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">  
-            <mat-radio-group aria-label="Select an option" fxFlex="33" class="pr-4" (ngModelChange)="radiobtndate()" name="RedioDate" formControlName="RedioDate">
+            <mat-radio-group aria-label="Select an option" fxFlex="20" class="radiobtn_size pr-4" (ngModelChange)="radiobtndate()" name="RedioDate" formControlName="RedioDate">
                 <mat-radio-button value="EndDate">No End Date</mat-radio-button>
             </mat-radio-group>
 
-            <mat-radio-group aria-label="Select an option" fxFlex="33" class="pr-4" (ngModelChange)="radiobtndate()" name="RedioDate" formControlName="RedioDate">
+            <mat-radio-group aria-label="Select an option" fxFlex="20" class="radiobtn_size pr-4" (ngModelChange)="radiobtndate()" name="RedioDate" formControlName="RedioDate">
                 <mat-radio-button value="EndBy" >End By</mat-radio-button>
             </mat-radio-group>
 
-            <mat-form-field appearance="outline" class="example" fxFlex="34" class="pr-4">
+            <mat-form-field appearance="outline" class="example" fxFlex="60" class="pr-4">
                 <mat-label>Date</mat-label>
                 <input (dateInput)="choosedDate($event)" matInput  [matDatepicker]="picker" formControlName ="Date" >
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

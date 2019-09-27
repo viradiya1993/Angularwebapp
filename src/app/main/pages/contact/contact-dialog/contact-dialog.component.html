@@ -34,7 +34,7 @@
                             <app-person [contactForm]="contactForm" [editDataCompny]="editDataCompny" [errorWarningData]="errorWarningData"></app-person>
                         </mat-tab>
                         <mat-tab *ngIf="nameSelected==='Company'" label="Company">
-                            <app-company [errorWarningData]="errorWarningData"></app-company>
+                            <app-company [contactForm]="contactForm" [errorWarningData]="errorWarningData"></app-company>
                         </mat-tab>
                         <mat-tab label="Ph/Web">
                             <app-ph [contactForm]="contactForm" [errorWarningData]="errorWarningData"></app-ph>

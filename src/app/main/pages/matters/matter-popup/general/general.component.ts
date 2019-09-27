@@ -54,10 +54,10 @@ export class GeneralComponent implements OnInit {
     });
   }
   calcPE() {
-    this.PRICEVALGST = round(this.f.EstimateFromTotalExGST.value * 1.1).toFixed(2);
+    this.PRICEVALGST = round(this.f.ESTIMATEFROMTOTALEXGST.value * 1.1).toFixed(2);
   }
   calcPI() {
-    this.PRICEVAL = round(this.f.EstimateFromTotalIncGST.value / 1.1).toFixed(2);
+    this.PRICEVAL = round(this.f.ESTIMATEFROMTOTALINCGST.value / 1.1).toFixed(2);
   }
 
 }

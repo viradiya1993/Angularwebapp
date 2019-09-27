@@ -1,0 +1,103 @@
+<div id="task" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
+    <div class="content" fxLayoutAlign="center">
+        <div class="center p-24 more_tbl_clmn list_tbl_main" fusePerfectScrollbar>
+            <div class="matter-serach-div sticky_search_div responsive_auto">
+                <form [formGroup]="MainTask">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field fxFlex="20" class="example" appearance="outline">
+                                    <mat-label>Status</mat-label>
+                                    <mat-select (selectionChange)="selectStatus($event.value)" formControlName="status"  >
+                                        <mat-option value=" ">All</mat-option>
+                                        <mat-option value="Incomplete">Incomplete</mat-option>
+                                        <mat-option value="Not Started">Not Started</mat-option>
+                                        <mat-option value="In Progress">In Progress</mat-option>
+                                        <mat-option value="Completed">Completed</mat-option>
+                                        <mat-option value="Waiting on someone else">Waiting on someone else</mat-option>
+                                        <mat-option value="Deferred">Deferred</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-form-field  fxFlex="20" class="example" appearance="outline">
+                                    <mat-label>User</mat-label>
+                                    <mat-select  (selectionChange)="selectUsers($event.value)"  formControlName="User">
+                                        <mat-option *ngFor="let val of GetUSERS" [value]="val.USERNAME" >{{val.USERNAME}}</mat-option>
+                                        <!-- <mat-option value="None">None</mat-option>
+                                        <mat-option value="CSP">CSP</mat-option>
+                                        <mat-option value="DLP">DLP</mat-option>
+                                        <mat-option value="Waiting on son">Waiting on son</mat-option>
+                                        <mat-option value="Deferred">Deferred</mat-option> -->
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <mat-checkbox  class="check_top" (change)="CheckboxChecxed()" formControlName="matterCheck" >All Matters </mat-checkbox>
+
+                            <mat-form-field class="example" fxFlex="20"  appearance="outline" >
+                                    <mat-label>Matter</mat-label>
+                                    <input formControlName="matter" readonly   matInput>
+                                    <mat-icon class="set_icon" matSuffix (click)='SelectMatter()'  >
+                                            <img class="{{ImgDisAb}}" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                        </mat-icon>
+                                </mat-form-field> 
+                                <!-- <mat-form-field appearance="outline" class="example" fxFlex="20">
+                                        <mat-label>Date Range</mat-label>
+                                        <input formControlName="DateRange"  matInput  [satDatepicker]="picker2" (dateChange)="DateRange1('change', $event)" (dateInput)="DateRange('input', $event)"  (dateChange)="DateRange1()">
+                                        <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
+                                        <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
+                                    </mat-form-field> -->
+
+                                    <mat-form-field appearance="outline" class="example" fxFlex="17.33">
+                                            <mat-label>Date Range</mat-label>
+                                            <input  matInput formControlName="DateRange" [satDatepicker]="picker3" (dateInput)="DateRange('input', $event)" (dateChange)="DateRange1('change', $event)">
+                                            <sat-datepicker #picker3 [rangeMode]="true"> </sat-datepicker>
+                                            <sat-datepicker-toggle matSuffix [for]="picker3"></sat-datepicker-toggle>
+                                        </mat-form-field>
+
+                                    <mat-form-field  fxFlex="20" appearance="outline" class="example">
+                                        <mat-label>Filter</mat-label>
+                                        <input matInput formControlName="search" (keydown)="onSearch($event)" >
+                                    </mat-form-field>
+                              
+                    </div>  
+                    <button mat-raised-button type="button" color="primary" id="refreshTask" (click)="refreshTask();">Refresh</button>
+                </form>
+            </div>
+            <div class="content">
+                <div class="page-layout simple left-sidebar inner-sidebar">
+                    <div fxLayoutAlign="center" class="content">
+                        <div class="center more_tbl_clmn" fusePerfectScrollbar>
+                            <div class="content">
+                                <div class="btn top_right_action_billing_position">
+                                    <button mat-icon-button  (click)="openDialog()"  aria-label="More">
+                                        <mat-icon class="secondary-text">more_vert</mat-icon>
+                                    </button>
+                                </div>
+                                <div class="content">
+
+                                    <div class="example-loading-shade" *ngIf="isLoadingResults">
+                                        <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+                                    </div>
+                                    
+                                    <div class="example-containerdata">
+                                        
+                                            <table mat-table #table [dataSource]="TaskAllData" matSort [@animateStagger]="{value:'50'}">
+                                                    <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
+                                                        <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header> {{ tempColobj[item].DESCRIPTION }}</th>
+                                                        <td mat-cell *matCellDef="let row"> <span *ngIf="row[item]">{{row[item]}}</span> </td>
+                                                    </ng-container>
+                                                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;let element;" class="row" (click)="RowClick(row);highlightedRows=row.TASKGUID" [style.background]="highlightedRows == row.TASKGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.TASKGUID ? 'row-text-colore' : ''"
+                                                        matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                                    </tr>
+                                                </table>
+                                        
+                                    </div>
+                                </div>
+                                <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MatDatepickerInputEvent, MatPaginator, MatTableDataSource } from '@angular/material';
-import { TimersService } from 'app/_services';
+import {  MainAPiServiceService } from 'app/_services';
 import { fuseAnimations } from '@fuse/animations';
 
 @Component({
@@ -11,7 +11,7 @@ import { fuseAnimations } from '@fuse/animations';
   animations: fuseAnimations
 })
 export class UserSelectPopupComponent implements OnInit {
-  displayedColumns: string[] = ['USERID', 'FULLNAME'];
+  displayedColumns: string[] = ['USERID', 'USERNAME'];
   getDataForTable: any = [];
   highlightedRows: any;
   theme_type = localStorage.getItem('theme_type');
@@ -22,13 +22,14 @@ export class UserSelectPopupComponent implements OnInit {
   currentUserData: any;
   constructor(
     public MatDialog: MatDialog,
-    private Timersservice: TimersService,
+
+    private _mainAPiServiceService: MainAPiServiceService,
     public dialogRef: MatDialogRef<UserSelectPopupComponent>
   ) { }
 
   ngOnInit() {
     this.isLoadingResults = true;
-    this.Timersservice.GetUsers({ 'Active': 'yes' }).subscribe(response => {
+      this._mainAPiServiceService.getSetData({ 'Active': 'yes' }, 'GetUsers').subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (response.DATA.USERS[0]) {
           this.highlightedRows = response.DATA.USERS[0].USERGUID;
@@ -36,7 +37,7 @@ export class UserSelectPopupComponent implements OnInit {
         }
         this.getDataForTable = new MatTableDataSource(response.DATA.USERS);
         this.getDataForTable.paginator = this.paginator;
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
       this.isLoadingResults = false;

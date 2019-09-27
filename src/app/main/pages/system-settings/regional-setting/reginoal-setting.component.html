@@ -3,7 +3,7 @@
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.COUNTRY,'has-warning':errorWarningData.Warning?.COUNTRY}">
             <mat-label>Country</mat-label>
             <mat-select name="COUNTRY" formControlName="COUNTRY" placeholder="Country">
-                <mat-option *ngFor="let val of getDropDownValue.COUNTRY" value="{{val.VALUE}}">{{val.DESCRIPTION}}</mat-option>
+                <mat-option *ngFor="let val of countryList" value="{{val.LOOKUPGUID}}">{{val.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.CURRENCYSYMBOL,'has-warning':errorWarningData.Warning?.CURRENCYSYMBOL}">

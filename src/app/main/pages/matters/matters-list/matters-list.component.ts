@@ -2,15 +2,13 @@ import { Component, OnDestroy, OnInit, Output, ViewEncapsulation, EventEmitter, 
 
 import { fuseAnimations } from '@fuse/animations';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-
-//import { MattersService } from '../matters.service';
 import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.component';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
-import { TableColumnsService } from '../../../../_services';
+import { TableColumnsService, MainAPiServiceService, BehaviorService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
-import {MatSort} from '@angular/material';
-import { MattersService } from 'app/_services/matters.service';
+import { MatSort } from '@angular/material';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -21,15 +19,17 @@ import { MattersService } from 'app/_services/matters.service';
   animations: fuseAnimations
 })
 export class MattersListComponent implements OnInit, OnDestroy {
+  subscription: Subscription;
   [x: string]: any;
   highlightedRows: any;
+  abced:any=[];
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   displayedColumns = [];
   ColumnsObj = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  mattersData: any;
+  mattersData: any = [];
   lastFilter = {};
   tempColobj: any;
   isLoadingResults: any = false;
@@ -40,10 +40,12 @@ export class MattersListComponent implements OnInit, OnDestroy {
 
   constructor(
     private dialog: MatDialog,
-    private _mattersService: MattersService,
+    private _mainAPiServiceService: MainAPiServiceService,
     private toastr: ToastrService,
     private TableColumnsService: TableColumnsService,
+    private behaviorService: BehaviorService,
   ) {
+    this.mattersData = [];
     if (JSON.parse(localStorage.getItem('matter_filter'))) {
       this.lastFilter = JSON.parse(localStorage.getItem('matter_filter'));
     }
@@ -51,6 +53,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.abced=[];
     $('content').addClass('inner-scroll');
     this.getMatterList(this.lastFilter);
   }
@@ -58,6 +61,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
     this.getMatterList(JSON.parse(localStorage.getItem('matter_filter')));
   }
   onPaginateChange(event) {
+    console.log(event);
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
   }
@@ -74,10 +78,9 @@ export class MattersListComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void { }
-
   editmatter(matters) {
     this.matterDetail.emit(matters);
+    this.behaviorService.MatterData(matters);
   }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
@@ -104,13 +107,33 @@ export class MattersListComponent implements OnInit, OnDestroy {
   }
   getMatterList(data) {
     this.isLoadingResults = true;
-    this._mattersService.getMatters(data).subscribe(response => {
+    this.subscription = this._mainAPiServiceService.getSetData(data, 'GetMatter').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.MATTERS[0]) {
+          this.behaviorService.MatterData(response.DATA.MATTERS[0]);
           this.highlightedRows = response.DATA.MATTERS[0].MATTERGUID;
           this.editmatter(response.DATA.MATTERS[0]);
         }
         this.mattersData = new MatTableDataSource(response.DATA.MATTERS);
+        this.mattersData.paginator = this.paginator;
+        
+      //   this.mattersData._paginator._pageIndex=0;
+      //   setInterval(() => {
+      //     this.abced.push({});
+      //     console.log(this.abced);
+          
+      //     this.mattersData._paginator._pageIndex=this.abced.length;
+      //     this.onPaginateChange({onPaginateChange:this.mattersData._paginator._pageSize});
+      //     console.log(this.mattersData);
+      //   }, 4000);
+      // for(let i=0;i<=this.mattersData.filteredData.length;i++){
+        
+      // }
+        // console.log(this.mattersData.filteredData.length);
+        this.mattersData.sort = this.sort;
+        this.isLoadingResults = false;
+      } else if (response.CODE == 406 && response.MESSAGE == "Permission denied") {
+        this.mattersData = new MatTableDataSource([]);
         this.mattersData.paginator = this.paginator;
         this.mattersData.sort = this.sort;
         this.isLoadingResults = false;
@@ -119,6 +142,9 @@ export class MattersListComponent implements OnInit, OnDestroy {
       this.toastr.error(error);
     });
     this.pageSize = localStorage.getItem('lastPageSize');
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }

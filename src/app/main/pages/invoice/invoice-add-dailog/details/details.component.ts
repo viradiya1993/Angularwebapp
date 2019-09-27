@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild, ViewEncapsulation, Output, EventEm
 import { FormGroup } from '@angular/forms';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
-import { TimersService } from 'app/_services';
+import { MainAPiServiceService } from 'app/_services';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatSort } from '@angular/material';
 
@@ -22,11 +22,12 @@ export class DetailsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   selection = new SelectionModel(true, []);
-  constructor(private _timersService: TimersService) { }
+  constructor(
+    private _mainAPiServiceService: MainAPiServiceService) { }
 
   ngOnInit() {
     let matterDetail = JSON.parse(localStorage.getItem('set_active_matters'));
-    this._timersService.getTimeEnrtyData({ MATTERGUID: matterDetail.MATTERGUID, Invoiced: 'No' }).subscribe(response => {
+    this._mainAPiServiceService.getSetData({ MATTERGUID: matterDetail.MATTERGUID, Invoiced: 'No' }, 'GetWorkItems').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.invoiceData = new MatTableDataSource(response.DATA.WORKITEMS);
         this.invoiceData.sort = this.sort;

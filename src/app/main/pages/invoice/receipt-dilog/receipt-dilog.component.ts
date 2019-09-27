@@ -5,9 +5,11 @@ import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { fuseAnimations } from '@fuse/animations';
 import { ContactSelectDialogComponent } from '../../contact/contact-select-dialog/contact-select-dialog.component';
-import { MatterInvoicesService, GetReceptData, ContactService } from 'app/_services';
+import { MainAPiServiceService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { MatSort } from '@angular/material';
+import { $ } from 'protractor';
+import { BankingDialogComponent } from '../../banking/banking-dialog.component';
 
 @Component({
   selector: 'app-receipt-dilog',
@@ -58,10 +60,8 @@ export class ReceiptDilogComponent implements OnInit {
     public dialogRef: MatDialogRef<ReceiptDilogComponent>,
     public datepipe: DatePipe,
     public MatDialog: MatDialog,
-    private _MatterInvoicesService: MatterInvoicesService,
-    private GetReceptData: GetReceptData,
-    public _getContact: ContactService,
     public _matDialog: MatDialog,
+    public _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
     this.matterData = this._data.matterData;
@@ -81,6 +81,7 @@ export class ReceiptDilogComponent implements OnInit {
       AMOUNT: [''],
       GST: [''],
       BANKACCOUNTGUID: [''],
+      BANKACCOUNTGUIDTEXT: [''],
       NOTE: [''],
       INCOMEACCOUNTGUID: ['', Validators.required],
       INCOMEACCOUNTGUIDTEXT: [''],
@@ -92,6 +93,7 @@ export class ReceiptDilogComponent implements OnInit {
       SHOW: [''],
       Unallocated: [''],
     });
+   ;
     this.getPayor({});
     let INCOMEDATEVAL = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
     this.PrepareReceiptForm.controls['INCOMEDATE'].setValue(INCOMEDATEVAL);
@@ -99,8 +101,10 @@ export class ReceiptDilogComponent implements OnInit {
     //for invoice
     if (this._data.action == 'editForTB' || this._data.action == 'edit') {
       this.receiptData = JSON.parse(localStorage.getItem('receiptData'));
+      let TBdata=JSON.parse(localStorage.getItem('TBreceiptData'));
       if (this._data.action == 'editForTB')
-        this.GetInvoiceForReceipt({ 'Outstanding': 'Yes' });
+      this.setInvoiceForReceipt(TBdata.INCOMEGUID);
+        // this.GetInvoiceForReceipt({ 'Outstanding': 'Yes' });
       else if (this._data.action == 'edit')
         this.setInvoiceForReceipt(this.receiptData.INCOMEGUID);
     } else if (this._data.action == 'add') {
@@ -112,11 +116,19 @@ export class ReceiptDilogComponent implements OnInit {
       this.ShowData.push({ id: 3, text: 'Show all unpaid invoices' });
       this.GetInvoiceForReceipt({ 'Outstanding': 'Yes' });
     }
-
+    this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: false, Data: {} }, 'SetIncome').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        this.PrepareReceiptForm.controls['INCOMECODE'].setValue(response.DATA.DEFAULTVALUES.INCOMECODE);
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
   }
   setInvoiceForReceipt(INCOMEGUID) {
+    this.PrepareReceiptData = [];
     this.isLoadingResults = true;
-    this.GetReceptData.getIncome({ INCOMEGUID: INCOMEGUID }).subscribe(response => {
+    let incomeGuid = { INCOMEGUID: INCOMEGUID }
+    this._mainAPiServiceService.getSetData(incomeGuid, 'GetIncome').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.INCOMEITEMS[0]) {
           localStorage.setItem('receiptData', JSON.stringify(response.DATA.INCOMEITEMS[0]));
@@ -128,11 +140,15 @@ export class ReceiptDilogComponent implements OnInit {
           this.PrepareReceiptForm.controls['AMOUNT'].setValue(data.AMOUNT);
           this.PrepareReceiptForm.controls['BANKACCOUNTGUID'].setValue(data.BANKACCOUNTGUID);
           this.PrepareReceiptForm.controls['FIRMGUID'].setValue(data.FIRMGUID);
+          this.PrepareReceiptForm.controls['FIRMGUIDTEXT'].setValue(data.PAYEE);
           this.PrepareReceiptForm.controls['INCOMETYPE'].setValue(data.INCOMETYPE);
           this.PrepareReceiptForm.controls['NOTE'].setValue(data.NOTE);
           this.PrepareReceiptForm.controls['PAYEE'].setValue(data.PAYEE);
+
+          this.ShowData.push({ id: 2, text: 'Show unpaid invoices for client : ' + data.PAYEE });
+          this.ShowData.push({ id: 3, text: 'Show all unpaid invoices' });
         }
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
       this.isLoadingResults = false;
@@ -141,7 +157,7 @@ export class ReceiptDilogComponent implements OnInit {
       this.toastr.error(err);
     });
     this.isLoadingResults = true;
-    this.GetReceptData.getRecept({ "RECEIPTGUID": INCOMEGUID }).subscribe(response => {
+    this._mainAPiServiceService.getSetData({ "RECEIPTGUID": INCOMEGUID }, 'GetReceiptAllocation').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.RECEIPTALLOCATIONS[0]) {
           this.highlightedRows = response.DATA.RECEIPTALLOCATIONS[0].INVOICEGUID;
@@ -150,7 +166,7 @@ export class ReceiptDilogComponent implements OnInit {
         this.PrepareReceiptData = new MatTableDataSource(response.DATA.RECEIPTALLOCATIONS)
         this.PrepareReceiptData.paginator = this.paginator;
         this.PrepareReceiptData.sort = this.sort;
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
       this.isLoadingResults = false;
@@ -158,11 +174,24 @@ export class ReceiptDilogComponent implements OnInit {
       this.isLoadingResults = false;
       this.toastr.error(err);
     });
-  }
 
+  
+  }
+  BankingDialogOpen(type: any) {
+    const dialogRef = this.MatDialog.open(BankingDialogComponent, {
+      disableClose: true, width: '100%', data: { AccountType: type }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.PrepareReceiptForm.controls['BANKACCOUNTGUIDTEXT'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER + ' ' + result.MainList.ACCOUNTNAME);
+        this.PrepareReceiptForm.controls['BANKACCOUNTGUID'].setValue(result.ACCOUNTGUID);
+      }
+    });
+  }
   GetInvoiceForReceipt(data) {
+    this.PrepareReceiptData = [];
     this.isLoadingResults = true;
-    this._MatterInvoicesService.MatterInvoicesData(data).subscribe(response => {
+    this._mainAPiServiceService.getSetData(data, 'GetInvoice').subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (response.DATA.INVOICES[0]) {
           this.highlightedRows = response.DATA.INVOICES[0].INVOICEGUID;
@@ -172,7 +201,7 @@ export class ReceiptDilogComponent implements OnInit {
         this.PrepareReceiptData.paginator = this.paginator;
         this.PrepareReceiptData.sort = this.sort;
         this.isLoadingResults = false;
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
     }, error => {
@@ -181,7 +210,7 @@ export class ReceiptDilogComponent implements OnInit {
     });
   }
   getPayor(postData) {
-    this._getContact.ContactData(postData).subscribe(response => {
+    this._mainAPiServiceService.getSetData(postData, 'GetContact').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         response.DATA.CONTACTS.forEach(element => {
           this.getPayourarray.push(element.CONTACTNAME);
@@ -257,8 +286,7 @@ export class ReceiptDilogComponent implements OnInit {
       PAYEE: this.f.PAYEE.value,
       AMOUNT: this.f.AMOUNT.value,
       GST: this.f.GST.value,
-      BANKACCOUNTGUID: "ACCAAAAAAAAAAAA4",
-      // BANKACCOUNTGUID: this.f.BANKACCOUNTGUID.value,
+      BANKACCOUNTGUID: this.f.BANKACCOUNTGUID.value,
       INCOMEACCOUNTGUID: "ACCAAAAAAAAAAAA9",
       NOTE: this.f.NOTE.value,
       MATTERGUID: this.matterData.MATTERGUID,
@@ -266,8 +294,8 @@ export class ReceiptDilogComponent implements OnInit {
       ALLOCATIONS: this.AllocationData
     }
     let setReceiptPostData: any = { FormAction: 'insert', VALIDATEONLY: true, DATA: AllocationDataInsert };
-    this.GetReceptData.setReceipt(setReceiptPostData).subscribe(response => {
-      if (response.DATA.INCOMECODE && response.DATA.INCOMECODE != "") {
+    this._mainAPiServiceService.getSetData(setReceiptPostData, 'SetIncome').subscribe(response => {
+      if (response.DATA.INCOMECODE && response.DATA.INCOMECODE != '') {
         this.PrepareReceiptForm.controls['INCOMECODE'].setValue(response.DATA.INCOMECODE);
         AllocationDataInsert.INCOMECODE = response.DATA.INCOMECODE;
       } else {
@@ -276,11 +304,11 @@ export class ReceiptDilogComponent implements OnInit {
       setReceiptPostData = { FormAction: 'insert', VALIDATEONLY: true, DATA: AllocationDataInsert };
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, setReceiptPostData);
-      } else if (response.CODE == 451 && response.STATUS == "warning") {
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.checkValidation(response.DATA.VALIDATIONS, setReceiptPostData);
-      } else if (response.CODE == 450 && response.STATUS == "error") {
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
         this.checkValidation(response.DATA.VALIDATIONS, setReceiptPostData);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
     }, error => {
@@ -304,7 +332,7 @@ export class ReceiptDilogComponent implements OnInit {
         tempWarning[value.FIELDNAME] = value;
       }
     });
-    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
+    this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
@@ -327,12 +355,14 @@ export class ReceiptDilogComponent implements OnInit {
   }
   SaveReceiptAfterVAlidation(data: any) {
     data.VALIDATEONLY = false;
-    this.GetReceptData.setReceipt(data).subscribe(response => {
+    this._mainAPiServiceService.getSetData(data, 'SetIncome').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        // $('#refreshReceiceMoany').click();
         this.toastr.success('Receipt save successfully');
         this.isspiner = false;
+
         this.dialogRef.close(true);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       } else {
         this.isspiner = false;

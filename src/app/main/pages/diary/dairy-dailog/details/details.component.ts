@@ -46,7 +46,6 @@ export class DetailsComponent implements OnInit {
   }
   //ChnageCategory
   ChnageCategory(value){
-    console.log(value);
     if(this.f.Category.value == 'Billable' || this.f.Category.value == 'Non-Billable'){
       this.DairyForm.controls['Matter'].enable();
     }else{

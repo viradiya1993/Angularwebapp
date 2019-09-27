@@ -11,13 +11,13 @@
         <div class=" one  mb-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
             <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="timeEntryForm" id="timeEntryForm" [formGroup]="timeEntryForm">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <div class=" one  mb-24" fxLayout="column">
+                    <div class="one  mb-24" fxLayout="column">
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                             <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MATTERGUID,'has-warning':errorWarningData.Warning?.MATTERGUID}">
                                 <mat-label>Matter</mat-label>
                                 <input matInput readonly placeholder="Placeholder" formControlName="matterautoVal">
                                 <mat-icon matSuffix (click)='selectMatter()'>
-                                    <img src="assets/icons/web_app/icon_contact_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                    <img src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                 </mat-icon>
                             </mat-form-field>
                             <mat-form-field fxFlex="50" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.ITEMTYPE,'has-warning':errorWarningData.Warning?.ITEMTYPE}">
@@ -49,7 +49,9 @@
                             <!-- <material-timepicker class="time_entry_picker" fxFlex="50" color="accent" label="Time Picker" appearance="outline"></material-timepicker> -->
                             <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ITEMTIME,'has-warning':errorWarningData.Warning?.ITEMTIME}">
                                 <mat-label>Time of day</mat-label>
-                                <input matInput formControlName="ITEMTIME">
+                                <mat-select formControlName="ITEMTIME">
+                                    <mat-option *ngFor="let data of timeStops" value="{{data}}">{{data}}</mat-option>
+                                </mat-select>
                             </mat-form-field>
                         </div>
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -88,8 +90,8 @@
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                             <mat-form-field fxFlex="100" class="pr-4" appearance="outline">
                                 <mat-label>Select Text</mat-label>
-                                <mat-select>
-                                    <mat-option *ngFor="let Lookups of LookupsList" (click)="LookupsChange(Lookups.LOOKUPFULLVALUE)" value="{{Lookups.LOOKUPGUID}}">{{Lookups.LOOKUPFULLVALUE}}</mat-option>
+                                <mat-select #LookupsSelect (selectionChange)='LookupsChange(LookupsSelect.value)' formControlName="ADDITIONALTEXTSELECT">
+                                    <mat-option *ngFor="let Lookups of LookupsList" [value]="Lookups.LOOKUPFULLVALUE">{{Lookups.LOOKUPFULLVALUE}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>

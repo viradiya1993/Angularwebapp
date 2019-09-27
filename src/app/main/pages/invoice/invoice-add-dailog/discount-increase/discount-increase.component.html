@@ -1,77 +1,77 @@
-<div class="one" [formGroup]="addInvoiceForm" fxLayout="column">
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <div fxFlex="40" style="text-align: right; padding-right: 19px !important;"> </div>
-        <div fxFlex="25">Excluding GST</div>
-        <div fxFlex="10">GST</div>
-        <div fxFlex="25">Including GST</div>
+<div class="one prepare_invoice_summary" [formGroup]="addInvoiceForm" fxLayout="column">
+    <div class="value_label_parent">
+        <div fxFlex="60" class="label_width"> </div>
+        <div fxFlex="15" class="value_width">Excluding GST</div>
+        <div fxFlex="10" class="value_width">GST</div>
+        <div fxFlex="15" class="value_width">Including GST</div>
     </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <div fxFlex="40" style="text-align: right; padding-right: 19px !important;">
+    <div class="value_label_parent">
+        <div fxFlex="60" class="label_width">
             <mat-checkbox formControlName="APPLYTOFEES">Apply to fees/Activities</mat-checkbox>
         </div>
-        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input  class="sideText"  matInput readonly placeholder="Date Received" formControlName="ActivityEXTOTAL">
+        <mat-form-field appearance="outline" fxFlex="15" class="value_width" class="pr-4">
+            <input class="sideText" matInput readonly placeholder="Date Received" formControlName="ActivityEXTOTAL">
             <span class="currency_sign" matPrefix>$&nbsp;</span>
         </mat-form-field>
-        <div fxFlex="10"></div>
-        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input  class="sideText" matInput readonly placeholder="Date Received" formControlName="ActivityINTOTAL">
+        <div fxFlex="10" class="value_width"></div>
+        <mat-form-field appearance="outline" fxFlex="15" class="value_width" class="pr-4">
+            <input class="sideText" matInput readonly placeholder="Date Received" formControlName="ActivityINTOTAL">
             <span class="currency_sign" matPrefix>$&nbsp;</span>
         </mat-form-field>
     </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <div fxFlex="40" style="text-align: right; padding-right: 19px !important;">
+    <div class="value_label_parent">
+        <div fxFlex="60" class="label_width">
             <mat-checkbox>Apply to sundries /searching</mat-checkbox>
         </div>
-        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input  class="sideText" matInput readonly placeholder="Date Received" formControlName="SundryEXTOTAL">
+        <mat-form-field appearance="outline" fxFlex="15" class="value_width" class="pr-4">
+            <input class="sideText" matInput readonly placeholder="Date Received" formControlName="SundryEXTOTAL">
             <span class="currency_sign" matPrefix>$&nbsp;</span>
         </mat-form-field>
-        <div fxFlex="10"></div>
-        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input  class="sideText" matInput readonly placeholder="Date Received" formControlName="SundryINTOTAL">
+        <div fxFlex="10" class="value_width"></div>
+        <mat-form-field appearance="outline" fxFlex="15" class="value_width" class="pr-4">
+            <input class="sideText" matInput readonly placeholder="Date Received" formControlName="SundryINTOTAL">
             <span class="currency_sign" matPrefix>$&nbsp;</span>
         </mat-form-field>
     </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <div fxFlex="40" style="text-align: right; padding-right: 19px !important;">
-            <mat-checkbox>aooky to Matter Expenses</mat-checkbox>
+    <div class="value_label_parent">
+        <div fxFlex="60" class="label_width">
+            <mat-checkbox>Apply to Matter Expenses</mat-checkbox>
         </div>
-        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input  class="sideText" matInput readonly placeholder="Date Received" formControlName="WIPEXTOTAL">
+        <mat-form-field appearance="outline" fxFlex="15" class="value_width" class="pr-4">
+            <input class="sideText" matInput readonly placeholder="Date Received" formControlName="WIPEXTOTAL">
             <span class="currency_sign" matPrefix>$&nbsp;</span>
         </mat-form-field>
-        <div fxFlex="10"></div>
-        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input  class="sideText" matInput readonly placeholder="Date Received" formControlName="WIPINTOTAL">
+        <div fxFlex="10" class="value_width"></div>
+        <mat-form-field appearance="outline" fxFlex="15" class="value_width" class="pr-4">
+            <input class="sideText" matInput readonly placeholder="Date Received" formControlName="WIPINTOTAL">
             <span class="currency_sign" matPrefix>$&nbsp;</span>
         </mat-form-field>
     </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field fxFlex="25" class="pr-4" appearance="outline">
+    <div class="value_label_parent">
+        <mat-form-field fxFlex="25" class="value_width" class="pr-4" appearance="outline">
             <mat-label>Discount</mat-label>
             <mat-select formControlName="Discount_type" (selectionChange)="DiscountTypeChange()">
                 <mat-option value="Increase">Increase</mat-option>
                 <mat-option value="Discount">Discount</mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field fxFlex="25" class="pr-4" appearance="outline">
+        <mat-form-field fxFlex="25" class="value_width" class="pr-4" appearance="outline">
             <mat-label>Gst Amount</mat-label>
             <mat-select formControlName="GST_type">
                 <mat-option value="ExGstAmount">Ex-Gst Amount</mat-option>
                 <mat-option value="IncGstAmount">Inc-Gst Amount</mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field fxFlex="25" class="pr-4" appearance="outline">
+        <mat-form-field fxFlex="25" class="value_width" class="pr-4" appearance="outline">
             <mat-label>Discount Type</mat-label>
             <mat-select formControlName="Percentage_type" (selectionChange)="PercentageTypeChange($event.value)">
                 <mat-option value="Percentage">Percentage</mat-option>
                 <mat-option value="Amount">Amount</mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
-            <input  class="sideText" matInput type="number" min="0" max="100" placeholder="Percentage" *ngIf="isAmount" (keydown)="onAmoPerChnage($event)" formControlName="Percentage">
-            <input  class="sideText" matInput placeholder="Amount" *ngIf="!isAmount" (keydown)="onAmoPerChnage($event)" formControlName="amount">
+        <mat-form-field appearance="outline" fxFlex="25" class="value_width" class="pr-4">
+            <input class="sideText" matInput type="number" min="0" max="100" placeholder="Percentage" *ngIf="isAmount" (keydown)="onAmoPerChnage($event)" formControlName="Percentage">
+            <input class="sideText" matInput placeholder="Amount" *ngIf="!isAmount" (keydown)="onAmoPerChnage($event)" formControlName="amount">
         </mat-form-field>
     </div>
     <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">

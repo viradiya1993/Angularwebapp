@@ -1,86 +1,97 @@
-<div class="one" [formGroup]="addInvoiceForm" fxLayout="column">
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <div fxFlex="40" style="text-align: right; padding-right: 19px !important;"> </div>
-        <div fxFlex="25">Excluding GST</div>
-        <div fxFlex="10">GST</div>
-        <div fxFlex="25">Including GST</div>
+<div class="one prepare_invoice_summary" [formGroup]="addInvoiceForm" fxLayout="column">
+    <div class="value_label_parent">
+        <div fxFlex="60" class="label_width"> </div>
+        <div fxFlex="15" class="value_width">Excluding GST</div>
+        <div fxFlex="10" class="value_width">GST</div>
+        <div fxFlex="15" class="value_width">Including GST</div>
     </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <div fxFlex="40" style="text-align: right; padding-right: 19px !important;">
+    <div class="value_label_parent">
+        <div fxFlex="60" class="label_width">
             Total invoiced befor this invoice ?
         </div>
-        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="15" class="pr-4" class="value_width">
             <input class="sideText" matInput readonly placeholder="Date Received" formControlName="INVOICEDVALUEEXGST">
             <span class="currency_sign" matPrefix>$&nbsp;</span>
         </mat-form-field>
         <div fxFlex="10"></div>
-        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="15" class="pr-4" class="value_width">
             <input class="sideText" matInput readonly placeholder="Date Received" formControlName="INVOICEDVALUEINCGST">
             <span class="currency_sign" matPrefix>$&nbsp;</span>
         </mat-form-field>
     </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <div fxFlex="40" style="text-align: right; padding-right: 19px !important;">
+    <div class="value_label_parent">
+        <div fxFlex="60" class="label_width">
             Total invoiced including this invoice?
         </div>
-        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="15" class="pr-4" class="value_width">
             <input class="sideText" matInput readonly placeholder="Date Received" formControlName="FIXEDRATEEXGSTTOTAL">
+            <span class="currency_sign" matPrefix>$&nbsp;</span>
         </mat-form-field>
         <div fxFlex="10"></div>
-        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+        <mat-form-field appearance="outline" fxFlex="15" class="pr-4" class="value_width">
             <input class="sideText" matInput readonly placeholder="Date Received" formControlName="FIXEDRATEINCGSTTOTAL">
-            <span matPrefix>$&nbsp;</span>
+            <span class="currency_sign" matPrefix>$&nbsp;</span>
         </mat-form-field>
     </div>
 
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="isFixPrice">
-        <div fxFlex="30" style="text-align: right; padding-right: 19px !important;">Fixed Price Status: </div>
-        <div fxFlex="20">Exceeded By :</div>
-        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+    <div *ngIf="isFixPrice" class="value_label_parent">
+        <div fxFlex="30" class="label_width_half">Fixed Price Status: </div>
+        <div fxFlex="30" class="label_width_half">Exceeded By :</div>
+        <mat-form-field appearance="outline" fxFlex="15" class="pr-4" class="value_width">
             <input class="sideText" matInput readonly placeholder="Date Received" formControlName="FIXEDRATEEXGST">
             <span class="currency_sign" matPrefix>$&nbsp;</span>
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+        <div fxFlex="10"></div>
+        <mat-form-field appearance="outline" fxFlex="15" class="pr-4" class="value_width">
             <input class="sideText" matInput readonly placeholder="Date Received" formControlName="FIXEDRATEINCGST">
             <span class="currency_sign" matPrefix>$&nbsp;</span>
         </mat-form-field>
     </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="!isFixPrice">
-        <div fxFlex="40" style="text-align: right; padding-right: 19px !important;"> Fixed Price Status: </div>
-        <div fxFlex="60">Fixed Price not specified!</div>
+    <div *ngIf="!isFixPrice" class="value_label_parent">
+        <div fxFlex="30" class="label_width_half"> Fixed Price Status: </div>
+        <div fxFlex="30" class="label_width_half">Fixed Price not specified!</div>
     </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="isMin">
-        <div fxFlex="30" style="text-align: right; padding-right: 19px !important;">Minimum Estimate Status: </div>
-        <div fxFlex="20">Exceeded By :</div>
-        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+    <div *ngIf="isMin" class="value_label_parent">
+        <div fxFlex="30" class="label_width_half">Minimum Estimate Status: </div>
+        <div fxFlex="30" class="label_width_half">Exceeded By :</div>
+        <mat-form-field appearance="outline" fxFlex="15" class="pr-4" class="value_width">
             <input class="sideText" matInput readonly placeholder="Date Received" formControlName="ESTIMATETOTOTALEXGST">
             <span class="currency_sign" matPrefix>$&nbsp;</span>
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+        <div fxFlex="10"></div>
+        <mat-form-field appearance="outline" fxFlex="15" class="pr-4" class="value_width">
             <input class="sideText" matInput readonly placeholder="Date Received" formControlName="ESTIMATETOTOTALINCGST">
             <span class="currency_sign" matPrefix>$&nbsp;</span>
         </mat-form-field>
     </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="!isMin">
-        <div fxFlex="40" style="text-align: right; padding-right: 19px !important;"> Minimum Estimate Status: </div>
-        <div fxFlex="60">No Minimum Estimate Provided!</div>
+    <div *ngIf="!isMin" class="value_label_parent">
+        <div fxFlex="30" class="label_width_half"> Minimum Estimate Status: </div>
+        <div fxFlex="30" class="label_width_half">No Minimum Estimate Provided!</div>
+        <div fxFlex="15" class="value_width"></div>
+        <div fxFlex="10" class="value_width"></div>
+        <div fxFlex="15" class="value_width"></div>
     </div>
 
 
 
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="isMax">
-        <div fxFlex="30" style="text-align: right; padding-right: 19px !important;">Maximum Estimate Status: </div>
-        <div fxFlex="20">Exceeded By :</div>
-        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+    <div *ngIf="isMax" class="value_label_parent">
+        <div fxFlex="30" class="label_width_half">Maximum Estimate Status: </div>
+        <div fxFlex="30" class="label_width_half">Exceeded By :</div>
+        <mat-form-field appearance="outline" fxFlex="15" class="pr-4" class="value_width">
             <input matInput readonly placeholder="Date Received" formControlName="ESTIMATEFROMTOTALEXGST">
         </mat-form-field>
-        <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+        <div fxFlex="10" class="value_width"></div>
+        <mat-form-field appearance="outline" fxFlex="15" class="pr-4" class="value_width">
             <input matInput readonly placeholder="Date Received" formControlName="ESTIMATEFROMTOTALINCGST">
         </mat-form-field>
     </div>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="!isMax">
-        <div fxFlex="40" style="text-align: right; padding-right: 19px !important;"> Maximum Estimate Status: </div>
-        <div fxFlex="60">No Maximum Estimate Provided!</div>
+    <div *ngIf="!isMax" class="value_label_parent">
+        <div fxFlex="30" class="label_width_half"> Maximum Estimate Status: </div>
+        <div fxFlex="30" class="label_width_half">No Maximum Estimate Provided!</div>
+        <div fxFlex="15" class="value_width"></div>
+        <div fxFlex="10" class="value_width"></div>
+        <div fxFlex="15" class="value_width"></div>
+
     </div>
 </div>
 <mat-divider></mat-divider>

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatterInvoicesService, TableColumnsService } from 'app/_services';
+import { TableColumnsService, MainAPiServiceService, BehaviorService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import * as $ from 'jquery';
@@ -40,14 +40,15 @@ export class InvoiceComponent implements OnInit {
   MatterInvoicesdata;
 
   constructor(
-    private _MatterInvoicesService: MatterInvoicesService,
+    private _mainAPiServiceService: MainAPiServiceService,
     private toastr: ToastrService,
     private dialog: MatDialog,
+    private behaviorService: BehaviorService,
     private TableColumnsService: TableColumnsService,
     private fb: FormBuilder,
     public datepipe: DatePipe,
   ) {
-    this.matterInvoiceFilterForm = this.fb.group({ dateRang: [''], OUTSTANDING: [''], ENDDATE: [''], STARTDATE: [''] });
+    this.matterInvoiceFilterForm = this.fb.group({ dateRang: [''], OUTSTANDING: [''], ENDDATE: [''], STARTDATE: [''], Outstanding: [0], Received: [0], TOTAL: [0] });
     let filterData = JSON.parse(localStorage.getItem('matter_invoice_filter'));
     if (filterData) {
       this.lastFilter = JSON.parse(localStorage.getItem('matter_invoice_filter'));
@@ -117,10 +118,15 @@ export class InvoiceComponent implements OnInit {
     this.loadData(JSON.parse(localStorage.getItem('matter_invoice_filter')));
   }
   loadData(filterData) {
+    this.MatterInvoicesdata = [];
     this.isLoadingResults = true;
-    this._MatterInvoicesService.MatterInvoicesData(filterData).subscribe(response => {
+    this._mainAPiServiceService.getSetData(filterData, 'GetInvoice').subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
+        this.matterInvoiceFilterForm.controls['TOTAL'].setValue(response.DATA.TOTALINVOICES);
+        this.matterInvoiceFilterForm.controls['Received'].setValue(response.DATA.TOTALRECEIVED);
+        this.matterInvoiceFilterForm.controls['Outstanding'].setValue(response.DATA.TOTALOUSTANDING);
         if (response.DATA.INVOICES[0]) {
+          this.behaviorService.matterInvoiceData(response.DATA.INVOICES[0])
           localStorage.setItem('edit_invoice_id', response.DATA.INVOICES[0].INVOICEGUID);
           // localStorage.setItem('set_active_Invoices', JSON.stringify(response.DATA.INVOICES[0]));
           this.highlightedRows = response.DATA.INVOICES[0].INVOICEGUID;
@@ -131,7 +137,7 @@ export class InvoiceComponent implements OnInit {
         this.MatterInvoicesdata.sort = this.sort;
         this.isLoadingResults = false;
       }
-    
+
     }, error => {
       this.toastr.error(error);
     });
@@ -139,6 +145,7 @@ export class InvoiceComponent implements OnInit {
   }
   selectInvoice(Row: any) {
     localStorage.setItem('edit_invoice_id', Row.INVOICEGUID);
+    this.behaviorService.matterInvoiceData(Row);
     // localStorage.setItem('set_active_Invoices', JSON.stringify(Row));
     this.currentInvoiceData = Row;
   }

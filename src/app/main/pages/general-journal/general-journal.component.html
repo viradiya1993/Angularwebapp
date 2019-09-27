@@ -2,31 +2,30 @@
     <div fxLayoutAlign="center" class="content">
         <div class="center p-24 more_tbl_clmn list_tbl_main" fusePerfectScrollbar>
             <div class="matter-serach-div sticky_search_div">
-                <form [formGroup]="GeneralForm">
+                <form>
                     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                      <mat-form-field appearance="outline" fxFlex="50" class="">
-                          <mat-label>Date Range</mat-label>
-                          <input matInput placeholder="Choose a date" [satDatepicker]="picker2" formControlName="date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)">
-                          <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
-                          <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
-                      </mat-form-field>
-                      <mat-form-field class="search" appearance="outline" fxFlex="50">
-                          <mat-label>Search</mat-label>
-                          <input matInput placeholder="Search" (keydown)="onSearch($event)" formControlName="searchFilter">
-                          <mat-icon matSuffix (click)="onSearch('Enter')">search</mat-icon>
-                      </mat-form-field>
-                      <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-                      <mat-checkbox formControlName="Receipts">Receipts</mat-checkbox>&nbsp;&nbsp;&nbsp;
-                      <mat-checkbox formControlName="Invoice">Invoice</mat-checkbox>&nbsp;&nbsp;&nbsp;
-                      <mat-checkbox formControlName="ReceiveMoney">Receive Money</mat-checkbox>&nbsp;&nbsp;&nbsp;
-                      <mat-checkbox formControlName="SpendMoney">Spend Money</mat-checkbox>&nbsp;&nbsp;&nbsp;
-                      <mat-checkbox formControlName="GeneralJournal">General Journal</mat-checkbox>
-                    </div>  
+                        <mat-form-field appearance="outline" fxFlex="50" class="">
+                            <mat-label>Date Range</mat-label>
+                            <input matInput placeholder="Choose a date" [satDatepicker]="picker2" name="dateRange" [(ngModel)]="dateRange" (dateChange)="choosedDate('change', $event)">
+                            <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
+                            <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
+                        </mat-form-field>
+                        <mat-form-field class="search" appearance="outline" fxFlex="50">
+                            <mat-label>Search</mat-label>
+                            <input matInput placeholder="Search" (keydown)="onSearch($event)" name="SEARCH" [(ngModel)]="filterVals.SEARCH">
+                            <mat-icon matSuffix (click)="onSearch('Enter')">search</mat-icon>
+                        </mat-form-field>
+                        <mat-checkbox name="SHOWRECEIPTS" [checked]="filterVals.SHOWRECEIPTS" [(ngModel)]="filterVals.SHOWRECEIPTS" (change)="changeValueOfCheckbox()">Receipts</mat-checkbox>&nbsp;&nbsp;&nbsp;
+                        <mat-checkbox name="SHOWINVOICES" [checked]="filterVals.SHOWINVOICES" [(ngModel)]="filterVals.SHOWINVOICES" (change)="changeValueOfCheckbox()">Invoice</mat-checkbox>&nbsp;&nbsp;&nbsp;
+                        <mat-checkbox name="SHOWRECEIVEMONEY" [checked]="filterVals.SHOWRECEIVEMONEY" [(ngModel)]="filterVals.SHOWRECEIVEMONEY" (change)="changeValueOfCheckbox()">Receive Money</mat-checkbox>&nbsp;&nbsp;&nbsp;
+                        <mat-checkbox name="SHOWSPENDMONEY" [checked]="filterVals.SHOWSPENDMONEY" [(ngModel)]="filterVals.SHOWSPENDMONEY" (change)="changeValueOfCheckbox()">Spend Money</mat-checkbox>&nbsp;&nbsp;&nbsp;
+                        <mat-checkbox name="SHOWGENERALJOURNAL" [checked]="filterVals.SHOWGENERALJOURNAL" [(ngModel)]="filterVals.SHOWGENERALJOURNAL" (change)="changeValueOfCheckbox()">General Journal</mat-checkbox>
+                    </div>
                 </form>
             </div>
             <div class="content">
                 <div class="btn contact_right_action one">
-                    <button mat-icon-button (click)="GeneralDialog()" aria-label="More">
+                    <button mat-icon-button (click)="openDialog()" aria-label="More">
                         <mat-icon class="secondary-text">more_vert</mat-icon>
                     </button>
                 </div>
@@ -35,45 +34,20 @@
                         <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                     </div>
                     <div class="example-containerdata">
-                      <table mat-table [dataSource]="GeneralAllData" matSort class="mat-elevation-z8">
-                          <ng-container matColumnDef="Date">
-                              <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>Date</th>
-                              <td mat-cell *matCellDef="let row"> {{row.Date}} </td>
-                          </ng-container>
-                          <ng-container matColumnDef="Description">
-                            <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>Description</th>
-                            <td mat-cell *matCellDef="let row"> {{row.Description}} </td>
-                          </ng-container>
-            
-                          <ng-container matColumnDef="Account">
-                              <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>Account</th>
-                              <td mat-cell *matCellDef="let row">{{row.Account}}<br>{{row.Account}}</td>
-                          </ng-container>
-            
-                          <ng-container matColumnDef="DebitAmount">
-                              <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>Debit Amount</th>
-                              <td mat-cell *matCellDef="let row"> {{row.DebitAmount}} </td>
-                          </ng-container>
-            
-                          <ng-container matColumnDef="CreditAmount">
-                              <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>Credit Amount</th>
-                              <td mat-cell *matCellDef="let row">{{row.CreditAmount}}<br>{{row.CreditAmount}}</td>
-                          </ng-container>
-
-                          <ng-container matColumnDef="ReconciledBankSlip">
-                              <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>Reconciled BankSlip</th>
-                              <td mat-cell *matCellDef="let row"> {{row.ReconciledBankSlip}} </td>
-                          </ng-container>
-                          
-                          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                          <tr [style.background]="highlightedRows == row.Date ? selectedColore : ''" 
-                            [ngClass]="highlightedRows == row.Date ? 'row-text-colore' : ''" 
-                            highlightedRows=row.Date mat-row *matRowDef="let row; columns: displayedColumns;"
-                            (click)="ClickGeneral(row);highlightedRows = row.Date " (dblclick)="openDialog(row)" matRipple>
-                          </tr>
-                      </table>
-                        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                        <table mat-table [dataSource]="generalJournalData" [@animateStagger]="{value:'50'}">
+                            <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
+                                <th mat-header-cell *matHeaderCellDef class="header_title"> {{ tempColobj[item].DESCRIPTION }}</th>
+                                <td mat-cell *matCellDef="let row">
+                                    <span *ngIf="row[item]">{{row[item]}}</span>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr [style.background]="highlightedRows == row.JOURNALGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.JOURNALGUID ? 'row-text-colore' : ''" highlightedRows=row.JOURNALGUID mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editjournal(row.JOURNALGUID, row);highlightedRows = row.JOURNALGUID "
+                                matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                            </tr>
+                        </table>
                     </div>
+                    <!-- <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator> -->
                 </div>
             </div>
         </div>

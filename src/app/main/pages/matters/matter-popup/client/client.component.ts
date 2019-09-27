@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 import { ContactSelectDialogComponent } from '../../../contact/contact-select-dialog/contact-select-dialog.component';
 import { FormGroup } from '@angular/forms';
 import { CorrespondDailogComponent } from '../../correspond-dailog/correspond-dailog.component';
-import { MattersService } from 'app/_services';
+import { MainAPiServiceService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -27,7 +27,7 @@ export class ClientComponent implements OnInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   constructor(
     private MatDialog: MatDialog,
-    private _mattersService: MattersService,
+    private _mainAPiServiceService: MainAPiServiceService,
     private dialogRef: MatDialogRef<ClientComponent>,
     private dialogRefDe: MatDialogRef<FuseConfirmDialogComponent>,
   ) { }
@@ -79,7 +79,8 @@ export class ClientComponent implements OnInit {
     this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
     this.confirmDialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this._mattersService.AddMatterContact({ FORMACTION: 'delete', VALIDATEONLY: false, DATA: { MATTERCONTACTGUID: editElement.MATTERCONTACTGUID } }).subscribe(response => {
+        
+        this._mainAPiServiceService.getSetData({ FORMACTION: 'delete', VALIDATEONLY: false, DATA: { MATTERCONTACTGUID: editElement.MATTERCONTACTGUID } }, 'SetMatterContact').subscribe(response => {
           if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
             this.loadData();
             // this.toastr.success('Matter Contact Delete successfully');
@@ -95,15 +96,18 @@ export class ClientComponent implements OnInit {
     });
   }
   loadData() {
-    this._mattersService.getMattersContact({ MATTERGUID: this.isEditMatter }).subscribe(response => {
-      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        this.CorrespondEdit = response.DATA.MATTERCONTACTS;
-      } else if (response.MESSAGE == "Not logged in") {
-        this.dialogRef.close(false);
-      }
-    }, error => {
-      console.log(error);
-    });
-  }
+    if(this.isEditMatter != undefined){
+      this._mainAPiServiceService.getSetData({ MATTERGUID: this.isEditMatter }, 'GetMatterContact').subscribe(response => {
+        if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+          this.CorrespondEdit = response.DATA.MATTERCONTACTS;
+        } else if (response.MESSAGE == 'Not logged in') {
+          this.dialogRef.close(false);
+        }
+      }, error => {
+        console.log(error);
+      });
+    }
+    }
+  
 
 }

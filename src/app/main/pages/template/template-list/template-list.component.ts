@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
-import { ContactService, TemplateListDetails, TableColumnsService } from 'app/_services';
+import {  MainAPiServiceService, BehaviorService } from 'app/_services';
 import { fuseAnimations } from '@fuse/animations';
 import * as $ from 'jquery';
 import { Router } from '@angular/router';
 import { MatSort } from '@angular/material';
 import { MatterDialogComponentForTemplate } from '../matter-dialog/matter-dialog.component';
 import { ContactSelectDialogComponent } from '../../contact/contact-select-dialog/contact-select-dialog.component';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-template-list',
@@ -24,25 +25,31 @@ export class TemplateListComponent implements OnInit {
   highlightedRows: any;
   currentMatterData: any;
   Templatedata: any = [];
+  TemplateGenerateData:any=[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   isLoadingResults: boolean;
   pageSize: any;
   abc: number;
+  TemplateForm:FormGroup;
   parentMessage: any;
   @Output() matterDetail: EventEmitter<any> = new EventEmitter<any>();
   constructor(
     private toastr: ToastrService,
-    public _getContact: ContactService,
-    public TemplateListData: TemplateListDetails,
+    private _mainAPiServiceService: MainAPiServiceService,
     public MatDialog: MatDialog,
-    private TableColumnsService: TableColumnsService,
+    private _formBuilder: FormBuilder,
     private router: Router,
     public _matDialog: MatDialog,
+    private behaviorService:BehaviorService,
   ) { }
 
   ngOnInit() {
     // let i=0;
+    this.TemplateForm = this._formBuilder.group({
+      search: ['']
+    });
+
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.LoadData({})
 
@@ -50,14 +57,20 @@ export class TemplateListComponent implements OnInit {
   }
   LoadData(d) {
     this.isLoadingResults = true;
-    this.TemplateListData.getTemplateList(d).subscribe(response => {
+    
+    this._mainAPiServiceService.getSetData(d, 'TemplateList').subscribe(response => {
 
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Templatedata = new MatTableDataSource(response.DATA.TEMPLATES);
+    
         this.editContact(response.DATA.TEMPLATES[0]);
+        
         this.Templatedata.paginator = this.paginator;
         this.Templatedata.sort = this.sort;
+
         if (response.DATA.TEMPLATES[0]) {
+
+          this.behaviorService.TemplateGenerateData(response.DATA.TEMPLATES[0]);
           // localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);
           this.highlightedRows = response.DATA.TEMPLATES[0].TEMPLATENAME;
         }
@@ -70,10 +83,13 @@ export class TemplateListComponent implements OnInit {
     });
     this.pageSize = localStorage.getItem('lastPageSize');
   }
-
+  get f() {
+    //console.log(this.contactForm);
+    return this.TemplateForm.controls;
+  }
   onSearch(searchFilter: any) {
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
-
+      this.LoadData({ SEARCH:this.f.search.value})
     }
   }
   editContact(Row: any) {
@@ -86,7 +102,8 @@ export class TemplateListComponent implements OnInit {
     }
     this.parentMessage = Row;
     this.matterDetail.emit(Row);
-    localStorage.setItem('templateData', JSON.stringify(Row));
+    this.behaviorService.TemplateGenerateData(Row);
+   
     this.currentMatterData = Row;
 
   }
@@ -107,22 +124,27 @@ export class TemplateListComponent implements OnInit {
     }
   }
   openDilog() {
-    let templateData = JSON.parse(localStorage.getItem('templateData'));
+
+    this.behaviorService.TemplateGenerateData$.subscribe(result => {
+      if(result){
+        this.TemplateGenerateData=result; 
+      }          
+    });
     if (this.router.url == "/create-document/invoice-template") {
         let invoiceGUid = localStorage.getItem('edit_invoice_id');
-        let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }
+        let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
         this.ForDocDialogOpen(passdata);
     } else if (this.router.url == "/create-document/matter-template") {
         let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
-        let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }
+        let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
         this.ForDocDialogOpen(passdata);
       } else if (this.router.url == "/create-document/receive-money-template") {
         let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
-        let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }
+        let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
         this.ForDocDialogOpen(passdata);
     } else if (this.router.url == "/create-document/contact-template") {
         let ContactGuID = localStorage.getItem('contactGuid');
-        let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Template", "Folder": '', "Template": templateData.TEMPLATENAME }
+        let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
         this.ForDocDialogOpen(passdata);
     }
 }

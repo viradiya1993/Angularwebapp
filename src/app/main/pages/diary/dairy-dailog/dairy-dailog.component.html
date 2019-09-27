@@ -10,45 +10,44 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                         <mat-label>Subject</mat-label>
-                        <input  formControlName ="Subject" matInput>
+                        <input formControlName="SUBJECT" matInput>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                         <mat-label>Location</mat-label>
-                        <input  formControlName ="Location" matInput>
+                        <input formControlName="LOCATION" matInput>
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-checkbox formControlName="allday" (ngModelChange)="CheckAllDays($event)">All Day Event</mat-checkbox>
-                     <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-                      &nbsp;&nbsp;
+                    <mat-checkbox formControlName="ALLDAYEVENT" (ngModelChange)="CheckAllDays($event)">All Day Event</mat-checkbox>
+                    &nbsp;&nbsp;
                     <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
                         <mat-label>Date</mat-label>
-                        <input (dateInput)="choosedDateFrom('input', $event)" (dateChange)="DateFrom('change', $event)" matInput  formControlName ="date" [matDatepicker]="picker">
+                        <input (dateInput)="choosedDateFrom()" (dateChange)="DateFrom()" matInput formControlName="APPOINTMENTDATE" [matDatepicker]="picker">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4" *ngIf="CheckClick ==='No'">
                         <mat-label>Start</mat-label>
-                        <mat-select formControlName="TimeSlot" (ngModelChange)="ChanageTimeSlot($event)">
+                        <mat-select formControlName="APPOINTMENTTIME">
                             <mat-option *ngFor="let data of timeStops" value="{{data}}">{{data}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4" *ngIf="CheckClick==='No'">
                         <mat-label>Finish</mat-label>
-                        <mat-select formControlName="TimeSlot2" (ngModelChange)="ChanageTimeSlot2($event)">
+                        <mat-select formControlName="TimeSlot2">
                             <mat-option *ngFor="let data of timeStops" value="{{data}}">{{data}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                  <mat-tab-group mat-align-tabs="start">
-                    <mat-tab label="Details">
-                      <app-details [DairyForm]="DairyForm"></app-details>
-                    </mat-tab>
-                    <mat-tab label="Recurrance Pattern">
-                      <app-recurrance-pattern [DairyForm]="DairyForm"></app-recurrance-pattern>
-                    </mat-tab>
-                  </mat-tab-group> 
+                    <mat-tab-group mat-align-tabs="start">
+                        <mat-tab label="Details">
+                            <app-details [DairyForm]="DairyForm"></app-details>
+                        </mat-tab>
+                        <mat-tab label="Recurrance Pattern">
+                            <app-recurrance-pattern [DairyForm]="DairyForm"></app-recurrance-pattern>
+                        </mat-tab>
+                    </mat-tab-group>
                 </div>
             </form>
         </div>

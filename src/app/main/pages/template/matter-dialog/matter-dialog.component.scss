@@ -1,14 +1,9 @@
 body.theme-default .mat-dialog-container {
     padding: 0;
 }
-
 //user 2
 body.theme-yellow-light .mat-dialog-container {
     padding: 0;
-}
-
-.btn {
-    float: right;
 }
 
 // .popup_title_div {
@@ -21,13 +16,11 @@ body.theme-yellow-light .mat-dialog-container {
     padding: 14px 24px;
     background-color: #303540;
 }
-
 .mat-dialog-content {
     margin: 0;
     max-height: 450px;
     padding: 24px 24px 0;
 }
-
 .remove_left_right_padding {
     padding-left: 0 !important;
     padding-right: 0 !important;
@@ -84,137 +77,66 @@ mat-icon.close_icon.mat-icon.material-icons.mat-icon-no-color {
     cursor: pointer;
 }
 
-table {
-    width: 100%;
+.btn {
+    float: right;
 }
 
-.corres_popup_main {
+mat-dialog-actions {
+    mat-spinner {
+        zoom: 0.2;
+        position: absolute;
+        right: 0;
+        left: 0;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+    }
+}
+
+.add_edit_contact_main {
     background-color: #fff;
     // width: 50%;
-    width: 900px;
+    width: 850px;
     margin: 0 auto;
     // box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
     // -webkit-box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
     box-shadow: none;
     border-radius: 4px;
 }
-
 .mat-dialog-title {
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
 }
-
 .right_popup_btn .right_btn_child:last-child {
     margin-right: 0;
 }
-
 .popup_ftr {
     border-top: 1px solid #ccc;
     margin-top: 15px !important;
     padding: 12px 24px !important;
 }
-
-@media screen and (max-width: 800px) {
-    .corres_popup_main {
+@media screen and (max-width: 900px) {
+    .add_edit_contact_main {
         width: 95%;
     }
 }
 
-@media screen and (max-width: 568px) {
-    .corres_popup_main .left_popup_btn {
-        width: 30%;
-    }
-    .corres_popup_main .right_popup_btn {
-        width: 70%;
-    }
-}
-
-// #matters .p-24.list_tbl_main {
-//    margin-top: 110px;
-//    margin-top: 95px;
-// }
-
-// .p-24.list_tbl_main {
-//    margin-top: 110px;
-//    padding-top: 0 !important;
-// }
-
-.list_sidebar_padding h3.one {
-    margin: 0;
-}
-
-.list_sidebar_right_child {
-    margin-top: 110px;
-}
-
-#matters .list_sidebar_right_child {
-    margin-top: 95px;
-}
-
-.list_sidebar_right_child {
-    background-color: #fff !important;
-    border-radius: 8px;
-    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12) !important;
-    border-bottom: 1px solid #999;
-}
-
-.invoiceddrop {
-    width: 165px !important;
-    text-align: center !important;
-}
-
-.select_matter_main_div .sticky_search_div {
-    position: relative;
-    top: 0;
+.mat-tab-group {
+  
     width: 100%;
-    background-color: transparent;
-    z-index: 9999;
-    left: 0;
-    padding: 0 0 9px 0;
 }
-.select_matter_main_div .sticky_search_div .mat-form-field {
-    display: inline-block;
-    position: relative;
-    text-align: left;
-    margin-right: 10px;
+.mat-row.row-text-colore td {
+    color: #fff;
 }
-.select_matter_main_div .p-24.list_tbl_main {
-    margin-top: 0;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+.auto_drop_ghandel{
+    position: relative !important;
 }
-
-.select_matter_main_div .example-containerdata {
-    height: 300px;
+.TemplatePopup{
     overflow: auto;
+    height: 140px;
+    width: 100%;
+   
 }
-
-.select_metter_main_div .mat-dialog-content {
-    max-height: 100%;
-}
-
-.freeEarner {
-    width: 141px;
-}
-.left_popup_btn {    
-    width: 70%;
-    text-align: left;
-}
-.right_popup_btn {
-    float: left;
-    width: 30%;
-    text-align: right;
-}
-th.mat-sort-header-sorted {
-    color: black;
-}
-div.middle {
-    margin-left: 34%;
-    margin-top: -56px;
-}
-.button {
-    margin-top: 50px;
-    margin-left: -42%;
+.btn_mrg{
+    margin-bottom: 10px !important;
 }

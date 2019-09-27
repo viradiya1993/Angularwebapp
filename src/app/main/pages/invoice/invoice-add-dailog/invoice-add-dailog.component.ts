@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MatDialog, MatDatepickerInputEvent } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { fuseAnimations } from '@fuse/animations';
-import { MattersService, MatterInvoicesService } from 'app/_services';
+import { MainAPiServiceService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
@@ -23,12 +23,13 @@ export class InvoiceAddDailogComponent implements OnInit {
   isFixPrice: any = true;
   isMin: any = true;
   isMax: any = true;
-  ORIEXTOTAL: any;
-  ORIGSTTOTAL: any;
-  ORIINTOTAL: any;
-  OVEEXTOTAL: any;
-  OVEGSTTOTAL: any;
-  OVEINTOTAL: any;
+  ORIEXTOTAL: any = 0;
+  baseGstPercentage: any = 0;
+  ORIGSTTOTAL: any = 0;
+  ORIINTOTAL: any = 0;
+  OVEEXTOTAL: any = 0;
+  OVEGSTTOTAL: any = 0;
+  OVEINTOTAL: any = 0;
   WORKITEMS: any;
   constructor(
     private _formBuilder: FormBuilder,
@@ -36,7 +37,8 @@ export class InvoiceAddDailogComponent implements OnInit {
     public datepipe: DatePipe,
     public MatDialog: MatDialog,
     private toastr: ToastrService,
-    private _mattersService: MattersService, private _matterInvoicesService: MatterInvoicesService) { }
+    private _mainAPiServiceService: MainAPiServiceService,
+  ) { }
 
   ngOnInit() {
     this.isLoadingResults = true;
@@ -85,7 +87,8 @@ export class InvoiceAddDailogComponent implements OnInit {
       DISGSTAMOUNT: [''],
       DISUINAMOUNT: [''],
     });
-    this._mattersService.getMattersDetail({ MATTERGUID: matterDetail.MATTERGUID, GetAllFields: true }).subscribe(response => {
+
+    this._mainAPiServiceService.getSetData({ MATTERGUID: matterDetail.MATTERGUID, GetAllFields: true }, 'GetMatter').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let matterDate = response.DATA.MATTERS[0];
         let inValEx = matterDate.SUMMARYTOTALS.INVOICEDVALUEEXGST;
@@ -98,19 +101,32 @@ export class InvoiceAddDailogComponent implements OnInit {
         this.addInvoiceForm.controls['FIXEDRATEEXGSTTOTAL'].setValue(matterDate.CONVEYANCINGGROUP.TOTALDUE + matterDate.SUMMARYTOTALS.INVOICEDVALUEEXGST);
         this.addInvoiceForm.controls['FIXEDRATEINCGSTTOTAL'].setValue(matterDate.CONVEYANCINGGROUP.TOTALDUE + matterDate.SUMMARYTOTALS.INVOICEDVALUEINCGST);
         //fix
-        this.isFixPrice = ((inValEx > matterDate.BILLINGGROUP.FIXEDRATEEXGST || matterDate.BILLINGGROUP.FIXEDRATEEXGST <= 0) && (inValIN > matterDate.BILLINGGROUP.FIXEDRATEEXGST || matterDate.BILLINGGROUP.FIXEDRATEEXGST <= 0)) ? false : true;
+        this.isFixPrice = ((inValEx > matterDate.BILLINGGROUP.FIXEDRATEEXGST || matterDate.BILLINGGROUP.FIXEDRATEEXGST <= 0)
+          && (inValIN > matterDate.BILLINGGROUP.FIXEDRATEEXGST || matterDate.BILLINGGROUP.FIXEDRATEEXGST <= 0)) ? false : true;
         this.addInvoiceForm.controls['FIXEDRATEEXGST'].setValue(matterDate.BILLINGGROUP.FIXEDRATEEXGST);
         this.addInvoiceForm.controls['FIXEDRATEINCGST'].setValue(matterDate.BILLINGGROUP.FIXEDRATEINCGST);
         //Minimum
-        this.isMin = ((inValEx > matterDate.SUMMARYTOTALS.ESTIMATETOTOTALEXGST || matterDate.SUMMARYTOTALS.ESTIMATETOTOTALEXGST <= 0) && (inValIN > matterDate.SUMMARYTOTALS.ESTIMATETOTOTALINCGST || matterDate.SUMMARYTOTALS.ESTIMATETOTOTALINCGST <= 0)) ? false : true;
+        this.isMin = ((inValEx > matterDate.SUMMARYTOTALS.ESTIMATETOTOTALEXGST || matterDate.SUMMARYTOTALS.ESTIMATETOTOTALEXGST <= 0)
+          && (inValIN > matterDate.SUMMARYTOTALS.ESTIMATETOTOTALINCGST || matterDate.SUMMARYTOTALS.ESTIMATETOTOTALINCGST <= 0)) ? false : true;
         this.addInvoiceForm.controls['ESTIMATETOTOTALEXGST'].setValue(matterDate.SUMMARYTOTALS.ESTIMATETOTOTALEXGST);
         this.addInvoiceForm.controls['ESTIMATETOTOTALINCGST'].setValue(matterDate.SUMMARYTOTALS.ESTIMATETOTOTALINCGST);
         //Maximum
-        this.isMax = ((inValEx > matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALEXGST || matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALEXGST <= 0) && (inValIN > matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST || matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST <= 0)) ? false : true;
+        this.isMax = ((inValEx > matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALEXGST || matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALEXGST <= 0)
+          && (inValIN > matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST || matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST <= 0)) ? false : true;
         this.addInvoiceForm.controls['ESTIMATEFROMTOTALEXGST'].setValue(matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALEXGST);
         this.addInvoiceForm.controls['ESTIMATEFROMTOTALINCGST'].setValue(matterDate.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
+    let PostInvoiceEntryData: any = { FormAction: 'default', VALIDATEONLY: false, Data: {} };
+
+    this._mainAPiServiceService.getSetData(PostInvoiceEntryData, 'SetInvoice').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        let temInvoice = response.DATA.DEFAULTVALUES.INVOICECODE;
+        this.addInvoiceForm.controls['INVOICECODE'].setValue(temInvoice.toString().padStart(8, "0"))
       }
     }, error => {
       this.toastr.error(error);
@@ -122,7 +138,7 @@ export class InvoiceAddDailogComponent implements OnInit {
   }
 
   firstDate(event) {
-    var dt = event;
+    var dt = event._d;
     dt.setMonth(dt.getMonth() + 1);
     this.addInvoiceForm.controls['DUEDATETEXT'].setValue(new Date(dt));
     this.addInvoiceForm.controls['DUEDATE'].setValue(this.datepipe.transform(dt, 'dd/MM/yyyy'));
@@ -136,14 +152,14 @@ export class InvoiceAddDailogComponent implements OnInit {
     let dicountGst: number = 0;
     let Percentage: number = 0;
     if (event.Percentage_type == "Percentage") {
-      dicountex = (Number(event.Percentage) * Number(this.f.ORIEXTOTAL.value)) / 100;
-      dicountin = (Number(event.Percentage) * Number(this.f.ORIINTOTAL.value)) / 100;
-      dicountGst = (Number(event.Percentage) * Number(this.f.ORIGSTTOTAL.value)) / 100;
+      dicountex = (Number(event.Percentage) * Number(this.ORIEXTOTAL)) / 100;
+      dicountin = (Number(event.Percentage) * Number(this.ORIINTOTAL)) / 100;
+      dicountGst = (Number(event.Percentage) * Number(this.ORIGSTTOTAL)) / 100;
     } else {
-      Percentage = (Number(event.amount) * 100) / Number(this.f.ORIEXTOTAL.value);
-      dicountex = (Number(Percentage) * Number(this.f.ORIEXTOTAL.value)) / 100;;
-      dicountin = (Number(Percentage) * Number(this.f.ORIINTOTAL.value)) / 100;
-      dicountGst = (Number(Percentage) * Number(this.f.ORIGSTTOTAL.value)) / 100;
+      Percentage = (Number(event.amount) * 100) / Number(this.ORIEXTOTAL);
+      dicountex = (Number(Percentage) * Number(this.ORIEXTOTAL)) / 100;;
+      dicountin = (Number(Percentage) * Number(this.ORIINTOTAL)) / 100;
+      dicountGst = (Number(Percentage) * Number(this.ORIGSTTOTAL)) / 100;
     }
     this.addInvoiceForm.controls['DISEXAMOUNT'].setValue(dicountex.toFixed(2));
     this.addInvoiceForm.controls['DISGSTAMOUNT'].setValue(dicountGst.toFixed(2));
@@ -153,9 +169,9 @@ export class InvoiceAddDailogComponent implements OnInit {
       dicountGst = -Math.abs(dicountGst);
       dicountin = -Math.abs(dicountin);
     }
-    let exfinalTotal = Number(this.f.ORIEXTOTAL.value - dicountex);
-    let GSTfinalTotal = Number(this.f.ORIGSTTOTAL.value - dicountGst);
-    let infinalTotal = Number(this.f.ORIINTOTAL.value - dicountin);
+    let exfinalTotal = Number(this.ORIEXTOTAL - dicountex);
+    let GSTfinalTotal = Number(this.ORIGSTTOTAL - dicountGst);
+    let infinalTotal = Number(this.ORIINTOTAL - dicountin);
 
     this.addInvoiceForm.controls['OVEEXTOTAL'].setValue(exfinalTotal.toFixed(2));
     this.addInvoiceForm.controls['OVEGSTTOTAL'].setValue(GSTfinalTotal.toFixed(2));
@@ -188,6 +204,7 @@ export class InvoiceAddDailogComponent implements OnInit {
         SundryINTOTAL += Number(value.PRICEINCGST);
       }
     });
+    this.baseGstPercentage = 100 * TOTALGST / EXTOTAL;
     this.WORKITEMS = WORKITEMSData;
     this.ORIEXTOTAL = EXTOTAL.toFixed(2);
     this.ORIGSTTOTAL = TOTALGST.toFixed(2);
@@ -201,6 +218,19 @@ export class InvoiceAddDailogComponent implements OnInit {
     this.addInvoiceForm.controls['ActivityINTOTAL'].setValue(ActivityINTOTAL.toFixed(2));
     this.addInvoiceForm.controls['SundryEXTOTAL'].setValue(SundryEXTOTAL.toFixed(2));
     this.addInvoiceForm.controls['SundryINTOTAL'].setValue(SundryINTOTAL.toFixed(2));
+    this.changeDiscountAmount({ 'amount': this.f.amount.value, 'Percentage': this.f.Percentage.value, 'Percentage_type': this.f.Percentage_type.value, 'GST_type': this.f.GST_type.value, 'Discount_type': this.f.Discount_type.value });
+  }
+  calculateOverrideTotal(type: any) {
+    if (type == "ex") {
+      const amountVal = this.f.OVEEXTOTAL.value;
+      const gstAmount = amountVal * this.baseGstPercentage / 100;
+      this.OVEGSTTOTAL = (Number(gstAmount)).toFixed(2);
+      const oveinamount = Number(amountVal) + Number(this.OVEGSTTOTAL);
+      this.OVEINTOTAL = oveinamount.toFixed(2);
+      this.OVEEXTOTAL = Number(amountVal).toFixed(2);
+    } else if (type == "in") {
+
+    }
   }
   selectDueDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.addInvoiceForm.controls['DUEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
@@ -213,35 +243,30 @@ export class InvoiceAddDailogComponent implements OnInit {
   }
   SaveInvoice() {
     this.isspiner = true;
-    let PostData: any = {
+    const PostData: any = {
       // "INVOICEGUID": this.f.ADDITIONALTEXT.value,
-      "INVOICECODE": this.f.INVOICECODE.value,
-      "MATTERGUID": this.f.MATTERGUID.value,
-      "INVOICEDATE": this.f.INVOICEDATE.value,
-      "DUEDATE": this.f.DUEDATE.value,
-      "PRINTEDDATE": "",
-      "INVOICETOTAL": this.f.OVEINTOTAL.value,
-      "GST": this.f.OVEGSTTOTAL.value,
-      "FOREIGNCURRENCYID": "",
-      "COMMENT": this.f.COMMENT.value,
-      "WORKITEMS": this.WORKITEMS
-    }
+      INVOICECODE: this.f.INVOICECODE.value,
+      MATTERGUID: this.f.MATTERGUID.value,
+      INVOICEDATE: this.f.INVOICEDATE.value,
+      DUEDATE: this.f.DUEDATE.value,
+      PRINTEDDATE: '',
+      INVOICETOTAL: this.f.OVEINTOTAL.value,
+      GST: this.f.OVEGSTTOTAL.value,
+      FOREIGNCURRENCYID: '',
+      COMMENT: this.f.COMMENT.value,
+      WORKITEMS: this.WORKITEMS
+    };
     let PostInvoiceEntryData: any = { FormAction: 'insert', VALIDATEONLY: true, Data: PostData };
-    this._matterInvoicesService.SetInvoiceData(PostInvoiceEntryData).subscribe(res => {
-      if (res.DATA.INVOICECODE && res.DATA.INVOICECODE != "") {
-        this.addInvoiceForm.controls['INVOICECODE'].setValue(res.DATA.INVOICECODE);
-        PostData.INVOICECODE = res.DATA.INVOICECODE;
-      } else {
-        PostData.INVOICECODE = this.f.INVOICECODE.value;
-      }
+
+    this._mainAPiServiceService.getSetData(PostInvoiceEntryData, 'SetInvoice').subscribe(res => {
       PostInvoiceEntryData = { FormAction: 'insert', VALIDATEONLY: true, Data: PostData };
-      if (res.CODE == 200 && res.STATUS == "success") {
+      if (res.CODE == 200 && res.STATUS == 'success') {
         this.checkValidation(res.DATA.VALIDATIONS, PostInvoiceEntryData);
-      } else if (res.CODE == 451 && res.STATUS == "warning") {
+      } else if (res.CODE == 451 && res.STATUS == 'warning') {
         this.checkValidation(res.DATA.VALIDATIONS, PostInvoiceEntryData);
-      } else if (res.CODE == 450 && res.STATUS == "error") {
+      } else if (res.CODE == 450 && res.STATUS == 'error') {
         this.checkValidation(res.DATA.VALIDATIONS, PostInvoiceEntryData);
-      } else if (res.MESSAGE == "Not logged in") {
+      } else if (res.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
       this.isspiner = false;
@@ -265,7 +290,7 @@ export class InvoiceAddDailogComponent implements OnInit {
         tempWarning[value.FIELDNAME] = value;
       }
     });
-    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
+    this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
@@ -290,12 +315,12 @@ export class InvoiceAddDailogComponent implements OnInit {
   }
   saveInvoice(PostInvoiceEntryData: any) {
     PostInvoiceEntryData.VALIDATEONLY = false;
-    this._matterInvoicesService.SetInvoiceData(PostInvoiceEntryData).subscribe(res => {
+    this._mainAPiServiceService.getSetData(PostInvoiceEntryData, 'SetInvoice').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.toastr.success('Save Success');
         this.dialogRef.close(true);
       } else {
-        if (res.CODE == 402 && res.STATUS == "error" && res.MESSAGE == "Not logged in")
+        if (res.CODE == 402 && res.STATUS == 'error' && res.MESSAGE == 'Not logged in')
           this.dialogRef.close(false);
       }
       this.isspiner = false;

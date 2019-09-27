@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-import { FileNotesService, TableColumnsService } from './../../../../_services';
+import { TableColumnsService, MainAPiServiceService, BehaviorService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import {MatSort} from '@angular/material';
@@ -23,25 +23,45 @@ export class FileNotesComponent implements OnInit {
   ColumnsObj: any[];
   pageSize: any;
   tempColobj: any;
+  highlightedRows: any;
+  theme_type = localStorage.getItem('theme_type');
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
+  public FileNoteData = {
+    "MatterName": '', "ContactName": '', "Search": '', 
+  }
 
-  constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, private fileNotes_service: FileNotesService, private toastr: ToastrService) { }
+  constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, 
+    private _mainAPiServiceService: MainAPiServiceService,private toastr: ToastrService,
+    public behaviorService: BehaviorService) { }
   filenotes_table;
   ngOnInit() {
+    this.FileNoteData.MatterName = this.currentMatter.MATTER;
+    this.FileNoteData.ContactName = this.currentMatter.CONTACTNAME;
     $('content').addClass('inner-scroll');
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
     this.getTableFilter();
     this.loadData();
   }
   loadData() {
+    this.filenotes_table=[];
     this.isLoadingResults = true;
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
-    this.fileNotes_service.getData(potData).subscribe(response => {
-      console.log(response);
+    this._mainAPiServiceService.getSetData(potData, 'GetFileNote').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        let FILENOTES = response.DATA.FILENOTES == null ? [] : response.DATA.FILENOTES;
-        this.filenotes_table = new MatTableDataSource(FILENOTES);
+        this.filenotes_table = new MatTableDataSource(response.DATA.FILENOTES);
         this.filenotes_table.paginator = this.paginator;
         this.filenotes_table.sort = this.sort;
+        if (response.DATA.FILENOTES[0]) {
+       
+          this.highlightedRows = response.DATA.FILENOTES[0].FILENOTEGUID;
+          this.RowClick(response.DATA.FILENOTES[0])
+          //this.highlightedRows = response.DATA.TASKS[0].TASKGUID;
+        } else {
+          //this.toastr.error("No Data Selected");
+        }
+        // let FILENOTES = response.DATA.FILENOTES == null ? [] : response.DATA.FILENOTES;
+      
+       
       }
       this.isLoadingResults = false;
     }, error => {
@@ -57,10 +77,8 @@ export class FileNotesComponent implements OnInit {
   getTableFilter() {
     this.TableColumnsService.getTableFilter('legal details', 'file notes').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        console.log(response)
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
         this.displayedColumns = data.showcol;
-        console.log(data.showcol)
         this.tempColobj = data.tempColobj;
         this.ColumnsObj = data.colobj;
       }
@@ -90,6 +108,15 @@ export class FileNotesComponent implements OnInit {
         }
       }
     });
+  }
+  RowClick(val){
+    this.behaviorService.FileNotesData(val);
+  }
+  refreshFileNote(){
+    this.loadData();
+  }
+  FilterSearch(filterValue:any){
+    this.filenotes_table.filter = filterValue;
   }
 }
 

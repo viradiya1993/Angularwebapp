@@ -66,10 +66,10 @@
     z-index: 9999;
     left: 0;
 }
+
 // #time_entries .sticky_search_remove_padding {
 //     padding-left: 80px;
 // }
-
 #time_entries .list_tbl_main {
     //margin-top: 85px;
     padding-top: 0 !important;
@@ -101,7 +101,6 @@
 //     background-color: #fff;
 //     border-left: 1px solid #ccc;
 // }
-
 // .list_sidebar_padding h3.one {
 //     margin: 0;
 // }
@@ -130,6 +129,32 @@ button#refreshTimeEntryTab {
 #time_entries .content .example {
     padding: 20px 10px;
 }
+
 th.mat-sort-header-sorted {
     color: black;
+}
+
+mat-spinner {
+    zoom: 0.2;
+    position: absolute !important;
+    right: 0;
+    left: 0;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+}
+
+.sideText {
+    text-align: right;
+}
+
+.one.mb-24 {
+    margin-top: 20px;
+}
+
+body .has-orange-row .mat-cell {
+    color: orange;
+}
+.secondcls{
+    margin-top: 7px;
 }

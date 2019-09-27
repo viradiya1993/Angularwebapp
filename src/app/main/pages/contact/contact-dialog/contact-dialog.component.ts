@@ -2,10 +2,12 @@ import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { AddContactService, ContactService } from './../../../../_services';
+import { MainAPiServiceService } from './../../../../_services';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { fuseAnimations } from '@fuse/animations';
+import { Subscription } from 'rxjs';
+
 
 
 @Component({
@@ -16,6 +18,7 @@ import { fuseAnimations } from '@fuse/animations';
   animations: fuseAnimations
 })
 export class ContactDialogComponent implements OnInit {
+  subscription: Subscription;
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   errorWarningData: any = {};
   action: string;
@@ -41,12 +44,10 @@ export class ContactDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<ContactDialogComponent>,
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private Contact: ContactService,
-    private addcontact: AddContactService,
     public _matDialog: MatDialog,
+    private _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
-    console.log(_data);
     this.action = _data.action;
     if (this.action === 'edit')
       this.dialogTitle = 'Update Contact';
@@ -61,14 +62,18 @@ export class ContactDialogComponent implements OnInit {
   contactForm: FormGroup;
   ngOnInit() {
     this.contactForm = this._formBuilder.group({
+      PreferedName: [''],
       //CONTACTGUID: ['', Validators.required],
       CONTACTNAME: ['', Validators.required],
       CONTACTTYPE: ['', Validators.required],
       ACTIVE: [''],
+      //Company
+      POSITION: [],
       //person
       COMPANYCONTACTGUID: [''],
+      SALUTATION: [''],
       COMPANYCONTACTGUIDTEXT: [''],
-      POSITION: [''],
+      TITLE: [''],
       GIVENNAMES: [''],
       NAMETITLE: [''],
       MIDDLENAMES: [''],
@@ -78,6 +83,7 @@ export class ContactDialogComponent implements OnInit {
       OTHERFAMILYNAME: [''],
       OTHERGIVENNAMES: [''],
       REASONFORCHANGE: [''],
+      USEPARENTADDRESS: [''],
       //Other
       GENDER: [''],
       DATEOFBIRTH: [''],
@@ -141,14 +147,13 @@ export class ContactDialogComponent implements OnInit {
     if (this.action === 'edit' || this.action === 'duplicate') {
       this.isLoadingResults = true;
       let contactguidforbody = { CONTACTGUID: localStorage.getItem('contactGuid') }
-      this.Contact.getContact(contactguidforbody).subscribe(res => {
-        if (res.MESSAGE == "Not logged in") {
+      this._mainAPiServiceService.getSetData(contactguidforbody, 'GetContact').subscribe(res => {
+        if (res.MESSAGE == 'Not logged in') {
           this.dialogRef.close(false);
         } else {
           if (res.DATA.CONTACTS[0]) {
             let getContactData = res.DATA.CONTACTS[0];
             this.editDataCompny = (getContactData.COMPANYCONTACTGUID != '' && getContactData.COMPANYNAME != '') ? false : true;
-            // console.log(this.editDataCompny);
             localStorage.setItem('getContact_edit', getContactData.CONTACTGUID);
             this.nameSelected = getContactData.CONTACTTYPE;
             this.active = getContactData.ACTIVE == 0 ? false : true;
@@ -190,9 +195,11 @@ export class ContactDialogComponent implements OnInit {
             this.contactForm.controls['CONTACTTYPE'].setValue(getContactData.CONTACTTYPE);
             this.contactForm.controls['COMPANYCONTACTGUID'].setValue(getContactData.COMPANYCONTACTGUID);
             this.contactForm.controls['COMPANYCONTACTGUIDTEXT'].setValue(getContactData.COMPANYNAME);
-            this.contactForm.controls['POSITION'].setValue(getContactData.POSITION);
+            this.contactForm.controls['TITLE'].setValue(getContactData.TITLE);
+            this.contactForm.controls['SALUTATION'].setValue(getContactData.SALUTATION);
             // this.contactForm.controls['ACTIVE'].setValue(getContactData.ACTIVE);
             this.contactForm.controls['ACTIVE'].setValue(this.active);
+            this.contactForm.controls['USEPARENTADDRESS'].setValue(getContactData.USEPARENTADDRESS == 0 ? false : true);
             this.contactForm.controls['GIVENNAMES'].setValue(getContactData.GIVENNAMES);
             this.contactForm.controls['NAMETITLE'].setValue(getContactData.NAMETITLE);
             this.contactForm.controls['MIDDLENAMES'].setValue(getContactData.MIDDLENAMES);
@@ -202,7 +209,9 @@ export class ContactDialogComponent implements OnInit {
             this.contactForm.controls['OTHERFAMILYNAME'].setValue(getContactData.OTHERFAMILYNAME);
             this.contactForm.controls['OTHERGIVENNAMES'].setValue(getContactData.OTHERGIVENNAMES);
             this.contactForm.controls['REASONFORCHANGE'].setValue(getContactData.REASONFORCHANGE);
-            //other
+            //Company
+            this.contactForm.controls['POSITION'].setValue(getContactData.POSITION);
+            //Other
             this.contactForm.controls['GENDER'].setValue(getContactData.GENDER);
             let DATEOFBIRTH = getContactData.DATEOFBIRTH.split("/");
             this.contactForm.controls['DATEOFBIRTH'].setValue(new Date(DATEOFBIRTH[1] + '/' + DATEOFBIRTH[0] + '/' + DATEOFBIRTH[2]));
@@ -268,6 +277,8 @@ export class ContactDialogComponent implements OnInit {
           }
         }
       });
+    } else {
+      this.contactForm.controls['ACTIVE'].setValue(true);
     }
   }
 
@@ -295,8 +306,10 @@ export class ContactDialogComponent implements OnInit {
       CONTACTTYPE: this.f.CONTACTTYPE.value,
       ACTIVE: this.f.ACTIVE.value == true ? "1" : "0",
       //person
+      USEPARENTADDRESS: this.f.USEPARENTADDRESS.value == true ? "1" : "0",
       COMPANYCONTACTGUID: this.f.COMPANYCONTACTGUID.value,
-      POSITION: this.f.POSITION.value,
+      TITLE: this.f.TITLE.value,
+      SALUTATION: this.f.SALUTATION.value,
       GIVENNAMES: this.f.GIVENNAMES.value,
       NAMETITLE: this.f.NAMETITLE.value,
       MIDDLENAMES: this.f.MIDDLENAMES.value,
@@ -306,7 +319,10 @@ export class ContactDialogComponent implements OnInit {
       OTHERFAMILYNAME: this.f.OTHERFAMILYNAME.value,
       OTHERGIVENNAMES: this.f.OTHERGIVENNAMES.value,
       REASONFORCHANGE: this.f.REASONFORCHANGE.value,
+      COMPANYNAME: this.f.COMPANYCONTACTGUIDTEXT.value,
 
+      //Company
+      POSITION: this.f.POSITION.value,
       //others
       GENDER: this.f.GENDER.value,
       DATEOFBIRTH: this.dateofbirth,
@@ -363,14 +379,14 @@ export class ContactDialogComponent implements OnInit {
       NOTES: this.f.NOTES.value
     }
     let details = { FormAction: this.FormAction, VALIDATEONLY: true, Data: detailsdata };
-    this.addcontact.AddContactData(details).subscribe(response => {
+    this.subscription = this._mainAPiServiceService.getSetData(details, 'SetContact').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, details);
-      } else if (response.CODE == 451 && response.STATUS == "warning") {
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.checkValidation(response.DATA.VALIDATIONS, details);
-      } else if (response.CODE == 450 && response.STATUS == "error") {
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
         this.checkValidation(response.DATA.VALIDATIONS, details);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       } else {
         this.isspiner = false;
@@ -393,7 +409,7 @@ export class ContactDialogComponent implements OnInit {
         tempWarning[value.FIELDNAME] = value;
       }
     });
-    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
+    this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
@@ -417,7 +433,7 @@ export class ContactDialogComponent implements OnInit {
   }
   saveContectData(data: any) {
     data.VALIDATEONLY = false;
-    this.addcontact.AddContactData(data).subscribe(response => {
+    this.subscription = this._mainAPiServiceService.getSetData(data, 'SetContact').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         if (this.action !== 'edit') {
           this.toastr.success('Contact save successfully');
@@ -426,13 +442,13 @@ export class ContactDialogComponent implements OnInit {
         }
         this.isspiner = false;
         this.dialogRef.close(true);
-      } else if (response.CODE == 451 && response.STATUS == "warning") {
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.toastr.warning(response.MESSAGE);
         this.isspiner = false;
-      } else if (response.CODE == 450 && response.STATUS == "error") {
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
         this.toastr.error(response.MESSAGE);
         this.isspiner = false;
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
     }, error => {
@@ -440,6 +456,10 @@ export class ContactDialogComponent implements OnInit {
     });
     localStorage.removeItem('DATEOFBIRTH');
     localStorage.removeItem('DATEOFDEATH');
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
 

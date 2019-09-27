@@ -1,23 +1,25 @@
 <div class="example-loading-shade" *ngIf="isLoadingResults">
   <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
 </div>
+<!-- <button mat-raised-button color="primary" type="button" id="refreshKitItemTab" (click)="refreshKitItemTab();">Refresh</button> -->
 <div cdkDrag class="popup_main_div add_edit_contact_main" >
-  <h2 cdkDragHandle mat-dialog-title>New Pack
+  <h2 cdkDragHandle mat-dialog-title>{{dialogTitle}}
     <button class="btn" mat-icon-button (click)="ClosePack()"  [mat-dialog-close]="false" aria-label="Close dialog">
       <mat-icon>close</mat-icon>
     </button>
   </h2>
+  
   <div mat-dialog-content class="mat-typography main">
     <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
-      <form [formGroup]="PackDocument" fxLayout="column" fxFlex="1 0 auto" name="form">
+      <form  fxLayout="column" fxFlex="1 0 auto" name="form">
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
           <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
               <mat-label>Pack Name</mat-label>
-              <input  formControlName="packName" matInput>
+              <input [(ngModel)]="MainKitData.KITNAME"  name="KITNAME" matInput>
           </mat-form-field>
           <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Context</mat-label>
-              <mat-select #value name="selected" (selectionChange)="ContextChnage($event.value)" formControlName="Context">
+              <mat-select [(ngModel)]="MainKitData.CONTEXT" name="CONTEXT" #value name="selected" (selectionChange)="ContextChnage($event.value)" >
                 <mat-option value="Matter">Matter</mat-option>
                 <mat-option value="Invoice">Invoice</mat-option>
                 <mat-option value="Receipt">Receipt</mat-option>
@@ -28,32 +30,64 @@
         </div>
       </form>
     </div>
-    <table mat-table [dataSource]="DocumentPack" matSort class="mat-elevation-z8">
+
+    <div class="example-containerdata">
+    <table class="simple" [@animateStagger]="{value:'50'}">
+      <tr>
+          <th>Order</th>
+          <th>Templete File</th>
+          <th>Type</th>
+        
+      </tr>
+      <tr *ngFor="let item of getDataForTable; let index = index" (click)="rowdata(item ,index);highlightedRows=index" [style.background]="highlightedRows == index ? selectedColore : ''" [ngClass]="highlightedRows == index ? 'row-text-colore' : ''" matRipple
+          [@animate]="{value:'*',params:{y:'100%'}}">
+          <td>{{item.ORDER}}</td>
+          <td>{{item.TEMPLATEFILE}}</td>
+          <td>{{item.TEMPLATETYPEDESC}}</td>
+      
+      </tr>
+
+  </table>
+  </div>
+
+    <!-- <table mat-table [dataSource]="DocumentPack" matSort class="">
       <ng-container matColumnDef="Order">
           <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>Order</th>
-          <td mat-cell *matCellDef="let row"> {{row.Order}} </td>
+          <td mat-cell *matCellDef="let row"> {{row.ORDER}} </td>
       </ng-container>
-
+     
       <ng-container matColumnDef="TempleteFile">
         <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>Templete File</th>
-        <td mat-cell *matCellDef="let row"> {{row.TempleteFile}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.TEMPLATEFILE}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="PromCopies">
-        <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>Prom Copies</th>
-        <td mat-cell *matCellDef="let row"> {{row.PromCopies}} </td>
+
+      <ng-container matColumnDef="TemplateType">
+        <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>Templete </th>
+        <td mat-cell *matCellDef="let row"> {{row.TEMPLATETYPEDESC}} </td>
+      </ng-container> -->
+
+      <!-- <ng-container matColumnDef="Prom">
+        <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>Prom</th>
+        <td mat-cell *matCellDef="let row"> {{row.Prom}} </td>
       </ng-container>
-      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-      <tr [style.background]="highlightedRows == row.Order ? selectedColore : ''" 
-        [ngClass]="highlightedRows == row.Order ? 'row-text-colore' : ''" 
-        highlightedRows=row.Order mat-row *matRowDef="let row; columns: displayedColumns;"
-        (click)="ClickPackTbl(row.Order);highlightedRows = row.Order " matRipple>
+
+      <ng-container matColumnDef="Copies">
+        <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header>Copies</th>
+        <td mat-cell *matCellDef="let row"> {{row.PromCopies}} </td>
+      </ng-container> -->
+
+      <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; let index = index; columns: displayedColumns;"(click)="rowdata(row ,index);highlightedRows=index" [style.background]="highlightedRows == index ? selectedColore : ''" [ngClass]="highlightedRows == index ? 'row-text-colore' : ''" matRipple
+      [@animate]="{value:'*',params:{y:'100%'}}" matRipple>
       </tr>
-    </table>
+    </table> -->
+
+
     <mat-dialog-actions align="end" class="popup_ftr">
-      <button mat-raised-button color="accent" (click)="AddPack()"[disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Add Pack Item</button>
-      <button mat-raised-button color="accent" (click)="EditPack()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Edit Pack Item</button>
-      <button mat-raised-button color="accent" (click)="DeletePack()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Delete Pack Item</button>
+      <button mat-raised-button color="accent" (click)="AddPack()">Add Pack Item</button>
+      <button mat-raised-button color="accent" (click)="EditPack()">Edit Pack Item</button>
+      <button mat-raised-button color="accent" (click)="DeletePack()">Delete Pack Item</button>
     </mat-dialog-actions>
   </div>
   <mat-dialog-actions align="end" class="popup_ftr">

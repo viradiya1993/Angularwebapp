@@ -7,11 +7,13 @@ import { ContactSelectDialogComponent } from '../../contact/contact-select-dialo
 import { MatterDialogComponent } from '../../time-entries/matter-dialog/matter-dialog.component';
 import * as $ from 'jquery';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-import { SpendmoneyService, TableColumnsService, ContactService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { MatSort } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { round } from 'lodash';
+import { BankingDialogComponent } from '../../banking/banking-dialog.component';
+
 @Component({
   selector: 'app-spend-money-add',
   templateUrl: './spend-money-add.component.html',
@@ -31,39 +33,30 @@ export class SpendMoneyAddComponent implements OnInit {
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   displayedColumnsTime: string[] = ['AMOUNT', 'EXPENDITURECLASS', 'GST', 'NOTE'];
   getDataForTable: any;
-  FinalDataTableArray:any=[];
   paginator: any;
   pageSize: any;
   isspiner: boolean = false;
   paidtype = 'paid';
-  classtype : any;
+  classtype: any;
   size = 33.33;
   Bankhide: boolean = true;
   hide: boolean = true;
   tdata: boolean;
-  getPayourarray:any=[];
+  getPayourarray: any = [];
   confirmDialogRef: any;
   expac: boolean;
   @ViewChild(MatSort) sort: MatSort;
   dataTableHide: string;
-  copyClassVal: any;
-  copyMatterVal: any;
-  copyAmountIncGSTVal: any;
-  copyGSTTypeVal: any;
-  sendItem:any=[];
-  arrayforIndex:any=[];
-  copyGST1Val: any;
-  copyAmountExGSTVal: any;
-  copyExpenseacVal: any;
+  sendItem: any = [];
   Main3btn: string;
   SubMain2btn: string;
   FormAction: string;
-  FAmount:any=[];
+  FAmount: any = [];
   GSTValAfterCal: any;
   GstTypeDiff: any;
-  GSTValForExGst:any;
+  GSTValForExGst: any;
   FinalTotal: any;
-  FGst: any=[];
+  FGst: any = [];
   FinalTotalGST: any;
   btnClickpurpose: string;
   INDEX: any;
@@ -72,22 +65,39 @@ export class SpendMoneyAddComponent implements OnInit {
   setMainGST: number;
   multicheckboxval: number;
   isItemSaveClicked: string;
+  FinalExGSTAmount: number;
+  itemAmountExGST: number;
+  SendMoney_data: any = [];
+  SendMoney_dataGUID: any;
   constructor(public dialogRef: MatDialogRef<SpendMoneyAddComponent>,
     @Inject(MAT_DIALOG_DATA) public _data: any,
     private _formBuilder: FormBuilder,
-    private SpendmoneyService: SpendmoneyService,
     public MatDialog: MatDialog,
     private toastr: ToastrService,
-    public _matDialog: MatDialog,public _getContact: ContactService, public datepipe: DatePipe, ) {
+    public behaviorService: BehaviorService,
+    public _matDialog: MatDialog, public datepipe: DatePipe, public _mainAPiServiceService: MainAPiServiceService) {
     this.action = _data.action;
-    
-    this.dialogTitle = this.action === 'edit' ? 'Update Spend Money' : 'Add Spend Money';
+
+    // this.dialogTitle = this.action === 'edit' ? 'Update Spend Money' : 'Add Spend Money';
+    if (this.action === 'new') {
+      this.dialogTitle = 'Add Spend Money ';
+    } else if (this.action === 'edit') {
+      this.dialogTitle = 'Update Spend Money';
+    } else {
+      this.dialogTitle = 'Duplicate Spend Money';
+    }
     this.getPayee({});
+
+    this.behaviorService.SpendMoneyData$.subscribe(result => {
+      if (result) {
+        this.SendMoney_data = result;
+      }
+    });
   }
   ngOnInit() {
     //for Data Table hideshow 
-    this.Main3btn='disabled';
-    this.dataTableHide="false";
+    this.Main3btn = 'disabled';
+    this.dataTableHide = "false";
     this.spendmoneyForm = this._formBuilder.group({
       DateIncurred: [''],
       Paid: [''],
@@ -106,6 +116,7 @@ export class SpendMoneyAddComponent implements OnInit {
       AmountIncGST: [''],
       GSTType: [''],
       GST1: [''],
+      BankacGUID: [''],
       AmountExGST: [''],
       Expenseac: [''],
       Note: [''],
@@ -113,120 +124,188 @@ export class SpendMoneyAddComponent implements OnInit {
       Gstac: [''],
       taxac: [''],
       Equityac: [''],
-      DatePaidForSend:[''],
-      DateIncurredForSend:[''],
-      MatterGUID:['']
-     });
-
-    if (this.action == 'edit') {
-      // this.size = 20;
+      DatePaidForSend: [''],
+      DateIncurredForSend: [''],
+      MatterGUID: [''],
+      ExpenseacGUID: ['']
+    });
+    if (this.action != 'new') {
       $('#expac').addClass('menu-disabled');
       this.expac = true;
-      // this.spendmoneyForm.controls['Matter'].disable();
-      this.forEditshowpopupData(); 
-    }else{
-      // this.size = 20;
+      this.isLoadingResults = true;
+      this._mainAPiServiceService.getSetData({ EXPENDITUREGUID: this.SendMoney_data.EXPENDITUREGUID }, 'GetExpenditure').subscribe(response => {
+        if (response.CODE == 200 && response.STATUS == "success") {
+          console.log(response);
+          this.behaviorService.SpendMoneyData(response.DATA.EXPENDITURES[0]);
+        } else if (response.MESSAGE == 'Not logged in') {
+          this.dialogRef.close(false);
+        }
+        this.isLoadingResults = false;
+      }, error => {
+        this.toastr.error(error);
+      });
+      this.forEditshowpopupData();
+    } else {
       this.forAddshowpopupData();
     }
   }
-
-  forEditshowpopupData(){
-    let SendMoney_data=JSON.parse(localStorage.getItem('spendMoney_data'));
-    this.getDataForTable =SendMoney_data.EXPENDITUREITEMS;
+  forEditshowpopupData() {
+    let DatePaid = this.SendMoney_data.DATE.split("/");
+    let DATE = new Date(DatePaid[1] + '/' + DatePaid[0] + '/' + DatePaid[2]);
+    let DateIncurred = this.SendMoney_data.RECEIVEDDATE.split("/");
+    let ReceiveDATE = new Date(DateIncurred[1] + '/' + DateIncurred[0] + '/' + DateIncurred[2]);
+    this.spendmoneyForm.controls['DateIncurred'].setValue(ReceiveDATE);
+    this.spendmoneyForm.controls['DatePaid'].setValue(DATE);
+    //for sending date 
+    this.spendmoneyForm.controls['DateIncurredForSend'].setValue(this.SendMoney_data.RECEIVEDDATE);
+    this.spendmoneyForm.controls['DatePaidForSend'].setValue(this.SendMoney_data.DATE);
+    //call first row and datatble -> start
+    this.getDataForTable = this.SendMoney_data.EXPENDITUREITEMS;
+    this.globallyCalculation();
     this.highlightedRows = 0;
-    //call first row -> start
-    this.editMoney(SendMoney_data.EXPENDITUREITEMS[0],0);
-     //call first row -> end
     this.getDataForTable.paginator = this.paginator;
     this.getDataForTable.sort = this.sort;
-    let DateIncurred = SendMoney_data.DATE.split("/");
-    let DATE = new Date(DateIncurred[1] + '/' + DateIncurred[0] + '/' + DateIncurred[2]);
-    let DatePaid = SendMoney_data.DATE.split("/");
-    let ReceiveDATE = new Date(DatePaid[1] + '/' + DatePaid[0] + '/' + DatePaid[2]);
-    this.spendmoneyForm.controls['DateIncurred'].setValue(DATE); 
-    this.paidtype=SendMoney_data.STATUS
-    this.spendmoneyForm.controls['DatePaid'].setValue(ReceiveDATE);
-    //for sending date 
-    this.spendmoneyForm.controls['DateIncurredForSend'].setValue(SendMoney_data.DATE);
-    this.spendmoneyForm.controls['DatePaidForSend'].setValue(SendMoney_data.DATE); 
-    
-    this.spendmoneyForm.controls['Notes'].setValue(SendMoney_data.NOTE); 
     this.spendmoneyForm.controls['GST1'].disable();
-    this.spendmoneyForm.controls['ChequeNo'].setValue(SendMoney_data.CHEQUENO); 
-    this.spendmoneyForm.controls['Type'].setValue(SendMoney_data.EXPENDITURETYPE); 
-    this.spendmoneyForm.controls['Payee'].setValue(SendMoney_data.PAYEE);
-   
-    if(SendMoney_data.EXPENDITUREITEMS.length !=0){
-      this.spendmoneyForm.controls['Class'].setValue(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS); 
-      this.spendmoneyForm.controls['GST1'].setValue(SendMoney_data.EXPENDITUREITEMS[0].GST.toString());  
-      this.spendmoneyForm.controls['AmountIncGST'].setValue(SendMoney_data.EXPENDITUREITEMS[0].AMOUNT);
-      this.spendmoneyForm.controls['Note'].setValue(SendMoney_data.EXPENDITUREITEMS[0].NOTE);
-      console.log(SendMoney_data.EXPENDITUREITEMS[0].SHORTNAME);
-      this.spendmoneyForm.controls['Matter'].setValue(SendMoney_data.EXPENDITUREITEMS[0].SHORTNAME); 
+    this.paidtype = this.SendMoney_data.STATUS
+    //globally value set 
+    this.spendmoneyForm.controls['Notes'].setValue(this.SendMoney_data.NOTE);
+    this.spendmoneyForm.controls['ChequeNo'].setValue(this.SendMoney_data.CHEQUENO);
+    this.spendmoneyForm.controls['Type'].setValue(this.SendMoney_data.EXPENDITURETYPE);
+    this.spendmoneyForm.controls['Payee'].setValue(this.SendMoney_data.PAYEE);
+    this.spendmoneyForm.controls['Amount'].setValue(this.SendMoney_data.AMOUNT + this.SendMoney_data.GST);
+    this.spendmoneyForm.controls['GST'].setValue(this.SendMoney_data.GST);
+    this.spendmoneyForm.controls['BankacGUID'].setValue(this.SendMoney_data.BANKACCOUNTGUID);
+    // inner item 
+    if (this.SendMoney_data.EXPENDITUREITEMS.length != 0) {
+      this.editMoney(this.SendMoney_data.EXPENDITUREITEMS[0], 0);
+      this.spendmoneyForm.controls['Class'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
+      this.spendmoneyForm.controls['GST1'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].GST.toString());
+      this.spendmoneyForm.controls['AmountIncGST'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT);
+      this.spendmoneyForm.controls['Note'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].NOTE);
+      this.spendmoneyForm.controls['Matter'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].SHORTNAME);
+      this.spendmoneyForm.controls['ExpenseacGUID'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENSEACCOUNTGUID);
 
-      if(round(SendMoney_data.EXPENDITUREITEMS[0].AMOUNT/10) ==round(SendMoney_data.EXPENDITUREITEMS[0].GST)){
+      if (round(this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT / 10) == round(this.SendMoney_data.EXPENDITUREITEMS[0].GST)) {
         this.spendmoneyForm.controls['GSTType'].setValue("1.1");
-        this.GstTypeDiff="1.1";
+        this.GstTypeDiff = "1.1";
         this.amountCal();
-      }else if(SendMoney_data.EXPENDITUREITEMS[0].GST==0){
+      } else if (this.SendMoney_data.EXPENDITUREITEMS[0].GST == 0) {
         this.spendmoneyForm.controls['GSTType'].setValue("No GST");
-        this.GstTypeDiff="No GST";
+        this.GstTypeDiff = "No GST";
         this.amountCal();
-      }else if(SendMoney_data.EXPENDITUREITEMS[0].AMOUNT/10 ==SendMoney_data.EXPENDITUREITEMS[0].GST){
-      
+      } else if (this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT / 10 != this.SendMoney_data.EXPENDITUREITEMS[0].GST) {
         this.spendmoneyForm.controls['GSTType'].setValue("LessThen 10% GST");
-        this.GstTypeDiff="LessThen 10% GST";
+        this.GstTypeDiff = "LessThen 10% GST";
         this.amountCal();
-      }else{
+      } else {
         this.amountCal();
       }
-      
-    }else{
-      this.spendmoneyForm.controls['Class'].setValue(""); 
-      this.spendmoneyForm.controls['GST1'].setValue(" ");  
-      this.spendmoneyForm.controls['AmountIncGST'].setValue(" ");
-      this.spendmoneyForm.controls['Note'].setValue(" ");
-      this.spendmoneyForm.controls['Matter'].setValue(" "); 
-    }
-     
-    this.spendmoneyForm.controls['Amount'].setValue(SendMoney_data.AMOUNT);
-    this.spendmoneyForm.controls['GST'].setValue(SendMoney_data.GST);
-    this.spendmoneyForm.controls['Payee'].setValue(SendMoney_data.PAYEE);
 
-if(SendMoney_data.MULTILINE == 0 ){
-  this.spendmoneyForm.controls['MultiLineExpense'].setValue(0);
-  if(SendMoney_data.EXPENDITUREITEMS.length !=0){
-    this.multilineCheckbox();
+    } else {
+      this.spendmoneyForm.controls['Class'].setValue("");
+      this.spendmoneyForm.controls['GST1'].setValue(" ");
+      this.spendmoneyForm.controls['AmountIncGST'].setValue("");
+      this.spendmoneyForm.controls['Note'].setValue(" ");
+      this.spendmoneyForm.controls['Matter'].setValue(" ");
+    }
+    if (this.SendMoney_data.MULTILINE == 0) {
+      this.spendmoneyForm.controls['MultiLineExpense'].setValue(0);
+      if (this.SendMoney_data.EXPENDITUREITEMS.length != 0) {
+        this.multilineCheckbox();
+      }
+    } else {
+      this.spendmoneyForm.controls['MultiLineExpense'].setValue(1);
+      this.multilineCheckbox();
+    }
+    this.Classtype(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
   }
-}else{
-  this.spendmoneyForm.controls['MultiLineExpense'].setValue(1);
-  this.multilineCheckbox();
-}
-this.Classtype(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
-    // this.spendmoneyForm.controls['Class'].setValue("Expense");
-  
-  }
-  forAddshowpopupData(){
-    this.isItemSaveClicked ='no';
+  // forEditshowpopupData() {
+  //   let DatePaid = this.SendMoney_data.DATE.split("/");
+  //   let DATE = new Date(DatePaid[1] + '/' + DatePaid[0] + '/' + DatePaid[2]);
+  //   let DateIncurred = this.SendMoney_data.DATE.split("/");
+  //   let ReceiveDATE = new Date(DateIncurred[1] + '/' + DateIncurred[0] + '/' + DateIncurred[2]);
+  //   this.spendmoneyForm.controls['DateIncurred'].setValue(ReceiveDATE);
+  //   this.spendmoneyForm.controls['DatePaid'].setValue(DATE);
+  //   //for sending date 
+  //   this.spendmoneyForm.controls['DateIncurredForSend'].setValue(this.SendMoney_data.ReceiveDATE);
+  //   this.spendmoneyForm.controls['DatePaidForSend'].setValue(this.SendMoney_data.DATE);
+  //   //call first row and datatble -> start
+  //   this.getDataForTable = this.SendMoney_data.EXPENDITUREITEMS;
+  //   this.highlightedRows = 0;
+  //   this.getDataForTable.paginator = this.paginator;
+  //   this.getDataForTable.sort = this.sort;
+
+  //   this.spendmoneyForm.controls['GST1'].disable();
+  //   this.paidtype = this.SendMoney_data.STATUS
+  //   //globally value set 
+  //   this.spendmoneyForm.controls['Notes'].setValue(this.SendMoney_data.NOTE);
+  //   this.spendmoneyForm.controls['ChequeNo'].setValue(this.SendMoney_data.CHEQUENO);
+  //   this.spendmoneyForm.controls['Type'].setValue(this.SendMoney_data.EXPENDITURETYPE);
+  //   this.spendmoneyForm.controls['Payee'].setValue(this.SendMoney_data.PAYEE);
+  //   this.spendmoneyForm.controls['Amount'].setValue(this.SendMoney_data.AMOUNT + this.SendMoney_data.GST);
+  //   this.spendmoneyForm.controls['GST'].setValue(this.SendMoney_data.GST);
+  //   this.spendmoneyForm.controls['BankacGUID'].setValue(this.SendMoney_data.BANKACCOUNTGUID);
+
+  //   // inner item 
+  //   if (this.SendMoney_data.EXPENDITUREITEMS.length != 0) {
+  //     this.editMoney(this.SendMoney_data.EXPENDITUREITEMS[0], 0);
+  //     this.spendmoneyForm.controls['Class'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
+  //     this.spendmoneyForm.controls['GST1'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].GST.toString());
+  //     this.spendmoneyForm.controls['AmountIncGST'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT);
+  //     this.spendmoneyForm.controls['Note'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].NOTE);
+  //     this.spendmoneyForm.controls['Matter'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].SHORTNAME);
+  //     this.spendmoneyForm.controls['ExpenseacGUID'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENSEACCOUNTGUID);
+
+  //     if (round(this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT / 10) == round(this.SendMoney_data.EXPENDITUREITEMS[0].GST)) {
+  //       this.spendmoneyForm.controls['GSTType'].setValue("1.1");
+  //       this.GstTypeDiff = "1.1";
+  //       this.amountCal();
+  //     } else if (this.SendMoney_data.EXPENDITUREITEMS[0].GST == 0) {
+  //       this.spendmoneyForm.controls['GSTType'].setValue("No GST");
+  //       this.GstTypeDiff = "No GST";
+  //       this.amountCal();
+  //     } else if (this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT / 10 != this.SendMoney_data.EXPENDITUREITEMS[0].GST) {
+  //       this.spendmoneyForm.controls['GSTType'].setValue("LessThen 10% GST");
+  //       this.GstTypeDiff = "LessThen 10% GST";
+  //       this.amountCal();
+  //     } else {
+  //       this.amountCal();
+  //     }
+
+  //   } else {
+  //     this.spendmoneyForm.controls['Class'].setValue("");
+  //     this.spendmoneyForm.controls['GST1'].setValue(" ");
+  //     this.spendmoneyForm.controls['AmountIncGST'].setValue("");
+  //     this.spendmoneyForm.controls['Note'].setValue(" ");
+  //     this.spendmoneyForm.controls['Matter'].setValue(" ");
+  //   }
+  //   if (this.SendMoney_data.MULTILINE == 0) {
+  //     this.spendmoneyForm.controls['MultiLineExpense'].setValue(0);
+  //     if (this.SendMoney_data.EXPENDITUREITEMS.length != 0) {
+  //       this.multilineCheckbox();
+  //     }
+  //   } else {
+  //     this.spendmoneyForm.controls['MultiLineExpense'].setValue(1);
+  //     this.multilineCheckbox();
+  //   }
+  //   this.Classtype(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
+  // }
+  forAddshowpopupData() {
+    this.isItemSaveClicked = 'no';
     this.getDataForTable = [];
-    let SendMoney_data=JSON.parse(localStorage.getItem('spendMoney_data'));
-    this.spendmoneyForm.controls['DateIncurred'].setValue(new Date(), 'dd/MM/yyyy'); 
-    this.spendmoneyForm.controls['DatePaid'].setValue(new Date(), 'dd/MM/yyyy'); 
-     //for sending date 
-     this.spendmoneyForm.controls['DateIncurredForSend'].setValue(new Date(), 'dd/MM/yyyy');
-     this.spendmoneyForm.controls['DatePaidForSend'].setValue(new Date(), 'dd/MM/yyyy'); 
-    
-     this.spendmoneyForm.controls['ChequeNo'].setValue("0"); 
-    this.spendmoneyForm.controls['Type'].setValue("Cash"); 
-    // this.spendmoneyForm.controls[''].setValue(''); 
-    this.spendmoneyForm.controls['Class'].setValue("Expense"); 
-    this.spendmoneyForm.controls['GST1'].setValue(0.00); 
-    this.spendmoneyForm.controls['AmountIncGST'].setValue(0.00); 
-    
+    this.spendmoneyForm.controls['DateIncurred'].setValue(new Date(), 'dd/MM/yyyy');
+    this.spendmoneyForm.controls['DatePaid'].setValue(new Date(), 'dd/MM/yyyy');
+    //for sending date 
+    this.spendmoneyForm.controls['DateIncurredForSend'].setValue(this.datepipe.transform(new Date(), 'dd/MM/yyyy'));
+    this.spendmoneyForm.controls['DatePaidForSend'].setValue(this.datepipe.transform(new Date(), 'dd/MM/yyyy'));
+    this.spendmoneyForm.controls['ChequeNo'].setValue("0");
+    this.spendmoneyForm.controls['Type'].setValue("Cash");
+    this.spendmoneyForm.controls['Class'].setValue("Expense");
+    this.spendmoneyForm.controls['GST1'].setValue(0.00);
+    this.spendmoneyForm.controls['AmountIncGST'].setValue(0.00);
     this.spendmoneyForm.controls['GSTType'].setValue("1.1");
-    this.GstTypeDiff="1.1"; 
+    this.GstTypeDiff = "1.1";
     this.spendmoneyForm.controls['GST1'].disable();
-    // this.spendmoneyForm.controls['Amount'].setValue(SendMoney_data.AMOUNT);
     this.spendmoneyForm.controls['GST'].setValue(0.0);
     this.Classtype("Expense");
   }
@@ -234,8 +313,8 @@ this.Classtype(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
   }
-  getPayee(postData){
-    this._getContact.ContactData(postData).subscribe(response => {
+  getPayee(postData) {
+    this._mainAPiServiceService.getSetData(postData, 'GetContact').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         response.DATA.CONTACTS.forEach(element => {
           this.getPayourarray.push(element.CONTACTNAME);
@@ -247,14 +326,14 @@ this.Classtype(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
   }
   // paid Type Dropdown
   Paidtype(paidvalue) {
-    if (paidvalue === 'paid') {
+    if (paidvalue === 'Paid') {
       this.Bankhide = false;
       $('#bank').removeClass('menu-disabled');
       this.spendmoneyForm.controls['DatePaid'].enable();
       this.spendmoneyForm.controls['Bankac'].enable();
       this.spendmoneyForm.controls['Type'].enable();
       this.spendmoneyForm.controls['ChequeNo'].enable();
-    } else if (paidvalue === 'unpaid') {
+    } else if (paidvalue === 'Unpaid') {
       this.Bankhide = true;
       $('#bank').addClass('menu-disabled');
       this.spendmoneyForm.controls['DatePaid'].disable();
@@ -266,128 +345,78 @@ this.Classtype(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
   Classtype(Classvalue) {
     this.classtype = Classvalue;
     if (Classvalue === 'Expense') {
-          this.spendmoneyForm.controls['Matter'].setValue('');
-          this.spendmoneyForm.controls['MatterGUID'].setValue('');
-      if (this.action != 'edit') {
+      this.spendmoneyForm.controls['Matter'].setValue('');
+      this.spendmoneyForm.controls['MatterGUID'].setValue('');
+      if (this.action == 'new') {
         this.hide = true;
         $("#mattersnew").addClass("menu-disabled");
-        this.spendmoneyForm.controls['Class'].enable();
         this.spendmoneyForm.controls['Matter'].disable();
-        // this.spendmoneyForm.controls['AmountExGST'].disable();
-        this.spendmoneyForm.controls['GSTType'].enable();
-        this.spendmoneyForm.controls['Note'].enable();
-        // this.spendmoneyForm.controls['GST1'].enable();
-      } else if (this.action === 'edit') {
+
+      } else if (this.action != 'new') {
         this.hide = true;
         this.expac = false;
         $("#mattersnew").addClass("menu-disabled");
-        // this.spendmoneyForm.controls['Class'].enable();
         this.spendmoneyForm.controls['Matter'].disable();
-        // this.spendmoneyForm.controls['GST1'].disable();
-        this.spendmoneyForm.controls['Note'].enable(); 
-        // this.spendmoneyForm.controls['GSTType'].enable();
-        // this.spendmoneyForm.controls['GST1'].enable();     
       }
     } else if (Classvalue === 'Matter Expense') {
-      
       this.hide = false;
       this.expac = false;
-      // this.spendmoneyForm.controls['Matter'].setValue('');
-      this.spendmoneyForm.controls['MatterGUID'].setValue('');
       $("#mattersnew").removeClass("menu-disabled");
-      this.spendmoneyForm.controls['Class'].enable();
-      this.spendmoneyForm.controls['Matter'].enable();
-      // this.spendmoneyForm.controls['AmountExGST'].disable();
-      this.spendmoneyForm.controls['GSTType'].enable();
-      // this.spendmoneyForm.controls['GST1'].disable();
-      this.spendmoneyForm.controls['AmountIncGST'].enable();
-      this.spendmoneyForm.controls['Note'].enable();
-      this.spendmoneyForm.controls['Expenseac'].enable();
+      this.spendmoneyForm.controls['MatterGUID'].setValue('');
+      this.forCommonEnable();
     } else if (Classvalue === 'Capital') {
       this.hide = true;
       this.expac = false;
-    
+      $("#mattersnew").addClass("menu-disabled");
       this.spendmoneyForm.controls['Matter'].setValue('');
       this.spendmoneyForm.controls['MatterGUID'].setValue('');
-      
-      $("#mattersnew").addClass("menu-disabled");
-      this.spendmoneyForm.controls['Class'].enable();
       this.spendmoneyForm.controls['Matter'].disable();
-      // this.spendmoneyForm.controls['AmountExGST'].disable();
-      this.spendmoneyForm.controls['GSTType'].disable();
-      // this.spendmoneyForm.controls['GST1'].disable();
-      this.spendmoneyForm.controls['AmountIncGST'].enable();
-      this.spendmoneyForm.controls['Note'].enable();
+      // this.spendmoneyForm.controls['GSTType'].disable();
+
     } else if (Classvalue === 'Pay GST') {
       this.hide = true;
-     
+      $("#mattersnew").addClass("menu-disabled");
       this.spendmoneyForm.controls['Matter'].setValue('');
       this.spendmoneyForm.controls['MatterGUID'].setValue('');
-
-      $("#mattersnew").addClass("menu-disabled");
-      this.spendmoneyForm.controls['Class'].enable();
       this.spendmoneyForm.controls['Matter'].disable();
       this.spendmoneyForm.controls['GSTType'].disable();
-      this.spendmoneyForm.controls['GST1'].disable();
-      // this.spendmoneyForm.controls['AmountExGST'].disable();
-      this.spendmoneyForm.controls['AmountIncGST'].enable();
-      this.spendmoneyForm.controls['Note'].enable();
+
     } else if (Classvalue === 'Pay Tax') {
       this.hide = true;
       this.expac = false;
+      $("#mattersnew").addClass("menu-disabled");
       this.spendmoneyForm.controls['Matter'].setValue('');
       this.spendmoneyForm.controls['MatterGUID'].setValue('');
-
-      $("#mattersnew").addClass("menu-disabled");
-      this.spendmoneyForm.controls['Class'].enable();
       this.spendmoneyForm.controls['Matter'].disable();
       this.spendmoneyForm.controls['GSTType'].disable();
-      // this.spendmoneyForm.controls['GST1'].disable();
-      // this.spendmoneyForm.controls['AmountExGST'].disable();
-      this.spendmoneyForm.controls['AmountIncGST'].enable();
-      this.spendmoneyForm.controls['Note'].enable();
+
     } else if (Classvalue === 'Personal') {
       this.hide = true;
       this.expac = false;
+      $("#mattersnew").addClass("menu-disabled");
       this.spendmoneyForm.controls['Matter'].setValue('');
       this.spendmoneyForm.controls['MatterGUID'].setValue('');
-
-      $("#mattersnew").addClass("menu-disabled");
-      this.spendmoneyForm.controls['Class'].enable();
       this.spendmoneyForm.controls['Matter'].disable();
       this.spendmoneyForm.controls['GSTType'].disable();
-      // this.spendmoneyForm.controls['GST1'].disable();
-      // this.spendmoneyForm.controls['AmountExGST'].disable();
-      this.spendmoneyForm.controls['AmountIncGST'].enable();
-      this.spendmoneyForm.controls['Note'].enable();
+
+
     } else if (Classvalue === 'Description') {
       this.hide = true;
       this.expac = false;
+      $("#mattersnew").addClass("menu-disabled");
       this.spendmoneyForm.controls['Matter'].setValue('');
       this.spendmoneyForm.controls['MatterGUID'].setValue('');
-
-      $("#mattersnew").addClass("menu-disabled");
-      this.spendmoneyForm.controls['Class'].enable();
       this.spendmoneyForm.controls['Matter'].disable();
       this.spendmoneyForm.controls['GSTType'].disable();
-      // this.spendmoneyForm.controls['GST1'].disable();
-      // this.spendmoneyForm.controls['AmountExGST'].disable();
-      this.spendmoneyForm.controls['AmountIncGST'].enable();
-      this.spendmoneyForm.controls['Note'].enable();
+
     } else if (Classvalue === 'Others') {
       this.hide = true;
       this.expac = false;
+      $("#mattersnew").addClass("menu-disabled");
       this.spendmoneyForm.controls['Matter'].setValue('');
       this.spendmoneyForm.controls['MatterGUID'].setValue('');
-
-      $("#mattersnew").addClass("menu-disabled");
-      this.spendmoneyForm.controls['Class'].enable();
       this.spendmoneyForm.controls['Matter'].disable();
       this.spendmoneyForm.controls['GSTType'].disable();
-      // this.spendmoneyForm.controls['GST1'].disable();
-      // this.spendmoneyForm.controls['AmountExGST'].disable();
-      this.spendmoneyForm.controls['AmountIncGST'].enable();
-      this.spendmoneyForm.controls['Note'].enable();
     }
   }
   ContactMatter() {
@@ -397,24 +426,22 @@ this.Classtype(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-    this.spendmoneyForm.controls['Payee'].setValue(result.CONTACTNAME);
+      this.spendmoneyForm.controls['Payee'].setValue(result.CONTACTNAME);
     });
   }
-
   public selectMatter() {
     const dialogRef = this.MatDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-          this.spendmoneyForm.controls['Matter'].setValue(result.MATTER);
-          this.spendmoneyForm.controls['MatterGUID'].setValue(result.MATTERGUID);
+        this.spendmoneyForm.controls['Matter'].setValue(result.MATTER);
+        this.spendmoneyForm.controls['MatterGUID'].setValue(result.MATTERGUID);
       }
     });
   }
-
   get f() {
     return this.spendmoneyForm.controls;
   }
-  commmonDisabled(){
+  commmonDisabled() {
     this.spendmoneyForm.controls['Class'].disable();
     this.spendmoneyForm.controls['GSTType'].disable();
     this.spendmoneyForm.controls['Matter'].disable();
@@ -422,8 +449,8 @@ this.Classtype(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
     this.spendmoneyForm.controls['AmountIncGST'].disable();
     this.spendmoneyForm.controls['Expenseac'].disable();
   }
-  forCommonEnable(){
-    if( this.classtype == 'Matter Expense'){
+  forCommonEnable() {
+    if (this.classtype == 'Matter Expense') {
       this.spendmoneyForm.controls['Matter'].enable();
     }
     this.spendmoneyForm.controls['Class'].enable();
@@ -432,314 +459,322 @@ this.Classtype(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
     this.spendmoneyForm.controls['AmountIncGST'].enable();
     this.spendmoneyForm.controls['Expenseac'].enable();
   }
-  multilineCheckbox(){
+
+  multilineCheckbox() {
     this.size = 20;
-    let SendMoney_data=JSON.parse(localStorage.getItem('spendMoney_data'));
-    if(this.f.MultiLineExpense.value==true){
-      this.dataTableHide="yes";
-      this.Main3btn='enable';
-      this.SubMain2btn='disabled';
-     this.commmonDisabled();
+
+    if (this.f.MultiLineExpense.value == true) {
+      this.dataTableHide = "yes";
+      this.Main3btn = 'enable';
+      this.SubMain2btn = 'disabled';
+      this.commmonDisabled();
     }
-    else{
+    else {
       this.size = 33.33;
-      this.Main3btn='disabled';
-      this.SubMain2btn='enable';
-      this.dataTableHide="false";
-      
-      if(this.action !='edit'){
-  
-      this.spendmoneyForm.controls['Class'].setValue('Expense'); 
-      this.spendmoneyForm.controls['GST1'].setValue(0.00); 
-      // this.spendmoneyForm.controls['GSTType'].setValue();
-      this.spendmoneyForm.controls['AmountExGST'].setValue(0.00);
-      this.GSTValForExGst=0.00;
-      this.spendmoneyForm.controls['Note'].setValue('ddffd');
-      this.spendmoneyForm.controls['AmountIncGST'].setValue(0.00);
-      this.spendmoneyForm.controls['Expenseac'].setValue('');
-      }else if(this.action =='edit' && SendMoney_data.MULTILINE == 1 ){
-            this.commonEmptyFiild();
+      this.Main3btn = 'disabled';
+      this.SubMain2btn = 'enable';
+      this.dataTableHide = "false";
+      if (this.action == 'new') {
+        this.commonEmptyFiild();
+        // this.spendmoneyForm.controls['Class'].setValue(this.f.Class.value);
+        // this.spendmoneyForm.controls['GST1'].setValue(this.f.GST1.value);
+        // this.spendmoneyForm.controls['AmountExGST'].setValue(this.f.AmountExGST.value);
+        // this.spendmoneyForm.controls['Note'].setValue(this.f.Note.value);
+        // this.spendmoneyForm.controls['AmountIncGST'].setValue(this.f.AmountIncGST.value);
+        // this.spendmoneyForm.controls['Expenseac'].setValue(this.f.Expenseac.value);
       }
-      else{
-        this.spendmoneyForm.controls['Class'].setValue(SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS); 
-        this.spendmoneyForm.controls['GST1'].setValue(SendMoney_data.EXPENDITUREITEMS[0].GST.toString()); 
-        // this.spendmoneyForm.controls['GSTType'].setValue();
-        this.spendmoneyForm.controls['Note'].setValue(SendMoney_data.EXPENDITUREITEMS[0].NOTE);
-        this.spendmoneyForm.controls['AmountIncGST'].setValue(SendMoney_data.EXPENDITUREITEMS[0].AMOUNT.toString());
+      // else if (this.action == 'edit' && SendMoney_data.MULTILINE == 1) {
+      //   this.commonEmptyFiild();
+      // }
+      else {
+        this.spendmoneyForm.controls['Class'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
+        this.spendmoneyForm.controls['GST1'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].GST.toString());
+        this.spendmoneyForm.controls['Note'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].NOTE);
+        this.spendmoneyForm.controls['AmountIncGST'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT.toString());
         this.spendmoneyForm.controls['Expenseac'].setValue('');
-       this.spendmoneyForm.controls['AmountExGST'].setValue(SendMoney_data.EXPENDITUREITEMS[0].AMOUNT - SendMoney_data.EXPENDITUREITEMS[0].GST);
-        if(round(SendMoney_data.EXPENDITUREITEMS[0].AMOUNT/10) ==round(SendMoney_data.EXPENDITUREITEMS[0].GST)){
+        this.spendmoneyForm.controls['AmountExGST'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT - this.SendMoney_data.EXPENDITUREITEMS[0].GST);
+        if (round(this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT / 10) == round(this.SendMoney_data.EXPENDITUREITEMS[0].GST)) {
           this.spendmoneyForm.controls['GSTType'].setValue("1.1");
-          this.GstTypeDiff="1.1"
+          this.GstTypeDiff = "1.1"
           this.amountCal();
-        }else if(SendMoney_data.EXPENDITUREITEMS[0].GST==0){
+        } else if (this.SendMoney_data.EXPENDITUREITEMS[0].GST == 0) {
           this.spendmoneyForm.controls['GSTType'].setValue("No GST");
-          this.GstTypeDiff="No GST"
+          this.GstTypeDiff = "No GST"
           this.amountCal();
-        }else if(SendMoney_data.EXPENDITUREITEMS[0].AMOUNT/10 ==SendMoney_data.EXPENDITUREITEMS[0].GST){
+        } else if (this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT / 10 == this.SendMoney_data.EXPENDITUREITEMS[0].GST) {
           this.spendmoneyForm.controls['GSTType'].setValue("LessThen 10% GST");
-          this.GstTypeDiff="LessThen 10% GST"
+          this.GstTypeDiff = "LessThen 10% GST"
           this.amountCal();
         }
       }
       this.forCommonEnable();
-       this.Classtype(this.classtype);  
+      this.Classtype(this.classtype);
     }
   }
-  GstTypeforSelect(val){
-    this.GstTypeDiff=val;
+  GstTypeforSelect(val) {
+    this.GstTypeDiff = val;
     this.amountCal();
-    if(val=="LessThen 10% GST"){
+    if (val == "LessThen 10% GST") {
       this.spendmoneyForm.controls['GST1'].enable();
-    }else if(val=="No GST"){
+    } else if (val == "No GST") {
       this.spendmoneyForm.controls['GST1'].disable();
       this.spendmoneyForm.controls['GST1'].setValue("");
-    }else if(val=="10"){
+    } else if (val == "10") {
       this.spendmoneyForm.controls['GST1'].disable();
       this.spendmoneyForm.controls['GST1'].setValue("10");
     }
   }
-  selectSpendMoneyId(row){
+  selectSpendMoneyId(row) {
   }
-  commonEmptyFiild(){
+  commonEmptyFiild() {
     this.spendmoneyForm.controls['GSTType'].setValue("1.1");
     this.spendmoneyForm.controls['AmountIncGST'].setValue(0.00);
     this.spendmoneyForm.controls['GST1'].setValue(0.00);
-    this.spendmoneyForm.controls['AmountExGST'].setValue(" ");
+    this.spendmoneyForm.controls['AmountExGST'].setValue(0.00);
+    this.GSTValForExGst = 0.00;
     this.spendmoneyForm.controls['Class'].setValue("Expense");
     this.spendmoneyForm.controls['Note'].setValue(" ");
+    this.spendmoneyForm.controls['Expenseac'].setValue(" ");
+    this.spendmoneyForm.controls['ExpenseacGUID'].setValue(" ");
   }
-  AddMoneyItem(){ 
+  AddMoneyItem() {
     this.commonEmptyFiild();
-    this.GstTypeDiff="1.1"; 
-    this.SubMain2btn='enable';
-    this.Main3btn='disabled';
+    this.GstTypeDiff = "1.1";
+    this.SubMain2btn = 'enable';
+    this.Main3btn = 'disabled';
     this.forCommonEnable();
     this.Classtype(this.classtype);
   }
-  SaveItemDialog(){ 
-    this.isItemSaveClicked='yes';
-    this.SubMain2btn='disabled';
+  SaveItemDialog() {
+    this.isItemSaveClicked = 'yes';
+    this.SubMain2btn = 'disabled';
     this.commmonDisabled();
-    this.Main3btn='enable';
-if(this.btnClickpurpose =='edit'){
-  this.getDataForTable[this.INDEX].EXPENDITURECLASS=this.f.Class.value;
-  this.getDataForTable[this.INDEX].GST=this.f.GST1.value;
-  this.getDataForTable[this.INDEX].AMOUNT=this.f.AmountIncGST.value;
-  this.getDataForTable[this.INDEX].MATTERGUID=this.f.MatterGUID.value;
-  this.getDataForTable[this.INDEX].SHORTNAME=this.f.Matter.value;
-  this.getDataForTable[this.INDEX].NOTE=this.f.Note.value;
-  this.btnClickpurpose ='save';
-  this.globallyCalculation();
-}
-else{
-  this.getDataForTable.push({
-      EXPENDITURECLASS:this.f.Class.value,
-      AMOUNT:this.f.AmountIncGST.value,
-      GST:this.f.GST1.value,
-      EXPENDITUREGUID:'',
-      MATTERGUID:this.f.MatterGUID.value,
-      SHORTNAME:this.f.Matter.value,
-      NOTE:this.f.Note.value
-    });
-    this.globallyCalculation();
-  
-  }  
-  this.highlightedRows=0;
-  this.editMoney(this.getDataForTable[0],0);
-  }
-  globallyCalculation(){
-    this.FAmount=[];
-    this.FGst=[];
-    this.getDataForTable.forEach(element => {
-      this.FAmount.push(element.AMOUNT); 
-      this.FGst.push(Number(element.GST)); 
-    });
-    console.log(this.FAmount);
-    this.FinalTotal= Number(this.FAmount.reduce(function (a = 0, b = 0) { return a + b; }, 0));
-    this.FinalTotalGST= Number(this.FGst.reduce(function (a = 0, b = 0) { return a + b; }, 0));
-    this.spendmoneyForm.controls['Amount'].setValue(this.FinalTotal);
-    this.spendmoneyForm.controls['GST'].setValue(this.FinalTotalGST);
-  }
-  clicktitle(){
+    this.Main3btn = 'enable';
+    if (this.btnClickpurpose == 'edit') {
+      this.getDataForTable[this.INDEX].EXPENDITURECLASS = this.f.Class.value;
+      this.getDataForTable[this.INDEX].GST = this.f.GST1.value;
+      this.getDataForTable[this.INDEX].EXPENSEACCOUNTGUID = this.f.ExpenseacGUID.value;
+      this.getDataForTable[this.INDEX].EXPENSEACCOUNT = this.f.Expenseac.value;
+      this.getDataForTable[this.INDEX].AMOUNT = this.f.AmountIncGST.value;
+      this.getDataForTable[this.INDEX].MATTERGUID = this.f.MatterGUID.value;
+      this.getDataForTable[this.INDEX].SHORTNAME = this.f.Matter.value;
+      this.getDataForTable[this.INDEX].NOTE = this.f.Note.value;
+      this.btnClickpurpose = 'save';
+      this.globallyCalculation();
+    }
+    else {
+      this.getDataForTable.push({
+        EXPENDITURECLASS: this.f.Class.value,
+        AMOUNT: this.f.AmountIncGST.value,
+        GST: this.f.GST1.value,
+        EXPENDITUREGUID: '',
+        EXPENSEACCOUNTGUID: this.f.ExpenseacGUID.value,
+        EXPENSEACCOUNT: this.f.Expenseac.value,
+        MATTERGUID: this.f.MatterGUID.value,
+        SHORTNAME: this.f.Matter.value,
+        NOTE: this.f.Note.value
+      });
+      this.globallyCalculation();
 
+    }
+    this.highlightedRows = 0;
+    this.editMoney(this.getDataForTable[0], 0);
   }
-  Cashtype(val){
-    if(val=="Cheque"){
-      this.spendmoneyForm.controls['ChequeNo'].setValue("1"); 
-    }else{
-      this.spendmoneyForm.controls['ChequeNo'].setValue("0"); 
+  globallyCalculation() {
+    this.FAmount = [];
+    this.FGst = [];
+    this.getDataForTable.forEach(element => {
+      this.FAmount.push(element.AMOUNT);
+      this.FGst.push(Number(element.GST));
+    });
+    this.FinalTotal = Number(this.FAmount.reduce(function (a = 0, b = 0) { return a + b; }, 0));
+    this.FinalTotalGST = Number(this.FGst.reduce(function (a = 0, b = 0) { return a + b; }, 0));
+    this.spendmoneyForm.controls['Amount'].setValue(parseFloat(this.FinalTotal).toFixed(2));
+    this.spendmoneyForm.controls['GST'].setValue(parseFloat(this.FinalTotalGST).toFixed(2));
+  }
+  clicktitle() {
+  }
+  Cashtype(val) {
+    if (val == "Cheque") {
+      this.spendmoneyForm.controls['ChequeNo'].setValue("1");
+    } else {
+      this.spendmoneyForm.controls['ChequeNo'].setValue("0");
     }
   }
-  editElement(){
-  this.forCommonEnable();
-  this.btnClickpurpose = "edit" ;
-  this.SubMain2btn='enable';
+  editElement() {
+    this.forCommonEnable();
+    this.btnClickpurpose = "edit";
+    this.SubMain2btn = 'enable';
   }
-
-editMoney(row,index){
-  this.MainData=row;
-  this.INDEX=index;
-  this.spendmoneyForm.controls['AmountIncGST'].setValue(row.AMOUNT);
-  this.spendmoneyForm.controls['Class'].setValue(row.EXPENDITURECLASS);
-  this.spendmoneyForm.controls['GST1'].setValue(row.GST);
-  this.spendmoneyForm.controls['Note'].setValue(row.NOTE);
-  this.spendmoneyForm.controls['Matter'].setValue(row.SHORTNAME);
-  this.commmonDisabled();
+  editMoney(row, index) {
+    this.MainData = row;
+    this.INDEX = index;
+    this.spendmoneyForm.controls['AmountIncGST'].setValue(row.AMOUNT);
+    this.spendmoneyForm.controls['Class'].setValue(row.EXPENDITURECLASS);
+    this.spendmoneyForm.controls['GST1'].setValue(row.GST);
+    this.spendmoneyForm.controls['Note'].setValue(row.NOTE);
+    this.spendmoneyForm.controls['Matter'].setValue(row.SHORTNAME);
+    this.spendmoneyForm.controls['Expenseac'].setValue(row.EXPENSEACCOUNT);
+    this.commmonDisabled();
   }
-  deleteElement(){
-    this.getDataForTable.splice(this.INDEX,1);
+  deleteElement() {
+    this.getDataForTable.splice(this.INDEX, 1);
     this.globallyCalculation();
     this.commonEmptyFiild();
     this.commmonDisabled();
-  }
-  CancelItemDialog(){
-    this.SubMain2btn='disabled';
-    this.Main3btn='enable';
-    this.commmonDisabled();
-
-  }
-  amountCal(){
-    let amount =this.f.AmountIncGST.value;
-    let cal :any =(this.f.AmountIncGST.value / 1.1).toFixed(2);
-    if(this.GstTypeDiff == "No GST"){
-      this.GSTValForExGst=amount;
-      this.spendmoneyForm.controls['GST1'].setValue("");        
-    }else if(this.GstTypeDiff == "1.1"){
-      this.GSTValAfterCal = (amount - cal).toFixed(2);
-      this.GSTValForExGst= cal;
-    }else if(this.GstTypeDiff=="LessThen 10% GST"){
-      this.GSTValAfterCal=0;
-    this.GSTValForExGst=amount;
+    if (this.getDataForTable.length != 0) {
+      this.highlightedRows = 0;
+      this.editMoney(this.getDataForTable[0], 0);
     }
   }
-  GSTCalFun(){
-    this.GSTValForExGst=round(this.f.AmountIncGST.value - this.f.GST1.value).toFixed(2);
+  CancelItemDialog() {
+    this.SubMain2btn = 'disabled';
+    this.Main3btn = 'enable';
+    this.commmonDisabled();
   }
-  choosedDateForIncurred(type: string, event: MatDatepickerInputEvent<Date>){
+  amountCal() {
+    let amount = this.f.AmountIncGST.value;
+    let cal: any = (this.f.AmountIncGST.value / 1.1).toFixed(2);
+    if (this.GstTypeDiff == "No GST") {
+      this.GSTValForExGst = amount;
+      this.spendmoneyForm.controls['GST1'].setValue("");
+    } else if (this.GstTypeDiff == "1.1") {
+      this.GSTValAfterCal = (amount - cal).toFixed(2);
+      this.GSTValForExGst = cal;
+    } else if (this.GstTypeDiff == "LessThen 10% GST") {
+      this.GSTValAfterCal = 0;
+      this.GSTValForExGst = amount;
+    }
+  }
+  GSTCalFun() {
+    this.GSTValForExGst = round(this.f.AmountIncGST.value - this.f.GST1.value).toFixed(2);
+  }
+  choosedDateForIncurred(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value, 'dd/MM/yyyy');
     this.spendmoneyForm.controls['DateIncurredForSend'].setValue(begin);
   }
-  choosedDateForPaid(type: string, event: MatDatepickerInputEvent<Date>){
+  choosedDateForPaid(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value, 'dd/MM/yyyy');
-    this.spendmoneyForm.controls['DatePaidForSend'].setValue(begin); 
+    this.spendmoneyForm.controls['DatePaidForSend'].setValue(begin);
   }
- 
   Addspendmoney() {
     this.forCommonEnable();
   }
-  CommonSendOneLineData(){
-    this.setMainAmount=Number(this.f.AmountIncGST.value);
-    this.setMainGST=Number(this.f.GST1.value);
+  CommonSendOneLineData() {
+    this.setMainAmount = Number(this.f.AmountIncGST.value);
+    this.setMainGST = Number(this.f.GST1.value);
     this.sendItem.push({
-      AMOUNT:Number(this.f.AmountIncGST.value),
-      EXPENDITURECLASS:this.f.Class.value,
+      // AMOUNT: Number(this.f.AmountIncGST.value),
+      EXPENDITURECLASS: this.f.Class.value,
       EXPENDITUREGUID: '',
       EXPENDITUREITEMGUID: "",
-      EXPENSEACCOUNTGUID: "",
-      GST:Number(this.f.GST1.value),
-      MATTERGUID:this.f.MatterGUID.value,
+      EXPENSEACCOUNTGUID: this.f.ExpenseacGUID.value,
+      GST: Number(this.f.GST1.value),
+      MATTERGUID: this.f.MatterGUID.value,
       NOTE: this.f.Note.value,
       SHORTNAME: this.f.Matter.value,
-      WORKITEMGUID: ""
-     });
+      WORKITEMGUID: "",
+      AMOUNTEXGST: Number(this.GSTValForExGst)
+    });
   }
-  commonSendMultiLineData(){
-    this.setMainAmount=this.FinalTotal;
-    this.setMainGST=this.FinalTotalGST;
+  commonSendMultiLineData() {
+    this.setMainAmount = this.FinalTotal;
+    this.setMainGST = this.FinalTotalGST;
     this.getDataForTable.forEach(element => {
+      // this.itemAmountExGST=Number(element.AMOUNT)-Number(element.GST);
       this.sendItem.push({
-       AMOUNT:Number(element.AMOUNT),
-       EXPENDITURECLASS:element.EXPENDITURECLASS,
-       EXPENDITUREGUID: '',
-       EXPENDITUREITEMGUID: "",
-       EXPENSEACCOUNTGUID: "",
-       GST:Number(element.GST),
-       MATTERGUID: element.MATTERGUID,
-       NOTE: element.NOTE,
-       SHORTNAME:element.SHORTNAME,
-       WORKITEMGUID: ""
+        // AMOUNT: Number(element.AMOUNT),
+        EXPENDITURECLASS: element.EXPENDITURECLASS,
+        EXPENDITUREGUID: '',
+        EXPENDITUREITEMGUID: "",
+        EXPENSEACCOUNTGUID: element.EXPENSEACCOUNTGUID,
+        GST: Number(element.GST),
+        MATTERGUID: element.MATTERGUID,
+        NOTE: element.NOTE,
+        SHORTNAME: element.SHORTNAME,
+        WORKITEMGUID: "",
+        AMOUNTEXGST: Number(element.AMOUNT) - Number(element.GST)
       })
     });
   }
-  FinalSaveData(){ 
-    let SendMoney_data=JSON.parse(localStorage.getItem('spendMoney_data'));
-    if(this.action !='edit' && this.f.MultiLineExpense.value==false){
+  FinalSaveData() {
+    if (this.action == 'new' && this.f.MultiLineExpense.value == false) {
       this.CommonSendOneLineData();
-
-    }else if(this.action !='edit' && this.f.MultiLineExpense.value==true && this.isItemSaveClicked =='no'){
+    } else if (this.action == 'new' && this.f.MultiLineExpense.value == true && this.isItemSaveClicked == 'no') {
       this.CommonSendOneLineData();
-    }else if(this.action !='edit' && this.f.MultiLineExpense.value==true && this.isItemSaveClicked =='yes'){
+    } else if (this.action == 'new' && this.f.MultiLineExpense.value == true && this.isItemSaveClicked == 'yes') {
       this.commonSendMultiLineData();
-    }else if(this.action =='edit' && SendMoney_data.MULTILINE == 1 && this.f.MultiLineExpense.value==true){
+    } else if (this.action != 'new' && this.SendMoney_data.MULTILINE == 1 && this.f.MultiLineExpense.value == true) {
       this.commonSendMultiLineData();
-    }else if(this.action =='edit' && SendMoney_data.MULTILINE == 1 && this.f.MultiLineExpense.value==false){
+    } else if (this.action != 'new' && this.SendMoney_data.MULTILINE == 1 && this.f.MultiLineExpense.value == false) {
       // first push and then get 
       // need to remove class from hml and show box 
       this.getDataForTable.push({
-        AMOUNT:Number(this.f.AmountIncGST.value),
-        EXPENDITURECLASS:this.f.Class.value,
+        // AMOUNT: Number(this.f.AmountIncGST.value),
+        EXPENDITURECLASS: this.f.Class.value,
         EXPENDITUREGUID: '',
         EXPENDITUREITEMGUID: "",
-        EXPENSEACCOUNTGUID: "",
-        GST:Number(this.f.GST1.value),
+        EXPENSEACCOUNTGUID: this.f.ExpenseacGUID.value,
+        GST: Number(this.f.GST1.value),
         MATTERGUID: this.f.MatterGUID.value,
         NOTE: this.f.Note.value,
         SHORTNAME: this.f.Matter.value,
-        WORKITEMGUID: ""
-       });
-       this.commonSendMultiLineData();
-    
-      }else if(this.action =='edit' && SendMoney_data.MULTILINE == 0 && this.f.MultiLineExpense.value==false){
+        WORKITEMGUID: "",
+        AMOUNTEXGST: this.GSTValForExGst
+      });
+      this.commonSendMultiLineData();
+    } else if (this.action != 'new' && this.SendMoney_data.MULTILINE == 0 && this.f.MultiLineExpense.value == false) {
       this.CommonSendOneLineData();
-      
-  }else if(this.action =='edit' && SendMoney_data.MULTILINE == 0 && this.f.MultiLineExpense.value==true){
-    this.commonSendMultiLineData();
-  }
-  // for multiline   
-  if(this.f.MultiLineExpense.value==false){this.multicheckboxval= 0;}
-  else if(this.getDataForTable.length == 1 || this.getDataForTable.length == 0 ){this.multicheckboxval= 0;} 
-  else{this.multicheckboxval= 1;}
-    
-let Data={
-      EXPENDITUREGUID:this.action == 'edit' ? SendMoney_data.EXPENDITUREGUID : " ",
-      EXPENDITURETYPE:this.f.Type.value,
-      STATUS:this.f.Paid.value,
-      CHEQUENO:this.f.ChequeNo.value,
-      PAYEE:this.f.Payee.value,
-      MULTILINE:this.multicheckboxval,
-      AMOUNT:this.setMainAmount,
-      GST: this.setMainGST,
-      RECEIVEDDATE:this.f.DatePaidForSend.value,
-      DATE:this.f.DateIncurredForSend.value,
-      BANKACCOUNTGUID:'ACCAAAAAAAAAAAA4',
-      USERCODE:'',
-      SOURCEREFERENCE:this.f.Invoice.value,
-      NOTE:this.f.Notes.value,
+
+    } else if (this.action != 'new' && this.SendMoney_data.MULTILINE == 0 && this.f.MultiLineExpense.value == true) {
+      this.commonSendMultiLineData();
+    }
+    // for multiline   
+    if (this.f.MultiLineExpense.value == false) { this.multicheckboxval = 0; }
+    else if (this.getDataForTable.length == 1 || this.getDataForTable.length == 0) { this.multicheckboxval = 0; }
+    else { this.multicheckboxval = 1; }
+    //ammount calculation
+    this.FinalExGSTAmount = this.setMainAmount - this.setMainGST;
+    let Data = {
+      EXPENDITUREGUID: this.action == 'edit' ? this.SendMoney_data.EXPENDITUREGUID : " ",
+      EXPENDITURETYPE: this.f.Type.value,
+      STATUS: this.f.Paid.value,
+      CHEQUENO: this.f.ChequeNo.value,
+      PAYEE: this.f.Payee.value,
+      MULTILINE: this.multicheckboxval,
+      AMOUNT: this.FinalExGSTAmount,
+      GST: (this.setMainGST).toFixed(2),
+
+      DATE: this.f.DatePaidForSend.value,
+      RECEIVEDDATE: this.f.DateIncurredForSend.value,
+      BANKACCOUNTGUID: this.f.BankacGUID.value,
+      USERCODE: '',
+      SOURCEREFERENCE: this.f.Invoice.value,
+      NOTE: this.f.Notes.value,
       EXPENDITUREITEMS: this.sendItem
     }
-    if(this.action=="edit"){
-      this.FormAction="update";
-    }else{
-      this.FormAction="insert";
+    console.log(Data);
+    if (this.action == "edit") {
+      this.FormAction = "update";
+    } else if (this.action == "new" || this.action == "duplicate") {
+      this.FormAction = "insert";
     }
     this.Setata(Data);
-    this.isItemSaveClicked ='no';
+    this.isItemSaveClicked = 'no';
   }
   Setata(potData) {
     this.isspiner = true;
     let details = { FormAction: this.FormAction, VALIDATEONLY: true, Data: potData };
-    this.SpendmoneyService.setSpendmonyData(details).subscribe(response => {
+    this._mainAPiServiceService.getSetData(details, 'SetExpenditure').subscribe(response => {
       //array empty of save item
-      this.sendItem=[];
+      this.sendItem = [];
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-       
         this.checkValidation(response.DATA.VALIDATIONS, details);
-      } else if (response.CODE == 451 && response.STATUS == "warning") {
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.checkValidation(response.DATA.VALIDATIONS, details);
-      } else if (response.CODE == 450 && response.STATUS == "error") {
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
         this.checkValidation(response.DATA.VALIDATIONS, details);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       } else {
         this.isspiner = false;
@@ -754,17 +789,16 @@ let Data={
     let tempError: any = [];
     let tempWarning: any = [];
     bodyData.forEach(function (value) {
-      if (value.VALUEVALID == 'No'){
+      if (value.VALUEVALID == 'No') {
         errorData.push(value.ERRORDESCRIPTION);
         tempError[value.FIELDNAME] = value;
       }
-      else if (value.VALUEVALID == 'Warning'){
+      else if (value.VALUEVALID == 'Warning') {
         tempWarning[value.FIELDNAME] = value;
         warningData.push(value.ERRORDESCRIPTION);
       }
-     
     });
-    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
+    this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
@@ -788,7 +822,7 @@ let Data={
   }
   saveSpendMoneyData(data: any) {
     data.VALIDATEONLY = false;
-    this.SpendmoneyService.setSpendmonyData(data).subscribe(response => {
+    this._mainAPiServiceService.getSetData(data, 'SetExpenditure').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         if (this.action !== 'edit') {
           this.toastr.success(' save successfully');
@@ -797,11 +831,11 @@ let Data={
         }
         this.isspiner = false;
         this.dialogRef.close(true);
-      } else if (response.CODE == 451 && response.STATUS == "warning") {
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.toastr.warning(response.MESSAGE);
-      } else if (response.CODE == 450 && response.STATUS == "error") {
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
         this.toastr.error(response.MESSAGE);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
       this.isspiner = false;
@@ -809,9 +843,36 @@ let Data={
       this.toastr.error(error);
     });
   }
-  
+  BankingDialogOpen(type: any) {
+    if (type == '') {
+      if (this.classtype == "Expense" || this.classtype == "Matter Expense" || this.classtype == "Description" || this.classtype == "Others") {
+        type = "EXPENSE";
+      } else if (this.classtype == "Capital") {
+        type = "ASSET";
+      } else if (this.classtype == "Pay GST") {
+        type = "INCOME";
+      } else if (this.classtype == "Pay Tax") {
+        type = "INCOME";
+      } else if (this.classtype == "Personal") {
+        type = "EQUITY";
+      }
+    }
+    const dialogRef = this.MatDialog.open(BankingDialogComponent, {
+      disableClose: true, width: '100%', data: { AccountType: type ,FromWhere:'spendMonyExpense' }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (type == "EXPENSE") {
+          this.spendmoneyForm.controls['Expenseac'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER + ' ' + result.MainList.ACCOUNTNAME);
+          this.spendmoneyForm.controls['ExpenseacGUID'].setValue(result.ACCOUNTGUID);
+        } else {
+          this.spendmoneyForm.controls['Bankac'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER + ' ' + result.MainList.ACCOUNTNAME);
+          this.spendmoneyForm.controls['BankacGUID'].setValue(result.ACCOUNTGUID);
+        }
+      }
+    });
+  }
 }
-
 export interface UserData {
   AMOUNT: string;
   EXPENDITURECLASS: string;

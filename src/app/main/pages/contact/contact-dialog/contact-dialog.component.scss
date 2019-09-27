@@ -86,13 +86,13 @@ mat-icon.close_icon.mat-icon.material-icons.mat-icon-no-color {
 
 mat-dialog-actions {
     mat-spinner {
-        zoom: 0.2;
-        position: absolute;
-        right: 0;
-        left: 0;
-        margin: auto;
-        top: 0;
-        bottom: 0;
+        zoom: 0.2 !important;
+        position: absolute !important;
+        right: 0 !important;
+        left: 0 !important; 
+        margin: auto !important;
+        top: 0 !important;
+        bottom: 0 !important;
     }
 }
 

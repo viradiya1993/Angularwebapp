@@ -13,7 +13,7 @@
                     </mat-form-field>
                     <mat-form-field class="example" appearance="outline">
                         <mat-label>Contact Type</mat-label>
-                        <mat-select #value name="selected" (selectionChange)="ContactTypeChange($event.Contactdata)" formControlName="ContactType">
+                        <mat-select #value name="selected" (selectionChange)="ContactTypeChange($event.value)" formControlName="ContactType">
                             <mat-option value="all">All Contacts</mat-option>
                             <mat-option value="Person">People</mat-option>
                             <mat-option value="Company">Company</mat-option>
@@ -73,7 +73,7 @@
                         <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                     </div>
                     <div class="example-containerdata">
-                        <table *ngIf="Contactdata" mat-table [dataSource]="Contactdata" matSort [@animateStagger]="{value:'50'}">
+                        <table mat-table [dataSource]="Contactdata" matSort [@animateStagger]="{value:'50'}">
                             <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
                                 <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header> {{ tempColobj[item].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">
@@ -81,7 +81,7 @@
                                 </td>
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                            <tr [style.background]="highlightedRows == row.CONTACTGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.CONTACTGUID ? 'row-text-colore' : ''" highlightedRows=row.CONTACTGUID mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editContact(row.CONTACTGUID);highlightedRows = row.CONTACTGUID "
+                            <tr [style.background]="highlightedRows == row.CONTACTGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.CONTACTGUID ? 'row-text-colore' : ''" highlightedRows=row.CONTACTGUID mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editContact(row.CONTACTGUID, row);highlightedRows = row.CONTACTGUID "
                                 matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                             </tr>
                         </table>

@@ -1,143 +1,255 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MatDialog } from '@angular/material';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
+import { MatDialogRef, MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { MainAPiServiceService } from 'app/_services';
+import { fuseAnimations } from '@fuse/animations';
+import { UserBudgetDialogComponent } from './user-budget-dialog/user-budget-dialog.component';
 
 @Component({
   selector: 'app-user-dialog',
   templateUrl: './user-dialog.component.html',
-  styleUrls: ['./user-dialog.component.scss']
+  styleUrls: ['./user-dialog.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  animations: fuseAnimations
 })
 export class UserDialogComponent implements OnInit {
-  confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+  //START budget related variable 
+  USERBUDGETGUIDIndex: number = 1;
+  isNewShow: boolean = true;
+  highlightedRows: any;
   isLoadingResults: boolean = false;
+  theme_type = localStorage.getItem('theme_type');
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
+  userBudgets: any = [];
+  tempuserBudgets: any = [];
+  currentBudgets: any;
+  pageSize: any;
+  displayedColumns: string[] = ['PERIODSTART', 'TOTALBUDGETHOURS', 'TOTALBUDGETDOLLARS'];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  //END budget related variable 
+  public userData: any = {
+    "USERGUID": "", "USERID": "", "USERNAME": "", "USERPASSWORD": "", "FULLNAME": "", "ISACTIVE": 0,
+    "ISPRINCIPAL": 0, "RATEPERHOUR": "0", "RATEPERDAY": "0", "GSTTYPE": 0, "POSITION": "", "PHONE1": "", "PHONE2": "",
+    "FAX1": "", "FAX2": "", "MOBILE": "", "EMAIL": "", "PRACTICINGCERTIFICATENO": "",
+    "SEARCHUSERNAME": "", "COMMENT": ""
+  };
   errorWarningData: any = {};
+  userPermissiontemp: any = []
   action: string;
   dialogTitle: string;
-  isspiner: boolean = false;
-  phide: boolean = true;
-  userForm: FormGroup;
-  USERGUID: any;
+  dialogButton: string;
+  isspiner = false;
+  phide = true;
+  public userinfoDatah: any = [];
   constructor(
-    public MatDialog: MatDialog,
     public dialogRef: MatDialogRef<UserDialogComponent>,
-    private _formBuilder: FormBuilder,
+    public confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>,
+    public budgetDialogRef: MatDialogRef<UserBudgetDialogComponent>,
     private toastr: ToastrService,
     public _matDialog: MatDialog,
     private _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.action = data.action;
-    // this.action = data.USERGUID;
     if (this.action === 'new') {
       this.dialogTitle = 'New User';
+      this.dialogButton = "Add";
     } else if (this.action === 'edit') {
       this.dialogTitle = 'Update User';
+      this.dialogButton = "Update";
     } else {
       this.dialogTitle = 'Duplicate User';
+      this.dialogButton = "Duplicate";
     }
-
   }
-  ngOnInit() {
-    this.userForm = this._formBuilder.group({
-      ISACTIVE: [true],
-      ISPRINCIPAL: [''],
-      USERNAME: [''],
-      USERPASSWORD: [''],
-      FULLNAME: [''],
-      // Fee Earner
-      PRACTICINGCERTIFICATENO: [''],
-      PHONE1: [''],
-      PHONE2: [''],
-      FAX1: [''],
-      FAX2: [''],
-      MOBILE: [''],
-      COMMENT: [''],
-      GSTTYPE: [''],
-      POSITION: [''],
-      EMAIL: [''],
-      RATEPERHOUR: [''],
-      RATEPERDAY: [''],
-      USERID: [''],
-      //Info Track
-      SEARCHUSERNAME: [''],
-      SEARCHUSERPASSWORD: [''],
-      allowaccess: [''],
-      USERGUID: [''],
-    });
+  ngOnInit(): void {
     if (this.action === 'edit' || this.action === 'duplicate') {
       this.isLoadingResults = true;
-      this._mainAPiServiceService.getSetData({ USERGUID: this.data.USERGUID, 'GETALLFIELDS': true }, 'GetUsers').subscribe(response => {
+      this._mainAPiServiceService.getSetData({ USERGUID: this.data.USERGUID, 'AllData': true }, 'GetUsers').subscribe(response => {
         if (response.CODE === 200 && response.STATUS === 'success') {
-          let userinfoData = response.DATA.USERS[0];
-          localStorage.setItem('edit_userPermission', JSON.stringify(userinfoData.PERMISSIONS));
-          this.USERGUID = userinfoData.USERGUID;
-          this.userForm.controls['USERGUID'].setValue(userinfoData.USERGUID);
-          this.userForm.controls['USERNAME'].setValue(userinfoData.USERNAME);
-          this.userForm.controls['FULLNAME'].setValue(userinfoData.FULLNAME);
-          this.userForm.controls['USERID'].setValue(userinfoData.USERID);
-          this.userForm.controls['USERPASSWORD'].setValue(userinfoData.USERPASSWORD);
-          this.userForm.controls['ISACTIVE'].setValue(userinfoData.ISACTIVE == 1 ? true : false);
-          this.userForm.controls['ISPRINCIPAL'].setValue(userinfoData.ISPRINCIPAL == 1 ? true : false);
-          this.userForm.controls['PHONE1'].setValue(userinfoData.PHONE1);
-          this.userForm.controls['PHONE2'].setValue(userinfoData.PHONE2);
-          this.userForm.controls['MOBILE'].setValue(userinfoData.MOBILE);
-          this.userForm.controls['FAX2'].setValue(userinfoData.FAX2);
-          this.userForm.controls['FAX1'].setValue(userinfoData.FAX1);
-          this.userForm.controls['EMAIL'].setValue(userinfoData.EMAIL);
-          this.userForm.controls['COMMENT'].setValue(userinfoData.COMMENT);
-          this.userForm.controls['PRACTICINGCERTIFICATENO'].setValue(userinfoData.PRACTICINGCERTIFICATENO);
-          this.userForm.controls['POSITION'].setValue(userinfoData.POSITION);
-          this.userForm.controls['RATEPERHOUR'].setValue(userinfoData.RATEPERHOUR);
-          this.userForm.controls['RATEPERDAY'].setValue(userinfoData.RATEPERDAY);
-          this.userForm.controls['SEARCHUSERNAME'].setValue(userinfoData.SEARCHUSERNAME);
-          this.userForm.controls['SEARCHUSERPASSWORD'].setValue(userinfoData.SEARCHUSERPASSWORD);
-        } else if (response.MESSAGE == "Not logged in") {
+          const userinfoData = response.DATA.USERS[0];
+          this.setPermissionsCons(userinfoData.PERMISSIONS, 'edit');
+          delete userinfoData['PERMISSIONS'];
+          this.userData = userinfoData;
+        } else if (response.MESSAGE == 'Not logged in') {
           this.dialogRef.close(false);
         }
         this.isLoadingResults = false;
       }, error => {
         this.toastr.error(error);
       });
+      this.loadData();
+      this.pageSize = localStorage.getItem('lastPageSize');
+    } else {
+      this.isLoadingResults = true;
+      this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: true, DATA: {} }, 'SetUser').subscribe(res => {
+        if (res.CODE == 200 && res.STATUS == "success") {
+          this.setPermissionsCons(res.DATA.DEFAULTVALUES.PERMISSIONS, 'add');
+        } else if (res.MESSAGE === 'Not logged in') {
+          this.dialogRef.close(false);
+        }
+      }, error => { this.toastr.error(error); });
+      setTimeout(() => { this.isLoadingResults = false; }, 2000);
     }
   }
-  get f() {
-    return this.userForm.controls;
+  //start buget
+  loadData() {
+    this.isLoadingResults = true;
+    this._mainAPiServiceService.getSetData({ USERGUID: this.userData.USERGUID, 'GETALLFIELDS': true }, 'getUserBudget').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        if (response.DATA.USERBUDGETS[0]) {
+          this.highlightedRows = response.DATA.USERBUDGETS[0].USERBUDGETGUID;
+          this.currentBudgets = response.DATA.USERBUDGETS[0];
+          localStorage.setItem('current_budgets', JSON.stringify(response.DATA.USERBUDGETS[0]));
+        }
+        this.userBudgets = new MatTableDataSource(response.DATA.USERBUDGETS);
+        this.userBudgets.paginator = this.paginator;
+        this.userBudgets.sort = this.sort;
+        this.isLoadingResults = false;
+      } else if (response.MESSAGE == 'Not logged in') {
+        this.budgetDialogRef.close(false);
+      }
+    }, error => {
+      console.log(error);
+    });
   }
-  SaveUser(): void {
+  onPaginateChange(event) {
+    this.pageSize = event.pageSize;
+    localStorage.setItem('lastPageSize', event.pageSize);
+  }
+  // Delete User Budget
+  delete_budget(): void {
+    this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, { disableClose: true, width: '100%' });
+    this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+    this.confirmDialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        let budgetsData: any = JSON.parse(localStorage.getItem('current_budgets'));
+        if (this.userData.USERGUID != '') {
+          let postData = { FormAction: "delete", DATA: { USERBUDGETGUID: budgetsData.USERBUDGETGUID } };
+          this._mainAPiServiceService.getSetData(postData, 'SetUserBudget').subscribe(res => {
+            if (res.STATUS == "success" && res.CODE == 200) {
+              this.toastr.success('Delete successfully');
+              this.loadData();
+            }
+          });
+        } else {
+          for (var i = 0; i < this.tempuserBudgets.length; i++) {
+            if (this.tempuserBudgets[i].USERBUDGETGUID == budgetsData.USERBUDGETGUID) {
+              this.tempuserBudgets.splice(i, 1);
+              i--;
+            }
+          }
+          this.isNewShow = true;
+          this.macktempBudgetDatatable();
+        }
+      }
+      this.confirmDialogRef = null;
+    });
+  }
+  macktempBudgetDatatable() {
+    if (this.tempuserBudgets[0]) {
+      this.highlightedRows = this.tempuserBudgets[0].USERBUDGETGUID;
+      this.currentBudgets = this.tempuserBudgets[0];
+      localStorage.setItem('current_budgets', JSON.stringify(this.tempuserBudgets[0]));
+      this.userBudgets = new MatTableDataSource(this.tempuserBudgets);
+      this.userBudgets.paginator = this.paginator;
+      this.userBudgets.sort = this.sort;
+    } else {
+      this.userBudgets = new MatTableDataSource([]);
+      this.userBudgets.paginator = this.paginator;
+      this.userBudgets.sort = this.sort;
+    }
+  }
+  budgetDailog(actionType) {
+    const budgetDialogRef = this._matDialog.open(UserBudgetDialogComponent, {
+      disableClose: true, panelClass: 'UserBudget-dialog', data: { action: actionType, USERGUID: this.userData.USERGUID, USERBUDGETGUIDIndex: this.USERBUDGETGUIDIndex }
+    });
+    budgetDialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result != true) {
+          this.tempuserBudgets.push(result);
+          this.USERBUDGETGUIDIndex = this.USERBUDGETGUIDIndex + 1;
+          this.macktempBudgetDatatable();
+          this.isNewShow = false;
+
+        } else
+          this.loadData();
+      }
+    });
+  }
+  setActiveBudget(val: any) {
+    this.currentBudgets = val;
+    localStorage.setItem('current_budgets', JSON.stringify(val));
+  }
+  //END buget
+  RatePerHourVal() {
+    this.userData.RATEPERHOUR = parseFloat(this.userData.RATEPERHOUR).toFixed(2);
+  }
+  RatePerDayVal() {
+    this.userData.RATEPERDAY = parseFloat(this.userData.RATEPERDAY).toFixed(2);
+  }
+  setPermissionsCons(tempPermission, type: any) {
+    const PermissionsCons = ['MATTER DETAILS', 'DAY BOOK / TIME ENTRIES', 'CONTACTS', 'ESTIMATES', 'DOCUMENT/EMAIL GENERATION', 'DOCUMENT REGISTER', 'INVOICING', 'RECEIVE MONEY', 'SPEND MONEY', 'CHRONOLOGY', 'TOPICS', 'AUTHORITIES', 'FILE NOTES', 'SAFE CUSTODY', 'SAFE CUSTODY PACKET', 'SEARCHING', 'DIARY', 'TASKS', 'CHART OF ACCOUNTS', 'GENERAL JOURNAL', 'OTHER ACCOUNTING', 'TRUST MONEY', 'TRUST CHART OF ACCOUNTS', 'TRUST GENERAL JOURNAL', 'TRUST REPORTS', 'ACCOUNTING REPORTS', 'MANAGEMENT REPORTS', 'SYSTEM', 'USERS', 'ACTIVITIES/SUNDRIES'];
+    // const userPermissiontemp: any = [];
+    if (tempPermission) {
+      PermissionsCons.forEach((value) => {
+        if (tempPermission[value]) {
+          const subPermissions = [];
+          tempPermission[value].forEach((value2) => {
+            if (type == "add")
+              subPermissions.push({ NAME: value2.NAME, VALUE: false });
+            else
+              subPermissions.push({ NAME: value2.NAME, VALUE: value2.VALUE == "1" ? true : false });
+          });
+          this.userPermissiontemp.push({ key: value, val: subPermissions });
+        }
+      });
+    }
+    this.userinfoDatah = this.userPermissiontemp;
+  }
+
+
+  getPermissionsCons(permissionsData) {
+    const permissionsValue: any = {};
+    permissionsData.forEach((value) => {
+      const subPermissions = value.val;
+      let temp = [];
+      subPermissions.forEach((value2) => {
+        temp.push({ NAME: value2.NAME, VALUE: value2.VALUE == true ? "1" : "0" });
+      });
+      permissionsValue[value['key']] = temp;
+    });
+    return permissionsValue;
+  }
+
+
+
+  SaveUser() {
     this.isspiner = true;
-    let data = {
-      USERNAME: this.f.USERNAME.value,
-      FULLNAME: this.f.FULLNAME.value,
-      USERPASSWORD: this.f.USERPASSWORD.value,
-      ISACTIVE: this.f.ISACTIVE.value == true ? 1 : 0,
-      ISPRINCIPAL: this.f.ISPRINCIPAL.value == true ? 1 : 0,
-      PHONE1: this.f.PHONE1.value,
-      PHONE2: this.f.PHONE2.value,
-      MOBILE: this.f.MOBILE.value,
-      FAX2: this.f.FAX2.value,
-      FAX1: this.f.FAX1.value,
-      COMMENT: this.f.COMMENT.value,
-      PRACTICINGCERTIFICATENO: this.f.PRACTICINGCERTIFICATENO.value,
-      POSITION: this.f.POSITION.value,
-      RATEPERHOUR: this.f.RATEPERHOUR.value,
-      RATEPERDAY: this.f.RATEPERDAY.value,
-      EMAIL: this.f.EMAIL.value,
-      SEARCHUSERNAME: this.f.SEARCHUSERNAME.value,
-      SEARCHUSERPASSWORD: this.f.SEARCHUSERPASSWORD.value
+    if (this.action === 'duplicate') {
+      delete this.userData['USERGUID'];
+      delete this.userData['STATUS'];
+      delete this.userData['ALLOWMOBILEACCESS'];
+      delete this.userData['SEARCHUSERPASSWORD'];
     }
-    let userPostData: any = { FormAction: 'insert', VALIDATEONLY: true, DATA: data };
+    delete this.userData['STATUS'];
+    delete this.userData['ALLOWMOBILEACCESS'];
+    delete this.userData['SEARCHUSERPASSWORD'];
+
+    const formAction = this.action == 'edit' ? 'update' : 'insert';
+    this.userData.PERMISSIONS = this.getPermissionsCons(this.userinfoDatah);
+    const userPostData: any = { FormAction: formAction, VALIDATEONLY: true, DATA: this.userData };
     this._mainAPiServiceService.getSetData(userPostData, 'SetUser').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.checkValidation(res.DATA.VALIDATIONS, userPostData);
-      } else if (res.CODE == 451 && res.STATUS == "warning") {
+      } else if (res.CODE == 451 && res.STATUS == 'warning') {
         this.checkValidation(res.DATA.VALIDATIONS, userPostData);
-      } else if (res.CODE == 450 && res.STATUS == "error") {
+      } else if (res.CODE == 450 && res.STATUS == 'error') {
         this.checkValidation(res.DATA.VALIDATIONS, userPostData);
-      } else if (res.MESSAGE == "Not logged in") {
+      } else if (res.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
     }, error => {
@@ -145,7 +257,7 @@ export class UserDialogComponent implements OnInit {
       this.toastr.error(error);
     });
   }
-  checkValidation(bodyData: any, details: any) {
+  checkValidation(bodyData: any, details: any): void {
     let errorData: any = [];
     let warningData: any = [];
     let tempError: any = [];
@@ -159,7 +271,7 @@ export class UserDialogComponent implements OnInit {
         warningData.push(value.ERRORDESCRIPTION);
       }
     });
-    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
+    this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
@@ -181,14 +293,23 @@ export class UserDialogComponent implements OnInit {
     data.VALIDATEONLY = false;
     this._mainAPiServiceService.getSetData(data, 'SetUser').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        this.toastr.success('User save successfully');
-        this.isspiner = false;
-        this.dialogRef.close(true);
-      } else if (response.CODE == 451 && response.STATUS == "warning") {
+        if (Object.keys(this.tempuserBudgets).length == 0) {
+          this.toastr.success('User save successfully');
+          this.isspiner = false;
+          this.dialogRef.close(true);
+        } else {
+          delete this.tempuserBudgets[0]['USERBUDGETGUID'];
+          this.tempuserBudgets[0].USERGUID = response.DATA.USERGUID;
+          this.saveBudgetData({ FormAction: 'insert', VALIDATEONLY: false, Data: this.tempuserBudgets[0] });
+          this.toastr.success('User save successfully');
+          this.isspiner = false;
+          this.dialogRef.close(true);
+        }
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.toastr.warning(response.MESSAGE);
-      } else if (response.CODE == 450 && response.STATUS == "error") {
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
         this.toastr.error(response.MESSAGE);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
       this.isspiner = false;
@@ -196,19 +317,22 @@ export class UserDialogComponent implements OnInit {
       this.toastr.error(error);
     });
   }
-  permissionConvert(tempData: any) {
-    let PermissionsCons = ['MATTER DETAILS', 'DAY BOOK / TIME ENTRIES', 'CONTACTS', 'ESTIMATES', 'DOCUMENT/EMAIL GENERATION', 'DOCUMENT REGISTER', 'INVOICING', 'RECEIVE MONEY', 'SPEND MONEY', 'CHRONOLOGY', 'TOPICS', 'AUTHORITIES', 'FILE NOTES', 'SAFE CUSTODY', 'SAFE CUSTODY PACKET', 'SEARCHING', 'DIARY', 'TASKS', 'CHART OF ACCOUNTS', 'GENERAL JOURNAL', 'OTHER ACCOUNTING', 'TRUST MONEY', 'TRUST CHART OF ACCOUNTS', 'TRUST GENERAL JOURNAL', 'TRUST REPORTS', 'ACCOUNTING REPORTS', 'MANAGEMENT REPORTS', 'SYSTEM', 'USERS', 'ACTIVITIES/SUNDRIES'];
-    let userPermissiontemp: any = {};
-    PermissionsCons.forEach(function (value) {
-      if (tempData[value]) {
-        let subPermissions: any = [];
-        tempData[value].forEach(function (value2) {
-          subPermissions.push(value2.NAME);
-        });
-        userPermissiontemp[value] = subPermissions;
+  saveBudgetData(PostBudgetData: any) {
+    this._mainAPiServiceService.getSetData(PostBudgetData, 'SetUserBudget').subscribe(res => {
+      if (res.CODE == 200 && res.STATUS == "success") {
       }
+    }, err => {
+      this.toastr.error(err);
     });
-    localStorage.setItem('edit_userPermission', JSON.stringify(userPermissiontemp));
   }
 
+  AllCHecked(val, type) {
+    this.userinfoDatah.forEach(element => {
+      if (element.key === type) {
+        element.val.forEach(element2 => {
+          element2.VALUE = val.checked;
+        });
+      }
+    });
+  }
 }

@@ -39,7 +39,7 @@ export class FuseNavigationComponent implements OnInit {
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
     private _fuseNavigationService: FuseNavigationService,
-    public GetFavouriteService: GetFavouriteService,
+    public getFavouriteService: GetFavouriteService,
     private toastr: ToastrService
   ) {
 
@@ -49,21 +49,23 @@ export class FuseNavigationComponent implements OnInit {
     if (guid) {
       let postdata = { 'USERGUID': guid.UserGuid };
       let Favouritelist = [{ "ID": "matters", "TITLE": "Matters", "URL": "matters", "STAR": "" },
-      { "ID": "contact", "TITLE": "Contact", "URL": "contact", "STAR": "" },
+      { "ID": "contact", "TITLE": "Contacts", "URL": "contact", "STAR": "" },
       { "ID": "time_entries", "TITLE": "Time entries", "URL": "time-entries", "STAR": "" },
       { "ID": "diary", "TITLE": "Diary", "URL": "diary", "STAR": "" },
-      { "ID": "invoice", "TITLE": "Invoice", "URL": "invoice", "STAR": "" },
+      { "ID": "invoice", "TITLE": "Invoices", "URL": "invoice", "STAR": "" },
       { "ID": "spend-money", "TITLE": "Spend money", "URL": "spend-money", "STAR": "" },
-      //added by web 19 
       { "ID": "authorities", "TITLE": "Authorities", "URL": "authorities", "STAR": "" },
       { "ID": "searching", "TITLE": "Searching", "URL": "searching", "STAR": "" },
+      { "ID": "Safe-Custody", "TITLE": "Safe Custody", "URL": "Safe-Custody", "STAR": "" },
+      { "ID": "trust-money", "TITLE": "Trust Money", "URL": "trust-money", "STAR": "" },
+      // { "ID": "trust-banking", "TITLE": "Trust Banking", "URL": "", "STAR": "" },
+      { "ID": "trust-end-month", "TITLE": "Trust End Of Month", "URL": "trust-end-month", "STAR": "" },
       { "ID": "receive-money", "TITLE": "Receive money", "URL": "receive-money", "STAR": "" }]
 
-      this.GetFavouriteService.GetFavourite(postdata).subscribe(response => {
+      this.getFavouriteService.GetFavourite(postdata).subscribe(response => {
         if (response.CODE == 200 && response.STATUS == "success") {
-          console.log(response);
           if (response.DATA.FAVOURITES == '') {
-            this.GetFavouriteService.setFavourite({ "FAVOURITES": Favouritelist }).subscribe(responses => {
+            this.getFavouriteService.setFavourite({ "FAVOURITES": Favouritelist }).subscribe(responses => {
               if (responses.CODE == 200 && responses.STATUS == "success") {
                 Favouritelist.forEach(items => {
                   this.page.push({ "ID": items.ID, "TITLE": items.TITLE, "URL": items.URL, "STAR": items.STAR, "type": "item", "icon": "icon_matter_d.ico" });
@@ -131,7 +133,6 @@ export class FuseNavigationComponent implements OnInit {
 
   //For click
   onChange(values) {
-    console.log(values);
     this.page.forEach(items => {
       if (items.STAR == '') {
         if (items.TITLE == values) {
@@ -149,7 +150,7 @@ export class FuseNavigationComponent implements OnInit {
     let guid = JSON.parse(localStorage.getItem('currentUser'));
     if (guid) {
       let favouritedatas = { "FAVOURITES": this.page }
-      this.GetFavouriteService.setFavourite(favouritedatas).subscribe(response => {
+      this.getFavouriteService.setFavourite(favouritedatas).subscribe(response => {
         if (response.CODE == 200 && response.STATUS == "success") {
           // this.toastr.error(error);    
         }
@@ -193,7 +194,6 @@ export class filterNames implements PipeTransform {
     if (!nameToFilter) return [];
     nameToFilter = nameToFilter.toLowerCase();
     return page.filter(it => {
-      //console.log(it);
       return it.TITLE.toLowerCase().includes(nameToFilter);
     });
   }

@@ -1,13 +1,14 @@
 import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA, MatDatepickerInputEvent } from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { TimersService, MattersService } from '../../../../_services';
+import { TimersService, BehaviorService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { DatePipe } from '@angular/common';
 import { MatterDialogComponent } from '../matter-dialog/matter-dialog.component';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { round } from 'lodash';
+import * as moment from 'moment';
 
 
 @Component({
@@ -18,7 +19,7 @@ import { round } from 'lodash';
 })
 export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
-  private exportTime = { hour: 7, minute: 15, meriden: 'PM', format: 24 };
+  timeStops: any = [];
   LookupsList: any;
   errorWarningData: any = {};
   userList: any;
@@ -55,8 +56,8 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     private Timersservice: TimersService,
     private toastr: ToastrService,
     private _formBuilder: FormBuilder,
-    private toasterService: ToastrService,
     public datepipe: DatePipe,
+    private behaviorService: BehaviorService,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
     if (_data.edit == 'Edit' || _data.edit == 'Add' || _data.edit == "Duplicate") {
@@ -77,6 +78,8 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   timeEntryForm: FormGroup;
   matterautoVal: any;
   ngOnInit() {
+    this.timeStops = this.getTimeStops('00:00', '23:30');
+    let maaterguid = JSON.parse(localStorage.getItem('set_active_matters'));
     this.ActivityList = this.optionList;
     this.timeEntryForm = this._formBuilder.group({
       matterautoVal: [''],
@@ -89,10 +92,13 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       PRICE: [''],
       PRICEINCGST: [''],
       ITEMTIME: [''],
+      ADDITIONALTEXTSELECT: [''],
       ADDITIONALTEXT: ['', Validators.required],
       COMMENT: [''],
       INVOICEDATE: [this.datepipe.transform(new Date(), 'dd/MM/yyyy')],
     });
+    this.timeEntryForm.controls['matterautoVal'].setValue(maaterguid.MATTER);
+    this.timeEntryForm.controls['MATTERGUID'].setValue(maaterguid.MATTERGUID);
     this.calculateData.QuantityType = 'H';
     this.ITEMDATEModel = new Date();
     this.timeEntryForm.controls['ITEMTYPE'].setValue('1');
@@ -105,7 +111,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.Timersservice.GetLookupsData({}).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.LookupsList = res.DATA.LOOKUPS;
-      } else if (res.MESSAGE == "Not logged in") {
+      } else if (res.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       } else {
         this.LookupsList = [];
@@ -118,7 +124,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.Timersservice.GetUsers({}).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.userList = res.DATA.USERS;
-      } else if (res.MESSAGE == "Not logged in") {
+      } else if (res.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       } else {
         this.userList = [];
@@ -138,6 +144,19 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.timeEntryForm.controls['ITEMTYPE'].setValue('1');
       this.matterChange('MatterGuid', this.currentTimeMatter);
     }
+  }
+  getTimeStops(start, end) {
+    var startTime = moment(start, 'hh:mm');
+    var endTime = moment(end, 'hh:mm');
+    if (endTime.isBefore(startTime)) {
+      endTime.add(1, 'day');
+    }
+    var timeStops = [];
+    while (startTime <= endTime) {
+      timeStops.push(moment(startTime).format('hh:mm A'));
+      startTime.add(30, 'minutes');
+    }
+    return timeStops;
   }
   calcPE() {
     // this.PRICEVAL= parseFloat(this.f.PRICE.value).toFixed(2);
@@ -159,7 +178,15 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   }
   setTimeEntryData() {
     this.isLoadingResults = true;
-    this.Timersservice.getTimeEnrtyData({ 'WorkItemGuid': localStorage.getItem('edit_WORKITEMGUID') }).subscribe(response => {
+    let workerGuid;
+    this.behaviorService.workInProgress$.subscribe(workInProgressData => {
+      if (workInProgressData) {
+        workerGuid = workInProgressData.WORKITEMGUID;
+      } else {
+        workerGuid = localStorage.getItem('edit_WORKITEMGUID');
+      }
+    });
+    this.Timersservice.getTimeEnrtyData({ 'WorkItemGuid': workerGuid }).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         // added by web19 19/06 
         this.matterChange('MatterGuid', response.DATA.WORKITEMS[0].MATTERGUID);
@@ -176,7 +203,8 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
         this.timeEntryForm.controls['QUANTITY'].setValue(timeEntryData.QUANTITY);
         this.timeEntryForm.controls['MATTERGUID'].setValue(timeEntryData.MATTERGUID);
         this.timeEntryForm.controls['ITEMTYPE'].setValue(timeEntryData.ITEMTYPE);
-        this.timeEntryForm.controls['ITEMTIME'].setValue(timeEntryData.ITEMTIME);
+        let ttyData = moment(timeEntryData.ITEMTIME, 'hh:mm');
+        this.timeEntryForm.controls['ITEMTIME'].setValue(moment(ttyData).format('hh:mm A'));
         this.timeEntryForm.controls['FEEEARNER'].setValue(timeEntryData.FEEEARNER);
 
         let tempDate = timeEntryData.ITEMDATE.split("/");
@@ -184,8 +212,9 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
         this.timeEntryForm.controls['PRICEINCGST'].setValue(timeEntryData.PRICEINCGST);
         this.timeEntryForm.controls['PRICE'].setValue(timeEntryData.PRICE);
         this.timeEntryForm.controls['ADDITIONALTEXT'].setValue(timeEntryData.ADDITIONALTEXT);
+        this.timeEntryForm.controls['ADDITIONALTEXTSELECT'].setValue(timeEntryData.ADDITIONALTEXT);
         this.timeEntryForm.controls['COMMENT'].setValue(timeEntryData.COMMENT);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
       this.isLoadingResults = false;
@@ -248,6 +277,8 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
           this.timeEntryForm.controls['PRICE'].setValue(CalcWorkItemCharge.PRICE);
           this.timeEntryForm.controls['PRICEINCGST'].setValue(CalcWorkItemCharge.PRICEINCGST);
           this.isLoadingResults = false;
+        } else if (response.MESSAGE == 'Not logged in') {
+          this.dialogRef.close(false);
         }
       }, err => {
         this.isLoadingResults = false;
@@ -317,11 +348,11 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.Timersservice.SetWorkItems(PostTimeEntryData).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.checkValidation(res.DATA.VALIDATIONS, PostTimeEntryData);
-      } else if (res.CODE == 451 && res.STATUS == "warning") {
+      } else if (res.CODE == 451 && res.STATUS == 'warning') {
         this.checkValidation(res.DATA.VALIDATIONS, PostTimeEntryData);
-      } else if (res.CODE == 450 && res.STATUS == "error") {
+      } else if (res.CODE == 450 && res.STATUS == 'error') {
         this.checkValidation(res.DATA.VALIDATIONS, PostTimeEntryData);
-      } else if (res.MESSAGE == "Not logged in") {
+      } else if (res.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
       this.isspiner = false;
@@ -345,7 +376,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
         warningData.push(value.ERRORDESCRIPTION);
       }
     });
-    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
+    this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
@@ -372,13 +403,13 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     PostTimeEntryData.VALIDATEONLY = false;
     this.Timersservice.SetWorkItems(PostTimeEntryData).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
-        this.toasterService.success(this.successMsg);
+        this.toastr.success(this.successMsg);
         this.dialogRef.close(true);
-      } else if (res.CODE == 451 && res.STATUS == "warning") {
-        this.toasterService.warning(res.MESSAGE);
-      } else if (res.CODE == 450 && res.STATUS == "error") {
-        this.toasterService.warning(res.MESSAGE);
-      } else if (res.MESSAGE == "Not logged in") {
+      } else if (res.CODE == 451 && res.STATUS == 'warning') {
+        this.toastr.warning(res.MESSAGE);
+      } else if (res.CODE == 450 && res.STATUS == 'error') {
+        this.toastr.warning(res.MESSAGE);
+      } else if (res.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
       this.isspiner = false;

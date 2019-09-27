@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatDialogConfig,MatDialog } from '@angular/material';
-import { ReportfilterService } from '../../_services';
+import { MainAPiServiceService } from '../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import * as $ from 'jquery';
@@ -19,16 +19,20 @@ export class ReportsComponent implements OnInit {
   PDF_Generation:string;
   base_url:string;
   isLoadingResults: boolean = false;
-  constructor(public dialog: MatDialog,public dialogRef: MatDialogRef<ReportsComponent>,private _formBuilder: FormBuilder,public datepipe: DatePipe,private Reportfilter: ReportfilterService,private toastr: ToastrService,@Inject(MAT_DIALOG_DATA) public data: any){
+  constructor(public dialog: MatDialog,public dialogRef: MatDialogRef<ReportsComponent>,
+    private _formBuilder: FormBuilder,public datepipe: DatePipe,private toastr: ToastrService,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private _mainAPiServiceService: MainAPiServiceService){
       //API Call
-     
+    
       if(data.ReportGenerateData){   
         this.PDF_Generation=data.ReportGenerateData;
         this.title=data.ReportGenerateData.title;
         this.base_url=environment.ReportUrl;
       }else{ 
         this.isLoadingResults = true;
-        this.Reportfilter.ReportfilterData(this.data.REPORTID).subscribe(response => {          
+       
+        this._mainAPiServiceService.getSetForReport(this.data.REPORTID).subscribe(response => {          
           this.isLoadingResults = false;  
            if(response.CODE==200 && response.STATUS=='success'){
              this.responseData=response.DATA; 
@@ -190,8 +194,8 @@ export class ReportsComponent implements OnInit {
        }
        keydelete(ReportData);         
        //Api Report Generate 
-       this.Reportfilter.ReportgenerateData(ReportData).subscribe(reportgenerateData => {
-         console.log(reportgenerateData);
+       this._mainAPiServiceService.getSetData(ReportData, 'ReportGenerate').subscribe(reportgenerateData => {
+       
         if(reportgenerateData.PDF_Generation.CODE==200 && reportgenerateData.PDF_Generation.STATUS=="success"){         
           this.dialogRef.close(true); 
           this.isLoadingResults = false;
@@ -202,7 +206,7 @@ export class ReportsComponent implements OnInit {
               }}
               //open pop-up
             this.dialog.open(ReportsComponent,{width:'100%',data:Data});
-        }else if(reportgenerateData.PDF_Generation.CODE==415 && reportgenerateData.PDF_Generation.STATUS=="error"){          
+        }else if(reportgenerateData.PDF_Generation.CODE==415 && reportgenerateData.PDF_Generation.STATUS=='error'){          
           this.toastr.error(reportgenerateData.PDF_Generation.MESSAGE);
           this.dialogRef.close(true);
         }

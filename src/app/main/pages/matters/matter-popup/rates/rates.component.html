@@ -1,17 +1,17 @@
-<div class=" one " fxLayout="column" [formGroup]="matterdetailForm">
-    <label id="example-radio-group-label">GST Type</label>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 40px">
-        <mat-radio-group aria-label="Billing Method" formControlName="GSTTYPE" (change)="radioChange($event.val)" class="example" fxFlex="100" class="pr-4">
+<div class=" one rate_tab_main" fxLayout="column" [formGroup]="matterdetailForm">
+    <label id="example-radio-group-label" class="rate_tab_label">GST Type</label>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 40px" class="rate_tab_value">
+        <mat-radio-group aria-label="Billing Method" formControlName="GSTTYPE" (change)="radioChange($event.val)" class="example tab_value_child" fxFlex="100" class="pr-4">
             <mat-radio-button value="GST Exclusive">GST Exclusive</mat-radio-button>
             <mat-radio-button value="GST Inclusive">GST Inclusive </mat-radio-button>
             <mat-radio-button value="GST Free">GST Free</mat-radio-button>
             <mat-radio-button value="Export">Export</mat-radio-button>
         </mat-radio-group>
-        <mat-checkbox formControlName="ONCHARGEDISBURSEMENTGST" [disabled]="isDisabled" class="gst_charge">Charge Disbursement GST</mat-checkbox>
+        <mat-checkbox formControlName="ONCHARGEDISBURSEMENTGST" [disabled]="isDisabled" class="gst_charge tab_value_child">Charge Disbursement GST</mat-checkbox>
     </div>
-    <label id="example-radio-group-label">Billing Method</label>
-    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 40px">
-        <mat-radio-group fxFlex="100" class="pr-4" formControlName="BILLINGMETHOD">
+    <label id="example-radio-group-label" class="rate_tab_label">Billing Method</label>
+    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 40px" class="rate_tab_value">
+        <mat-radio-group fxFlex="100" class="pr-4 tab_value_child" formControlName="BILLINGMETHOD">
             <mat-radio-button value="Time Costed">Time Costed</mat-radio-button>
             <mat-radio-button value="Fixed">Fixed </mat-radio-button>
             <mat-radio-button value="Pro Bono">Pro Bono</mat-radio-button>
@@ -21,12 +21,13 @@
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="59" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.RATEPERHOUR,'has-warning':errorWarningData.Warning?.RATEPERHOUR}">
             <mat-label>Per Hours</mat-label>
-            <input matInput type="number" class="sideText" formControlName="RATEPERHOUR">
+            <input (focusout)="RatePerHourVal()"  class="sideText" matInput type="number" [(ngModel)]="RATEPERHOUR" formControlName="RATEPERHOUR">
+            <span class="currency_sign" matPrefix>$&nbsp;</span>
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.RATEPERDAY,'has-warning':errorWarningData.Warning?.RATEPERDAY}">
             <mat-label>Per Day</mat-label>
-            <input name="PerDay" class="sideText" matInput type="number" formControlName="RATEPERDAY">
-            <mat-icon matSuffix class="secondary-text"></mat-icon>
+            <input (focusout)="RatePerDayVal()"  class="sideText" name="PerDay"  [(ngModel)]="RATEPERDAY"  matInput type="number" formControlName="RATEPERDAY">
+            <span class="currency_sign" matPrefix>$&nbsp;</span>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -39,7 +40,6 @@
             <mat-label>Ex-GST</mat-label>
             <input class="sideText" numeric numericType="decimal" name="Ex-GST" matInput type="number" formControlName="FIXEDRATEINCGST" (keyup)="calcPI()" [(ngModel)]="FIXEDRATEINCGST">
             <span class="currency_sign" matPrefix>$&nbsp;</span>
-            <mat-icon matSuffix class="secondary-text"></mat-icon>
         </mat-form-field>
     </div>
 </div>

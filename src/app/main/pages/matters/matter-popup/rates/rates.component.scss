@@ -23,3 +23,23 @@
 .sideText {
     text-align: right;
 }
+
+@media screen and (max-width: 991px) {
+    .rate_tab_label {
+        float: left;
+        width: 100%;
+        padding: 10px 0;
+    }
+    .rate_tab_value {
+        float: left;
+        width: 100%;
+        display: inline-block !important;
+        min-height: 100% !important;
+        flex: auto !important;
+    }
+    .rate_tab_value .mat-radio-group, .rate_tab_value .tab_value_child {
+        float: left;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}

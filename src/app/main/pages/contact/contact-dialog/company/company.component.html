@@ -1,15 +1,15 @@
-<div class=" one " fxLayout="column">
+<div class="one" fxLayout="column" [formGroup]="contactForm">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
             <mat-label>Preferred name</mat-label>
-            <input matInput>
+            <input matInput name="SALUTATION" formControlName="SALUTATION">
             <mat-icon matSuffix class="secondary-text"></mat-icon>
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
             <mat-label>Position</mat-label>
-            <input matInput>
+            <input matInput name="POSITION" formControlName="POSITION">
             <mat-icon matSuffix class="secondary-text"></mat-icon>
         </mat-form-field>
     </div>

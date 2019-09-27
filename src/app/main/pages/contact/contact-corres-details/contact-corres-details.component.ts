@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation, Inject } from '@angula
 import { MatTableDataSource, MatPaginator, MatDialog, MatDialogRef } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { MattersService, ContactService } from './../../../../_services';
+import {  MainAPiServiceService} from './../../../../_services';
 import { ContactDialogComponent } from '../contact-dialog/contact-dialog.component';
 import { ToastrService } from 'ngx-toastr';
 import {MatSort} from '@angular/material';
@@ -29,8 +29,7 @@ export class ContactCorresDetailsComponent implements OnInit {
   isLoadingResults: boolean = false;
   pageSize: any;
   constructor(
-    public _getContact: ContactService,
-    private _getMattersService: MattersService,
+    private _mainAPiServiceService: MainAPiServiceService,
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<ContactCorresDetailsComponent>,
     private toastr: ToastrService,
@@ -42,8 +41,8 @@ export class ContactCorresDetailsComponent implements OnInit {
   ngOnInit() {
     this.isLoadingResults = true;
     this.getin = { MatterGuid: this.getMatterGuid }
-    this._getMattersService.getMattersContact(this.getin).subscribe(res => {
-      if (res.MESSAGE == "Not logged in") {
+    this._mainAPiServiceService.getSetData(this.getin, 'GetMatterContact').subscribe(res => {
+      if (res.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       } else {
         if (Object.keys(res.DATA.MATTERCONTACTS).length == 0) {

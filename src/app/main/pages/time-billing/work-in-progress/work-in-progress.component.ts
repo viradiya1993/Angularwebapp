@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialogConfig, MatDialog, MatDatepickerInputEvent } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { ToastrService } from 'ngx-toastr';
-import { WorkInProgressService, TableColumnsService } from '../../../../_services';
+import { TableColumnsService, MainAPiServiceService, BehaviorService } from '../../../../_services';
 import * as $ from 'jquery';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-work-in-progress',
@@ -16,7 +16,10 @@ import {MatSort} from '@angular/material';
   encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
-export class WorkInProgressComponent implements OnInit {
+export class WorkInProgressComponent implements OnInit, OnDestroy {
+  highlightedRows: any;
+  theme_type = localStorage.getItem('theme_type');
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   displayedColumns: string[];
   TimeEnrtyForm: FormGroup;
@@ -28,7 +31,7 @@ export class WorkInProgressComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   isLoadingResults: boolean = false;
-  constructor(public datepipe: DatePipe, private dialog: MatDialog, private fb: FormBuilder, private WorkInProgress: WorkInProgressService, private TableColumnsService: TableColumnsService, private toastr: ToastrService) {
+  constructor(public datepipe: DatePipe, private dialog: MatDialog, private fb: FormBuilder, private behaviorService: BehaviorService, private _mainAPiServiceService: MainAPiServiceService, private TableColumnsService: TableColumnsService, private toastr: ToastrService) {
     this.lastFilter = JSON.parse(localStorage.getItem('Work_in_progress_filter'));
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.isShowDrop = currentUser.ProductType == "Barrister" ? false : true;
@@ -47,8 +50,18 @@ export class WorkInProgressComponent implements OnInit {
   ngOnInit() {
     $('content').addClass('inner-scroll');
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
+    this.behaviorService.workInProgress$.subscribe(workInProgressData => {
+      if (workInProgressData)
+        this.highlightedRows = workInProgressData.WORKITEMGUID;
+    });
     this.getTableFilter();
     this.loadData(this.lastFilter);
+  }
+  ngOnDestroy() {
+    this.behaviorService.setworkInProgressData(null);
+  }
+  editworkInProgress(row: any) {
+    this.behaviorService.setworkInProgressData(row);
   }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('time and billing', 'work in progress').subscribe(response => {
@@ -66,8 +79,10 @@ export class WorkInProgressComponent implements OnInit {
     potData.MatterGuid = this.currentMatter.MATTERGUID
     this.isLoadingResults = true;
     // let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
-    this.WorkInProgress.WorkInProgressData(potData).subscribe(res => {
+    this._mainAPiServiceService.getSetData(potData, 'GetWorkItems').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
+        if (res.DATA.WORKITEMS[0])
+          this.editworkInProgress(res.DATA.WORKITEMS[0]);
         this.WorkInProgressdata = new MatTableDataSource(res.DATA.WORKITEMS);
         this.WorkInProgressdata.paginator = this.paginator;
         this.WorkInProgressdata.sort = this.sort;

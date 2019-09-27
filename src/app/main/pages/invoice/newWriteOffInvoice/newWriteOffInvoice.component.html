@@ -1,0 +1,54 @@
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+</div>
+<div cdkDrag class="popup_main_div add_edit_contact_main">
+    <h2 cdkDragHandle mat-dialog-title>Write Off
+        <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </h2>
+    <div mat-dialog-content class="mat-typography main">
+        <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+            <form fxLayout="column" fxFlex="1 0 auto" name="form">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
+                        <mat-label>Invoice No</mat-label>
+                        <input [(ngModel)]="WriteOffInvoice.INVOICECODE" name="INVOICECODE" matInput placeholder="Invoice No" readonly>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
+                        <mat-label>Invoice Date</mat-label>
+                        <input [(ngModel)]="WriteOffInvoice.INVOICEDATE" name="INVOICEDATE" matInput readonly [satDatepicker]="picker2">
+                        <sat-datepicker #picker2> </sat-datepicker>
+                        <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
+                        <mat-label>Due Date</mat-label>
+                        <input [(ngModel)]="WriteOffInvoice.DUEDATE" name="DUEDATE" matInput readonly [satDatepicker]="picker1">
+                        <sat-datepicker #picker1> </sat-datepicker>
+                        <sat-datepicker-toggle matSuffix [for]="picker1"></sat-datepicker-toggle>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
+                        <mat-label>Invoice Total</mat-label>
+                        <input [(ngModel)]="WriteOffInvoice.TOTALINVOICES" name="TOTALINVOICES" readonly matInput placeholder="Invoice Total">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
+                        <mat-label>Amount Paid</mat-label>
+                        <input [(ngModel)]="WriteOffInvoice.AMOUNTOUTSTANDINGEXGST" name="AMOUNTOUTSTANDINGEXGST" readonly matInput placeholder="Amount Paid">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
+                        <mat-label>Amount Outstanding</mat-label>
+                        <input [(ngModel)]="WriteOffInvoice.TOTALOUSTANDING" name="TOTALOUSTANDING" readonly matInput placeholder="Amount Outstanding">
+                    </mat-form-field>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <mat-dialog-actions align="end" class="popup_ftr">
+        <button mat-raised-button color="accent" (click)="saveWriteOff()" [disabled]="isspiner" cdkFocusInitial><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
+    </mat-dialog-actions>
+</div>

@@ -17,7 +17,7 @@
                         <mat-option value="0">Last Month</mat-option>
                         <mat-option value="1">Current Month</mat-option>
                         <mat-option value="2">Last Quarter</mat-option>
-                        <mat-option value="3">Current Quarter</mat-option>
+                        <mat-option value="3"> Quarter</mat-option>
                         <mat-option value="4">Last Financial Year</mat-option>
                         <mat-option value="5">Current Financial Year</mat-option>
                         <mat-option value="6">Data Range</mat-option>
@@ -25,7 +25,7 @@
                 </mat-form-field>
                 <mat-form-field appearance="outline" fxFlex="50" class="">
                     <mat-label>Date Range</mat-label>
-                    <input matInput placeholder="Choose a date" [satDatepicker]="picker2" formControlName="date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)">
+                    <input matInput placeholder="Choose a date" [satDatepicker]="picker2" formControlName="date" (dateInput)="choosedDate()" (dateChange)="choosedDate()">
                     <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
                     <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
                 </mat-form-field>
@@ -34,7 +34,7 @@
       </div>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
-        <button mat-raised-button color="accent" (click)="SaveFilter()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Select</button>
+        <button mat-raised-button color="accent" (click)="SaveFilter()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>OK</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
     </mat-dialog-actions>
 </div>

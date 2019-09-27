@@ -13,7 +13,6 @@ export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
 
-
     constructor(private http: HttpClient, private router: Router, private toastr: ToastrService) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
@@ -49,22 +48,21 @@ export class AuthenticationService {
     notLogin() {
         const currentUser = this.currentUserValue;
         if (currentUser) {
-            this.router.navigate(['matters']);
             return false;
         }
-        // not logged in so return true
+        // Not logged in so return true
         return true;
     }
     logout() {
         // remove user from local storage to log user out
         this.http.get<any>(environment.APIEndpoint + 'Login?request=Logout').subscribe(loginResponse => {
-            if (loginResponse.MESSAGE == "Not logged in") {
+            if (loginResponse.MESSAGE == 'Not logged in') {
                 localStorage.removeItem('currentUser');
                 localStorage.removeItem('app_permissions');
                 localStorage.removeItem('session_token');
                 this.currentUserSubject.next(null);
                 this.router.navigate(['login']);
-            } else if (loginResponse.CODE != 402 && loginResponse.STATUS != "error") {
+            } else if (loginResponse.CODE != 402 && loginResponse.STATUS != 'error') {
                 this.toastr.success('success');
                 localStorage.removeItem('currentUser');
                 localStorage.removeItem('app_permissions');
@@ -72,6 +70,15 @@ export class AuthenticationService {
                 this.currentUserSubject.next(null);
                 this.router.navigate(['login']);
             }
+        }, error => {
+            console.log(error);
+            this.toastr.error(error);
+        });
+    }
+    MaintainLicence() {
+        // remove user from local storage to log user out
+        this.http.get<any>(environment.APIEndpoint + 'Login?request=MaintainLicence').subscribe(loginResponse => {
+            // console.log(loginResponse);
         }, error => {
             console.log(error);
             this.toastr.error(error);

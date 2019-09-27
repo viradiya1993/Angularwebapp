@@ -1,60 +1,67 @@
+<button mat-raised-button type="button" color="primary" id="refreshRecouncilItem" (click)="refreshRecouncilItem();">Refresh</button>
+
+<div class="nameCount">
+    {{this.chartAccountDetail.name}}
+</div>
 <div id="AccountRecouncile" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
+      
     <div class="content" fxLayoutAlign="center">
+           
         <div class="center p-24 more_tbl_clmn list_tbl_main" fusePerfectScrollbar>
             <div class="matter-serach-div sticky_search_div responsive_auto">
-                <form [formGroup]="AccountRecouncile"  fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
-                    <h2>1-1200 General Cheque Account</h2>
+              
+                <form [formGroup]="AccountRecouncile" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
                     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                        <mat-form-field class="example" appearance="outline"  fxFlex="25">
+                        <mat-form-field class="example" appearance="outline" fxFlex="16.66">
                             <mat-label>Last Reconciled Date</mat-label>
-                            <input matInput  formControlName="ReconciledDate"> 
+                            <input matInput formControlName="LASTRECONCILEDDATE" readonly>
                         </mat-form-field>
-                        <mat-form-field class="example" appearance="outline"  fxFlex="25" >
-                            <mat-label>Statement Closing Bal.</mat-label>
-                            <input matInput  formControlName="Statement" type="number" value="$0.00">
+
+                        <mat-form-field class="example" appearance="outline" fxFlex="16.66">
+                            <mat-label>Last Reconciled Balance</mat-label>
+                            <input matInput formControlName="LASTRECONCILEDBALANCE" readonly class="sideText">
+                            <span class="currency_sign" matPrefix>$&nbsp;</span>
                         </mat-form-field>
-                        <mat-form-field class="example" appearance="outline"  fxFlex="25">
+
+                        <mat-form-field class="example" appearance="outline" fxFlex="16.66">
                             <mat-label>Bank Statement Date</mat-label>
-                            <input (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDateOfBank('change', $event)" matInput  formControlName ="Bankdate" [matDatepicker]="picker">
+                            <input (dateInput)="BankchoosedDate('input', $event)" (dateChange)="BankchoosedDate('change', $event)" matInput formControlName="Bankdate" [matDatepicker]="picker">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
-                        <mat-form-field class="example" appearance="outline"  fxFlex="25">
-                            <mat-label>Calculated Closing Bal.</mat-label>
-                            <input matInput  formControlName="closeBal"  value="$5,994.00">
+
+                        <mat-form-field class="example" appearance="outline" fxFlex="16.66">
+                            <mat-label>Statement Closing Bal.</mat-label>
+                            <input (focusout)="statmentClosingBal()" matInput formControlName="statementClosingBalance" type="number" class="sideText">
+                            <span class="currency_sign" matPrefix>$&nbsp;</span>
+                        </mat-form-field>
+
+                        <mat-form-field class="example" appearance="outline" fxFlex="16.66">
+                            <mat-label>Calculated Closing Balance</mat-label>
+                            <input  matInput formControlName="calculatedClosingBalance" readonly class="sideText">
+                            <span class="currency_sign" matPrefix>$&nbsp;</span>
+                        </mat-form-field>
+
+                        <mat-form-field class="example" appearance="outline" fxFlex="16.66">
+                            <mat-label>Out of Balance</mat-label>
+                            <input matInput formControlName="OutBal" class="sideText">
+                            <span class="currency_sign" matPrefix>$&nbsp;</span>
                         </mat-form-field>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                        <mat-form-field class="example" appearance="outline"  fxFlex="25">
-                            <mat-label>Last Reconciled Balance</mat-label>
-                            <input matInput  formControlName="LastBal" value="$5,994.00">
+                        <mat-form-field class="example" appearance="outline" fxFlex="20">
+                            <mat-label>Unpresented Deposits</mat-label>
+                            <input readonly matInput formControlName="UnDeposite" class="sideText">
+                            <span class="currency_sign" matPrefix>$&nbsp;</span>
                         </mat-form-field>
-                        <mat-form-field class="example" appearance="outline"  fxFlex="25">
-                            <mat-label>Out of Balance</mat-label>
-                            <input matInput  formControlName="OutBal" value="$5,994.00">
-                        </mat-form-field>
-                        <mat-form-field class="example" appearance="outline"  fxFlex="25">
-                            <mat-label>Unpresented Deposites</mat-label>
-                            <input matInput  formControlName="UnDeposite" value="$0.00">
-                        </mat-form-field>
-                        <mat-form-field class="example" appearance="outline"  fxFlex="25">
-                            <mat-label>Prepared by</mat-label>
-                            <input matInput  formControlName="PreBy" value="Diana Parkinson">
-                        </mat-form-field>
-                    </div>
-                   <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                        <mat-form-field class="example" appearance="outline"  fxFlex="33">
-                            <mat-label>Unbanked Cash/Chqs</mat-label>
-                            <input matInput  formControlName="UnbankedCase" value="$0.00">
-                        </mat-form-field>
-                        <mat-form-field class="example" appearance="outline"  fxFlex="33">
+                        <mat-form-field class="example" appearance="outline" fxFlex="20">
                             <mat-label>Unpresented Withdrawals</mat-label>
-                            <input matInput  formControlName="UnWith" value="$0.00">
+                            <input readonly matInput formControlName="UnWith" class="sideText">
+                            <span class="currency_sign" matPrefix>$&nbsp;</span>
                         </mat-form-field>
-                        <mat-form-field class="search" appearance="outline" fxFlex="34">
-                            <mat-label>Search</mat-label>
-                            <input matInput placeholder="Search" (keydown)="onSearch($event)" formControlName="searchFilter">
-                            <mat-icon matSuffix (click)="onSearch('Enter')">search</mat-icon>
+                        <mat-form-field class="example" appearance="outline" fxFlex="20">
+                            <mat-label>Prepared by</mat-label>
+                            <input matInput formControlName="PreBy" readonly>
                         </mat-form-field>
                     </div>
                 </form>
@@ -74,64 +81,43 @@
                                         <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                                     </div>
                                     <div class="example-containerdata">
-                                        <table mat-table [dataSource]="dataSource"  matSort>
-
-                                            <!-- Checkbox Column -->
-                                            <ng-container matColumnDef="select">
-                                              <th mat-header-cell *matHeaderCellDef>
-                                                <mat-checkbox (change)="$event ? masterToggle() : null"
-                                                              [checked]="selection.hasValue() && isAllSelected()"
-                                                              [indeterminate]="selection.hasValue() && !isAllSelected()"
-                                                              [aria-label]="checkboxLabel()">
-                                                </mat-checkbox>
-                                              </th>
-                                              <td mat-cell *matCellDef="let row">
-                                                <mat-checkbox (click)="$event.stopPropagation()"
-                                                              (change)="$event ? selection.toggle(row) : null"
-                                                              [checked]="selection.isSelected(row)"
-                                                              [aria-label]="checkboxLabel(row)">
-                                                </mat-checkbox>
-                                              </td>
+                                        <table mat-table [dataSource]="ReconciliationData" matSort
+                                            [@animateStagger]="{value:'50'}">
+                                            <ng-container *ngFor="let item of displayedColumns;"
+                                                matColumnDef="{{item}}">
+                                                <span *ngIf="item=='select'">
+                                                    <th mat-header-cell *matHeaderCellDef>
+                                                        <mat-checkbox
+                                                            (change)="$event ? masterToggle() : null;helloFunction();"
+                                                            [checked]="selection.hasValue() && isAllSelected()"
+                                                            [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                                            [aria-label]="checkboxLabel()">
+                                                        </mat-checkbox>
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        <mat-checkbox (click)="$event.stopPropagation();"
+                                                            (change)="$event ? selection.toggle(row) : null;helloFunction();"
+                                                            [checked]="selection.isSelected(row)"
+                                                            [aria-label]="checkboxLabel(row)">
+                                                        </mat-checkbox>
+                                                    </td>
+                                                </span>
+                                                <span *ngIf="item!='select'">
+                                                    <th mat-header-cell *matHeaderCellDef class="header_title"
+                                                        mat-sort-header> {{ tempColobj[item].DESCRIPTION }}</th>
+                                                    <td mat-cell *matCellDef="let row">
+                                                        <span *ngIf="row[item]">{{row[item]}}</span>
+                                                    </td>
+                                                </span>
                                             </ng-container>
-                                          
-                                           
-                                            <ng-container matColumnDef="Chequeno">
-                                              <th mat-header-cell *matHeaderCellDef mat-sort-header>Cheque No </th>
-                                              <td mat-cell *matCellDef="let element"> {{element.Chequeno}} </td>
-                                            </ng-container>
-                                          
-                                           
-                                            <ng-container matColumnDef="Chequetotal">
-                                              <th mat-header-cell *matHeaderCellDef mat-sort-header> Cheque Total </th>
-                                              <td mat-cell *matCellDef="let element"> {{element.Chequetotal}} </td>
-                                            </ng-container>
-                                          
-                                            
-                                            <ng-container matColumnDef="Description">
-                                              <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
-                                              <td mat-cell *matCellDef="let element"> {{element.Description}} </td>
-                                            </ng-container>
-                                          
-                                         
-                                            <ng-container matColumnDef="Withdrawals">
-                                              <th mat-header-cell *matHeaderCellDef mat-sort-header> Withdrawals </th>
-                                              <td mat-cell *matCellDef="let element"> {{element.Withdrawals}} </td>
-                                            </ng-container>
-
-                                            <ng-container matColumnDef="Deposite">
-                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Deposite </th>
-                                                <td mat-cell *matCellDef="let element"> {{element.Deposite}} </td>
-                                            </ng-container>
-                                           
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                            <tr [style.background]="highlightedRows == row.Chequeno ? selectedColore : ''" 
-                                              [ngClass]="highlightedRows == row.Chequeno ? 'row-text-colore' : ''" 
-                                              highlightedRows=row.Chequeno mat-row *matRowDef="let row; columns: displayedColumns;"
-                                              (click)="clickAc(row.Chequeno);highlightedRows = row.Chequeno " (click)="selection.toggle(row)" matRipple>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;" matRipple
+                                                [@animate]="{value:'*',params:{y:'100%'}}">
                                             </tr>
-                                          </table>
+                                        </table>
                                     </div>
-                                    <mat-paginator [pageSizeOptions]="[10, 20,50,100]"  showFirstLastButtons></mat-paginator>
+                                    <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize"
+                                        (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
                                 </div>
                             </div>
                         </div>
@@ -140,4 +126,3 @@
             </div>
         </div>
     </div>
-</div>

@@ -89,7 +89,6 @@ export class GeneralDailogComponent implements OnInit {
 
     });
     dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
     });
   }
   //NewItem

@@ -1,11 +1,11 @@
 import { Component, OnInit, Inject, AfterViewInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatPaginator, MatTableDataSource, MatDialogConfig } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { MattersService, TimersService } from './../../../../_services';
+import { TimersService, MainAPiServiceService, BehaviorService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.component';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material';
 
 @Component({
   selector: 'app-matter-dialog',
@@ -15,13 +15,15 @@ import {MatSort} from '@angular/material';
   animations: fuseAnimations
 })
 export class MatterDialogComponent implements OnInit {
+  appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
   displayedColumns: string[] = ['matternumber', 'matter', 'client'];
   getDataForTable: any = [];
   highlightedRows: any;
-  theme_type = localStorage.getItem('theme_type');
-  @ViewChild(MatPaginator)paginator: MatPaginator;
-  @ViewChild(MatSort)sort: MatSort;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   matterFilterForm: FormGroup;
+  theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   isLoadingResults: boolean = false;
   pageSize: any;
@@ -32,14 +34,17 @@ export class MatterDialogComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
-    private mattersService: MattersService,
+    private _mainAPiServiceService: MainAPiServiceService,
     private toastr: ToastrService,
+    private behaviorService: BehaviorService,
     private Timersservice: TimersService
   ) {
     this.matterFilterForm = this.fb.group({ MatterFilter: [''], UserFilter: [''], searchFilter: [''], InvoiceFilter: [''], });
   }
 
   ngOnInit() {
+    if (this.appPermissions == null)
+      this.appPermissions = [];
     this.getDropValue();
     this.getMatterList();
   }
@@ -55,6 +60,7 @@ export class MatterDialogComponent implements OnInit {
   }
   selectMatterId(Row: any) {
     this.currentMatterData = Row;
+    this.behaviorService.MatterData(this.currentMatterData);
   }
   getMatterList() {
     this.getList({});
@@ -79,11 +85,13 @@ export class MatterDialogComponent implements OnInit {
   }
   getList(filterVal: any) {
     this.isLoadingResults = true;
-    this.mattersService.getMatters(filterVal).subscribe(response => {
+
+    this._mainAPiServiceService.getSetData(filterVal, 'GetMatter').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.MATTERS[0]) {
           this.highlightedRows = response.DATA.MATTERS[0].MATTERGUID;
           this.currentMatterData = response.DATA.MATTERS[0];
+          this.behaviorService.MatterData(this.currentMatterData);
         }
         this.getDataForTable = new MatTableDataSource(response.DATA.MATTERS);
         this.getDataForTable.paginator = this.paginator;

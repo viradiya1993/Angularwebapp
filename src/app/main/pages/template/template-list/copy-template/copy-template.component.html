@@ -1,0 +1,26 @@
+
+<div cdkDrag class="popup_main_div add_edit_contact_main" >
+    <h2 cdkDragHandle mat-dialog-title>Copy Template 
+      <button class="btn" mat-icon-button (click)="closepopup()"  [mat-dialog-close]="false" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </h2>
+    <div mat-dialog-content class="mat-typography main">
+      <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+          <form  fxLayout="column" fxFlex="1 0 auto" name="form">
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field  appearance="outline" fxFlex="100" class=" pr-4">
+                    <mat-label>Template Name</mat-label>
+                    <input name="TemplateName" [(ngModel)]="TemplateName"  matInput>
+                    <!-- <mat-icon matSuffix class="secondary-text">account_circle</mat-icon> -->
+                </mat-form-field>
+            </div>
+
+          </form>
+      </div>
+    </div>
+    <mat-dialog-actions align="end" class="popup_ftr">
+        <button mat-raised-button color="accent" (click)="save()" [mat-dialog-close]="false" cdkFocusInitial>Save</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
+    </mat-dialog-actions>
+</div>

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef, MatDialog, MatDatepickerInputEvent } from '@angular/material';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MatDialog, MatDatepickerInputEvent, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { FileNotesService } from 'app/_services';
+import {  MainAPiServiceService, BehaviorService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
@@ -23,18 +23,35 @@ export class FileNoteDialogComponent implements OnInit {
   selectDate: any;
   selectTime: string;
   ShortName: any;
+  action: any;
+  FileNoteData:any=[];
+  dialogTitle: string;
+  FormAction: string;
+  FileGUID: string;
   constructor(
     public MatDialog: MatDialog,
     public dialogRef: MatDialogRef<FileNoteDialogComponent>,
     private _formBuilder: FormBuilder,
     public datepipe: DatePipe,
-    public setfilenote: FileNotesService,
+    public behaviorService: BehaviorService,
+    private _mainAPiServiceService: MainAPiServiceService,
+    @Inject(MAT_DIALOG_DATA) public _data: any,
     private toastr: ToastrService) {
+      this.action = _data.action;
+      this.behaviorService.FileNotesData$.subscribe(result => {
+        if (result) {
+          this.FileNoteData = result;
+        }
+      });
+      // if(this.action === 'new'){
+      //   this.dialogTitle = 'Add Spend Money ';
+      // }else if(this.action === 'edit'){
+      //   this.dialogTitle = 'Update Spend Money';
+      // }else{
+      //   this.dialogTitle = 'Duplicate Spend Money';
+      // }
   }
-
   ngOnInit() {
-    let matterGuid = JSON.parse(localStorage.getItem('set_active_matters'));
-    this.ShortName=matterGuid.SHORTNAME;
     this.NewFileNote = this._formBuilder.group({
       newfiledate: [new Date()],
       User: [''],
@@ -42,10 +59,38 @@ export class FileNoteDialogComponent implements OnInit {
       time: [new Date().getHours()],
       comment: ['']
     });
-    var today = new Date();
-    this.time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    this.NewFileNote.controls['time'].setValue(this.time);
+
+    let matterGuid = JSON.parse(localStorage.getItem('set_active_matters'));
+    this.ShortName=matterGuid.SHORTNAME;
+    if(this.action !='new' ){
+      this.EditPopUpOPen();
+    }else{
+      var today = new Date();
+      this.time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      this.NewFileNote.controls['time'].setValue(this.time);
+    }
     this.NewFileNote.controls['User'].setValue(matterGuid.CONTACTNAME);
+
+  }
+  EditPopUpOPen() {
+    this.isLoadingResults = true;
+    this._mainAPiServiceService.getSetData({ FILENOTEGUID: this.FileNoteData.FILENOTEGUID }, 'GetFileNote').subscribe(res => {
+      console.log(res);
+      if (res.CODE == 200 && res.STATUS == "success") {
+        this.NewFileNote.controls['time'].setValue(res.DATA.FILENOTES[0].TIME);
+         this.NewFileNote.controls['comment'].setValue(res.DATA.FILENOTES[0].NOTE);
+         let DatePaid = res.DATA.FILENOTES[0].DATE.split("/");
+         let DATE = new Date(DatePaid[1] + '/' + DatePaid[0] + '/' + DatePaid[2]);
+         this.NewFileNote.controls['newfiledate'].setValue(DATE);
+         this.NewFileNote.controls['newfiledate2'].setValue(res.DATA.FILENOTES[0].DATE);
+      } else if (res.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      }
+      this.isLoadingResults = false;
+    }, err => {
+      this.toastr.error(err);
+      this.isLoadingResults = false;
+    });
   }
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.beginDate = this.datepipe.transform(event.value, 'dd/MM/yyyy');
@@ -56,9 +101,16 @@ export class FileNoteDialogComponent implements OnInit {
   }
   //Save File Note
   SaveFileNote() {
+    if(this.action=='new' || this.action=="duplicate"){
+      this.FormAction="insert";
+      this.FileGUID=''
+    }else{
+    this.FormAction="update";
+    this.FileGUID=this.FileNoteData.FILENOTEGUID;
+    }
     let matterGuid = JSON.parse(localStorage.getItem('set_active_matters'));
     let passdata = {
-      FILENOTEGUID: "",
+      FILENOTEGUID: this.FileGUID,
       MATTERGUID: matterGuid.MATTERGUID,
       USERNAME: this.f.User.value,
       DATE: this.f.newfiledate2.value,
@@ -68,15 +120,19 @@ export class FileNoteDialogComponent implements OnInit {
     this.setValue(passdata);
   }
   setValue(passdata) {
+   
+
     this.isspiner = true;
-    this.setfilenote.setFileNote({ 'FormAction': 'insert', DATA: passdata }).subscribe(res => {
+    // let finalPassdata=
+    let finalPassdata: any = { FormAction: this.FormAction, VALIDATEONLY: true, DATA: passdata };
+    this._mainAPiServiceService.getSetData(finalPassdata, 'SetFileNote').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
-        this.checkValidation(res.DATA.VALIDATIONS, passdata);
-      } else if (res.CODE == 451 && res.STATUS == "warning") {
-        this.checkValidation(res.DATA.VALIDATIONS, passdata);
-      } else if (res.CODE == 450 && res.STATUS == "error") {
-        this.checkValidation(res.DATA.VALIDATIONS, passdata);
-      } else if (res.MESSAGE == "Not logged in") {
+        this.checkValidation(res.DATA.VALIDATIONS, finalPassdata);
+      } else if (res.CODE == 451 && res.STATUS == 'warning') {
+        this.checkValidation(res.DATA.VALIDATIONS, finalPassdata);
+      } else if (res.CODE == 450 && res.STATUS == 'error') {
+        this.checkValidation(res.DATA.VALIDATIONS, finalPassdata);
+      } else if (res.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
       this.isspiner = false;
@@ -99,7 +155,7 @@ export class FileNoteDialogComponent implements OnInit {
         tempWarning[value.FIELDNAME] = value;
       }
     });
-    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
+    this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
@@ -124,18 +180,18 @@ export class FileNoteDialogComponent implements OnInit {
   }
   FinalsaveFileNote(PostFileNoteData: any) {
     PostFileNoteData.VALIDATEONLY = false;
-    this.setfilenote.setFileNote({ 'FormAction': 'insert', DATA: PostFileNoteData }).subscribe(response => {
+    this._mainAPiServiceService.getSetData(PostFileNoteData, 'SetFileNote').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
           this.toastr.success('Note save successfully');
         this.isspiner = false;
-        this.dialogRef.close(false);
-      } else if (response.CODE == 451 && response.STATUS == "warning") {
+        this.dialogRef.close(true);
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.toastr.warning(response.MESSAGE);
         this.isspiner = false;
-      } else if (response.CODE == 450 && response.STATUS == "error") {
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
         this.toastr.error(response.MESSAGE);
         this.isspiner = false;
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.isspiner = false;
         this.dialogRef.close(false);
       }

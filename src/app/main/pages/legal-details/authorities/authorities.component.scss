@@ -1,9 +1,6 @@
 @import "src/@fuse/scss/fuse";
-app-authorities {
-    width: 100%;
-}
-
-#authorities {
+#chronetab {
+    // margin-top: 95px;
     .header {
         .search-wrapper {
             width: 100%;
@@ -48,10 +45,13 @@ app-authorities {
     padding: 20px !important;
 }
 
-//For Scoller add css
-// .mat-table.mat-table.ng-trigger.ng-trigger-animateStagger {
-//     width: 300%;
-// }
+app-authorities {
+    width: 100%;
+}
+app-legal-details {
+    overflow-y: auto;
+}
+
 .mat-table {
     width: 100%;
 }
@@ -69,6 +69,29 @@ app-authorities {
 .more_tbl_clmn .mat-cell:last-child {
     padding-right: 70px;
 }
-th.mat-sort-header-sorted {
-    color: black;
+
+// .h2 {
+//     margin-top: 13px !important;
+// }
+// .matter-serach-div.sticky_search_div {
+//     margin-top: 18px !important;
+//     margin-left: 45px !important;
+// }
+.page-layout.carded>.top-bg.work_progress_height {
+    height: 86px;
+    th.mat-sort-header-sorted {
+        color: black;
+    }
 }
+button#refreshLegalAuthorityADD{
+    display: none;
+}
+.row-text-colore span {
+    color: #fff;
+}
+// .example-containerdata1{
+//     height:210px;
+// }
+// .example-containerdata2{
+//     height:210px;
+// }

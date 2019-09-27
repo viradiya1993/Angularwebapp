@@ -5,9 +5,9 @@
         </button>
     </h2>
     <div mat-dialog-content class="mat-typography">
-        <div class="example-loading-shade" *ngIf="isLoadingResults">
+        <!-- <div class="example-loading-shade" *ngIf="isLoadingResults">
             <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
-        </div>
+        </div> -->
         <div class="one select_matter_main_div">
             <div class="center p-24 list_tbl_main more_tbl_clmn">
                 <div class="matter-serach-div sticky_search_div">
@@ -17,19 +17,19 @@
 
                                 <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
                                         <mat-label>Name</mat-label>
-                                        <input   matInput>
+                                        <input readonly [(ngModel)]="accDialoge.Name" name="Name" matInput>
                                         <mat-icon matSuffix class="secondary-text"></mat-icon>
                                     </mat-form-field>
                         </div>
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
                                 <mat-form-field appearance="outline" fxFlex="75" class="pr-4">
-                                        <mat-label>Address</mat-label>
-                                        <input   matInput>
+                                        <mat-label>Acc NO</mat-label>
+                                        <input [(ngModel)]="accDialoge.AccNo" name="AccNo"   matInput>
                                         <mat-icon matSuffix class="secondary-text"></mat-icon>
                                     </mat-form-field>
 
-                                    <mat-icon fxFlex="25" matSuffix (click)='openAccount()'>
+                                    <mat-icon fxFlex="25" matSuffix (click)='openAccount(accDialoge.AccType)'>
                                             <img src="assets/icons/web_app/icon_receipt_o.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                         </mat-icon> 
                         </div>
@@ -44,7 +44,7 @@
     </div>
    
     <mat-dialog-actions align="end" class="popup_ftr contact_select_footer">
-        <button mat-raised-button [mat-dialog-close]="currentMatterData" color="accent">Save</button>
+        <button mat-raised-button (click)="SaveClick()" color="accent">Save</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
     </mat-dialog-actions>
 </div>

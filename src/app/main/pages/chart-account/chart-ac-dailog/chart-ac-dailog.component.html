@@ -8,46 +8,119 @@
         </button>
     </h2>
     <div mat-dialog-content class="mat-typography main">
-      <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
-        <form [formGroup]="AccountForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-              <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
-                  <mat-label>Account Class</mat-label>
-                  <mat-select #value formControlName = "AccountClass" (selectionChange)="AccountChange($event)" disabled>
-                      <mat-option value="0">Expense</mat-option>
-                      <mat-option value="1">None-Expense</mat-option>
-                  </mat-select>
-              </mat-form-field>
-            </div>  
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
-                    <mat-label>Account Name</mat-label>
-                    <input formControlName ="accountname" matInput>
-                </mat-form-field>
-            </div>
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-              <mat-tab-group mat-align-tabs="start">
-                <mat-tab label="General">
-                  <app-general [AccountForm]="AccountForm"></app-general>
-                </mat-tab>
-                <mat-tab label="Bank Details" *ngIf="action === 'edit'">
-                  <app-bank-details [AccountForm]="AccountForm"></app-bank-details>
-                </mat-tab>
-                <mat-tab label="Xero">
-                  <app-xero [AccountForm]="AccountForm"></app-xero>
-                </mat-tab>
-                <mat-tab label="MYOB">
-                  <app-myob [AccountForm]="AccountForm"></app-myob>
-                </mat-tab>
-              </mat-tab-group> 
-            </div>
-        </form>
-      </div>
+        <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+            <form [formGroup]="AccountForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ACCOUNTCLASS,'has-warning':errorWarningData.Warning?.ACCOUNTCLASS}">
+                        <mat-label>Account Class</mat-label>
+                        <mat-select #value formControlName="ACCOUNTCLASS">
+                            <mat-option value="Asset">Assets</mat-option>
+                            <mat-option value="Liability">Liabilities</mat-option>
+                            <mat-option value="Equity">Equity</mat-option>
+                            <mat-option value="Income">Income</mat-option>
+                            <mat-option value="Expense">Expenses</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ACCOUNTNAME,'has-warning':errorWarningData.Warning?.ACCOUNTNAME}">
+                        <mat-label>Account Name</mat-label>
+                        <input formControlName="ACCOUNTNAME" matInput>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-tab-group mat-align-tabs="start">
+                        <mat-tab label="General">
+                            <br>
+                            <div class="one" fxLayout="column">
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ACCOUNTNUMBER,'has-warning':errorWarningData.Warning?.ACCOUNTNUMBER}">
+                                        <mat-label>Account Number</mat-label>
+                                        <input formControlName='ACCOUNTNUMBER' matInput>
+                                        <!-- <span matPrefix>1-&nbsp;</span> -->
+                                    </mat-form-field>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <mat-checkbox formControlName="ACTIVE">Active Account</mat-checkbox>
+                                </div>
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field appearance="outline" fxFlex="" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ACCOUNTTYPE,'has-warning':errorWarningData.Warning?.ACCOUNTTYPE}">
+                                        <mat-label>Account Type</mat-label>
+                                        <mat-select formControlName="ACCOUNTTYPE" (selectionChange)="onACCOUNTTYPE($event.value)">
+                                           <mat-option value="Header">Header</mat-option>
+                                            <mat-option value="Detail">Detail</mat-option>
+                                            <mat-option value="Bank Account">Bank Account</mat-option>
+                                            <mat-option value="Pass Through">Pass ACCOUNTNUMBER</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Bank Details" *ngIf="accountType=='Bank Account'">
+                            <br>
+                            <div class="one" fxLayout="column">
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.BANKBSB ,'has-warning':errorWarningData.Warning?.BANKBSB }">
+                                        <mat-label>BSB</mat-label>
+                                        <input formControlName='BANKBSB' matInput>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.BANKNAME ,'has-warning':errorWarningData.Warning?.BANKNAME }">
+                                        <mat-label>Bank Name</mat-label>
+                                        <input formControlName='BANKNAME' matInput>
+                                    </mat-form-field>
+                                </div>
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.BANKACCOUNTNUMBER ,'has-warning':errorWarningData.Warning?.BANKACCOUNTNUMBER }">
+                                        <mat-label>A/C Number</mat-label>
+                                        <input formControlName='BANKACCOUNTNUMBER' matInput>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.BANKADDRESS ,'has-warning':errorWarningData.Warning?.BANKADDRESS }">
+                                        <mat-label>Bank Address</mat-label>
+                                        <input formControlName='BANKADDRESS' matInput>
+                                    </mat-form-field>
+                                </div>
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+                                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.BANKTERM ,'has-warning':errorWarningData.Warning?.BANKTERM }">
+                                        <mat-label>Term</mat-label>
+                                        <input formControlName='BANKTERM' matInput>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.BANKINTERESTRATE ,'has-warning':errorWarningData.Warning?.BANKINTERESTRATE }">
+                                        <mat-label>Interest Rate</mat-label>
+                                        <input formControlName='BANKINTERESTRATE' matInput>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <!-- <mat-tab label="Xero">
+                            <app-xero [AccountForm]="AccountForm" [errorWarningData]="errorWarningData"></app-xero>
+                        </mat-tab> -->
+                        <mat-tab label="MYOB">
+                            <br>
+                            <span>
+                                SILQ will by default export to 1-1200.You only need to enter a value for the MYOB export account if you went it to go<br>
+                                 to a different account. it is upto you to ensure that the account you are exporting to matches the appropriate account.
+                                 <br><br></span>
+                            <span>It must be in the format X-YYYY</span><br><br>
+                            <div class="one" [formGroup]="AccountForm" fxLayout="column">
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MYOBEXPORTACCOUNT,'has-warning':errorWarningData.Warning?.MYOBEXPORTACCOUNT}">
+                                        <mat-label>MYOB Export Account</mat-label>
+                                        <input placeholder="MYOB Export Account" formControlName="MYOBEXPORTACCOUNT" matInput>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </form>
+        </div>
     </div>
+
     <mat-dialog-actions align="end" class="popup_ftr">
         <button mat-raised-button color="accent" (click)="SaveAccount()" [disabled]="isspiner" *ngIf="action === 'new'"><mat-spinner *ngIf="isspiner"></mat-spinner>Add</button>
         <button mat-raised-button color="accent" (click)="SaveAccount()" [disabled]="isspiner" *ngIf="action === 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Update</button>
         <button mat-raised-button color="accent" (click)="SaveAccount()" [disabled]="isspiner" *ngIf="action === 'duplicate'"><mat-spinner *ngIf="isspiner"></mat-spinner>Duplicate</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
     </mat-dialog-actions>
+
 </div>

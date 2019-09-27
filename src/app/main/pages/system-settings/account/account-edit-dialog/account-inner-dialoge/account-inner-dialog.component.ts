@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Injectable } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
-import { SystemSetting } from '../../../../../../_services';
 import {MatTreeFlatDataSource, MatTreeFlattener} from '@angular/material/tree';
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {BehaviorSubject, Observable} from 'rxjs';
@@ -103,7 +102,6 @@ export class AccountInnerDialogComponent implements OnInit {
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   addData:any=[];
-  // constructor(private SystemSetting:SystemSetting) { }
 
   nodeMap = new Map<string, LoadmoreFlatNode>();
   treeControl: FlatTreeControl<LoadmoreFlatNode>;

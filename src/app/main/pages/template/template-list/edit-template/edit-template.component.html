@@ -1,0 +1,174 @@
+<!-- <div class="example-loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+    </div> -->
+    <div cdkDrag class="popup_main_div add_edit_contact_main" >
+        <h2 cdkDragHandle mat-dialog-title>Edit Template 
+          <button class="btn" mat-icon-button (click)="closepopup()"  [mat-dialog-close]="false" aria-label="Close dialog">
+            <mat-icon>close</mat-icon>
+          </button>
+        </h2>
+        <div mat-dialog-content class="mat-typography main">
+          <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+              <form  fxLayout="column" fxFlex="1 0 auto" name="form">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field appearance="outline" fxFlex="50" class="pr-4" >
+                                <mat-label>Show what field categories</mat-label>
+                                <mat-select  placeholder="Country">
+                                    <mat-option  value="Matter">Matter</mat-option>
+                                    <mat-option  value="Matter Property">Matter Property</mat-option>
+                                    <mat-option  value="Matter Contact">Matter Contact</mat-option>
+                                    <mat-option  value="Matter Contact Solicitor">Matter Contact Solicitor</mat-option>
+                                    <mat-option  value="Receipt">Receipt</mat-option>
+                                    <mat-option  value="System">System</mat-option>
+
+                                </mat-select>
+                            </mat-form-field>
+                </div>
+    
+              </form>
+          </div>
+          <mat-dialog-actions align="left" *ngIf="btnClick =='EditTemplate'">
+                <button    mat-button>
+                <section class="large-button-container">
+                    <mat-icon  class="main-icon">
+                        <img src="assets/icons/web_app/icon_template_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                        </mat-icon>
+                    <div class="main-text">
+                        <span>Insert <br/> Field</span>
+                    </div>
+                </section>
+                 </button>
+                <button   mat-button (click)="InsertWithForm()">
+                  <section class="large-button-container">
+                      <mat-icon class="main-icon">
+                          <img src="assets/icons/web_app/icon_template_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                          </mat-icon>
+                      <div class="main-text">
+                          <span>Insert With <br/> Formating</span>
+                      </div>
+                  </section>
+                   </button>
+                   <button   mat-button (click)="deleteElement()">
+                        <section class="large-button-container">
+                            <mat-icon class="main-icon">
+                                <img src="assets/icons/web_app/icon_template_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                </mat-icon>
+                            <div class="main-text">
+                                    <span>Insert Multi <br/>Field</span>
+                            </div>
+                        </section>
+                         </button>
+                       
+                         <button   mat-button (click)="deleteElement()">
+                                <section class="large-button-container">
+                                    <mat-icon class="main-icon">
+                                        <img src="assets/icons/web_app/icon_template_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                        </mat-icon>
+                                    <div class="main-text">
+                                        <span>Remove Line If <br/>Field empty</span>
+                                    </div>
+                                </section>
+                                 </button>
+                                 <button  mat-button (click)="deleteElement()">
+                                        <section class="large-button-container">
+                                            <mat-icon class="main-icon">
+                                                <img src="assets/icons/web_app/icon_template_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                            <div class="main-text">
+                                                    <span>Remove Line If <br/>Field not empty</span>
+                                            </div>
+                                        </section>
+                                         </button>
+                                         <button  mat-button (click)="deleteElement()">
+                                                <section class="large-button-container">
+                                                    <mat-icon class="main-icon">
+                                                        <img src="assets/icons/web_app/icon_template_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                        </mat-icon>
+                                                    <div class="main-text">
+                                                        <span>Insert <br/> Address</span>
+                                                    </div>
+                                                </section>
+                                                 </button>
+                                                 <button   mat-button (click)="EditUser()">
+                                                        <section class="large-button-container">
+                                                            <mat-icon class="main-icon">
+                                                                <img src="assets/icons/web_app/icon_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                                </mat-icon>
+                                                            <div class="main-text">
+                                                                <span>Edit User <br/> Fields</span>
+                                                            </div>
+                                                        </section>
+                                                         </button>
+
+            </mat-dialog-actions>
+
+            <mat-dialog-actions align="left" *ngIf="btnClick=='EditUser'">
+                    
+                             <button mat-button (click)="NewAddField()">
+                                    <section class="large-button-container">
+                                        <mat-icon class="main-icon">
+                                            <img src="assets/icons/web_app/icon_add_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                            </mat-icon>
+                                        <div class="main-text">
+                                            <span>New<br/>Field</span>
+                                        </div>
+                                    </section>
+                                     </button>
+                                     <button  mat-button (click)="deleteElement()">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                <div class="main-text">
+                                                        <span>Edit<br/>Field</span>
+                                                </div>
+                                            </section>
+                                             </button>
+                                             <button  mat-button (click)="deleteElement()">
+                                                    <section class="large-button-container">
+                                                        <mat-icon class="main-icon">
+                                                            <img src="assets/icons/web_app/CANCEL.ICO" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                            </mat-icon>
+                                                        <div class="main-text">
+                                                                <span>Delete<br/>Field</span>
+                                                        </div>
+                                                    </section>
+                                                     </button>
+                                                     <button   mat-button (click)="EditTemplate()">
+                                                            <section class="large-button-container">
+                                                                <mat-icon class="main-icon">
+                                                                    <img src="assets/icons/web_app/icon_template_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                                    </mat-icon>
+                                                                <div class="main-text">
+                                                                    <span>Edit  <br/>Template</span>
+                                                                </div>
+                                                            </section>
+                                                             </button>
+                                                             <button   mat-button (click)="deleteElement()">
+                                                                    <section class="large-button-container">
+                                                                        <mat-icon class="main-icon">
+                                                                            <img src="assets/icons/web_app/icon_template_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                                            </mat-icon>
+                                                                        <div class="main-text">
+                                                                            <span>Export User <br/> Fields</span>
+                                                                        </div>
+                                                                    </section>
+                                                                     </button>
+                                                                     <button   mat-button (click)="deleteElement()">
+                                                                            <section class="large-button-container">
+                                                                                <mat-icon class="main-icon">
+                                                                                    <img src="assets/icons/web_app/icon_template_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                                                    </mat-icon>
+                                                                                <div class="main-text">
+                                                                                    <span>Import User <br/> Fields</span>
+                                                                                </div>
+                                                                            </section>
+                                                                             </button>
+    
+                </mat-dialog-actions>
+        </div>
+        <mat-dialog-actions align="end" class="popup_ftr">
+            <button mat-raised-button color="accent" [mat-dialog-close]="false" cdkFocusInitial>Save</button>
+            <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
+        </mat-dialog-actions>
+    </div>

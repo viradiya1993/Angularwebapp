@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialogConfig, MatDialog } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
-import { FormGroup, FormBuilder } from '@angular/forms';
 import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.component';
-import { MatterInvoicesService, TableColumnsService } from '../../../../_services';
+import { TableColumnsService, MainAPiServiceService, BehaviorService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material';
 
 
 @Component({
@@ -17,8 +16,11 @@ import {MatSort} from '@angular/material';
   animations: fuseAnimations
 })
 export class MatterInvoicesComponent implements OnInit {
-  MatterinvoiceForm: FormGroup;
+  MatterinvoiceData = { invoicetotal: 0, recevived: 0, outstanding: 0 };
   ColumnsObj: any = [];
+  highlightedRows: any;
+  theme_type = localStorage.getItem('theme_type');
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   displayedColumns: string[];
   tempColobj: any;
@@ -27,20 +29,16 @@ export class MatterInvoicesComponent implements OnInit {
   pageSize: any;
   isLoadingResults: boolean = false;
   constructor(private dialog: MatDialog,
-    private _formBuilder: FormBuilder,
-    private MatterInvoices: MatterInvoicesService,
+    private _mainAPiServiceService: MainAPiServiceService,
     private TableColumnsService: TableColumnsService,
+    private behaviorService: BehaviorService,
     private toastr: ToastrService) { }
 
   MatterInvoicesdata;
   ngOnInit() {
-    this.MatterinvoiceForm = this._formBuilder.group({
-      matter:[],
-      Client:[],
-      invoicetotal:[],
-      recevived:[],
-      outstanding:[],
-      searchFilter:[]
+    this.behaviorService.matterInvoice$.subscribe(matterInvoiceData => {
+      if (matterInvoiceData)
+        this.highlightedRows = matterInvoiceData.INVOICEGUID;
     });
     $('content').addClass('inner-scroll');
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
@@ -55,9 +53,12 @@ export class MatterInvoicesComponent implements OnInit {
   loadData() {
     this.isLoadingResults = true;
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
-    this.MatterInvoices.MatterInvoicesData(potData).subscribe(res => {
+    this._mainAPiServiceService.getSetData(potData, 'GetInvoice').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
-        this.MatterInvoicesdata = new MatTableDataSource(res.DATA.INVOICES)
+        this.MatterinvoiceData = { invoicetotal: res.DATA.TOTALINVOICES, recevived: res.DATA.TOTALRECEIVED, outstanding: res.DATA.TOTALOUSTANDING };
+        if (res.DATA.INVOICES[0])
+          this.editmatterInvoive(res.DATA.INVOICES[0]);
+        this.MatterInvoicesdata = new MatTableDataSource(res.DATA.INVOICES);
         this.MatterInvoicesdata.paginator = this.paginator;
         this.MatterInvoicesdata.sort = this.sort;
       }
@@ -102,8 +103,10 @@ export class MatterInvoicesComponent implements OnInit {
       }
     });
   }
+  editmatterInvoive(matterinvoice: any) {
+    this.behaviorService.matterInvoiceData(matterinvoice);
+  }
   //onSearch
-  onSearch(searchFilter:any){
-    console.log(searchFilter);
+  onSearch(searchFilter: any) {
   }
 }

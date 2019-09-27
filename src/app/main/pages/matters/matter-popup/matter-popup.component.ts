@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MattersService, TimersService } from '../../../../_services';
+import { MainAPiServiceService, BehaviorService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
@@ -31,53 +31,66 @@ export class MatterPopupComponent implements OnInit {
   CorrespondDetail: any = [];
 
   constructor(
-    private _mattersService: MattersService,
+    private _mainAPiServiceService: MainAPiServiceService,
     private toastr: ToastrService,
     private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<MatterPopupComponent>,
     public datepipe: DatePipe,
     public _matDialog: MatDialog,
+    public behaviorService: BehaviorService,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
-    console.log(_data);
     this.action = _data.action;
     if (this.action === 'edit') {
       this.dialogTitle = 'Update Matter';
       this.isEdit = true;
-    } else if (this.action == 'duplicate') {
-      this.dialogTitle = 'Duplicate Matter'
+    } else if (this.action == 'new') {
+      this.dialogTitle = 'New Matter'
       this.isEdit = true;
+      this.isLoadingResults = true;
+      this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: true, DATA: {} }, 'SetMatter').subscribe(res => {
+        if (res.CODE == 200 && res.STATUS == "success") {
+          this.matterdetailForm.controls['SHORTNAME'].setValue(res.DATA.DEFAULTVALUES['SHORTNAME']);
+        } else if (res.MESSAGE === 'Not logged in') {
+          this.dialogRef.close(false);
+        } else {
+          this.matterdetailForm.controls['SHORTNAME'].setValue(res.DATA.DEFAULTVALUES['SHORTNAME']);
+        }
+      }, error => { this.toastr.error(error); });
+      setTimeout(() => { this.isLoadingResults = false; }, 2000);
     } else {
-      this.dialogTitle = 'New Matter';
+      this.dialogTitle = 'Duplicate Matter';
       this.isEdit = false;
     }
     this.isEditMatter = this._data.matterGuid;
     this.classtype;
   }
-
-
   matterdetailForm: FormGroup;
   ngOnInit() {
     this.isLoadingResults = true;
     let UserData = JSON.parse(localStorage.getItem('currentUser')).ProductType;
     this.userType = UserData == 'Barrister' ? 0 : 1;
     this.matterFormBuild();
-    this._mattersService.getMattersClasstype({ 'LookupType': 'Matter Class' }).subscribe(responses => {
+
+    this._mainAPiServiceService.getSetData({ 'LookupType': 'Matter Class' }, 'GetLookups').subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.Classdata = responses.DATA.LOOKUPS;
-      } else if (responses.MESSAGE == "Not logged in") {
+        console.log(responses);
+      } else if (responses.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
       this.isLoadingResults = false;
     });
     if (this.action === 'edit' || this.action === 'duplicate') {
       this.isLoadingResults = true;
-      this._mattersService.getMattersDetail({ MATTERGUID: this._data.matterGuid, 'GETALLFIELDS': true }).subscribe(response => {
+
+
+      this._mainAPiServiceService.getSetData({ MATTERGUID: this._data.matterGuid, 'GETALLFIELDS': true }, 'GetMatter').subscribe(response => {
         if (response.CODE === 200 && response.STATUS === 'success') {
           let matterData = response.DATA.MATTERS[0];
           this.classtype = matterData.MATTERCLASS;
           this.matterdetailForm.controls['MATTERGUID'].setValue(matterData.MATTERGUID);
-          this.matterdetailForm.controls['ACTIVE'].setValue(matterData.ACTIVE_ == 1 ? true : false);
+          this.matterdetailForm.controls['ACTIVE'].setValue(matterData.ACTIVE == 1 ? true : false);
           this.matterdetailForm.controls['MATTERCLASS'].setValue(matterData.MATTERCLASS.toString());
           this.matterdetailForm.controls['SHORTNAME'].setValue(matterData.SHORTNAME);
           this.matterdetailForm.controls['MATTER'].setValue(matterData.MATTER);
@@ -121,8 +134,8 @@ export class MatterPopupComponent implements OnInit {
           }
           this.matterdetailForm.controls['REFERENCE'].setValue(matterData.REFERENCE);
           this.matterdetailForm.controls['OTHERREFERENCE'].setValue(matterData.OTHERREFERENCE);
-          this.matterdetailForm.controls['EstimateFromTotalExGST'].setValue(matterData.SUMMARYTOTALS.ESTIMATEFROMTOTALEXGST);
-          this.matterdetailForm.controls['EstimateFromTotalIncGST'].setValue(matterData.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST);
+          this.matterdetailForm.controls['ESTIMATEFROMTOTALEXGST'].setValue(matterData.SUMMARYTOTALS.ESTIMATEFROMTOTALEXGST);
+          this.matterdetailForm.controls['ESTIMATEFROMTOTALINCGST'].setValue(matterData.SUMMARYTOTALS.ESTIMATEFROMTOTALINCGST);
           this.matterdetailForm.controls['NOTES'].setValue(matterData.NOTES);
           if (this.userType) {
             this.matterdetailForm.controls['OWNERGUID'].setValue(matterData.OWNERGUID);
@@ -215,15 +228,18 @@ export class MatterPopupComponent implements OnInit {
           } else if (matterData.MATTERCLASS == 10) {            // Details ->family
             this.matterdetailForm.controls['MARRIAGEPLACE'].setValue(matterData.FAMILYLAWGROUP.MARRIAGEPLACE);
             this.matterdetailForm.controls['MARRIAGECOUNTRY'].setValue(matterData.FAMILYLAWGROUP.MARRIAGECOUNTRY);
-
-            let DATEFILEDFORDIVORCE = matterData.FAMILYLAWGROUP.DATEFILEDFORDIVORCE.split("/");
-            this.matterdetailForm.controls['DATEFILEDFORDIVORCE'].setValue(new Date(DATEFILEDFORDIVORCE[1] + '/' + DATEFILEDFORDIVORCE[0] + '/' + DATEFILEDFORDIVORCE[2]));
             // this.matterdetailForm.controls['DATEFILEDFORDIVORCE'].setValue(matterData.FAMILYLAWGROUP.DATEFILEDFORDIVORCE);
             this.matterdetailForm.controls['DIVORCEPLACE'].setValue(matterData.FAMILYLAWGROUP.DIVORCEPLACE);
             this.matterdetailForm.controls['DIVORCECOUNTRY'].setValue(matterData.FAMILYLAWGROUP.DIVORCECOUNTRY);
             this.matterdetailForm.controls['NUMDEPENDANTS'].setValue(matterData.FAMILYLAWGROUP.NUMDEPENDANTS);
             this.matterdetailForm.controls['FAMILYCOURTCLIENTID'].setValue(matterData.FAMILYLAWGROUP.FAMILYCOURTCLIENTID);
             this.matterdetailForm.controls['MatterNo'].setValue(matterData.COMPULSORYACQUISITIONGROUP.MATTERNO);
+            // 
+            if (matterData.FAMILYLAWGROUP.DATEFILEDFORDIVORCE) {
+              let DATEFILEDFORDIVORCE = matterData.FAMILYLAWGROUP.DATEFILEDFORDIVORCE.split("/");
+              this.matterdetailForm.controls['DATEFILEDFORDIVORCETEXT'].setValue(new Date(DATEFILEDFORDIVORCE[1] + '/' + DATEFILEDFORDIVORCE[0] + '/' + DATEFILEDFORDIVORCE[2]));
+              this.matterdetailForm.controls['DATEFILEDFORDIVORCE'].setValue(matterData.FAMILYLAWGROUP.DATEFILEDFORDIVORCE);
+            }
             if (matterData.FAMILYLAWGROUP.COHABITATIONDATE) {
               let COHABITATIONDATE1 = matterData.FAMILYLAWGROUP.COHABITATIONDATE.split("/");
               this.matterdetailForm.controls['COHABITATIONDATETEXT'].setValue(new Date(COHABITATIONDATE1[1] + '/' + COHABITATIONDATE1[0] + '/' + COHABITATIONDATE1[2]));
@@ -341,8 +357,7 @@ export class MatterPopupComponent implements OnInit {
             if (matterData.VESSELGROUP.INCIDENTDATE) {
               let INCIDENTDATE1 = matterData.VESSELGROUP.INCIDENTDATE.split("/");
               this.matterdetailForm.controls['INCIDENTDATETEXTM'].setValue(new Date(INCIDENTDATE1[1] + '/' + INCIDENTDATE1[0] + '/' + INCIDENTDATE1[2]));
-
-              this.matterdetailForm.controls['INCIDENTDATE'].setValue(new Date(INCIDENTDATE1[1] + '/' + INCIDENTDATE1[0] + '/' + INCIDENTDATE1[2]));
+              this.matterdetailForm.controls['INCIDENTDATE'].setValue(matterData.VESSELGROUP.INCIDENTDATE);
             }
             if (matterData.CONVEYANCINGGROUP.EXCHANGEDATE) {
               let EXCHANGEDATE1 = matterData.CONVEYANCINGGROUP.EXCHANGEDATE.split("/");
@@ -364,10 +379,10 @@ export class MatterPopupComponent implements OnInit {
               this.matterdetailForm.controls['DISCHARGEDATETEXTM'].setValue(new Date(dcd1[1] + '/' + dcd1[0] + '/' + dcd1[2]));
               this.matterdetailForm.controls['DISCHARGEDATE'].setValue(matterData.MORTGAGEGROUP.DISCHARGEDATE);
             }
-            if (matterData.LEASINGGROUP.COMMENCEMENTDATE) {
-              let cd1 = matterData.LEASINGGROUP.COMMENCEMENTDATE.split("/");
+            if (matterData.MORTGAGEGROUP.COMMENCEMENTDATE) {
+              let cd1 = matterData.MORTGAGEGROUP.COMMENCEMENTDATE.split("/");
               this.matterdetailForm.controls['COMMENCEMENTDATETEXTM'].setValue(new Date(cd1[1] + '/' + cd1[0] + '/' + cd1[2]));
-              this.matterdetailForm.controls['COMMENCEMENTDATE'].setValue(matterData.LEASINGGROUP.COMMENCEMENTDATE);
+              this.matterdetailForm.controls['COMMENCEMENTDATE'].setValue(matterData.MORTGAGEGROUP.COMMENCEMENTDATE);
             }
             if (matterData.STRATAGROUP.EXPIRATIONDATE) {
               let ed2 = matterData.STRATAGROUP.EXPIRATIONDATE.split("/");
@@ -395,9 +410,11 @@ export class MatterPopupComponent implements OnInit {
               this.matterdetailForm.controls['EXCHANGEDATETEXTPP'].setValue(new Date(ed1[1] + '/' + ed1[0] + '/' + ed1[2]));
               this.matterdetailForm.controls['EXCHANGEDATE'].setValue(matterData.CONVEYANCINGGROUP.EXCHANGEDATE);
             }
-            let STAMPDUTYDATE = matterData.CONVEYANCINGGROUP.STAMPDUTYDATE.split("/");
-            this.matterdetailForm.controls['STAMPDUTYDATE'].setValue(new Date(STAMPDUTYDATE[1] + '/' + STAMPDUTYDATE[0] + '/' + STAMPDUTYDATE[2]));
-            // this.matterdetailForm.controls['STAMPDUTYDATE'].setValue(matterData.CONVEYANCINGGROUP.STAMPDUTYDATE);
+            if (matterData.CONVEYANCINGGROUP.STAMPDUTYDATE) {
+              let ed5 = matterData.CONVEYANCINGGROUP.STAMPDUTYDATE.split("/");
+              this.matterdetailForm.controls['STAMPDUTYDATETEXT'].setValue(new Date(ed5[1] + '/' + ed5[0] + '/' + ed5[2]));
+              this.matterdetailForm.controls['STAMPDUTYDATE'].setValue(matterData.CONVEYANCINGGROUP.STAMPDUTYDATE);
+            }
             this.matterdetailForm.controls['PURCHASEPRICE'].setValue(matterData.CONVEYANCINGGROUP.PURCHASEPRICE);
             this.matterdetailForm.controls['DEPOSITAMOUNT'].setValue(matterData.CONVEYANCINGGROUP.DEPOSITAMOUNT);
             this.matterdetailForm.controls['DEPOSITBONDAMOUNT'].setValue(matterData.CONVEYANCINGGROUP.DEPOSITBONDAMOUNT);
@@ -411,7 +428,7 @@ export class MatterPopupComponent implements OnInit {
             this.matterdetailForm.controls['CLIENTSTATUS'].setValue(matterData.LEGALDETAILS.CLIENTSTATUS);
             // Address3 = Address3;
           } else if (matterData.MATTERCLASS == 3) {   //Details -> property-sale 
-            this.matterdetailForm.controls['PURCHASEPRICE'].setValue(matterData.CONVEYANCINGGROUP.CLIENTSTATUS);
+            this.matterdetailForm.controls['PURCHASEPRICE'].setValue(matterData.CONVEYANCINGGROUP.PURCHASEPRICE);
             if (matterData.CONVEYANCINGGROUP.EXCHANGEDATE) {
               let tempdps1 = matterData.CONVEYANCINGGROUP.EXCHANGEDATE.split("/");
               this.matterdetailForm.controls['EXCHANGEDATETEXTPS'].setValue(new Date(tempdps1[1] + '/' + tempdps1[0] + '/' + tempdps1[2]));
@@ -481,7 +498,7 @@ export class MatterPopupComponent implements OnInit {
             this.matterdetailForm.controls['MatterNo'].setValue(matterData.LEGALDETAILS.MATTERNO);
           }
           this.isLoadingResults = false;
-        } else if (response.MESSAGE == "Not logged in") {
+        } else if (response.MESSAGE == 'Not logged in') {
           this.dialogRef.close(false);
         }
       }, error => {
@@ -513,8 +530,8 @@ export class MatterPopupComponent implements OnInit {
       OWNERNAME: [''],
       FEEAGREEMENTDATE: [],
       FeeAgreementDateText: [],
-      EstimateFromTotalExGST: [''],
-      EstimateFromTotalIncGST: [''],
+      ESTIMATEFROMTOTALEXGST: [''],
+      ESTIMATEFROMTOTALINCGST: [''],
 
       // client
       FIRMGUID: [''],
@@ -590,6 +607,7 @@ export class MatterPopupComponent implements OnInit {
       SEPARATIONDATE: [''],
       SEPARATIONDATETEXT: [''],
       DATEFILEDFORDIVORCE: [''],
+      DATEFILEDFORDIVORCETEXT: [''],
       DIVORCEDATE: [''],
       DIVORCEDATETEXT: [''],
       DIVORCEPLACE: [''],
@@ -672,6 +690,7 @@ export class MatterPopupComponent implements OnInit {
       PURCHASEPRICE: [''],
       DEPOSITAMOUNT: [''],
       STAMPDUTYDATE: [''],
+      STAMPDUTYDATETEXT: [''],
       DEPOSITBONDAMOUNT: [''],
       STAMPDUTYAMOUNT: [''],
       DATEPAID: [''],
@@ -741,6 +760,8 @@ export class MatterPopupComponent implements OnInit {
   }
   Classtype(value: any) {
     this.classtype = value;
+    let val = this.Classdata.find(c => c['LOOKUPGUID'] == value)
+    this.behaviorService.matterClassData(val);
   }
   ondialogSaveClick(): void {
     this.FormAction = this.action !== 'edit' ? 'insert' : 'update';
@@ -779,8 +800,8 @@ export class MatterPopupComponent implements OnInit {
     details.OTHERREFERENCE = this.f.OTHERREFERENCE.value;
     details.COMPLETEDDATE = this.f.COMPLETEDDATE.value;
     details.FEEAGREEMENTDATE = this.f.FEEAGREEMENTDATE.value;
-    details.EstimateFromTotalExGST = this.f.EstimateFromTotalIncGST.value;
-    details.EstimateFromTotalIncGST = this.f.EstimateFromTotalExGST.value;
+    details.ESTIMATEFROMTOTALEXGST = this.f.ESTIMATEFROMTOTALEXGST.value;
+    details.ESTIMATEFROMTOTALINCGST = this.f.ESTIMATEFROMTOTALINCGST.value;
     if (this.userType) {
       details.PRIMARYFEEEARNERGUID = this.f.PRIMARYFEEEARNERGUID.value;
       details.OWNERGUID = this.f.OWNERGUID.value;
@@ -908,7 +929,7 @@ export class MatterPopupComponent implements OnInit {
     }
     else if (this.classtype == 4) {
       // Details ->property-purchase
-      details.Address3 = this.f.Address3.value;
+      // details.Address3 = this.f.Address3.value;
       details.PURCHASEPRICE = this.f.PURCHASEPRICE.value;
       details.DEPOSITAMOUNT = this.f.DEPOSITAMOUNT.value;
 
@@ -928,7 +949,7 @@ export class MatterPopupComponent implements OnInit {
       details.CLIENTSTATUS = this.f.CLIENTSTATUS.value;
     } else if (this.classtype == 3) {
       //Details -> property-sale 
-      details.Address4 = this.f.Address4.value;
+      // details.Address4 = this.f.Address4.value;
       details.PURCHASEPRICE = this.f.PURCHASEPRICE.value;
       details.EXCHANGEDATE = this.f.EXCHANGEDATE.value;
       details.SETTLEMENTDATE = this.f.SETTLEMENTDATE.value;
@@ -963,21 +984,16 @@ export class MatterPopupComponent implements OnInit {
       details.MATTERNO = this.f.MatterNo.value;
     }
     let matterPostData: any = { FormAction: this.FormAction, VALIDATEONLY: true, Data: details };
-    this._mattersService.AddNewMatter(matterPostData).subscribe(response => {
-      if (response.DATA.SHORTNAME && response.DATA.SHORTNAME != "") {
-        this.matterdetailForm.controls['SHORTNAME'].setValue(response.DATA.SHORTNAME);
-        details.SHORTNAME = response.DATA.SHORTNAME;
-      } else {
-        details.SHORTNAME = this.f.SHORTNAME.value;
-      }
+
+    this._mainAPiServiceService.getSetData(matterPostData, 'SetMatter').subscribe(response => {
       matterPostData = { FormAction: this.FormAction, VALIDATEONLY: true, Data: details };
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
-      } else if (response.CODE == 451 && response.STATUS == "warning") {
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
-      } else if (response.CODE == 450 && response.STATUS == "error") {
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
         this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
-      } else if (response.MESSAGE == "Not logged in") {
+      } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       } else {
         this.isspiner = false;
@@ -1000,7 +1016,7 @@ export class MatterPopupComponent implements OnInit {
         warningData.push(value.ERRORDESCRIPTION);
       }
     });
-    this.errorWarningData = { "Error": tempError, "Warning": tempWarning };
+    this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
     if (Object.keys(errorData).length != 0)
       this.toastr.error(errorData);
     if (Object.keys(warningData).length != 0) {
@@ -1024,7 +1040,8 @@ export class MatterPopupComponent implements OnInit {
   }
   saveMatterData(data: any) {
     data.VALIDATEONLY = false;
-    this._mattersService.AddNewMatter(data).subscribe(response => {
+
+    this._mainAPiServiceService.getSetData(data, 'SetMatter').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         if (this.action !== 'edit') {
           this.toastr.success('Matter save successfully');
@@ -1033,22 +1050,27 @@ export class MatterPopupComponent implements OnInit {
         }
         this.saveCorDetail(response.DATA.MATTERGUID);
         this.isspiner = false;
-      } else if (response.CODE == 451 && response.STATUS == "warning") {
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.toastr.warning(response.MESSAGE);
-      } else if (response.CODE == 450 && response.STATUS == "error") {
+        this.isspiner = false;
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
         this.toastr.error(response.MESSAGE);
-      } else if (response.MESSAGE == "Not logged in") {
+        this.isspiner = false;
+      } else if (response.MESSAGE == 'Not logged in') {
+        this.isspiner = false;
         this.dialogRef.close(false);
+
       }
     }, error => {
       this.toastr.error(error);
     });
   }
   saveCorDetail(MatterId: any) {
-    let matterService = this._mattersService;
+
+    let matterService = this._mainAPiServiceService;
     this.CorrespondDetail.forEach(function (value: { MATTERGUID: any; }) {
       value.MATTERGUID = MatterId;
-      matterService.AddMatterContact({ FORMACTION: 'insert', VALIDATEONLY: false, DATA: value }).subscribe((response: { CODE: number; STATUS: string; }) => {
+      matterService.getSetData({ FORMACTION: 'insert', VALIDATEONLY: false, DATA: value }, 'SetMatter').subscribe((response: { CODE: number; STATUS: string; }) => {
         if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         }
       }, (error: any) => { console.log(error); });

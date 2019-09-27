@@ -18,16 +18,21 @@ import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
 
 
 
-import { MatDialogModule, MatTabsModule, MatProgressSpinnerModule, MatPaginatorModule, MatButtonModule, MatSelectModule, MatCardModule, MatSlideToggleModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule, MatAutocompleteModule } from '@angular/material';
+import { MatDialogModule, MatTabsModule, MatProgressSpinnerModule, MatPaginatorModule, MatButtonModule, MatSelectModule, MatCardModule, MatSlideToggleModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule, MatAutocompleteModule, MatDividerModule } from '@angular/material';
 
 import { TimeEntryDialogComponent } from './time-entry-dialog/time-entry-dialog.component';
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 import { MatterDialogComponent } from './matter-dialog/matter-dialog.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NumericDirective } from './time-entry-dialog/numericValidation.component';
-import {MatSortModule} from '@angular/material/sort';
+import { MatSortModule } from '@angular/material/sort';
+import { ResumeTimerComponent } from './resume-timer/resume-timer.component';
+import { WriteOffTimeEntryComponent } from './write-off-time-entry/write-off-time-entry.component';
 const routes = [
-  { path: '', component: TimeEntriesComponent, canActivate: [AuthGuard] }
+  // { path: '', component: TimeEntriesComponent, canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/time-entries/full-time-entries', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: 'time-entries/full-time-entries', component: TimeEntriesComponent, canActivate: [AuthGuard] },
+  { path: 'time-entries/quick-time-entries', component: TimeEntriesComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
@@ -35,7 +40,9 @@ const routes = [
     TimeEntriesComponent,
     TimeEntryDialogComponent,
     MatterDialogComponent,
-    NumericDirective
+    NumericDirective,
+    ResumeTimerComponent,
+    WriteOffTimeEntryComponent
     // SatDatepickerModule,
   ],
   imports: [
@@ -61,6 +68,7 @@ const routes = [
     MatTabsModule,
     MatDialogModule,
     MatProgressSpinnerModule,
+    MatDividerModule,
 
     FuseSharedModule,
     FuseConfirmDialogModule,
@@ -76,12 +84,14 @@ const routes = [
   //   // {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
   // ],
   providers: [
-    { provide: DateAdapter, useClass: AppDateAdapter},
-    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
+    { provide: DateAdapter, useClass: AppDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
   ],
   entryComponents: [
     TimeEntryDialogComponent,
-    MatterDialogComponent
+    MatterDialogComponent,
+    ResumeTimerComponent,
+    WriteOffTimeEntryComponent
   ],
   exports: [
     TimeEntriesComponent

@@ -102,7 +102,7 @@ app-packs {
 }
 
 table tr.highlight {
-    background-color: #4CAF50 !important;
+    background-color: #4caf50 !important;
     color: #ffffff;
 }
 
@@ -116,4 +116,26 @@ button#refreshContactTab {
 
 th.mat-sort-header-sorted {
     color: black;
+}
+
+.row-text-colore span {
+    color: #fff;
+}
+
+.mat-header-row {
+    background-color: rgba(128, 128, 128, 0.1);
+    height: 5em;
+}
+
+button#refreshKitTab {
+    display: none;
+}
+
+img.document-img {
+    margin-top: 9px;
+}
+
+img.email-img {
+    height: 75% !important;
+    margin-top: 6px;
 }

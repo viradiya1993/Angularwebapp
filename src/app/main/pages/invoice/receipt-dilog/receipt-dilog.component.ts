@@ -93,7 +93,7 @@ export class ReceiptDilogComponent implements OnInit {
       SHOW: [''],
       Unallocated: [''],
     });
-   ;
+    ;
     this.getPayor({});
     let INCOMEDATEVAL = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
     this.PrepareReceiptForm.controls['INCOMEDATE'].setValue(INCOMEDATEVAL);
@@ -101,10 +101,10 @@ export class ReceiptDilogComponent implements OnInit {
     //for invoice
     if (this._data.action == 'editForTB' || this._data.action == 'edit') {
       this.receiptData = JSON.parse(localStorage.getItem('receiptData'));
-      let TBdata=JSON.parse(localStorage.getItem('TBreceiptData'));
+      let TBdata = JSON.parse(localStorage.getItem('TBreceiptData'));
       if (this._data.action == 'editForTB')
-      this.setInvoiceForReceipt(TBdata.INCOMEGUID);
-        // this.GetInvoiceForReceipt({ 'Outstanding': 'Yes' });
+        this.setInvoiceForReceipt(TBdata.INCOMEGUID);
+      // this.GetInvoiceForReceipt({ 'Outstanding': 'Yes' });
       else if (this._data.action == 'edit')
         this.setInvoiceForReceipt(this.receiptData.INCOMEGUID);
     } else if (this._data.action == 'add') {
@@ -118,7 +118,8 @@ export class ReceiptDilogComponent implements OnInit {
     }
     this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: false, Data: {} }, 'SetIncome').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        this.PrepareReceiptForm.controls['INCOMECODE'].setValue(response.DATA.DEFAULTVALUES.INCOMECODE);
+        let temincome = response.DATA.DEFAULTVALUES.INCOMECODE;
+        this.PrepareReceiptForm.controls['INCOMECODE'].setValue(temincome.toString().padStart(8, "0"));
       }
     }, error => {
       this.toastr.error(error);
@@ -133,7 +134,7 @@ export class ReceiptDilogComponent implements OnInit {
         if (response.DATA.INCOMEITEMS[0]) {
           localStorage.setItem('receiptData', JSON.stringify(response.DATA.INCOMEITEMS[0]));
           let data = response.DATA.INCOMEITEMS[0];
-          this.PrepareReceiptForm.controls['INCOMECODE'].setValue(data.INCOMECODE);
+          this.PrepareReceiptForm.controls['INCOMECODE'].setValue(data.INCOMECODE.toString().padStart(8, "0"));
           let FeeAgreementDate1 = data.INCOMEDATE.split("/");
           this.PrepareReceiptForm.controls['INCOMEDATETEXT'].setValue(new Date(FeeAgreementDate1[1] + '/' + FeeAgreementDate1[0] + '/' + FeeAgreementDate1[2]));
           this.PrepareReceiptForm.controls['INCOMEDATE'].setValue(data.INCOMEDATE);
@@ -175,7 +176,7 @@ export class ReceiptDilogComponent implements OnInit {
       this.toastr.error(err);
     });
 
-  
+
   }
   BankingDialogOpen(type: any) {
     const dialogRef = this.MatDialog.open(BankingDialogComponent, {
@@ -296,7 +297,7 @@ export class ReceiptDilogComponent implements OnInit {
     let setReceiptPostData: any = { FormAction: 'insert', VALIDATEONLY: true, DATA: AllocationDataInsert };
     this._mainAPiServiceService.getSetData(setReceiptPostData, 'SetIncome').subscribe(response => {
       if (response.DATA.INCOMECODE && response.DATA.INCOMECODE != '') {
-        this.PrepareReceiptForm.controls['INCOMECODE'].setValue(response.DATA.INCOMECODE);
+        this.PrepareReceiptForm.controls['INCOMECODE'].setValue(response.DATA.INCOMECODE.toString().padStart(8, "0"));
         AllocationDataInsert.INCOMECODE = response.DATA.INCOMECODE;
       } else {
         AllocationDataInsert.INCOMECODE = this.f.INCOMECODE.value;

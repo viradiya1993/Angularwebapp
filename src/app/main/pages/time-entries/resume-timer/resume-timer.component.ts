@@ -53,7 +53,7 @@ export class ResumeTimerComponent implements OnInit {
     this.resumeTimerForm = this._formBuilder.group({
       MATTERGUID: ['', Validators.required],
       matterautoVal: [''],
-      INVOICEGUID:[''],
+      INVOICEGUID: [''],
       ITEMTYPE: [''],
       QUANTITYTYPE: ['Hours'],
       ITEMDATE: ['', Validators.required],
@@ -107,7 +107,7 @@ export class ResumeTimerComponent implements OnInit {
       this.toastr.error(err);
     });
 
-    this.Timersservice.getTimeEnrtyData({'WorkItemGuid': workerGuid }).subscribe(response => {
+    this.Timersservice.getTimeEnrtyData({ 'WorkItemGuid': workerGuid }).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         let timeEntryData = response.DATA.WORKITEMS[0];
         let isT: boolean = timeEntryData.QUANTITYTYPE == "hh:mm" || timeEntryData.QUANTITYTYPE == "Hours" || timeEntryData.QUANTITYTYPE == "Minutes";
@@ -142,7 +142,6 @@ export class ResumeTimerComponent implements OnInit {
         let seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
         this.ActiveTimerData = { SHORTNAME: timeEntryData.SHORTNAME, MATTERGUID: timeEntryData.MATTERGUID, secound: seconds, WORKITEMGUID: timeEntryData.WORKITEMGUID };
         this.matterChange('MatterGuid', response.DATA.WORKITEMS[0].MATTERGUID);
-        this.matterChange('QuantityType', response.DATA.WORKITEMS[0].QUANTITYTYPE);
         this.matterShortName = response.DATA.WORKITEMS[0].SHORTNAME;
         localStorage.setItem('edit_WORKITEMGUID', response.DATA.WORKITEMS[0].WORKITEMGUID);
         if (timeEntryData.ITEMTYPE == "2" || timeEntryData.ITEMTYPE == "3") {
@@ -166,7 +165,7 @@ export class ResumeTimerComponent implements OnInit {
         this.resumeTimerForm.controls['ADDITIONALTEXT'].setValue(timeEntryData.ADDITIONALTEXT);
         this.resumeTimerForm.controls['ADDITIONALTEXTSELECT'].setValue(timeEntryData.ADDITIONALTEXT);
         this.resumeTimerForm.controls['COMMENT'].setValue(timeEntryData.COMMENT);
-
+        this.matterChange('QuantityType', response.DATA.WORKITEMS[0].QUANTITYTYPE);
       } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
@@ -246,6 +245,8 @@ export class ResumeTimerComponent implements OnInit {
     }
     this.calculateData.Quantity = this.f.QUANTITY.value;
     if (this.calculateData.MatterGuid != '' && this.calculateData.Quantity != '' && (this.calculateData.QuantityType != '' || this.calculateData.FeeType != '')) {
+      console.log('here');
+      console.log(this.calculateData);
       this.isLoadingResults = true;
       this.Timersservice.calculateWorkItems(this.calculateData).subscribe(response => {
         if (response.CODE == 200 && response.STATUS == "success") {

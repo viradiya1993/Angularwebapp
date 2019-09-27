@@ -3,8 +3,9 @@ import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 import { ContactSelectDialogComponent } from '../../../contact/contact-select-dialog/contact-select-dialog.component';
 import { FormGroup } from '@angular/forms';
 import { CorrespondDailogComponent } from '../../correspond-dailog/correspond-dailog.component';
-import { MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-client',
@@ -20,7 +21,7 @@ export class ClientComponent implements OnInit {
   symbol: string;
   isspiner: boolean;
   @Output() CorrespondDetail: EventEmitter<any> = new EventEmitter<any>();
-  @Input() isEdit: any;
+  isEdit: boolean = false;
   @Input() isEditMatter: any;
   @Input() matterdetailForm: FormGroup;
   @Input() errorWarningData: any;
@@ -28,15 +29,21 @@ export class ClientComponent implements OnInit {
   constructor(
     private MatDialog: MatDialog,
     private _mainAPiServiceService: MainAPiServiceService,
+    public behaviorService: BehaviorService,
     private dialogRef: MatDialogRef<ClientComponent>,
-    private dialogRefDe: MatDialogRef<FuseConfirmDialogComponent>,
+    private dialogRefDe: MatDialogRef<FuseConfirmDialogComponent>, private toastr: ToastrService,
   ) { }
 
 
   ngOnInit() {
-    if (this.isEdit) {
-      this.loadData();
-    }
+    this.behaviorService.MatterEditData$.subscribe(result => {
+      if (result) {
+        this.isEdit = true;
+        this.loadData();
+      } else {
+        this.isEdit = false;
+      }
+    });
   }
   get f() {
     return this.matterdetailForm.controls;
@@ -44,7 +51,10 @@ export class ClientComponent implements OnInit {
   Addcorres_party() {
     const dialogRef = this.MatDialog.open(CorrespondDailogComponent, { width: '100%', disableClose: true, data: { type: 'new' } });
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+      console.log(result);
+      if (result == true) {
+        this.loadData();
+      } else if (result) {
         this.CorrespondDetail.emit(result.saveData);
         this.Correspond.push(result.showData);
       }
@@ -79,24 +89,21 @@ export class ClientComponent implements OnInit {
     this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
     this.confirmDialogRef.afterClosed().subscribe(result => {
       if (result) {
-        
         this._mainAPiServiceService.getSetData({ FORMACTION: 'delete', VALIDATEONLY: false, DATA: { MATTERCONTACTGUID: editElement.MATTERCONTACTGUID } }, 'SetMatterContact').subscribe(response => {
           if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
             this.loadData();
-            // this.toastr.success('Matter Contact Delete successfully');
+            this.toastr.success('Matter Contact Delete successfully');
             this.isspiner = false;
-            this.dialogRefDe.close(true);
           }
         }, (error: any) => {
           console.log(error);
         });
-
       }
       this.confirmDialogRef = null;
     });
   }
   loadData() {
-    if(this.isEditMatter != undefined){
+    if (this.isEditMatter != undefined) {
       this._mainAPiServiceService.getSetData({ MATTERGUID: this.isEditMatter }, 'GetMatterContact').subscribe(response => {
         if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
           this.CorrespondEdit = response.DATA.MATTERCONTACTS;
@@ -107,7 +114,7 @@ export class ClientComponent implements OnInit {
         console.log(error);
       });
     }
-    }
-  
+  }
+
 
 }

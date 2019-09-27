@@ -41,6 +41,7 @@ export class BehaviorService {
   public LegalAuthorityForSubAuthToolbar$: BehaviorSubject<any> = new BehaviorSubject(null);
   public MainTopicData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public RecouncileItemSendSetData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public MatterEditData$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(private http: HttpClient) { }
 
   matterInvoiceData(matterClassData: any) {
@@ -130,6 +131,9 @@ export class BehaviorService {
   }
   setTimeScale(d) {
     this.TimeScale$.next(d);
+  }
+  setMatterEditData(d) {
+    this.MatterEditData$.next(d);
   }
 
 

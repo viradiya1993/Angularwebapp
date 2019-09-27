@@ -19,7 +19,7 @@
                 <table class="simple">
                     <tr *ngFor="let item of CorrespondEdit">
                         <td>{{item.TYPENAME}}</td>
-                        <td>{{item.CONTACTNAME}}</td>
+                        <td>{{item.CONTACTNAME}} - {{item.SOLICITORNAME}}</td>
                         <td>
                             <mat-icon (click)="editElement(item)" class="pr-4">edit</mat-icon>
                             <mat-icon (click)="deleteElement(item)" class="pr-4">delete</mat-icon>
@@ -33,10 +33,6 @@
                     <tr *ngFor="let item of Correspond">
                         <td>{{item.type}}</td>
                         <td>{{item.Text}}</td>
-                        <!-- <td>
-                            <mat-icon (click)="editElement()" class="pr-4">edit</mat-icon>
-                            <mat-icon (click)="deleteElement()" class="pr-4">delete</mat-icon>
-                        </td> -->
                     </tr>
                     <br>
                 </table>

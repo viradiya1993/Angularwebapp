@@ -24,6 +24,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   errorWarningData: any = {};
   userList: any;
   matterList: any = [];
+  isreadonly: boolean = false;
   isspiner: boolean = false;
   isLoadingResults: boolean = false;
   ActivityList: any = [];
@@ -136,7 +137,9 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.isLoadingResults = true;
     if (this.action === 'Edit' || this.action == "Duplicate") {
       this.setTimeEntryData();
+      this.isreadonly = true;
     } else if (this.currentTimeMatter != '') {
+      this.isreadonly = true;
       this.timeEntryForm.controls['MATTERGUID'].setValue(this.currentTimeMatter);
       let Qval = this.matterTimerData == '' ? 'Hours' : 'hh:mm';
       this.timeEntryForm.controls['QUANTITYTYPE'].setValue(Qval);

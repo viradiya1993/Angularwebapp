@@ -135,7 +135,6 @@ export class SpendMoneyAddComponent implements OnInit {
       this.isLoadingResults = true;
       this._mainAPiServiceService.getSetData({ EXPENDITUREGUID: this.SendMoney_data.EXPENDITUREGUID }, 'GetExpenditure').subscribe(response => {
         if (response.CODE == 200 && response.STATUS == "success") {
-          console.log(response);
           this.behaviorService.SpendMoneyData(response.DATA.EXPENDITURES[0]);
         } else if (response.MESSAGE == 'Not logged in') {
           this.dialogRef.close(false);
@@ -858,7 +857,7 @@ export class SpendMoneyAddComponent implements OnInit {
       }
     }
     const dialogRef = this.MatDialog.open(BankingDialogComponent, {
-      disableClose: true, width: '100%', data: { AccountType: type ,FromWhere:'spendMonyExpense' }
+      disableClose: true, width: '100%', data: { AccountType: type, FromWhere: 'spendMonyExpense' }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

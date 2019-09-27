@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ContactSelectDialogComponent } from '../../contact/contact-select-dialog/contact-select-dialog.component';
 import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-correspond-dailog',
@@ -11,7 +12,6 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./correspond-dailog.component.scss']
 })
 export class CorrespondDailogComponent implements OnInit {
-
   constructor(
     private _formBuilder: FormBuilder,
     public MatDialog: MatDialog,
@@ -20,20 +20,26 @@ export class CorrespondDailogComponent implements OnInit {
     private toastr: ToastrService,
     public behaviorService: BehaviorService,
     @Inject(MAT_DIALOG_DATA) public _data: any
-  ) { 
+  ) {
     this.behaviorService.matterClassData$.subscribe(result => {
       if (result) {
-        this.MatterClassData =result.LOOKUPFULLVALUE;
+        this.MatterClassData = result.LOOKUPFULLVALUE;
       }
     });
   }
+  confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   correspondForm: FormGroup;
-  MatterClassData:any=[];
-  CorrspondClassData:any=[];
+  MatterClassData: any = [];
+  errorWarningData: any = {};
+  CorrspondClassData: any = [];
   isLoadingResults: boolean = false;
   isspiner: boolean = false;
-  isEditData = this._data.type == "edit" ? true : false;
+  isEdit: boolean = false;
+  matterData: any;
   ngOnInit() {
+    this.behaviorService.MatterEditData$.subscribe(result => {
+      this.matterData = result;
+    });
     this.correspondForm = this._formBuilder.group({
       TYPE: ['General'],
       PERSONGUID: [''],
@@ -43,43 +49,32 @@ export class CorrespondDailogComponent implements OnInit {
       REFERENCE: [''],
       MATTERGUID: [''],
       MATTERCONTACTGUID: [''],
-      //       MATTERCONTACTGUID - STRING(16)
-      // PERSONGUID - STRING(16)
-      // SOLICITORGUID - STRING(16)
-      // RELATEDPERSONGUID - STRING(16)
-      // ORDER - NUMBER
-      // TYPE - LOOKUP -> ContactRole
-      // RELATIONSHIP - STRING(50)
-      // SHAREOFESTATE - NUMBER
     });
+    this.isLoadingResults = true;
+    this._mainAPiServiceService.getSetData({ 'LookupType': 'contact role', 'MatterClass': this.MatterClassData }, 'GetLookups').subscribe(responses => {
+      if (responses.CODE === 200 && responses.STATUS === 'success') {
+        this.CorrspondClassData = responses.DATA.LOOKUPS;
+        this.isLoadingResults = false;
+      }
+    });
+    this.isEdit = this._data.type == "edit" ? true : false;
     if (this._data.type == "edit") {
       let editData = this._data.EditData;
       this.correspondForm.controls['SOLICITORGUID'].setValue(editData.SOLICITORGUID);
       this.correspondForm.controls['SOLICITORGUIDTEXT'].setValue(editData.SOLICITORNAME);
       this.correspondForm.controls['PERSONGUID'].setValue(editData.PERSONGUID);
-      this.correspondForm.controls['PERSONGUIDTEXT'].setValue(editData.PERSONNAME);
+      this.correspondForm.controls['PERSONGUIDTEXT'].setValue(editData.CONTACTNAME);
       this.correspondForm.controls['REFERENCE'].setValue(editData.REFERENCE);
       this.correspondForm.controls['MATTERGUID'].setValue(editData.MATTERGUID);
-      this.correspondForm.controls['TYPE'].setValue(editData.TYPE);
+      this.correspondForm.controls['TYPE'].setValue(editData.TYPENAME);
       this.correspondForm.controls['MATTERCONTACTGUID'].setValue(editData.MATTERCONTACTGUID);
-    }  
-      this.isLoadingResults=true;
-      this._mainAPiServiceService.getSetData({'LookupType': 'contact role', 'MatterClass' :this.MatterClassData}, 'GetLookups').subscribe(responses => {
-      if (responses.CODE === 200 && responses.STATUS === 'success') {
-         this.CorrspondClassData = responses.DATA.LOOKUPS;
-         this.isLoadingResults=false;
-      }
-    });
+    }
   }
   get f() {
     return this.correspondForm.controls;
   }
   selectContact() {
-    const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, {
-      width: '100%', disableClose: true, data: {
-        type: ""
-      }
-    });
+    const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true, data: { type: "" } });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.correspondForm.controls['MATTERGUID'].setValue(result.MATTERGUID);
@@ -89,11 +84,7 @@ export class CorrespondDailogComponent implements OnInit {
     });
   }
   selectSolicitor() {
-    const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, {
-      width: '100%', disableClose: true, data: {
-        type: ""
-      }
-    });
+    const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true, data: { type: "" } });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.correspondForm.controls['SOLICITORGUID'].setValue(result.CONTACTGUID);
@@ -110,9 +101,33 @@ export class CorrespondDailogComponent implements OnInit {
       PERSONGUID: this.f.PERSONGUID.value,
       MATTERGUID: this.f.MATTERGUID.value,
     }
-    let data = { 'showData': { 'type': this.f.TYPE.value, 'Text': this.f.PERSONGUIDTEXT.value + ' - ' + this.f.SOLICITORGUIDTEXT.value }, 'saveData': details };
-    this.dialogRef.close(data);
+    if (this.matterData) {
+      details.MATTERGUID = this.matterData.MATTERGUID;
+      this._mainAPiServiceService.getSetData({ FORMACTION: 'insert', VALIDATEONLY: false, DATA: details }, 'SetMatterContact').subscribe(response => {
+        if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+          this.toastr.success('Matter Contact save successfully');
+          this.isspiner = false;
+          this.dialogRef.close(true);
+        } else if (response.CODE == 451 && response.STATUS == 'warning') {
+          this.isspiner = false;
+          this.toastr.warning(response.MESSAGE);
+        } else if (response.CODE == 450 && response.STATUS == 'error') {
+          this.isspiner = false;
+          this.toastr.error(response.MESSAGE);
+        } else if (response.MESSAGE == 'Not logged in') {
+          this.isspiner = false;
+          this.dialogRef.close(false);
+        }
+      }, (error: any) => {
+        console.log(error);
+      });
+    } else {
+      let data = { 'showData': { 'type': this.f.TYPE.value, 'Text': this.f.PERSONGUIDTEXT.value + ' - ' + this.f.SOLICITORGUIDTEXT.value }, 'saveData': details };
+      console.log(data);
+      this.dialogRef.close(data);
+    }
   }
+
   updateCorrespomndDetail() {
     this.isspiner = true;
     let details: any = {

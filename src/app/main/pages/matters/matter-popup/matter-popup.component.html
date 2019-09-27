@@ -35,7 +35,7 @@
                             <app-general [matterdetailForm]="matterdetailForm" [errorWarningData]="errorWarningData" [userType]="userType"></app-general>
                         </mat-tab>
                         <mat-tab label="Client & Corres">
-                            <app-client [errorWarningData]="errorWarningData" [matterdetailForm]="matterdetailForm" [isEditMatter]="isEditMatter" [isEdit]="isEdit" (CorrespondDetail)="corDetailBack($event)"></app-client>
+                            <app-client [errorWarningData]="errorWarningData" [matterdetailForm]="matterdetailForm" [isEditMatter]="isEditMatter" (CorrespondDetail)="corDetailBack($event)"></app-client>
                         </mat-tab>
                         <mat-tab label="Rates">
                             <app-rates [matterdetailForm]="matterdetailForm" [errorWarningData]="errorWarningData"></app-rates>

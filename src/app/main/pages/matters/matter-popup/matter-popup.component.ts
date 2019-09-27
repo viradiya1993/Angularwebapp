@@ -19,7 +19,6 @@ export class MatterPopupComponent implements OnInit {
   active: any;
   isLoadingResults: boolean = false;
   action: any;
-  isEdit: boolean = false;
   isEditMatter: any = "";
   dialogTitle: string;
   isspiner: boolean = false;
@@ -43,10 +42,8 @@ export class MatterPopupComponent implements OnInit {
     this.action = _data.action;
     if (this.action === 'edit') {
       this.dialogTitle = 'Update Matter';
-      this.isEdit = true;
     } else if (this.action == 'new') {
       this.dialogTitle = 'New Matter'
-      this.isEdit = true;
       this.isLoadingResults = true;
       this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: true, DATA: {} }, 'SetMatter').subscribe(res => {
         if (res.CODE == 200 && res.STATUS == "success") {
@@ -60,12 +57,14 @@ export class MatterPopupComponent implements OnInit {
       setTimeout(() => { this.isLoadingResults = false; }, 2000);
     } else {
       this.dialogTitle = 'Duplicate Matter';
-      this.isEdit = false;
     }
     this.isEditMatter = this._data.matterGuid;
     this.classtype;
   }
   matterdetailForm: FormGroup;
+  ngOnDestroy() {
+    this.behaviorService.setMatterEditData(null);
+  }
   ngOnInit() {
     this.isLoadingResults = true;
     let UserData = JSON.parse(localStorage.getItem('currentUser')).ProductType;
@@ -75,7 +74,6 @@ export class MatterPopupComponent implements OnInit {
     this._mainAPiServiceService.getSetData({ 'LookupType': 'Matter Class' }, 'GetLookups').subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.Classdata = responses.DATA.LOOKUPS;
-        console.log(responses);
       } else if (responses.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
@@ -83,12 +81,11 @@ export class MatterPopupComponent implements OnInit {
     });
     if (this.action === 'edit' || this.action === 'duplicate') {
       this.isLoadingResults = true;
-
-
       this._mainAPiServiceService.getSetData({ MATTERGUID: this._data.matterGuid, 'GETALLFIELDS': true }, 'GetMatter').subscribe(response => {
         if (response.CODE === 200 && response.STATUS === 'success') {
           let matterData = response.DATA.MATTERS[0];
           this.classtype = matterData.MATTERCLASS;
+          this.behaviorService.setMatterEditData(matterData);
           this.matterdetailForm.controls['MATTERGUID'].setValue(matterData.MATTERGUID);
           this.matterdetailForm.controls['ACTIVE'].setValue(matterData.ACTIVE == 1 ? true : false);
           this.matterdetailForm.controls['MATTERCLASS'].setValue(matterData.MATTERCLASS.toString());
@@ -755,7 +752,6 @@ export class MatterPopupComponent implements OnInit {
     });
   }
   get f() {
-    //console.log(this.contactForm);
     return this.matterdetailForm.controls;
   }
   Classtype(value: any) {
@@ -1066,11 +1062,10 @@ export class MatterPopupComponent implements OnInit {
     });
   }
   saveCorDetail(MatterId: any) {
-
     let matterService = this._mainAPiServiceService;
     this.CorrespondDetail.forEach(function (value: { MATTERGUID: any; }) {
       value.MATTERGUID = MatterId;
-      matterService.getSetData({ FORMACTION: 'insert', VALIDATEONLY: false, DATA: value }, 'SetMatter').subscribe((response: { CODE: number; STATUS: string; }) => {
+      matterService.getSetData({ FORMACTION: 'insert', VALIDATEONLY: false, DATA: value }, 'SetMatterContact').subscribe((response: { CODE: number; STATUS: string; }) => {
         if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         }
       }, (error: any) => { console.log(error); });

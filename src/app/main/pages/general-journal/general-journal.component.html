@@ -6,20 +6,20 @@
                     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                         <mat-form-field appearance="outline" fxFlex="50" class="">
                             <mat-label>Date Range</mat-label>
-                            <input matInput placeholder="Choose a date" [satDatepicker]="picker2" (dateInput)="choosedDate()" (dateChange)="choosedDate()">
+                            <input matInput placeholder="Choose a date" [satDatepicker]="picker2" name="dateRange" [(ngModel)]="dateRange" (dateChange)="choosedDate('change', $event)">
                             <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
                             <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
                         </mat-form-field>
                         <mat-form-field class="search" appearance="outline" fxFlex="50">
                             <mat-label>Search</mat-label>
-                            <input matInput placeholder="Search" (keydown)="onSearch($event)" name="searching" [(ngModel)]="filterVals.searching">
+                            <input matInput placeholder="Search" (keydown)="onSearch($event)" name="SEARCH" [(ngModel)]="filterVals.SEARCH">
                             <mat-icon matSuffix (click)="onSearch('Enter')">search</mat-icon>
                         </mat-form-field>
-                        <mat-checkbox name="ShowReceipts" [checked]="filterVals.ShowReceipts" [(ngModel)]="filterVals.ShowReceipts" (change)="changeValueOfCheckbox()">Receipts</mat-checkbox>&nbsp;&nbsp;&nbsp;
-                        <mat-checkbox name="ShowInvoices" [checked]="filterVals.ShowInvoices" [(ngModel)]="filterVals.ShowInvoices" (change)="changeValueOfCheckbox()">Invoice</mat-checkbox>&nbsp;&nbsp;&nbsp;
-                        <mat-checkbox name="ShowReceiveMoney" [checked]="filterVals.ShowReceiveMoney" [(ngModel)]="filterVals.ShowReceiveMoney" (change)="changeValueOfCheckbox()">Receive Money</mat-checkbox>&nbsp;&nbsp;&nbsp;
-                        <mat-checkbox name="ShowSpendMoney" [checked]="filterVals.ShowSpendMoney" [(ngModel)]="filterVals.ShowSpendMoney" (change)="changeValueOfCheckbox()">Spend Money</mat-checkbox>&nbsp;&nbsp;&nbsp;
-                        <mat-checkbox name="ShowGeneralJournal" [checked]="filterVals.ShowGeneralJournal" [(ngModel)]="filterVals.ShowGeneralJournal" (change)="changeValueOfCheckbox()">General Journal</mat-checkbox>
+                        <mat-checkbox name="SHOWRECEIPTS" [checked]="filterVals.SHOWRECEIPTS" [(ngModel)]="filterVals.SHOWRECEIPTS" (change)="changeValueOfCheckbox()">Receipts</mat-checkbox>&nbsp;&nbsp;&nbsp;
+                        <mat-checkbox name="SHOWINVOICES" [checked]="filterVals.SHOWINVOICES" [(ngModel)]="filterVals.SHOWINVOICES" (change)="changeValueOfCheckbox()">Invoice</mat-checkbox>&nbsp;&nbsp;&nbsp;
+                        <mat-checkbox name="SHOWRECEIVEMONEY" [checked]="filterVals.SHOWRECEIVEMONEY" [(ngModel)]="filterVals.SHOWRECEIVEMONEY" (change)="changeValueOfCheckbox()">Receive Money</mat-checkbox>&nbsp;&nbsp;&nbsp;
+                        <mat-checkbox name="SHOWSPENDMONEY" [checked]="filterVals.SHOWSPENDMONEY" [(ngModel)]="filterVals.SHOWSPENDMONEY" (change)="changeValueOfCheckbox()">Spend Money</mat-checkbox>&nbsp;&nbsp;&nbsp;
+                        <mat-checkbox name="SHOWGENERALJOURNAL" [checked]="filterVals.SHOWGENERALJOURNAL" [(ngModel)]="filterVals.SHOWGENERALJOURNAL" (change)="changeValueOfCheckbox()">General Journal</mat-checkbox>
                     </div>
                 </form>
             </div>
@@ -34,20 +34,20 @@
                         <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                     </div>
                     <div class="example-containerdata">
-                        <table mat-table [dataSource]="generalJournalData" matSort [@animateStagger]="{value:'50'}">
+                        <table mat-table [dataSource]="generalJournalData" [@animateStagger]="{value:'50'}">
                             <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
-                                <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header> {{ tempColobj[item].DESCRIPTION }}</th>
+                                <th mat-header-cell *matHeaderCellDef class="header_title"> {{ tempColobj[item].DESCRIPTION }}</th>
                                 <td mat-cell *matCellDef="let row">
                                     <span *ngIf="row[item]">{{row[item]}}</span>
                                 </td>
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                            <tr [style.background]="highlightedRows == row.CONTACTGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.CONTACTGUID ? 'row-text-colore' : ''" highlightedRows=row.CONTACTGUID mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editContact(row.CONTACTGUID, row);highlightedRows = row.CONTACTGUID "
+                            <tr [style.background]="highlightedRows == row.JOURNALGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.JOURNALGUID ? 'row-text-colore' : ''" highlightedRows=row.JOURNALGUID mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editjournal(row.JOURNALGUID, row);highlightedRows = row.JOURNALGUID "
                                 matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                             </tr>
                         </table>
                     </div>
-                    <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+                    <!-- <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator> -->
                 </div>
             </div>
         </div>

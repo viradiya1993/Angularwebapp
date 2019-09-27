@@ -42,9 +42,11 @@ export class ChartAcDailogComponent implements OnInit {
     } else if (this.action === 'duplicate') {
       this.dialogTitle = 'Duplicate Account';
     }
-    this.behaviorService.ChartAccountData$.subscribe(result => { if (result) {
-      console.log(result);
-       this.AccountData = result; } });
+    this.behaviorService.ChartAccountData$.subscribe(result => {
+      if (result) {
+        this.AccountData = result;
+      }
+    });
   }
   ngOnInit() {
     this.AccountForm = this._formBuilder.group({
@@ -55,23 +57,21 @@ export class ChartAcDailogComponent implements OnInit {
       ACCOUNTNUMBER: ['1-'],
       ACCOUNTTYPE: [''],
       ACTIVE: [''],
-      ACCOUNTTYPENAME:[''],
+      ACCOUNTTYPENAME: [''],
       //EXPORTINFO 
       MYOBEXPORTACCOUNT: [''],
       //bank BANKDETAILS 
       BANKNAME: [''],
       BANKADDRESS: [''],
       BANKBSB: [''],
-      SForSendACCNO:[''],
+      SForSendACCNO: [''],
       BANKACCOUNTNUMBER: [''],
       BANKTERM: [''],
       BANKINTERESTRATE: [''],
     });
     if (this.action == "edit" || this.action == 'duplicate') {
-      console.log("fgjhjkghkjdf");
       this.isLoadingResults = true;
-      this._mainAPiServiceService.getSetData({ACCOUNTGUID:this.AccountData.ACCOUNTGUID },'GetAccount').subscribe(res => {
-        console.log(res);
+      this._mainAPiServiceService.getSetData({ ACCOUNTGUID: this.AccountData.ACCOUNTGUID }, 'GetAccount').subscribe(res => {
         if (res.CODE == 200 && res.STATUS == "success") {
           if (this.action != 'duplicate') {
             this.AccountForm.controls['ACCOUNTGUID'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTGUID);
@@ -79,11 +79,11 @@ export class ChartAcDailogComponent implements OnInit {
           this.AccountForm.controls['ACCOUNTCLASS'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTCLASSNAME);          // toString()
           this.AccountForm.controls['ACCOUNTNAME'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTNAME);
           //General
-          this.AccountForm.controls['SForSendACCNO'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTNUMBER); 
+          this.AccountForm.controls['SForSendACCNO'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTNUMBER);
           this.AccountForm.controls['ACCOUNTNUMBER'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTCLASS + ' - ' + res.DATA.ACCOUNTS[0].ACCOUNTNUMBER);
           this.accountType = res.DATA.ACCOUNTS[0].ACCOUNTTYPENAME;
           this.AccountForm.controls['ACCOUNTTYPE'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTTYPENAME);          // toString()
-        
+
           this.AccountForm.controls['ACTIVE'].setValue(res.DATA.ACCOUNTS[0].ACTIVE);
           //EXPORTINFO
           this.AccountForm.controls['MYOBEXPORTACCOUNT'].setValue(res.DATA.ACCOUNTS[0].EXPORTINFO['MYOBEXPORTACCOUNT']);
@@ -110,13 +110,13 @@ export class ChartAcDailogComponent implements OnInit {
   }
   //SaveAccount
   SaveAccount() {
-  if(this.f.ACCOUNTTYPE.value == 'Header'){
-    this.sendtype=1;
-  }else if(this.f.ACCOUNTTYPE.value == 'Detail'){
-    this.sendtype=2;
-  }else if(this.f.ACCOUNTTYPE.value == 'Bank Account'){
-    this.sendtype=3;
-  }
+    if (this.f.ACCOUNTTYPE.value == 'Header') {
+      this.sendtype = 1;
+    } else if (this.f.ACCOUNTTYPE.value == 'Detail') {
+      this.sendtype = 2;
+    } else if (this.f.ACCOUNTTYPE.value == 'Bank Account') {
+      this.sendtype = 3;
+    }
     this.isspiner = true;
     let PostData: any = {
       ACCOUNTCLASS: this.f.ACCOUNTCLASS.value,
@@ -126,7 +126,7 @@ export class ChartAcDailogComponent implements OnInit {
       // ACCOUNTTYPENAME:this.f.ACCOUNTTYPENAME.value,
       ACTIVE: this.f.ACTIVE.value,
       MYOBEXPORTACCOUNT: this.f.MYOBEXPORTACCOUNT.value,
-      BANKDETAILS:{
+      BANKDETAILS: {
         BANKNAME: this.f.BANKNAME.value,
         BANKADDRESS: this.f.BANKADDRESS.value,
         BANKBSB: this.f.BANKBSB.value,
@@ -136,7 +136,7 @@ export class ChartAcDailogComponent implements OnInit {
       }
     }
     this.successMsg = 'Save successfully';
-      let FormAction = this.action == 'edit' ? 'update' : 'insert';
+    let FormAction = this.action == 'edit' ? 'update' : 'insert';
     if (this.action == 'edit') {
       PostData.ACCOUNTGUID = this.f.ACCOUNTGUID.value;
       this.successMsg = 'Update successfully';

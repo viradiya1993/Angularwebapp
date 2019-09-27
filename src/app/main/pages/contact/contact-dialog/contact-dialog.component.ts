@@ -38,6 +38,7 @@ export class ContactDialogComponent implements OnInit {
   dateofbirth: any;
   dateofdeath: string;
   editDataCompny: boolean = true;
+  namepusharray: any =[];
 
   constructor(
     public MatDialog: MatDialog,
@@ -281,7 +282,24 @@ export class ContactDialogComponent implements OnInit {
       this.contactForm.controls['ACTIVE'].setValue(true);
     }
   }
-
+  splitname(){
+    this.namepusharray=[];
+   let val:any= (this.f.CONTACTNAME.value).split(' ');
+   let val1 = val[0];
+   let val2 = val.length-1;
+   let val3 = val[val2];
+    val.forEach(element => {
+     if(element !=val1){
+       if(element !=val3){
+        this.namepusharray.push(element);
+       }
+     }
+   });
+  this.contactForm.controls['SALUTATION'].setValue(val1);
+  this.contactForm.controls['GIVENNAMES'].setValue(val1);
+  this.contactForm.controls['FAMILYNAME'].setValue(val3);
+  this.contactForm.controls['MIDDLENAMES'].setValue(this.namepusharray.join(' '));
+  }
 
   // convenience getter for easy access to form fields
   get f() {

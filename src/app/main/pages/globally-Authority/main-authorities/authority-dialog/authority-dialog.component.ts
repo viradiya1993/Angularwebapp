@@ -43,6 +43,7 @@ export class AuthorityDialogComponent implements OnInit {
     }
     this.behaviorService.MainAuthorityData$.subscribe(result => {
     if(result){
+      console.log(result);
     this.AuthoDialogeData=result;
     }
   });
@@ -130,8 +131,7 @@ export class AuthorityDialogComponent implements OnInit {
       COMMENT:this.authorityDialoge.COMMENT_,
       REFERENCE:this.authorityDialoge.REFERENCE,
       WEBADDRESS:this.authorityDialoge.WEBADDRESS
-    }
-   
+    } 
     let finalData = { DATA: data, FormAction: this.FormAction, VALIDATEONLY: true }
     this._mainAPiServiceService.getSetData(finalData, 'SetAuthority').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
@@ -188,6 +188,7 @@ export class AuthorityDialogComponent implements OnInit {
       this.AuthoritySaveData(details);
     this.isspiner = false;
   }
+ 
   AuthoritySaveData(data: any) {
     data.VALIDATEONLY = false;
     this._mainAPiServiceService.getSetData(data, 'SetAuthority').subscribe(response => {
@@ -212,8 +213,8 @@ export class AuthorityDialogComponent implements OnInit {
     });
   }
   TopicClassChange(val){
-let value = this.MainTopicClass.find(c => c['TOPICNAME'] == val);
-this.authorityDialoge.TOPICGUID=value.TOPICGUID;
+  let value = this.MainTopicClass.find(c => c['TOPICNAME'] == val);
+  this.authorityDialoge.TOPICGUID=value.TOPICGUID;
   }
 
 }

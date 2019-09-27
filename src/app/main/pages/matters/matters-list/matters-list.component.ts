@@ -71,6 +71,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
+        console.log(this.ColumnsObj);
         this.tempColobj = data.tempColobj;
       }
     }, error => {

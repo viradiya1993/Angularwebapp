@@ -64,7 +64,7 @@
                                     </div>
                                     <div class="example-containerdata1">
                                         <table>
-                                            <thead class="mat-header-row" fxLayoutAlign="center center">
+                                            <thead class="header_title" fxLayoutAlign="center center">
                                                     <th class="mat-header-cell" fxFlex>Authority</th>
                                                     <th class="mat-header-cell" fxFlex="20">Citation</th>
                                                     <th class="mat-header-cell" fxFlex="20">Web Address</th>
@@ -113,6 +113,7 @@
                                             </tr>
                                         </table> -->
                                     </div>
+                                    <br/>
                                     <div class="example-containerdata2">
                                     <table  mat-table #table [dataSource]="authorities_table" matSort [@animateStagger]="{value:'50'}">
                                             <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">

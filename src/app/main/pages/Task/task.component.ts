@@ -37,15 +37,17 @@ export class TaskComponent implements OnInit {
   highlightedRows: any;
   ImgDisAb: string;
   val: any;
+  isGetUserEmpty: string;
   constructor(private _mainAPiServiceService: MainAPiServiceService, private dialog: MatDialog,
     private _formBuilder: FormBuilder, public behaviorService: BehaviorService,
     private toastr: ToastrService, private TableColumnsService: TableColumnsService,
-    public datepipe: DatePipe, ) { }
+    public datepipe: DatePipe, ) { 
+      this.getUserdata();
+    }
 
   ngOnInit() {
     this.ImgDisAb = "menu-disabled";
     this.getTableFilter();
-    this.getUserdata();
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
 
     this.MainTask = this._formBuilder.group({
@@ -74,7 +76,7 @@ export class TaskComponent implements OnInit {
     this.MainTask.controls['status'].setValue(this.filterData.STATUS);
     this.MainTask.controls['matter'].setValue(this.filterData.Matter);
     this.MainTask.controls['User'].setValue(this.filterData.user);
-    this.selectUsers(this.filterData.user);
+   
     let date = this.filterData.DUEDATEFROM.split("/");
     let putDate1 = new Date(date[1] + '/' + date[0] + '/' + date[2]);
     let date2 = this.filterData.DUEDATETO.split("/");
@@ -86,6 +88,10 @@ export class TaskComponent implements OnInit {
       this.CheckboxChecxed();
     }else{
       this.LoadData(this.filterData);
+    }
+    if(this.isGetUserEmpty =='no'){
+      this.selectUsers(this.filterData.user);
+      this.isLoadingResults = false;
     }
   }
   getTableFilter() {
@@ -101,10 +107,13 @@ export class TaskComponent implements OnInit {
     });
   }
   getUserdata() {
+    this.isGetUserEmpty='yes';
+    this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({ 'Active':'yes' },'GetUsers').subscribe(response => {
       console.log(response);
       if(response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         this.GetUSERS = response.DATA.USERS;
+        this.isGetUserEmpty='no';
         this.behaviorService.UserDropDownData(response.DATA.USERS[0]);
       }
     });
@@ -215,6 +224,7 @@ export class TaskComponent implements OnInit {
   selectUsers(value) {
     console.log(value);
     this.filterData = JSON.parse(localStorage.getItem("task_filter"));
+    console.log(this.GetUSERS);
     let val = this.GetUSERS.find(c => c['USERNAME'] == value)
 console.log(val);
     this.filterData.USERGUID = val.USERGUID;

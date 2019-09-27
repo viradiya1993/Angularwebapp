@@ -1588,7 +1588,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                     width: '100%', disableClose: true,
                     data: { action: 'add', type: " ", matterData: result }
                 });
-                dialogRef.afterClosed().subscribe(result => { if (result) { } });
+                dialogRef.afterClosed().subscribe(result => { if (result) { 
+                    $('#refreshReceiceMoany').click();
+                } });
             }
         });
     }

@@ -35,6 +35,7 @@ export class TaskDialogeComponent implements OnInit {
   RimindereDate: any;
   RimindereTime: any;
   UserDropDownData: any;
+  userGuid: string;
   constructor(private _mainAPiServiceService: MainAPiServiceService,
     public dialogRef: MatDialogRef<TaskDialogeComponent>, private toastr: ToastrService,
     private behaviorService: BehaviorService,
@@ -227,38 +228,44 @@ export class TaskDialogeComponent implements OnInit {
       this.FormAction = 'update';
       this.TaskGuid = this.f.TASKGUID.value
       this.MatterGuid = this.f.MATTERGUID.value;
+      this.userGuid=this.f.USERGUID.value;
     }
-    // else if(this.action == 'new'){
-    //   this.forRimindCheck();
-    //   this.FormAction='insert';
-    //   this.TaskGuid="";
-    //   this.MatterGuid=this.f.MATTERGUID.value;
-    // }
+    else if(this.action == 'new legal'){
+      this.forRimindCheck();
+      this.FormAction='insert';
+      this.TaskGuid="";
+      this.MatterGuid=this.f.MATTERGUID.value;
+      this.userGuid='';
+    }
     else if (this.action == 'new matter') {
       this.forRimindCheck();
       this.FormAction = 'insert';
       this.TaskGuid = "";
       this.MatterGuid = this.f.MATTERGUID.value;
+      this.userGuid=this.f.USERGUID.value;
     } else if (this.action == 'new general') {
       this.forRimindCheck();
       this.MatterGuid = '';
       this.FormAction = 'insert';
       this.TaskGuid = "";
+      this.userGuid=this.f.USERGUID.value;
     } else if (this.action == 'copy' || this.action == 'copy legal') {
       this.forRimindCheck();
       this.FormAction = 'insert';
       this.TaskGuid = "";
       this.MatterGuid = this.f.MATTERGUID.value;
+      this.userGuid=this.f.USERGUID.value;
     } else {
       this.forRimindCheck();
       this.FormAction = 'insert';
       this.TaskGuid = "";
       this.MatterGuid = this.f.MATTERGUID.value;
+      this.userGuid=this.f.USERGUID.value;
     }
     let data = {
       TASKGUID: this.TaskGuid,
       MATTERGUID: this.MatterGuid,
-      USERGUID: this.f.USERGUID.value,
+      USERGUID: this.userGuid,
       DUEDATE: this.f.SendDUEDATE.value,
       STATUS: this.f.STATUS.value,
       STARTDATE: this.f.SendSTARTDATE.value,

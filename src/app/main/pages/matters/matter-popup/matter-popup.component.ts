@@ -83,8 +83,6 @@ export class MatterPopupComponent implements OnInit {
     });
     if (this.action === 'edit' || this.action === 'duplicate') {
       this.isLoadingResults = true;
-
-
       this._mainAPiServiceService.getSetData({ MATTERGUID: this._data.matterGuid, 'GETALLFIELDS': true }, 'GetMatter').subscribe(response => {
         if (response.CODE === 200 && response.STATUS === 'success') {
           let matterData = response.DATA.MATTERS[0];

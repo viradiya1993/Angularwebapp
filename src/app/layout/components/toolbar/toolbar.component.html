@@ -445,7 +445,7 @@
                                         </button>
                                     </section>
                                     <section *ngIf="mainlegalAuthWebUrl != ''" [ngClass]="appPermissions[12]?.Acess==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button  mat-button [ngClass]="appPermissions[12]?.Acess==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)">
+                                        <button mat-button [ngClass]="appPermissions[12]?.Acess==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)">
                                             <a target="_blank" href="{{mainlegalAuthWebUrl}}" mat-list-item>
                                                 <section class="large-button-container">
                                                     <mat-icon class="main-icon">
@@ -1345,46 +1345,46 @@
                                 <section class="group-section-tab extras_tab">
                                     <section class="ribbon-section">
                                         <mat-nav-list>
-                                            <a mat-list-item [routerLink]="'/legal-details/chronology'" [ngClass]="activeSubMenu =='chronology'?'cmn_active_tab':''" [ngClass]="appPermissions[10]?.Access==0 ? 'disabled-click-cursor' : ''">
+                                            <a mat-list-item [routerLink]="'/legal-details/chronology'" [ngClass]="{'disabled-click-cursor':appPermissions[10]?.Access==0,'cmn_active_tab':activeSubMenu =='chronology'}">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_chronology_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <span>Chronology</span>
                                             </a>
-                                            <a mat-list-item [ngClass]="appPermissions[12]?.Access==0 ? 'disabled-click-cursor' : ''" [routerLink]="'/legal-details/authority'" [ngClass]="activeSubMenu =='authorities'?'cmn_active_tab':''">
+                                            <a mat-list-item [routerLink]="'/legal-details/authority'" [ngClass]="{'disabled-click-cursor':appPermissions[12]?.Access==0,'cmn_active_tab':activeSubMenu =='authority'}">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_authorities_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <span>Authorities</span>
                                             </a>
-                                            <a mat-list-item [ngClass]="appPermissions[18]?.Access==0 ? 'disabled-click-cursor' : ''" [routerLink]="'/legal-details/legal-detail-task'" [ngClass]="activeSubMenu =='authorities'?'cmn_active_tab':''">
+                                            <a mat-list-item [ngClass]="{'disabled-click-cursor':appPermissions[18]?.Access==0,'cmn_active_tab':activeSubMenu =='legal-detail-task'}" [routerLink]="'/legal-details/legal-detail-task'">
                                                 <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_filesnotes_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                    <img src="assets/icons/web_app/icon_tasks_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
-                                                <span> Tasks</span>
+                                                <span> Tasks </span>
                                             </a>
                                         </mat-nav-list>
                                     </section>
                                     <section class="ribbon-section">
                                         <mat-nav-list>
-                                            <a mat-list-item [ngClass]="appPermissions[13]?.Access==0 ? 'disabled-click-cursor' : ''" [routerLink]="'/legal-details/file-notes'" [ngClass]="activeSubMenu =='file-notes'?'cmn_active_tab':''">
+                                            <a mat-list-item [routerLink]="'/legal-details/file-notes'" [ngClass]="{'disabled-click-cursor':appPermissions[13]?.Access==0,'cmn_active_tab':activeSubMenu =='file-notes'}">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_filesnotes_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <span>File Notes</span>
                                             </a>
-                                            <a mat-list-item [ngClass]="appPermissions[14]?.Access==0 ? 'disabled-click-cursor' : ''" [routerLink]="'/legal-details/safe-custody'" [ngClass]="activeSubMenu =='safe-custody'?'cmn_active_tab':''">
+                                            <a mat-list-item [ngClass]="{'disabled-click-cursor':appPermissions[14]?.Access==0,'cmn_active_tab':activeSubMenu =='safe-custody'}" [routerLink]="'/legal-details/safe-custody'">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_safecustody_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <span>Safe Custody</span>
                                             </a>
 
-                                            <a mat-list-item [ngClass]="appPermissions[16]?.Access==0 ? 'disabled-click-cursor' : ''" [routerLink]="'/legal-details/search'" [ngClass]="activeSubMenu =='search'?'cmn_active_tab':''">
+                                            <a mat-list-item [ngClass]="{'disabled-click-cursor':appPermissions[16]?.Access==0,'cmn_active_tab':activeSubMenu =='search'}" [routerLink]="'/legal-details/search'">
                                                 <mat-icon>
-                                                    <img src="assets/icons/web_app/Search.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                    <img src="assets/icons/web_app/icon_search_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
-                                                <span>Search</span>
+                                                <span>Searching</span>
                                             </a>
                                             <mat-divider vertical></mat-divider>
 
@@ -1398,7 +1398,7 @@
                                         <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/time-billing'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_invoice_d.ico" alt=""
+                                                    <img src="assets/icons/web_app/icon_search_delete_d.ico" alt=""
                                                         matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <div class="main-text">
@@ -1407,18 +1407,7 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section class="ribbon-section" disabled>
-                                        <button mat-button class="large-button">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img class="menu-disabled" src="assets/icons/web_app/infotrack.ico"
-                                                        alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text">
-                                                    <span>Start InfoTrack <br> Search</span>
-                                                </div>
-                                            </section>
-                                        </button>
+                                    <section class="ribbon-section">
                                         <button mat-button class="large-button">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1431,7 +1420,7 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section class="ribbon-section" disabled>
+                                    <section class="ribbon-section">
                                         <button mat-button class="large-button">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">

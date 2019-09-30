@@ -22,7 +22,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   [x: string]: any;
   highlightedRows: any;
-  abced:any=[];
+  abced: any = [];
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   displayedColumns = [];
@@ -53,7 +53,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.abced=[];
+    this.abced = [];
     $('content').addClass('inner-scroll');
     this.getMatterList(this.lastFilter);
   }
@@ -61,7 +61,6 @@ export class MattersListComponent implements OnInit, OnDestroy {
     this.getMatterList(JSON.parse(localStorage.getItem('matter_filter')));
   }
   onPaginateChange(event) {
-    console.log(event);
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
   }
@@ -71,7 +70,6 @@ export class MattersListComponent implements OnInit, OnDestroy {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
-        console.log(this.ColumnsObj);
         this.tempColobj = data.tempColobj;
       }
     }, error => {
@@ -117,19 +115,19 @@ export class MattersListComponent implements OnInit, OnDestroy {
         }
         this.mattersData = new MatTableDataSource(response.DATA.MATTERS);
         this.mattersData.paginator = this.paginator;
-        
-      //   this.mattersData._paginator._pageIndex=0;
-      //   setInterval(() => {
-      //     this.abced.push({});
-      //     console.log(this.abced);
-          
-      //     this.mattersData._paginator._pageIndex=this.abced.length;
-      //     this.onPaginateChange({onPaginateChange:this.mattersData._paginator._pageSize});
-      //     console.log(this.mattersData);
-      //   }, 4000);
-      // for(let i=0;i<=this.mattersData.filteredData.length;i++){
-        
-      // }
+
+        //   this.mattersData._paginator._pageIndex=0;
+        //   setInterval(() => {
+        //     this.abced.push({});
+        //     console.log(this.abced);
+
+        //     this.mattersData._paginator._pageIndex=this.abced.length;
+        //     this.onPaginateChange({onPaginateChange:this.mattersData._paginator._pageSize});
+        //     console.log(this.mattersData);
+        //   }, 4000);
+        // for(let i=0;i<=this.mattersData.filteredData.length;i++){
+
+        // }
         // console.log(this.mattersData.filteredData.length);
         this.mattersData.sort = this.sort;
         this.isLoadingResults = false;

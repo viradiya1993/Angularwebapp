@@ -47,7 +47,7 @@ export class legalDetailTaskComponent implements OnInit {
     this.MainTaskFilterData = JSON.parse(localStorage.getItem("task_filter"));
 
     this.filterData = {
-      'MATTERGUID': this.currentMatter.MATTERGUID, 'STATUS': ' ',"USERGUID":''
+      'MATTERGUID': this.currentMatter.MATTERGUID, 'STATUS': ' ', "USERGUID": ''
     }
     if (!localStorage.getItem("task_filter_legal")) {
       localStorage.setItem('task_filter_legal', JSON.stringify(this.filterData));
@@ -84,7 +84,6 @@ export class legalDetailTaskComponent implements OnInit {
     this.Task_table = [];
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(data, 'GetTask').subscribe(response => {
-      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Task_table = new MatTableDataSource(response.DATA.TASKS);
         this.Task_table.paginator = this.paginator;

@@ -92,8 +92,8 @@ export class ChartAccountComponent implements OnInit {
     this.ChartData.AccountClass = this.filterData.AccountClass;
     this.loadData(this.filterData);
   }
-
-  ngOnInit() {
+  ngOnInit() {    
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 80)) + 'px');
     this.acc = "";
   }
   loadData(data: any) {

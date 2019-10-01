@@ -51,12 +51,6 @@
                                     </a>
                                 </div>
 
-                                <div class="nav-item business" aria-label="frequently contacted">
-                                    <!-- [routerLink]="'/system-setting/business'" <button [queryParams]="{ calander: 'business' }"></button> -->
-                                    <a (click)="accountClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='account'}">
-                                        <div class="title">Account</div>
-                                    </a>
-                                </div>
 
                                 <div class="nav-item defaults" aria-label="starred">
                                     <a (click)="defaultsClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='defaults'}">
@@ -78,6 +72,14 @@
                                         <div class="title">Trust</div>
                                     </a>
                                 </div>
+                                
+                                <div class="nav-item business" aria-label="frequently contacted">
+                                    <!-- [routerLink]="'/system-setting/business'" <button [queryParams]="{ calander: 'business' }"></button> -->
+                                    <a (click)="accountClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='account'}">
+                                        <div class="title">Account</div>
+                                    </a>
+                                </div>
+                                
                                 <div class="nav-item template" aria-label="starred">
                                     <a (click)="templatesClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='templates'}">
                                         <div class="title">Templates</div>

@@ -118,7 +118,6 @@ export class EmailDailogComponent implements OnInit {
   innerTable(){
     // this.isLoadingResults = true;
       this._mainAPiServiceService.getSetData({"TEMPLATETYPE":'Email'}, 'TemplateFieldList').subscribe(res=>{
-      console.log(res);
       this.InnerTableData = new MatTableDataSource(res.DATA.FIELDS);
       this.InnerTableData.paginator = this.paginator;
       this.InnerTableData.sort = this.sort;

@@ -110,7 +110,6 @@ export class TaskComponent implements OnInit {
     this.isGetUserEmpty='yes';
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({ 'Active':'yes' },'GetUsers').subscribe(response => {
-      console.log(response);
       if(response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         this.GetUSERS = response.DATA.USERS;
         this.isGetUserEmpty='no';
@@ -184,7 +183,6 @@ export class TaskComponent implements OnInit {
     const dialogRef = this.dialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         this.MainTask.controls['matter'].setValue(result.MATTER);
         this.filterData = JSON.parse(localStorage.getItem("task_filter"));
         this.filterData.MATTERGUID = result.MATTERGUID;
@@ -222,11 +220,10 @@ export class TaskComponent implements OnInit {
     });
   }
   selectUsers(value) {
-    console.log(value);
     this.filterData = JSON.parse(localStorage.getItem("task_filter"));
     console.log(this.GetUSERS);
     let val = this.GetUSERS.find(c => c['USERNAME'] == value)
-console.log(val);
+
     this.filterData.USERGUID = val.USERGUID;
     this.filterData.user = value;
     this.behaviorService.UserDropDownData(val);

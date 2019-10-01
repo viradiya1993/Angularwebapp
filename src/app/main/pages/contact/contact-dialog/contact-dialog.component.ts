@@ -171,7 +171,6 @@ export class ContactDialogComponent implements OnInit {
               this.contactForm.get('OTHERFAMILYNAME').enable();
               this.contactForm.get('REASONFORCHANGE').enable();
             }
-
             if (getContactData.SAMEASSTREET == 1) {
               this.contactForm.get('POSTALADDRESS1').disable();
               this.contactForm.get('POSTALADDRESS2').disable();
@@ -283,7 +282,7 @@ export class ContactDialogComponent implements OnInit {
     }
   }
   splitname(){
-    this.namepusharray=[];
+   this.namepusharray=[];
    let val:any= (this.f.CONTACTNAME.value).split(' ');
    let val1 = val[0];
    let val2 = val.length-1;
@@ -300,7 +299,6 @@ export class ContactDialogComponent implements OnInit {
   this.contactForm.controls['FAMILYNAME'].setValue(val3);
   this.contactForm.controls['MIDDLENAMES'].setValue(this.namepusharray.join(' '));
   }
-
   // convenience getter for easy access to form fields
   get f() {
     //console.log(this.contactForm);

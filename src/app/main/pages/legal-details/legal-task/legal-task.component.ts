@@ -88,7 +88,6 @@ export class legalDetailTaskComponent implements OnInit {
         this.Task_table = new MatTableDataSource(response.DATA.TASKS);
         this.Task_table.paginator = this.paginator;
         this.Task_table.sort = this.sort;
-
         if (response.DATA.TASKS[0]) {
           this.behaviorService.TaskData(response.DATA.TASKS[0]);
           this.highlightedRows = response.DATA.TASKS[0].TASKGUID;
@@ -162,7 +161,6 @@ export class legalDetailTaskComponent implements OnInit {
     localStorage.setItem('lastPageSize', event.pageSize);
   }
   RowClick(row) {
-    console.log(row);
     this.behaviorService.TaskData(row);
   }
   refreshLegalTask() {

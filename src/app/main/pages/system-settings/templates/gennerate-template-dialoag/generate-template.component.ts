@@ -27,20 +27,18 @@ export class GenerateTemplatesDialoagComponent implements OnInit {
   highlightedRows: any;
   getDropDownValue: any = [];
   getRoeData:any=[];
-
   pageSize: any;
   constructor(private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService,
     public dialogRef: MatDialogRef<GenerateTemplatesDialoagComponent>,   public _matDialog: MatDialog,private router:Router,
     public behaviorService:BehaviorService ) { }
-
-  ngOnInit() {
+  
+    ngOnInit() {
     this.LoadData({});
   }
+  
   LoadData(data){
     this.isLoadingResults = true;
-
     this._mainAPiServiceService.getSetData(data, 'TemplateList').subscribe(response => {
-      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Templatedata = new MatTableDataSource(response.DATA.TEMPLATES);
         this.Templatedata.paginator = this.paginator;

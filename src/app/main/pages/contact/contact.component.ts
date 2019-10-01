@@ -96,7 +96,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
     // this._mainAPiServiceService.getSetData(postData, 'SetActivity').subscribe
     this.Contactdata = [];
     this.isLoadingResults = true;
-    this.subscription = this._mainAPiServiceService.getSetData(data, 'GetContact').subscribe(response => {
+     this._mainAPiServiceService.getSetData(data, 'GetContact').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Contactdata = new MatTableDataSource(response.DATA.CONTACTS);
         this.Contactdata.paginator = this.paginator;
@@ -104,7 +104,6 @@ export class ContactComponent implements OnInit, AfterViewInit {
         if (response.DATA.CONTACTS[0]) {
           localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);
           // localStorage.setItem('contactData',  JSON.stringify(response.DATA.CONTACTS[0]));
-
           this.highlightedRows = response.DATA.CONTACTS[0].CONTACTGUID;
         }
         this.isLoadingResults = false;
@@ -168,11 +167,11 @@ export class ContactComponent implements OnInit, AfterViewInit {
   }
   onSearch(searchFilter: any) {
     this.filterVals.SEARCH = this.f.search.value;
+    localStorage.setItem('contact_Filter', JSON.stringify(this.filterVals));
     this.LoadData(this.filterVals);
-
   }
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
   }
 }
 

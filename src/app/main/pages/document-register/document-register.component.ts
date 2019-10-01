@@ -62,7 +62,6 @@ export class DocumentRegisterComponent implements OnInit {
   }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('Matter Documents', '').subscribe(response => {
-      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
         this.displayedColumns = data.showcol;

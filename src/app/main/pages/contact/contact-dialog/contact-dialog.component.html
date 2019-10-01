@@ -1,13 +1,12 @@
 <div class="example-loading-shade" *ngIf="isLoadingResults">
     <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
 </div>
-
 <div cdkDrag class="popup_main_div add_edit_contact_main">
     <h2 cdkDragHandle mat-dialog-title>{{dialogTitle}}
         <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
                     <mat-icon>close</mat-icon>
             </button>
-    </h2>
+</h2>
     <div mat-dialog-content class="mat-typography main">
         <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
             <form name="contactForm" id="contactForm" [formGroup]="contactForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
@@ -20,7 +19,6 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <mat-checkbox formControlName="ACTIVE">Contact is Active</mat-checkbox>
                 </div>
-
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.CONTACTNAME,'has-warning':errorWarningData.Warning?.CONTACTNAME}">
                         <mat-label>Name</mat-label>

@@ -111,7 +111,6 @@ export class EmailTempleteComponent implements OnInit {
 
   }
   onPaginateChange(event) {
-    console.log(event);
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
   }

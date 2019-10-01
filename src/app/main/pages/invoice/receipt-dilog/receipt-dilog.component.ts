@@ -53,6 +53,8 @@ export class ReceiptDilogComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   isEdit: boolean = false;
   AMOUNT: any = 0;
+  AllocationBtn: string;
+  TotalInvoice: any;
 
   constructor(
     private toastr: ToastrService,
@@ -71,6 +73,7 @@ export class ReceiptDilogComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit() {
+    this.AllocationBtn='auto';
     this.PrepareReceiptForm = this._formBuilder.group({
       INCOMECODE: [''],
       INCOMECLASS: ['Receipt'],
@@ -92,6 +95,7 @@ export class ReceiptDilogComponent implements OnInit {
       RECEIPTAMOUNTEXGST: [''],
       SHOW: [''],
       Unallocated: [''],
+      allocatedSelected:['']
     });
    ;
     this.getPayor({});
@@ -157,8 +161,10 @@ export class ReceiptDilogComponent implements OnInit {
       this.toastr.error(err);
     });
     this.isLoadingResults = true;
+
     this._mainAPiServiceService.getSetData({ "RECEIPTGUID": INCOMEGUID }, 'GetReceiptAllocation').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
+        console.log(response);
         if (response.DATA.RECEIPTALLOCATIONS[0]) {
           this.highlightedRows = response.DATA.RECEIPTALLOCATIONS[0].INVOICEGUID;
           this.currentInvoiceData = response.DATA.RECEIPTALLOCATIONS[0];
@@ -193,6 +199,8 @@ export class ReceiptDilogComponent implements OnInit {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(data, 'GetInvoice').subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
+        console.log(response);
+        this.TotalInvoice=response.DATA.TOTALINVOICES;
         if (response.DATA.INVOICES[0]) {
           this.highlightedRows = response.DATA.INVOICES[0].INVOICEGUID;
           this.currentInvoiceData = response.DATA.INVOICES[0];
@@ -227,20 +235,34 @@ export class ReceiptDilogComponent implements OnInit {
     this.PrepareReceiptForm.controls['INCOMEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
   editContact(row: any) {
+    console.log(row);
     this.currentInvoiceData = row;
+    this.PrepareReceiptForm.controls['Unallocated'].setValue(row.AMOUNTOUTSTANDINGINCGST);
   }
   onChangeShow(val) {
     let data = {};
     if (val == 3) {
+      this.AllocationBtn="clear"
       data = { 'Outstanding': 'Yes' };
     } else if (val == 1) {
-      data = { MATTERGUID: this.matterData.MATTERGUID };
+      data = { MATTERGUID:this.matterData.MATTERGUID};
     } else if (val == 2) {
       data = { MATTERGUID: this.matterData.CONTACTNAME };
     }
     this.GetInvoiceForReceipt(data);
   }
   revivedAmount() {
+    if(this.f.AMOUNT.value > this.TotalInvoice){
+            let val = this.f.AMOUNT.value - this.TotalInvoice;
+            this.PrepareReceiptForm.controls['Unallocated'].setValue(val.toFixed(2));
+    }else{
+            if( this.AllocationBtn =='clear'){
+              this.PrepareReceiptForm.controls['Unallocated'].setValue(this.f.AMOUNT.value);
+            }else{
+              this.PrepareReceiptForm.controls['Unallocated'].setValue(0);
+            }
+            
+    }
     this.AMOUNT = parseFloat(this.f.AMOUNT.value).toFixed(2);
   }
   getClosetInvoiceForAllocation() {
@@ -270,6 +292,20 @@ export class ReceiptDilogComponent implements OnInit {
         this.getClosetInvoiceForAllocation();
       }
     }
+  }
+  clickAutoAllocation(){
+    this.AllocationBtn='auto';
+    if(this.f.AMOUNT.value > this.TotalInvoice){
+      let val = this.f.AMOUNT.value - this.TotalInvoice;
+      this.PrepareReceiptForm.controls['Unallocated'].setValue(val.toFixed(2));
+    }else{
+      this.PrepareReceiptForm.controls['Unallocated'].setValue(0.00);
+    }
+  
+  }
+  clickClearAllocation(){
+    this.AllocationBtn='clear';
+    this.PrepareReceiptForm.controls['Unallocated'].setValue(this.f.AMOUNT.value);
   }
   SaveReceipt() {
     this.isspiner = true;

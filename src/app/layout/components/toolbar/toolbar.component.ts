@@ -153,12 +153,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.behaviorService.MainAuthorityData$.subscribe(result => {
             this.MainAuthorityData = result;
             if (result != null) {
-                if (result.AUTHORITY != undefined) { 
-                    if(result.AUTHORITY.WEBADDRESS !=''){
+                if (result.AUTHORITY != undefined) {
+                    if (result.AUTHORITY.WEBADDRESS != '') {
                         this.mainlegalAuthWebUrl = result.Main.WEBADDRESS;
-                    }else{ this.mainlegalAuthWebUrl = ''}
-                    this.DisMainAuthorityToolbar = 'Autho_yes'; }
-                else { this.DisMainAuthorityToolbar = 'Autho_no'; this.mainlegalAuthWebUrl='' }
+                    } else { this.mainlegalAuthWebUrl = '' }
+                    this.DisMainAuthorityToolbar = 'Autho_yes';
+                }
+                else { this.DisMainAuthorityToolbar = 'Autho_no'; this.mainlegalAuthWebUrl = '' }
             }
         });
         this.behaviorService.LegalAuthorityData$.subscribe(result => {
@@ -639,29 +640,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         let postData = {
             BankStatementDate: this.recouncileItemdata.BankStatementDate,
-            ClosingBalance: this.recouncileItemdata.BankStatementDate,
-            // RECONCILIATIONGUID :'',
-            // ACCOUNTGUID:'',
-            // PERIODENDDATE:'',
-            // RECONCILEDDATE:'',
-            // STARTINGBALANCE:'',
-            // DEPOSITS:'',
-            // WITHDRAWALS:'',
-            // UNPRESENTEDDEPOSITS:'',
-            // UNPRESENTEDWITHDRAWALS:'',
-            // ENDINGBALANCE:'',
-            // PREPAREDBY:'',
+            ClosingBalance: this.recouncileItemdata.ClosingBalance,
             RECONCILIATIONITEMS: [
                 this.recouncileItemdata.item
             ]
-
-            // ITEMDATE:'',
-            // DEBITAMOUNT:'',
-            // CREDITAMOUNT:'',
-            // LINKTYPE:'',
-            // LINKGUID:'',
-            // JOURNALGUID:'',
-
         }
         let sendData = {
             DATA: postData, FormAction: 'insert'
@@ -669,12 +651,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this._mainAPiServiceService.getSetData(sendData, 'SetReconciliation').subscribe(res => {
             console.log(res);
             if (res.STATUS == "success" && res.CODE == 200) {
-                // $('#refreshSpendMoneyTab').click();
+                //$('#refreshSpendMoneyTab').click();
                 this.toastr.success('Save successfully');
             }
         });
     }
-    undoRecouncilebtn(){
+    undoRecouncilebtn() {
 
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
@@ -696,7 +678,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /* ---------------------------------------------------------------------end of timer add--------------------------------------------------------------------------  */
     //Reportpopup open
     Reportpopup(ReportData) {
-
         let type: number;
         if (ReportData.REPORTGROUP == 'Management')
             type = 27;
@@ -791,8 +772,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }
     }
     //// Duplicate Spend Money
-
-
     deleteContact(): void {
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
@@ -889,11 +868,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             data: SpendMoneyPopdata
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result){
+            if (result) {
                 $("#refreshSpendMoneyTab").click();
                 $('#refreshRecouncilItem').click();
             }
-             
+
         });
     }
 
@@ -1310,9 +1289,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-
-
-
     //DeleteChron
     DeleteChron() {
         this.behaviorService.LegalChronologyData$.subscribe(result => {
@@ -1373,8 +1349,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     setTimeScale(params: any) {
         this.behaviorService.setTimeScale(params);
     }
-
-
     //_____________________________________________________________________________________________________
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
@@ -1542,9 +1516,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 }
             });
         }
-
-        // return false;
-
     }
     createInvoice() {
         const dialogRef = this._matDialog.open(InvoiceAddDailogComponent, { width: '100%', disableClose: true, data: null });
@@ -1587,9 +1558,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                     width: '100%', disableClose: true,
                     data: { action: 'add', type: " ", matterData: result }
                 });
-                dialogRef.afterClosed().subscribe(result => { if (result) { 
-                    $('#refreshReceiceMoany').click();
-                } });
+                dialogRef.afterClosed().subscribe(result => {
+                    if (result) {
+                        $('#refreshReceiceMoany').click();
+                    }
+                });
             }
         });
     }
@@ -1695,8 +1668,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef = null;
         });
     }
-
-
     NewGeneralReceipt(type: any): void {
         const dialogRef = this._matDialog.open(GeneralReceiptDilogComponent, { width: '100%', disableClose: true, data: { 'type': type, 'Id': '' } });
         dialogRef.afterClosed().subscribe(result => {
@@ -1751,7 +1722,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     deleteTask() {
-
         this.behaviorService.TaskData$.subscribe(result => {
             if (result) {
                 this.TaskData = result;
@@ -1775,9 +1745,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
             this.confirmDialogRef = null;
         });
-
-
-
     }
     //////// End  Task///////////////////
     clickToolbarbtn() {

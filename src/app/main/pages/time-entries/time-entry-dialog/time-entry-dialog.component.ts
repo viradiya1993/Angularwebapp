@@ -98,6 +98,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       INVOICEDATE: [this.datepipe.transform(new Date(), 'dd/MM/yyyy')],
     });
     this.timeEntryForm.controls['matterautoVal'].setValue(maaterguid.MATTER);
+    this.calculateData.MatterGuid = maaterguid.MATTERGUID;
     this.timeEntryForm.controls['MATTERGUID'].setValue(maaterguid.MATTERGUID);
     this.calculateData.QuantityType = 'H';
     this.ITEMDATEModel = new Date();

@@ -57,6 +57,7 @@ import { WriteOffInvoiceComponent } from 'app/main/pages/invoice/newWriteOffInvo
 // import { TopicDialogComponent } from 'app/main/pages/main-authorities/topic/topic-dialog/topic-dialog.component';
 import { AuthorityDialogComponent } from 'app/main/pages/globally-Authority/main-authorities/authority-dialog/authority-dialog.component';
 import { TopicDialogComponent } from 'app/main/pages/globally-Authority/main-authorities/topic/topic-dialog/topic-dialog.component';
+import { EstimateDilogComponent } from 'app/main/pages/time-billing/estimate/estimate-dilog/estimate-dilog.component';
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -714,6 +715,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         });
     }
+
     DeleteFileNotes() {
         this.behaviorService.FileNotesData$.subscribe(result => {
             if (result) {
@@ -763,6 +765,50 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                     this._mainAPiServiceService.getSetData(postData, 'SetExpenditure').subscribe(res => {
                         if (res.STATUS == "success" && res.CODE == 200) {
                             $('#refreshSpendMoneyTab').click();
+                            this.toastr.success('Delete successfully');
+                        }
+                    });
+                }
+                this.confirmDialogRef = null;
+            });
+        }
+    }
+    // 
+    addNewEstimate(actionType) {
+        let EstimatePopdata = {}
+        if (actionType == 'new') {
+            EstimatePopdata = { action: actionType }
+        } else if (actionType == 'edit' || actionType == 'duplicate') {
+            EstimatePopdata = { action: actionType }
+        }
+        const dialogRef = this.dialog.open(EstimateDilogComponent, { disableClose: true, panelClass: 'Document-dialog', data: EstimatePopdata });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                $('#refreshFileNote').click();
+            }
+        });
+    }
+    //delete Estimate  item
+    deleteEstimate() {
+        this.behaviorService.FileNotesData$.subscribe(result => {
+            if (result) {
+                this.FileNotesData = result;
+            }
+        });
+        if (this.FileNotesData == null) {
+            this.toastr.error("No Data Selected");
+        } else {
+            this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+                disableClose: true,
+                width: '100%',
+            });
+            this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+            this.confirmDialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    let postData = { FormAction: "delete", DATA: { FILENOTEGUID: this.FileNotesData.FILENOTEGUID } }
+                    this._mainAPiServiceService.getSetData(postData, 'SetFileNote').subscribe(res => {
+                        if (res.STATUS == "success" && res.CODE == 200) {
+                            $('#refreshFileNote').click();
                             this.toastr.success('Delete successfully');
                         }
                     });

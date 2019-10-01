@@ -14,9 +14,10 @@ import { MatterInvoicesComponent } from './matter-invoices/matter-invoices.compo
 import { ReceiptsCreditsComponent } from './receipts-credits/receipts-credits.component';
 import { MatterTrustComponent } from './matter-trust/matter-trust.component';
 //import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
-import {MatSortModule} from '@angular/material/sort';
+import { MatSortModule } from '@angular/material/sort';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker'
 import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
+import { EstimateDilogComponent } from './estimate/estimate-dilog/estimate-dilog.component';
 
 
 
@@ -38,13 +39,14 @@ const routes = [
   }
 ];
 @NgModule({
-  
-  declarations: [TimeBillingComponent, EstimateComponent, WorkInProgressComponent, MatterInvoicesComponent, ReceiptsCreditsComponent, MatterTrustComponent],
+
+  declarations: [
+    TimeBillingComponent, EstimateComponent, WorkInProgressComponent, MatterInvoicesComponent, ReceiptsCreditsComponent, MatterTrustComponent, EstimateDilogComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     FuseSharedModule,
-   
+
     //mat 
     SatDatepickerModule, SatNativeDateModule,
     MatButtonModule,
@@ -68,9 +70,12 @@ const routes = [
   exports: [
     TimeBillingComponent
   ],
+  entryComponents: [
+    EstimateDilogComponent
+  ],
   providers: [
-    {provide: DateAdapter, useClass: AppDateAdapter},
-    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
+    { provide: DateAdapter, useClass: AppDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
   ],
 })
 export class TimeBillingModule { }

@@ -22,19 +22,19 @@
                     &nbsp;&nbsp;
                     <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
                         <mat-label>Date</mat-label>
-                        <input (dateInput)="choosedDateFrom()" (dateChange)="DateFrom()" matInput formControlName="APPOINTMENTDATE" [matDatepicker]="picker">
+                        <input (dateInput)="DateFrom('input', $event)" (dateChange)="DateFrom('change', $event)" matInput formControlName="APPOINTMENTDATE" [matDatepicker]="picker">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4" *ngIf="CheckClick ==='No'">
                         <mat-label>Start</mat-label>
-                        <mat-select formControlName="APPOINTMENTTIME">
+                        <mat-select formControlName="APPOINTMENTTIME"  (ngModelChange)="StartTime($event)">
                             <mat-option *ngFor="let data of timeStops" value="{{data}}">{{data}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4" *ngIf="CheckClick==='No'">
                         <mat-label>Finish</mat-label>
-                        <mat-select formControlName="TimeSlot2">
+                        <mat-select formControlName="TimeSlot2" (ngModelChange)="EndTime($event)">
                             <mat-option *ngFor="let data of timeStops" value="{{data}}">{{data}}</mat-option>
                         </mat-select>
                     </mat-form-field>

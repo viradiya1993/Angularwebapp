@@ -1021,6 +1021,63 @@
                                     <div class="light_label_txt">Action</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
+                                <!--estimate section start-->
+                                <section class="group-section-tab details_tab" *ngIf="activeSubMenu =='estimate'">
+                                    <section [ngClass]="appPermissions[4]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[4]?.Create==0 ? 'large-button' : 'large-button'" (click)="addNewEstimate('Add')">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_estimate_new_d.ico" alt=""
+                                                        matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>New Est.  <br> Item</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section [ngClass]="appPermissions[4]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[4]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="addNewEstimate('Edit')">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_estimate_edit_d.ico" alt=""
+                                                        matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Edit Est. <br> Item</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section [ngClass]="appPermissions[4]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[4]?.Delete==0 ? 'disabled-click large-button' : 'large-button'" (click)="deleteEstimate()">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_estimate_delete_d.ico" alt=""
+                                                        matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Delete Est. <br> Item</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section [ngClass]="appPermissions[4]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[4]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="addNewEstimate('Duplicate')">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_duplicate_d.ico" alt=""
+                                                        matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Duplicate Est.<br>Item</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <div class="light_label_txt">Action</div>
+                                </section>
+                                <!--estimate section end-->
                                 <!-- time entry section -->
                                 <section class="group-section-tab details_tab" *ngIf="activeSubMenu =='work-in-progress' && isInvoice != 'invoice'">
                                     <section [ngClass]="appPermissions[2]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
@@ -1049,8 +1106,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[2]?.Delete==0 ? 'disabled-click large-button' : 'large-button'">
-                                        <button mat-button [ngClass]="appPermissions[2]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" (click)="deleteTimeEntry()">
+                                    <section [ngClass]="appPermissions[2]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[2]?.Delete==0 ? 'disabled-click large-button' : 'large-button'" (click)="deleteTimeEntry()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_time_cost_delete_d.ico" alt=""

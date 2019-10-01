@@ -112,20 +112,14 @@ export class DairyDailogComponent implements OnInit {
   // }
   //DocumentSave
   SaveAppointment() {
-    console.log(this.f.dayweek);
-    console.log("==Amit==");
-    console.log(this.f.dayweek.value);
-    return;
     if(this.action === 'edit'){
       // this.appoitmentID=
-      //console.log(1);
       this.FormAction = 'update';
     }else if(this.action === 'duplicate' || this.action ==="new"){
       this.FormAction = 'insert';
-      //console.log(2);
     }
     let data= {
-      APPOINTMENTGUID:" ",
+      APPOINTMENTGUID:"",
       SUBJECT:this.f.SUBJECT.value,
       LOCATION:this.f.LOCATION.value,
       ALLDAYEVENT:this.f.ALLDAYEVENT.value,
@@ -133,19 +127,27 @@ export class DairyDailogComponent implements OnInit {
       APPOINTMENTENDDATE:this.f.DateFrom.value,
       APPOINTMENTTIME:this.App_StartTime,
       APPOINTMENTTYPE:this.f.type.value,
-      CATEGORY:this.f.Category.value,
       REMINDER:this.f.Reminder.value,
       REMINDERMINUTESBEFORE:this.f.Beforestart.value,
+      CATEGORY:this.f.Category.value,
+      MATTERGUID:"",
+     
       RECURRING: {
         DAYFREQUENCY:this.f.Every.value,
         WEEKFREQUENCY:this.f.EveryWeekly.value,
-        WEEKDAYMASK: this.f.mon.value,
+        WEEKDAYMASK: this.f.dayweek.value,
         MONTHFREQUENCY:this.f.EveryMonthly.value,
         MONTHOPTIONS:this.f.EveryDay.value,
         MONTHOPTIONDAY:this.f.RedioChnageDay.value,
         MONTHWHICHWEEK:this.f.countvalue.value,
         MONTHWHICHDAY:this.f.DaySelect.value,
         RECURRINGUNTIL:this.f.SendEndDate.value
+      },
+      SYNCHRONISINGINFO:{
+        DATECREATED:"",
+        TIMECREATED:"",
+        DATEMODIFIED:"",
+        TIMEMODIFIED:""
       }
     }
     console.log(data);

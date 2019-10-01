@@ -10,14 +10,14 @@ import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 export class RecurrancePatternComponent implements OnInit {
   @Input() DairyForm: FormGroup;
   RedioBtnValue:any;
-  WeekDay =[
-    {value:1, day: "Monday" },
-    { value:2,day: "Tuesday" },
-    {value:3, day: "Wednesday" },
+  WeekDay:any =[
+    {value:1, day: 'Monday' },
+    {value:2, day: 'Tuesday' },
+    {value:3, day: 'Wednesday' },
     {value:4, day: 'Thursday' },
-    { value:5,day: 'Friday' },
+    {value:5, day: 'Friday' },
     {value:6, day: 'Saturday' },
-    {value:7,day: 'Sunday' }
+    {value:7, day: 'Sunday' }
   ]
   constructor(public datepipe: DatePipe,private fb: FormBuilder) { }
 
@@ -50,8 +50,7 @@ export class RecurrancePatternComponent implements OnInit {
         this.DairyForm.controls['EveryDay'].enable();
         this.DairyForm.controls['countvalue'].disable();
         this.DairyForm.controls['DaySelect'].disable();
-    }
-    else if(this.f.RedioChnageDay.value == 'The'){
+    }else if(this.f.RedioChnageDay.value == 'The'){
         this.DairyForm.controls['countvalue'].enable();
         this.DairyForm.controls['DaySelect'].enable();
         this.DairyForm.controls['EveryDay'].disable();
@@ -75,6 +74,6 @@ export class RecurrancePatternComponent implements OnInit {
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value, 'dd/MM/yyyy');
     console.log(begin);
-    this.DairyForm.controls['SendEndDate'].setValue(begin);
+    this.DairyForm.controls['SendEndDate'].setValue(begin); 
   }
 }

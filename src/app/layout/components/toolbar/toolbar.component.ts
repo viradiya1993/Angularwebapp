@@ -345,7 +345,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 return false;
             }
             let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
-
             MaterPopupData = { action: actionType, 'matterGuid': mattersData.MATTERGUID }
         }
         const dialogRef = this.dialog.open(MatterPopupComponent, {

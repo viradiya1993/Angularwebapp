@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
-import { MainAPiServiceService,TableColumnsService } from 'app/_services';
+import { MainAPiServiceService, TableColumnsService } from 'app/_services';
 import { MatterPopupComponent } from '../matters/matter-popup/matter-popup.component';
 import { MatDialog, MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { MatterDialogComponent } from '../time-entries/matter-dialog/matter-dialog.component';
@@ -20,14 +20,14 @@ export class MainSafeCustodyComponent implements OnInit {
   pageSize: any;
   isLoadingResults: boolean = false;
   tempColobj: any;
-  highlightedRows:any;  
-  displayedColumns:any;
-  addData:any=[];
-  MainSafeCustodyData:any=[];
+  highlightedRows: any;
+  displayedColumns: any;
+  addData: any = [];
+  MainSafeCustodyData: any = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(private _mainAPiServiceService:MainAPiServiceService, private dialog: MatDialog,
-    private TableColumnsService: TableColumnsService, private toastr: ToastrService,) { }
+  constructor(private _mainAPiServiceService: MainAPiServiceService, private dialog: MatDialog,
+    private TableColumnsService: TableColumnsService, private toastr: ToastrService, ) { }
 
   ngOnInit() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 70)) + 'px');
@@ -37,11 +37,10 @@ export class MainSafeCustodyComponent implements OnInit {
     //  // console.log(response);
     //   this.addData=response.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP
     // })
-    
+
   }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('safe custody', '').subscribe(response => {
-      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
         this.displayedColumns = data.showcol;
@@ -56,26 +55,25 @@ export class MainSafeCustodyComponent implements OnInit {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
   }
-  LoadData(){
-    this.isLoadingResults=true;
+  LoadData() {
+    this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({}, 'GetSafeCustody').subscribe(res => {
-      console.log(res);
       return
       if (res.CODE == 200 && res.STATUS == "success") {
         // this.behaviorService.DocumentRegisterData(res.DATA.DOCUMENTS[0]);
         this.MainSafeCustodyData = new MatTableDataSource(res.DATA.DOCUMENTS);
         this.MainSafeCustodyData.sort = this.sort;
         this.MainSafeCustodyData.paginator = this.paginator;
-        this.highlightedRows=res.DATA.DOCUMENTS[0].DOCUMENTGUID;
-        this.isLoadingResults=false;
+        this.highlightedRows = res.DATA.DOCUMENTS[0].DOCUMENTGUID;
+        this.isLoadingResults = false;
       }
     }, err => {
-      this.isLoadingResults=false;
+      this.isLoadingResults = false;
       this.toastr.error(err);
 
     });
   }
-  
+
   SelectMatter() {
     const dialogRef = this.dialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
     dialogRef.afterClosed().subscribe(result => {
@@ -86,12 +84,13 @@ export class MainSafeCustodyComponent implements OnInit {
     });
   }
   SelectContactMatter() {
-    const dialogRef = this.dialog.open(ContactSelectDialogComponent, { 
-      width: '100%', 
+    const dialogRef = this.dialog.open(ContactSelectDialogComponent, {
+      width: '100%',
       disableClose: true,
-    data:{
-      type:"fromcontact"
-    } });
+      data: {
+        type: "fromcontact"
+      }
+    });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
 

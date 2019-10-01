@@ -22,6 +22,7 @@ export class MatterPopupComponent implements OnInit {
   isEditMatter: any = "";
   dialogTitle: string;
   isspiner: boolean = false;
+  isDefultMatter: boolean = true;
   FormAction: string;
   classtype: any;
   BILLINGMETHODVAL: any = '';
@@ -47,6 +48,9 @@ export class MatterPopupComponent implements OnInit {
       this.isLoadingResults = true;
       this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: true, DATA: {} }, 'SetMatter').subscribe(res => {
         if (res.CODE == 200 && res.STATUS == "success") {
+          if (res.DATA.DEFAULTVALUES['SHORTNAME'] == "") {
+            this.isDefultMatter = false;
+          }
           this.matterdetailForm.controls['SHORTNAME'].setValue(res.DATA.DEFAULTVALUES['SHORTNAME']);
         } else if (res.MESSAGE === 'Not logged in') {
           this.dialogRef.close(false);

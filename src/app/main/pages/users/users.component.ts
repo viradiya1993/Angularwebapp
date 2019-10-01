@@ -81,7 +81,7 @@ export class UsersComponent implements OnInit {
   }
   loadData(filterData) {
     this.isLoadingResults = true;
-    filterData.AllData = true;
+    filterData.AllData = false;
     this._mainAPiServiceService.getSetData(filterData, 'GetUsers').subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (response.DATA.USERS[0]) {

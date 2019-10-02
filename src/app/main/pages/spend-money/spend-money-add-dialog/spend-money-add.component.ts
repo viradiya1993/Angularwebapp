@@ -300,12 +300,18 @@ export class SpendMoneyAddComponent implements OnInit {
     this.spendmoneyForm.controls['ChequeNo'].setValue("0");
     this.spendmoneyForm.controls['Type'].setValue("Cash");
     this.spendmoneyForm.controls['Class'].setValue("Expense");
-    this.spendmoneyForm.controls['GST1'].setValue(0.00);
-    this.spendmoneyForm.controls['AmountIncGST'].setValue(0.00);
+
+    this.spendmoneyForm.controls['GST1'].setValue("0.00");
+    this.spendmoneyForm.controls['AmountIncGST'].setValue("0.00");
+    this.spendmoneyForm.controls['AmountExGST'].setValue("0.00");
+    
     this.spendmoneyForm.controls['GSTType'].setValue("1.1");
     this.GstTypeDiff = "1.1";
     this.spendmoneyForm.controls['GST1'].disable();
     this.spendmoneyForm.controls['GST'].setValue(0.0);
+    this.spendmoneyForm.controls['Amount'].setValue(0.00);
+    this.FinalTotal=0.00;
+    this.FinalTotalGST=0.00;
     this.Classtype("Expense");
   }
   onPaginateChange(event) {
@@ -314,6 +320,7 @@ export class SpendMoneyAddComponent implements OnInit {
   }
   getPayee(postData) {
     this._mainAPiServiceService.getSetData(postData, 'GetContact').subscribe(response => {
+      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         response.DATA.CONTACTS.forEach(element => {
           this.getPayourarray.push(element.CONTACTNAME);
@@ -588,6 +595,11 @@ export class SpendMoneyAddComponent implements OnInit {
     });
     this.FinalTotal = Number(this.FAmount.reduce(function (a = 0, b = 0) { return a + b; }, 0));
     this.FinalTotalGST = Number(this.FGst.reduce(function (a = 0, b = 0) { return a + b; }, 0));
+
+    // if(this.FinalTotal==null || this.FinalTotal==null || this.FinalTotalGST==null || this.FinalTotalGST==null){
+    //   this.spendmoneyForm.controls['Amount'].setValue(0.00);
+    //   this.spendmoneyForm.controls['GST'].setValue(0.00);
+    // }
     this.spendmoneyForm.controls['Amount'].setValue(parseFloat(this.FinalTotal).toFixed(2));
     this.spendmoneyForm.controls['GST'].setValue(parseFloat(this.FinalTotalGST).toFixed(2));
   }

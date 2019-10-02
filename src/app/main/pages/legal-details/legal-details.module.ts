@@ -69,7 +69,7 @@ const routes = [
   ],
   exports: [
     LegalDetailsComponent,
-    ChronItemDailogComponent
+    // ChronItemDailogComponent
   ],
  
 })

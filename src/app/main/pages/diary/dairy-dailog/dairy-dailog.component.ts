@@ -6,6 +6,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
 import { MainAPiServiceService, BehaviorService } from '../../../../_services';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 //https://apitest.silq.com.au/MobileService?SetAppointment
 @Component({
   selector: 'app-dairy-dailog',
@@ -13,10 +14,12 @@ import { MainAPiServiceService, BehaviorService } from '../../../../_services';
   styleUrls: ['./dairy-dailog.component.scss']
 })
 export class DairyDailogComponent implements OnInit {
-  timeStops: any = []
+  timeStops: any = [];
+  errorWarningData: any = { "Error": [], 'Warning': [] };
   DairyForm: FormGroup;
   isLoadingResults: boolean = false;
   action: string;
+  confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   dialogTitle: string;
   isspiner: boolean = false;
   CheckClick: any;
@@ -48,15 +51,7 @@ export class DairyDailogComponent implements OnInit {
       this.dialogTitle = 'Duplicate Appointment';
     }
   }
-  // WeekDay =[
-  //   { day: "Monday" },
-  //   { day: "Tuesday" },
-  //   { day: "Wednesday" },
-  //   { day: 'Thursday' },
-  //   { day: 'Friday' },
-  //   { day: 'Saturday' },
-  //   { day: 'Sunday' }
-  // ]
+
   ngOnInit() {
     this.CheckClick = "No";
     this.DairyForm = this._formBuilder.group({
@@ -103,13 +98,7 @@ export class DairyDailogComponent implements OnInit {
   get f() {
     return this.DairyForm.controls;
   }
-  // private addCheckboxes(){
-  //   this.WeekDay.forEach((o, i) => {
-  //     this.control = new FormControl(i === 0); // if first item set to true, else false
-  //     (this.DairyForm.controls.orders as FormArray).push(this.control);
-  //   });
-  //   console.log(this.control);
-  // }
+
   //DocumentSave
   SaveAppointment() {
     if(this.action === 'edit'){
@@ -143,20 +132,91 @@ export class DairyDailogComponent implements OnInit {
         MONTHWHICHDAY:this.f.DaySelect.value,
         RECURRINGUNTIL:this.f.SendEndDate.value
       },
-      SYNCHRONISINGINFO:{
-        DATECREATED:"",
-        TIMECREATED:"",
-        DATEMODIFIED:"",
-        TIMEMODIFIED:""
-      }
+      // SYNCHRONISINGINFO:{
+      //   DATECREATED:"",
+      //   TIMECREATED:"",
+      //   DATEMODIFIED:"",
+      //   TIMEMODIFIED:""
+      // }
     }
     console.log(data);
-    return;
     let finalData = { DATA: data, FormAction: this.FormAction, VALIDATEONLY: true }
-    this._mainAPiServiceService.getSetData({}, 'SetAppointment').subscribe(response => {
-      console.log(response);
+    this._mainAPiServiceService.getSetData(finalData, 'SetAppointment').subscribe(response => {
+      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        this.checkValidation(response.DATA.VALIDATIONS, finalData);
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
+        this.checkValidation(response.DATA.VALIDATIONS, finalData);
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
+        this.checkValidation(response.DATA.VALIDATIONS, finalData);
+      } else if (response.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      } else {
+        this.isspiner = false;
+      }
+
     }, err => {
       this.toastr.error(err);
+    });
+  }
+  checkValidation(bodyData: any, details: any) {
+    let errorData: any = [];
+    let warningData: any = [];
+    let tempError: any = [];
+    let tempWarning: any = [];
+    bodyData.forEach(function (value) {
+      if (value.VALUEVALID == 'No') {
+        errorData.push(value.ERRORDESCRIPTION);
+        tempError[value.FIELDNAME] = value;
+      }
+      else if (value.VALUEVALID == 'Warning') {
+        tempWarning[value.FIELDNAME] = value;
+        warningData.push(value.ERRORDESCRIPTION);
+      }
+
+    });
+    this.errorWarningData = { "Error": tempError, 'Warning': tempWarning };
+    if (Object.keys(errorData).length != 0)
+      this.toastr.error(errorData);
+    if (Object.keys(warningData).length != 0) {
+      this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+        disableClose: true,
+        width: '100%',
+        data: warningData
+      });
+      this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Save?';
+      this.confirmDialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.isspiner = true;
+          this.appotmentSaveData(details);
+        }
+        this.confirmDialogRef = null;
+      });
+    }
+    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+      this.appotmentSaveData(details);
+    this.isspiner = false;
+  }
+  appotmentSaveData(data: any) {
+    data.VALIDATEONLY = false;
+    this._mainAPiServiceService.getSetData(data, 'SetTask').subscribe(response => {
+      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        if (this.action !== 'edit') {
+          this.toastr.success(' save successfully');
+        } else {
+          this.toastr.success(' update successfully');
+        }
+        this.isspiner = false;
+        this.dialogRef.close(true);
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
+        this.toastr.warning(response.MESSAGE);
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
+        this.toastr.error(response.MESSAGE);
+      } else if (response.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      }
+      this.isspiner = false;
+    }, error => {
+      this.toastr.error(error);
     });
   }
   //DateFrom

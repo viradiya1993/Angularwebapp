@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { Subject } from 'rxjs';
 import { startOfDay, isSameDay, isSameMonth } from 'date-fns';
-import { CalendarEvent, CalendarEventTimesChangedEvent, CalendarMonthViewDay, CalendarWeekViewBeforeRenderEvent } from 'angular-calendar';
+import { CalendarEvent, CalendarEventTimesChangedEvent, CalendarMonthViewDay, CalendarWeekViewBeforeRenderEvent, CalendarEventAction } from 'angular-calendar';
 import { fuseAnimations } from '@fuse/animations';
 import { DiaryService } from './diary.service';
 import { DiaryEventModel } from './event.model';
@@ -9,6 +9,10 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import * as $ from 'jquery';
 import { BehaviorService } from 'app/_services';
+import { FormGroup } from '@angular/forms';
+import { MatDialogRef, MatDialog } from '@angular/material';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import { DairyDailogComponent } from './dairy-dailog/dairy-dailog.component';
 
 @Component({
     selector: 'app-diary',
@@ -21,9 +25,11 @@ export class DiaryComponent implements OnInit {
 
     activeDayIsOpen: boolean;
     dialogRef: any;
+    actions: CalendarEventAction[];
     events: CalendarEvent[];
     refresh: Subject<any> = new Subject();
     selectedDay: any;
+    confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     view: string;
     TimeScale: string;
     viewDate: Date;
@@ -33,7 +39,8 @@ export class DiaryComponent implements OnInit {
         private _calendarService: DiaryService,
         private route: ActivatedRoute,
         private _httpClient: HttpClient,
-        private behaviorService: BehaviorService
+        private behaviorService: BehaviorService,
+        private _matDialog: MatDialog,
     ) {
         this.behaviorService.calanderViewType$.subscribe(result => {
             if (result) {
@@ -52,7 +59,22 @@ export class DiaryComponent implements OnInit {
         /**
          * Get events from service/server
          */
+        this.actions = [
+            {
+                label  : '<i class="material-icons s-16">edit</i>',
+                onClick: ({event}: { event: CalendarEvent }): void => {
+                    this.editEvent('edit', event);
+                }
+            },
+            {
+                label  : '<i class="material-icons s-16">delete</i>',
+                onClick: ({event}: { event: CalendarEvent }): void => {
+                    this.deleteEvent(event);
+                }
+            }
+        ];
         this.setEvents();
+        
     }
     ngOnInit(): void {
         $('content').addClass('inner-scroll');
@@ -64,6 +86,67 @@ export class DiaryComponent implements OnInit {
         this.events = this._calendarService.events.map(item => {
             return new DiaryEventModel(item);
         });
+    }
+    editEvent(action: string, event: CalendarEvent): void
+    {
+     const eventIndex = this.events.indexOf(event);
+
+        this.dialogRef = this._matDialog.open(DairyDailogComponent, {
+            panelClass: 'event-form-dialog',
+            data      : {
+                event : event,
+                action: action
+            }
+        });
+
+        this.dialogRef.afterClosed()
+            .subscribe(response => {
+                if ( !response )
+                {
+                    return;
+                }
+                const actionType: string = response[0];
+                const formData: FormGroup = response[1];
+                switch ( actionType )
+                {
+                    /**
+                     * Save
+                     */
+                    case 'save':
+
+                        this.events[eventIndex] = Object.assign(this.events[eventIndex], formData.getRawValue());
+                        this.refresh.next(true);
+
+                        break;
+                    /**
+                     * Delete
+                     */
+                    case 'delete':
+
+                        this.deleteEvent(event);
+
+                        break;
+                }
+            });
+    }
+    deleteEvent(event): void
+    {
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: false
+        });
+
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if ( result )
+            {
+                const eventIndex = this.events.indexOf(event);
+                this.events.splice(eventIndex, 1);
+                this.refresh.next(true);
+            }
+            this.confirmDialogRef = null;
+        });
+
     }
 
     /**
@@ -97,6 +180,7 @@ export class DiaryComponent implements OnInit {
      * @param {MonthViewDay} day
      */
     dayClicked(day: CalendarMonthViewDay): void {
+        console.log(day);
         const date: Date = day.date;
         const events: CalendarEvent[] = day.events;
 

@@ -2,6 +2,7 @@
     <mat-list>
         <h3 matSubheader>
             <span>Timers</span>
+            <button mat-raised-button color="primary" class="new-timer-button" (click)="AddTimer()">New Timer</button>
         </h3>
         <mat-divider cdkFocusRegionEnd></mat-divider>
         <span *ngIf="eventsData">

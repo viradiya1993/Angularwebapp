@@ -1148,6 +1148,45 @@
                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[2]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[2]?.Create==0 ? 'large-button' : 'large-button'" (click)="spendmoneypopup('new')">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_expenses_new_d.ico" alt=""
+                                                        matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>New Matter <br>Expense</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section [ngClass]="appPermissions[2]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[2]?.Create==0 ? 'large-button' : 'large-button'" (click)="ActivityDialog('new')">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_time_cost_new_d.ico" alt=""
+                                                        matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>New <br>Activity</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section [ngClass]="appPermissions[2]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[2]?.Create==0 ? 'large-button' : 'large-button'" (click)="ActivityDialog('new')">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_expenses_new_d.ico" alt=""
+                                                        matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>New <br>Sundry</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section [ngClass]="appPermissions[2]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[2]?.Create==0 ? 'large-button' : 'large-button'" (click)="addNewTimeEntry('Duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">

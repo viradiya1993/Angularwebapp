@@ -611,9 +611,6 @@
                     </section>
                 </mat-tab>
 
-
-
-
                 <!--  -->
 
                 <mat-tab label="Trust Money" *ngIf="isTabShow===23">
@@ -750,8 +747,6 @@
                         </mat-card>
                     </section>
                 </mat-tab>
-
-
 
                 <mat-tab label="Trust End Of Month" *ngIf="isTabShow===24">
                     <section class="ribbon-container contact_tab_main">
@@ -1024,7 +1019,7 @@
                                 <!--estimate section start-->
                                 <section class="group-section-tab details_tab" *ngIf="activeSubMenu =='estimate'">
                                     <section [ngClass]="appPermissions[4]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[4]?.Create==0 ? 'large-button' : 'large-button'" (click)="addNewEstimate('Add')">
+                                        <button mat-button [ngClass]="appPermissions[4]?.Create==0 ? 'large-button' : 'large-button'" (click)="addNewEstimate('new')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_estimate_new_d.ico" alt=""
@@ -1037,7 +1032,7 @@
                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[4]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[4]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="addNewEstimate('Edit')">
+                                        <button mat-button [ngClass]="appPermissions[4]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="addNewEstimate('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_estimate_edit_d.ico" alt=""
@@ -1063,7 +1058,7 @@
                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[4]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[4]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="addNewEstimate('Duplicate')">
+                                        <button mat-button [ngClass]="appPermissions[4]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="addNewEstimate('duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_duplicate_d.ico" alt=""

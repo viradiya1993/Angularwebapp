@@ -1,3 +1,56 @@
-<p>
-  estimate-dilog works!
-</p>
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+  <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+</div>
+<div cdkDrag class="popup_main_div add_edit_estimate_main" >
+  <h2 cdkDragHandle mat-dialog-title>{{dialogTitle}}
+    <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
+      <mat-icon>close</mat-icon>
+    </button>
+  </h2>
+  <div mat-dialog-content class="mat-typography main">
+    <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <form [formGroup]="estimateform" fxLayout="column" fxFlex="1 0 auto" name="form">
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+              <mat-form-field appearance="outline" fxFlex="25" class="pr-4"  [ngClass]="{'has-error':errorWarningData.Error?.FEEEARNER,'has-warning':errorWarningData.Warning?.FEEEARNER}">
+                  <mat-label>Fee Earner</mat-label>
+                    <mat-select #value name="selected" (selectionChange)="matterChange('FeeEarner',$event.value)" formControlName="FEEEARNER">
+                        <mat-option *ngFor="let user of userList" value="{{user.USERID}}">{{user.FULLNAME}}</mat-option>
+                    </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="outline" fxFlex="25" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.SERVICE,'has-warning':errorWarningData.Warning?.SERVICE}">
+                  <mat-label>Service</mat-label>
+                  <mat-select #Servieselect (selectionChange)='ServiceChnage(Servieselect.value)' formControlName="SERVICE">
+                    <mat-option *ngFor="let Service of Serivcelist" [value]="Service.LOOKUPFULLVALUE">{{Service.LOOKUPFULLVALUE}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="outline" fxFlex="25" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MINQUATITY,'has-warning':errorWarningData.Warning?.MINQUATITY}">
+                  <mat-label>Min. Quantity</mat-label>
+                  <input formControlName ="MINQUATITY" matInput type="number"  (focusout)="matterChange('Quantity',$event.value)">
+              </mat-form-field>
+              <mat-form-field appearance="outline" fxFlex="25" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MINTYPE,'has-warning':errorWarningData.Warning?.MINTYPE}">
+                  <mat-label>Min. Type:</mat-label>
+                    <mat-select #value name="selected" (selectionChange)="matterChange('QuantityType',$event.value)" formControlName="MINTYPE">
+                        <mat-option *ngFor="let Activity of ActivityList" value="{{Activity.ACTIVITYID}}">{{Activity.DESCRIPTION}}</mat-option>
+                  </mat-select>
+              </mat-form-field>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+              <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MINPRICE,'has-warning':errorWarningData.Warning?.MINPRICE}">
+                  <mat-label>Min. Price</mat-label>
+                  <input  formControlName ="MINPRICE" matInput type="number" [readonly]="isreadonly" numeric numericType="decimal" (keyup)="calcPE()" [(ngModel)]="PRICEVAL">
+              </mat-form-field>
+              <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MININCGST,'has-warning':errorWarningData.Warning?.MININCGST}">
+                  <mat-label>Min. Inc GST</mat-label>
+                  <input formControlName ="MININCGST" matInput type="number" [readonly]="isreadonly"  numeric numericType="decimal" (keyup)="calcPI()" [(ngModel)]="PRICEINCGSTVAL">
+              </mat-form-field>
+          </div>
+        </form>
+    </div>
+  </div>
+  <mat-dialog-actions align="end" class="popup_ftr">
+    <button mat-raised-button color="accent" (click)="EstimateSave()" [disabled]="isspiner" *ngIf="action === 'new'"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
+    <button mat-raised-button color="accent" (click)="EstimateSave()" [disabled]="isspiner" *ngIf="action === 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Update</button>
+    <button mat-raised-button color="accent" (click)="EstimateSave()" [disabled]="isspiner" *ngIf="action !== 'new' && action !== 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Duplicate</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
+  </mat-dialog-actions>
+</div>

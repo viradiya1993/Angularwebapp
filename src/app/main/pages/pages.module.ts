@@ -30,6 +30,7 @@ import { AccountManagmentModule } from './account-managment/account-managment.mo
 import { TrustMoneyModule } from './Trust Accounts/trust-money/trust-money.module';
 import { TaskModule } from './Task/task.module';
 import { GloballyAuthorityModule } from './globally-Authority/globally-authority.module';
+import { TimeBillingModule } from './time-billing/time-billing.module';
 
 const appRoutes: Routes = [
   { path: 'matters', loadChildren: './matters/matters.module#MattersModule' },
@@ -62,6 +63,7 @@ const appRoutes: Routes = [
     TrustMoneyModule,
     AccountManagmentModule,
     LegalDetailsModule,
+    TimeBillingModule,
     ConflictCheckModule,
     RouterModule.forChild(appRoutes),
     ContactModule,

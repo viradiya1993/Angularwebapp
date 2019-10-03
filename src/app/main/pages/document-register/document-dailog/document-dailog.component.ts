@@ -118,7 +118,7 @@ export class DocumentDailogComponent implements OnInit {
    }
    choosedDate(type: string, event: MatDatepickerInputEvent<Date>){
     let begin = this.datepipe.transform(event.value, 'dd/MM/yyyy');
-   this.DocumentRegiData.GENERATEDATESEND=begin;
+    this.DocumentRegiData.GENERATEDATESEND=begin;
    }
 
   //Class Drop Down

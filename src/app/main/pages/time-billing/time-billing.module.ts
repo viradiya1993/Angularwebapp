@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { AuthGuard } from '../../../_guards';
 
-import { MatButtonModule, MatPaginatorModule, MatProgressSpinnerModule, MatCheckboxModule, MatTabsModule, MatExpansionModule, MatSlideToggleModule, MatCardModule, MatSelectModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule } from '@angular/material';
+import { MatButtonModule, MatPaginatorModule, MatProgressSpinnerModule, MatCheckboxModule, MatTabsModule, MatExpansionModule, MatSlideToggleModule, MatCardModule, MatSelectModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule,MatDialogModule } from '@angular/material';
 
 import { TimeBillingComponent } from './time-billing.component';
 import { EstimateComponent } from './estimate/estimate.component';
@@ -18,6 +18,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker'
 import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
 import { EstimateDilogComponent } from './estimate/estimate-dilog/estimate-dilog.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 
@@ -41,7 +42,14 @@ const routes = [
 @NgModule({
 
   declarations: [
-    TimeBillingComponent, EstimateComponent, WorkInProgressComponent, MatterInvoicesComponent, ReceiptsCreditsComponent, MatterTrustComponent, EstimateDilogComponent],
+    TimeBillingComponent, 
+    EstimateComponent,
+    WorkInProgressComponent,
+    MatterInvoicesComponent,
+    ReceiptsCreditsComponent,
+    MatterTrustComponent,
+    EstimateDilogComponent
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -65,10 +73,12 @@ const routes = [
     MatExpansionModule,
     MatTabsModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatDialogModule,
+    DragDropModule
   ],
   exports: [
-    TimeBillingComponent
+    TimeBillingComponent,
   ],
   entryComponents: [
     EstimateDilogComponent

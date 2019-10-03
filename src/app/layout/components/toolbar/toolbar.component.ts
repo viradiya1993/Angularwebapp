@@ -123,6 +123,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     DisEnTimeEntryToolbar: string;
     timeEntryData: any;
     DisMainAuthorityToolbar: string;
+    estimateData:any;
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
@@ -782,39 +783,33 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }
         const dialogRef = this.dialog.open(EstimateDilogComponent, { disableClose: true, panelClass: 'Document-dialog', data: EstimatePopdata });
         dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                $('#refreshFileNote').click();
-            }
+            if (result)
+                $('#refresheEtimateTab').click();
         });
     }
     //delete Estimate  item
     deleteEstimate() {
-        this.behaviorService.FileNotesData$.subscribe(result => {
+        this.behaviorService.estimatelegalData$.subscribe(result => {
             if (result) {
-                this.FileNotesData = result;
+               this.estimateData = result;
             }
         });
-        if (this.FileNotesData == null) {
-            this.toastr.error("No Data Selected");
-        } else {
-            this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-                disableClose: true,
-                width: '100%',
-            });
-            this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-            this.confirmDialogRef.afterClosed().subscribe(result => {
-                if (result) {
-                    let postData = { FormAction: "delete", DATA: { FILENOTEGUID: this.FileNotesData.FILENOTEGUID } }
-                    this._mainAPiServiceService.getSetData(postData, 'SetFileNote').subscribe(res => {
-                        if (res.STATUS == "success" && res.CODE == 200) {
-                            $('#refreshFileNote').click();
-                            this.toastr.success('Delete successfully');
-                        }
-                    });
-                }
-                this.confirmDialogRef = null;
-            });
-        }
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true, width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                let postData = { FormAction: "delete", DATA: { ESTIMATEITEMGUID: this.estimateData.ESTIMATEITEMGUID } };
+                this._mainAPiServiceService.getSetData(postData, 'SetMatterEstimateItem').subscribe(res => {
+                    if (res.STATUS == "success" && res.CODE == 200) {
+                        $("#refresheEtimateTab").click();
+                        this.toastr.success('Delete successfully');
+                    }
+                });
+            }
+            this.confirmDialogRef = null;
+        });
     }
     //// Duplicate Spend Money
     deleteContact(): void {

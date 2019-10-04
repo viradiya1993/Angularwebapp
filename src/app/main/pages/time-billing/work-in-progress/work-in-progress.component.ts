@@ -163,7 +163,6 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
   this.loadData(this.lastFilter);
   }
   editworkInProgress(row: any) {
-    console.log(row);
     this.behaviorService.setworkInProgressData(row);
   }
 

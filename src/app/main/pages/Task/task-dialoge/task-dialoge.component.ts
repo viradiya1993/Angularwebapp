@@ -129,8 +129,10 @@ export class TaskDialogeComponent implements OnInit {
     this.TaskForm.controls['SendREMINDERTIME'].setValue(this.time);
   }
   EditPopUpOPen() {
-    let username = JSON.parse(localStorage.getItem("task_filter"));
-    this.TaskForm.controls['UserName'].setValue(username.user);
+    if(this.action != 'edit legal' && this.action != 'copy legal'){
+      let username = JSON.parse(localStorage.getItem("task_filter"));
+      this.TaskForm.controls['UserName'].setValue(username.user);
+    } 
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({ TASKGUID: this.TaskData.TASKGUID }, 'GetTask').subscribe(res => {
         if (res.CODE == 200 && res.STATUS == "success") {

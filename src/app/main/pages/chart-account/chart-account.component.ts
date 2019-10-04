@@ -58,7 +58,7 @@ export class ChartAccountComponent implements OnInit {
     return {
       expandable: !!node.SUBACCOUNTS && node.SUBACCOUNTS.length > 0,
       name: node.ACCOUNTCLASS + ' - ' + node.ACCOUNTNUMBER + '        ' + node.ACCOUNTNAME,
-      ACTIVE: node.ACTIVE == 1 ? '(inactive)' : '',
+      ACTIVE: node.ACTIVE == 1 ? '' : '(inactive)',
       class: node.ACCOUNTNAME,
       ACCOUNTGUID: node.ACCOUNTGUID,
       ACCOUNTTYPE: node.ACCOUNTTYPE,
@@ -146,8 +146,8 @@ export class ChartAccountComponent implements OnInit {
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
   RowClick(val) {
     this.behaviorService.ChartAccountData(val);
+    this.behaviorService.setChartAccountDataEdit(val);
     localStorage.setItem('ChartAccountData', JSON.stringify({ "name": val.name, "class": val.class, "ACCOUNTGUID": val.ACCOUNTGUID, "ACCOUNTTYPE": val.ACCOUNTTYPE, "index": val.index, "parent": val.parent, "level": val.level }));
-    // localStorage.setItem('ChartAccountData', JSON.stringify(val));
   }
   AccountClass(val) {
     this.filterData = JSON.parse(localStorage.getItem("chartAcc_filter"));
@@ -157,6 +157,9 @@ export class ChartAccountComponent implements OnInit {
   }
   refreshChartACCTab() {
     this.loadData(this.filterData)
+  }
+  ngAfterViewInit() {
+    this.tree.treeControl.expandAll();
   }
 
   FilterSearch(val) {

@@ -236,11 +236,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }
         this.behaviorService.ChartAccountData$.subscribe(result => {
             if (result) {
-                console.log(this.isMainAccount);
-                this.isMainAccount = result.ACCOUNTTYPENAME == "Header";
-                console.log(this.isMainAccount);
                 this.chartAccountDetail = result;
                 this.AccountGUID = result.ACCOUNTGUID;
+            }
+        });
+        this.behaviorService.ChartAccountDataEdit$.subscribe(result => {
+            if (result) {
+                this.isMainAccount = result.MainList.ACCOUNTTYPENAME == "Header"
             }
         });
     }

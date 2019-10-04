@@ -85,7 +85,10 @@
                                                         <td mat-cell *matCellDef="let row"> <span *ngIf="row[item]">{{row[item]}}</span> </td>
                                                     </ng-container>
                                                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;let element;" class="row" (click)="RowClick(row);highlightedRows=row.TASKGUID" [style.background]="highlightedRows == row.TASKGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.TASKGUID ? 'row-text-colore' : ''"
+                                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;let element;"
+                                                        class="row" (click)="RowClick(row);highlightedRows=row.TASKGUID"
+                                                        [style.background]="highlightedRows == row.TASKGUID ? selectedColore : ''" 
+                                                        [ngClass]="highlightedRows == row.TASKGUID ? 'row-text-colore' : ''"
                                                         matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                                     </tr>
                                                 </table>

@@ -411,8 +411,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
             if (result)
                 $('#refreshActivities').click();
-                $('#refresheWorkEtimateTab').click();
-                
+                $('#refreshWorkInprogress').click();
         });
     }
     DeleteActivityDialog(): void {
@@ -614,6 +613,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 $('#refreshTimeEntryTab').click();
+                $('#refreshWorkInprogress').click();
             }
         });
     }
@@ -622,6 +622,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
             if (result)
                 $('#refreshTimeEntryTab').click();
+                 $('#refreshWorkInprogress').click();
         });
     }
     WriteOffTimeEntry() {
@@ -884,6 +885,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 this._mainAPiServiceService.getSetData(postData, 'SetWorkItems').subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {
                         $('#refreshTimeEntryTab').click();
+                        $('#refreshWorkInprogress').click();
                         this.toastr.success('Delete successfully');
                     }
                 });;
@@ -926,7 +928,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     ///Spend Money 
 
-    spendmoneypopup(actionType) {
+    spendmoneypopup(actionType,val) {
         let SpendMoneyPopdata = {}
         if (actionType == 'new') {
             SpendMoneyPopdata = { action: actionType }
@@ -936,12 +938,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this.dialog.open(SpendMoneyAddComponent, {
             disableClose: true,
             panelClass: 'SpendMoney-dialog',
-            data: SpendMoneyPopdata
+            data:{
+                action: actionType ,
+                FromWhere:val
+            } 
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 $("#refreshSpendMoneyTab").click();
                 $('#refreshRecouncilItem').click();
+                $('#refreshWorkInprogress').click();
             }
         });
     }
@@ -1541,6 +1547,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 dialogRef.afterClosed().subscribe(result => {
                     if (result) {
                         $('#refreshTimeEntryTab').click();
+                        $('#refreshWorkInprogress').click();
                     }
 
                 });
@@ -1567,7 +1574,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                     const dialogRef = this._matDialog.open(InstantInvoiceDailogComponent, { width: '100%', disableClose: true, data: null });
                     dialogRef.afterClosed().subscribe(result => {
                         if (result) {
-
+                            $('#refreshWorkInprogress').click();
                         }
                     });
                 }
@@ -1585,7 +1592,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this._matDialog.open(InvoiceAddDailogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-
+                $('#refreshWorkInprogress').click();
             }
         });
     }

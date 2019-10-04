@@ -113,7 +113,7 @@ export class BankingDialogComponent implements OnInit {
   }
   RowClick(node) {
     this.behaviorService.ChartAccountData(node);
-    localStorage.setItem('ChartAccountData', JSON.stringify({ "name": node.name, "class": node.class, "ACCOUNTGUID": node.ACCOUNTGUID, "ACCOUNTTYPE": node.ACCOUNTTYPE, "index": node.index, "parent": node.parent, "level": node.level }));
+    localStorage.setItem('ChartAccountData', JSON.stringify({ 'ACCOUNTTYPENAME': node.MainList.ACCOUNTTYPENAME, "name": node.name, "class": node.class, "ACCOUNTGUID": node.ACCOUNTGUID, "ACCOUNTTYPE": node.ACCOUNTTYPE, "index": node.index, "parent": node.parent, "level": node.level }));
     node.AccountType = this._data.AccountType;
     this.ACCOUNTGUIDsELECTED = node;
     this.isDisabledselect = node.MainList.ACCOUNTTYPENAME;

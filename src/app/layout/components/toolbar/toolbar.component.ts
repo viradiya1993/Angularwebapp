@@ -116,6 +116,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     DocRegData: any = [];
     AccountGUID: any;
     chartAccountDetail: any;
+    isMainAccount: boolean = false;
     TaskData: any;
     FileNotesData: any;
     conflictData: any;
@@ -135,8 +136,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private toastr: ToastrService,
         private TimersServiceI: TimersService,
         private _mainAPiServiceService: MainAPiServiceService,
-        private _router: Router,
-        private location: Location,
         public MatDialog: MatDialog,
         public behaviorService: BehaviorService
     ) {
@@ -237,6 +236,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }
         this.behaviorService.ChartAccountData$.subscribe(result => {
             if (result) {
+                console.log(this.isMainAccount);
+                this.isMainAccount = result.ACCOUNTTYPENAME == "Header";
+                console.log(this.isMainAccount);
                 this.chartAccountDetail = result;
                 this.AccountGUID = result.ACCOUNTGUID;
             }
@@ -385,7 +387,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /* ---------------------------------------------------------------------Matter End--------------------------------------------------------------------------  */
     /* ---------------------------------------------------------------------Activity Start--------------------------------------------------------------------------  */
     //add edit and duplicat ActivityDialog
-    ActivityDialog(actionType,name) {
+    ActivityDialog(actionType, name) {
         let popupData: any = {};
         if (actionType == "new") {
             popupData = { action: actionType };
@@ -398,11 +400,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             popupData = { action: actionType, ACTIVITYGUID: ActivityData.ACTIVITYGUID };
         }
         const dialogRef = this.dialog.open(ActivityDialogComponent, {
-            disableClose: true, panelClass: 'Activity-dialog', 
-            data:{
-                 popupData,
-                 popupname:name
-            } 
+            disableClose: true, panelClass: 'Activity-dialog',
+            data: {
+                popupData,
+                popupname: name
+            }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result)
@@ -628,16 +630,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    
-    GenerateInvoice(){
+
+    GenerateInvoice() {
         this.behaviorService.matterInvoice$.subscribe(result => {
             console.log(result);
-            if (result !=null) {
-            this.ShowGenerateInvoice="yes";
-            }else{
-            this.ShowGenerateInvoice="no"; 
+            if (result != null) {
+                this.ShowGenerateInvoice = "yes";
+            } else {
+                this.ShowGenerateInvoice = "no";
             }
-          });
+        });
         const dialogRef = this._matDialog.open(GenerateInvoiceComponent, {
             width: '100%', disableClose: true, data: {}
         });
@@ -645,7 +647,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             if (result) {
                 // $('#refreshTimeEntryTab').click();
             }
-        }); 
+        });
     }
 
     UndoWriteOffTimeEntry() {
@@ -1551,7 +1553,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.clickedBtn = 'matterDoc';
     }
     createInstantInvoice() {
-        console.log(this.router.url );
+        console.log(this.router.url);
         if (this.router.url != '/time-billing/matter-invoices') {
             const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
             dialogRef.afterClosed().subscribe(result => {

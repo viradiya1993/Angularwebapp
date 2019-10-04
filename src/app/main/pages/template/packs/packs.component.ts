@@ -81,7 +81,6 @@ export class PacksComponent implements OnInit, AfterViewInit {
     private toastr: ToastrService,
     public _matDialog: MatDialog,
     private behaviorService: BehaviorService,
-
     private _mainAPiServiceService: MainAPiServiceService
   ) {
     this.loadData({});

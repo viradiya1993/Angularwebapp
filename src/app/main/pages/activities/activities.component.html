@@ -39,12 +39,12 @@
                                                 </td>
                                             </ng-container>
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                            <!-- <tr mat-row [style.background]="highlightedRows == row.ACTIVITYGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" [ngClass]="highlightedRows == row.ACTIVITYGUID ? 'row-text-colore' : ''" class="contact" (click)="setActiveData(row);currentActivitieData = row;highlightedRows = row.ACTIVITYGUID"
-                                                matRipple [@animate]="{value:'*',params:{y:'100%'}}">
-                                            </tr> -->
-                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;let element;" class="row" (click)="RowClick(row);highlightedRows=row.WORKITEMGUID" [style.background]="highlightedRows == row.WORKITEMGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.WORKITEMGUID ? 'row-text-colore' : ''"
+                                            <tr mat-row [style.background]="highlightedRows == row.ACTIVITYGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" [ngClass]="highlightedRows == row.ACTIVITYGUID ? 'row-text-colore' : ''" class="contact" (click)="setActiveData(row);currentActivitieData = row;highlightedRows = row.ACTIVITYGUID"
                                                 matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                             </tr>
+                                            <!-- <tr mat-row *matRowDef="let row; columns: displayedColumns;let element;" class="row" (click)="RowClick(row);highlightedRows=row.WORKITEMGUID" [style.background]="highlightedRows == row.WORKITEMGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.WORKITEMGUID ? 'row-text-colore' : ''"
+                                                matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                            </tr> -->
                                         </table>
                                     </div>
                                     <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>

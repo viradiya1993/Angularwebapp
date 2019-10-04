@@ -44,13 +44,16 @@ export class BehaviorService {
   public MatterEditData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public estimatelegalData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public ActivityData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public BankChartAccountStore$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor(private http: HttpClient) { }
 
   matterInvoiceData(matterClassData: any) {
     this.matterInvoice$.next(matterClassData);
   }
-
+  BankChartAccountStore(BankChartAccountStore: any) {
+    this.BankChartAccountStore$.next(BankChartAccountStore);
+  }
   RecouncileItemSendSetData(RecouncileItemSendSetData: any) {
     this.RecouncileItemSendSetData$.next(RecouncileItemSendSetData);
   }

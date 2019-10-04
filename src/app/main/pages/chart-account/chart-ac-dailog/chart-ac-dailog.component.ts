@@ -56,7 +56,7 @@ export class ChartAcDailogComponent implements OnInit {
       //General
       ACCOUNTNUMBER: ['1-'],
       ACCOUNTTYPE: [''],
-      ACTIVE: [''],
+      ACTIVE: [true],
       ACCOUNTTYPENAME: [''],
       //EXPORTINFO 
       MYOBEXPORTACCOUNT: [''],

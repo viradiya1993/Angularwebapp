@@ -49,7 +49,13 @@ export class ClientComponent implements OnInit {
     return this.matterdetailForm.controls;
   }
   Addcorres_party() {
-    const dialogRef = this.MatDialog.open(CorrespondDailogComponent, { width: '100%', disableClose: true, data: { type: 'new' } });
+    let classTyepData = "";
+    this.behaviorService.matterClassData$.subscribe(result => {
+      if (result) {
+        classTyepData = result.LOOKUPFULLVALUE;
+      }
+    });
+    const dialogRef = this.MatDialog.open(CorrespondDailogComponent, { width: '100%', disableClose: true, data: { type: 'new', classTyep: classTyepData } });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
       if (result == true) {

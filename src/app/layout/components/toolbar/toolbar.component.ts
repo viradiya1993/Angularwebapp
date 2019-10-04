@@ -36,7 +36,6 @@ import { DocumentDailogComponent } from './../../../main/pages/document-register
 import { EmailDailogComponent } from './../../../main/pages/template/email-templete/email-dailog/email-dailog.component';
 import { PacksDailogComponent } from './../../../main/pages/template/packs/packs-dailog/packs-dailog.component';
 import { ChartAcDailogComponent } from './../../../main/pages/chart-account/chart-ac-dailog/chart-ac-dailog.component';
-import { SelectAccountComponent } from './../../../main/pages/select-account/select-account.component';
 import { FileNoteDialogComponent } from 'app/main/pages/matters/file-note-dialog/file-note-dialog.component';
 import { BankingDialogComponent } from 'app/main/pages/banking/banking-dialog.component';
 import { GeneralDailogComponent } from './../../../main/pages/general-journal/general-dailog/general-dailog.component';
@@ -123,7 +122,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     DisEnTimeEntryToolbar: string;
     timeEntryData: any;
     DisMainAuthorityToolbar: string;
-    estimateData:any;
+    estimateData: any;
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
@@ -791,7 +790,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     deleteEstimate() {
         this.behaviorService.estimatelegalData$.subscribe(result => {
             if (result) {
-               this.estimateData = result;
+                this.estimateData = result;
             }
         });
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
@@ -1245,14 +1244,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef = null;
         });
     }
-    //end of Authority dialoge 
-    //ReconcileAC
-    ReconcileAC() {
-        const dialogRef = this.dialog.open(SelectAccountComponent, {
-        });
-        dialogRef.afterClosed().subscribe(result => {
-        });
-    }
+
     /* General Journal Module Function's */
     //NewGeneral
     NewGeneral() {

@@ -72,7 +72,6 @@ export class BankingDialogComponent implements OnInit {
     this.treeControl.expandAll();
   }
   loadData(type: any) {
-    console.log(type);
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({ AccountClass: type }, 'GetAccount').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
@@ -166,7 +165,7 @@ export class BankingDialogComponent implements OnInit {
       this.router.navigate(['account-reconciliation/reconciliation-item']);
     }
   }
-  refreshBank(){
-    
+  refreshBank() {
+
   }
 }

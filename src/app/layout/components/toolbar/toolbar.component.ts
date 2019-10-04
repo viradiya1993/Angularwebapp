@@ -383,7 +383,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /* ---------------------------------------------------------------------Matter End--------------------------------------------------------------------------  */
     /* ---------------------------------------------------------------------Activity Start--------------------------------------------------------------------------  */
     //add edit and duplicat ActivityDialog
-    ActivityDialog(actionType) {
+    ActivityDialog(actionType,name) {
         let popupData: any = {};
         if (actionType == "new") {
             popupData = { action: actionType };
@@ -396,7 +396,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             popupData = { action: actionType, ACTIVITYGUID: ActivityData.ACTIVITYGUID };
         }
         const dialogRef = this.dialog.open(ActivityDialogComponent, {
-            disableClose: true, panelClass: 'Activity-dialog', data: popupData
+            disableClose: true, panelClass: 'Activity-dialog', 
+            data:{
+                 popupData,
+                 popupname:name
+            } 
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result)
@@ -874,7 +878,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
 
         });
-    }/* Document Register Module */
+    }
+    /* Document Register Module */
     DocumntPop(actionType) {
         let DcoumentPopdata = {}
         if (actionType == 'new') {
@@ -911,7 +916,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 $("#refreshSpendMoneyTab").click();
                 $('#refreshRecouncilItem').click();
             }
-
         });
     }
 

@@ -58,6 +58,7 @@ import { WriteOffInvoiceComponent } from 'app/main/pages/invoice/newWriteOffInvo
 import { AuthorityDialogComponent } from 'app/main/pages/globally-Authority/main-authorities/authority-dialog/authority-dialog.component';
 import { TopicDialogComponent } from 'app/main/pages/globally-Authority/main-authorities/topic/topic-dialog/topic-dialog.component';
 import { EstimateDilogComponent } from 'app/main/pages/time-billing/estimate/estimate-dilog/estimate-dilog.component';
+import { GenerateInvoiceComponent } from 'app/main/pages/invoice/generate-invoice/generate-invoice.component';
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -75,6 +76,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     LegalSubAuthotool: any;
     mainlegalAuthWebUrl: any;
     recouncileItemdata: any;
+    ShowGenerateInvoice: string;
     [x: string]: any;
     appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
     @ViewChild(TimeEntriesComponent) TimeEntrieschild: TimeEntriesComponent;
@@ -621,6 +623,25 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 $('#refreshTimeEntryTab').click();
             }
         });
+    }
+    
+    GenerateInvoice(){
+        this.behaviorService.matterInvoice$.subscribe(result => {
+            console.log(result);
+            if (result !=null) {
+            this.ShowGenerateInvoice="yes";
+            }else{
+            this.ShowGenerateInvoice="no"; 
+            }
+          });
+        const dialogRef = this._matDialog.open(GenerateInvoiceComponent, {
+            width: '100%', disableClose: true, data: {}
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // $('#refreshTimeEntryTab').click();
+            }
+        }); 
     }
 
     UndoWriteOffTimeEntry() {
@@ -1539,7 +1560,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.clickedBtn = 'matterDoc';
     }
     createInstantInvoice() {
-        if (this.router.url != '/matters') {
+        console.log(this.router.url );
+        if (this.router.url != '/time-billing/matter-invoices') {
             const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {

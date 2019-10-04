@@ -55,11 +55,11 @@ export class FuseNavigationComponent implements OnInit {
       { "ID": "invoice", "TITLE": "Invoices", "URL": "invoice", "STAR": "" },
       { "ID": "spend-money", "TITLE": "Spend money", "URL": "spend-money", "STAR": "" },
       { "ID": "authorities", "TITLE": "Authorities", "URL": "authorities", "STAR": "" },
-      { "ID": "searching", "TITLE": "Searching", "URL": "searching", "STAR": "" },
-      { "ID": "Safe-Custody", "TITLE": "Safe Custody", "URL": "Safe-Custody", "STAR": "" },
-      { "ID": "trust-money", "TITLE": "Trust Money", "URL": "trust-money", "STAR": "" },
+      // { "ID": "searching", "TITLE": "Searching", "URL": "searching", "STAR": "" },
+      // { "ID": "Safe-Custody", "TITLE": "Safe Custody", "URL": "Safe-Custody", "STAR": "" },
+      // { "ID": "trust-money", "TITLE": "Trust Money", "URL": "trust-money", "STAR": "" },
       // { "ID": "trust-banking", "TITLE": "Trust Banking", "URL": "", "STAR": "" },
-      { "ID": "trust-end-month", "TITLE": "Trust End Of Month", "URL": "trust-end-month", "STAR": "" },
+      // { "ID": "trust-end-month", "TITLE": "Trust End Of Month", "URL": "trust-end-month", "STAR": "" },
       { "ID": "receive-money", "TITLE": "Receive money", "URL": "receive-money", "STAR": "" }]
 
       this.getFavouriteService.GetFavourite(postdata).subscribe(response => {

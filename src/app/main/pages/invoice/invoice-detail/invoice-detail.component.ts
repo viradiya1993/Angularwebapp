@@ -206,6 +206,7 @@ export class InvoiceDetailComponent implements OnInit {
     this._mainAPiServiceService.getSetData(PostInvoiceEntryData, 'SetInvoice').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         $('#refreshInvoiceTab').click();
+        $('#refreshWorkInprogress').click();
         this.toastr.success('Update Success');
         this.dialogRef.close(true);
       } else if (res.CODE == 451 && res.STATUS == 'warning') {

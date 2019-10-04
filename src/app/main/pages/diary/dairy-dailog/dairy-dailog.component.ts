@@ -67,18 +67,14 @@ export class DairyDailogComponent implements OnInit {
       TimeSlot2: [],
       start: [],
       Finish: [],
-
       //Details Tab
-
       type: [],
       Beforestart: [],
       Reminder: [],
       Category: [],
       Matter: [],
       COMMENT: [],
-
       //Recurrance-Pattern Tab
-
       Every: [],
       EveryWeekly: [],
       EveryMonthly: [],

@@ -45,6 +45,12 @@ export class TimersService {
     }
     return this.httpClient.post<any>(environment.APIEndpoint + 'CalcWorkItemCharge ', Data);
   }
+  CalcWorkItemCharge(Data: any) {
+    if (Data == null) {
+      Data = {};
+    }
+    return this.httpClient.post<any>(environment.APIEndpoint + 'CalcWorkItemCharge ', Data);
+  }
   SetWorkItems(Data: any) {
     if (Data == null) {
       Data = {};

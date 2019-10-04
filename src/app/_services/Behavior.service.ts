@@ -42,11 +42,15 @@ export class BehaviorService {
   public MainTopicData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public RecouncileItemSendSetData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public MatterEditData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public estimatelegalData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public ActivityData$: BehaviorSubject<any> = new BehaviorSubject(null);
+
   constructor(private http: HttpClient) { }
 
   matterInvoiceData(matterClassData: any) {
     this.matterInvoice$.next(matterClassData);
   }
+
   RecouncileItemSendSetData(RecouncileItemSendSetData: any) {
     this.RecouncileItemSendSetData$.next(RecouncileItemSendSetData);
   }
@@ -134,6 +138,12 @@ export class BehaviorService {
   }
   setMatterEditData(d) {
     this.MatterEditData$.next(d);
+  }
+  estimatelegalData(estimatelegalData: any) {
+    this.estimatelegalData$.next(estimatelegalData);
+  }
+  ActivityData(ActivityData: any) {
+    this.ActivityData$.next(ActivityData);
   }
 
 

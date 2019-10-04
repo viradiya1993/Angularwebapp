@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from '../../../sorting-dialog/sorting-dialog.component';
-import { GetallcolumnsFilterService, TableColumnsService, MainAPiServiceService } from '../../../../_services';
+import { GetallcolumnsFilterService, TableColumnsService, MainAPiServiceService, BehaviorService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { MatSort } from '@angular/material';
@@ -24,15 +24,22 @@ export class EstimateComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   isLoadingResults: boolean = false;
   ColumnsObj: any = [];
+  highlightedRows: any;
+  theme_type = localStorage.getItem('theme_type');
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   constructor(private TableColumnsService: TableColumnsService,
     private dialog: MatDialog, private GetallcolumnsFilter: GetallcolumnsFilterService,
-    private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService) { }
+    private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService,public behaviorService: BehaviorService) { }
   Estimatedata;
   ngOnInit() {
     this.getTableFilter();
     this.loadData();
     $('content').addClass('inner-scroll');
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 150)) + 'px');
+    this.loadData();
+  }
+  refreshEstimateTab() {
+    this.loadData();
   }
   loadData() {
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
@@ -88,5 +95,8 @@ export class EstimateComponent implements OnInit {
         }
       }
     });
+  }
+  RowClick(row){
+    this.behaviorService.estimatelegalData(row);
   }
 }

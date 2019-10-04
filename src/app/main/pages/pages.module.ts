@@ -19,7 +19,6 @@ import { SortingDialogModule } from '../sorting-dialog/sorting-dialog.module';
 import { DocumentRegitser } from './document-register/document-register.module';
 // import { ChartOfAccount } from './chart-account/chart-account.module';
 import { ChartOfAccount } from './chart-account/chart-account.module';
-import { SelectAccountModule } from './select-account/select-account.module';
 import { BankingDialogModule } from './banking/banking-dialog.module';
 import { GeneralJoural } from './general-journal/general-journal.module';
 import { ConflictCheckModule } from './conflict-check/conflict-check.module';
@@ -30,6 +29,7 @@ import { AccountManagmentModule } from './account-managment/account-managment.mo
 import { TrustMoneyModule } from './Trust Accounts/trust-money/trust-money.module';
 import { TaskModule } from './Task/task.module';
 import { GloballyAuthorityModule } from './globally-Authority/globally-authority.module';
+import { TimeBillingModule } from './time-billing/time-billing.module';
 
 const appRoutes: Routes = [
   { path: 'matters', loadChildren: './matters/matters.module#MattersModule' },
@@ -62,6 +62,7 @@ const appRoutes: Routes = [
     TrustMoneyModule,
     AccountManagmentModule,
     LegalDetailsModule,
+    TimeBillingModule,
     ConflictCheckModule,
     RouterModule.forChild(appRoutes),
     ContactModule,
@@ -82,7 +83,6 @@ const appRoutes: Routes = [
     // NewfilenoteModule,
     DocumentRegitser,
     ChartOfAccount,
-    SelectAccountModule,
     GeneralJoural,
     AccountRecountciliation
   ]

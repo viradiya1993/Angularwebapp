@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
-import { TableColumnsService, MainAPiServiceService } from 'app/_services';
+import { TableColumnsService, MainAPiServiceService, BehaviorService } from 'app/_services';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 
 
@@ -40,7 +40,7 @@ export class ActivitiesComponent implements OnInit {
     private dialog: MatDialog,
     private TableColumnsService: TableColumnsService,
     private _mainAPiServiceService: MainAPiServiceService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,public behaviorService: BehaviorService) { }
   ngOnInit() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.activitiesFilter = this._formBuilder.group({ TYPE: [" "] });
@@ -132,5 +132,8 @@ export class ActivitiesComponent implements OnInit {
   }
   setActiveData(rowData: any) {
     localStorage.setItem('current_ActivityData', JSON.stringify(rowData));
+  }
+  RowClick(row){
+    this.behaviorService.estimatelegalData(row);
   }
 }

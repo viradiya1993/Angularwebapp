@@ -107,7 +107,6 @@ export class PacksComponent implements OnInit, AfterViewInit {
       search: []
     });
     // this.loadData();
-
   }
   ngAfterViewInit() {
     this.treeControl.expandAll();
@@ -117,8 +116,8 @@ export class PacksComponent implements OnInit, AfterViewInit {
   }
   loadData(Data) {
     this.isLoadingResults = true;
-    this._mainAPiServiceService.getSetData({INCLUDEKITITEMS:'Yes'}, 'GetKit').subscribe(res => {
-  
+    this._mainAPiServiceService.getSetData({ INCLUDEKITITEMS: 'Yes' }, 'GetKit').subscribe(res => {
+
       if (res.CODE == 200 && res.STATUS == "success") {
         // this.dataSource.paginator = this.paginator;
         this.arrayForIndex = [];
@@ -145,7 +144,7 @@ export class PacksComponent implements OnInit, AfterViewInit {
   }
   FilterSearch(searchFilter: any) {
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
-        this.loadData({SEARCH:this.f.search.value})
+      this.loadData({ SEARCH: this.f.search.value })
     }
   }
   //SelectMatter

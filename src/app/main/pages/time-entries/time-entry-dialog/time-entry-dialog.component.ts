@@ -145,6 +145,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.timeEntryForm.controls['MATTERGUID'].setValue(this.currentTimeMatter);
       let Qval = this.matterTimerData == '' ? 'Hours' : 'hh:mm';
       this.timeEntryForm.controls['QUANTITYTYPE'].setValue(Qval);
+      this.calculateData.QuantityType = Qval == "Hours" ? 'H' : 'X';
       this.timeEntryForm.controls['QUANTITY'].setValue(this.matterTimerData);
       this.timeEntryForm.controls['ITEMTYPE'].setValue('1');
       this.matterChange('MatterGuid', this.currentTimeMatter);
@@ -164,9 +165,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     return timeStops;
   }
   calcPE() {
-    // this.PRICEVAL= parseFloat(this.f.PRICE.value).toFixed(2);
     this.PRICEINCGSTVAL = round(this.f.PRICE.value * 1.1).toFixed(2);
-
   }
   calcPI() {
     this.PRICEVAL = round(this.f.PRICEINCGST.value / 1.1).toFixed(2);

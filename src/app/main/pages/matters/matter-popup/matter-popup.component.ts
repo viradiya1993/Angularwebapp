@@ -760,7 +760,7 @@ export class MatterPopupComponent implements OnInit {
   }
   Classtype(value: any) {
     this.classtype = value;
-    let val = this.Classdata.find(c => c['LOOKUPGUID'] == value)
+    let val = this.Classdata.find(c => c['LOOKUPGUID'] == value);
     this.behaviorService.matterClassData(val);
   }
   ondialogSaveClick(): void {

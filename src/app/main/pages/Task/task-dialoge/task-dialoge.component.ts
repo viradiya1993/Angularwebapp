@@ -232,33 +232,31 @@ export class TaskDialogeComponent implements OnInit {
       this.TaskGuid = this.f.TASKGUID.value
       this.MatterGuid = this.f.MATTERGUID.value;
       this.userGuid=this.f.USERGUID.value;
-    }
-    else if(this.action == 'new legal'){
+    }else if(this.action == 'new legal'){
       this.forRimindCheck();
       this.FormAction='insert';
       this.TaskGuid="";
       this.MatterGuid=this.f.MATTERGUID.value;
       this.userGuid='';
-    }
-    else if (this.action == 'new matter') {
+    }else if (this.action == 'new matter') {
       this.forRimindCheck();
       this.FormAction = 'insert';
       this.TaskGuid = "";
       this.MatterGuid = this.f.MATTERGUID.value;
       this.userGuid=this.f.USERGUID.value;
-    } else if (this.action == 'new general') {
+    }else if (this.action == 'new general') {
       this.forRimindCheck();
       this.MatterGuid = '';
       this.FormAction = 'insert';
       this.TaskGuid = "";
       this.userGuid=this.f.USERGUID.value;
-    } else if (this.action == 'copy' || this.action == 'copy legal') {
+    }else if (this.action == 'copy' || this.action == 'copy legal') {
       this.forRimindCheck();
       this.FormAction = 'insert';
       this.TaskGuid = "";
       this.MatterGuid = this.f.MATTERGUID.value;
       this.userGuid=this.f.USERGUID.value;
-    } else {
+    }else {
       this.forRimindCheck();
       this.FormAction = 'insert';
       this.TaskGuid = "";

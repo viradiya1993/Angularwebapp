@@ -16,6 +16,7 @@ interface FoodNode {
   ACCOUNTGUID: string;
   ACCOUNTTYPE: string;
   ACCOUNTCLASS: any;
+  ACTIVE: any;
   ACCOUNTNAME: any;
   ACCOUNTNUMBER: any;
   SUBACCOUNTS: any;
@@ -57,6 +58,7 @@ export class ChartAccountComponent implements OnInit {
     return {
       expandable: !!node.SUBACCOUNTS && node.SUBACCOUNTS.length > 0,
       name: node.ACCOUNTCLASS + ' - ' + node.ACCOUNTNUMBER + '        ' + node.ACCOUNTNAME,
+      ACTIVE: node.ACTIVE == 1 ? '(inactive)' : '',
       class: node.ACCOUNTNAME,
       ACCOUNTGUID: node.ACCOUNTGUID,
       ACCOUNTTYPE: node.ACCOUNTTYPE,
@@ -92,10 +94,11 @@ export class ChartAccountComponent implements OnInit {
     this.ChartData.AccountClass = this.filterData.AccountClass;
     this.loadData(this.filterData);
   }
-  ngOnInit() {    
+  ngOnInit() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 80)) + 'px');
     this.acc = "";
   }
+
   loadData(data: any) {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(data, 'GetAccount').subscribe(response => {
@@ -109,6 +112,7 @@ export class ChartAccountComponent implements OnInit {
         }
         this.showData(this.storeDataarray, 0, null);
         this.dataSource.data = this.storeDataarray;
+        this.treeControl.dataNodes = this.storeDataarray;
         if (response.DATA.ACCOUNTS[0].SUBACCOUNTS)
           this.RowClick(response.DATA.ACCOUNTS[0].SUBACCOUNTS[0]);
         this.highlightedRows = 1;
@@ -158,4 +162,5 @@ export class ChartAccountComponent implements OnInit {
   FilterSearch(val) {
     this.storeDataarray.filter = val;
   }
+  // this.tree.treeControl.expandAll();
 }

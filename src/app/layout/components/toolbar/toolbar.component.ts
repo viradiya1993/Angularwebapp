@@ -36,7 +36,6 @@ import { DocumentDailogComponent } from './../../../main/pages/document-register
 import { EmailDailogComponent } from './../../../main/pages/template/email-templete/email-dailog/email-dailog.component';
 import { PacksDailogComponent } from './../../../main/pages/template/packs/packs-dailog/packs-dailog.component';
 import { ChartAcDailogComponent } from './../../../main/pages/chart-account/chart-ac-dailog/chart-ac-dailog.component';
-import { SelectAccountComponent } from './../../../main/pages/select-account/select-account.component';
 import { FileNoteDialogComponent } from 'app/main/pages/matters/file-note-dialog/file-note-dialog.component';
 import { BankingDialogComponent } from 'app/main/pages/banking/banking-dialog.component';
 import { GeneralDailogComponent } from './../../../main/pages/general-journal/general-dailog/general-dailog.component';
@@ -125,6 +124,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     DisEnTimeEntryToolbar: string;
     timeEntryData: any;
     DisMainAuthorityToolbar: string;
+    estimateData: any;
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
@@ -385,7 +385,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /* ---------------------------------------------------------------------Matter End--------------------------------------------------------------------------  */
     /* ---------------------------------------------------------------------Activity Start--------------------------------------------------------------------------  */
     //add edit and duplicat ActivityDialog
-    ActivityDialog(actionType) {
+    ActivityDialog(actionType,name) {
         let popupData: any = {};
         if (actionType == "new") {
             popupData = { action: actionType };
@@ -398,7 +398,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             popupData = { action: actionType, ACTIVITYGUID: ActivityData.ACTIVITYGUID };
         }
         const dialogRef = this.dialog.open(ActivityDialogComponent, {
-            disableClose: true, panelClass: 'Activity-dialog', data: popupData
+            disableClose: true, panelClass: 'Activity-dialog', 
+            data:{
+                 popupData,
+                 popupname:name
+            } 
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result)
@@ -803,39 +807,33 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }
         const dialogRef = this.dialog.open(EstimateDilogComponent, { disableClose: true, panelClass: 'Document-dialog', data: EstimatePopdata });
         dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                $('#refreshFileNote').click();
-            }
+            if (result)
+                $('#refresheEtimateTab').click();
         });
     }
     //delete Estimate  item
     deleteEstimate() {
-        this.behaviorService.FileNotesData$.subscribe(result => {
+        this.behaviorService.estimatelegalData$.subscribe(result => {
             if (result) {
-                this.FileNotesData = result;
+                this.estimateData = result;
             }
         });
-        if (this.FileNotesData == null) {
-            this.toastr.error("No Data Selected");
-        } else {
-            this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-                disableClose: true,
-                width: '100%',
-            });
-            this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-            this.confirmDialogRef.afterClosed().subscribe(result => {
-                if (result) {
-                    let postData = { FormAction: "delete", DATA: { FILENOTEGUID: this.FileNotesData.FILENOTEGUID } }
-                    this._mainAPiServiceService.getSetData(postData, 'SetFileNote').subscribe(res => {
-                        if (res.STATUS == "success" && res.CODE == 200) {
-                            $('#refreshFileNote').click();
-                            this.toastr.success('Delete successfully');
-                        }
-                    });
-                }
-                this.confirmDialogRef = null;
-            });
-        }
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true, width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                let postData = { FormAction: "delete", DATA: { ESTIMATEITEMGUID: this.estimateData.ESTIMATEITEMGUID } };
+                this._mainAPiServiceService.getSetData(postData, 'SetMatterEstimateItem').subscribe(res => {
+                    if (res.STATUS == "success" && res.CODE == 200) {
+                        $("#refresheEtimateTab").click();
+                        this.toastr.success('Delete successfully');
+                    }
+                });
+            }
+            this.confirmDialogRef = null;
+        });
     }
     //// Duplicate Spend Money
     deleteContact(): void {
@@ -901,7 +899,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
 
         });
-    }/* Document Register Module */
+    }
+    /* Document Register Module */
     DocumntPop(actionType) {
         let DcoumentPopdata = {}
         if (actionType == 'new') {
@@ -938,7 +937,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 $("#refreshSpendMoneyTab").click();
                 $('#refreshRecouncilItem').click();
             }
-
         });
     }
 
@@ -1271,14 +1269,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef = null;
         });
     }
-    //end of Authority dialoge 
-    //ReconcileAC
-    ReconcileAC() {
-        const dialogRef = this.dialog.open(SelectAccountComponent, {
-        });
-        dialogRef.afterClosed().subscribe(result => {
-        });
-    }
+
     /* General Journal Module Function's */
     //NewGeneral
     NewGeneral() {

@@ -125,6 +125,7 @@ export class InvoiceComponent implements OnInit {
         this.matterInvoiceFilterForm.controls['TOTAL'].setValue(response.DATA.TOTALINVOICES);
         this.matterInvoiceFilterForm.controls['Received'].setValue(response.DATA.TOTALRECEIVED);
         this.matterInvoiceFilterForm.controls['Outstanding'].setValue(response.DATA.TOTALOUSTANDING);
+        this.behaviorService.matterInvoiceData(null);
         if (response.DATA.INVOICES[0]) {
           this.behaviorService.matterInvoiceData(response.DATA.INVOICES[0])
           localStorage.setItem('edit_invoice_id', response.DATA.INVOICES[0].INVOICEGUID);

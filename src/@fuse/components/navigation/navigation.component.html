@@ -19,7 +19,7 @@
             <!-- <div>{{searchpage}}</div> -->
             <div class="listdata" *ngIf="( page | filterByName:searchpage ) as result">
                 <mat-list role="list" *ngFor="let pages of result">
-                    <mat-list-item *ngIf="pages.TITLE !='Spend money' && pages.TITLE !='Receive money'" role="listitem" (click)="onChange(pages.TITLE)">
+                    <mat-list-item role="listitem" (click)="onChange(pages.TITLE)">
                         <mat-icon>
                             <img *ngIf="pages.TITLE=='Matters'" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                             <img *ngIf="pages.TITLE=='Contacts'" src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -34,7 +34,6 @@
                             <img *ngIf="pages.TITLE=='Safe Custody'" src="assets/icons/web_app/icon_safecustody_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                             <img *ngIf="pages.TITLE=='Trust Money'" src="assets/icons/web_app/icon_trust_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                             <img *ngIf="pages.TITLE=='Trust End Of Month'" src="assets/icons/web_app/icon_trust_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-
                             <img *ngIf="pages.TITLE=='Trust Banking'" src="assets/icons/web_app/icon_trust_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                         </mat-icon>
                         <div class="side_bar_title">{{pages.TITLE}}</div>

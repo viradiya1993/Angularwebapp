@@ -901,7 +901,7 @@
                             <mat-card-content>
                                 <section class="group-section-tab details_tab">
                                     <section class="ribbon-section">
-                                        <button mat-button classs="large-button" (click)="setTab($event)" [routerLink]="'/legal-details'">
+                                        <button mat-button classs="large-button"  (click)="setTab($event)" [routerLink]="'/legal-details'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_authorities_d.ico" alt=""
@@ -1333,7 +1333,7 @@
                                 <mat-divider vertical></mat-divider>
                                 <section *ngIf="activeSubMenu=='matter-invoices'" class="group-section-tab action_tab">
                                     <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
+                                        <button [disabled]="ShowGenerateInvoice =='no'" (click)="GenerateInvoice()" mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_print_d.ico" alt=""
@@ -1808,7 +1808,7 @@
                                     </section>
 
                                     <section [ngClass]="appPermissions[12]?.Acess==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button [routerLink]="'/authorities/authorities'" mat-button [ngClass]="appPermissions[12]?.Acess==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)">
+                                        <button [routerLink]="'/authorities/full-authorities'" mat-button [ngClass]="appPermissions[12]?.Acess==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_authorities_edit_d.ico" alt=""
@@ -2253,7 +2253,7 @@
                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[5]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
+                                        <button [disabled]="ShowGenerateInvoice =='no' " (click)="GenerateInvoice()" mat-button [ngClass]="appPermissions[5]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_print_d.ico" alt=""

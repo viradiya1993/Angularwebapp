@@ -3,10 +3,12 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MatDialog, MatDatepickerInputEvent } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { fuseAnimations } from '@fuse/animations';
-import { MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-
+import { MatterDialogComponentForTemplate } from '../../template/matter-dialog/matter-dialog.component';
+import { GenerateInvoiceComponent } from '../generate-invoice/generate-invoice.component';
+import * as $ from 'jquery';
 @Component({
   selector: 'app-instant-invoice-dailog',
   templateUrl: './instant-invoice-dailog.component.html',
@@ -39,7 +41,8 @@ export class InstantInvoiceDailogComponent implements OnInit {
     public datepipe: DatePipe,
     public _matDialog: MatDialog,
     private toastr: ToastrService,
-    private _mainAPiServiceService: MainAPiServiceService
+    private _mainAPiServiceService: MainAPiServiceService,
+    private behaviorService: BehaviorService,
   ) { }
 
   ngOnInit() {
@@ -123,10 +126,8 @@ export class InstantInvoiceDailogComponent implements OnInit {
       this.TotalExGst = (ExGSt).toFixed(2);
       this.GstVal = (Number(this.TotalIncGst) - Number(ExGSt)).toFixed(2);
     }
-    
-
   }
-
+  
   SaveInstaceInvoice() {
     let SendData = {
       INVOICEGUID: '',
@@ -211,9 +212,21 @@ export class InstantInvoiceDailogComponent implements OnInit {
     data.VALIDATEONLY = false;
     this._mainAPiServiceService.getSetData(data, 'SetInvoice').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        
         this.toastr.success(' save successfully');
         this.isspiner = false;
         this.dialogRef.close(true);
+        $('#refreshWorkInprogress').click();
+        this.behaviorService.matterInvoiceData({INVOICEGUID:response.DATA.INVOICEGUID});
+        const dialogRef = this._matDialog.open(GenerateInvoiceComponent, {
+          width: '100%',
+          disableClose: true,
+          data: {}
+          });
+       dialogRef.afterClosed().subscribe(result => {
+    
+         });
+
       } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.toastr.warning(response.MESSAGE);
       } else if (response.CODE == 450 && response.STATUS == 'error') {

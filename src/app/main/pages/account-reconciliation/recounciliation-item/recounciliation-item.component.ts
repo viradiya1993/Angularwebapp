@@ -61,6 +61,7 @@ export class RecounciliationItemComponent implements OnInit {
         this.chartAccountDetail = result;
       }
     });
+    console.log(this.chartAccountDetail);
     let sendDate = this.chartAccountDetail.MainList.RECONCILEDGROUP.LASTRECONCILEDDATE.split("/");
     let getdate = new Date(sendDate[1] + '/' + sendDate[0] + '/' + sendDate[2]), y = getdate.getFullYear(), m = getdate.getMonth();;;
        let lateday = new Date(y, m + 1, 0);
@@ -114,7 +115,6 @@ export class RecounciliationItemComponent implements OnInit {
   helloFunction() {
     this.GloballyCal();
     this.FirstTimeCal('');
-    console.log(this.selection.selected);
     // this.SendRecouncileArray.push(this.selection.selected);
     this.behaviorService.RecouncileItemSendSetData({ "BankStatementDate": "30/11/2015", "ClosingBalance": this.f.statementClosingBalance.value, "item": this.selection.selected })
     // this.SelectedItemArray.push(this.selection.selected)
@@ -174,6 +174,7 @@ export class RecounciliationItemComponent implements OnInit {
     this.isLoadingResults = true;
     this.subscription = this._mainAPiServiceService.getSetData(data, 'GetReconciliationItems').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
+        console.log(response);
         this.FirstTimeCal(response.DATA.RECONCILIATIONITEMS);
         this.ReconciliationData = new MatTableDataSource(response.DATA.RECONCILIATIONITEMS);
         this.ReconciliationData.paginator = this.paginator;
@@ -186,6 +187,14 @@ export class RecounciliationItemComponent implements OnInit {
         this.statmentClosingBal();
         this.AccountRecouncile.controls['OutBal'].setValue(response.DATA.LASTRECONCILEDBALANCE);
         this.isLoadingResults = false;
+        if(response.DATA.RECONCILIATIONITEMS[0]){
+        }else{
+          this.AccountRecouncile.controls['UnDeposite'].setValue(0);
+          this.AccountRecouncile.controls['UnWith'].setValue(0);
+        }
+     
+
+
       } else if (response.CODE == 406 && response.MESSAGE == "Permission denied") {
         this.ReconciliationData = new MatTableDataSource([]);
         this.ReconciliationData.paginator = this.paginator;

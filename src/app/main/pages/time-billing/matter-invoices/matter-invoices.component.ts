@@ -56,6 +56,7 @@ export class MatterInvoicesComponent implements OnInit {
     this._mainAPiServiceService.getSetData(potData, 'GetInvoice').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.MatterinvoiceData = { invoicetotal: res.DATA.TOTALINVOICES, recevived: res.DATA.TOTALRECEIVED, outstanding: res.DATA.TOTALOUSTANDING };
+        this.behaviorService.matterInvoiceData(null);
         if (res.DATA.INVOICES[0])
           this.editmatterInvoive(res.DATA.INVOICES[0]);
         this.MatterInvoicesdata = new MatTableDataSource(res.DATA.INVOICES);

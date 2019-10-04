@@ -66,8 +66,8 @@ export class PacksComponent implements OnInit, AfterViewInit {
       level: level,
     };
   }
-
-  treeControl = new FlatTreeControl<ExampleFlatNode>(node => node.level, node => node.expandable);
+  treeControl = new FlatTreeControl<ExampleFlatNode>(
+    node => node.level, node => node.expandable);
 
   treeFlattener = new MatTreeFlattener(
     this._transformer, node => node.level, node => node.expandable, node => node.KITITEMS);

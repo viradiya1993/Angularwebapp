@@ -42,7 +42,6 @@ export class SpendMoneyAddComponent implements OnInit {
   Bankhide: boolean = true;
   hide: boolean = true;
   tdata: boolean;
-  getPayourarray: any = [];
   confirmDialogRef: any;
   expac: boolean;
   @ViewChild(MatSort) sort: MatSort;
@@ -86,7 +85,6 @@ export class SpendMoneyAddComponent implements OnInit {
     } else {
       this.dialogTitle = 'Duplicate Spend Money';
     }
-    this.getPayee({});
 
     this.behaviorService.SpendMoneyData$.subscribe(result => {
       if (result) {
@@ -318,18 +316,7 @@ export class SpendMoneyAddComponent implements OnInit {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
   }
-  getPayee(postData) {
-    this._mainAPiServiceService.getSetData(postData, 'GetContact').subscribe(response => {
-      console.log(response);
-      if (response.CODE == 200 && response.STATUS == "success") {
-        response.DATA.CONTACTS.forEach(element => {
-          this.getPayourarray.push(element.CONTACTNAME);
-        });
-      }
-    }, err => {
-      this.toastr.error(err);
-    });
-  }
+
   // paid Type Dropdown
   Paidtype(paidvalue) {
     if (paidvalue === 'Paid') {

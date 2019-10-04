@@ -66,6 +66,7 @@ export class MatterDialogComponentForTemplate implements OnInit {
     //need to call generate template api 
 
     if (_data) {
+      console.log(_data);
       this.base_url = environment.ReportUrl;
       this.filefolder_Name = _data.Template;
       this.Title = _data.Type == 'Email' ? 'Email' : 'Document';
@@ -85,7 +86,6 @@ export class MatterDialogComponentForTemplate implements OnInit {
   //select matter
   selectMatter(data) {
     this.isLoadingResults = true;
-
     this._mainAPiServiceService.getSetData(data, 'TemplateGenerate').subscribe(response => {
       console.log(response);  
       if (response.CODE == 200 && response.STATUS == "success") {

@@ -36,7 +36,6 @@ import { DocumentDailogComponent } from './../../../main/pages/document-register
 import { EmailDailogComponent } from './../../../main/pages/template/email-templete/email-dailog/email-dailog.component';
 import { PacksDailogComponent } from './../../../main/pages/template/packs/packs-dailog/packs-dailog.component';
 import { ChartAcDailogComponent } from './../../../main/pages/chart-account/chart-ac-dailog/chart-ac-dailog.component';
-import { SelectAccountComponent } from './../../../main/pages/select-account/select-account.component';
 import { FileNoteDialogComponent } from 'app/main/pages/matters/file-note-dialog/file-note-dialog.component';
 import { BankingDialogComponent } from 'app/main/pages/banking/banking-dialog.component';
 import { GeneralDailogComponent } from './../../../main/pages/general-journal/general-dailog/general-dailog.component';
@@ -58,6 +57,7 @@ import { WriteOffInvoiceComponent } from 'app/main/pages/invoice/newWriteOffInvo
 import { AuthorityDialogComponent } from 'app/main/pages/globally-Authority/main-authorities/authority-dialog/authority-dialog.component';
 import { TopicDialogComponent } from 'app/main/pages/globally-Authority/main-authorities/topic/topic-dialog/topic-dialog.component';
 import { EstimateDilogComponent } from 'app/main/pages/time-billing/estimate/estimate-dilog/estimate-dilog.component';
+import { GenerateInvoiceComponent } from 'app/main/pages/invoice/generate-invoice/generate-invoice.component';
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -75,6 +75,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     LegalSubAuthotool: any;
     mainlegalAuthWebUrl: any;
     recouncileItemdata: any;
+    ShowGenerateInvoice: string;
     [x: string]: any;
     appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
     @ViewChild(TimeEntriesComponent) TimeEntrieschild: TimeEntriesComponent;
@@ -115,6 +116,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     DocRegData: any = [];
     AccountGUID: any;
     chartAccountDetail: any;
+    isMainAccount: boolean = false;
     TaskData: any;
     FileNotesData: any;
     conflictData: any;
@@ -123,7 +125,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     DisEnTimeEntryToolbar: string;
     timeEntryData: any;
     DisMainAuthorityToolbar: string;
-    estimateData:any;
+    estimateData: any;
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
@@ -134,8 +136,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private toastr: ToastrService,
         private TimersServiceI: TimersService,
         private _mainAPiServiceService: MainAPiServiceService,
-        private _router: Router,
-        private location: Location,
         public MatDialog: MatDialog,
         public behaviorService: BehaviorService
     ) {
@@ -236,6 +236,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }
         this.behaviorService.ChartAccountData$.subscribe(result => {
             if (result) {
+                console.log(this.isMainAccount);
+                this.isMainAccount = result.ACCOUNTTYPENAME == "Header";
+                console.log(this.isMainAccount);
                 this.chartAccountDetail = result;
                 this.AccountGUID = result.ACCOUNTGUID;
             }
@@ -384,7 +387,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /* ---------------------------------------------------------------------Matter End--------------------------------------------------------------------------  */
     /* ---------------------------------------------------------------------Activity Start--------------------------------------------------------------------------  */
     //add edit and duplicat ActivityDialog
-    ActivityDialog(actionType,name) {
+    ActivityDialog(actionType, name) {
         let popupData: any = {};
         if (actionType == "new") {
             popupData = { action: actionType };
@@ -397,11 +400,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             popupData = { action: actionType, ACTIVITYGUID: ActivityData.ACTIVITYGUID };
         }
         const dialogRef = this.dialog.open(ActivityDialogComponent, {
-            disableClose: true, panelClass: 'Activity-dialog', 
-            data:{
-                 popupData,
-                 popupname:name
-            } 
+            disableClose: true, panelClass: 'Activity-dialog',
+            data: {
+                popupData,
+                popupname: name
+            }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result)
@@ -630,6 +633,25 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
 
+    GenerateInvoice() {
+        this.behaviorService.matterInvoice$.subscribe(result => {
+            console.log(result);
+            if (result != null) {
+                this.ShowGenerateInvoice = "yes";
+            } else {
+                this.ShowGenerateInvoice = "no";
+            }
+        });
+        const dialogRef = this._matDialog.open(GenerateInvoiceComponent, {
+            width: '100%', disableClose: true, data: {}
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // $('#refreshTimeEntryTab').click();
+            }
+        });
+    }
+
     UndoWriteOffTimeEntry() {
         let postData = { FormAction: "undo write off", DATA: { WORKITEMGUID: this.timeEntryData.WORKITEMGUID } }
         this.TimersServiceI.SetWorkItems(postData).subscribe(res => {
@@ -797,7 +819,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     deleteEstimate() {
         this.behaviorService.estimatelegalData$.subscribe(result => {
             if (result) {
-               this.estimateData = result;
+                this.estimateData = result;
             }
         });
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
@@ -1251,14 +1273,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef = null;
         });
     }
-    //end of Authority dialoge 
-    //ReconcileAC
-    ReconcileAC() {
-        const dialogRef = this.dialog.open(SelectAccountComponent, {
-        });
-        dialogRef.afterClosed().subscribe(result => {
-        });
-    }
+
     /* General Journal Module Function's */
     //NewGeneral
     NewGeneral() {
@@ -1540,7 +1555,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.clickedBtn = 'matterDoc';
     }
     createInstantInvoice() {
-        if (this.router.url != '/matters') {
+        console.log(this.router.url);
+        if (this.router.url != '/time-billing/matter-invoices') {
             const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {

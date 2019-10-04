@@ -66,7 +66,6 @@ export class PacksComponent implements OnInit, AfterViewInit {
       level: level,
     };
   }
-
   treeControl = new FlatTreeControl<ExampleFlatNode>(
     node => node.level, node => node.expandable);
 
@@ -82,7 +81,6 @@ export class PacksComponent implements OnInit, AfterViewInit {
     private toastr: ToastrService,
     public _matDialog: MatDialog,
     private behaviorService: BehaviorService,
-
     private _mainAPiServiceService: MainAPiServiceService
   ) {
     this.loadData({});
@@ -108,7 +106,6 @@ export class PacksComponent implements OnInit, AfterViewInit {
       search: []
     });
     // this.loadData();
-
   }
   ngAfterViewInit() {
     this.treeControl.expandAll();
@@ -118,8 +115,8 @@ export class PacksComponent implements OnInit, AfterViewInit {
   }
   loadData(Data) {
     this.isLoadingResults = true;
-    this._mainAPiServiceService.getSetData({INCLUDEKITITEMS:'Yes'}, 'GetKit').subscribe(res => {
-  
+    this._mainAPiServiceService.getSetData({ INCLUDEKITITEMS: 'Yes' }, 'GetKit').subscribe(res => {
+
       if (res.CODE == 200 && res.STATUS == "success") {
         // this.dataSource.paginator = this.paginator;
         this.arrayForIndex = [];
@@ -146,7 +143,7 @@ export class PacksComponent implements OnInit, AfterViewInit {
   }
   FilterSearch(searchFilter: any) {
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
-        this.loadData({SEARCH:this.f.search.value})
+      this.loadData({ SEARCH: this.f.search.value })
     }
   }
   //SelectMatter

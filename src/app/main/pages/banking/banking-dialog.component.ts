@@ -72,7 +72,6 @@ export class BankingDialogComponent implements OnInit {
     this.treeControl.expandAll();
   }
   loadData(type: any) {
-    console.log(type);
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({ AccountClass: type }, 'GetAccount').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
@@ -114,7 +113,7 @@ export class BankingDialogComponent implements OnInit {
   }
   RowClick(node) {
     this.behaviorService.ChartAccountData(node);
-    localStorage.setItem('ChartAccountData', JSON.stringify({ "name": node.name, "class": node.class, "ACCOUNTGUID": node.ACCOUNTGUID, "ACCOUNTTYPE": node.ACCOUNTTYPE, "index": node.index, "parent": node.parent, "level": node.level }));
+    localStorage.setItem('ChartAccountData', JSON.stringify({ 'ACCOUNTTYPENAME': node.MainList.ACCOUNTTYPENAME, "name": node.name, "class": node.class, "ACCOUNTGUID": node.ACCOUNTGUID, "ACCOUNTTYPE": node.ACCOUNTTYPE, "index": node.index, "parent": node.parent, "level": node.level }));
     node.AccountType = this._data.AccountType;
     this.ACCOUNTGUIDsELECTED = node;
     this.isDisabledselect = node.MainList.ACCOUNTTYPENAME;
@@ -166,7 +165,7 @@ export class BankingDialogComponent implements OnInit {
       this.router.navigate(['account-reconciliation/reconciliation-item']);
     }
   }
-  refreshBank(){
-    
+  refreshBank() {
+
   }
 }

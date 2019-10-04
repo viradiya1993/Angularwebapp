@@ -25,6 +25,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, Sa
 import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
 import { WriteOffInvoiceComponent } from './newWriteOffInvoice/newWriteOffInvoice.component';
 import { InvoiceNumberPipe } from './invoicenumber.pipe'
+import { GenerateInvoiceComponent } from './generate-invoice/generate-invoice.component';
 
 const routes = [
   { path: '', component: InvoiceComponent, canActivate: [AuthGuard] },
@@ -42,7 +43,8 @@ const routes = [
     DetailsComponent,
     DiscountIncreaseComponent,
     WriteOffInvoiceComponent,
-    InvoiceNumberPipe
+    InvoiceNumberPipe,
+    GenerateInvoiceComponent
   ],
   entryComponents: [
     ReceiptDilogComponent,
@@ -50,7 +52,8 @@ const routes = [
     InstantInvoiceDailogComponent,
     InvoiceAddDailogComponent,
     InvoiceDialogComponentForTemplate,
-    WriteOffInvoiceComponent
+    WriteOffInvoiceComponent,
+    GenerateInvoiceComponent
   ],
   imports: [
     CommonModule,

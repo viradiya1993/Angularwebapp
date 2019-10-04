@@ -1,96 +1,91 @@
 <div class="example-loading-shade" *ngIf="isLoadingResults">
-  <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
 </div>
 <div cdkDrag class="popup_main_div add_edit_contact_main">
-  <h2 cdkDragHandle mat-dialog-title>General Journal Entry
-    <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
+    <h2 cdkDragHandle mat-dialog-title>General Journal Entry
+        <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
       <mat-icon>close</mat-icon>
     </button>
-  </h2>
-  <div mat-dialog-content class="mat-typography main">
-    <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
-      <form [formGroup]="GenrealForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
-          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-              <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
-                  <mat-label>Date</mat-label>
-                  <input  formControlName ="GenralDate" matInput [matDatepicker]="picker3">
-                  <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-                  <mat-datepicker #picker3></mat-datepicker>
-              </mat-form-field>
-              <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                  <mat-label>Description</mat-label>
-                  <input matInput formControlName ="description" value="GJ;">                  
-              </mat-form-field>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-              <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                <mat-label>Total</mat-label>
-                <input matInput formControlName ="total" value="0.00">                  
-              </mat-form-field>
-              <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
-                  <input matInput formControlName ="total1" value="0.00">                  
-              </mat-form-field>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-            
-            <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
-                  <mat-label>Amount</mat-label>
-                  <input [disabled]=" disabledField =='yes'" matInput formControlName ="amount" value="0.00" type="number">                  
-              </mat-form-field>
-              <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
-                  <mat-label>Account</mat-label>
-                  <input [disabled]="disabledField =='yes'" matInput formControlName = "account"> 
-                  <mat-icon matSuffix (click)='SelecteAccount()'>
-                        <img src="assets/icons/web_app/icon_receipts_small_o.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                  </mat-icon>                 
-              </mat-form-field>
-              <mat-radio-group formControlName="DRCR"  fxFlex="" class="pr-4">
-                  <mat-radio-button value="DR">DR</mat-radio-button>
-              </mat-radio-group>
-              <mat-radio-group  formControlName="DRCR" fxFlex="" class="pr-4">
-                  <mat-radio-button value="CR">CR</mat-radio-button>
-              </mat-radio-group>
-          </div>
-          <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-              <table mat-table [dataSource]="dataSource" matSort >                
-                  <ng-container matColumnDef="Number">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Number</th>
-                    <td mat-cell *matCellDef="let element">{{element.Number}}</td>
-                  </ng-container>
-                  <ng-container matColumnDef="Account">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Account</th>
-                    <td mat-cell *matCellDef="let element"> {{element.Account}} </td>
-                  </ng-container>
-                  <ng-container matColumnDef="Debit">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Debit</th>
-                    <td mat-cell *matCellDef="let element"> {{element.Debit}} </td>
-                  </ng-container>                  
-                  <ng-container matColumnDef="Credit">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Credit</th>
-                    <td mat-cell *matCellDef="let element"> {{element.Credit}} </td>
-                  </ng-container>
-                  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                  <tr [style.background]="highlightedRows == row.Number ? selectedColore : ''" 
-                    [ngClass]="highlightedRows == row.Number ? 'row-text-colore' : ''" 
-                    highlightedRows=row.Number mat-row *matRowDef="let row; columns: displayedColumns;"
-                    (click)="clickNo(row.Number);highlightedRows = row.Number " matRipple>
-                  </tr>
-              </table>
-              <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
-          </div>
-      </form>
+    </h2>
+    <div mat-dialog-content class="mat-typography main">
+        <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+            <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
+                        <mat-label>Date</mat-label>
+                        <input name="DATE" matInput [matDatepicker]="picker3">
+                        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                        <mat-datepicker #picker3></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Description</mat-label>
+                        <input matInput name="DESCRIPTION" value="GJ;">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Debit Total</mat-label>
+                        <input matInput name="DEBITSTOTAL" [(ngModel)]="DEBITSTOTAL">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Credit Total</mat-label>
+                        <input matInput name="CREDITSTOTAL" [(ngModel)]="CREDITSTOTAL">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                        <mat-label>Amount</mat-label>
+                        <input [disabled]="isDisable" name="AMOUNT" matInput [(ngModel)]="craditDEbitData.AMOUNT" value="0.00" type="number">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                        <mat-label>Account</mat-label>
+                        <input [disabled]="isDisable" matInput name="ACCOUNTGUID" [(ngModel)]="craditDEbitData.ACCOUNTGUID">
+                        <mat-icon matSuffix (click)='SelecteAccount()'>
+                            <img src="assets/icons/web_app/icon_receipts_small_o.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                        </mat-icon>
+                    </mat-form-field>
+                    <mat-radio-group [(ngModel)]="craditDEbitData.DRCR" name="DRCR" [disabled]="isDisable" class="pr-4">
+                        <mat-radio-button value="DR">DR</mat-radio-button>
+                        <mat-radio-button value="CR">CR</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <table mat-table [dataSource]="dataSource">
+                        <ng-container matColumnDef="Number">
+                            <th mat-header-cell *matHeaderCellDef>Number</th>
+                            <td mat-cell *matCellDef="let element">{{element.Number}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="Account">
+                            <th mat-header-cell *matHeaderCellDef>Account</th>
+                            <td mat-cell *matCellDef="let element"> {{element.Account}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Debit">
+                            <th mat-header-cell *matHeaderCellDef>Debit</th>
+                            <td mat-cell *matCellDef="let element"> {{element.Debit}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="Credit">
+                            <th mat-header-cell *matHeaderCellDef>Credit</th>
+                            <td mat-cell *matCellDef="let element"> {{element.Credit}} </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                        <tr [style.background]="highlightedRows == row.Number ? selectedColore : ''" [ngClass]="highlightedRows == row.Number ? 'row-text-colore' : ''" highlightedRows=row.Number mat-row *matRowDef="let row; columns: displayedColumns;" (click)="clickNo(row.Number);highlightedRows = row.Number "
+                            matRipple>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+        </div>
+        <mat-dialog-actions *ngIf="btnhide === 'NewDelete'" align="left" class="popup_ftr">
+            <button mat-raised-button color="accent" (click)="NewItem()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>New Item</button>
+            <button mat-raised-button color="accent" (click)="DeleteItem()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Delete Item</button>
+        </mat-dialog-actions>
+        <mat-dialog-actions *ngIf="btnhide === 'AddCancel'" align="left" class="popup_ftr">
+            <button mat-raised-button color="accent" (click)="AddItem()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Add Item</button>
+            <button mat-raised-button color="accent" (click)="CancelItem()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Cancel Item</button>
+        </mat-dialog-actions>
     </div>
-      <mat-dialog-actions  *ngIf="btnhide === 'NewDelete'"  align="left" class="popup_ftr">
-          <button mat-raised-button color="accent" (click)="NewItem()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>New Item</button>
-          <button mat-raised-button color="accent" (click)="DeleteItem()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Delete Item</button>
-      </mat-dialog-actions>
-      <mat-dialog-actions *ngIf="btnhide === 'AddCancel'"  align="left" class="popup_ftr">
-          <button mat-raised-button color="accent" (click)="AddItem()"  [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Add Item</button>
-          <button mat-raised-button color="accent" (click)="CancelItem()"  [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Cancel Item</button>
-     </mat-dialog-actions>
-  </div>
-  <mat-dialog-actions align="end" class="popup_ftr">
-    <button mat-raised-button color="accent" disabled (click)="SaveGeneral()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
-    <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
-  </mat-dialog-actions>
+    <mat-dialog-actions align="end" class="popup_ftr">
+        <button mat-raised-button color="accent" disabled (click)="SaveGeneral()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
+    </mat-dialog-actions>
 </div>

@@ -93,6 +93,10 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
     });
     this.pageSize = localStorage.getItem('lastPageSize');
   }
+  refreshWorkInprogress(){
+    let filterVal = JSON.parse(localStorage.getItem('Work_in_progress_filter'));
+    this.loadData(filterVal);
+  }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);

@@ -411,7 +411,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
             if (result)
                 $('#refreshActivities').click();
-                $('#refreshWorkInprogress').click();
+            $('#refreshWorkInprogress').click();
         });
     }
     DeleteActivityDialog(): void {
@@ -622,7 +622,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
             if (result)
                 $('#refreshTimeEntryTab').click();
-                 $('#refreshWorkInprogress').click();
+            $('#refreshWorkInprogress').click();
         });
     }
     WriteOffTimeEntry() {
@@ -928,7 +928,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     ///Spend Money 
 
-    spendmoneypopup(actionType,val) {
+    spendmoneypopup(actionType, val) {
         let SpendMoneyPopdata = {}
         if (actionType == 'new') {
             SpendMoneyPopdata = { action: actionType }
@@ -938,10 +938,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this.dialog.open(SpendMoneyAddComponent, {
             disableClose: true,
             panelClass: 'SpendMoney-dialog',
-            data:{
-                action: actionType ,
-                FromWhere:val
-            } 
+            data: {
+                action: actionType,
+                FromWhere: val
+            }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -999,19 +999,19 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         if (this.router.url == "/create-document/email-invoice-template" || this.router.url == "/create-document/packs-invoice-template") {
             let invoiceGUid = localStorage.getItem('edit_invoice_id');
-            let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
+            let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "knownby": "Template", "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
             this.ForEmailDialogOpen(passdata);
         } else if (this.router.url == "/create-document/email-matter-template" || this.router.url == "/create-document/packs-matter-template") {
             let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
-            let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
+            let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "knownby": "Email", "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
             this.ForEmailDialogOpen(passdata);
         } else if (this.router.url == "/create-document/email-receive-money-template" || this.router.url == "/create-document/packs-receive-money-template") {
             let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
-            let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
+            let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "knownby": "Email", "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
             this.ForEmailDialogOpen(passdata);
         } else if (this.router.url == "/create-document/email-contact-template" || this.router.url == "/create-document/packs-contact-template") {
             let ContactGuID = localStorage.getItem('contactGuid');
-            let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
+            let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "knownby": "Email", "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
             this.ForEmailDialogOpen(passdata);
         }
     }
@@ -1023,19 +1023,19 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         if (this.router.url == "/create-document/packs-invoice-template") {
             let invoiceGUid = localStorage.getItem('edit_invoice_id');
-            let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "Type": "Pack", "Folder": '', "Template": this.KitName }
+            let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "knownby": "Pack", "Type": "Pack", "Folder": '', "Template": this.KitName }
             this.ForEmailDialogOpen(passdata);
         } else if (this.router.url == "/create-document/packs-matter-template") {
             let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
-            let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Pack", "Folder": '', "Template": this.KitName }
+            let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "knownby": "Pack", "Type": "Pack", "Folder": '', "Template": this.KitName }
             this.ForEmailDialogOpen(passdata);
         } else if (this.router.url == "/create-document/packs-receive-money-template") {
             let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
-            let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Pack", "Folder": '', "Template": this.KitName }
+            let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "knownby": "Pack", "Type": "Pack", "Folder": '', "Template": this.KitName }
             this.ForEmailDialogOpen(passdata);
         } else if (this.router.url == "/create-document/packs-contact-template") {
             let ContactGuID = localStorage.getItem('contactGuid');
-            let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Pack", "Folder": '', "Template": this.KitName }
+            let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "knownby": "Pack", "Type": "Pack", "Folder": '', "Template": this.KitName }
             this.ForEmailDialogOpen(passdata);
         }
     }
@@ -1564,8 +1564,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.clickedBtn = 'matterDoc';
     }
     createInstantInvoice() {
-        console.log(this.router.url);
-        if (this.router.url != '/time-billing/matter-invoices') {
+        if (this.router.url != '/time-billing/matter-invoices' && this.router.url != 'time-billing/work-in-progress/invoice') {
             const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
@@ -1593,6 +1592,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 $('#refreshWorkInprogress').click();
+                $('#refreshTimeEntryTab').click();
             }
         });
     }
@@ -1881,20 +1881,20 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         if (this.router.url == "/create-document/invoice-template" || this.router.url == "/create-document/packs-invoice-template") {
             let invoiceGUid = localStorage.getItem('edit_invoice_id');
-            let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
+            let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "knownby": "Template", "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
         } else if (this.router.url == "/create-document/matter-template" || this.router.url == "/create-document/packs-matter-template") {
             let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
-            let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
+            let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "knownby": "Template", "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
         } else if (this.router.url == "/create-document/receive-money-template" || this.router.url == "/create-document/packs-receive-money-template") {
 
             let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
-            let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
+            let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "knownby": "Template", "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
         } else if (this.router.url == "/create-document/contact-template" || this.router.url == "/create-document/packs-contact-template") {
             let ContactGuID = localStorage.getItem('contactGuid');
-            let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
+            let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "knownby": "Template", "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
         }
     }

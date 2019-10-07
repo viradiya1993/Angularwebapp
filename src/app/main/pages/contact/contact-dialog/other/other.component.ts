@@ -3,20 +3,20 @@ import { FormGroup } from '@angular/forms';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig, MatDatepickerInputEvent } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { NativeDateAdapter, DateAdapter, MAT_DATE_FORMATS } from "@angular/material";
-import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
+// import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
 
 @Component({
   selector: 'app-other',
   templateUrl: './other.component.html',
   styleUrls: ['./other.component.scss'],
-  providers: [
-    {
-      provide: DateAdapter, useClass: AppDateAdapter
-    },
-    {
-      provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
-    }
-  ]
+  // providers: [
+  //   {
+  //     provide: DateAdapter, useClass: AppDateAdapter
+  //   },
+  //   {
+  //     provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
+  //   }
+  // ]
 })
 export class OtherComponent implements OnInit {
 

@@ -96,6 +96,11 @@ export class SpendMoneyAddComponent implements OnInit {
     });
   }
   ngOnInit() {
+    this._mainAPiServiceService.getSetData({ AccountClass: 'BANK ACCOUNT' }, 'GetAccount').subscribe(response => {
+      this.storeDataarray = response.DATA.ACCOUNTS;
+      this.showData(this.storeDataarray);
+    }, err => {
+    });
     //for Data Table hideshow 
     this.Main3btn = 'disabled';
     this.dataTableHide = "false";
@@ -148,6 +153,18 @@ export class SpendMoneyAddComponent implements OnInit {
     } else {
       this.forAddshowpopupData();
     }
+  }
+  showData(element) {
+    element.forEach(x => {
+      if (x.ACCOUNTTYPENAME == "Bank Account") {
+        x.EXPORTINFO.MYOBEXPORTACCOUNT;
+        this.spendmoneyForm.controls['Bankac'].setValue(x.EXPORTINFO.MYOBEXPORTACCOUNT);
+        this.spendmoneyForm.controls['BankacGUID'].setValue(x.ACCOUNTGUID);
+      }
+      if (x.SUBACCOUNTS) {
+        this.showData(x.SUBACCOUNTS);
+      }
+    });
   }
   forEditshowpopupData() {
     let DatePaid = this.SendMoney_data.DATE.split("/");
@@ -316,18 +333,17 @@ export class SpendMoneyAddComponent implements OnInit {
     if (this._data.FromWhere == 'FromWIP') {
       this.Classtype("Matter Expense");
       this.spendmoneyForm.controls['Class'].setValue("Matter Expense");
-
     } else {
       this.Classtype("Expense");
       this.spendmoneyForm.controls['Class'].setValue("Expense");
     }
-
+    this.Paidtype('Paid');
+    this.spendmoneyForm.controls['Paid'].setValue("Paid");
   }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
   }
-
   // paid Type Dropdown
   Paidtype(paidvalue) {
     if (paidvalue === 'Paid') {

@@ -93,6 +93,8 @@ export class ChartAccountComponent implements OnInit {
     }
     this.ChartData.AccountClass = this.filterData.AccountClass;
     this.loadData(this.filterData);
+    
+  
   }
   ngOnInit() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 80)) + 'px');
@@ -143,6 +145,9 @@ export class ChartAccountComponent implements OnInit {
 
     });
   }
+  ngAfterViewInit() {
+  
+}
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
   RowClick(val) {
     this.behaviorService.ChartAccountData(val);

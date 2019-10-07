@@ -3,9 +3,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MatDialog, MatDatepickerInputEvent } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { fuseAnimations } from '@fuse/animations';
-import { MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import { GenerateInvoiceComponent } from '../generate-invoice/generate-invoice.component';
 
 @Component({
   selector: 'app-invoice-add-dailog',
@@ -37,7 +38,9 @@ export class InvoiceAddDailogComponent implements OnInit {
     public datepipe: DatePipe,
     public MatDialog: MatDialog,
     private toastr: ToastrService,
+    public _matDialog: MatDialog,
     private _mainAPiServiceService: MainAPiServiceService,
+    private behaviorService: BehaviorService,
   ) { }
 
   ngOnInit() {
@@ -317,9 +320,22 @@ export class InvoiceAddDailogComponent implements OnInit {
   saveInvoice(PostInvoiceEntryData: any) {
     PostInvoiceEntryData.VALIDATEONLY = false;
     this._mainAPiServiceService.getSetData(PostInvoiceEntryData, 'SetInvoice').subscribe(res => {
+      console.log(res);
       if (res.CODE == 200 && res.STATUS == "success") {
         this.toastr.success('Save Success');
         this.dialogRef.close(true);
+       
+     this.behaviorService.matterInvoiceData({INVOICEGUID:res.DATA.INVOICEGUID});
+     const dialogRef = this._matDialog.open(GenerateInvoiceComponent, {
+       width: '100%',
+       disableClose: true,
+       data: {}
+       });
+    dialogRef.afterClosed().subscribe(result => {
+ 
+      }); 
+
+
       } else {
         if (res.CODE == 402 && res.STATUS == 'error' && res.MESSAGE == 'Not logged in')
           this.dialogRef.close(false);

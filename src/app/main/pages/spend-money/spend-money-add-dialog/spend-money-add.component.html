@@ -42,11 +42,12 @@
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="40" class="pr-4">
-                        <mat-label *ngIf="classtype !=='depreciation'">Bank a/c</mat-label>
-                        <mat-label *ngIf="classtype=='depreciation'">Asset a/c</mat-label>
+                        <mat-label *ngIf="classtype !=='Description'">Bank a/c</mat-label>
+                        <mat-label *ngIf="classtype=='Description'">Asset a/c</mat-label>
                         <input matInput formControlName="Bankac">
                         <mat-icon matSuffix>
-                            <button id="bank" class="matternews menu-disabled" [disabled]="Bankhide === true" class="matternews" (click)="BankingDialogOpen('BANK ACCOUNT')"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
+                            <button  *ngIf="classtype !=='Description'" id="bank" class="matternews menu-disabled" [disabled]="Bankhide === true" class="matternews" (click)="BankingDialogOpen('BANK ACCOUNT')"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
+                            <button  *ngIf="classtype =='Description'" id="bank" class="matternews menu-disabled" [disabled]="Bankhide === true" class="matternews" (click)="BankingDialogOpen('ASSET')"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                         </mat-icon>
                     </mat-form-field>
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.NOTE,'has-warning':errorWarningData.Warning?.NOTE}" appearance="outline" fxFlex="60" class="pr-4">

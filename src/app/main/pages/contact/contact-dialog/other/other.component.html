@@ -6,11 +6,23 @@
                 <mat-option [value]="val.Name" *ngFor="let val of common">{{val.Name}}</mat-option>
             </mat-select>
         </mat-form-field>
+        
         <mat-form-field appearance="outline" class="example" fxFlex="49" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DATEOFBIRTH,'has-warning':errorWarningData.Warning?.DATEOFBIRTH}">
-            <input (dateInput)="choosedDateOfBirth('input', $event)" (dateChange)="choosedDateOfBirth('change', $event)" matInput name="DATEOFBIRTH" [formControlName]="'DATEOFBIRTH'" [matDatepicker]="picker" placeholder="Date Of Birth">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <mat-label>Date Of Birth</mat-label>
+            <input (dateInput)="choosedDateOfBirth('input', $event)" (dateChange)="choosedDateOfBirth('change', $event)" matInput name="DATEOFBIRTH" [formControlName]="'DATEOFBIRTH'" [matDatepicker]="DATEOFBIRTH" placeholder="Date Of Birth">
+            <mat-datepicker-toggle matSuffix [for]="DATEOFBIRTH"></mat-datepicker-toggle>
+            <mat-datepicker #DATEOFBIRTH></mat-datepicker>
         </mat-form-field>
+
+        <!-- <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.DATE,'has-warning':errorWarningData.Warning?.DATE}" appearance="outline" class="example" fxFlex="{{size}}" class="pr-4">
+            <mat-label>Date Incurred</mat-label>
+            <input (dateInput)="choosedDateForIncurred('input', $event)" (dateChange)="choosedDateForIncurred('change', $event)" matInput [matDatepicker]="DateIncurred" formControlName="DateIncurred">
+            <mat-datepicker-toggle matSuffix [for]="DateIncurred"></mat-datepicker-toggle>
+            <mat-datepicker #DateIncurred></mat-datepicker>
+        </mat-form-field> -->
+
+
+
         <mat-checkbox class="checkbox" name="BIRTHDAYREMINDER" [formControlName]="'BIRTHDAYREMINDER'">reminder
         </mat-checkbox>
     </div>
@@ -25,11 +37,17 @@
         </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        
         <mat-form-field appearance="outline" class="example" fxFlex="59" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DATEOFDEATH,'has-warning':errorWarningData.Warning?.DATEOFDEATH}">
-            <input (dateInput)="choosedDateOfDath('input', $event)" (dateChange)="choosedDateOfDath('change', $event)" matInput name="DATEOFDEATH" [formControlName]="'DATEOFDEATH'" [matDatepicker]="picker1" placeholder="Date Of Death">
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-            <mat-datepicker #picker1></mat-datepicker>
+            <mat-label>Date Of Death</mat-label>
+            <input (dateInput)="choosedDateOfDath('input', $event)" (dateChange)="choosedDateOfDath('change', $event)" matInput name="DATEOFDEATH" [formControlName]="'DATEOFDEATH'" [matDatepicker]="DATEOFDEATH" placeholder="Date Of Death">
+            <mat-datepicker-toggle matSuffix [for]="DATEOFDEATH"></mat-datepicker-toggle>
+            <mat-datepicker #DATEOFDEATH></mat-datepicker>
         </mat-form-field>
+        
+        
+        
+        
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.CAUSEOFDEATH,'has-warning':errorWarningData.Warning?.CAUSEOFDEATH}">
             <mat-label>Cause Of Death</mat-label>
             <input name="CAUSEOFDEATH" [formControlName]="'CAUSEOFDEATH'" matInput>

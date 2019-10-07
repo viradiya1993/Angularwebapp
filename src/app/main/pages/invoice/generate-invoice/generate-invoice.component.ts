@@ -24,7 +24,8 @@ export class GenerateInvoiceComponent implements OnInit {
     highlightedRows: any;
     slectedPack: any;
     Invoicedata: any;
-  passdata: { Template: any; Context: string; ContextGuid: any; Type: string; };
+  passdata:any=[];
+  temptype: string;
   constructor(private _mainAPiServiceService:MainAPiServiceService,
     private toastr: ToastrService,public dialogRef: MatDialogRef<GenerateInvoiceComponent>,
     private behaviorService: BehaviorService,
@@ -69,19 +70,29 @@ export class GenerateInvoiceComponent implements OnInit {
   }
   
   GenerateDocumentPack(val){
+    let checkType =this.slectedPack.KITNAME.split('-');
+    console.log(checkType)
+    if(checkType[1]==" Email"){
+      this.temptype="Email"
+    }else{
+      this.temptype="Pack"
+    }
     if(val=="Pack"){
   this.passdata={
         Template:this.slectedPack.KITNAME,
         Context:'Invoice',
         ContextGuid:this.Invoicedata.INVOICEGUID,
+        "knownby":'Pack',
         Type:'Pack'
     }    
     }else{
       this.passdata={
-        Template: '<'+this.slectedPack.KITNAME+'>',
+        Template: this.slectedPack.KITNAME,
+        // Template: '<'+this.slectedPack.KITNAME+'>',
         Context:'Invoice',
         ContextGuid:this.Invoicedata.INVOICEGUID,
-        Type:'Template'
+        "knownby":this.temptype,
+        Type:this.temptype
     }
     }
     // let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Pack", "Folder": '', "Template": this.KitName }

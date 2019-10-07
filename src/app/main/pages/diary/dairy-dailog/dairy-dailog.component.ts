@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MatDialog, MatDatepickerInputEvent } from '@angular/material';
-import { FormGroup, FormBuilder,FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import * as moment from 'moment';
@@ -24,11 +24,11 @@ export class DairyDailogComponent implements OnInit {
   isspiner: boolean = false;
   CheckClick: any;
   FormAction: string;
-  AppointmentGuid:any;
-  App_StartTime:any;
-  App_EndTime:any;
-  control:any=[];
-  
+  AppointmentGuid: any;
+  App_StartTime: any;
+  App_EndTime: any;
+  control: any = [];
+
 
   constructor(
     private _mainAPiServiceService: MainAPiServiceService,
@@ -60,7 +60,7 @@ export class DairyDailogComponent implements OnInit {
       MATTERGUID: [],
       APPOINTMENTDATE: [],
       APPOINTMENTENDDATE: [],
-      DateFrom:[],
+      DateFrom: [],
       ALLDAYEVENT: [],
 
       APPOINTMENTTIME: [],
@@ -82,11 +82,11 @@ export class DairyDailogComponent implements OnInit {
       countvalue: [],
       DaySelect: [],
       EndDate: [],
-      SendEndDate:[],
+      SendEndDate: [],
       RedioChnage: [],
       RedioChnageDay: [],
       RedioDate: [],
-      dayweek:[],
+      dayweek: [],
       orders: new FormArray([])
     });
     //this.addCheckboxes();
@@ -97,36 +97,36 @@ export class DairyDailogComponent implements OnInit {
 
   //DocumentSave
   SaveAppointment() {
-    if(this.action === 'edit'){
+    if (this.action === 'edit') {
       // this.appoitmentID=
       this.FormAction = 'update';
-    }else if(this.action === 'duplicate' || this.action ==="new"){
+    } else if (this.action === 'duplicate' || this.action === "new") {
       this.FormAction = 'insert';
     }
-    let data= {
-      APPOINTMENTGUID:"",
-      SUBJECT:this.f.SUBJECT.value,
-      LOCATION:this.f.LOCATION.value,
-      ALLDAYEVENT:this.f.ALLDAYEVENT.value,
-      APPOINTMENTDATE:this.f.DateFrom.value,
-      APPOINTMENTENDDATE:this.f.DateFrom.value,
-      APPOINTMENTTIME:this.App_StartTime,
-      APPOINTMENTTYPE:this.f.type.value,
-      REMINDER:this.f.Reminder.value,
-      REMINDERMINUTESBEFORE:this.f.Beforestart.value,
-      CATEGORY:this.f.Category.value,
-      MATTERGUID:"",
-     
+    let data = {
+      APPOINTMENTGUID: "",
+      SUBJECT: this.f.SUBJECT.value,
+      LOCATION: this.f.LOCATION.value,
+      ALLDAYEVENT: this.f.ALLDAYEVENT.value,
+      APPOINTMENTDATE: this.f.DateFrom.value,
+      APPOINTMENTENDDATE: this.f.DateFrom.value,
+      APPOINTMENTTIME: this.App_StartTime,
+      APPOINTMENTTYPE: this.f.type.value,
+      REMINDER: this.f.Reminder.value,
+      REMINDERMINUTESBEFORE: this.f.Beforestart.value,
+      CATEGORY: this.f.Category.value,
+      MATTERGUID: "",
+
       RECURRING: {
-        DAYFREQUENCY:this.f.Every.value,
-        WEEKFREQUENCY:this.f.EveryWeekly.value,
+        DAYFREQUENCY: this.f.Every.value,
+        WEEKFREQUENCY: this.f.EveryWeekly.value,
         WEEKDAYMASK: this.f.dayweek.value,
-        MONTHFREQUENCY:this.f.EveryMonthly.value,
-        MONTHOPTIONS:this.f.EveryDay.value,
-        MONTHOPTIONDAY:this.f.RedioChnageDay.value,
-        MONTHWHICHWEEK:this.f.countvalue.value,
-        MONTHWHICHDAY:this.f.DaySelect.value,
-        RECURRINGUNTIL:this.f.SendEndDate.value
+        MONTHFREQUENCY: this.f.EveryMonthly.value,
+        MONTHOPTIONS: this.f.EveryDay.value,
+        MONTHOPTIONDAY: this.f.RedioChnageDay.value,
+        MONTHWHICHWEEK: this.f.countvalue.value,
+        MONTHWHICHDAY: this.f.DaySelect.value,
+        RECURRINGUNTIL: this.f.SendEndDate.value
       },
       // SYNCHRONISINGINFO:{
       //   DATECREATED:"",
@@ -171,9 +171,10 @@ export class DairyDailogComponent implements OnInit {
 
     });
     this.errorWarningData = { "Error": tempError, 'Warning': tempWarning };
-    if (Object.keys(errorData).length != 0)
+    if (Object.keys(errorData).length != 0) {
       this.toastr.error(errorData);
-    if (Object.keys(warningData).length != 0) {
+      this.isspiner = false;
+    } else if (Object.keys(warningData).length != 0) {
       this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
         disableClose: true,
         width: '100%',
@@ -187,10 +188,10 @@ export class DairyDailogComponent implements OnInit {
         }
         this.confirmDialogRef = null;
       });
-    }
-    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+    } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
       this.appotmentSaveData(details);
-    this.isspiner = false;
+      this.isspiner = false;
+    }
   }
   appotmentSaveData(data: any) {
     data.VALIDATEONLY = false;
@@ -220,7 +221,7 @@ export class DairyDailogComponent implements OnInit {
     let begin = this.datepipe.transform(event.value, 'dd/MM/yyyy');
     this.DairyForm.controls['DateFrom'].setValue(begin);
   }
-  
+
   //CheckAllDays
   CheckAllDays(val) {
     if (val == true) {
@@ -231,11 +232,11 @@ export class DairyDailogComponent implements OnInit {
       this.App_EndTime = "";
     }
   }
-  StartTime(){
-    this.App_StartTime =  this.f.APPOINTMENTTIME.value;
-  // console.log(this.App_StartTime);  
+  StartTime() {
+    this.App_StartTime = this.f.APPOINTMENTTIME.value;
+    // console.log(this.App_StartTime);  
   }
-  EndTime(){
+  EndTime() {
     this.App_EndTime = this.f.TimeSlot2.value;
     //console.log(this.App_EndTime);
   }

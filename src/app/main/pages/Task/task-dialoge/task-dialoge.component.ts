@@ -89,7 +89,7 @@ export class TaskDialogeComponent implements OnInit {
       DESCRIPTION: [''],
       SendDUEDATE: ['']
     });
-    this.TaskForm.controls['UserName' ].disable();
+    this.TaskForm.controls['UserName'].disable();
     this.TaskForm.controls['UserName'].setValue(this.UserDropDownData.USERNAME);
     this.TaskForm.controls['USERGUID'].setValue(this.UserDropDownData.USERGUID);
 
@@ -122,54 +122,54 @@ export class TaskDialogeComponent implements OnInit {
     this.TaskForm.controls['STARTDATE'].setValue(new Date());
     this.TaskForm.controls['STATUS'].setValue('Not Started');
     this.TaskForm.controls['PRIORITY'].setValue('0');
-    
+
     this.TaskForm.controls['DUEDATE'].setValue(new Date());
     this.TaskForm.controls['SendDUEDATE'].setValue(begin);
     this.TaskForm.controls['SendSTARTDATE'].setValue(begin);
     this.TaskForm.controls['SendREMINDERTIME'].setValue(this.time);
   }
   EditPopUpOPen() {
-    if(this.action != 'edit legal' && this.action != 'copy legal'){
+    if (this.action != 'edit legal' && this.action != 'copy legal') {
       let username = JSON.parse(localStorage.getItem("task_filter"));
       this.TaskForm.controls['UserName'].setValue(username.user);
-    } 
+    }
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({ TASKGUID: this.TaskData.TASKGUID }, 'GetTask').subscribe(res => {
-        if (res.CODE == 200 && res.STATUS == "success") {
-          let DueDate = res.DATA.TASKS[0].DUEDATE.split("/");
-          let DUE = new Date(DueDate[1] + '/' + DueDate[0] + '/' + DueDate[2]);
-          this.TaskForm.controls['DUEDATE'].setValue(DUE);
-          this.TaskForm.controls['SendDUEDATE'].setValue(res.DATA.TASKS[0].DUEDATE);
-          let StartDate = res.DATA.TASKS[0].STARTDATE.split("/");
-          let Start = new Date(StartDate[1] + '/' + StartDate[0] + '/' + StartDate[2]);
-          this.TaskForm.controls['STARTDATE'].setValue(Start);
-          this.TaskForm.controls['SendSTARTDATE'].setValue(res.DATA.TASKS[0].STARTDATE);
-          let ReminderDate = res.DATA.TASKS[0].REMINDERGROUP.REMINDERDATE.split("/");
-          let Reminder = new Date(ReminderDate[1] + '/' + ReminderDate[0] + '/' + ReminderDate[2]);
-          this.TaskForm.controls['REMINDERDATE'].setValue(Reminder);
-          this.TaskForm.controls['SendREMINDERDATE'].setValue(res.DATA.TASKS[0].REMINDERGROUP.REMINDERDATE);
-          this.TaskForm.controls['USERGUID'].setValue(res.DATA.TASKS[0].USERGUID);
-          this.TaskForm.controls['MatterName'].setValue(res.DATA.TASKS[0].MATTER);
-          this.TaskForm.controls['MATTERGUID'].setValue(res.DATA.TASKS[0].MATTERGUID);
-          this.TaskForm.controls['STATUS'].setValue(res.DATA.TASKS[0].STATUS);
-          this.TaskForm.controls['PRIORITY'].setValue(res.DATA.TASKS[0].PRIORITY.toString());
-          this.TaskForm.controls['REMINDERTIME'].setValue(res.DATA.TASKS[0].REMINDERGROUP.REMINDERTIME);
-          this.TaskForm.controls['SendREMINDERTIME'].setValue(res.DATA.TASKS[0].REMINDERGROUP.REMINDERTIME);
-          this.TaskForm.controls['REMINDER'].setValue(res.DATA.TASKS[0].REMINDERGROUP.REMINDER);
-          this.ChekBoxClick(res.DATA.TASKS[0].REMINDERGROUP.REMINDER)
-          this.TaskForm.controls['STATUS'].setValue(res.DATA.TASKS[0].STATUS);
-          this.TaskForm.controls['TASKGUID'].setValue(res.DATA.TASKS[0].TASKGUID);
-          this.TaskForm.controls['PERCENTCOMPLETE'].setValue(res.DATA.TASKS[0].PERCENTCOMPLETE);
-          this.TaskForm.controls['DESCRIPTION'].setValue(res.DATA.TASKS[0].DESCRIPTION);
-        } else if (res.MESSAGE == 'Not logged in') {
-          this.dialogRef.close(false);
-        }
-        this.isLoadingResults = false;
-      }, err => {
-        this.toastr.error(err);
-        this.isLoadingResults = false;
-      });
-    }
+      if (res.CODE == 200 && res.STATUS == "success") {
+        let DueDate = res.DATA.TASKS[0].DUEDATE.split("/");
+        let DUE = new Date(DueDate[1] + '/' + DueDate[0] + '/' + DueDate[2]);
+        this.TaskForm.controls['DUEDATE'].setValue(DUE);
+        this.TaskForm.controls['SendDUEDATE'].setValue(res.DATA.TASKS[0].DUEDATE);
+        let StartDate = res.DATA.TASKS[0].STARTDATE.split("/");
+        let Start = new Date(StartDate[1] + '/' + StartDate[0] + '/' + StartDate[2]);
+        this.TaskForm.controls['STARTDATE'].setValue(Start);
+        this.TaskForm.controls['SendSTARTDATE'].setValue(res.DATA.TASKS[0].STARTDATE);
+        let ReminderDate = res.DATA.TASKS[0].REMINDERGROUP.REMINDERDATE.split("/");
+        let Reminder = new Date(ReminderDate[1] + '/' + ReminderDate[0] + '/' + ReminderDate[2]);
+        this.TaskForm.controls['REMINDERDATE'].setValue(Reminder);
+        this.TaskForm.controls['SendREMINDERDATE'].setValue(res.DATA.TASKS[0].REMINDERGROUP.REMINDERDATE);
+        this.TaskForm.controls['USERGUID'].setValue(res.DATA.TASKS[0].USERGUID);
+        this.TaskForm.controls['MatterName'].setValue(res.DATA.TASKS[0].MATTER);
+        this.TaskForm.controls['MATTERGUID'].setValue(res.DATA.TASKS[0].MATTERGUID);
+        this.TaskForm.controls['STATUS'].setValue(res.DATA.TASKS[0].STATUS);
+        this.TaskForm.controls['PRIORITY'].setValue(res.DATA.TASKS[0].PRIORITY.toString());
+        this.TaskForm.controls['REMINDERTIME'].setValue(res.DATA.TASKS[0].REMINDERGROUP.REMINDERTIME);
+        this.TaskForm.controls['SendREMINDERTIME'].setValue(res.DATA.TASKS[0].REMINDERGROUP.REMINDERTIME);
+        this.TaskForm.controls['REMINDER'].setValue(res.DATA.TASKS[0].REMINDERGROUP.REMINDER);
+        this.ChekBoxClick(res.DATA.TASKS[0].REMINDERGROUP.REMINDER)
+        this.TaskForm.controls['STATUS'].setValue(res.DATA.TASKS[0].STATUS);
+        this.TaskForm.controls['TASKGUID'].setValue(res.DATA.TASKS[0].TASKGUID);
+        this.TaskForm.controls['PERCENTCOMPLETE'].setValue(res.DATA.TASKS[0].PERCENTCOMPLETE);
+        this.TaskForm.controls['DESCRIPTION'].setValue(res.DATA.TASKS[0].DESCRIPTION);
+      } else if (res.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      }
+      this.isLoadingResults = false;
+    }, err => {
+      this.toastr.error(err);
+      this.isLoadingResults = false;
+    });
+  }
   // closepopup() {
   //     this.dialogRef.close(false);
   // }
@@ -231,37 +231,37 @@ export class TaskDialogeComponent implements OnInit {
       this.FormAction = 'update';
       this.TaskGuid = this.f.TASKGUID.value
       this.MatterGuid = this.f.MATTERGUID.value;
-      this.userGuid=this.f.USERGUID.value;
-    }else if(this.action == 'new legal'){
-      this.forRimindCheck();
-      this.FormAction='insert';
-      this.TaskGuid="";
-      this.MatterGuid=this.f.MATTERGUID.value;
-      this.userGuid='';
-    }else if (this.action == 'new matter') {
+      this.userGuid = this.f.USERGUID.value;
+    } else if (this.action == 'new legal') {
       this.forRimindCheck();
       this.FormAction = 'insert';
       this.TaskGuid = "";
       this.MatterGuid = this.f.MATTERGUID.value;
-      this.userGuid=this.f.USERGUID.value;
-    }else if (this.action == 'new general') {
+      this.userGuid = '';
+    } else if (this.action == 'new matter') {
+      this.forRimindCheck();
+      this.FormAction = 'insert';
+      this.TaskGuid = "";
+      this.MatterGuid = this.f.MATTERGUID.value;
+      this.userGuid = this.f.USERGUID.value;
+    } else if (this.action == 'new general') {
       this.forRimindCheck();
       this.MatterGuid = '';
       this.FormAction = 'insert';
       this.TaskGuid = "";
-      this.userGuid=this.f.USERGUID.value;
-    }else if (this.action == 'copy' || this.action == 'copy legal') {
+      this.userGuid = this.f.USERGUID.value;
+    } else if (this.action == 'copy' || this.action == 'copy legal') {
       this.forRimindCheck();
       this.FormAction = 'insert';
       this.TaskGuid = "";
       this.MatterGuid = this.f.MATTERGUID.value;
-      this.userGuid=this.f.USERGUID.value;
-    }else {
+      this.userGuid = this.f.USERGUID.value;
+    } else {
       this.forRimindCheck();
       this.FormAction = 'insert';
       this.TaskGuid = "";
       this.MatterGuid = this.f.MATTERGUID.value;
-      this.userGuid=this.f.USERGUID.value;
+      this.userGuid = this.f.USERGUID.value;
     }
     let data = {
       TASKGUID: this.TaskGuid,
@@ -316,9 +316,10 @@ export class TaskDialogeComponent implements OnInit {
 
     });
     this.errorWarningData = { "Error": tempError, 'Warning': tempWarning };
-    if (Object.keys(errorData).length != 0)
+    if (Object.keys(errorData).length != 0) {
       this.toastr.error(errorData);
-    if (Object.keys(warningData).length != 0) {
+      this.isspiner = false;
+    } else if (Object.keys(warningData).length != 0) {
       this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
         disableClose: true,
         width: '100%',
@@ -332,10 +333,10 @@ export class TaskDialogeComponent implements OnInit {
         }
         this.confirmDialogRef = null;
       });
-    }
-    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+    } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
       this.taskSaveData(details);
-    this.isspiner = false;
+      this.isspiner = false;
+    }
   }
   taskSaveData(data: any) {
     data.VALIDATEONLY = false;

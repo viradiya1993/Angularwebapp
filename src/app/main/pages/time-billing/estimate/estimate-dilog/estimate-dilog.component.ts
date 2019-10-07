@@ -14,7 +14,7 @@ import { round } from 'lodash';
 })
 export class EstimateDilogComponent implements OnInit {
   errorWarningData: any = { "Error": [], 'Warning': [] };
-  estimateform:FormGroup;
+  estimateform: FormGroup;
   isLoadingResults: boolean = false;
   dialogTitle: string;
   action: string;
@@ -22,14 +22,14 @@ export class EstimateDilogComponent implements OnInit {
   isspiner: boolean = false;
   isreadonly: boolean = false;
   FormAction: string;
-  EstimateGuid:any;
+  EstimateGuid: any;
   MatterGuid: string;
   userList: any;
   PRICEINCGSTVAL: any;
   PRICEVAL: any;
   ActivityList: any = [];
   EstimateData: any = [];
-  Serivcelist:any;
+  Serivcelist: any;
   optionList: any = [
     { 'ACTIVITYID': 'hh:mm', 'DESCRIPTION': 'hh:mm' },
     { 'ACTIVITYID': 'H', 'DESCRIPTION': 'Hours' },
@@ -39,7 +39,7 @@ export class EstimateDilogComponent implements OnInit {
     { 'ACTIVITYID': 'F', 'DESCRIPTION': 'Fixed' }
   ];
   calculateData: any = {
-   QuantityType: '', Quantity: '', FeeEarner: ''
+    QuantityType: '', Quantity: '', FeeEarner: ''
   };
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   constructor(
@@ -55,31 +55,31 @@ export class EstimateDilogComponent implements OnInit {
     private Timersservice: TimersService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-      this.action = data.action;
-      if(this.action === 'new'){
-        this.dialogTitle = 'New Estimate';
-      }else if(this.action === 'edit'){
-        this.dialogTitle = 'Update Estimate';
-      }else{
-        this.dialogTitle = 'Duplicate Estimate';
-      }
-      this.behaviorService.estimatelegalData$.subscribe(result => {
-        if (result) {
-          this.EstimateData = result;
-        }
-      });
+    this.action = data.action;
+    if (this.action === 'new') {
+      this.dialogTitle = 'New Estimate';
+    } else if (this.action === 'edit') {
+      this.dialogTitle = 'Update Estimate';
+    } else {
+      this.dialogTitle = 'Duplicate Estimate';
     }
-
-  ngOnInit() {    
-    this.estimateform = this._formBuilder.group({
-      FEEEARNER:[''],
-      SERVICE:[''],
-      MINQUATITY:[''],
-      MINTYPE:['H'],
-      MINPRICE:[''],
-      MININCGST:[''],
+    this.behaviorService.estimatelegalData$.subscribe(result => {
+      if (result) {
+        this.EstimateData = result;
+      }
     });
-    if (this.action == 'edit' || this.action == 'duplicate'){
+  }
+
+  ngOnInit() {
+    this.estimateform = this._formBuilder.group({
+      FEEEARNER: [''],
+      SERVICE: [''],
+      MINQUATITY: [''],
+      MINTYPE: ['H'],
+      MINPRICE: [''],
+      MININCGST: [''],
+    });
+    if (this.action == 'edit' || this.action == 'duplicate') {
       this.EditPopUpOPen();
     }
     this.ActivityList = this.optionList;
@@ -126,11 +126,11 @@ export class EstimateDilogComponent implements OnInit {
     return this.estimateform.controls;
   }
   //FEEEARNER
-  matterChange(key: any, event: any){
-    if(key == "FeeEarner"){
+  matterChange(key: any, event: any) {
+    if (key == "FeeEarner") {
       this.calculateData.FeeEarner = event;
-    }else if(key === 'QuantityType'){
-      switch(event){
+    } else if (key === 'QuantityType') {
+      switch (event) {
         case 'hh:mm': {
           this.calculateData.QuantityType = 'X';
           break;
@@ -162,28 +162,28 @@ export class EstimateDilogComponent implements OnInit {
       }
     }
     this.calculateData.Quantity = this.f.MINQUATITY.value;
-    if(this.calculateData.Quantity != '' &&  this.calculateData.QuantityType != ''){
+    if (this.calculateData.Quantity != '' && this.calculateData.QuantityType != '') {
       this.isLoadingResults = true;
       this.Timersservice.CalcWorkItemCharge(this.calculateData).subscribe(response => {
         if (response.CODE == 200 && response.STATUS == "success") {
-            let CalcWorkItemCharge = response.DATA;
-             this.estimateform.controls['MINPRICE'].setValue(CalcWorkItemCharge.PRICE);
-             this.estimateform.controls['MININCGST'].setValue(CalcWorkItemCharge.PRICEINCGST);
-             this.isLoadingResults = false;
+          let CalcWorkItemCharge = response.DATA;
+          this.estimateform.controls['MINPRICE'].setValue(CalcWorkItemCharge.PRICE);
+          this.estimateform.controls['MININCGST'].setValue(CalcWorkItemCharge.PRICEINCGST);
+          this.isLoadingResults = false;
         } else if (response.MESSAGE == 'Not logged in') {
-             this.dialogRef.close(false);
+          this.dialogRef.close(false);
         }
       }, err => {
         this.isLoadingResults = false;
         this.toastr.error(err);
       });
     }
-   
+
   }
   //EstimateEdit
-  EditPopUpOPen(){
+  EditPopUpOPen() {
     this.isLoadingResults = true;
-    this._mainAPiServiceService.getSetData({ESTIMATEITEMGUID: this.EstimateData.ESTIMATEITEMGUID }, 'GetMatterEstimateItem').subscribe(result => {
+    this._mainAPiServiceService.getSetData({ ESTIMATEITEMGUID: this.EstimateData.ESTIMATEITEMGUID }, 'GetMatterEstimateItem').subscribe(result => {
       if (result.CODE == 200 && result.STATUS == "success") {
         this.estimateform.controls['FEEEARNER'].setValue(result.DATA.ESTIMATEITEMS[0].FEEEARNER);
         this.estimateform.controls['SERVICE'].setValue(result.DATA.ESTIMATEITEMS[0].SERVICE);
@@ -194,37 +194,37 @@ export class EstimateDilogComponent implements OnInit {
         this.isLoadingResults = false;
       }
     }, err => {
-       this.toastr.error(err);
-       this.isLoadingResults = false;
+      this.toastr.error(err);
+      this.isLoadingResults = false;
     });
   }
   //Serive
-  ServiceChnage(value: any){
+  ServiceChnage(value: any) {
     this.estimateform.controls['SERVICE'].setValue(value);
   }
   //EstimateSave
-  EstimateSave(){
-    if(this.action === 'new' || this.action === 'duplicate'){
+  EstimateSave() {
+    if (this.action === 'new' || this.action === 'duplicate') {
       this.FormAction = 'insert';
-      this.EstimateGuid = "";      
-    }else{
+      this.EstimateGuid = "";
+    } else {
       this.FormAction = 'update';
-      this.EstimateGuid =this.EstimateData.ESTIMATEITEMGUID
+      this.EstimateGuid = this.EstimateData.ESTIMATEITEMGUID
     }
     let data = {
       ESTIMATEITEMGUID: this.EstimateGuid,
-      MATTERGUID:this.cuurentmatter.MATTERGUID,
-      FEEEARNER:this.f.FEEEARNER.value,
-      SERVICE:this.f.SERVICE.value,  
-      QUANTITYFROM:this.f.MINQUATITY.value,
-      QUANTITYTYPEFROM:this.f.MINTYPE.value,
-      PRICEFROM:this.f.MINPRICE.value,
-      PRICEINCGSTFROM:this.f.MININCGST.value
+      MATTERGUID: this.cuurentmatter.MATTERGUID,
+      FEEEARNER: this.f.FEEEARNER.value,
+      SERVICE: this.f.SERVICE.value,
+      QUANTITYFROM: this.f.MINQUATITY.value,
+      QUANTITYTYPEFROM: this.f.MINTYPE.value,
+      PRICEFROM: this.f.MINPRICE.value,
+      PRICEINCGSTFROM: this.f.MININCGST.value
     }
     // console.log(data);
     this.isspiner = true;
     let finalData = { DATA: data, FormAction: this.FormAction, VALIDATEONLY: true }
-    this._mainAPiServiceService.getSetData(finalData, 'SetMatterEstimateItem').subscribe(response => {     
+    this._mainAPiServiceService.getSetData(finalData, 'SetMatterEstimateItem').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, finalData);
       } else if (response.CODE == 451 && response.STATUS == 'warning') {
@@ -237,9 +237,9 @@ export class EstimateDilogComponent implements OnInit {
         this.isspiner = false;
       }
     }, err => {
-       this.toastr.error(err);
+      this.toastr.error(err);
     });
-   
+
   }
   checkValidation(bodyData: any, details: any) {
     let errorData: any = [];
@@ -258,9 +258,10 @@ export class EstimateDilogComponent implements OnInit {
 
     });
     this.errorWarningData = { "Error": tempError, 'Warning': tempWarning };
-    if (Object.keys(errorData).length != 0)
+    if (Object.keys(errorData).length != 0) {
       this.toastr.error(errorData);
-    if (Object.keys(warningData).length != 0) {
+      this.isspiner = false;
+    } else if (Object.keys(warningData).length != 0) {
       this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
         disableClose: true,
         width: '100%',
@@ -274,34 +275,34 @@ export class EstimateDilogComponent implements OnInit {
         }
         this.confirmDialogRef = null;
       });
+    } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
+      this.EstimateSaveData(details);
+      this.isspiner = false;
     }
-    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
-    this.EstimateSaveData(details);
-    this.isspiner = false;
   }
-  EstimateSaveData(data: any){
-      data.VALIDATEONLY = false;
-      this._mainAPiServiceService.getSetData(data, 'SetMatterEstimateItem').subscribe(response => {
-        if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-          if (this.action !== 'edit') {
-            this.toastr.success(' save successfully');
-          } else {
-            this.toastr.success(' update successfully');
-          }
-          this.isspiner = false;
-          this.dialogRef.close(true);
-        } else if (response.CODE == 451 && response.STATUS == 'warning') {
-          this.toastr.warning(response.MESSAGE);
-        } else if (response.CODE == 450 && response.STATUS == 'error') {
-          this.toastr.error(response.MESSAGE);
-        } else if (response.MESSAGE == 'Not logged in') {
-          this.dialogRef.close(false);
+  EstimateSaveData(data: any) {
+    data.VALIDATEONLY = false;
+    this._mainAPiServiceService.getSetData(data, 'SetMatterEstimateItem').subscribe(response => {
+      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        if (this.action !== 'edit') {
+          this.toastr.success(' save successfully');
+        } else {
+          this.toastr.success(' update successfully');
         }
         this.isspiner = false;
-      }, error => {
-        this.toastr.error(error);
-      });
+        this.dialogRef.close(true);
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
+        this.toastr.warning(response.MESSAGE);
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
+        this.toastr.error(response.MESSAGE);
+      } else if (response.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      }
+      this.isspiner = false;
+    }, error => {
+      this.toastr.error(error);
+    });
   }
-  
+
 
 }

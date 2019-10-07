@@ -86,23 +86,24 @@ export class BasicInfoComponent implements OnInit {
       }
     });
     this.errorWarningData = { "Error": tempError, 'Warning': tempWarning };
-    if (Object.keys(errorData).length != 0)
+    if (Object.keys(errorData).length != 0) {
       this.toastr.error(errorData);
-    if (Object.keys(warningData).length != 0) {
+      this.isspiner = false;
+    } else if (Object.keys(warningData).length != 0) {
       this.confirmDialogRef = this.MatDialog.open(FuseConfirmDialogComponent, {
         disableClose: true, width: '100%', data: warningData
       });
       this.confirmDialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.isspiner = true;
-          this.saveBasicDetailData(PostBasicDetail);
+          this.saveBasicDetailData(PostBasicDetail); 
         }
         this.confirmDialogRef = null;
       });
-    }
-    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+    } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
       this.saveBasicDetailData(PostBasicDetail);
-    this.isspiner = false;
+      this.isspiner = false;
+    }
   }
   saveBasicDetailData(PostActivityData: any) {
     PostActivityData.VALIDATEONLY = false;

@@ -315,7 +315,7 @@ export class SystemSettingComponent implements OnInit {
     return this.SettingForm.controls;
   }
   save() {
-    let tempArrayAccountGroup :any={};
+    let tempArrayAccountGroup: any = {};
     this.SetAccountArray = [];
     let data = {
       //for name 
@@ -417,7 +417,7 @@ export class SystemSettingComponent implements OnInit {
       let val = element.ACCOUNTGUID;
       tempArrayAccountGroup[key] = val;
     });
-    data['ACCOUNTSGROUP']=tempArrayAccountGroup;
+    data['ACCOUNTSGROUP'] = tempArrayAccountGroup;
     // data.ACCOUNTSGROUP.push(this.SetAccountArray)
     console.log(this.abc);
     let data1 = { FormAction: "update", VALIDATEONLY: true, Data: data }
@@ -451,9 +451,10 @@ export class SystemSettingComponent implements OnInit {
       }
     });
     this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
-    if (Object.keys(errorData).length != 0)
+    if (Object.keys(errorData).length != 0) {
+      this.isspiner = false;
       this.toastr.error(errorData);
-    if (Object.keys(warningData).length != 0) {
+    } else if (Object.keys(warningData).length != 0) {
       this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
         disableClose: true,
         width: '100%',
@@ -467,10 +468,10 @@ export class SystemSettingComponent implements OnInit {
         }
         this.confirmDialogRef = null;
       });
-    }
-    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+    } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
       this.saveSettingData(data1);
-    this.isspiner = false;
+      this.isspiner = false;
+    }
   }
   saveSettingData(data1: any) {
     data1.VALIDATEONLY = false;

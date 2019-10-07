@@ -106,10 +106,10 @@ export class InstantInvoiceDailogComponent implements OnInit {
     this.addInvoiceForm.controls['DUEDATETEXT'].setValue(begin);
   }
   calcTotalEXGST() {
-    if(this.TotalExGst==undefined){
-      this.GstVal=0.00;
-      this.TotalIncGst=0.00; 
-    }else{
+    if (this.TotalExGst == undefined) {
+      this.GstVal = 0.00;
+      this.TotalIncGst = 0.00;
+    } else {
       this.GstVal = Number(this.TotalExGst) * 10 / 100;
       this.TotalIncGst = (Number(this.GstVal) + Number(this.TotalExGst)).toFixed(2);
     }
@@ -118,16 +118,16 @@ export class InstantInvoiceDailogComponent implements OnInit {
     return this.addInvoiceForm.controls;
   }
   calcTotalINGST() {
-    if(this.TotalExGst==undefined){
-      this.TotalExGst=0.00;
-      this.GstVal =0.00;
-    }else{
+    if (this.TotalExGst == undefined) {
+      this.TotalExGst = 0.00;
+      this.GstVal = 0.00;
+    } else {
       let ExGSt = Number(this.TotalIncGst) / 1.1;
       this.TotalExGst = (ExGSt).toFixed(2);
       this.GstVal = (Number(this.TotalIncGst) - Number(ExGSt)).toFixed(2);
     }
   }
-  
+
   SaveInstaceInvoice() {
     let SendData = {
       INVOICEGUID: '',
@@ -187,9 +187,10 @@ export class InstantInvoiceDailogComponent implements OnInit {
       }
     });
     this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
-    if (Object.keys(errorData).length != 0)
+    if (Object.keys(errorData).length != 0) {
+      this.isspiner = false;
       this.toastr.error(errorData);
-    if (Object.keys(warningData).length != 0) {
+    } else if (Object.keys(warningData).length != 0) {
       this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
         disableClose: true,
         width: '100%',
@@ -203,29 +204,29 @@ export class InstantInvoiceDailogComponent implements OnInit {
         }
         this.confirmDialogRef = null;
       });
-    }
-    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+    } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
       this.InstantInvoiceData(details);
-    this.isspiner = false;
+      this.isspiner = false;
+    }
   }
   InstantInvoiceData(data: any) {
     data.VALIDATEONLY = false;
     this._mainAPiServiceService.getSetData(data, 'SetInvoice').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        
+
         this.toastr.success(' save successfully');
         this.isspiner = false;
         this.dialogRef.close(true);
         $('#refreshWorkInprogress').click();
-        this.behaviorService.matterInvoiceData({INVOICEGUID:response.DATA.INVOICEGUID});
+        this.behaviorService.matterInvoiceData({ INVOICEGUID: response.DATA.INVOICEGUID });
         const dialogRef = this._matDialog.open(GenerateInvoiceComponent, {
           width: '100%',
           disableClose: true,
           data: {}
-          });
-       dialogRef.afterClosed().subscribe(result => {
-    
-         });
+        });
+        dialogRef.afterClosed().subscribe(result => {
+
+        });
 
       } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.toastr.warning(response.MESSAGE);

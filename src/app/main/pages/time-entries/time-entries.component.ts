@@ -280,9 +280,10 @@ export class TimeEntriesComponent implements OnInit {
       }
     });
     this.errorWarningData = { "Error": tempError, 'Warning': tempWarning };
-    if (Object.keys(errorData).length != 0)
+    if (Object.keys(errorData).length != 0) {
       this.toastr.error(errorData);
-    if (Object.keys(warningData).length != 0) {
+      this.isspiner = false;
+    } else if (Object.keys(warningData).length != 0) {
       this.confirmDialogRef = this.MatDialog.open(FuseConfirmDialogComponent, {
         disableClose: true,
         width: '100%',
@@ -296,10 +297,10 @@ export class TimeEntriesComponent implements OnInit {
         }
         this.confirmDialogRef = null;
       });
-    }
-    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+    } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
       this.saveQuick(PostQuickTimeEntryData);
-    this.isspiner = false;
+      this.isspiner = false;
+    }
   }
   saveQuick(PostQuickTimeEntryData: any) {
     PostQuickTimeEntryData.VALIDATEONLY = false;

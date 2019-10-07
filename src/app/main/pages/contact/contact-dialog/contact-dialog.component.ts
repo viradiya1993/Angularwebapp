@@ -38,7 +38,7 @@ export class ContactDialogComponent implements OnInit {
   dateofbirth: any;
   dateofdeath: string;
   editDataCompny: boolean = true;
-  namepusharray: any =[];
+  namepusharray: any = [];
 
   constructor(
     public MatDialog: MatDialog,
@@ -281,23 +281,23 @@ export class ContactDialogComponent implements OnInit {
       this.contactForm.controls['ACTIVE'].setValue(true);
     }
   }
-  splitname(){
-   this.namepusharray=[];
-   let val:any= (this.f.CONTACTNAME.value).split(' ');
-   let val1 = val[0];
-   let val2 = val.length-1;
-   let val3 = val[val2];
+  splitname() {
+    this.namepusharray = [];
+    let val: any = (this.f.CONTACTNAME.value).split(' ');
+    let val1 = val[0];
+    let val2 = val.length - 1;
+    let val3 = val[val2];
     val.forEach(element => {
-     if(element !=val1){
-       if(element !=val3){
-        this.namepusharray.push(element);
-       }
-     }
-   });
-  this.contactForm.controls['SALUTATION'].setValue(val1);
-  this.contactForm.controls['GIVENNAMES'].setValue(val1);
-  this.contactForm.controls['FAMILYNAME'].setValue(val3);
-  this.contactForm.controls['MIDDLENAMES'].setValue(this.namepusharray.join(' '));
+      if (element != val1) {
+        if (element != val3) {
+          this.namepusharray.push(element);
+        }
+      }
+    });
+    this.contactForm.controls['SALUTATION'].setValue(val1);
+    this.contactForm.controls['GIVENNAMES'].setValue(val1);
+    this.contactForm.controls['FAMILYNAME'].setValue(val3);
+    this.contactForm.controls['MIDDLENAMES'].setValue(this.namepusharray.join(' '));
   }
   // convenience getter for easy access to form fields
   get f() {
@@ -426,9 +426,10 @@ export class ContactDialogComponent implements OnInit {
       }
     });
     this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
-    if (Object.keys(errorData).length != 0)
+    if (Object.keys(errorData).length != 0) {
       this.toastr.error(errorData);
-    if (Object.keys(warningData).length != 0) {
+      this.isspiner = false;
+    } else if (Object.keys(warningData).length != 0) {
       this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
         disableClose: true,
         width: '100%',
@@ -442,10 +443,10 @@ export class ContactDialogComponent implements OnInit {
         }
         this.confirmDialogRef = null;
       });
-    }
-    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+    } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
       this.saveContectData(details);
-    this.isspiner = false;
+      this.isspiner = false;
+    }
   }
   saveContectData(data: any) {
     data.VALIDATEONLY = false;

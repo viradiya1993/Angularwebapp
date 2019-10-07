@@ -8,6 +8,7 @@ import * as $ from 'jquery';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { MatSort } from '@angular/material';
+import { post } from 'selenium-webdriver/http';
 
 @Component({
   selector: 'app-work-in-progress',
@@ -28,6 +29,7 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
   tempColobj: any;
   isShowDrop: boolean;
   lastFilter: any
+  TimerDropData:any=[];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   isLoadingResults: boolean = false;
@@ -59,9 +61,6 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.behaviorService.setworkInProgressData(null);
-  }
-  editworkInProgress(row: any) {
-    this.behaviorService.setworkInProgressData(row);
   }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('time and billing', 'work in progress').subscribe(response => {
@@ -159,7 +158,13 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
       }
     });
   }
-
+  refresheWorkEtimateTab(){
+  this.lastFilter = JSON.parse(localStorage.getItem('Work_in_progress_filter'));
+  this.loadData(this.lastFilter);
+  }
+  editworkInProgress(row: any) {
+    this.behaviorService.setworkInProgressData(row);
+  }
 
 }
 

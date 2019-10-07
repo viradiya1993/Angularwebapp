@@ -116,6 +116,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     DocRegData: any = [];
     AccountGUID: any;
     chartAccountDetail: any;
+    isMainAccount: boolean = false;
     TaskData: any;
     FileNotesData: any;
     conflictData: any;
@@ -135,8 +136,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         private toastr: ToastrService,
         private TimersServiceI: TimersService,
         private _mainAPiServiceService: MainAPiServiceService,
-        private _router: Router,
-        private location: Location,
         public MatDialog: MatDialog,
         public behaviorService: BehaviorService
     ) {
@@ -239,6 +238,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             if (result) {
                 this.chartAccountDetail = result;
                 this.AccountGUID = result.ACCOUNTGUID;
+            }
+        });
+        this.behaviorService.ChartAccountDataEdit$.subscribe(result => {
+            if (result) {
+                this.isMainAccount = result.MainList.ACCOUNTTYPENAME == "Header"
             }
         });
     }
@@ -385,7 +389,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /* ---------------------------------------------------------------------Matter End--------------------------------------------------------------------------  */
     /* ---------------------------------------------------------------------Activity Start--------------------------------------------------------------------------  */
     //add edit and duplicat ActivityDialog
-    ActivityDialog(actionType,name) {
+    ActivityDialog(actionType, name) {
         let popupData: any = {};
         if (actionType == "new") {
             popupData = { action: actionType };
@@ -398,16 +402,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             popupData = { action: actionType, ACTIVITYGUID: ActivityData.ACTIVITYGUID };
         }
         const dialogRef = this.dialog.open(ActivityDialogComponent, {
-            disableClose: true, panelClass: 'Activity-dialog', 
-            data:{
-                 popupData,
-                 popupname:name
-            } 
+            disableClose: true, panelClass: 'Activity-dialog',
+            data: {
+                popupData,
+                popupname: name
+            }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result)
                 $('#refreshActivities').click();
-                $('#refreshWorkInprogress').click();
+            $('#refreshWorkInprogress').click();
         });
     }
     DeleteActivityDialog(): void {
@@ -618,7 +622,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
             if (result)
                 $('#refreshTimeEntryTab').click();
-                 $('#refreshWorkInprogress').click();
+            $('#refreshWorkInprogress').click();
         });
     }
     WriteOffTimeEntry() {
@@ -631,16 +635,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    
-    GenerateInvoice(){
+
+    GenerateInvoice() {
         this.behaviorService.matterInvoice$.subscribe(result => {
             console.log(result);
-            if (result !=null) {
-            this.ShowGenerateInvoice="yes";
-            }else{
-            this.ShowGenerateInvoice="no"; 
+            if (result != null) {
+                this.ShowGenerateInvoice = "yes";
+            } else {
+                this.ShowGenerateInvoice = "no";
             }
-          });
+        });
         const dialogRef = this._matDialog.open(GenerateInvoiceComponent, {
             width: '100%', disableClose: true, data: {}
         });
@@ -648,7 +652,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             if (result) {
                 // $('#refreshTimeEntryTab').click();
             }
-        }); 
+        });
     }
 
     UndoWriteOffTimeEntry() {
@@ -924,7 +928,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     ///Spend Money 
 
-    spendmoneypopup(actionType,val) {
+    spendmoneypopup(actionType, val) {
         let SpendMoneyPopdata = {}
         if (actionType == 'new') {
             SpendMoneyPopdata = { action: actionType }
@@ -934,10 +938,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this.dialog.open(SpendMoneyAddComponent, {
             disableClose: true,
             panelClass: 'SpendMoney-dialog',
-            data:{
-                action: actionType ,
-                FromWhere:val
-            } 
+            data: {
+                action: actionType,
+                FromWhere: val
+            }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -999,15 +1003,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.ForEmailDialogOpen(passdata);
         } else if (this.router.url == "/create-document/email-matter-template" || this.router.url == "/create-document/packs-matter-template") {
             let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
-            let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID,  "knownby": "Email","Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
+            let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "knownby": "Email", "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
             this.ForEmailDialogOpen(passdata);
         } else if (this.router.url == "/create-document/email-receive-money-template" || this.router.url == "/create-document/packs-receive-money-template") {
             let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
-            let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID,  "knownby": "Email","Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
+            let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "knownby": "Email", "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
             this.ForEmailDialogOpen(passdata);
         } else if (this.router.url == "/create-document/email-contact-template" || this.router.url == "/create-document/packs-contact-template") {
             let ContactGuID = localStorage.getItem('contactGuid');
-            let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID,  "knownby": "Email","Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
+            let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "knownby": "Email", "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
             this.ForEmailDialogOpen(passdata);
         }
     }
@@ -1019,19 +1023,19 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         if (this.router.url == "/create-document/packs-invoice-template") {
             let invoiceGUid = localStorage.getItem('edit_invoice_id');
-            let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "knownby": "Pack","Type": "Pack", "Folder": '', "Template": this.KitName }
+            let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "knownby": "Pack", "Type": "Pack", "Folder": '', "Template": this.KitName }
             this.ForEmailDialogOpen(passdata);
         } else if (this.router.url == "/create-document/packs-matter-template") {
             let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
-            let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "knownby": "Pack","Type": "Pack", "Folder": '', "Template": this.KitName }
+            let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "knownby": "Pack", "Type": "Pack", "Folder": '', "Template": this.KitName }
             this.ForEmailDialogOpen(passdata);
         } else if (this.router.url == "/create-document/packs-receive-money-template") {
             let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
-            let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "knownby": "Pack","Type": "Pack", "Folder": '', "Template": this.KitName }
+            let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "knownby": "Pack", "Type": "Pack", "Folder": '', "Template": this.KitName }
             this.ForEmailDialogOpen(passdata);
         } else if (this.router.url == "/create-document/packs-contact-template") {
             let ContactGuID = localStorage.getItem('contactGuid');
-            let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "knownby": "Pack","Type": "Pack", "Folder": '', "Template": this.KitName }
+            let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "knownby": "Pack", "Type": "Pack", "Folder": '', "Template": this.KitName }
             this.ForEmailDialogOpen(passdata);
         }
     }
@@ -1560,8 +1564,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.clickedBtn = 'matterDoc';
     }
     createInstantInvoice() {
-        console.log(this.router.url );
-        if (this.router.url != '/time-billing/matter-invoices' && this.router.url !='time-billing/work-in-progress/invoice') {
+        if (this.router.url != '/time-billing/matter-invoices' && this.router.url != 'time-billing/work-in-progress/invoice') {
             const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
@@ -1845,7 +1848,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else {
             this.SafeCustodyPoup(actionType);
         }
-    } 
+    }
     SafeCustodyPoup(actionType) {
         let safeCustodyData = {}
         if (actionType == 'new client' || actionType == 'new matter' || actionType == 'new') {
@@ -1878,7 +1881,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         if (this.router.url == "/create-document/invoice-template" || this.router.url == "/create-document/packs-invoice-template") {
             let invoiceGUid = localStorage.getItem('edit_invoice_id');
-            let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "knownby": "Template", "Type": "Template",  "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
+            let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "knownby": "Template", "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
         } else if (this.router.url == "/create-document/matter-template" || this.router.url == "/create-document/packs-matter-template") {
             let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
@@ -1887,11 +1890,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else if (this.router.url == "/create-document/receive-money-template" || this.router.url == "/create-document/packs-receive-money-template") {
 
             let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
-            let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "knownby": "Template","Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
+            let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "knownby": "Template", "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
         } else if (this.router.url == "/create-document/contact-template" || this.router.url == "/create-document/packs-contact-template") {
             let ContactGuID = localStorage.getItem('contactGuid');
-            let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID,"knownby": "Template","Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
+            let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "knownby": "Template", "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
         }
     }

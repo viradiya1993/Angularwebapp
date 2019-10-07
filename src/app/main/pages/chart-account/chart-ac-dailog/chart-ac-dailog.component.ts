@@ -173,9 +173,10 @@ export class ChartAcDailogComponent implements OnInit {
       }
     });
     this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
-    if (Object.keys(errorData).length != 0)
+    if (Object.keys(errorData).length != 0) {
       this.toastr.error(errorData);
-    if (Object.keys(warningData).length != 0) {
+      this.isspiner = false;
+    } else if (Object.keys(warningData).length != 0) {
       this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Save?';
       this.confirmDialogRef = this.MatDialog.open(FuseConfirmDialogComponent, {
         disableClose: true, width: '100%', data: warningData
@@ -187,10 +188,10 @@ export class ChartAcDailogComponent implements OnInit {
         }
         this.confirmDialogRef = null;
       });
-    }
-    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+    } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
       this.saveAccountData(PostAccountData);
-    this.isspiner = false;
+      this.isspiner = false;
+    }
   }
   onACCOUNTTYPE(value) {
     this.accountType = value;

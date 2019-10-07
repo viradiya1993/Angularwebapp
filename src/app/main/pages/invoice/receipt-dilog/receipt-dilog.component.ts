@@ -73,7 +73,7 @@ export class ReceiptDilogComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit() {
-    this.AllocationBtn='auto';
+    this.AllocationBtn = 'auto';
     this.PrepareReceiptForm = this._formBuilder.group({
       INCOMECODE: [''],
       INCOMECLASS: ['Receipt'],
@@ -95,7 +95,7 @@ export class ReceiptDilogComponent implements OnInit {
       RECEIPTAMOUNTEXGST: [''],
       SHOW: [''],
       Unallocated: [''],
-      allocatedSelected:['']
+      allocatedSelected: ['']
     });
     ;
     this.getPayor({});
@@ -201,7 +201,7 @@ export class ReceiptDilogComponent implements OnInit {
     this._mainAPiServiceService.getSetData(data, 'GetInvoice').subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         console.log(response);
-        this.TotalInvoice=response.DATA.TOTALINVOICES;
+        this.TotalInvoice = response.DATA.TOTALINVOICES;
         if (response.DATA.INVOICES[0]) {
           this.highlightedRows = response.DATA.INVOICES[0].INVOICEGUID;
           this.currentInvoiceData = response.DATA.INVOICES[0];
@@ -243,26 +243,26 @@ export class ReceiptDilogComponent implements OnInit {
   onChangeShow(val) {
     let data = {};
     if (val == 3) {
-      this.AllocationBtn="clear"
+      this.AllocationBtn = "clear"
       data = { 'Outstanding': 'Yes' };
     } else if (val == 1) {
-      data = { MATTERGUID:this.matterData.MATTERGUID};
+      data = { MATTERGUID: this.matterData.MATTERGUID };
     } else if (val == 2) {
       data = { MATTERGUID: this.matterData.CONTACTNAME };
     }
     this.GetInvoiceForReceipt(data);
   }
   revivedAmount() {
-    if(this.f.AMOUNT.value > this.TotalInvoice){
-            let val = this.f.AMOUNT.value - this.TotalInvoice;
-            this.PrepareReceiptForm.controls['Unallocated'].setValue(val.toFixed(2));
-    }else{
-            if( this.AllocationBtn =='clear'){
-              this.PrepareReceiptForm.controls['Unallocated'].setValue(this.f.AMOUNT.value);
-            }else{
-              this.PrepareReceiptForm.controls['Unallocated'].setValue(0);
-            }
-            
+    if (this.f.AMOUNT.value > this.TotalInvoice) {
+      let val = this.f.AMOUNT.value - this.TotalInvoice;
+      this.PrepareReceiptForm.controls['Unallocated'].setValue(val.toFixed(2));
+    } else {
+      if (this.AllocationBtn == 'clear') {
+        this.PrepareReceiptForm.controls['Unallocated'].setValue(this.f.AMOUNT.value);
+      } else {
+        this.PrepareReceiptForm.controls['Unallocated'].setValue(0);
+      }
+
     }
     this.AMOUNT = parseFloat(this.f.AMOUNT.value).toFixed(2);
   }
@@ -294,18 +294,18 @@ export class ReceiptDilogComponent implements OnInit {
       }
     }
   }
-  clickAutoAllocation(){
-    this.AllocationBtn='auto';
-    if(this.f.AMOUNT.value > this.TotalInvoice){
+  clickAutoAllocation() {
+    this.AllocationBtn = 'auto';
+    if (this.f.AMOUNT.value > this.TotalInvoice) {
       let val = this.f.AMOUNT.value - this.TotalInvoice;
       this.PrepareReceiptForm.controls['Unallocated'].setValue(val.toFixed(2));
-    }else{
+    } else {
       this.PrepareReceiptForm.controls['Unallocated'].setValue(0.00);
     }
-  
+
   }
-  clickClearAllocation(){
-    this.AllocationBtn='clear';
+  clickClearAllocation() {
+    this.AllocationBtn = 'clear';
     this.PrepareReceiptForm.controls['Unallocated'].setValue(this.f.AMOUNT.value);
   }
   SaveReceipt() {
@@ -370,9 +370,10 @@ export class ReceiptDilogComponent implements OnInit {
       }
     });
     this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
-    if (Object.keys(errorData).length != 0)
+    if (Object.keys(errorData).length != 0) {
       this.toastr.error(errorData);
-    if (Object.keys(warningData).length != 0) {
+      this.isspiner = false;
+    } else if (Object.keys(warningData).length != 0) {
       this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
         disableClose: true,
         width: '100%',
@@ -385,10 +386,10 @@ export class ReceiptDilogComponent implements OnInit {
         }
         this.confirmDialogRef = null;
       });
-    }
-    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+    } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
       this.SaveReceiptAfterVAlidation(details);
-    this.isspiner = false;
+      this.isspiner = false;
+    }
   }
   SaveReceiptAfterVAlidation(data: any) {
     data.VALIDATEONLY = false;

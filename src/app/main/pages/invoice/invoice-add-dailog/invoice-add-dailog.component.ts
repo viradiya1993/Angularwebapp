@@ -294,9 +294,10 @@ export class InvoiceAddDailogComponent implements OnInit {
       }
     });
     this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
-    if (Object.keys(errorData).length != 0)
+    if (Object.keys(errorData).length != 0) {
       this.toastr.error(errorData);
-    if (Object.keys(warningData).length != 0) {
+      this.isspiner = false;
+    } else if (Object.keys(warningData).length != 0) {
       // this.toastr.warning(warningData);
       this.confirmDialogRef = this.MatDialog.open(FuseConfirmDialogComponent, {
         disableClose: true,
@@ -311,10 +312,10 @@ export class InvoiceAddDailogComponent implements OnInit {
         }
         this.confirmDialogRef = null;
       });
-    }
-    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+    } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
       this.saveInvoice(PostInvoiceEntryData);
-    this.isspiner = false;
+      this.isspiner = false;
+    }
   }
   saveInvoice(PostInvoiceEntryData: any) {
     PostInvoiceEntryData.VALIDATEONLY = false;

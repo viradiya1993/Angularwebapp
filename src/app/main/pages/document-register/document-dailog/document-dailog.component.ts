@@ -15,18 +15,18 @@ import { $ } from 'protractor';
   styleUrls: ['./document-dailog.component.scss']
 })
 export class DocumentDailogComponent implements OnInit {
-  DocumentForm:FormGroup;
+  DocumentForm: FormGroup;
   isLoadingResults: boolean = false;
   action: string;
-  DocRegData:any;
+  DocRegData: any;
   errorWarningData: any = {};
-  SendDataArray:any={};
+  SendDataArray: any = {};
   dialogTitle: string;
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>
   isspiner: boolean = false;
   public DocumentRegiData: any = {
-    "GENERATEDATE": " ", "GENERATETIME": "", "DOCUMENTCLASS": 0,"DESCRIPTION":"","DRAFTSTATUS":0,"DOCUMENTNUMBER":0,"DOCUMENTTYPE":0,"DOCUMENTNAME":'',
-    "KEYWORDS":'',"GENERATEDATESEND":" ","DOCUMENTAUTHOR":"Diana Parkinson (no password)"
+    "GENERATEDATE": " ", "GENERATETIME": "", "DOCUMENTCLASS": 0, "DESCRIPTION": "", "DRAFTSTATUS": 0, "DOCUMENTNUMBER": 0, "DOCUMENTTYPE": 0, "DOCUMENTNAME": '',
+    "KEYWORDS": '', "GENERATEDATESEND": " ", "DOCUMENTAUTHOR": "Diana Parkinson (no password)"
   };
   FormAction: string;
   DocGUID: string;
@@ -42,72 +42,71 @@ export class DocumentDailogComponent implements OnInit {
     public _matDialog: MatDialog,
     private _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) 
-  {
+  ) {
     this.action = data.action;
-    if(this.action === 'new'){
+    if (this.action === 'new') {
       this.dialogTitle = 'New Document';
-    }else if(this.action === 'edit'){
+    } else if (this.action === 'edit') {
       this.dialogTitle = 'Update Document';
-    }else{
+    } else {
       this.dialogTitle = 'Duplicate Document';
     }
 
     this.behaviorService.DocumentRegisterData$.subscribe(result => {
-      if(result){
-        this.DocRegData=result;        
-      }          
+      if (result) {
+        this.DocRegData = result;
+      }
     });
   }
 
   ngOnInit() {
     this.DocumentForm = this._formBuilder.group({
-      Document:[''],
-      time:[],
-      Class:[],
-      Description:[],
-      Draft:[],
-      DocNo:[],
-      Type:[],
-      author:['',Validators.required],
-      Recipients:[],
-      DocumentName:[],
-      Keywords:[]
+      Document: [''],
+      time: [],
+      Class: [],
+      Description: [],
+      Draft: [],
+      DocNo: [],
+      Type: [],
+      author: ['', Validators.required],
+      Recipients: [],
+      DocumentName: [],
+      Keywords: []
     });
     let begin = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
-    this.DocumentRegiData.GENERATEDATESEND=begin;
-    if(this.action=='edit' || this.action=='duplicate'){
+    this.DocumentRegiData.GENERATEDATESEND = begin;
+    if (this.action == 'edit' || this.action == 'duplicate') {
       this.LoadData();
-    }else{
-  
-      this._mainAPiServiceService.getSetData({DOCUMENTGUID: this.DocRegData.DOCUMENTGUID}, 'GetDocument').subscribe(res => {
+    } else {
+
+      this._mainAPiServiceService.getSetData({ DOCUMENTGUID: this.DocRegData.DOCUMENTGUID }, 'GetDocument').subscribe(res => {
         if (res.CODE == 200 && res.STATUS == "success") {
-       
-          this.SendDataArray=res.DATA.DOCUMENTS[0];
+
+          this.SendDataArray = res.DATA.DOCUMENTS[0];
         }
       }, err => {
         this.toastr.error(err);
       });
     }
-      
+
 
   }
 
-   LoadData(){
+  LoadData() {
     this.isLoadingResults = true;
-    this._mainAPiServiceService.getSetData({DOCUMENTGUID: this.DocRegData.DOCUMENTGUID}, 'GetDocument').subscribe(res => {
+    this._mainAPiServiceService.getSetData({ DOCUMENTGUID: this.DocRegData.DOCUMENTGUID }, 'GetDocument').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
-        this.SendDataArray=res.DATA.DOCUMENTS[0];
-        this.DocumentRegiData.GENERATETIME=res.DATA.DOCUMENTS[0].GENERATETIME;
-        this.DocumentRegiData.DESCRIPTION=res.DATA.DOCUMENTS[0].DESCRIPTION;
-        this.DocumentRegiData.DOCUMENTNUMBER=res.DATA.DOCUMENTS[0].DOCUMENTNUMBER;
-        this.DocumentRegiData.DOCUMENTNAME=res.DATA.DOCUMENTS[0].DOCUMENTNAME;
-        this.DocumentRegiData.KEYWORDS=res.DATA.DOCUMENTS[0].KEYWORDS;
-        this.DocumentRegiData.DOCUMENTCLASS=res.DATA.DOCUMENTS[0].DOCUMENTCLASS.toString();
-        this.DocumentRegiData.DRAFTSTATUS=res.DATA.DOCUMENTS[0].DRAFTSTATUS.toString();
-        this.DocumentRegiData.DOCUMENTTYPE=res.DATA.DOCUMENTS[0].DOCUMENTTYPE.toString();
-        this.DocumentRegiData.GENERATEDATE=new Date();
-    
+        this.SendDataArray = res.DATA.DOCUMENTS[0];
+        this.DocumentRegiData.GENERATETIME = res.DATA.DOCUMENTS[0].GENERATETIME;
+        this.DocumentRegiData.DESCRIPTION = res.DATA.DOCUMENTS[0].DESCRIPTION;
+        this.DocumentRegiData.DOCUMENTNUMBER = res.DATA.DOCUMENTS[0].DOCUMENTNUMBER;
+        this.DocumentRegiData.DOCUMENTNAME = res.DATA.DOCUMENTS[0].DOCUMENTNAME;
+        this.DocumentRegiData.KEYWORDS = res.DATA.DOCUMENTS[0].KEYWORDS;
+        this.DocumentRegiData.DOCUMENTCLASS = res.DATA.DOCUMENTS[0].DOCUMENTCLASS.toString();
+        this.DocumentRegiData.DRAFTSTATUS = res.DATA.DOCUMENTS[0].DRAFTSTATUS.toString();
+        this.DocumentRegiData.DOCUMENTTYPE = res.DATA.DOCUMENTS[0].DOCUMENTTYPE.toString();
+        this.DocumentRegiData.GENERATEDATE = new Date();
+
       }
       this.isLoadingResults = false;
     }, err => {
@@ -115,62 +114,62 @@ export class DocumentDailogComponent implements OnInit {
       this.isLoadingResults = false;
     });
     // this.pageSize = localStorage.getItem('lastPageSize');
-   }
-   choosedDate(type: string, event: MatDatepickerInputEvent<Date>){
+  }
+  choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value, 'dd/MM/yyyy');
-    this.DocumentRegiData.GENERATEDATESEND=begin;
-   }
+    this.DocumentRegiData.GENERATEDATESEND = begin;
+  }
 
   //Class Drop Down
-  ClassChange(value){
+  ClassChange(value) {
     console.log(value);
   }
   //Draft Drop Down
-  DraftChange(value){
+  DraftChange(value) {
     console.log(value);
   }
 
   //Type Drop Down
-  TypeChnage(value){
+  TypeChnage(value) {
     console.log(value);
   }
 
   //Dcoument Floder
-  DcoumentFloder(){
+  DcoumentFloder() {
     console.log('DcoumentFloder Work!!');
   }
   //Document Save
-  DocumentSave(){
+  DocumentSave() {
     this.isspiner = true;
-  let MatterData=JSON.parse(localStorage.getItem('set_active_matters'));
-    if(this.action=="edit"){
-        this.FormAction="update";
-        this.DocGUID=this.SendDataArray.DOCUMENTGUID;
-       
-    }else if(this.action=='new' || this.action=='duplicate'){
-        this.FormAction="insert";
-        this.DocGUID="";
+    let MatterData = JSON.parse(localStorage.getItem('set_active_matters'));
+    if (this.action == "edit") {
+      this.FormAction = "update";
+      this.DocGUID = this.SendDataArray.DOCUMENTGUID;
+
+    } else if (this.action == 'new' || this.action == 'duplicate') {
+      this.FormAction = "insert";
+      this.DocGUID = "";
     }
-    let Data={
+    let Data = {
       CONTEXT: "Matter",
-      CONTEXTGUID:this.SendDataArray.CONTEXTGUID,
+      CONTEXTGUID: this.SendDataArray.CONTEXTGUID,
       DESCRIPTION: this.DocumentRegiData.DESCRIPTION,
-      DOCUMENTAUTHOR:this.DocumentRegiData.DOCUMENTAUTHOR,
+      DOCUMENTAUTHOR: this.DocumentRegiData.DOCUMENTAUTHOR,
       DOCUMENTCLASS: Number(this.DocumentRegiData.DOCUMENTCLASS),
       DOCUMENTGUID: this.DocGUID,
       DOCUMENTNAME: this.DocumentRegiData.DOCUMENTNAME,
       DOCUMENTNUMBER: this.DocumentRegiData.DOCUMENTNUMBER,
-      DOCUMENTRECIPIENTS:this.SendDataArray.DOCUMENTRECIPIENTS,
-      DOCUMENTTYPE:Number(this.DocumentRegiData.DOCUMENTTYPE),
-      DRAFTSTATUS:Number(this.DocumentRegiData.DRAFTSTATUS),
+      DOCUMENTRECIPIENTS: this.SendDataArray.DOCUMENTRECIPIENTS,
+      DOCUMENTTYPE: Number(this.DocumentRegiData.DOCUMENTTYPE),
+      DRAFTSTATUS: Number(this.DocumentRegiData.DRAFTSTATUS),
       GENERATEDATE: this.DocumentRegiData.GENERATEDATESEND,
-      GENERATETIME:this.DocumentRegiData.GENERATETIME,
+      GENERATETIME: this.DocumentRegiData.GENERATETIME,
       KEYWORDS: this.DocumentRegiData.KEYWORDS,
       MATTERGUID: MatterData.MATTERGUID,
       TEMPLATENAME: this.SendDataArray.TEMPLATENAME,
 
     }
-    let finalData={DATA:Data,FormAction:this.FormAction,VALIDATEONLY: true}
+    let finalData = { DATA: Data, FormAction: this.FormAction, VALIDATEONLY: true }
     this._mainAPiServiceService.getSetData(finalData, 'SetDocument').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, finalData);
@@ -183,10 +182,10 @@ export class DocumentDailogComponent implements OnInit {
       } else {
         this.isspiner = false;
       }
-       
-      }, err => {
-        this.toastr.error(err);
-     });
+
+    }, err => {
+      this.toastr.error(err);
+    });
   }
   checkValidation(bodyData: any, details: any) {
     let errorData: any = [];
@@ -205,9 +204,10 @@ export class DocumentDailogComponent implements OnInit {
 
     });
     this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
-    if (Object.keys(errorData).length != 0)
+    if (Object.keys(errorData).length != 0) {
       this.toastr.error(errorData);
-    if (Object.keys(warningData).length != 0) {
+      this.isspiner = false;
+    } else if (Object.keys(warningData).length != 0) {
       this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
         disableClose: true,
         width: '100%',
@@ -221,22 +221,22 @@ export class DocumentDailogComponent implements OnInit {
         }
         this.confirmDialogRef = null;
       });
-    }
-    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+    } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
       this.DocRegiData(details);
-    this.isspiner = false;
+      this.isspiner = false;
+    }
   }
   DocRegiData(data: any) {
     data.VALIDATEONLY = false;
     this._mainAPiServiceService.getSetData(data, 'SetDocument').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-      
+
         if (this.action !== 'edit') {
           this.toastr.success(' save successfully');
         } else {
           this.toastr.success(' update successfully');
         }
-       
+
         this.isspiner = false;
         this.dialogRef.close(true);
       } else if (response.CODE == 451 && response.STATUS == 'warning') {
@@ -253,7 +253,7 @@ export class DocumentDailogComponent implements OnInit {
   }
 
   //Document Close
-  CloseDocument():void{
+  CloseDocument(): void {
     this.dialogRef.close(false);
   }
 }

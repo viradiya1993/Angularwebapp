@@ -27,13 +27,13 @@ export class GeneralReceiptDilogComponent implements OnInit {
     public MatDialog: MatDialog,
     public _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public _data: any,
-  ) { 
-console.log(_data);
-this.action=_data.type;
+  ) {
+    console.log(_data);
+    this.action = _data.type;
   }
   generalReceiptForm: FormGroup;
   isspiner: boolean;
-  ReceiptData=JSON.parse(localStorage.getItem('receiptData'));
+  ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
   isLoadingResults: boolean;
   getPayourarray: any;
   gsttypeData: any = [{ id: 1, text: "10% GST" }, { id: 2, text: "No GST" }, { id: 3, text: "< 10% GST" }];
@@ -45,7 +45,7 @@ this.action=_data.type;
       INCOMEDATE: [],
       INCOMETYPE: [''],
       PAYEE: [''],
-      PAYEEGUID:[''],
+      PAYEEGUID: [''],
       AMOUNT: [''],
       // gsttype: [''],
       // GST: [''],
@@ -55,9 +55,9 @@ this.action=_data.type;
       INCOMEACCOUNTGUIDTEXT: [''],
       NOTE: [''],
     });
-    if(this.action=="duplicate"){
+    if (this.action == "duplicate") {
       this.LoadData();
-    }else{
+    } else {
 
       let INCOMEDATEVAL = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
       this.generalReceiptForm.controls['INCOMEDATE'].setValue(INCOMEDATEVAL);
@@ -65,10 +65,10 @@ this.action=_data.type;
 
     this.getPayor({});
   }
-  LoadData(){
-     this.isLoadingResults = true;
+  LoadData() {
+    this.isLoadingResults = true;
     // console.log(this.ReceiptData);
-    this._mainAPiServiceService.getSetData({INCOMEGUID:this.ReceiptData.INCOMEGUID}, 'GetIncome').subscribe(response => {
+    this._mainAPiServiceService.getSetData({ INCOMEGUID: this.ReceiptData.INCOMEGUID }, 'GetIncome').subscribe(response => {
       console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.INCOMEITEMS[0]) {
@@ -84,7 +84,7 @@ this.action=_data.type;
           this.generalReceiptForm.controls['INCOMEACCOUNTGUID'].setValue(response.DATA.INCOMEITEMS[0].INCOMEACCOUNTGUID);
           this.generalReceiptForm.controls['BANKACCOUNTGUID'].setValue(response.DATA.INCOMEITEMS[0].BANKACCOUNTGUID);
 
-          
+
           this.generalReceiptForm.controls['NOTE'].setValue(response.DATA.INCOMEITEMS[0].NOTE);
         }
       } else if (response.MESSAGE == 'Not logged in') {
@@ -95,17 +95,18 @@ this.action=_data.type;
       this.isLoadingResults = false;
       this.toastr.error(err);
     });
-  
+
   }
-  PayeeTypeChange(value){
-     this.generalReceiptForm.controls['PAYEE'].setValue(value);
-;  }
+  PayeeTypeChange(value) {
+    this.generalReceiptForm.controls['PAYEE'].setValue(value);
+    ;
+  }
   getPayor(postData) {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(postData, 'GetContact').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.getPayourarray = response.DATA.CONTACTS;
-       this.isLoadingResults = false;
+        this.isLoadingResults = false;
       } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       } else {
@@ -137,7 +138,7 @@ this.action=_data.type;
       PAYEE: this.f.PAYEE.value,
       AMOUNT: this.f.AMOUNT.value,
       // GST: this.f.GST.value,
-      BANKACCOUNTGUID:this.f.BANKACCOUNTGUID.value,
+      BANKACCOUNTGUID: this.f.BANKACCOUNTGUID.value,
       INCOMEACCOUNTGUID: this.f.INCOMEACCOUNTGUID.value,
       NOTE: this.f.NOTE.value,
     }
@@ -173,9 +174,10 @@ this.action=_data.type;
       }
     });
     this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
-    if (Object.keys(errorData).length != 0)
+    if (Object.keys(errorData).length != 0) {
       this.toastr.error(errorData);
-    if (Object.keys(warningData).length != 0) {
+      this.isspiner = false;
+    } else if (Object.keys(warningData).length != 0) {
       this.confirmDialogRef = this.MatDialog.open(FuseConfirmDialogComponent, {
         disableClose: true,
         width: '100%',
@@ -188,10 +190,10 @@ this.action=_data.type;
         }
         this.confirmDialogRef = null;
       });
-    }
-    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+    } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
       this.SaveReceiptAfterVAlidation(details);
-    this.isspiner = false;
+      this.isspiner = false;
+    }
   }
   SaveReceiptAfterVAlidation(data: any) {
     data.VALIDATEONLY = false;
@@ -215,7 +217,7 @@ this.action=_data.type;
   }
   BankingDialogOpen(type: any) {
     const dialogRef = this.MatDialog.open(BankingDialogComponent, {
-      disableClose: true, width: '100%', data: { AccountType: type ,FromWhere:'generalReceiptIncome' }
+      disableClose: true, width: '100%', data: { AccountType: type, FromWhere: 'generalReceiptIncome' }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result.AccountType == "INCOME") {

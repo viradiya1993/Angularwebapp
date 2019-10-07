@@ -45,8 +45,6 @@ export class ActivitiesComponent implements OnInit {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.activitiesFilter = this._formBuilder.group({ TYPE: [" "] });
     this.getTableFilter();
-
-
     if (JSON.parse(localStorage.getItem('activity_filter'))) {
       this.FilterVal = JSON.parse(localStorage.getItem('activity_filter'));
       this.activitiesFilter.controls['TYPE'].setValue(this.FilterVal.ACTIVITYTYPE);
@@ -74,7 +72,7 @@ export class ActivitiesComponent implements OnInit {
     localStorage.setItem('lastPageSize', event.pageSize);
   }
   refreshActivities() {
-    let filterval = JSON.parse(localStorage.getItem('activity_filter'))
+    let filterval = JSON.parse(localStorage.getItem('activity_filter'));
     this.loadData(filterval);
   }
   loadData(filterData) {
@@ -133,7 +131,6 @@ export class ActivitiesComponent implements OnInit {
   setActiveData(rowData: any) {
     localStorage.setItem('current_ActivityData', JSON.stringify(rowData));
   }
-  RowClick(row){
-    this.behaviorService.estimatelegalData(row);
-  }
+ 
+  
 }

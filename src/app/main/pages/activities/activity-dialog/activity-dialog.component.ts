@@ -25,19 +25,19 @@ export class ActivityDialogComponent implements OnInit {
   isspiner: boolean = false;
   RATEPERUNIT: any;
   successMsg: any;
-  ActivityModel:Date;
+  ActivityModel: Date;
   errorWarningData: any = {};
   ITEMDATEVLAUE: any;
   timeStops: any = [];
-  userList:any;
+  userList: any;
   LookupsList: any;
-  lookuptype:any; 
+  lookuptype: any;
   PRICEINCGSTVAL: any;
   PRICEVAL: any;
   calculateData: any = {
     MatterGuid: '', QuantityType: '', Quantity: '', FeeEarner: ''
   };
-  
+
   constructor(
     public MatDialog: MatDialog,
     public dialogRef: MatDialogRef<ActivityDialogComponent>,
@@ -49,33 +49,28 @@ export class ActivityDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     //console.log(data);
-    this.lookuptype=data.popupname;
+    this.lookuptype = data.popupname;
     this.action = data.popupData.action;
-    if (this.action === 'new') {
-      this.dialogTitle = 'New Activity';
-    } else if (this.action === 'edit') {
-      this.dialogTitle = 'Update Activity';
-    } else {
-      this.dialogTitle = 'Duplicate Activity';
-    }
+
   }
 
   ngOnInit() {
     this.timeStops = this.getTimeStops('00:00', '23:30');
     let maaterguid = JSON.parse(localStorage.getItem('set_active_matters'));
-    this.activityForm = this._formBuilder.group({      
-      matterautoVal:[''],
+    this.activityForm = this._formBuilder.group({
+      matterautoVal: [''],
       MATTERGUID: ['', Validators.required],
       ITEMDATE: ['', Validators.required],
       ITEMTIME: [''],
       FEEEARNER: [''],
-      QUANTITY:[''],
-      ITEMTYPE:[''],
+      QUANTITY: [''],
+      ITEMTYPE: [''],
+      QUANTITYTYPE: [],
       PRICE: [''],
       PRICEINCGST: [''],
-      ADDITIONALTEXTSELECT:[''],
-      ADDITIONALTEXT:['', Validators.required],
-      COMMENT:[''],
+      ADDITIONALTEXTSELECT: [''],
+      ADDITIONALTEXT: ['', Validators.required],
+      COMMENT: [''],
       INVOICEDATE: [this.datepipe.transform(new Date(), 'dd/MM/yyyy')],
     });
     this.activityForm.controls['matterautoVal'].setValue(maaterguid.MATTER);
@@ -101,7 +96,7 @@ export class ActivityDialogComponent implements OnInit {
     }, err => {
       this.toastr.error(err);
     });
-    this.Timersservice.GetLookupsData({LookupType:this.lookuptype}).subscribe(res => {
+    this.Timersservice.GetLookupsData({ LookupType: this.lookuptype }).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.LookupsList = res.DATA.LOOKUPS;
       } else if (res.MESSAGE == 'Not logged in') {
@@ -113,29 +108,17 @@ export class ActivityDialogComponent implements OnInit {
     }, err => {
       this.toastr.error(err);
     });
-    // if (this.action == 'edit' || this.action == "Duplicate") {
-    //   this.activityForm.controls['ACTIVITYGUID'].setValue(this.data.ACTIVITYGUID);
-    //   this.isLoadingResults = true;
-    //   this._mainAPiServiceService.getSetData({ ACTIVITYGUID: this.data.ACTIVITYGUID }, 'GetActivity').subscribe(response => {
-    //     if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
-    //       if (response.DATA.ACTIVITIES[0]) {
-    //         let activityData = response.DATA.ACTIVITIES[0];
-    //         this.activityForm.controls['ACTIVITYTYPE'].setValue(activityData.ACTIVITYTYPEDESC);
-    //         this.activityForm.controls['ACTIVITYID'].setValue(activityData.ACTIVITYID);
-    //         this.activityForm.controls['DESCRIPTION'].setValue(activityData.DESCRIPTION);
-    //         this.activityForm.controls['GSTTYPE'].setValue(activityData.GSTTYPEDESC);
-    //         this.activityForm.controls['RATEPERUNIT'].setValue(parseFloat(activityData.RATEPERUNIT).toFixed(2));
-    //         this.activityForm.controls['UNITDESCRIPTIONPLURAL'].setValue(activityData.UNITDESCRIPTIONPLURAL);
-    //         this.activityForm.controls['UNITDESCRIPTIONSINGLE'].setValue(activityData.UNITDESCRIPTIONSINGLE);
-    //       } else {
-    //         this.toastr.error('No data found please try again');
-    //       }
-    //     }
-    //     this.isLoadingResults = false;
-    //   }, error => {
-    //     this.toastr.error(error);
-    //   });
-    // }
+    if (this.lookuptype === 'Activity') {
+      this.dialogTitle = 'New Activity';
+      this.activityForm.controls['ITEMTYPE'].setValue(1);
+    } else if (this.lookuptype === 'Sundry') {
+      this.dialogTitle = 'New Sundry';
+      this.activityForm.controls['ITEMTYPE'].setValue(2);
+    } else {
+      this.dialogTitle = 'New Activity';
+      this.activityForm.controls['ITEMTYPE'].setValue(1);
+    }
+
   }
   RatePerUnitVal() {
     this.RATEPERUNIT = parseFloat(this.f.RATEPERUNIT.value).toFixed(2);
@@ -205,7 +188,7 @@ export class ActivityDialogComponent implements OnInit {
       }
     }
     this.calculateData.Quantity = this.f.QUANTITY.value;
-    if(this.calculateData.Quantity != '' &&  this.calculateData.QuantityType != ''){
+    if (this.calculateData.Quantity != '' && this.calculateData.QuantityType != '') {
       this.isLoadingResults = true;
       this.Timersservice.calculateWorkItems(this.calculateData).subscribe(response => {
         if (response.CODE == 200 && response.STATUS == "success") {
@@ -222,27 +205,27 @@ export class ActivityDialogComponent implements OnInit {
       });
     }
   }
-  LookupsChange(value:any){
+  LookupsChange(value: any) {
     this.activityForm.controls['ADDITIONALTEXT'].setValue(value);
   }
-  calcPE(){
+  calcPE() {
     this.PRICEINCGSTVAL = round(this.f.PRICE.value * 1.1).toFixed(2);
   }
-  calcPI(){
+  calcPI() {
     this.PRICEVAL = round(this.f.PRICEINCGST.value / 1.1).toFixed(2);
   }
   saveActivity() {
     if (this.ITEMDATEVLAUE == "" || this.ITEMDATEVLAUE == null || this.ITEMDATEVLAUE == undefined) {
       this.ITEMDATEVLAUE = this.f.INVOICEDATE.value;
     }
-   this.isspiner = true;
+    this.isspiner = true;
     let PostData: any = {
-      MATTERGUID:this.f.MATTERGUID.value,
-      ITEMDATE:this.ITEMDATEVLAUE,
-      ITEMTIME:this.f.ITEMTIME.value,
-      FEEEARNER:this.f.FEEEARNER.value,
-      QUANTITY:this.f.QUANTITY.value,
-      ITEMTYPE:this.f.ITEMTYPE.value,
+      MATTERGUID: this.f.MATTERGUID.value,
+      ITEMDATE: this.ITEMDATEVLAUE,
+      ITEMTIME: this.f.ITEMTIME.value,
+      FEEEARNER: this.f.FEEEARNER.value,
+      QUANTITY: this.f.QUANTITY.value,
+      ITEMTYPE: this.f.ITEMTYPE.value,
       PRICE: this.f.PRICE.value,
       PRICEINCGST: this.f.PRICEINCGST.value,
       ADDITIONALTEXT: this.f.ADDITIONALTEXT.value,
@@ -250,7 +233,7 @@ export class ActivityDialogComponent implements OnInit {
     }
     this.successMsg = 'Save successfully';
     let PostActivityData: any = { FormAction: "insert", VALIDATEONLY: true, Data: PostData };
-    this._mainAPiServiceService.getSetData(PostActivityData, 'SetWorkItems').subscribe(res => { 
+    this._mainAPiServiceService.getSetData(PostActivityData, 'SetWorkItems').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.checkValidation(res.DATA.VALIDATIONS, PostActivityData);
       } else if (res.CODE == 451 && res.STATUS == 'warning') {
@@ -281,9 +264,10 @@ export class ActivityDialogComponent implements OnInit {
       }
     });
     this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
-    if (Object.keys(errorData).length != 0)
+    if (Object.keys(errorData).length != 0) {
       this.toastr.error(errorData);
-    if (Object.keys(warningData).length != 0) {
+      this.isspiner = false;
+    } else if (Object.keys(warningData).length != 0) {
       this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Save?';
       this.confirmDialogRef = this.MatDialog.open(FuseConfirmDialogComponent, {
         disableClose: true, width: '100%', data: warningData
@@ -295,10 +279,10 @@ export class ActivityDialogComponent implements OnInit {
         }
         this.confirmDialogRef = null;
       });
-    }
-    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+    } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
       this.saveActivityData(PostActivityData);
-    this.isspiner = false;
+      this.isspiner = false;
+    }
   }
   saveActivityData(PostActivityData: any) {
     PostActivityData.VALIDATEONLY = false;

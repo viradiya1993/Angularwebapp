@@ -61,7 +61,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     private behaviorService: BehaviorService,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
-    console.log(_data);
     if (_data.edit == 'Edit' || _data.edit == 'Add' || _data.edit == "Duplicate") {
       this.action = _data.edit;
       if (this.action === 'Edit') {
@@ -234,6 +233,9 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     $('#time_Control').attr('placeholder', 'Select time');
   }
   matterChange(key: any, event: any) {
+    if (this.f.FEEEARNER.value && key != "FeeEarner") {
+      this.calculateData.FeeEarner = this.f.FEEEARNER.value;
+    }
     if (key == "MatterGuid") {
       this.timeEntryForm.controls['MATTERGUID'].setValue(event);
       this.calculateData.MatterGuid = event;
@@ -381,9 +383,10 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       }
     });
     this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
-    if (Object.keys(errorData).length != 0)
+    if (Object.keys(errorData).length != 0) {
       this.toastr.error(errorData);
-    if (Object.keys(warningData).length != 0) {
+      this.isspiner = false;
+    } else if (Object.keys(warningData).length != 0) {
       // this.toastr.warning(warningData);
       this.confirmDialogRef = this.MatDialog.open(FuseConfirmDialogComponent, {
         disableClose: true,
@@ -398,10 +401,10 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
         }
         this.confirmDialogRef = null;
       });
-    }
-    if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
+    } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
       this.saveTimeEntry(PostTimeEntryData);
-    this.isspiner = false;
+      this.isspiner = false;
+    }
   }
   saveTimeEntry(PostTimeEntryData: any) {
     PostTimeEntryData.VALIDATEONLY = false;

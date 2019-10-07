@@ -19,6 +19,7 @@ export class BehaviorService {
   public DocumentRegisterData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public SpendMoneyData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public ChartAccountData$: BehaviorSubject<any> = new BehaviorSubject(JSON.parse(localStorage.getItem('ChartAccountData')));
+  public ChartAccountDataEdit$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   public MatterData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public TaskData$: BehaviorSubject<any> = new BehaviorSubject(null);
@@ -126,6 +127,9 @@ export class BehaviorService {
   }
   ChartAccountData(d) {
     this.ChartAccountData$.next(d);
+  }
+  setChartAccountDataEdit(d) {
+    this.ChartAccountDataEdit$.next(d);
   }
   MatterData(d) {
     this.MatterData$.next(d);

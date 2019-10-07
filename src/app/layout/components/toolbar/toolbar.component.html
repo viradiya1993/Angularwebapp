@@ -901,7 +901,7 @@
                             <mat-card-content>
                                 <section class="group-section-tab details_tab">
                                     <section class="ribbon-section">
-                                        <button mat-button classs="large-button"  (click)="setTab($event)" [routerLink]="'/legal-details'">
+                                        <button mat-button classs="large-button" (click)="setTab($event)" [routerLink]="'/legal-details'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_authorities_d.ico" alt=""
@@ -3003,12 +3003,11 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[19]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[19]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="AccountPop('edit')">
+                                    <section [ngClass]="appPermissions[19]?.Edit==0 || isMainAccount ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[19]?.Edit==0 || isMainAccount ? 'disabled-click large-button' : 'large-button'" (click)="AccountPop('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_edit_d.ico" alt=""
-                                                        matTooltip="Twitter" matTooltipPosition="above">
+                                                    <img src="assets/icons/web_app/icon_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <div class="main-text">
                                                     <span>Edit<br>Account</span>
@@ -3016,8 +3015,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[19]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[19]?.Delete==0 ? 'disabled-click large-button' : 'large-button'" (click)="DeleteAccount()">
+                                    <section [ngClass]="appPermissions[19]?.Delete==0 || isMainAccount ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[19]?.Delete==0 || isMainAccount ? 'disabled-click large-button' : 'large-button'" (click)="DeleteAccount()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_delete_d.ico" alt=""
@@ -3029,8 +3028,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[19]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[19]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="AccountPop('duplicate')">
+                                    <section [ngClass]="appPermissions[19]?.Create==0 || isMainAccount ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[19]?.Create==0 || isMainAccount? 'disabled-click large-button' : 'large-button'" (click)="AccountPop('duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_duplicate_d.ico" alt=""
@@ -3238,6 +3237,76 @@
                     </section>
                 </mat-tab>
 
+                <!-- searching start  -->
+                <mat-tab label="SEARCHING" *ngIf="isTabShow===19">
+                    <section class="ribbon-container contact_tab_main">
+                        <mat-card>
+                            <mat-card-content>
+                                <section class="group-section-tab action_tab">
+                                    <section *ngIf="appPermissions[16]" [ngClass]="appPermissions[16]['Execute Search']==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button *ngIf="appPermissions[16]" mat-button [ngClass]="appPermissions[16]['Execute Search']==0 ? 'disabled-click large-button' : 'large-button'" (click)="StartInfoDialog()">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/infotrack.ico" alt=""
+                                                        matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Start InfoTrack <br> Search</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section [ngClass]="appPermissions[16]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[16]?.Access==0 ? 'disabled-click large-button' : 'large-button'">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_search_d.ico" alt=""
+                                                        matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Open<br>file</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+
+                                    <section [ngClass]="appPermissions[16]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button disabled mat-button [ngClass]="appPermissions[16]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="deleteAuthority()">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img class="menu-disabled" src="assets/icons/web_app/infotrack.ico"
+                                                        alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>View<br>Online</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+
+
+                                    <section *ngIf="appPermissions[16]" [ngClass]="appPermissions[5]['Import Results']==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button *ngIf="appPermissions[16]" mat-button [ngClass]="appPermissions[5]['Import Results']==0 ? 'disabled-click large-button' : 'large-button'">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_search_new_d.ico" alt=""
+                                                        matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Import<br>Infotrack CSV</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <div class="light_label_txt">Action</div>
+                                </section>
+                                <mat-divider vertical></mat-divider>
+                            </mat-card-content>
+                        </mat-card>
+                    </section>
+                </mat-tab>
+                <!-- searching end  -->
+
                 <mat-tab label="ACCOUNTS RECONCILIATION" *ngIf="isTabShow===20">
                     <section class="ribbon-container legal_details_tab_main">
                         <mat-card>
@@ -3385,77 +3454,7 @@
                         </mat-card>
                     </section>
                 </mat-tab>
-                <!-- searching start  -->
-                <mat-tab label="SEARCHING" *ngIf="isTabShow===19">
-                    <section class="ribbon-container contact_tab_main">
-                        <mat-card>
-                            <mat-card-content>
-                                <section class="group-section-tab action_tab">
-                                    <section *ngIf="appPermissions[16]" [ngClass]="appPermissions[16]['Execute Search']==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button *ngIf="appPermissions[16]" mat-button [ngClass]="appPermissions[16]['Execute Search']==0 ? 'disabled-click large-button' : 'large-button'" (click)="StartInfoDialog()">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/infotrack.ico" alt=""
-                                                        matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text">
-                                                    <span>Start InfoTrack <br> Search</span>
-                                                </div>
-                                            </section>
-                                        </button>
-                                    </section>
-                                    <section [ngClass]="appPermissions[16]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[16]?.Access==0 ? 'disabled-click large-button' : 'large-button'">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_search_d.ico" alt=""
-                                                        matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text">
-                                                    <span>Open<br>file</span>
-                                                </div>
-                                            </section>
-                                        </button>
-                                    </section>
-
-                                    <section [ngClass]="appPermissions[16]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button disabled mat-button [ngClass]="appPermissions[16]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="deleteAuthority()">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img class="menu-disabled" src="assets/icons/web_app/infotrack.ico"
-                                                        alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text">
-                                                    <span>View<br>Online</span>
-                                                </div>
-                                            </section>
-                                        </button>
-                                    </section>
-
-
-                                    <section *ngIf="appPermissions[16]" [ngClass]="appPermissions[5]['Import Results']==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button *ngIf="appPermissions[16]" mat-button [ngClass]="appPermissions[5]['Import Results']==0 ? 'disabled-click large-button' : 'large-button'">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_search_new_d.ico" alt=""
-                                                        matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text">
-                                                    <span>Import<br>Infotrack CSV</span>
-                                                </div>
-                                            </section>
-                                        </button>
-                                    </section>
-                                    <div class="light_label_txt">Action</div>
-                                </section>
-                                <mat-divider vertical></mat-divider>
-                            </mat-card-content>
-                        </mat-card>
-                    </section>
-                </mat-tab>
-                <!-- searching end  -->
-
-
+                
                 <mat-tab label="TASK" *ngIf="isTabShow===25">
                     <section class="ribbon-container contact_tab_main">
                         <mat-card>

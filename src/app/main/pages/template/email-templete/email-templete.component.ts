@@ -123,19 +123,19 @@ export class EmailTempleteComponent implements OnInit {
     });
     if (this.router.url == "/create-document/email-invoice-template") {
         let invoiceGUid = localStorage.getItem('edit_invoice_id');
-        let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
+        let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid,"knownby":'Email', "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
         this.ForEmailDialogOpen(passdata);
     } else if (this.router.url == "/create-document/email-matter-template") {
         let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
-        let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
+        let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID,"knownby":'Email', "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
         this.ForEmailDialogOpen(passdata);
     } else if (this.router.url == "/create-document/email-receive-money-template") {
         let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
-        let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
+        let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "knownby":'Email',"Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
         this.ForEmailDialogOpen(passdata);
     } else if (this.router.url == "/create-document/email-contact-template") {
         let ContactGuID = localStorage.getItem('contactGuid');
-        let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "Type": "Email","Folder": '', "Template": this.EmailtemplateData.NAME }
+        let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "knownby":'Email',"Type": "Email","Folder": '', "Template": this.EmailtemplateData.NAME }
         this.ForEmailDialogOpen(passdata);
     }
     

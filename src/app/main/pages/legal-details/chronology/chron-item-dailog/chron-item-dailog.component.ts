@@ -114,11 +114,11 @@ export class ChronItemDailogComponent implements OnInit {
         let Dateform = res.DATA.CHRONOLOGIES[0].DATEFROM.split("/");
         let DATE = new Date(Dateform[1] + '/' + Dateform[0] + '/' + Dateform[2]);
         this.ChronologyADD.DATEFROM=DATE;
-        this.ChronologyADD.FakeDateForm=DATE;
+        this.ChronologyADD.FakeDateForm=res.DATA.CHRONOLOGIES[0].DATEFROM;
         let DATETO = res.DATA.CHRONOLOGIES[0].DATETO.split("/");
         let DATE2 = new Date(DATETO[1] + '/' + DATETO[0] + '/' + DATETO[2]);
         this.ChronologyADD.DATETO=DATE2;
-        this.ChronologyADD.FakeDateTo=DATE2;
+        this.ChronologyADD.FakeDateTo=res.DATA.CHRONOLOGIES[0].DATETO;
         this.ChronologyADD.FORMAT=res.DATA.CHRONOLOGIES[0].FORMAT
         this.ChronologyADD.TIMEFROM=res.DATA.CHRONOLOGIES[0].TIMEFROM
         this.ChronologyADD.TIMETO=res.DATA.CHRONOLOGIES[0].TIMETO
@@ -225,6 +225,7 @@ console.log(val);
   }
     //ChroneItemSave
     ChroneItemSave(){
+      console.log(this.ChronologyADD);
       this.isspiner = true;
       if(this.ChronologyADD.FORMAT=='1'){
       this.commonSendOdd();

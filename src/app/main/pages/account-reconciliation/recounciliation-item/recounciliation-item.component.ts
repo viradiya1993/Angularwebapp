@@ -60,15 +60,14 @@ export class RecounciliationItemComponent implements OnInit {
       if (result) {
         this.chartAccountDetail = result;
       }
-    });
-    console.log(this.chartAccountDetail);
-    let sendDate = this.chartAccountDetail.MainList.RECONCILEDGROUP.LASTRECONCILEDDATE.split("/");
-    let getdate = new Date(sendDate[1] + '/' + sendDate[0] + '/' + sendDate[2]), y = getdate.getFullYear(), m = getdate.getMonth();;;
-       let lateday = new Date(y, m + 1, 0);
-       this.lastDay=this.datepipe.transform(this.lastDay, 'dd/MM/yyyy')
-    this.AccountRecouncile.controls['Bankdate'].setValue(this.lastDay);
+    });    
+    // let getdate = new Date(sendDate[1] + '/' + sendDate[0] + '/' + sendDate[2]), y = getdate.getFullYear(), m = getdate.getMonth();;;
+      //  let lateday = new Date(y, m + 1, 0);
+    this.lastDay=this.datepipe.transform(new Date(), 'dd/MM/yyyy');
+    console.log(this.lastDay)
+    this.AccountRecouncile.controls['Bankdate'].setValue(new Date());
     this.getTableFilter();
-    this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID, 'BankStatementDate': this.datepipe.transform(this.lastDay, 'dd/MM/yyyy') });
+    this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID, 'BankStatementDate': this.lastDay });
   
     // this.LoadData({ AccountGuid: "ACCAAAAAAAAAAAA4", 'BankStatementDate': '30/11/2015' });
   }
@@ -85,8 +84,6 @@ export class RecounciliationItemComponent implements OnInit {
     this.GloballyCal();
     this.SendRecouncileArray.push(this.selection.selected);
     this.behaviorService.RecouncileItemSendSetData({ "BankStatementDate": "30/11/2015", "ClosingBalance": this.f.statementClosingBalance.value, "item": this.selection.selected })
-
-
   }
   get f() {
     return this.AccountRecouncile.controls;
@@ -170,6 +167,11 @@ export class RecounciliationItemComponent implements OnInit {
     this.AccountRecouncile.controls['UnDeposite'].setValue(FinalValdeposit);
   }
   LoadData(data) {
+    this.AccountRecouncile.controls['calculatedClosingBalance'].setValue(0);
+    this.AccountRecouncile.controls['statementClosingBalance'].setValue(0);
+    this.AccountRecouncile.controls['OutBal'].setValue(0);
+    this.AccountRecouncile.controls['UnDeposite'].setValue(0);
+    this.AccountRecouncile.controls['UnWith'].setValue(0);
     this.ReconciliationData = [];
     this.isLoadingResults = true;
     this.subscription = this._mainAPiServiceService.getSetData(data, 'GetReconciliationItems').subscribe(response => {

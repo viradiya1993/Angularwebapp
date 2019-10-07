@@ -30,7 +30,7 @@ export class SpendMoneyAddComponent implements OnInit {
   spendmoneyForm: FormGroup;
   highlightedRows: any;
   theme_type = localStorage.getItem('theme_type');
-  CurrentMatter=JSON.parse(localStorage.getItem('set_active_matters'));
+  CurrentMatter = JSON.parse(localStorage.getItem('set_active_matters'));
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   displayedColumnsTime: string[] = ['AMOUNT', 'EXPENDITURECLASS', 'GST', 'NOTE'];
   getDataForTable: any;
@@ -70,7 +70,7 @@ export class SpendMoneyAddComponent implements OnInit {
   SendMoney_data: any = [];
   SendMoney_dataGUID: any;
   arrayForIndex: any;
-  storeDataarray: any=[];
+  storeDataarray: any = [];
   constructor(public dialogRef: MatDialogRef<SpendMoneyAddComponent>,
     @Inject(MAT_DIALOG_DATA) public _data: any,
     private _formBuilder: FormBuilder,
@@ -78,8 +78,6 @@ export class SpendMoneyAddComponent implements OnInit {
     private toastr: ToastrService,
     public behaviorService: BehaviorService,
     public _matDialog: MatDialog, public datepipe: DatePipe, public _mainAPiServiceService: MainAPiServiceService) {
-
-      console.log(_data);
     this.action = _data.action;
 
     // this.dialogTitle = this.action === 'edit' ? 'Update Spend Money' : 'Add Spend Money';
@@ -98,12 +96,6 @@ export class SpendMoneyAddComponent implements OnInit {
     });
   }
   ngOnInit() {
-    // this._mainAPiServiceService.getSetData({ AccountClass: 'BANK ACCOUNT' }, 'GetAccount').subscribe(response => {
-    //   console.log(response);
-    //   this.storeDataarray = response.DATA.ACCOUNTS;
-    //   this.showData(this.storeDataarray);  
-    // }, err => {
-    // });
     //for Data Table hideshow 
     this.Main3btn = 'disabled';
     this.dataTableHide = "false";
@@ -157,18 +149,6 @@ export class SpendMoneyAddComponent implements OnInit {
       this.forAddshowpopupData();
     }
   }
-  // showData(element) {
-  //   console.log(element);
-  //   element.forEach(x => {
-
-  //     if (x.SUBACCOUNTS){
-      
-  //       this.showData(x.SUBACCOUNTS);
-  //     }
-  //     console.log(x);
-        
-  //   });
-  // }
   forEditshowpopupData() {
     let DatePaid = this.SendMoney_data.DATE.split("/");
     let DATE = new Date(DatePaid[1] + '/' + DatePaid[0] + '/' + DatePaid[2]);
@@ -320,29 +300,28 @@ export class SpendMoneyAddComponent implements OnInit {
     this.spendmoneyForm.controls['DatePaidForSend'].setValue(this.datepipe.transform(new Date(), 'dd/MM/yyyy'));
     this.spendmoneyForm.controls['ChequeNo'].setValue("0");
     this.spendmoneyForm.controls['Type'].setValue("Cash");
-   
+
 
     this.spendmoneyForm.controls['GST1'].setValue("0.00");
     this.spendmoneyForm.controls['AmountIncGST'].setValue("0.00");
     this.spendmoneyForm.controls['AmountExGST'].setValue("0.00");
-    
+
     this.spendmoneyForm.controls['GSTType'].setValue("1.1");
     this.GstTypeDiff = "1.1";
     this.spendmoneyForm.controls['GST1'].disable();
     this.spendmoneyForm.controls['GST'].setValue(0.0);
     this.spendmoneyForm.controls['Amount'].setValue(0.00);
-    this.FinalTotal=0.00;
-    this.FinalTotalGST=0.00;
-    if(this._data.FromWhere == 'FromWIP'){
-      console.log("jdlsjdd");
+    this.FinalTotal = 0.00;
+    this.FinalTotalGST = 0.00;
+    if (this._data.FromWhere == 'FromWIP') {
       this.Classtype("Matter Expense");
       this.spendmoneyForm.controls['Class'].setValue("Matter Expense");
-      
-    }else{
+
+    } else {
       this.Classtype("Expense");
       this.spendmoneyForm.controls['Class'].setValue("Expense");
     }
- 
+
   }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
@@ -387,17 +366,14 @@ export class SpendMoneyAddComponent implements OnInit {
     } else if (Classvalue === 'Matter Expense') {
       this.hide = false;
       this.expac = false;
-      console.log("dkjsjakjdklasjld");
       $("#mattersnew").removeClass("menu-disabled");
-      if(this._data.FromWhere=="FromWIP"){
-        console.log("in matter");
-        console.log(this.CurrentMatter);
+      if (this._data.FromWhere == "FromWIP") {
         this.spendmoneyForm.controls['Matter'].setValue(this.CurrentMatter.MATTER);
         this.spendmoneyForm.controls['MatterGUID'].setValue(this.CurrentMatter.MATTERGUID);
-      }else{
+      } else {
         this.spendmoneyForm.controls['MatterGUID'].setValue('');
       }
-      
+
       this.forCommonEnable();
     } else if (Classvalue === 'Capital') {
       this.hide = true;
@@ -793,7 +769,6 @@ export class SpendMoneyAddComponent implements OnInit {
       NOTE: this.f.Notes.value,
       EXPENDITUREITEMS: this.sendItem
     }
-    console.log(Data);
     if (this.action == "edit") {
       this.FormAction = "update";
     } else if (this.action == "new" || this.action == "duplicate") {

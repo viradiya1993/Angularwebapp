@@ -9,6 +9,7 @@ import { MainAPiServiceService, BehaviorService, TableColumnsService } from 'app
 import { Subscription } from 'rxjs';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { DatePipe } from '@angular/common';
+import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-recounciliation-item',
@@ -19,9 +20,11 @@ import { DatePipe } from '@angular/common';
 })
 export class RecounciliationItemComponent implements OnInit {
   chartAccountDetail: any;
+errorWarningData: any = { "Error": [], 'Warning': [] };
   subscription: Subscription;
   isLoadingResults: boolean = false;
   pageSize: any;
+  confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   DebitAmount: any = [];
   CraditAmount: any = [];
   SendRecouncileArray: any = [];
@@ -40,8 +43,11 @@ export class RecounciliationItemComponent implements OnInit {
   DepositBalnce: number;
   FirstTimeDipositeTotal: number;
   lastDay: any;
+  recouncileItemdata: any;
 
-  constructor(private dialog: MatDialog, public datepipe: DatePipe, private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService, private _formBuilder: FormBuilder, public behaviorService: BehaviorService, private TableColumnsService: TableColumnsService, ) { }
+  constructor(private dialog: MatDialog, public datepipe: DatePipe,
+     private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService, private _formBuilder: FormBuilder,
+      public behaviorService: BehaviorService, private TableColumnsService: TableColumnsService, public _matDialog: MatDialog,) { }
   ngOnInit() {
     this.ReconciliationData = [];
     let userdata = JSON.parse(localStorage.getItem('currentUser'));
@@ -64,7 +70,6 @@ export class RecounciliationItemComponent implements OnInit {
     // let getdate = new Date(sendDate[1] + '/' + sendDate[0] + '/' + sendDate[2]), y = getdate.getFullYear(), m = getdate.getMonth();;;
       //  let lateday = new Date(y, m + 1, 0);
     this.lastDay=this.datepipe.transform(new Date(), 'dd/MM/yyyy');
-    console.log(this.lastDay)
     this.AccountRecouncile.controls['Bankdate'].setValue(new Date());
     this.getTableFilter();
     this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID, 'BankStatementDate': this.lastDay });
@@ -83,7 +88,17 @@ export class RecounciliationItemComponent implements OnInit {
       this.ReconciliationData.data.forEach(row => this.selection.select(row));
     this.GloballyCal();
     this.SendRecouncileArray.push(this.selection.selected);
-    this.behaviorService.RecouncileItemSendSetData({ "BankStatementDate": "30/11/2015", "ClosingBalance": this.f.statementClosingBalance.value, "item": this.selection.selected })
+    this.behaviorService.RecouncileItemSendSetData({ 
+      ACCOUNTGUID:this.chartAccountDetail.ACCOUNTGUID, 
+      PERIODENDDATE:this.lastDay,
+      STARTINGBALANCE:'',
+      DEPOSITS:this.f.UnDeposite.value,
+      WITHDRAWALS:this.f.UnWith.value,
+      UNPRESENTEDDEPOSITS:this.f.UnDeposite.value,
+      UNPRESENTEDWITHDRAWALS:this.f.UnWith.value,
+      ENDINGBALANCE:this.f.calculatedClosingBalance.value,
+      PREPAREDBY:this.f.PreBy.value,
+      RECONCILIATIONITEMS: this.selection.selected })
   }
   get f() {
     return this.AccountRecouncile.controls;
@@ -113,7 +128,17 @@ export class RecounciliationItemComponent implements OnInit {
     this.GloballyCal();
     this.FirstTimeCal('');
     // this.SendRecouncileArray.push(this.selection.selected);
-    this.behaviorService.RecouncileItemSendSetData({ "BankStatementDate": "30/11/2015", "ClosingBalance": this.f.statementClosingBalance.value, "item": this.selection.selected })
+      this.behaviorService.RecouncileItemSendSetData({ 
+      ACCOUNTGUID:this.chartAccountDetail.ACCOUNTGUID, 
+      PERIODENDDATE:this.lastDay,
+      STARTINGBALANCE:'',
+      DEPOSITS:this.f.UnDeposite.value,
+      WITHDRAWALS:this.f.UnWith.value,
+      UNPRESENTEDDEPOSITS:this.f.UnDeposite.value,
+      UNPRESENTEDWITHDRAWALS:this.f.UnWith.value,
+      ENDINGBALANCE:this.f.calculatedClosingBalance.value,
+      PREPAREDBY:this.f.PreBy.value,
+      RECONCILIATIONITEMS: this.selection.selected })
     // this.SelectedItemArray.push(this.selection.selected)
   }
   /** The label for the checkbox on the passed row */
@@ -176,7 +201,6 @@ export class RecounciliationItemComponent implements OnInit {
     this.isLoadingResults = true;
     this.subscription = this._mainAPiServiceService.getSetData(data, 'GetReconciliationItems').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        console.log(response);
         this.FirstTimeCal(response.DATA.RECONCILIATIONITEMS);
         this.ReconciliationData = new MatTableDataSource(response.DATA.RECONCILIATIONITEMS);
         this.ReconciliationData.paginator = this.paginator;
@@ -231,6 +255,85 @@ export class RecounciliationItemComponent implements OnInit {
           // this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID });
         }
       }
+    });
+  }
+  SetRecouncilItem(){
+    this.behaviorService.RecouncileItemSendSetData$.subscribe(result => {
+      this.recouncileItemdata = result
+  });
+  // let postData = this.recouncileItemdata;
+  // let sendData = {
+  //     DATA: postData, FormAction: 'insert'
+  // }
+
+  let finalData = { DATA: this.recouncileItemdata, FormAction: 'insert', VALIDATEONLY: true }
+  this._mainAPiServiceService.getSetData(finalData, 'SetReconciliation').subscribe(response => {
+    if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+      this.checkValidation(response.DATA.VALIDATIONS, finalData);
+    } else if (response.CODE == 451 && response.STATUS == 'warning') {
+      this.checkValidation(response.DATA.VALIDATIONS, finalData);
+    } else if (response.CODE == 450 && response.STATUS == 'error') {
+      this.checkValidation(response.DATA.VALIDATIONS, finalData);
+    } else if (response.MESSAGE == 'Not logged in') {
+    } else {
+
+    }
+
+  }, err => {
+    this.toastr.error(err);
+  });
+
+  }
+  checkValidation(bodyData: any, details: any) {
+    let errorData: any = [];
+    let warningData: any = [];
+    let tempError: any = [];
+    let tempWarning: any = [];
+    bodyData.forEach(function (value) {
+      if (value.VALUEVALID == 'No') {
+        errorData.push(value.ERRORDESCRIPTION);
+        tempError[value.FIELDNAME] = value;
+      }
+      else if (value.VALUEVALID == 'Warning') {
+        tempWarning[value.FIELDNAME] = value;
+        warningData.push(value.ERRORDESCRIPTION);
+      }
+
+    });
+    this.errorWarningData = { "Error": tempError, 'Warning': tempWarning };
+    if (Object.keys(errorData).length != 0) {
+      this.toastr.error(errorData);
+    } else if (Object.keys(warningData).length != 0) {
+      this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+        disableClose: true,
+        width: '100%',
+        data: warningData
+      });
+      this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Save?';
+      this.confirmDialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.RecouncileSaveData(details);
+        }
+        this.confirmDialogRef = null;
+      });
+    } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
+      this.RecouncileSaveData(details);
+    }
+  }
+  RecouncileSaveData(data: any) {
+    data.VALIDATEONLY = false;
+    this._mainAPiServiceService.getSetData(data, 'SetTask').subscribe(response => {
+      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        this.toastr.success(' save successfully');
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
+        this.toastr.warning(response.MESSAGE);
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
+        this.toastr.error(response.MESSAGE);
+      } else if (response.MESSAGE == 'Not logged in') {
+      }
+
+    }, error => {
+      this.toastr.error(error);
     });
   }
   refreshRecouncilItem() {

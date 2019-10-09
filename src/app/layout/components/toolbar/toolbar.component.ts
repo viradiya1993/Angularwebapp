@@ -622,7 +622,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
             if (result)
                 $('#refreshTimeEntryTab').click();
-            $('#refreshWorkInprogress').click();
+                $('#refreshWorkInprogress').click();
         });
     }
     WriteOffTimeEntry() {
@@ -666,27 +666,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     RecouncileAccount() {
-        this.behaviorService.RecouncileItemSendSetData$.subscribe(result => {
-            console.log(result);
-            this.recouncileItemdata = result
-        });
-        let postData = {
-            BankStatementDate: this.recouncileItemdata.BankStatementDate,
-            ClosingBalance: this.recouncileItemdata.ClosingBalance,
-            RECONCILIATIONITEMS: [
-                this.recouncileItemdata.item
-            ]
-        }
-        let sendData = {
-            DATA: postData, FormAction: 'insert'
-        }
-        this._mainAPiServiceService.getSetData(sendData, 'SetReconciliation').subscribe(res => {
-            console.log(res);
-            if (res.STATUS == "success" && res.CODE == 200) {
-                //$('#refreshSpendMoneyTab').click();
-                this.toastr.success('Save successfully');
-            }
-        });
+        $("#SetRecouncilItem").click();
+      
     }
     undoRecouncilebtn() {
 

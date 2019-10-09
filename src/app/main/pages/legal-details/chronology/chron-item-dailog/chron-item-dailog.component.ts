@@ -64,7 +64,7 @@ export class ChronItemDailogComponent implements OnInit {
       "PRIVILEGED": '',
       "ADDITIONALTEXT": '',
       "TOPIC": '',
-      "AGREEDEVENT": '',
+      "EVENTAGREED": '',
       "DOCUMENTNAME": '',
       "MATTERGUID": '',
       "CHRONOLOGYGUID": '',
@@ -128,7 +128,7 @@ export class ChronItemDailogComponent implements OnInit {
         this.ChronologyADD.PRIVILEGED = res.DATA.CHRONOLOGIES[0].PRIVILEGED
         this.ChronologyADD.ADDITIONALTEXT = res.DATA.CHRONOLOGIES[0].ADDITIONALTEXT
         this.ChronologyADD.TOPIC = res.DATA.CHRONOLOGIES[0].TOPIC
-        this.ChronologyADD.AGREEDEVENT = res.DATA.CHRONOLOGIES[0].AGREEDEVENT
+        this.ChronologyADD.EVENTAGREED = res.DATA.CHRONOLOGIES[0].EVENTAGREED
         this.ChronologyADD.DOCUMENTNAME = res.DATA.CHRONOLOGIES[0].DOCUMENTNAME;
         this.ChronologyADD.MATTERGUID = res.DATA.CHRONOLOGIES[0].MATTERGUID
         this.ChronologyADD.CHRONOLOGYGUID = res.DATA.CHRONOLOGIES[0].CHRONOLOGYGUID;
@@ -274,7 +274,7 @@ export class ChronItemDailogComponent implements OnInit {
       PRIVILEGED: this.ChronologyADD.PRIVILEGED,
       ADDITIONALTEXT: this.ChronologyADD.ADDITIONALTEXT,
       TOPIC: this.ChronologyADD.TOPIC,
-      AGREEDEVENT: this.ChronologyADD.AGREEDEVENT,
+      EVENTAGREED: this.ChronologyADD.EVENTAGREED,
       DOCUMENTNAME: this.ChronologyADD.DOCUMENTNAME,
       MATTERGUID: this.ChronologyADD.MATTERGUID,
       CHRONOLOGYGUID: this.ChronoGUID,

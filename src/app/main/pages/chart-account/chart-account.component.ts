@@ -145,9 +145,9 @@ export class ChartAccountComponent implements OnInit {
 
     });
   }
-  ngAfterViewInit() {
+//   ngAfterViewInit() {
   
-}
+// }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
   RowClick(val) {
     this.behaviorService.ChartAccountData(val);

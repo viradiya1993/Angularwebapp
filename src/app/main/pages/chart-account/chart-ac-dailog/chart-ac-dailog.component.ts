@@ -44,6 +44,7 @@ export class ChartAcDailogComponent implements OnInit {
     }
     this.behaviorService.ChartAccountData$.subscribe(result => {
       if (result) {
+        console.log(result);
         this.AccountData = result;
       }
     });
@@ -56,7 +57,7 @@ export class ChartAcDailogComponent implements OnInit {
       //General
       ACCOUNTNUMBER: ['1-'],
       ACCOUNTTYPE: [''],
-      ACTIVE: [true],
+      ACTIVE: [''],
       ACCOUNTTYPENAME: [''],
       //EXPORTINFO 
       MYOBEXPORTACCOUNT: [''],
@@ -72,6 +73,7 @@ export class ChartAcDailogComponent implements OnInit {
     if (this.action == "edit" || this.action == 'duplicate') {
       this.isLoadingResults = true;
       this._mainAPiServiceService.getSetData({ ACCOUNTGUID: this.AccountData.ACCOUNTGUID }, 'GetAccount').subscribe(res => {
+        console.log(res);
         if (res.CODE == 200 && res.STATUS == "success") {
           if (this.action != 'duplicate') {
             this.AccountForm.controls['ACCOUNTGUID'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTGUID);
@@ -84,7 +86,7 @@ export class ChartAcDailogComponent implements OnInit {
           this.accountType = res.DATA.ACCOUNTS[0].ACCOUNTTYPENAME;
           this.AccountForm.controls['ACCOUNTTYPE'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTTYPENAME);          // toString()
 
-          this.AccountForm.controls['ACTIVE'].setValue(res.DATA.ACCOUNTS[0].ACTIVE);
+          this.AccountForm.controls['ACTIVE'].setValue(Number(res.DATA.ACCOUNTS[0].ACTIVE));
           //EXPORTINFO
           this.AccountForm.controls['MYOBEXPORTACCOUNT'].setValue(res.DATA.ACCOUNTS[0].EXPORTINFO['MYOBEXPORTACCOUNT']);
           //BANKDETAILS
@@ -102,6 +104,8 @@ export class ChartAcDailogComponent implements OnInit {
         this.toastr.error(err);
         this.isLoadingResults = false;
       });
+    }else{
+      this.AccountForm.controls['ACTIVE'].setValue(true);
     }
 
   }

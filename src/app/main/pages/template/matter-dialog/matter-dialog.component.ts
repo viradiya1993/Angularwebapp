@@ -7,6 +7,8 @@ import { fuseAnimations } from '@fuse/animations';
 
 import { environment } from 'environments/environment';
 import { MatSort } from '@angular/material';
+// import { $ } from 'protractor';
+import * as $ from 'jquery';
 
 
 @Component({
@@ -103,6 +105,7 @@ export class MatterDialogComponentForTemplate implements OnInit {
           this.PacksDocument = response.DATA.DOCUMENTS;
         }
         this.isLoadingResults = false;
+        $('#refreshWorkInprogress').click();
       } else if (response.CODE == 420) {
         this.isLoadingResults = false;
         this.dialogRef.close();

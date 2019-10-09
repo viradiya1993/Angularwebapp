@@ -7,7 +7,6 @@ import * as $ from 'jquery';
 import { DatePipe } from '@angular/common';
 import { MatterDialogComponent } from '../matter-dialog/matter-dialog.component';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-import { round } from 'lodash';
 import * as moment from 'moment';
 
 
@@ -171,7 +170,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     if (typeof priceTemp === 'undefined')
       priceTemp = 0;
     this.PRICEVAL = Number(priceTemp).toFixed(2);
-    priceTemp = round(priceTemp * 1.1);
+    priceTemp = priceTemp * 1.1;
     this.PRICEINCGSTVAL = priceTemp.toFixed(2);
   }
   calcPI() {
@@ -179,7 +178,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     if (typeof temGst === 'undefined')
       temGst = 0;
     this.PRICEINCGSTVAL = Number(temGst).toFixed(2);
-    temGst = round(temGst / 1.1);
+    temGst = temGst / 1.1;
     this.PRICEVAL = temGst.toFixed(2)
   }
   public selectMatter() {

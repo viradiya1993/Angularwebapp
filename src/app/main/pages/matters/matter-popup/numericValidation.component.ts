@@ -1,4 +1,4 @@
-import {Directive, ElementRef, HostListener, Input} from '@angular/core';
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 
 @Directive({
     selector: '[numeric]'
@@ -14,14 +14,14 @@ export class NumericDirective {
     };
 
     private specialKeys = {
-        number: [ 'Backspace', 'Tab', 'End', 'Home', 'ArrowLeft', 'ArrowRight' ],
-        decimal: [ 'Backspace', 'Tab', 'End', 'Home', 'ArrowLeft', 'ArrowRight' ],
+        number: ['Backspace', 'Tab', 'End', 'Home', 'ArrowLeft', 'ArrowRight', 'Delete'],
+        decimal: ['Backspace', 'Tab', 'End', 'Home', 'ArrowLeft', 'ArrowRight', 'Delete'],
     };
 
     constructor(private el: ElementRef) {
     }
 
-    @HostListener('keydown', [ '$event' ])
+    @HostListener('keydown', ['$event'])
     onKeyDown(event: KeyboardEvent) {
 
         if (this.specialKeys[this.numericType].indexOf(event.key) !== -1) {

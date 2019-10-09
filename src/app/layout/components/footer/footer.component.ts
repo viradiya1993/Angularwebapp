@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { environment } from '../../../../environments/environment';
 @Component({
     selector: 'footer',
     templateUrl: './footer.component.html',
@@ -10,6 +10,7 @@ export class FooterComponent {
      * Constructor
      */
     currentYear: any;
+    VERSION: any = environment.VERSION;
     constructor() {
         this.currentYear = new Date().getFullYear();
     }

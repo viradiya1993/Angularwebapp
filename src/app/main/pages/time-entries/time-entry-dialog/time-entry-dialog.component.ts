@@ -141,6 +141,9 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.isreadonly = true;
     } else if (this.currentTimeMatter != '') {
       this.isreadonly = true;
+      if (this._data.isReadOnly) {
+        this.isreadonly = false;
+      }
       this.timeEntryForm.controls['MATTERGUID'].setValue(this.currentTimeMatter);
       let Qval = this.matterTimerData == '' ? 'Hours' : 'hh:mm';
       this.timeEntryForm.controls['QUANTITYTYPE'].setValue(Qval);
@@ -164,10 +167,16 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     return timeStops;
   }
   calcPE() {
-    this.PRICEINCGSTVAL = round(this.f.PRICE.value * 1.1).toFixed(2);
+    let priceTemp = this.f.PRICE.value;
+    if (typeof priceTemp === 'undefined')
+      priceTemp = 0;
+    this.PRICEINCGSTVAL = round(priceTemp * 1.1).toFixed(2);
   }
   calcPI() {
-    this.PRICEVAL = round(this.f.PRICEINCGST.value / 1.1).toFixed(2);
+    let temGst = this.f.PRICEINCGST.value;
+    if (typeof temGst === 'undefined')
+      temGst = 0;
+    this.PRICEVAL = round(temGst / 1.1).toFixed(2);
   }
   public selectMatter() {
     const dialogRef = this.MatDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });

@@ -7,6 +7,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { AuthenticationService } from '../../../_services';
 import { first } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../../environments/environment';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class ForgotPasswordComponent implements OnInit {
   forgotPasswordForm: FormGroup;
   isspiner: boolean = false;
   currentYear: any;
+  VERSION: any = environment.VERSION;
   constructor(
     private _fuseConfigService: FuseConfigService,
     private _formBuilder: FormBuilder,

@@ -87,13 +87,10 @@ export class MatterDialogComponentForTemplate implements OnInit {
     delete data["knownby"];
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(data, 'TemplateGenerate').subscribe(response => {
-      console.log(response);  
       if (response.CODE == 200 && response.STATUS == "success") {
         this.IsLoading = "false";
         this.toastr.success('success');
         if (this._data.Type == "Template") {
-          // var textSample = response.DATA.DOCUMENTS[0].FILENAME;
-          // var uri = 'https://api2.silq.com.au/' + encodeURIComponent(textSample);
           this.filefolderUrl = response.DATA.DOCUMENTS[0].FILENAME;
         } else if (this._data.Type == "Email") {
           this.PacksEmail = response.DATA.EMAILS;
@@ -123,7 +120,6 @@ export class MatterDialogComponentForTemplate implements OnInit {
 
 
   SendMain(val) {
-console.log(val);
     var browser = "agent";
     var credits = '0';
     var subject = val.SUBJECT;

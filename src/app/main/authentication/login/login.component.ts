@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../../../environments/environment';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit {
   isspiner: boolean = false;
   hide: boolean = true;
   currentYear: any;
+  VERSION: any = environment.VERSION;
 
 
   constructor(

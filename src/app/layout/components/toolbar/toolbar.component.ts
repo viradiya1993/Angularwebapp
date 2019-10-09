@@ -596,13 +596,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         if (WORKITEMGUID && WORKITEMGUID != '') {
             this.ResumeTimePopup('resume', { time: matterDataTime, WORKITEMGUID: WORKITEMGUID });
         } else {
-            this.addNewTimeEntry(matterId, matterDataTime);
+            this.addNewTimeEntry(matterId, matterDataTime, '');
         }
     }
-    addNewTimeEntryNew() {
+    addNewTimeEntryNew(isReadOnly) {
         let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
         if (matterData.ACTIVE) {
-            this.addNewTimeEntry(matterData.MATTERGUID, '');
+            this.addNewTimeEntry(matterData.MATTERGUID, '', isReadOnly);
         } else {
             this.toastr.error("You cannot time entry for Inactive matter. Please select active matter and try again.");
             return false;
@@ -617,13 +617,30 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    addNewTimeEntry(Data: any, matterData: any) {
-        const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '100%', disableClose: true, data: { 'edit': Data, 'matterData': matterData } });
-        dialogRef.afterClosed().subscribe(result => {
-            if (result)
-                $('#refreshTimeEntryTab').click();
-            $('#refreshWorkInprogress').click();
-        });
+    addNewTimeEntry(Data: any, matterData: any, isReadOnly: any) {
+        if (Data == 'Add') {
+            const dialogRef = this.MatDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    localStorage.setItem('set_active_matters', JSON.stringify(result));
+                    const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '100%', disableClose: true, data: { 'edit': Data, 'matterData': matterData, isReadOnly: isReadOnly } });
+                    dialogRef.afterClosed().subscribe(result => {
+                        if (result) {
+                            $('#refreshTimeEntryTab').click();
+                            $('#refreshWorkInprogress').click();
+                        }
+                    });
+                }
+            });
+        } else {
+            const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '100%', disableClose: true, data: { 'edit': Data, 'matterData': matterData, isReadOnly: isReadOnly } });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    $('#refreshTimeEntryTab').click();
+                    $('#refreshWorkInprogress').click();
+                }
+            });
+        }
     }
     WriteOffTimeEntry() {
         const dialogRef = this._matDialog.open(WriteOffTimeEntryComponent, {
@@ -638,7 +655,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     GenerateInvoice() {
         this.behaviorService.matterInvoice$.subscribe(result => {
-            console.log(result);
             if (result != null) {
                 this.ShowGenerateInvoice = "yes";
             } else {

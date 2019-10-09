@@ -8,7 +8,6 @@ import * as $ from 'jquery';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { MatSort } from '@angular/material';
-import { post } from 'selenium-webdriver/http';
 
 @Component({
   selector: 'app-work-in-progress',
@@ -29,7 +28,7 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
   tempColobj: any;
   isShowDrop: boolean;
   lastFilter: any
-  TimerDropData:any=[];
+  TimerDropData: any = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   isLoadingResults: boolean = false;
@@ -40,18 +39,17 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
     this.TimeEnrtyForm = this.fb.group({ date: [''], uninvoicedWork: [''], dlpdrop: [''], });
 
     if (this.lastFilter) {
-      console.log(this.lastFilter);
       this.TimeEnrtyForm.controls['uninvoicedWork'].setValue(this.lastFilter.Invoiced);
       this.TimeEnrtyForm.controls['dlpdrop'].setValue(this.lastFilter.FeeEarner);
 
       let Date1 = this.lastFilter.ItemDateStart.split("/");
-    let SendDate1 = new Date(Date1[1] + '/' + Date1[0] + '/' + Date1[2]);
+      let SendDate1 = new Date(Date1[1] + '/' + Date1[0] + '/' + Date1[2]);
 
-    let Date2 = this.lastFilter.ItemDateEnd.split("/");
-    let  SendDate2 = new Date(Date2[1] + '/' + Date2[0] + '/' + Date2[2]);
-    this.TimeEnrtyForm.controls['date'].setValue({ begin: SendDate1, end: SendDate2 });
-    
-  } else {
+      let Date2 = this.lastFilter.ItemDateEnd.split("/");
+      let SendDate2 = new Date(Date2[1] + '/' + Date2[0] + '/' + Date2[2]);
+      this.TimeEnrtyForm.controls['date'].setValue({ begin: SendDate1, end: SendDate2 });
+
+    } else {
       this.lastFilter = { 'MatterGuid': this.currentMatter.MATTERGUID, 'FeeEarner': '', 'Invoiced': "", 'ItemDateStart': '', 'ItemDateEnd': '' };
       localStorage.setItem('Work_in_progress_filter', JSON.stringify(this.lastFilter));
     }
@@ -103,7 +101,7 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
     });
     this.pageSize = localStorage.getItem('lastPageSize');
   }
-  refreshWorkInprogress(){
+  refreshWorkInprogress() {
     let filterVal = JSON.parse(localStorage.getItem('Work_in_progress_filter'));
     this.loadData(filterVal);
   }
@@ -142,7 +140,7 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
     filterVal = JSON.parse(localStorage.getItem('Work_in_progress_filter'));
     filterVal.ItemDateStart = begin;
     filterVal.ItemDateEnd = end;
-    localStorage.setItem('Work_in_progress_filter',JSON.stringify(filterVal));
+    localStorage.setItem('Work_in_progress_filter', JSON.stringify(filterVal));
     this.loadData(filterVal);
   }
 
@@ -169,9 +167,9 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
       }
     });
   }
-  refresheWorkEtimateTab(){
-  this.lastFilter = JSON.parse(localStorage.getItem('Work_in_progress_filter'));
-  this.loadData(this.lastFilter);
+  refresheWorkEtimateTab() {
+    this.lastFilter = JSON.parse(localStorage.getItem('Work_in_progress_filter'));
+    this.loadData(this.lastFilter);
   }
   editworkInProgress(row: any) {
     this.behaviorService.setworkInProgressData(row);

@@ -618,12 +618,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     addNewTimeEntry(Data: any, matterData: any, isReadOnly: any) {
-        if (Data == 'Add') {
+        if (Data == 'Add-New') {
             const dialogRef = this.MatDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     localStorage.setItem('set_active_matters', JSON.stringify(result));
-                    const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '100%', disableClose: true, data: { 'edit': Data, 'matterData': matterData, isReadOnly: isReadOnly } });
+                    const dialogRef = this.dialog.open(TimeEntryDialogComponent, { width: '100%', disableClose: true, data: { 'edit': 'Add', 'matterData': matterData, isReadOnly: isReadOnly } });
                     dialogRef.afterClosed().subscribe(result => {
                         if (result) {
                             $('#refreshTimeEntryTab').click();
@@ -683,7 +683,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     RecouncileAccount() {
         $("#SetRecouncilItem").click();
-      
+
     }
     undoRecouncilebtn() {
 

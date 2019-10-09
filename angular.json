@@ -53,6 +53,26 @@
                                 "maximumError": "20mb"
                             }]
                         },
+                        "sandbox": {
+                            "fileReplacements": [{
+                                "replace": "src/environments/environment.ts",
+                                "with": "src/environments/environment.sandbox.ts"
+                            }],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [{
+                                "type": "initial",
+                                "maximumWarning": "10mb",
+                                "maximumError": "20mb"
+                            }]
+                        },
                         "ec": {
                             "sourceMap": true,
                             "extractCss": true
@@ -73,6 +93,9 @@
                     "configurations": {
                         "production": {
                             "browserTarget": "fuse:build:production"
+                        },
+                        "sandbox": {
+                            "browserTarget": "fuse:build:sandbox"
                         },
                         "hmr": {
                             "hmr": true,

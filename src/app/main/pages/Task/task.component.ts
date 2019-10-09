@@ -126,7 +126,8 @@ export class TaskComponent implements OnInit {
       this.TaskAllData.paginator = this.paginator;
       if (res.CODE == 200 && res.STATUS == "success") {
         if (res.DATA.TASKS[0]) {
-          this.behaviorService.TaskData(res.DATA.TASKS[0]);
+          this.RowClick(res.DATA.TASKS[0])
+          // this.behaviorService.TaskData(res.DATA.TASKS[0]);
           this.highlightedRows = res.DATA.TASKS[0].TASKGUID;
         } else {
           // this.toastr.error("No Data Selected");
@@ -141,7 +142,6 @@ export class TaskComponent implements OnInit {
     this.pageSize = localStorage.getItem('lastPageSize');
   }
   get f() {
-    //console.log(this.contactForm);
     return this.MainTask.controls;
   }
   CheckboxChecxed(){
@@ -223,7 +223,6 @@ export class TaskComponent implements OnInit {
     this.filterData = JSON.parse(localStorage.getItem("task_filter"));
     console.log(this.GetUSERS);
     let val = this.GetUSERS.find(c => c['USERNAME'] == value)
-
     this.filterData.USERGUID = val.USERGUID;
     this.filterData.user = value;
     this.behaviorService.UserDropDownData(val);

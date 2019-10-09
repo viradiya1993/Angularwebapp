@@ -3087,7 +3087,7 @@
                             <mat-card-content>
                                 <section class="group-section-tab details_tab">
                                     <section [ngClass]="appPermissions[20]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[20]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="NewGeneral()">
+                                        <button mat-button [ngClass]="appPermissions[20]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="NewGeneral('new')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_add_d.ico" alt=""
@@ -3113,7 +3113,7 @@
                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[20]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[20]?.Delete==0 ? 'disabled-click large-button' : 'large-button'" (click)="DeleteGeneral()" disabled>
+                                        <button mat-button [ngClass]="appPermissions[20]?.Delete==0 ? 'disabled-click large-button' : 'large-button'" (click)="DeleteGeneral()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_delete_d.ico" alt=""
@@ -3126,7 +3126,7 @@
                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[20]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[20]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="DuplicateGeneral()" disabled>
+                                        <button mat-button [ngClass]="appPermissions[20]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="NewGeneral('duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_duplicate_d.ico" alt=""

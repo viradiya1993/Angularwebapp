@@ -5,7 +5,7 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatPaginator, MatDialogRef, MatDialog, MatDialogConfig, MatDatepickerInputEvent } from '@angular/material';
 import { MatSort } from '@angular/material';
 import { MatTableDataSource } from '@angular/material/table';
-import { MainAPiServiceService, TableColumnsService } from 'app/_services';
+import { MainAPiServiceService, TableColumnsService, BehaviorService } from 'app/_services';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { DatePipe } from '@angular/common';
 import * as $ from 'jquery';
@@ -40,6 +40,7 @@ export class GeneralJournalComponent implements OnInit {
     public _matDialog: MatDialog,
     public datepipe: DatePipe,
     private _mainAPiServiceService: MainAPiServiceService,
+    public behaviorService: BehaviorService,
   ) { }
 
   ngOnInit() {
@@ -110,6 +111,7 @@ export class GeneralJournalComponent implements OnInit {
         // this.generalJournalData.paginator = this.paginator;
         // this.generalJournalData.sort = this.sort;
         if (tempJData[0]) {
+          this.editjournal(tempJData[0]);
           this.highlightedRows = tempJData[0].JOURNALGUID;
         }
         this.isLoadingResults = false;
@@ -153,7 +155,10 @@ export class GeneralJournalComponent implements OnInit {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
   }
-  editjournal() {
-
+  editjournal(row) {
+    this.behaviorService.GeneralData(row);
+  }
+  refreshGeneral(){
+    this.LoadData();
   }
 }

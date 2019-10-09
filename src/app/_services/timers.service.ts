@@ -57,6 +57,12 @@ export class TimersService {
     }
     return this.httpClient.post<any>(environment.APIEndpoint + 'SetWorkItems ', Data);
   }
+  SetJournal(Data: any) {
+    if (Data == null) {
+      Data = {};
+    }
+    return this.httpClient.post<any>(environment.APIEndpoint + 'SetJournal ', Data);
+  }
   //time entry popup data end 
   addTimeEnrtS(eTimer: any) {
     let currentUser: any = JSON.parse(localStorage.getItem('currentUser'));

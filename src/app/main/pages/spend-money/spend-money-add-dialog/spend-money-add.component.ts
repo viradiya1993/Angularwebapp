@@ -452,7 +452,6 @@ export class SpendMoneyAddComponent implements OnInit {
     this.spendmoneyForm.controls['AmountIncGST'].enable();
     this.spendmoneyForm.controls['Expenseac'].enable();
   }
-
   multilineCheckbox() {
     this.size = 20;
 

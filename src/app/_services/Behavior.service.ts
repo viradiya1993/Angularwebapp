@@ -45,6 +45,7 @@ export class BehaviorService {
   public MatterEditData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public estimatelegalData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public ActivityData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public GeneralData$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor(private http: HttpClient) { }
 
@@ -149,6 +150,10 @@ export class BehaviorService {
   ActivityData(ActivityData: any) {
     this.ActivityData$.next(ActivityData);
   }
+  GeneralData(GeneralData:any){
+    this.GeneralData$.next(GeneralData);
+  }
+ 
 
 
 }

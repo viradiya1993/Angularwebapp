@@ -1278,10 +1278,22 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     /* General Journal Module Function's */
     //NewGeneral
-    NewGeneral() {
+    NewGeneral(actionType) {
+        let GeneralPopData = {}
+        if (actionType == 'new') {
+            GeneralPopData = { action: actionType }
+        }else if (actionType == 'edit' || actionType == 'duplicate') {
+            GeneralPopData = { action: actionType }
+        }
         const dialogRef = this.dialog.open(GeneralDailogComponent, {
+            disableClose: true,
+            panelClass: 'Chrone-dialog',
+            data: GeneralPopData
         });
         dialogRef.afterClosed().subscribe(result => {
+            if(result){
+                $('#refreshGeneral').click();
+            }
         });
     }
     //ViewDetails
@@ -1298,7 +1310,28 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //DeleteGeneral
     DeleteGeneral() {
-        console.log('DeleteGeneral Work!!');
+        this.behaviorService.GeneralData$.subscribe(result => {
+            if (result) {
+                this.JournalData = result; 
+            }
+        });       
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                let postData = { FormAction: "delete", data: { JOURNALGUID: this.JournalData.JOURNALGUID } }
+                this._mainAPiServiceService.getSetData(postData, 'SetJournal').subscribe(res => {
+                    if (res.STATUS == "success" && res.CODE == 200) {
+                        $('#refreshGeneral').click();
+                        this.toastr.success('Delete successfully');
+                    }
+                });
+            }
+        });
+        
     }
     //DuplicateGeneral
     DuplicateGeneral() {

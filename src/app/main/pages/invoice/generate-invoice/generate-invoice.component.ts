@@ -82,9 +82,10 @@ export class GenerateInvoiceComponent implements OnInit {
       this.passdata.Type = 'Pack';
       this.passdata.Template = this.slectedPack.KITNAME;
     } else if (val == "Template") {
+
       this.passdata.knownby = 'Template';
       this.passdata.Type = 'Template';
-      this.passdata.Template = this.slectedPack.KITNAME;
+      this.passdata.Template ='<DEFINVTEMP>';
     } else {
       this.passdata.Template = this.slectedPack.KITNAME;
       this.passdata.knownby = this.temptype;

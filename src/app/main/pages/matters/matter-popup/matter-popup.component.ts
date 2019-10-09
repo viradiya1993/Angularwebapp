@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MainAPiServiceService, BehaviorService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
@@ -74,7 +74,6 @@ export class MatterPopupComponent implements OnInit {
     let UserData = JSON.parse(localStorage.getItem('currentUser')).ProductType;
     this.userType = UserData == 'Barrister' ? 0 : 1;
     this.matterFormBuild();
-
     this._mainAPiServiceService.getSetData({ 'LookupType': 'Matter Class' }, 'GetLookups').subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {
         this.Classdata = responses.DATA.LOOKUPS;
@@ -90,10 +89,24 @@ export class MatterPopupComponent implements OnInit {
           let matterData = response.DATA.MATTERS[0];
           this.classtype = matterData.MATTERCLASS;
           this.behaviorService.setMatterEditData(matterData);
-          this.matterdetailForm.controls['MATTERGUID'].setValue(matterData.MATTERGUID);
+          if (this.action === 'duplicate') {
+            this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: true, DATA: {} }, 'SetMatter').subscribe(res => {
+              if (res.CODE == 200 && res.STATUS == "success") {
+                if (res.DATA.DEFAULTVALUES['SHORTNAME'] == "") {
+                  this.isDefultMatter = false;
+                }
+                this.matterdetailForm.controls['SHORTNAME'].setValue(res.DATA.DEFAULTVALUES['SHORTNAME']);
+              } else if (res.MESSAGE === 'Not logged in') {
+                this.dialogRef.close(false);
+              }
+            }, error => { this.toastr.error(error); });
+          } else {
+            this.matterdetailForm.controls['SHORTNAME'].setValue(matterData.SHORTNAME);
+            this.matterdetailForm.controls['MATTERGUID'].setValue(matterData.MATTERGUID);
+          }
           this.matterdetailForm.controls['ACTIVE'].setValue(matterData.ACTIVE == 1 ? true : false);
-          this.matterdetailForm.controls['MATTERCLASS'].setValue(matterData.MATTERCLASS.toString());
-          this.matterdetailForm.controls['SHORTNAME'].setValue(matterData.SHORTNAME);
+          let matterClass = matterData.MATTERCLASS;
+          this.matterdetailForm.controls['MATTERCLASS'].setValue(matterClass.toString());
           this.matterdetailForm.controls['MATTER'].setValue(matterData.MATTER);
           //client
           this.matterdetailForm.controls['Clientmattertext'].setValue(matterData.CONTACTNAME);

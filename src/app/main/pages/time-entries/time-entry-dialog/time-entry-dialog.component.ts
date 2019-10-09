@@ -138,7 +138,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.isLoadingResults = true;
     if (this.action === 'Edit' || this.action == "Duplicate") {
       this.setTimeEntryData();
-      this.isreadonly = true;
+      this.isreadonly = false;
     } else if (this.currentTimeMatter != '') {
       this.isreadonly = true;
       if (this._data.isReadOnly) {
@@ -170,13 +170,17 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     let priceTemp = this.f.PRICE.value;
     if (typeof priceTemp === 'undefined')
       priceTemp = 0;
-    this.PRICEINCGSTVAL = round(priceTemp * 1.1).toFixed(2);
+    this.PRICEVAL = Number(priceTemp).toFixed(2);
+    priceTemp = round(priceTemp * 1.1);
+    this.PRICEINCGSTVAL = priceTemp.toFixed(2);
   }
   calcPI() {
     let temGst = this.f.PRICEINCGST.value;
     if (typeof temGst === 'undefined')
       temGst = 0;
-    this.PRICEVAL = round(temGst / 1.1).toFixed(2);
+    this.PRICEINCGSTVAL = Number(temGst).toFixed(2);
+    temGst = round(temGst / 1.1);
+    this.PRICEVAL = temGst.toFixed(2)
   }
   public selectMatter() {
     const dialogRef = this.MatDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
@@ -289,8 +293,8 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.Timersservice.calculateWorkItems(this.calculateData).subscribe(response => {
         if (response.CODE == 200 && response.STATUS == "success") {
           let CalcWorkItemCharge = response.DATA;
-          this.timeEntryForm.controls['PRICE'].setValue(CalcWorkItemCharge.PRICE);
-          this.timeEntryForm.controls['PRICEINCGST'].setValue(CalcWorkItemCharge.PRICEINCGST);
+          this.timeEntryForm.controls['PRICE'].setValue(Number(CalcWorkItemCharge.PRICE).toFixed(2));
+          this.timeEntryForm.controls['PRICEINCGST'].setValue(Number(CalcWorkItemCharge.PRICEINCGST).toFixed(2));
           this.isLoadingResults = false;
         } else if (response.MESSAGE == 'Not logged in') {
           this.dialogRef.close(false);

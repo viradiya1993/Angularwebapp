@@ -43,6 +43,7 @@ export class MatterDialogComponentForTemplate implements OnInit {
   filefolderUrlforEmail: any = [];
   title: string;
   filefolderUrl: any;
+  filefolderUrlDes: any;
   Title: any;
   emailToadd: any;
   emailBCC: any;
@@ -94,6 +95,7 @@ export class MatterDialogComponentForTemplate implements OnInit {
         this.toastr.success('success');
         if (this._data.Type == "Template") {
           this.filefolderUrl = response.DATA.DOCUMENTS[0].FILENAME;
+          this.filefolderUrlDes = response.DATA.DOCUMENTS[0].DESCRIPTION;
         } else if (this._data.Type == "Email") {
           this.PacksEmail = response.DATA.EMAILS;
         } else if (this._data.Type == "Pack") {

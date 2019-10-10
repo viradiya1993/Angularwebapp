@@ -2,90 +2,96 @@
     <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
 </div>
 <div cdkDrag class="popup_main_div add_edit_contact_main">
-    <h2 cdkDragHandle mat-dialog-title>General Journal Entry
+    <h2 cdkDragHandle mat-dialog-title>{{dialogTitle}}
         <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
       <mat-icon>close</mat-icon>
     </button>
     </h2>
     <div mat-dialog-content class="mat-typography main">
         <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
-            <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
+            <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="GeneralForm" id="GeneralForm" [formGroup]="GeneralForm">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.DATEGENERAL,'has-warning':errorWarningData.Warning?.DATEGENERAL}">
                         <mat-label>Date</mat-label>
-                        <input name="DATE" matInput [matDatepicker]="picker3">
-                        <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-                        <mat-datepicker #picker3></mat-datepicker>
+                        <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" [(ngModel)]="GeneralDate" formControlName="DATEGENERAL">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DESCRIPTION,'has-warning':errorWarningData.Warning?.DESCRIPTION}">
                         <mat-label>Description</mat-label>
-                        <input matInput name="DESCRIPTION" value="GJ;">
+                        <input matInput name="DESCRIPTION" value="" formControlName="DESCRIPTION">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DEBITSTOTAL,'has-warning':errorWarningData.Warning?.DEBITSTOTAL}">
                         <mat-label>Debit Total</mat-label>
-                        <input matInput name="DEBITSTOTAL" [(ngModel)]="DEBITSTOTAL">
+                        <input matInput name="DEBITSTOTAL" [(ngModel)]="DEBITSTOTAL" formControlName="TOTALDEBIT" readonly>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.CREDITSTOTAL,'has-warning':errorWarningData.Warning?.CREDITSTOTAL}">
                         <mat-label>Credit Total</mat-label>
-                        <input matInput name="CREDITSTOTAL" [(ngModel)]="CREDITSTOTAL">
+                        <input matInput name="CREDITSTOTAL" [(ngModel)]="CREDITSTOTAL" formControlName="TOTALCREDITS" readonly>
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.AMOUNT,'has-warning':errorWarningData.Warning?.AMOUNT}">
                         <mat-label>Amount</mat-label>
-                        <input [disabled]="isDisable" name="AMOUNT" matInput [(ngModel)]="craditDEbitData.AMOUNT" value="0.00" type="number">
+                        <input [disabled]="isDisable" name="AMOUNT" matInput [(ngModel)]="craditDEbitData.AMOUNT" value="0.00" type="number" formControlName="GAMOUNT">
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ACCOUNTGUID,'has-warning':errorWarningData.Warning?.ACCOUNTGUID}">
                         <mat-label>Account</mat-label>
-                        <input [disabled]="isDisable" matInput name="ACCOUNTGUID" [(ngModel)]="craditDEbitData.ACCOUNTGUID">
-                        <mat-icon matSuffix (click)='SelecteAccount()'>
+                        <input [disabled]="isDisable" matInput name="ACCOUNTGUID" [(ngModel)]="craditDEbitData.ACCOUNTGUID" formControlName="ACCOUNT" readonly>
+                        <!-- <mat-icon matSuffix (click)='SelecteAccount()'>
                             <img src="assets/icons/web_app/icon_receipts_small_o.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                        </mat-icon> -->
+                        <mat-icon matSuffix>
+                            <button id="accountnew" class="accountnew menu-disabled" [disabled]="hide" (click)='SelecteAccount()'><img src="assets/icons/web_app/icon_receipts_small_o.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                            </button>
                         </mat-icon>
                     </mat-form-field>
-                    <mat-radio-group [(ngModel)]="craditDEbitData.DRCR" name="DRCR" [disabled]="isDisable" class="pr-4">
-                        <mat-radio-button value="DR">DR</mat-radio-button>
+                    <mat-radio-group [(ngModel)]="craditDEbitData.DRCR" name="DRCR" [disabled]="isDisable" class="pr-4" formControlName="CRDR" [ngClass]="{'has-error':errorWarningData.Error?.DRCR,'has-warning':errorWarningData.Warning?.DRCR}">
+                        <mat-radio-button value="DR" checked>DR</mat-radio-button>
                         <mat-radio-button value="CR">CR</mat-radio-button>
                     </mat-radio-group>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <table mat-table [dataSource]="dataSource">
-                        <ng-container matColumnDef="Number">
-                            <th mat-header-cell *matHeaderCellDef>Number</th>
-                            <td mat-cell *matCellDef="let element">{{element.Number}}</td>
-                        </ng-container>
-                        <ng-container matColumnDef="Account">
-                            <th mat-header-cell *matHeaderCellDef>Account</th>
-                            <td mat-cell *matCellDef="let element"> {{element.Account}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="Debit">
-                            <th mat-header-cell *matHeaderCellDef>Debit</th>
-                            <td mat-cell *matCellDef="let element"> {{element.Debit}} </td>
-                        </ng-container>
-                        <ng-container matColumnDef="Credit">
-                            <th mat-header-cell *matHeaderCellDef>Credit</th>
-                            <td mat-cell *matCellDef="let element"> {{element.Credit}} </td>
-                        </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                        <tr [style.background]="highlightedRows == row.Number ? selectedColore : ''" [ngClass]="highlightedRows == row.Number ? 'row-text-colore' : ''" highlightedRows=row.Number mat-row *matRowDef="let row; columns: displayedColumns;" (click)="clickNo(row.Number);highlightedRows = row.Number "
-                            matRipple>
-                        </tr>
-                    </table>
+                    <mat-card>
+                        <div class="customer">
+                            <table class="simple" [@animateStagger]="{value:'50'}">
+                                <tr>
+                                    <th>NUMBER</th>
+                                    <th>ACCOUNT</th>
+                                    <th>DEBIT</th>
+                                    <th>CREDIT</th>
+                                </tr>
+                                <tr *ngFor="let item of CREDITDEBITDATA; let index = index" (click)="ClickData(item ,index);highlightedRows=index" [style.background]="highlightedRows == index ? selectedColore : ''" [ngClass]="highlightedRows == index ? 'row-text-colore' : ''" matRipple
+                                    [@animate]="{value:'*',params:{y:'100%'}}">
+                                    <td>{{item.ACCOUNTNUMBER}}</td>
+                                    <td>{{item.ACCOUNTNAME}}</td>
+                                    <td>{{item.DEBITAMOUNT}}</td>
+                                    <td>{{item.CREDITAMOUNT}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </mat-card>
                 </div>
             </form>
         </div>
         <mat-dialog-actions *ngIf="btnhide === 'NewDelete'" align="left" class="popup_ftr">
-            <button mat-raised-button color="accent" (click)="NewItem()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>New Item</button>
-            <button mat-raised-button color="accent" (click)="DeleteItem()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Delete Item</button>
+            <button mat-raised-button color="accent" (click)="NewItem()" [disabled]="isspiner">New Item</button>
+            <button mat-raised-button color="accent" (click)="DeleteItem()" [disabled]="isspiner">Delete Item</button>
         </mat-dialog-actions>
         <mat-dialog-actions *ngIf="btnhide === 'AddCancel'" align="left" class="popup_ftr">
-            <button mat-raised-button color="accent" (click)="AddItem()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Add Item</button>
-            <button mat-raised-button color="accent" (click)="CancelItem()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Cancel Item</button>
+            <button mat-raised-button color="accent" (click)="AddItem()" [disabled]="isspiner">Add Item</button>
+            <button mat-raised-button color="accent" (click)="CancelItem()" [disabled]="isspiner">Cancel Item</button>
         </mat-dialog-actions>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
-        <button mat-raised-button color="accent" disabled (click)="SaveGeneral()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
+        <button mat-raised-button color="accent" (click)="SaveGeneral()" [disabled]="isspiner"  *ngIf="action === 'new'"><mat-spinner style=" zoom: 0.2;position: absolute;right: 0;left: 0;
+            margin: auto;top: 0;bottom: 0;" *ngIf="isspiner"></mat-spinner>Add</button>
+        <button mat-raised-button color="accent" (click)="SaveGeneral()" [disabled]="isspiner" *ngIf="action === 'edit'"><mat-spinner style=" zoom: 0.2;position: absolute;right: 0;left: 0;
+            margin: auto;top: 0;bottom: 0;" *ngIf="isspiner"></mat-spinner>Update</button>
+        <button mat-raised-button color="accent" (click)="SaveGeneral()" [disabled]="isspiner" *ngIf="action !== 'new' && action !== 'edit'"><mat-spinner style=" zoom: 0.2;position: absolute;right: 0;left: 0;
+            margin: auto;top: 0;bottom: 0;" *ngIf="isspiner"></mat-spinner>Duplicate</button>        
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
     </mat-dialog-actions>
 </div>

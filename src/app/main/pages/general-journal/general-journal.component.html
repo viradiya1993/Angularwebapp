@@ -42,7 +42,7 @@
                                 </td>
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                            <tr [style.background]="highlightedRows == row.JOURNALGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.JOURNALGUID ? 'row-text-colore' : ''" highlightedRows=row.JOURNALGUID mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editjournal(row.JOURNALGUID, row);highlightedRows = row.JOURNALGUID "
+                            <tr [style.background]="highlightedRows == row.JOURNALGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.JOURNALGUID ? 'row-text-colore' : ''" highlightedRows=row.JOURNALGUID mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editjournal(row);highlightedRows = row.JOURNALGUID "
                                 matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                             </tr>
                         </table>
@@ -53,3 +53,4 @@
         </div>
     </div>
 </div>
+<button mat-raised-button type="button" color="primary" id="refreshGeneral" (click)="refreshGeneral();">Refresh</button>

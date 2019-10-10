@@ -58,12 +58,13 @@ export class DairyDailogComponent implements OnInit {
       SUBJECT: [],
       LOCATION: [],
       MATTERGUID: [],
-      APPOINTMENTDATE: [],
+      APPOINTMENTDATE: [new Date()],
+      sendAPPOINTMENTDATE:[this.datepipe.transform(new Date(), 'dd/MM/yyyy')],
       APPOINTMENTENDDATE: [],
       DateFrom: [],
-      ALLDAYEVENT: [],
+      ALLDAYEVENT: [false],
 
-      APPOINTMENTTIME: [],
+      APPOINTMENTTIME: ['09:00 AM'],
       TimeSlot2: [],
       start: [],
       Finish: [],
@@ -77,6 +78,7 @@ export class DairyDailogComponent implements OnInit {
       //Recurrance-Pattern Tab
       Every: [],
       EveryWeekly: [],
+      Senddayweek:[],
       EveryMonthly: [],
       EveryDay: [],
       countvalue: [],
@@ -90,6 +92,13 @@ export class DairyDailogComponent implements OnInit {
       orders: new FormArray([])
     });
     //this.addCheckboxes();
+    if(this.action !='edit'){
+        this.CheckAllDays(false);
+        this.DairyForm.controls['type'].setValue('Conference');
+        this.DairyForm.controls['Reminder'].setValue(true); 
+        this.DairyForm.controls['Beforestart'].setValue('15Minutes'); 
+    }
+
   }
   get f() {
     return this.DairyForm.controls;
@@ -108,25 +117,35 @@ export class DairyDailogComponent implements OnInit {
       SUBJECT: this.f.SUBJECT.value,
       LOCATION: this.f.LOCATION.value,
       ALLDAYEVENT: this.f.ALLDAYEVENT.value,
-      APPOINTMENTDATE: this.f.DateFrom.value,
-      APPOINTMENTENDDATE: this.f.DateFrom.value,
+      APPOINTMENTDATE: this.f.sendAPPOINTMENTDATE.value,
+      APPOINTMENTENDDATE: "",
       APPOINTMENTTIME: this.App_StartTime,
+   
+    
       APPOINTMENTTYPE: this.f.type.value,
       REMINDER: this.f.Reminder.value,
       REMINDERMINUTESBEFORE: this.f.Beforestart.value,
       CATEGORY: this.f.Category.value,
-      MATTERGUID: "",
+      MATTERGUID: this.f.MATTERGUID.value,
+
 
       RECURRING: {
+        FREQUENCY:'',
         DAYFREQUENCY: this.f.Every.value,
+
         WEEKFREQUENCY: this.f.EveryWeekly.value,
-        WEEKDAYMASK: this.f.dayweek.value,
+        WEEKDAYMASK: this.f.Senddayweek.value,
+
         MONTHFREQUENCY: this.f.EveryMonthly.value,
+
         MONTHOPTIONS: this.f.EveryDay.value,
+        
         MONTHOPTIONDAY: this.f.RedioChnageDay.value,
         MONTHWHICHWEEK: this.f.countvalue.value,
         MONTHWHICHDAY: this.f.DaySelect.value,
-        RECURRINGUNTIL: this.f.SendEndDate.value
+
+        RECURRINGUNTIL: this.f.SendEndDate.value,
+        RECURRINGUNTILDATE:''
       },
       // SYNCHRONISINGINFO:{
       //   DATECREATED:"",
@@ -135,7 +154,6 @@ export class DairyDailogComponent implements OnInit {
       //   TIMEMODIFIED:""
       // }
     }
-    console.log(data);
     let finalData = { DATA: data, FormAction: this.FormAction, VALIDATEONLY: true }
     this._mainAPiServiceService.getSetData(finalData, 'SetAppointment').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
@@ -228,7 +246,7 @@ export class DairyDailogComponent implements OnInit {
       this.CheckClick = "Yes";
     } else {
       this.CheckClick = "No";
-      this.App_StartTime = "";
+      this.App_StartTime = this.f.APPOINTMENTTIME.value;
       this.App_EndTime = "";
     }
   }

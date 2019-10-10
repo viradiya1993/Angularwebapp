@@ -28,7 +28,6 @@ export class GeneralReceiptDilogComponent implements OnInit {
     public _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public _data: any,
   ) {
-    console.log(_data);
     this.action = _data.type;
   }
   generalReceiptForm: FormGroup;

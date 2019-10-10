@@ -26,7 +26,6 @@ export class AccountDialogComponent implements OnInit {
   ngOnInit() {
     this.behaviorService.SysytemAccountDIalogData$.subscribe(result => {
       if (result) {
-        console.log(result);
         this.accountDialoge=result;
       }
   });

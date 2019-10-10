@@ -670,6 +670,24 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
+    GenerateReceipt(){
+        let receiData=JSON.parse(localStorage.getItem('receiptData'));
+    let passdata = {
+            Context: 'Receipt',
+            ContextGuid: receiData.INCOMEGUID,
+            knownby:'Template',
+            Type:'Template',
+            Template:"<DEFRECTEMP>" 
+          }
+        const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
+            width: '100%',
+            disableClose: true,
+            data: passdata
+        });
+        dialogRef.afterClosed().subscribe(result => {
+
+        });
+    }
 
     UndoWriteOffTimeEntry() {
         let postData = { FormAction: "undo write off", DATA: { WORKITEMGUID: this.timeEntryData.WORKITEMGUID } }

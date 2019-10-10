@@ -125,7 +125,6 @@ export class CorrespondDailogComponent implements OnInit {
       });
     } else {
       let data = { 'showData': { 'type': this.f.TYPE.value, 'Text': this.f.PERSONGUIDTEXT.value + ' - ' + this.f.SOLICITORGUIDTEXT.value }, 'saveData': details };
-      console.log(data);
       this.dialogRef.close(data);
     }
   }

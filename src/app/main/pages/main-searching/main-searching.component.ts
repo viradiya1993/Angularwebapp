@@ -78,7 +78,6 @@ export class MainSearchingComponent implements OnInit {
   this.MainSearchingData=[];
       this.isLoadingResults = true;
       this._mainAPiServiceService.getSetData(data, 'GetCostRecovery').subscribe(res => {
-        console.log(res);
         this.MainSearchingData = new MatTableDataSource(res.DATA.TASKS);
         this.MainSearchingData.sort = this.sort;
         this.MainSearchingData.paginator = this.paginator;

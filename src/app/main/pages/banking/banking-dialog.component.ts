@@ -117,21 +117,21 @@ export class BankingDialogComponent implements OnInit {
     node.AccountType = this._data.AccountType;
     this.ACCOUNTGUIDsELECTED = node;
     this.isDisabledselect = node.MainList.ACCOUNTTYPENAME;
-    if (this._data.FromWhere == 'systemSetting') {
-      this.isDisabledselect = 'Bank Account';
-    } else if (this._data.FromWhere == 'spendMonyExpense' && this._data.AccountType == "EXPENSE") {
-      if (node.MainList.ACCOUNTTYPENAME == 'Detail') {
-        this.isDisabledselect = 'Bank Account';
-      } else {
-        this.isDisabledselect = 'None Bank Account';
-      }
-    } else if (this._data.FromWhere == 'generalReceiptIncome' && this._data.AccountType == "INCOME") {
-      if (node.MainList.ACCOUNTTYPENAME == 'Detail') {
-        this.isDisabledselect = 'Bank Account';
-      } else {
-        this.isDisabledselect = 'None Bank Account';
-      }
-    }
+    // if (this._data.FromWhere == 'systemSetting') {
+    //   this.isDisabledselect = 'Bank Account';
+    // } else if (this._data.FromWhere == 'spendMonyExpense') {
+    //   if (node.MainList.ACCOUNTTYPENAME == 'Detail') {
+    //     this.isDisabledselect = 'Bank Account';
+    //   } else {
+    //     this.isDisabledselect = 'None Bank Account';
+    //   }
+    // } else if (this._data.FromWhere == 'generalReceiptIncome' && this._data.AccountType == "INCOME") {
+    //   if (node.MainList.ACCOUNTTYPENAME == 'Detail') {
+    //     this.isDisabledselect = 'Bank Account';
+    //   } else {
+    //     this.isDisabledselect = 'None Bank Account';
+    //   }
+    // }
     // generalReceiptIncome this.abcd=node;
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;

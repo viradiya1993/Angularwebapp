@@ -16,7 +16,7 @@
         <mat-checkbox fxFlex="20" formControlName="Reminder" (ngModelChange)="CheckReminder($event)" [ngModel]="filter">Reminder</mat-checkbox>
         <mat-form-field appearance="outline" fxFlex="40" class="pr-4">
             <mat-label>Before Start</mat-label>
-            <mat-select formControlName="Beforestart">
+            <mat-select formControlName="Beforestart"  (selectionChange)="Beforstartchange($event.value)">
                 <mat-option value="15Minutes">15 Minutes</mat-option>
                 <mat-option value="30Minutes">30 Minutes</mat-option>
                 <mat-option value="45Minutes">45 Minutes</mat-option>
@@ -62,9 +62,14 @@
         <mat-form-field class="example p-16" fxFlex="50" appearance="outline">
             <mat-label>Matter</mat-label>
             <input formControlName="Matter" matInput>
-            <mat-icon matSuffix (click)='SelectMatter()'>
-                <img class="seticon" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+            <!-- <button> <mat-icon matSuffix (click)='SelectMatter()'>
+                <img id="mattersnew" class="matternews menu-disabled" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+            </mat-icon></button> -->
+            <mat-icon matSuffix>
+                <button [disabled]="hideicon"  id="appoitmentnew" class="appoitmentnews menu-disabled " (click)='SelectMatter()'><img  src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+            </button>
             </mat-icon>
+           
         </mat-form-field>
 
     </div>

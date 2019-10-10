@@ -23,7 +23,6 @@ export class SafeCustodyDialogeComponent implements OnInit {
     dialogTitle: string;
   constructor(private _mainAPiServiceService:MainAPiServiceService,
     public dialogRef: MatDialogRef<SafeCustodyDialogeComponent>,@Inject(MAT_DIALOG_DATA) public data: any) { 
-      console.log(data);
         this.action = data.action;
         if(this.action === 'new client'){
             this.dialogTitle = 'New Safe Custody';

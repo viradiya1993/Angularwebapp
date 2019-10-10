@@ -65,7 +65,6 @@ export class InvoiceDetailComponent implements OnInit {
     if (this._data.type == 'edit') {
       this.isLoadingResults = true;
       this._mainAPiServiceService.getSetData({ 'INVOICEGUID': this._data.INVOICEGUID }, 'GetInvoice').subscribe(response => {
-        console.log(response);
         if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
           let invoiceData = response.DATA.INVOICES[0];
           this.invoiceDetailForm.controls['CLIENTNAME'].setValue(invoiceData.CLIENTNAME);

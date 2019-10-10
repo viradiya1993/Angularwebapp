@@ -40,7 +40,6 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
     this.TimeEnrtyForm = this.fb.group({ date: [''], uninvoicedWork: [''], dlpdrop: [''], });
 
     if (this.lastFilter) {
-      console.log(this.lastFilter);
       this.TimeEnrtyForm.controls['uninvoicedWork'].setValue(this.lastFilter.Invoiced);
       this.TimeEnrtyForm.controls['dlpdrop'].setValue(this.lastFilter.FeeEarner);
 

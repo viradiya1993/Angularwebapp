@@ -45,7 +45,6 @@ export class TrustMoneyDialogeComponent implements OnInit {
   title: string;
   constructor(private _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public _data: any, ) {
-    console.log(_data);
     this.action = _data.action;
     if (this.action == "receipt") {
       this.title = "Add Trust Receipt"
@@ -70,7 +69,6 @@ export class TrustMoneyDialogeComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.TrustMoneyData);
     // this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response=>{
     //  // console.log(response);
     //   this.addData=response.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP

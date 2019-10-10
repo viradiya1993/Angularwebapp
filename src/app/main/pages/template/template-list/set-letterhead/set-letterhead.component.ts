@@ -110,8 +110,6 @@ export class SetLetterHeadComponent implements OnInit {
   }
 
   SelectDocument() {
-    console.log("clicked");
-
     const dialogRef = this.dialog.open(GenerateTemplatesDialoagComponent, {
       disableClose: true,
       panelClass: 'contact-dialog',

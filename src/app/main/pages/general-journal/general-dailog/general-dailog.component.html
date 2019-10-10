@@ -49,7 +49,7 @@
                         </mat-icon>
                     </mat-form-field>
                     <mat-radio-group [(ngModel)]="craditDEbitData.DRCR" name="DRCR" [disabled]="isDisable" class="pr-4" formControlName="CRDR" [ngClass]="{'has-error':errorWarningData.Error?.DRCR,'has-warning':errorWarningData.Warning?.DRCR}">
-                        <mat-radio-button value="DR" checked>DR</mat-radio-button>
+                        <mat-radio-button value="DR">DR</mat-radio-button>
                         <mat-radio-button value="CR">CR</mat-radio-button>
                     </mat-radio-group>
                 </div>
@@ -77,12 +77,12 @@
             </form>
         </div>
         <mat-dialog-actions *ngIf="btnhide === 'NewDelete'" align="left" class="popup_ftr">
-            <button mat-raised-button color="accent" (click)="NewItem()" [disabled]="isspiner">New Item</button>
-            <button mat-raised-button color="accent" (click)="DeleteItem()" [disabled]="isspiner">Delete Item</button>
+            <button mat-raised-button color="accent" (click)="NewItem()">New Item</button>
+            <button mat-raised-button color="accent" (click)="DeleteItem()">Delete Item</button>
         </mat-dialog-actions>
         <mat-dialog-actions *ngIf="btnhide === 'AddCancel'" align="left" class="popup_ftr">
-            <button mat-raised-button color="accent" (click)="AddItem()" [disabled]="isspiner">Add Item</button>
-            <button mat-raised-button color="accent" (click)="CancelItem()" [disabled]="isspiner">Cancel Item</button>
+            <button mat-raised-button color="accent" (click)="AddItem()" >Add Item</button>
+            <button mat-raised-button color="accent" (click)="CancelItem()">Cancel Item</button>
         </mat-dialog-actions>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">

@@ -11,6 +11,7 @@ import { TimersService, BehaviorService, MainAPiServiceService } from 'app/_serv
 import * as $ from 'jquery';
 import { DatePipe } from '@angular/common';
 import { fuseAnimations } from '@fuse/animations';
+import { element } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-general-dailog',
@@ -158,7 +159,7 @@ export class GeneralDailogComponent implements OnInit {
     if (this.craditDEbitData.AMOUNT == '' || this.craditDEbitData.AMOUNT == null) {
       this.toastr.error('Please enter amount.');
       return false;
-    } else if (this.craditDEbitData.ACCOUNTGUID == '' || this.craditDEbitData.ACCOUNTGUID == null) {
+  }else if(this.craditDEbitData.ACCOUNTGUID=='' || this.craditDEbitData.ACCOUNTGUID == null){
       this.toastr.error('Please select account.');
       return false;
     }
@@ -225,6 +226,7 @@ export class GeneralDailogComponent implements OnInit {
     // return;
     this.isspiner = true;
     if (this.CREDITSTOTAL === this.DEBITSTOTAL) {
+      console.log(PostData);
       this.successMsg = 'Save successfully';
       let details = { FormAction: this.FormAction, VALIDATEONLY: true, Data: PostData };
       this._mainAPiServiceService.getSetData(details, 'SetJournal').subscribe(response => {
@@ -246,7 +248,6 @@ export class GeneralDailogComponent implements OnInit {
       this.toastr.error('Credit Amount total and Debit Amount total not equal.');
     }
   }
-
   checkValidation(bodyData: any, PostActivityData: any) {
     let errorData: any = [];
     let warningData: any = [];
@@ -304,13 +305,27 @@ export class GeneralDailogComponent implements OnInit {
   }
   //EditGeneral
   EditGeneral() {
-    //GetJournal
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({ JOURNALGUID: this.JournalData.JOURNALGUID }, 'GetJournal').subscribe(result => {
       if (result.CODE == 200 && result.STATUS == "success") {
         this.GeneralForm.controls['DESCRIPTION'].setValue(result.DATA.JOURNALS[0].DESCRIPTION);
         this.CREDITDEBITDATA = result.DATA.JOURNALS[0].JOURNALITEMS;
-        this.CreditDebitTotal();
+        this.CREDITDEBITDATA.forEach(element => {
+          if (element.DEBITCREDIT == 'CR') {
+            this.CREDITDATAARRY.push({
+              ACCOUNTGUID: element.ACCOUNTGUID,
+              AMOUNT: element.AMOUNT
+            });
+            this.DEBITSTOTAL += element.AMOUNT
+          } else if (element.DEBITCREDIT == 'DR') {
+            this.DEBITDATAARRAY.push({
+              ACCOUNTGUID: element.ACCOUNTGUID,
+              AMOUNT: element.AMOUNT
+            });
+            this.CREDITSTOTAL += element.AMOUNT
+          }
+
+        });
         this.isLoadingResults = false;
       }
     }, err => {
@@ -318,18 +333,4 @@ export class GeneralDailogComponent implements OnInit {
       this.isLoadingResults = false;
     });
   }
-  CreditDebitTotal() {
-    this.CREDITTOTALFINAL = [];
-    this.DEBITSTOTALFINAL = [];
-    this.CREDITDEBITDATA.forEach(element => {
-      this.CREDITTOTALFINAL.push(element.CREDITAMOUNT);
-      this.DEBITSTOTALFINAL.push(Number(element.DEBITAMOUNT));
-    });
-    this.FinalDebitTotal = Number(this.DEBITSTOTALFINAL.reduce(function (a = 0, b = 0) { return a + b; }, 0));
-    this.FinalCreditTotal = Number(this.CREDITTOTALFINAL.reduce(function (a = 0, b = 0) { return a + b; }, 0));
-    this.GeneralForm.controls['TOTALDEBIT'].setValue(parseFloat(this.FinalDebitTotal).toFixed(2));
-    this.GeneralForm.controls['TOTALCREDITS'].setValue(parseFloat(this.FinalCreditTotal).toFixed(2));
-  }
-
-
 }

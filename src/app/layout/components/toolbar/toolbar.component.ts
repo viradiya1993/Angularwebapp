@@ -147,7 +147,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         this.behaviorService.GeneralData$.subscribe(result => {
             if (result) {
-                console.log(result.LINKTYPE);
                 this.JournalData = result;
                 this.journalLinktype = result.LINKTYPE;
                 if (this.journalLinktype == "Receipt" || this.journalLinktype == "Invoice") {
@@ -956,6 +955,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 $("#refreshSpendMoneyTab").click();
                 $('#refreshRecouncilItem').click();
                 $('#refreshWorkInprogress').click();
+                $('#refreshGeneral').click();
             }
         });
     }
@@ -1293,16 +1293,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /* General Journal Module Function's */
     //NewGeneral
     NewGeneral(actionType) {
-        let GeneralPopData = {}
-        if (actionType == 'new') {
-            GeneralPopData = { action: actionType }
-        } else if (actionType == 'edit' || actionType == 'duplicate') {
-            GeneralPopData = { action: actionType }
-        }
         const dialogRef = this.dialog.open(GeneralDailogComponent, {
-            disableClose: true,
-            panelClass: 'Chrone-dialog',
-            data: GeneralPopData
+            disableClose: true, panelClass: 'Chrone-dialog', data: { action: actionType }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -1324,12 +1316,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else if (this.journalLinktype == "Income") {
             localStorage.setItem('receiptData', JSON.stringify({ INCOMEGUID: this.JournalData.LINKGUID }));
             this.NewGeneralReceipt('edit');
+        } else if (this.journalLinktype == "General Journal") {
+            this.NewGeneral('edit');
         }
-        // else if (this.journalLinktype == "General Journal" || this.journalLinktype == "") {
-        //     this.NewGeneral('edit');
-        // }else{
-        // }
-        // }
     }
     //DeleteGeneral
     DeleteGeneral() {
@@ -1690,6 +1679,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 localStorage.removeItem('matterName');
+                $('#refreshGeneral').click();
             }
         });
     }
@@ -1783,6 +1773,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             if (result) {
                 $('#refreshReceiceMoany').click();
                 $('#refreshRecouncilItem').click();
+                $('#refreshGeneral').click();
             }
         });
     }

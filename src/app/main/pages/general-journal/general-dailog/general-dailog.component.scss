@@ -87,7 +87,7 @@ mat-icon.close_icon.mat-icon.material-icons.mat-icon-no-color {
 mat-dialog-actions {
     mat-spinner {
         zoom: 0.2;
-        position: absolute;
+        position: absolute !important;
         right: 0;
         left: 0;
         margin: auto;
@@ -106,23 +106,28 @@ mat-dialog-actions {
     box-shadow: none;
     border-radius: 4px;
 }
+
 .mat-dialog-title {
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
 }
+
 .right_popup_btn .right_btn_child:last-child {
     margin-right: 0;
 }
+
 .popup_ftr {
     border-top: 1px solid #ccc;
     margin-top: 15px !important;
     padding: 12px 24px !important;
 }
+
 @media screen and (max-width: 900px) {
     .add_edit_contact_main {
         width: 95%;
     }
 }
+
 // .mat-dialog-container {
 //     display: block;
 //     padding: 24px;
@@ -140,19 +145,29 @@ mat-dialog-actions {
     //flex-direction: column;
     width: 100%;
 }
+
 //Table Css
 table {
     width: 100%;
 }
-  
+
 th.mat-sort-header-sorted {
     color: black;
 }
+
 .mat-radio-button {
     font-size: 16px;
     margin-left: 66px;
     margin-bottom: 19px;
 }
+
+button.matternews {
+    background: none;
+    border: none;
+    width: 150%;
+    cursor: pointer;
+}
+
 // .mat-radio-button ~ .mat-radio-button {
 //     margin-left: 16px;
 // }

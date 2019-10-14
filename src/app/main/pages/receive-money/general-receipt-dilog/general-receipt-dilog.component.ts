@@ -79,8 +79,8 @@ export class GeneralReceiptDilogComponent implements OnInit {
           this.generalReceiptForm.controls['INCOMETYPE'].setValue(incomeData.INCOMETYPE);
           this.generalReceiptForm.controls['PAYEE'].setValue(incomeData.PAYEE);
           this.generalReceiptForm.controls['AMOUNT'].setValue(incomeData.AMOUNT);
-          // this.generalReceiptForm.controls['BANKACCOUNTGUIDTEXT'].setValue(response.DATA.INCOMEITEMS[0].BANKACCOUNTGUIDTEXT);
-          // this.generalReceiptForm.controls['INCOMEACCOUNTGUIDTEXT'].setValue(response.DATA.INCOMEITEMS[0].INCOMEACCOUNTGUIDTEXT);
+          this.generalReceiptForm.controls['BANKACCOUNTGUIDTEXT'].setValue(incomeData.BANKACCOUNTNUMBER);
+          this.generalReceiptForm.controls['INCOMEACCOUNTGUIDTEXT'].setValue(incomeData.INCOMEACCOUNTNUMBER);
           this.generalReceiptForm.controls['INCOMEACCOUNTGUID'].setValue(incomeData.INCOMEACCOUNTGUID);
           this.generalReceiptForm.controls['BANKACCOUNTGUID'].setValue(incomeData.BANKACCOUNTGUID);
           this.generalReceiptForm.controls['NOTE'].setValue(incomeData.NOTE);

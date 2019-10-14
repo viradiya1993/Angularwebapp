@@ -4,14 +4,12 @@ import { FormGroup, FormBuilder, Validators, FormControl, FormsModule } from '@a
 import { ToastrService } from 'ngx-toastr';
 import { MAT_DIALOG_DATA, MatPaginator } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { BankingDialogComponent } from '../../banking/banking-dialog.component';
-import { TimersService, BehaviorService, MainAPiServiceService } from 'app/_services';
+import { BehaviorService, MainAPiServiceService } from 'app/_services';
 import * as $ from 'jquery';
 import { DatePipe } from '@angular/common';
 import { fuseAnimations } from '@fuse/animations';
-import { element } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-general-dailog',
@@ -31,32 +29,27 @@ export class GeneralDailogComponent implements OnInit {
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   Number = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   displayedColumns: string[] = ['Number', 'Account', 'Debit', 'Credit'];
-  dataSource: any = [];
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
   disabledField: any;
-  addbtn: any;
   btnhide: any;
   craditDEbitData = { DRCR: '', AMOUNT: '', ACCOUNTGUID: '' };
   isDisable: boolean = true;
   GeneralForm: FormGroup;
-  GeneralDate: Date;
-  DATEVLAUE: any;
   errorWarningData: any = {};
+  ButtonText = 'Save';
 
   //buttonDisabled: boolean = true;
   successMsg: any;
   Slice: any;
   Slice2: any;
-  hide: boolean;
   JournalData: any = [];
   FormAction: string;
-  JournalGuid: string;
   DEBITSTOTAL: any = 0;
   CREDITSTOTAL: any = 0;
   CREDITDEBITDATA: any = [];
+  generalTempData: any = [];
   CREDITDATAARRY: any = [];
   DEBITDATAARRAY: any = [];
+
   Accountguid: any;
   Accountname: any;
   FinalDebitTotal: any;
@@ -68,7 +61,6 @@ export class GeneralDailogComponent implements OnInit {
     public dialogRef: MatDialogRef<GeneralDailogComponent>,
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private Timersservice: TimersService,
     public datepipe: DatePipe,
     private behaviorService: BehaviorService,
     public _mainAPiServiceService: MainAPiServiceService,
@@ -78,8 +70,10 @@ export class GeneralDailogComponent implements OnInit {
     if (this.action === 'new') {
       this.dialogTitle = 'New General Journal Entry';
     } else if (this.action === 'edit') {
+      this.ButtonText = 'Update';
       this.dialogTitle = 'Update General Journal Entry';
     } else {
+      this.ButtonText = 'Duplicate';
       this.dialogTitle = 'Duplicate General Journal Entry';
     }
     this.behaviorService.GeneralData$.subscribe(result => {
@@ -91,7 +85,6 @@ export class GeneralDailogComponent implements OnInit {
 
   ngOnInit() {
     this.btnhide = 'NewDelete';
-    this.dataSource = new MatTableDataSource([]);
     this.GeneralForm = this._formBuilder.group({
       DATEGENERAL: ['', Validators.required],
       DESCRIPTION: [''],
@@ -106,12 +99,6 @@ export class GeneralDailogComponent implements OnInit {
     if (this.action == 'edit' || this.action == 'duplicate') {
       this.EditGeneral();
     }
-    this.GeneralDate = new Date();
-    this.hide = true;
-    $("#accountnew").addClass("menu-disabled");
-    this.GeneralForm.controls['GAMOUNT'].disable();
-    this.GeneralForm.controls['ACCOUNT'].disable();
-    this.GeneralForm.controls['CRDR'].disable();
   }
 
   get f() {
@@ -120,7 +107,7 @@ export class GeneralDailogComponent implements OnInit {
 
   //choosedDate
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.DATEVLAUE = this.datepipe.transform(event.value, 'dd/MM/yyyy');
+    this.GeneralForm.controls['NEWDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
   //SelecteAccount
   SelecteAccount() {
@@ -128,7 +115,6 @@ export class GeneralDailogComponent implements OnInit {
       disableClose: true, width: '100%', data: { AccountType: '' }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result.name);
       if (result) {
         let AccountName = result.name;
         this.Slice = AccountName.slice(0, 8);
@@ -142,11 +128,6 @@ export class GeneralDailogComponent implements OnInit {
   NewItem() {
     this.btnhide = 'AddCancel';
     this.isDisable = false;
-    this.hide = false;
-    $("#accountnew").removeClass("menu-disabled");
-    this.GeneralForm.controls['GAMOUNT'].enable();
-    this.GeneralForm.controls['ACCOUNT'].enable();
-    this.GeneralForm.controls['CRDR'].enable();
   }
   //DeleteItem
   DeleteItem() {
@@ -159,7 +140,7 @@ export class GeneralDailogComponent implements OnInit {
     if (this.craditDEbitData.AMOUNT == '' || this.craditDEbitData.AMOUNT == null) {
       this.toastr.error('Please enter amount.');
       return false;
-  }else if(this.craditDEbitData.ACCOUNTGUID=='' || this.craditDEbitData.ACCOUNTGUID == null){
+    } else if (this.craditDEbitData.ACCOUNTGUID == '' || this.craditDEbitData.ACCOUNTGUID == null) {
       this.toastr.error('Please select account.');
       return false;
     }
@@ -192,36 +173,28 @@ export class GeneralDailogComponent implements OnInit {
       this.GeneralForm.controls['ACCOUNT'].setValue('');
       this.craditDEbitData.AMOUNT = '';
     }
+    this.generalTempData = new MatTableDataSource(this.CREDITDEBITDATA);
   }
   //CancelItem
   CancelItem() {
     this.btnhide = 'NewDelete';
     this.isDisable = true;
-    this.hide = true;
-    $("#accountnew").addClass("menu-disabled");
-    this.GeneralForm.controls['GAMOUNT'].disable();
-    this.GeneralForm.controls['ACCOUNT'].disable();
-    this.GeneralForm.controls['CRDR'].disable();
   }
   //SaveGeneral
   SaveGeneral() {
-    if (this.DATEVLAUE == "" || this.DATEVLAUE == null || this.DATEVLAUE == undefined) {
-      this.DATEVLAUE = this.f.NEWDATE.value;
-    }
-    if (this.action === 'new' || this.action === 'duplicate') {
-      this.FormAction = 'insert';
-      this.JournalGuid = "";
-    } else {
-      this.FormAction = 'update';
-      this.JournalGuid = this.JournalData.JOURNALGUID;
-    }
     let PostData: any = {
-      JOURNALGUID: this.JournalGuid,
-      DATE: this.DATEVLAUE,
+      DATE: this.f.NEWDATE.value,
       JOURNALTIME: "",
       DESCRIPTION: this.f.DESCRIPTION.value,
       DEBITS: this.DEBITDATAARRAY,
       CREDITS: this.CREDITDATAARRY
+    }
+    if (this.action === 'new' || this.action === 'duplicate') {
+      this.FormAction = 'insert';
+      PostData.JOURNALGUID = '';
+    } else {
+      this.FormAction = 'update';
+      PostData.JOURNALGUID = this.JournalData.JOURNALGUID;
     }
     // return;
     this.isspiner = true;
@@ -324,8 +297,8 @@ export class GeneralDailogComponent implements OnInit {
             });
             this.CREDITSTOTAL += element.AMOUNT
           }
-
         });
+        this.generalTempData = new MatTableDataSource(this.CREDITDEBITDATA);
         this.isLoadingResults = false;
       }
     }, err => {

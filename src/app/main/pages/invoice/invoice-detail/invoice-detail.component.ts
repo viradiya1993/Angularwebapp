@@ -35,6 +35,7 @@ export class InvoiceDetailComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatSort) sort1: MatSort;
   @ViewChild(MatSort) sort2: MatSort;
+  isView: any;
   constructor(
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -46,6 +47,7 @@ export class InvoiceDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.isView = this._data.type;
     this.invoiceDetailForm = this._formBuilder.group({
       CLIENTNAME: [''],
       SHORTNAME: [''],
@@ -62,10 +64,9 @@ export class InvoiceDetailComponent implements OnInit {
       AMOUNTOUTSTANDINGINCGST: [''],
       AMOUNTTOTAL: [''],
     });
-    if (this._data.type == 'edit') {
+    if (this._data.type == 'edit' || this._data.type == 'view') {
       this.isLoadingResults = true;
       this._mainAPiServiceService.getSetData({ 'INVOICEGUID': this._data.INVOICEGUID }, 'GetInvoice').subscribe(response => {
-        console.log(response);
         if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
           let invoiceData = response.DATA.INVOICES[0];
           this.invoiceDetailForm.controls['CLIENTNAME'].setValue(invoiceData.CLIENTNAME);

@@ -89,16 +89,15 @@ export class GeneralJournalComponent implements OnInit {
         temJJ.forEach((item) => {
           item.JOURNALITEMS.forEach((item2) => {
             item2.JOURNALGUID = item.JOURNALGUID;
+            item2.LINKTYPE = item.LINKTYPE;
             if (!tempJData2[item2.JOURNALGUID]) {
               item2.DATE = item.DATE;
               item2.JOURNALTIME = item.JOURNALTIME;
               item2.DESCRIPTION = item.DESCRIPTION;
-              item2.LINKTYPE = item.LINKTYPE;
             } else {
               item2.DATE = '';
               item2.JOURNALTIME = '';
               item2.DESCRIPTION = '';
-              item2.LINKTYPE = '';
             }
             item2.LINKGUID = item.LINKGUID;
             item2.EXPORTEDDATE = item.EXPORTEDDATE;
@@ -108,8 +107,6 @@ export class GeneralJournalComponent implements OnInit {
           });
         });
         this.generalJournalData = new MatTableDataSource(tempJData);
-        // this.generalJournalData.paginator = this.paginator;
-        // this.generalJournalData.sort = this.sort;
         if (tempJData[0]) {
           this.editjournal(tempJData[0]);
           this.highlightedRows = tempJData[0].JOURNALGUID;
@@ -117,15 +114,12 @@ export class GeneralJournalComponent implements OnInit {
         this.isLoadingResults = false;
       } else if (response.CODE == 406 && response.MESSAGE == "Permission denied") {
         this.generalJournalData = new MatTableDataSource([]);
-        // this.generalJournalData.paginator = this.paginator;
-        // this.generalJournalData.sort = this.sort;
         this.isLoadingResults = false;
       }
     }, err => {
       this.isLoadingResults = false;
       this.toastr.error(err);
     });
-    // this.pageSize = localStorage.getItem('lastPageSize');
   }
 
   openDialog() {
@@ -143,8 +137,6 @@ export class GeneralJournalComponent implements OnInit {
         this.ColumnsObj = result.columnameObj;
         if (!result.columObj) {
           this.generalJournalData = new MatTableDataSource([]);
-          // this.generalJournalData.paginator = this.paginator;
-          // this.generalJournalData.sort = this.sort;
         } else {
           this.LoadData();
         }
@@ -156,9 +148,9 @@ export class GeneralJournalComponent implements OnInit {
     localStorage.setItem('lastPageSize', event.pageSize);
   }
   editjournal(row) {
-    this.behaviorService.GeneralData(row);
+    this.behaviorService.setGeneralData(row);
   }
-  refreshGeneral(){
+  refreshGeneral() {
     this.LoadData();
   }
 }

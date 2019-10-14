@@ -67,7 +67,7 @@ export class ReceiptDilogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
     this.matterData = this._data.matterData;
-    this.isEdit = this._data.action == 'edit' ? true : false;
+    this.isEdit = this._data.action == 'edit' || this._data.action == 'view' ? true : false;
   }
 
 
@@ -103,13 +103,13 @@ export class ReceiptDilogComponent implements OnInit {
     this.PrepareReceiptForm.controls['INCOMEDATE'].setValue(INCOMEDATEVAL);
     this.isShowchecked = "false";
     //for invoice
-    if (this._data.action == 'editForTB' || this._data.action == 'edit') {
+    if (this._data.action == 'editForTB' || this._data.action == 'edit' || this._data.action == 'view') {
       this.receiptData = JSON.parse(localStorage.getItem('receiptData'));
       let TBdata = JSON.parse(localStorage.getItem('TBreceiptData'));
       if (this._data.action == 'editForTB')
         this.setInvoiceForReceipt(TBdata.INCOMEGUID);
       // this.GetInvoiceForReceipt({ 'Outstanding': 'Yes' });
-      else if (this._data.action == 'edit')
+      else if (this._data.action == 'edit' || this._data.action == 'view')
         this.setInvoiceForReceipt(this.receiptData.INCOMEGUID);
     } else if (this._data.action == 'add') {
       this.PrepareReceiptForm.controls['FIRMGUID'].setValue(this.matterData.FIRMGUID);
@@ -165,7 +165,6 @@ export class ReceiptDilogComponent implements OnInit {
 
     this._mainAPiServiceService.getSetData({ "RECEIPTGUID": INCOMEGUID }, 'GetReceiptAllocation').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        console.log(response);
         if (response.DATA.RECEIPTALLOCATIONS[0]) {
           this.highlightedRows = response.DATA.RECEIPTALLOCATIONS[0].INVOICEGUID;
           this.currentInvoiceData = response.DATA.RECEIPTALLOCATIONS[0];

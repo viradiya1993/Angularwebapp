@@ -126,6 +126,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     timeEntryData: any;
     DisMainAuthorityToolbar: string;
     estimateData: any;
+    journalText: any = 'View';
+    journalLinktype: any;
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
@@ -142,6 +144,18 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         //for Disabled enabled
         this.behaviorService.ConflictDataList$.subscribe(result => {
             if (result == null) { this.disconflictToolbar = 'yes'; } else { this.disconflictToolbar = 'no'; }
+        });
+        this.behaviorService.GeneralData$.subscribe(result => {
+            if (result) {
+                console.log(result.LINKTYPE);
+                this.JournalData = result;
+                this.journalLinktype = result.LINKTYPE;
+                if (this.journalLinktype == "Receipt" || this.journalLinktype == "Invoice") {
+                    this.journalText = 'View';
+                } else if (this.journalLinktype == "Income" || this.journalLinktype == "General Journal" || this.journalLinktype == "Expenditure" || this.journalLinktype == "Payable" || this.journalLinktype == "Disbursement") {
+                    this.journalText = 'Edit';
+                }
+            }
         });
 
         this.behaviorService.MainTimeEntryData$.subscribe(result => {
@@ -925,7 +939,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     ///Spend Money 
 
-    spendmoneypopup(actionType, val) {
+    spendmoneypopup(actionType: any, val: any = '') {
         let SpendMoneyPopdata = {}
         if (actionType == 'new') {
             SpendMoneyPopdata = { action: actionType }
@@ -935,10 +949,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this.dialog.open(SpendMoneyAddComponent, {
             disableClose: true,
             panelClass: 'SpendMoney-dialog',
-            data: {
-                action: actionType,
-                FromWhere: val
-            }
+            data: { action: actionType, FromWhere: val }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -1285,7 +1296,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         let GeneralPopData = {}
         if (actionType == 'new') {
             GeneralPopData = { action: actionType }
-        }else if (actionType == 'edit' || actionType == 'duplicate') {
+        } else if (actionType == 'edit' || actionType == 'duplicate') {
             GeneralPopData = { action: actionType }
         }
         const dialogRef = this.dialog.open(GeneralDailogComponent, {
@@ -1294,30 +1305,34 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             data: GeneralPopData
         });
         dialogRef.afterClosed().subscribe(result => {
-            if(result){
+            if (result) {
                 $('#refreshGeneral').click();
             }
         });
     }
     //ViewDetails
     ViewDetails() {
-        const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
-            width: '100%', disableClose: true,
-            data: { action: 'add' }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                $('#refreshReceiceMoany').click();
-            }
-        });
+        if (this.journalLinktype == "Expenditure" || this.journalLinktype == "Payable" || this.journalLinktype == "Disbursement") {
+            this.behaviorService.SpendMoneyData({ EXPENDITUREGUID: this.JournalData.LINKGUID });
+            this.spendmoneypopup('edit');
+        } else if (this.journalLinktype == "Receipt") {
+            localStorage.setItem('receiptData', JSON.stringify({ INCOMEGUID: this.JournalData.LINKGUID }));
+            this.ViewReceipt('view');
+        } else if (this.journalLinktype == "Invoice") {
+            localStorage.setItem('edit_invoice_id', this.JournalData.LINKGUID);
+            this.InvoiceDetail('view');
+        } else if (this.journalLinktype == "Income") {
+            localStorage.setItem('receiptData', JSON.stringify({ INCOMEGUID: this.JournalData.LINKGUID }));
+            this.NewGeneralReceipt('edit');
+        }
+        // else if (this.journalLinktype == "General Journal" || this.journalLinktype == "") {
+        //     this.NewGeneral('edit');
+        // }else{
+        // }
+        // }
     }
     //DeleteGeneral
     DeleteGeneral() {
-        this.behaviorService.GeneralData$.subscribe(result => {
-            if (result) {
-                this.JournalData = result; 
-            }
-        });       
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
@@ -1334,7 +1349,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 });
             }
         });
-        
+
     }
     //DuplicateGeneral
     DuplicateGeneral() {
@@ -1667,10 +1682,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    ViewReceipt() {
+    ViewReceipt(type: any) {
         const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
             width: '100%', disableClose: true,
-            data: { action: 'edit' }
+            data: { action: type }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -1693,27 +1708,20 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //Invoice Detail for invoice
     InvoiceDetail(isType) {
-        // let INVOICEGUID = '';
-        //       this.behaviorService.matterInvoice$.subscribe(matterInvoiceData => {
-        //         if (matterInvoiceData)
-        //             INVOICEGUID = matterInvoiceData.INVOICEGUID;
-        //     });
-        // const dialogRef = this._matDialog.open(WriteOffInvoiceComponent, { width: '100%', disableClose: true, data: { 'type': 'edit', INVOICEGUID: INVOICEGUID } });
-        // dialogRef.afterClosed().subscribe(result => {
-        //     if (result) {
-
-        //     }
-        // });
         let INVOICEGUID = '';
+        let editType = 'edit';
         if (isType == 'isTime') {
             this.behaviorService.matterInvoice$.subscribe(matterInvoiceData => {
                 if (matterInvoiceData)
                     INVOICEGUID = matterInvoiceData.INVOICEGUID;
             });
+        } else if (isType == 'view') {
+            editType = 'view';
+            INVOICEGUID = localStorage.getItem('edit_invoice_id');
         } else {
-            localStorage.getItem('edit_invoice_id');
+            INVOICEGUID = localStorage.getItem('edit_invoice_id');
         }
-        const dialogRef = this._matDialog.open(InvoiceDetailComponent, { width: '100%', disableClose: true, data: { 'type': 'edit', INVOICEGUID: INVOICEGUID } });
+        const dialogRef = this._matDialog.open(InvoiceDetailComponent, { width: '100%', disableClose: true, data: { 'type': editType, INVOICEGUID: INVOICEGUID } });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
 

@@ -27,10 +27,7 @@ export class GeneralReceiptDilogComponent implements OnInit {
     public MatDialog: MatDialog,
     public _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public _data: any,
-  ) {
-    console.log(_data);
-    this.action = _data.type;
-  }
+  ) { this.action = _data.type; }
   generalReceiptForm: FormGroup;
   isspiner: boolean;
   ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
@@ -40,6 +37,7 @@ export class GeneralReceiptDilogComponent implements OnInit {
   ngOnInit() {
     // this.isLoadingResults = true;
     this.generalReceiptForm = this._formBuilder.group({
+      INCOMEGUID: [''],
       INCOMECLASS: [''],
       INCOMEDATETEXT: [new Date()],
       INCOMEDATE: [],
@@ -55,10 +53,9 @@ export class GeneralReceiptDilogComponent implements OnInit {
       INCOMEACCOUNTGUIDTEXT: [''],
       NOTE: [''],
     });
-    if (this.action == "duplicate") {
+    if (this.action == "duplicate" || this.action == 'edit') {
       this.LoadData();
     } else {
-
       let INCOMEDATEVAL = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
       this.generalReceiptForm.controls['INCOMEDATE'].setValue(INCOMEDATEVAL);
     }
@@ -69,23 +66,24 @@ export class GeneralReceiptDilogComponent implements OnInit {
     this.isLoadingResults = true;
     // console.log(this.ReceiptData);
     this._mainAPiServiceService.getSetData({ INCOMEGUID: this.ReceiptData.INCOMEGUID }, 'GetIncome').subscribe(response => {
-      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.INCOMEITEMS[0]) {
-          let DatePaid = response.DATA.INCOMEITEMS[0].INCOMEDATE.split("/");
+          let incomeData = response.DATA.INCOMEITEMS[0];
+          if (this.action == 'edit') {
+            this.generalReceiptForm.controls['INCOMEGUID'].setValue(incomeData.INCOMEGUID);
+          }
+          let DatePaid = incomeData.INCOMEDATE.split("/");
           let DATE = new Date(DatePaid[1] + '/' + DatePaid[0] + '/' + DatePaid[2]);
           this.generalReceiptForm.controls['INCOMEDATE'].setValue(DATE);
-          this.generalReceiptForm.controls['INCOMECLASS'].setValue(response.DATA.INCOMEITEMS[0].INCOMECLASS);
-          this.generalReceiptForm.controls['INCOMETYPE'].setValue(response.DATA.INCOMEITEMS[0].INCOMETYPE);
-          this.generalReceiptForm.controls['PAYEE'].setValue(response.DATA.INCOMEITEMS[0].PAYEE);
-          this.generalReceiptForm.controls['AMOUNT'].setValue(response.DATA.INCOMEITEMS[0].AMOUNT);
+          this.generalReceiptForm.controls['INCOMECLASS'].setValue(incomeData.INCOMECLASS);
+          this.generalReceiptForm.controls['INCOMETYPE'].setValue(incomeData.INCOMETYPE);
+          this.generalReceiptForm.controls['PAYEE'].setValue(incomeData.PAYEE);
+          this.generalReceiptForm.controls['AMOUNT'].setValue(incomeData.AMOUNT);
           // this.generalReceiptForm.controls['BANKACCOUNTGUIDTEXT'].setValue(response.DATA.INCOMEITEMS[0].BANKACCOUNTGUIDTEXT);
           // this.generalReceiptForm.controls['INCOMEACCOUNTGUIDTEXT'].setValue(response.DATA.INCOMEITEMS[0].INCOMEACCOUNTGUIDTEXT);
-          this.generalReceiptForm.controls['INCOMEACCOUNTGUID'].setValue(response.DATA.INCOMEITEMS[0].INCOMEACCOUNTGUID);
-          this.generalReceiptForm.controls['BANKACCOUNTGUID'].setValue(response.DATA.INCOMEITEMS[0].BANKACCOUNTGUID);
-
-
-          this.generalReceiptForm.controls['NOTE'].setValue(response.DATA.INCOMEITEMS[0].NOTE);
+          this.generalReceiptForm.controls['INCOMEACCOUNTGUID'].setValue(incomeData.INCOMEACCOUNTGUID);
+          this.generalReceiptForm.controls['BANKACCOUNTGUID'].setValue(incomeData.BANKACCOUNTGUID);
+          this.generalReceiptForm.controls['NOTE'].setValue(incomeData.NOTE);
         }
       } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
@@ -112,8 +110,6 @@ export class GeneralReceiptDilogComponent implements OnInit {
       } else {
         this.isLoadingResults = false;
       }
-
-
     }, err => {
       this.isLoadingResults = false;
       this.toastr.error(err);
@@ -130,7 +126,7 @@ export class GeneralReceiptDilogComponent implements OnInit {
   }
   SaveGeneralReceipt() {
     this.isspiner = true;
-    let data = {
+    let data: any = {
       INCOMECLASS: this.f.INCOMECLASS.value,
       INCOMETYPE: this.f.INCOMETYPE.value,
       // FIRMGUID: this.f.FIRMGUID.value,
@@ -142,7 +138,12 @@ export class GeneralReceiptDilogComponent implements OnInit {
       INCOMEACCOUNTGUID: this.f.INCOMEACCOUNTGUID.value,
       NOTE: this.f.NOTE.value,
     }
-    let matterPostData: any = { FormAction: 'insert', VALIDATEONLY: true, Data: data };
+    let FormActionData = 'insert';
+    if (this.action == 'edit') {
+      data.INCOMEGUID = this.f.INCOMEGUID.value;
+      FormActionData = 'update';
+    }
+    let matterPostData: any = { FormAction: FormActionData, VALIDATEONLY: true, Data: data };
     this._mainAPiServiceService.getSetData(matterPostData, 'SetIncome').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, matterPostData);
@@ -200,7 +201,12 @@ export class GeneralReceiptDilogComponent implements OnInit {
     this._mainAPiServiceService.getSetData(data, 'SetIncome').subscribe(response => {
 
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        this.toastr.success('Receipt save successfully');
+        if (this.action == 'edit') {
+          this.toastr.success('Receipt update successfully');
+        } else {
+          this.toastr.success('Receipt save successfully');
+        }
+
         this.isspiner = false;
         this.dialogRef.close(true);
       } else if (response.CODE == 450 && response.STATUS == 'error') {

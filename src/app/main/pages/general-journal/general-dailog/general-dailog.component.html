@@ -63,8 +63,7 @@
                                     <th>DEBIT</th>
                                     <th>CREDIT</th>
                                 </tr>
-                                <tr *ngFor="let item of CREDITDEBITDATA; let index = index" (click)="ClickData(item ,index);highlightedRows=index" [style.background]="highlightedRows == index ? selectedColore : ''" [ngClass]="highlightedRows == index ? 'row-text-colore' : ''" matRipple
-                                    [@animate]="{value:'*',params:{y:'100%'}}">
+                                <tr *ngFor="let item of CREDITDEBITDATA; let index = index" [style.background]="highlightedRows == index ? selectedColore : ''" [ngClass]="highlightedRows == index ? 'row-text-colore' : ''" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                     <td>{{item.ACCOUNTNUMBER}}</td>
                                     <td>{{item.ACCOUNTNAME}}</td>
                                     <td>{{item.DEBITAMOUNT}}</td>
@@ -86,12 +85,12 @@
         </mat-dialog-actions>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
-        <button mat-raised-button color="accent" (click)="SaveGeneral()" [disabled]="isspiner"  *ngIf="action === 'new'"><mat-spinner style=" zoom: 0.2;position: absolute;right: 0;left: 0;
+        <button mat-raised-button color="accent" (click)="SaveGeneral()" [disabled]="isspiner" *ngIf="action === 'new'"><mat-spinner style=" zoom: 0.2;position: absolute;right: 0;left: 0;
             margin: auto;top: 0;bottom: 0;" *ngIf="isspiner"></mat-spinner>Add</button>
         <button mat-raised-button color="accent" (click)="SaveGeneral()" [disabled]="isspiner" *ngIf="action === 'edit'"><mat-spinner style=" zoom: 0.2;position: absolute;right: 0;left: 0;
             margin: auto;top: 0;bottom: 0;" *ngIf="isspiner"></mat-spinner>Update</button>
         <button mat-raised-button color="accent" (click)="SaveGeneral()" [disabled]="isspiner" *ngIf="action !== 'new' && action !== 'edit'"><mat-spinner style=" zoom: 0.2;position: absolute;right: 0;left: 0;
-            margin: auto;top: 0;bottom: 0;" *ngIf="isspiner"></mat-spinner>Duplicate</button>        
+            margin: auto;top: 0;bottom: 0;" *ngIf="isspiner"></mat-spinner>Duplicate</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
     </mat-dialog-actions>
 </div>

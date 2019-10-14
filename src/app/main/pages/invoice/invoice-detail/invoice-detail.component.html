@@ -211,7 +211,7 @@
     </div>
 
     <mat-dialog-actions align="end" class="popup_ftr">
-        <button mat-raised-button color="accent" (click)="updateInvoice()" [disabled]="isspiner"><mat-spinner style=" zoom: 0.2;position: absolute;right: 0;left: 0;
+        <button *ngIf="isView!='view'" mat-raised-button color="accent" (click)="updateInvoice()" [disabled]="isspiner"><mat-spinner style=" zoom: 0.2;position: absolute;right: 0;left: 0;
             margin: auto;top: 0;bottom: 0;" *ngIf="isspiner"></mat-spinner>Update</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don`t Save</button>
     </mat-dialog-actions>

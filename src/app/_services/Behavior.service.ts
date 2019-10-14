@@ -153,10 +153,7 @@ export class BehaviorService {
   ActivityData(ActivityData: any) {
     this.ActivityData$.next(ActivityData);
   }
-  GeneralData(GeneralData: any) {
+  setGeneralData(GeneralData: any) {
     this.GeneralData$.next(GeneralData);
   }
-
-
-
 }

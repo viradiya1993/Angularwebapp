@@ -11,9 +11,9 @@
         <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
             <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="GeneralForm" id="GeneralForm" [formGroup]="GeneralForm">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.DATEGENERAL,'has-warning':errorWarningData.Warning?.DATEGENERAL}">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.DATE,'has-warning':errorWarningData.Warning?.DATE}">
                         <mat-label>Date</mat-label>
-                        <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" [(ngModel)]="GeneralDate" formControlName="DATEGENERAL">
+                        <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" formControlName="DATEGENERAL">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>

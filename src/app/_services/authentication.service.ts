@@ -22,9 +22,9 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
-    login(uesrname: string, password: string) {
+    login(uesrname: string, password: string, ipAddress: any) {
         let detail = {
-            user: uesrname, password: password, formatting: 'JSON', EmailAddress: "", SessionToken: ""
+            user: uesrname, password: password, formatting: 'JSON', EmailAddress: "", SessionToken: "", IPADDRESS: ipAddress, BROWSER: '', USERAGENT: '', OPERATINGSYSTEM: ''
         };
         return this.http.post<any>(environment.APIEndpoint + 'login', detail).pipe(map(loginResponse => {
             if (loginResponse && loginResponse.CODE == 200 && loginResponse.STATUS == "success") {

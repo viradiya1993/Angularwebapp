@@ -1,13 +1,12 @@
-import { Component, OnInit, Inject, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MatDialog, MatDatepickerInputEvent } from '@angular/material';
-import { FormGroup, FormBuilder, Validators, FormControl, FormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { MAT_DIALOG_DATA, MatPaginator } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { BankingDialogComponent } from '../../banking/banking-dialog.component';
 import { BehaviorService, MainAPiServiceService } from 'app/_services';
-import * as $ from 'jquery';
 import { DatePipe } from '@angular/common';
 import { fuseAnimations } from '@fuse/animations';
 
@@ -86,7 +85,7 @@ export class GeneralDailogComponent implements OnInit {
   ngOnInit() {
     this.btnhide = 'NewDelete';
     this.GeneralForm = this._formBuilder.group({
-      DATEGENERAL: ['', Validators.required],
+      DATEGENERAL: [new Date()],
       DESCRIPTION: [''],
       TOTALDEBIT: [''],
       TOTALCREDITS: [''],
@@ -281,6 +280,11 @@ export class GeneralDailogComponent implements OnInit {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({ JOURNALGUID: this.JournalData.JOURNALGUID }, 'GetJournal').subscribe(result => {
       if (result.CODE == 200 && result.STATUS == "success") {
+        if (result.DATA.JOURNALS[0].DATE) {
+          let DATE1 = result.DATA.JOURNALS[0].DATE.split("/");
+          this.GeneralForm.controls['DATEGENERAL'].setValue(new Date(DATE1[1] + '/' + DATE1[0] + '/' + DATE1[2]));
+          this.GeneralForm.controls['NEWDATE'].setValue(result.DATA.JOURNALS[0].DATE);
+        }
         this.GeneralForm.controls['DESCRIPTION'].setValue(result.DATA.JOURNALS[0].DESCRIPTION);
         this.CREDITDEBITDATA = result.DATA.JOURNALS[0].JOURNALITEMS;
         this.CREDITDEBITDATA.forEach(element => {

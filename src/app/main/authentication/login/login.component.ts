@@ -23,18 +23,20 @@ export class LoginComponent implements OnInit {
   hide: boolean = true;
   currentYear: any;
   VERSION: any = environment.VERSION;
-
+  ipAddress: any;
 
   constructor(
     private _fuseConfigService: FuseConfigService,
     private _formBuilder: FormBuilder,
+    private http: HttpClient,
     private authenticationService: AuthenticationService,
     private _AppPermissionsService: AppPermissionsService,
-    private route: ActivatedRoute,
     private router: Router,
-    private http: HttpClient,
     private toastr: ToastrService
   ) {
+    this.http.get<{ ip: string }>('https://jsonip.com').subscribe(data => {
+      this.ipAddress = data.ip;
+    });
     this.currentYear = new Date().getFullYear();
     // Configure the layout
     this._fuseConfigService.config = {
@@ -55,7 +57,7 @@ export class LoginComponent implements OnInit {
   }
   loginUser() {
     this.isspiner = true;
-    this.authenticationService.login(this.f.email.value, this.f.password.value).pipe(first()).subscribe(data => {
+    this.authenticationService.login(this.f.email.value, this.f.password.value, this.ipAddress).pipe(first()).subscribe(data => {
       if (data) {
         this.isspiner = false;
         this._AppPermissionsService.applictionSetting(JSON.parse(localStorage.getItem('Login_response')));

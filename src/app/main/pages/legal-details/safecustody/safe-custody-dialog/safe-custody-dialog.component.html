@@ -8,83 +8,85 @@
         </button>
     </h2>
     <div mat-dialog-content class="mat-typography main">
-        <div class="one" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
-            <form fxLayout="column" fxFlex="1 0 auto" name="form">
+        <div class="one" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">            
+            <form fxLayout="column" fxFlex="1 0 auto" name="SafeCustody" id="SafeCustody" [formGroup]="SafeCustody">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.Matternum,'has-warning':errorWarningData.Warning?.Matternum}">
                         <mat-label>Matter Num.</mat-label>
-                        <input name="TemplateName" matInput>
+                        <input  matInput formControlName="Matternum">
                     </mat-form-field>
 
-                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.Owener,'has-warning':errorWarningData.Warning?.Owener}">
                         <mat-label>Owner</mat-label>
-                        <input name="TemplateName" matInput>
+                        <input  matInput formControlName="Owener">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.Packet,'has-warning':errorWarningData.Warning?.Packet}">
                         <mat-label>Packet</mat-label>
-                        <mat-select name="Seperator" placeholder="Seperator">
+                        <mat-select placeholder="Seperator" formControlName="Packet">
                             <mat-option value="Standard">Standard</mat-option>
                             <mat-option value="Period">Period</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DocumentType,'has-warning':errorWarningData.Warning?.DocumentType}">
                         <mat-label>Document Type</mat-label>
-                        <mat-select name="Seperator" placeholder="Seperator">
+                        <mat-select placeholder="Seperator" formControlName="DocumentType">
                             <mat-option value="Standard">Standard</mat-option>
                             <mat-option value="Period">Period</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.Dscription,'has-warning':errorWarningData.Warning?.Dscription}">
                         <mat-label>Dscription</mat-label>
-                        <input name="TemplateName" matInput>
+                        <input  matInput formControlName="Dscription">
                     </mat-form-field>
 
-                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DocumentWeb,'has-warning':errorWarningData.Warning?.DocumentWeb}">
                         <mat-label>Document\Web Site</mat-label>
-                        <input name="TemplateName" matInput>
+                        <input  matInput formControlName="DocumentWeb">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
-                        <input matInput [matDatepicker]="picker1" placeholder="Review Date">
-                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                        <mat-datepicker #picker1></mat-datepicker>
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.DateSafecustody,'has-warning':errorWarningData.Warning?.DateSafecustody}">
+                        <mat-label>Review Date</mat-label>
+                        <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" formControlName="DateSafecustody">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.Text,'has-warning':errorWarningData.Warning?.Text}">
                         <mat-label>Text</mat-label>
-                        <textarea cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" matInput></textarea>
+                        <textarea cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" matInput formControlName="Text"></textarea>
                     </mat-form-field>
                 </div>
 
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-tab-group mat-align-tabs="start">
-                        <mat-tab label="Person">
+                        <mat-tab label="Check In">
                             <div class="Pad_tab" fxLayout="column">
                                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
-                                        <input matInput [matDatepicker]="picker2" placeholder="Date">
-                                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                                        <mat-datepicker #picker2></mat-datepicker>
+                                    <mat-form-field appearance="outline" fxFlex="50" class="example" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.Dateperson,'has-warning':errorWarningData.Warning?.Dateperson}">
+                                            <mat-label>Date</mat-label>
+                                            <input matInput [matDatepicker]="picker1" placeholder="Choose a date" (dateInput)="PersonDate('input', $event)" (dateChange)="PersonDate('change', $event)" formControlName="Dateperson">
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
                                     </mat-form-field>
-                                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
+                                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ContactName,'has-warning':errorWarningData.Warning?.ContactName}">
                                         <mat-label>Contact Name</mat-label>
-                                        <input value="Diana Parkinson (no password)" matInput>
+                                        <input value="Diana Parkinson (no password)" matInput formControlName="ContactName">
                                     </mat-form-field>
                                 </div>
                             </div>
                         </mat-tab>
                     </mat-tab-group>
                 </div>
-
             </form>
         </div>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
-        <button mat-raised-button color="accent" (click)="SaveSafeCustody()" [mat-dialog-close]="false" cdkFocusInitial>Save</button>
+        <button mat-raised-button color="accent" (click)="SaveSafeCustody()" [disabled]="isspiner" [mat-dialog-close]="false" cdkFocusInitial><mat-spinner style=" zoom: 0.2;position: absolute;right: 0;left: 0;
+            margin: auto;top: 0;bottom: 0;" *ngIf="isspiner"></mat-spinner>Save</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
     </mat-dialog-actions>
 </div>

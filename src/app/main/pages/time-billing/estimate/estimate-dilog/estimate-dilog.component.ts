@@ -302,6 +302,4 @@ export class EstimateDilogComponent implements OnInit {
         this.toastr.error(error);
       });
   }
-  
-
 }

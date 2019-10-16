@@ -4,8 +4,6 @@
                 <div class="matter-serach-div sticky_search_div responsive_auto">
                     <form>
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                              
-                          
                         </div>  
                         <button mat-raised-button type="button" color="primary" id="refresMainTopic" (click)="refresMainTopic();">Refresh</button>
                     </form>
@@ -28,7 +26,6 @@
                                             <table class="mat-table simple" [@animateStagger]="{value:'50'}">
                                                 <thead class="mat-header-row" fxLayoutAlign="center center">
                                                     <th class="mat-header-cell" fxFlex>Topic</th>
-                                                   
                                                 </thead>
                                             </table>
                                             <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">

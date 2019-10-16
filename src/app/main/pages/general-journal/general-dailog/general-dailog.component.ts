@@ -318,6 +318,7 @@ export class GeneralDailogComponent implements OnInit {
         this.GeneralForm.controls['DESCRIPTION'].setValue(result.DATA.JOURNALS[0].DESCRIPTION);
         this.CREDITDEBITDATA = result.DATA.JOURNALS[0].JOURNALITEMS;
         this.CREDITDEBITDATA.forEach(element => {
+          console.log(this.craditDEbitData.DRCR);
           if(element.DEBITCREDIT == 'CR'){
               this.CREDITDATAARRY.push({
                 ACCOUNTGUID:element.ACCOUNTGUID,

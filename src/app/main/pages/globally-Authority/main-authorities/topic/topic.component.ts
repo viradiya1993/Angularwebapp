@@ -34,7 +34,6 @@ export class TopicComponent implements OnInit {
     Accountlist: FormGroup;
     isLoadingResults: boolean = false;
     highlightedRows: any;
-   
     arrayForIndex: any = [];
     theme_type = localStorage.getItem('theme_type');
     selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
@@ -44,9 +43,8 @@ export class TopicComponent implements OnInit {
         expandable: !!node.SUBTOPICS && node.SUBTOPICS.length > 0 ,
         name: node.TOPICNAME,
         SUBTOPICS: node.SUBTOPICS,
-
         // Context: node.CONTEXT,
-         Main: node.MainList,
+        Main: node.MainList,
         // child: node.TEMPLATEFILE,
         // iconType: node.TEMPLATETYPEDESC,
         // KitGUid: node.KITGUID,
@@ -56,11 +54,9 @@ export class TopicComponent implements OnInit {
     }
   
     treeControl = new FlatTreeControl<ExampleFlatNode>(
-      node => node.level, node => node.expandable);
-  
+    node => node.level, node => node.expandable);
     treeFlattener = new MatTreeFlattener(
-      this._transformer, node => node.level, node => node.expandable, node => node.SUBTOPICS);
-  
+    this._transformer, node => node.level, node => node.expandable, node => node.SUBTOPICS);
     dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
     pageSize: string;
 
@@ -70,7 +66,6 @@ export class TopicComponent implements OnInit {
         private toastr: ToastrService,
         private behaviorService: BehaviorService,
         private _mainAPiServiceService: MainAPiServiceService,
-    
       ) {
         // this.arrayForIndex = [];
         // // this.showData(TREE_DATA, 0, null);
@@ -78,46 +73,44 @@ export class TopicComponent implements OnInit {
         // this.highlightedRows = 1;
       }
 
-      showData(element, level, parent) {
-        element.forEach(x => {
-          // this.MainKitArray=x;
-          this.arrayForIndex.push({});
-          x.level = level
-          x.parent = parent
-          x.MainList = x;
-          x.index = this.arrayForIndex.length;
-          if (x.SUBTOPICS)
-          this.showData(x.SUBTOPICS,x.level + 1, x.TOPICNAME);
-            // this.showData(x.SUBTOPICS, x.level + 1, x.TOPICNAME);
-        });
-      }
-      ngOnInit() {
-        $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 50)) + 'px');
-        this.Accountlist = this._formBuilder.group({
-          AccountType: [''],
-          searchFilter: [''],
-          Matter: [''],
-          Client: ['']
-        });
-        let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
-        this.Accountlist.controls['Matter'].setValue(mattersData.MATTER);
-        this.Accountlist.controls['Client'].setValue(mattersData.CONTACTNAME);
-    
-        this.LoadData();
-    
-      }
+  showData(element, level, parent) {
+    element.forEach(x => {
+      // this.MainKitArray=x;
+      this.arrayForIndex.push({});
+      x.level = level
+      x.parent = parent
+      x.MainList = x;
+      x.index = this.arrayForIndex.length;
+      if (x.SUBTOPICS)
+      this.showData(x.SUBTOPICS,x.level + 1, x.TOPICNAME);
+        // this.showData(x.SUBTOPICS, x.level + 1, x.TOPICNAME);
+    });
+  }
+  ngOnInit() {
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 50)) + 'px');
+    this.Accountlist = this._formBuilder.group({
+      AccountType: [''],
+      searchFilter: [''],
+      Matter: [''],
+      Client: ['']
+    });
+    let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
+    this.Accountlist.controls['Matter'].setValue(mattersData.MATTER);
+    this.Accountlist.controls['Client'].setValue(mattersData.CONTACTNAME);
+    this.LoadData();
+
+  }
 
   LoadData() {
     this.isLoadingResults = true;
      this._mainAPiServiceService.getSetData({}, 'GetTopic').subscribe(res => {
-
        if ((res.CODE == 200 || res.CODE == '200') && res.STATUS == "success") {
-         this.arrayForIndex = [];
+          this.arrayForIndex = [];
           this.storeDataarray = res.DATA.TOPICS;
           this.showData(this.storeDataarray, 0, null);
           this.dataSource.data = this.storeDataarray;
           this.editContact(this.storeDataarray[0]);
-         this.highlightedRows = 1;
+          this.highlightedRows = 1;
        }
        this.isLoadingResults = false;
      }, err => {
@@ -128,7 +121,6 @@ export class TopicComponent implements OnInit {
    }
    hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
    editContact(val) {
-
      this.behaviorService.MainTopicData(val);
    }
    refresMainTopic(){

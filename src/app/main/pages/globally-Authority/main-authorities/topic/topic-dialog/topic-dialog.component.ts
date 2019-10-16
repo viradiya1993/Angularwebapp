@@ -22,32 +22,31 @@ export class TopicDialogComponent implements OnInit {
   public TopicDialoge={
     TOPICNAME:'',Parent:'',TOPICGUID:'',PARENTGUID:'',selective:''
   }
-    ShowParent: string;
-    action: string;
-    FormAction: string;
-    TopicGuid: string;
-    title: string;
-    TopicClassVal: any;
-    parentGuid: string;
-    MainTopicData: any;
+  ShowParent: string;
+  action: string;
+  FormAction: string;
+  TopicGuid: string;
+  title: string;
+  TopicClassVal: any;
+  parentGuid: string;
+  MainTopicData: any;
   constructor(private _mainAPiServiceService:MainAPiServiceService,public _matDialog: MatDialog,public behaviorService: BehaviorService,
     private toastr: ToastrService, public dialogRef: MatDialogRef<TopicDialogComponent>,@Inject(MAT_DIALOG_DATA) public data: any,) 
     {
-        this.action=data.action;
-        if(data.action == 'edit'){
-        this.title='Update';
-        }else if(data.action == 'duplicate'){
-          this.title='Duplicate';
-        }
-        else if(data.action=='new'){
-          this.title='Add';
-        }
-        this.behaviorService.MainTopicData$.subscribe(result => {
-            if(result){
-            
-            this.MainTopicData=result;
-            }
-          });
+      this.action=data.action;
+      if(data.action == 'edit'){
+      this.title='Update';
+      }else if(data.action == 'duplicate'){
+        this.title='Duplicate';
+      }
+      else if(data.action=='new'){
+        this.title='Add';
+      }
+      this.behaviorService.MainTopicData$.subscribe(result => {
+          if(result){
+          this.MainTopicData=result;
+          }
+      });
      }
   ngOnInit() {
     this.isLoadingResults=true;
@@ -60,7 +59,6 @@ export class TopicDialogComponent implements OnInit {
               element.SUBTOPICS.forEach(element2 => {
                 this.MainTopicClass.push(element2);
               });
-              
             }
         }); 
       }
@@ -79,16 +77,14 @@ export class TopicDialogComponent implements OnInit {
                             this.TopicDialoge.PARENTGUID=responses.DATA.TOPICS[0].TOPICGUID;
                             this.TopicDialoge.selective='2';
                             this.TopicClassChange('2');
-
                         }
-                        });
+                    });
                 }else{
                     this.TopicDialoge.selective='1';
                     this.TopicClassChange('1');
                     this.TopicDialoge.TOPICNAME=responses.DATA.TOPICS[0].TOPICNAME;
                     this.TopicDialoge.TOPICGUID=responses.DATA.TOPICS[0].TOPICGUID;
                 }
-                 
               this.isLoadingResults=false;
             }
             else if (responses.MESSAGE == 'Not logged in') {
@@ -105,16 +101,15 @@ export class TopicDialogComponent implements OnInit {
 
   }
   TopicClassChange(val){
-      this.TopicClassVal=val;
-if(val=='2'){
-    this.ShowParent='yes';
-}else{
-    this.ShowParent='no'; 
-}
+    this.TopicClassVal=val;
+    if(val=='2'){
+        this.ShowParent='yes';
+    }else{
+        this.ShowParent='no'; 
+    }
   }
   TopicNameChange(val){
     let value = this.MainTopicClass.find(c => c['TOPICNAME'] == val);
-  
     this.TopicDialoge.PARENTGUID=value.TOPICGUID;
   }
   saveTopic(){
@@ -135,7 +130,6 @@ if(val=='2'){
         TOPICGUID:this.TopicGuid,
         PARENTGUID:this.parentGuid,
         TOPICNAME:this.TopicDialoge.TOPICNAME
-
     }
     let finalData = { DATA:data, FormAction: this.FormAction, VALIDATEONLY: true }
     this._mainAPiServiceService.getSetData(finalData, 'SetTopic').subscribe(response => {
@@ -191,16 +185,16 @@ if(val=='2'){
     }
     if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
       this.AuthoritySaveData(details);
-    this.isspiner = false;
+      this.isspiner = false;
   }
   AuthoritySaveData(data: any) {
     data.VALIDATEONLY = false;
     this._mainAPiServiceService.getSetData(data, 'SetTopic').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         if (this.action !== 'edit') {
-          this.toastr.success(' save successfully');
+          this.toastr.success('save successfully');
         } else {
-          this.toastr.success(' update successfully');
+          this.toastr.success('update successfully');
         }
         this.isspiner = false;
         this.dialogRef.close(true);

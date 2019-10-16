@@ -1,13 +1,14 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
-import { MainAPiServiceService, TableColumnsService } from 'app/_services';
+import { MainAPiServiceService, TableColumnsService,BehaviorService } from 'app/_services';
 import { MatterPopupComponent } from '../matters/matter-popup/matter-popup.component';
-import { MatDialog, MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { MatDialog, MatTableDataSource, MatSort, MatPaginator, MatDialogConfig } from '@angular/material';
 import { MatterDialogComponent } from '../time-entries/matter-dialog/matter-dialog.component';
 import { ContactSelectDialogComponent } from '../contact/contact-select-dialog/contact-select-dialog.component';
 import * as $ from 'jquery';
 import { ToastrService } from 'ngx-toastr';
+import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 
 @Component({
   selector: 'app-main-safe-custody',
@@ -16,6 +17,8 @@ import { ToastrService } from 'ngx-toastr';
   animations: fuseAnimations
 })
 export class MainSafeCustodyComponent implements OnInit {
+  theme_type = localStorage.getItem('theme_type');
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   ColumnsObj = [];
   pageSize: any;
   isLoadingResults: boolean = false;
@@ -27,7 +30,7 @@ export class MainSafeCustodyComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   constructor(private _mainAPiServiceService: MainAPiServiceService, private dialog: MatDialog,
-    private TableColumnsService: TableColumnsService, private toastr: ToastrService, ) { }
+    private TableColumnsService: TableColumnsService, private toastr: ToastrService,public behaviorService: BehaviorService ) { }
 
   ngOnInit() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 70)) + 'px');
@@ -40,8 +43,9 @@ export class MainSafeCustodyComponent implements OnInit {
 
   }
   getTableFilter() {
-    this.TableColumnsService.getTableFilter('safe custody', '').subscribe(response => {
+    this.TableColumnsService.getTableFilter('Safe Custody', 'Safe Custody').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
+        //console.log(response);
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
         this.displayedColumns = data.showcol;
         this.ColumnsObj = data.colobj;
@@ -57,20 +61,22 @@ export class MainSafeCustodyComponent implements OnInit {
   }
   LoadData() {
     this.isLoadingResults = true;
-    this._mainAPiServiceService.getSetData({}, 'GetSafeCustody').subscribe(res => {
-      return
+    this._mainAPiServiceService.getSetData({}, 'GetSafeCustody').subscribe(res => {   
+      //console.log(res);  
       if (res.CODE == 200 && res.STATUS == "success") {
         // this.behaviorService.DocumentRegisterData(res.DATA.DOCUMENTS[0]);
-        this.MainSafeCustodyData = new MatTableDataSource(res.DATA.DOCUMENTS);
+        this.MainSafeCustodyData = new MatTableDataSource(res.DATA.SAFECUSTODIES);
         this.MainSafeCustodyData.sort = this.sort;
         this.MainSafeCustodyData.paginator = this.paginator;
-        this.highlightedRows = res.DATA.DOCUMENTS[0].DOCUMENTGUID;
+        if (res.DATA.SAFECUSTODIES[0]) {
+          this.editsafecustody(res.DATA.SAFECUSTODIES[0]);
+          this.highlightedRows = res.DATA.SAFECUSTODIES[0].SAFECUSTODYGUID;
+        }
         this.isLoadingResults = false;
       }
     }, err => {
       this.isLoadingResults = false;
       this.toastr.error(err);
-
     });
   }
 
@@ -97,5 +103,31 @@ export class MainSafeCustodyComponent implements OnInit {
       }
     });
   }
-
+  editsafecustody(row){
+    this.behaviorService.SafeCustody(row);
+  }
+  openDialog(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '100%';
+    dialogConfig.disableClose = true;
+    dialogConfig.data = { 'data': this.ColumnsObj, 'type': 'contacts', 'list': '' };
+    //open pop-up
+    const dialogRef = this.dialog.open(SortingDialogComponent, dialogConfig);
+    //Save button click
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.displayedColumns = result.columObj;
+        this.tempColobj = result.tempColobj;
+        this.ColumnsObj = result.columnameObj;
+        if (!result.columObj) {
+          this.MainSafeCustodyData = new MatTableDataSource([]);
+        } else {
+          this.LoadData();
+        }
+      }
+    });  
+  }
+  refreshmainsafecusday(){
+    this.LoadData();
+  }
 }

@@ -37,7 +37,6 @@ export class AccountComponent implements OnInit {
     // this.TaskAllData=[];
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(data, 'GetSystem').subscribe(res => {
-      console.log(res);
       res.DATA.LISTS.SYSTEMACCOUNTS.forEach(element => {
         this.FinalList.push(element)
       });

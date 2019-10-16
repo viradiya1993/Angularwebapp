@@ -43,7 +43,7 @@
         </div>
     </div>
     <mat-dialog-actions align="left" class="popup_ftr contact_select_footer">
-        <button [disabled]="isDisabledselect !='Bank Account'" mat-raised-button color="accent" (click)="SelectClick(ACCOUNTGUIDsELECTED)" [mat-dialog-close]="ACCOUNTGUIDsELECTED">Select</button>
+        <button [disabled]="isDisabledselect =='Header'" mat-raised-button color="accent" (click)="SelectClick(ACCOUNTGUIDsELECTED)" [mat-dialog-close]="ACCOUNTGUIDsELECTED">Select</button>
         <!-- <button mat-raised-button color="accent" [mat-dialog-close]="ACCOUNTGUIDsELECTED" (click)="SelectDialogOpen()">Select</button> -->
         <button mat-raised-button color="accent" (click)="AccountDialogOpen('new')">New Account</button>
         <button mat-raised-button color="accent" (click)="AccountDialogOpen('edit')">Edit Account</button>

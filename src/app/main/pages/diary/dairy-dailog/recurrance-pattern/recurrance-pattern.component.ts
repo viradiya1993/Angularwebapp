@@ -75,4 +75,7 @@ export class RecurrancePatternComponent implements OnInit {
     let begin = this.datepipe.transform(event.value, 'dd/MM/yyyy');
     this.DairyForm.controls['SendEndDate'].setValue(begin);
   }
+  weekmonth(val) {
+    this.DairyForm.controls['Senddayweek'].setValue(Number(val.source.value));
+  }
 }

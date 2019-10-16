@@ -57,7 +57,6 @@ export class ClientComponent implements OnInit {
     });
     const dialogRef = this.MatDialog.open(CorrespondDailogComponent, { width: '100%', disableClose: true, data: { type: 'new', classTyep: classTyepData } });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       if (result == true) {
         this.loadData();
       } else if (result) {

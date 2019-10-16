@@ -243,7 +243,6 @@ export class InvoiceDialogComponentForTemplate implements OnInit {
     const dialogRef = this._matDialog.open(InvoiceAddDailogComponent, { width: '100%', disableClose: true, data: null });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
       }
     });
   }

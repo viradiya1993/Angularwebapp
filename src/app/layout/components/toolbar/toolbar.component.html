@@ -1924,8 +1924,8 @@
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab details_tab">
-                                    <section [ngClass]="appPermissions[17]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'disabled-click-cursor ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[17]?.Create==0 ? 'disabled-click large-button' : 'disabled-click large-button'" (click)="DiaryAppointment('new')">
+                                    <section [ngClass]="appPermissions[17]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[17]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="DiaryAppointment('new')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img class=" " src="assets/icons/web_app/icon_diary_new_d.ico"
@@ -2459,6 +2459,19 @@
                                                 </mat-icon>
                                                 <div class="main-text">
                                                     <span>Generate <br> Template</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section class="ribbon-section">
+                                        <button mat-button class="large-button" (click)="GenerateReceipt()" (click)="setTab($event)">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_print_d.ico" alt=""
+                                                        matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Generate <br>Receipt</span>
                                                 </div>
                                             </section>
                                         </button>

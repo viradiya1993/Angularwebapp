@@ -27,7 +27,9 @@ export class GeneralReceiptDilogComponent implements OnInit {
     public MatDialog: MatDialog,
     public _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public _data: any,
-  ) { this.action = _data.type; }
+  ) {
+    this.action = _data.type;
+  }
   generalReceiptForm: FormGroup;
   isspiner: boolean;
   ReceiptData = JSON.parse(localStorage.getItem('receiptData'));

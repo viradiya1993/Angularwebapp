@@ -240,7 +240,6 @@ export class InvoiceDialogComponentForTemplate implements OnInit {
   // }
   //  // New matter Pop-up
   AddNewInvoicepopup() {
-    console.log("addInvoice");
     const dialogRef = this._matDialog.open(InvoiceAddDailogComponent, { width: '100%', disableClose: true, data: null });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

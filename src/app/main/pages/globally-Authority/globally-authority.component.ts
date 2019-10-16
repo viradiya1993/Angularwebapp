@@ -11,17 +11,16 @@ import { MainAPiServiceService } from 'app/_services';
   animations: fuseAnimations
 })
 export class GloballyAuthorityComponent implements OnInit {
-  
-  constructor(private _mainAPiServiceService:MainAPiServiceService) { }
+
+  constructor(private _mainAPiServiceService: MainAPiServiceService) { }
 
   ngOnInit() {
     // this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response=>{
-    //  // console.log(response);
     //   this.addData=response.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP
     // })
-    
+
   }
-  
- 
+
+
 
 }

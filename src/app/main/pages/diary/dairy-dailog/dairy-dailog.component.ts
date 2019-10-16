@@ -135,7 +135,6 @@ export class DairyDailogComponent implements OnInit {
       //   TIMEMODIFIED:""
       // }
     }
-    console.log(data);
     let finalData = { DATA: data, FormAction: this.FormAction, VALIDATEONLY: true }
     this._mainAPiServiceService.getSetData(finalData, 'SetAppointment').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
@@ -233,12 +232,10 @@ export class DairyDailogComponent implements OnInit {
     }
   }
   StartTime() {
-    this.App_StartTime = this.f.APPOINTMENTTIME.value;
-    // console.log(this.App_StartTime);  
+    this.App_StartTime = this.f.APPOINTMENTTIME.value; 
   }
   EndTime() {
     this.App_EndTime = this.f.TimeSlot2.value;
-    //console.log(this.App_EndTime);
   }
   getTimeStops(start, end) {
     var startTime = moment(start, 'HH:mm');

@@ -43,7 +43,6 @@ export class AuthorityDialogComponent implements OnInit {
     }
     this.behaviorService.MainAuthorityData$.subscribe(result => {
       if (result) {
-        console.log(result);
         this.AuthoDialogeData = result;
       }
     });

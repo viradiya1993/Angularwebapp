@@ -22,7 +22,6 @@ export class LeasingComponent implements OnInit {
   Matteraddress() {
     const dialogRef = this.MatDialog.open(MatterAddressPopupComponent, { width: '100%', disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
-      //  console.log(result);
       if (result) {
         // this.matterdetailForm.controls['Clientmatter'].setValue(result.MATTERGUID);
         //this.matterdetailForm.controls['Clientmatter'].setValue(result.SHORTNAME + ' : ' + result.MATTER);

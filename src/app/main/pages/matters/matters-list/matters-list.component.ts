@@ -119,8 +119,6 @@ export class MattersListComponent implements OnInit, OnDestroy {
         //   this.mattersData._paginator._pageIndex=0;
         //   setInterval(() => {
         //     this.abced.push({});
-        //     console.log(this.abced);
-
         //     this.mattersData._paginator._pageIndex=this.abced.length;
         //     this.onPaginateChange({onPaginateChange:this.mattersData._paginator._pageSize});
         //     console.log(this.mattersData);

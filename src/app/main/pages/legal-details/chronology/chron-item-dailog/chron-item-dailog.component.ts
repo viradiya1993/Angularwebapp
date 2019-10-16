@@ -42,7 +42,6 @@ export class ChronItemDailogComponent implements OnInit {
     private _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    console.log(data);
     this.action = data.action;
     if (this.action === 'new') {
       this.dialogTitle = 'New Chronology';
@@ -107,9 +106,7 @@ export class ChronItemDailogComponent implements OnInit {
   EditTimeadata() {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({ CHRONOLOGYGUID: this.Chronology_data.CHRONOLOGYGUID }, 'GetChronology').subscribe(res => {
-      console.log(res);
       if (res.CODE == 200 && res.STATUS == "success") {
-
         let Dateform = res.DATA.CHRONOLOGIES[0].DATEFROM.split("/");
         let DATE = new Date(Dateform[1] + '/' + Dateform[0] + '/' + Dateform[2]);
         this.ChronologyADD.DATEFROM = DATE;
@@ -158,7 +155,6 @@ export class ChronItemDailogComponent implements OnInit {
   }
   //FormatChange
   FormatChange(val) {
-    console.log(val);
     if (val == '1') {
       this.commonOdd();
 

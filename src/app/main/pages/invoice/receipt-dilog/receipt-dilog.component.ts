@@ -199,7 +199,6 @@ export class ReceiptDilogComponent implements OnInit {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(data, 'GetInvoice').subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
-        console.log(response);
         this.TotalInvoice = response.DATA.TOTALINVOICES;
         if (response.DATA.INVOICES[0]) {
           this.highlightedRows = response.DATA.INVOICES[0].INVOICEGUID;
@@ -235,7 +234,6 @@ export class ReceiptDilogComponent implements OnInit {
     this.PrepareReceiptForm.controls['INCOMEDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
   editContact(row: any) {
-    console.log(row);
     this.currentInvoiceData = row;
     this.PrepareReceiptForm.controls['Unallocated'].setValue(row.AMOUNTOUTSTANDINGINCGST);
   }

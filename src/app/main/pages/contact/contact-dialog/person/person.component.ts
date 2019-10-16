@@ -35,7 +35,6 @@ export class PersonComponent implements OnInit {
     this.isContact = this.editDataCompny;
   }
   get f() {
-    //console.log(this.contactForm);
     return this.contactForm.controls;
   }
   removeContactMatter() {

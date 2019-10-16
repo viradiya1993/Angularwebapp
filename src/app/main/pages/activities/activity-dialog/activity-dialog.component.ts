@@ -48,7 +48,6 @@ export class ActivityDialogComponent implements OnInit {
     private Timersservice: TimersService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    //console.log(data);
     this.lookuptype = data.popupname;
     this.action = data.popupData.action;
 

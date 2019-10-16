@@ -51,7 +51,6 @@ export class CorrespondDailogComponent implements OnInit {
       MATTERCONTACTGUID: [''],
     });
     this.isLoadingResults = true;
-    console.log(this.MatterClassData);
     this._mainAPiServiceService.getSetData({ 'LookupType': 'contact role', 'MatterClass': this.MatterClassData }, 'GetLookups').subscribe(responses => {
       // this._mainAPiServiceService.getSetData({ 'LookupType': this._data.classTyep, 'MatterClass': this.MatterClassData }, 'GetLookups').subscribe(responses => {
       if (responses.CODE === 200 && responses.STATUS === 'success') {

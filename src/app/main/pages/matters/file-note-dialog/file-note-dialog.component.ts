@@ -75,7 +75,6 @@ export class FileNoteDialogComponent implements OnInit {
   EditPopUpOPen() {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({ FILENOTEGUID: this.FileNoteData.FILENOTEGUID }, 'GetFileNote').subscribe(res => {
-      console.log(res);
       if (res.CODE == 200 && res.STATUS == "success") {
         this.NewFileNote.controls['time'].setValue(res.DATA.FILENOTES[0].TIME);
         this.NewFileNote.controls['comment'].setValue(res.DATA.FILENOTES[0].NOTE);

@@ -320,20 +320,19 @@ export class InvoiceAddDailogComponent implements OnInit {
   saveInvoice(PostInvoiceEntryData: any) {
     PostInvoiceEntryData.VALIDATEONLY = false;
     this._mainAPiServiceService.getSetData(PostInvoiceEntryData, 'SetInvoice').subscribe(res => {
-      console.log(res);
       if (res.CODE == 200 && res.STATUS == "success") {
         this.toastr.success('Save Success');
         this.dialogRef.close(true);
-       
-     this.behaviorService.matterInvoiceData({INVOICEGUID:res.DATA.INVOICEGUID});
-     const dialogRef = this._matDialog.open(GenerateInvoiceComponent, {
-       width: '100%',
-       disableClose: true,
-       data: {}
-       });
-    dialogRef.afterClosed().subscribe(result => {
- 
-      }); 
+
+        this.behaviorService.matterInvoiceData({ INVOICEGUID: res.DATA.INVOICEGUID });
+        const dialogRef = this._matDialog.open(GenerateInvoiceComponent, {
+          width: '100%',
+          disableClose: true,
+          data: {}
+        });
+        dialogRef.afterClosed().subscribe(result => {
+
+        });
 
 
       } else {

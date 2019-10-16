@@ -18,35 +18,34 @@ export class SafeCustodyDialogeComponent implements OnInit {
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   @Input() errorWarningData: any;
-  addData:any=[];
-    action: any;
-    dialogTitle: string;
-  constructor(private _mainAPiServiceService:MainAPiServiceService,
-    public dialogRef: MatDialogRef<SafeCustodyDialogeComponent>,@Inject(MAT_DIALOG_DATA) public data: any) { 
-      console.log(data);
-        this.action = data.action;
-        if(this.action === 'new client'){
-            this.dialogTitle = 'New Safe Custody';
-          }else if(this.action === 'edit'){
-            this.dialogTitle = 'Update Safe Custody';
-          }else if(this.action === 'new matter'){
-            this.dialogTitle = 'New Safe Custody';
-          }else if(this.action === 'new'){
-            this.dialogTitle = 'New Safe Custody';
-          }
-      
+  addData: any = [];
+  action: any;
+  dialogTitle: string;
+  constructor(private _mainAPiServiceService: MainAPiServiceService,
+    public dialogRef: MatDialogRef<SafeCustodyDialogeComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.action = data.action;
+    if (this.action === 'new client') {
+      this.dialogTitle = 'New Safe Custody';
+    } else if (this.action === 'edit') {
+      this.dialogTitle = 'Update Safe Custody';
+    } else if (this.action === 'new matter') {
+      this.dialogTitle = 'New Safe Custody';
+    } else if (this.action === 'new') {
+      this.dialogTitle = 'New Safe Custody';
     }
 
-  ngOnInit() {  
+  }
+
+  ngOnInit() {
     // this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response=>{
     //  // console.log(response);
     //   this.addData=response.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP
     // })
   }
-  closepopup(){
+  closepopup() {
     this.dialogRef.close(false);
   }
-  SaveSafeCustody(){
+  SaveSafeCustody() {
 
   }
 

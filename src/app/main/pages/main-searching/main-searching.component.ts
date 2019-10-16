@@ -5,7 +5,7 @@ import { MatterPopupComponent } from '../matters/matter-popup/matter-popup.compo
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource, MatDatepickerInputEvent } from '@angular/material';
 import { MatterDialogComponent } from '../time-entries/matter-dialog/matter-dialog.component';
 import * as $ from 'jquery';
-import { MainAPiServiceService ,TableColumnsService} from 'app/_services';
+import { MainAPiServiceService, TableColumnsService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 
@@ -17,35 +17,35 @@ import { DatePipe } from '@angular/common';
   animations: fuseAnimations
 })
 export class MainSearchingComponent implements OnInit {
-  MainSearching:FormGroup;
+  MainSearching: FormGroup;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   isLoadingResults: boolean = false;
-  addData:any=[];
+  addData: any = [];
   highlightedRows: any;
-  MainSearchingData:any=[];
+  MainSearchingData: any = [];
   ColumnsObj = [];
   pageSize: any;
   displayedColumns: string[];
   tempColobj: any;
-  filterData: { 'MATTERGUID': any, 'STATUS': any; 'Search': string;  'OrderedDateFrom': any; 'OrderedDateTo': any, "Matter": any };
+  filterData: { 'MATTERGUID': any, 'STATUS': any; 'Search': string; 'OrderedDateFrom': any; 'OrderedDateTo': any, "Matter": any };
   ImgDisAb: string;
-  constructor(private dialog: MatDialog,private _formBuilder: FormBuilder,
-  private _mainAPiServiceService: MainAPiServiceService,private TableColumnsService: TableColumnsService,
-  private toastr: ToastrService,public datepipe: DatePipe,) {
+  constructor(private dialog: MatDialog, private _formBuilder: FormBuilder,
+    private _mainAPiServiceService: MainAPiServiceService, private TableColumnsService: TableColumnsService,
+    private toastr: ToastrService, public datepipe: DatePipe, ) {
     this.getTableFilter();
-   }
+  }
 
   ngOnInit() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 80)) + 'px');
     this.MainSearching = this._formBuilder.group({
       matterCheck: [''],
       active: [''],
-      status:[''],
-      matter:[''],
-      DateRange:['']
+      status: [''],
+      matter: [''],
+      DateRange: ['']
     });
-    
+
     this.filterData = {
       'MATTERGUID': '', 'Search': '', 'OrderedDateFrom': '', 'OrderedDateTo': '', 'STATUS': ' ', "Matter": ''
     }
@@ -67,112 +67,110 @@ export class MainSearchingComponent implements OnInit {
       this.MainSearching.controls['matterCheck'].setValue(true);
       this.MainSearching.controls['matter'].disable();
       this.CheckboxChecxed();
-    }else{
+    } else {
       this.LoadData(this.filterData);
     }
-    
+
     // this.MainSearching.controls['status'].setValue('all');
-   
+
   }
   LoadData(data) {
-  this.MainSearchingData=[];
-      this.isLoadingResults = true;
-      this._mainAPiServiceService.getSetData(data, 'GetCostRecovery').subscribe(res => {
-        console.log(res);
-        this.MainSearchingData = new MatTableDataSource(res.DATA.TASKS);
-        this.MainSearchingData.sort = this.sort;
-        this.MainSearchingData.paginator = this.paginator;
-        if (res.CODE == 200 && res.STATUS == "success") {
-          // if (res.DATA.TASKS[0]) {
-          //   // this.behaviorService.TaskData(res.DATA.TASKS[0]);
-          // this.highlightedRows = res.DATA.TASKS[0].TASKGUID;
-          // } else {
-          //   // this.toastr.error("No Data Selected");
-          // }
-          this.isLoadingResults = false;
-        }
-      }, err => {
+    this.MainSearchingData = [];
+    this.isLoadingResults = true;
+    this._mainAPiServiceService.getSetData(data, 'GetCostRecovery').subscribe(res => {
+      this.MainSearchingData = new MatTableDataSource(res.DATA.TASKS);
+      this.MainSearchingData.sort = this.sort;
+      this.MainSearchingData.paginator = this.paginator;
+      if (res.CODE == 200 && res.STATUS == "success") {
+        // if (res.DATA.TASKS[0]) {
+        //   // this.behaviorService.TaskData(res.DATA.TASKS[0]);
+        // this.highlightedRows = res.DATA.TASKS[0].TASKGUID;
+        // } else {
+        //   // this.toastr.error("No Data Selected");
+        // }
         this.isLoadingResults = false;
-        this.toastr.error(err);
-  
-      });
-       this.pageSize = localStorage.getItem('lastPageSize');
-    }
-    getTableFilter() {
-      this.TableColumnsService.getTableFilter('searching', '').subscribe(response => {
-        if (response.CODE == 200 && response.STATUS == "success") {
-          let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
-          this.tempColobj = data.tempColobj;
-          this.displayedColumns = data.showcol;
-          this.ColumnsObj = data.colobj;
-        }
-      }, error => {
-        this.toastr.error(error);
-      });
-    }
+      }
+    }, err => {
+      this.isLoadingResults = false;
+      this.toastr.error(err);
+
+    });
+    this.pageSize = localStorage.getItem('lastPageSize');
+  }
+  getTableFilter() {
+    this.TableColumnsService.getTableFilter('searching', '').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
+        this.tempColobj = data.tempColobj;
+        this.displayedColumns = data.showcol;
+        this.ColumnsObj = data.colobj;
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
+  }
   get f() {
     //console.log(this.contactForm);
     return this.MainSearching.controls;
   }
-//   CheckboxChecxed(){
-//     if(this.f.matterCheck.value == true){
-//       this.MainSearching.controls['matter'].disable();
-//     }else{
-//       this.MainSearching.controls['matter'].enable();
-//       const dialogRef = this.dialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
-//       dialogRef.afterClosed().subscribe(result => {
-       
-//           if (result) {
-//               localStorage.setItem('set_active_matters', JSON.stringify(result));
-//               this.MainSearching.controls['matter'].setValue(result.MATTER);      
-//           }
-//           else if (this.f.matter.value==''){
-//             this.MainSearching.controls['matterCheck'].setValue(true);
-//           }
-//       }); 
-//   }
-// }
-CheckboxChecxed(){
-  if(this.f.matterCheck.value == true) {
-    this.ImgDisAb = "menu-disabled";
-    this.MainSearching.controls['matter'].disable();
-    this.filterData = JSON.parse(localStorage.getItem("search_filter"));
-    this.filterData.MATTERGUID = "";
-    localStorage.setItem('search_filter',JSON.stringify(this.filterData));
-    this.LoadData(this.filterData);
-  } else {
-    this.ImgDisAb = "";
-    this.MainSearching.controls['matter'].enable();
-    const dialogRef = this.dialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
-    dialogRef.afterClosed().subscribe(result => {
-      if(result != false){
-        if (result) {
-          localStorage.setItem('set_active_matters', JSON.stringify(result));
-          this.MainSearching.controls['matter'].setValue(result.MATTER);
-          this.filterData = JSON.parse(localStorage.getItem("search_filter"));
-          this.filterData.MATTERGUID = result.MATTERGUID;
-          this.filterData.Matter = result.MATTER;
-          localStorage.setItem('search_filter', JSON.stringify(this.filterData));
-          this.LoadData(this.filterData);
-        }
-        else if (this.f.matter.value == '') {
-          this.MainSearching.controls['matterCheck'].setValue(true);
-        }
-      }else{
-        this.ImgDisAb = "menu-disabled";
-        this.MainSearching.controls['matterCheck'].setValue(true);
-        this.MainSearching.controls['matter'].disable();
-      }
+  //   CheckboxChecxed(){
+  //     if(this.f.matterCheck.value == true){
+  //       this.MainSearching.controls['matter'].disable();
+  //     }else{
+  //       this.MainSearching.controls['matter'].enable();
+  //       const dialogRef = this.dialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
+  //       dialogRef.afterClosed().subscribe(result => {
 
-    });
+  //           if (result) {
+  //               localStorage.setItem('set_active_matters', JSON.stringify(result));
+  //               this.MainSearching.controls['matter'].setValue(result.MATTER);      
+  //           }
+  //           else if (this.f.matter.value==''){
+  //             this.MainSearching.controls['matterCheck'].setValue(true);
+  //           }
+  //       }); 
+  //   }
+  // }
+  CheckboxChecxed() {
+    if (this.f.matterCheck.value == true) {
+      this.ImgDisAb = "menu-disabled";
+      this.MainSearching.controls['matter'].disable();
+      this.filterData = JSON.parse(localStorage.getItem("search_filter"));
+      this.filterData.MATTERGUID = "";
+      localStorage.setItem('search_filter', JSON.stringify(this.filterData));
+      this.LoadData(this.filterData);
+    } else {
+      this.ImgDisAb = "";
+      this.MainSearching.controls['matter'].enable();
+      const dialogRef = this.dialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result != false) {
+          if (result) {
+            localStorage.setItem('set_active_matters', JSON.stringify(result));
+            this.MainSearching.controls['matter'].setValue(result.MATTER);
+            this.filterData = JSON.parse(localStorage.getItem("search_filter"));
+            this.filterData.MATTERGUID = result.MATTERGUID;
+            this.filterData.Matter = result.MATTER;
+            localStorage.setItem('search_filter', JSON.stringify(this.filterData));
+            this.LoadData(this.filterData);
+          }
+          else if (this.f.matter.value == '') {
+            this.MainSearching.controls['matterCheck'].setValue(true);
+          }
+        } else {
+          this.ImgDisAb = "menu-disabled";
+          this.MainSearching.controls['matterCheck'].setValue(true);
+          this.MainSearching.controls['matter'].disable();
+        }
+
+      });
+    }
   }
-}
 
   SelectMatter() {
     const dialogRef = this.dialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         this.MainSearching.controls['matter'].setValue(result.MATTER);
         this.filterData = JSON.parse(localStorage.getItem("search_filter"));
         this.filterData.MATTERGUID = result.MATTERGUID;
@@ -196,7 +194,7 @@ CheckboxChecxed(){
   selectStatus(val) {
     this.filterData = JSON.parse(localStorage.getItem("search_filter"));
     this.filterData.STATUS = val;
-    localStorage.setItem('search_filter',JSON.stringify(this.filterData));
+    localStorage.setItem('search_filter', JSON.stringify(this.filterData));
     this.LoadData(this.filterData);
   }
 

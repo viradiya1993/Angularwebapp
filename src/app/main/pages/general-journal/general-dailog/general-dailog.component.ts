@@ -191,15 +191,15 @@ export class GeneralDailogComponent implements OnInit {
     if (this.action === 'new' || this.action === 'duplicate') {
       this.FormAction = 'insert';
       PostData.JOURNALGUID = '';
+      this.successMsg = 'Save successfully';
     } else {
       this.FormAction = 'update';
       PostData.JOURNALGUID = this.JournalData.JOURNALGUID;
+      this.successMsg = 'Update successfully';
     }
     // return;
     this.isspiner = true;
     if (this.CREDITSTOTAL === this.DEBITSTOTAL) {
-      console.log(PostData);
-      this.successMsg = 'Save successfully';
       let details = { FormAction: this.FormAction, VALIDATEONLY: true, Data: PostData };
       this._mainAPiServiceService.getSetData(details, 'SetJournal').subscribe(response => {
         if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {

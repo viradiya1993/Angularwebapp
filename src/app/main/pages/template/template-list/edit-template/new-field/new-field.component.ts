@@ -14,9 +14,9 @@ import { MatDialogRef } from '@angular/material';
 export class NewFieldComponent implements OnInit {
   @Input() SettingForm: FormGroup;
   @Input() errorWarningData: any;
-  addData:any=[];
-    VarValue: string;
-  constructor(private _mainAPiServiceService:MainAPiServiceService,
+  addData: any = [];
+  VarValue: string;
+  constructor(private _mainAPiServiceService: MainAPiServiceService,
     public dialogRef: MatDialogRef<NewFieldComponent>) { }
 
   ngOnInit() {
@@ -24,18 +24,17 @@ export class NewFieldComponent implements OnInit {
     //  // console.log(response);
     //   this.addData=response.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP
     // })
-    
-  }
-  choosedDate(){
 
   }
-  onChangeFieldType(val){
-      console.log(val);
-        if(val=='Calculated Field'){
-            this.VarValue="CalculatedF"
-        }
+  choosedDate() {
+
   }
-  closepopup(){
+  onChangeFieldType(val) {
+    if (val == 'Calculated Field') {
+      this.VarValue = "CalculatedF"
+    }
+  }
+  closepopup() {
     this.dialogRef.close(false);
   }
 

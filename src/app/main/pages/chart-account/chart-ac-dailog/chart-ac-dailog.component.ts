@@ -44,7 +44,6 @@ export class ChartAcDailogComponent implements OnInit {
     }
     this.behaviorService.ChartAccountData$.subscribe(result => {
       if (result) {
-        console.log(result);
         this.AccountData = result;
       }
     });
@@ -73,7 +72,6 @@ export class ChartAcDailogComponent implements OnInit {
     if (this.action == "edit" || this.action == 'duplicate') {
       this.isLoadingResults = true;
       this._mainAPiServiceService.getSetData({ ACCOUNTGUID: this.AccountData.ACCOUNTGUID }, 'GetAccount').subscribe(res => {
-        console.log(res);
         if (res.CODE == 200 && res.STATUS == "success") {
           if (this.action != 'duplicate') {
             this.AccountForm.controls['ACCOUNTGUID'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTGUID);
@@ -104,7 +102,7 @@ export class ChartAcDailogComponent implements OnInit {
         this.toastr.error(err);
         this.isLoadingResults = false;
       });
-    }else{
+    } else {
       this.AccountForm.controls['ACTIVE'].setValue(true);
     }
 

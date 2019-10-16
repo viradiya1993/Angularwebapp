@@ -65,7 +65,6 @@ export class InvoiceDetailComponent implements OnInit {
       AMOUNTTOTAL: [''],
     });
     if (this._data.type == 'edit' || this._data.type == 'view') {
-      console.log(this._data);
       this.isLoadingResults = true;
       this._mainAPiServiceService.getSetData({ 'INVOICEGUID': this._data.INVOICEGUID }, 'GetInvoice').subscribe(response => {
         if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {

@@ -301,7 +301,6 @@ export class ContactDialogComponent implements OnInit {
   }
   // convenience getter for easy access to form fields
   get f() {
-    //console.log(this.contactForm);
     return this.contactForm.controls;
   }
   ondialogSaveClick(): void {

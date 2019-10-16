@@ -687,7 +687,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     UndoWriteOffTimeEntry() {
         let postData = { FormAction: "undo write off", DATA: { WORKITEMGUID: this.timeEntryData.WORKITEMGUID } }
         this.TimersServiceI.SetWorkItems(postData).subscribe(res => {
-            console.log(res);
             if (res.STATUS == "success" && res.CODE == 200) {
                 $('#refreshTimeEntryTab').click();
                 this.toastr.success('Undo successfully');
@@ -1554,8 +1553,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }
         this.activeSubMenu = x[2];
         this.behaviorService.SetActiveSubMenu(this.activeSubMenu);
-        // console.log(this.activeSubMenu);
-        // this.behaviorService.navigation(this.router.url);
+               // this.behaviorService.navigation(this.router.url);
     }
     setTab(event: any) {
         this.selectedIndex = 0;

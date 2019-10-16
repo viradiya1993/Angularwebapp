@@ -220,8 +220,7 @@ export class TaskComponent implements OnInit {
     });
   }
   selectUsers(value) {
-    this.filterData = JSON.parse(localStorage.getItem("task_filter"));
-    console.log(this.GetUSERS);
+    this.filterData = JSON.parse(localStorage.getItem("task_filter"));  
     let val = this.GetUSERS.find(c => c['USERNAME'] == value)
     this.filterData.USERGUID = val.USERGUID;
     this.filterData.user = value;

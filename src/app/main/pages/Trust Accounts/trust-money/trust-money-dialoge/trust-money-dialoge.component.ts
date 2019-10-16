@@ -45,26 +45,23 @@ export class TrustMoneyDialogeComponent implements OnInit {
   title: string;
   constructor(private _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public _data: any, ) {
-    console.log(_data);
     this.action = _data.action;
     if (this.action == "receipt") {
       this.title = "Add Trust Receipt"
-    } else if (this.action == "withdrawal") {
+    }else if (this.action == "withdrawal") {
       this.title = "Add Trust withdrawal";
-    } else if (this.action == "Transfer") {
+    }else if (this.action == "Transfer") {
       this.title = "Add Trust Transfer";
       this.TrustMoneyData.PaymentType = "Transfer";
       this.PymentType = "Transfer";
-
-    } else if (this.action == "office") {
+    }else if (this.action == "office") {
       this.title = "Add Trust Office";
       this.matterType = true;
       this.TrustMoneyData.CheckBox = true;
       // this.PymentType="Office";
-    } else if (this.action == "money receipt") {
+    }else if (this.action == "money receipt") {
       this.title = "Add Controlled Money Receipt";
-
-    } else if (this.action == "money withdrawal") {
+    }else if (this.action == "money withdrawal") {
       this.title = "Add Controlled Money withdrawal";
     }
   }
@@ -94,12 +91,14 @@ export class TrustMoneyDialogeComponent implements OnInit {
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
+  SelectMatter(){
 
+  }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
+    this.selection.clear() :
+    this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
   /** The label for the checkbox on the passed row */

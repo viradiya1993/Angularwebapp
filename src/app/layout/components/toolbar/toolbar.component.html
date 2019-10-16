@@ -1462,8 +1462,8 @@
                                                 </mat-icon>
                                                 <span>File Notes</span>
                                             </a>
-                                            <a mat-list-item class="disabled-click-cursor" [routerLink]="'/legal-details/safe-custody'">
-                                                <!-- <a mat-list-item [ngClass]="{'disabled-click-cursor':appPermissions[14]?.Access==0,'cmn_active_tab':activeSubMenu =='safe-custody'}" [routerLink]="'/legal-details/safe-custody'"> -->
+                                            <!-- <a mat-list-item class="disabled-click-cursor" [routerLink]="'/legal-details/safe-custody'"> -->
+                                                <a mat-list-item [ngClass]="{'disabled-click-cursor':appPermissions[14]?.Access==0,'cmn_active_tab':activeSubMenu =='safe-custody'}" [routerLink]="'/legal-details/safe-custody'">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_safecustody_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
@@ -1530,7 +1530,7 @@
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab details_tab" *ngIf="activeSubMenu ==='safe-custody'">
                                     <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="OpenNewSafeCustody('new')" (click)="setTab($event)">
+                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="OpenNewSafeCustody('newlegal')" (click)="setTab($event)">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_safecustody_new_d.ico" alt=""
@@ -1543,7 +1543,7 @@
                                         </button>
                                     </section>
                                     <section class="ribbon-section" disabled>
-                                        <button mat-button class="large-button" (click)="OpenNewSafeCustody('edit')">
+                                        <button mat-button class="large-button" (click)="OpenNewSafeCustody('editlegal')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img class="" src="assets/icons/web_app/icon_safecustody_edit_d.ico"
@@ -1554,7 +1554,7 @@
                                                 </div>
                                             </section>
                                         </button>
-                                        <button mat-button class="large-button">
+                                        <button mat-button class="large-button" (click)="DeleteSafeCustody()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img class=""

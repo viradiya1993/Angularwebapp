@@ -229,8 +229,9 @@ export class SpendMoneyAddComponent implements OnInit {
   showData(element) {
     element.forEach(x => {
       if (x.ACCOUNTTYPENAME == "Bank Account") {
+        // this.spendmoneyForm.controls['Bankac'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER + ' ' + result.MainList.ACCOUNTNAME);
         x.EXPORTINFO.MYOBEXPORTACCOUNT;
-        this.spendmoneyForm.controls['Bankac'].setValue(x.EXPORTINFO.MYOBEXPORTACCOUNT);
+        this.spendmoneyForm.controls['Bankac'].setValue(x.ACCOUNTCLASS + ' - ' + x.ACCOUNTNUMBER );
         this.spendmoneyForm.controls['BankacGUID'].setValue(x.ACCOUNTGUID);
       }
       if (x.SUBACCOUNTS) {

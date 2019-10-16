@@ -8,11 +8,12 @@ import { DiaryEventModel } from './event.model';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import * as $ from 'jquery';
-import { BehaviorService } from 'app/_services';
+import { BehaviorService, MainAPiServiceService } from 'app/_services';
 import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { DairyDailogComponent } from './dairy-dailog/dairy-dailog.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-diary',
@@ -29,11 +30,14 @@ export class DiaryComponent implements OnInit {
     events: CalendarEvent[];
     refresh: Subject<any> = new Subject();
     selectedDay: any;
+    theme_type = localStorage.getItem('theme_type');
+    selectedColore = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
     view: string;
     TimeScale: string;
     viewDate: Date;
     segmentIsValid: any;
+    DairyData: any;
 
     constructor(
         private _calendarService: DiaryService,
@@ -41,6 +45,8 @@ export class DiaryComponent implements OnInit {
         private _httpClient: HttpClient,
         private behaviorService: BehaviorService,
         private _matDialog: MatDialog,
+        private toastr: ToastrService,
+        private _mainAPiServiceService:MainAPiServiceService
     ) {
         this.behaviorService.calanderViewType$.subscribe(result => {
             if (result) {
@@ -59,6 +65,8 @@ export class DiaryComponent implements OnInit {
         /**
          * Get events from service/server
          */
+      
+
         this.actions = [
             {
                 label: '<i class="material-icons s-16">edit</i>',
@@ -74,74 +82,88 @@ export class DiaryComponent implements OnInit {
             }
         ];
         this.setEvents();
-
+        this.refresh.next();
+        
     }
     ngOnInit(): void {
         $('content').addClass('inner-scroll');
+        this.refresh.subscribe(updateDB => {
+            if ( updateDB )
+            {
+                this._calendarService.getEvents();
+            }
+        });
+
+        this._calendarService.onEventsUpdated.subscribe(events => {
+            this.setEvents();
+            this.refresh.next();
+        });
+        // console.log(this.tConvert('18:00:00')) ;
     }
+
+      
+     
     /**
        * Set events
        */
     setEvents(): void {
         this.events = this._calendarService.events.map(item => {
+            item.actions = this.actions;
             return new DiaryEventModel(item);
         });
     }
-    editEvent(action: string, event: CalendarEvent): void {
-        const eventIndex = this.events.indexOf(event);
+    editEvent(action: string, event: CalendarEvent): void
+    {
+        this.selectedColore = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
+        this.behaviorService.forDiaryRefersh(event);
+        // console.log(this.events)
+    //  const eventIndex = this.events.indexOf(event);
 
         this.dialogRef = this._matDialog.open(DairyDailogComponent, {
             panelClass: 'event-form-dialog',
-            data: {
-                event: event,
+            data      : {
+                event : event,
+                AppoitmentGuId:event.DairyRowClickData,
                 action: action
             }
         });
-
         this.dialogRef.afterClosed()
             .subscribe(response => {
-                if (!response) {
-                    return;
+                if ( !response )
+                {
+                    this.refresh.next(true);
                 }
-                const actionType: string = response[0];
-                const formData: FormGroup = response[1];
-                switch (actionType) {
-                    /**
-                     * Save
-                     */
-                    case 'save':
-
-                        this.events[eventIndex] = Object.assign(this.events[eventIndex], formData.getRawValue());
-                        this.refresh.next(true);
-
-                        break;
-                    /**
-                     * Delete
-                     */
-                    case 'delete':
-
-                        this.deleteEvent(event);
-
-                        break;
-                }
+      
             });
     }
-    deleteEvent(event): void {
-        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-            disableClose: false
-        });
-
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-
-        this.confirmDialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                const eventIndex = this.events.indexOf(event);
-                this.events.splice(eventIndex, 1);
-                this.refresh.next(true);
-            }
-            this.confirmDialogRef = null;
-        });
-
+    deleteEvent(event): void
+    {
+        this.behaviorService.forDiaryRefersh(event);
+        this.behaviorService.forDiaryRefersh$.subscribe(result => {    
+            this.DairyData=result;
+                });
+                this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+                    disableClose: true,
+                    width: '100%',
+                });
+                this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+                this.confirmDialogRef.afterClosed().subscribe(result => { 
+                    if (result) {
+                        let postData = { FormAction: "delete", data: { APPOINTMENTGUID: this.DairyData.DairyRowClickData } }
+                        this._mainAPiServiceService.getSetData(postData, 'SetAppointment').subscribe(res => {
+                            if (res.STATUS == "success") {
+                                this.behaviorService.forDiaryRefersh2("call");
+                                // $('#refreshLegalChronology').click();
+                                this.toastr.success(res.STATUS);
+                                this.refresh.next(true);
+                            } else {
+                                // this.toastr.error("You Can't Delete Contact Which One Is To Related to Matters");
+                            }
+                        });;
+                    }
+                    this.confirmDialogRef = null;
+                });
+        ///////
     }
 
     /**

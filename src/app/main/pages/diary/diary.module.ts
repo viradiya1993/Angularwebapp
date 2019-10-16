@@ -14,6 +14,7 @@ import { DiaryComponent } from './diary.component';
 import { AuthGuard } from 'app/_guards';
 import { EventFormComponent } from './event-form/event-form.component';
 import { DiaryService } from './diary.service';
+import { MatTableModule,MatPaginatorModule } from '@angular/material'  
 import {MatSortModule} from '@angular/material/sort';
 import { DairyDailogComponent } from './dairy-dailog/dairy-dailog.component';
 import { DetailsComponent } from './dairy-dailog/details/details.component';
@@ -21,6 +22,11 @@ import { RecurrancePatternComponent } from './dairy-dailog/recurrance-pattern/re
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CreateDiaryComponent } from './create-diary/create-diary.component';
+import {  MatNativeDateModule } from '@angular/material';
+import { MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker'
+import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
+
 // import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 // import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 const routes = [
@@ -30,14 +36,17 @@ const routes = [
     children: [], resolve: {
       chat: DiaryService
     }, canActivate: [AuthGuard]
-  }
+  },
+  { path: 'diary/create-diary', component: CreateDiaryComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
   declarations: [
     DiaryComponent,
+    CreateDiaryComponent,
     EventFormComponent,
     DairyDailogComponent,
+    
     DetailsComponent,
     RecurrancePatternComponent
   ],
@@ -45,6 +54,10 @@ const routes = [
     RouterModule.forChild(routes),
 
     MatButtonModule,
+    MatNativeDateModule,
+    MatPaginatorModule,
+    MatTableModule,
+    SatDatepickerModule, SatNativeDateModule,
     MatDatepickerModule,
     MatDialogModule,
     MatFormFieldModule,
@@ -80,11 +93,12 @@ const routes = [
     DiaryComponent
   ],
   providers: [
-    DiaryService
+    DiaryService,
+
   ],
   entryComponents: [
     EventFormComponent,
     DairyDailogComponent
-  ]
+  ],
 })
 export class DiaryModule { }

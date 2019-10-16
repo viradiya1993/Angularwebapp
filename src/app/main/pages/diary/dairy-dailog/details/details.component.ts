@@ -53,8 +53,10 @@ export class DetailsComponent implements OnInit {
   CheckReminder(value){
     if(value == true){
       this.DairyForm.controls['Beforestart'].enable();
+      this.DairyForm.controls['SendBeforestart'].setValue(this.f.Beforestart.value);
     }else{
       this.DairyForm.controls['Beforestart'].disable();
+      this.DairyForm.controls['SendBeforestart'].setValue('');
     }
   }
   //ChnageCategory
@@ -63,10 +65,12 @@ export class DetailsComponent implements OnInit {
       $("#appoitmentnew").removeClass("menu-disabled");
       this.hideicon=false;
       this.DairyForm.controls['Matter'].enable();
+      this.DairyForm.controls['SendMATTERGUID'].setValue(this.f.MATTERGUID.value);
     }else{
       $("#appoitmentnew").addClass("menu-disabled");
       this.hideicon=true;
       this.DairyForm.controls['Matter'].disable();
+      this.DairyForm.controls['SendMATTERGUID'].setValue('');
     }
   }
 }

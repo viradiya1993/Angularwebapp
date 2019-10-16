@@ -12,6 +12,7 @@ export class DiaryEventModel
     };
     actions?: CalendarEventAction[];
     allDay?: boolean;
+    DairyRowClickData: string;
     cssClass?: string;
     resizable?: {
         beforeStart?: boolean;
@@ -34,6 +35,7 @@ export class DiaryEventModel
         this.start = new Date(data.start) || startOfDay(new Date());
         this.end = new Date(data.end) || endOfDay(new Date());
         this.title = data.title || '';
+        this.DairyRowClickData = data.DairyRowClickData || '';
         this.color = {
             primary  : data.color && data.color.primary || '#1e90ff',
             secondary: data.color && data.color.secondary || '#D1E8FF'

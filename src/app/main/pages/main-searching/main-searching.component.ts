@@ -171,7 +171,6 @@ CheckboxChecxed(){
     const dialogRef = this.dialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
         this.MainSearching.controls['matter'].setValue(result.MATTER);
         this.filterData = JSON.parse(localStorage.getItem("search_filter"));
         this.filterData.MATTERGUID = result.MATTERGUID;

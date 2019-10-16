@@ -76,6 +76,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     mainlegalAuthWebUrl: any;
     recouncileItemdata: any;
     ShowGenerateInvoice: string;
+    DairyData: any;
     [x: string]: any;
     appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
     @ViewChild(TimeEntriesComponent) TimeEntrieschild: TimeEntriesComponent;
@@ -651,6 +652,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 $('#refreshTimeEntryTab').click();
             }
         });
+    }
+
+    CreateDiary(){
+        $('#saveCreateDiary').click();
     }
 
     GenerateInvoice() {
@@ -1420,12 +1425,29 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //DeleteAppointment
     DeleteAppointment() {
+   this.behaviorService.forDiaryRefersh$.subscribe(result => {    
+    this.DairyData=result;
+        });
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-        this.confirmDialogRef.afterClosed().subscribe(result => { });
+        this.confirmDialogRef.afterClosed().subscribe(result => { 
+            if (result) {
+                let postData = { FormAction: "delete", data: { APPOINTMENTGUID: this.DairyData.DairyRowClickData } }
+                this._mainAPiServiceService.getSetData(postData, 'SetAppointment').subscribe(res => {
+                    if (res.STATUS == "success") {
+                        this.behaviorService.forDiaryRefersh2("call");
+                        // $('#refreshLegalChronology').click();
+                        this.toastr.success(res.STATUS);
+                    } else {
+                        this.toastr.error("You Can't Delete Contact Which One Is To Related to Matters");
+                    }
+                });;
+            }
+            this.confirmDialogRef = null;
+        });
     }
     setViewType(params: any) {
         this.behaviorService.setCalanderViewType(params);
@@ -1455,6 +1477,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 4;
         } else if (x[1] == "diary" || x[1] == 'diary?calander=day' || x[1] == 'diary?calander=week' || x[1] == 'diary?calander=month') {
             this.isTabShow = 5;
+         if (x[2] == "create-diary") {
+                this.isTabShow = 26;
+            }
         } else if (x[1] == "time-entries") {
             this.isTabShow = 6;
         } else if (x[1] == "invoice") {

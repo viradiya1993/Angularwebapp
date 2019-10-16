@@ -1,29 +1,29 @@
 <div class="one" [formGroup]="DairyForm" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-radio-group name="RedioChnage" [(ngModel)]="abc" formControlName="RedioChnage" aria-label="Select an option"  fxFlex="20" class="pr-4" (ngModelChange)="radiobtnclick()">
-                <mat-radio-button  value="Once">Once Only</mat-radio-button>
+                <mat-radio-button  value="0">Once Only</mat-radio-button>
         </mat-radio-group>
         <mat-radio-group   [(ngModel)]="abc" name="RedioChnage" formControlName="RedioChnage"  aria-label="Select an option" fxFlex="20" class="pr-4" (ngModelChange)="radiobtnclick()">
-                <mat-radio-button  value="Daily" >Daily</mat-radio-button>
+                <mat-radio-button  value="1" >Daily</mat-radio-button>
         </mat-radio-group>
         <mat-radio-group   [(ngModel)]="abc" name="RedioChnage" formControlName="RedioChnage" aria-label="Select an option"  fxFlex="20" class="pr-4"  (ngModelChange)="radiobtnclick()">
-                <mat-radio-button  value="Weekly">Weekly</mat-radio-button>
+                <mat-radio-button  value="2">Weekly</mat-radio-button>
         </mat-radio-group>
         <mat-radio-group  [(ngModel)]="abc" name="RedioChnage" formControlName="RedioChnage" aria-label="Select an option"  fxFlex="20" class="pr-4"  (ngModelChange)="radiobtnclick()">
-                <mat-radio-button value="Monthly">Monthly</mat-radio-button>
+                <mat-radio-button value="3">Monthly</mat-radio-button>
         </mat-radio-group>
         <mat-radio-group  [(ngModel)]="abc"  name="RedioChnage" formControlName="RedioChnage" aria-label="Select an option"  fxFlex="20" class="pr-4"  (ngModelChange)="radiobtnclick()">
-                <mat-radio-button  value="Yearly">Yearly</mat-radio-button>
+                <mat-radio-button  value="4">Yearly</mat-radio-button>
         </mat-radio-group>
     </div>
     <!-- Once   class="pr-4-->
-    <div class="Once" fxLayout="column"  *ngIf="abc =='Once'">
+    <div class="Once" fxLayout="column"  *ngIf="abc =='0'">
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" >
             <p id="Once">Pattern Details<br>The appointment will occur only once</p>
         </div>  
     </div>
     <!-- Daily-->
-    <div class="Daily" fxLayout="column"  *ngIf="abc =='Daily'">
+    <div class="Daily" fxLayout="column"  *ngIf="abc =='1'">
         <div fxLayout="row" fxLayoutAlign="start"><p id="Daily">Pattern Details</p></div>
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
             <mat-form-field class="example p-4 " fxFlex="100" appearance="outline">
@@ -33,7 +33,7 @@
         </div>  
     </div>
     <!-- Weekly-->
-    <div class="Weekly" fxLayout="column" *ngIf="abc =='Weekly'">
+    <div class="Weekly" fxLayout="column" *ngIf="abc =='2'">
         <div fxLayout="row" fxLayoutAlign="start" ><p id="Weekly">Pattern Details</p></div>
 
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -54,7 +54,7 @@
         </div>
     </div> 
     <!-- Monthly-->
-    <div class="Monthly" fxLayout="column"  *ngIf="abc =='Monthly'">
+    <div class="Monthly" fxLayout="column"  *ngIf="abc =='3'">
         <div fxLayout="row" fxLayoutAlign="start" ><p id="Monthly">Pattern Details</p></div>
         
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">  
@@ -64,30 +64,30 @@
                 <input matInput type="number"  formControlName="EveryMonthly" >
             </mat-form-field>   
 
-            <mat-radio-group  name="RedioChnageDay" formControlName="RedioChnageDay" (ngModelChange)="radiobtnday()" aria-label="Select an option" fxFlex="20" class="pr-4">
-                <mat-radio-button  value="Fristday">The First Day</mat-radio-button>
+            <mat-radio-group  name="MONTHOPTIONS" formControlName="MONTHOPTIONS" (ngModelChange)="radiobtnday()" aria-label="Select an option" fxFlex="20" class="pr-4">
+                <mat-radio-button  value="0">The First Day</mat-radio-button>
             </mat-radio-group>
 
-            <mat-radio-group  name="RedioChnageDay" formControlName="RedioChnageDay" (ngModelChange)="radiobtnday()" aria-label="Select an option" fxFlex="20" class="pr-4">
-                <mat-radio-button value="LastDay" >The Last Day</mat-radio-button>
+            <mat-radio-group  name="MONTHOPTIONS" formControlName="MONTHOPTIONS" (ngModelChange)="radiobtnday()" aria-label="Select an option" fxFlex="20" class="pr-4">
+                <mat-radio-button value="1" >The Last Day</mat-radio-button>
             </mat-radio-group>
 
-            <mat-radio-group  name="RedioChnageDay" formControlName="RedioChnageDay"  (ngModelChange)="radiobtnday()"  aria-label="Select an option" fxFlex="20" class="pr-4">
-                <mat-radio-button value="Day">The Day</mat-radio-button>
+            <mat-radio-group  name="MONTHOPTIONS" formControlName="MONTHOPTIONS"  (ngModelChange)="radiobtnday()"  aria-label="Select an option" fxFlex="20" class="pr-4">
+                <mat-radio-button value="3">The Day</mat-radio-button>
             </mat-radio-group>
     
-            <mat-radio-group name="RedioChnageDay" formControlName="RedioChnageDay"  (ngModelChange)="radiobtnday()" aria-label="Select an option"  fxFlex="20" class="pr-4">
-                <mat-radio-button value="The">The</mat-radio-button>
+            <mat-radio-group name="MONTHOPTIONS" formControlName="MONTHOPTIONS"  (ngModelChange)="radiobtnday()" aria-label="Select an option"  fxFlex="20" class="pr-4">
+                <mat-radio-button value="4">The</mat-radio-button>
             </mat-radio-group>
         </div>    
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
             <mat-form-field class="example p-4" fxFlex="33" appearance="outline">            
-                    <input matInput type="number"  formControlName="EveryDay" >
+                    <input (keyup)="EveryDaypress($event);" matInput type="number" [(ngModel)]="Everydayval" formControlName="EveryDay" >
             </mat-form-field>
             
             <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
-                <mat-select formControlName="countvalue">
+                <mat-select formControlName="countvalue" (selectionChange)="whichweek()">
                     <mat-option value="First" selected>First</mat-option>
                     <mat-option value="Second">Second</mat-option>
                     <mat-option value="Third">Third</mat-option>
@@ -97,7 +97,7 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
-                <mat-select formControlName="DaySelect">
+                <mat-select formControlName="DaySelect" (selectionChange)="whichday()">
                     <mat-option value="Sun" selected>Sun</mat-option>
                     <mat-option value="Mon">Mon</mat-option>
                     <mat-option value="Tue">Tue</mat-option>
@@ -110,7 +110,7 @@
         </div>
     </div>
      <!-- Yearly-->
-    <div class="Yearly" fxLayout="column"  *ngIf="abc =='Yearly'">
+    <div class="Yearly" fxLayout="column"  *ngIf="abc =='4'">
         <p id="Yearly">Pattern Details <br> The Recurrance wil occur on the anniversary of the appointment</p>
     </div>
 

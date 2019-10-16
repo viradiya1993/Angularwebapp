@@ -72,7 +72,6 @@
     <div class="content" fusePerfectScrollbar [@animate]="{value:'*',params:{delay:'200ms',y:'50px'}}">
         <div [ngSwitch]="view">
             <mwl-calendar-month-view 
-            (eventClicked)="editEvent('edit', $event.event)" 
             *ngSwitchCase="'month'"
             [viewDate]="viewDate" 
             [events]="events" 
@@ -80,12 +79,13 @@
             [activeDayIsOpen]="activeDayIsOpen"
             (dayClicked)="dayClicked($event.day)" 
             (eventTimesChanged)="eventTimesChanged($event)" 
-            (beforeViewRender)="beforeMonthViewRender($event)">
+            (beforeViewRender)="beforeMonthViewRender($event)"
+           >
             </mwl-calendar-month-view>
-            <mwl-calendar-week-view (eventClicked)="editEvent('edit', $event.event)" [hourSegments]="TimeScale" *ngSwitchCase="'week'" [viewDate]="viewDate" (viewDateChange)="selectedDay = {date:$event}" [events]="events" [refresh]="refresh" (dayClicked)="dayClicked($event.day)" (eventTimesChanged)="eventTimesChanged($event)">
+            <mwl-calendar-week-view  [hourSegments]="TimeScale" *ngSwitchCase="'week'" [viewDate]="viewDate" (viewDateChange)="selectedDay = {date:$event}" [events]="events" [refresh]="refresh" (dayClicked)="dayClicked($event.day)" (eventTimesChanged)="eventTimesChanged($event)">
             </mwl-calendar-week-view>
             <div id="day_view_div" *ngSwitchCase="'day'">
-                <mwl-calendar-day-view (eventClicked)="editEvent('edit', $event.event)" [hourSegments]="TimeScale" *ngSwitchCase="'day'" [viewDate]="viewDate" (beforeViewRender)="beforeDayViewRender($event)" (viewDateChange)="selectedDay = {date:$event}" [events]="events" [refresh]="refresh" (dayClicked)="dayClicked($event.day)"
+                <mwl-calendar-day-view  [hourSegments]="TimeScale" *ngSwitchCase="'day'" [viewDate]="viewDate" (beforeViewRender)="beforeDayViewRender($event)" (viewDateChange)="selectedDay = {date:$event}" [events]="events" [refresh]="refresh" (dayClicked)="dayClicked($event.day)"
                     (eventTimesChanged)="eventTimesChanged($event)">
                 </mwl-calendar-day-view>
             </div>

@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { MainAPiServiceService } from '../../../_services';
+import { MainAPiServiceService, BehaviorService } from '../../../_services';
+import * as $ from 'jquery';
 
 @Injectable()
 export class DiaryService implements Resolve<any>
@@ -20,9 +21,14 @@ export class DiaryService implements Resolve<any>
         private _httpClient: HttpClient,
         private toastr: ToastrService,
         private _mainAPiServiceService: MainAPiServiceService,
+        private behaviorService:BehaviorService
     ) {
         // Set the defaults
         this.onEventsUpdated = new Subject();
+        
+        this.behaviorService.forDiaryRefersh2$.subscribe(result => {
+          this.getEvents();
+        });
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -56,16 +62,27 @@ export class DiaryService implements Resolve<any>
      * @returns {Promise<any>}
      */
     getEvents(): Promise<any> {
+       let userData = JSON.parse(localStorage.getItem('currentUser'));
         return new Promise((resolve, reject) => {
             let tempEvent: any[] = [];
-            this._mainAPiServiceService.getSetData({}, 'GetAppointment').subscribe(res => {
+            this._mainAPiServiceService.getSetData({USERGUID:userData.UserGuid,DATESTART:'27/05/2005',DATEEND:'27/11/2019'}, 'GetAppointment').subscribe(res => {
                 if (res.CODE == 200 && res.STATUS == "success") {
+                    console.log(res);
+                    if($.isEmptyObject(res.DATA) ==true ){
+                       tempEvent.push({});
+                       this.events = tempEvent;
+                       this.onEventsUpdated.next(this.events);
+                       resolve(this.events);
+                    }else{
                     res.DATA.APPOINTMENTS.forEach(itemsdata => {
-                        tempEvent.push({ start: dateformat(changeformat(itemsdata.DATE) + ' ' + itemsdata.TIME), title: '(' + this.tConvert(itemsdata.TIME) + ') -' + itemsdata.SUBJECT, allDay: false });
+                    tempEvent.push({ start: dateformat(changeformat(itemsdata.DATE) + ' ' + itemsdata.TIME), title: '(' + this.tConvert(itemsdata.TIME) + ') -' + itemsdata.SUBJECT, allDay: false, DairyRowClickData:itemsdata.APPOINTMENTGUID ,id:"das"});
                     });
+                    tempEvent.push({});
                     this.events = tempEvent;
                     this.onEventsUpdated.next(this.events);
                     resolve(this.events);
+                    }
+                   
                 }
             },
                 err => {

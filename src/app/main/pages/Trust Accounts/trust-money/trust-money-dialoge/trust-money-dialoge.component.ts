@@ -43,6 +43,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
   matterType: boolean = false;
   action: any;
   title: string;
+  ForDetailTab: string;
   constructor(private _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public _data: any, ) {
     this.action = _data.action;
@@ -65,6 +66,30 @@ export class TrustMoneyDialogeComponent implements OnInit {
 
     } else if (this.action == "money withdrawal") {
       this.title = "Add Controlled Money withdrawal";
+    }
+
+    else if (this.action == "Cancelled Cheque") {
+      this.title = "Add Cancelled Cheque";
+    }else if (this.action == "Unknown Deposit") {
+      this.title = "Add Unknown Deposit Receipt";
+    }
+    else if (this.action == "Transfer Unknow Deposit") {
+      this.title = "Add Unknown Deposit Transfer";
+      this.action = "Transfer";
+      this.TrustMoneyData.PaymentType = "Transfer";
+      this.PymentType = "Transfer";
+    }else if (this.action == "Statutory Deposit") {
+      this.title = "Add Statutory Depositl";
+      this.ForDetailTab='Statutory Deposit';
+      this.action = "withdrawal";
+    }else if (this.action == "Statutory Receipt") {
+      this.title = "Add Statutory Receipt";
+      this.ForDetailTab='Statutory Receipt';
+      this.action = "receipt";
+
+
+    }else if (this.action == "Release Trust") {
+      this.title = "Add Release Trust";
     }
   }
 

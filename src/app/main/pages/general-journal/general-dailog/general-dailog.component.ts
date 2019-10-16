@@ -54,7 +54,6 @@ export class GeneralDailogComponent implements OnInit {
       disableClose: true, width: '100%', data: { AccountType: '' }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
     });
   }
   //NewItem

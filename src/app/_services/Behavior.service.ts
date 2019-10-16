@@ -47,10 +47,20 @@ export class BehaviorService {
   public ActivityData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public BankChartAccountStore$: BehaviorSubject<any> = new BehaviorSubject(null);
 
+  public forDiaryRefersh$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public forDiaryRefersh2$: BehaviorSubject<any> = new BehaviorSubject(null);
+
+
   constructor(private http: HttpClient) { }
 
   matterInvoiceData(matterClassData: any) {
     this.matterInvoice$.next(matterClassData);
+  }
+  forDiaryRefersh2(forDiaryRefersh2: any) {
+    this.forDiaryRefersh2$.next(forDiaryRefersh2);
+  }
+  forDiaryRefersh(forDiaryRefersh: any) {
+    this.forDiaryRefersh$.next(forDiaryRefersh);
   }
   BankChartAccountStore(BankChartAccountStore: any) {
     this.BankChartAccountStore$.next(BankChartAccountStore);

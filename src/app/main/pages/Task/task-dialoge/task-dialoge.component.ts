@@ -306,14 +306,13 @@ export class TaskDialogeComponent implements OnInit {
     let tempWarning: any = [];
     bodyData.forEach(function (value) {
       if (value.VALUEVALID == 'No') {
-        errorData.push(value.ERRORDESCRIPTION);
-        tempError[value.FIELDNAME] = value;
+          errorData.push(value.ERRORDESCRIPTION);
+          tempError[value.FIELDNAME] = value;
       }
       else if (value.VALUEVALID == 'Warning') {
         tempWarning[value.FIELDNAME] = value;
         warningData.push(value.ERRORDESCRIPTION);
       }
-
     });
     this.errorWarningData = { "Error": tempError, 'Warning': tempWarning };
     if (Object.keys(errorData).length != 0) {
@@ -343,9 +342,9 @@ export class TaskDialogeComponent implements OnInit {
     this._mainAPiServiceService.getSetData(data, 'SetTask').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         if (this.action !== 'edit') {
-          this.toastr.success(' save successfully');
+          this.toastr.success('save successfully');
         } else {
-          this.toastr.success(' update successfully');
+          this.toastr.success('update successfully');
         }
         this.isspiner = false;
         this.dialogRef.close(true);

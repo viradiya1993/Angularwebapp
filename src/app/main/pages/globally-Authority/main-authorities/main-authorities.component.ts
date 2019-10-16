@@ -37,7 +37,7 @@ interface ExampleFlatNode {
 
 })
 export class MainAuthoritiesComponent implements OnInit {
-    storeDataarray:any=[];
+  storeDataarray:any=[];
   Accountlist: FormGroup;
   isLoadingResults: boolean = false;
   highlightedRows: any;
@@ -67,7 +67,7 @@ export class MainAuthoritiesComponent implements OnInit {
     node => node.level, node => node.expandable);
 
   treeFlattener = new MatTreeFlattener(
-    this._transformer, node => node.level, node => node.expandable, node => node.SUBTOPICS || node.AUTHORITIES);
+  this._transformer, node => node.level, node => node.expandable, node => node.SUBTOPICS || node.AUTHORITIES);
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
   pageSize: string;
@@ -124,23 +124,19 @@ export class MainAuthoritiesComponent implements OnInit {
     let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
     this.Accountlist.controls['Matter'].setValue(mattersData.MATTER);
     this.Accountlist.controls['Client'].setValue(mattersData.CONTACTNAME);
-
     this.LoadData();
-
   }
 
   LoadData() {
    this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({}, 'GetAuthority').subscribe(res => {
-  
       if ((res.CODE == 200 || res.CODE == '200') && res.STATUS == "success") {
         this.arrayForIndex = [];
          this.storeDataarray = res.DATA.TOPICS;
          this.showData(this.storeDataarray, 0, null);
- 
          this.dataSource.data = this.storeDataarray;
          this.editContact(this.storeDataarray[0]);
-        this.highlightedRows = 1;
+         this.highlightedRows = 1;
       }
       this.isLoadingResults = false;
     }, err => {

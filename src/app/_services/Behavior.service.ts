@@ -47,6 +47,7 @@ export class BehaviorService {
   public ActivityData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public BankChartAccountStore$: BehaviorSubject<any> = new BehaviorSubject(null);
   public GeneralData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public SafeCustody$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor(private http: HttpClient) { }
 
@@ -156,4 +157,8 @@ export class BehaviorService {
   setGeneralData(GeneralData: any) {
     this.GeneralData$.next(GeneralData);
   }
+  SafeCustody(SafeCustody: any) {
+    this.SafeCustody$.next(SafeCustody);
+  }
+
 }

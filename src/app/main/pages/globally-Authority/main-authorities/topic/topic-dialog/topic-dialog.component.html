@@ -1,6 +1,6 @@
 <div class="example-loading-shade" *ngIf="isLoadingResults">
-        <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
-    </div>
+    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+ </div>
 
 <div cdkDrag class="popup_main_div add_edit_contact_main" >
         <h2 cdkDragHandle mat-dialog-title>{{title}}
@@ -23,7 +23,6 @@
                                 <mat-select [(ngModel)]="TopicDialoge.selective" name="selective" (selectionChange)="TopicClassChange($event.value)">
                                     <mat-option value="1">is head topic of</mat-option>
                                     <mat-option value="2">is sub topic of</mat-option>
-
                                 </mat-select>
                         </mat-form-field>
 
@@ -31,11 +30,9 @@
                                 <mat-label>Parent</mat-label>
                                 <mat-select [ngClass]="{'has-error':errorWarningData.Error?.COMMENT,'has-warning':errorWarningData.Warning?.COMMENT}" [(ngModel)]="TopicDialoge.Parent" name="Parent"   (selectionChange)="TopicNameChange($event.value)">
                                     <mat-option  *ngFor="let val of MainTopicClass" [value]="val.TOPICNAME">{{val.TOPICNAME}}</mat-option>
-    
-                                    </mat-select>
+                                </mat-select>
                         </mat-form-field>
                     </div>
-        
               </form>
           </div>
         </div>
@@ -46,7 +43,6 @@
         <button *ngIf="action =='edit'"  mat-raised-button color="accent" [disabled]="isspiner" (click)="saveTopic()"  cdkFocusInitial>
             <mat-spinner style=" zoom: 0.2;position: absolute;right: 0;left: 0;
         margin: auto;top: 0;bottom: 0;" *ngIf="isspiner"></mat-spinner>Update</button>
-
             <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
         </mat-dialog-actions>
     </div>

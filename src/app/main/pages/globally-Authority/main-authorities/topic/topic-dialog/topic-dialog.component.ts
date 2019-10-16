@@ -198,9 +198,9 @@ export class TopicDialogComponent implements OnInit {
     this._mainAPiServiceService.getSetData(data, 'SetTopic').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         if (this.action !== 'edit') {
-          this.toastr.success(' save successfully');
+          this.toastr.success('save successfully');
         } else {
-          this.toastr.success(' update successfully');
+          this.toastr.success('update successfully');
         }
         this.isspiner = false;
         this.dialogRef.close(true);

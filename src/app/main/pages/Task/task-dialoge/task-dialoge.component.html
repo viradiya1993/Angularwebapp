@@ -53,9 +53,8 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.PERCENTCOMPLETE,'has-warning':errorWarningData.Warning?.PERCENTCOMPLETE}" appearance="outline" fxFlex="50" class="pr-4">
                         <mat-label>% complete</mat-label>
-                        <input   formControlName="PERCENTCOMPLETE" placeholder="Matter" type="number" matInput>
+                        <input formControlName="PERCENTCOMPLETE" placeholder="Matter" type="number" matInput>
                     </mat-form-field>
-
                     <mat-checkbox  formControlName="REMINDER" (change)="ChekBoxClick($event)"  fxFlex="50" class="check_1 pr-4">Reminder </mat-checkbox>
                 </div>
 

@@ -422,9 +422,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
         dialogRef.afterClosed().subscribe(result => {
-            if (result)
+            if (result) {
                 $('#refreshActivities').click();
-            $('#refreshWorkInprogress').click();
+                $('#refreshWorkInprogress').click();
+            }
         });
     }
     DeleteActivityDialog(): void {
@@ -683,15 +684,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    GenerateReceipt(){
-        let receiData=JSON.parse(localStorage.getItem('receiptData'));
-    let passdata = {
+    GenerateReceipt() {
+        let receiData = JSON.parse(localStorage.getItem('receiptData'));
+        let passdata = {
             Context: 'Receipt',
             ContextGuid: receiData.INCOMEGUID,
-            knownby:'Template',
-            Type:'Template',
-            Template:"<DEFRECTEMP>" 
-          }
+            knownby: 'Template',
+            Type: 'Template',
+            Template: "<DEFRECTEMP>"
+        }
         const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
             width: '100%',
             disableClose: true,
@@ -765,9 +766,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             data: FileNotePopdata
         });
         dialogRef.afterClosed().subscribe(result => {
-
             if (result) {
-
                 $('#refreshFileNote').click();
             }
 
@@ -1106,7 +1105,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
-
                 let postData = { FormAction: "delete", data: { EMAILGUID: this.EmailtemplateData.EMAILGUID } }
                 this._mainAPiServiceService.getSetData(postData, 'SetEmail').subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {
@@ -1301,7 +1299,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                     } else {
                         this.toastr.error("You Can't Delete Contact Which One Is To Related to Matters");
                     }
-                });;
+                });
             }
             this.confirmDialogRef = null;
         });
@@ -1355,7 +1353,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 });
             }
         });
-
     }
     //DuplicateGeneral
     DuplicateGeneral() {
@@ -1416,7 +1413,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 this.ChronologyLegalData = result;
             }
         });
-
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
@@ -1432,7 +1428,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                     } else {
                         this.toastr.error("You Can't Delete Contact Which One Is To Related to Matters");
                     }
-                });;
+                });
             }
             this.confirmDialogRef = null;
         });
@@ -1440,7 +1436,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     /* Dairy Appointment Module's Function's **/
     //New - Edit - Duplicate Appointment Dialog
     DiaryAppointment(actionType) {
-
         let DiaryPopupData = {}
         if (actionType == 'new') {
             DiaryPopupData = { action: actionType };
@@ -1502,32 +1497,25 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else if (x[1] == "create-document") {
             this.activedocument = x[1];
             this.isTabShow = 10;
-
             if (x[2] == "matter-template" || x[2] == "email-matter-template" || x[2] == "packs-matter-template") {
-
-
                 this.TemplateUrlHandel = '/create-document/matter-template'
                 this.emailrouting = '/create-document/email-matter-template';
                 this.packrouting = '/create-document/packs-matter-template';
                 this.packsToobar = 'Packs';
-
             }
             else if (x[2] == "invoice-template" || x[2] == "email-invoice-template" || x[2] == "packs-invoice-template") {
-
                 this.TemplateUrlHandel = '/create-document/invoice-template'
                 this.emailrouting = '/create-document/email-invoice-template';
                 this.packrouting = '/create-document/packs-invoice-template';
                 this.packsToobar = 'Packs';
             }
             else if (x[2] == "contact-template" || x[2] == "email-contact-template" || x[2] == "packs-contact-template") {
-
                 this.TemplateUrlHandel = '/create-document/contact-template'
                 this.emailrouting = '/create-document/email-contact-template';
                 this.packrouting = '/create-document/packs-contact-template';
                 this.packsToobar = 'Packs';
             }
             else if (x[2] == "receive-money-template" || x[2] == "email-receive-money-template" || x[2] == "packs-receive-money-template") {
-
                 this.TemplateUrlHandel = '/create-document/receive-money-template'
                 this.emailrouting = '/create-document/email-receive-money-template';
                 this.packrouting = '/create-document/packs-receive-money-template';
@@ -1545,15 +1533,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 15;
         } else if (x[1] == "general-journal") {
             this.isTabShow = 16;
-        }
-        else if (x[1] == "conflict-check") {
+        } else if (x[1] == "conflict-check") {
             this.isTabShow = 17;
         } else if (x[1] == "authorities") {
             this.isTabShow = 18;
         } else if (x[1] == "searching") {
             this.isTabShow = 19;
-        }
-        else if (x[1] == "account-reconciliation") {
+        } else if (x[1] == "account-reconciliation") {
             this.isTabShow = 20;
         } else if (x[1] == "account-management") {
             this.isTabShow = 21;
@@ -1571,7 +1557,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }
         this.activeSubMenu = x[2];
         this.behaviorService.SetActiveSubMenu(this.activeSubMenu);
-               // this.behaviorService.navigation(this.router.url);
+        // this.behaviorService.navigation(this.router.url);
     }
     setTab(event: any) {
         this.selectedIndex = 0;
@@ -1849,7 +1835,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
-                // let receiptData = JSON.parse(localStorage.getItem('receiptData'));
                 let postData = { FormAction: "delete", DATA: { TASKGUID: this.TaskData.TASKGUID } };
                 this._mainAPiServiceService.getSetData(postData, 'SetTask').subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {
@@ -1861,6 +1846,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
             this.confirmDialogRef = null;
         });
+
     }
     //////// End  Task///////////////////
     clickToolbarbtn() {
@@ -1870,7 +1856,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.isDocumentGenerateHide = "no";
     }
     OpenNewSafeCustody(actionType) {
-
         if (actionType == 'new client') {
             const dialogRef = this._matDialog.open(ContactSelectDialogComponent, {
                 width: '100%', disableClose: true,
@@ -1880,38 +1865,64 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
-                    this.SafeCustodyPoup(actionType);
+                    this.SafeCustodyPoup(actionType, result);
                 }
             });
         } else if (actionType == 'new matter') {
             const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
-                    this.SafeCustodyPoup(actionType);
+                    this.SafeCustodyPoup(actionType, result);
+                    $("#mainsafecusday").click();
                 }
             });
         } else {
-            this.SafeCustodyPoup(actionType);
+            this.SafeCustodyPoup(actionType, '');
         }
     }
-    SafeCustodyPoup(actionType) {
+    SafeCustodyPoup(actionType, result) {
         let safeCustodyData = {}
-        if (actionType == 'new client' || actionType == 'new matter' || actionType == 'new') {
-            safeCustodyData = { action: actionType }
+        if (actionType == 'new client' || actionType == 'new matter') {
+            safeCustodyData = { action: actionType, result }
         } else if (actionType == 'edit' || actionType == 'copy') {
-            safeCustodyData = { action: actionType }
+            safeCustodyData = { action: actionType, result }
         }
         const dialogRef = this.dialog.open(SafeCustodyDialogeComponent, {
             disableClose: true,
             panelClass: 'Safe-Custody-dialog',
-            data: safeCustodyData
+            data: {
+                type: safeCustodyData,
+            }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-
                 // $('#refreshEmailTab').click();
             }
         });
+    }
+    DeleteSafeCustody() {
+        this.behaviorService.SafeCustody$.subscribe(result => {
+            if (result) {
+                this.safecustodydata = result;
+            }
+        });
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true, width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                let postData = { FormAction: "delete", DATA: { SAFECUSTODYGUID: this.safecustodydata.SAFECUSTODYGUID } };
+                this._mainAPiServiceService.getSetData(postData, 'SetSafeCustody').subscribe(res => {
+                    if (res.STATUS == "success" && res.CODE == 200) {
+                        $("#mainsafecusday").click();
+                        this.toastr.success('Delete successfully');
+                    }
+                });
+            }
+            this.confirmDialogRef = null;
+        });
+
     }
     // spendmoneyMenubtn(){
     // this.spendMoneyMenu="disabled"; 

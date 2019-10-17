@@ -19,11 +19,11 @@ import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.c
 export class MainSafeCustodyComponent implements OnInit {
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
+  highlightedRows: any;
   ColumnsObj = [];
   pageSize: any;
   isLoadingResults: boolean = false;
   tempColobj: any;
-  highlightedRows: any;
   displayedColumns: any;
   addData: any = [];
   MainSafeCustodyData: any = [];

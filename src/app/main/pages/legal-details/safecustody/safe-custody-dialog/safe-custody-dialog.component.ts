@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
-import { MainAPiServiceService,BehaviorService } from 'app/_services';
+import { MainAPiServiceService,BehaviorService, TimersService } from 'app/_services';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatDialog } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl,FormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
@@ -34,6 +34,9 @@ export class SafeCustodyDialogeComponent implements OnInit {
     MetterGuid:any;
     SafecustodyGuid:any;
     safecustodydata:any=[];
+    cuurentmatter = JSON.parse(localStorage.getItem('set_active_matters'));
+    documnettype:any=[];
+    packetcustody:any=[];
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
    
   constructor(private _mainAPiServiceService:MainAPiServiceService, 
@@ -44,13 +47,14 @@ export class SafeCustodyDialogeComponent implements OnInit {
     public datepipe: DatePipe,
     public dialogRef: MatDialogRef<SafeCustodyDialogeComponent>,
     public _matDialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data: any) {       
+    private Timersservice: TimersService,
+    @Inject(MAT_DIALOG_DATA) public data: any) {  
         this.action = data.type.action;
         this.contact = data.type.result;
         this.matterno = data.type.result;
-        if(this.action === 'new client' || this.action === 'new matter' ){
+        if(this.action === 'new client' || this.action === 'new matter' || this.action === 'newlegal'){
           this.dialogTitle = 'New Safe Custody';
-        }else if(this.action === 'edit'){
+        }else if(this.action === 'edit' || this.action === 'editlegal'){
           this.dialogTitle = 'Update Safe Custody';
         }else if(this.action === 'copy'){
           this.dialogTitle = 'Duplicate Safe Custody';
@@ -67,23 +71,24 @@ export class SafeCustodyDialogeComponent implements OnInit {
       Matternum: [''],
       Owener:[''],
       Packet:[''],
-      DocumentType:[''],
-      Dscription:[''],
-      DocumentWeb:[''],
+      DOCUMENTTYPE:[''],
+      SAFECUSTODYDESCRIPTION:[''],
+      DOCUMENTNAME:[''],
       DateSafecustody:[''],
-      Text:[''],
+      ADDITIONALTEXT:[''],
       Dateperson:[''],
-      ContactName:[''],
+      CHECKINCONTACTNAME:[''],
       MetterGuid:[''],
       ConatctGuid:[''],
       SAFECUSTODYGUID:[''],
+      PACKETGUID:[''],
       SendRevieDate:[this.datepipe.transform(new Date(), 'dd/MM/yyyy')],
       SendCheckinDate:[this.datepipe.transform(new Date(), 'dd/MM/yyyy')]
     });
-    if (this.action == 'edit' || this.action === 'copy'){
-      this.EditSafeCustody();
+    if (this.action == 'edit' || this.action === 'copy' || this.action === 'editlegal'){
+        this.EditSafeCustody();
     }
-    if(this.action === 'new client'){
+    if(this.action === 'new client'){     
       this.SafeCustody.controls['Matternum'].setValue('No Matter');
       this.SafeCustody.controls['Owener'].setValue(this.contact.CONTACTNAME);
       this.SafeCustody.controls['ConatctGuid'].setValue(this.contact.CONTACTGUID);
@@ -92,7 +97,14 @@ export class SafeCustodyDialogeComponent implements OnInit {
       this.SafeCustody.controls['Owener'].setValue(this.matterno.CONTACTNAME);
       this.SafeCustody.controls['MetterGuid'].setValue(this.matterno.MATTERGUID);
       this.SafeCustody.controls['ConatctGuid'].setValue(this.contact.CONTACTGUID);
+    }else if(this.action === 'newlegal'){
+      this.SafeCustody.controls['Matternum'].setValue(this.cuurentmatter.SHORTNAME);
+      this.SafeCustody.controls['Owener'].setValue(this.cuurentmatter.CONTACTNAME);
+      this.SafeCustody.controls['MetterGuid'].setValue(this.cuurentmatter.MATTERGUID);
+      this.SafeCustody.controls['ConatctGuid'].setValue(this.cuurentmatter.CONTACTGUID);
     }
+    this.DocumentType();
+    this.PacketCustody();
   }
   get f() {
     return this.SafeCustody.controls;
@@ -110,8 +122,6 @@ export class SafeCustodyDialogeComponent implements OnInit {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({ SAFECUSTODYGUID: this.safecustodydata.SAFECUSTODYGUID }, 'GetSafeCustody').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
-        // console.log('editpop');
-        // console.log(res);
         this.SafeCustody.controls['SAFECUSTODYGUID'].setValue(res.DATA.SAFECUSTODIES[0].SAFECUSTODYGUID);
         this.SafeCustody.controls['MetterGuid'].setValue(res.DATA.SAFECUSTODIES[0].MATTERGUID);
         this.SafeCustody.controls['ConatctGuid'].setValue(res.DATA.SAFECUSTODIES[0].CONTACTGUID);
@@ -141,18 +151,18 @@ export class SafeCustodyDialogeComponent implements OnInit {
       this.SafecustodyGuid = this.f.SAFECUSTODYGUID.value;
       this.ConatctGuid = this.f.ConatctGuid.value;
       this.MetterGuid = this.f.MetterGuid.value;  
-    }else if(this.action === 'new client'){
-      this.SafecustodyGuid = ''
+    }else if(this.action === 'new client' || this.action === 'newlegal'){
+      this.SafecustodyGuid = ""
       this.ConatctGuid = this.f.ConatctGuid.value;
-      this.MetterGuid = '';
+      this.MetterGuid = "";
       this.FormAction = 'insert'      
     }else if(this.action === 'new matter'){
-      this.SafecustodyGuid = ''
+      this.SafecustodyGuid = ""
       this.ConatctGuid = this.f.ConatctGuid.value;
       this.MetterGuid = this.f.MetterGuid.value;
       this.FormAction = 'insert'
     }else if(this.action === 'copy'){
-      this.SafecustodyGuid = ''
+      this.SafecustodyGuid = ""
       this.ConatctGuid = this.f.ConatctGuid.value;
       this.MetterGuid = this.f.MetterGuid.value;
       this.FormAction = 'insert'
@@ -160,40 +170,41 @@ export class SafeCustodyDialogeComponent implements OnInit {
     //return;
     let data = {
       SAFECUSTODYGUID: this.SafecustodyGuid,
+      SAFECUSTODYPACKETGUID:this.f.PACKETGUID.value,
       MATTERGUID: this.MetterGuid,
       CONTACTGUID:  this.ConatctGuid,
-      PACKETNUMBER: this.f.Packet.value,
-      DOCUMENTTYPE: this.f.DocumentType.value,
-      SAFECUSTODYDESCRIPTION: this.f.Dscription.value,
-      DOCUMENTNAME: this.f.DocumentWeb.value,
-      REMINDERDATE:this.ReviewDate,
-     
-      // REMINDERGROUP: {
-      //   REMINDER: this.f.REMINDER.value,
-      //   REMINDERDATE: this.RimindereDate,
-      //   REMINDERTIME: this.RimindereTime,
-      // }
+      DOCUMENTTYPE: this.f.DOCUMENTTYPE.value,
+      SAFECUSTODYDESCRIPTION: this.f.SAFECUSTODYDESCRIPTION.value,
+      DOCUMENTNAME: this.f.DOCUMENTNAME.value,
+      ADDITIONALTEXT:this.f.ADDITIONALTEXT.value, 
+      STATUS: "",       
+      CHECKINDATE:this.CheckIndate,
+      CHECKINCONTACTNAME:this.f.CHECKINCONTACTNAME.value,
+      REMINDERGROUP: {
+        REMINDER: "",
+        REMINDERDATE: this.ReviewDate,
+        REMINDERTIME: "",
+      }
     }
+    console.log(data);
+    //return;
     this.isspiner = true;
     let finalData = { DATA: data, FormAction: this.FormAction, VALIDATEONLY: true }
-    // this._mainAPiServiceService.getSetData(finalData, 'SetSafeCustody').subscribe(response => {
-    //   if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-    //     this.checkValidation(response.DATA.VALIDATIONS, finalData);
-    //   } else if (response.CODE == 451 && response.STATUS == 'warning') {
-    //     this.checkValidation(response.DATA.VALIDATIONS, finalData);
-    //   } else if (response.CODE == 450 && response.STATUS == 'error') {
-    //     this.checkValidation(response.DATA.VALIDATIONS, finalData);
-    //   } else if (response.MESSAGE == 'Not logged in') {
-    //     this.dialogRef.close(false);
-    //   } else {
-    //     this.isspiner = false;
-    //   }
-
-    // }, err => {
-    //   this.toastr.error(err);
-    // });
-
-
+    this._mainAPiServiceService.getSetData(finalData, 'SetSafeCustody').subscribe(response => {     
+      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        this.checkValidation(response.DATA.VALIDATIONS, finalData);
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
+        this.checkValidation(response.DATA.VALIDATIONS, finalData);
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
+        this.checkValidation(response.DATA.VALIDATIONS, finalData);
+      } else if (response.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      } else {
+        this.isspiner = false;
+      }
+    }, err => {
+       this.toastr.error(err);
+    });
   }
   checkValidation(bodyData: any, details: any) {
     let errorData: any = [];
@@ -202,13 +213,14 @@ export class SafeCustodyDialogeComponent implements OnInit {
     let tempWarning: any = [];
     bodyData.forEach(function (value) {
       if (value.VALUEVALID == 'No') {
-          errorData.push(value.ERRORDESCRIPTION);
-          tempError[value.FIELDNAME] = value;
+        errorData.push(value.ERRORDESCRIPTION);
+        tempError[value.FIELDNAME] = value;
       }
       else if (value.VALUEVALID == 'Warning') {
         tempWarning[value.FIELDNAME] = value;
         warningData.push(value.ERRORDESCRIPTION);
       }
+
     });
     this.errorWarningData = { "Error": tempError, 'Warning': tempWarning };
     if (Object.keys(errorData).length != 0)
@@ -229,17 +241,18 @@ export class SafeCustodyDialogeComponent implements OnInit {
       });
     }
     if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
-      this.SafeCusodySave(details);
-      this.isspiner = false;
+    this.SafeCusodySave(details);
+    this.isspiner = false;
   }
-  SafeCusodySave(data: any) {
+
+  SafeCusodySave(data: any){
     data.VALIDATEONLY = false;
     this._mainAPiServiceService.getSetData(data, 'SetSafeCustody').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         if (this.action !== 'edit') {
-          this.toastr.success('save successfully');
+          this.toastr.success(' save successfully');
         } else {
-          this.toastr.success('update successfully');
+          this.toastr.success(' update successfully');
         }
         this.isspiner = false;
         this.dialogRef.close(true);
@@ -254,6 +267,42 @@ export class SafeCustodyDialogeComponent implements OnInit {
     }, error => {
       this.toastr.error(error);
     });
+  }
+  
+  DocumentType(){
+    this.Timersservice.GetLookupsData({LookupType:'Document Type'}).subscribe(res => {
+      if (res.CODE == 200 && res.STATUS == "success") {
+        this.documnettype = res.DATA.LOOKUPS;
+      } else if (res.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      } else {
+        this.documnettype = [];
+      }
+      this.isLoadingResults = false;
+    }, err => {
+      this.toastr.error(err);
+    });
+  }
+  
+  PacketCustody(){
+    this._mainAPiServiceService.getSetData({}, 'GetSafeCustodyPacket').subscribe(res => {
+      if (res.CODE == 200 && res.STATUS == "success") {
+        //console.log(res);
+        this.packetcustody = res.DATA.SAFECUSTODYPACKETS;
+      } else if (res.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      }else{
+        this.packetcustody = [];
+      }
+      this.isLoadingResults = false;
+    }, err => {
+      this.toastr.error(err);
+      this.isLoadingResults = false;
+    });
+  }
+  selectPacket(value){
+    let packetid = this.packetcustody.find(c => c['PACKETNUMBER'] == value)
+    this.SafeCustody.controls['PACKETGUID'].setValue(packetid.SAFECUSTODYPACKETGUID);
   }
  
 }

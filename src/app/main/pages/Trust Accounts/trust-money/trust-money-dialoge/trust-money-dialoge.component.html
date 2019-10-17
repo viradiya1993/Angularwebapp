@@ -1,151 +1,112 @@
 <div class="example-loading-shade" *ngIf="isLoadingResults">
-        <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
-    </div>
-    <div cdkDrag class="popup_main_div add_edit_contact_main" >
-        <h2 cdkDragHandle mat-dialog-title>{{title}}
-          <button class="btn" mat-icon-button   [mat-dialog-close]="false" aria-label="Close dialog">
-            <mat-icon>close</mat-icon>
-          </button>
-        </h2>
-        <div mat-dialog-content class="mat-typography main">
-          <div class="one" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
-              <form  fxLayout="column" fxFlex="1 0 auto" >
-               
+    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+</div>
+<div cdkDrag class="popup_main_div add_edit_contact_main">
+    <h2 cdkDragHandle mat-dialog-title>{{title}}
+        <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </h2>
+    <div mat-dialog-content class="mat-typography main">
+        <div class="one" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+            <form fxLayout="column" fxFlex="1 0 auto">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                        <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4" >
-                                <input  matInput [matDatepicker]="picker" placeholder="Transaction Date">
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-datepicker #picker></mat-datepicker>
-                        </mat-form-field>                
-                         <mat-form-field  appearance="outline" fxFlex="50" class=" pr-4">
-                                <mat-label>Picture</mat-label>
-                                <input  placeholder="Picture" matInput>
-                        </mat-form-field>
-              </div>
-
-              <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-
-                  <mat-form-field appearance="outline" fxFlex="50" class="pr-4" >
-                      <mat-label>Payment Type</mat-label>
-                      <mat-select (selectionChange)="PaymentTypeChange($event.value)" [(ngModel)]="TrustMoneyData.PaymentType" name="PaymentType"   placeholder="Payment Type">
-                          <mat-option  *ngIf="action!='Transfer'"  value="Cheque">Cheque</mat-option>
-                          <mat-option  *ngIf="action !='Transfer'" value="EFT">EFT</mat-option>
-                          <mat-option *ngIf="action =='receipt'|| action =='money receipt' || action =='money withdrawal'" value="Cash">Cash</mat-option>
-                          <mat-option *ngIf="action =='Transfer'" value="Transfer">Transfer</mat-option>
-                          <mat-option *ngIf="action =='money receipt' || action =='money withdrawal'" value="Bank">Bank</mat-option>
-                      </mat-select>
-                  </mat-form-field>
-
-              <mat-form-field  appearance="outline" fxFlex="50" class=" pr-4">
-                  <mat-label>Received Form</mat-label>
-                  <input  placeholder="Received Form" matInput>
-              </mat-form-field>
-            </div>
-
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-checkbox *ngIf="matterType === true" [disabled]="action =='office'" name="CheckBox" [(ngModel)]="TrustMoneyData.CheckBox"  (change)="CheckBoxClick($event.checked)" class="pr-4">Multiple Matters </mat-checkbox>
-                    <mat-checkbox *ngIf="matterType === false" [disabled]="action =='office'" name="CheckBox" [(ngModel)]="TrustMoneyData.CheckBox"  (change)="CheckBoxClick($event.checked)" class="pr-4">Single Matters </mat-checkbox>
-                       
-            
-            </div>
-
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <mat-tab-group mat-align-tabs="start">
-                   
-                  <mat-tab *ngIf="action === 'Cancelled Cheque' || action === 'Unknown Deposit' || ForDetailTab== 'Statutory Deposit' || ForDetailTab== 'Statutory Receipt'"  label="Details">
-                    <div class="item_pad"  fxLayout="column">
-                    <div  fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                            <mat-form-field class="example" fxFlex="80" class="pr-4"  appearance="outline" >
-                                    <mat-label>Ledger</mat-label>
-                                    <input    matInput>
-                                </mat-form-field> 
-                                <p>Nil Value Ledger : $0.00</p>
-                          
-                      </div>
-                      <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                      <mat-form-field  appearance="outline" fxFlex="100" class=" pr-4" >
-                            <mat-label>Reason</mat-label>
-                          <textarea  cdkTextareaAutosize
-                          cdkAutosizeMinRows="5"
-                          cdkAutosizeMaxRows="5"  matInput ></textarea>
-                        </mat-form-field>
-                    </div>
-                   
-                      </div>
-                </mat-tab>
-                  
-                  
-                  
-                  <mat-tab *ngIf="matterType === false && (action !='office' && action !='Cancelled Cheque' && action !='Unknown Deposit' && ForDetailTab !='Statutory Deposit' && ForDetailTab !='Statutory Receipt')" label="Single Matter">
-                        <div class="item_pad"  fxLayout="column">
-                        <div *ngIf="action === 'money receipt' ||action === 'money withdrawal' " fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                <mat-form-field class="example" fxFlex="80" class="pr-4"  appearance="outline" >
+                    <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
+                        <input matInput [matDatepicker]="picker" placeholder="Transaction Date">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
+                        <mat-label>Picture</mat-label>
+                        <input placeholder="Picture" matInput>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Payment Type</mat-label>
+                        <mat-select (selectionChange)="PaymentTypeChange($event.value)" [(ngModel)]="TrustMoneyData.PaymentType" name="PaymentType" placeholder="Payment Type">
+                            <mat-option *ngIf="action!='Transfer'" value="Cheque">Cheque</mat-option>
+                            <mat-option *ngIf="action !='Transfer'" value="EFT">EFT</mat-option>
+                            <mat-option *ngIf="action =='receipt'|| action =='money receipt' || action =='money withdrawal'" value="Cash">Cash</mat-option>
+                            <mat-option *ngIf="action =='Transfer'" value="Transfer">Transfer</mat-option>
+                            <mat-option *ngIf="action =='money receipt' || action =='money withdrawal'" value="Bank">Bank</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
+                        <mat-label>Received Form</mat-label>
+                        <input placeholder="Received Form" matInput>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-checkbox *ngIf="matterType === true" [disabled]="action =='office'" name="CheckBox" [(ngModel)]="TrustMoneyData.CheckBox" (change)="CheckBoxClick($event.checked)" class="pr-4">Multiple Matters </mat-checkbox>
+                    <mat-checkbox *ngIf="matterType === false" [disabled]="action =='office'" name="CheckBox" [(ngModel)]="TrustMoneyData.CheckBox" (change)="CheckBoxClick($event.checked)" class="pr-4">Single Matters </mat-checkbox>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-tab-group mat-align-tabs="start">
+                        <mat-tab *ngIf="matterType === false && action !='office'" label="Single Matter">
+                            <div class="item_pad" fxLayout="column">
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field class="example" fxFlex="80" class="pr-4" appearance="outline">
                                         <mat-label>Matter</mat-label>
-                                        <input    matInput>
-                                    </mat-form-field> 
-                                    <mat-icon class="set_icon" matSuffix (click)='SelectMatter()'  >
-                                            <img class="icon_set" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                        </mat-icon>
-                          </div>
-                          <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                          <mat-form-field  appearance="outline" fxFlex="100" class=" pr-4" >
-                                <mat-label>Reason</mat-label>
-                              <textarea  cdkTextareaAutosize
-                              cdkAutosizeMinRows="5"
-                              cdkAutosizeMaxRows="5"  matInput ></textarea>
-                            </mat-form-field>
-                        </div>
-                       
-                          </div>
-                    </mat-tab>
-
-                    <mat-tab *ngIf="matterType === true && action !='office'"  label="Multiple Matter">
-                            <div class="item_pad"  fxLayout="column">
-                            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example" fxFlex="80" class="pr-4"  appearance="outline" >
-                                            <mat-label>Matter</mat-label>
-                                            <input    matInput>
-                                        </mat-form-field> 
-                                        <mat-icon class="set_icon" matSuffix (click)='SelectMatter()'  >
-                                                <img class="icon_set" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                            </mat-icon>
-                              </div>
-                              <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                              <mat-form-field  appearance="outline" fxFlex="100" class=" pr-4" >
-                                    <mat-label>Reason</mat-label>
-                                  <textarea  cdkTextareaAutosize
-                                  cdkAutosizeMinRows="5"
-                                  cdkAutosizeMaxRows="5"  matInput ></textarea>
-                                </mat-form-field>
+                                        <input matInput>
+                                    </mat-form-field>
+                                    <mat-icon class="set_icon" matSuffix (click)='SelectMatter()'>
+                                        <img class="icon_set" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                    </mat-icon>
+                                </div>
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field appearance="outline" fxFlex="100" class=" pr-4">
+                                        <mat-label>Reason</mat-label>
+                                        <textarea cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" matInput></textarea>
+                                    </mat-form-field>
+                                </div>
                             </div>
-                            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    
-                                <mat-form-field class="example"   fxFlex="33" class="pr-4" appearance="outline" >
-                                            <mat-label>Matter</mat-label>
-                                            <input   matInput>
-                                        </mat-form-field> 
-                                        <button fxFlex="33" class="pr-4" mat-button (click)="AddMoneyItem()">
-                                        <mat-icon class="main-icon">
-                                                <img src="assets/icons/web_app/icon_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                            <div class="main-text">
-                                                <span>Add</span>
-                                            </div>
-                                            </button>
-                                            <button fxFlex="33" class="pr-4" mat-button (click)="AddMoneyItem()">
-                                                    <mat-icon class="main-icon">
-                                                            <img src="assets/icons/web_app/icon_generic_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                                            </mat-icon>
-                                                        <div class="main-text">
-                                                            <span>Remove</span>
-                                                        </div>
-                                                        </button>
+                        </mat-tab>
+                        <mat-tab *ngIf="matterType === true && action !='office'" label="Multiple Matter">
+                            <div class="item_pad" fxLayout="column">
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field class="example" fxFlex="80" class="pr-4" appearance="outline">
+                                        <mat-label>Matter</mat-label>
+                                        <input matInput>
+                                    </mat-form-field>
+                                    <mat-icon class="set_icon" matSuffix (click)='SelectMatter()'>
+                                        <img class="icon_set" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                    </mat-icon>
+                                </div>
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field appearance="outline" fxFlex="100" class=" pr-4">
+                                        <mat-label>Reason</mat-label>
+                                        <textarea cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" matInput></textarea>
+                                    </mat-form-field>
+                                </div>
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
-                              
-                                
-                            </div>
-                            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" >
-                                    <mat-card> 
+                                    <mat-form-field class="example" fxFlex="33" class="pr-4" appearance="outline">
+                                        <mat-label>Matter</mat-label>
+                                        <input matInput>
+                                    </mat-form-field>
+                                    <button fxFlex="33" class="pr-4" mat-button>
+                                      <mat-icon class="main-icon">
+                                              <img src="assets/icons/web_app/icon_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                              </mat-icon>
+                                          <div class="main-text">
+                                              <span>Add</span>
+                                          </div>
+                                          </button>
+                                    <button fxFlex="33" class="pr-4" mat-button>
+                                                  <mat-icon class="main-icon">
+                                                          <img src="assets/icons/web_app/icon_generic_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                          </mat-icon>
+                                                      <div class="main-text">
+                                                          <span>Remove</span>
+                                                      </div>
+                                                      </button>
+
+
+
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-card>
                                         <div class="customer">
                                             <table class="simple" [@animateStagger]="{value:'50'}">
                                                 <tr>
@@ -153,253 +114,243 @@
                                                     <th>Amount</th>
                                                 </tr>
                                                 <!-- <tr *ngFor="let item of getDataForTable; let index = index" (click)="editMoney(item ,index);highlightedRows=index" [style.background]="highlightedRows == index ? selectedColore : ''" [ngClass]="highlightedRows == index ? 'row-text-colore' : ''" matRipple
-                                                    [@animate]="{value:'*',params:{y:'100%'}}">
-                                                    <td>{{item.AMOUNT}}</td>
-                                                    <td>{{item.EXPENDITURECLASS}}</td>
-                                                    <td>{{item.GST}}</td>
-                                                    <td>{{item.SHORTNAME}}</td>
-                                                    <td>{{item.NOTE}}</td>
-                                                </tr> -->
-                
+                                                  [@animate]="{value:'*',params:{y:'100%'}}">
+                                                  <td>{{item.AMOUNT}}</td>
+                                                  <td>{{item.EXPENDITURECLASS}}</td>
+                                                  <td>{{item.GST}}</td>
+                                                  <td>{{item.SHORTNAME}}</td>
+                                                  <td>{{item.NOTE}}</td>
+                                              </tr> -->
+
                                             </table>
                                         </div>
-                                    </mat-card>                                  
+                                    </mat-card>
                                 </div>
-                                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" >
-                                        <mat-form-field class="example"   fxFlex="50" class="pr-4" appearance="outline" >
-                                                <mat-label>Total</mat-label>
-                                                <input    matInput>
-                                            </mat-form-field> 
-                                            <mat-form-field class="example"   fxFlex="50" class="pr-4" appearance="outline" >
-                                                    <mat-label>Unallocated</mat-label>
-                                                    <input     matInput>
-                                                </mat-form-field> 
-                                    
+                                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline">
+                                        <mat-label>Total</mat-label>
+                                        <input matInput>
+                                    </mat-form-field>
+                                    <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline">
+                                        <mat-label>Unallocated</mat-label>
+                                        <input matInput>
+                                    </mat-form-field>
+
                                 </div>
 
-                              </div>
+                            </div>
                         </mat-tab>
 
 
                         <mat-tab *ngIf="action == 'office'" label="Trust To Office">
-                            <div class="item_pad"  fxLayout="column">
-                                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" >
-                                        <mat-card>     
-                                    <table mat-table [dataSource]="dataSource" class="table mat-elevation-z8">
+                            <div class="item_pad" fxLayout="column">
+                                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-card>
+                                        <table mat-table [dataSource]="dataSource" class="table mat-elevation-z8">
 
-                                                <!-- Checkbox Column -->
-                                                <ng-container matColumnDef="select">
-                                                  <th mat-header-cell *matHeaderCellDef>
-                                                    <mat-checkbox (change)="$event ? masterToggle() : null"
-                                                                  [checked]="selection.hasValue() && isAllSelected()"
-                                                                  [indeterminate]="selection.hasValue() && !isAllSelected()"
-                                                                  [aria-label]="checkboxLabel()">
+                                            <!-- Checkbox Column -->
+                                            <ng-container matColumnDef="select">
+                                                <th mat-header-cell *matHeaderCellDef>
+                                                    <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
                                                     </mat-checkbox>
-                                                  </th>
-                                                  <td mat-cell *matCellDef="let row">
-                                                    <mat-checkbox (click)="$event.stopPropagation()"
-                                                                  (change)="$event ? selection.toggle(row) : null"
-                                                                  [checked]="selection.isSelected(row)"
-                                                                  [aria-label]="checkboxLabel(row)">
+                                                </th>
+                                                <td mat-cell *matCellDef="let row">
+                                                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
                                                     </mat-checkbox>
-                                                  </td>
-                                                </ng-container>
-                                              
-                                                <!-- Position Column -->
-                                                <ng-container matColumnDef="position">
-                                                  <th mat-header-cell *matHeaderCellDef> No. </th>
-                                                  <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-                                                </ng-container>
-                                              
-                                                <!-- Name Column -->
-                                                <ng-container matColumnDef="name">
-                                                  <th mat-header-cell *matHeaderCellDef> Name </th>
-                                                  <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                                                </ng-container>
-                                              
-                                                <!-- Weight Column -->
-                                                <ng-container matColumnDef="weight">
-                                                  <th mat-header-cell *matHeaderCellDef> Weight </th>
-                                                  <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-                                                </ng-container>
-                                              
-                                                <!-- Symbol Column -->
-                                                <ng-container matColumnDef="symbol">
-                                                  <th mat-header-cell *matHeaderCellDef> Symbol </th>
-                                                  <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-                                                </ng-container>
-                                              
-                                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-                                                    (click)="selection.toggle(row)">
-                                                </tr>
-                                              </table>
-                                            </mat-card>    
-                                                   
+                                                </td>
+                                            </ng-container>
+
+                                            <!-- Position Column -->
+                                            <ng-container matColumnDef="position">
+                                                <th mat-header-cell *matHeaderCellDef> No. </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                                            </ng-container>
+
+                                            <!-- Name Column -->
+                                            <ng-container matColumnDef="name">
+                                                <th mat-header-cell *matHeaderCellDef> Name </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                                            </ng-container>
+
+                                            <!-- Weight Column -->
+                                            <ng-container matColumnDef="weight">
+                                                <th mat-header-cell *matHeaderCellDef> Weight </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                                            </ng-container>
+
+                                            <!-- Symbol Column -->
+                                            <ng-container matColumnDef="symbol">
+                                                <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                                            </ng-container>
+
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+                                            </tr>
+                                        </table>
+                                    </mat-card>
+
                                 </div>
-                             
-                              <div  fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example pr-4" fxFlex="50"  appearance="outline" >
-                                            <mat-label>Enter override amount</mat-label>
-                                            <input    matInput>
-                                        </mat-form-field> 
-                                      
+
+                                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                        <mat-label>Enter override amount</mat-label>
+                                        <input matInput>
+                                    </mat-form-field>
+
+                                </div>
                             </div>
-                              </div>
                         </mat-tab>
 
-                    <!--start  tab 2 -->
-                    <mat-tab *ngIf="PymentType =='Cheque'" label="Cheque Details">
-                            <div class="item_pad"  fxLayout="column">
-                            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example pr-4" fxFlex="50"  appearance="outline" >
-                                            <mat-label>Cheque No.</mat-label>
-                                            <input type="number"    matInput>
-                                        </mat-form-field> 
-                                        <!-- <mat-checkbox fxFlex="50" class="pr-4" >Multiple Matters </mat-checkbox> -->
-                                        <mat-checkbox fxFlex="50" class="pr-4" >Bank Cheque  </mat-checkbox>
-                              </div>
-                              <div *ngIf="action =='receipt' || action == 'money receipt'" fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example pr-4" fxFlex="100"  appearance="outline" >
-                                            <mat-label>Account Name</mat-label>
-                                            <input    matInput>
-                                        </mat-form-field> 
-                            </div>
-                              <div *ngIf="action =='receipt' || action == 'money receipt'" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example pr-4" fxFlex="50"  appearance="outline" >
-                                            <mat-label>BSB</mat-label>
-                                            <input    matInput>
-                                        </mat-form-field> 
-                                        <mat-form-field class="example pr-4" fxFlex="50"  appearance="outline" >
-                                                <mat-label>A/C No</mat-label>
-                                                <input   matInput>
-                                            </mat-form-field> 
-                            </div>
-                              </div>
-                        </mat-tab>
-                    <!-- end tab 2 -->
-                    <mat-tab *ngIf="PymentType =='EFT'"  label="EFT Details">
-                            <div class="item_pad"  fxLayout="column">
-                            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example pr-4" fxFlex="50"   appearance="outline" >
-                                            <mat-label>Bank Reference</mat-label>
-                                            <input  matInput>
-                                        </mat-form-field> 
-                                        <mat-form-field class="example pr-4" fxFlex="50"  appearance="outline" >
-                                                <mat-label>Account Name</mat-label>
-                                                <input matInput>
-                                            </mat-form-field> 
-                                      
-                              </div>
-                              <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example pr-4" fxFlex="50"   appearance="outline" >
-                                            <mat-label>BSB</mat-label>
-                                            <input  matInput>
-                                        </mat-form-field> 
-                                        <mat-form-field class="example pr-4" fxFlex="50"  appearance="outline" >
-                                                <mat-label>A/C No</mat-label>
-                                                <input value="0"    matInput>
-                                            </mat-form-field>       
-                              </div>
-                              </div>
-                        </mat-tab>
-
-
-                        <mat-tab  *ngIf="PymentType =='Cash'"  label="Cash">
-                                <div class="item_pad"   fxLayout="column">
+                        <!--start  tab 2 -->
+                        <mat-tab *ngIf="PymentType =='Cheque'" label="Cheque Details">
+                            <div class="item_pad" fxLayout="column">
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                        <mat-form-field class="example pr-4" fxFlex="50"  appearance="outline" >
-                                                <mat-label>Coins</mat-label>
-                                                <input  type="number"    matInput>
-                                            </mat-form-field> 
-                                            <mat-form-field class="example pr-4" fxFlex="50"appearance="outline" >
-                                                    <mat-label>Five Dollars</mat-label>
-                                                    <input  type="number"    matInput>
-                                                </mat-form-field> 
-                                  </div>
-                                  <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                        <mat-form-field class="example pr-4" fxFlex="50"  appearance="outline" >
-                                                <mat-label>ten Dollars</mat-label>
-                                                <input  type="number"    matInput>
-                                            </mat-form-field> 
-                                            <mat-form-field class="example pr-4" fxFlex="50"  appearance="outline" >
-                                                    <mat-label>twenty Dollars</mat-label>
-                                                    <input  type="number"   matInput>
-                                                </mat-form-field> 
-                                  </div>
-                                  <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                        <mat-form-field class="example pr-4" fxFlex="50"  appearance="outline" >
-                                                <mat-label>Fifty Dollars</mat-label>
-                                                <input  type="number"  matInput>
-                                            </mat-form-field> 
-                                            <mat-form-field class="example pr-4" fxFlex="50" appearance="outline" >
-                                                    <mat-label>Hundred  Dollars</mat-label>
-                                                    <input  type="number"    matInput>
-                                                </mat-form-field> 
-                                  </div>
-
-                                  <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                        <mat-form-field class="example pr-4" fxFlex="100"   appearance="outline" >
-                                                <mat-label>Cash Total</mat-label>
-                                                <input  type="number"    matInput>
-                                            </mat-form-field> 
-                                           
-                                  </div>
-                                  
-                                  </div>
-                            </mat-tab>
-                    <!-- start tab 3 -->
-                    <mat-tab *ngIf="action != 'Transfer' && action != 'office' && action !='Cancelled Cheque' && action !='Cancelled Cheque'" label="Payor Address">
-                            <div class="item_pad"  fxLayout="column">
-                            <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field  appearance="outline" fxFlex="100" class="pr-4" >
-                                            <mat-label>Address</mat-label>
-                                          <textarea  cdkTextareaAutosize
-                                          cdkAutosizeMinRows="3"
-                                          cdkAutosizeMaxRows="3"  matInput ></textarea>
-                                        </mat-form-field>
-                                      
-                              </div>
-                              <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example pr-4" fxFlex="33"  appearance="outline" >
-                                            <mat-label>Suburb</mat-label>
-                                            <input   matInput>
-                                        </mat-form-field> 
-                                        <mat-form-field class="example pr-4" fxFlex="33"   appearance="outline" >
-                                                <mat-label>State</mat-label>
-                                                <input    matInput>
-                                            </mat-form-field> 
-                                            <mat-form-field class="example pr-4" fxFlex="33"  appearance="outline" >
-                                                    <mat-label>Postcode</mat-label>
-                                                    <input    matInput>
-                                                </mat-form-field> 
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                        <mat-label>Cheque No.</mat-label>
+                                        <input type="number" matInput>
+                                    </mat-form-field>
+                                    <mat-checkbox fxFlex="50" class="pr-4">Multiple Matters </mat-checkbox>
+                                </div>
+                                <div *ngIf="action =='receipt'" fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field class="example pr-4" fxFlex="100" appearance="outline">
+                                        <mat-label>Account Name</mat-label>
+                                        <input matInput>
+                                    </mat-form-field>
+                                </div>
+                                <div *ngIf="action =='receipt'" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                        <mat-label>BSB</mat-label>
+                                        <input matInput>
+                                    </mat-form-field>
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                        <mat-label>A/C No</mat-label>
+                                        <input matInput>
+                                    </mat-form-field>
+                                </div>
                             </div>
-                              </div>
+                        </mat-tab>
+                        <!-- end tab 2 -->
+                        <mat-tab *ngIf="PymentType =='EFT'" label="EFT Details">
+                            <div class="item_pad" fxLayout="column">
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                        <mat-label>Bank Reference</mat-label>
+                                        <input matInput>
+                                    </mat-form-field>
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                        <mat-label>Account Name</mat-label>
+                                        <input matInput>
+                                    </mat-form-field>
+
+                                </div>
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                        <mat-label>BSB</mat-label>
+                                        <input matInput>
+                                    </mat-form-field>
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                        <mat-label>A/C No</mat-label>
+                                        <input value="0" matInput>
+                                    </mat-form-field>
+                                </div>
+                            </div>
                         </mat-tab>
 
-                    
-                    <!-- end tab 3 -->
-                </mat-tab-group>
-            </div>
-            <!-- <mat-divider horizontal></mat-divider> -->
-            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field  appearance="outline" fxFlex="50" class=" pr-4">
-                            <mat-label>Authorised By</mat-label>
-                            <input  placeholder="Authorised By" matInput>
-                        </mat-form-field>
 
-                        <mat-form-field  appearance="outline" fxFlex="50" class=" pr-4">
-                                <mat-label>Prepared By</mat-label>
-                                <input value="Claudine Parkinson (pwd=test)"  placeholder="Prepared By" matInput>
-                            </mat-form-field>
+                        <mat-tab *ngIf="PymentType =='Cash'" label="Cash">
+                            <div class="item_pad" fxLayout="column">
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                        <mat-label>Coins</mat-label>
+                                        <input type="number" matInput>
+                                    </mat-form-field>
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                        <mat-label>Five Dollars</mat-label>
+                                        <input type="number" matInput>
+                                    </mat-form-field>
+                                </div>
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                        <mat-label>ten Dollars</mat-label>
+                                        <input type="number" matInput>
+                                    </mat-form-field>
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                        <mat-label>twenty Dollars</mat-label>
+                                        <input type="number" matInput>
+                                    </mat-form-field>
+                                </div>
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                        <mat-label>Fifty Dollars</mat-label>
+                                        <input type="number" matInput>
+                                    </mat-form-field>
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                        <mat-label>Hundred Dollars</mat-label>
+                                        <input type="number" matInput>
+                                    </mat-form-field>
+                                </div>
 
-            </div>
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field class="example pr-4" fxFlex="100" appearance="outline">
+                                        <mat-label>Cash Total</mat-label>
+                                        <input type="number" matInput>
+                                    </mat-form-field>
 
-              </form>
-          </div>
+                                </div>
+
+                            </div>
+                        </mat-tab>
+                        <!-- start tab 3 -->
+                        <mat-tab *ngIf="action != 'Transfer' && action != 'office'" label="Payor Address">
+                            <div class="item_pad" fxLayout="column">
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                                        <mat-label>Address</mat-label>
+                                        <textarea cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="3" matInput></textarea>
+                                    </mat-form-field>
+
+                                </div>
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field class="example pr-4" fxFlex="33" appearance="outline">
+                                        <mat-label>Suburb</mat-label>
+                                        <input matInput>
+                                    </mat-form-field>
+                                    <mat-form-field class="example pr-4" fxFlex="33" appearance="outline">
+                                        <mat-label>State</mat-label>
+                                        <input matInput>
+                                    </mat-form-field>
+                                    <mat-form-field class="example pr-4" fxFlex="33" appearance="outline">
+                                        <mat-label>Postcode</mat-label>
+                                        <input matInput>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </mat-tab>
+
+
+                        <!-- end tab 3 -->
+                    </mat-tab-group>
+                </div>
+                <!-- <mat-divider horizontal></mat-divider> -->
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
+                        <mat-label>Authorised By</mat-label>
+                        <input placeholder="Authorised By" matInput>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
+                        <mat-label>Prepared By</mat-label>
+                        <input value="Claudine Parkinson (pwd=test)" placeholder="Prepared By" matInput>
+                    </mat-form-field>
+
+                </div>
+
+            </form>
         </div>
-        <mat-dialog-actions align="end" class="popup_ftr">
-            <button mat-raised-button color="accent" [mat-dialog-close]="false" cdkFocusInitial>Save</button>
-            <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
-        </mat-dialog-actions>
     </div>
+    <mat-dialog-actions align="end" class="popup_ftr">
+        <button mat-raised-button color="accent" [mat-dialog-close]="false" cdkFocusInitial>Save</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
+    </mat-dialog-actions>
+</div>

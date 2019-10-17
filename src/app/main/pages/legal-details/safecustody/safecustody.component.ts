@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-import { TableColumnsService, MainAPiServiceService } from './../../../../_services';
+import { TableColumnsService, MainAPiServiceService, BehaviorService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import {MatSort} from '@angular/material';
@@ -15,6 +15,9 @@ import {MatSort} from '@angular/material';
   animations: fuseAnimations
 })
 export class SafecustodyComponent implements OnInit {
+  theme_type = localStorage.getItem('theme_type');
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
+  highlightedRows: any;
   ColumnsObj: any = [];
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   displayedColumns: string[];
@@ -24,7 +27,10 @@ export class SafecustodyComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService,  private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService) { }
+  constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, 
+     private _mainAPiServiceService: MainAPiServiceService,
+      private toastr: ToastrService,
+      public behaviorService: BehaviorService) { }
   safeCustody_table;
   ngOnInit() {
     $('content').addClass('inner-scroll');
@@ -47,8 +53,8 @@ export class SafecustodyComponent implements OnInit {
   LoadData() {
     this.isLoadingResults = true;
     //get autorites  
-    let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
-    this._mainAPiServiceService.getSetData(potData, 'GetSafeCustody').subscribe(response =>{
+    let postData = { 'MatterGUID': this.currentMatter.MATTERGUID };
+    this._mainAPiServiceService.getSetData(postData, 'GetSafeCustody').subscribe(response =>{
       if (response.CODE == 200 && response.STATUS == "success") {
         this.safeCustody_table = new MatTableDataSource(response.DATA.SAFECUSTODIES);
         this.safeCustody_table.paginator = this.paginator;
@@ -85,6 +91,12 @@ export class SafecustodyComponent implements OnInit {
           this.LoadData();
       }
     });
+  }
+  EditLegalCustody(row){
+    this.behaviorService.SafeCustody(row);
+  }
+  RefreshLegalCustody(){
+    this.LoadData();
   }
 }
 

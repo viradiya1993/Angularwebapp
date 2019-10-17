@@ -668,7 +668,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
 
-    CreateDiary(){
+    CreateDiary() {
         $('#saveCreateDiary').click();
     }
 
@@ -1456,18 +1456,18 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //DeleteAppointment
     DeleteAppointment() {
-   this.behaviorService.forDiaryRefersh$.subscribe(result => {    
-    this.DairyData=result;
+        this.behaviorService.forDiaryRefersh$.subscribe(result => {
+            this.DairyData = result;
         });
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
         });
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-        this.confirmDialogRef.afterClosed().subscribe(result => { 
+        this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
                 // this.DairyData.DairyRowClickData 
-                let postData = { FormAction: "delete", data: { APPOINTMENTGUID: ""} }
+                let postData = { FormAction: "delete", data: { APPOINTMENTGUID: "" } }
                 this._mainAPiServiceService.getSetData(postData, 'SetAppointment').subscribe(res => {
                     if (res.STATUS == "success") {
                         this.behaviorService.forDiaryRefersh2("call");
@@ -1509,7 +1509,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 4;
         } else if (x[1] == "diary" || x[1] == 'diary?calander=day' || x[1] == 'diary?calander=week' || x[1] == 'diary?calander=month') {
             this.isTabShow = 5;
-         if (x[2] == "create-diary") {
+            if (x[2] == "create-diary") {
                 this.isTabShow = 26;
             }
         } else if (x[1] == "time-entries") {
@@ -1882,7 +1882,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.isDocumentGenerateHide = "no";
     }
     OpenNewSafeCustody(actionType) {
-        if (actionType == 'new client') {
+        if (actionType === 'new client') {
             const dialogRef = this._matDialog.open(ContactSelectDialogComponent, {
                 width: '100%', disableClose: true,
                 data: {
@@ -1892,25 +1892,41 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     this.SafeCustodyPoup(actionType, result);
+                    $("#mainsafecusday").click();
+                    $("#Legalsafecusday").click();
                 }
             });
-        } else if (actionType == 'new matter') {
+        } else if (actionType === 'new matter') {
             const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     this.SafeCustodyPoup(actionType, result);
                     $("#mainsafecusday").click();
+                    $("#Legalsafecusday").click();
                 }
             });
-        } else {
+        } else if (actionType === 'newlegal') {
             this.SafeCustodyPoup(actionType, '');
         }
+        else {
+            this.SafeCustodyPoup(actionType, '');
+        }
+
+        //  else if (actionType === 'newlegal'){
+        //     this.SafeCustodyPoup(actionType,'');
+        // } else if(actionType === 'editlegal'){
+        //     this.SafeCustodyPoup(actionType,'');
+        // }
     }
     SafeCustodyPoup(actionType, result) {
         let safeCustodyData = {}
-        if (actionType == 'new client' || actionType == 'new matter') {
+        if (actionType === 'new client' || actionType === 'new matter') {
             safeCustodyData = { action: actionType, result }
-        } else if (actionType == 'edit' || actionType == 'copy') {
+        } else if (actionType === 'edit' || actionType === 'copy') {
+            safeCustodyData = { action: actionType, result }
+        } else if (actionType === 'newlegal') {
+            safeCustodyData = { action: actionType, result }
+        } else if (actionType === 'editlegal') {
             safeCustodyData = { action: actionType, result }
         }
         const dialogRef = this.dialog.open(SafeCustodyDialogeComponent, {
@@ -1922,7 +1938,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                // $('#refreshEmailTab').click();
+                $("#mainsafecusday").click();
+                $("#Legalsafecusday").click();
             }
         });
     }
@@ -1930,11 +1947,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.behaviorService.SafeCustody$.subscribe(result => {
             if (result) {
                 this.safecustodydata = result;
+                console.log(result);
             }
         });
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true, width: '100%',
         });
+
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -1942,6 +1961,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 this._mainAPiServiceService.getSetData(postData, 'SetSafeCustody').subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {
                         $("#mainsafecusday").click();
+                        $("#Legalsafecusday").click();
                         this.toastr.success('Delete successfully');
                     }
                 });

@@ -6,7 +6,7 @@ import { FormGroup, FormBuilder, Validators, FormControl,FormsModule } from '@an
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-// import {  MainAPiServiceService } from './../../../../_services';
+
 
 @Component({
   selector: 'app-safe-custody-dialog',
@@ -37,6 +37,7 @@ export class SafeCustodyDialogeComponent implements OnInit {
     cuurentmatter = JSON.parse(localStorage.getItem('set_active_matters'));
     documnettype:any=[];
     packetcustody:any=[];
+    checkboxvalue:any;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
    
   constructor(private _mainAPiServiceService:MainAPiServiceService, 
@@ -213,12 +214,12 @@ export class SafeCustodyDialogeComponent implements OnInit {
     let tempWarning: any = [];
     bodyData.forEach(function (value) {
       if (value.VALUEVALID == 'No') {
-        errorData.push(value.ERRORDESCRIPTION);
-        tempError[value.FIELDNAME] = value;
+          errorData.push(value.ERRORDESCRIPTION);
+          tempError[value.FIELDNAME] = value;
       }
       else if (value.VALUEVALID == 'Warning') {
-        tempWarning[value.FIELDNAME] = value;
-        warningData.push(value.ERRORDESCRIPTION);
+          tempWarning[value.FIELDNAME] = value;
+          warningData.push(value.ERRORDESCRIPTION);
       }
 
     });
@@ -303,6 +304,14 @@ export class SafeCustodyDialogeComponent implements OnInit {
   selectPacket(value){
     let packetid = this.packetcustody.find(c => c['PACKETNUMBER'] == value)
     this.SafeCustody.controls['PACKETGUID'].setValue(packetid.SAFECUSTODYPACKETGUID);
+  }
+  changeValueOfCheckbox(value){
+    console.log(value);
+    if(value === true){
+      this.checkboxvalue = 1;
+    }else{
+      this.checkboxvalue = 0;
+    }
   }
  
 }

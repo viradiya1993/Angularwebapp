@@ -18,6 +18,8 @@ import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
 import {MatTreeModule} from '@angular/material/tree';
 import { GloballySafeCustodyComponent } from './globally-safecustody.component';
 import { MainSafeCustodyComponent } from './main-safe-custody/main-safe-custody.component';
+import { PacketsComponent } from './packets/packets.component';
+import { PacketsDialogComponent } from './packets/packets-dialog/packets-dialog.component';
 
 // import { MainSafeCustodyComponent } from './main-safe-custody.component';
 
@@ -31,13 +33,14 @@ const routes = [
     {
       path: '', component: GloballySafeCustodyComponent, children: [
         { path: 'full-Safe-Custody', component: MainSafeCustodyComponent },
+       { path: 'packets', component: PacketsComponent },
         // { path: 'topic', component: TopicComponent },
       ], canActivate: [AuthGuard]
   }
   ];
 @NgModule({
-  declarations: [GloballySafeCustodyComponent,MainSafeCustodyComponent],
-  entryComponents: [],
+  declarations: [GloballySafeCustodyComponent,MainSafeCustodyComponent, PacketsComponent, PacketsDialogComponent],
+  entryComponents: [PacketsDialogComponent],
   imports: [
     CommonModule,
     MatTreeModule,

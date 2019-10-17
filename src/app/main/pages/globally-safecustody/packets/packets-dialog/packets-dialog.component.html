@@ -1,0 +1,49 @@
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+<div cdkDrag class="popup_main_div add_edit_packets_main" >
+    <h2 cdkDragHandle mat-dialog-title>{{dialogTitle}}
+        <button class="btn" mat-icon-button  [mat-dialog-close]="false" aria-label="Close dialog">
+          <mat-icon>close</mat-icon>
+        </button>
+    </h2>
+    <div mat-dialog-content class="mat-typography main">
+      <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+          <form [formGroup]="packetsform" fxLayout="column" fxFlex="1 0 auto" name="form">
+              <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                  <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PACKETNUMBER,'has-warning':errorWarningData.Warning?.PACKETNUMBER}">
+                      <mat-label>Packet Num</mat-label>
+                      <input formControlName = "PACKETNUMBER" matInput>
+                  </mat-form-field>
+
+                  <mat-form-field class="pr-4" fxFlex="33" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.CONTACT,'has-warning':errorWarningData.Warning?.CONTACT}">
+                      <mat-label>Contact</mat-label>
+                      <input formControlName="CONTACT" readonly  matInput>
+                      <mat-icon matSuffix (click)='SelectContact()'  fxFlex="5">
+                          <img class="seticon" src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                      </mat-icon>
+                  </mat-form-field>
+                
+                  <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.LOCATION,'has-warning':errorWarningData.Warning?.LOCATION}">
+                      <mat-label>Location</mat-label>
+                      <input formControlName = "LOCATION" matInput>
+                  </mat-form-field>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                  <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PACKETDESCRIPTION,'has-warning':errorWarningData.Warning?.PACKETDESCRIPTION}">
+                      <mat-label>Description</mat-label>
+                      <textarea matInput formControlName="PACKETDESCRIPTION"></textarea>
+                  </mat-form-field>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <mat-checkbox formControlName="ISACTIVE">is Active</mat-checkbox>
+              </div>
+          </form>
+      </div>
+    </div>
+    <mat-dialog-actions align="end" class="popup_ftr">
+        <button mat-raised-button color="accent" (click)="PacketsSave()" [disabled]="isspiner" *ngIf="action === 'new'"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
+        <button mat-raised-button color="accent" (click)="PacketsSave()" [disabled]="isspiner" *ngIf="action === 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Update</button>
+        <button mat-raised-button color="accent" (click)="PacketsSave()" [disabled]="isspiner" *ngIf="action !== 'new' && action !== 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Duplicate</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
+    </mat-dialog-actions>
+</div>

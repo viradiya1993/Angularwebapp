@@ -216,6 +216,7 @@ export class SpendMoneyAddComponent implements OnInit {
           }
           this.Classtype(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
         } else if (response.MESSAGE == 'Not logged in') {
+          console.log("nottt loged in");
           this.dialogRef.close(false);
         }
         this.isLoadingResults = false;
@@ -271,6 +272,7 @@ export class SpendMoneyAddComponent implements OnInit {
     }
     this.Paidtype('Paid');
     this.spendmoneyForm.controls['Paid'].setValue("Paid");
+    this.amountCal();
   }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
@@ -697,7 +699,13 @@ export class SpendMoneyAddComponent implements OnInit {
     else if (this.getDataForTable.length == 1 || this.getDataForTable.length == 0) { this.multicheckboxval = 0; }
     else { this.multicheckboxval = 1; }
     //ammount calculation
+    console.log(this.FinalExGSTAmount);
+    // for ammount field 
     this.FinalExGSTAmount = this.setMainAmount - this.setMainGST;
+    if(this.FinalExGSTAmount == 0 ){
+      this.toastr.error("Amount should not be 0");
+      return;
+    }
     let Data = {
       EXPENDITUREGUID: this.action == 'edit' ? this.SendMoney_data.EXPENDITUREGUID : " ",
       EXPENDITURETYPE: this.f.Type.value,
@@ -706,7 +714,7 @@ export class SpendMoneyAddComponent implements OnInit {
       PAYEE: this.f.Payee.value,
       MULTILINE: this.multicheckboxval,
       AMOUNT: this.FinalExGSTAmount,
-      GST: (this.setMainGST).toFixed(2),
+      GST: Number((this.setMainGST).toFixed(2)),
 
       DATE: this.f.DatePaidForSend.value,
       RECEIVEDDATE: this.f.DateIncurredForSend.value,

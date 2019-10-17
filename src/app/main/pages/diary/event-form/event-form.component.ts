@@ -50,7 +50,7 @@ export class EventFormComponent implements OnInit {
   createEventForm(): FormGroup {
     return new FormGroup({
       title: new FormControl(this.event.title),
-      DairyRowClickData: new FormControl(this.event.DairyRowClickData),
+      DairyRowClickData: new FormControl(this.event),
       start: new FormControl(this.event.start),
       end: new FormControl(this.event.end),
       allDay: new FormControl(this.event.allDay),

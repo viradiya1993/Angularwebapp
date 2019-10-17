@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-import {  TableColumnsService, MainAPiServiceService } from '../../../../_services';
+import {  TableColumnsService, MainAPiServiceService, BehaviorService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import {MatSort} from '@angular/material';
@@ -32,7 +32,7 @@ export class ReceiptsCreditsComponent implements OnInit {
   constructor(private dialog: MatDialog,
     private _mainAPiServiceService: MainAPiServiceService,
     private TableColumnsService: TableColumnsService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,public behaviorService: BehaviorService,) { }
 
   ReceiptsCreditsdata;
   ngOnInit() {
@@ -49,6 +49,8 @@ export class ReceiptsCreditsComponent implements OnInit {
       if (res.CODE == 200 && res.STATUS == "success") {
 
         if (res.DATA.RECEIPTS.length != 0) {
+          this.behaviorService.ReceiptData(res.DATA.RECEIPTS[0]);
+          localStorage.setItem('receiptData', JSON.stringify(res.DATA.RECEIPTS[0]));
           localStorage.setItem('TBreceiptData', JSON.stringify(res.DATA.RECEIPTS[0]));
           this.highlightedRows = res.DATA.RECEIPTS[0].INCOMEGUID;
           this.ReceiptsCreditsdata = new MatTableDataSource(res.DATA.RECEIPTS)
@@ -83,6 +85,9 @@ export class ReceiptsCreditsComponent implements OnInit {
   }
   selectId(row: any) {
     this.currentData = row;
+    this.behaviorService.ReceiptData(row);
+    // let receiData = JSON.parse(localStorage.getItem('receiptData'));
+    localStorage.setItem('receiptData', JSON.stringify(row));
     localStorage.setItem('TBreceiptData', JSON.stringify(row));
   }
   openDialog() {

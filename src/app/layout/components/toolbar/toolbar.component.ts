@@ -77,6 +77,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     recouncileItemdata: any;
     ShowGenerateInvoice: string;
     DairyData: any;
+    JournalData: any;
+    receiptData: any;
+    DisabledReceiptTool: string;
     [x: string]: any;
     appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
     @ViewChild(TimeEntriesComponent) TimeEntrieschild: TimeEntriesComponent;
@@ -142,6 +145,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         public MatDialog: MatDialog,
         public behaviorService: BehaviorService
     ) {
+
+        //For receipt 
+        this.behaviorService.ReceiptData$.subscribe(result => {
+            this.DisabledReceiptTool="disabled";
+            if (result) {
+                this.receiptData=result;
+                this.DisabledReceiptTool="enabled";
+            }
+          });
+
         //for Disabled enabled
         this.behaviorService.ConflictDataList$.subscribe(result => {
             if (result == null) { this.disconflictToolbar = 'yes'; } else { this.disconflictToolbar = 'no'; }
@@ -201,6 +214,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 }
             }
         });
+
         //for navigation bar 
         if (this.appPermissions == null) {
             this.appPermissions = [];

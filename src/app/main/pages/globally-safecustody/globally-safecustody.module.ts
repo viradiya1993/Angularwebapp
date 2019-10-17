@@ -16,20 +16,32 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, Sa
 import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
 
 import {MatTreeModule} from '@angular/material/tree';
-import { MainSafeCustodyComponent } from './main-safe-custody.component';
+import { GloballySafeCustodyComponent } from './globally-safecustody.component';
+import { MainSafeCustodyComponent } from './main-safe-custody/main-safe-custody.component';
+
+// import { MainSafeCustodyComponent } from './main-safe-custody.component';
 
 
+// const routes = [
+//   { path: '', component: MainSafeCustodyComponent, canActivate: [AuthGuard] },
+
+// ];
 const routes = [
-  { path: '', component: MainSafeCustodyComponent, canActivate: [AuthGuard] },
-
-];
+    { path: '', redirectTo: '/Safe-Custody/full-Safe-Custody', pathMatch: 'full', canActivate: [AuthGuard] },
+    {
+      path: '', component: GloballySafeCustodyComponent, children: [
+        { path: 'full-Safe-Custody', component: MainSafeCustodyComponent },
+        // { path: 'topic', component: TopicComponent },
+      ], canActivate: [AuthGuard]
+  }
+  ];
 @NgModule({
-  declarations: [MainSafeCustodyComponent],
+  declarations: [GloballySafeCustodyComponent,MainSafeCustodyComponent],
   entryComponents: [],
   imports: [
     CommonModule,
     MatTreeModule,
-     RouterModule.forChild(routes),
+    RouterModule.forChild(routes),
     FuseSharedModule,
     FuseConfirmDialogModule,
     FuseSidebarModule,
@@ -65,11 +77,11 @@ const routes = [
 
   ],
   exports: [
-    MainSafeCustodyComponent
+    // MainSafeCustodyComponent
   ],
   providers: [
     {provide: DateAdapter, useClass: AppDateAdapter},
     {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
   ],
 })
-export class MainSafeCustodyModule { }
+export class GloballySafeCustodyModule { }

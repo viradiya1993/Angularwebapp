@@ -1435,7 +1435,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => { 
             if (result) {
-                let postData = { FormAction: "delete", data: { APPOINTMENTGUID: this.DairyData.DairyRowClickData } }
+                // this.DairyData.DairyRowClickData 
+                let postData = { FormAction: "delete", data: { APPOINTMENTGUID: ""} }
                 this._mainAPiServiceService.getSetData(postData, 'SetAppointment').subscribe(res => {
                     if (res.STATUS == "success") {
                         this.behaviorService.forDiaryRefersh2("call");

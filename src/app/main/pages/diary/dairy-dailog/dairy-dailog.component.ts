@@ -123,7 +123,8 @@ export class DairyDailogComponent implements OnInit {
         this.CheckAllDays(false);
     }else{
       this.isLoadingResults = true;
-      this._mainAPiServiceService.getSetData({ APPOINTMENTGUID: this.DairyData.DairyRowClickData }, 'GetAppointment').subscribe(res => {
+      // this.DairyData.DairyRowClickData
+      this._mainAPiServiceService.getSetData({ APPOINTMENTGUID: "" }, 'GetAppointment').subscribe(res => {
         console.log(res);
         if (res.CODE == 200 && res.STATUS == "success") {
           let Date1 =res.DATA.APPOINTMENTS[0].APPOINTMENTDATE.split("/");

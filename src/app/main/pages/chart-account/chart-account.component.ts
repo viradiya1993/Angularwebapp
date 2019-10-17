@@ -115,6 +115,7 @@ export class ChartAccountComponent implements OnInit {
         this.showData(this.storeDataarray, 0, null);
         this.dataSource.data = this.storeDataarray;
         this.treeControl.dataNodes = this.storeDataarray;
+        this.treeControl.expandAll();
         if (response.DATA.ACCOUNTS[0].SUBACCOUNTS)
           this.RowClick(response.DATA.ACCOUNTS[0].SUBACCOUNTS[0]);
         this.highlightedRows = 1;

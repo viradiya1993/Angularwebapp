@@ -108,6 +108,7 @@ export class DiaryComponent implements OnInit {
        */
     setEvents(): void {
         this.events = this._calendarService.events.map(item => {
+            console.log(item);
             item.actions = this.actions;
             return new DiaryEventModel(item);
         });
@@ -123,7 +124,7 @@ export class DiaryComponent implements OnInit {
             panelClass: 'event-form-dialog',
             data      : {
                 event : event,
-                AppoitmentGuId:event.DairyRowClickData,
+                AppoitmentGuId:event,
                 action: action
             }
         });
@@ -149,7 +150,8 @@ export class DiaryComponent implements OnInit {
                 this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
                 this.confirmDialogRef.afterClosed().subscribe(result => { 
                     if (result) {
-                        let postData = { FormAction: "delete", data: { APPOINTMENTGUID: this.DairyData.DairyRowClickData } }
+                        // this.DairyData.DairyRowClickData 
+                        let postData = { FormAction: "delete", data: { APPOINTMENTGUID:''} }
                         this._mainAPiServiceService.getSetData(postData, 'SetAppointment').subscribe(res => {
                             if (res.STATUS == "success") {
                                 this.behaviorService.forDiaryRefersh2("call");

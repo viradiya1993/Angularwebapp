@@ -219,7 +219,7 @@
                         <span class="currency_sign" matPrefix>$ &nbsp;</span>
                     </mat-form-field>
                     <!-- for expense *ngIf="classtype=='Expence' || classtype=='matter Expence' || classtype=='depreciation' || classtype=='other'" -->
-                    <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+                    <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.EXPENDITUREITEMS,'has-warning':errorWarningData.Warning?.EXPENDITUREITEMS}" appearance="outline" fxFlex="25" class="pr-4">
                         <mat-label *ngIf="classtype=='Expense' || classtype=='Matter Expense' || classtype=='Description' ||classtype=='Others'">Expense a/c </mat-label>
                         <mat-label *ngIf="classtype=='Capital'">Asset a/c </mat-label>
                         <mat-label *ngIf="classtype=='Pay GST'">GST a/c </mat-label>

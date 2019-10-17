@@ -49,6 +49,7 @@ import { DeviceDetectorModule } from 'ngx-device-detector';
 import { ChangePasswordComponent } from './main/change-password/change-password.component';
 import { CKEditorModule } from 'ckeditor4-angular';
 
+
 //end
 const appRoutes: Routes = [
     { path: '', loadChildren: './main/authentication/authentication.module#AuthenticationModule' },
@@ -64,7 +65,7 @@ const appRoutes: Routes = [
         InternalErrorComponent,
         ReportsComponent,
         LicenceAgreementComponent,
-        ChangePasswordComponent
+        ChangePasswordComponent,
     ],
     entryComponents: [
         SortingDialogComponent,

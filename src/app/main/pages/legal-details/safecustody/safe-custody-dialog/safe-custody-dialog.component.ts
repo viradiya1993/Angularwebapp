@@ -305,13 +305,5 @@ export class SafeCustodyDialogeComponent implements OnInit {
     let packetid = this.packetcustody.find(c => c['PACKETNUMBER'] == value)
     this.SafeCustody.controls['PACKETGUID'].setValue(packetid.SAFECUSTODYPACKETGUID);
   }
-  changeValueOfCheckbox(value){
-    console.log(value);
-    if(value === true){
-      this.checkboxvalue = 1;
-    }else{
-      this.checkboxvalue = 0;
-    }
-  }
  
 }

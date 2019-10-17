@@ -718,19 +718,19 @@
                                 <section class="group-section-tab extras_tab">
                                     <section class="ribbon-section">
                                         <mat-nav-list>
-                                            <a  (click)="TrustMoneyPopup('Cancelled Cheque')" mat-list-item  [ngClass]="{'disabled-click-cursor':appPermissions[4]?.Access==0,'cmn_active_tab':activeSubMenu =='estimate'}">
+                                            <a (click)="TrustMoneyPopup('Cancelled Cheque')" mat-list-item [ngClass]="{'disabled-click-cursor':appPermissions[4]?.Access==0,'cmn_active_tab':activeSubMenu =='estimate'}">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_trust_reversal_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <span>Cancelled Cheque </span>
                                             </a>
-                                            <a (click)="TrustMoneyPopup('Unknown Deposit')" mat-list-item  [ngClass]="{'disabled-click-cursor':appPermissions[2]?.Access==0,'cmn_active_tab':activeSubMenu =='work-in-progress'}">
+                                            <a (click)="TrustMoneyPopup('Unknown Deposit')" mat-list-item [ngClass]="{'disabled-click-cursor':appPermissions[2]?.Access==0,'cmn_active_tab':activeSubMenu =='work-in-progress'}">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_trust_receipt_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <span>Unknown Deposit </span>
                                             </a>
-                                            <a (click)="TrustMoneyPopup('Transfer Unknow Deposit')" mat-list-item [ngClass]="{'disabled-click-cursor':appPermissions[2]?.Access==0,'cmn_active_tab':activeSubMenu =='matter-trust'}" >
+                                            <a (click)="TrustMoneyPopup('Transfer Unknow Deposit')" mat-list-item [ngClass]="{'disabled-click-cursor':appPermissions[2]?.Access==0,'cmn_active_tab':activeSubMenu =='matter-trust'}">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_trust_transfer_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
@@ -740,19 +740,19 @@
                                     </section>
                                     <section class="ribbon-section">
                                         <mat-nav-list>
-                                            <a (click)="TrustMoneyPopup('Statutory Deposit')" mat-list-item [ngClass]="{'disabled-click-cursor':appPermissions[7]?.Access==0,'cmn_active_tab':activeSubMenu =='matter-invoices'}" >
+                                            <a (click)="TrustMoneyPopup('Statutory Deposit')" mat-list-item [ngClass]="{'disabled-click-cursor':appPermissions[7]?.Access==0,'cmn_active_tab':activeSubMenu =='matter-invoices'}">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_controlled_withdraw_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <span>Statutory Deposit(to Law Society)</span>
                                             </a>
-                                            <a (click)="TrustMoneyPopup('Statutory Receipt')" mat-list-item [ngClass]="{'disabled-click-cursor':appPermissions[8]?.Access==0,'cmn_active_tab':activeSubMenu =='receipts-credits'}" >
+                                            <a (click)="TrustMoneyPopup('Statutory Receipt')" mat-list-item [ngClass]="{'disabled-click-cursor':appPermissions[8]?.Access==0,'cmn_active_tab':activeSubMenu =='receipts-credits'}">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_controlled_receipt_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <span>Statutory Receipt(from Law Society)</span>
                                             </a>
-                                            <a (click)="TrustMoneyPopup('Release Trust')" mat-list-item [ngClass]="{'disabled-click-cursor':appPermissions[8]?.Access==0,'cmn_active_tab':activeSubMenu =='receipts-credits'}" >
+                                            <a (click)="TrustMoneyPopup('Release Trust')" mat-list-item [ngClass]="{'disabled-click-cursor':appPermissions[8]?.Access==0,'cmn_active_tab':activeSubMenu =='receipts-credits'}">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_trust_reversal_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
@@ -3189,15 +3189,15 @@
                 <!-- Chart Of Account tab End-->
                 <!-- General Journal tab Start-->
 
-                
+
 
                 <mat-tab label="CREATE DIARY ENTTRIES" *ngIf="isTabShow===26">
-                        <section class="ribbon-container legal_details_tab_main">
-                            <mat-card>
-                                <mat-card-content>
-                                    <section class="group-section-tab action_tab">
-                                        <section [ngClass]="appPermissions[19]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                            <button mat-button [ngClass]="appPermissions[19]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="CreateDiary()">
+                    <section class="ribbon-container legal_details_tab_main">
+                        <mat-card>
+                            <mat-card-content>
+                                <section class="group-section-tab action_tab">
+                                    <section [ngClass]="appPermissions[19]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[19]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="CreateDiary()">
                                                 <section class="large-button-container">
                                                     <mat-icon class="main-icon">
                                                         <img src="assets/icons/web_app/Select.ico" alt=""
@@ -3208,9 +3208,9 @@
                                                     </div>
                                                 </section>
                                             </button>
-                                        </section>
-                                        <section [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                            <button mat-button [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="addNewTimeEntry('Edit')">
+                                    </section>
+                                    <section [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="addNewTimeEntry('Edit')">
                                                 <section class="large-button-container">
                                                     <mat-icon class="main-icon">
                                                         <img src="assets/icons/web_app/icon_time_cost_edit_d.ico" alt=""
@@ -3221,16 +3221,16 @@
                                                     </div>
                                                 </section>
                                             </button>
-                                        </section>
-                                     
-                                        <div class="light_label_txt">Action</div>
                                     </section>
-                                
-                                    <mat-divider vertical></mat-divider>
-                                </mat-card-content>
-                            </mat-card>
-                        </section>
-                    </mat-tab>
+
+                                    <div class="light_label_txt">Action</div>
+                                </section>
+
+                                <mat-divider vertical></mat-divider>
+                            </mat-card-content>
+                        </mat-card>
+                    </section>
+                </mat-tab>
 
 
 

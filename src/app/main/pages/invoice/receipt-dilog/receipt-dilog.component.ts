@@ -37,7 +37,7 @@ export class ReceiptDilogComponent implements OnInit {
   receiptData: any;
   formaction: string;
   val: any;
-  displayedColumns: string[] = ['INVOICEDATE', 'INVOICETOTAL', 'AMOUNTOUTSTANDINGINCGST', 'MATTERGUID'];
+  displayedColumns: string[] = ['INVOICEDATE', 'INVOICETOTAL', 'AMOUNTOUTSTANDINGINCGST', 'ALLOCATED', 'MATTERGUID'];
   PrepareReceiptForm: FormGroup;
   PrepareReceiptData: any;
   PrepareReceiptTemp: any;
@@ -245,7 +245,7 @@ export class ReceiptDilogComponent implements OnInit {
     } else if (val == 1) {
       data = { MATTERGUID: this.matterData.MATTERGUID };
     } else if (val == 2) {
-      data = { MATTERGUID: this.matterData.CONTACTNAME };
+      data = { CONTACTGUID: this.matterData.CONTACTGUID };
     }
     this.GetInvoiceForReceipt(data);
   }

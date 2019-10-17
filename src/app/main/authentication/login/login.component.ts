@@ -3,12 +3,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfigService } from '@fuse/services/config.service';
 import { AuthenticationService, AppPermissionsService } from '../../../_services';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../../environments/environment';
-
+import browser from 'browser-detect';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   currentYear: any;
   VERSION: any = environment.VERSION;
   ipAddress: any;
-
+  browserData: any = browser();
   constructor(
     private _fuseConfigService: FuseConfigService,
     private _formBuilder: FormBuilder,
@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
   }
   loginUser() {
     this.isspiner = true;
-    this.authenticationService.login(this.f.email.value, this.f.password.value, this.ipAddress).pipe(first()).subscribe(data => {
+    this.authenticationService.login(this.f.email.value, this.f.password.value, this.ipAddress, this.browserData.name, this.browserData.os, this.browserData.os + '/' + this.browserData.version).pipe(first()).subscribe(data => {
       if (data) {
         this.isspiner = false;
         this._AppPermissionsService.applictionSetting(JSON.parse(localStorage.getItem('Login_response')));

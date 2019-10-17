@@ -20,7 +20,6 @@ import * as $ from 'jquery';
 })
 export class MatterDialogComponentForTemplate implements OnInit {
   message: string;
-  displayedColumns: string[] = ['matternumber', 'matter', 'client'];
   getDataForTable: any = [];
   isspiner: boolean = false;
   highlightedRows: any;

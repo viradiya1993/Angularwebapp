@@ -17,6 +17,7 @@ import { BankingDialogComponent } from '../../banking/banking-dialog.component';
 export class GeneralReceiptDilogComponent implements OnInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   AMOUNT: any;
+  GST: any;
   errorWarningData: any = {};
   action: any;
   constructor(
@@ -35,6 +36,9 @@ export class GeneralReceiptDilogComponent implements OnInit {
   ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
   isLoadingResults: boolean;
   getPayourarray: any;
+  classText: any = 'Income A/C';
+  classType: any = 'INCOME';
+  isGstReadonly: boolean = true;
   gsttypeData: any = [{ id: 1, text: "10% GST" }, { id: 2, text: "No GST" }, { id: 3, text: "< 10% GST" }];
   ngOnInit() {
     // this.isLoadingResults = true;
@@ -47,8 +51,8 @@ export class GeneralReceiptDilogComponent implements OnInit {
       PAYEE: [''],
       PAYEEGUID: [''],
       AMOUNT: [''],
-      // gsttype: [''],
-      // GST: [''],
+      gsttype: [''],
+      GST: [''],
       BANKACCOUNTGUID: [''],
       BANKACCOUNTGUIDTEXT: [''],
       INCOMEACCOUNTGUID: [''],
@@ -60,6 +64,8 @@ export class GeneralReceiptDilogComponent implements OnInit {
     } else {
       let INCOMEDATEVAL = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
       this.generalReceiptForm.controls['INCOMEDATE'].setValue(INCOMEDATEVAL);
+      this.generalReceiptForm.controls['INCOMECLASS'].setValue('Income');
+      this.generalReceiptForm.controls['gsttype'].setValue(1);
     }
 
     this.getPayor({});
@@ -81,10 +87,11 @@ export class GeneralReceiptDilogComponent implements OnInit {
           this.generalReceiptForm.controls['INCOMETYPE'].setValue(incomeData.INCOMETYPE);
           this.generalReceiptForm.controls['PAYEE'].setValue(incomeData.PAYEE);
           this.generalReceiptForm.controls['AMOUNT'].setValue(incomeData.AMOUNT);
-          this.generalReceiptForm.controls['BANKACCOUNTGUIDTEXT'].setValue(incomeData.BANKACCOUNTNUMBER);
-          this.generalReceiptForm.controls['INCOMEACCOUNTGUIDTEXT'].setValue(incomeData.INCOMEACCOUNTNUMBER);
-          this.generalReceiptForm.controls['INCOMEACCOUNTGUID'].setValue(incomeData.INCOMEACCOUNTGUID);
-          this.generalReceiptForm.controls['BANKACCOUNTGUID'].setValue(incomeData.BANKACCOUNTGUID);
+          this.generalReceiptForm.controls['GST'].setValue(incomeData.GST);
+          // this.generalReceiptForm.controls['BANKACCOUNTGUIDTEXT'].setValue(incomeData.BANKACCOUNTNUMBER);
+          // this.generalReceiptForm.controls['INCOMEACCOUNTGUIDTEXT'].setValue(incomeData.INCOMEACCOUNTNUMBER);
+          // this.generalReceiptForm.controls['INCOMEACCOUNTGUID'].setValue(incomeData.INCOMEACCOUNTGUID);
+          // this.generalReceiptForm.controls['BANKACCOUNTGUID'].setValue(incomeData.BANKACCOUNTGUID);
           this.generalReceiptForm.controls['NOTE'].setValue(incomeData.NOTE);
         }
       } else if (response.MESSAGE == 'Not logged in') {
@@ -97,9 +104,40 @@ export class GeneralReceiptDilogComponent implements OnInit {
     });
 
   }
+  classChange(value) {
+    if (value == 'GST Refund') {
+      this.isGstReadonly = false;
+      this.classText = 'GST A/C';
+      this.classType = 'Liability';
+    } else if (value == 'Tax Refund') {
+      this.isGstReadonly = false;
+      this.classText = 'Tax A/C';
+      this.classType = 'Liability';
+    } else if (value == 'Capital') {
+      this.isGstReadonly = true;
+      this.classText = 'Asset A/C';
+      this.classType = 'ASSET';
+    } else if (value == 'Personal') {
+      this.isGstReadonly = false;
+      this.classText = 'Equity A/C';
+      this.classType = 'Equity';
+    } else if (value == 'Other') {
+      this.isGstReadonly = false;
+      this.classText = 'Income A/C';
+      this.classType = 'all';
+    } else {
+      this.isGstReadonly = true;
+      this.classText = 'Income A/C';
+      this.classType = 'INCOME';
+    }
+    this.generalReceiptForm.controls['INCOMEACCOUNTGUIDTEXT'].setValue('');
+    this.generalReceiptForm.controls['INCOMEACCOUNTGUID'].setValue('');
+  }
+  gstTypeChange(value) {
+    this.isGstReadonly = value == 3 ? false : true;
+  }
   PayeeTypeChange(value) {
     this.generalReceiptForm.controls['PAYEE'].setValue(value);
-    ;
   }
   getPayor(postData) {
     this.isLoadingResults = true;
@@ -125,6 +163,11 @@ export class GeneralReceiptDilogComponent implements OnInit {
   }
   amountVal() {
     this.AMOUNT = parseFloat(this.f.AMOUNT.value).toFixed(2);
+    let temV = this.AMOUNT - this.AMOUNT / 1.1;
+    this.GST = temV.toFixed(2);
+  }
+  gstVal() {
+    this.GST = parseFloat(this.f.GST.value).toFixed(2);
   }
   SaveGeneralReceipt() {
     this.isspiner = true;
@@ -135,7 +178,7 @@ export class GeneralReceiptDilogComponent implements OnInit {
       INCOMEDATE: this.f.INCOMEDATE.value,
       PAYEE: this.f.PAYEE.value,
       AMOUNT: this.f.AMOUNT.value,
-      // GST: this.f.GST.value,
+      GST: this.f.GST.value,
       BANKACCOUNTGUID: this.f.BANKACCOUNTGUID.value,
       INCOMEACCOUNTGUID: this.f.INCOMEACCOUNTGUID.value,
       NOTE: this.f.NOTE.value,
@@ -228,12 +271,14 @@ export class GeneralReceiptDilogComponent implements OnInit {
       disableClose: true, width: '100%', data: { AccountType: type, FromWhere: 'generalReceiptIncome' }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result.AccountType == "INCOME") {
-        this.generalReceiptForm.controls['INCOMEACCOUNTGUIDTEXT'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER);
-        this.generalReceiptForm.controls['INCOMEACCOUNTGUID'].setValue(result.ACCOUNTGUID);
-      } else {
-        this.generalReceiptForm.controls['BANKACCOUNTGUIDTEXT'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER);
-        this.generalReceiptForm.controls['BANKACCOUNTGUID'].setValue(result.ACCOUNTGUID);
+      if (result) {
+        if (result.AccountType == "BANK ACCOUNT") {
+          this.generalReceiptForm.controls['BANKACCOUNTGUIDTEXT'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER);
+          this.generalReceiptForm.controls['BANKACCOUNTGUID'].setValue(result.ACCOUNTGUID);
+        } else {
+          this.generalReceiptForm.controls['INCOMEACCOUNTGUIDTEXT'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER);
+          this.generalReceiptForm.controls['INCOMEACCOUNTGUID'].setValue(result.ACCOUNTGUID);
+        }
       }
     });
   }

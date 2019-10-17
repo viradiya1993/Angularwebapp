@@ -108,17 +108,16 @@ export class ReceiptDilogComponent implements OnInit {
       let TBdata = JSON.parse(localStorage.getItem('TBreceiptData'));
       if (this._data.action == 'editForTB')
         this.setInvoiceForReceipt(TBdata.INCOMEGUID);
-      // this.GetInvoiceForReceipt({ 'Outstanding': 'Yes' });
       else if (this._data.action == 'edit' || this._data.action == 'view')
         this.setInvoiceForReceipt(this.receiptData.INCOMEGUID);
     } else if (this._data.action == 'add') {
       this.PrepareReceiptForm.controls['FIRMGUID'].setValue(this.matterData.FIRMGUID);
       this.PrepareReceiptForm.controls['FIRMGUIDTEXT'].setValue(this.matterData.CONTACTNAME);
-      this.PrepareReceiptForm.controls['SHOW'].setValue(3);
+      this.PrepareReceiptForm.controls['SHOW'].setValue(1);
       this.ShowData.push({ id: 1, text: 'Show unpaid invoices for matter : ' + this.matterData.SHORTNAME });
       this.ShowData.push({ id: 2, text: 'Show unpaid invoices for client : ' + this.matterData.CONTACTNAME });
       this.ShowData.push({ id: 3, text: 'Show all unpaid invoices' });
-      this.GetInvoiceForReceipt({ 'Outstanding': 'Yes' });
+      this.GetInvoiceForReceipt({ CONTACTGUID: this.matterData.CONTACTGUID });
     }
     this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: false, Data: {} }, 'SetIncome').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {

@@ -20,10 +20,10 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="25" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.INCOMECLASS,'has-warning':errorWarningData.Warning?.INCOMECLASS}">
                         <mat-label>Class</mat-label>
-                        <mat-select formControlName="INCOMECLASS">
+                        <mat-select formControlName="INCOMECLASS" (selectionChange)="classChange($event.value)">
                             <mat-option value="Income">Income</mat-option>
                             <mat-option value="Capital">Capital</mat-option>
-                            <mat-option value="Receipt">Receipt</mat-option>
+                            <!-- <mat-option value="Receipt">Receipt</mat-option> -->
                             <mat-option value="GST Refund"> GST Refund </mat-option>
                             <mat-option value="Tax Refund">Tax Refund</mat-option>
                             <mat-option value="Personal">Personal</mat-option>
@@ -51,23 +51,34 @@
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="30" [ngClass]="{'has-error':errorWarningData.Error?.AMOUNT,'has-warning':errorWarningData.Warning?.AMOUNT}">
+                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="20" [ngClass]="{'has-error':errorWarningData.Error?.AMOUNT,'has-warning':errorWarningData.Warning?.AMOUNT}">
                         <mat-label>Amount</mat-label>
                         <input matInput class="sideText" type="number" formControlName="AMOUNT" [(ngModel)]="AMOUNT" (focusout)="amountVal()">
                         <span class="currency_sign" matPrefix>$&nbsp;</span>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="35" [ngClass]="{'has-error':errorWarningData.Error?.BANKACCOUNTGUID,'has-warning':errorWarningData.Warning?.BANKACCOUNTGUID}">
+                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="20">
+                        <mat-label>Gst Type</mat-label>
+                        <mat-select (selectionChange)="gstTypeChange($event.value)" formControlName="gsttype">
+                            <mat-option *ngFor="let val of gsttypeData" [value]="val.id">{{val.text}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="20" [ngClass]="{'has-error':errorWarningData.Error?.GST,'has-warning':errorWarningData.Warning?.GST}">
+                        <mat-label>Gst</mat-label>
+                        <input matInput class="sideText" type="number" formControlName="GST" [readonly]="isGstReadonly" [(ngModel)]="GST" (focusout)="gstVal()">
+                        <span class="currency_sign" matPrefix>$&nbsp;</span>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="20" [ngClass]="{'has-error':errorWarningData.Error?.BANKACCOUNTGUID,'has-warning':errorWarningData.Warning?.BANKACCOUNTGUID}">
                         <mat-label>Bank A/C</mat-label>
                         <input matInput formControlName="BANKACCOUNTGUIDTEXT" readonly>
                         <mat-icon matSuffix>
                             <button id="bank" class="matternews" (click)="BankingDialogOpen('BANK ACCOUNT')"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                         </mat-icon>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="35" [ngClass]="{'has-error':errorWarningData.Error?.INCOMEACCOUNTGUID,'has-warning':errorWarningData.Warning?.INCOMEACCOUNTGUID}">
-                        <mat-label>Income A/C</mat-label>
+                    <mat-form-field appearance="outline" class="example pr-4" fxFlex="20" [ngClass]="{'has-error':errorWarningData.Error?.INCOMEACCOUNTGUID,'has-warning':errorWarningData.Warning?.INCOMEACCOUNTGUID}">
+                        <mat-label>{{classText}}</mat-label>
                         <input matInput formControlName="INCOMEACCOUNTGUIDTEXT" readonly>
                         <mat-icon matSuffix>
-                            <button id="bank" class="matternews" (click)="BankingDialogOpen('INCOME')"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
+                            <button id="bank" class="matternews" (click)="BankingDialogOpen(classType)"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                         </mat-icon>
                     </mat-form-field>
                 </div>

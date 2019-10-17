@@ -30,6 +30,7 @@ import { TrustMoneyModule } from './Trust Accounts/trust-money/trust-money.modul
 import { TaskModule } from './Task/task.module';
 import { GloballyAuthorityModule } from './globally-Authority/globally-authority.module';
 import { TimeBillingModule } from './time-billing/time-billing.module';
+import { GloballySafeCustodyModule } from './globally-safecustody/globally-safecustody.module';
 
 const appRoutes: Routes = [
   { path: 'matters', loadChildren: './matters/matters.module#MattersModule' },
@@ -40,6 +41,8 @@ const appRoutes: Routes = [
   { path: 'time-entries', loadChildren: './time-entries/time-entries.module#TimeEntriesModule' },
   { path: 'invoice', loadChildren: './invoice/invoice.module#InvoiceModule' },
   { path: 'authorities', loadChildren: './globally-Authority/globally-authority.module#GloballyAuthorityModule' },
+
+  { path: 'Safe-Custody', loadChildren: './globally-safecustody/globally-safecustody.module#GloballySafeCustodyModule' },
   { path: 'searching', loadChildren: './main-searching/main-searching.module#MainSearchingModule' },
   { path: 'spend-money', loadChildren: './spend-money/spend-money.module#SpendMoneyModule' },
   { path: 'receive-money', loadChildren: './receive-money/receive-money.module#ReceiveMoneyModule' },
@@ -50,7 +53,7 @@ const appRoutes: Routes = [
   { path: 'general-journal', loadChildren: './general-journal/general-journal.module#GeneralJoural' },
   { path: 'account-reconciliation', loadChildren: './account-reconciliation/account-reconciliation.module#AccountRecountciliation' },
   { path: 'account-management', loadChildren: './account-managment/account-managment.module#AccountManagmentModule' },
-  { path: 'Safe-Custody', loadChildren: './main-safe-custody/main-safe-custody.module#MainSafeCustodyModule' }
+  // { path: 'Safe-Custody', loadChildren: './main-safe-custody/main-safe-custody.module#MainSafeCustodyModule' }
 ];
 
 
@@ -73,6 +76,7 @@ const appRoutes: Routes = [
     DiaryModule,
     InvoiceModule,
     GloballyAuthorityModule,
+    GloballySafeCustodyModule,
     SpendMoneyModule,
     ReceiveMoneyModule,
     TemplateModule,

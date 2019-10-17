@@ -51,12 +51,16 @@ export class BehaviorService {
 
   public forDiaryRefersh$: BehaviorSubject<any> = new BehaviorSubject(null);
   public forDiaryRefersh2$: BehaviorSubject<any> = new BehaviorSubject(null);
-
+  
+  public ReceiptData$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor(private http: HttpClient) { }
 
   matterInvoiceData(matterClassData: any) {
     this.matterInvoice$.next(matterClassData);
+  }
+  ReceiptData(ReceiptData: any) {
+    this.ReceiptData$.next(ReceiptData);
   }
   forDiaryRefersh2(forDiaryRefersh2: any) {
     this.forDiaryRefersh2$.next(forDiaryRefersh2);

@@ -1411,8 +1411,8 @@
                                 </section>
                                 <mat-divider vertical></mat-divider>
                                 <section *ngIf="activeSubMenu=='receipts-credits'" class="group-section-tab action_tab">
-                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'disabled-click-cursor ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ?  'disabled-click large-button' : 'disabled-click large-button'">
+                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button [disabled]="DisabledReceiptTool=='disabled'" (click)="GenerateReceipt()" mat-button [ngClass]="appPermissions[5]?.Access==0 ?  'disabled-click large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_print_d.ico" alt=""
@@ -2559,7 +2559,7 @@
                                         </button>
                                     </section>
                                     <section class="ribbon-section">
-                                        <button mat-button class="large-button" (click)="GenerateReceipt()" (click)="setTab($event)">
+                                        <button [disabled]="DisabledReceiptTool=='disabled'" mat-button class="large-button" (click)="GenerateReceipt()" (click)="setTab($event)">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_print_d.ico" alt=""

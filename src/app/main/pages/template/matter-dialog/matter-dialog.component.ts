@@ -89,6 +89,7 @@ export class MatterDialogComponentForTemplate implements OnInit {
     delete data["knownby"];
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(data, 'TemplateGenerate').subscribe(response => {
+      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         this.IsLoading = "false";
         this.toastr.success('success');

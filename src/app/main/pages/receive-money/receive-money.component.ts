@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { TableColumnsService, MainAPiServiceService } from '../../../_services';
+import { TableColumnsService, MainAPiServiceService, BehaviorService } from '../../../_services';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
@@ -35,10 +35,17 @@ export class ReceiveMoneyComponent implements OnInit {
     private TableColumnsService: TableColumnsService,
     private dialog: MatDialog,
     private fb: FormBuilder,
+    public behaviorService: BehaviorService,
     private toastr: ToastrService,
     public _mainAPiServiceService: MainAPiServiceService,
     public datepipe: DatePipe,
-  ) { }
+  ) { 
+    this.behaviorService.ReceiptData$.subscribe(result => {
+      if (result) {
+        
+      }
+    });
+  }
   receiveMoneyForm: FormGroup;
   ngOnInit() {
     var dt = new Date();
@@ -77,6 +84,7 @@ export class ReceiveMoneyComponent implements OnInit {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.totalAountData = { TOTALINCGST: response.DATA.TOTALINCGST, TOTALEXGST: response.DATA.TOTALEXGST };
         if (response.DATA.INCOMEITEMS[0]) {
+          this.behaviorService.ReceiptData(response.DATA.INCOMEITEMS[0]);
           localStorage.setItem('receiptData', JSON.stringify(response.DATA.INCOMEITEMS[0]));
           this.highlightedRows = response.DATA.INCOMEITEMS[0].INCOMEGUID;
           this.currentReciveMoneyData = response.DATA.INCOMEITEMS[0];
@@ -115,6 +123,7 @@ export class ReceiveMoneyComponent implements OnInit {
   }
   selectMatterId(row: any) {
     this.currentReciveMoneyData = row;
+    this.behaviorService.ReceiptData(row);
     localStorage.setItem('receiptData', JSON.stringify(row));
   }
   onPaginateChange(event) {

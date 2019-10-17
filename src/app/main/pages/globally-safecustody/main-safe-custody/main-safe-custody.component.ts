@@ -2,13 +2,14 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
 import { MainAPiServiceService, TableColumnsService,BehaviorService } from 'app/_services';
-import { MatterPopupComponent } from '../matters/matter-popup/matter-popup.component';
 import { MatDialog, MatTableDataSource, MatSort, MatPaginator, MatDialogConfig } from '@angular/material';
-import { MatterDialogComponent } from '../time-entries/matter-dialog/matter-dialog.component';
-import { ContactSelectDialogComponent } from '../contact/contact-select-dialog/contact-select-dialog.component';
+// import { MatterDialogComponent } from '../time-entries/matter-dialog/matter-dialog.component';
+// import { ContactSelectDialogComponent } from '../contact/contact-select-dialog/contact-select-dialog.component';
 import * as $ from 'jquery';
 import { ToastrService } from 'ngx-toastr';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
+import { ContactSelectDialogComponent } from '../../contact/contact-select-dialog/contact-select-dialog.component';
+import { MatterDialogComponent } from '../../time-entries/matter-dialog/matter-dialog.component';
 
 @Component({
   selector: 'app-main-safe-custody',

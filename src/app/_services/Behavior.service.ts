@@ -48,11 +48,10 @@ export class BehaviorService {
   public BankChartAccountStore$: BehaviorSubject<any> = new BehaviorSubject(null);
   public GeneralData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public SafeCustody$: BehaviorSubject<any> = new BehaviorSubject(null);
-
   public forDiaryRefersh$: BehaviorSubject<any> = new BehaviorSubject(null);
   public forDiaryRefersh2$: BehaviorSubject<any> = new BehaviorSubject(null);
-  
   public ReceiptData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public Packets$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor(private http: HttpClient) { }
 
@@ -173,6 +172,9 @@ export class BehaviorService {
   }
   SafeCustody(SafeCustody: any) {
     this.SafeCustody$.next(SafeCustody);
+  }
+  Packets(Packets: any) {
+    this.Packets$.next(Packets);
   }
 
 }

@@ -467,44 +467,247 @@
                         </mat-card>
                     </section>
                 </mat-tab>
+                   <!-- Start Create Document menu -->
+                   <mat-tab label="CREATE DOCUMENT" *ngIf="isTabShow===10">
+                        <section class="ribbon-container contact_tab_main">
+                            <mat-card>
+                                <mat-card-content>
+                                    <section class="group-section-tab action_tab">
+                                        <section class="ribbon-section">
+                                            <mat-nav-list>
+                                                <!-- <button mat-button class="large-button"> -->
+                                                <a mat-list-item [routerLink]="TemplateUrlHandel" [ngClass]="{'cmn_active_tab':activeSubMenu=='matter-template'}">
+                                                    <mat-icon>
+                                                        <img src="assets/icons/web_app/icon_letters_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                    <span>Templates </span>
+                                                </a>
+                                                <!-- added by web 19  -->
+                                                <a [ngClass]="{'cmn_active_tab':activeSubMenu=='email-matter-template','disabled-click-cursor':appPermissions[5]?.Access==0}" mat-list-item [routerLink]="emailrouting">
+                                                    <mat-icon>
+                                                        <img src="assets/icons/web_app/icon_email_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                    <span>Emails</span>
+                                                </a>
+                                                <a [ngClass]="{'cmn_active_tab':activeSubMenu=='packs-matter-template','disabled-click-cursor':appPermissions[5]?.Access==0}" mat-list-item [routerLink]="packrouting">
+                                                    <mat-icon>
+                                                        <img src="assets/icons/web_app/icon_doc_pack_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                    <span>Packs  </span>
+                                                </a>
+                                                <!-- </button> -->
+                                            </mat-nav-list>
+                                        </section>
+                                        <div class="light_label_txt">View</div>
+                                    </section>
+                                    <mat-divider vertical></mat-divider>
+                                    <section class="group-section-tab action_tab">
+                                        <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="activeSubMenu ==='matter-template' || activeSubMenu ==='invoice-template' ||activeSubMenu ==='contact-template' 
+                                        ||activeSubMenu ==='receive-money-template' || packsToobar=='Template'">
+                                            <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="GenarateDocument()" [disabled]="isDocumentGenerateHide =='yes'">
+                                                <section class="large-button-container">
+                                                    <mat-icon class="main-icon">
+                                                        <img src="assets/icons/web_app/icon_letters_d.ico" alt=""
+                                                            matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                    <div class="main-text">
+                                                        <span>Generate <br> Document</span>
+                                                    </div>
+                                                </section>
+                                            </button>
+                                        </section>
+                                        <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="activeSubMenu ==='email-matter-template' || activeSubMenu ==='email-invoice-template' ||activeSubMenu ==='email-contact-template' 
+                                        ||activeSubMenu ==='email-receive-money-template' || packsToobar=='Email' ">
+                                            <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="GenarateEmail()">
+                                                <section class="large-button-container">
+                                                    <mat-icon class="main-icon">
+                                                        <img src="assets/icons/web_app/icon_email_d.ico" alt=""
+                                                            matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                    <div class="main-text">
+                                                        <span>Generate <br> Email</span>
+                                                    </div>
+                                                </section>
+                                            </button>
+                                        </section>
+                                        <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="(activeSubMenu ==='packs-matter-template' || activeSubMenu ==='packs-invoice-template' ||activeSubMenu ==='packs-contact-template' 
+                                        ||activeSubMenu ==='packs-receive-money-template') && packsToobar == 'Packs'">
+                                            <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="GenaratePacks()" [disabled]="isDocumentGenerateHide =='yes'">
+                                                <section class="large-button-container">
+                                                    <mat-icon class="main-icon">
+                                                        <img src="assets/icons/web_app/icon_doc_pack_d.ico" alt=""
+                                                            matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                    <div class="main-text">
+                                                        <span>Generate <br>Pack</span>
+                                                    </div>
+                                                </section>
+                                            </button>
+                                        </section>
+                                        <div class="light_label_txt">Generate</div>
+                                    </section>
+                                    <mat-divider vertical></mat-divider>
+                                    <section class="group-section-tab action_tab" *ngIf="activeSubMenu ==='email-matter-template' || activeSubMenu ==='email-invoice-template' ||activeSubMenu ==='email-contact-template' 
+                                    ||activeSubMenu ==='email-receive-money-template' || packsToobar=='Email'">
+                                        <section [ngClass]="appPermissions[5]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                            <button mat-button (click)="EmailTempletePopUp('new')" [ngClass]="appPermissions[5]?.Create==0 ? 'disabled-click large-button' : 'large-button'">
+                                                <section class="large-button-container">
+                                                    <mat-icon class="main-icon">
+                                                        <img src="assets/icons/web_app/icon_email_new_d.ico" alt=""
+                                                            matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                    <div class="main-text"><span>New Email<br> Template</span></div>
+                                                </section>
+                                            </button>
+                                        </section>
+                                        <section [ngClass]="appPermissions[5]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                            <button mat-button (click)="EmailTempletePopUp('edit')" [ngClass]="appPermissions[5]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
+                                                <section class="large-button-container">
+                                                    <mat-icon class="main-icon">
+                                                        <img src="assets/icons/web_app/icon_email_edit_d.ico" alt=""
+                                                            matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                    <div class="main-text">
+                                                        <span>Edit Email<br> Template</span>
+                                                    </div>
+                                                </section>
+                                            </button>
+                                        </section>
+                                        <section [ngClass]="appPermissions[5]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                            <button mat-button (click)="EmailTempletePopUp('copy')" [ngClass]="appPermissions[5]?.Create==0 ? 'disabled-click large-button' : 'large-button'">
+                                                <section class="large-button-container">
+                                                    <mat-icon class="main-icon">
+                                                        <img src="assets/icons/web_app/icon_email_new_d.ico" alt=""
+                                                            matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                    <div class="main-text">
+                                                        <span>Copy Email<br> Template</span>
+                                                    </div>
+                                                </section>
+                                            </button>
+                                        </section>
+    
+                                    </section>
+    
+                                    <section class="group-section-tab action_tab" *ngIf="activeSubMenu ==='matter-template' || activeSubMenu ==='invoice-template' ||activeSubMenu ==='contact-template' 
+                                    ||activeSubMenu ==='receive-money-template' || packsToobar=='Template'">
+                                        <section [ngClass]="appPermissions[5]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                            <button mat-button [ngClass]="appPermissions[5]?.Edit==0 ?  'disabled-click large-button' : 'large-button'" (click)="EditTemplatePopup()">
+                                                <section class="large-button-container">
+                                                    <mat-icon class="main-icon">
+                                                        <img src="assets/icons/web_app/icon_letters_edit_d.ico" alt=""
+                                                            matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                    <div class="main-text"><span>Edit<br> Template</span></div>
+                                                </section>
+                                            </button>
+                                        </section>
+                                        <section [ngClass]="appPermissions[5]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                            <button mat-button [ngClass]="appPermissions[5]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="CopyTemplatePopup()">
+                                                <section class="large-button-container">
+                                                    <mat-icon class="main-icon">
+                                                        <img src="assets/icons/web_app/icon_letters_new_d.ico" alt=""
+                                                            matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                    <div class="main-text">
+                                                        <span>Copy<br> Template</span>
+                                                    </div>
+                                                </section>
+                                            </button>
+                                        </section>
+                                        <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                            <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="SetLetterHeadPopup()">
+                                                <section class="large-button-container">
+                                                    <mat-icon class="main-icon">
+                                                        <img src="assets/icons/web_app/icon_letters_edit_d.ico" alt=""
+                                                            matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                    <div class="main-text">
+                                                        <span>Set<br>Letterhead</span>
+                                                    </div>
+                                                </section>
+                                            </button>
+                                        </section>
+    
+                                        <div class="light_label_txt">Action</div>
+                                    </section>
+                                    <!-- Packs Start-->
+                                    <section class="group-section-tab action_tab" *ngIf="(activeSubMenu ==='packs-matter-template' || activeSubMenu ==='packs-invoice-template' ||activeSubMenu ==='packs-contact-template' 
+                                    ||activeSubMenu ==='packs-receive-money-template') && packsToobar == 'Packs'">
+                                        <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                            <button mat-button (click)="PackModule('new')" [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
+                                                <section class="large-button-container">
+                                                    <mat-icon class="main-icon">
+                                                        <img src="assets/icons/web_app/icon_doc_pack_new_d.ico" alt=""
+                                                            matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                    <div class="main-text"><span>New<br> Pack</span></div>
+                                                </section>
+                                            </button>
+                                        </section>
+                                        <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                            <button mat-button (click)="PackModule('edit')" [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
+                                                <section class="large-button-container">
+                                                    <mat-icon class="main-icon">
+                                                        <img src="assets/icons/web_app/icon_doc_pack_edit_d.ico" alt=""
+                                                            matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                    <div class="main-text">
+                                                        <span>Edit<br> Pack</span>
+                                                    </div>
+                                                </section>
+                                            </button>
+                                        </section>
+                                        <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                            <button mat-button (click)="DeletePack()" [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
+                                                <section class="large-button-container">
+                                                    <mat-icon class="main-icon">
+                                                        <img src="assets/icons/web_app/icon_doc_pack_delete_d.ico" alt=""
+                                                            matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                    <div class="main-text">
+                                                        <span>Delete<br> Pack</span>
+                                                    </div>
+                                                </section>
+                                            </button>
+                                        </section>
+                                        <div class="light_label_txt">Action</div>
+                                    </section>
+                                    <!-- Packs End-->
+                                </mat-card-content>
+                            </mat-card>
+                        </section>
+                    </mat-tab>
+                    <!-- End  Start Create Document menu  -->
 
                 <mat-tab label="Safe Custody" *ngIf="isTabShow===22">
                     <section class="ribbon-container contact_tab_main">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
-                                    <section [ngClass]="appPermissions[14]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[14]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/legal-details/safe-custody'">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_safecustody_d.ico" alt=""
-                                                        matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text">
-                                                    <span>SafeCustody</span>
-                                                </div>
-                                            </section>
-                                        </button>
-                                    </section>
-
-                                    <section [ngClass]="appPermissions[14]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[14]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/legal-details/authority'">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_doc_pack_d.ico" alt=""
-                                                        matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text">
+                                    <section class="ribbon-section">
+                                            <mat-nav-list>
+                                                <!-- added by web 6  -->
+                                                <a mat-list-item [routerLink]="'/Safe-Custody/full-Safe-Custody'" [ngClass]="{'cmn_active_tab':activeSubMenu=='full-Safe-Custody'}">
+                                                    <mat-icon>
+                                                        <img src="assets/icons/web_app/icon_safecustody_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
+                                                    <span>SafeCustody </span>
+                                                </a>
+                                                <!-- added by web 6  -->
+                                                <a [routerLink]="'/Safe-Custody/packets'"[ngClass]="{'cmn_active_tab':activeSubMenu=='packets','disabled-click-cursor':appPermissions[14]?.Access==0}" mat-list-item>
+                                                    <mat-icon>
+                                                        <img src="assets/icons/web_app/icon_doc_pack_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                    </mat-icon>
                                                     <span>Packets</span>
-                                                </div>
-                                            </section>
-                                        </button>
-                                    </section>
+                                                </a>
+                                            </mat-nav-list>
+                                        </section>
                                     <div class="light_label_txt">View</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
-
-                                <section class="group-section-tab action_tab">
+                                 <!---FULL SAFE CUSTODY START -->
+                                <section class="group-section-tab action_tab" *ngIf="activeSubMenu === 'full-Safe-Custody'">
                                     <section [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="OpenNewSafeCustody('new client')">
                                             <section class="large-button-container">
@@ -574,8 +777,9 @@
                                     </section>
                                     <div class="light_label_txt">Action</div>
                                 </section>
+                                <!---FULL SAFE CUSTODY END -->
                                 <mat-divider vertical></mat-divider>
-                                <section class="group-section-tab action_tab">
+                                <section class="group-section-tab action_tab" *ngIf="activeSubMenu === 'full-Safe-Custody'">
                                     <section [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)">
                                             <section class="large-button-container">
@@ -605,6 +809,63 @@
                                     <mat-divider vertical></mat-divider>
                                     <div class="light_label_txt">Details</div>
                                 </section>
+                                <!--PACEKTS SECTION START-->
+                                <section class="group-section-tab action_tab" *ngIf="activeSubMenu === 'packets'">
+                                    <section [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="OpenPacket('new')">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_doc_pack_new_d.ico" alt=""
+                                                        matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>New<br>Packet</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section [ngClass]="appPermissions[14]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[14]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="OpenPacket('edit')">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_doc_pack_edit_d.ico" alt=""
+                                                        matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Edit<br>Packet</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <section [ngClass]="appPermissions[14]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[14]?.Delete==0 ? 'disabled-click large-button' : 'large-button'" (click)="DeletePacket()">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_doc_pack_delete_d.ico" alt=""
+                                                        matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Delete <br>Packet</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>                                       
+                                    <section [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="OpenPacket('duplicate')">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_duplicate_d.ico" alt=""
+                                                        matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Duplicate<br>Packet</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+                                    <div class="light_label_txt">Action</div>
+                                </section>
+                                <!--PACKETS SECTION END-->
                             </mat-card-content>
                         </mat-card>
                     </section>
@@ -2577,218 +2838,7 @@
                         </mat-card>
                     </section>
                 </mat-tab>
-                <!-- Start Create Document menu -->
-                <mat-tab label="CREATE DOCUMENT" *ngIf="isTabShow===10">
-                    <section class="ribbon-container contact_tab_main">
-                        <mat-card>
-                            <mat-card-content>
-                                <section class="group-section-tab action_tab">
-                                    <section class="ribbon-section">
-                                        <mat-nav-list>
-                                            <!-- <button mat-button class="large-button"> -->
-                                            <a mat-list-item [routerLink]="TemplateUrlHandel" [ngClass]="{'cmn_active_tab':activeSubMenu=='matter-template'}">
-                                                <mat-icon>
-                                                    <img src="assets/icons/web_app/icon_letters_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <span>Templates </span>
-                                            </a>
-                                            <!-- added by web 19  -->
-                                            <a [ngClass]="{'cmn_active_tab':activeSubMenu=='email-matter-template','disabled-click-cursor':appPermissions[5]?.Access==0}" mat-list-item [routerLink]="emailrouting">
-                                                <mat-icon>
-                                                    <img src="assets/icons/web_app/icon_email_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <span>Emails</span>
-                                            </a>
-                                            <a [ngClass]="{'cmn_active_tab':activeSubMenu=='packs-matter-template','disabled-click-cursor':appPermissions[5]?.Access==0}" mat-list-item [routerLink]="packrouting">
-                                                <mat-icon>
-                                                    <img src="assets/icons/web_app/icon_doc_pack_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <span>Packs  </span>
-                                            </a>
-                                            <!-- </button> -->
-                                        </mat-nav-list>
-                                    </section>
-                                    <div class="light_label_txt">View</div>
-                                </section>
-                                <mat-divider vertical></mat-divider>
-                                <section class="group-section-tab action_tab">
-                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="activeSubMenu ==='matter-template' || activeSubMenu ==='invoice-template' ||activeSubMenu ==='contact-template' 
-                                    ||activeSubMenu ==='receive-money-template' || packsToobar=='Template'">
-                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="GenarateDocument()" [disabled]="isDocumentGenerateHide =='yes'">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_letters_d.ico" alt=""
-                                                        matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text">
-                                                    <span>Generate <br> Document</span>
-                                                </div>
-                                            </section>
-                                        </button>
-                                    </section>
-                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="activeSubMenu ==='email-matter-template' || activeSubMenu ==='email-invoice-template' ||activeSubMenu ==='email-contact-template' 
-                                    ||activeSubMenu ==='email-receive-money-template' || packsToobar=='Email' ">
-                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="GenarateEmail()">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_email_d.ico" alt=""
-                                                        matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text">
-                                                    <span>Generate <br> Email</span>
-                                                </div>
-                                            </section>
-                                        </button>
-                                    </section>
-                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="(activeSubMenu ==='packs-matter-template' || activeSubMenu ==='packs-invoice-template' ||activeSubMenu ==='packs-contact-template' 
-                                    ||activeSubMenu ==='packs-receive-money-template') && packsToobar == 'Packs'">
-                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="GenaratePacks()" [disabled]="isDocumentGenerateHide =='yes'">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_doc_pack_d.ico" alt=""
-                                                        matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text">
-                                                    <span>Generate <br>Pack</span>
-                                                </div>
-                                            </section>
-                                        </button>
-                                    </section>
-                                    <div class="light_label_txt">Generate</div>
-                                </section>
-                                <mat-divider vertical></mat-divider>
-                                <section class="group-section-tab action_tab" *ngIf="activeSubMenu ==='email-matter-template' || activeSubMenu ==='email-invoice-template' ||activeSubMenu ==='email-contact-template' 
-                                ||activeSubMenu ==='email-receive-money-template' || packsToobar=='Email'">
-                                    <section [ngClass]="appPermissions[5]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button (click)="EmailTempletePopUp('new')" [ngClass]="appPermissions[5]?.Create==0 ? 'disabled-click large-button' : 'large-button'">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_email_new_d.ico" alt=""
-                                                        matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text"><span>New Email<br> Template</span></div>
-                                            </section>
-                                        </button>
-                                    </section>
-                                    <section [ngClass]="appPermissions[5]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button (click)="EmailTempletePopUp('edit')" [ngClass]="appPermissions[5]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_email_edit_d.ico" alt=""
-                                                        matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text">
-                                                    <span>Edit Email<br> Template</span>
-                                                </div>
-                                            </section>
-                                        </button>
-                                    </section>
-                                    <section [ngClass]="appPermissions[5]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button (click)="EmailTempletePopUp('copy')" [ngClass]="appPermissions[5]?.Create==0 ? 'disabled-click large-button' : 'large-button'">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_email_new_d.ico" alt=""
-                                                        matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text">
-                                                    <span>Copy Email<br> Template</span>
-                                                </div>
-                                            </section>
-                                        </button>
-                                    </section>
-
-                                </section>
-
-                                <section class="group-section-tab action_tab" *ngIf="activeSubMenu ==='matter-template' || activeSubMenu ==='invoice-template' ||activeSubMenu ==='contact-template' 
-                                ||activeSubMenu ==='receive-money-template' || packsToobar=='Template'">
-                                    <section [ngClass]="appPermissions[5]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[5]?.Edit==0 ?  'disabled-click large-button' : 'large-button'" (click)="EditTemplatePopup()">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_letters_edit_d.ico" alt=""
-                                                        matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text"><span>Edit<br> Template</span></div>
-                                            </section>
-                                        </button>
-                                    </section>
-                                    <section [ngClass]="appPermissions[5]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[5]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="CopyTemplatePopup()">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_letters_new_d.ico" alt=""
-                                                        matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text">
-                                                    <span>Copy<br> Template</span>
-                                                </div>
-                                            </section>
-                                        </button>
-                                    </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="SetLetterHeadPopup()">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_letters_edit_d.ico" alt=""
-                                                        matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text">
-                                                    <span>Set<br>Letterhead</span>
-                                                </div>
-                                            </section>
-                                        </button>
-                                    </section>
-
-                                    <div class="light_label_txt">Action</div>
-                                </section>
-                                <!-- Packs Start-->
-                                <section class="group-section-tab action_tab" *ngIf="(activeSubMenu ==='packs-matter-template' || activeSubMenu ==='packs-invoice-template' ||activeSubMenu ==='packs-contact-template' 
-                                ||activeSubMenu ==='packs-receive-money-template') && packsToobar == 'Packs'">
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button (click)="PackModule('new')" [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_doc_pack_new_d.ico" alt=""
-                                                        matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text"><span>New<br> Pack</span></div>
-                                            </section>
-                                        </button>
-                                    </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button (click)="PackModule('edit')" [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_doc_pack_edit_d.ico" alt=""
-                                                        matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text">
-                                                    <span>Edit<br> Pack</span>
-                                                </div>
-                                            </section>
-                                        </button>
-                                    </section>
-                                    <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button (click)="DeletePack()" [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_doc_pack_delete_d.ico" alt=""
-                                                        matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text">
-                                                    <span>Delete<br> Pack</span>
-                                                </div>
-                                            </section>
-                                        </button>
-                                    </section>
-                                    <div class="light_label_txt">Action</div>
-                                </section>
-                                <!-- Packs End-->
-                            </mat-card-content>
-                        </mat-card>
-                    </section>
-                </mat-tab>
-                <!-- End  Start Create Document menu  -->
+             
                 <!-- User tab Start-->
                 <mat-tab label="USERS" *ngIf="isTabShow===12">
                     <section class="ribbon-container contact_tab_main">

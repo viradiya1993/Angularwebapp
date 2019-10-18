@@ -58,6 +58,7 @@ import { AuthorityDialogComponent } from 'app/main/pages/globally-Authority/main
 import { TopicDialogComponent } from 'app/main/pages/globally-Authority/main-authorities/topic/topic-dialog/topic-dialog.component';
 import { EstimateDilogComponent } from 'app/main/pages/time-billing/estimate/estimate-dilog/estimate-dilog.component';
 import { GenerateInvoiceComponent } from 'app/main/pages/invoice/generate-invoice/generate-invoice.component';
+import { PacketsDialogComponent } from 'app/main/pages/globally-safecustody/packets/packets-dialog/packets-dialog.component';
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -1507,6 +1508,49 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     // -----------------------------------------------------------------------------------------------------
     logOutUser() {
         this.authenticationService.logout();
+    }
+    /** PACKETS MODULE FUNCTION'S */
+    OpenPacket(actionType){
+        let PacketPopData = {}
+        if (actionType == 'new') {
+            PacketPopData = { action: actionType }
+        } else if (actionType == 'edit' || actionType == 'duplicate') {
+            PacketPopData = { action: actionType }
+        }
+        const dialogRef = this.dialog.open(PacketsDialogComponent, {
+            disableClose: true,
+            panelClass: 'Packets-dialog',
+            data: PacketPopData
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                $('#refereshpacketsdata').click();
+            }
+        });
+    }
+    DeletePacket():void{
+        this.behaviorService.Packets$.subscribe(result => {
+            if (result) {
+                this.PacketsData = result;
+            }
+        });
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                let postData = { FormAction: "delete", data: { SAFECUSTODYPACKETGUID: this.PacketsData.SAFECUSTODYPACKETGUID } }
+                this._mainAPiServiceService.getSetData(postData, 'SetSafeCustodyPacket').subscribe(res => {
+                    if (res.STATUS == "success") {
+                        $('#refereshpacketsdata').click();
+                        this.toastr.success('Delete successfully');
+                    }
+                });
+            }
+            this.confirmDialogRef = null;
+        });
     }
     navBarSetting(value: any) {
         let x = value.split("/");

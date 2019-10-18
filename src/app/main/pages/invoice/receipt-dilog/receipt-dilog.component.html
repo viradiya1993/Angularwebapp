@@ -14,8 +14,8 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="70" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FIRMGUID,'has-warning':errorWarningData.Warning?.FIRMGUID}">
                         <mat-label>Client</mat-label>
-                        <input matInput placeholder="Client" formControlName="FIRMGUIDTEXT">
-                        <mat-icon matSuffix (click)='selectClient()' *ngIf="this._data.action !='editForTB' || this._data.action !='edit'">
+                        <input readonly matInput placeholder="Client" formControlName="FIRMGUIDTEXT">
+                        <mat-icon matSuffix (click)="selectClient('client')" *ngIf="this._data.action !='editForTB' || this._data.action !='edit'">
                             <img src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                         </mat-icon>
                     </mat-form-field>
@@ -59,12 +59,23 @@
                         <mat-label>GST</mat-label>
                         <input class="sideText" matInput placeholder="GST" readonly formControlName="GST">
                     </mat-form-field> -->
-                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PAYEE,'has-warning':errorWarningData.Warning?.PAYEE}">
+                    <!-- <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PAYEE,'has-warning':errorWarningData.Warning?.PAYEE}">
                         <mat-label>Payor</mat-label>
                         <mat-select formControlName="PAYEE">
                             <mat-option *ngFor="let val of getPayourarray" [value]="val">{{val}}</mat-option>
                         </mat-select>
+                    </mat-form-field> -->
+                    
+                    <mat-form-field appearance="outline" fxFlex="70" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FIRMGUID,'has-warning':errorWarningData.Warning?.FIRMGUID}">
+                        <mat-label>Payor</mat-label>
+                        <input readonly matInput placeholder="Client" formControlName="PAYEE">
+                        <mat-icon matSuffix (click)="selectClient('payee')">
+                            <img src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                        </mat-icon>
                     </mat-form-field>
+
+
+
                     <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.BANKACCOUNTGUID,'has-warning':errorWarningData.Warning?.BANKACCOUNTGUID}">
                         <mat-label>Bank Account</mat-label>
                         <input matInput placeholder="Bank Account" readonly formControlName="BANKACCOUNTGUIDTEXT">

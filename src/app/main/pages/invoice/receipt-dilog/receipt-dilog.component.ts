@@ -74,12 +74,7 @@ export class ReceiptDilogComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   ngOnInit() {
-    this._mainAPiServiceService.getSetData({ AccountClass: 'BANK ACCOUNT' }, 'GetAccount').subscribe(response => {
-      this.storeDataarray = response.DATA.ACCOUNTS;
-      console.log(response)
-      this.showData(this.storeDataarray);
-    }, err => {
-    });
+    
     this.AllocationBtn = 'auto';
     this.PrepareReceiptForm = this._formBuilder.group({
       INCOMECODE: [''],
@@ -104,9 +99,12 @@ export class ReceiptDilogComponent implements OnInit {
       Unallocated: [''],
       allocatedSelected: ['']
     });
-    ;
-    this.getPayor({});
-    console.log(this._data);
+    // this.PrepareReceiptForm.controls['DatePaid'].disable();
+    this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: false, Data: {} }, 'SetIncome').subscribe(response => {
+      this.PrepareReceiptForm.controls['BANKACCOUNTGUIDTEXT'].setValue(response.DATA.DEFAULTVALUES.BANKACCOUNTNUMBER );
+      this.PrepareReceiptForm.controls['BANKACCOUNTGUID'].setValue(response.DATA.DEFAULTVALUES.BANKACCOUNTGUID);
+    }, err => {
+    });
     let INCOMEDATEVAL = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
     this.PrepareReceiptForm.controls['INCOMEDATE'].setValue(INCOMEDATEVAL);
     this.isShowchecked = "false";
@@ -136,19 +134,7 @@ export class ReceiptDilogComponent implements OnInit {
       this.toastr.error(error);
     });
   }
-  showData(element) {
-    element.forEach(x => {
-      if (x.ACCOUNTTYPENAME == "Bank Account") {
-        // this.spendmoneyForm.controls['Bankac'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER + ' ' + result.MainList.ACCOUNTNAME);
-        x.EXPORTINFO.MYOBEXPORTACCOUNT;
-        this.PrepareReceiptForm.controls['BANKACCOUNTGUIDTEXT'].setValue(x.ACCOUNTCLASS + ' - ' + x.ACCOUNTNUMBER );
-        this.PrepareReceiptForm.controls['BANKACCOUNTGUID'].setValue(x.ACCOUNTGUID);
-      }
-      if (x.SUBACCOUNTS) {
-        this.showData(x.SUBACCOUNTS);
-      }
-    });
-  }
+
   setInvoiceForReceipt(INCOMEGUID) {
     this.PrepareReceiptData = [];
     this.isLoadingResults = true;
@@ -236,17 +222,7 @@ export class ReceiptDilogComponent implements OnInit {
       this.toastr.error(error);
     });
   }
-  getPayor(postData) {
-    this._mainAPiServiceService.getSetData(postData, 'GetContact').subscribe(response => {
-      if (response.CODE == 200 && response.STATUS == "success") {
-        response.DATA.CONTACTS.forEach(element => {
-          this.getPayourarray.push(element.CONTACTNAME);
-        });
-      }
-    }, err => {
-      this.toastr.error(err);
-    });
-  }
+
   get f() {
     return this.PrepareReceiptForm.controls;
   }
@@ -437,12 +413,16 @@ export class ReceiptDilogComponent implements OnInit {
       this.toastr.error(error);
     });
   }
-  selectClient() {
+  selectClient(val) {
     const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true, data: { type: '' } });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.PrepareReceiptForm.controls['FIRMGUIDTEXT'].setValue(result.CONTACTNAME);
-        this.PrepareReceiptForm.controls['FIRMGUID'].setValue(result.CONTACTGUID);
+        if(val=='client'){
+          this.PrepareReceiptForm.controls['FIRMGUIDTEXT'].setValue(result.CONTACTNAME);
+          this.PrepareReceiptForm.controls['FIRMGUID'].setValue(result.CONTACTGUID);
+        }else{
+          this.PrepareReceiptForm.controls['PAYEE'].setValue(result.CONTACTNAME);
+        }
       }
     });
   }

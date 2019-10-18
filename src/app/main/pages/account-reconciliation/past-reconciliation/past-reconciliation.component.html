@@ -27,12 +27,12 @@
                                             <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
                                                 <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header> {{ tempColobj[item].DESCRIPTION }}</th>
                                                 <td mat-cell *matCellDef="let row">
-                                                    <span *ngIf="row[item]">{{row[item]}}</span>
+                                                    <span *ngIf="row[item]!==undefined">{{row[item]}}</span>
                                                 </td>
                                             </ng-container>
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                            <tr [style.background]="highlightedRows == row.RECONCILIATIONGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.RECONCILIATIONGUID ? 'row-text-colore' : ''" highlightedRows=row.RECONCILIATIONGUID mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editBanking(row.RECONCILIATIONGUID, row);highlightedRows = row.RECONCILIATIONGUID "
-                                                matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                            <tr [style.background]="highlightedRows == row.RECONCILIATIONGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.RECONCILIATIONGUID ? 'row-text-colore' : ''" highlightedRows=row.RECONCILIATIONGUID mat-row *matRowDef="let row; columns: displayedColumns;"
+                                                (click)="editBanking(row.RECONCILIATIONGUID, row);highlightedRows = row.RECONCILIATIONGUID " matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                             </tr>
                                         </table>
                                     </div>

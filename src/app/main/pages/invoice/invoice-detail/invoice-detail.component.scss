@@ -136,6 +136,11 @@ table.mat-table {
     overflow: auto;
 }
 
+.example-containerdata-invoice-view {
+    height: 200px !important;
+    overflow: auto !important;
+}
+
 .view_invoice_table tbody {
     min-height: 250px;
     display: inline-block;

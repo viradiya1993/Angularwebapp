@@ -81,6 +81,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     JournalData: any;
     receiptData: any;
     DisabledReceiptTool: string;
+    safecustodydata: any;
     [x: string]: any;
     appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
     @ViewChild(TimeEntriesComponent) TimeEntrieschild: TimeEntriesComponent;
@@ -1717,9 +1718,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     createReceiptForTimeBilling() {
+        let result=JSON.parse(localStorage.getItem('set_active_matters'));
         const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
             width: '100%', disableClose: true,
-            data: { action: 'add' }
+            data: { action: 'add', type: " ", matterData: result }
+
+            // data: { action: 'add' }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {

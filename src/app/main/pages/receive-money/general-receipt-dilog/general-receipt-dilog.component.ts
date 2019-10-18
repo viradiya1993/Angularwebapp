@@ -20,6 +20,7 @@ export class GeneralReceiptDilogComponent implements OnInit {
   GST: any;
   errorWarningData: any = {};
   action: any;
+  storeDataarray: any;
   constructor(
     private toastr: ToastrService,
     private _formBuilder: FormBuilder,
@@ -41,6 +42,11 @@ export class GeneralReceiptDilogComponent implements OnInit {
   isGstReadonly: boolean = true;
   gsttypeData: any = [{ id: 1, text: "10% GST" }, { id: 2, text: "No GST" }, { id: 3, text: "< 10% GST" }];
   ngOnInit() {
+    this._mainAPiServiceService.getSetData({ AccountClass: 'BANK ACCOUNT' }, 'GetAccount').subscribe(response => {
+      this.storeDataarray = response.DATA.ACCOUNTS;
+      this.showData(this.storeDataarray);
+    }, err => {
+    });
     // this.isLoadingResults = true;
     this.generalReceiptForm = this._formBuilder.group({
       INCOMEGUID: [''],
@@ -69,6 +75,19 @@ export class GeneralReceiptDilogComponent implements OnInit {
     }
 
     this.getPayor({});
+  }
+  showData(element) {
+    element.forEach(x => {
+      if (x.ACCOUNTTYPENAME == "Bank Account") {
+        // this.spendmoneyForm.controls['Bankac'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER + ' ' + result.MainList.ACCOUNTNAME);
+        x.EXPORTINFO.MYOBEXPORTACCOUNT;
+        this.generalReceiptForm.controls['BANKACCOUNTGUIDTEXT'].setValue(x.ACCOUNTCLASS + ' - ' + x.ACCOUNTNUMBER );
+        this.generalReceiptForm.controls['BANKACCOUNTGUID'].setValue(x.ACCOUNTGUID);
+      }
+      if (x.SUBACCOUNTS) {
+        this.showData(x.SUBACCOUNTS);
+      }
+    });
   }
   LoadData() {
     this.isLoadingResults = true;

@@ -102,7 +102,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.timeEntryForm.controls['MATTERGUID'].setValue(maaterguid.MATTERGUID);
     this.calculateData.QuantityType = 'H';
     this.ITEMDATEModel = new Date();
-    this.timeEntryForm.controls['ITEMTYPE'].setValue('1');
+    this.timeEntryForm.controls['ITEMTYPE'].setValue('wip');
     let userType = JSON.parse(localStorage.getItem('currentUser'));
     if (userType) {
       this.timeEntryForm.controls['FEEEARNER'].setValue(userType.UserId);
@@ -148,7 +148,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.timeEntryForm.controls['QUANTITYTYPE'].setValue(Qval);
       this.calculateData.QuantityType = Qval == "Hours" ? 'H' : 'X';
       this.timeEntryForm.controls['QUANTITY'].setValue(this.matterTimerData);
-      this.timeEntryForm.controls['ITEMTYPE'].setValue('1');
+      this.timeEntryForm.controls['ITEMTYPE'].setValue('wip');
       this.matterChange('MatterGuid', this.currentTimeMatter);
     }
   }
@@ -210,7 +210,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
         localStorage.setItem('edit_WORKITEMGUID', response.DATA.WORKITEMS[0].WORKITEMGUID);
         let timeEntryData = response.DATA.WORKITEMS[0];
         this.itemTypeChange(timeEntryData.ITEMTYPE);
-        if (timeEntryData.ITEMTYPE == "2" || timeEntryData.ITEMTYPE == "3") {
+        if (timeEntryData.ITEMTYPE == "activity" || timeEntryData.ITEMTYPE == "sundry") {
           this.timeEntryForm.controls['QUANTITYTYPE'].setValue(timeEntryData.FEETYPE);
         } else {
           this.timeEntryForm.controls['QUANTITYTYPE'].setValue(timeEntryData.QUANTITYTYPE);
@@ -309,9 +309,9 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   }
   itemTypeChange(value: any) {
     this.isLoadingResults = true;
-    if (value == '2' || value == '3') {
-      this.QuantityTypeLabel = value == '2' ? 'Activity' : 'Sundry';
-      let callType = value == '2' ? 'Activity' : 'Sundries';
+    if (value == 'activity' || value == 'sundry') {
+      this.QuantityTypeLabel = value == 'activity' ? 'Activity' : 'Sundry';
+      let callType = value == 'activity' ? 'Activity' : 'Sundries';
       this.Timersservice.GetActivity({ "ActivityType": callType }).subscribe(res => {
         if (res.CODE == 200 && res.STATUS == "success") {
           this.ActivityList = res.DATA.ACTIVITIES;
@@ -348,7 +348,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       "PRICEINCGST": this.f.PRICEINCGST.value,
       "QUANTITY": this.f.QUANTITY.value,
     }
-    if (this.f.ITEMTYPE.value == "2" || this.f.ITEMTYPE.value == "3") {
+    if (this.f.ITEMTYPE.value == "activity" || this.f.ITEMTYPE.value == "sundry") {
       PostData.FEETYPE = this.f.QUANTITYTYPE.value;
       PostData.QUANTITYTYPE = '';
     } else {

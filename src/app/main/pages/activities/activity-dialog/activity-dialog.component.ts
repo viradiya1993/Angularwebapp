@@ -64,10 +64,10 @@ export class ActivityDialogComponent implements OnInit {
       FEEEARNER: [''],
       QUANTITY: [''],
       ITEMTYPE: [''],
+      FEETYPE: [''],
       QUANTITYTYPE: [],
       PRICE: [''],
       PRICEINCGST: [''],
-      ADDITIONALTEXTSELECT: [''],
       ADDITIONALTEXT: ['', Validators.required],
       COMMENT: [''],
       INVOICEDATE: [this.datepipe.transform(new Date(), 'dd/MM/yyyy')],
@@ -109,13 +109,16 @@ export class ActivityDialogComponent implements OnInit {
     });
     if (this.lookuptype === 'Activity') {
       this.dialogTitle = 'New Activity';
-      this.activityForm.controls['ITEMTYPE'].setValue(1);
+      this.activityForm.controls['ITEMTYPE'].setValue('activity');
+      this.activityForm.controls['FEETYPE'].setValue('activity');
     } else if (this.lookuptype === 'Sundry') {
       this.dialogTitle = 'New Sundry';
-      this.activityForm.controls['ITEMTYPE'].setValue(2);
+      this.activityForm.controls['ITEMTYPE'].setValue('sundry');
+      this.activityForm.controls['FEETYPE'].setValue('sundry');
     } else {
       this.dialogTitle = 'New Activity';
-      this.activityForm.controls['ITEMTYPE'].setValue(1);
+      this.activityForm.controls['ITEMTYPE'].setValue('activity');
+      this.activityForm.controls['FEETYPE'].setValue('activity');
     }
 
   }
@@ -150,10 +153,14 @@ export class ActivityDialogComponent implements OnInit {
     }
     return timeStops;
   }
-  matterChange(key: any, event: any) {
-    if (key == "FeeEarner") {
-      this.calculateData.FeeEarner = event;
-    } else if (key == "QuantityType") {
+  matterChange(key: any, value: any) {
+    let event: any = value;
+    if (key == "QuantityType") {
+      let target = value.source.selected._element.nativeElement;
+      event = event.value;
+      this.activityForm.controls['ADDITIONALTEXT'].setValue(target.innerText.trim());
+    }
+    if (key == "QuantityType") {
       switch (event) {
         case 'hh:mm': {
           this.calculateData.QuantityType = 'X';
@@ -186,6 +193,7 @@ export class ActivityDialogComponent implements OnInit {
         }
       }
     }
+    this.calculateData.FeeEarner = this.f.FEEEARNER.value;
     this.calculateData.Quantity = this.f.QUANTITY.value;
     if (this.calculateData.Quantity != '' && this.calculateData.QuantityType != '') {
       this.isLoadingResults = true;
@@ -203,9 +211,6 @@ export class ActivityDialogComponent implements OnInit {
         this.toastr.error(err);
       });
     }
-  }
-  LookupsChange(value: any) {
-    this.activityForm.controls['ADDITIONALTEXT'].setValue(value);
   }
   calcPE() {
     this.PRICEINCGSTVAL = round(this.f.PRICE.value * 1.1).toFixed(2);
@@ -225,6 +230,7 @@ export class ActivityDialogComponent implements OnInit {
       FEEEARNER: this.f.FEEEARNER.value,
       QUANTITY: this.f.QUANTITY.value,
       ITEMTYPE: this.f.ITEMTYPE.value,
+      FEETYPE: this.f.FEETYPE.value,
       PRICE: this.f.PRICE.value,
       PRICEINCGST: this.f.PRICEINCGST.value,
       ADDITIONALTEXT: this.f.ADDITIONALTEXT.value,

@@ -46,7 +46,7 @@
                     <mat-form-field appearance="outline" fxFlex="34" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.QUANTITYTYPE,'has-warning':errorWarningData.Warning?.QUANTITYTYPE}">
                         <mat-label *ngIf="lookuptype=='Activity'">Activity</mat-label>
                         <mat-label *ngIf="lookuptype=='Sundry'">Sundry</mat-label>
-                        <mat-select (selectionChange)="matterChange('QuantityType',$event.value)" formControlName="QUANTITYTYPE">
+                        <mat-select (selectionChange)="matterChange('QuantityType',$event)" formControlName="QUANTITYTYPE">
                             <mat-option *ngFor="let Lookups of LookupsList" value="{{Lookups.LOOKUPGUID}}">{{Lookups.LOOKUPFULLVALUE}}</mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -63,14 +63,6 @@
                         <input class="sideText" [readonly]="isreadonly" type="text" numeric numericType="decimal" matInput formControlName="PRICEINCGST" (keyup)="calcPI()" [(ngModel)]="PRICEINCGSTVAL">
                         <span class="currency_sign" matPrefix>$&nbsp;</span>
                         <mat-icon matSuffix class="secondary-text">currency</mat-icon>
-                    </mat-form-field>
-                </div>
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field fxFlex="100" class="pr-4" appearance="outline">
-                        <mat-label>Invoice Text</mat-label>
-                        <mat-select #LookupsSelect (selectionChange)='LookupsChange(LookupsSelect.value)' formControlName="ADDITIONALTEXTSELECT">
-                            <mat-option *ngFor="let Lookups of LookupsList" [value]="Lookups.LOOKUPFULLVALUE">{{Lookups.LOOKUPFULLVALUE}}</mat-option>
-                        </mat-select>
                     </mat-form-field>
                 </div>
                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">

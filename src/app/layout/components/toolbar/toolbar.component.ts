@@ -150,12 +150,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         //For receipt 
         this.behaviorService.ReceiptData$.subscribe(result => {
-            this.DisabledReceiptTool="disabled";
+            this.DisabledReceiptTool = "disabled";
             if (result) {
-                this.receiptData=result;
-                this.DisabledReceiptTool="enabled";
+                this.receiptData = result;
+                this.DisabledReceiptTool = "enabled";
             }
-          });
+        });
 
         //for Disabled enabled
         this.behaviorService.ConflictDataList$.subscribe(result => {
@@ -1511,7 +1511,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.authenticationService.logout();
     }
     /** PACKETS MODULE FUNCTION'S */
-    OpenPacket(actionType){
+    OpenPacket(actionType) {
         let PacketPopData = {}
         if (actionType == 'new') {
             PacketPopData = { action: actionType }
@@ -1529,7 +1529,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    DeletePacket():void{
+    DeletePacket(): void {
         this.behaviorService.Packets$.subscribe(result => {
             if (result) {
                 this.PacketsData = result;
@@ -1718,7 +1718,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     createReceiptForTimeBilling() {
-        let result=JSON.parse(localStorage.getItem('set_active_matters'));
+        let result = JSON.parse(localStorage.getItem('set_active_matters'));
         const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
             width: '100%', disableClose: true,
             data: { action: 'add', type: " ", matterData: result }
@@ -1782,7 +1782,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this._matDialog.open(WriteOffInvoiceComponent, { width: '100%', disableClose: true, data: { 'type': 'edit', INVOICEGUID: INVOICEGUID } });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-
+                $('#refreshMatterInvoice').click();
             }
         });
     }

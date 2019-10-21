@@ -40,6 +40,10 @@
     }
 }
 
+#refreshMatterInvoice {
+    display: none;
+}
+
 .search {
     width: 45% !important;
     padding: 20px !important;
@@ -74,6 +78,7 @@ app-time-billing {
 .h2 {
     margin-top: 13px !important;
 }
+
 // .matter-serach-div.sticky_search_div {
 //     margin-top: 18px !important;
 //     margin-left: 45px !important;

@@ -56,7 +56,7 @@ export class UserDialogComponent implements OnInit {
     this.action = data.action;
     if (this.action === 'new') {
       this.dialogTitle = 'New User';
-      this.dialogButton = "Add";
+      this.dialogButton = "Save";
     } else if (this.action === 'edit') {
       this.dialogTitle = 'Update User';
       this.dialogButton = "Update";

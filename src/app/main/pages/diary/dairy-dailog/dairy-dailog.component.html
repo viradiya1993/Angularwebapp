@@ -28,7 +28,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="33" class="pr-4" *ngIf="CheckClick ==='No'">
                         <mat-label>Start</mat-label>
-                        <mat-select formControlName="APPOINTMENTTIME"  (ngModelChange)="StartTime($event)">
+                        <mat-select formControlName="APPOINTMENTTIME" (ngModelChange)="StartTime($event)">
                             <mat-option *ngFor="let data of timeStops" value="{{data}}">{{data}}</mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -53,7 +53,7 @@
         </div>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
-        <button mat-raised-button color="accent" (click)="SaveAppointment()" [disabled]="isspiner" *ngIf="action === 'new'"><mat-spinner *ngIf="isspiner"></mat-spinner>Add</button>
+        <button mat-raised-button color="accent" (click)="SaveAppointment()" [disabled]="isspiner" *ngIf="action === 'new'"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
         <button mat-raised-button color="accent" (click)="SaveAppointment()" [disabled]="isspiner" *ngIf="action === 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Update</button>
         <button mat-raised-button color="accent" (click)="SaveAppointment()" [disabled]="isspiner" *ngIf="action !== 'new' && action !== 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Duplicate</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>

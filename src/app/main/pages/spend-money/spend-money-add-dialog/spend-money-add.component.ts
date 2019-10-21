@@ -71,7 +71,8 @@ export class SpendMoneyAddComponent implements OnInit {
   SendMoney_dataGUID: any;
   arrayForIndex: any;
   storeDataarray: any = [];
-  constructor(public dialogRef: MatDialogRef<SpendMoneyAddComponent>,
+  constructor(
+    public dialogRef: MatDialogRef<SpendMoneyAddComponent>,
     @Inject(MAT_DIALOG_DATA) public _data: any,
     private _formBuilder: FormBuilder,
     public MatDialog: MatDialog,
@@ -79,7 +80,6 @@ export class SpendMoneyAddComponent implements OnInit {
     public behaviorService: BehaviorService,
     public _matDialog: MatDialog, public datepipe: DatePipe, public _mainAPiServiceService: MainAPiServiceService) {
     this.action = _data.action;
-
     // this.dialogTitle = this.action === 'edit' ? 'Update Spend Money' : 'Add Spend Money';
     if (this.action === 'new') {
       this.dialogTitle = 'Add Spend Money ';
@@ -90,9 +90,15 @@ export class SpendMoneyAddComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({ AccountClass: 'BANK ACCOUNT' }, 'GetAccount').subscribe(response => {
-      this.storeDataarray = response.DATA.ACCOUNTS;
-      this.showData(this.storeDataarray);
+      if (response.CODE == 200 && response.STATUS == "success") {
+        this.storeDataarray = response.DATA.ACCOUNTS;
+        this.showData(this.storeDataarray);
+        this.isLoadingResults = false;
+      } else if (response.MESSAGE == "Not logged in") {
+        this.dialogRef.close(false);
+      }
     }, err => {
     });
     this.behaviorService.SpendMoneyData$.subscribe(result => {
@@ -134,10 +140,10 @@ export class SpendMoneyAddComponent implements OnInit {
       MatterGUID: [''],
       ExpenseacGUID: ['']
     });
+    this.isLoadingResults = true;
     if (this.action != 'new') {
       $('#expac').addClass('menu-disabled');
       this.expac = true;
-      this.isLoadingResults = true;
       this._mainAPiServiceService.getSetData({ EXPENDITUREGUID: this.SendMoney_dataGUID.EXPENDITUREGUID }, 'GetExpenditure').subscribe(response => {
         if (response.CODE == 200 && response.STATUS == "success") {
           this.SendMoney_data = response.DATA.EXPENDITURES[0];
@@ -216,7 +222,6 @@ export class SpendMoneyAddComponent implements OnInit {
           }
           this.Classtype(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
         } else if (response.MESSAGE == 'Not logged in') {
-          console.log("nottt loged in");
           this.dialogRef.close(false);
         }
         this.isLoadingResults = false;
@@ -232,7 +237,7 @@ export class SpendMoneyAddComponent implements OnInit {
       if (x.ACCOUNTTYPENAME == "Bank Account") {
         // this.spendmoneyForm.controls['Bankac'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER + ' ' + result.MainList.ACCOUNTNAME);
         x.EXPORTINFO.MYOBEXPORTACCOUNT;
-        this.spendmoneyForm.controls['Bankac'].setValue(x.ACCOUNTCLASS + ' - ' + x.ACCOUNTNUMBER );
+        this.spendmoneyForm.controls['Bankac'].setValue(x.ACCOUNTCLASS + ' - ' + x.ACCOUNTNUMBER);
         this.spendmoneyForm.controls['BankacGUID'].setValue(x.ACCOUNTGUID);
       }
       if (x.SUBACCOUNTS) {
@@ -273,6 +278,7 @@ export class SpendMoneyAddComponent implements OnInit {
     this.Paidtype('Paid');
     this.spendmoneyForm.controls['Paid'].setValue("Paid");
     this.amountCal();
+    this.isLoadingResults = false;
   }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
@@ -702,7 +708,7 @@ export class SpendMoneyAddComponent implements OnInit {
     console.log(this.FinalExGSTAmount);
     // for ammount field 
     this.FinalExGSTAmount = this.setMainAmount - this.setMainGST;
-    if(this.FinalExGSTAmount == 0 ){
+    if (this.FinalExGSTAmount == 0) {
       this.toastr.error("Amount should not be 0");
       return;
     }

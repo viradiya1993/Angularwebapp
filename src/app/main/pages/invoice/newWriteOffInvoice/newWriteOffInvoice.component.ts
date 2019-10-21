@@ -5,6 +5,7 @@ import { MainAPiServiceService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-newWriteOffInvoice',
@@ -21,12 +22,13 @@ export class WriteOffInvoiceComponent implements OnInit {
   WriteOffInvoice: any = {}
   constructor(private _mainAPiServiceService: MainAPiServiceService,
     private toastr: ToastrService,
+    public datepipe: DatePipe,
     public dialogRef: MatDialogRef<WriteOffInvoiceComponent>,
     @Inject(MAT_DIALOG_DATA) public _data: any, public _matDialog: MatDialog, ) { }
 
   ngOnInit() {
     this.WriteOffInvoice = {
-      INVOICECODE: '', INVOICEDATE: '', DUEDATE: '', TOTALINVOICES: '', AMOUNTOUTSTANDINGEXGST: '', TOTALOUSTANDING: '', SendInvoiceDate: ''
+      matter: '', client: '', INVOICECODE: '', INVOICEDATE: '', DUEDATE: '', TOTALINVOICES: '', TOTALRECEIVED: '', TOTALOUSTANDING: '', WriteOffDate: '', AMOUNT: ''
     }
     this.EditPopUpOPen();
   }
@@ -34,24 +36,21 @@ export class WriteOffInvoiceComponent implements OnInit {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({ 'INVOICEGUID': this._data.INVOICEGUID }, 'GetInvoice').subscribe(res => {
       if ((res.CODE == 200 || res.CODE == '200') && res.STATUS == "success") {
-        let temInvoice = res.DATA.INVOICES[0].INVOICECODE;
+        let invoiceData = res.DATA.INVOICES[0];
+        this.WriteOffInvoice.matter = invoiceData.SHORTNAME;
+        this.WriteOffInvoice.client = invoiceData.CLIENTNAME;
+        let temInvoice = invoiceData.INVOICECODE;
         this.WriteOffInvoice.INVOICECODE = temInvoice.toString().padStart(8, "0");
-        let DueDate = res.DATA.INVOICES[0].DUEDATE.split("/");
-        let DUE = new Date(DueDate[1] + '/' + DueDate[0] + '/' + DueDate[2]);
-        this.WriteOffInvoice.DUEDATE = DUE;
-        let InvoiceDate = res.DATA.INVOICES[0].INVOICEDATE.split("/");
+        let InvoiceDate = invoiceData.INVOICEDATE.split("/");
         let date = new Date(InvoiceDate[1] + '/' + InvoiceDate[0] + '/' + InvoiceDate[2]);
         this.WriteOffInvoice.INVOICEDATE = date;
-        this.WriteOffInvoice.SendInvoiceDate = res.DATA.INVOICES[0].INVOICEDATE
-        this.WriteOffInvoice.AMOUNTOUTSTANDINGEXGST = res.DATA.INVOICES[0].AMOUNTOUTSTANDINGEXGST;
+        let DueDate = invoiceData.DUEDATE.split("/");
+        let DUE = new Date(DueDate[1] + '/' + DueDate[0] + '/' + DueDate[2]);
+        this.WriteOffInvoice.DUEDATE = DUE;
         this.WriteOffInvoice.TOTALINVOICES = res.DATA.TOTALINVOICES;
+        this.WriteOffInvoice.TOTALRECEIVED = res.DATA.TOTALRECEIVED;
         this.WriteOffInvoice.TOTALOUSTANDING = res.DATA.TOTALOUSTANDING;
-        // this.TaskForm.controls['DUEDATE'].setValue(DUE);
-        // this.TaskForm.controls['SendDUEDATE'].setValue(res.DATA.TASKS[0].DUEDATE);
-        // let StartDate = res.DATA.TASKS[0].STARTDATE.split("/");
-        // let Start = new Date(StartDate[1] + '/' + StartDate[0] + '/' + StartDate[2]);
-        // this.TaskForm.controls['STARTDATE'].setValue(Start);
-
+        this.WriteOffInvoice.WriteOffDate = new Date();
       } else if (res.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
@@ -67,8 +66,8 @@ export class WriteOffInvoiceComponent implements OnInit {
     let data = {
       INVOICEGUID: this._data.INVOICEGUID,
       MATTERGUID: matterdata.MATTERGUID,
-      WRITEOFFDATE: this.WriteOffInvoice.SendInvoiceDate,
-      WRITEOFFAMOUNT: this.WriteOffInvoice.AMOUNTOUTSTANDINGEXGST
+      WRITEOFFDATE: this.datepipe.transform(this.WriteOffInvoice.WriteOffDate, 'dd/MM/yyyy'),
+      WRITEOFFAMOUNT: this.WriteOffInvoice.AMOUNT
     }
     this.isspiner = true;
     let finalData = { DATA: data, FormAction: 'write off', VALIDATEONLY: true }
@@ -95,11 +94,10 @@ export class WriteOffInvoiceComponent implements OnInit {
     let tempError: any = [];
     let tempWarning: any = [];
     bodyData.forEach(function (value) {
-      if (value.VALUEVALID == 'No') {
+      if (value.VALUEVALID == 'ERROR') {
         errorData.push(value.ERRORDESCRIPTION);
         tempError[value.FIELDNAME] = value;
-      }
-      else if (value.VALUEVALID == 'Warning') {
+      } else if (value.VALUEVALID == 'Warning') {
         tempWarning[value.FIELDNAME] = value;
         warningData.push(value.ERRORDESCRIPTION);
       }

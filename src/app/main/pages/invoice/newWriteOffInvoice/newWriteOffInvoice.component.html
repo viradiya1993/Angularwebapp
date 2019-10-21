@@ -11,6 +11,16 @@
         <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
             <form fxLayout="column" fxFlex="1 0 auto" name="form">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
+                        <mat-label>Client</mat-label>
+                        <input [(ngModel)]="WriteOffInvoice.client" name="client" matInput readonly>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
+                        <mat-label>Matter</mat-label>
+                        <input [(ngModel)]="WriteOffInvoice.matter" name="matter" matInput readonly>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
                         <mat-label>Invoice No</mat-label>
                         <input [(ngModel)]="WriteOffInvoice.INVOICECODE" name="INVOICECODE" matInput placeholder="Invoice No" readonly>
@@ -35,16 +45,27 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
                         <mat-label>Amount Paid</mat-label>
-                        <input [(ngModel)]="WriteOffInvoice.AMOUNTOUTSTANDINGEXGST" name="AMOUNTOUTSTANDINGEXGST" readonly matInput placeholder="Amount Paid">
+                        <input [(ngModel)]="WriteOffInvoice.TOTALRECEIVED" name="TOTALRECEIVED" readonly matInput placeholder="Amount Paid">
                     </mat-form-field>
                     <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
                         <mat-label>Amount Outstanding</mat-label>
                         <input [(ngModel)]="WriteOffInvoice.TOTALOUSTANDING" name="TOTALOUSTANDING" readonly matInput placeholder="Amount Outstanding">
                     </mat-form-field>
-
                 </div>
-
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.WRITEOFFDATE,'has-warning':errorWarningData.Warning?.WRITEOFFDATE}">
+                        <mat-label>Write Off Date</mat-label>
+                        <input [(ngModel)]="WriteOffInvoice.WriteOffDate" name="WriteOffDate" matInput readonly [satDatepicker]="WriteOffDatePiker">
+                        <sat-datepicker #WriteOffDatePiker> </sat-datepicker>
+                        <sat-datepicker-toggle matSuffix [for]="WriteOffDatePiker"></sat-datepicker-toggle>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.WRITEOFFAMOUNT,'has-warning':errorWarningData.Warning?.WRITEOFFAMOUNT}">
+                        <mat-label>Write Off Amount</mat-label>
+                        <input [(ngModel)]="WriteOffInvoice.AMOUNT" name="AMOUNT" matInput placeholder="Amount">
+                    </mat-form-field>
+                </div>
             </form>
+            <!-- WriteOffDate -->
         </div>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">

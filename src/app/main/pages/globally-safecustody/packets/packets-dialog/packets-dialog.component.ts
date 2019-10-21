@@ -88,6 +88,7 @@ export class PacketsDialogComponent implements OnInit {
       if (result.CODE == 200 && result.STATUS == "success") {
           this.packetsform.controls['SAFECUSTODYPACKETGUID'].setValue(result.DATA.SAFECUSTODYPACKETS[0].SAFECUSTODYPACKETGUID);
           this.packetsform.controls['CONTACTGUID'].setValue(result.DATA.SAFECUSTODYPACKETS[0].CONTACTGUID);
+          this.packetsform.controls['CONTACT'].setValue('');
           if(this.action == "edit"){
             this.packetsform.controls['PACKETNUMBER'].setValue(result.DATA.SAFECUSTODYPACKETS[0].PACKETNUMBER);
           }

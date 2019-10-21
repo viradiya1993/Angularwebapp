@@ -176,27 +176,22 @@ export class InvoiceComponent implements OnInit {
       }
     });
   }
-
-  sortingCLM(){
-    console.log("fjksdklfj");
+  
+sortingCLM(){
     console.log(this.MatterInvoicesdata);
-
     this.MatterInvoicesdata.sortingDataAccessor = (item, property) => {
     switch (property) {
     case 'INVOICEDATE': {
-        console.log('Inside date');
         let tempDate = item.INVOICEDATE.split("/");
         let Sd = new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]);
         let newDate = new Date(Sd);
-        console.log(newDate);
       return newDate;
     }
     default: {
-      console.log('Inside default sort');
       return item[property];}
             }
         };
-   
+
   }
 
 } 

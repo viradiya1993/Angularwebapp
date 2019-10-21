@@ -109,6 +109,8 @@ export class DiaryComponent implements OnInit {
         });
     }
     editEvent(action: string, event: CalendarEvent): void {
+        console.log(action);
+        console.log(event);
         this.selectedColore = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
         this.behaviorService.forDiaryRefersh(event);
         // console.log(this.events)

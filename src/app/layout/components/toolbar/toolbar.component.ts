@@ -82,6 +82,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     receiptData: any;
     DisabledReceiptTool: string;
     safecustodydata: any;
+    PacketsData: any;
     [x: string]: any;
     appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
     @ViewChild(TimeEntriesComponent) TimeEntrieschild: TimeEntriesComponent;

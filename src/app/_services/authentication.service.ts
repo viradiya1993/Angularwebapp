@@ -7,9 +7,12 @@ import { environment } from '../../environments/environment';
 
 import { User } from '../_models';
 import { ToastrService } from 'ngx-toastr';
+import { SpendMoneyAddComponent } from 'app/main/pages/spend-money/spend-money-add-dialog/spend-money-add.component';
+import { MatDialogRef } from '@angular/material';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
+    public dialogRef: MatDialogRef<SpendMoneyAddComponent>;
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User>;
 
@@ -60,6 +63,7 @@ export class AuthenticationService {
                 localStorage.removeItem('currentUser');
                 localStorage.removeItem('app_permissions');
                 localStorage.removeItem('session_token');
+                // this.dialogRef.close(false);
                 this.currentUserSubject.next(null);
                 this.router.navigate(['login']);
             } else if (loginResponse.CODE != 402 && loginResponse.STATUS != 'error') {
@@ -78,6 +82,8 @@ export class AuthenticationService {
     MaintainLicence() {
         // remove user from local storage to log user out
         this.http.get<any>(environment.APIEndpoint + 'Login?request=MaintainLicence').subscribe(loginResponse => {
+            console.log(loginResponse);
+           // this.dialogRef.close(false);
             // console.log(loginResponse);
         }, error => {
             console.log(error);

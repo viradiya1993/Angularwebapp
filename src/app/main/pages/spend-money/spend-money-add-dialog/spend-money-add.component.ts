@@ -98,10 +98,7 @@ export class SpendMoneyAddComponent implements OnInit {
       } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
-
-
-    }, err => {
-    });
+    }, err => { });
     this.behaviorService.SpendMoneyData$.subscribe(result => {
       if (result) {
         this.SendMoney_dataGUID = result;

@@ -91,8 +91,14 @@ export class SpendMoneyAddComponent implements OnInit {
   }
   ngOnInit() {
     this._mainAPiServiceService.getSetData({ AccountClass: 'BANK ACCOUNT' }, 'GetAccount').subscribe(response => {
-      this.storeDataarray = response.DATA.ACCOUNTS;
-      this.showData(this.storeDataarray);
+      if(response){
+        this.storeDataarray = response.DATA.ACCOUNTS;
+        this.showData(this.storeDataarray);
+      }else if (response.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      }
+    
+
     }, err => {
     });
     this.behaviorService.SpendMoneyData$.subscribe(result => {

@@ -108,13 +108,14 @@ export class DiaryComponent implements OnInit {
        */
     setEvents(): void {
         this.events = this._calendarService.events.map(item => {
-            console.log(item);
             item.actions = this.actions;
             return new DiaryEventModel(item);
         });
     }
     editEvent(action: string, event: CalendarEvent): void
     {
+        console.log(action);
+        console.log(event);
         this.selectedColore = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
         this.behaviorService.forDiaryRefersh(event);
         // console.log(this.events)

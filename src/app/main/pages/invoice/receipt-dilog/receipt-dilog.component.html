@@ -116,11 +116,11 @@
                 <div class="one invoice_receipt_main_div">
                     <div class="example-containerdata">
                         <table mat-table #table [dataSource]="PrepareReceiptData" [@animateStagger]="{value:'50'}" matSort class="mat-elevation-z8">
-                            <ng-container matColumnDef="INVOICEDATE">
+                            <ng-container matColumnDef="INVOICECODE">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Invoice</th>
                                 <td mat-cell *matCellDef="let row">
                                     <p class="job-title text-truncate">
-                                        {{row.INVOICEDATE}}
+                                        {{row.INVOICECODE}}
                                     </p>
                                 </td>
                             </ng-container>
@@ -128,7 +128,7 @@
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
                                 <td mat-cell *matCellDef="let row">
                                     <p class="company text-truncate">
-                                        {{row.INVOICETOTAL }}
+                                        {{row.INVOICETOTALINCGST }}
                                     </p>
                                 </td>
                             </ng-container>
@@ -140,6 +140,32 @@
                                     </p>
                                 </td>
                             </ng-container>
+
+<!-- 
+                            <ng-container matColumnDef="AMOUNTOUTSTANDINGINCGST">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Outstanding</th>
+                                <td mat-cell *matCellDef="let row">
+                                    <p class="company text-truncate">
+                                        {{row.AMOUNTOUTSTANDINGEXGST }}
+                                    </p>
+                                </td>
+                            </ng-container> -->
+
+
+                            <!-- <ng-container matColumnDef="ALLOCATED">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Allocated</th>
+                                <td mat-cell *matCellDef="let row">
+                                    <p class="company text-truncate">
+                                        <span *ngIf="row.ALLOCATED">
+                                        {{row.ALLOCATED }}
+                                       </span>
+                                        <span *ngIf="!row.ALLOCATED">
+                                            0.00
+                                       </span>
+                                    </p>
+                                </td>
+                            </ng-container> -->
+
                             <ng-container matColumnDef="ALLOCATED">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Allocated</th>
                                 <td mat-cell *matCellDef="let row">
@@ -153,6 +179,7 @@
                                     </p>
                                 </td>
                             </ng-container>
+
                             <ng-container matColumnDef="MATTERGUID">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Matter</th>
                                 <td mat-cell *matCellDef="let row">

@@ -1672,8 +1672,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                     }
 
                 });
-                // localStorage.setItem('set_active_matters', JSON.stringify(result));
-                // this.router.navigate(['time-billing/work-in-progress/invoice']);
             }
         });
     }

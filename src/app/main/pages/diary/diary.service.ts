@@ -16,6 +16,7 @@ export class DiaryService implements Resolve<any>
     SendParam: any = {};
     onEventsUpdated: Subject<any>;
     getCalenderDetails: any;
+    CurrentDate: any;
     /**
      * Constructor
      *
@@ -36,6 +37,16 @@ export class DiaryService implements Resolve<any>
             this.getEvents();
         });
 
+        this.behaviorService.UseCalanderViewType$.subscribe(result => {
+            if(result != null){
+            console.log(result);
+                this.CurrentDate=result
+            }else{
+                this.CurrentDate=new Date();
+            }
+            // this.getEvents();
+        });
+        
         this.behaviorService.calanderViewType$.subscribe(result => {
             if (result) {
 
@@ -76,19 +87,12 @@ export class DiaryService implements Resolve<any>
      * @returns {Promise<any>}
      */
     getEvents(): Promise<any> {
-        var curr = new Date; // get current date
-        var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
-        var last = first + 6; // last day is the first day + 6
-        
-        var firstday = new Date(curr.setDate(first)).toUTCString();
-        var lastday = new Date(curr.setDate(last)).toUTCString();
-       
-
+      
         let userData = JSON.parse(localStorage.getItem('currentUser'));
         if (this.getCalenderDetails == 'month') {
-            var date = new Date();
-            var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-            var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+           
+            var firstDay = new Date(this.CurrentDate.getFullYear(), this.CurrentDate.getMonth(), 1);
+            var lastDay = new Date(this.CurrentDate.getFullYear(), this.CurrentDate.getMonth() + 1, 0);
 
             this.SendParam = {
                 USERGUID: userData.UserGuid,
@@ -96,20 +100,20 @@ export class DiaryService implements Resolve<any>
                 DATEEND: this.datepipe.transform(lastDay, 'dd/MM/yyyy')
             }
         } else if (this.getCalenderDetails == 'day') {
-            var date = new Date();
+          
 
             this.SendParam = {
                 USERGUID: userData.UserGuid,
-                DATESTART: this.datepipe.transform(date, 'dd/MM/yyyy'),
-                DATEEND: this.datepipe.transform(date, 'dd/MM/yyyy')
+                DATESTART: this.datepipe.transform(this.CurrentDate, 'dd/MM/yyyy'),
+                DATEEND: this.datepipe.transform(this.CurrentDate, 'dd/MM/yyyy')
             }
         } else if (this.getCalenderDetails == 'week') {
        
-            var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
+            var first = this.CurrentDate.getDate() - this.CurrentDate.getDay(); // First day is the day of the month - the day of the week
             var last = first + 6; // last day is the first day + 6
-            var firstday = new Date(curr.setDate(first)).toUTCString();
-            var lastday = new Date(curr.setDate(last)).toUTCString();
-
+            var firstday = new Date(this.CurrentDate.setDate(first)).toUTCString();
+            var lastday = new Date(this.CurrentDate.setDate(last)).toUTCString();
+            
             this.SendParam = {
                 USERGUID: userData.UserGuid,
                 DATESTART: this.datepipe.transform(new Date(firstday), 'dd/MM/yyyy'),

@@ -59,12 +59,13 @@ export class AuthenticationService {
     logout() {
         // remove user from local storage to log user out
         this.http.get<any>(environment.APIEndpoint + 'Login?request=Logout').subscribe(loginResponse => {
+            this.behaviorService.dialogClose(loginResponse);
             if (loginResponse.MESSAGE == 'Not logged in') {
 
                 localStorage.removeItem('currentUser');
                 localStorage.removeItem('app_permissions');
                 localStorage.removeItem('session_token');
-                this.behaviorService.dialogClose(loginResponse);
+               
                 this.currentUserSubject.next(null);
                 this.router.navigate(['login']);
             } else if (loginResponse.CODE != 402 && loginResponse.STATUS != 'error') {
@@ -83,9 +84,11 @@ export class AuthenticationService {
     MaintainLicence() {
         // remove user from local storage to log user out
         this.http.get<any>(environment.APIEndpoint + 'Login?request=MaintainLicence').subscribe(loginResponse => {
-            if (loginResponse.MESSAGE == 'Not logged in') {
-                this.behaviorService.dialogClose(loginResponse);
-            }
+            
+            this.behaviorService.dialogClose(loginResponse);
+            // if (loginResponse.MESSAGE == 'Not logged in') {
+             
+            // }
         }, error => {
             console.log(error);
             this.toastr.error(error);

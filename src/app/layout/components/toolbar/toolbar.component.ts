@@ -1661,20 +1661,30 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    NewTimeEntry() {
-        const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                const dialogRef = this.dialog.open(ResumeTimerComponent, { width: '100%', disableClose: true, data: { 'type': 'new', 'matterData': result } });
-                dialogRef.afterClosed().subscribe(result => {
-                    if (result) {
-                        $('#refreshTimeEntryTab').click();
-                        $('#refreshWorkInprogress').click();
-                    }
-
-                });
-            }
-        });
+    NewTimeEntry(type: any) {
+        if (type == 'timeBill') {
+            let temMatterData = JSON.parse(localStorage.getItem('set_active_matters'));
+            const dialogRef = this.dialog.open(ResumeTimerComponent, { width: '100%', disableClose: true, data: { 'type': 'new', 'matterData': temMatterData } });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    $('#refreshTimeEntryTab').click();
+                    $('#refreshWorkInprogress').click();
+                }
+            });
+        } else {
+            const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    const dialogRef = this.dialog.open(ResumeTimerComponent, { width: '100%', disableClose: true, data: { 'type': 'new', 'matterData': result } });
+                    dialogRef.afterClosed().subscribe(result => {
+                        if (result) {
+                            $('#refreshTimeEntryTab').click();
+                            $('#refreshWorkInprogress').click();
+                        }
+                    });
+                }
+            });
+        }
     }
     //web19
     isInvoiceClick() {

@@ -175,6 +175,8 @@ export class ResumeTimerComponent implements OnInit {
         this.toastr.error(err);
       });
     } else {
+      let temmatterData = this.resumeTimerData.matterData;
+      this.ActiveTimerData = { SHORTNAME: temmatterData.SHORTNAME, MATTERGUID: temmatterData.MATTERGUID, secound: '0', WORKITEMGUID: '' };
       this.matterShortName = this.resumeTimerData.matterData.SHORTNAME;
       this.resumeTimerForm.controls['matterautoVal'].setValue(this.resumeTimerData.matterData.SHORTNAME + ' : ' + this.resumeTimerData.matterData.MATTER);
       this.resumeTimerForm.controls['MATTERGUID'].setValue(this.resumeTimerData.matterData.MATTERGUID);

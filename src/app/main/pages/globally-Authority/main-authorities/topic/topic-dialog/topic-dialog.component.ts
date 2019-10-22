@@ -41,6 +41,14 @@ export class TopicDialogComponent implements OnInit {
     else if (data.action == 'new') {
       this.title = 'Add';
     }
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
+
     this.behaviorService.MainTopicData$.subscribe(result => {
       if (result) {
 

@@ -31,7 +31,15 @@ export class WriteOffTimeEntryComponent implements OnInit {
     private toastr: ToastrService, public datepipe: DatePipe,
     private Timersservice: TimersService,
     @Inject(MAT_DIALOG_DATA) public writeTimerData: any
-  ) { }
+  ) { 
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
+  }
 
   ngOnInit() {
     this.writeOffTimerForm = this._formBuilder.group({

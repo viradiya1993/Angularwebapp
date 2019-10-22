@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, ViewEncapsulation } from '@angular/core';
 import { MatDialogRef, MatDialog } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { MainAPiServiceService } from './../../../../_services';
+import { MainAPiServiceService, BehaviorService } from './../../../../_services';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { fuseAnimations } from '@fuse/animations';
@@ -46,6 +46,7 @@ export class ContactDialogComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
     public _matDialog: MatDialog,
+     public behaviorService: BehaviorService,
     private _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
@@ -56,6 +57,14 @@ export class ContactDialogComponent implements OnInit {
       this.dialogTitle = 'Duplicate Contact'
     else
       this.dialogTitle = 'New Contact';
+
+      this.behaviorService.dialogClose$.subscribe(result => {
+        if(result != null){
+          if(result.MESSAGE == 'Not logged in'){
+            this.dialogRef.close(false);
+          }
+        }
+       });
   }
   common: Common[];
   nameSelected: string;

@@ -40,6 +40,7 @@ export class MatterDialogComponent implements OnInit {
     private Timersservice: TimersService
   ) {
     this.matterFilterForm = this.fb.group({ MatterFilter: [''], UserFilter: [''], searchFilter: [''], InvoiceFilter: [''], });
+    
   }
 
   ngOnInit() {

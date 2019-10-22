@@ -50,7 +50,13 @@ export class NewPacksDailogComponent implements OnInit {
 
     this.action = data.action;
     this.dialogTitle = this.action === 'edit' ? 'Edit Pack' : 'New Pack';
-
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
     this.behaviorService.packs$.subscribe(result => {
       if (result) {
         this.kitguid = result.KITGUID;

@@ -47,6 +47,13 @@ export class ResumeTimerComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public resumeTimerData: any
   ) {
     this.timeStops = this.getTimeStops('01:00', '23:59');
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
   }
 
   ngOnInit() {

@@ -43,7 +43,15 @@ export class InstantInvoiceDailogComponent implements OnInit {
     private toastr: ToastrService,
     private _mainAPiServiceService: MainAPiServiceService,
     private behaviorService: BehaviorService,
-  ) { }
+  ) { 
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
+  }
 
   ngOnInit() {
     // this.TotalExGst=0.00;

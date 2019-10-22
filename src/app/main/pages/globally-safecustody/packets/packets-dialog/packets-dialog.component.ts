@@ -48,6 +48,13 @@ export class PacketsDialogComponent implements OnInit {
       } else {
         this.dialogTitle = 'Duplicate Packets';
       }
+      this.behaviorService.dialogClose$.subscribe(result => {
+        if(result != null){
+          if(result.MESSAGE == 'Not logged in'){
+            this.dialogRef.close(false);
+          }
+        }
+       });
       this.behaviorService.Packets$.subscribe(result => {
         if (result) {
           this.PacketsData = result;

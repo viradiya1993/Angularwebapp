@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { MatDialogRef, MatDialog, MatDatepickerInputEvent, MAT_DIALOG_DATA } from '@angular/material';
-import { MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { BankingDialogComponent } from '../../banking/banking-dialog.component';
 @Component({
@@ -24,6 +24,7 @@ export class GeneralReceiptDilogComponent implements OnInit {
   constructor(
     private toastr: ToastrService,
     private _formBuilder: FormBuilder,
+    public behaviorService: BehaviorService,
     public dialogRef: MatDialogRef<GeneralReceiptDilogComponent>,
     public datepipe: DatePipe,
     public MatDialog: MatDialog,
@@ -31,6 +32,13 @@ export class GeneralReceiptDilogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public _data: any,
   ) {
     this.action = _data.type;
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
   }
   generalReceiptForm: FormGroup;
   isspiner: boolean;

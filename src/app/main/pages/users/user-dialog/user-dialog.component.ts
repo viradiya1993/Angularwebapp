@@ -3,7 +3,7 @@ import { MatDialogRef, MatDialog, MatPaginator, MatSort, MatTableDataSource } fr
 import { ToastrService } from 'ngx-toastr';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-import { MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import { fuseAnimations } from '@fuse/animations';
 import { UserBudgetDialogComponent } from './user-budget-dialog/user-budget-dialog.component';
 
@@ -49,6 +49,7 @@ export class UserDialogComponent implements OnInit {
     public confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>,
     public budgetDialogRef: MatDialogRef<UserBudgetDialogComponent>,
     private toastr: ToastrService,
+    public behaviorService: BehaviorService,
     public _matDialog: MatDialog,
     private _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -64,6 +65,13 @@ export class UserDialogComponent implements OnInit {
       this.dialogTitle = 'Duplicate User';
       this.dialogButton = "Duplicate";
     }
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
   }
   ngOnInit(): void {
     if (this.action === 'edit' || this.action === 'duplicate') {

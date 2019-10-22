@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatTableDataSource, MatDatepickerInputEvent } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -21,7 +21,7 @@ import { BankingDialogComponent } from '../../banking/banking-dialog.component';
   encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
-export class SpendMoneyAddComponent implements OnInit {
+export class SpendMoneyAddComponent implements OnInit{
   errorWarningData: any = {};
   dataSource: MatTableDataSource<UserData>;
   action: any;
@@ -88,17 +88,22 @@ export class SpendMoneyAddComponent implements OnInit {
     } else {
       this.dialogTitle = 'Duplicate Spend Money';
     }
+    
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
+    
   }
+  // ngOnDestroy(){
+  //   console.log("on distry");
+  //   this.dialogRef.close(false);
+  // }
   ngOnInit() {
     this.isLoadingResults = true;
-    this._mainAPiServiceService.getSetData({ AccountClass: 'BANK ACCOUNT' }, 'GetAccount').subscribe(response => {
-      if (response) {
-        this.storeDataarray = response.DATA.ACCOUNTS;
-        this.showData(this.storeDataarray);
-      } else if (response.MESSAGE == 'Not logged in') {
-        this.dialogRef.close(false);
-      }
-    }, err => { });
     this.behaviorService.SpendMoneyData$.subscribe(result => {
       if (result) {
         this.SendMoney_dataGUID = result;
@@ -244,6 +249,15 @@ export class SpendMoneyAddComponent implements OnInit {
     });
   }
   forAddshowpopupData() {
+  this._mainAPiServiceService.getSetData({ AccountClass: 'BANK ACCOUNT' }, 'GetAccount').subscribe(response => {
+      if (response) {
+        this.storeDataarray = response.DATA.ACCOUNTS;
+        this.showData(this.storeDataarray);
+      } else if (response.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      }
+    }, err => {
+    });
     this.isItemSaveClicked = 'no';
     this.getDataForTable = [];
     this.spendmoneyForm.controls['DateIncurred'].setValue(new Date(), 'dd/MM/yyyy');

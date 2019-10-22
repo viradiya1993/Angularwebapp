@@ -39,7 +39,7 @@
                                                 <th class="mat-header-cell" fxFlex="20">Account Type</th>
                                             </thead>
                                         </table>
-                                        <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                                        <mat-tree #tree [dataSource]="dataSource" [treeControl]="treeControl">
                                             <!-- This is the tree node template for leaf nodes -->
                                             <mat-tree-node class="border-top" *matTreeNodeDef="let node" matTreeNodePadding [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index (click)="RowClick(node);highlightedRows = node.index "
                                                 matRipple [@animate]="{value:'*',params:{y:'100%'}}">

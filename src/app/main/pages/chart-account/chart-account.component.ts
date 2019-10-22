@@ -1,14 +1,9 @@
 import { fuseAnimations } from '@fuse/animations';
-import { ToastrService } from 'ngx-toastr';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { Component, OnInit, ViewEncapsulation, ViewChild, Injectable, ViewContainerRef, Inject } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatDialogRef, MatDialog, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material';
-import { MatSort } from '@angular/material';
+import { Component, OnInit, ViewEncapsulation, ViewChild, Injectable } from '@angular/core';
+import { MatPaginator, MatDialog } from '@angular/material';
 import * as $ from 'jquery';
-import { NestedTreeControl } from '@angular/cdk/tree';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { MatTreeFlatDataSource, MatTreeFlattener, MatTreeNestedDataSource } from '@angular/material/tree';
+import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { MainAPiServiceService, BehaviorService } from 'app/_services';
 
 interface FoodNode {
@@ -72,20 +67,14 @@ export class ChartAccountComponent implements OnInit {
   treeFlattener = new MatTreeFlattener(this._transformer, node => node.level, node => node.expandable, node => node.SUBACCOUNTS);
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
   highlightedRows: number;
-  accClass: any;
-  public ChartData = {
-    "AccountClass": 'All'
-  }
+  public ChartData = { "AccountClass": 'All' }
   filterData: { 'Search': string; 'AccountClass': any; };
 
   constructor(
     public dialog: MatDialog,
     private _mainAPiServiceService: MainAPiServiceService,
     private behaviorService: BehaviorService) {
-
-    this.filterData = {
-      'Search': '', "AccountClass": "All"
-    }
+    this.filterData = { 'Search': '', "AccountClass": "All" }
     if (!localStorage.getItem("chartAcc_filter")) {
       localStorage.setItem('chartAcc_filter', JSON.stringify(this.filterData));
     } else {
@@ -93,8 +82,6 @@ export class ChartAccountComponent implements OnInit {
     }
     this.ChartData.AccountClass = this.filterData.AccountClass;
     this.loadData(this.filterData);
-
-
   }
   ngOnInit() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 80)) + 'px');
@@ -115,7 +102,7 @@ export class ChartAccountComponent implements OnInit {
         this.showData(this.storeDataarray, 0, null);
         this.dataSource.data = this.storeDataarray;
         this.treeControl.dataNodes = this.storeDataarray;
-        this.treeControl.expandAll();
+        this.tree.treeControl.expandAll();
         if (response.DATA.ACCOUNTS[0].SUBACCOUNTS)
           this.RowClick(response.DATA.ACCOUNTS[0].SUBACCOUNTS[0]);
         this.highlightedRows = 1;
@@ -162,11 +149,10 @@ export class ChartAccountComponent implements OnInit {
     this.loadData(this.filterData)
   }
   ngAfterViewInit() {
-    this.treeControl.expandAll();
+    this.tree.treeControl.expandAll();
   }
 
   FilterSearch(val) {
     this.storeDataarray.filter = val;
   }
-  // this.tree.treeControl.expandAll();
 }

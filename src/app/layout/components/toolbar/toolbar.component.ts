@@ -83,6 +83,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     DisabledReceiptTool: string;
     safecustodydata: any;
     PacketsData: any;
+    CurrentDate: any;
     [x: string]: any;
     appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
     @ViewChild(TimeEntriesComponent) TimeEntrieschild: TimeEntriesComponent;
@@ -1500,7 +1501,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     setViewType(params: any) {
+        this.behaviorService.UseCalanderViewType$.subscribe(result => {
+            if(result != null){
+                this.CurrentDate=result
+            }else{
+                this.CurrentDate=new Date();
+            }
+            // this.getEvents();
+        });
         this.behaviorService.setCalanderViewType(params);
+        this.behaviorService.UseCalanderViewType(this.CurrentDate);
     }
     setTimeScale(params: any) {
         this.behaviorService.setTimeScale(params);

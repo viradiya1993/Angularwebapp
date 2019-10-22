@@ -52,8 +52,8 @@ export class BehaviorService {
   public forDiaryRefersh2$: BehaviorSubject<any> = new BehaviorSubject(null);
   public ReceiptData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public Packets$: BehaviorSubject<any> = new BehaviorSubject(null);
-  
   public dialogClose$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public UseCalanderViewType$: BehaviorSubject<any> = new BehaviorSubject(null);
   
   constructor(private http: HttpClient) { }
 
@@ -159,6 +159,9 @@ export class BehaviorService {
   }
   setCalanderViewType(d) {
     this.calanderViewType$.next(d);
+  }
+  UseCalanderViewType(d) {
+    this.UseCalanderViewType$.next(d);
   }
   setTimeScale(d) {
     this.TimeScale$.next(d);

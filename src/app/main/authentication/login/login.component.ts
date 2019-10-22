@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfigService } from '@fuse/services/config.service';
-import { AuthenticationService, AppPermissionsService } from '../../../_services';
+import { AuthenticationService, AppPermissionsService, BehaviorService } from '../../../_services';
 import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private _AppPermissionsService: AppPermissionsService,
     private router: Router,
+    public behaviorService:BehaviorService,
     private toastr: ToastrService
   ) {
     this.http.get<{ ip: string }>('https://jsonip.com').subscribe(data => {
@@ -63,6 +64,7 @@ export class LoginComponent implements OnInit {
         this._AppPermissionsService.applictionSetting(JSON.parse(localStorage.getItem('Login_response')));
         setInterval(() => this.authenticationService.MaintainLicence(), 60000);
         this.router.navigate(['matters']);
+        this.behaviorService.dialogClose(null);
       } else {
         this.isspiner = false;
       }

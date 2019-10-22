@@ -80,6 +80,14 @@ export class GeneralDailogComponent implements OnInit {
         this.JournalData = result;
       }
     });
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
+
   }
 
   ngOnInit() {

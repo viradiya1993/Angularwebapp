@@ -51,6 +51,13 @@ export class DocumentDailogComponent implements OnInit {
     } else {
       this.dialogTitle = 'Duplicate Document';
     }
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
 
     this.behaviorService.DocumentRegisterData$.subscribe(result => {
       if (result) {

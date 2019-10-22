@@ -74,6 +74,13 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.currentTimeMatter = _data.edit;
       this.matterTimerData = _data.matterData;
     }
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
   }
   timeEntryForm: FormGroup;
   matterautoVal: any;

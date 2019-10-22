@@ -52,11 +52,16 @@ export class BehaviorService {
   public forDiaryRefersh2$: BehaviorSubject<any> = new BehaviorSubject(null);
   public ReceiptData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public Packets$: BehaviorSubject<any> = new BehaviorSubject(null);
-
+  
+  public dialogClose$: BehaviorSubject<any> = new BehaviorSubject(null);
+  
   constructor(private http: HttpClient) { }
 
   matterInvoiceData(matterClassData: any) {
     this.matterInvoice$.next(matterClassData);
+  }
+  dialogClose(dialogClose: any) {
+    this.dialogClose$.next(dialogClose);
   }
   ReceiptData(ReceiptData: any) {
     this.ReceiptData$.next(ReceiptData);

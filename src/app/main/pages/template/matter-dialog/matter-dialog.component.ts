@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, AfterViewInit, ViewChild, ViewEncapsulation, Input } from '@angular/core';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatPaginator, MatTableDataSource, MatDialogConfig } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { MainAPiServiceService } from './../../../../_services';
+import { MainAPiServiceService, BehaviorService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 
@@ -58,6 +58,7 @@ export class MatterDialogComponentForTemplate implements OnInit {
     private dialog: MatDialog,
     private toastr: ToastrService,
     private _mainAPiServiceService: MainAPiServiceService,
+    public behaviorService: BehaviorService,
     public dialogRef: MatDialogRef<MatterDialogComponentForTemplate>,
     @Inject(MAT_DIALOG_DATA) public _data: any
     // private data:TemplateComponent
@@ -74,6 +75,13 @@ export class MatterDialogComponentForTemplate implements OnInit {
       this.whichTypeTemplate = _data.knownby;
       this.selectMatter(_data);
     }
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
 
   }
 

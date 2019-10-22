@@ -66,7 +66,15 @@ export class BankingDialogComponent implements OnInit {
     private _mainAPiServiceService: MainAPiServiceService,
     private behaviorService: BehaviorService,
     public dialogRef: MatDialogRef<BankingDialogComponent>, @Inject(MAT_DIALOG_DATA) public _data: any, private router: Router, ) {
-    this.loadData(_data.AccountType);
+
+   this.loadData(_data.AccountType);
+   this.behaviorService.dialogClose$.subscribe(result => {
+    if(result != null){
+      if(result.MESSAGE == 'Not logged in'){
+        this.dialogRef.close(false);
+      }
+    }
+   });
   }
   ngOnInit() {
     this.treeControl.expandAll();

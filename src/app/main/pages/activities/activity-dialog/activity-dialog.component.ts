@@ -43,6 +43,7 @@ export class ActivityDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<ActivityDialogComponent>,
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
+    public behaviorService: BehaviorService,
     private _mainAPiServiceService: MainAPiServiceService,
     public datepipe: DatePipe,
     private Timersservice: TimersService,
@@ -50,6 +51,14 @@ export class ActivityDialogComponent implements OnInit {
   ) {
     this.lookuptype = data.popupname;
     this.action = data.popupData.action;
+    
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
 
   }
 

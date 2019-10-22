@@ -42,6 +42,13 @@ export class ChartAcDailogComponent implements OnInit {
     } else if (this.action === 'duplicate') {
       this.dialogTitle = 'Duplicate Account';
     }
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
     this.behaviorService.ChartAccountData$.subscribe(result => {
       if (result) {
         this.AccountData = result;

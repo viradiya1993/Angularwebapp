@@ -46,6 +46,13 @@ export class AuthorityDialogComponent implements OnInit {
         this.AuthoDialogeData = result;
       }
     });
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
 
   }
   ngOnInit() {

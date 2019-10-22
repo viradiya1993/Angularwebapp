@@ -75,7 +75,6 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.matterTimerData = _data.matterData;
     }
     this.behaviorService.dialogClose$.subscribe(result => {
-      console.log(result);
       if(result != null){
         if(result.MESSAGE == 'Not logged in'){
           this.dialogRef.close(false);

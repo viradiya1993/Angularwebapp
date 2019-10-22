@@ -54,13 +54,13 @@ export class DairyDailogComponent implements OnInit {
     } else {
       this.dialogTitle = 'Duplicate Appointment';
     }
-    this.behaviorService.dialogClose$.subscribe(result => {
-      if(result != null){
-        if(result.MESSAGE == 'Not logged in'){
-          this.dialogRef.close(false);
-        }
-      }
-     });
+    // this.behaviorService.dialogClose$.subscribe(result => {
+    //   if(result != null){
+    //     if(result.MESSAGE == 'Not logged in'){
+    //       this.dialogRef.close(false);
+    //     }
+    //   }
+    //  });
 
     this.behaviorService.forDiaryRefersh$.subscribe(result => {
       this.DairyData=result;
@@ -131,7 +131,7 @@ export class DairyDailogComponent implements OnInit {
     }else{
       this.isLoadingResults = true;
       // this.DairyData.DairyRowClickData
-      this._mainAPiServiceService.getSetData({ APPOINTMENTGUID: "" }, 'GetAppointment').subscribe(res => {
+      this._mainAPiServiceService.getSetData({ APPOINTMENTGUID: this.DairyData.DairyRowClickData}, 'GetAppointment').subscribe(res => {
         console.log(res);
         if (res.CODE == 200 && res.STATUS == "success") {
           let Date1 =res.DATA.APPOINTMENTS[0].APPOINTMENTDATE.split("/");
@@ -143,7 +143,7 @@ export class DairyDailogComponent implements OnInit {
           this.DairyForm.controls['LOCATION'].setValue(res.DATA.APPOINTMENTS[0].LOCATION);
           this.DairyForm.controls['ALLDAYEVENT'].setValue(Number(res.DATA.APPOINTMENTS[0].ALLDAYEVENT));
           this.DairyForm.controls['APPOINTMENTTIME'].setValue(this.tConvert('09:00:00'));
-          console.log(this.tConvert('9:00:00'))
+          // console.log(this.tConvert('9:00:00'))
         //  console.log((res.DATA.APPOINTMENTS[0].ALLDAYEVENT))
           this.DairyForm.controls['TimeSlot2'].setValue(res.DATA.APPOINTMENTS[0].ENDTIME);
           //End time not yet 

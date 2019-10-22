@@ -70,9 +70,9 @@ export class TimeEntriesComponent implements OnInit {
         let ed = new Date(tempDate2[1] + '/' + tempDate2[0] + '/' + tempDate2[2]);
         this.TimeEnrtyForm.controls['date'].setValue({ begin: Sd, end: ed });
       } else {
-        var dt = new Date();
-        dt.setMonth(dt.getMonth() + 1);
-        this.TimeEnrtyForm.controls['date'].setValue({ begin: new Date(), end: dt });
+        // var dt = new Date();
+        // dt.setMonth(dt.getMonth() + 1);
+        this.TimeEnrtyForm.controls['date'].setValue({ begin: new Date(), end: new Date()});
         this.lastFilter.ItemDateStart = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
         this.lastFilter.ItemDateEnd = this.datepipe.transform(dt, 'dd/MM/yyyy');
       }

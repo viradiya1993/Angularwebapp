@@ -88,17 +88,18 @@ export class CreateDiaryComponent implements OnInit {
   LoadData() {
     this.TimerDataFordiary = [];
     this.isLoadingResults = true;
+    // this.Timersservice.getTimeEnrtyData({})
     // this._mainAPiServiceService.getSetData({ShowWhat: "CREATE WIP" }, 'GetAppointment')
-    this.Timersservice.getTimeEnrtyData({}).subscribe(response => {
+    this._mainAPiServiceService.getSetData({ShowWhat: "CREATE WIP" }, 'GetAppointment').subscribe(response => {
       console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
-        if (response.DATA.WORKITEMS[0]) {
-          this.behaviorService.MainTimeEntryData(response.DATA.WORKITEMS[0]);
-          this.highlightedRows = response.DATA.WORKITEMS[0].WORKITEMGUID;
-          localStorage.setItem('edit_WORKITEMGUID', this.highlightedRows);
+        if (response.DATA.APPOINTMENTS[0]) {
+          // this.behaviorService.MainTimeEntryData(response.DATA.WORKITEMS[0]);
+          this.highlightedRows = response.DATA.APPOINTMENTS[0].APPOINTMENTGUID;
+          // localStorage.setItem('edit_WORKITEMGUID', this.highlightedRows);
         }
         try {
-          this.TimerDataFordiary = new MatTableDataSource(response.DATA.WORKITEMS);
+          this.TimerDataFordiary = new MatTableDataSource(response.DATA.APPOINTMENTS);
           this.TimerDataFordiary.paginator = this.paginator;
           this.TimerDataFordiary.sort = this.sort;
         } catch (error) {

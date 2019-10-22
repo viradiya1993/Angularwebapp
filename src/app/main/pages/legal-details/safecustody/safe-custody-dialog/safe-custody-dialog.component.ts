@@ -123,15 +123,15 @@ export class SafeCustodyDialogeComponent implements OnInit {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({ SAFECUSTODYGUID: this.safecustodydata.SAFECUSTODYGUID }, 'GetSafeCustody').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
-        this.SafeCustody.controls['SAFECUSTODYGUID'].setValue(res.DATA.SAFECUSTODIES[0].SAFECUSTODYGUID);
-        this.SafeCustody.controls['MetterGuid'].setValue(res.DATA.SAFECUSTODIES[0].MATTERGUID);
-        this.SafeCustody.controls['ConatctGuid'].setValue(res.DATA.SAFECUSTODIES[0].CONTACTGUID);
-        this.SafeCustody.controls['Matternum'].setValue('No Matter');
-        this.SafeCustody.controls['Owener'].setValue(res.DATA.SAFECUSTODIES[0].CONTACTNAME);
-        this.SafeCustody.controls['Packet'].setValue(res.DATA.SAFECUSTODIES[0].PACKETNUMBER);
-        this.SafeCustody.controls['DocumentType'].setValue(res.DATA.SAFECUSTODIES[0].DOCUMENTTYPE);
-        this.SafeCustody.controls['Dscription'].setValue(res.DATA.SAFECUSTODIES[0].SAFECUSTODYDESCRIPTION);
-        this.SafeCustody.controls['DateSafecustody'].setValue(res.DATA.SAFECUSTODIES[0].REMINDERDATE);        
+          this.SafeCustody.controls['SAFECUSTODYGUID'].setValue(res.DATA.SAFECUSTODIES[0].SAFECUSTODYGUID);
+          this.SafeCustody.controls['MetterGuid'].setValue(res.DATA.SAFECUSTODIES[0].MATTERGUID);
+          this.SafeCustody.controls['ConatctGuid'].setValue(res.DATA.SAFECUSTODIES[0].CONTACTGUID);
+          this.SafeCustody.controls['Matternum'].setValue('No Matter');
+          this.SafeCustody.controls['Owener'].setValue(res.DATA.SAFECUSTODIES[0].CONTACTNAME);
+          this.SafeCustody.controls['Packet'].setValue(res.DATA.SAFECUSTODIES[0].PACKETNUMBER);
+          this.SafeCustody.controls['DocumentType'].setValue(res.DATA.SAFECUSTODIES[0].DOCUMENTTYPE);
+          this.SafeCustody.controls['Dscription'].setValue(res.DATA.SAFECUSTODIES[0].SAFECUSTODYDESCRIPTION);
+          this.SafeCustody.controls['DateSafecustody'].setValue(res.DATA.SAFECUSTODIES[0].REMINDERDATE);        
       } else if (res.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
@@ -187,8 +187,6 @@ export class SafeCustodyDialogeComponent implements OnInit {
         REMINDERTIME: "",
       }
     }
-    console.log(data);
-    //return;
     this.isspiner = true;
     let finalData = { DATA: data, FormAction: this.FormAction, VALIDATEONLY: true }
     this._mainAPiServiceService.getSetData(finalData, 'SetSafeCustody').subscribe(response => {     

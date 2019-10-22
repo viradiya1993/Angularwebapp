@@ -2005,7 +2005,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.behaviorService.SafeCustody$.subscribe(result => {
             if (result) {
                 this.safecustodydata = result;
-                console.log(result);
             }
         });
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {

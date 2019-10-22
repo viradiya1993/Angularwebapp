@@ -56,8 +56,8 @@
         <div class="header accent" fxLayout="column" fxLayoutAlign="space-between start">
             <div fxLayout="row" fxLayoutAlign="start center">
                 <button mat-icon-button class="mr-16" [routerLink]="'/matters'">
-                        <mat-icon>arrow_back</mat-icon>
-                    </button>
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
                 <div fxLayout="column" fxLayoutAlign="start start" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
                     <div class="h2">
                         Safe Custody Detail for Matter({{currentMatter?.SHORTNAME}})
@@ -70,22 +70,22 @@
             </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" class="matter-serach-div sticky_search_div">
-            <form>  
-                        <mat-form-field class="example p-16" fxFlex="" appearance="outline" >
-                                <mat-label>Matter</mat-label>
-                                <input  readonly  matInput>
-                         </mat-form-field>
-                         <mat-icon class="set_icon" matSuffix >
-                                <img class="seticon" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                         </mat-icon>
-                            
-                            <mat-form-field class="example p-16" fxFlex="" appearance="outline" >
-                                <mat-label>Client</mat-label>
-                                <input readonly  matInput>
-                            </mat-form-field>
-                            <mat-icon class="set_icon" matSuffix   >
-                                <img class="seticon" src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                            </mat-icon> 
+            <form [formGroup]="SafeCustody"> 
+                <mat-form-field class="search" appearance="outline" fxFlex="50">
+                    <mat-label>Matter</mat-label>
+                    <input matInput placeholder="Matter" formControlName="MATTER" readonly>
+                    <mat-icon matSuffix (click)='SelectMatter()'>
+                        <img src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                    </mat-icon>
+                </mat-form-field>
+
+                <mat-form-field class="search" appearance="outline" fxFlex="50">
+                    <mat-label>Client</mat-label>
+                    <input matInput placeholder="CLIENT" formControlName="CLIENT">
+                    <mat-icon matSuffix (click)='SelectContact()'>
+                        <img src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                    </mat-icon>
+                </mat-form-field>
 <!-- 
                 <mat-form-field class="example p-16" appearance="outline" fxFlex="25">
                     <mat-label>Outstanding</mat-label>

@@ -1475,6 +1475,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     DeleteAppointment() {
         this.behaviorService.forDiaryRefersh$.subscribe(result => {
             this.DairyData = result;
+            console.log(result);
         });
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
@@ -1484,7 +1485,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
                 // this.DairyData.DairyRowClickData 
-                let postData = { FormAction: "delete", data: { APPOINTMENTGUID: "" } }
+                let postData = { FormAction: "delete", data: { APPOINTMENTGUID: this.DairyData.DairyRowClickData } }
                 this._mainAPiServiceService.getSetData(postData, 'SetAppointment').subscribe(res => {
                     if (res.STATUS == "success") {
                         this.behaviorService.forDiaryRefersh2("call");

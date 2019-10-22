@@ -45,7 +45,7 @@
             <!-- HEADER BOTTOM -->
             <div class="header-bottom diary_header_bottom" fxLayout="row" fxLayoutAlign="center center" [@animate]="{value:'*',params:{delay:'150ms'}}">
 
-                <button mat-icon-button class="arrow left_diary_icon" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="selectedDay = {date:$event}" aria-label="Previous">
+                <button (click)="CalDaywiseView(viewDate,view)" mat-icon-button class="arrow left_diary_icon" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="selectedDay = {date:$event}" aria-label="Previous">
                     <mat-icon>chevron_left</mat-icon>
                 </button>
 
@@ -53,7 +53,7 @@
                     {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
                 </div>
                 
-                <button mat-icon-button class="arrow" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="selectedDay = {date:$event}" aria-label="Next">
+                <button  (click)="CalDaywiseView(viewDate,view)" mat-icon-button class="arrow" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="selectedDay = {date:$event}" aria-label="Next">
                     <mat-icon>chevron_right</mat-icon>
                 </button>
             </div>
@@ -73,6 +73,7 @@
         <div [ngSwitch]="view">
             <mwl-calendar-month-view 
             *ngSwitchCase="'month'"
+            (eventClicked)="editEvent('edit', $event.event,'click')"
             [viewDate]="viewDate" 
             [events]="events" 
             [refresh]="refresh"

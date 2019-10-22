@@ -53,6 +53,7 @@ export class DiaryComponent implements OnInit {
                 this.view = result;
             }
         });
+        // this.CalDaywiseView();
         this.behaviorService.TimeScale$.subscribe(result => {
             if (result) {
                 this.TimeScale = result;
@@ -70,7 +71,7 @@ export class DiaryComponent implements OnInit {
         this.actions = [{
             label: '<i class="material-icons s-16">edit</i>',
             onClick: ({ event }: { event: CalendarEvent }): void => {
-                this.editEvent('edit', event);
+                this.editEvent('edit', event,'');
             }
         }, {
             label: '<i class="material-icons s-16">delete</i>',
@@ -82,11 +83,49 @@ export class DiaryComponent implements OnInit {
         this.refresh.next();
 
     }
+    CalDaywiseView(val,val2){
+       
+
+        // if (this.getCalenderDetails == 'month') {
+        //     var date = new Date();
+        //     var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+        //     var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+
+        //     this.SendParam = {
+        //         USERGUID: userData.UserGuid,
+        //         DATESTART: this.datepipe.transform(firstDay, 'dd/MM/yyyy'),
+        //         DATEEND: this.datepipe.transform(lastDay, 'dd/MM/yyyy')
+        //     }
+        // } else if (this.getCalenderDetails == 'day') {
+        //     var date = new Date();
+
+        //     this.SendParam = {
+        //         USERGUID: userData.UserGuid,
+        //         DATESTART: this.datepipe.transform(date, 'dd/MM/yyyy'),
+        //         DATEEND: this.datepipe.transform(date, 'dd/MM/yyyy')
+        //     }
+        // } else if (this.getCalenderDetails == 'week') {
+       
+        //     var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
+        //     var last = first + 6; // last day is the first day + 6
+        //     var firstday = new Date(curr.setDate(first)).toUTCString();
+        //     var lastday = new Date(curr.setDate(last)).toUTCString();
+
+        //     this.SendParam = {
+        //         USERGUID: userData.UserGuid,
+        //         DATESTART: this.datepipe.transform(new Date(firstday), 'dd/MM/yyyy'),
+        //         DATEEND: this.datepipe.transform(new Date(lastday), 'dd/MM/yyyy')
+        //     }
+        // }
+
+
+    }
     ngOnInit(): void {
         $('content').addClass('inner-scroll');
         this.refresh.subscribe(updateDB => {
             if (updateDB) {
                 this._calendarService.getEvents();
+                
             }
         });
 
@@ -108,34 +147,38 @@ export class DiaryComponent implements OnInit {
             return new DiaryEventModel(item);
         });
     }
-    editEvent(action: string, event: CalendarEvent): void {
-        console.log(action);
-        console.log(event);
-        this.selectedColore = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
-        this.behaviorService.forDiaryRefersh(event);
-        // console.log(this.events)
-        //  const eventIndex = this.events.indexOf(event);
-
-        this.dialogRef = this._matDialog.open(DairyDailogComponent, {
-            panelClass: 'event-form-dialog',
-            data: {
-                event: event,
-                AppoitmentGuId: event,
-                action: action
-            }
-        });
-        this.dialogRef.afterClosed()
-            .subscribe(response => {
-                if (!response) {
-                    this.refresh.next(true);
+    editEvent(action: string, event: CalendarEvent,clickDay): void {
+        if(clickDay=='click'){
+            this.behaviorService.forDiaryRefersh(event);
+        }else{
+            this.selectedColore = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
+            this.behaviorService.forDiaryRefersh(event);
+            // console.log(this.events)
+            //  const eventIndex = this.events.indexOf(event);
+    
+            this.dialogRef = this._matDialog.open(DairyDailogComponent, {
+                panelClass: 'event-form-dialog',
+                data: {
+                    event: event,
+                    AppoitmentGuId: event,
+                    action: action
                 }
-
             });
+            this.dialogRef.afterClosed()
+                .subscribe(response => {
+                    if (!response) {
+                        this.refresh.next(true);
+                    }
+    
+                });
+        }
+  
     }
     deleteEvent(event): void {
         this.behaviorService.forDiaryRefersh(event);
         this.behaviorService.forDiaryRefersh$.subscribe(result => {
             this.DairyData = result;
+         
         });
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
@@ -145,7 +188,7 @@ export class DiaryComponent implements OnInit {
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
                 // this.DairyData.DairyRowClickData 
-                let postData = { FormAction: "delete", data: { APPOINTMENTGUID: '' } }
+                let postData = { FormAction: "delete", data: { APPOINTMENTGUID:  this.DairyData.DairyRowClickData } }
                 this._mainAPiServiceService.getSetData(postData, 'SetAppointment').subscribe(res => {
                     if (res.STATUS == "success") {
                         this.behaviorService.forDiaryRefersh2("call");
@@ -193,9 +236,11 @@ export class DiaryComponent implements OnInit {
      * @param {MonthViewDay} day
      */
     dayClicked(day: CalendarMonthViewDay): void {
+  
         const date: Date = day.date;
         const events: CalendarEvent[] = day.events;
         if (isSameMonth(date, this.viewDate)) {
+         
             if ((isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) || events.length === 0) {
                 this.activeDayIsOpen = false;
             }

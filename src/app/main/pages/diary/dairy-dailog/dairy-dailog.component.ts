@@ -54,6 +54,13 @@ export class DairyDailogComponent implements OnInit {
     } else {
       this.dialogTitle = 'Duplicate Appointment';
     }
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
 
     this.behaviorService.forDiaryRefersh$.subscribe(result => {
       this.DairyData=result;
@@ -211,6 +218,7 @@ export class DairyDailogComponent implements OnInit {
   }
   //DocumentSave
   SaveAppointment() {
+    let userData = JSON.parse(localStorage.getItem('currentUser'));
     if (this.action === 'edit') {
       this.appoitmentID=this.f.APPOINTMENTGUID.value;
       this.FormAction = 'update';
@@ -235,9 +243,9 @@ export class DairyDailogComponent implements OnInit {
       REMINDERMINUTESBEFORE: this.f.SendBeforestart.value,
       CATEGORY: this.f.Category.value,
       MATTERGUID: this.f.SendMATTERGUID.value,
+      USERGUID:userData.UserGuid,
 
-
-      RECURRING: {
+     
         FREQUENCY:this.f.RedioChnage.value,
         DAYFREQUENCY: this.f.Every.value,
 
@@ -253,7 +261,7 @@ export class DairyDailogComponent implements OnInit {
 
         RECURRINGUNTIL: this.f.ToSendEndDate.value,
         RECURRINGUNTILDATE:''
-      },
+  
       // SYNCHRONISINGINFO:{
       //   DATECREATED:"",
       //   TIMECREATED:"",

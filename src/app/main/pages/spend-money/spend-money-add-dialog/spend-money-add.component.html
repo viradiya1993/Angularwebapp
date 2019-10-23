@@ -46,8 +46,8 @@
                         <mat-label *ngIf="classtype=='Description'">Asset a/c</mat-label>
                         <input matInput formControlName="Bankac">
                         <mat-icon matSuffix>
-                            <button  *ngIf="classtype !=='Description'" id="bank" class="matternews menu-disabled" [disabled]="Bankhide === true" class="matternews" (click)="BankingDialogOpen('BANK ACCOUNT')"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
-                            <button  *ngIf="classtype =='Description'" id="bank" class="matternews menu-disabled" [disabled]="Bankhide === true" class="matternews" (click)="BankingDialogOpen('ASSET')"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
+                            <button *ngIf="classtype !=='Description'" id="bank" class="matternews menu-disabled" [disabled]="Bankhide === true" class="matternews" (click)="BankingDialogOpen('BANK ACCOUNT')"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
+                            <button *ngIf="classtype =='Description'" id="bank" class="matternews menu-disabled" [disabled]="Bankhide === true" class="matternews" (click)="BankingDialogOpen('ASSET')"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                         </mat-icon>
                     </mat-form-field>
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.NOTE,'has-warning':errorWarningData.Warning?.NOTE}" appearance="outline" fxFlex="60" class="pr-4">
@@ -82,10 +82,10 @@
 
 
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.PAYEE,'has-warning':errorWarningData.Warning?.PAYEE}" appearance="outline" fxFlex="28" class="pr-4">
-                            <mat-label>Payee</mat-label>
-                            <input matInput placeholder="Payee" formControlName="Payee">
-                        </mat-form-field>
-    
+                        <mat-label>Payee</mat-label>
+                        <input matInput placeholder="Payee" formControlName="Payee">
+                    </mat-form-field>
+
 
                     <!-- <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.PAYEE,'has-warning':errorWarningData.Warning?.PAYEE}" appearance="outline" fxFlex="28" class="pr-4">
                         <mat-label>Payee</mat-label>
@@ -98,7 +98,7 @@
                        
                     </mat-form-field> -->
                     <mat-icon matSuffix>
-                        <button  class="matternews1" (click)='ContactMatter()'><img  class="iconset" src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                        <button class="matternews1" (click)='ContactMatter()'><img  class="iconset" src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                         </button>
                     </mat-icon>
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.SOURCEREFERENCE,'has-warning':errorWarningData.Warning?.SOURCEREFERENCE}" appearance="outline" fxFlex="27" class="pr-4">
@@ -269,7 +269,7 @@
       </div> -->
         <div class="right_popup_btn">
             <button mat-raised-button color="accent" (click)="FinalSaveData()" [disabled]="isspiner" *ngIf="action !== 'edit'"><mat-spinner style=" zoom: 0.2;position: absolute;right: 0;left: 0;
-                margin: auto;top: 0;bottom: 0;" *ngIf="isspiner"></mat-spinner>Add</button>
+                margin: auto;top: 0;bottom: 0;" *ngIf="isspiner"></mat-spinner>Save</button>
             <button mat-raised-button color="accent" (click)="FinalSaveData()" [disabled]="isspiner" *ngIf="action === 'edit'"><mat-spinner style=" zoom: 0.2;position: absolute;right: 0;left: 0;
                 margin: auto;top: 0;bottom: 0;" *ngIf="isspiner"></mat-spinner>Update</button>
             <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don`t Save</button>

@@ -29,7 +29,10 @@ export class MattersSortDetailComponent implements OnInit {
 
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+
+    console.log(this.mattersDetailData);
+  }
 
   closeDetail(event) {
     this.matterCloseD.emit(event);

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatTableDataSource, MatDatepickerInputEvent } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -21,7 +21,7 @@ import { BankingDialogComponent } from '../../banking/banking-dialog.component';
   encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
-export class SpendMoneyAddComponent implements OnInit {
+export class SpendMoneyAddComponent implements OnInit{
   errorWarningData: any = {};
   dataSource: MatTableDataSource<UserData>;
   action: any;
@@ -71,7 +71,8 @@ export class SpendMoneyAddComponent implements OnInit {
   SendMoney_dataGUID: any;
   arrayForIndex: any;
   storeDataarray: any = [];
-  constructor(public dialogRef: MatDialogRef<SpendMoneyAddComponent>,
+  constructor(
+    public dialogRef: MatDialogRef<SpendMoneyAddComponent>,
     @Inject(MAT_DIALOG_DATA) public _data: any,
     private _formBuilder: FormBuilder,
     public MatDialog: MatDialog,
@@ -79,7 +80,6 @@ export class SpendMoneyAddComponent implements OnInit {
     public behaviorService: BehaviorService,
     public _matDialog: MatDialog, public datepipe: DatePipe, public _mainAPiServiceService: MainAPiServiceService) {
     this.action = _data.action;
-
     // this.dialogTitle = this.action === 'edit' ? 'Update Spend Money' : 'Add Spend Money';
     if (this.action === 'new') {
       this.dialogTitle = 'Add Spend Money ';
@@ -88,13 +88,22 @@ export class SpendMoneyAddComponent implements OnInit {
     } else {
       this.dialogTitle = 'Duplicate Spend Money';
     }
+    
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
+    
   }
+  // ngOnDestroy(){
+  //   console.log("on distry");
+  //   this.dialogRef.close(false);
+  // }
   ngOnInit() {
-    this._mainAPiServiceService.getSetData({ AccountClass: 'BANK ACCOUNT' }, 'GetAccount').subscribe(response => {
-      this.storeDataarray = response.DATA.ACCOUNTS;
-      this.showData(this.storeDataarray);
-    }, err => {
-    });
+    this.isLoadingResults = true;
     this.behaviorService.SpendMoneyData$.subscribe(result => {
       if (result) {
         this.SendMoney_dataGUID = result;
@@ -134,10 +143,10 @@ export class SpendMoneyAddComponent implements OnInit {
       MatterGUID: [''],
       ExpenseacGUID: ['']
     });
+    this.isLoadingResults = true;
     if (this.action != 'new') {
       $('#expac').addClass('menu-disabled');
       this.expac = true;
-      this.isLoadingResults = true;
       this._mainAPiServiceService.getSetData({ EXPENDITUREGUID: this.SendMoney_dataGUID.EXPENDITUREGUID }, 'GetExpenditure').subscribe(response => {
         if (response.CODE == 200 && response.STATUS == "success") {
           this.SendMoney_data = response.DATA.EXPENDITURES[0];
@@ -216,7 +225,6 @@ export class SpendMoneyAddComponent implements OnInit {
           }
           this.Classtype(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
         } else if (response.MESSAGE == 'Not logged in') {
-          console.log("nottt loged in");
           this.dialogRef.close(false);
         }
         this.isLoadingResults = false;
@@ -232,7 +240,7 @@ export class SpendMoneyAddComponent implements OnInit {
       if (x.ACCOUNTTYPENAME == "Bank Account") {
         // this.spendmoneyForm.controls['Bankac'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER + ' ' + result.MainList.ACCOUNTNAME);
         x.EXPORTINFO.MYOBEXPORTACCOUNT;
-        this.spendmoneyForm.controls['Bankac'].setValue(x.ACCOUNTCLASS + ' - ' + x.ACCOUNTNUMBER );
+        this.spendmoneyForm.controls['Bankac'].setValue(x.ACCOUNTCLASS + ' - ' + x.ACCOUNTNUMBER);
         this.spendmoneyForm.controls['BankacGUID'].setValue(x.ACCOUNTGUID);
       }
       if (x.SUBACCOUNTS) {
@@ -241,6 +249,15 @@ export class SpendMoneyAddComponent implements OnInit {
     });
   }
   forAddshowpopupData() {
+  this._mainAPiServiceService.getSetData({ AccountClass: 'BANK ACCOUNT' }, 'GetAccount').subscribe(response => {
+      if (response) {
+        this.storeDataarray = response.DATA.ACCOUNTS;
+        this.showData(this.storeDataarray);
+      } else if (response.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      }
+    }, err => {
+    });
     this.isItemSaveClicked = 'no';
     this.getDataForTable = [];
     this.spendmoneyForm.controls['DateIncurred'].setValue(new Date(), 'dd/MM/yyyy');
@@ -273,6 +290,7 @@ export class SpendMoneyAddComponent implements OnInit {
     this.Paidtype('Paid');
     this.spendmoneyForm.controls['Paid'].setValue("Paid");
     this.amountCal();
+    this.isLoadingResults = false;
   }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
@@ -702,7 +720,7 @@ export class SpendMoneyAddComponent implements OnInit {
     console.log(this.FinalExGSTAmount);
     // for ammount field 
     this.FinalExGSTAmount = this.setMainAmount - this.setMainGST;
-    if(this.FinalExGSTAmount == 0 ){
+    if (this.FinalExGSTAmount == 0) {
       this.toastr.error("Amount should not be 0");
       return;
     }

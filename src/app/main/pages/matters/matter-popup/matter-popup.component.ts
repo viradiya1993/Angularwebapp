@@ -64,6 +64,14 @@ export class MatterPopupComponent implements OnInit {
     }
     this.isEditMatter = this._data.matterGuid;
     this.classtype;
+   
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
   }
   matterdetailForm: FormGroup;
   ngOnDestroy() {

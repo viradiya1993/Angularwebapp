@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation, Inject, ViewChild } from '@angula
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MatTableDataSource, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatPaginator, MatDialog, MatDialogRef } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
-import { MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
@@ -42,9 +42,18 @@ export class InvoiceDetailComponent implements OnInit {
     public dialogRef: MatDialogRef<InvoiceDetailComponent>,
     public datepipe: DatePipe,
     public MatDialog: MatDialog,
+    public behaviorService: BehaviorService,
     private _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public _data: any,
-  ) { }
+  ) { 
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
+  }
 
   ngOnInit() {
     this.isView = this._data.type;

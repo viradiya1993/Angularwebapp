@@ -37,9 +37,9 @@ export class CreateDiaryComponent implements OnInit {
     private behaviorService: BehaviorService,
     private TableColumnsService: TableColumnsService,
     private toastr: ToastrService, ) {
-      this.getTableFilter();
-      this.LoadData();
-     }
+    this.getTableFilter();
+    this.LoadData();
+  }
 
   ngOnInit() {
     this.createDiaryForm.Date = ({ begin: new Date(), end: new Date() });
@@ -50,12 +50,12 @@ export class CreateDiaryComponent implements OnInit {
     console.log(this.selection.selected);
   }
   isAllSelected() {
-    if(this.TimerDataFordiary.length != 0){
+    if (this.TimerDataFordiary.length != 0) {
       const numSelected = this.selection.selected.length;
       const numRows = this.TimerDataFordiary.data.length;
       return numSelected === numRows;
     }
-   
+
   }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
@@ -64,13 +64,13 @@ export class CreateDiaryComponent implements OnInit {
       this.TimerDataFordiary.data.forEach(row => this.selection.select(row));
   }
   checkboxLabel(row?: any): string {
-    if(this.TimerDataFordiary.length != 0){
+    if (this.TimerDataFordiary.length != 0) {
       if (!row) {
         return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
       }
       return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
     }
-   
+
   }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('time entries', '').subscribe(response => {
@@ -130,11 +130,14 @@ export class CreateDiaryComponent implements OnInit {
 
   }
 
-  saveCreateDiary(){
+  saveCreateDiary() {
 
   }
 
-  selectDayRange(val){
+  onPaginateChange(page: any) {
+
+  }
+  selectDayRange(val) {
     console.log(val);
   }
 

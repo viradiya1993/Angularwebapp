@@ -1,0 +1,103 @@
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+  <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+</div>
+<div cdkDrag class="popup_main_div add_trust_account_main">
+  <h2 cdkDragHandle mat-dialog-title>{{dialogTitle}}
+    <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
+      <mat-icon>close</mat-icon>
+    </button>
+  </h2>
+  <div mat-dialog-content class="mat-typography main">
+    <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+      <form [formGroup]="TrustChartAccount" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="form">
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+            <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                <mat-label>Account Class</mat-label>
+                <mat-select #value formControlName="TRUSTACCOUNTCLASS">
+                    <mat-option value="Asset">Assets</mat-option>
+                    <mat-option value="Liability">Liabilities</mat-option>
+                    <mat-option value="Equity">Equity</mat-option>
+                    <mat-option value="Income">Income</mat-option>
+                    <mat-option value="Expense">Expenses</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+              <mat-label>Account Name</mat-label>
+              <input formControlName="TRUSTACCOUNTNAME" matInput>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <mat-tab-group mat-align-tabs="start">          
+              <mat-tab label="General">
+                <div class="one" fxLayout="column">
+                  <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                      <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                          <mat-label>Account Number</mat-label>
+                          <input formControlName='TRUSTACCOUNTNUMBER' matInput>
+                          <!-- <span matPrefix>1-&nbsp;</span> -->
+                      </mat-form-field>
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      <mat-checkbox formControlName="TRUSTACTIVE">Active Account</mat-checkbox>
+                  </div>
+                  <!-- <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                      <mat-form-field appearance="outline" fxFlex="" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ACCOUNTTYPE,'has-warning':errorWarningData.Warning?.ACCOUNTTYPE}">
+                          <mat-label>Account Type</mat-label>
+                          <mat-select formControlName="ACCOUNTTYPE" (selectionChange)="onACCOUNTTYPE($event.value)">
+                              <mat-option value="Header">Header</mat-option>
+                              <mat-option value="Detail">Detail</mat-option>
+                              <mat-option value="Bank Account">Bank Account</mat-option>
+                              <mat-option value="Pass Through">Pass ACCOUNTNUMBER</mat-option>
+                          </mat-select>
+                      </mat-form-field>
+                  </div> -->
+                </div>
+              </mat-tab>
+              <mat-tab label="Bank Details">
+                <br>
+                <div class="one" fxLayout="column">
+                    <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                            <mat-label>BSB</mat-label>
+                            <input formControlName='TRUSTBANKBSB' matInput>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                            <mat-label>Bank Name</mat-label>
+                            <input formControlName='TRUSTBANKNAME' matInput>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                            <mat-label>A/C Number</mat-label>
+                            <input formControlName='TRUSTBANKACCOUNTNUMBER' matInput>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                            <mat-label>Bank Address</mat-label>
+                            <input formControlName='TRUSTBANKADDRESS' matInput>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                            <mat-label>Term</mat-label>
+                            <input formControlName='TRUSTBANKTERM' matInput>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                            <mat-label>Interest Rate</mat-label>
+                            <input formControlName='TRUSTBANKINTERESTRATE' matInput>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </form>
+    </div>
+  </div>
+  <mat-dialog-actions align="end" class="popup_ftr">
+    <button mat-raised-button color="accent" (click)="Savetrustaccount()" [disabled]="isspiner" *ngIf="action === 'new'"><mat-spinner *ngIf="isspiner"></mat-spinner>Save</button>
+    <button mat-raised-button color="accent" (click)="Savetrustaccount()" [disabled]="isspiner" *ngIf="action === 'edit'"><mat-spinner *ngIf="isspiner"></mat-spinner>Update</button>
+    <button mat-raised-button color="accent" (click)="Savetrustaccount()" [disabled]="isspiner" *ngIf="action === 'duplicate'"><mat-spinner *ngIf="isspiner"></mat-spinner>Duplicate</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
+</mat-dialog-actions>
+</div>

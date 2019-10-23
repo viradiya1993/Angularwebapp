@@ -36,13 +36,10 @@
                                 <table *ngIf="Estimatedata" mat-table #table [dataSource]="Estimatedata" matSort [@animateStagger]="{value:'50'}">
                                     <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
                                         <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header> {{ tempColobj[item].DESCRIPTION }}</th>
-                                        <td mat-cell *matCellDef="let row"> <span *ngIf="row[item]">{{row[item]}}</span> </td>
+                                        <td mat-cell *matCellDef="let row"> <span *ngIf="row[item]!==undefined">{{row[item]}}</span> </td>
                                     </ng-container>
                                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;let element;" 
-                                        class="row" (click)="RowClick(row);highlightedRows=row.ESTIMATEITEMGUID"
-                                        [style.background]="highlightedRows == row.ESTIMATEITEMGUID ? selectedColore : ''" 
-                                        [ngClass]="highlightedRows == row.ESTIMATEITEMGUID ? 'row-text-colore' : ''"
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;let element;" class="row" (click)="RowClick(row);highlightedRows=row.ESTIMATEITEMGUID" [style.background]="highlightedRows == row.ESTIMATEITEMGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.ESTIMATEITEMGUID ? 'row-text-colore' : ''"
                                         matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                     </tr>
                                     <!-- <tr mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">

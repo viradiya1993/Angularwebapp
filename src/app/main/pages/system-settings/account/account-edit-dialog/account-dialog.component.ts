@@ -22,7 +22,15 @@ export class AccountDialogComponent implements OnInit {
     "Name":" ", "AccNo":' ','AccType':' '
   }
   constructor(public dialog: MatDialog,public behaviorService:BehaviorService,
-    public dialogRef: MatDialogRef<AccountDialogComponent>,private _mainAPiServiceService:MainAPiServiceService,) { }
+    public dialogRef: MatDialogRef<AccountDialogComponent>,private _mainAPiServiceService:MainAPiServiceService,) { 
+      this.behaviorService.dialogClose$.subscribe(result => {
+        if(result != null){
+          if(result.MESSAGE == 'Not logged in'){
+            this.dialogRef.close(false);
+          }
+        }
+       });
+    }
   ngOnInit() {
     this.behaviorService.SysytemAccountDIalogData$.subscribe(result => {
       if (result) {

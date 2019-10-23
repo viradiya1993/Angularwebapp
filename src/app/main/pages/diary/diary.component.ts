@@ -46,7 +46,7 @@ export class DiaryComponent implements OnInit {
         private behaviorService: BehaviorService,
         private _matDialog: MatDialog,
         private toastr: ToastrService,
-        private _mainAPiServiceService:MainAPiServiceService
+        private _mainAPiServiceService: MainAPiServiceService
     ) {
         this.behaviorService.calanderViewType$.subscribe(result => {
             if (result) {
@@ -65,31 +65,27 @@ export class DiaryComponent implements OnInit {
         /**
          * Get events from service/server
          */
-      
 
-        this.actions = [
-            {
-                label: '<i class="material-icons s-16">edit</i>',
-                onClick: ({ event }: { event: CalendarEvent }): void => {
-                    this.editEvent('edit', event);
-                }
-            },
-            {
-                label: '<i class="material-icons s-16">delete</i>',
-                onClick: ({ event }: { event: CalendarEvent }): void => {
-                    this.deleteEvent(event);
-                }
+
+        this.actions = [{
+            label: '<i class="material-icons s-16">edit</i>',
+            onClick: ({ event }: { event: CalendarEvent }): void => {
+                this.editEvent('edit', event);
             }
-        ];
+        }, {
+            label: '<i class="material-icons s-16">delete</i>',
+            onClick: ({ event }: { event: CalendarEvent }): void => {
+                this.deleteEvent(event);
+            }
+        }];
         this.setEvents();
         this.refresh.next();
-        
+
     }
     ngOnInit(): void {
         $('content').addClass('inner-scroll');
         this.refresh.subscribe(updateDB => {
-            if ( updateDB )
-            {
+            if (updateDB) {
                 this._calendarService.getEvents();
             }
         });
@@ -101,70 +97,68 @@ export class DiaryComponent implements OnInit {
         // console.log(this.tConvert('18:00:00')) ;
     }
 
-      
-     
+
+
     /**
        * Set events
        */
     setEvents(): void {
         this.events = this._calendarService.events.map(item => {
-            console.log(item);
             item.actions = this.actions;
             return new DiaryEventModel(item);
         });
     }
-    editEvent(action: string, event: CalendarEvent): void
-    {
+    editEvent(action: string, event: CalendarEvent): void {
+        console.log(action);
+        console.log(event);
         this.selectedColore = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
         this.behaviorService.forDiaryRefersh(event);
         // console.log(this.events)
-    //  const eventIndex = this.events.indexOf(event);
+        //  const eventIndex = this.events.indexOf(event);
 
         this.dialogRef = this._matDialog.open(DairyDailogComponent, {
             panelClass: 'event-form-dialog',
-            data      : {
-                event : event,
-                AppoitmentGuId:event,
+            data: {
+                event: event,
+                AppoitmentGuId: event,
                 action: action
             }
         });
         this.dialogRef.afterClosed()
             .subscribe(response => {
-                if ( !response )
-                {
+                if (!response) {
                     this.refresh.next(true);
                 }
-      
+
             });
     }
-    deleteEvent(event): void
-    {
+    deleteEvent(event): void {
         this.behaviorService.forDiaryRefersh(event);
-        this.behaviorService.forDiaryRefersh$.subscribe(result => {    
-            this.DairyData=result;
-                });
-                this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-                    disableClose: true,
-                    width: '100%',
-                });
-                this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-                this.confirmDialogRef.afterClosed().subscribe(result => { 
-                    if (result) {
-                        // this.DairyData.DairyRowClickData 
-                        let postData = { FormAction: "delete", data: { APPOINTMENTGUID:''} }
-                        this._mainAPiServiceService.getSetData(postData, 'SetAppointment').subscribe(res => {
-                            if (res.STATUS == "success") {
-                                this.behaviorService.forDiaryRefersh2("call");
-                                // $('#refreshLegalChronology').click();
-                                this.toastr.success(res.STATUS);
-                                this.refresh.next(true);
-                            } else {
-                                // this.toastr.error("You Can't Delete Contact Which One Is To Related to Matters");
-                            }
-                        });;
+        this.behaviorService.forDiaryRefersh$.subscribe(result => {
+            this.DairyData = result;
+        });
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // this.DairyData.DairyRowClickData 
+                let postData = { FormAction: "delete", data: { APPOINTMENTGUID: '' } }
+                this._mainAPiServiceService.getSetData(postData, 'SetAppointment').subscribe(res => {
+                    if (res.STATUS == "success") {
+                        this.behaviorService.forDiaryRefersh2("call");
+                        // $('#refreshLegalChronology').click();
+                        this.toastr.success(res.STATUS);
+                        this.refresh.next(true);
+                    } else {
+                        // this.toastr.error("You Can't Delete Contact Which One Is To Related to Matters");
                     }
-                    this.confirmDialogRef = null;
-                });
+                });;
+            }
+            this.confirmDialogRef = null;
+        });
         ///////
     }
 

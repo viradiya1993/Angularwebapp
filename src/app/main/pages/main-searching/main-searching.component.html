@@ -4,37 +4,37 @@
             <div class="matter-serach-div sticky_search_div responsive_auto">
                 <form [formGroup]="MainSearching">
                     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                            <mat-form-field fxFlex="33" class="example" appearance="outline">
-                                    <mat-label>Status</mat-label>
-                                    <mat-select (selectionChange)="selectStatus($event.value)" formControlName="status"  >
-                                        <mat-option value="all">All</mat-option>
-                                        <mat-option value="Expense">Incomplete</mat-option>
-                                        <mat-option value="Capital">Pending</mat-option>
-                                        <mat-option value="Pay GST">Waiting</mat-option>
-                                        <mat-option value="Pay Tax">Complete</mat-option>
-                                        <mat-option value="Personal">Error</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                <mat-checkbox class="check_top" (change)="CheckboxChecxed()" formControlName="matterCheck" >All Matters </mat-checkbox>
+                        <mat-form-field fxFlex="33" class="example" appearance="outline">
+                            <mat-label>Status</mat-label>
+                            <mat-select (selectionChange)="selectStatus($event.value)" formControlName="status">
+                                <mat-option value="all">All</mat-option>
+                                <mat-option value="Expense">Incomplete</mat-option>
+                                <mat-option value="Capital">Pending</mat-option>
+                                <mat-option value="Pay GST">Waiting</mat-option>
+                                <mat-option value="Pay Tax">Complete</mat-option>
+                                <mat-option value="Personal">Error</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-checkbox class="check_top" (change)="CheckboxChecxed()" formControlName="matterCheck">All Matters </mat-checkbox>
 
-                            <mat-form-field class="example" fxFlex="34"  appearance="outline" >
-                                    <mat-label>Matter</mat-label>
-                                    <input formControlName="matter" readonly   matInput>
-                                    <mat-icon class="set_icon" matSuffix (click)='SelectMatter()'  >
-                                            <img class="{{ImgDisAb}}" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                                        </mat-icon>
-                                </mat-form-field>
-                                
-                               
-                                
-                                <mat-form-field appearance="outline" class="example" fxFlex="33">
-                                        <mat-label>Date Range</mat-label>
-                                        <input  matInput formControlName="DateRange"  [satDatepicker]="picker2" (dateInput)="DateRange('input', $event)" (dateChange)="DateRange1('change', $event)">
-                                        <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
-                                        <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
-                                    </mat-form-field>
-                              
-                    </div>  
+                        <mat-form-field class="example" fxFlex="34" appearance="outline">
+                            <mat-label>Matter</mat-label>
+                            <input formControlName="matter" readonly matInput>
+                            <mat-icon class="set_icon" matSuffix (click)='SelectMatter()'>
+                                <img class="{{ImgDisAb}}" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                            </mat-icon>
+                        </mat-form-field>
+
+
+
+                        <mat-form-field appearance="outline" class="example" fxFlex="33">
+                            <mat-label>Date Range</mat-label>
+                            <input matInput formControlName="DateRange" [satDatepicker]="picker2" (dateInput)="DateRange('input', $event)" (dateChange)="DateRange1('change', $event)">
+                            <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
+                            <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
+                        </mat-form-field>
+
+                    </div>
                     <!-- <button mat-raised-button type="button" color="primary" id="refreshAccount" (click)="loadData(lastFilter);">Refresh</button> -->
                 </form>
             </div>
@@ -44,7 +44,7 @@
                         <div class="center more_tbl_clmn" fusePerfectScrollbar>
                             <div class="content">
                                 <div class="btn top_right_action_billing_position">
-                                    <button mat-icon-button  aria-label="More">
+                                    <button mat-icon-button aria-label="More">
                                         <mat-icon class="secondary-text">more_vert</mat-icon>
                                     </button>
                                 </div>
@@ -53,18 +53,18 @@
                                         <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                                     </div>
                                     <div class="example-containerdata">
-                                             <table mat-table #table [dataSource]="MainSearchingData" matSort [@animateStagger]="{value:'50'}">
-                                                <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
-                                                    <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header> {{ tempColobj[item].DESCRIPTION }}</th>
-                                                    <td mat-cell *matCellDef="let row"> <span *ngIf="row[item]">{{row[item]}}</span> </td>
-                                                </ng-container>
-                                                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                                <tr mat-row [style.background]="highlightedRows == row.INCOMEGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" [ngClass]="highlightedRows == row.INCOMEGUID ? 'row-text-colore' : ''" class="contact" (click)="selectMatterId(row);highlightedRows = row.INCOMEGUID"
-                                                    matRipple [@animate]="{value:'*',params:{y:'100%'}}">
-                                                </tr>
-    
-                                            </table>
-                                        
+                                        <table mat-table #table [dataSource]="MainSearchingData" matSort [@animateStagger]="{value:'50'}">
+                                            <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
+                                                <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header> {{ tempColobj[item].DESCRIPTION }}</th>
+                                                <td mat-cell *matCellDef="let row"> <span *ngIf="row[item]!==undefined">{{row[item]}}</span> </td>
+                                            </ng-container>
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                            <tr mat-row [style.background]="highlightedRows == row.INCOMEGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" [ngClass]="highlightedRows == row.INCOMEGUID ? 'row-text-colore' : ''" class="contact" (click)="selectMatterId(row);highlightedRows = row.INCOMEGUID"
+                                                matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                            </tr>
+
+                                        </table>
+
                                     </div>
                                 </div>
                             </div>

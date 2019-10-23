@@ -82,7 +82,6 @@ export class ChartAccountComponent implements OnInit {
     public dialog: MatDialog,
     private _mainAPiServiceService: MainAPiServiceService,
     private behaviorService: BehaviorService) {
-
     this.filterData = {
       'Search': '', "AccountClass": "All"
     }
@@ -93,8 +92,6 @@ export class ChartAccountComponent implements OnInit {
     }
     this.ChartData.AccountClass = this.filterData.AccountClass;
     this.loadData(this.filterData);
-
-
   }
   ngOnInit() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 80)) + 'px');
@@ -118,8 +115,8 @@ export class ChartAccountComponent implements OnInit {
         this.treeControl.expandAll();
         if (response.DATA.ACCOUNTS[0].SUBACCOUNTS)
           this.RowClick(response.DATA.ACCOUNTS[0].SUBACCOUNTS[0]);
-        this.highlightedRows = 1;
-      } else if (response.MESSAGE == 'Not logged in') {
+          this.highlightedRows = 1;
+        } else if (response.MESSAGE == 'Not logged in') {
         // this.dialogRef.close(false);
       }
       this.isLoadingResults = false;
@@ -142,8 +139,6 @@ export class ChartAccountComponent implements OnInit {
       if (x.SUBACCOUNTS) {
         this.showData(x.SUBACCOUNTS, x.level + 1, x.ACCOUNTNAME);
       }
-
-
     });
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
@@ -162,11 +157,9 @@ export class ChartAccountComponent implements OnInit {
     this.loadData(this.filterData)
   }
   ngAfterViewInit() {
-    this.tree.treeControl.expandAll();
+    this.treeControl.expandAll();
   }
-
   FilterSearch(val) {
     this.storeDataarray.filter = val;
   }
-  // this.tree.treeControl.expandAll();
 }

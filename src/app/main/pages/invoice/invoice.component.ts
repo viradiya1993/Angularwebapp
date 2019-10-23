@@ -76,6 +76,7 @@ export class InvoiceComponent implements OnInit {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.getTableFilter();
     this.loadData(JSON.parse(localStorage.getItem('matter_invoice_filter')));
+
   }
   outstandingChange(val) {
     this.lastFilter.OUTSTANDING = val;
@@ -84,7 +85,7 @@ export class InvoiceComponent implements OnInit {
   }
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
-    let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');  
+    let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');
     this.lastFilter = JSON.parse(localStorage.getItem('matter_invoice_filter'));
     if (this.lastFilter) {
       this.lastFilter.STARTDATE = begin;
@@ -137,6 +138,7 @@ export class InvoiceComponent implements OnInit {
         this.MatterInvoicesdata.paginator = this.paginator;
         this.MatterInvoicesdata.sort = this.sort;
         this.isLoadingResults = false;
+        this.sortingCLM();
       }
 
     }, error => {
@@ -172,6 +174,22 @@ export class InvoiceComponent implements OnInit {
         }
       }
     });
+  }
+
+  sortingCLM() {
+    this.MatterInvoicesdata.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'INVOICEDATE': {
+          let tempDate = item.INVOICEDATE.split("/");
+          let Sd = new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]);
+          let newDate = new Date(Sd);
+          return newDate;
+        }
+        default: {
+          return item[property];
+        }
+      }
+    }
   }
 
 } 

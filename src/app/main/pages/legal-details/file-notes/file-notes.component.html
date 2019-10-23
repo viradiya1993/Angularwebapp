@@ -21,26 +21,26 @@
             </div>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" class="matter-serach-div sticky_search_div">
-            <form name="form"  fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                <mat-form-field  class="example p-16" fxFlex="20" appearance="outline" >
+            <form name="form" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field class="example p-16" fxFlex="20" appearance="outline">
                     <mat-label>Matter</mat-label>
-                    <input [(ngModel)]="FileNoteData.MatterName" name="MatterName"  readonly  matInput>
+                    <input [(ngModel)]="FileNoteData.MatterName" name="MatterName" readonly matInput>
                 </mat-form-field>
-                
-                <mat-icon matSuffix  fxFlex="5">
+
+                <mat-icon matSuffix fxFlex="5">
                     <img class="seticon" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                 </mat-icon>
-                
-                <mat-form-field class="example p-16" fxFlex="20" appearance="outline" >
+
+                <mat-form-field class="example p-16" fxFlex="20" appearance="outline">
                     <mat-label>Client</mat-label>
-                    <input [(ngModel)]="FileNoteData.ContactName" name="ContactName" readonly  matInput>
+                    <input [(ngModel)]="FileNoteData.ContactName" name="ContactName" readonly matInput>
                 </mat-form-field>
-               
-                <mat-icon matSuffix   fxFlex="5">
+
+                <mat-icon matSuffix fxFlex="5">
                     <img class="seticon" src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                 </mat-icon>
 
-                <mat-form-field class="example p-16" fxFlex="22" appearance="outline" >
+                <mat-form-field class="example p-16" fxFlex="22" appearance="outline">
                     <mat-label>Search</mat-label>
                     <input matInput placeholder="search" (keyup)='FilterSearch($event.target.value)'>
                     <mat-icon matSuffix>search</mat-icon>
@@ -62,20 +62,21 @@
                                     <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                                 </div>
                                 <div class="example-containerdata">
-                                  <table  mat-table #table [dataSource]="filenotes_table" matSort [@animateStagger]="{value:'50'}">
+                                    <table mat-table #table [dataSource]="filenotes_table" matSort [@animateStagger]="{value:'50'}">
                                         <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
                                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="header_title"> {{ tempColobj[item].DESCRIPTION }}</th>
-                                            <td mat-cell *matCellDef="let row"> <span *ngIf="row[item]">{{row[item]}}</span> </td>
+                                            <td mat-cell *matCellDef="let row">
+                                                <span *ngIf="row[item]!==undefined">{{row[item]}}</span> </td>
                                         </ng-container>
-                                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;let element;" class="row" (click)="RowClick(row);highlightedRows=row.FILENOTEGUID" [style.background]="highlightedRows == row.FILENOTEGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.FILENOTEGUID ? 'row-text-colore' : ''"
-                                                matRipple [@animate]="{value:'*',params:{y:'100%'}}">
-                                            </tr>
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true "></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;let element; " class="row " (click)="RowClick(row);highlightedRows=row.FILENOTEGUID " [style.background]="highlightedRows==row.FILENOTEGUID ? selectedColore
+                                                    : '' " [ngClass]="highlightedRows==row.FILENOTEGUID ? 'row-text-colore' : '' " matRipple [@animate]="{value: '*',params:{y: '100%'}} ">
+                                        </tr>
                                     </table>
                                 </div>
                             </div>
                         </div>
-                        <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+                        <mat-paginator [pageSizeOptions]="[10, 20,50,100] " [pageSize]="pageSize " (page)="onPaginateChange($event) " showFirstLastButtons></mat-paginator>
                     </div>
                 </div>
             </div>

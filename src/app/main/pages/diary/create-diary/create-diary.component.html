@@ -15,8 +15,7 @@
 
                     <mat-form-field appearance="outline" class="example" fxFlex="17.33">
                         <mat-label>Date Range</mat-label>
-                        <input name="Date" [(ngModel)]="createDiaryForm.Date" matInput [satDatepicker]="picker2"
-                            (dateInput)="DateRange('input', $event)" (dateChange)="DateRange1('change', $event)">
+                        <input name="Date" [(ngModel)]="createDiaryForm.Date" matInput [satDatepicker]="picker2" (dateInput)="DateRange('input', $event)" (dateChange)="DateRange1('change', $event)">
                         <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
                         <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
                     </mat-form-field>
@@ -57,10 +56,8 @@
                                         <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                                     </div>
                                     <div class="example-containerdata">
-                                        <table  mat-table [dataSource]="TimerDataFordiary"
-                                            matSort [@animateStagger]="{value:'50'}">
-                                            <ng-container *ngFor="let item of displayedColumns;"
-                                                matColumnDef="{{item}}">
+                                        <table mat-table [dataSource]="TimerDataFordiary" matSort [@animateStagger]="{value:'50'}">
+                                            <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
                                                 <span *ngIf="item=='select'">
                                                     <th mat-header-cell *matHeaderCellDef>
                                                         <mat-checkbox
@@ -85,22 +82,16 @@
                                                     <th mat-header-cell *matHeaderCellDef class="header_title"
                                                         mat-sort-header> {{ tempColobj[item].DESCRIPTION }}</th>
                                                     <td mat-cell *matCellDef="let row">
-                                                        <span *ngIf="row[item]">{{row[item]}}</span>
-                                                    </td>
+                                                        <span *ngIf="row[item]!==undefined">{{row[item]}}</span>
+                                                </td>
                                                 </span>
                                             </ng-container>
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                            <tr mat-row
-                                                *matRowDef="let row let index = index; columns: displayedColumns;"
-                                                matRipple [@animate]="{value:'*',params:{y:'100%'}}"
-                                                (click)="Rowclick(row);highlightedRows=index"
-                                                [style.background]="highlightedRows == index ? selectedColore : ''"
-                                                [ngClass]="highlightedRows == index ? 'row-text-colore' : ''">
+                                            <tr mat-row *matRowDef="let row let index = index; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}" (click)="Rowclick(row);highlightedRows=index" [style.background]="highlightedRows == index ? selectedColore : ''" [ngClass]="highlightedRows == index ? 'row-text-colore' : ''">
                                             </tr>
                                         </table>
                                     </div>
-                                    <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize"
-                                        (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+                                    <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
                                 </div>
                             </div>
                         </div>

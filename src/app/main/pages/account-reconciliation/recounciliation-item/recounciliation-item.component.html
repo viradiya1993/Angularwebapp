@@ -5,12 +5,12 @@
     {{this.chartAccountDetail.name}}
 </div>
 <div id="AccountRecouncile" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
-      
+
     <div class="content" fxLayoutAlign="center">
-           
+
         <div class="center p-24 more_tbl_clmn list_tbl_main" fusePerfectScrollbar>
             <div class="matter-serach-div sticky_search_div responsive_auto">
-              
+
                 <form [formGroup]="AccountRecouncile" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
                     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                         <mat-form-field class="example" appearance="outline" fxFlex="16.66">
@@ -20,7 +20,7 @@
 
                         <mat-form-field class="example" appearance="outline" fxFlex="16.66">
                             <mat-label>Last Reconciled Balance</mat-label>
-                            <input matInput formControlName="LASTRECONCILEDBALANCE"  class="sideText">
+                            <input matInput formControlName="LASTRECONCILEDBALANCE" class="sideText">
                             <span class="currency_sign" matPrefix>$&nbsp;</span>
                         </mat-form-field>
 
@@ -39,7 +39,7 @@
 
                         <mat-form-field class="example" appearance="outline" fxFlex="16.66">
                             <mat-label>Calculated Closing Balance</mat-label>
-                            <input  matInput formControlName="calculatedClosingBalance" readonly class="sideText">
+                            <input matInput formControlName="calculatedClosingBalance" readonly class="sideText">
                             <span class="currency_sign" matPrefix>$&nbsp;</span>
                         </mat-form-field>
 
@@ -82,10 +82,8 @@
                                         <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                                     </div>
                                     <div class="example-containerdata">
-                                        <table mat-table [dataSource]="ReconciliationData" matSort
-                                            [@animateStagger]="{value:'50'}">
-                                            <ng-container *ngFor="let item of displayedColumns;"
-                                                matColumnDef="{{item}}">
+                                        <table mat-table [dataSource]="ReconciliationData" matSort [@animateStagger]="{value:'50'}">
+                                            <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
                                                 <span *ngIf="item=='select'">
                                                     <th mat-header-cell *matHeaderCellDef>
                                                         <mat-checkbox
@@ -107,18 +105,16 @@
                                                     <th mat-header-cell *matHeaderCellDef class="header_title"
                                                         mat-sort-header> {{ tempColobj[item].DESCRIPTION }}</th>
                                                     <td mat-cell *matCellDef="let row">
-                                                        <span *ngIf="row[item]">{{row[item]}}</span>
-                                                    </td>
+                                                        <span *ngIf="row[item]!==undefined">{{row[item]}}</span>
+                                                </td>
                                                 </span>
                                             </ng-container>
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;" matRipple
-                                                [@animate]="{value:'*',params:{y:'100%'}}">
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                             </tr>
                                         </table>
                                     </div>
-                                    <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize"
-                                        (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+                                    <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
                                 </div>
                             </div>
                         </div>

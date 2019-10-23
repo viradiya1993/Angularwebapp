@@ -67,6 +67,14 @@ export class TaskDialogeComponent implements OnInit {
         this.UserDropDownData = result;
       }
     });
+
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
   }
   ngOnInit() {
     this.TaskForm = this._formBuilder.group({

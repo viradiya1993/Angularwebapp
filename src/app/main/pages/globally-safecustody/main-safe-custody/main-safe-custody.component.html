@@ -1,4 +1,3 @@
-
 <div id="account" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
     <div class="content" fxLayoutAlign="center">
         <div class="center p-24 more_tbl_clmn list_tbl_main" fusePerfectScrollbar>
@@ -7,7 +6,7 @@
                     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                         <mat-form-field fxFlex="20" class="example" appearance="outline">
                             <mat-label>Status</mat-label>
-                            <mat-select (selectionChange)="selectStatus($event.value)"  formControlName="STATUS">
+                            <mat-select (selectionChange)="selectStatus($event.value)" formControlName="STATUS">
                                 <mat-option value="All">All</mat-option>
                                 <mat-option value="Review Soon ">Review Soon </mat-option>
                                 <mat-option value="Checked In ">Checked In </mat-option>
@@ -21,29 +20,29 @@
                             </mat-select>
                         </mat-form-field>
 
-                        <mat-checkbox  class="check_top" (change)="MatterChecxed()" formControlName="MATTERCHECK" >All Matters </mat-checkbox>
-                        <mat-form-field class="example" fxFlex="20"  appearance="outline" >
+                        <mat-checkbox class="check_top" (change)="MatterChecxed()" formControlName="MATTERCHECK">All Matters </mat-checkbox>
+                        <mat-form-field class="example" fxFlex="20" appearance="outline">
                             <mat-label>Matter</mat-label>
-                            <input formControlName="MATTER" readonly   matInput>
-                            <mat-icon class="set_icon" matSuffix (click)='SelectMatter()'  >
-                                    <img class="{{ImgDisAb}}" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                            <input formControlName="MATTER" readonly matInput>
+                            <mat-icon class="set_icon" matSuffix (click)='SelectMatter()'>
+                                <img class="{{ImgDisAb}}" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                             </mat-icon>
-                        </mat-form-field> 
+                        </mat-form-field>
 
-                        <mat-checkbox class="check_top"(change)="ContactChecxed()" formControlName="CLIENTCHECK">All Contact </mat-checkbox>
-                        <mat-form-field class="example" fxFlex="20"  appearance="outline" >
+                        <mat-checkbox class="check_top" (change)="ContactChecxed()" formControlName="CLIENTCHECK">All Contact </mat-checkbox>
+                        <mat-form-field class="example" fxFlex="20" appearance="outline">
                             <mat-label>Client</mat-label>
-                            <input readonly   matInput formControlName="CLIENT" >
-                            <mat-icon class="set_icon" matSuffix (click)='SelectContact()' >
+                            <input readonly matInput formControlName="CLIENT">
+                            <mat-icon class="set_icon" matSuffix (click)='SelectContact()'>
                                 <img class="{{ImgDisAb}}" src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                             </mat-icon>
                         </mat-form-field>
 
-                        <mat-form-field  fxFlex="20" appearance="outline" class="example">
+                        <mat-form-field fxFlex="20" appearance="outline" class="example">
                             <mat-label>Filter</mat-label>
                             <input matInput formControlName="SEARCH" (keydown)="onSearch($event)">
                         </mat-form-field>
-                    </div> 
+                    </div>
                 </form>
             </div>
             <div class="content">
@@ -52,7 +51,7 @@
                         <div class="center more_tbl_clmn" fusePerfectScrollbar>
                             <div class="content">
                                 <div class="btn top_right_action_billing_position">
-                                    <button mat-icon-button  aria-label="More"  (click)="openDialog()">
+                                    <button mat-icon-button aria-label="More" (click)="openDialog()">
                                         <mat-icon class="secondary-text">more_vert</mat-icon>
                                     </button>
                                 </div>

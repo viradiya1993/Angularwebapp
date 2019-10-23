@@ -42,7 +42,7 @@
                 <div class="one">
                     <mat-tab-group>
                         <mat-tab label="Time Entries" class="time-entries">
-                            <div class="example-containerdata">
+                            <div class="example-containerdata example-containerdata-invoice-view">
                                 <table mat-table #table [dataSource]="invoiceDatasor" [@animateStagger]="{value:'50'}" matSort class="">
                                     <ng-container matColumnDef="ITEMDATE">
                                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
@@ -107,7 +107,7 @@
                             </div>
                         </mat-tab>
                         <mat-tab label="Receipts">
-                            <div class="example-containerdata">
+                            <div class="example-containerdata example-containerdata-invoice-view">
                                 <table mat-table #table [dataSource]="ReceiptsData" [@animateStagger]="{value:'50'}" matSort class="mat-elevation-z8">
                                     <ng-container matColumnDef="RECEIPTCODE">
                                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Receipt</th>
@@ -163,7 +163,7 @@
                             </div>
                         </mat-tab>
                         <mat-tab label="Interest Charges">
-                            <div class="example-containerdata">
+                            <div class="example-containerdata example-containerdata-invoice-view">
                                 <table mat-table #table [dataSource]="IntersetChatgesData" [@animateStagger]="{value:'50'}" matSort class="mat-elevation-z8">
                                     <ng-container matColumnDef="INVOICECODE">
                                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Invoice</th>

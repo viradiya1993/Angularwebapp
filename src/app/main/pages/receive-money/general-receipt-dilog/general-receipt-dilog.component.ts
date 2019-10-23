@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { MatDialogRef, MatDialog, MatDatepickerInputEvent, MAT_DIALOG_DATA } from '@angular/material';
-import { MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { BankingDialogComponent } from '../../banking/banking-dialog.component';
 @Component({
@@ -20,9 +20,11 @@ export class GeneralReceiptDilogComponent implements OnInit {
   GST: any;
   errorWarningData: any = {};
   action: any;
+  storeDataarray: any;
   constructor(
     private toastr: ToastrService,
     private _formBuilder: FormBuilder,
+    public behaviorService: BehaviorService,
     public dialogRef: MatDialogRef<GeneralReceiptDilogComponent>,
     public datepipe: DatePipe,
     public MatDialog: MatDialog,
@@ -30,6 +32,13 @@ export class GeneralReceiptDilogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public _data: any,
   ) {
     this.action = _data.type;
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
   }
   generalReceiptForm: FormGroup;
   isspiner: boolean;
@@ -41,6 +50,11 @@ export class GeneralReceiptDilogComponent implements OnInit {
   isGstReadonly: boolean = true;
   gsttypeData: any = [{ id: 1, text: "10% GST" }, { id: 2, text: "No GST" }, { id: 3, text: "< 10% GST" }];
   ngOnInit() {
+    this._mainAPiServiceService.getSetData({ AccountClass: 'BANK ACCOUNT' }, 'GetAccount').subscribe(response => {
+      this.storeDataarray = response.DATA.ACCOUNTS;
+      this.showData(this.storeDataarray);
+    }, err => {
+    });
     // this.isLoadingResults = true;
     this.generalReceiptForm = this._formBuilder.group({
       INCOMEGUID: [''],
@@ -69,6 +83,19 @@ export class GeneralReceiptDilogComponent implements OnInit {
     }
 
     this.getPayor({});
+  }
+  showData(element) {
+    element.forEach(x => {
+      if (x.ACCOUNTTYPENAME == "Bank Account") {
+        // this.spendmoneyForm.controls['Bankac'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER + ' ' + result.MainList.ACCOUNTNAME);
+        x.EXPORTINFO.MYOBEXPORTACCOUNT;
+        this.generalReceiptForm.controls['BANKACCOUNTGUIDTEXT'].setValue(x.ACCOUNTCLASS + ' - ' + x.ACCOUNTNUMBER );
+        this.generalReceiptForm.controls['BANKACCOUNTGUID'].setValue(x.ACCOUNTGUID);
+      }
+      if (x.SUBACCOUNTS) {
+        this.showData(x.SUBACCOUNTS);
+      }
+    });
   }
   LoadData() {
     this.isLoadingResults = true;

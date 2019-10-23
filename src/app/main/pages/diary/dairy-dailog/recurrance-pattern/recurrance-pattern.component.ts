@@ -10,6 +10,7 @@ import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 export class RecurrancePatternComponent implements OnInit {
   @Input() DairyForm: FormGroup;
   RedioBtnValue: any;
+  abc: any
   Everydayval: any
   WeekDay: any = [
     { value: 1, day: 'Monday' },

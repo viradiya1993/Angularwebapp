@@ -27,24 +27,29 @@
                     </tr>
                     <tr class="unbilled">
                         <th>Unbilled</th>
-                        <td>{{mattersDetailData?.UNBILLEDVALUEEXGST | currency}}</td>
+                     
+                        <td>{{mattersDetailData?.UNBILLEDVALUEINCGST | currency}}</td>
                     </tr>
                     <tr class="invoiced">
                         <th>Invoiced</th>
-                        <td>{{mattersDetailData?.INVOICEDVALUEEXGST | currency}}</td>
+                       
+                        <td>{{mattersDetailData?.INVOICEDVALUEINCGST | currency}}</td>
                     </tr>
                     <tr class="received">
                         <th>Received</th>
-                        <td>{{mattersDetailData?.RECEIVEDVALUEEXGST |currency}}</td>
+                      
+                        <td>{{mattersDetailData?.RECEIVEDVALUEINCGST |currency}}</td>
                     </tr>
                     <tr class="unpaid">
                         <th>Unpaid</th>
-                        <td>{{mattersDetailData?.OUTSTANDINGVALUEEXGST |currency}}</td>
+                       
+                        <td>{{mattersDetailData?.OUTSTANDINGVALUEINCGST |currency}}</td>
                     </tr>
 
                     <tr class="total_value">
                         <th>Total Value</th>
-                        <td>{{mattersDetailData?.TOTALVALUEEXGST |currency}}</td>
+          
+                        <td>{{mattersDetailData?.TOTALVALUEINCGST |currency}}</td>
                     </tr>
                 </table>
             </div>

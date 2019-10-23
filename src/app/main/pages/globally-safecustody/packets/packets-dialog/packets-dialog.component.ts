@@ -39,7 +39,8 @@ export class PacketsDialogComponent implements OnInit {
     private _mainAPiServiceService: MainAPiServiceService,
     private Timersservice: TimersService,
     @Inject(MAT_DIALOG_DATA) public data: any
-    ) {
+    ) 
+    {
       this.action = data.action;
       if (this.action === 'new') {
         this.dialogTitle = 'New Packets';
@@ -48,6 +49,14 @@ export class PacketsDialogComponent implements OnInit {
       } else {
         this.dialogTitle = 'Duplicate Packets';
       }
+      // this.behaviorService.dialogClose$.subscribe(result => {
+      //   console.log(result);
+      //   if(result != null){
+      //     if(result.MESSAGE == 'Not logged in'){
+      //       this.dialogRef.close(false);
+      //     }
+      //   }
+      //  });
       this.behaviorService.Packets$.subscribe(result => {
         if (result) {
           this.PacketsData = result;

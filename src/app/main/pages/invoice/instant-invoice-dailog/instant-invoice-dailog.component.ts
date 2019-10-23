@@ -43,7 +43,15 @@ export class InstantInvoiceDailogComponent implements OnInit {
     private toastr: ToastrService,
     private _mainAPiServiceService: MainAPiServiceService,
     private behaviorService: BehaviorService,
-  ) { }
+  ) { 
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
+  }
 
   ngOnInit() {
     // this.TotalExGst=0.00;
@@ -129,6 +137,12 @@ export class InstantInvoiceDailogComponent implements OnInit {
   }
 
   SaveInstaceInvoice() {
+  // SaveInstaceInvoice
+    if(this.TotalExGst == 0 ){
+      this.toastr.error("Invoice of $0 is not allowed");
+      return;
+    }
+    
     let SendData = {
       INVOICEGUID: '',
       INVOICECODE: this.f.Invoiceno.value,
@@ -146,10 +160,6 @@ export class InstantInvoiceDailogComponent implements OnInit {
         QUANTITYTYPE: this.f.QUANTITYTYPE.value,
         ADDITIONALTEXT: this.f.ADDITIONALTEXT.value,
       }
-
-
-
-
     }
     this.isspiner = true;
     let finalData = { DATA: SendData, FormAction: 'insert', VALIDATEONLY: true }

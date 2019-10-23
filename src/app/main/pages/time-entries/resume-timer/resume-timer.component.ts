@@ -47,6 +47,13 @@ export class ResumeTimerComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public resumeTimerData: any
   ) {
     this.timeStops = this.getTimeStops('01:00', '23:59');
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if(result != null){
+        if(result.MESSAGE == 'Not logged in'){
+          this.dialogRef.close(false);
+        }
+      }
+     });
   }
 
   ngOnInit() {
@@ -175,6 +182,8 @@ export class ResumeTimerComponent implements OnInit {
         this.toastr.error(err);
       });
     } else {
+      let temmatterData = this.resumeTimerData.matterData;
+      this.ActiveTimerData = { SHORTNAME: temmatterData.SHORTNAME, MATTERGUID: temmatterData.MATTERGUID, secound: '0', WORKITEMGUID: '' };
       this.matterShortName = this.resumeTimerData.matterData.SHORTNAME;
       this.resumeTimerForm.controls['matterautoVal'].setValue(this.resumeTimerData.matterData.SHORTNAME + ' : ' + this.resumeTimerData.matterData.MATTER);
       this.resumeTimerForm.controls['MATTERGUID'].setValue(this.resumeTimerData.matterData.MATTERGUID);

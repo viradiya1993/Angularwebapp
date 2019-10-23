@@ -36,6 +36,7 @@ export class InvoiceDetailComponent implements OnInit {
   @ViewChild(MatSort) sort1: MatSort;
   @ViewChild(MatSort) sort2: MatSort;
   isView: any;
+  tabingVal: string;
   constructor(
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -73,6 +74,7 @@ export class InvoiceDetailComponent implements OnInit {
       AMOUNTOUTSTANDINGINCGST: [''],
       AMOUNTTOTAL: [''],
     });
+    this.TabingClick('Time Entries');
     if (this._data.type == 'edit' || this._data.type == 'view') {
       this.isLoadingResults = true;
       this._mainAPiServiceService.getSetData({ 'INVOICEGUID': this._data.INVOICEGUID }, 'GetInvoice').subscribe(response => {
@@ -232,5 +234,15 @@ export class InvoiceDetailComponent implements OnInit {
       this.toastr.error(err);
     });
   }
-
+  TabingClick(val){
+    console.log(val);
+    console.log("fjkdsjfd");
+    if(val =='Time Entries'){
+      this.tabingVal='Time Entries';
+    }else if(val== 'Receipts'){
+      this.tabingVal='Receipts';
+    }else{
+      this.tabingVal='InterChange';
+    }
+  }
 }

@@ -255,6 +255,7 @@ export class SpendMoneyAddComponent implements OnInit {
   }
   forAddshowpopupData() {
     this._mainAPiServiceService.getSetData({ AccountClass: 'BANK ACCOUNT' }, 'GetAccount').subscribe(response => {
+      this.behaviorService.dialogClose(response);
       if (response) {
         this.storeDataarray = response.DATA.ACCOUNTS;
         this.showData(this.storeDataarray);

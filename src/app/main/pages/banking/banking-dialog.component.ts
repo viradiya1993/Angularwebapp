@@ -82,6 +82,7 @@ export class BankingDialogComponent implements OnInit {
   loadData(type: any) {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({ AccountClass: type }, 'GetAccount').subscribe(response => {
+     
       if (response.CODE == 200 && response.STATUS == "success") {
         this.arrayForIndex = [];
         if (response.DATA.ACCOUNTS[0].ACCOUNTGUID == "") {

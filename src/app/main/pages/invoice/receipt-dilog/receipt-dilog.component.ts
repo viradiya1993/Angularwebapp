@@ -309,34 +309,34 @@ export class ReceiptDilogComponent implements OnInit {
     }
   }
 
-  getClosetInvoiceForAllocation() {
-    var closest = 0;
-    let currentInvoiceId: any = "";
-    let lastindex = null;
-    if (Object.keys(this.PrepareReceiptTemp).length == 0) {
-      if (this.AllocationAmout != 0)
-        this.AllocationData.push({ INVOICEGUID: "", AMOUNTAPPLIED: this.AllocationAmout });
-      this.AllocationAmout = 0;
-    } else {
-      this.PrepareReceiptTemp.forEach((element, index) => {
-        if (closest == 0 || Math.abs(element.AMOUNTOUTSTANDINGINCGST - this.AllocationAmout) < Math.abs(closest - this.AllocationAmout)) {
-          if (this.AllocationAmout != 0 && this.AllocationAmout > 0) {
-            closest = Number(element.AMOUNTOUTSTANDINGINCGST);
-            currentInvoiceId = element.INVOICEGUID;
-            lastindex = index;
-          }
-        }
-      });
-      if (lastindex != null)
-        this.PrepareReceiptTemp.splice(lastindex, 1);
-      if (this.AllocationAmout != 0 && this.AllocationAmout > 0) {
-        closest = Number(this.AllocationAmout) > Number(closest) ? Number(closest) : Number(this.AllocationAmout);
-        this.AllocationAmout = this.AllocationAmout - closest;
-        this.AllocationData.push({ INVOICEGUID: currentInvoiceId, AMOUNTAPPLIED: closest });
-        this.getClosetInvoiceForAllocation();
-      }
-    }
-  }
+  // getClosetInvoiceForAllocation() {
+  //   var closest = 0;
+  //   let currentInvoiceId: any = "";
+  //   let lastindex = null;
+  //   if (Object.keys(this.PrepareReceiptTemp).length == 0) {
+  //     if (this.AllocationAmout != 0)
+  //       this.AllocationData.push({ INVOICEGUID: "", AMOUNTAPPLIED: this.AllocationAmout });
+  //     this.AllocationAmout = 0;
+  //   } else {
+  //     this.PrepareReceiptTemp.forEach((element, index) => {
+  //       if (closest == 0 || Math.abs(element.AMOUNTOUTSTANDINGINCGST - this.AllocationAmout) < Math.abs(closest - this.AllocationAmout)) {
+  //         if (this.AllocationAmout != 0 && this.AllocationAmout > 0) {
+  //           closest = Number(element.AMOUNTOUTSTANDINGINCGST);
+  //           currentInvoiceId = element.INVOICEGUID;
+  //           lastindex = index;
+  //         }
+  //       }
+  //     });
+  //     if (lastindex != null)
+  //       this.PrepareReceiptTemp.splice(lastindex, 1);
+  //     if (this.AllocationAmout != 0 && this.AllocationAmout > 0) {
+  //       closest = Number(this.AllocationAmout) > Number(closest) ? Number(closest) : Number(this.AllocationAmout);
+  //       this.AllocationAmout = this.AllocationAmout - closest;
+  //       this.AllocationData.push({ INVOICEGUID: currentInvoiceId, AMOUNTAPPLIED: closest });
+  //       this.getClosetInvoiceForAllocation();
+  //     }
+  //   }
+  // }
   clickAutoAllocation() {
     if (this.InvoiceTypeCheck != 3) {
       this.AllocationBtn = 'auto';
@@ -358,8 +358,12 @@ export class ReceiptDilogComponent implements OnInit {
     }
   }
   SaveReceipt() {
-    this.isspiner = true;
     this.AllocationData = [];
+  console.log(this.PrepareReceiptData.data);
+  this.PrepareReceiptData.data.forEach(element => {
+    this.AllocationData.push({INVOICEGUID:element.INVOICEGUID, AMOUNTAPPLIED:element.ALLOCATED})
+  });
+    this.isspiner = true;
     this.PrepareReceiptTemp = this.PrepareReceiptData.data;
     this.AllocationAmout = Number(this.f.AMOUNT.value);
 

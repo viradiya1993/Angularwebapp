@@ -8,23 +8,23 @@
         </button>
     </h2>
     <div mat-dialog-content class="mat-typography main">
-        <div class="one" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">            
+        <div class="one" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
             <form fxLayout="column" fxFlex="1 0 auto" name="SafeCustody" id="SafeCustody" [formGroup]="SafeCustody">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="50" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.Matternum,'has-warning':errorWarningData.Warning?.Matternum}">
                         <mat-label>Matter Num.</mat-label>
-                        <input  matInput formControlName="Matternum">
+                        <input matInput formControlName="Matternum">
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="50" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.Owener,'has-warning':errorWarningData.Warning?.Owener}">
                         <mat-label>Owner</mat-label>
-                        <input  matInput formControlName="Owener">
+                        <input matInput formControlName="Owener">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.Packet,'has-warning':errorWarningData.Warning?.Packet}">
                         <mat-label>Packet</mat-label>
                         <mat-select placeholder="Seperator" formControlName="Packet" (selectionChange)="selectPacket($event.value)">
-                            <mat-option *ngFor="let pakets of packetcustody"  [value]="pakets.PACKETNUMBER">{{pakets.PACKETNUMBER}}</mat-option>
+                            <mat-option *ngFor="let pakets of packetcustody" [value]="pakets.PACKETNUMBER">{{pakets.PACKETNUMBER}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DOCUMENTTYPE,'has-warning':errorWarningData.Warning?.DOCUMENTTYPE}">
@@ -35,24 +35,25 @@
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.SAFECUSTODYDESCRIPTION,'has-warning':errorWarningData.Warning?.SAFECUSTODYDESCRIPTION}">
-                        <mat-label>Dscription</mat-label>
-                        <input  matInput formControlName="SAFECUSTODYDESCRIPTION">
-                    </mat-form-field>
-
                     <mat-form-field appearance="outline" fxFlex="50" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.DOCUMENTNAME,'has-warning':errorWarningData.Warning?.DOCUMENTNAME}">
                         <mat-label>Document\Web Site</mat-label>
-                        <input  matInput formControlName="DOCUMENTNAME">
+                        <input matInput formControlName="DOCUMENTNAME">
                     </mat-form-field>
-                </div>
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="50" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.DateSafecustody,'has-warning':errorWarningData.Warning?.DateSafecustody}">
                         <mat-label>Review Date</mat-label>
                         <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" formControlName="DateSafecustody">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ADDITIONALTEXT,'has-warning':errorWarningData.Warning?.ADDITIONALTEXT}">
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.SAFECUSTODYDESCRIPTION,'has-warning':errorWarningData.Warning?.SAFECUSTODYDESCRIPTION}">
+                        <mat-label>Dscription</mat-label>
+                        <input matInput formControlName="SAFECUSTODYDESCRIPTION">
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="100" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ADDITIONALTEXT,'has-warning':errorWarningData.Warning?.ADDITIONALTEXT}">
                         <mat-label>Text</mat-label>
                         <textarea cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" matInput formControlName="ADDITIONALTEXT"></textarea>
                     </mat-form-field>
@@ -63,15 +64,15 @@
                         <mat-tab label="Check In">
                             <div class="Pad_tab" fxLayout="column">
                                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field appearance="outline" fxFlex="50" class="example" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.Dateperson,'has-warning':errorWarningData.Warning?.Dateperson}">
-                                            <mat-label>Date</mat-label>
-                                            <input matInput [matDatepicker]="picker1" placeholder="Choose a date" (dateInput)="PersonDate('input', $event)" (dateChange)="PersonDate('change', $event)" formControlName="Dateperson">
-                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                                            <mat-datepicker #picker1></mat-datepicker>
+                                    <mat-form-field appearance="outline" fxFlex="50" class="example pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.Dateperson,'has-warning':errorWarningData.Warning?.Dateperson}">
+                                        <mat-label>Date</mat-label>
+                                        <input matInput [matDatepicker]="picker1" placeholder="Choose a date" (dateInput)="PersonDate('input', $event)" (dateChange)="PersonDate('change', $event)" formControlName="Dateperson">
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
                                     </mat-form-field>
                                     <mat-form-field appearance="outline" fxFlex="50" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.CHECKINCONTACTNAME,'has-warning':errorWarningData.Warning?.CHECKINCONTACTNAME}">
                                         <mat-label>Contact Name</mat-label>
-                                        <input  matInput formControlName="CHECKINCONTACTNAME">
+                                        <input matInput formControlName="CHECKINCONTACTNAME">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -82,7 +83,7 @@
         </div>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
-        <button mat-raised-button color="accent"  (click)="SaveSafeCustody()" [disabled]="isspiner">
+        <button mat-raised-button color="accent" (click)="SaveSafeCustody()" [disabled]="isspiner">
             <mat-spinner style=" zoom: 0.2;position: absolute;right: 0;left: 0;
             margin: auto;top: 0;bottom: 0;" *ngIf="isspiner"></mat-spinner>Save</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>

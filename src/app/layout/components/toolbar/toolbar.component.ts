@@ -1502,10 +1502,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     setViewType(params: any) {
         this.behaviorService.UseCalanderViewType$.subscribe(result => {
-            if(result != null){
-                this.CurrentDate=result
-            }else{
-                this.CurrentDate=new Date();
+            if (result != null) {
+                this.CurrentDate = result
+            } else {
+                this.CurrentDate = new Date();
             }
             // this.getEvents();
         });
@@ -1763,8 +1763,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    deleteReceiceMoanyForTimeBilling() {
-    }
     createReceipt() {
         const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
@@ -1870,6 +1868,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 this._mainAPiServiceService.getSetData(postData, 'SetIncome').subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {
                         $('#refreshReceiceMoany').click();
+                        $('#refresheReceiptsTab').click();
                         this.toastr.success('Delete successfully');
                     }
                 });
@@ -1965,12 +1964,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     OpenNewSafeCustody(actionType) {
         if (actionType === 'new client') {
-            const dialogRef = this._matDialog.open(ContactSelectDialogComponent, {
-                width: '100%', disableClose: true,
-                data: {
-                    type: null
-                }
-            });
+            const dialogRef = this._matDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true, data: { type: null } });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     this.SafeCustodyPoup(actionType, result);
@@ -1989,16 +1983,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             });
         } else if (actionType === 'newlegal') {
             this.SafeCustodyPoup(actionType, '');
-        }
-        else {
+        } else {
             this.SafeCustodyPoup(actionType, '');
         }
-
-        //  else if (actionType === 'newlegal'){
-        //     this.SafeCustodyPoup(actionType,'');
-        // } else if(actionType === 'editlegal'){
-        //     this.SafeCustodyPoup(actionType,'');
-        // }
     }
     SafeCustodyPoup(actionType, result) {
         let safeCustodyData = {}

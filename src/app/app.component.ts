@@ -54,6 +54,7 @@ export class AppComponent implements OnInit, OnDestroy {
         private deviceService: DeviceDetectorService,
         public dialog: MatDialog,
     ) {
+        localStorage.setItem('lastPageSize', '100');
         // Get default navigation
         this.navigation = navigation;
 
@@ -123,7 +124,7 @@ export class AppComponent implements OnInit, OnDestroy {
         const isMobile = this.deviceService.isMobile();
 
         if (window.innerWidth < 1024) {
-            if (isMobile){
+            if (isMobile) {
                 const dialogRef = this.dialog.open(LicenceAgreementComponent, {
                     disableClose: true,
                     width: '100%',
@@ -131,10 +132,10 @@ export class AppComponent implements OnInit, OnDestroy {
                 });
                 dialogRef.afterClosed().subscribe(result => { });
             }
-           
-                 } else {
-                 //
-              }
+
+        } else {
+            //
+        }
     }
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks

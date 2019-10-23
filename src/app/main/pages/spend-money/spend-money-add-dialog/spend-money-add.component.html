@@ -53,10 +53,6 @@
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.NOTE,'has-warning':errorWarningData.Warning?.NOTE}" appearance="outline" fxFlex="60" class="pr-4">
                         <mat-label *ngIf="classtype !='Matter Expense'">Notes</mat-label>
                         <mat-label *ngIf="classtype ==='Matter Expense'">Invoice Text</mat-label>
-                        <!-- <input matInput formControlName="Notes">
-                    <mat-icon matSuffix >
-                      <img src="assets/icons/web_app/icon_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-                    </mat-icon> -->
                         <textarea formControlName="Notes" matInput></textarea>
                     </mat-form-field>
                 </div>

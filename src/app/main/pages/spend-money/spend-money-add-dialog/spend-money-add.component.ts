@@ -21,7 +21,7 @@ import { BankingDialogComponent } from '../../banking/banking-dialog.component';
   encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
-export class SpendMoneyAddComponent implements OnInit{
+export class SpendMoneyAddComponent implements OnInit {
   errorWarningData: any = {};
   dataSource: MatTableDataSource<UserData>;
   action: any;
@@ -88,20 +88,16 @@ export class SpendMoneyAddComponent implements OnInit{
     } else {
       this.dialogTitle = 'Duplicate Spend Money';
     }
-    
+
     this.behaviorService.dialogClose$.subscribe(result => {
-      if(result != null){
-        if(result.MESSAGE == 'Not logged in'){
+      if (result != null) {
+        if (result.MESSAGE == 'Not logged in') {
           this.dialogRef.close(false);
         }
       }
-     });
-    
+    });
+
   }
-  // ngOnDestroy(){
-  //   console.log("on distry");
-  //   this.dialogRef.close(false);
-  // }
   ngOnInit() {
     this.isLoadingResults = true;
     this.behaviorService.SpendMoneyData$.subscribe(result => {
@@ -235,6 +231,15 @@ export class SpendMoneyAddComponent implements OnInit{
       this.forAddshowpopupData();
     }
   }
+  ngAfterViewInit() {
+    let tempError: any = [];
+    let tempWarning: any = [];
+    tempWarning['PAYEE'] = {};
+    tempError['AMOUNT'] = {};
+    tempError['NOTE'] = {};
+    tempError['EXPENDITUREITEMS'] = {};
+    this.errorWarningData = { "Error": tempError, 'Warning': tempWarning };
+  }
   showData(element) {
     element.forEach(x => {
       if (x.ACCOUNTTYPENAME == "Bank Account") {
@@ -249,7 +254,7 @@ export class SpendMoneyAddComponent implements OnInit{
     });
   }
   forAddshowpopupData() {
-  this._mainAPiServiceService.getSetData({ AccountClass: 'BANK ACCOUNT' }, 'GetAccount').subscribe(response => {
+    this._mainAPiServiceService.getSetData({ AccountClass: 'BANK ACCOUNT' }, 'GetAccount').subscribe(response => {
       if (response) {
         this.storeDataarray = response.DATA.ACCOUNTS;
         this.showData(this.storeDataarray);
@@ -629,6 +634,7 @@ export class SpendMoneyAddComponent implements OnInit{
       this.GSTValForExGst = amount;
     }
   }
+
   GSTCalFun() {
     this.GSTValForExGst = round(this.f.AmountIncGST.value - this.f.GST1.value).toFixed(2);
   }
@@ -767,6 +773,7 @@ export class SpendMoneyAddComponent implements OnInit{
       } else {
         this.isspiner = false;
       }
+
     }, error => {
       this.toastr.error(error);
     });
@@ -786,7 +793,7 @@ export class SpendMoneyAddComponent implements OnInit{
         warningData.push(value.ERRORDESCRIPTION);
       }
     });
-    this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
+    this.errorWarningData = { "Error": tempError, 'Warning': tempWarning };
     if (Object.keys(errorData).length != 0) {
       this.toastr.error(errorData);
       this.isspiner = false;

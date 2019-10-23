@@ -85,8 +85,7 @@ export class DiaryComponent implements OnInit {
         this.refresh.next();
 
     }
-    CalDaywiseView(val, val2) {
-
+    CalDaywiseView(val, val2, val3) {
         this.behaviorService.UseCalanderViewType(val);
         this.behaviorService.setCalanderViewType(val2);
 

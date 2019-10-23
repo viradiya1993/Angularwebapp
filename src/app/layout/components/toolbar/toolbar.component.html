@@ -721,6 +721,19 @@
                                             </section>
                                         </button>
                                     </section>
+                                    <section [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="OpenNewSafeCustody('new matter')">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_safecustody_new_d.ico" alt=""
+                                                        matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>New Matter<br>Safe Custody</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
                                     <section [ngClass]="appPermissions[14]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[14]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="OpenNewSafeCustody('edit')">
                                             <section class="large-button-container">
@@ -744,20 +757,6 @@
                                                 </mat-icon>
                                                 <div class="main-text">
                                                     <span>Delete Client<br>Safe Custody</span>
-                                                </div>
-                                            </section>
-                                        </button>
-                                    </section>
-
-                                    <section [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="OpenNewSafeCustody('new matter')">
-                                            <section class="large-button-container">
-                                                <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_safecustody_new_d.ico" alt=""
-                                                        matTooltip="Twitter" matTooltipPosition="above">
-                                                </mat-icon>
-                                                <div class="main-text">
-                                                    <span>New Matter<br>Safe Custody</span>
                                                 </div>
                                             </section>
                                         </button>
@@ -1310,7 +1309,7 @@
                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[8]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[8]?.Delete==0 ? 'disabled-click large-button' : 'large-button'" (click)="deleteReceiceMoanyForTimeBilling()">
+                                        <button mat-button [ngClass]="appPermissions[8]?.Delete==0 ? 'disabled-click large-button' : 'large-button'" (click)="deleteReceiceMoany()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_receipts_delete_d.ico" alt=""

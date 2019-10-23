@@ -45,7 +45,6 @@ export class EstimateDilogComponent implements OnInit {
   constructor(
     public MatDialog: MatDialog,
     public dialogRef: MatDialogRef<EstimateDilogComponent>,
-    private router: Router,
     private _formBuilder: FormBuilder,
     private behaviorService: BehaviorService,
     private toastr: ToastrService,
@@ -69,12 +68,12 @@ export class EstimateDilogComponent implements OnInit {
       }
     });
     this.behaviorService.dialogClose$.subscribe(result => {
-      if(result != null){
-        if(result.MESSAGE == 'Not logged in'){
+      if (result != null) {
+        if (result.MESSAGE == 'Not logged in') {
           this.dialogRef.close(false);
         }
       }
-     });
+    });
   }
 
   ngOnInit() {
@@ -134,9 +133,8 @@ export class EstimateDilogComponent implements OnInit {
   }
   //FEEEARNER
   matterChange(key: any, event: any) {
-    if (key == "FeeEarner") {
-      this.calculateData.FeeEarner = event;
-    } else if (key === 'QuantityType') {
+    this.calculateData.FeeEarner = this.f.FEEEARNER.value;
+    if (key === 'QuantityType') {
       switch (event) {
         case 'hh:mm': {
           this.calculateData.QuantityType = 'X';

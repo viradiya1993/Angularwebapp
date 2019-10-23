@@ -228,6 +228,7 @@ export class ReceiptDilogComponent implements OnInit {
         this.PrepareReceiptData = new MatTableDataSource(response.DATA.INVOICES)
         this.PrepareReceiptData.paginator = this.paginator;
         this.PrepareReceiptData.sort = this.sort;
+        this.checkCal(this.PrepareReceiptData.data, 'autoAllocation');
         this.isLoadingResults = false;
       } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
@@ -260,6 +261,8 @@ export class ReceiptDilogComponent implements OnInit {
       data = { CONTACTGUID: this.matterData.CONTACTGUID, 'Outstanding': 'Yes' };
     }
     this.GetInvoiceForReceipt(data);
+    
+    
   }
   revivedAmount() {
     if (this.f.AMOUNT.value > this.TotalInvoice) {
@@ -277,6 +280,7 @@ export class ReceiptDilogComponent implements OnInit {
   }
 
   checkCal(data, checkval) {
+    console.log("hnkhsdkjf");
     if (this.InvoiceTypeCheck != 3) {
       if (checkval == 'clearAllocation') {
         data.forEach(element => {
@@ -304,11 +308,6 @@ export class ReceiptDilogComponent implements OnInit {
         }
       }
     }
-
-
-
-
-
   }
 
   getClosetInvoiceForAllocation() {

@@ -39,9 +39,26 @@
                         <sat-datepicker-toggle matSuffix [for]="picker1"></sat-datepicker-toggle>
                     </mat-form-field>
                 </div>
+                <div *ngIf="tabingVal =='Time Entries'" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="30" class="example" class="pr-4">
+                        <mat-label>Invoice Total</mat-label>
+                        <input class="sideText" matInput readonly formControlName="INVOICETOTAL">
+                        <span class="currency_sign" matPrefix>$&nbsp;</span>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="30" class="example" class="pr-4">
+                        <mat-label>GST</mat-label>
+                        <input class="sideText" matInput readonly formControlName="GST">
+                        <span class="currency_sign" matPrefix>$&nbsp;</span>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="30" class="example" class="pr-4">
+                        <mat-label>Total Inc GST</mat-label>
+                        <input class="sideText" matInput readonly formControlName="AMOUNTTOTAL">
+                        <span class="currency_sign" matPrefix>$&nbsp;</span>
+                    </mat-form-field>
+                </div>
                 <div class="one">
-                    <mat-tab-group>
-                        <mat-tab label="Time Entries" class="time-entries">
+                    <mat-tab-group (selectedTabChange)="TabingClick($event.tab.textLabel)">
+                        <mat-tab  label="Time Entries" class="time-entries">
                             <div class="example-containerdata example-containerdata-invoice-view">
                                 <table mat-table #table [dataSource]="invoiceDatasor" [@animateStagger]="{value:'50'}" matSort class="">
                                     <ng-container matColumnDef="ITEMDATE">
@@ -88,25 +105,9 @@
                                     <textarea matInput formControlName="COMMENT"></textarea>
                                 </mat-form-field>
                             </div>
-                            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                <mat-form-field appearance="outline" fxFlex="30" class="example" class="pr-4">
-                                    <mat-label>Invoice Total</mat-label>
-                                    <input class="sideText" matInput readonly formControlName="INVOICETOTAL">
-                                    <span class="currency_sign" matPrefix>$&nbsp;</span>
-                                </mat-form-field>
-                                <mat-form-field appearance="outline" fxFlex="30" class="example" class="pr-4">
-                                    <mat-label>GST</mat-label>
-                                    <input class="sideText" matInput readonly formControlName="GST">
-                                    <span class="currency_sign" matPrefix>$&nbsp;</span>
-                                </mat-form-field>
-                                <mat-form-field appearance="outline" fxFlex="30" class="example" class="pr-4">
-                                    <mat-label>Total Inc GST</mat-label>
-                                    <input class="sideText" matInput readonly formControlName="AMOUNTTOTAL">
-                                    <span class="currency_sign" matPrefix>$&nbsp;</span>
-                                </mat-form-field>
-                            </div>
+                          
                         </mat-tab>
-                        <mat-tab label="Receipts">
+                        <mat-tab  label="Receipts">
                             <div class="example-containerdata example-containerdata-invoice-view">
                                 <table mat-table #table [dataSource]="ReceiptsData" [@animateStagger]="{value:'50'}" matSort class="mat-elevation-z8">
                                     <ng-container matColumnDef="RECEIPTCODE">
@@ -162,7 +163,7 @@
                                 </mat-form-field>
                             </div>
                         </mat-tab>
-                        <mat-tab label="Interest Charges">
+                        <mat-tab  label="Interest Charges">
                             <div class="example-containerdata example-containerdata-invoice-view">
                                 <table mat-table #table [dataSource]="IntersetChatgesData" [@animateStagger]="{value:'50'}" matSort class="mat-elevation-z8">
                                     <ng-container matColumnDef="INVOICECODE">

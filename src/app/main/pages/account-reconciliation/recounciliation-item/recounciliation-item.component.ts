@@ -20,7 +20,7 @@ import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/conf
 })
 export class RecounciliationItemComponent implements OnInit {
   chartAccountDetail: any;
-errorWarningData: any = { "Error": [], 'Warning': [] };
+  errorWarningData: any = { "Error": [], 'Warning': [] };
   subscription: Subscription;
   isLoadingResults: boolean = false;
   pageSize: any;
@@ -47,8 +47,8 @@ errorWarningData: any = { "Error": [], 'Warning': [] };
   SendData: { ACCOUNTGUID: any; PERIODENDDATE: any; STARTINGBALANCE: number; DEPOSITS: any; WITHDRAWALS: any; UNPRESENTEDDEPOSITS: any; UNPRESENTEDWITHDRAWALS: any; ENDINGBALANCE: any; PREPAREDBY: any; RECONCILIATIONITEMS: any[]; };
 
   constructor(private dialog: MatDialog, public datepipe: DatePipe,
-     private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService, private _formBuilder: FormBuilder,
-      public behaviorService: BehaviorService, private TableColumnsService: TableColumnsService, public _matDialog: MatDialog,) { }
+    private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService, private _formBuilder: FormBuilder,
+    public behaviorService: BehaviorService, private TableColumnsService: TableColumnsService, public _matDialog: MatDialog, ) { }
   ngOnInit() {
     this.ReconciliationData = [];
     let userdata = JSON.parse(localStorage.getItem('currentUser'));
@@ -62,21 +62,21 @@ errorWarningData: any = { "Error": [], 'Warning': [] };
       UnDeposite: [],
       PreBy: [userdata.UserName],
       UnWith: [],
-      SendDeposite:[],
-      SendWithdrawal:[]
+      SendDeposite: [],
+      SendWithdrawal: []
     });
     this.behaviorService.ChartAccountData$.subscribe(result => {
       if (result) {
         this.chartAccountDetail = result;
       }
-    });    
+    });
     // let getdate = new Date(sendDate[1] + '/' + sendDate[0] + '/' + sendDate[2]), y = getdate.getFullYear(), m = getdate.getMonth();;;
-      //  let lateday = new Date(y, m + 1, 0);
-    this.lastDay=this.datepipe.transform(new Date(), 'dd/MM/yyyy');
+    //  let lateday = new Date(y, m + 1, 0);
+    this.lastDay = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
     this.AccountRecouncile.controls['Bankdate'].setValue(new Date());
     this.getTableFilter();
     this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID, 'BankStatementDate': this.lastDay });
-  
+
     // this.LoadData({ AccountGuid: "ACCAAAAAAAAAAAA4", 'BankStatementDate': '30/11/2015' });
   }
   isAllSelected() {
@@ -96,23 +96,22 @@ errorWarningData: any = { "Error": [], 'Warning': [] };
     this.commonSendData();
   }
 
-commonSendData(){
-  console.log("fjkjkfhdkjsf");
-  this.behaviorService.RecouncileItemSendSetData(
-  {
-      ACCOUNTGUID:this.chartAccountDetail.ACCOUNTGUID, 
-      PERIODENDDATE:this.lastDay,
-      STARTINGBALANCE:Number(this.f.LASTRECONCILEDBALANCE.value),
-      DEPOSITS:this.f.SendDeposite.value,
-      WITHDRAWALS:this.f.SendWithdrawal.value,
-      UNPRESENTEDDEPOSITS:Number(this.f.UnDeposite.value),
-      UNPRESENTEDWITHDRAWALS:Number(this.f.UnWith.value),
-      ENDINGBALANCE:Number(this.f.calculatedClosingBalance.value),
-      PREPAREDBY:this.f.PreBy.value,
-      RECONCILIATIONITEMS: this.selection.selected
+  commonSendData() {
+    this.behaviorService.RecouncileItemSendSetData(
+      {
+        ACCOUNTGUID: this.chartAccountDetail.ACCOUNTGUID,
+        PERIODENDDATE: this.lastDay,
+        STARTINGBALANCE: Number(this.f.LASTRECONCILEDBALANCE.value),
+        DEPOSITS: this.f.SendDeposite.value,
+        WITHDRAWALS: this.f.SendWithdrawal.value,
+        UNPRESENTEDDEPOSITS: Number(this.f.UnDeposite.value),
+        UNPRESENTEDWITHDRAWALS: Number(this.f.UnWith.value),
+        ENDINGBALANCE: Number(this.f.calculatedClosingBalance.value),
+        PREPAREDBY: this.f.PreBy.value,
+        RECONCILIATIONITEMS: this.selection.selected
+      }
+    )
   }
-  )
-}
 
   get f() {
     return this.AccountRecouncile.controls;
@@ -136,17 +135,18 @@ commonSendData(){
 
     this.AccountRecouncile.controls['SendDeposite'].setValue(this.CalculatedClosingBalnce);
     this.AccountRecouncile.controls['SendWithdrawal'].setValue(this.DepositBalnce);
-    let deposit:any = Number(this.DepositBalnce).toFixed(2);
-    console.log(deposit);
-    let withdrawal:any = Number(this.CalculatedClosingBalnce).toFixed(2);
-    console.log(withdrawal);
-    let finalTotal = Number(this.f.LASTRECONCILEDBALANCE.value) + Number(withdrawal) - Number(deposit) ;
+    let deposit: any = Number(this.DepositBalnce).toFixed(2);
+
+    let withdrawal: any = Number(this.CalculatedClosingBalnce).toFixed(2);
+
+    let finalTotal = Number(this.f.LASTRECONCILEDBALANCE.value) + Number(withdrawal) - Number(deposit);
     this.AccountRecouncile.controls['calculatedClosingBalance'].setValue((finalTotal).toFixed(2));
   }
   helloFunction() {
     this.GloballyCal();
     this.FirstTimeCal('');
     this.commonSendData();
+    this.statmentClosingBal();
   }
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: any): string {
@@ -157,7 +157,7 @@ commonSendData(){
   }
   statmentClosingBal() {
     let val = Number(this.f.calculatedClosingBalance.value) - Number(this.f.statementClosingBalance.value);
-    this.AccountRecouncile.controls['OutBal'].setValue(val) ;
+    this.AccountRecouncile.controls['OutBal'].setValue(val);
   }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('Reconciliation', 'Reconciliation').subscribe(response => {
@@ -173,7 +173,7 @@ commonSendData(){
     });
   }
   ngOnDestroy() {
-  
+
   }
   onPaginateChange(event) {
     this.pageSize = event.pageSize;
@@ -181,9 +181,9 @@ commonSendData(){
   }
   FirstTimeCal(data) {
     if (data != '') {
-      this.FirstTimeWithDrawTotalArray=[];
-      this.FirstTimeDipositeTotalArray=[];
-      console.log("not empty");
+      this.FirstTimeWithDrawTotalArray = [];
+      this.FirstTimeDipositeTotalArray = [];
+
       data.forEach(element => {
 
         this.FirstTimeWithDrawTotalArray.push(element.DEBITAMOUNT);
@@ -210,8 +210,8 @@ commonSendData(){
     this.AccountRecouncile.controls['OutBal'].setValue(0);
     this.AccountRecouncile.controls['UnDeposite'].setValue(0);
     this.AccountRecouncile.controls['UnWith'].setValue(0);
-    this.CalculatedClosingBalnce=0;
-    this.DepositBalnce=0;
+    this.CalculatedClosingBalnce = 0;
+    this.DepositBalnce = 0;
     this.ReconciliationData = [];
     this.isLoadingResults = true;
     this.subscription = this._mainAPiServiceService.getSetData(data, 'GetReconciliationItems').subscribe(response => {
@@ -227,11 +227,11 @@ commonSendData(){
         this.AccountRecouncile.controls['statementClosingBalance'].setValue(0.00);
         // this.statmentClosingBal();
         this.AccountRecouncile.controls['OutBal'].setValue(0.00 - Number(response.DATA.LASTRECONCILEDBALANCE));
-        
+
         // this.AccountRecouncile.controls['OutBal'].setValue(response.DATA.LASTRECONCILEDBALANCE);
         this.isLoadingResults = false;
-        if(response.DATA.RECONCILIATIONITEMS[0]){
-        }else{
+        if (response.DATA.RECONCILIATIONITEMS[0]) {
+        } else {
           this.AccountRecouncile.controls['UnDeposite'].setValue(0);
           this.AccountRecouncile.controls['UnWith'].setValue(0);
         }
@@ -272,31 +272,31 @@ commonSendData(){
       }
     });
   }
-  SetRecouncilItem(){
+  SetRecouncilItem() {
     this.behaviorService.RecouncileItemSendSetData$.subscribe(result => {
       this.recouncileItemdata = result
-  });
-  // let postData = this.recouncileItemdata;
-  // let sendData = {
-  //     DATA: postData, FormAction: 'insert'
-  // }
+    });
+    // let postData = this.recouncileItemdata;
+    // let sendData = {
+    //     DATA: postData, FormAction: 'insert'
+    // }
 
-  let finalData = { DATA: this.recouncileItemdata, FormAction: 'insert', VALIDATEONLY: true }
-  this._mainAPiServiceService.getSetData(finalData, 'SetReconciliation').subscribe(response => {
-    if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-      this.checkValidation(response.DATA.VALIDATIONS, finalData);
-    } else if (response.CODE == 451 && response.STATUS == 'warning') {
-      this.checkValidation(response.DATA.VALIDATIONS, finalData);
-    } else if (response.CODE == 450 && response.STATUS == 'error') {
-      this.checkValidation(response.DATA.VALIDATIONS, finalData);
-    } else if (response.MESSAGE == 'Not logged in') {
-    } else {
+    let finalData = { DATA: this.recouncileItemdata, FormAction: 'insert', VALIDATEONLY: true }
+    this._mainAPiServiceService.getSetData(finalData, 'SetReconciliation').subscribe(response => {
+      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        this.checkValidation(response.DATA.VALIDATIONS, finalData);
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
+        this.checkValidation(response.DATA.VALIDATIONS, finalData);
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
+        this.checkValidation(response.DATA.VALIDATIONS, finalData);
+      } else if (response.MESSAGE == 'Not logged in') {
+      } else {
 
-    }
+      }
 
-  }, err => {
-    this.toastr.error(err);
-  });
+    }, err => {
+      this.toastr.error(err);
+    });
 
   }
   checkValidation(bodyData: any, details: any) {
@@ -355,8 +355,8 @@ commonSendData(){
     this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID, 'BankStatementDate': this.lastDay });
     // this.LoadData({ AccountGuid: "ACCAAAAAAAAAAAA4", 'BankStatementDate': "3/09/2019" });
   }
-  BankchoosedDate(type: string, event: MatDatepickerInputEvent<Date>){
-    this.lastDay= this.datepipe.transform(event.value, 'dd/MM/yyyy');
-    this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID, 'BankStatementDate':  this.lastDay });
+  BankchoosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.lastDay = this.datepipe.transform(event.value, 'dd/MM/yyyy');
+    this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID, 'BankStatementDate': this.lastDay });
   }
 }

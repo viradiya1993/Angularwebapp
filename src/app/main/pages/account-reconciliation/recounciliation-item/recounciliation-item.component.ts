@@ -181,6 +181,8 @@ commonSendData(){
   }
   FirstTimeCal(data) {
     if (data != '') {
+      this.FirstTimeWithDrawTotalArray=[];
+      this.FirstTimeDipositeTotalArray=[];
       console.log("not empty");
       data.forEach(element => {
 
@@ -196,8 +198,11 @@ commonSendData(){
     let FinalValWithdrawl = (this.FirstTimeWithDrawTotal - this.CalculatedClosingBalnce).toFixed(2);
     let FinalValdeposit = (this.FirstTimeDipositeTotal - this.DepositBalnce).toFixed(2);
 
-    this.AccountRecouncile.controls['UnWith'].setValue(FinalValWithdrawl);
-    this.AccountRecouncile.controls['UnDeposite'].setValue(FinalValdeposit);
+    this.AccountRecouncile.controls['UnWith'].setValue(FinalValdeposit);
+    this.AccountRecouncile.controls['UnDeposite'].setValue(FinalValWithdrawl);
+
+    // this.AccountRecouncile.controls['UnWith'].setValue(FinalValWithdrawl);
+    // this.AccountRecouncile.controls['UnDeposite'].setValue(FinalValdeposit);
   }
   LoadData(data) {
     this.AccountRecouncile.controls['calculatedClosingBalance'].setValue(0);

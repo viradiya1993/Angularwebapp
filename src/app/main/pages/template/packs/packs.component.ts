@@ -123,6 +123,7 @@ export class PacksComponent implements OnInit, AfterViewInit {
         this.storeDataarray = res.DATA.KITS;
         this.showData(this.storeDataarray, 0, null);
         this.dataSource.data = this.storeDataarray;
+        this.treeControl.expandAll();
         this.RowClick(res.DATA.KITS[0]);
         this.highlightedRows = 1;
       }

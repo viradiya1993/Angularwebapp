@@ -230,7 +230,6 @@ export class ReceiptDilogComponent implements OnInit {
         this.PrepareReceiptData = new MatTableDataSource(response.DATA.INVOICES)
         this.PrepareReceiptData.paginator = this.paginator;
         this.PrepareReceiptData.sort = this.sort;
-        this.checkCal(this.PrepareReceiptData.data, 'autoAllocation');
         this.isLoadingResults = false;
       } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);

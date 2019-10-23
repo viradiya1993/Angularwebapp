@@ -236,10 +236,9 @@ export class InvoiceDetailComponent implements OnInit {
   }
   TabingClick(val){
     console.log(val);
-    console.log("fjkdsjfd");
     if(val =='Time Entries'){
       this.tabingVal='Time Entries';
-    }else if(val== 'Receipts'){
+    }else if(val == 'Receipts'){
       this.tabingVal='Receipts';
     }else{
       this.tabingVal='InterChange';

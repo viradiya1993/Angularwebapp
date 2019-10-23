@@ -159,7 +159,8 @@ export class ChartAccountComponent implements OnInit,AfterViewInit {
     this.loadData(this.filterData)
   }
   ngAfterViewInit() {
-    this.treeControl.expandAll();
+    // this.treeControl.expandAll();
+    this.tree.treeControl.expandAll();
   }
 
   FilterSearch(val) {

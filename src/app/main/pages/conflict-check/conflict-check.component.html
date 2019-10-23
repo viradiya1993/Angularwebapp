@@ -6,19 +6,19 @@
                     <!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"> -->
                     <mat-form-field fxFlex="16" class="example" appearance="outline">
                         <mat-label>Name To Check</mat-label>
-                        <input (keyup)="nameClick()" [(ngModel)]="ConflictNGData.NameToCheck" name="NameToCheck" matInput >
+                        <input (keyup)="nameClick()" [(ngModel)]="ConflictNGData.NameToCheck" name="NameToCheck" matInput>
                     </mat-form-field>
-                    
+
                     <!-- <mat-form-field fxFlex="16" class="example" appearance="outline">
                             <mat-label>Filter</mat-label>
                             <input [(ngModel)]="ConflictNGData.Search" name="Search" (keyup.enter)="onSearch($event)" matInput >
                         </mat-form-field> -->
 
-                        <mat-checkbox disabled checked='true' class="check_top" fxFlex="16" >Check Matter/Contact  </mat-checkbox>
-                        <mat-checkbox (change)="CheckWPI()" [(ngModel)]="ConflictNGData.CheckWIP" name="CheckWIP" class="check_top" fxFlex="16">Check WIP </mat-checkbox>
-                        <mat-checkbox (change)="CheckFileNote()" [(ngModel)]="ConflictNGData.CheckFilesNotes" name="CheckFilesNotes" class="check_top" fxFlex="16">Check File Notes </mat-checkbox>
-                        <mat-checkbox (change)="CheckChronology()" [(ngModel)]="ConflictNGData.CheckChronologies" name="CheckChronologies" class="check_top" fxFlex="16">Check Chronology </mat-checkbox> 
-                   
+                    <mat-checkbox disabled checked='true' class="check_top" fxFlex="16">Check Matter/Contact </mat-checkbox>
+                    <mat-checkbox (change)="CheckWPI()" [(ngModel)]="ConflictNGData.CheckWIP" name="CheckWIP" class="check_top" fxFlex="16">Check WIP </mat-checkbox>
+                    <mat-checkbox (change)="CheckFileNote()" [(ngModel)]="ConflictNGData.CheckFilesNotes" name="CheckFilesNotes" class="check_top" fxFlex="16">Check File Notes </mat-checkbox>
+                    <mat-checkbox (change)="CheckChronology()" [(ngModel)]="ConflictNGData.CheckChronologies" name="CheckChronologies" class="check_top" fxFlex="16">Check Chronology </mat-checkbox>
+
                     <button mat-raised-button color="primary" type="button" id="refreshConflict" (click)="refreshConflict();">Refresh</button>
                 </form>
             </div>
@@ -33,66 +33,58 @@
                         <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                     </div>
                     <div class="example-containerdata">
-                        <table  mat-table [dataSource]="ConflictData" matSort [@animateStagger]="{value:'50'}">
-                            
+                        <table mat-table [dataSource]="ConflictData" matSort [@animateStagger]="{value:'50'}">
+
                             <ng-container matColumnDef="CHRONOLOGYCONFLICT">
                                 <th mat-header-cell *matHeaderCellDef>Chronology Conflict </th>
                                 <td mat-cell *matCellDef="let element"> {{element.CHRONOLOGYCONFLICT}} </td>
-                              </ng-container>
-                              <ng-container matColumnDef="COMPLETEDDATE">
+                            </ng-container>
+                            <ng-container matColumnDef="COMPLETEDDATE">
                                 <th mat-header-cell *matHeaderCellDef> Completed Date </th>
                                 <td mat-cell *matCellDef="let element"> {{element.COMPLETEDDATE}} </td>
-                              </ng-container>
-                              <ng-container matColumnDef="CONTACTCONFLICT">
+                            </ng-container>
+                            <ng-container matColumnDef="CONTACTCONFLICT">
                                 <th mat-header-cell *matHeaderCellDef> Contact Conflict </th>
                                 <td mat-cell *matCellDef="let element"> {{element.CONTACTCONFLICT}} </td>
-                              </ng-container>
-                              <ng-container matColumnDef="DATE">
+                            </ng-container>
+                            <ng-container matColumnDef="DATE">
                                 <th mat-header-cell *matHeaderCellDef> Date </th>
                                 <td mat-cell *matCellDef="let element"> {{element.DATE}} </td>
-                              </ng-container>
-                              <ng-container matColumnDef="DETAILS">
+                            </ng-container>
+                            <ng-container matColumnDef="DETAILS">
                                 <th mat-header-cell *matHeaderCellDef> Details </th>
                                 <td mat-cell *matCellDef="let element"> {{element.DETAILS}} </td>
-                              </ng-container>
-                              <ng-container matColumnDef="FILENOTECONFLICT">
+                            </ng-container>
+                            <ng-container matColumnDef="FILENOTECONFLICT">
                                 <th mat-header-cell *matHeaderCellDef> Filenote Conflict </th>
                                 <td mat-cell *matCellDef="let element"> {{element.FILENOTECONFLICT}} </td>
-                              </ng-container>
-                              <ng-container matColumnDef="MATDESCCONFLICT">
+                            </ng-container>
+                            <ng-container matColumnDef="MATDESCCONFLICT">
                                 <th mat-header-cell *matHeaderCellDef> Matdesc Conflict </th>
                                 <td mat-cell *matCellDef="let element"> {{element.MATDESCCONFLICT}} </td>
-                              </ng-container>
-                              <ng-container matColumnDef="MATTER">
+                            </ng-container>
+                            <ng-container matColumnDef="MATTER">
                                 <th mat-header-cell *matHeaderCellDef> Matter </th>
                                 <td mat-cell *matCellDef="let element"> {{element.MATTER}} </td>
-                              </ng-container>
-                              <ng-container matColumnDef="MATTERGUID">
-                                <th mat-header-cell *matHeaderCellDef> Matter guid </th>
-                                <td mat-cell *matCellDef="let element"> {{element.MATTERGUID}} </td>
-                              </ng-container>
-                              <ng-container matColumnDef="RESULTID">
-                                <th mat-header-cell *matHeaderCellDef>Result Id </th>
-                                <td mat-cell *matCellDef="let element"> {{element.RESULTID}} </td>
-                              </ng-container>
-                              <ng-container matColumnDef="SHORTNAME">
+                            </ng-container>
+                            <ng-container matColumnDef="SHORTNAME">
                                 <th mat-header-cell *matHeaderCellDef> Short Name </th>
                                 <td mat-cell *matCellDef="let element"> {{element.SHORTNAME}} </td>
-                              </ng-container>
-                              <ng-container matColumnDef="WIPCONFLICT">
+                            </ng-container>
+                            <ng-container matColumnDef="WIPCONFLICT">
                                 <th mat-header-cell *matHeaderCellDef> Wip Conflict </th>
                                 <td mat-cell *matCellDef="let element"> {{element.WIPCONFLICT}} </td>
-                              </ng-container>
+                            </ng-container>
 
-                              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                             <tr [style.background]="highlightedRows == row.MATTERGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.MATTERGUID ? 'row-text-colore' : ''" highlightedRows=row.MATTERGUID mat-row *matRowDef="let row; columns: displayedColumns;" (click)="RowClick(row);highlightedRows = row.MATTERGUID "
                                 matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                             </tr>
                         </table>
                     </div>
-                  
+
                 </div>
-                  <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
+                <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
             </div>
         </div>
     </div>

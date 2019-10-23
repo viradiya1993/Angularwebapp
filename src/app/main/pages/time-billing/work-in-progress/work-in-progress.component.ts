@@ -36,10 +36,12 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
     this.lastFilter = JSON.parse(localStorage.getItem('Work_in_progress_filter'));
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.isShowDrop = currentUser.ProductType == "Barrister" ? false : true;
-    this.TimeEnrtyForm = this.fb.group({ date: [''], uninvoicedWork: [''], dlpdrop: [''], });
+    this.TimeEnrtyForm = this.fb.group({ date: [''], uninvoicedWork: ['No'], dlpdrop: [''], });
 
     if (this.lastFilter) {
-      this.TimeEnrtyForm.controls['uninvoicedWork'].setValue(this.lastFilter.Invoiced);
+      this.TimeEnrtyForm.controls['uninvoicedWork'].setValue('No');
+      this.lastFilter.Invoiced = 'No';
+      // this.TimeEnrtyForm.controls['uninvoicedWork'].setValue(this.lastFilter.Invoiced);
       this.TimeEnrtyForm.controls['dlpdrop'].setValue(this.lastFilter.FeeEarner);
 
       let Date1 = this.lastFilter.ItemDateStart.split("/");
@@ -48,9 +50,9 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
       let Date2 = this.lastFilter.ItemDateEnd.split("/");
       let SendDate2 = new Date(Date2[1] + '/' + Date2[0] + '/' + Date2[2]);
       this.TimeEnrtyForm.controls['date'].setValue({ begin: SendDate1, end: SendDate2 });
-
     } else {
-      this.lastFilter = { 'MatterGuid': this.currentMatter.MATTERGUID, 'FeeEarner': '', 'Invoiced': "", 'ItemDateStart': '', 'ItemDateEnd': '' };
+      this.TimeEnrtyForm.controls['uninvoicedWork'].setValue('No');
+      this.lastFilter = { 'MatterGuid': this.currentMatter.MATTERGUID, 'FeeEarner': '', 'Invoiced': "No", 'ItemDateStart': '', 'ItemDateEnd': '' };
       localStorage.setItem('Work_in_progress_filter', JSON.stringify(this.lastFilter));
     }
 

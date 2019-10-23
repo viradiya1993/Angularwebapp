@@ -74,12 +74,12 @@ export class ReceiptDilogComponent implements OnInit {
     this.isEdit = this._data.action == 'edit' || this._data.action == 'view' ? true : false;
 
     this.behaviorService.dialogClose$.subscribe(result => {
-      if(result != null){
-        if(result.MESSAGE == 'Not logged in'){
+      if (result != null) {
+        if (result.MESSAGE == 'Not logged in') {
           this.dialogRef.close(false);
         }
       }
-     });
+    });
   }
 
 
@@ -111,7 +111,7 @@ export class ReceiptDilogComponent implements OnInit {
       allocatedSelected: ['']
     });
     // this.PrepareReceiptForm.controls['DatePaid'].disable();
- 
+
     let INCOMEDATEVAL = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
     this.PrepareReceiptForm.controls['INCOMEDATE'].setValue(INCOMEDATEVAL);
     this.isShowchecked = "false";
@@ -124,7 +124,7 @@ export class ReceiptDilogComponent implements OnInit {
       else if (this._data.action == 'edit' || this._data.action == 'view')
         this.setInvoiceForReceipt(this.receiptData.INCOMEGUID);
     } else if (this._data.action == 'add') {
-      
+
       this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: false, Data: {} }, 'SetIncome').subscribe(response => {
         this.PrepareReceiptForm.controls['BANKACCOUNTGUIDTEXT'].setValue(response.DATA.DEFAULTVALUES.BANKACCOUNTNUMBER);
         this.PrepareReceiptForm.controls['BANKACCOUNTGUID'].setValue(response.DATA.DEFAULTVALUES.BANKACCOUNTGUID);
@@ -137,9 +137,7 @@ export class ReceiptDilogComponent implements OnInit {
       this.ShowData.push({ id: 1, text: 'Show unpaid invoices for matter : ' + this.matterData.SHORTNAME });
       this.ShowData.push({ id: 2, text: 'Show unpaid invoices for client : ' + this.matterData.CONTACTNAME });
       this.ShowData.push({ id: 3, text: 'Show all unpaid invoices' });
-      this.GetInvoiceForReceipt({ CONTACTGUID: this.matterData.CONTACTGUID });
-
-     
+      this.GetInvoiceForReceipt({ MATTERGUID: this.matterData.MATTERGUID, 'Outstanding': 'Yes' });
     }
     this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: false, Data: {} }, 'SetIncome').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
@@ -252,15 +250,14 @@ export class ReceiptDilogComponent implements OnInit {
   }
   onChangeShow(val) {
     this.InvoiceTypeCheck = val;
-    console.log(val);
     let data = {};
     if (val == 3) {
       this.AllocationBtn = "clear"
       data = { 'Outstanding': 'Yes' };
     } else if (val == 1) {
-      data = { MATTERGUID: this.matterData.MATTERGUID };
+      data = { MATTERGUID: this.matterData.MATTERGUID, 'Outstanding': 'Yes' };
     } else if (val == 2) {
-      data = { CONTACTGUID: this.matterData.CONTACTGUID };
+      data = { CONTACTGUID: this.matterData.CONTACTGUID, 'Outstanding': 'Yes' };
     }
     this.GetInvoiceForReceipt(data);
   }
@@ -343,7 +340,7 @@ export class ReceiptDilogComponent implements OnInit {
     }
   }
   clickAutoAllocation() {
-    if(this.InvoiceTypeCheck != 3){
+    if (this.InvoiceTypeCheck != 3) {
       this.AllocationBtn = 'auto';
       if (this.f.AMOUNT.value > this.TotalInvoice) {
         let val = this.f.AMOUNT.value - this.TotalInvoice;
@@ -356,7 +353,7 @@ export class ReceiptDilogComponent implements OnInit {
 
   }
   clickClearAllocation() {
-    if(this.InvoiceTypeCheck != 3){
+    if (this.InvoiceTypeCheck != 3) {
       this.AllocationBtn = 'clear';
       this.PrepareReceiptForm.controls['Unallocated'].setValue(this.f.AMOUNT.value);
       this.checkCal(this.PrepareReceiptData.data, 'clearAllocation');

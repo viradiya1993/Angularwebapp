@@ -21,8 +21,8 @@ export class ConflictCheckComponent implements OnInit {
   ColumnsObj: any = [];
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   isLoadingResults: boolean = false;
-  displayedColumns: string[] = ['CHRONOLOGYCONFLICT', 'COMPLETEDDATE', 'CONTACTCONFLICT', 'DATE', 'DETAILS', 'FILENOTECONFLICT',
-    'MATDESCCONFLICT', 'MATTER', 'MATTERGUID', 'RESULTID', 'SHORTNAME', 'WIPCONFLICT'];
+  displayedColumns: string[] = ['MATTER', 'SHORTNAME', 'CHRONOLOGYCONFLICT', 'COMPLETEDDATE', 'CONTACTCONFLICT', 'DATE', 'DETAILS', 'FILENOTECONFLICT',
+    'MATDESCCONFLICT', 'WIPCONFLICT'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   highlightedRows: any;
@@ -73,7 +73,7 @@ export class ConflictCheckComponent implements OnInit {
     });
     this.pageSize = localStorage.getItem('lastPageSize');
   }
-  
+
   RowClick(val) {
     localStorage.setItem('set_active_matters', JSON.stringify({ MATTERGUID: val.MATTERGUID, SHORTNAME: val.SHORTNAME }))
     // let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
@@ -106,7 +106,7 @@ export class ConflictCheckComponent implements OnInit {
     this.LoadData(this.StartbtnSendData);
   }
   onSearch(searchFilter: any) {
-    this.LoadData({Search: this.ConflictNGData.Search });
+    this.LoadData({ Search: this.ConflictNGData.Search });
 
   }
 }

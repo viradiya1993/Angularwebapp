@@ -1,5 +1,5 @@
 import { fuseAnimations } from '@fuse/animations';
-import { Component, OnInit, ViewEncapsulation, ViewChild, Injectable, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, Injectable } from '@angular/core';
 import { MatPaginator, MatDialog } from '@angular/material';
 import * as $ from 'jquery';
 import { FlatTreeControl } from '@angular/cdk/tree';
@@ -36,7 +36,7 @@ interface ExampleFlatNode {
   animations: fuseAnimations,
   encapsulation: ViewEncapsulation.None,
 })
-export class ChartAccountComponent implements OnInit,AfterViewInit {
+export class ChartAccountComponent implements OnInit{
   @ViewChild('tree') tree;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   theme_type = localStorage.getItem('theme_type');
@@ -65,7 +65,6 @@ export class ChartAccountComponent implements OnInit,AfterViewInit {
   }
 
   treeControl: FlatTreeControl<ExampleFlatNode>;
-  // treeControl = new FlatTreeControl<ExampleFlatNode>(node => node.level, node => node.expandable);
   treeFlattener: MatTreeFlattener<FoodNode, ExampleFlatNode>;
   dataSource: MatTreeFlatDataSource<FoodNode, ExampleFlatNode>;
   
@@ -111,8 +110,7 @@ export class ChartAccountComponent implements OnInit,AfterViewInit {
         }
         this.showData(this.storeDataarray, 0, null);
         this.dataSource.data = this.storeDataarray;
-        // this.treeControl.dataNodes = this.storeDataarray;
-        // this.tree.treeControl.expandAll();
+        this.treeControl.expandAll();
         if (response.DATA.ACCOUNTS[0].SUBACCOUNTS)
           this.RowClick(response.DATA.ACCOUNTS[0].SUBACCOUNTS[0]);
         this.highlightedRows = 1;
@@ -160,7 +158,7 @@ export class ChartAccountComponent implements OnInit,AfterViewInit {
   }
   ngAfterViewInit() {
     // this.treeControl.expandAll();
-    this.tree.treeControl.expandAll();
+    // this.tree.treeControl.expandAll();
   }
 
   FilterSearch(val) {

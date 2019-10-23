@@ -127,3 +127,21 @@ th.mat-sort-header-sorted {
 button#refreshChartACCTab{
     display: none;
 }
+
+.mat-tree-node span {
+    /* float: left; */
+    text-align: left;
+    width: 40%;
+}
+.mat-tree-node.top_row_span span {
+    width: auto;
+}
+
+.chart_tbl_head th:first-child {
+    width: 40%;
+    text-align: left;
+}
+.chart_tbl_head th:last-child {
+    width: 55%;
+    text-align: left;
+}

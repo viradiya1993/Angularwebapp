@@ -1763,8 +1763,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    deleteReceiceMoanyForTimeBilling() {
-    }
     createReceipt() {
         const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
@@ -1870,6 +1868,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 this._mainAPiServiceService.getSetData(postData, 'SetIncome').subscribe(res => {
                     if (res.STATUS == "success" && res.CODE == 200) {
                         $('#refreshReceiceMoany').click();
+                        $('#refresheReceiptsTab').click();
                         this.toastr.success('Delete successfully');
                     }
                 });

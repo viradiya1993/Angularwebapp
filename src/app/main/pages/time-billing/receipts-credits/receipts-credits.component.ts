@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-import {  TableColumnsService, MainAPiServiceService, BehaviorService } from '../../../../_services';
+import { TableColumnsService, MainAPiServiceService, BehaviorService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material';
 
 
 
@@ -32,7 +32,7 @@ export class ReceiptsCreditsComponent implements OnInit {
   constructor(private dialog: MatDialog,
     private _mainAPiServiceService: MainAPiServiceService,
     private TableColumnsService: TableColumnsService,
-    private toastr: ToastrService,public behaviorService: BehaviorService,) { }
+    private toastr: ToastrService, public behaviorService: BehaviorService, ) { }
 
   ReceiptsCreditsdata;
   ngOnInit() {
@@ -86,7 +86,6 @@ export class ReceiptsCreditsComponent implements OnInit {
   selectId(row: any) {
     this.currentData = row;
     this.behaviorService.ReceiptData(row);
-    // let receiData = JSON.parse(localStorage.getItem('receiptData'));
     localStorage.setItem('receiptData', JSON.stringify(row));
     localStorage.setItem('TBreceiptData', JSON.stringify(row));
   }

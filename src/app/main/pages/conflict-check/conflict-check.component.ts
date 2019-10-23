@@ -21,8 +21,8 @@ export class ConflictCheckComponent implements OnInit {
   ColumnsObj: any = [];
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   isLoadingResults: boolean = false;
-  displayedColumns: string[] = ['MATTER', 'SHORTNAME', 'CHRONOLOGYCONFLICT', 'COMPLETEDDATE', 'CONTACTCONFLICT', 'DATE', 'DETAILS', 'FILENOTECONFLICT',
-    'MATDESCCONFLICT', 'WIPCONFLICT'];
+  displayedColumns: string[] = ['MATTER', 'SHORTNAME', 'DATE', 'COMPLETEDDATE',
+    'MATDESCCONFLICT', 'CONTACTCONFLICT', 'WIPCONFLICT', 'FILENOTECONFLICT', 'CHRONOLOGYCONFLICT', 'DETAILS'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   highlightedRows: any;

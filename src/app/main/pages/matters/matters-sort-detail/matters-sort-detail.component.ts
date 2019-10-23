@@ -1,9 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
-import * as $ from 'jquery';
 import { ToastrService } from 'ngx-toastr';
-import { isValid } from 'date-fns';
 import { TimersService } from '../../../../_services'
 import { MatterPopupComponent } from '../matter-popup/matter-popup.component';
 import { MatDialogConfig, MatDialog } from '@angular/material';
@@ -22,16 +20,12 @@ export class MattersSortDetailComponent implements OnInit {
   contectTitle = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   prevMatterArray: any[] = [];
   constructor(
-    private _fuseSidebarService: FuseSidebarService,
-    private toastr: ToastrService,
     private TimersServiceI: TimersService,
     public dialog: MatDialog,
 
   ) { }
 
-  ngOnInit() { 
-
-    console.log(this.mattersDetailData);
+  ngOnInit() {
   }
 
   closeDetail(event) {
@@ -41,7 +35,6 @@ export class MattersSortDetailComponent implements OnInit {
     this.TimersServiceI.addTimeEnrtS('');
   }
   AddNewmatterpopup() {
-    const dialogConfig = new MatDialogConfig();
     let mattersData = JSON.parse(localStorage.getItem('set_active_matters'));
     const dialogRef = this.dialog.open(MatterPopupComponent, {
       width: '100%',

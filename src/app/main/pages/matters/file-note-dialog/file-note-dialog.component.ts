@@ -43,13 +43,6 @@ export class FileNoteDialogComponent implements OnInit {
         this.FileNoteData = result;
       }
     });
-    // if(this.action === 'new'){
-    //   this.dialogTitle = 'Add Spend Money ';
-    // }else if(this.action === 'edit'){
-    //   this.dialogTitle = 'Update Spend Money';
-    // }else{
-    //   this.dialogTitle = 'Duplicate Spend Money';
-    // }
   }
   ngOnInit() {
     this.NewFileNote = this._formBuilder.group({
@@ -60,7 +53,7 @@ export class FileNoteDialogComponent implements OnInit {
       comment: ['']
     });
 
-    let matterGuid = JSON.parse(localStorage.getItem('set_active_matters'));
+    let matterGuid = JSON.parse(localStorage.getItem('set_active_matters'));    
     this.ShortName = matterGuid.SHORTNAME;
     if (this.action != 'new') {
       this.EditPopUpOPen();
@@ -92,8 +85,8 @@ export class FileNoteDialogComponent implements OnInit {
     });
   }
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.beginDate = this.datepipe.transform(event.value, 'dd/MM/yyyy');
-    this.NewFileNote.controls['newfiledate2'].setValue(new Date(), 'dd/MM/yyyy');
+   this.beginDate = this.datepipe.transform(event.value, 'dd/MM/yyyy');
+   this.NewFileNote.controls['newfiledate2'].setValue(new Date(), 'dd/MM/yyyy');
   }
   get f() {
     return this.NewFileNote.controls;
@@ -107,7 +100,7 @@ export class FileNoteDialogComponent implements OnInit {
       this.FormAction = "update";
       this.FileGUID = this.FileNoteData.FILENOTEGUID;
     }
-    let matterGuid = JSON.parse(localStorage.getItem('set_active_matters'));
+    let matterGuid = JSON.parse(localStorage.getItem('set_active_matters'));  
     let passdata = {
       FILENOTEGUID: this.FileGUID,
       MATTERGUID: matterGuid.MATTERGUID,
@@ -118,9 +111,7 @@ export class FileNoteDialogComponent implements OnInit {
     }
     this.setValue(passdata);
   }
-  setValue(passdata) {
-
-
+  setValue(passdata) {   
     this.isspiner = true;
     // let finalPassdata=
     let finalPassdata: any = { FormAction: this.FormAction, VALIDATEONLY: true, DATA: passdata };

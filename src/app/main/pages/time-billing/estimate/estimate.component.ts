@@ -48,6 +48,7 @@ export class EstimateComponent implements OnInit {
     this._mainAPiServiceService.getSetData(potData, 'GetMatterEstimateItem').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         if (res.DATA.ESTIMATEITEMS[0]) {
+          this.isDisplay = false;
           this.RowClick(res.DATA.ESTIMATEITEMS[0]);
         } else {
           this.isDisplay = true;

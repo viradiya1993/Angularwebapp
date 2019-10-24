@@ -85,6 +85,7 @@ export class ReceiveMoneyComponent implements OnInit {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.totalAountData = { TOTALINCGST: response.DATA.TOTALINCGST, TOTALEXGST: response.DATA.TOTALEXGST };
         if (response.DATA.INCOMEITEMS[0]) {
+          this.isDisplay = false;
           this.behaviorService.ReceiptData(response.DATA.INCOMEITEMS[0]);
           localStorage.setItem('receiptData', JSON.stringify(response.DATA.INCOMEITEMS[0]));
           this.highlightedRows = response.DATA.INCOMEITEMS[0].INCOMEGUID;

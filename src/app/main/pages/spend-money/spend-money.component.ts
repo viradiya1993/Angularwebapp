@@ -159,6 +159,7 @@ export class SpendMoneyComponent implements OnInit {
         this.Spendmoneydata.paginator = this.paginator;
         this.Spendmoneydata.sort = this.sort;
         if (response.DATA.EXPENDITURES[0]) {
+          this.isDisplay = false;
           this.behaviorService.SpendMoneyData(response.DATA.EXPENDITURES[0]);
           this.highlightedRows = response.DATA.EXPENDITURES[0].EXPENDITUREGUID;
           this.currentMatterData = response.DATA.EXPENDITURES[0].EXPENDITUREGUID;

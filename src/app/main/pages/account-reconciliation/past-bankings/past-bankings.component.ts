@@ -74,6 +74,7 @@ export class PastBankingsComponent implements OnInit {
         this.bankingPastData.paginator = this.paginator;
         this.bankingPastData.sort = this.sort;
         if (response.DATA.BANKINGS[0]) {
+          this.isDisplay = false;
           localStorage.setItem('BANKINGGUID', response.DATA.BANKINGS[0].BANKINGGUID);
           this.highlightedRows = response.DATA.BANKINGS[0].BANKINGGUID;
         }else {

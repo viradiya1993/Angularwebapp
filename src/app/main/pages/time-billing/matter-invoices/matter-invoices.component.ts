@@ -58,9 +58,10 @@ export class MatterInvoicesComponent implements OnInit {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.MatterinvoiceData = { invoicetotal: res.DATA.TOTALINVOICES, recevived: res.DATA.TOTALRECEIVED, outstanding: res.DATA.TOTALOUSTANDING };
         this.behaviorService.matterInvoiceData(null);
-        if (res.DATA.INVOICES[0])
+        if (res.DATA.INVOICES[0]){
+          this.isDisplay = false;
           this.editmatterInvoive(res.DATA.INVOICES[0]);
-        else {
+        }else {
           this.isDisplay = true;
         }          
         this.MatterInvoicesdata = new MatTableDataSource(res.DATA.INVOICES);

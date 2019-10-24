@@ -91,6 +91,7 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
     this._mainAPiServiceService.getSetData(potData, 'GetWorkItems').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         if (res.DATA.WORKITEMS[0]) {
+          this.isDisplay = false;
           this.editworkInProgress(res.DATA.WORKITEMS[0]);
         } else {
           this.isDisplay = true;
@@ -136,8 +137,6 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
     }
     this.loadData(filterVal);
   }
-
-
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
     let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');

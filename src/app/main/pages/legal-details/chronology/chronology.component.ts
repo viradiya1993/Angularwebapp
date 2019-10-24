@@ -76,9 +76,9 @@ export class ChronologyComponent implements OnInit {
         this.chronology_table.paginator = this.paginator;
         this.chronology_table.sort = this.sort;
         if (response.DATA.CHRONOLOGIES[0]) {
+          this.isDisplay = false;
           this.RowClick(response.DATA.CHRONOLOGIES[0])
           this.highlightedRows = response.DATA.CHRONOLOGIES[0].CHRONOLOGYGUID;
-
         } else {
           this.isDisplay = true;
         }

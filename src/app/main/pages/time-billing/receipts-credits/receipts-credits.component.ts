@@ -49,6 +49,7 @@ export class ReceiptsCreditsComponent implements OnInit {
     this._mainAPiServiceService.getSetData(potData, 'GetMatterReceipts').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         if (res.DATA.RECEIPTS[0]) {
+          this.isDisplay = false;
           this.selectId(res.DATA.RECEIPTS[0]);
         } else {
           this.isDisplay = true;

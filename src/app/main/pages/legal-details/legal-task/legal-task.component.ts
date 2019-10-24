@@ -91,6 +91,7 @@ export class legalDetailTaskComponent implements OnInit {
         this.Task_table.paginator = this.paginator;
         this.Task_table.sort = this.sort;
         if (response.DATA.TASKS[0]) {
+          this.isDisplay = false;
           this.behaviorService.TaskData(response.DATA.TASKS[0]);
           this.highlightedRows = response.DATA.TASKS[0].TASKGUID;
           //this.highlightedRows = response.DATA.TASKS[0].TASKGUID;

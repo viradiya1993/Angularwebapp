@@ -63,6 +63,7 @@ export class PastReconciliationComponent implements OnInit {
         this.PastRECData.sort = this.sort;
         if (response.DATA.RECONCILIATIONS[0]) {
           // localStorage.setItem('BANKINGGUID', response.DATA.BANKINGS[0].BANKINGGUID);
+          this.isDisplay = false;
           this.highlightedRows = response.DATA.RECONCILIATIONS[0].RECONCILIATIONGUID;
         } else {
           this.isDisplay = true;

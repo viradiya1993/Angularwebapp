@@ -86,6 +86,7 @@ export class UsersComponent implements OnInit {
     this._mainAPiServiceService.getSetData(filterData, 'GetUsers').subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (response.DATA.USERS[0]) {
+          this.isDisplay = false;
           this.highlightedRows = response.DATA.USERS[0].USERGUID;
           this.currentUserData = response.DATA.USERS[0];
           localStorage.setItem('current_user_Data', JSON.stringify(response.DATA.USERS[0]));

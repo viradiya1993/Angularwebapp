@@ -96,6 +96,7 @@ console.log(_data);
         this.dataSource.data = this.storeDataarray;
         this.treeControl.expandAll();
         if (this.storeDataarray[0]) {
+          this.isDisplay = false;
           this.RowClick(this.storeDataarray[0]);
         }else{
           this.isDisplay = true;

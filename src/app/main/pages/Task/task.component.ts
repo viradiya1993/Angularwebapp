@@ -127,6 +127,7 @@ export class TaskComponent implements OnInit {
       this.TaskAllData.paginator = this.paginator;
       if (res.CODE == 200 && res.STATUS == "success") {
         if (res.DATA.TASKS[0]) {
+          this.isDisplay = false;
           this.RowClick(res.DATA.TASKS[0])
           // this.behaviorService.TaskData(res.DATA.TASKS[0]);
           this.highlightedRows = res.DATA.TASKS[0].TASKGUID;

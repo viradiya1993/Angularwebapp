@@ -109,6 +109,7 @@ export class GeneralJournalComponent implements OnInit {
         });
         this.generalJournalData = new MatTableDataSource(tempJData);
         if (tempJData[0]) {
+          this.isDisplay = false;
           this.editjournal(tempJData[0]);
           this.highlightedRows = tempJData[0].JOURNALGUID;
         }else {

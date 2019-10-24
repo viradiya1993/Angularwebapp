@@ -329,6 +329,10 @@ export class ReceiptDilogComponent implements OnInit {
     }else{
       this.PrepareReceiptForm.controls['allocatedSelected'].setValue(0);
     }
+    if((Number(this.f.allocatedSelected.value) != 0)){
+      let val=this.PrepareReceiptData.data[this.INDEX].AMOUNTOUTSTANDINGINCGST- (Number(this.f.allocatedSelected.value));
+        this.PrepareReceiptForm.controls['Unallocated'].setValue(Number(this.f.Unallocated.value) + Number(val))
+    }
    
   }
   // getClosetInvoiceForAllocation() {

@@ -410,9 +410,10 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['MatterGUID'].setValue('');
       this.spendmoneyForm.controls['Matter'].disable();
       this.spendmoneyForm.controls['GSTType'].disable();
+      this.GstTypeforSelect('No GST');
       let tempError: any = this.errorWarningData.Error;
       if(tempError !=undefined){  delete tempError['SHORTNAME']; }
-    } else if (Classvalue === 'Others') {
+    } else if (Classvalue === 'Other') {
       this.hide = true;
       this.expac = false;
       $("#mattersnew").addClass("menu-disabled");

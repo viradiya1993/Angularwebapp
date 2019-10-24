@@ -25,6 +25,7 @@ export class EstimateComponent implements OnInit {
   isLoadingResults: boolean = false;
   ColumnsObj: any = [];
   highlightedRows: any;
+  isDisplay: boolean = false;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   constructor(private TableColumnsService: TableColumnsService,
@@ -46,6 +47,11 @@ export class EstimateComponent implements OnInit {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(potData, 'GetMatterEstimateItem').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
+        if (res.DATA.ESTIMATEITEMS[0]) {
+          this.RowClick(res.DATA.ESTIMATEITEMS[0]);
+        } else {
+          this.isDisplay = true;
+        }
         this.Estimatedata = new MatTableDataSource(res.DATA.ESTIMATEITEMS)
         this.Estimatedata.paginator = this.paginator
         this.Estimatedata.sort = this.sort;
@@ -90,6 +96,7 @@ export class EstimateComponent implements OnInit {
           this.Estimatedata = new MatTableDataSource([]);
           this.Estimatedata.paginator = this.paginator;
           this.Estimatedata.sort = this.sort;
+          this.isDisplay = true;
         } else {
           this.loadData();
         }

@@ -15,6 +15,7 @@ export class EndOfMonthHistroyComponent implements OnInit {
   @Input() SettingForm: FormGroup;
   @Input() errorWarningData: any;
   addData:any=[];
+  isDisplay: boolean = false;
   constructor(private _mainAPiServiceService:MainAPiServiceService) { }
 
   ngOnInit() {

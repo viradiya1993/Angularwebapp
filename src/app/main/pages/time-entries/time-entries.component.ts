@@ -47,6 +47,7 @@ export class TimeEntriesComponent implements OnInit {
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   tempColobj: any;
   isspiner: boolean = false;
+  isDisplay: boolean = false;
   calculateData: any = { MatterGuid: '', QuantityType: '', Quantity: '', FeeEarner: '', FeeType: '' };
   constructor(
     private dialog: MatDialog,
@@ -352,6 +353,8 @@ export class TimeEntriesComponent implements OnInit {
           this.behaviorService.MainTimeEntryData(response.DATA.WORKITEMS[0]);
           this.highlightedRows = response.DATA.WORKITEMS[0].WORKITEMGUID;
           localStorage.setItem('edit_WORKITEMGUID', this.highlightedRows);
+        }else {
+          this.isDisplay = true;
         }
         try {
           this.TimerData = new MatTableDataSource(response.DATA.WORKITEMS);
@@ -426,6 +429,7 @@ export class TimeEntriesComponent implements OnInit {
           this.TimerData = new MatTableDataSource([]);
           this.TimerData.paginator = this.paginator;
           this.TimerData.sort = this.sort;
+          this.isDisplay = true;
         } else {
           this.LoadData(JSON.parse(localStorage.getItem('time_entries_filter')));
         }

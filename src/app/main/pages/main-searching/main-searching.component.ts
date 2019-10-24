@@ -23,6 +23,8 @@ export class MainSearchingComponent implements OnInit {
   isLoadingResults: boolean = false;
   addData: any = [];
   highlightedRows: any;
+  theme_type = localStorage.getItem('theme_type');
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   MainSearchingData: any = [];
   ColumnsObj = [];
   pageSize: any;
@@ -30,6 +32,7 @@ export class MainSearchingComponent implements OnInit {
   tempColobj: any;
   filterData: { 'MATTERGUID': any, 'STATUS': any; 'Search': string; 'OrderedDateFrom': any; 'OrderedDateTo': any, "Matter": any };
   ImgDisAb: string;
+  isDisplay: boolean = false;
   constructor(private dialog: MatDialog, private _formBuilder: FormBuilder,
     private _mainAPiServiceService: MainAPiServiceService, private TableColumnsService: TableColumnsService,
     private toastr: ToastrService, public datepipe: DatePipe, ) {
@@ -78,16 +81,17 @@ export class MainSearchingComponent implements OnInit {
     this.MainSearchingData = [];
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(data, 'GetCostRecovery').subscribe(res => {
-      this.MainSearchingData = new MatTableDataSource(res.DATA.TASKS);
-      this.MainSearchingData.sort = this.sort;
-      this.MainSearchingData.paginator = this.paginator;
+     
       if (res.CODE == 200 && res.STATUS == "success") {
-        // if (res.DATA.TASKS[0]) {
-        //   // this.behaviorService.TaskData(res.DATA.TASKS[0]);
-        // this.highlightedRows = res.DATA.TASKS[0].TASKGUID;
-        // } else {
-        //   // this.toastr.error("No Data Selected");
-        // }
+        if (res.DATA.TASKS[0]) {
+          // this.behaviorService.TaskData(res.DATA.TASKS[0]);
+         this.highlightedRows = res.DATA.TASKS[0].TASKGUID;
+        } else {
+          this.isDisplay = true;
+        }
+        this.MainSearchingData = new MatTableDataSource(res.DATA.TASKS);
+        this.MainSearchingData.sort = this.sort;
+        this.MainSearchingData.paginator = this.paginator;
         this.isLoadingResults = false;
       }
     }, err => {
@@ -197,5 +201,6 @@ export class MainSearchingComponent implements OnInit {
     localStorage.setItem('search_filter', JSON.stringify(this.filterData));
     this.LoadData(this.filterData);
   }
+  selectMatterId(){}
 
 }

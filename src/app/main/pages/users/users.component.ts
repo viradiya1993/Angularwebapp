@@ -30,6 +30,7 @@ export class UsersComponent implements OnInit {
   pageSize: any;
   Useralldata: any = [];
   lastFilter: any;
+  isDisplay: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -88,6 +89,8 @@ export class UsersComponent implements OnInit {
           this.highlightedRows = response.DATA.USERS[0].USERGUID;
           this.currentUserData = response.DATA.USERS[0];
           localStorage.setItem('current_user_Data', JSON.stringify(response.DATA.USERS[0]));
+        }else {
+          this.isDisplay = true;
         }
         this.Useralldata = new MatTableDataSource(response.DATA.USERS);
         this.Useralldata.paginator = this.paginator;
@@ -117,6 +120,7 @@ export class UsersComponent implements OnInit {
           this.Useralldata = new MatTableDataSource([]);
           this.Useralldata.paginator = this.paginator;
           this.Useralldata.sort = this.sort;
+          this.isDisplay = true;
         } else {
           this.loadData(this.lastFilter);
         }

@@ -42,7 +42,7 @@ export class SpendMoneyComponent implements OnInit {
   whichtypedate2: any;
   whichtypedate3: any;
   whichtypedate4: any;
-
+  isDisplay: boolean = false;
   constructor(
     private TableColumnsService: TableColumnsService,
     private _mainAPiServiceService: MainAPiServiceService,
@@ -163,7 +163,7 @@ export class SpendMoneyComponent implements OnInit {
           this.highlightedRows = response.DATA.EXPENDITURES[0].EXPENDITUREGUID;
           this.currentMatterData = response.DATA.EXPENDITURES[0].EXPENDITUREGUID;
         } else {
-          // this.toastr.error("No Data Selected");
+          this.isDisplay = true;
         }
       }
       this.isLoadingResults = false;
@@ -197,6 +197,7 @@ export class SpendMoneyComponent implements OnInit {
           this.Spendmoneydata = new MatTableDataSource([]);
           this.Spendmoneydata.paginator = this.paginator;
           this.Spendmoneydata.sort = this.sort;
+          this.isDisplay = true;
         } else {
           this.filterData = JSON.parse(localStorage.getItem("spendmoney_filter"));
           this.loadData(this.filterData);

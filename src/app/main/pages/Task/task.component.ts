@@ -37,6 +37,7 @@ export class TaskComponent implements OnInit {
   highlightedRows: any;
   ImgDisAb: string;
   val: any;
+  isDisplay: boolean = false;
   isGetUserEmpty: string;
   constructor(private _mainAPiServiceService: MainAPiServiceService, private dialog: MatDialog,
     private _formBuilder: FormBuilder, public behaviorService: BehaviorService,
@@ -130,7 +131,7 @@ export class TaskComponent implements OnInit {
           // this.behaviorService.TaskData(res.DATA.TASKS[0]);
           this.highlightedRows = res.DATA.TASKS[0].TASKGUID;
         } else {
-          // this.toastr.error("No Data Selected");
+          this.isDisplay = true;
         }
         this.isLoadingResults = false;
       }
@@ -212,6 +213,7 @@ export class TaskComponent implements OnInit {
           this.TaskAllData = new MatTableDataSource([]);
           this.TaskAllData.paginator = this.paginator;
           this.TaskAllData.sort = this.sort;
+          this.isDisplay = true;
         } else {
           this.filterData = JSON.parse(localStorage.getItem("task_filter"));
           this.LoadData(this.filterData);

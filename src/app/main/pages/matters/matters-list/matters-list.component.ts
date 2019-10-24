@@ -34,7 +34,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
   tempColobj: any;
   isLoadingResults: any = false;
   pageSize: any;
-
+  isDisplay: boolean = false;
   @Output() matterDetail: EventEmitter<any> = new EventEmitter<any>();
 
 
@@ -98,6 +98,7 @@ export class MattersListComponent implements OnInit, OnDestroy {
           this.mattersData = new MatTableDataSource([]);
           this.mattersData.paginator = this.paginator;
           this.mattersData.sort = this.sort;
+          this.isDisplay = true;
         } else {
           this.getMatterList(this.lastFilter);
         }
@@ -112,6 +113,8 @@ export class MattersListComponent implements OnInit, OnDestroy {
           this.behaviorService.MatterData(response.DATA.MATTERS[0]);
           this.highlightedRows = response.DATA.MATTERS[0].MATTERGUID;
           this.editmatter(response.DATA.MATTERS[0]);
+        }else {
+          this.isDisplay = true;
         }
         this.mattersData = new MatTableDataSource(response.DATA.MATTERS);
         this.mattersData.paginator = this.paginator;

@@ -28,6 +28,7 @@ export class MatterInvoicesComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   pageSize: any;
   isLoadingResults: boolean = false;
+  isDisplay: boolean = false;
   constructor(private dialog: MatDialog,
     private _mainAPiServiceService: MainAPiServiceService,
     private TableColumnsService: TableColumnsService,
@@ -59,6 +60,9 @@ export class MatterInvoicesComponent implements OnInit {
         this.behaviorService.matterInvoiceData(null);
         if (res.DATA.INVOICES[0])
           this.editmatterInvoive(res.DATA.INVOICES[0]);
+        else {
+          this.isDisplay = true;
+        }          
         this.MatterInvoicesdata = new MatTableDataSource(res.DATA.INVOICES);
         this.MatterInvoicesdata.paginator = this.paginator;
         this.MatterInvoicesdata.sort = this.sort;
@@ -98,6 +102,7 @@ export class MatterInvoicesComponent implements OnInit {
           this.MatterInvoicesdata = new MatTableDataSource([]);
           this.MatterInvoicesdata.paginator = this.paginator;
           this.MatterInvoicesdata.sort = this.sort;
+          this.isDisplay = true;
         } else {
           this.loadData();
         }

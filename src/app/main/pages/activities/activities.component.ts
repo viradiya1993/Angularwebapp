@@ -31,6 +31,7 @@ export class ActivitiesComponent implements OnInit {
   pageSize: any;
   Activitiesdata: any = [];
   lastFilter: any;
+  isDisplay: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -83,6 +84,8 @@ export class ActivitiesComponent implements OnInit {
           this.highlightedRows = response.DATA.ACTIVITIES[0].ACTIVITYGUID;
           this.Activitiesdata = response.DATA.ACTIVITIES[0];
           localStorage.setItem('current_ActivityData', JSON.stringify(response.DATA.ACTIVITIES[0]));
+        } else {
+          this.isDisplay = true;
         }
         this.Activitiesdata = new MatTableDataSource(response.DATA.ACTIVITIES);
         this.Activitiesdata.paginator = this.paginator;
@@ -116,6 +119,7 @@ export class ActivitiesComponent implements OnInit {
           this.Activitiesdata = new MatTableDataSource([]);
           this.Activitiesdata.paginator = this.paginator;
           this.Activitiesdata.sort = this.sort;
+          this.isDisplay = true;
         } else {
           this.loadData({ ACTIVITYTYPE: "" });
         }

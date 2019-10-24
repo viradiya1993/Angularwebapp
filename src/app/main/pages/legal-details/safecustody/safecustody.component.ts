@@ -30,6 +30,7 @@ export class SafecustodyComponent implements OnInit {
   pageSize: any;
   tempColobj: any;
   SafeCustody: FormGroup;
+  isDisplay: boolean = false;
   cuurentmatter = JSON.parse(localStorage.getItem('set_active_matters'));
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -75,6 +76,8 @@ export class SafecustodyComponent implements OnInit {
         if (response.DATA.SAFECUSTODIES[0]) {
           this.EditLegalCustody(response.DATA.SAFECUSTODIES[0]);
           this.highlightedRows = response.DATA.SAFECUSTODIES[0].SAFECUSTODYGUID;
+        } else {
+          this.isDisplay = true;
         }
       }
       this.isLoadingResults = false;
@@ -104,6 +107,7 @@ export class SafecustodyComponent implements OnInit {
           this.safeCustody_table = new MatTableDataSource([]);
           this.safeCustody_table.paginator = this.paginator;
           this.safeCustody_table.sort = this.sort;
+          this.isDisplay = true;
         } else
           this.LoadData();
       }

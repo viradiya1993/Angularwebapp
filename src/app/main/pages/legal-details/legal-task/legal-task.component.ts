@@ -30,6 +30,8 @@ export class legalDetailTaskComponent implements OnInit {
   GetUSERS: any = [];
   pageSize: any;
   filterData: any = [];
+  isDisplay: boolean = false;
+  
   public legalTaskData = {
     "MatterName": '', "ContactName": '', "Search": '', 'Status': ''
   }
@@ -93,7 +95,7 @@ export class legalDetailTaskComponent implements OnInit {
           this.highlightedRows = response.DATA.TASKS[0].TASKGUID;
           //this.highlightedRows = response.DATA.TASKS[0].TASKGUID;
         } else {
-          //this.toastr.error("No Data Selected");
+          this.isDisplay = true;
         }
       }
       this.isLoadingResults = false;
@@ -119,6 +121,7 @@ export class legalDetailTaskComponent implements OnInit {
           this.Task_table = new MatTableDataSource([]);
           this.Task_table.paginator = this.paginator;
           this.Task_table.sort = this.sort;
+          this.isDisplay = true;
         } else {
           this.filterData = JSON.parse(localStorage.getItem("task_filter_legal"));
           this.LoadData(this.filterData);

@@ -24,6 +24,7 @@ export class FileNotesComponent implements OnInit {
   pageSize: any;
   tempColobj: any;
   highlightedRows: any;
+  isDisplay: boolean = false;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   public FileNoteData = {
@@ -52,12 +53,11 @@ export class FileNotesComponent implements OnInit {
         this.filenotes_table.paginator = this.paginator;
         this.filenotes_table.sort = this.sort;
         if (response.DATA.FILENOTES[0]) {
-       
           this.highlightedRows = response.DATA.FILENOTES[0].FILENOTEGUID;
           this.RowClick(response.DATA.FILENOTES[0])
           //this.highlightedRows = response.DATA.TASKS[0].TASKGUID;
         } else {
-          //this.toastr.error("No Data Selected");
+          this.isDisplay = true;
         }
         // let FILENOTES = response.DATA.FILENOTES == null ? [] : response.DATA.FILENOTES;
       
@@ -103,6 +103,7 @@ export class FileNotesComponent implements OnInit {
           this.filenotes_table = new MatTableDataSource([]);
           this.filenotes_table.paginator = this.paginator;
           this.filenotes_table.sort = this.sort;
+          this.isDisplay = true;
         } else {
           this.loadData();
         }

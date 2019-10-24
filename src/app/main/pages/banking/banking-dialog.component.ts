@@ -42,6 +42,7 @@ export class BankingDialogComponent implements OnInit {
   pageSize: any;
   ACCOUNTGUIDsELECTED: any;
   arrayForIndex: any = [];
+  isDisplay: boolean = false;
 
 
   private _transformer = (node: FoodNode, level: number) => {
@@ -94,7 +95,11 @@ console.log(_data);
         this.showData(this.storeDataarray, 0, null);
         this.dataSource.data = this.storeDataarray;
         this.treeControl.expandAll();
-        this.RowClick(this.storeDataarray[0]);
+        if (this.storeDataarray[0]) {
+          this.RowClick(this.storeDataarray[0]);
+        }else{
+          this.isDisplay = true;
+        }
         this.highlightedRows = 1;
       } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);

@@ -34,6 +34,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
   pageSize: any;
   Contactdata;
   selectedVal: any;
+  isDisplay: boolean = false;
   filterVals = { 'active': 'all', 'FirstLetter': 'a', 'SEARCH': '', 'ContactType': '' };
   constructor(
     private dialog: MatDialog,
@@ -105,6 +106,8 @@ export class ContactComponent implements OnInit, AfterViewInit {
           localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);
           // localStorage.setItem('contactData',  JSON.stringify(response.DATA.CONTACTS[0]));
           this.highlightedRows = response.DATA.CONTACTS[0].CONTACTGUID;
+        }else {
+          this.isDisplay = true;
         }
         this.isLoadingResults = false;
       } else if (response.CODE == 406 && response.MESSAGE == "Permission denied") {
@@ -141,6 +144,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
           this.Contactdata = new MatTableDataSource([]);
           this.Contactdata.paginator = this.paginator;
           this.Contactdata.sort = this.sort;
+          this.isDisplay = true;
         } else {
           let filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
           let filterVal = { 'active': filterVals.active, 'FirstLetter': filterVals.FirstLetter };

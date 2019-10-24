@@ -31,6 +31,7 @@ export class CreateDiaryComponent implements OnInit {
   TimerDataFordiary: any = [];
   highlightedRows: any;
   pageSize: string;
+  isDisplay: boolean = false;
   constructor(private _mainAPiServiceService: MainAPiServiceService,
     private Timersservice: TimersService,
     public datepipe: DatePipe,
@@ -97,6 +98,8 @@ export class CreateDiaryComponent implements OnInit {
           // this.behaviorService.MainTimeEntryData(response.DATA.WORKITEMS[0]);
           this.highlightedRows = response.DATA.APPOINTMENTS[0].APPOINTMENTGUID;
           // localStorage.setItem('edit_WORKITEMGUID', this.highlightedRows);
+        }else {
+          this.isDisplay = true;
         }
         try {
           this.TimerDataFordiary = new MatTableDataSource(response.DATA.APPOINTMENTS);

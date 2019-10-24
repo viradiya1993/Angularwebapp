@@ -174,8 +174,8 @@
                             <mat-option value="Pay GST">Pay GST</mat-option>
                             <mat-option value="Pay Tax">Pay Tax</mat-option>
                             <mat-option value="Personal">Personal</mat-option>
-                            <mat-option value="Description">Description</mat-option>
-                            <mat-option value="Others">Others</mat-option>
+                            <mat-option value="Description">Depreciation</mat-option>
+                            <mat-option value="Other">Other</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.SHORTNAME,'has-warning':errorWarningData.Warning?.SHORTNAME}" appearance="outline" fxFlex="33.33" class="pr-4">
@@ -214,7 +214,7 @@
                     </mat-form-field>
                     <!-- for expense *ngIf="classtype=='Expence' || classtype=='matter Expence' || classtype=='depreciation' || classtype=='other'" -->
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.EXPENDITUREITEMS,'has-warning':errorWarningData.Warning?.EXPENDITUREITEMS}" appearance="outline" fxFlex="25" class="pr-4">
-                        <mat-label *ngIf="classtype=='Expense' || classtype=='Matter Expense' || classtype=='Description' ||classtype=='Others'">Expense a/c </mat-label>
+                        <mat-label *ngIf="classtype=='Expense' || classtype=='Matter Expense' || classtype=='Description' ||classtype=='Other'">Expense a/c </mat-label>
                         <mat-label *ngIf="classtype=='Capital'">Asset a/c </mat-label>
                         <mat-label *ngIf="classtype=='Pay GST'">GST a/c </mat-label>
                         <mat-label *ngIf="classtype=='Pay Tax'">Tax a/c</mat-label>

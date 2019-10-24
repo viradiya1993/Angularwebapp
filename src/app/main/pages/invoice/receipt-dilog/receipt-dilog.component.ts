@@ -381,7 +381,7 @@ export class ReceiptDilogComponent implements OnInit {
       NOTE: this.f.NOTE.value,
       MATTERGUID: this.matterData.MATTERGUID,
       // CLERKFEE: "",
-      ALLOCATIONS: this.PrepareReceiptData.data
+      ALLOCATIONS:this.AllocationData
     }
     let setReceiptPostData: any = { FormAction: 'insert', VALIDATEONLY: true, DATA: AllocationDataInsert };
     this._mainAPiServiceService.getSetData(setReceiptPostData, 'SetIncome').subscribe(response => {

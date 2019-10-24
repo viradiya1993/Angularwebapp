@@ -330,6 +330,7 @@ export class SpendMoneyAddComponent implements OnInit {
         this.hide = true;
         $("#mattersnew").addClass("menu-disabled");
         this.spendmoneyForm.controls['Matter'].disable();
+        this.spendmoneyForm.controls['GSTType'].enable();
 
       } else if (this.action != 'new') {
         this.hide = true;
@@ -340,6 +341,8 @@ export class SpendMoneyAddComponent implements OnInit {
     } else if (Classvalue === 'Matter Expense') {
       this.hide = false;
       this.expac = false;
+      console.log(this.errorWarningData.Error);
+     
       $("#mattersnew").removeClass("menu-disabled");
       if (this._data.FromWhere == "FromWIP") {
         this.spendmoneyForm.controls['Matter'].setValue(this.CurrentMatter.MATTER);
@@ -347,8 +350,12 @@ export class SpendMoneyAddComponent implements OnInit {
       } else {
         this.spendmoneyForm.controls['MatterGUID'].setValue('');
       }
-
       this.forCommonEnable();
+      console.log(this.errorWarningData);
+      let tempError: any=this.errorWarningData.Error;
+      tempError['SHORTNAME'] = {};
+      this.errorWarningData.Error= tempError;
+      // this.errorWarningData = { "Error": tempError };
     } else if (Classvalue === 'Capital') {
       this.hide = true;
       this.expac = false;
@@ -365,6 +372,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['MatterGUID'].setValue('');
       this.spendmoneyForm.controls['Matter'].disable();
       this.spendmoneyForm.controls['GSTType'].disable();
+      this.GstTypeforSelect('No GST');
 
     } else if (Classvalue === 'Pay Tax') {
       this.hide = true;
@@ -374,7 +382,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['MatterGUID'].setValue('');
       this.spendmoneyForm.controls['Matter'].disable();
       this.spendmoneyForm.controls['GSTType'].disable();
-
+      this.GstTypeforSelect('No GST');
     } else if (Classvalue === 'Personal') {
       this.hide = true;
       this.expac = false;
@@ -383,8 +391,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['MatterGUID'].setValue('');
       this.spendmoneyForm.controls['Matter'].disable();
       this.spendmoneyForm.controls['GSTType'].disable();
-
-
+      this.GstTypeforSelect('No GST');
     } else if (Classvalue === 'Description') {
       this.hide = true;
       this.expac = false;
@@ -402,6 +409,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['MatterGUID'].setValue('');
       this.spendmoneyForm.controls['Matter'].disable();
       this.spendmoneyForm.controls['GSTType'].disable();
+      this.GstTypeforSelect('No GST');
     }
   }
   ContactMatter() {
@@ -496,13 +504,15 @@ export class SpendMoneyAddComponent implements OnInit {
     }
   }
   GstTypeforSelect(val) {
+    console.log(val);
     this.GstTypeDiff = val;
     this.amountCal();
     if (val == "LessThen 10% GST") {
       this.spendmoneyForm.controls['GST1'].enable();
     } else if (val == "No GST") {
       this.spendmoneyForm.controls['GST1'].disable();
-      this.spendmoneyForm.controls['GST1'].setValue("");
+      this.spendmoneyForm.controls['GST1'].setValue(0.00);
+      this.spendmoneyForm.controls['GSTType'].setValue('No GST');
     } else if (val == "10") {
       this.spendmoneyForm.controls['GST1'].disable();
       this.spendmoneyForm.controls['GST1'].setValue("10");
@@ -842,16 +852,18 @@ export class SpendMoneyAddComponent implements OnInit {
   }
   BankingDialogOpen(type: any) {
     if (type == '') {
-      if (this.classtype == "Expense" || this.classtype == "Matter Expense" || this.classtype == "Description" || this.classtype == "Others") {
+      if (this.classtype == "Expense" || this.classtype == "Matter Expense" || this.classtype == "Description") {
         type = "EXPENSE";
       } else if (this.classtype == "Capital") {
         type = "ASSET";
       } else if (this.classtype == "Pay GST") {
-        type = "INCOME";
+        type = "LIABILITY"; 
       } else if (this.classtype == "Pay Tax") {
-        type = "INCOME";
+        type = "LIABILITY";
       } else if (this.classtype == "Personal") {
         type = "EQUITY";
+      } else if (this.classtype == "Other"){
+        type = "All";
       }
     }
     const dialogRef = this.MatDialog.open(BankingDialogComponent, {

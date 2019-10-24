@@ -66,7 +66,7 @@ export class BankingDialogComponent implements OnInit {
     private _mainAPiServiceService: MainAPiServiceService,
     private behaviorService: BehaviorService,
     public dialogRef: MatDialogRef<BankingDialogComponent>, @Inject(MAT_DIALOG_DATA) public _data: any, private router: Router, ) {
-
+console.log(_data);
    this.loadData(_data.AccountType);
    this.behaviorService.dialogClose$.subscribe(result => {
     if(result != null){
@@ -93,6 +93,7 @@ export class BankingDialogComponent implements OnInit {
         }
         this.showData(this.storeDataarray, 0, null);
         this.dataSource.data = this.storeDataarray;
+        this.treeControl.expandAll();
         this.RowClick(this.storeDataarray[0]);
         this.highlightedRows = 1;
       } else if (response.MESSAGE == 'Not logged in') {
@@ -168,10 +169,12 @@ export class BankingDialogComponent implements OnInit {
     });
   }
   SelectClick(val) {
-    if (this._data.AccountType == 'Reconclie Practice') {
+    console.log(val);
+    if (this._data.RoterPath == 'Reconclie Practice') {
+      console.log("fhksdkfhdjkshfdjsf");
       this.behaviorService.ChartAccountData(val);
       localStorage.setItem('ChartAccountData', JSON.stringify({ "name": val.name, "class": val.class, "ACCOUNTGUID": val.ACCOUNTGUID, "ACCOUNTTYPE": val.ACCOUNTTYPE, "index": val.index, "parent": val.parent, "level": val.level }));
-      this.router.navigate(['account-reconciliation/reconciliation-item']);
+      this.router.navigate(['/account-reconciliation/reconciliation-item']);
     }
   }
   refreshBank() {

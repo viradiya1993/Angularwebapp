@@ -85,6 +85,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     safecustodydata: any;
     PacketsData: any;
     CurrentDate: any;
+    PathOfRouter: any;
     [x: string]: any;
     appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
     @ViewChild(TimeEntriesComponent) TimeEntrieschild: TimeEntriesComponent;
@@ -1403,9 +1404,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     //_____________________________________________________________________________________________________
-    BankingDialogOpen(type: any) {
+    BankingDialogOpen(type: any,forPoPUpHandel :any) {
+        if(forPoPUpHandel){
+            this.PathOfRouter=forPoPUpHandel
+        }else{
+            this.PathOfRouter='';  
+        }
         const dialogRef = this.dialog.open(BankingDialogComponent, {
-            disableClose: true, width: '100%', data: { AccountType: type }
+            disableClose: true, width: '100%', data: { AccountType: type , RoterPath: this.PathOfRouter }
         });
         dialogRef.afterClosed().subscribe(result => {
         });

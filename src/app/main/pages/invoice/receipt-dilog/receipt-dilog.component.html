@@ -190,7 +190,7 @@
                             </ng-container>
                             <tr mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                             <!-- sticky: true" -->
-                            <tr mat-row [style.background]="highlightedRows == row.INVOICEGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumns;" [ngClass]="highlightedRows == row.INVOICEGUID ? 'row-text-colore' : ''" class="contact" (click)="editContact(row);highlightedRows = row.INVOICEGUID"
+                            <tr mat-row [style.background]="highlightedRows == index ? selectedColore : ''" *matRowDef="let row; let index = index  columns: displayedColumns;" [ngClass]="highlightedRows == index ? 'row-text-colore' : ''" class="contact" (click)="editContact(row,index);highlightedRows = index"
                                 matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                             </tr>
                         </table>
@@ -198,12 +198,14 @@
                     <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" showFirstLastButtons></mat-paginator>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="unallocated_div">
-                    Enter the amount to allocate to the selected invoice and press tab
-                    <mat-form-field appearance="outline" fxFlex="60" class="pr-4">
+                    <p  fxFlex="50"> Enter the amount to allocate to the selected invoice and press tab</p>
+                    <mat-form-field appearance="outline" fxFlex="35" class="pr-4">
                         <input formControlName="allocatedSelected" matInput placeholder="Unallocated">
                         <span class="currency_sign" matPrefix>$&nbsp;</span>
                         <mat-icon matSuffix class="secondary-text">currency</mat-icon>
                     </mat-form-field>
+
+                    <button fxFlex="15" mat-raised-button color="accent" (click)="ApplyReceipt()">Apply</button>
                 </div>
 
             </form>

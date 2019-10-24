@@ -167,7 +167,7 @@
                 <div class="itemdetails" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.EXPENDITURECLASS,'has-warning':errorWarningData.Warning?.EXPENDITURECLASS}" class="example" fxFlex="33.33" class="pr-4" appearance="outline">
                         <mat-label>Class</mat-label>
-                        <mat-select formControlName="Class" (ngModelChange)="Classtype($event)">
+                        <mat-select formControlName="Class" (selectionChange)="Classtype($event.value)">
                             <mat-option value="Expense">Expense</mat-option>
                             <mat-option value="Matter Expense">Matter Expence</mat-option>
                             <mat-option value="Capital">Capital</mat-option>
@@ -195,7 +195,7 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field class="example" fxFlex="25" class="pr-4" appearance="outline">
                         <mat-label>GST Type</mat-label>
-                        <mat-select formControlName="GSTType" (ngModelChange)="GstTypeforSelect($event)">
+                        <mat-select formControlName="GSTType" (selectionChange)="GstTypeforSelect($event.value)">
                             <mat-option value="1.1">10% GST</mat-option>
                             <mat-option value="No GST">No GST</mat-option>
                             <mat-option value="LessThen 10% GST">LessThen 10% GST</mat-option>

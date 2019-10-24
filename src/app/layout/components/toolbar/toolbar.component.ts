@@ -1392,16 +1392,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     //PrepareReceipt
-    PrepareReceipt() {
-        const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
-            width: '100%',
-            disableClose: true,
-            data: {}
-        });
-        dialogRef.afterClosed().subscribe(result => {
+    // PrepareReceipt() {
+    //     const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
+    //         width: '100%',
+    //         disableClose: true,
+    //         data: {}
+    //     });
+    //     dialogRef.afterClosed().subscribe(result => {
 
-        });
-    }
+    //     });
+    // }
     //_____________________________________________________________________________________________________
     BankingDialogOpen(type: any,forPoPUpHandel :any) {
         if(forPoPUpHandel){

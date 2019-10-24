@@ -640,14 +640,9 @@ td.text-C-align {
     text-align: center;
 }
 
-th.text-L-align {
-    text-align: left;
-}
-
-th.text-R-align {
-    text-align: right;
-}
-
-th.text-C-align {
-    text-align: center;
+.text--align,
+.text-R-align,
+.text-L-align,
+.text-C-align {
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
 }

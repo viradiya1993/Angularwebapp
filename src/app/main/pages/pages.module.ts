@@ -29,6 +29,7 @@ import { GloballyAuthorityModule } from './globally-Authority/globally-authority
 import { TimeBillingModule } from './time-billing/time-billing.module';
 import { GloballySafeCustodyModule } from './globally-safecustody/globally-safecustody.module';
 import { TrustGeneral } from './trust-general-journal/trust-general-journal.module';
+// import { TrustChartAccount } from './trust-chart-of-account/trust-chart-of-account.module';
 
 
 
@@ -53,8 +54,8 @@ const appRoutes: Routes = [
   { path: 'general-journal', loadChildren: './general-journal/general-journal.module#GeneralJoural' },
   { path: 'account-reconciliation', loadChildren: './account-reconciliation/account-reconciliation.module#AccountRecountciliation' },
   { path: 'account-management', loadChildren: './account-managment/account-managment.module#AccountManagmentModule' },
-  { path: 'trust-chart-of-account', loadChildren: './TrustChartOfAccountComponent/trust-chart-of-account.module#TrustChartAccount' },
-  { path: 'trust-general-journal', loadChildren: './TrustGeneralJournalComponent/trust-general-journal.module#TrustGeneral' },
+  // { path: 'trust-chart-of-account', loadChildren: './TrustChartOfAccountComponent/trust-chart-of-account.module#TrustChartAccount' },
+  // { path: 'trust-general-journal', loadChildren: './TrustGeneralJournalComponent/trust-general-journal.module#TrustGeneral' },
 
 ];
 
@@ -91,6 +92,7 @@ const appRoutes: Routes = [
     GeneralJoural,
     AccountRecountciliation,
     TrustGeneral,
+    // TrustChartAccount
 
   ]
 })

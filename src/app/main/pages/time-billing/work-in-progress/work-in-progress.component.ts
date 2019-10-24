@@ -27,8 +27,10 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
   pageSize: any;
   tempColobj: any;
   isShowDrop: boolean;
+  isDisplay: boolean = false;
   lastFilter: any
   TimerDropData: any = [];
+  WorkInProgressdata: any = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   isLoadingResults: boolean = false;
@@ -57,14 +59,12 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
     }
 
   }
-
-  WorkInProgressdata: any
   ngOnInit() {
     $('content').addClass('inner-scroll');
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
-    this.behaviorService.workInProgress$.subscribe(workInProgressData => {
-      if (workInProgressData)
-        this.highlightedRows = workInProgressData.WORKITEMGUID;
+    this.behaviorService.workInProgress$.subscribe(result => {
+      if (result)
+        this.highlightedRows = result.WORKITEMGUID;
     });
     this.getTableFilter();
     this.loadData(this.lastFilter);
@@ -90,8 +90,11 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
     // let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
     this._mainAPiServiceService.getSetData(potData, 'GetWorkItems').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
-        if (res.DATA.WORKITEMS[0])
+        if (res.DATA.WORKITEMS[0]) {
           this.editworkInProgress(res.DATA.WORKITEMS[0]);
+        } else {
+          this.isDisplay = true;
+        }
         this.WorkInProgressdata = new MatTableDataSource(res.DATA.WORKITEMS);
         this.WorkInProgressdata.paginator = this.paginator;
         this.WorkInProgressdata.sort = this.sort;
@@ -163,6 +166,7 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
           this.WorkInProgressdata = new MatTableDataSource([]);
           this.WorkInProgressdata.paginator = this.paginator;
           this.WorkInProgressdata.sort = this.sort;
+          this.isDisplay = true;
         } else {
           this.loadData({});
         }

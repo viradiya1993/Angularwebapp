@@ -59,7 +59,7 @@ import { TopicDialogComponent } from 'app/main/pages/globally-Authority/main-aut
 import { EstimateDilogComponent } from 'app/main/pages/time-billing/estimate/estimate-dilog/estimate-dilog.component';
 import { GenerateInvoiceComponent } from 'app/main/pages/invoice/generate-invoice/generate-invoice.component';
 import { PacketsDialogComponent } from 'app/main/pages/globally-safecustody/packets/packets-dialog/packets-dialog.component';
-import {TrustChartOfAccountDailogComponent} from 'app/main/pages/trust-chart-of-account/trust-chart-of-account-dailog/trust-chart-of-account-dailog.component'
+import { TrustChartOfAccountDailogComponent } from 'app/main/pages/trust-chart-of-account/trust-chart-of-account-dailog/trust-chart-of-account-dailog.component'
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -1404,14 +1404,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     //_____________________________________________________________________________________________________
-    BankingDialogOpen(type: any,forPoPUpHandel :any) {
-        if(forPoPUpHandel){
-            this.PathOfRouter=forPoPUpHandel
-        }else{
-            this.PathOfRouter='';  
+    BankingDialogOpen(type: any, forPoPUpHandel: any) {
+        if (forPoPUpHandel) {
+            this.PathOfRouter = forPoPUpHandel
+        } else {
+            this.PathOfRouter = '';
         }
         const dialogRef = this.dialog.open(BankingDialogComponent, {
-            disableClose: true, width: '100%', data: { AccountType: type , RoterPath: this.PathOfRouter }
+            disableClose: true, width: '100%', data: { AccountType: type, RoterPath: this.PathOfRouter }
         });
         dialogRef.afterClosed().subscribe(result => {
         });
@@ -1529,7 +1529,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     logOutUser() {
         this.authenticationService.logout();
     }
-   
+
     navBarSetting(value: any) {
         let x = value.split("/");
         this.activeMenu = x[1]
@@ -1613,9 +1613,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 24;
         } else if (x[1] == "task") {
             this.isTabShow = 25;
-        }else if (x[1] == "trust-chart-of-account") {
+        } else if (x[1] == "trust-chart-of-account") {
             this.isTabShow = 27;
-        }else if (x[1] == "trust-general-journal") {
+        } else if (x[1] == "trust-general-journal") {
             this.isTabShow = 28;
         } else {
             this.isTabShow = 1;
@@ -1930,8 +1930,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     clickToolbarbtn2() {
         this.isDocumentGenerateHide = "no";
     }
-     /** PACKETS MODULE FUNCTION'S */
-     OpenPacket(actionType) {
+    /** PACKETS MODULE FUNCTION'S */
+    OpenPacket(actionType) {
         let PacketPopData = {}
         if (actionType == 'new') {
             PacketPopData = { action: actionType }
@@ -2024,7 +2024,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    DeleteSafeCustody():void {
+    DeleteSafeCustody(): void {
         this.behaviorService.SafeCustody$.subscribe(result => {
             if (result) {
                 this.safecustodydata = result;
@@ -2051,8 +2051,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     }
     /** Trust Chart Of Account's */
-    TrustNewAccount(actionType){
-        if (actionType === 'new'){
+    TrustNewAccount(actionType) {
+        if (actionType === 'new') {
             const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
@@ -2060,16 +2060,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                     // $("#mainsafecusday").click();
                 }
             });
-        }else {
-            this.TrustNewChartAccount(actionType,'');
+        } else {
+            this.TrustNewChartAccount(actionType, '');
         }
     }
-    TrustNewChartAccount(actionType, result){
+    TrustNewChartAccount(actionType, result) {
         let TrustNewChartAccountData = {}
         if (actionType == 'new') {
-            TrustNewChartAccountData = { action: actionType,result }
+            TrustNewChartAccountData = { action: actionType, result }
         } else if (actionType == 'edit' || actionType == 'duplicate') {
-            TrustNewChartAccountData = { action: actionType,result }
+            TrustNewChartAccountData = { action: actionType, result }
         }
         const dialogRef = this.dialog.open(TrustChartOfAccountDailogComponent, {
             disableClose: true,
@@ -2082,7 +2082,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    TrustDeleteAccount():void{
+    TrustDeleteAccount(): void {
         // this.behaviorService.SafeCustody$.subscribe(result => {
         //     if (result) {
         //         this.safecustodydata = result;

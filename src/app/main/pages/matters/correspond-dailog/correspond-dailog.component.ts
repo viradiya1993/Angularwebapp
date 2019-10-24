@@ -94,6 +94,14 @@ export class CorrespondDailogComponent implements OnInit {
     });
   }
   saveCorrespomndDetail() {
+
+    this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: true, DATA: {} }, 'SetMatter').subscribe(res => {
+      if (res.CODE == 200 && res.STATUS == "success") {
+      } else if (res.MESSAGE === 'Not logged in') {
+        this.dialogRef.close(false);
+      } 
+    }, error => { this.toastr.error(error); });
+
     this.isspiner = true;
     let details: any = {
       TYPE: this.f.TYPE.value,

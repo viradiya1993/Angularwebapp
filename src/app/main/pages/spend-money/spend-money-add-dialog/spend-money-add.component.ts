@@ -331,18 +331,21 @@ export class SpendMoneyAddComponent implements OnInit {
         $("#mattersnew").addClass("menu-disabled");
         this.spendmoneyForm.controls['Matter'].disable();
         this.spendmoneyForm.controls['GSTType'].enable();
-
+        this.GstTypeforSelect('1.1');
       } else if (this.action != 'new') {
         this.hide = true;
         this.expac = false;
         $("#mattersnew").addClass("menu-disabled");
         this.spendmoneyForm.controls['Matter'].disable();
+
       }
+      let tempError: any = this.errorWarningData.Error;
+      if(tempError !=undefined){  delete tempError['SHORTNAME']; }
+    
+
     } else if (Classvalue === 'Matter Expense') {
       this.hide = false;
       this.expac = false;
-      console.log(this.errorWarningData.Error);
-     
       $("#mattersnew").removeClass("menu-disabled");
       if (this._data.FromWhere == "FromWIP") {
         this.spendmoneyForm.controls['Matter'].setValue(this.CurrentMatter.MATTER);
@@ -351,10 +354,10 @@ export class SpendMoneyAddComponent implements OnInit {
         this.spendmoneyForm.controls['MatterGUID'].setValue('');
       }
       this.forCommonEnable();
-      console.log(this.errorWarningData);
-      let tempError: any=this.errorWarningData.Error;
+      this.GstTypeforSelect('1.1');
+      let tempError: any = this.errorWarningData.Error;
       tempError['SHORTNAME'] = {};
-      this.errorWarningData.Error= tempError;
+      this.errorWarningData.Error = tempError;
       // this.errorWarningData = { "Error": tempError };
     } else if (Classvalue === 'Capital') {
       this.hide = true;
@@ -363,8 +366,10 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['Matter'].setValue('');
       this.spendmoneyForm.controls['MatterGUID'].setValue('');
       this.spendmoneyForm.controls['Matter'].disable();
+      this.GstTypeforSelect('1.1');
       // this.spendmoneyForm.controls['GSTType'].disable();
-
+      let tempError: any = this.errorWarningData.Error;
+      if(tempError !=undefined){  delete tempError['SHORTNAME']; }
     } else if (Classvalue === 'Pay GST') {
       this.hide = true;
       $("#mattersnew").addClass("menu-disabled");
@@ -373,7 +378,8 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['Matter'].disable();
       this.spendmoneyForm.controls['GSTType'].disable();
       this.GstTypeforSelect('No GST');
-
+      let tempError: any = this.errorWarningData.Error;
+      if(tempError !=undefined){  delete tempError['SHORTNAME']; }
     } else if (Classvalue === 'Pay Tax') {
       this.hide = true;
       this.expac = false;
@@ -383,6 +389,8 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['Matter'].disable();
       this.spendmoneyForm.controls['GSTType'].disable();
       this.GstTypeforSelect('No GST');
+      let tempError: any = this.errorWarningData.Error;
+      if(tempError !=undefined){  delete tempError['SHORTNAME']; }
     } else if (Classvalue === 'Personal') {
       this.hide = true;
       this.expac = false;
@@ -392,6 +400,8 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['Matter'].disable();
       this.spendmoneyForm.controls['GSTType'].disable();
       this.GstTypeforSelect('No GST');
+      let tempError: any = this.errorWarningData.Error;
+      if(tempError !=undefined){  delete tempError['SHORTNAME']; }
     } else if (Classvalue === 'Description') {
       this.hide = true;
       this.expac = false;
@@ -400,7 +410,8 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['MatterGUID'].setValue('');
       this.spendmoneyForm.controls['Matter'].disable();
       this.spendmoneyForm.controls['GSTType'].disable();
-
+      let tempError: any = this.errorWarningData.Error;
+      if(tempError !=undefined){  delete tempError['SHORTNAME']; }
     } else if (Classvalue === 'Others') {
       this.hide = true;
       this.expac = false;
@@ -410,6 +421,8 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['Matter'].disable();
       this.spendmoneyForm.controls['GSTType'].disable();
       this.GstTypeforSelect('No GST');
+      let tempError: any = this.errorWarningData.Error;
+      if(tempError !=undefined){  delete tempError['SHORTNAME']; }
     }
   }
   ContactMatter() {
@@ -468,6 +481,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.dataTableHide = "false";
       if (this.action == 'new') {
         this.commonEmptyFiild();
+        this.GstTypeforSelect('1.1');
         // this.spendmoneyForm.controls['Class'].setValue(this.f.Class.value);
         // this.spendmoneyForm.controls['GST1'].setValue(this.f.GST1.value);
         // this.spendmoneyForm.controls['AmountExGST'].setValue(this.f.AmountExGST.value);
@@ -504,7 +518,6 @@ export class SpendMoneyAddComponent implements OnInit {
     }
   }
   GstTypeforSelect(val) {
-    console.log(val);
     this.GstTypeDiff = val;
     this.amountCal();
     if (val == "LessThen 10% GST") {
@@ -516,6 +529,10 @@ export class SpendMoneyAddComponent implements OnInit {
     } else if (val == "10") {
       this.spendmoneyForm.controls['GST1'].disable();
       this.spendmoneyForm.controls['GST1'].setValue("10");
+    } else if (val == "1.1") {
+      // this.spendmoneyForm.controls['GST1'].disable();
+      this.spendmoneyForm.controls['GSTType'].enable();
+      this.spendmoneyForm.controls['GSTType'].setValue("1.1");
     }
   }
   selectSpendMoneyId(row) {
@@ -636,7 +653,7 @@ export class SpendMoneyAddComponent implements OnInit {
     let cal: any = (this.f.AmountIncGST.value / 1.1).toFixed(2);
     if (this.GstTypeDiff == "No GST") {
       this.GSTValForExGst = amount;
-      this.spendmoneyForm.controls['GST1'].setValue("");
+      this.spendmoneyForm.controls['GST1'].setValue(0.00);
     } else if (this.GstTypeDiff == "1.1") {
       this.GSTValAfterCal = (amount - cal).toFixed(2);
       this.GSTValForExGst = cal;
@@ -734,7 +751,6 @@ export class SpendMoneyAddComponent implements OnInit {
     else if (this.getDataForTable.length == 1 || this.getDataForTable.length == 0) { this.multicheckboxval = 0; }
     else { this.multicheckboxval = 1; }
     //ammount calculation
-    console.log(this.FinalExGSTAmount);
     // for ammount field 
     this.FinalExGSTAmount = this.setMainAmount - this.setMainGST;
     if (this.FinalExGSTAmount == 0) {
@@ -857,12 +873,12 @@ export class SpendMoneyAddComponent implements OnInit {
       } else if (this.classtype == "Capital") {
         type = "ASSET";
       } else if (this.classtype == "Pay GST") {
-        type = "LIABILITY"; 
+        type = "LIABILITY";
       } else if (this.classtype == "Pay Tax") {
         type = "LIABILITY";
       } else if (this.classtype == "Personal") {
         type = "EQUITY";
-      } else if (this.classtype == "Other"){
+      } else if (this.classtype == "Other") {
         type = "All";
       }
     }

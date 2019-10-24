@@ -34,13 +34,16 @@ export class SortingDialogComponent implements OnInit {
     this.property = this.propertyNew.sort(function (a, b) {
       return a.HIDDEN - b.HIDDEN;
     });
+    console.log(this.property);
     this.updateCount();
   }
   updateCount() {
     this.checkboxdata = 0;
     this.property.forEach(itemsdata => {
       if (!itemsdata.HIDDEN) {
-        this.checkboxdata++;
+          this.checkboxdata++;
+          console.log(itemsdata);
+          console.log(this.checkboxdata);
       }
     });
     this.title = this.checkboxdata == 0 ? "Select All" : "Clear";

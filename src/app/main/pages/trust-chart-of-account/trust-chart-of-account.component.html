@@ -1,0 +1,45 @@
+<div id="Trustaccount" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
+  <div class="content" fxLayoutAlign="center">
+    <div class="center p-24 more_tbl_clmn list_tbl_main" fusePerfectScrollbar>
+      <div class="matter-serach-div sticky_search_div responsive_auto">
+        <form>
+          <mat-form-field class="example" appearance="outline">
+            <mat-label>Show what type of accounts</mat-label>
+            <mat-select name=""  (selectionChange)="AccountType($event.value)">
+                <mat-option value="0">All Accounts</mat-option>
+                <mat-option value="1">Trust Accounts</mat-option>
+                <mat-option value="2">Trus Ledgers</mat-option>
+                <mat-option value="3">Unkhown Deposite Accounts</mat-option>
+                <mat-option value="4">Controlled Money Accounts</mat-option>
+                <mat-option value="5">Controlled Money Ledgers</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="search" appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput placeholder="search" (keydown)="FilterSearch($event.target.value)">
+            <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+        </form>
+      </div>
+      <div class="content">
+        <div class="page-layout simple left-sidebar inner-sidebar">
+          <div fxLayoutAlign="center" class="content">
+            <div class="center more_tbl_clmn" fusePerfectScrollbar>
+              <div class="content">
+                <div class="content">
+                  <div class="example-loading-shade" *ngIf="isLoadingResults">
+                    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+                  </div>
+                  <div class="example-containerdata">                    
+                     
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<button mat-raised-button color="primary" type="button" id="refreshturstcAC" (click)="refreshturstcAC();">Refresh</button>

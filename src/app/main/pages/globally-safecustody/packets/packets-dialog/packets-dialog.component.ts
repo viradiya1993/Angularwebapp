@@ -39,7 +39,8 @@ export class PacketsDialogComponent implements OnInit {
     private _mainAPiServiceService: MainAPiServiceService,
     private Timersservice: TimersService,
     @Inject(MAT_DIALOG_DATA) public data: any
-    ) {
+    ) 
+    {
       this.action = data.action;
       if (this.action === 'new') {
         this.dialogTitle = 'New Packets';
@@ -48,13 +49,14 @@ export class PacketsDialogComponent implements OnInit {
       } else {
         this.dialogTitle = 'Duplicate Packets';
       }
-      this.behaviorService.dialogClose$.subscribe(result => {
-        if(result != null){
-          if(result.MESSAGE == 'Not logged in'){
-            this.dialogRef.close(false);
-          }
-        }
-       });
+      // this.behaviorService.dialogClose$.subscribe(result => {
+      //   console.log(result);
+      //   if(result != null){
+      //     if(result.MESSAGE == 'Not logged in'){
+      //       this.dialogRef.close(false);
+      //     }
+      //   }
+      //  });
       this.behaviorService.Packets$.subscribe(result => {
         if (result) {
           this.PacketsData = result;
@@ -82,7 +84,7 @@ export class PacketsDialogComponent implements OnInit {
         this.toastr.error(error);
     });
     if (this.action == 'edit' || this.action == 'duplicate') {
-      this.EditPackets();
+        this.EditPackets();
     }
   }
   get f() {
@@ -96,7 +98,7 @@ export class PacketsDialogComponent implements OnInit {
           this.packetsform.controls['SAFECUSTODYPACKETGUID'].setValue(result.DATA.SAFECUSTODYPACKETS[0].SAFECUSTODYPACKETGUID);
           this.packetsform.controls['CONTACTGUID'].setValue(result.DATA.SAFECUSTODYPACKETS[0].CONTACTGUID);
           this.packetsform.controls['CONTACT'].setValue('');
-          if(this.action == "edit"){
+          if(this.action == "edit" || this.action == 'duplicate'){
             this.packetsform.controls['PACKETNUMBER'].setValue(result.DATA.SAFECUSTODYPACKETS[0].PACKETNUMBER);
           }
           this.packetsform.controls['LOCATION'].setValue(result.DATA.SAFECUSTODYPACKETS[0].LOCATION);
@@ -128,6 +130,8 @@ export class PacketsDialogComponent implements OnInit {
       LOCATION:this.f.LOCATION.value,
       ISACTIVE: this.f.ISACTIVE.value == true ? "1" : "0",
     }
+    console.log(PostData);
+    //return;
     this.isspiner = true;
     let finalData = { DATA: PostData, FormAction: this.FormAction, VALIDATEONLY: true }
     this._mainAPiServiceService.getSetData(finalData, 'SetSafeCustodyPacket').subscribe(response => {
@@ -170,15 +174,15 @@ export class PacketsDialogComponent implements OnInit {
       });
       this.confirmDialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.isspiner = true;
-          this.savePacketsData(PostActivityData);
+            this.isspiner = true;
+            this.savePacketsData(PostActivityData);
         }
         this.confirmDialogRef = null;
       });
     }
     if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
       this.savePacketsData(PostActivityData);
-    this.isspiner = false;
+      this.isspiner = false;
   }
   savePacketsData(PostActivityData: any) {
     PostActivityData.VALIDATEONLY = false;

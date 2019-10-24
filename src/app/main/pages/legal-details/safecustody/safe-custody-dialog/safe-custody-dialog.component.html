@@ -58,13 +58,12 @@
                         <textarea cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" matInput formControlName="ADDITIONALTEXT"></textarea>
                     </mat-form-field>
                 </div>
-
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-tab-group mat-align-tabs="start">
                         <mat-tab label="Check In">
                             <div class="Pad_tab" fxLayout="column">
                                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field appearance="outline" fxFlex="50" class="example pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.Dateperson,'has-warning':errorWarningData.Warning?.Dateperson}">
+                                    <mat-form-field appearance="outline" fxFlex="50" class="example" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.Dateperson,'has-warning':errorWarningData.Warning?.Dateperson}">
                                         <mat-label>Date</mat-label>
                                         <input matInput [matDatepicker]="picker1" placeholder="Choose a date" (dateInput)="PersonDate('input', $event)" (dateChange)="PersonDate('change', $event)" formControlName="Dateperson">
                                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>

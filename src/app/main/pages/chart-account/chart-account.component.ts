@@ -36,7 +36,7 @@ interface ExampleFlatNode {
   animations: fuseAnimations,
   encapsulation: ViewEncapsulation.None,
 })
-export class ChartAccountComponent implements OnInit{
+export class ChartAccountComponent implements OnInit {
   @ViewChild('tree') tree;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   theme_type = localStorage.getItem('theme_type');
@@ -67,7 +67,7 @@ export class ChartAccountComponent implements OnInit{
   treeControl: FlatTreeControl<ExampleFlatNode>;
   treeFlattener: MatTreeFlattener<FoodNode, ExampleFlatNode>;
   dataSource: MatTreeFlatDataSource<FoodNode, ExampleFlatNode>;
-  
+
   highlightedRows: number;
   public ChartData = { "AccountClass": 'All' }
   filterData: { 'Search': string; 'AccountClass': any; };
@@ -77,13 +77,13 @@ export class ChartAccountComponent implements OnInit{
     private _mainAPiServiceService: MainAPiServiceService,
     private behaviorService: BehaviorService) {
 
-      this.treeControl = new FlatTreeControl<ExampleFlatNode>(node => node.level, node => node.expandable);
-      this.treeFlattener = new MatTreeFlattener(this._transformer, node => node.level, node => node.expandable, node => node.SUBACCOUNTS);
-      this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-      
-      this.filterData = { 'Search': '', "AccountClass": "All" }
-   
-   
+    this.treeControl = new FlatTreeControl<ExampleFlatNode>(node => node.level, node => node.expandable);
+    this.treeFlattener = new MatTreeFlattener(this._transformer, node => node.level, node => node.expandable, node => node.SUBACCOUNTS);
+    this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+
+    this.filterData = { 'Search': '', "AccountClass": "All" }
+
+
     if (!localStorage.getItem("chartAcc_filter")) {
       localStorage.setItem('chartAcc_filter', JSON.stringify(this.filterData));
     } else {
@@ -137,8 +137,6 @@ export class ChartAccountComponent implements OnInit{
       if (x.SUBACCOUNTS) {
         this.showData(x.SUBACCOUNTS, x.level + 1, x.ACCOUNTNAME);
       }
-
-
     });
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
@@ -160,7 +158,6 @@ export class ChartAccountComponent implements OnInit{
     // this.treeControl.expandAll();
     // this.tree.treeControl.expandAll();
   }
-
   FilterSearch(val) {
     this.storeDataarray.filter = val;
   }

@@ -1,0 +1,39 @@
+<div id="trust_general" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
+  <div class="content" fxLayoutAlign="center">
+    <div class="center p-24 more_tbl_clmn list_tbl_main" fusePerfectScrollbar>
+      <div class="matter-serach-div sticky_search_div">
+        <form [formGroup]="TrustGeneralForm">
+          <mat-form-field appearance="outline" class="">
+            <mat-label>Date Range</mat-label>
+            <input matInput placeholder="Choose a date" [satDatepicker]="picker2" formControlName="DATE" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)">
+            <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
+            <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
+          </mat-form-field>
+          <mat-form-field class="search" appearance="outline">
+            <mat-label>Search</mat-label>
+            <input matInput placeholder="search" ormControlName="SEARCH" (keydown)="FilterSearch($event.target.value)">
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+          <mat-checkbox name="RECEIPTS" (change)="changeValueOfCheckbox()">Receipts</mat-checkbox>&nbsp;&nbsp;&nbsp;
+          <mat-checkbox name="WITHDRAWALS" (change)="changeValueOfCheckbox()">Withdrawals</mat-checkbox>&nbsp;&nbsp;&nbsp;
+          <mat-checkbox name="TRANSFER" (change)="changeValueOfCheckbox()">Transfers</mat-checkbox>&nbsp;&nbsp;&nbsp;
+        </form>
+      </div>
+      <div class="content fix_div_padding">
+        <!-- <div class="btn top_right_action_billing_one one">
+          <button mat-icon-button (click)="openDialog()" aria-label="More">
+              <mat-icon class="secondary-text">more_vert</mat-icon>
+          </button>
+        </div> -->
+        <div class="content">
+          <div class="example-loading-shade" *ngIf="isLoadingResults">
+            <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+          </div>
+          <div class="example-containerdata">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

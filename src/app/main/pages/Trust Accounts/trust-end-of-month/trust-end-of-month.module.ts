@@ -19,14 +19,16 @@ import { TrustEndOfMonthComponent } from './trust-end-of-month.component';
 import { ToDoComponent } from './to-do/to-do.component';
 import { EndOfMonthHistroyComponent } from './end-month-histroy/end-month-histroy.component';
 import { AuthGuard } from 'app/_guards';
+
 const routes = [
   { path: '', redirectTo: '/trust-end-month/to-do', pathMatch: 'full', canActivate: [AuthGuard] },
   {
     path: '', component: TrustEndOfMonthComponent, children: [
       { path: 'to-do', component: ToDoComponent },
       { path: 'end-month-histroy', component: EndOfMonthHistroyComponent },
+    
     ], canActivate: [AuthGuard]
-}
+  }
 ];
 @NgModule({
   declarations: [TrustEndOfMonthComponent,EndOfMonthHistroyComponent,ToDoComponent],
@@ -34,7 +36,7 @@ const routes = [
   imports: [
     CommonModule,
     MatTreeModule,
-    RouterModule.forChild(routes),
+    RouterModule.forRoot(routes),
     FuseSharedModule,
     FuseConfirmDialogModule,
     FuseSidebarModule,
@@ -69,6 +71,7 @@ const routes = [
 
   ],
   exports: [
+    RouterModule,
     TrustEndOfMonthComponent
   ],
   providers: [

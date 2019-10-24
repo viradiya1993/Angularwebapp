@@ -59,6 +59,7 @@ import { TopicDialogComponent } from 'app/main/pages/globally-Authority/main-aut
 import { EstimateDilogComponent } from 'app/main/pages/time-billing/estimate/estimate-dilog/estimate-dilog.component';
 import { GenerateInvoiceComponent } from 'app/main/pages/invoice/generate-invoice/generate-invoice.component';
 import { PacketsDialogComponent } from 'app/main/pages/globally-safecustody/packets/packets-dialog/packets-dialog.component';
+import { TrustChartOfAccountDailogComponent } from 'app/main/pages/trust-chart-of-account/trust-chart-of-account-dailog/trust-chart-of-account-dailog.component'
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -295,6 +296,20 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.rightNavbar = settings.layout.navbar.position === 'right';
             this.hiddenNavbar = settings.layout.navbar.hidden === true;
         });
+
+        $(window).resize(function () {
+            if ($(window).width() >= 992 && $(window).width() < 1280) {
+                const wph = $(window).width();
+                this.detailwidth = wph - 65 + 'px';
+                const nvh = 56;
+                $('.mat-tab-header').css({ 'width': wph - nvh - 280 + 'px' });
+            } else if ($(window).width() <= 991) {
+                const wph = $(window).width();
+                this.detailwidth = wph - 65 + 'px';
+                const nvh = 56;
+                $('.mat-tab-header').css({ 'width': wph - nvh - 160 + 'px' });
+            }
+        });
     }
     ngAfterViewInit() {
         const wph = $(window).width();
@@ -310,20 +325,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             const nvh = 56;
             $('.mat-tab-header').css({ 'width': wph - nvh - 160 + 'px' });
         }
-        $(window).resize(function () {
-            if ($(window).width() >= 992 && $(window).width() < 1280) {
-                const wph = $(window).width();
-                this.detailwidth = wph - 65 + 'px';
-                const nvh = 56;
-                $('.mat-tab-header').css({ 'width': wph - nvh - 280 + 'px' });
-            } else if ($(window).width() <= 991) {
-                const wph = $(window).width();
-                this.detailwidth = wph - 65 + 'px';
-                const nvh = 56;
-                $('.mat-tab-header').css({ 'width': wph - nvh - 160 + 'px' });
-            }
-        });
-
     }
     /* ---------------------------------------------------------------------help Licence start--------------------------------------------------------------------------  */
     openLicence(Data) {
@@ -1403,14 +1404,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     //     });
     // }
     //_____________________________________________________________________________________________________
-    BankingDialogOpen(type: any,forPoPUpHandel :any) {
-        if(forPoPUpHandel){
-            this.PathOfRouter=forPoPUpHandel
-        }else{
-            this.PathOfRouter='';  
+    BankingDialogOpen(type: any, forPoPUpHandel: any) {
+        if (forPoPUpHandel) {
+            this.PathOfRouter = forPoPUpHandel
+        } else {
+            this.PathOfRouter = '';
         }
         const dialogRef = this.dialog.open(BankingDialogComponent, {
-            disableClose: true, width: '100%', data: { AccountType: type , RoterPath: this.PathOfRouter }
+            disableClose: true, width: '100%', data: { AccountType: type, RoterPath: this.PathOfRouter }
         });
         dialogRef.afterClosed().subscribe(result => {
         });
@@ -1528,49 +1529,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     logOutUser() {
         this.authenticationService.logout();
     }
-    /** PACKETS MODULE FUNCTION'S */
-    OpenPacket(actionType) {
-        let PacketPopData = {}
-        if (actionType == 'new') {
-            PacketPopData = { action: actionType }
-        } else if (actionType == 'edit' || actionType == 'duplicate') {
-            PacketPopData = { action: actionType }
-        }
-        const dialogRef = this.dialog.open(PacketsDialogComponent, {
-            disableClose: true,
-            panelClass: 'Packets-dialog',
-            data: PacketPopData
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                $('#refereshpacketsdata').click();
-            }
-        });
-    }
-    DeletePacket(): void {
-        this.behaviorService.Packets$.subscribe(result => {
-            if (result) {
-                this.PacketsData = result;
-            }
-        });
-        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-            disableClose: true,
-            width: '100%',
-        });
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-        this.confirmDialogRef.afterClosed().subscribe(result => {
-            if (result) {
-                let postData = { FormAction: "delete", data: { SAFECUSTODYPACKETGUID: this.PacketsData.SAFECUSTODYPACKETGUID } }
-                this._mainAPiServiceService.getSetData(postData, 'SetSafeCustodyPacket').subscribe(res => {
-                    if (res.STATUS == "success") {
-                        $('#refereshpacketsdata').click();
-                        this.toastr.success('Delete successfully');
-                    }
-                });
-            }
-            this.confirmDialogRef = null;
-        });
-    }
+
     navBarSetting(value: any) {
         let x = value.split("/");
         this.activeMenu = x[1]
@@ -1654,8 +1613,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 24;
         } else if (x[1] == "task") {
             this.isTabShow = 25;
-        }
-        else {
+        } else if (x[1] == "trust-chart-of-account") {
+            this.isTabShow = 27;
+        } else if (x[1] == "trust-general-journal") {
+            this.isTabShow = 28;
+        } else {
             this.isTabShow = 1;
         }
         this.activeSubMenu = x[2];
@@ -1968,6 +1930,50 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     clickToolbarbtn2() {
         this.isDocumentGenerateHide = "no";
     }
+    /** PACKETS MODULE FUNCTION'S */
+    OpenPacket(actionType) {
+        let PacketPopData = {}
+        if (actionType == 'new') {
+            PacketPopData = { action: actionType }
+        } else if (actionType == 'edit' || actionType == 'duplicate') {
+            PacketPopData = { action: actionType }
+        }
+        const dialogRef = this.dialog.open(PacketsDialogComponent, {
+            disableClose: true,
+            panelClass: 'Packets-dialog',
+            data: PacketPopData
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                $('#refereshpacketsdata').click();
+            }
+        });
+    }
+    DeletePacket(): void {
+        this.behaviorService.Packets$.subscribe(result => {
+            if (result) {
+                this.PacketsData = result;
+            }
+        });
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                let postData = { FormAction: "delete", data: { SAFECUSTODYPACKETGUID: this.PacketsData.SAFECUSTODYPACKETGUID } }
+                this._mainAPiServiceService.getSetData(postData, 'SetSafeCustodyPacket').subscribe(res => {
+                    if (res.STATUS == "success") {
+                        $('#refereshpacketsdata').click();
+                        this.toastr.success('Delete successfully');
+                    }
+                });
+            }
+            this.confirmDialogRef = null;
+        });
+    }
+    /* Safe Custody Module's*/
     OpenNewSafeCustody(actionType) {
         if (actionType === 'new client') {
             const dialogRef = this._matDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true, data: { type: null } });
@@ -2018,11 +2024,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    DeleteSafeCustody() {
+    DeleteSafeCustody(): void {
         this.behaviorService.SafeCustody$.subscribe(result => {
             if (result) {
                 this.safecustodydata = result;
-                console.log(result);
             }
         });
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
@@ -2044,6 +2049,63 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef = null;
         });
 
+    }
+    /** Trust Chart Of Account's */
+    TrustNewAccount(actionType) {
+        if (actionType === 'new') {
+            const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    this.TrustNewChartAccount(actionType, result);
+                    // $("#mainsafecusday").click();
+                }
+            });
+        } else {
+            this.TrustNewChartAccount(actionType, '');
+        }
+    }
+    TrustNewChartAccount(actionType, result) {
+        let TrustNewChartAccountData = {}
+        if (actionType == 'new') {
+            TrustNewChartAccountData = { action: actionType, result }
+        } else if (actionType == 'edit' || actionType == 'duplicate') {
+            TrustNewChartAccountData = { action: actionType, result }
+        }
+        const dialogRef = this.dialog.open(TrustChartOfAccountDailogComponent, {
+            disableClose: true,
+            panelClass: 'Trust-Chart-Account-Dailog',
+            data: TrustNewChartAccountData
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                // $("#mainsafecusday").click();
+            }
+        });
+    }
+    TrustDeleteAccount(): void {
+        // this.behaviorService.SafeCustody$.subscribe(result => {
+        //     if (result) {
+        //         this.safecustodydata = result;
+        //     }
+        // });
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true, width: '100%',
+        });
+
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        // this.confirmDialogRef.afterClosed().subscribe(result => {
+        //     if (result) {
+        //         let postData = { FormAction: "delete", DATA: { SAFECUSTODYGUID: this.safecustodydata.SAFECUSTODYGUID } };
+        //         this._mainAPiServiceService.getSetData(postData, 'SetSafeCustody').subscribe(res => {
+        //             if (res.STATUS == "success" && res.CODE == 200) {
+        //                 $("#mainsafecusday").click();
+        //                 $("#Legalsafecusday").click();
+        //                 this.toastr.success('Delete successfully');
+        //             }
+        //         });
+        //     }
+        //     this.confirmDialogRef = null;
+        // });
     }
     // spendmoneyMenubtn(){
     // this.spendMoneyMenu="disabled"; 

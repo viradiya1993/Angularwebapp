@@ -1,5 +1,5 @@
 @import "src/@fuse/scss/fuse";
-#pack {
+#Trustaccount {
     .header {
         .search-wrapper {
             width: 100%;
@@ -39,7 +39,7 @@
     }
 }
 
-app-packs {
+app-trust-chart-of-account {
     width: 100%;
 }
 
@@ -124,24 +124,6 @@ th.mat-sort-header-sorted {
     background-color: rgba(128, 128, 128, 0.1);
     height: 5em;
 }
-button#refreshChartACCTab{
+button#refreshturstcAC{
     display: none;
-}
-
-.mat-tree-node span {
-    /* float: left; */
-    text-align: left;
-    width: 40%;
-}
-.mat-tree-node.top_row_span span {
-    width: auto;
-}
-
-.chart_tbl_head th:first-child {
-    width: 40%;
-    text-align: left;
-}
-.chart_tbl_head th:last-child {
-    width: 55%;
-    text-align: left;
 }

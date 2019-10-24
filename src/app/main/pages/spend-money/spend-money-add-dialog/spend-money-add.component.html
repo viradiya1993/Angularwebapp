@@ -169,7 +169,7 @@
                         <mat-label>Class</mat-label>
                         <mat-select formControlName="Class" (selectionChange)="Classtype($event.value)">
                             <mat-option value="Expense">Expense</mat-option>
-                            <mat-option value="Matter Expense">Matter Expence</mat-option>
+                            <mat-option value="Matter Expense">Matter Expense</mat-option>
                             <mat-option value="Capital">Capital</mat-option>
                             <mat-option value="Pay GST">Pay GST</mat-option>
                             <mat-option value="Pay Tax">Pay Tax</mat-option>
@@ -212,7 +212,6 @@
                         <input class="sideText" matInput formControlName="AmountExGST" [(ngModel)]="GSTValForExGst">
                         <span class="currency_sign" matPrefix>$ &nbsp;</span>
                     </mat-form-field>
-                    <!-- for expense *ngIf="classtype=='Expence' || classtype=='matter Expence' || classtype=='depreciation' || classtype=='other'" -->
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.EXPENDITUREITEMS,'has-warning':errorWarningData.Warning?.EXPENDITUREITEMS}" appearance="outline" fxFlex="25" class="pr-4">
                         <mat-label *ngIf="classtype=='Expense' || classtype=='Matter Expense' || classtype=='Description' ||classtype=='Other'">Expense a/c </mat-label>
                         <mat-label *ngIf="classtype=='Capital'">Asset a/c </mat-label>

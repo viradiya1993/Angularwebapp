@@ -28,6 +28,7 @@ export class PastBankingsComponent implements OnInit {
   displayedColumns: string[];
   tempColobj: any;
   ColumnsObj = [];
+  isDisplay: boolean = false;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -75,6 +76,8 @@ export class PastBankingsComponent implements OnInit {
         if (response.DATA.BANKINGS[0]) {
           localStorage.setItem('BANKINGGUID', response.DATA.BANKINGS[0].BANKINGGUID);
           this.highlightedRows = response.DATA.BANKINGS[0].BANKINGGUID;
+        }else {
+          this.isDisplay = true;
         }
         this.isLoadingResults = false;
       } else if (response.CODE == 406 && response.MESSAGE == "Permission denied") {
@@ -104,6 +107,7 @@ export class PastBankingsComponent implements OnInit {
           this.bankingPastData = new MatTableDataSource([]);
           this.bankingPastData.paginator = this.paginator;
           this.bankingPastData.sort = this.sort;
+          this.isDisplay = true;
         } else {
           this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID });
         }

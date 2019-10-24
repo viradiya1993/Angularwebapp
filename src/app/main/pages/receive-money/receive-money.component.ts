@@ -27,6 +27,7 @@ export class ReceiveMoneyComponent implements OnInit {
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   pageSize: any;
+  isDisplay: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   currentReciveMoneyData: any;
@@ -88,6 +89,8 @@ export class ReceiveMoneyComponent implements OnInit {
           localStorage.setItem('receiptData', JSON.stringify(response.DATA.INCOMEITEMS[0]));
           this.highlightedRows = response.DATA.INCOMEITEMS[0].INCOMEGUID;
           this.currentReciveMoneyData = response.DATA.INCOMEITEMS[0];
+        }else {
+          this.isDisplay = true;
         }
         this.receiveMoneydata = new MatTableDataSource(response.DATA.INCOMEITEMS)
         this.receiveMoneydata.paginator = this.paginator;
@@ -155,6 +158,7 @@ export class ReceiveMoneyComponent implements OnInit {
           this.receiveMoneydata = new MatTableDataSource([]);
           this.receiveMoneydata.paginator = this.paginator;
           this.receiveMoneydata.sort = this.sort;
+          this.isDisplay = true;
         } else {
           this.forListing(this.lastFilter);
         }

@@ -46,7 +46,6 @@ export class MattersListComponent implements OnInit, OnDestroy, AfterViewInit {
   tempColobj: any;
   isLoadingResults: any = false;
   pageSize: any;
-
   @Output() matterDetail: EventEmitter<any> = new EventEmitter<any>();
   constructor(
     private dialog: MatDialog,

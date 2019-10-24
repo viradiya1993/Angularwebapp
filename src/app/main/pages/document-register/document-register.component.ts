@@ -30,6 +30,7 @@ export class DocumentRegisterComponent implements OnInit {
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   DocNo = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   DocumentAllData: any = [];
+  isDisplay: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   constructor(
@@ -79,7 +80,13 @@ export class DocumentRegisterComponent implements OnInit {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({}, 'GetDocument').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
-        this.behaviorService.DocumentRegisterData(res.DATA.DOCUMENTS[0]);
+        if (res.DATA.DOCUMENTS[0]) {
+          this.RowClick(res.DATA.DOCUMENTS[0]);
+        } else {
+          this.isDisplay = true;
+        }
+
+        //this.behaviorService.DocumentRegisterData(res.DATA.DOCUMENTS[0]);
         this.DocumentAllData = new MatTableDataSource(res.DATA.DOCUMENTS);
         this.DocumentAllData.sort = this.sort;
         this.DocumentAllData.paginator = this.paginator;
@@ -132,6 +139,7 @@ export class DocumentRegisterComponent implements OnInit {
           this.DocumentAllData = new MatTableDataSource([]);
           this.DocumentAllData.paginator = this.paginator;
           this.DocumentAllData.sort = this.sort;
+          this.isDisplay = true;
         } else {
           // this.getMatterList(this.lastFilter);
         }
@@ -152,5 +160,6 @@ export class DocumentRegisterComponent implements OnInit {
     console.log(value);
   }
   RowClick(row) {
+    this.behaviorService.DocumentRegisterData(row);
   }
 }

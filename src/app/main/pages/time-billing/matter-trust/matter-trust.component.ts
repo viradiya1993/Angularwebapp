@@ -21,6 +21,7 @@ export class MatterTrustComponent implements OnInit {
   ColumnsObj: any = [];
   pageSize: any;
   tempColobj: any;
+  isDisplay: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -54,6 +55,11 @@ export class MatterTrustComponent implements OnInit {
     
     this._mainAPiServiceService.getSetData(potData, 'GetTrustTransaction').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
+        if (res.DATA.TRUSTTRANSACTIONS[0]) {
+       
+        } else {
+          this.isDisplay = true;
+        }
         let TRUSTTRANSACTIONS = res.DATA.TRUSTTRANSACTIONS == null ? [] : res.DATA.TRUSTTRANSACTIONS;
         this.MatterTrustdata = new MatTableDataSource(TRUSTTRANSACTIONS);
         this.MatterTrustdata.paginator = this.paginator;
@@ -87,6 +93,7 @@ export class MatterTrustComponent implements OnInit {
           this.MatterTrustdata = new MatTableDataSource([]);
           this.MatterTrustdata.paginator = this.paginator;
           this.MatterTrustdata.sort = this.sort;
+          this.isDisplay = true;
         } else {
           this.loadData();
         }

@@ -22,6 +22,7 @@ export class PacketsComponent implements OnInit {
   ColumnsObj = [];
   tempColobj: any;
   MainPacketsData:any = [];
+  isDisplay: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   constructor(
@@ -60,6 +61,8 @@ export class PacketsComponent implements OnInit {
         if (res.DATA.SAFECUSTODYPACKETS[0]) {
           this.EditPackets(res.DATA.SAFECUSTODYPACKETS[0]);
           this.highlightedRows = res.DATA.SAFECUSTODYPACKETS[0].SAFECUSTODYPACKETGUID;
+        }else {
+          this.isDisplay = true;
         }
         this.isLoadingResults = false;
       }
@@ -83,6 +86,7 @@ export class PacketsComponent implements OnInit {
         this.ColumnsObj = result.columnameObj;
         if (!result.columObj) {
           this.MainPacketsData = new MatTableDataSource([]);
+          this.isDisplay = true;
         } else {
           this.LoadData();
         }

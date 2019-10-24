@@ -44,6 +44,7 @@ export class RecounciliationItemComponent implements OnInit {
   FirstTimeDipositeTotal: number;
   lastDay: any;
   recouncileItemdata: any;
+  isDisplay: boolean = false;
   SendData: { ACCOUNTGUID: any; PERIODENDDATE: any; STARTINGBALANCE: number; DEPOSITS: any; WITHDRAWALS: any; UNPRESENTEDDEPOSITS: any; UNPRESENTEDWITHDRAWALS: any; ENDINGBALANCE: any; PREPAREDBY: any; RECONCILIATIONITEMS: any[]; };
 
   constructor(private dialog: MatDialog, public datepipe: DatePipe,
@@ -232,6 +233,7 @@ export class RecounciliationItemComponent implements OnInit {
         this.isLoadingResults = false;
         if (response.DATA.RECONCILIATIONITEMS[0]) {
         } else {
+          this.isDisplay = true;
           this.AccountRecouncile.controls['UnDeposite'].setValue(0);
           this.AccountRecouncile.controls['UnWith'].setValue(0);
         }
@@ -264,6 +266,8 @@ export class RecounciliationItemComponent implements OnInit {
           this.ReconciliationData = new MatTableDataSource([]);
           this.ReconciliationData.paginator = this.paginator;
           this.ReconciliationData.sort = this.sort;
+          this.isDisplay = true;
+          
         } else {
           this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID, 'BankStatementDate': this.lastDay });
           // this.LoadData({ AccountGuid: "ACCAAAAAAAAAAAA4", 'BankStatementDate': "3/09/2019" });

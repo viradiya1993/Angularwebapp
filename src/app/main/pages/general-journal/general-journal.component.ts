@@ -31,6 +31,7 @@ export class GeneralJournalComponent implements OnInit {
   pageSize: any;
   dateRange: any = {};
   generalJournalData: any = [];
+  isDisplay: boolean = false;
   // updatecurrentDate.setDate( new Date().getDate() - 30);
   filterVals = { ITEMSTARTDATE: '', ITEMENDDATE: '', SEARCH: '', SHOWRECEIPTS: false, SHOWINVOICES: false, SHOWRECEIVEMONEY: false, SHOWSPENDMONEY: false, SHOWGENERALJOURNAL: false };
   constructor(
@@ -110,6 +111,8 @@ export class GeneralJournalComponent implements OnInit {
         if (tempJData[0]) {
           this.editjournal(tempJData[0]);
           this.highlightedRows = tempJData[0].JOURNALGUID;
+        }else {
+          this.isDisplay = true;
         }
         this.isLoadingResults = false;
       } else if (response.CODE == 406 && response.MESSAGE == "Permission denied") {
@@ -137,6 +140,7 @@ export class GeneralJournalComponent implements OnInit {
         this.ColumnsObj = result.columnameObj;
         if (!result.columObj) {
           this.generalJournalData = new MatTableDataSource([]);
+          this.isDisplay = true;
         } else {
           this.LoadData();
         }

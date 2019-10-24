@@ -30,6 +30,7 @@ export class MainSafeCustodyComponent implements OnInit {
   addData: any = [];
   MainSafeCustodyData: any = [];
   ImgDisAb:any;
+  isDisplay: boolean = false;
   filterData: {'STATUS': any,'MATTERGUID': any, "Matter": any,"Contactguid":any, "Contact":any,'Search': string; };
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -103,6 +104,8 @@ export class MainSafeCustodyComponent implements OnInit {
         if (res.DATA.SAFECUSTODIES[0]) {
           this.editsafecustody(res.DATA.SAFECUSTODIES[0]);
           this.highlightedRows = res.DATA.SAFECUSTODIES[0].SAFECUSTODYGUID;
+        }else {
+          this.isDisplay = true;
         }
         this.isLoadingResults = false;
       }
@@ -236,6 +239,7 @@ export class MainSafeCustodyComponent implements OnInit {
         this.ColumnsObj = result.columnameObj;
         if (!result.columObj) {
           this.MainSafeCustodyData = new MatTableDataSource([]);
+          this.isDisplay = true;
         } else {
          this.LoadData(this.filterData);
         }

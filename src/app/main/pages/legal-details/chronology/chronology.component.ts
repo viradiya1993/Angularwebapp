@@ -30,6 +30,7 @@ export class ChronologyComponent implements OnInit {
   pageSize: any;
   tempColobj: any;
   highlightedRows: any;
+  isDisplay: boolean = false;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   constructor(private _formBuilder: FormBuilder, private dialog: MatDialog, private TableColumnsService: TableColumnsService,
@@ -79,7 +80,7 @@ export class ChronologyComponent implements OnInit {
           this.highlightedRows = response.DATA.CHRONOLOGIES[0].CHRONOLOGYGUID;
 
         } else {
-          this.toastr.error("No Data Selected");
+          this.isDisplay = true;
         }
       }
       this.isLoadingResults = false;
@@ -110,6 +111,7 @@ export class ChronologyComponent implements OnInit {
           this.chronology_table = new MatTableDataSource([]);
           this.chronology_table.paginator = this.paginator;
           this.chronology_table.sort = this.sort;
+          this.isDisplay = true;
         } else {
           this.LoadData();
         }

@@ -28,6 +28,7 @@ export class PastReconciliationComponent implements OnInit {
   PastRECData: any = [];
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  isDisplay: boolean = false;
   constructor(private dialog: MatDialog, private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService, private _formBuilder: FormBuilder, public behaviorService: BehaviorService, private TableColumnsService: TableColumnsService, ) { }
 
   ngOnInit() {
@@ -63,6 +64,8 @@ export class PastReconciliationComponent implements OnInit {
         if (response.DATA.RECONCILIATIONS[0]) {
           // localStorage.setItem('BANKINGGUID', response.DATA.BANKINGS[0].BANKINGGUID);
           this.highlightedRows = response.DATA.RECONCILIATIONS[0].RECONCILIATIONGUID;
+        } else {
+          this.isDisplay = true;
         }
         this.isLoadingResults = false;
       } else if (response.CODE == 406 && response.MESSAGE == "Permission denied") {
@@ -95,6 +98,7 @@ export class PastReconciliationComponent implements OnInit {
           this.bankingPastData = new MatTableDataSource([]);
           this.bankingPastData.paginator = this.paginator;
           this.bankingPastData.sort = this.sort;
+          this.isDisplay = true;
         } else {
           this.LoadData({ AccountGuid: this.chartAccountDetail.ACCOUNTGUID });
         }

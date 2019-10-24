@@ -27,6 +27,7 @@ export class SearchComponent implements OnInit {
   Search_table:any=[];
   filterData: any = [];
   tempColobj: any;
+  isDisplay: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   constructor(private _formBuilder: FormBuilder,private dialog: MatDialog, private TableColumnsService: TableColumnsService, 
@@ -74,6 +75,11 @@ export class SearchComponent implements OnInit {
     // let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
     this._mainAPiServiceService.getSetData(data, 'GetCostRecovery').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
+        if (response.DATA.SAFECUSTODIES[0]) {
+          
+        } else {
+          this.isDisplay = true;
+        }
         this.Search_table = new MatTableDataSource(response.DATA.SAFECUSTODIES);
         this.Search_table.paginator = this.paginator;
         this.Search_table.sort = this.sort;
@@ -105,6 +111,7 @@ export class SearchComponent implements OnInit {
           this.safeCustody_table = new MatTableDataSource([]);
           this.safeCustody_table.paginator = this.paginator;
           this.safeCustody_table.sort = this.sort;
+          this.isDisplay = true;
         } else{
           this.filterData = JSON.parse(localStorage.getItem("search_filter_legal"));
           this.LoadData(this.filterData);

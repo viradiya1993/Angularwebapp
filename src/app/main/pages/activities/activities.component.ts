@@ -81,6 +81,7 @@ export class ActivitiesComponent implements OnInit {
     this._mainAPiServiceService.getSetData(filterData, 'GetActivity').subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         if (response.DATA.ACTIVITIES[0]) {
+          this.isDisplay = false;
           this.highlightedRows = response.DATA.ACTIVITIES[0].ACTIVITYGUID;
           this.Activitiesdata = response.DATA.ACTIVITIES[0];
           localStorage.setItem('current_ActivityData', JSON.stringify(response.DATA.ACTIVITIES[0]));

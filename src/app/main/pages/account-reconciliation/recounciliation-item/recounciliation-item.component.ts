@@ -232,6 +232,7 @@ export class RecounciliationItemComponent implements OnInit {
         // this.AccountRecouncile.controls['OutBal'].setValue(response.DATA.LASTRECONCILEDBALANCE);
         this.isLoadingResults = false;
         if (response.DATA.RECONCILIATIONITEMS[0]) {
+            this.isDisplay = false;
         } else {
           this.isDisplay = true;
           this.AccountRecouncile.controls['UnDeposite'].setValue(0);

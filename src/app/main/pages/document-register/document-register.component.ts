@@ -82,6 +82,7 @@ export class DocumentRegisterComponent implements OnInit {
       if (res.CODE == 200 && res.STATUS == "success") {
         if (res.DATA.DOCUMENTS[0]) {
           this.RowClick(res.DATA.DOCUMENTS[0]);
+          this.isDisplay = false;
         } else {
           this.isDisplay = true;
         }

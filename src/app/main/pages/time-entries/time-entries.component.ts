@@ -350,6 +350,7 @@ export class TimeEntriesComponent implements OnInit {
     this.Timersservice.getTimeEnrtyData(Data).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.WORKITEMS[0]) {
+          this.isDisplay = false;
           this.behaviorService.MainTimeEntryData(response.DATA.WORKITEMS[0]);
           this.highlightedRows = response.DATA.WORKITEMS[0].WORKITEMGUID;
           localStorage.setItem('edit_WORKITEMGUID', this.highlightedRows);

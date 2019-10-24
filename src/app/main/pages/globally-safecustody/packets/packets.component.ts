@@ -59,6 +59,7 @@ export class PacketsComponent implements OnInit {
         this.MainPacketsData.sort = this.sort;
         this.MainPacketsData.paginator = this.paginator;
         if (res.DATA.SAFECUSTODYPACKETS[0]) {
+          this.isDisplay = false;
           this.EditPackets(res.DATA.SAFECUSTODYPACKETS[0]);
           this.highlightedRows = res.DATA.SAFECUSTODYPACKETS[0].SAFECUSTODYPACKETGUID;
         }else {

@@ -53,6 +53,7 @@ export class FileNotesComponent implements OnInit {
         this.filenotes_table.paginator = this.paginator;
         this.filenotes_table.sort = this.sort;
         if (response.DATA.FILENOTES[0]) {
+          this.isDisplay = false;
           this.highlightedRows = response.DATA.FILENOTES[0].FILENOTEGUID;
           this.RowClick(response.DATA.FILENOTES[0])
           //this.highlightedRows = response.DATA.TASKS[0].TASKGUID;

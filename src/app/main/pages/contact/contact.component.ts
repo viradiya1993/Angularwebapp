@@ -105,6 +105,7 @@ export class ContactComponent implements OnInit, AfterViewInit {
         if (response.DATA.CONTACTS[0]) {
           localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);
           // localStorage.setItem('contactData',  JSON.stringify(response.DATA.CONTACTS[0]));
+          this.isDisplay = false;
           this.highlightedRows = response.DATA.CONTACTS[0].CONTACTGUID;
         }else {
           this.isDisplay = true;

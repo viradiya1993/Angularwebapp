@@ -76,7 +76,7 @@ export class SearchComponent implements OnInit {
     this._mainAPiServiceService.getSetData(data, 'GetCostRecovery').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.SAFECUSTODIES[0]) {
-          
+          this.isDisplay = false;
         } else {
           this.isDisplay = true;
         }

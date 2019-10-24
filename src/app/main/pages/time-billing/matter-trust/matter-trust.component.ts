@@ -56,7 +56,7 @@ export class MatterTrustComponent implements OnInit {
     this._mainAPiServiceService.getSetData(potData, 'GetTrustTransaction').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         if (res.DATA.TRUSTTRANSACTIONS[0]) {
-       
+          this.isDisplay = false;
         } else {
           this.isDisplay = true;
         }

@@ -139,7 +139,6 @@ export class PacksComponent implements OnInit, AfterViewInit {
     localStorage.setItem('lastPageSize', event.pageSize);
   }
   get f() {
-    //console.log(this.contactForm);
     return this.packForm.controls;
   }
   FilterSearch(searchFilter: any) {

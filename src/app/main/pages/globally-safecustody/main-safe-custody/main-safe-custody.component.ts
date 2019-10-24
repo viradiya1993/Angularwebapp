@@ -102,6 +102,7 @@ export class MainSafeCustodyComponent implements OnInit {
         this.MainSafeCustodyData.sort = this.sort;
         this.MainSafeCustodyData.paginator = this.paginator;
         if (res.DATA.SAFECUSTODIES[0]) {
+          this.isDisplay = false;
           this.editsafecustody(res.DATA.SAFECUSTODIES[0]);
           this.highlightedRows = res.DATA.SAFECUSTODIES[0].SAFECUSTODYGUID;
         }else {

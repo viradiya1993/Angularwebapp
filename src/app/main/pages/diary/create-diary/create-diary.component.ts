@@ -96,6 +96,7 @@ export class CreateDiaryComponent implements OnInit {
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.APPOINTMENTS[0]) {
           // this.behaviorService.MainTimeEntryData(response.DATA.WORKITEMS[0]);
+           this.isDisplay = false;
           this.highlightedRows = response.DATA.APPOINTMENTS[0].APPOINTMENTGUID;
           // localStorage.setItem('edit_WORKITEMGUID', this.highlightedRows);
         }else {

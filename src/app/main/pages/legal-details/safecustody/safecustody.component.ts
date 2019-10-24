@@ -74,6 +74,7 @@ export class SafecustodyComponent implements OnInit {
         this.safeCustody_table.paginator = this.paginator;
         this.safeCustody_table.sort = this.sort;
         if (response.DATA.SAFECUSTODIES[0]) {
+          this.isDisplay = false;
           this.EditLegalCustody(response.DATA.SAFECUSTODIES[0]);
           this.highlightedRows = response.DATA.SAFECUSTODIES[0].SAFECUSTODYGUID;
         } else {

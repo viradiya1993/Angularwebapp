@@ -2,8 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { round } from 'lodash';
-import { MatDialog, MatDatepickerInputEvent } from '@angular/material';
+import { MatDialog,MatDialogRef, MatDatepickerInputEvent } from '@angular/material';
 import { UserSelectPopupComponent } from '../../user-select-popup/user-select-popup.component';
+import { MainAPiServiceService } from 'app/_services';
+import { MatterPopupComponent } from '../matter-popup.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-general',
@@ -17,7 +20,9 @@ export class GeneralComponent implements OnInit {
   @Input() errorWarningData: any;
   PRICEVAL: any;
   PRICEVALGST: any;
-  constructor(public datepipe: DatePipe, public MatDialog: MatDialog) {
+  isDefultMatter: boolean;
+  constructor(public datepipe: DatePipe, public MatDialog: MatDialog,   public dialogRef: MatDialogRef<MatterPopupComponent>,
+    private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService,) {
   }
 
   CommencementDate(type: string, event: MatDatepickerInputEvent<Date>) {
@@ -36,10 +41,27 @@ export class GeneralComponent implements OnInit {
     const dialogRef = this.MatDialog.open(UserSelectPopupComponent, { width: '100%', disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.CoommonMatterNum();
         this.matterdetailForm.controls['OWNERGUID'].setValue(result.USERGUID);
         this.matterdetailForm.controls['OWNERNAME'].setValue(result.FULLNAME);
       }
     });
+  }
+  CoommonMatterNum(){
+    this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: true, DATA: {} }, 'SetMatter').subscribe(res => {
+      console.log(res);
+      if (res.CODE == 200 && res.STATUS == "success") {
+        if (res.DATA.DEFAULTVALUES['SHORTNAME'] == "") {
+          this.isDefultMatter = false;
+        }
+        this.matterdetailForm.controls['SHORTNAME'].setValue(res.DATA.DEFAULTVALUES['SHORTNAME']);
+      } else if (res.MESSAGE === 'Not logged in') {
+        this.dialogRef.close(false);
+      } else {
+        this.matterdetailForm.controls['SHORTNAME'].setValue(res.DATA.DEFAULTVALUES['SHORTNAME']);
+      }
+    }, error => { this.toastr.error(error); });
+
   }
   get f() {
     return this.matterdetailForm.controls;
@@ -48,6 +70,8 @@ export class GeneralComponent implements OnInit {
     const dialogRef = this.MatDialog.open(UserSelectPopupComponent, { width: '100%', disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+
+        this.CoommonMatterNum();
         this.matterdetailForm.controls['PRIMARYFEEEARNERGUID'].setValue(result.USERGUID);
         this.matterdetailForm.controls['PRIMARYFEEEARNERNAME'].setValue(result.FULLNAME);
       }

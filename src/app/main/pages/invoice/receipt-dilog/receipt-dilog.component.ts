@@ -59,6 +59,8 @@ export class ReceiptDilogComponent implements OnInit {
   storeDataarray: any;
   TempData: any;
   InvoiceTypeCheck: any;
+  storeAllocatedVal: any;
+  GloballyUnallocatedVAl: any;
 
   constructor(
     private toastr: ToastrService,
@@ -267,11 +269,14 @@ export class ReceiptDilogComponent implements OnInit {
     if (this.f.AMOUNT.value > this.TotalInvoice) {
       let val = this.f.AMOUNT.value - this.TotalInvoice;
       this.PrepareReceiptForm.controls['Unallocated'].setValue(val.toFixed(2));
+      this.GloballyUnallocatedVAl=this.f.Unallocated.value;
     } else {
       if (this.AllocationBtn == 'clear') {
         this.PrepareReceiptForm.controls['Unallocated'].setValue(this.f.AMOUNT.value);
+        this.GloballyUnallocatedVAl=this.f.Unallocated.value;
       } else {
         this.PrepareReceiptForm.controls['Unallocated'].setValue(0);
+        this.GloballyUnallocatedVAl=this.f.Unallocated.value;
       }
     }
     this.AMOUNT = parseFloat(this.f.AMOUNT.value).toFixed(2);
@@ -296,10 +301,10 @@ export class ReceiptDilogComponent implements OnInit {
         for ( i = 0; data.length - 1; i++) {
           if (enteredval > 0) {
             if (Number(data[i].AMOUNTOUTSTANDINGINCGST) <= Number(enteredval)) {
-              data[i].ALLOCATED = data[i].AMOUNTOUTSTANDINGINCGST;
+              data[i].ALLOCATED = (Number(data[i].AMOUNTOUTSTANDINGINCGST)).toFixed(2);
               enteredval = enteredval - data[i].AMOUNTOUTSTANDINGINCGST;
             } else {
-              data[i].ALLOCATED = enteredval;
+              data[i].ALLOCATED = (Number(enteredval)).toFixed(2);
               enteredval = enteredval - data[i].AMOUNTOUTSTANDINGINCGST;
             }
           } else {
@@ -327,11 +332,25 @@ export class ReceiptDilogComponent implements OnInit {
       this.highlightedRows=this.INDEX;
       this.PrepareReceiptData.data[this.INDEX].ALLOCATED=Number(this.f.allocatedSelected.value);
     }else{
+      this.toastr.error('You are trying to allocate an amount that is more than the amount outstanding.');
       this.PrepareReceiptForm.controls['allocatedSelected'].setValue(0);
+      this.PrepareReceiptForm.controls['Unallocated'].setValue(0);
+      this.PrepareReceiptData.data[this.INDEX].ALLOCATED=0;
     }
+    
     if((Number(this.f.allocatedSelected.value) != 0)){
-      let val=this.PrepareReceiptData.data[this.INDEX].AMOUNTOUTSTANDINGINCGST- (Number(this.f.allocatedSelected.value));
-        this.PrepareReceiptForm.controls['Unallocated'].setValue(Number(this.f.Unallocated.value) + Number(val))
+      let val=0;
+      if(Number(this.storeAllocatedVal) != Number(this.f.allocatedSelected.value)){
+          this.storeAllocatedVal= this.f.allocatedSelected.value;
+          val=this.PrepareReceiptData.data[this.INDEX].AMOUNTOUTSTANDINGINCGST- (Number(this.f.allocatedSelected.value));
+          if(Number(this.f.Unallocated.value) != 0 || this.f.Unallocated.value !=''){
+            this.PrepareReceiptForm.controls['Unallocated'].setValue(Number(this.GloballyUnallocatedVAl) + Number(val))
+          }else{
+            this.PrepareReceiptForm.controls['Unallocated'].setValue('-'+ Number(this.f.allocatedSelected.value))
+          }
+         
+      }
+   
     }
    
   }

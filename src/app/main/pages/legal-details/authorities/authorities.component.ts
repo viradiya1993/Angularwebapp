@@ -163,6 +163,7 @@ export class AuthoritiesComponent implements OnInit {
         this.storeDataarray = res.DATA.TOPICS;
         this.showData(this.storeDataarray, 0, null);
         this.dataSource.data = this.storeDataarray;
+        this.treeControl.expandAll();
         this.editContact(this.storeDataarray[0]);
         this.highlightedRows = 1;
       }

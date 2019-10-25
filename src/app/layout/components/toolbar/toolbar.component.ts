@@ -346,9 +346,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else if (actionType == 'edit' || actionType == 'duplicate' || actionType == 'matter_contect') {
             if (actionType == "matter_contect") {
                 let getMatterContactGuId = JSON.parse(localStorage.getItem('set_active_matters'));
-                localStorage.setItem('contactGuid', getMatterContactGuId.COMPANYCONTACTGUID);
+                localStorage.setItem('contactGuid', getMatterContactGuId.CONTACTGUID);
                 actionType = "edit";
-                if (getMatterContactGuId.COMPANYCONTACTGUID == "") {
+                if (getMatterContactGuId.CONTACTGUID == "") {
                     this.toastr.error('CONTACTGUID not available');
                     return false;
                 }
@@ -1673,7 +1673,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.clickedBtn = 'matterDoc';
     }
     createInstantInvoice() {
-        if (this.router.url != '/time-billing/matter-invoices' && this.router.url != 'time-billing/work-in-progress/invoice') {
+        if (this.router.url != '/time-billing/matter-invoices' && this.router.url != 'time-billing/work-in-progress/invoice' && this.router.url != '/matters') {
             const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {

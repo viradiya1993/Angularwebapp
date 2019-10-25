@@ -26,6 +26,7 @@ export class ClientComponent implements OnInit {
   @Input() matterdetailForm: FormGroup;
   @Input() errorWarningData: any;
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+  isDefultMatter: boolean;
   constructor(
     private MatDialog: MatDialog,
     private _mainAPiServiceService: MainAPiServiceService,
@@ -73,10 +74,27 @@ export class ClientComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.CoommonMatterNum();
         this.matterdetailForm.controls['FIRMGUID'].setValue(result.CONTACTGUID);
         this.matterdetailForm.controls['Clientmattertext'].setValue(result.CONTACTNAME + ' - ' + result.SUBURB);
       }
     });
+  }
+  CoommonMatterNum(){
+    this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: true, DATA: {} }, 'SetMatter').subscribe(res => {
+      console.log(res);
+      if (res.CODE == 200 && res.STATUS == "success") {
+        if (res.DATA.DEFAULTVALUES['SHORTNAME'] == "") {
+          this.isDefultMatter = false;
+        }
+        this.matterdetailForm.controls['SHORTNAME'].setValue(res.DATA.DEFAULTVALUES['SHORTNAME']);
+      } else if (res.MESSAGE === 'Not logged in') {
+        this.dialogRef.close(false);
+      } else {
+        this.matterdetailForm.controls['SHORTNAME'].setValue(res.DATA.DEFAULTVALUES['SHORTNAME']);
+      }
+    }, error => { this.toastr.error(error); });
+
   }
   editElement(editElement) {
     const dialogRef = this.MatDialog.open(CorrespondDailogComponent, {

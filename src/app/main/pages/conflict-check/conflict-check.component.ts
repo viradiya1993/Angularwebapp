@@ -41,7 +41,7 @@ export class ConflictCheckComponent implements OnInit {
     }
   }
   ngOnInit() {
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 80)) + 'px');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.LoadData({});
     this.StartbtnSendData.CheckWIP = this.ConflictNGData.CheckWIP;
     this.StartbtnSendData.CheckFilesNotes = this.ConflictNGData.CheckFilesNotes;

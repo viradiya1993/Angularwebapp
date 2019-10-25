@@ -98,6 +98,11 @@ export class RecounciliationItemComponent implements OnInit {
   }
 
   commonSendData() {
+console.log(this.selection.selected);
+    this.selection.selected.forEach(element => {
+          element.TAGGED=1
+      });
+
     this.behaviorService.RecouncileItemSendSetData(
       {
         ACCOUNTGUID: this.chartAccountDetail.ACCOUNTGUID,
@@ -342,7 +347,7 @@ export class RecounciliationItemComponent implements OnInit {
   }
   RecouncileSaveData(data: any) {
     data.VALIDATEONLY = false;
-    this._mainAPiServiceService.getSetData(data, 'SetTask').subscribe(response => {
+    this._mainAPiServiceService.getSetData(data, 'SetReconciliation').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.toastr.success(' save successfully');
       } else if (response.CODE == 451 && response.STATUS == 'warning') {

@@ -54,9 +54,10 @@ const appRoutes: Routes = [
   { path: 'general-journal', loadChildren: './general-journal/general-journal.module#GeneralJoural' },
   { path: 'account-reconciliation', loadChildren: './account-reconciliation/account-reconciliation.module#AccountRecountciliation' },
   { path: 'account-management', loadChildren: './account-managment/account-managment.module#AccountManagmentModule' },
+  // { path: 'Safe-Custody', loadChildren: './main-safe-custody/main-safe-custody.module#MainSafeCustodyModule' }
   // { path: 'trust-chart-of-account', loadChildren: './TrustChartOfAccountComponent/trust-chart-of-account.module#TrustChartAccount' },
-  // { path: 'trust-general-journal', loadChildren: './TrustGeneralJournalComponent/trust-general-journal.module#TrustGeneral' },
-
+  { path: 'trust-general-journal', loadChildren: './TrustGeneralJournalComponent/trust-general-journal.module#TrustGeneral' },
+  
 ];
 
 
@@ -91,6 +92,7 @@ const appRoutes: Routes = [
     ChartOfAccount,
     GeneralJoural,
     AccountRecountciliation,
+    // TrustChartAccount,
     TrustGeneral,
     // TrustChartAccount
 

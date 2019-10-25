@@ -28,7 +28,7 @@ import { TaskModule } from './Task/task.module';
 import { GloballyAuthorityModule } from './globally-Authority/globally-authority.module';
 import { TimeBillingModule } from './time-billing/time-billing.module';
 import { GloballySafeCustodyModule } from './globally-safecustody/globally-safecustody.module';
-import { TrustGeneral } from './trust-general-journal/trust-general-journal.module';
+// import { TrustGeneral } from './trust-general-journal/trust-general-journal.module';
 // import { TrustChartAccount } from './trust-chart-of-account/trust-chart-of-account.module';
 
 
@@ -56,8 +56,8 @@ const appRoutes: Routes = [
   { path: 'account-management', loadChildren: './account-managment/account-managment.module#AccountManagmentModule' },
   // { path: 'Safe-Custody', loadChildren: './main-safe-custody/main-safe-custody.module#MainSafeCustodyModule' }
   // { path: 'trust-chart-of-account', loadChildren: './TrustChartOfAccountComponent/trust-chart-of-account.module#TrustChartAccount' },
-  { path: 'trust-general-journal', loadChildren: './TrustGeneralJournalComponent/trust-general-journal.module#TrustGeneral' },
-  
+  // { path: 'trust-general-journal', loadChildren: './TrustGeneralJournalComponent/trust-general-journal.module#TrustGeneral' },
+
 ];
 
 

@@ -58,7 +58,7 @@
                 </div>
                 <div class="one">
                     <mat-tab-group (selectedTabChange)="TabingClick($event.tab.textLabel)">
-                        <mat-tab  label="Time Entries" class="time-entries">
+                        <mat-tab label="Time Entries" class="time-entries">
                             <div class="example-containerdata example-containerdata-invoice-view">
                                 <table mat-table #table [dataSource]="invoiceDatasor" [@animateStagger]="{value:'50'}" matSort class="">
                                     <ng-container matColumnDef="ITEMDATE">
@@ -105,9 +105,9 @@
                                     <textarea matInput formControlName="COMMENT"></textarea>
                                 </mat-form-field>
                             </div>
-                          
+
                         </mat-tab>
-                        <mat-tab  label="Receipts">
+                        <mat-tab label="Receipts">
                             <div class="example-containerdata example-containerdata-invoice-view">
                                 <table mat-table #table [dataSource]="ReceiptsData" [@animateStagger]="{value:'50'}" matSort class="mat-elevation-z8">
                                     <ng-container matColumnDef="RECEIPTCODE">
@@ -163,7 +163,7 @@
                                 </mat-form-field>
                             </div>
                         </mat-tab>
-                        <mat-tab  label="Interest Charges">
+                        <mat-tab label="Interest Charges">
                             <div class="example-containerdata example-containerdata-invoice-view">
                                 <table mat-table #table [dataSource]="IntersetChatgesData" [@animateStagger]="{value:'50'}" matSort class="mat-elevation-z8">
                                     <ng-container matColumnDef="INVOICECODE">

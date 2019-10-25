@@ -26,6 +26,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material/sort';
 import { ReportFilterComponent } from './report-filter/report-filter.component';
+import { ApplicationPipesModule } from '../application-pipes.module';
 
 
 const routes = [
@@ -85,7 +86,8 @@ const routes = [
     ScrollDispatchModule,
     MatNativeDateModule,
     ReactiveFormsModule,
-    MatSortModule
+    MatSortModule,
+    ApplicationPipesModule
 
   ],
   exports: [

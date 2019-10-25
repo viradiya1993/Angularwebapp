@@ -30,6 +30,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material/sort';
 import { PastReconciliationComponent } from './past-reconciliation/past-reconciliation.component';
+import { ApplicationPipesModule } from '../application-pipes.module';
 
 const routes = [
   { path: '', redirectTo: '/account-reconciliation/reconciliation-item', pathMatch: 'full', canActivate: [AuthGuard] },
@@ -95,7 +96,8 @@ const routes = [
     ScrollDispatchModule,
     MatNativeDateModule,
     ReactiveFormsModule,
-    MatSortModule
+    MatSortModule,
+    ApplicationPipesModule
 
   ],
   exports: [

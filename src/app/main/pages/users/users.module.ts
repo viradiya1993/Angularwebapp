@@ -28,6 +28,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { UserBudgetDialogComponent } from './user-dialog/user-budget-dialog/user-budget-dialog.component';
 
 import { BehaviorService } from 'app/_services';
+import { ApplicationPipesModule } from '../application-pipes.module';
 
 
 
@@ -90,7 +91,8 @@ const routes = [
     ScrollDispatchModule,
     MatNativeDateModule,
     ReactiveFormsModule,
-    MatSortModule
+    MatSortModule,
+    ApplicationPipesModule
 
   ],
   providers: [BehaviorService],

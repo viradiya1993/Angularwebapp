@@ -26,6 +26,7 @@ import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
 import { WriteOffInvoiceComponent } from './newWriteOffInvoice/newWriteOffInvoice.component';
 import { InvoiceNumberPipe } from './invoicenumber.pipe'
 import { GenerateInvoiceComponent } from './generate-invoice/generate-invoice.component';
+import { ApplicationPipesModule } from '../application-pipes.module';
 
 const routes = [
   { path: '', component: InvoiceComponent, canActivate: [AuthGuard] },
@@ -90,7 +91,8 @@ const routes = [
     MaterialTimePickerModule,
     MatCheckboxModule,
     DragDropModule,
-    MatSortModule
+    MatSortModule,
+    ApplicationPipesModule
   ],
   providers: [
     { provide: DateAdapter, useClass: AppDateAdapter },

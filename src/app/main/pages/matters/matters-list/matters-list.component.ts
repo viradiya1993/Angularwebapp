@@ -71,7 +71,6 @@ export class MattersListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.setTableResize(this.matTableRef.nativeElement.clientWidth);
   }
   setTableResize(tableWidth: number) {
-    console.log(tableWidth);
     let totWidth = 0;
     this.displayedColumns.forEach((column) => {
       totWidth += 100;

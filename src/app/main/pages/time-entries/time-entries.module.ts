@@ -28,6 +28,7 @@ import { NumericDirective } from './time-entry-dialog/numericValidation.componen
 import { MatSortModule } from '@angular/material/sort';
 import { ResumeTimerComponent } from './resume-timer/resume-timer.component';
 import { WriteOffTimeEntryComponent } from './write-off-time-entry/write-off-time-entry.component';
+import { ApplicationPipesModule } from '../application-pipes.module';
 const routes = [
   // { path: '', component: TimeEntriesComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: '/time-entries/full-time-entries', pathMatch: 'full', canActivate: [AuthGuard] },
@@ -77,7 +78,8 @@ const routes = [
 
     MaterialTimePickerModule,
     DragDropModule,
-    MatSortModule
+    MatSortModule,
+    ApplicationPipesModule
   ],
   // providers: [
   //   // {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},

@@ -46,8 +46,9 @@ import { UserSelectPopupComponent } from './user-select-popup/user-select-popup.
 import { NumericDirective } from './matter-popup/numericValidation.component';
 
 
-import {MatSortModule} from '@angular/material/sort';
+import { MatSortModule } from '@angular/material/sort';
 import { FileNoteDialogComponent } from './file-note-dialog/file-note-dialog.component';
+import { ApplicationPipesModule } from '../application-pipes.module';
 
 
 
@@ -66,7 +67,7 @@ const routes = [
     ClientComponent,
     RatesComponent,
     NumericDirective,
- 
+
     // DetailsComponent,
     OthersComponent,
     // NewmatterDetailComponent,
@@ -92,7 +93,7 @@ const routes = [
     CrownAllotmentComponent,
     CorrespondDailogComponent,
     UserSelectPopupComponent
-    
+
   ],
   imports: [
     CommonModule,
@@ -124,12 +125,13 @@ const routes = [
     MatRadioModule,
     MatGridListModule,
     DragDropModule,
-    MatSortModule
+    MatSortModule,
+    ApplicationPipesModule
   ],
   exports: [
     MattersComponent,
     DragDropModule
   ],
-  entryComponents: [MatterPopupComponent,FileNoteDialogComponent, MatterAddressPopupComponent, CorrespondDailogComponent, UserSelectPopupComponent]
+  entryComponents: [MatterPopupComponent, FileNoteDialogComponent, MatterAddressPopupComponent, CorrespondDailogComponent, UserSelectPopupComponent]
 })
 export class MattersModule { }

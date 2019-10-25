@@ -17,6 +17,7 @@ import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
 
 import {MatTreeModule} from '@angular/material/tree';
 import { MainSearchingComponent } from './main-searching.component';
+import { ApplicationPipesModule } from '../application-pipes.module';
 
 const routes = [
   { path: '', component: MainSearchingComponent, canActivate: [AuthGuard] },
@@ -60,7 +61,8 @@ const routes = [
     MaterialTimePickerModule,
     MatCheckboxModule,
     DragDropModule,
-    MatSortModule
+    MatSortModule,
+    ApplicationPipesModule
 
   ],
   exports: [

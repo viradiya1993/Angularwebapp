@@ -11,18 +11,19 @@ import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, 
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 import { SpendMoneyAddComponent } from './spend-money-add-dialog/spend-money-add.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import {MatSortModule} from '@angular/material/sort';
+import { MatSortModule } from '@angular/material/sort';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker'
 import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
+import { ApplicationPipesModule } from '../application-pipes.module';
 
 const routes = [
   { path: '', component: SpendMoneyComponent, canActivate: [AuthGuard] },
 
 ];
-@NgModule({  
+@NgModule({
   declarations: [
     SpendMoneyComponent,
-    SpendMoneyAddComponent,    
+    SpendMoneyAddComponent,
   ],
   entryComponents: [
     SpendMoneyAddComponent,
@@ -61,14 +62,15 @@ const routes = [
     MaterialTimePickerModule,
     MatCheckboxModule,
     DragDropModule,
-    MatSortModule
+    MatSortModule,
+    ApplicationPipesModule
   ],
   exports: [
     SpendMoneyComponent, SpendMoneyAddComponent
   ],
   providers: [
-    {provide: DateAdapter, useClass: AppDateAdapter},
-    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
+    { provide: DateAdapter, useClass: AppDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
   ],
 })
 export class SpendMoneyModule { }

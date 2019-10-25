@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { AuthGuard } from '../../../_guards';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule, MatProgressSpinnerModule, MatPaginatorModule, MatCheckboxModule, MatTabsModule, MatExpansionModule, MatSlideToggleModule, MatCardModule, MatSelectModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule } from '@angular/material';
 
 import { LegalDetailsComponent } from './legal-details.component';
@@ -13,13 +13,14 @@ import { ChronologyComponent } from './chronology/chronology.component';
 import { AuthoritiesComponent } from './authorities/authorities.component';
 import { FileNotesComponent } from './file-notes/file-notes.component';
 import { SafecustodyComponent } from './safecustody/safecustody.component';
-import {MatSortModule} from '@angular/material/sort';
+import { MatSortModule } from '@angular/material/sort';
 import { SearchComponent } from './search/search.component';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { ChronItemDailogComponent } from './chronology/chron-item-dailog/chron-item-dailog.component'
 import { SafeCustodyDialogeComponent } from './safecustody/safe-custody-dialog/safe-custody-dialog.component';
 import { legalDetailTaskComponent } from './legal-task/legal-task.component';
-import {MatTreeModule} from '@angular/material/tree';
+import { MatTreeModule } from '@angular/material/tree';
+import { ApplicationPipesModule } from '../application-pipes.module';
 
 const routes = [
   { path: '', redirectTo: '/legal-details/chronology', pathMatch: 'full', canActivate: [AuthGuard] },
@@ -31,14 +32,14 @@ const routes = [
       { path: 'legal-detail-task', component: legalDetailTaskComponent },
       { path: 'safe-custody', component: SafecustodyComponent },
       { path: 'search', component: SearchComponent },
-     
+
     ], canActivate: [AuthGuard]
   }
 ];
 @NgModule({
-  declarations: [LegalDetailsComponent, legalDetailTaskComponent,ChronologyComponent, AuthoritiesComponent, FileNotesComponent, SafecustodyComponent,
-    SearchComponent, ChronItemDailogComponent,SafeCustodyDialogeComponent],
-    entryComponents: [ChronItemDailogComponent,SafeCustodyDialogeComponent],
+  declarations: [LegalDetailsComponent, legalDetailTaskComponent, ChronologyComponent, AuthoritiesComponent, FileNotesComponent, SafecustodyComponent,
+    SearchComponent, ChronItemDailogComponent, SafeCustodyDialogeComponent],
+  entryComponents: [ChronItemDailogComponent, SafeCustodyDialogeComponent],
   imports: [
     CommonModule,
     SatDatepickerModule, SatNativeDateModule,
@@ -65,12 +66,14 @@ const routes = [
     MatTabsModule,
     MatPaginatorModule,
     MatSortModule,
-    DragDropModule
+    DragDropModule,
+    ApplicationPipesModule
+
   ],
   exports: [
     LegalDetailsComponent,
     // ChronItemDailogComponent
   ],
- 
+
 })
 export class LegalDetailsModule { }

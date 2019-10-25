@@ -622,12 +622,11 @@ body .mat-input-element {
     bottom: 3px !important;
 }
 
-.mat-sort-header-arrow {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-    transition: none !important;
-}
-
+// .mat-sort-header-arrow {
+//     opacity: 1 !important;
+//     transform: translateY(0) !important;
+//     transition: none !important;
+// }
 td.text-L-align {
     text-align: left;
 }
@@ -645,4 +644,5 @@ td.text-C-align {
 .text-L-align,
 .text-C-align {
     border-bottom: 1px solid rgba(0, 0, 0, .12);
+    padding: 10px;
 }

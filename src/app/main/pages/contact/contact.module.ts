@@ -28,7 +28,8 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { ContactCorresDetailsComponent } from './contact-corres-details/contact-corres-details.component';
 import { ContactSelectDialogComponent } from './contact-select-dialog/contact-select-dialog.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import {MatSortModule} from '@angular/material/sort';
+import { MatSortModule } from '@angular/material/sort';
+import { ApplicationPipesModule } from '../application-pipes.module';
 const routes = [
   { path: 'contact', component: ContactComponent, canActivate: [AuthGuard] }
 ];
@@ -46,7 +47,7 @@ const routes = [
     ContactCorresDetailsComponent,
     ContactSelectDialogComponent,
 
-  
+
   ],
   imports: [
     CommonModule,
@@ -79,7 +80,8 @@ const routes = [
     SatNativeDateModule,
     MatProgressSpinnerModule,
     DragDropModule,
-    MatSortModule
+    MatSortModule,
+    ApplicationPipesModule
   ],
   exports: [
     ContactComponent

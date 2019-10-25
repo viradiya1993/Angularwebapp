@@ -14,6 +14,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatSortModule } from '@angular/material/sort';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker'
 import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
+import { ApplicationPipesModule } from '../application-pipes.module';
 const routes = [
   { path: '', component: ReceiveMoneyComponent, canActivate: [AuthGuard] },
 ];
@@ -54,7 +55,8 @@ const routes = [
     MaterialTimePickerModule,
     MatCheckboxModule,
     DragDropModule,
-    MatSortModule
+    MatSortModule,
+    ApplicationPipesModule
 
   ],
   exports: [

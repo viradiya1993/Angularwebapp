@@ -754,8 +754,10 @@ export class SpendMoneyAddComponent implements OnInit {
     //ammount calculation
     // for ammount field 
     this.FinalExGSTAmount = this.setMainAmount - this.setMainGST;
-    if (this.FinalExGSTAmount == 0) {
-      this.toastr.error("Amount should not be 0");
+
+    
+    if (this.FinalExGSTAmount == 0 ||  this.f.Expenseac.value =='' || this.f.Notes.value =='') {
+      this.toastr.error("Amount should not be 0 || You should select a Expense a/c  || You should enter Notes");
       return;
     }
     let Data = {

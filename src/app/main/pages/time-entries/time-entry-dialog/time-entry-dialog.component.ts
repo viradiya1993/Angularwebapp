@@ -98,6 +98,8 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       QUANTITY: [''],
       PRICE: [''],
       PRICEINCGST: [''],
+      SendPRICEINCGST:[''],
+      SendPRICE:[''],
       ITEMTIME: [''],
       ADDITIONALTEXTSELECT: [''],
       ADDITIONALTEXT: ['', Validators.required],
@@ -231,8 +233,12 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
 
         let tempDate = timeEntryData.ITEMDATE.split("/");
         this.ITEMDATEModel = new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]);
-        this.timeEntryForm.controls['PRICEINCGST'].setValue(timeEntryData.PRICEINCGST);
-        this.timeEntryForm.controls['PRICE'].setValue(timeEntryData.PRICE);
+        
+        this.timeEntryForm.controls['SendPRICEINCGST'].setValue(timeEntryData.PRICEINCGST);
+        this.timeEntryForm.controls['SendPRICE'].setValue(timeEntryData.PRICE);
+        
+        this.timeEntryForm.controls['PRICEINCGST'].setValue((Number(timeEntryData.PRICEINCGST)).toFixed(2));
+        this.timeEntryForm.controls['PRICE'].setValue((Number(timeEntryData.PRICE)).toFixed(2));
         this.timeEntryForm.controls['ADDITIONALTEXT'].setValue(timeEntryData.ADDITIONALTEXT);
         this.timeEntryForm.controls['ADDITIONALTEXTSELECT'].setValue(timeEntryData.ADDITIONALTEXT);
         this.timeEntryForm.controls['COMMENT'].setValue(timeEntryData.COMMENT);
@@ -301,6 +307,8 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
           let CalcWorkItemCharge = response.DATA;
           this.timeEntryForm.controls['PRICE'].setValue(Number(CalcWorkItemCharge.PRICE).toFixed(2));
           this.timeEntryForm.controls['PRICEINCGST'].setValue(Number(CalcWorkItemCharge.PRICEINCGST).toFixed(2));
+          this.timeEntryForm.controls['SendPRICE'].setValue(Number(CalcWorkItemCharge.PRICE));
+          this.timeEntryForm.controls['SendPRICEINCGST'].setValue(Number(CalcWorkItemCharge.PRICEINCGST));
           this.isLoadingResults = false;
         } else if (response.MESSAGE == 'Not logged in') {
           this.dialogRef.close(false);
@@ -351,8 +359,8 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       "ITEMDATE": this.ITEMDATEVLAUE,
       "ITEMTIME": this.f.ITEMTIME.value,
       "MATTERGUID": this.f.MATTERGUID.value,
-      "PRICE": this.f.PRICE.value,
-      "PRICEINCGST": this.f.PRICEINCGST.value,
+      "PRICE": this.f.SendPRICE.value,
+      "PRICEINCGST": this.f.SendPRICEINCGST.value,
       "QUANTITY": this.f.QUANTITY.value,
     }
     if (this.f.ITEMTYPE.value == "activity" || this.f.ITEMTYPE.value == "sundry") {

@@ -93,7 +93,7 @@ const appRoutes: Routes = [
     GeneralJoural,
     AccountRecountciliation,
     // TrustChartAccount,
-    TrustGeneral,
+    // TrustGeneral,
     // TrustChartAccount
 
   ]

@@ -55,10 +55,15 @@ export class BehaviorService {
   public dialogClose$: BehaviorSubject<any> = new BehaviorSubject(null);
   public UseCalanderViewType$: BehaviorSubject<any> = new BehaviorSubject(null);
   
+  public MatterNum$: BehaviorSubject<any> = new BehaviorSubject(null);
+
   constructor(private http: HttpClient) { }
 
   matterInvoiceData(matterClassData: any) {
     this.matterInvoice$.next(matterClassData);
+  }
+  MatterNum(MatterNum: any) {
+    this.MatterNum$.next(MatterNum);
   }
   dialogClose(dialogClose: any) {
     this.dialogClose$.next(dialogClose);

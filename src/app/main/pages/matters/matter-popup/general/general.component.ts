@@ -4,7 +4,7 @@ import { DatePipe } from '@angular/common';
 import { round } from 'lodash';
 import { MatDialog,MatDialogRef, MatDatepickerInputEvent } from '@angular/material';
 import { UserSelectPopupComponent } from '../../user-select-popup/user-select-popup.component';
-import { MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import { MatterPopupComponent } from '../matter-popup.component';
 import { ToastrService } from 'ngx-toastr';
 
@@ -21,10 +21,16 @@ export class GeneralComponent implements OnInit {
   PRICEVAL: any;
   PRICEVALGST: any;
   isDefultMatter: boolean;
-  constructor(public datepipe: DatePipe, public MatDialog: MatDialog,   public dialogRef: MatDialogRef<MatterPopupComponent>,
+  constructor(public datepipe: DatePipe, public MatDialog: MatDialog, 
+      public dialogRef: MatDialogRef<MatterPopupComponent>, public behaviorService:BehaviorService,
     private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService,) {
-  }
 
+      this.behaviorService.MatterNum$.subscribe(result => {
+        if(result != null){
+         this.CoommonMatterNum();
+        }
+       });
+  }
   CommencementDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.matterdetailForm.controls['COMMENCEMENTDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
@@ -49,7 +55,6 @@ export class GeneralComponent implements OnInit {
   }
   CoommonMatterNum(){
     this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: true, DATA: {} }, 'SetMatter').subscribe(res => {
-      console.log(res);
       if (res.CODE == 200 && res.STATUS == "success") {
         if (res.DATA.DEFAULTVALUES['SHORTNAME'] == "") {
           this.isDefultMatter = false;

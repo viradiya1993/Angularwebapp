@@ -82,7 +82,7 @@ export class ClientComponent implements OnInit {
   }
   CoommonMatterNum(){
     this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: true, DATA: {} }, 'SetMatter').subscribe(res => {
-      console.log(res);
+   
       if (res.CODE == 200 && res.STATUS == "success") {
         if (res.DATA.DEFAULTVALUES['SHORTNAME'] == "") {
           this.isDefultMatter = false;

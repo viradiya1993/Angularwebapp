@@ -24,8 +24,8 @@
                         <mat-form-field class="example" fxFlex="20" appearance="outline">
                             <mat-label>Matter</mat-label>
                             <input formControlName="MATTER" readonly matInput>
-                            <mat-icon class="set_icon" matSuffix (click)='SelectMatter()'>
-                                <img class="{{ImgDisAb}}" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                            <mat-icon class="set_icon {{ImgDisAb}}" matSuffix (click)='SelectMatter()'>
+                                <img src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                             </mat-icon>
                         </mat-form-field>
 
@@ -33,8 +33,8 @@
                         <mat-form-field class="example" fxFlex="20" appearance="outline">
                             <mat-label>Client</mat-label>
                             <input readonly matInput formControlName="CLIENT">
-                            <mat-icon class="set_icon" matSuffix (click)='SelectContact()'>
-                                <img class="{{ImgDisAb}}" src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                            <mat-icon class="set_icon {{ImgDisAb}}" matSuffix (click)='SelectContact()'>
+                                <img src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                             </mat-icon>
                         </mat-form-field>
 
@@ -76,6 +76,7 @@
                                             </tr>
                                         </table>
                                     </div>
+                                    <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
                                 </div>
                             </div>
                         </div>

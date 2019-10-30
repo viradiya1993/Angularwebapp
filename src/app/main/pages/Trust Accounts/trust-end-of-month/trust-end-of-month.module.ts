@@ -19,6 +19,7 @@ import { TrustEndOfMonthComponent } from './trust-end-of-month.component';
 import { ToDoComponent } from './to-do/to-do.component';
 import { EndOfMonthHistroyComponent } from './end-month-histroy/end-month-histroy.component';
 import { AuthGuard } from 'app/_guards';
+import { ApplicationPipesModule } from '../../application-pipes.module';
 
 const routes = [
   { path: '', redirectTo: '/trust-end-month/to-do', pathMatch: 'full', canActivate: [AuthGuard] },
@@ -67,7 +68,8 @@ const routes = [
     MaterialTimePickerModule,
     MatCheckboxModule,
     DragDropModule,
-    MatSortModule
+    MatSortModule,
+    ApplicationPipesModule
 
   ],
   exports: [

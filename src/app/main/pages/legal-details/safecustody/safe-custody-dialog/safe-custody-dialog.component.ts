@@ -1,11 +1,13 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { MainAPiServiceService, BehaviorService, TimersService } from 'app/_services';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatDialog } from '@angular/material';
-import { FormGroup, FormBuilder, Validators, FormControl, FormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
+import { ContactSelectDialogComponent } from 'app/main/pages/contact/contact-select-dialog/contact-select-dialog.component';
+import { isNull } from 'util';
 
 
 @Component({
@@ -16,40 +18,29 @@ import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/conf
 })
 export class SafeCustodyDialogeComponent implements OnInit {
   SafeCustody: FormGroup;
-  highlightedRows: any;
   isLoadingResults: boolean = false;
-  theme_type = localStorage.getItem('theme_type');
-  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   errorWarningData: any = { "Error": [], 'Warning': [] };
   isspiner: boolean = false;
   action: any;
-  contact: any;
   dialogTitle: string;
-  ReviewDate: any;
-  CheckIndate: any;
-  matterno: any;
   mattername: any;
   FormAction: any;
   safecustodydata: any = [];
   cuurentmatter = JSON.parse(localStorage.getItem('set_active_matters'));
   documnettype: any = [];
   packetcustody: any = [];
-  checkboxvalue: any;
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
 
   constructor(private _mainAPiServiceService: MainAPiServiceService,
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
     private behaviorService: BehaviorService,
-    //private Timersservice: TimersService,
     public datepipe: DatePipe,
     public dialogRef: MatDialogRef<SafeCustodyDialogeComponent>,
     public _matDialog: MatDialog,
     private Timersservice: TimersService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.action = data.type.action;
-    this.contact = data.type.result;
-    this.matterno = data.type.result;
+    this.action = data.safeCustodyData.action;
     if (this.action === 'new client' || this.action === 'new matter' || this.action === 'newlegal') {
       this.dialogTitle = 'New Safe Custody';
     } else if (this.action === 'edit' || this.action === 'editlegal') {
@@ -66,69 +57,78 @@ export class SafeCustodyDialogeComponent implements OnInit {
 
   ngOnInit() {
     this.SafeCustody = this._formBuilder.group({
-      Matternum: [''],
-      Owener: [''],
-      Packet: [''],
+      SAFECUSTODYGUID: [''],
+      SAFECUSTODYPACKETGUID: [''],
+      MATTERGUID: [""],
+      SHORTNAME: [''],
+      CONTACTGUID: [''],
+      CONTACTNAME: [''],
       DOCUMENTTYPE: [''],
       SAFECUSTODYDESCRIPTION: [''],
       DOCUMENTNAME: [''],
-      DateSafecustody: [''],
       ADDITIONALTEXT: [''],
-      Dateperson: [''],
+      REMINDERDATE: [this.datepipe.transform(new Date(), 'dd/MM/yyyy')],
+      REMINDERDATETEXT: [new Date()],
+      CHECKINDATE: [this.datepipe.transform(new Date(), 'dd/MM/yyyy')],
+      CHECKINDATETEXT: [new Date()],
       CHECKINCONTACTNAME: [''],
-      MetterGuid: [''],
-      ConatctGuid: [''],
-      SAFECUSTODYGUID: [''],
-      PACKETGUID: [''],
-      SendRevieDate: [this.datepipe.transform(new Date(), 'dd/MM/yyyy')],
-      SendCheckinDate: [this.datepipe.transform(new Date(), 'dd/MM/yyyy')]
     });
     if (this.action == 'edit' || this.action === 'copy' || this.action === 'editlegal') {
-      this.EditSafeCustody();
-    }
-    if (this.action === 'new client') {
-      this.SafeCustody.controls['Matternum'].setValue('No Matter');
-      this.SafeCustody.controls['Owener'].setValue(this.contact.CONTACTNAME);
-      this.SafeCustody.controls['ConatctGuid'].setValue(this.contact.CONTACTGUID);
+      this.isLoadingResults = true;
+      this._mainAPiServiceService.getSetData({ SAFECUSTODYGUID: this.safecustodydata.SAFECUSTODYGUID }, 'GetSafeCustody').subscribe(res => {
+        if (res.CODE == 200 && res.STATUS == "success") {
+          let SAFECUSTODIESDATA = res.DATA.SAFECUSTODIES[0];
+          this.SafeCustody.controls['SAFECUSTODYGUID'].setValue(SAFECUSTODIESDATA.SAFECUSTODYGUID);
+          this.SafeCustody.controls['MATTERGUID'].setValue(SAFECUSTODIESDATA.MATTERGUID);
+          if (SAFECUSTODIESDATA.MATTERGUID != '')
+            this.SafeCustody.controls['SHORTNAME'].setValue(SAFECUSTODIESDATA.SHORTNAME);
+          else
+            this.SafeCustody.controls['SHORTNAME'].setValue('No Matter');
+          this.SafeCustody.controls['CONTACTGUID'].setValue(SAFECUSTODIESDATA.CONTACTGUID);
+          this.SafeCustody.controls['CONTACTNAME'].setValue(SAFECUSTODIESDATA.CONTACTNAME);
+          this.SafeCustody.controls['ADDITIONALTEXT'].setValue(SAFECUSTODIESDATA.ADDITIONALTEXT);
+          this.SafeCustody.controls['DOCUMENTTYPE'].setValue(SAFECUSTODIESDATA.DOCUMENTTYPE);
+          this.SafeCustody.controls['DOCUMENTNAME'].setValue(SAFECUSTODIESDATA.DOCUMENTNAME);
+          this.SafeCustody.controls['SAFECUSTODYDESCRIPTION'].setValue(SAFECUSTODIESDATA.SAFECUSTODYDESCRIPTION);
+        } else if (res.MESSAGE == 'Not logged in') {
+          this.dialogRef.close(false);
+        }
+        this.isLoadingResults = false;
+      }, err => {
+        this.toastr.error(err);
+        this.isLoadingResults = false;
+      });
+    } else if (this.action === 'new client') {
+      this.SafeCustody.controls['SHORTNAME'].setValue('No Matter');
+      this.SafeCustody.controls['CONTACTNAME'].setValue(this.data.safeCustodyData.result.CONTACTNAME);
+      this.SafeCustody.controls['CONTACTGUID'].setValue(this.data.safeCustodyData.result.CONTACTGUID);
     } else if (this.action === 'new matter') {
-      this.SafeCustody.controls['Matternum'].setValue(this.matterno.SHORTNAME);
-      this.SafeCustody.controls['Owener'].setValue(this.matterno.CONTACTNAME);
-      this.SafeCustody.controls['MetterGuid'].setValue(this.matterno.MATTERGUID);
-      this.SafeCustody.controls['ConatctGuid'].setValue(this.contact.CONTACTGUID);
+      this.SafeCustody.controls['SHORTNAME'].setValue(this.data.safeCustodyData.result.SHORTNAME);
+      this.SafeCustody.controls['MATTERGUID'].setValue(this.data.safeCustodyData.result.MATTERGUID);
+      this.SafeCustody.controls['CONTACTNAME'].setValue(this.data.safeCustodyData.result.CONTACTNAME);
+      this.SafeCustody.controls['CONTACTGUID'].setValue(this.data.safeCustodyData.result.CONTACTGUID);
     } else if (this.action === 'newlegal') {
-      this.SafeCustody.controls['Matternum'].setValue(this.cuurentmatter.SHORTNAME);
-      this.SafeCustody.controls['Owener'].setValue(this.cuurentmatter.CONTACTNAME);
-      this.SafeCustody.controls['MetterGuid'].setValue(this.cuurentmatter.MATTERGUID);
-      this.SafeCustody.controls['ConatctGuid'].setValue(this.cuurentmatter.CONTACTGUID);
+      this.SafeCustody.controls['SHORTNAME'].setValue(this.cuurentmatter.SHORTNAME);
+      this.SafeCustody.controls['MATTERGUID'].setValue(this.cuurentmatter.MATTERGUID);
+      this.SafeCustody.controls['CONTACTNAME'].setValue(this.cuurentmatter.CONTACTNAME);
+      this.SafeCustody.controls['CONTACTGUID'].setValue(this.cuurentmatter.CONTACTGUID);
     }
-    this.DocumentType();
-    this.PacketCustody();
-  }
-  get f() {
-    return this.SafeCustody.controls;
-  }
-  closepopup() {
-    this.dialogRef.close(false);
-  }
-  choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.ReviewDate = this.datepipe.transform(event.value, 'dd/MM/yyyy');
-  }
-  PersonDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.CheckIndate = this.datepipe.transform(event.value, 'dd/MM/yyyy');
-  }
-  EditSafeCustody() {
     this.isLoadingResults = true;
-    this._mainAPiServiceService.getSetData({ SAFECUSTODYGUID: this.safecustodydata.SAFECUSTODYGUID }, 'GetSafeCustody').subscribe(res => {
+    this.Timersservice.GetLookupsData({ LookupType: 'Document Type' }).subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
-        this.SafeCustody.controls['SAFECUSTODYGUID'].setValue(res.DATA.SAFECUSTODIES[0].SAFECUSTODYGUID);
-        this.SafeCustody.controls['MetterGuid'].setValue(res.DATA.SAFECUSTODIES[0].MATTERGUID);
-        this.SafeCustody.controls['ConatctGuid'].setValue(res.DATA.SAFECUSTODIES[0].CONTACTGUID);
-        this.SafeCustody.controls['Matternum'].setValue('No Matter');
-        this.SafeCustody.controls['Owener'].setValue(res.DATA.SAFECUSTODIES[0].CONTACTNAME);
-        this.SafeCustody.controls['Packet'].setValue(res.DATA.SAFECUSTODIES[0].PACKETNUMBER);
-        this.SafeCustody.controls['DocumentType'].setValue(res.DATA.SAFECUSTODIES[0].DOCUMENTTYPE);
-        this.SafeCustody.controls['Dscription'].setValue(res.DATA.SAFECUSTODIES[0].SAFECUSTODYDESCRIPTION);
-        this.SafeCustody.controls['DateSafecustody'].setValue(res.DATA.SAFECUSTODIES[0].REMINDERDATE);
+        this.documnettype = res.DATA.LOOKUPS;
+      } else if (res.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      }
+      this.isLoadingResults = false;
+    }, err => {
+      this.toastr.error(err);
+      this.isLoadingResults = false;
+    });
+    this.isLoadingResults = true;
+    this._mainAPiServiceService.getSetData({}, 'GetSafeCustodyPacket').subscribe(res => {
+      if (res.CODE == 200 && res.STATUS == "success") {
+        this.packetcustody = res.DATA.SAFECUSTODYPACKETS;
       } else if (res.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       }
@@ -138,47 +138,58 @@ export class SafeCustodyDialogeComponent implements OnInit {
       this.isLoadingResults = false;
     });
   }
+  get f() {
+    return this.SafeCustody.controls;
+  }
+  SelectContact() {
+    const dialogRef = this._matDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true, data: '' });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.SafeCustody.controls['CONTACTGUID'].setValue(result.CONTACTGUID);
+        this.SafeCustody.controls['CONTACTNAME'].setValue(result.CONTACTNAME);
+      }
+    });
+  }
+  choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.SafeCustody.controls['REMINDERDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
+  PersonDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.SafeCustody.controls['CHECKINDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
+
   SaveSafeCustody() {
-    if (this.ReviewDate == "" || this.ReviewDate == null || this.ReviewDate == undefined) {
-      this.ReviewDate = this.f.SendRevieDate.value;
-    } else if (this.CheckIndate == "" || this.CheckIndate == null || this.CheckIndate == undefined) {
-      this.CheckIndate = this.f.SendCheckinDate.value;
-    }
-    let data: any = {
-      SAFECUSTODYPACKETGUID: this.f.PACKETGUID.value,
-      CONTACTGUID: this.f.ConatctGuid.value,
-      DOCUMENTTYPE: this.f.DOCUMENTTYPE.value,
-      SAFECUSTODYDESCRIPTION: this.f.SAFECUSTODYDESCRIPTION.value,
-      DOCUMENTNAME: this.f.DOCUMENTNAME.value,
-      ADDITIONALTEXT: this.f.ADDITIONALTEXT.value,
-      STATUS: "",
-      CHECKINDATE: this.CheckIndate,
-      CHECKINCONTACTNAME: this.f.CHECKINCONTACTNAME.value,
-      REMINDERGROUP: {
-        REMINDER: "",
-        REMINDERDATE: this.ReviewDate,
-        REMINDERTIME: "",
+    let PostData: any = {
+      "SAFECUSTODYPACKETGUID": this.f.SAFECUSTODYPACKETGUID.value,
+      "CONTACTGUID": this.f.CONTACTGUID.value,
+      "DOCUMENTTYPE": this.f.DOCUMENTTYPE.value,
+      "SAFECUSTODYDESCRIPTION": this.f.SAFECUSTODYDESCRIPTION.value,
+      "DOCUMENTNAME": this.f.DOCUMENTNAME.value,
+      "ADDITIONALTEXT": this.f.ADDITIONALTEXT.value,
+      "REMINDERDATE": this.f.REMINDERDATE.value,
+      "CHECKINDATE": this.f.CHECKINDATE.value,
+      "CHECKINCONTACTNAME": this.f.CHECKINCONTACTNAME.value,
+      "REMINDERGROUP": {
+        "REMINDER": '',
+        "REMINDERDATE": this.datepipe.transform(new Date(), 'dd/MM/yyyy'),
+        "REMINDERTIME": ''
       }
     }
+    PostData.MATTERGUID = isNull(this.f.MATTERGUID.value) ? "" : this.f.MATTERGUID.value;
     if (this.action === 'edit') {
       this.FormAction = 'update'
-      data.SAFECUSTODYGUID = this.f.SAFECUSTODYGUID.value;
-      data.MATTERGUID = this.f.MetterGuid.value;
-    } else if (this.action === 'new client' || this.action === 'newlegal') {
-      this.FormAction = 'insert'
-    } else if (this.action === 'new matter' || this.action === 'copy') {
-      data.MATTERGUID = this.f.MetterGuid.value;
+      PostData.SAFECUSTODYGUID = this.f.SAFECUSTODYGUID.value;
+    } else {
       this.FormAction = 'insert'
     }
     this.isspiner = true;
-    let finalData = { DATA: data, FormAction: this.FormAction, VALIDATEONLY: true };
-    this._mainAPiServiceService.getSetData(finalData, 'SetSafeCustody').subscribe(response => {
+    let PostFinalData: any = { FormAction: this.FormAction, VALIDATEONLY: true, Data: PostData };
+    this._mainAPiServiceService.getSetData(PostFinalData, 'SetSafeCustody').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        this.checkValidation(response.DATA.VALIDATIONS, finalData);
+        this.checkValidation(response.DATA.VALIDATIONS, PostFinalData);
       } else if (response.CODE == 451 && response.STATUS == 'warning') {
-        this.checkValidation(response.DATA.VALIDATIONS, finalData);
+        this.checkValidation(response.DATA.VALIDATIONS, PostFinalData);
       } else if (response.CODE == 450 && response.STATUS == 'error') {
-        this.checkValidation(response.DATA.VALIDATIONS, finalData);
+        this.checkValidation(response.DATA.VALIDATIONS, PostFinalData);
       } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       } else {
@@ -249,42 +260,6 @@ export class SafeCustodyDialogeComponent implements OnInit {
     }, error => {
       this.toastr.error(error);
     });
-  }
-
-  DocumentType() {
-    this.Timersservice.GetLookupsData({ LookupType: 'Document Type' }).subscribe(res => {
-      if (res.CODE == 200 && res.STATUS == "success") {
-        this.documnettype = res.DATA.LOOKUPS;
-      } else if (res.MESSAGE == 'Not logged in') {
-        this.dialogRef.close(false);
-      } else {
-        this.documnettype = [];
-      }
-      this.isLoadingResults = false;
-    }, err => {
-      this.toastr.error(err);
-    });
-  }
-
-  PacketCustody() {
-    this._mainAPiServiceService.getSetData({}, 'GetSafeCustodyPacket').subscribe(res => {
-      if (res.CODE == 200 && res.STATUS == "success") {
-        //console.log(res);
-        this.packetcustody = res.DATA.SAFECUSTODYPACKETS;
-      } else if (res.MESSAGE == 'Not logged in') {
-        this.dialogRef.close(false);
-      } else {
-        this.packetcustody = [];
-      }
-      this.isLoadingResults = false;
-    }, err => {
-      this.toastr.error(err);
-      this.isLoadingResults = false;
-    });
-  }
-  selectPacket(value) {
-    let packetid = this.packetcustody.find(c => c['PACKETNUMBER'] == value)
-    this.SafeCustody.controls['PACKETGUID'].setValue(packetid.SAFECUSTODYPACKETGUID);
   }
 
 }

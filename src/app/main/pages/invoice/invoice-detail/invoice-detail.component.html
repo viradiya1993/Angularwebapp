@@ -82,13 +82,13 @@
                                     <ng-container matColumnDef="PRICE">
                                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Charge</th>
                                         <td mat-cell *matCellDef="let row">
-                                            {{row.PRICE | currency}}
+                                            {{row.PRICE | toFixedAmount:true}}
                                         </td>
                                     </ng-container>
                                     <ng-container matColumnDef="GST">
                                         <th mat-header-cell *matHeaderCellDef mat-sort-header>GST</th>
                                         <td mat-cell *matCellDef="let row">
-                                            {{row.GST | currency}}
+                                            {{row.GST | toFixedAmount:true}}
                                         </td>
                                     </ng-container>
                                     <tr mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumnsTime; sticky: true"></tr>
@@ -138,7 +138,7 @@
                                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
                                         <td mat-cell *matCellDef="let row">
                                             <p class="company text-truncate">
-                                                {{row.AMOUNT | currency}}
+                                                {{row.AMOUNT | toFixedAmount:true}}
                                             </p>
                                         </td>
                                     </ng-container>
@@ -181,13 +181,13 @@
                                     <ng-container matColumnDef="INVOICETOTAL">
                                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
                                         <td mat-cell *matCellDef="let row">
-                                            {{row.INVOICETOTAL | currency }}
+                                            {{row.INVOICETOTAL | toFixedAmount:true }}
                                         </td>
                                     </ng-container>
                                     <ng-container matColumnDef="AMOUNTOUTSTANDINGEXGST">
                                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Outstanding</th>
                                         <td mat-cell *matCellDef="let row">
-                                            {{row.AMOUNTOUTSTANDINGEXGST | currency }}
+                                            {{row.AMOUNTOUTSTANDINGEXGST | toFixedAmount:true }}
                                         </td>
                                     </ng-container>
                                     <ng-container matColumnDef="COMMENT">

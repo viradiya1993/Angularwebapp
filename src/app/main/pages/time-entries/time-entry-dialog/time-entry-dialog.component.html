@@ -33,8 +33,8 @@
                             </mat-form-field>
                             <mat-form-field *ngIf="action=='Edit'" appearance="outline" fxFlex="25" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.ITEMDATE,'has-warning':errorWarningData.Warning?.ITEMDATE}">
                                 <mat-label>Date</mat-label>
-                                <input matInput [matDatepicker]="picker" placeholder="Choose a date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" [(ngModel)]="ITEMDATEModel" formControlName="ITEMDATE">
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <input matInput [disabled]="isDisable" [readonly]="isDisable" [matDatepicker]="picker" placeholder="Choose a date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" [(ngModel)]="ITEMDATEModel" formControlName="ITEMDATE">
+                                <mat-datepicker-toggle [disabled]="isDisable" matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
                             </mat-form-field>
                             <mat-form-field *ngIf="action=='Edit'" appearance="outline" fxFlex="25" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ITEMTIME,'has-warning':errorWarningData.Warning?.ITEMTIME}">

@@ -10,9 +10,9 @@
             <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
         </div>
         <div class="example-containerdata">
-                <div class="grid-overlay" *ngIf="isDisplay">
-                    <div class="grid-overlay-msg"> There is no data to display. </div>
-                </div>
+            <div class="grid-overlay" *ngIf="isDisplay">
+                <div class="grid-overlay-msg"> There is no data to display. </div>
+            </div>
             <table class="mat-table simple" [@animateStagger]="{value:'50'}">
                 <thead class="mat-header-row" fxLayoutAlign="center center">
                     <th class="mat-header-cell" fxFlex>Account Name</th>
@@ -27,7 +27,7 @@
                     <!-- use a disabled button to provide padding for tree leaf -->
                     <button mat-icon-button disabled></button>
                     <span> {{node.name}}</span>
-                    <span fxFlex="50" class="text-center">{{node.MainList.OPENINGBALANCE | currency}}</span>
+                    <span fxFlex="50" class="text-center">{{node.MainList.OPENINGBALANCE | toFixedAmount:true}}</span>
                     <!-- <span fxFlex="20" *ngIf="node.MainList.OPENINGBALANCE>0" class="text-center">{{node.MainList.ACCOUNTTYPE}}</span> -->
                 </mat-tree-node>
                 <!-- This is the tree node template for expandable nodes -->

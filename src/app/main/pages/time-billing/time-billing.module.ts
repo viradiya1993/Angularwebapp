@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { FuseSharedModule } from '@fuse/shared.module';
 import { AuthGuard } from '../../../_guards';
 
-import { MatButtonModule, MatPaginatorModule, MatProgressSpinnerModule, MatCheckboxModule, MatTabsModule, MatExpansionModule, MatSlideToggleModule, MatCardModule, MatSelectModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule,MatDialogModule } from '@angular/material';
+import { MatButtonModule, MatPaginatorModule, MatProgressSpinnerModule, MatCheckboxModule, MatTabsModule, MatExpansionModule, MatSlideToggleModule, MatCardModule, MatSelectModule, MatDatepickerModule, MatFormFieldModule, MatIconModule, MatInputModule, MatMenuModule, MatRippleModule, MatTableModule, MatToolbarModule, MatDialogModule } from '@angular/material';
 
 import { TimeBillingComponent } from './time-billing.component';
 import { EstimateComponent } from './estimate/estimate.component';
@@ -19,6 +19,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, Sa
 import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
 import { EstimateDilogComponent } from './estimate/estimate-dilog/estimate-dilog.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ApplicationPipesModule } from '../application-pipes.module';
 
 
 
@@ -42,7 +43,7 @@ const routes = [
 @NgModule({
 
   declarations: [
-    TimeBillingComponent, 
+    TimeBillingComponent,
     EstimateComponent,
     WorkInProgressComponent,
     MatterInvoicesComponent,
@@ -75,7 +76,8 @@ const routes = [
     MatPaginatorModule,
     MatSortModule,
     MatDialogModule,
-    DragDropModule
+    DragDropModule,
+    ApplicationPipesModule
   ],
   exports: [
     TimeBillingComponent,

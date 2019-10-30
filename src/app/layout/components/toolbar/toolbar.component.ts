@@ -1979,43 +1979,27 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             const dialogRef = this._matDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true, data: { type: null } });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
-                    this.SafeCustodyPoup(actionType, result);
-                    $("#mainsafecusday").click();
-                    $("#Legalsafecusday").click();
+                    this.SafeCustodyPoup({ action: actionType, result: result });
                 }
             });
         } else if (actionType === 'new matter') {
             const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
-                    this.SafeCustodyPoup(actionType, result);
-                    $("#mainsafecusday").click();
-                    $("#Legalsafecusday").click();
+                    this.SafeCustodyPoup({ action: actionType, result: result });
                 }
             });
         } else if (actionType === 'newlegal') {
-            this.SafeCustodyPoup(actionType, '');
+            this.SafeCustodyPoup({ action: actionType, result: '' });
         } else {
-            this.SafeCustodyPoup(actionType, '');
+            this.SafeCustodyPoup({ action: actionType, result: '' });
         }
     }
-    SafeCustodyPoup(actionType, result) {
-        let safeCustodyData = {}
-        if (actionType === 'new client' || actionType === 'new matter') {
-            safeCustodyData = { action: actionType, result }
-        } else if (actionType === 'edit' || actionType === 'copy') {
-            safeCustodyData = { action: actionType, result }
-        } else if (actionType === 'newlegal') {
-            safeCustodyData = { action: actionType, result }
-        } else if (actionType === 'editlegal') {
-            safeCustodyData = { action: actionType, result }
-        }
+    SafeCustodyPoup(safeCustodyData: any) {
         const dialogRef = this.dialog.open(SafeCustodyDialogeComponent, {
             disableClose: true,
             panelClass: 'Safe-Custody-dialog',
-            data: {
-                type: safeCustodyData,
-            }
+            data: { safeCustodyData }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {

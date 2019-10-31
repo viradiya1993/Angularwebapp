@@ -44,7 +44,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="50" class="example pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.REMINDERDATE,'has-warning':errorWarningData.Warning?.REMINDERDATE}">
                         <mat-label>Review Date</mat-label>
-                        <input matInput [matDatepicker]="pickerREMINDERDATE" placeholder="Choose a date" (dateInput)="PersonDate('input', $event)" (dateChange)="PersonDate('change', $event)" formControlName="REMINDERDATETEXT">
+                        <input matInput [matDatepicker]="pickerREMINDERDATE" placeholder="Choose a date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" formControlName="REMINDERDATETEXT">
                         <mat-datepicker-toggle matSuffix [for]="pickerREMINDERDATE"></mat-datepicker-toggle>
                         <mat-datepicker #pickerREMINDERDATE></mat-datepicker>
                     </mat-form-field>

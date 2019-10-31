@@ -36,7 +36,7 @@
                                             <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
                                                 <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header> {{ tempColobj[item].DESCRIPTION }}</th>
                                                 <td mat-cell *matCellDef="let row" class="text-{{tempColobj[item].JUSTIFICATION}}-align">
-                                                    <span *ngIf="(row[item] && item !='GSTTYPE') && (row[item] && item !='ACTIVITYTYPE') && (row[item]!==undefined)">{{row[item] | toFixedAmount:tempColobj[item].CURRENCY}}</span>
+                                                    <span *ngIf="(row[item] && item !='GSTTYPE') && (row[item] && item !='ACTIVITYTYPE') && (row[item]!==undefined)">{{row[item] | toFixedAmount:tempColobj[item].CURRENCY | wordwrap:tempColobj[item].WIDEDATA}}</span>
                                                     <span *ngIf="item =='GSTTYPE'">{{row.GSTTYPEDESC}}</span>
                                                     <span *ngIf="item =='ACTIVITYTYPE'">{{row.ACTIVITYTYPEDESC}}</span>
                                                 </td>

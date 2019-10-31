@@ -856,8 +856,7 @@
                                                 </mat-icon>
                                                 <span>File Notes</span>
                                             </a>
-                                            <a mat-list-item class="disabled-click-cursor" [routerLink]="'/legal-details/safe-custody'">
-                                                <!-- <a mat-list-item  [ngClass]="{'disabled-click-cursor':appPermissions[14]?.Access==0,'cmn_active_tab':activeSubMenu =='safe-custody'}" [routerLink]="'/legal-details/safe-custody'"> -->
+                                            <a mat-list-item [ngClass]="{'disabled-click-cursor':appPermissions[14]?.Access==0,'cmn_active_tab':activeSubMenu =='safe-custody'}" [routerLink]="'/legal-details/safe-custody'">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_safecustody_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
@@ -4035,8 +4034,8 @@
                                     </button>
                                     </section>
 
-                                    <section [ngClass]="appPermissions[14]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'disabled-click-cursor ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[14]?.Access==0 ? 'disabled-click large-button' : 'disabled-click large-button'" (click)="setTab($event)" [routerLink]="'/Safe-Custody'">
+                                    <section [ngClass]="appPermissions[14]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[14]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/Safe-Custody'">
                                         <section class="large-button-container">
                                             <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_safecustody_d.ico" alt=""

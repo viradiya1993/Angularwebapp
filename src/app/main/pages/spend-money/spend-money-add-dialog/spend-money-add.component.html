@@ -189,7 +189,7 @@
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.AMOUNT,'has-warning':errorWarningData.Warning?.AMOUNT}" appearance="outline" fxFlex="33.33" class="pr-4">
                         <mat-label>Amount Inc GST</mat-label>
                         <span class="currency_sign" matPrefix>$ &nbsp;</span>
-                        <input class="sideText" class="sideText" matInput type="number" formControlName="AmountIncGST" (keyup)="amountCal()">
+                        <input  [(ngModel)]="GSTValForInGst" class="sideText" class="sideText" matInput type="number" formControlName="AmountIncGST" (keyup)="amountCal()">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -209,7 +209,7 @@
                     </mat-form-field>
                     <mat-form-field *ngIf="dataTableHide !='yes'" appearance="outline" fxFlex="25" class="pr-4">
                         <mat-label>Amount Ex GST</mat-label>
-                        <input class="sideText" matInput formControlName="AmountExGST" [(ngModel)]="GSTValForExGst">
+                        <input (keyup)="ExamountCall()" class="sideText" matInput formControlName="AmountExGST" [(ngModel)]="GSTValForExGst">
                         <span class="currency_sign" matPrefix>$ &nbsp;</span>
                     </mat-form-field>
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.EXPENDITUREITEMS,'has-warning':errorWarningData.Warning?.EXPENDITUREITEMS}" appearance="outline" fxFlex="25" class="pr-4">

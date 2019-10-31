@@ -29,6 +29,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
   ActivityList: any = [];
   successMsg: any;
   PRICEINCGSTVAL: any;
+  isDisable: boolean = false;
   PRICEVAL: any;
   optionList: any = [
     { 'ACTIVITYID': 'hh:mm', 'DESCRIPTION': 'hh:mm' },
@@ -61,6 +62,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
     if (_data.edit == 'Edit' || _data.edit == 'Add' || _data.edit == "Duplicate") {
+      this.isDisable = _data.edit == 'Edit' ? true : false;
       this.action = _data.edit;
       if (this.action === 'Edit') {
         this.dialogTitle = 'Update Time Entry';
@@ -71,16 +73,17 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       }
       this.buttonText = _data.edit === 'Edit' ? 'Update' : 'Save';
     } else {
+      this.isDisable = false;
       this.currentTimeMatter = _data.edit;
       this.matterTimerData = _data.matterData;
     }
     this.behaviorService.dialogClose$.subscribe(result => {
-      if(result != null){
-        if(result.MESSAGE == 'Not logged in'){
+      if (result != null) {
+        if (result.MESSAGE == 'Not logged in') {
           this.dialogRef.close(false);
         }
       }
-     });
+    });
   }
   timeEntryForm: FormGroup;
   matterautoVal: any;
@@ -98,8 +101,8 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       QUANTITY: [''],
       PRICE: [''],
       PRICEINCGST: [''],
-      SendPRICEINCGST:[''],
-      SendPRICE:[''],
+      SendPRICEINCGST: [''],
+      SendPRICE: [''],
       ITEMTIME: [''],
       ADDITIONALTEXTSELECT: [''],
       ADDITIONALTEXT: ['', Validators.required],
@@ -179,16 +182,21 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     if (typeof priceTemp === 'undefined')
       priceTemp = 0;
     this.PRICEVAL = Number(priceTemp).toFixed(2);
+    this.timeEntryForm.controls['SendPRICE'].setValue(Number(priceTemp));
     priceTemp = priceTemp * 1.1;
+    this.timeEntryForm.controls['SendPRICEINCGST'].setValue(Number(priceTemp));
     this.PRICEINCGSTVAL = priceTemp.toFixed(2);
   }
   calcPI() {
     let temGst = this.f.PRICEINCGST.value;
     if (typeof temGst === 'undefined')
       temGst = 0;
+    this.timeEntryForm.controls['SendPRICEINCGST'].setValue(Number(temGst));
     this.PRICEINCGSTVAL = Number(temGst).toFixed(2);
     temGst = temGst / 1.1;
+    this.timeEntryForm.controls['SendPRICE'].setValue(Number(temGst));
     this.PRICEVAL = temGst.toFixed(2)
+
   }
   public selectMatter() {
     const dialogRef = this.MatDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
@@ -233,10 +241,10 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
 
         let tempDate = timeEntryData.ITEMDATE.split("/");
         this.ITEMDATEModel = new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]);
-        
+
         this.timeEntryForm.controls['SendPRICEINCGST'].setValue(timeEntryData.PRICEINCGST);
         this.timeEntryForm.controls['SendPRICE'].setValue(timeEntryData.PRICE);
-        
+
         this.timeEntryForm.controls['PRICEINCGST'].setValue((Number(timeEntryData.PRICEINCGST)).toFixed(2));
         this.timeEntryForm.controls['PRICE'].setValue((Number(timeEntryData.PRICE)).toFixed(2));
         this.timeEntryForm.controls['ADDITIONALTEXT'].setValue(timeEntryData.ADDITIONALTEXT);

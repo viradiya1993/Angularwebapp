@@ -57,7 +57,6 @@ const appRoutes: Routes = [
   // { path: 'Safe-Custody', loadChildren: './main-safe-custody/main-safe-custody.module#MainSafeCustodyModule' }
   // { path: 'trust-chart-of-account', loadChildren: './TrustChartOfAccountComponent/trust-chart-of-account.module#TrustChartAccount' },
   // { path: 'trust-general-journal', loadChildren: './TrustGeneralJournalComponent/trust-general-journal.module#TrustGeneral' },
-  
 ];
 
 

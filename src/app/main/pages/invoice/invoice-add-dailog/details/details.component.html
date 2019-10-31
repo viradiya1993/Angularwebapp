@@ -19,19 +19,19 @@
         <ng-container matColumnDef="PRICE">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Charge(Ex)</th>
             <td mat-cell *matCellDef="let row">
-                {{row.PRICE | currency}}
+                {{row.PRICE | toFixedAmount:true}}
             </td>
         </ng-container>
         <ng-container matColumnDef="GST">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>GST</th>
             <td mat-cell *matCellDef="let row">
-                {{row.GST | currency}}
+                {{row.GST | toFixedAmount:true}}
             </td>
         </ng-container>
         <ng-container matColumnDef="PRICEINCGST">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Charge</th>
             <td mat-cell *matCellDef="let row">
-                {{row.PRICEINCGST | currency}}
+                {{row.PRICEINCGST | toFixedAmount:true}}
             </td>
         </ng-container>
         <tr mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumnsTime; sticky: true"></tr>

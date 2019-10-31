@@ -5,10 +5,8 @@ import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.c
 import { TableColumnsService, MainAPiServiceService, BehaviorService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { MatterDialogComponent } from '../../time-entries/matter-dialog/matter-dialog.component';
-import { ContactSelectDialogComponent } from '../../contact/contact-select-dialog/contact-select-dialog.component';
 import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.component';
 import { ContactDialogComponent } from '../../contact/contact-dialog/contact-dialog.component';
 
@@ -35,11 +33,11 @@ export class SafecustodyComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService, 
-     private _mainAPiServiceService: MainAPiServiceService,
-      private toastr: ToastrService,
-      public behaviorService: BehaviorService,
-      private _formBuilder: FormBuilder) { }
+  constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService,
+    private _mainAPiServiceService: MainAPiServiceService,
+    private toastr: ToastrService,
+    public behaviorService: BehaviorService,
+    private _formBuilder: FormBuilder) { }
   safeCustody_table;
   ngOnInit() {
     $('content').addClass('inner-scroll');
@@ -47,8 +45,8 @@ export class SafecustodyComponent implements OnInit {
     this.getTableFilter();
     this.LoadData();
     this.SafeCustody = this._formBuilder.group({
-      MATTER:[''],     
-      CLIENT:[''],
+      MATTER: [''],
+      CLIENT: [''],
     });
     this.SafeCustody.controls['MATTER'].setValue(this.cuurentmatter.MATTER);
     this.SafeCustody.controls['CLIENT'].setValue(this.cuurentmatter.CLIENT);
@@ -56,19 +54,19 @@ export class SafecustodyComponent implements OnInit {
   getTableFilter() {
     this.TableColumnsService.getTableFilter('legal details', 'safe custody').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-          let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
-          this.displayedColumns = data.showcol;
-          this.ColumnsObj = data.colobj;
-          this.tempColobj = data.tempColobj;
+        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
+        this.displayedColumns = data.showcol;
+        this.ColumnsObj = data.colobj;
+        this.tempColobj = data.tempColobj;
       }
     }, error => {
       this.toastr.error(error);
     });
   }
   LoadData() {
-    this.isLoadingResults = true;    
+    this.isLoadingResults = true;
     let postData = { 'MatterGUID': this.currentMatter.MATTERGUID };
-    this._mainAPiServiceService.getSetData(postData, 'GetSafeCustody').subscribe(response =>{
+    this._mainAPiServiceService.getSetData(postData, 'GetSafeCustody').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.safeCustody_table = new MatTableDataSource(response.DATA.SAFECUSTODIES);
         this.safeCustody_table.paginator = this.paginator;
@@ -114,29 +112,28 @@ export class SafecustodyComponent implements OnInit {
       }
     });
   }
-  EditLegalCustody(row){
+  EditLegalCustody(row) {
     this.behaviorService.SafeCustody(row);
   }
-  RefreshLegalCustody(){
+  RefreshLegalCustody() {
     this.LoadData();
   }
-  SelectMatter(){
-    const dialogConfig = new MatDialogConfig();
+  SelectMatter() {
     const dialogRef = this.dialog.open(MatterPopupComponent, {
       width: '100%',
       disableClose: true,
       data: { action: 'edit', 'matterGuid': this.cuurentmatter.MATTERGUID }
     });
-    dialogRef.afterClosed().subscribe(result => {});
+    dialogRef.afterClosed().subscribe(result => { });
   }
-  SelectContact(){   
+  SelectContact() {
     if (!localStorage.getItem('contactGuid')) {
       this.toastr.error("Please Select Contact");
     } else {
       const dialogRef = this.dialog.open(ContactDialogComponent, { disableClose: true, data: { action: 'edit' } });
       dialogRef.afterClosed().subscribe(result => {
-        if (result){
-           $('#Legalsafecusday').click();
+        if (result) {
+          $('#Legalsafecusday').click();
         }
       });
     }

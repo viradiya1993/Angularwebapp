@@ -643,6 +643,12 @@ td.text-C-align {
 .text-R-align,
 .text-L-align,
 .text-C-align {
-    border-bottom: 1px solid rgba(0, 0, 0, .12);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
     padding: 10px;
+}
+
+mark {
+    outline: none !important;
+    font-weight: bold;
+    text-transform: uppercase;
 }

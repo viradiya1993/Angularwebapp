@@ -73,6 +73,15 @@ export class CreateDiaryComponent implements OnInit {
     }
 
   }
+//   APPOINTMENTENDDATE
+// APPOINTMENTTIME
+// DURATION
+// MATTERSHORTNAME
+// APPOINTMENTTYPE
+// Description
+// PRICE
+// PRICEINCGST
+// GST
   getTableFilter() {
     this.TableColumnsService.getTableFilter('time entries', '').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {

@@ -3,7 +3,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({ name: 'toFixedAmount' })
 export class ToFixedAmountPipe implements PipeTransform {
 
-  transform(value: any, args: any = 2): any {
+  transform(value: any, args: any = false): any {
+    if (typeof value == "string" && !value)
+      value = 0;
     if (args) {
       let tem: any = parseFloat(value).toFixed(2);
       return '$' + this.addCommas(tem);

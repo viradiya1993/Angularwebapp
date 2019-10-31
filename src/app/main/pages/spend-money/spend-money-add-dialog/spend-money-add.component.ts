@@ -340,8 +340,8 @@ export class SpendMoneyAddComponent implements OnInit {
 
       }
       let tempError: any = this.errorWarningData.Error;
-      if(tempError !=undefined){  delete tempError['SHORTNAME']; }
-    
+      if (tempError != undefined) { delete tempError['SHORTNAME']; }
+
 
     } else if (Classvalue === 'Matter Expense') {
       this.hide = false;
@@ -369,7 +369,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.GstTypeforSelect('1.1');
       // this.spendmoneyForm.controls['GSTType'].disable();
       let tempError: any = this.errorWarningData.Error;
-      if(tempError !=undefined){  delete tempError['SHORTNAME']; }
+      if (tempError != undefined) { delete tempError['SHORTNAME']; }
     } else if (Classvalue === 'Pay GST') {
       this.hide = true;
       $("#mattersnew").addClass("menu-disabled");
@@ -379,7 +379,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['GSTType'].disable();
       this.GstTypeforSelect('No GST');
       let tempError: any = this.errorWarningData.Error;
-      if(tempError !=undefined){  delete tempError['SHORTNAME']; }
+      if (tempError != undefined) { delete tempError['SHORTNAME']; }
     } else if (Classvalue === 'Pay Tax') {
       this.hide = true;
       this.expac = false;
@@ -390,7 +390,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['GSTType'].disable();
       this.GstTypeforSelect('No GST');
       let tempError: any = this.errorWarningData.Error;
-      if(tempError !=undefined){  delete tempError['SHORTNAME']; }
+      if (tempError != undefined) { delete tempError['SHORTNAME']; }
     } else if (Classvalue === 'Personal') {
       this.hide = true;
       this.expac = false;
@@ -401,7 +401,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['GSTType'].disable();
       this.GstTypeforSelect('No GST');
       let tempError: any = this.errorWarningData.Error;
-      if(tempError !=undefined){  delete tempError['SHORTNAME']; }
+      if (tempError != undefined) { delete tempError['SHORTNAME']; }
     } else if (Classvalue === 'Description') {
       this.hide = true;
       this.expac = false;
@@ -412,7 +412,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['GSTType'].disable();
       this.GstTypeforSelect('No GST');
       let tempError: any = this.errorWarningData.Error;
-      if(tempError !=undefined){  delete tempError['SHORTNAME']; }
+      if (tempError != undefined) { delete tempError['SHORTNAME']; }
     } else if (Classvalue === 'Other') {
       this.hide = true;
       this.expac = false;
@@ -423,7 +423,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['GSTType'].disable();
       this.GstTypeforSelect('No GST');
       let tempError: any = this.errorWarningData.Error;
-      if(tempError !=undefined){  delete tempError['SHORTNAME']; }
+      if (tempError != undefined) { delete tempError['SHORTNAME']; }
     }
   }
   ContactMatter() {
@@ -755,8 +755,8 @@ export class SpendMoneyAddComponent implements OnInit {
     // for ammount field 
     this.FinalExGSTAmount = this.setMainAmount - this.setMainGST;
 
-    
-    if (this.FinalExGSTAmount == 0 ||  this.f.Expenseac.value =='' || this.f.Notes.value =='') {
+
+    if (this.FinalExGSTAmount == 0 || this.f.Expenseac.value == '' || this.f.Notes.value == '') {
       this.toastr.error("Amount should not be 0 || You should select a Expense a/c  || You should enter Notes");
       return;
     }

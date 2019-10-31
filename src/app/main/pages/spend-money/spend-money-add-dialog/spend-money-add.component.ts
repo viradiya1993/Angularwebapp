@@ -71,6 +71,7 @@ export class SpendMoneyAddComponent implements OnInit {
   SendMoney_dataGUID: any;
   arrayForIndex: any;
   storeDataarray: any = [];
+  GSTValForInGst: any;
   constructor(
     public dialogRef: MatDialogRef<SpendMoneyAddComponent>,
     @Inject(MAT_DIALOG_DATA) public _data: any,
@@ -663,6 +664,12 @@ export class SpendMoneyAddComponent implements OnInit {
       this.GSTValForExGst = amount;
     }
   }
+ExamountCall(){
+  let amount = this.f.AmountExGST.value;
+  let cal: any = (this.f.AmountExGST.value * 1.1).toFixed(2);
+  this.GSTValForInGst = cal;
+  this.GSTValAfterCal = (cal - amount).toFixed(2);
+}
 
   GSTCalFun() {
     this.GSTValForExGst = round(this.f.AmountIncGST.value - this.f.GST1.value).toFixed(2);

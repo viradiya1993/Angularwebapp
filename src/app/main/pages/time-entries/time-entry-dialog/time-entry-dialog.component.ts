@@ -70,12 +70,14 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
         this.dialogTitle = 'Duplicate Time Entry'
       } else {
         this.dialogTitle = 'Add New Time Entry';
+        this.ITEMDATEModel = new Date();
       }
       this.buttonText = _data.edit === 'Edit' ? 'Update' : 'Save';
     } else {
       this.isDisable = false;
       this.currentTimeMatter = _data.edit;
       this.matterTimerData = _data.matterData;
+      this.ITEMDATEModel = new Date();
     }
     this.behaviorService.dialogClose$.subscribe(result => {
       if (result != null) {
@@ -113,7 +115,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     this.calculateData.MatterGuid = maaterguid.MATTERGUID;
     this.timeEntryForm.controls['MATTERGUID'].setValue(maaterguid.MATTERGUID);
     this.calculateData.QuantityType = 'H';
-    this.ITEMDATEModel = new Date();
+   
     this.timeEntryForm.controls['ITEMTYPE'].setValue('wip');
     let userType = JSON.parse(localStorage.getItem('currentUser'));
     if (userType) {
@@ -151,10 +153,12 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
       this.setTimeEntryData();
       this.isreadonly = false;
     } else if (this.currentTimeMatter != '') {
+     
       this.isreadonly = true;
       if (this._data.isReadOnly) {
         this.isreadonly = false;
       }
+      
       this.timeEntryForm.controls['MATTERGUID'].setValue(this.currentTimeMatter);
       let Qval = this.matterTimerData == '' ? 'Hours' : 'hh:mm';
       this.timeEntryForm.controls['QUANTITYTYPE'].setValue(Qval);
@@ -241,7 +245,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
 
         let tempDate = timeEntryData.ITEMDATE.split("/");
         this.ITEMDATEModel = new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]);
-
+        this.timeEntryForm.controls['INVOICEDATE'].setValue(timeEntryData.ITEMDATE);
         this.timeEntryForm.controls['SendPRICEINCGST'].setValue(timeEntryData.PRICEINCGST);
         this.timeEntryForm.controls['SendPRICE'].setValue(timeEntryData.PRICE);
 
@@ -260,6 +264,7 @@ export class TimeEntryDialogComponent implements OnInit, AfterViewInit {
     });
   }
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    if(this.action != 'Edit')
     this.ITEMDATEVLAUE = this.datepipe.transform(event.value, 'dd/MM/yyyy');
   }
   ngAfterViewInit(): void {

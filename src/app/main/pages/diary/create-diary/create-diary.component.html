@@ -59,7 +59,75 @@
                                         <div class="grid-overlay" *ngIf="isDisplay">
                                             <div class="grid-overlay-msg"> There is no data to display. </div>
                                         </div>
-                                        <table mat-table [dataSource]="TimerDataFordiary" matSort [@animateStagger]="{value:'50'}">
+                                        <table mat-table [dataSource]="TimerDataFordiary" class="mat-elevation-z8">
+
+                                            <!-- Checkbox Column -->
+                                            <ng-container matColumnDef="select">
+                                              <th mat-header-cell *matHeaderCellDef>
+                                                <mat-checkbox  (change)="$event ? masterToggle() : null;helloFunction();"
+                                                [checked]="selection.hasValue() && isAllSelected()"
+                                                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                                [aria-label]="checkboxLabel()">
+                                                </mat-checkbox>
+                                              </th>
+                                              <td mat-cell *matCellDef="let row let index = index">
+                                                <mat-checkbox  (click)="$event.stopPropagation();"
+                                                (change)="$event ? selection.toggle(row) : null;helloFunction();"
+                                                [checked]="selection.isSelected(row)"
+                                                [aria-label]="checkboxLabel(row)"
+                                                (click)="CheckboxClick();highlightedRows=index"
+                                                [style.background]="highlightedRows == index ? selectedColore : ''"
+                                                [ngClass]="highlightedRows == index ? 'row-text-colore' : ''">
+                                                </mat-checkbox>
+                                              </td>
+                                            </ng-container>
+                                    
+                                            <ng-container matColumnDef="APPOINTMENTDATE">
+                                              <th mat-header-cell *matHeaderCellDef>APPOINTMENTDATE </th>
+                                              <td mat-cell *matCellDef="let element"> {{element.APPOINTMENTDATE}} </td>
+                                            </ng-container>
+                                    
+                                            <ng-container matColumnDef="APPOINTMENTTIME">
+                                              <th mat-header-cell *matHeaderCellDef> APPOINTMENTTIME </th>
+                                              <td mat-cell *matCellDef="let element"> {{element.APPOINTMENTTIME}} </td>
+                                            </ng-container>
+                                       
+                                            <ng-container matColumnDef="DURATION">
+                                              <th mat-header-cell *matHeaderCellDef> DURATION </th>
+                                              <td mat-cell *matCellDef="let element"> {{element.DURATION}} </td>
+                                            </ng-container>
+                                     
+                                            <ng-container matColumnDef="MATTERSHORTNAME">
+                                              <th mat-header-cell *matHeaderCellDef> MATTERSHORTNAME </th>
+                                              <td mat-cell *matCellDef="let element"> {{element.MATTERSHORTNAME}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="APPOINTMENTTYPE">
+                                                <th mat-header-cell *matHeaderCellDef> APPOINTMENTTYPE </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.APPOINTMENTTYPE}} </td>
+                                              </ng-container>
+                                              <ng-container matColumnDef="NOTE">
+                                                <th mat-header-cell *matHeaderCellDef> NOTE </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.NOTE}} </td>
+                                              </ng-container>
+                                              <ng-container matColumnDef="PRICE">
+                                                <th mat-header-cell *matHeaderCellDef> PRICE </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.PRICE}} </td>
+                                              </ng-container>
+                                              <ng-container matColumnDef="PRICEINCGST">
+                                                <th mat-header-cell *matHeaderCellDef> PRICEINCGST </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.PRICEINCGST}} </td>
+                                              </ng-container>
+                                              <ng-container matColumnDef="GST">
+                                                <th mat-header-cell *matHeaderCellDef> GST </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.GST}} </td>
+                                              </ng-container>
+
+                                              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                              <tr mat-row *matRowDef="let row let index = index; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}" (click)="Rowclick(row);highlightedRows=index" [style.background]="highlightedRows == index ? selectedColore : ''" [ngClass]="highlightedRows == index ? 'row-text-colore' : ''">
+                                              </tr>
+                                          </table>
+                                        <!-- <table mat-table [dataSource]="TimerDataFordiary" matSort [@animateStagger]="{value:'50'}">
                                             <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
                                                 <span *ngIf="item=='select'">
                                                     <th mat-header-cell *matHeaderCellDef>
@@ -91,7 +159,7 @@
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                                             <tr mat-row *matRowDef="let row let index = index; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}" (click)="Rowclick(row);highlightedRows=index" [style.background]="highlightedRows == index ? selectedColore : ''" [ngClass]="highlightedRows == index ? 'row-text-colore' : ''">
                                             </tr>
-                                        </table>
+                                        </table> -->
                                     </div>
                                     <mat-paginator [pageSizeOptions]="[10, 20,50,100]" [pageSize]="pageSize" (page)="onPaginateChange($event)" showFirstLastButtons></mat-paginator>
                                 </div>

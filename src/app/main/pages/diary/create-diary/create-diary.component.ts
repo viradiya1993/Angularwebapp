@@ -26,19 +26,22 @@ export class CreateDiaryComponent implements OnInit {
   // }
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
-  displayedColumns: string[];
+  // displayedColumns: string[];
   selection = new SelectionModel<any>(true, []);
   TimerDataFordiary: any = [];
   highlightedRows: any;
+  displayedColumns: string[] = ['select', 'APPOINTMENTDATE', 'APPOINTMENTTIME', 'DURATION', 'MATTERSHORTNAME',
+  'APPOINTMENTTYPE', 'NOTE', 'PRICE', 'PRICEINCGST', 'GST'];
   pageSize: string;
   isDisplay: boolean = false;
+  CreateDiaryArray: any=[];
   constructor(private _mainAPiServiceService: MainAPiServiceService,
     private Timersservice: TimersService,
     public datepipe: DatePipe,
     private behaviorService: BehaviorService,
     private TableColumnsService: TableColumnsService,
     private toastr: ToastrService, ) {
-    this.getTableFilter();
+    // this.getTableFilter();
     this.LoadData();
   }
 
@@ -49,6 +52,8 @@ export class CreateDiaryComponent implements OnInit {
   }
   helloFunction() {
     console.log(this.selection.selected);
+
+
   }
   isAllSelected() {
     if (this.TimerDataFordiary.length != 0) {
@@ -63,6 +68,7 @@ export class CreateDiaryComponent implements OnInit {
     this.isAllSelected() ?
       this.selection.clear() :
       this.TimerDataFordiary.data.forEach(row => this.selection.select(row));
+      this.CreateDiaryArray.push(this.selection.selected);
   }
   checkboxLabel(row?: any): string {
     if (this.TimerDataFordiary.length != 0) {
@@ -82,19 +88,19 @@ export class CreateDiaryComponent implements OnInit {
 // PRICE
 // PRICEINCGST
 // GST
-  getTableFilter() {
-    this.TableColumnsService.getTableFilter('time entries', '').subscribe(response => {
-      if (response.CODE == 200 && response.STATUS == "success") {
-        let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
-        this.tempColobj = data.tempColobj;
-        this.displayedColumns = data.showcol;
-        this.displayedColumns.splice(0, 0, "select");
-        this.ColumnsObj = data.colobj;
-      }
-    }, error => {
-      this.toastr.error(error);
-    });
-  }
+  // getTableFilter() {
+  //   this.TableColumnsService.getTableFilter('time entries', '').subscribe(response => {
+  //     if (response.CODE == 200 && response.STATUS == "success") {
+  //       let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
+  //       this.tempColobj = data.tempColobj;
+  //       this.displayedColumns = data.showcol;
+  //       this.displayedColumns.splice(0, 0, "select");
+  //       this.ColumnsObj = data.colobj;
+  //     }
+  //   }, error => {
+  //     this.toastr.error(error);
+  //   });
+  // }
   LoadData() {
     this.TimerDataFordiary = [];
     this.isLoadingResults = true;
@@ -103,6 +109,9 @@ export class CreateDiaryComponent implements OnInit {
     this._mainAPiServiceService.getSetData({ShowWhat: "CREATE WIP" }, 'GetAppointment').subscribe(response => {
       console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
+        this.TimerDataFordiary = new MatTableDataSource(response.DATA.APPOINTMENTS);
+          this.TimerDataFordiary.paginator = this.paginator;
+          this.TimerDataFordiary.sort = this.sort;
         if (response.DATA.APPOINTMENTS[0]) {
           // this.behaviorService.MainTimeEntryData(response.DATA.WORKITEMS[0]);
            this.isDisplay = false;
@@ -145,6 +154,19 @@ export class CreateDiaryComponent implements OnInit {
   }
 
   saveCreateDiary() {
+
+    console.log(this.selection.selected);
+    
+    let finalData = { DATA: this.selection.selected, FormAction: 'insert', VALIDATEONLY: false }
+    this._mainAPiServiceService.getSetData(finalData, 'SetAppointment').subscribe(response => {
+      console.log(response);
+
+    }, err => {
+      this.toastr.error(err);
+    });
+
+
+
 
   }
 

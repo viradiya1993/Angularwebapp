@@ -98,7 +98,7 @@ export class RecounciliationItemComponent implements OnInit {
   }
 
   commonSendData() {
-console.log(this.selection.selected);
+    console.log(this.selection.selected);
     this.selection.selected.forEach(element => {
           element.TAGGED=1
       });
@@ -350,6 +350,7 @@ console.log(this.selection.selected);
     this._mainAPiServiceService.getSetData(data, 'SetReconciliation').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.toastr.success(' save successfully');
+        this.refreshRecouncilItem();
       } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.toastr.warning(response.MESSAGE);
       } else if (response.CODE == 450 && response.STATUS == 'error') {

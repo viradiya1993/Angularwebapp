@@ -34,6 +34,8 @@ export class SafeCustodyDialogeComponent implements OnInit {
   checkInData: any = [];
   highlightedRows: any;
   selectCheckin: any;
+  isDisableCheckBtn: boolean = false;
+  isBorrow: boolean = true;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
@@ -84,6 +86,13 @@ export class SafeCustodyDialogeComponent implements OnInit {
       CHECKINDATE: [this.datepipe.transform(new Date(), 'dd/MM/yyyy')],
       CHECKINDATETEXT: [new Date()],
       CHECKINCONTACTNAME: [''],
+      //movement form
+      SAFECUSTODYMOVEMENTGUID: [''],
+      MOVEMENTDATE: [''],
+      MOVEMENTDATETEXT: [''],
+      MOVEMENTTYPE: [''],
+      REASON: [''],
+      MOVEMENTCONTACTNAME: [''],
     });
     if (this.action == 'edit' || this.action === 'copy' || this.action === 'editlegal') {
       this.isLoadingResults = true;
@@ -114,19 +123,7 @@ export class SafeCustodyDialogeComponent implements OnInit {
           this.SafeCustody.controls['DOCUMENTTYPE'].setValue(SAFECUSTODIESDATA.DOCUMENTTYPE);
           this.SafeCustody.controls['DOCUMENTNAME'].setValue(SAFECUSTODIESDATA.DOCUMENTNAME);
           this.SafeCustody.controls['SAFECUSTODYDESCRIPTION'].setValue(SAFECUSTODIESDATA.SAFECUSTODYDESCRIPTION);
-          this._mainAPiServiceService.getSetData({ SAFECUSTODYGUID: SAFECUSTODIESDATA.SAFECUSTODYGUID }, 'GetSafeCustodyMovement').subscribe(response => {
-            if (response.CODE == 200 && response.STATUS == "success") {
-              if (this.action == 'edit' || this.action === 'editlegal') {
-                if (response.DATA.SAFECUSTODIES[0]) {
-                  this.selectCheckin = response.DATA.SAFECUSTODIES[0];
-                  this.highlightedRows = response.DATA.SAFECUSTODIES[0].SAFECUSTODYMOVEMENTGUID;
-                  this.checkInData = new MatTableDataSource(response.DATA.SAFECUSTODIES);
-                } else {
-                  this.checkInData = new MatTableDataSource([]);
-                }
-              }
-            }
-          });
+          this.getmoveMentData(this.action);
         } else if (res.MESSAGE == 'Not logged in') {
           this.dialogRef.close(false);
         }
@@ -175,6 +172,49 @@ export class SafeCustodyDialogeComponent implements OnInit {
       this.isLoadingResults = false;
     });
   }
+  getmoveMentData(type) {
+    this._mainAPiServiceService.getSetData({ SAFECUSTODYGUID: this.f.SAFECUSTODYGUID.value }, 'GetSafeCustodyMovement').subscribe(response => {
+      if (response.CODE == 200 && response.STATUS == "success") {
+        if (this.action == 'edit' || this.action === 'editlegal') {
+          if (response.DATA.SAFECUSTODIES[0]) {
+            this.selectCheckin = response.DATA.SAFECUSTODIES[0];
+            this.highlightedRows = response.DATA.SAFECUSTODIES[0].SAFECUSTODYMOVEMENTGUID;
+            this.isBorrow = response.DATA.SAFECUSTODIES[0].MOVEMENTTYPE == "Borrow" ? false : true;
+            this.checkInData = new MatTableDataSource(response.DATA.SAFECUSTODIES);
+            if (type == 'copy') {
+              this.SafeCustody.controls['CHECKINCONTACTNAME'].setValue(this.checkInData.CONTACTNAME);
+              if (this.checkInData.MOVEMENTDATE) {
+                let tempDate = this.checkInData.MOVEMENTDATE.split("/");
+                this.SafeCustody.controls['CHECKINDATETEXT'].setValue(new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]));
+                this.SafeCustody.controls['CHECKINDATE'].setValue(this.checkInData.MOVEMENTDATE);
+              }
+              this.tabLable = "Check In";
+              this.isDisableCheckBtn = true;
+              debugger;
+            }
+          } else {
+            this.checkInData = new MatTableDataSource([]);
+          }
+        }
+      }
+    });
+  }
+  setDataRow(type) {
+    this.isDisableCheckBtn = true;
+    this.SafeCustody.controls['SAFECUSTODYMOVEMENTGUID'].setValue(this.selectCheckin.SAFECUSTODYMOVEMENTGUID);
+    this.SafeCustody.controls['MOVEMENTDATE'].setValue(this.selectCheckin.MOVEMENTDATE);
+    if (this.selectCheckin.MOVEMENTDATE) {
+      let tempDate = this.selectCheckin.MOVEMENTDATE.split("/");
+      this.SafeCustody.controls['MOVEMENTDATETEXT'].setValue(new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]));
+    }
+    let MOVEMENTTYPE = (type == "Check Out") ? 'CheckOut' : type;
+    this.SafeCustody.controls['MOVEMENTTYPE'].setValue(MOVEMENTTYPE);
+    this.SafeCustody.controls['REASON'].setValue(this.selectCheckin.REASON);
+    this.SafeCustody.controls['MOVEMENTCONTACTNAME'].setValue(this.selectCheckin.CONTACTNAME);
+  }
+  choosedDateTab(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.SafeCustody.controls['MOVEMENTDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
+  }
   get f() {
     return this.SafeCustody.controls;
   }
@@ -193,7 +233,33 @@ export class SafeCustodyDialogeComponent implements OnInit {
   PersonDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.SafeCustody.controls['CHECKINDATE'].setValue(this.datepipe.transform(event.value, 'dd/MM/yyyy'));
   }
-
+  SaveSafeCustodyMoveMent() {
+    let PostData: any = {
+      "SAFECUSTODYMOVEMENTGUID": this.f.SAFECUSTODYMOVEMENTGUID.value,
+      "SAFECUSTODYGUID": this.f.SAFECUSTODYGUID.value,
+      "MOVEMENTDATE": this.f.MOVEMENTDATE.value,
+      "MOVEMENTTYPE": this.f.MOVEMENTTYPE.value,
+      "CONTACTNAME": this.f.MOVEMENTCONTACTNAME.value,
+      "REASON": this.f.REASON.value,
+    }
+    this.isspiner = true;
+    let PostFinalData: any = { FormAction: 'update', VALIDATEONLY: true, Data: PostData };
+    this._mainAPiServiceService.getSetData(PostFinalData, 'SetSafeCustodyMovement').subscribe(response => {
+      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        this.checkValidation(response.DATA.VALIDATIONS, PostFinalData, 'SetSafeCustodyMovement');
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
+        this.checkValidation(response.DATA.VALIDATIONS, PostFinalData, 'SetSafeCustodyMovement');
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
+        this.checkValidation(response.DATA.VALIDATIONS, PostFinalData, 'SetSafeCustodyMovement');
+      } else if (response.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      } else {
+        this.isspiner = false;
+      }
+    }, err => {
+      this.toastr.error(err);
+    });
+  }
   SaveSafeCustody() {
     let PostData: any = {
       "SAFECUSTODYPACKETGUID": this.f.SAFECUSTODYPACKETGUID.value,
@@ -222,11 +288,11 @@ export class SafeCustodyDialogeComponent implements OnInit {
     let PostFinalData: any = { FormAction: this.FormAction, VALIDATEONLY: true, Data: PostData };
     this._mainAPiServiceService.getSetData(PostFinalData, 'SetSafeCustody').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        this.checkValidation(response.DATA.VALIDATIONS, PostFinalData);
+        this.checkValidation(response.DATA.VALIDATIONS, PostFinalData, 'SetSafeCustody');
       } else if (response.CODE == 451 && response.STATUS == 'warning') {
-        this.checkValidation(response.DATA.VALIDATIONS, PostFinalData);
+        this.checkValidation(response.DATA.VALIDATIONS, PostFinalData, 'SetSafeCustody');
       } else if (response.CODE == 450 && response.STATUS == 'error') {
-        this.checkValidation(response.DATA.VALIDATIONS, PostFinalData);
+        this.checkValidation(response.DATA.VALIDATIONS, PostFinalData, 'SetSafeCustody');
       } else if (response.MESSAGE == 'Not logged in') {
         this.dialogRef.close(false);
       } else {
@@ -236,7 +302,7 @@ export class SafeCustodyDialogeComponent implements OnInit {
       this.toastr.error(err);
     });
   }
-  checkValidation(bodyData: any, details: any) {
+  checkValidation(bodyData: any, details: any, APIURL: any) {
     let errorData: any = [];
     let warningData: any = [];
     let tempError: any = [];
@@ -250,7 +316,6 @@ export class SafeCustodyDialogeComponent implements OnInit {
         tempWarning[value.FIELDNAME] = value;
         warningData.push(value.ERRORDESCRIPTION);
       }
-
     });
     this.errorWarningData = { "Error": tempError, 'Warning': tempWarning };
     if (Object.keys(errorData).length != 0)
@@ -265,27 +330,33 @@ export class SafeCustodyDialogeComponent implements OnInit {
       this.confirmDialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.isspiner = true;
-          this.SafeCusodySave(details);
+          this.SafeCusodySave(details, APIURL);
         }
         this.confirmDialogRef = null;
       });
     }
     if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
-      this.SafeCusodySave(details);
+      this.SafeCusodySave(details, APIURL);
     this.isspiner = false;
   }
 
-  SafeCusodySave(data: any) {
+  SafeCusodySave(data: any, APIURL: any) {
     data.VALIDATEONLY = false;
-    this._mainAPiServiceService.getSetData(data, 'SetSafeCustody').subscribe(response => {
+    this._mainAPiServiceService.getSetData(data, APIURL).subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        if (this.action !== 'edit') {
-          this.toastr.success(' save successfully');
+        if (APIURL == 'SetSafeCustodyMovement') {
+          this.isDisableCheckBtn = false;
+          this.tabLable = 'History';
+          this.getmoveMentData(false);
         } else {
-          this.toastr.success(' update successfully');
+          if (this.action !== 'edit') {
+            this.toastr.success(' save successfully');
+          } else {
+            this.toastr.success(' update successfully');
+          }
+          this.isspiner = false;
+          this.dialogRef.close(true);
         }
-        this.isspiner = false;
-        this.dialogRef.close(true);
       } else if (response.CODE == 451 && response.STATUS == 'warning') {
         this.toastr.warning(response.MESSAGE);
       } else if (response.CODE == 450 && response.STATUS == 'error') {

@@ -62,8 +62,38 @@
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <button mat-raised-button color="accent" [disabled]="isDisableCheckBtn" (click)="tabLable='Borrow';setDataRow('Borrow');">Borrow</button>
+                    <button mat-raised-button color="accent" [disabled]="isDisableCheckBtn || isBorrow" style="margin-left: 8px" (click)="tabLable='Return';setDataRow('Return');">Return</button>
+                    <button mat-raised-button color="accent" [disabled]="isDisableCheckBtn" style="margin-left: 8px" (click)="tabLable='Check Out';setDataRow('Check Out');">Check Out</button>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-tab-group mat-align-tabs="start">
                         <mat-tab label="{{tabLable}}">
+                            <div class="Pad_tab" fxLayout="column" *ngIf="tabLable=='Borrow' || tabLable=='Check Out' || tabLable=='Return'">
+                                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field appearance="outline" fxFlex="50" class="example pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.MOVEMENTDATE,'has-warning':errorWarningData.Warning?.MOVEMENTDATE}">
+                                        <mat-label>Date</mat-label>
+                                        <input matInput [matDatepicker]="picker1" placeholder="Choose a date" (dateChange)="choosedDateTab('change', $event)" formControlName="MOVEMENTDATETEXT">
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.CONTACTNAME,'has-warning':errorWarningData.Warning?.CONTACTNAME}">
+                                        <mat-label>Contact Name</mat-label>
+                                        <input matInput formControlName="MOVEMENTCONTACTNAME">
+                                    </mat-form-field>
+                                </div>
+                                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.REASON,'has-warning':errorWarningData.Warning?.REASON}">
+                                        <mat-label>Details</mat-label>
+                                        <textarea cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" matInput formControlName="REASON"></textarea>
+                                    </mat-form-field>
+                                </div>
+
+                                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <button mat-raised-button color="accent" (click)="SaveSafeCustodyMoveMent()" [disabled]="isspiner"><mat-spinner style=" zoom: 0.2;position: absolute;right: 0;left: 0;margin: auto;top: 0;bottom: 0;" *ngIf="isspiner"></mat-spinner>Save</button>
+                                    <button mat-raised-button color="primary" style="margin-left: 8px" (click)="isDisableCheckBtn=false;tabLable='History'">Cancel</button>
+                                </div>
+                            </div>
                             <div class="Pad_tab" fxLayout="column" *ngIf="tabLable=='Check In'">
                                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field appearance="outline" fxFlex="50" class="example pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.CHECKINDATE,'has-warning':errorWarningData.Warning?.CHECKINDATE}">
@@ -76,10 +106,6 @@
                                         <mat-label>Contact Name</mat-label>
                                         <input matInput formControlName="CHECKINCONTACTNAME">
                                     </mat-form-field>
-                                </div>
-                            </div>
-                            <div class="Pad_tab" fxLayout="column" *ngIf="tabLable=='Check Out'">
-                                <div class="one content">
                                 </div>
                             </div>
                             <div class="Pad_tab" fxLayout="column" *ngIf="tabLable=='History'">

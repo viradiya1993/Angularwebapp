@@ -1975,7 +1975,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     /* Safe Custody Module's*/
     OpenNewSafeCustody(actionType) {
-        if (actionType === 'new client') {
+        if (actionType === 'new client' || actionType == 'copy') {
             const dialogRef = this._matDialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true, data: { type: null } });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {

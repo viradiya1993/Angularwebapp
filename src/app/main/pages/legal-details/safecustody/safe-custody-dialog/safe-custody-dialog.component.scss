@@ -106,18 +106,22 @@ mat-dialog-actions {
     box-shadow: none;
     border-radius: 4px;
 }
+
 .mat-dialog-title {
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
 }
+
 .right_popup_btn .right_btn_child:last-child {
     margin-right: 0;
 }
+
 .popup_ftr {
     border-top: 1px solid #ccc;
     margin-top: 15px !important;
     padding: 12px 24px !important;
 }
+
 @media screen and (max-width: 900px) {
     .add_edit_contact_main {
         width: 95%;
@@ -125,18 +129,21 @@ mat-dialog-actions {
 }
 
 .mat-tab-group {
-  
     width: 100%;
 }
+
 .mat-row.row-text-colore td {
     color: #fff;
 }
-.auto_drop_ghandel{
+
+.auto_drop_ghandel {
     position: relative !important;
 }
 
-
-
-.Pad_tab{
+.Pad_tab {
     margin-top: 20px;
+}
+
+.example-containerdata table {
+    width: 100%;
 }

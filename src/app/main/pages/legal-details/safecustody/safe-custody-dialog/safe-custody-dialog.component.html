@@ -44,7 +44,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="outline" fxFlex="50" class="example pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.REMINDERDATE,'has-warning':errorWarningData.Warning?.REMINDERDATE}">
                         <mat-label>Review Date</mat-label>
-                        <input matInput [matDatepicker]="pickerREMINDERDATE" placeholder="Choose a date" (dateInput)="PersonDate('input', $event)" (dateChange)="PersonDate('change', $event)" formControlName="REMINDERDATETEXT">
+                        <input matInput [matDatepicker]="pickerREMINDERDATE" placeholder="Choose a date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" formControlName="REMINDERDATETEXT">
                         <mat-datepicker-toggle matSuffix [for]="pickerREMINDERDATE"></mat-datepicker-toggle>
                         <mat-datepicker #pickerREMINDERDATE></mat-datepicker>
                     </mat-form-field>
@@ -63,8 +63,8 @@
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-tab-group mat-align-tabs="start">
-                        <mat-tab label="Check In">
-                            <div class="Pad_tab" fxLayout="column">
+                        <mat-tab label="{{tabLable}}">
+                            <div class="Pad_tab" fxLayout="column" *ngIf="tabLable=='Check In'">
                                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field appearance="outline" fxFlex="50" class="example pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.CHECKINDATE,'has-warning':errorWarningData.Warning?.CHECKINDATE}">
                                         <mat-label>Date</mat-label>
@@ -76,6 +76,42 @@
                                         <mat-label>Contact Name</mat-label>
                                         <input matInput formControlName="CHECKINCONTACTNAME">
                                     </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="Pad_tab" fxLayout="column" *ngIf="tabLable=='Check Out'">
+                                <div class="one content">
+                                </div>
+                            </div>
+                            <div class="Pad_tab" fxLayout="column" *ngIf="tabLable=='History'">
+                                <div class="one content">
+                                    <div class="example-containerdata">
+                                        <table mat-table [dataSource]="checkInData" [@animateStagger]="{value:'50'}">
+                                            <ng-container matColumnDef="MOVEMENTDATE">
+                                                <th mat-header-cell *matHeaderCellDef> Date </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.MOVEMENTDATE}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="MOVEMENTTYPE">
+                                                <th mat-header-cell *matHeaderCellDef> Type </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.MOVEMENTTYPE}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="CONTACTNAME">
+                                                <th mat-header-cell *matHeaderCellDef> Name </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.CONTACTNAME}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="REASON">
+                                                <th mat-header-cell *matHeaderCellDef> REASON </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.REASON}} </td>
+                                            </ng-container>
+
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                            <tr mat-row *matRowDef="let row;columns: displayedColumns;" (click)="editCheckinData(row);highlightedRows=row.SAFECUSTODYMOVEMENTGUID" [style.background]="highlightedRows == row.SAFECUSTODYMOVEMENTGUID ? selectedColore : ''" [ngClass]="highlightedRows == row.SAFECUSTODYMOVEMENTGUID ? 'row-text-colore' : ''"
+                                                matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </mat-tab>

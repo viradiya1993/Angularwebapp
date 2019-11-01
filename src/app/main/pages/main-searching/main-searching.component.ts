@@ -81,16 +81,16 @@ export class MainSearchingComponent implements OnInit {
     this.MainSearchingData = [];
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(data, 'GetCostRecovery').subscribe(res => {
-     
+
       if (res.CODE == 200 && res.STATUS == "success") {
-        if (res.DATA.TASKS[0]) {
+        if (res.DATA.COSTRECOVERIES[0]) {
           this.isDisplay = false;
           // this.behaviorService.TaskData(res.DATA.TASKS[0]);
-         this.highlightedRows = res.DATA.TASKS[0].TASKGUID;
+          this.highlightedRows = res.DATA.COSTRECOVERIES[0].TASKGUID;
         } else {
           this.isDisplay = true;
         }
-        this.MainSearchingData = new MatTableDataSource(res.DATA.TASKS);
+        this.MainSearchingData = new MatTableDataSource(res.DATA.COSTRECOVERIES);
         this.MainSearchingData.sort = this.sort;
         this.MainSearchingData.paginator = this.paginator;
         this.isLoadingResults = false;
@@ -202,6 +202,6 @@ export class MainSearchingComponent implements OnInit {
     localStorage.setItem('search_filter', JSON.stringify(this.filterData));
     this.LoadData(this.filterData);
   }
-  selectMatterId(){}
+  selectMatterId() { }
 
 }

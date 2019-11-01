@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { MainAPiServiceService, BehaviorService, TimersService } from 'app/_services';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatDialog } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatDialog, MatTableDataSource } from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
@@ -29,6 +29,13 @@ export class SafeCustodyDialogeComponent implements OnInit {
   cuurentmatter = JSON.parse(localStorage.getItem('set_active_matters'));
   documnettype: any = [];
   packetcustody: any = [];
+  displayedColumns: any = ['MOVEMENTDATE', 'MOVEMENTTYPE', 'CONTACTNAME', 'REASON'];
+  tabLable: any = "Check In";
+  checkInData: any = [];
+  highlightedRows: any;
+  selectCheckin: any;
+  theme_type = localStorage.getItem('theme_type');
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
 
   constructor(private _mainAPiServiceService: MainAPiServiceService,
@@ -42,11 +49,14 @@ export class SafeCustodyDialogeComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.action = data.safeCustodyData.action;
     if (this.action === 'new client' || this.action === 'new matter' || this.action === 'newlegal') {
+      this.tabLable = "Check In";
       this.dialogTitle = 'New Safe Custody';
     } else if (this.action === 'edit' || this.action === 'editlegal') {
+      this.tabLable = "History";
       this.dialogTitle = 'Update Safe Custody';
     } else if (this.action === 'copy') {
       this.dialogTitle = 'Duplicate Safe Custody';
+      this.tabLable = "Check In";
     }
     this.behaviorService.SafeCustody$.subscribe(result => {
       if (result) {
@@ -54,7 +64,9 @@ export class SafeCustodyDialogeComponent implements OnInit {
       }
     });
   }
-
+  editCheckinData(row) {
+    this.selectCheckin = row;
+  }
   ngOnInit() {
     this.SafeCustody = this._formBuilder.group({
       SAFECUSTODYGUID: [''],
@@ -78,18 +90,43 @@ export class SafeCustodyDialogeComponent implements OnInit {
       this._mainAPiServiceService.getSetData({ SAFECUSTODYGUID: this.safecustodydata.SAFECUSTODYGUID }, 'GetSafeCustody').subscribe(res => {
         if (res.CODE == 200 && res.STATUS == "success") {
           let SAFECUSTODIESDATA = res.DATA.SAFECUSTODIES[0];
+          // console.log(SAFECUSTODIESDATA);
           this.SafeCustody.controls['SAFECUSTODYGUID'].setValue(SAFECUSTODIESDATA.SAFECUSTODYGUID);
           this.SafeCustody.controls['MATTERGUID'].setValue(SAFECUSTODIESDATA.MATTERGUID);
           if (SAFECUSTODIESDATA.MATTERGUID != '')
             this.SafeCustody.controls['SHORTNAME'].setValue(SAFECUSTODIESDATA.SHORTNAME);
           else
             this.SafeCustody.controls['SHORTNAME'].setValue('No Matter');
-          this.SafeCustody.controls['CONTACTGUID'].setValue(SAFECUSTODIESDATA.CONTACTGUID);
-          this.SafeCustody.controls['CONTACTNAME'].setValue(SAFECUSTODIESDATA.CONTACTNAME);
+          if (SAFECUSTODIESDATA.REMINDERDATE) {
+            let tempDate = SAFECUSTODIESDATA.REMINDERDATE.split("/");
+            this.SafeCustody.controls['REMINDERDATETEXT'].setValue(new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]));
+            this.SafeCustody.controls['REMINDERDATE'].setValue(SAFECUSTODIESDATA.REMINDERDATE);
+          }
+          this.SafeCustody.controls['SAFECUSTODYPACKETGUID'].setValue(SAFECUSTODIESDATA.SAFECUSTODYPACKETGUID);
+          if (this.action === 'copy') {
+            this.SafeCustody.controls['CONTACTNAME'].setValue(this.data.safeCustodyData.result.CONTACTNAME);
+            this.SafeCustody.controls['CONTACTGUID'].setValue(this.data.safeCustodyData.result.CONTACTGUID);
+          } else {
+            this.SafeCustody.controls['CONTACTGUID'].setValue(SAFECUSTODIESDATA.CONTACTGUID);
+            this.SafeCustody.controls['CONTACTNAME'].setValue(SAFECUSTODIESDATA.CONTACTNAME);
+          }
           this.SafeCustody.controls['ADDITIONALTEXT'].setValue(SAFECUSTODIESDATA.ADDITIONALTEXT);
           this.SafeCustody.controls['DOCUMENTTYPE'].setValue(SAFECUSTODIESDATA.DOCUMENTTYPE);
           this.SafeCustody.controls['DOCUMENTNAME'].setValue(SAFECUSTODIESDATA.DOCUMENTNAME);
           this.SafeCustody.controls['SAFECUSTODYDESCRIPTION'].setValue(SAFECUSTODIESDATA.SAFECUSTODYDESCRIPTION);
+          this._mainAPiServiceService.getSetData({ SAFECUSTODYGUID: SAFECUSTODIESDATA.SAFECUSTODYGUID }, 'GetSafeCustodyMovement').subscribe(response => {
+            if (response.CODE == 200 && response.STATUS == "success") {
+              if (this.action == 'edit' || this.action === 'editlegal') {
+                if (response.DATA.SAFECUSTODIES[0]) {
+                  this.selectCheckin = response.DATA.SAFECUSTODIES[0];
+                  this.highlightedRows = response.DATA.SAFECUSTODIES[0].SAFECUSTODYMOVEMENTGUID;
+                  this.checkInData = new MatTableDataSource(response.DATA.SAFECUSTODIES);
+                } else {
+                  this.checkInData = new MatTableDataSource([]);
+                }
+              }
+            }
+          });
         } else if (res.MESSAGE == 'Not logged in') {
           this.dialogRef.close(false);
         }

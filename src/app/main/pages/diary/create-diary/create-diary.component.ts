@@ -106,7 +106,7 @@ export class CreateDiaryComponent implements OnInit {
     this.isLoadingResults = true;
     // this.Timersservice.getTimeEnrtyData({})
     // this._mainAPiServiceService.getSetData({ShowWhat: "CREATE WIP" }, 'GetAppointment')
-    this._mainAPiServiceService.getSetData({ShowWhat: "CREATE WIP" }, 'GetAppointment').subscribe(response => {
+    this._mainAPiServiceService.getSetData({ShowWhat: "CREATE WIP",TYPEFILTER:'All' }, 'GetAppointment').subscribe(response => {
       console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         this.TimerDataFordiary = new MatTableDataSource(response.DATA.APPOINTMENTS);

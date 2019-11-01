@@ -2,7 +2,8 @@
     <div class="content" fxLayoutAlign="center">
         <div class="center p-24 more_tbl_clmn list_tbl_main" fusePerfectScrollbar>
             <div class="matter-serach-div sticky_search_div responsive_auto">
-                <form>
+                
+                <form >
                     <mat-form-field class="example" appearance="outline">
                         <mat-select (selectionChange)="selectDayRange($event.value)" placeholder="Select Date Range">
                             <mat-option value="Today">Today</mat-option>
@@ -35,6 +36,74 @@
                     </mat-form-field>
                 </form>
             </div>
+                <div class="matter-serach-div sticky_search_div responsive_auto">
+                <form [formGroup]="CreateTimeEnrtyForm" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="CreateTimeEnrtyForm" id="CreateTimeEnrtyForm"  >
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <div class="one  mb-24" fxLayout="column">
+                            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                <mat-form-field appearance="outline" fxFlex="25" class="pr-4">
+                                    <mat-label>Matter</mat-label>
+                                    <input matInput readonly placeholder="Placeholder" formControlName="matterautoVal">
+                                    <mat-icon matSuffix (click)='selectMatter()'>
+                                        <img src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                    </mat-icon>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="20" class="pr-4" appearance="outline" >
+                                    <mat-label>Date</mat-label>
+                                    <input  matInput [matDatepicker]="picker" placeholder="Choose a date" (dateInput)="QuickDate('input', $event)" (dateChange)="QuickDate('change', $event)" formControlName="ITEMDATETEXT">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="15" class="pr-4" >
+                                    <mat-label>Time of day</mat-label>
+                                    <mat-select formControlName="ITEMTIME">
+                                        <mat-option *ngFor="let data of timeStops" value="{{data}}">{{data}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field fxFlex="20" class="pr-4" appearance="outline" >
+                                    <mat-label>Fee Earner</mat-label>
+                                    <mat-select formControlName="FEEEARNER" (selectionChange)="matterChange('FeeEarner',$event.value)">
+                                        <mat-option *ngFor="let user of userList" value="{{user.USERID}}">{{user.FULLNAME}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="25" class="pr-4" >
+                                    <mat-label>Duration</mat-label>
+                                    <input matInput formControlName="QUANTITY" (focusout)="matterChange('Quantity',$event.value)">
+                                    <mat-icon matSuffix class="secondary-text">quantity</mat-icon>
+                                </mat-form-field>
+                            </div>
+                            <div class="secondcls" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                <mat-form-field fxFlex="25" class="pr-4" appearance="outline" >
+                                    <mat-label>Type</mat-label>
+                                    <mat-select formControlName="QUANTITYTYPE" (selectionChange)="matterChange('QuantityType',$event.value)">
+                                        <mat-option *ngFor="let Activity of ActivityList" value="{{Activity.ACTIVITYID}}">{{Activity.DESCRIPTION}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="25" class="pr-4" >
+                                    <mat-label>Price (Ex GST)</mat-label>
+                                    <input class="sideText" type="text" numeric numericType="decimal" matInput formControlName="PRICE" (keyup)="calcPE()">
+                                    <span class="currency_sign" matPrefix>$&nbsp;</span>
+                                    <mat-icon matSuffix class="secondary-text">currency</mat-icon>
+                                </mat-form-field>
+                                <mat-form-field appearance="outline" fxFlex="25" class="pr-4" >
+                                    <mat-label>Price (Inc GST)</mat-label>
+                                    <input class="sideText" type="text" numeric numericType="decimal" matInput formControlName="PRICEINCGST" (keyup)="calcPI()">
+                                    <span class="currency_sign" matPrefix>$&nbsp;</span>
+                                    <mat-icon matSuffix class="secondary-text">currency</mat-icon>
+                                </mat-form-field>
+                                <mat-form-field fxFlex="40" class="pr-4" appearance="outline" >
+                                    <mat-label>Invoice Text</mat-label>
+                                    <mat-select #LookupsSelect formControlName="ADDITIONALTEXT">
+                                        <mat-option *ngFor="let Lookups of LookupsList" [value]="Lookups.LOOKUPFULLVALUE">{{Lookups.LOOKUPFULLVALUE}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <!-- <button mat-raised-button fxFlex="40" color="accent" (click)="SaveQuickTimeEntry()" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Add Time</button> -->
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
             <button mat-raised-button color="primary" type="button" id="saveCreateDiary" (click)="saveCreateDiary();">Refresh</button>
             <div class="content fix_div_padding">
                 <!-- <div class="btn top_right_action_billing_one one">
@@ -124,7 +193,7 @@
                                               </ng-container>
 
                                               <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                              <tr mat-row *matRowDef="let row let index = index; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}" (click)="Rowclick(row);highlightedRows=index" [style.background]="highlightedRows == index ? selectedColore : ''" [ngClass]="highlightedRows == index ? 'row-text-colore' : ''">
+                                              <tr mat-row *matRowDef="let row let index = index; columns: displayedColumns;" matRipple [@animate]="{value:'*',params:{y:'100%'}}" (click)="Rowclick(row,index);highlightedRows=index" [style.background]="highlightedRows == index ? selectedColore : ''" [ngClass]="highlightedRows == index ? 'row-text-colore' : ''">
                                               </tr>
                                           </table>
                                         <!-- <table mat-table [dataSource]="TimerDataFordiary" matSort [@animateStagger]="{value:'50'}">

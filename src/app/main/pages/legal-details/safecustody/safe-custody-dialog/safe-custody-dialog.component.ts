@@ -175,22 +175,21 @@ export class SafeCustodyDialogeComponent implements OnInit {
   getmoveMentData(type) {
     this._mainAPiServiceService.getSetData({ SAFECUSTODYGUID: this.f.SAFECUSTODYGUID.value }, 'GetSafeCustodyMovement').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-        if (this.action == 'edit' || this.action === 'editlegal') {
+        if (this.action == 'edit' || this.action === 'editlegal' || this.action === 'copy') {
           if (response.DATA.SAFECUSTODIES[0]) {
             this.selectCheckin = response.DATA.SAFECUSTODIES[0];
             this.highlightedRows = response.DATA.SAFECUSTODIES[0].SAFECUSTODYMOVEMENTGUID;
             this.isBorrow = response.DATA.SAFECUSTODIES[0].MOVEMENTTYPE == "Borrow" ? false : true;
             this.checkInData = new MatTableDataSource(response.DATA.SAFECUSTODIES);
             if (type == 'copy') {
-              this.SafeCustody.controls['CHECKINCONTACTNAME'].setValue(this.checkInData.CONTACTNAME);
-              if (this.checkInData.MOVEMENTDATE) {
-                let tempDate = this.checkInData.MOVEMENTDATE.split("/");
+              this.SafeCustody.controls['CHECKINCONTACTNAME'].setValue(this.selectCheckin.CONTACTNAME);
+              if (this.selectCheckin.MOVEMENTDATE) {
+                let tempDate = this.selectCheckin.MOVEMENTDATE.split("/");
                 this.SafeCustody.controls['CHECKINDATETEXT'].setValue(new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]));
-                this.SafeCustody.controls['CHECKINDATE'].setValue(this.checkInData.MOVEMENTDATE);
+                this.SafeCustody.controls['CHECKINDATE'].setValue(this.selectCheckin.MOVEMENTDATE);
               }
               this.tabLable = "Check In";
               this.isDisableCheckBtn = true;
-              debugger;
             }
           } else {
             this.checkInData = new MatTableDataSource([]);

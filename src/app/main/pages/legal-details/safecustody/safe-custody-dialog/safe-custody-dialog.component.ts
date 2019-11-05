@@ -35,7 +35,7 @@ export class SafeCustodyDialogeComponent implements OnInit {
   highlightedRows: any;
   selectCheckin: any;
   isDisableCheckBtn: boolean = false;
-  isBorrow: boolean = true;
+  MOVEMENTTYPEData: any;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
@@ -179,7 +179,8 @@ export class SafeCustodyDialogeComponent implements OnInit {
           if (response.DATA.SAFECUSTODIES[0]) {
             this.selectCheckin = response.DATA.SAFECUSTODIES[0];
             this.highlightedRows = response.DATA.SAFECUSTODIES[0].SAFECUSTODYMOVEMENTGUID;
-            this.isBorrow = response.DATA.SAFECUSTODIES[0].MOVEMENTTYPE == "Borrow" ? false : true;
+            this.MOVEMENTTYPEData = response.DATA.SAFECUSTODIES[0].MOVEMENTTYPE;
+            console.log(this.MOVEMENTTYPEData);
             this.checkInData = new MatTableDataSource(response.DATA.SAFECUSTODIES);
             if (type == 'copy') {
               this.SafeCustody.controls['CHECKINCONTACTNAME'].setValue(this.selectCheckin.CONTACTNAME);

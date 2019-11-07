@@ -110,6 +110,7 @@ export class SortingDialogComponent implements OnInit {
   }
   //dialog content close event with save
   ondialogSaveClick(): void {
+    console.log(this.property);
     let showCol = [];
     let tempColobj = [];
     this.property.forEach(itemsdata => {
@@ -127,6 +128,9 @@ export class SortingDialogComponent implements OnInit {
       dataObj.push({ COLUMNNAME: itemsdata.COLUMNNAME, HIDDEN: itemsdata.HIDDEN, POSITION: POSITIONData });
       POSITIONData++;
     });
+    console.log(this.modelType);
+    console.log(this.list);
+    console.log(dataObj);
     this.TableColumnsService.setTableFilter(this.modelType, this.list, dataObj).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") { }
     }, error => {

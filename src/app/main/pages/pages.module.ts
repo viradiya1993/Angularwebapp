@@ -28,13 +28,15 @@ import { TaskModule } from './Task/task.module';
 import { GloballyAuthorityModule } from './globally-Authority/globally-authority.module';
 import { TimeBillingModule } from './time-billing/time-billing.module';
 import { GloballySafeCustodyModule } from './globally-safecustody/globally-safecustody.module';
-// import { TrustGeneral } from './trust-general-journal/trust-general-journal.module';
-// import { TrustChartAccount } from './trust-chart-of-account/trust-chart-of-account.module';
+import { TrustGeneral } from './trust-general-journal/trust-general-journal.module';
+import { TrustChartAccount } from './trust-chart-of-account/trust-chart-of-account.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 
 
 const appRoutes: Routes = [
   { path: 'matters', loadChildren: './matters/matters.module#MattersModule' },
+  { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardModule' },
   { path: 'task', loadChildren: './Task/task.module#TaskModule' },
   { path: 'time-billing', loadChildren: './time-billing/time-billing.module#TimeBillingModule' },
   { path: 'trust-end-month', loadChildren: './Trust Accounts/trust-end-of-month/trust-end-of-month.module#TrustEndOfMonthModule' },
@@ -75,6 +77,7 @@ const appRoutes: Routes = [
     SystemSettingModule,
     UsersModule,
     MattersModule,
+    DashboardModule,
     TimeEntriesModule,
     DiaryModule,
     InvoiceModule,

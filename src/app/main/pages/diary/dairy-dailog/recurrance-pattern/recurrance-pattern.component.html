@@ -1,18 +1,18 @@
 <div class="one" [formGroup]="DairyForm" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-radio-group name="RedioChnage" [(ngModel)]="abc" formControlName="RedioChnage" aria-label="Select an option"  fxFlex="20" class="pr-4" (ngModelChange)="radiobtnclick()">
+        <mat-radio-group [ngClass]="{'has-error':errorWarningData.Error?.FREQUENCY,'has-warning':errorWarningData.Warning?.FREQUENCY}" name="RedioChnage" [(ngModel)]="abc" formControlName="RedioChnage" aria-label="Select an option"  fxFlex="20" class="pr-4" (ngModelChange)="radiobtnclick()">
                 <mat-radio-button  value="0">Once Only</mat-radio-button>
         </mat-radio-group>
-        <mat-radio-group   [(ngModel)]="abc" name="RedioChnage" formControlName="RedioChnage"  aria-label="Select an option" fxFlex="20" class="pr-4" (ngModelChange)="radiobtnclick()">
+        <mat-radio-group [ngClass]="{'has-error':errorWarningData.Error?.FREQUENCY,'has-warning':errorWarningData.Warning?.FREQUENCY}"   [(ngModel)]="abc" name="RedioChnage" formControlName="RedioChnage"  aria-label="Select an option" fxFlex="20" class="pr-4" (ngModelChange)="radiobtnclick()">
                 <mat-radio-button  value="1" >Daily</mat-radio-button>
         </mat-radio-group>
-        <mat-radio-group   [(ngModel)]="abc" name="RedioChnage" formControlName="RedioChnage" aria-label="Select an option"  fxFlex="20" class="pr-4"  (ngModelChange)="radiobtnclick()">
+        <mat-radio-group [ngClass]="{'has-error':errorWarningData.Error?.FREQUENCY,'has-warning':errorWarningData.Warning?.FREQUENCY}"  [(ngModel)]="abc" name="RedioChnage" formControlName="RedioChnage" aria-label="Select an option"  fxFlex="20" class="pr-4"  (ngModelChange)="radiobtnclick()">
                 <mat-radio-button  value="2">Weekly</mat-radio-button>
         </mat-radio-group>
-        <mat-radio-group  [(ngModel)]="abc" name="RedioChnage" formControlName="RedioChnage" aria-label="Select an option"  fxFlex="20" class="pr-4"  (ngModelChange)="radiobtnclick()">
+        <mat-radio-group [ngClass]="{'has-error':errorWarningData.Error?.FREQUENCY,'has-warning':errorWarningData.Warning?.FREQUENCY}" [(ngModel)]="abc" name="RedioChnage" formControlName="RedioChnage" aria-label="Select an option"  fxFlex="20" class="pr-4"  (ngModelChange)="radiobtnclick()">
                 <mat-radio-button value="3">Monthly</mat-radio-button>
         </mat-radio-group>
-        <mat-radio-group  [(ngModel)]="abc"  name="RedioChnage" formControlName="RedioChnage" aria-label="Select an option"  fxFlex="20" class="pr-4"  (ngModelChange)="radiobtnclick()">
+        <mat-radio-group [ngClass]="{'has-error':errorWarningData.Error?.FREQUENCY,'has-warning':errorWarningData.Warning?.FREQUENCY}" [(ngModel)]="abc"  name="RedioChnage" formControlName="RedioChnage" aria-label="Select an option"  fxFlex="20" class="pr-4"  (ngModelChange)="radiobtnclick()">
                 <mat-radio-button  value="4">Yearly</mat-radio-button>
         </mat-radio-group>
     </div>
@@ -26,7 +26,7 @@
     <div class="Daily" fxLayout="column"  *ngIf="abc =='1'">
         <div fxLayout="row" fxLayoutAlign="start"><p id="Daily">Pattern Details</p></div>
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-            <mat-form-field class="example p-4 " fxFlex="100" appearance="outline">
+            <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.DAYFREQUENCY,'has-warning':errorWarningData.Warning?.DAYFREQUENCY}" class="example p-4 " fxFlex="100" appearance="outline">
                 <mat-label>Every</mat-label>
                 <input matInput type="number" formControlName="Every" >
             </mat-form-field>
@@ -37,7 +37,7 @@
         <div fxLayout="row" fxLayoutAlign="start" ><p id="Weekly">Pattern Details</p></div>
 
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-            <mat-form-field class="example p-4" fxFlex="100" appearance="outline" >
+            <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.WEEKFREQUENCY,'has-warning':errorWarningData.Warning?.WEEKFREQUENCY}" class="example p-4" fxFlex="100" appearance="outline" >
                 <mat-label>Every</mat-label>
                 <input matInput type="number"  formControlName="EveryWeekly" >
             </mat-form-field>
@@ -59,34 +59,34 @@
         
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">  
 
-            <mat-form-field class="example p-4" fxFlex="20" appearance="outline" >
+            <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.MONTHOPTIONS,'has-warning':errorWarningData.Warning?.MONTHOPTIONS}"  class="example p-4" fxFlex="20" appearance="outline" >
                 <mat-label>Every</mat-label>
                 <input matInput type="number"  formControlName="EveryMonthly" >
             </mat-form-field>   
 
-            <mat-radio-group  name="MONTHOPTIONS" formControlName="MONTHOPTIONS" (ngModelChange)="radiobtnday()" aria-label="Select an option" fxFlex="20" class="pr-4">
+            <mat-radio-group [ngClass]="{'has-error':errorWarningData.Error?.MONTHOPTIONS,'has-warning':errorWarningData.Warning?.MONTHOPTIONS}" name="MONTHOPTIONS" formControlName="MONTHOPTIONS" (ngModelChange)="radiobtnday()" aria-label="Select an option" fxFlex="20" class="pr-4">
                 <mat-radio-button  value="0">The First Day</mat-radio-button>
             </mat-radio-group>
 
-            <mat-radio-group  name="MONTHOPTIONS" formControlName="MONTHOPTIONS" (ngModelChange)="radiobtnday()" aria-label="Select an option" fxFlex="20" class="pr-4">
+            <mat-radio-group [ngClass]="{'has-error':errorWarningData.Error?.MONTHOPTIONS,'has-warning':errorWarningData.Warning?.MONTHOPTIONS}" name="MONTHOPTIONS" formControlName="MONTHOPTIONS" (ngModelChange)="radiobtnday()" aria-label="Select an option" fxFlex="20" class="pr-4">
                 <mat-radio-button value="1" >The Last Day</mat-radio-button>
             </mat-radio-group>
 
-            <mat-radio-group  name="MONTHOPTIONS" formControlName="MONTHOPTIONS"  (ngModelChange)="radiobtnday()"  aria-label="Select an option" fxFlex="20" class="pr-4">
+            <mat-radio-group  [ngClass]="{'has-error':errorWarningData.Error?.MONTHOPTIONS,'has-warning':errorWarningData.Warning?.MONTHOPTIONS}" name="MONTHOPTIONS" formControlName="MONTHOPTIONS"  (ngModelChange)="radiobtnday()"  aria-label="Select an option" fxFlex="20" class="pr-4">
                 <mat-radio-button value="3">The Day</mat-radio-button>
             </mat-radio-group>
     
-            <mat-radio-group name="MONTHOPTIONS" formControlName="MONTHOPTIONS"  (ngModelChange)="radiobtnday()" aria-label="Select an option"  fxFlex="20" class="pr-4">
+            <mat-radio-group [ngClass]="{'has-error':errorWarningData.Error?.MONTHOPTIONS,'has-warning':errorWarningData.Warning?.MONTHOPTIONS}" name="MONTHOPTIONS" formControlName="MONTHOPTIONS"  (ngModelChange)="radiobtnday()" aria-label="Select an option"  fxFlex="20" class="pr-4">
                 <mat-radio-button value="4">The</mat-radio-button>
             </mat-radio-group>
         </div>    
         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
-            <mat-form-field class="example p-4" fxFlex="33" appearance="outline">            
+            <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.MONTHOPTIONDAY,'has-warning':errorWarningData.Warning?.MONTHOPTIONDAY}" class="example p-4" fxFlex="33" appearance="outline">            
                     <input (keyup)="EveryDaypress($event);" matInput type="number" [(ngModel)]="Everydayval" formControlName="EveryDay" >
             </mat-form-field>
             
-            <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+            <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.MONTHWHICHWEEK,'has-warning':errorWarningData.Warning?.MONTHWHICHWEEK}" appearance="outline" fxFlex="33" class="pr-4">
                 <mat-select formControlName="countvalue" (selectionChange)="whichweek()">
                     <mat-option value="First" selected>First</mat-option>
                     <mat-option value="Second">Second</mat-option>
@@ -96,7 +96,7 @@
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" fxFlex="34" class="pr-4">
+            <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.MONTHWHICHDAY,'has-warning':errorWarningData.Warning?.MONTHWHICHDAY}" appearance="outline" fxFlex="34" class="pr-4">
                 <mat-select formControlName="DaySelect" (selectionChange)="whichday()">
                     <mat-option value="Sun" selected>Sun</mat-option>
                     <mat-option value="Mon">Mon</mat-option>

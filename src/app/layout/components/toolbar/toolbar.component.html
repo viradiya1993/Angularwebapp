@@ -126,6 +126,22 @@
                                             </section>
                                         </button>
                                     </section>
+
+                                    <!-- dummy dashboard -->
+                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="isMatterClick()" (click)="setTab($event)" [routerLink]="'/dashboard'">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_doc_reg_d.ico" alt=""
+                                                        matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Dashboard</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
+
                                     <div class="light_label_txt">Details</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
@@ -1813,6 +1829,77 @@
                     </section>
                 </mat-tab>
                 <!-- End Spend Money Tab menu -->
+
+<!-- Dashboard Start -->
+
+<mat-tab label="DASHBOARD" *ngIf="isTabShow===29">
+    <section class="ribbon-container contact_tab_main">
+        <mat-card>
+            <mat-card-content>
+                <!-- <section class="group-section-tab action_tab">
+                    <section [ngClass]="appPermissions[9]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                        <button [disabled]="spendMoneyMenu =='disabled'" mat-button [ngClass]="appPermissions[9]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="spendmoneypopup('new')">
+                            <section class="large-button-container">
+                                <mat-icon class="main-icon">
+                                    <img src="assets/icons/web_app/icon_expenses_new_d.ico" alt=""
+                                        matTooltip="Twitter" matTooltipPosition="above">
+                                </mat-icon>
+                                <div class="main-text">
+                                    <span>New<br> Spend</span>
+                                </div>
+                            </section>
+                        </button>
+                    </section>
+                    <section [ngClass]="appPermissions[9]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                        <button [disabled]="spendMoneyMenu =='disabled'" mat-button [ngClass]="appPermissions[9]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="spendmoneypopup('edit')">
+                            <section class="large-button-container">
+                                <mat-icon class="main-icon">
+                                    <img src="assets/icons/web_app/icon_expenses_edit_d.ico" alt=""
+                                        matTooltip="Twitter" matTooltipPosition="above">
+                                </mat-icon>
+                                <div class="main-text">
+                                    <span>Edit<br> Spend</span>
+                                </div>
+                            </section>
+                        </button>
+                    </section>
+                    <section [ngClass]="appPermissions[9]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                        <button [disabled]="spendMoneyMenu=='disabled'" mat-button [ngClass]="appPermissions[9]?.Delete==0 ? 'disabled-click large-button' : 'large-button'" (click)="Deletespendmoneypopup()">
+                            <section class="large-button-container">
+                                <mat-icon class="main-icon">
+                                    <img src="assets/icons/web_app/icon_expenses_delete_d.ico" alt=""
+                                        matTooltip="Twitter" matTooltipPosition="above">
+                                </mat-icon>
+                                <div class="main-text">
+                                    <span>Delete<br> Spend</span>
+                                </div>
+                            </section>
+                        </button>
+                    </section>
+
+                    <section [ngClass]="appPermissions[9]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                        <button mat-button [ngClass]="appPermissions[9]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="spendmoneypopup('duplicate')">
+                            <section class="large-button-container">
+                                <mat-icon class="main-icon">
+                                    <img src="assets/icons/web_app/icon_duplicate_d.ico" alt=""
+                                        matTooltip="Twitter" matTooltipPosition="above">
+                                </mat-icon>
+                                <div class="main-text">
+                                    <span>Duplicate<br>Spend Money</span>
+                                </div>
+                            </section>
+                        </button>
+                    </section>
+
+                    <div class="light_label_txt">Action</div>
+                </section> -->
+                <mat-divider vertical></mat-divider>
+            </mat-card-content>
+        </mat-card>
+    </section>
+</mat-tab>
+
+<!-- dashboard end  -->
                 <!-- Receive Money Start tab menu start -->
                 <mat-tab label="Receive Money" *ngIf="isTabShow===9 || activeSubMenu =='time-billing/receipts-credits'">
                     <section class="ribbon-container contact_tab_main">
@@ -1958,7 +2045,7 @@
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab">
                                     <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="activeSubMenu ==='matter-template' || activeSubMenu ==='invoice-template' ||activeSubMenu ==='contact-template' 
-                                        ||activeSubMenu ==='receive-money-template' || packsToobar=='Template'">
+                                        ||activeSubMenu ==='receive-money-template' || activeSubMenu ==='safe-custody-template' || packsToobar=='Template'">
                                         <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="GenarateDocument()" [disabled]="isDocumentGenerateHide =='yes'">
                                                 <section class="large-button-container">
                                                     <mat-icon class="main-icon">
@@ -1972,7 +2059,7 @@
                                             </button>
                                     </section>
                                     <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="activeSubMenu ==='email-matter-template' || activeSubMenu ==='email-invoice-template' ||activeSubMenu ==='email-contact-template' 
-                                        ||activeSubMenu ==='email-receive-money-template' || packsToobar=='Email' ">
+                                        ||activeSubMenu ==='email-receive-money-template' || activeSubMenu ==='email-safe-custody-template' || packsToobar=='Email' ">
                                         <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="GenarateEmail()">
                                                 <section class="large-button-container">
                                                     <mat-icon class="main-icon">
@@ -1986,7 +2073,7 @@
                                             </button>
                                     </section>
                                     <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="(activeSubMenu ==='packs-matter-template' || activeSubMenu ==='packs-invoice-template' ||activeSubMenu ==='packs-contact-template' 
-                                        ||activeSubMenu ==='packs-receive-money-template') && packsToobar == 'Packs'">
+                                        ||activeSubMenu ==='packs-receive-money-template' || activeSubMenu ==='packs-safe-custody-template') && packsToobar == 'Packs'">
                                         <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="GenaratePacks()" [disabled]="isDocumentGenerateHide =='yes'">
                                                 <section class="large-button-container">
                                                     <mat-icon class="main-icon">
@@ -2003,7 +2090,7 @@
                                 </section>
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab" *ngIf="activeSubMenu ==='email-matter-template' || activeSubMenu ==='email-invoice-template' ||activeSubMenu ==='email-contact-template' 
-                                    ||activeSubMenu ==='email-receive-money-template' || packsToobar=='Email'">
+                                    ||activeSubMenu ==='email-receive-money-template'  ||activeSubMenu ==='email-safe-custody-template' || packsToobar=='Email'">
                                     <section [ngClass]="appPermissions[5]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button (click)="EmailTempletePopUp('new')" [ngClass]="appPermissions[5]?.Create==0 ? 'disabled-click large-button' : 'large-button'">
                                                 <section class="large-button-container">
@@ -2045,7 +2132,7 @@
                                 </section>
 
                                 <section class="group-section-tab action_tab" *ngIf="activeSubMenu ==='matter-template' || activeSubMenu ==='invoice-template' ||activeSubMenu ==='contact-template' 
-                                    ||activeSubMenu ==='receive-money-template' || packsToobar=='Template'">
+                                    ||activeSubMenu ==='receive-money-template' ||activeSubMenu ==='safe-custody-template' || packsToobar=='Template'">
                                     <section [ngClass]="appPermissions[5]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[5]?.Edit==0 ?  'disabled-click large-button' : 'large-button'" (click)="EditTemplatePopup()">
                                                 <section class="large-button-container">
@@ -2088,7 +2175,7 @@
                                 </section>
                                 <!-- Packs Start-->
                                 <section class="group-section-tab action_tab" *ngIf="(activeSubMenu ==='packs-matter-template' || activeSubMenu ==='packs-invoice-template' ||activeSubMenu ==='packs-contact-template' 
-                                    ||activeSubMenu ==='packs-receive-money-template') && packsToobar == 'Packs'">
+                                    ||activeSubMenu ==='packs-receive-money-template'||activeSubMenu ==='packs-safe-custody-template') && packsToobar == 'Packs'">
                                     <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button (click)="PackModule('new')" [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
                                                 <section class="large-button-container">
@@ -2437,7 +2524,8 @@
                 </mat-tab>
                 <!-- Document Register tab End-->
                 <!-- Chart Of Account tab Start-->
-                <mat-tab label="CHART OF ACCOUNTS" *ngIf="isTabShow===15">
+                <mat-tab  label="{{ShowMatLable}}" *ngIf="isTabShow===15">
+                <!-- <mat-tab label="TRUST CHART OF ACCOUNTS" *ngIf="isTabShow===15 && ShowMatLable =='WithTrust'"> -->
                     <section class="ribbon-container legal_details_tab_main">
                         <mat-card>
                             <mat-card-content>
@@ -2530,6 +2618,10 @@
                         </mat-card>
                     </section>
                 </mat-tab>
+
+
+            
+     
                 <!-- Chart Of Account tab End-->
                 <!-- General Journal tab Start-->
                 <mat-tab label="GENERAL JOURNAL" *ngIf="isTabShow===16">
@@ -3213,7 +3305,7 @@
                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)">
+                                        <button mat-button [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/create-document/safe-custody-template'"  >
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_template_edit_d.ico" alt=""
@@ -3718,7 +3810,7 @@
                                                 </section>
                                             </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                    <!-- <section [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="addNewTimeEntry('Edit')">
                                                 <section class="large-button-container">
                                                     <mat-icon class="main-icon">
@@ -3730,7 +3822,7 @@
                                                     </div>
                                                 </section>
                                             </button>
-                                    </section>
+                                    </section> -->
 
                                     <div class="light_label_txt">Action</div>
                                 </section>
@@ -4080,7 +4172,7 @@
                                 <!-- Account Section Start-->
                                 <section class="group-section-tab">
                                     <section [ngClass]="appPermissions[19]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[19]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/chart-account'">
+                                        <button mat-button [ngClass]="appPermissions[19]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="ChartAccount('WithTrust')" (click)="setTab($event)" [routerLink]="'/chart-account'">
                                         <section class="large-button-container">
                                             <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_receipt_d.ico" alt=""
@@ -4165,7 +4257,7 @@
                                     </button>
                                     </section>
                                     <section [ngClass]="appPermissions[23]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'disabled-click-cursor ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[23]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/trust-chart-of-account'">
+                                        <button mat-button [ngClass]="appPermissions[23]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" (click)="ChartAccount('WithoutTrust')" [routerLink]="'/chart-account'">
                                         <section class="large-button-container">
                                             <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_receipt_d.ico" alt=""

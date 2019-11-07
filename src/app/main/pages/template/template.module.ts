@@ -34,12 +34,13 @@ const routes = [
   { path: '', redirectTo: '/create-document/invoice-template', pathMatch: 'full', canActivate: [AuthGuard] },
   { path: '', redirectTo: '/create-document/receive-money-template', pathMatch: 'full', canActivate: [AuthGuard] },
   { path: '', redirectTo: '/create-document/contact-template', pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/create-document/safe-custody-template', pathMatch: 'full', canActivate: [AuthGuard] },
 
   { path: '', redirectTo: '/create-document/email-matter-template', pathMatch: 'full', canActivate: [AuthGuard] },
   { path: '', redirectTo: '/create-document/email-invoice-template', pathMatch: 'full', canActivate: [AuthGuard] },
   { path: '', redirectTo: '/create-document/email-contact-template', pathMatch: 'full', canActivate: [AuthGuard] },
   { path: '', redirectTo: '/create-document/email-receive-money-template', pathMatch: 'full', canActivate: [AuthGuard] },
-
+  { path: '', redirectTo: '/create-document/email-safe-custody-template', pathMatch: 'full', canActivate: [AuthGuard] },
 
   { path: '', redirectTo: '/create-document/packs', pathMatch: 'full', canActivate: [AuthGuard] },
   {
@@ -49,12 +50,14 @@ const routes = [
       { path: 'invoice-template', component: TemplateListComponent },
       { path: 'receive-money-template', component: TemplateListComponent },
       { path: 'contact-template', component: TemplateListComponent },
+      { path: 'safe-custody-template', component: TemplateListComponent },
 
       //for email template
       { path: 'email-matter-template', component: EmailTempleteComponent },
       { path: 'email-invoice-template', component: EmailTempleteComponent },
       { path: 'email-contact-template', component: EmailTempleteComponent },
       { path: 'email-receive-money-template', component: EmailTempleteComponent },
+      { path: 'email-safe-custody-template', component: EmailTempleteComponent },
 
       // { path: 'email-templete', component: EmailTempleteComponent },
       // { path: 'packs', component: PacksComponent },
@@ -62,6 +65,7 @@ const routes = [
       { path: 'packs-invoice-template', component: PacksComponent },
       { path: 'packs-contact-template', component: PacksComponent },
       { path: 'packs-receive-money-template', component: PacksComponent },
+      { path: 'packs-safe-custody-template', component: PacksComponent },
       { path: 'email-templete', component: EmailTempleteComponent },
       { path: 'packs', component: PacksComponent },
     ], canActivate: [AuthGuard]

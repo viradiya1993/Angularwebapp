@@ -86,6 +86,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     PacketsData: any;
     CurrentDate: any;
     PathOfRouter: any;
+    SafeCustodyData: any;
+    ShowMatLable: any;
+    ChartHandlingData:any=[];
     [x: string]: any;
     appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
     @ViewChild(TimeEntriesComponent) TimeEntrieschild: TimeEntriesComponent;
@@ -219,6 +222,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                     this.LegalSubAuthotool = '';
                 }
             }
+        });
+
+        //Trust Chart Account Behaviour 
+        this.behaviorService.TrustChartAccountHandling$.subscribe(result => {
+           if(result != null){
+               console.log(result);
+            this.ShowMatLable=result.Lable;
+           }
         });
 
         //for navigation bar 
@@ -1062,6 +1073,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             let ContactGuID = localStorage.getItem('contactGuid');
             let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "knownby": "Email", "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
             this.ForEmailDialogOpen(passdata);
+        }else if(this.router.url == "/create-document/email-safe-custody-template" || this.router.url == "/create-document/packs-safe-custody-template"){
+            let passdata = { 'Context': "Safe Custody", 'ContextGuid': this.SafeCustodyData.SAFECUSTODYGUID, "knownby": "Email", "Type": "Email", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
+            this.ForEmailDialogOpen(passdata);
         }
     }
     GenaratePacks() {
@@ -1085,6 +1099,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else if (this.router.url == "/create-document/packs-contact-template") {
             let ContactGuID = localStorage.getItem('contactGuid');
             let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "knownby": "Pack", "Type": "Pack", "Folder": '', "Template": this.KitName }
+            this.ForEmailDialogOpen(passdata);
+        }else if(this.router.url == "/create-document/packs-safe-custody-template"){
+            let passdata = { 'Context': "Safe Custody", 'ContextGuid': this.SafeCustodyData.SAFECUSTODYGUID, "knownby": "Pack", "Type": "Pack", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForEmailDialogOpen(passdata);
         }
     }
@@ -1199,6 +1216,39 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         //     }
         // });
     }
+
+
+
+
+/////// Trust Chart Account 
+
+ChartAccount(val){
+
+    console.log(val);
+    if(val == 'WithTrust'){
+        console.log("hello");
+         this.ChartHandlingData={
+            ClickType:val,
+            API:'',
+            PopUp:'',
+            Lable:"CHART ACCOUNT",  
+        }
+localStorage.setItem('ChartURL',JSON.stringify({Lable:"CHART ACCOUNT"}));
+    }else if(val=='WithoutTrust'){   
+        console.log("hello22222222");
+        this.ChartHandlingData={
+            ClickType:val,
+            API:'',
+            PopUp:'',
+            Lable:"TRUST CHART ACCOUNT", 
+        }
+        localStorage.setItem('ChartURL',JSON.stringify({Lable:"TRUST CHART ACCOUNT"}));
+    }
+   
+    console.log(this.ChartHandlingData);
+    this.behaviorService.TrustChartAccountHandling(this.ChartHandlingData); 
+}
+
     SelectMatter() {
         const dialogRef = this.MatDialog.open(MatterDialogComponent, {
             width: '100%',
@@ -1583,6 +1633,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 this.packrouting = '/create-document/packs-receive-money-template';
                 this.packsToobar = 'Packs';
             }
+            else if (x[2] == "safe-custody-template" || x[2] == "email-safe-custody-template" || x[2] == "packs-safe-custody-template") {
+                this.TemplateUrlHandel = '/create-document/safe-custody-template'
+                this.emailrouting = '/create-document/email-safe-custody-template';
+                this.packrouting = '/create-document/packs-safe-custody-template';
+                this.packsToobar = 'Packs';
+            }
         } else if (x[1] == "system-setting") {
             this.isTabShow = 11;
         } else if (x[1] == "users") {
@@ -1617,7 +1673,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.isTabShow = 27;
         } else if (x[1] == "trust-general-journal") {
             this.isTabShow = 28;
-        } else {
+        }else if (x[1] == "dashboard") {
+            this.isTabShow = 29;
+        } 
+        else {
             this.isTabShow = 1;
         }
         this.activeSubMenu = x[2];
@@ -2102,6 +2161,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 this.TemplateGenerateData = result;
             }
         });
+        this.behaviorService.SafeCustody$.subscribe(result => {
+            if (result) {
+                this.SafeCustodyData = result;
+            }
+        });
         if (this.router.url == "/create-document/invoice-template" || this.router.url == "/create-document/packs-invoice-template") {
             let invoiceGUid = localStorage.getItem('edit_invoice_id');
             let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "knownby": "Template", "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
@@ -2118,6 +2182,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else if (this.router.url == "/create-document/contact-template" || this.router.url == "/create-document/packs-contact-template") {
             let ContactGuID = localStorage.getItem('contactGuid');
             let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "knownby": "Template", "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
+            this.ForDocDialogOpen(passdata);
+        }else if(this.router.url == "/create-document/safe-custody-template" || this.router.url == "/create-document/packs-safe-custody-template"){
+            let passdata = { 'Context': "Safe Custody", 'ContextGuid': this.SafeCustodyData.SAFECUSTODYGUID, "knownby": "Template", "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
         }
     }

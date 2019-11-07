@@ -323,7 +323,7 @@ export class TimeEntriesComponent implements OnInit {
   }
 
   refreshTab() {
-    this.LoadData(this.lastFilter);
+    this.LoadData(JSON.parse(localStorage.getItem('time_entries_filter')));
   }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('time entries', '').subscribe(response => {

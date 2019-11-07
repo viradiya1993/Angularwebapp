@@ -81,6 +81,7 @@ export class SpendMoneyAddComponent implements OnInit {
     public behaviorService: BehaviorService,
     public _matDialog: MatDialog, public datepipe: DatePipe, public _mainAPiServiceService: MainAPiServiceService) {
     this.action = _data.action;
+    console.log(_data);
     // this.dialogTitle = this.action === 'edit' ? 'Update Spend Money' : 'Add Spend Money';
     if (this.action === 'new') {
       this.dialogTitle = 'Add Spend Money ';
@@ -356,9 +357,11 @@ export class SpendMoneyAddComponent implements OnInit {
       }
       this.forCommonEnable();
       this.GstTypeforSelect('1.1');
+    if(this.f.Matter.value ==''){
       let tempError: any = this.errorWarningData.Error;
       tempError['SHORTNAME'] = {};
       this.errorWarningData.Error = tempError;
+    }
       // this.errorWarningData = { "Error": tempError };
     } else if (Classvalue === 'Capital') {
       this.hide = true;
@@ -762,9 +765,10 @@ ExamountCall(){
     // for ammount field 
     this.FinalExGSTAmount = this.setMainAmount - this.setMainGST;
 
-
+    
     if (this.FinalExGSTAmount == 0 || this.f.Expenseac.value == '' || this.f.Notes.value == '') {
       this.toastr.error("Amount should not be 0 || You should select a Expense a/c  || You should enter Notes");
+      this.sendItem=[];
       return;
     }
     let Data = {

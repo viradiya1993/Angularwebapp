@@ -71,9 +71,9 @@ export class DashboardService implements Resolve<any>
                 console.log(res);
                 if (res.CODE == 200 && res.STATUS == "success") {
                     this.AgedDebtorsArray=res.DATA.DASHBOARDDATA;
-                    AnalyticsDashboardDb.widgets.widget7.devices[0].name=this.AgedDebtorsArray[1].DATEDESC;
-                    AnalyticsDashboardDb.widgets.widget7.devices[1].name=this.AgedDebtorsArray[2].DATEDESC;
-                    AnalyticsDashboardDb.widgets.widget7.devices[2].name=this.AgedDebtorsArray[3].DATEDESC;
+                    AnalyticsDashboardDb.widgets.widget7.devices[0].name=this.AgedDebtorsArray[0].DATEDESC;
+                    AnalyticsDashboardDb.widgets.widget7.devices[1].name=this.AgedDebtorsArray[1].DATEDESC;
+                    AnalyticsDashboardDb.widgets.widget7.devices[2].name=this.AgedDebtorsArray[2].DATEDESC;
                 }
                 // this.widgets = AnalyticsDashboardDb.widgets;
                 // resolve(this.widgets);

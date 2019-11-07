@@ -534,17 +534,17 @@ export class AnalyticsDashboardDb
             },
             devices: [
                 {
-                    name  : 'Desktop',
+                    name  : '',
                     value : 92.8,
                     change: -0.6
                 },
                 {
-                    name  : 'Mobile',
+                    name  : '',
                     value : 6.1,
                     change: 0.7
                 },
                 {
-                    name  : 'Tablet',
+                    name  : '',
                     value : 1.1,
                     change: 0.1
                 }

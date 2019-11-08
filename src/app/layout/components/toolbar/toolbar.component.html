@@ -126,6 +126,19 @@
                                             </section>
                                         </button>
                                     </section>
+                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="isMatterClick()" (click)="setTab($event)" [routerLink]="'/create-document/matter-template'">
+                                            <section class="large-button-container">
+                                                <mat-icon class="main-icon">
+                                                    <img src="assets/icons/web_app/icon_email_d.ico" alt=""
+                                                        matTooltip="Twitter" matTooltipPosition="above">
+                                                </mat-icon>
+                                                <div class="main-text">
+                                                    <span>Email <br> Templates</span>
+                                                </div>
+                                            </section>
+                                        </button>
+                                    </section>
                                     <div class="light_label_txt">Details</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
@@ -3212,15 +3225,15 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)">
+                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="isMatterClick()" (click)="setTab($event)" [routerLink]="'/create-document/matter-template'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
-                                                    <img src="assets/icons/web_app/icon_template_edit_d.ico" alt=""
+                                                    <img src="assets/icons/web_app/icon_letters_d.ico" alt=""
                                                         matTooltip="Twitter" matTooltipPosition="above">
                                                 </mat-icon>
                                                 <div class="main-text">
-                                                    <span>Document <br />Template</span>
+                                                    <span>Document <br> Templates</span>
                                                 </div>
                                             </section>
                                         </button>
@@ -3350,6 +3363,7 @@
                                             </section>
                                         </button>
                                     </section>
+                                    
                                     <section [ngClass]="appPermissions[22]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[22]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="TrustMoneyPopup('money receipt')">
                                             <section class="large-button-container">
@@ -3613,7 +3627,6 @@
                                     <div class="light_label_txt">Action</div>
                                 </section>
                                 <mat-divider vertical></mat-divider>
-
                             </mat-card-content>
                         </mat-card>
                     </section>

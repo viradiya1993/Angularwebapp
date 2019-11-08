@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation,OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TableColumnsService, MainAPiServiceService, BehaviorService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
@@ -17,7 +17,7 @@ import { stringify } from '@angular/core/src/render3/util';
   encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
-export class SpendMoneyComponent implements OnInit {
+export class SpendMoneyComponent implements OnInit,OnDestroy {
   SepndMoneyForm: FormGroup;
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   isLoadingResults: boolean = false;
@@ -181,7 +181,6 @@ export class SpendMoneyComponent implements OnInit {
     this.currentMatterData = Row;
     this.behaviorService.SpendMoneyData(Row);
   }
-
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
@@ -209,11 +208,9 @@ export class SpendMoneyComponent implements OnInit {
   onSearch(searchFilter: any) {
     this.filterData = JSON.parse(localStorage.getItem("spendmoney_filter"));
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
-      
       this.filterData.Search = this.f.searchFilter.value;
       localStorage.setItem('spendmoney_filter', JSON.stringify(this.filterData));
       this.loadData(this.filterData);
-     
     }
   }
   SpendClassChange(val) {
@@ -295,6 +292,11 @@ export class SpendMoneyComponent implements OnInit {
       this.filterData.PAIDSTARTDATE = end;
       this.filterData.PAIDENDDATE = begin;
     }
+    localStorage.setItem('spendmoney_filter', JSON.stringify(this.filterData));
+  }
+  ngOnDestroy(): void {
+    this.filterData = JSON.parse(localStorage.getItem("spendmoney_filter"));
+    this.filterData.Search = '';
     localStorage.setItem('spendmoney_filter', JSON.stringify(this.filterData));
   }
 }

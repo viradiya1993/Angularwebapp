@@ -64,14 +64,11 @@ export class TrustMoneyDialogeComponent implements OnInit {
       this.title = "Add Controlled Money Receipt";
     }else if (this.action == "money withdrawal") {
       this.title = "Add Controlled Money withdrawal";
-    }
-
-    else if (this.action == "Cancelled Cheque") {
+    }else if (this.action == "Cancelled Cheque") {
       this.title = "Add Cancelled Cheque";
     }else if (this.action == "Unknown Deposit") {
       this.title = "Add Unknown Deposit Receipt";
-    }
-    else if (this.action == "Transfer Unknow Deposit") {
+    }else if (this.action == "Transfer Unknow Deposit") {
       this.title = "Add Unknown Deposit Transfer";
       this.action = "Transfer";
       this.TrustMoneyData.PaymentType = "Transfer";
@@ -84,8 +81,6 @@ export class TrustMoneyDialogeComponent implements OnInit {
       this.title = "Add Statutory Receipt";
       this.ForDetailTab='Statutory Receipt';
       this.action = "receipt";
-
-
     }else if (this.action == "Release Trust") {
       this.title = "Add Release Trust";
     }
@@ -93,8 +88,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
 
   ngOnInit() {
     // this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response=>{
-    //  // console.log(response);
-    //   this.addData=response.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP
+    // this.addData=response.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP
     // })
 
   }

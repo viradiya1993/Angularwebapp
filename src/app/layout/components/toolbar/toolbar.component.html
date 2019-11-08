@@ -128,7 +128,7 @@
                                     </section>
 
                                     <!-- dummy dashboard -->
-                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                    <!-- <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="isMatterClick()" (click)="setTab($event)" [routerLink]="'/dashboard'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -140,7 +140,7 @@
                                                 </div>
                                             </section>
                                         </button>
-                                    </section>
+                                    </section> -->
 
                                     <div class="light_label_txt">Details</div>
                                 </section>
@@ -1830,13 +1830,13 @@
                 </mat-tab>
                 <!-- End Spend Money Tab menu -->
 
-<!-- Dashboard Start -->
+                <!-- Dashboard Start -->
 
-<mat-tab label="DASHBOARD" *ngIf="isTabShow===29">
-    <section class="ribbon-container contact_tab_main">
-        <mat-card>
-            <mat-card-content>
-                <!-- <section class="group-section-tab action_tab">
+                <mat-tab label="DASHBOARD" *ngIf="isTabShow===29">
+                    <section class="ribbon-container contact_tab_main">
+                        <mat-card>
+                            <mat-card-content>
+                                <!-- <section class="group-section-tab action_tab">
                     <section [ngClass]="appPermissions[9]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                         <button [disabled]="spendMoneyMenu =='disabled'" mat-button [ngClass]="appPermissions[9]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="spendmoneypopup('new')">
                             <section class="large-button-container">
@@ -1893,13 +1893,13 @@
 
                     <div class="light_label_txt">Action</div>
                 </section> -->
-                <mat-divider vertical></mat-divider>
-            </mat-card-content>
-        </mat-card>
-    </section>
-</mat-tab>
+                                <mat-divider vertical></mat-divider>
+                            </mat-card-content>
+                        </mat-card>
+                    </section>
+                </mat-tab>
 
-<!-- dashboard end  -->
+                <!-- dashboard end  -->
                 <!-- Receive Money Start tab menu start -->
                 <mat-tab label="Receive Money" *ngIf="isTabShow===9 || activeSubMenu =='time-billing/receipts-credits'">
                     <section class="ribbon-container contact_tab_main">
@@ -2524,8 +2524,8 @@
                 </mat-tab>
                 <!-- Document Register tab End-->
                 <!-- Chart Of Account tab Start-->
-                <mat-tab  label="{{ShowMatLable}}" *ngIf="isTabShow===15">
-                <!-- <mat-tab label="TRUST CHART OF ACCOUNTS" *ngIf="isTabShow===15 && ShowMatLable =='WithTrust'"> -->
+                <mat-tab label="{{ShowMatLable}}" *ngIf="isTabShow===15">
+                    <!-- <mat-tab label="TRUST CHART OF ACCOUNTS" *ngIf="isTabShow===15 && ShowMatLable =='WithTrust'"> -->
                     <section class="ribbon-container legal_details_tab_main">
                         <mat-card>
                             <mat-card-content>
@@ -2620,8 +2620,8 @@
                 </mat-tab>
 
 
-            
-     
+
+
                 <!-- Chart Of Account tab End-->
                 <!-- General Journal tab Start-->
                 <mat-tab label="GENERAL JOURNAL" *ngIf="isTabShow===16">
@@ -3305,7 +3305,7 @@
                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/create-document/safe-custody-template'"  >
+                                        <button mat-button [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/create-document/safe-custody-template'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_template_edit_d.ico" alt=""

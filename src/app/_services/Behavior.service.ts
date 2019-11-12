@@ -58,11 +58,15 @@ export class BehaviorService {
   public TrustChartAccountHandling$: BehaviorSubject<any> = new BehaviorSubject(JSON.parse(localStorage.getItem('ChartURL')));
 
   public MatterNum$: BehaviorSubject<any> = new BehaviorSubject(null);
-
+  
+  public totalDashboard$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(private http: HttpClient) { }
 
   matterInvoiceData(matterClassData: any) {
     this.matterInvoice$.next(matterClassData);
+  }
+  totalDashboard(totalDashboard: any) {
+    this.totalDashboard$.next(totalDashboard);
   }
   TrustChartAccountHandling(TrustChartAccountHandling: any) {
     this.TrustChartAccountHandling$.next(TrustChartAccountHandling);

@@ -398,7 +398,12 @@ button#spendmoneyMenubtn {
 button#packsToolbarHide {
     display: none;
 }
-
+.unbilledClassColor{
+color:blue;
+}
+.OutstandingClassColor{
+color: red
+}
 // added by web 19
 // mat-icon.main-icon.mat-icon.material-icons.mat-icon-no-color {
 //     width: 32px;

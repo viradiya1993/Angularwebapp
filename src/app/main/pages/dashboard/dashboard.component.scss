@@ -45,7 +45,8 @@
             }
 
             .fuse-card {
-
+                height: 500px;
+                width: 500px;
                 @include media-breakpoint('lt-lg') {
                     width: 100%;
                     min-width: 0;
@@ -62,4 +63,10 @@
     background-color: #bbb;
     border-radius: 50%;
     display: inline-block;
+  }
+  .unbilToCl{
+      color: red;
+  }
+  .TolUnbil{
+      margin-left: 90px;
   }

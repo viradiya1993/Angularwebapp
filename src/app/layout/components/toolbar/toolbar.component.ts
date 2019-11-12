@@ -89,6 +89,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     SafeCustodyData: any;
     ShowMatLable: any;
     ChartHandlingData: any = [];
+    TotalUnbilledWIP: any;
+    TotalOutstanding: any;
+    WorkInProgressData: any;
     [x: string]: any;
     appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
     @ViewChild(TimeEntriesComponent) TimeEntrieschild: TimeEntriesComponent;
@@ -154,7 +157,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         public MatDialog: MatDialog,
         public behaviorService: BehaviorService
     ) {
-
+        // call dashboard showing api
+        this.DashboardAPI();
         //For receipt 
         this.behaviorService.ReceiptData$.subscribe(result => {
             this.DisabledReceiptTool = "disabled";
@@ -163,7 +167,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 this.DisabledReceiptTool = "enabled";
             }
         });
-
+        this.behaviorService.workInProgress$.subscribe(result => {
+            if (result) {
+            this.WorkInProgressData=result
+            }
+        });
         //for Disabled enabled
         this.behaviorService.ConflictDataList$.subscribe(result => {
             if (result == null) { this.disconflictToolbar = 'yes'; } else { this.disconflictToolbar = 'no'; }
@@ -228,7 +236,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         //Trust Chart Account Behaviour 
         this.behaviorService.TrustChartAccountHandling$.subscribe(result => {
             if (result != null) {
-                console.log(result);
                 this.ShowMatLable = result.Lable;
             }
         });
@@ -338,6 +345,28 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             $('.mat-tab-header').css({ 'width': wph - nvh - 160 + 'px' });
         }
     }
+    // DashboardAPI start //
+
+    DashboardAPI(){
+
+        this._mainAPiServiceService.getSetData({Dashboard:'total unbilled wip'}, 'GetDashboard').subscribe(res => {
+
+            if (res.CODE == 200 && res.STATUS == "success") {
+                this.TotalUnbilledWIP=res.DATA.DASHBOARDDATA[0].EXGST;
+            }
+          
+        });
+
+        this._mainAPiServiceService.getSetData({Dashboard:'total outstanding'}, 'GetDashboard').subscribe(res => {
+
+            if (res.CODE == 200 && res.STATUS == "success") {
+             this.TotalOutstanding= res.DATA.DASHBOARDDATA[0].EXGST;
+            }
+          
+        });
+    }
+
+     // DashboardAPI end  //
     /* ---------------------------------------------------------------------help Licence start--------------------------------------------------------------------------  */
     openLicence(Data) {
         let w = Data == 'LI' ? '50%' : '25%';
@@ -689,6 +718,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             });
         }
     }
+    EditTimeEntryFromWIP(){
+if(this.WorkInProgressData.ITEMTYPEDESC =='Disbursement'){
+    this.spendmoneypopup('edit');
+}else{
+    this.addNewTimeEntry('Edit','','')
+}
+       
+       
+    }
     WriteOffTimeEntry() {
         const dialogRef = this._matDialog.open(WriteOffTimeEntryComponent, {
             width: '100%', disableClose: true, data: {}
@@ -939,6 +977,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 let WORKITEMGUID;
                 this.behaviorService.workInProgress$.subscribe(workInProgressData => {
                     if (workInProgressData) {
+                        this.WorkInProgressData=workInProgressData;
                         WORKITEMGUID = workInProgressData.WORKITEMGUID;
                     } else {
                         WORKITEMGUID = localStorage.getItem('edit_WORKITEMGUID');

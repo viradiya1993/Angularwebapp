@@ -3,7 +3,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
 
 import { ToastrService } from 'ngx-toastr';
-import { MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import { DashboardService } from './dashboard.service';
 import CanvasJS from 'canvasjs';
 import * as shape from 'd3-shape';
@@ -17,9 +17,11 @@ import { Chart } from 'chart.js';
 export class DashboardComponent implements OnInit {
     widgets: any;
     chart: any;
+    widget2: any = {};
     widget1SelectedYear = '2016';
     widget5SelectedDay = 'today';
   isLoadingResults: boolean = false;
+    UnbilledTotal: any;
 
   //doughnut chart
 //   public chartType: string = 'doughnut';
@@ -39,7 +41,7 @@ export class DashboardComponent implements OnInit {
 //         labels: {
 //             fontColor: 'rgb(255, 99, 132)',
 //             text:'jkhfgd',
-//         }
+//         }~
 //     }   
 //   }
 
@@ -52,9 +54,29 @@ export class DashboardComponent implements OnInit {
      * @param {AnalyticsDashboardService} _analyticsDashboardService
      */
   constructor(private _mainAPiServiceService:MainAPiServiceService,
-    private toastr: ToastrService, private _analyticsDashboardService: DashboardService) { 
-      // Register the custom chart.js plugin
+    private toastr: ToastrService, private _analyticsDashboardService: DashboardService,
+    private behaviorService:BehaviorService) { 
+        
+        //forTotal
+        this.behaviorService.totalDashboard$.subscribe(result => {
+            console.log(result);
+            this.UnbilledTotal=result
+          });
 
+      // Register the custom chart.js plugin
+      this.widget2 = {
+        legend       : false,
+        explodeSlices: false,
+        labels       : true,
+        doughnut     : false,
+        gradient     : false,
+        scheme       : {
+            domain: ['#f44336', '#9c27b0', '#03a9f4', '#e91e63', '#ffc107']
+        },
+        onSelect     : (ev) => {
+            console.log(ev);
+        }
+    };
       this._registerCustomChartJSPlugin();
       this.chartPl();
 

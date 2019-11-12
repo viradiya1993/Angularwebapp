@@ -178,6 +178,7 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
   }
   editworkInProgress(row: any) {
     this.behaviorService.setworkInProgressData(row);
+    this.behaviorService.SpendMoneyData(row);
   }
 
 }

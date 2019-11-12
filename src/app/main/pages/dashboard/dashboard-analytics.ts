@@ -112,75 +112,103 @@ export class AnalyticsDashboardDb
                 }
             }
         },
-        widget2: {
-            conversion: {
-                value   :'',
-                ofTarget: 13
-            },
-            chartType : 'bar',
-            datasets  : [
-                {
-                    label: 'Unbilled WIP',
-                    data : [221, 428, 492, 471, 413, 344, 294, 452, 532, 956, 625, 756],
+        // widget2: {
+        //     conversion: {
+        //         value   :'',
+        //         ofTarget: 13
+        //     },
+        //     chartType : 'bar',
+        //     datasets  : [
+        //         {
+        //             label: 'Unbilled WIP',
+        //             data : [221, 428, 492, 471, 413, 344, 294, 452, 532, 956, 625, 756],
                    
                         
-                },
+        //         },
                
-            ],
-            labels    : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept ', 'Oct ', 'Nov', 'Dec'],
-            colors    : [
-                {
-                    borderColor    : '#42a5f5',
-                    backgroundColor: '#42a5f5'
-                }
-            ],
-            options   : {
-                spanGaps           : false,
-                legend             : {
-                    display: false
-                },
-                maintainAspectRatio: false,
-                tooltips           : {
-                    position : 'average',
-                    mode     : 'index',
-                    intersect: false
-                },
-                layout             : {
-                    padding: {
-                        top   : 24,
-                        left  : 16,
-                        right : 16,
-                        bottom: 16
-                    }
-                },
-                scales             : {
-                    xAxes: [
-                        {
+        //     ],
+        //     labels    : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept ', 'Oct ', 'Nov', 'Dec'],
+        //     colors    : [
+        //         {
+        //             borderColor    : '#42a5f5',
+        //             backgroundColor: '#42a5f5'
+        //         }
+        //     ],
+        //     options   : {
+        //         spanGaps           : false,
+        //         legend             : {
+        //             display: false
+        //         },
+        //         maintainAspectRatio: false,
+        //         tooltips           : {
+        //             position : 'average',
+        //             mode     : 'index',
+        //             intersect: false
+        //         },
+        //         layout             : {
+        //             padding: {
+        //                 top   : 24,
+        //                 left  : 16,
+        //                 right : 16,
+        //                 bottom: 16
+        //             }
+        //         },
+        //         scales             : {
+        //             xAxes: [
+        //                 {
 
-                            display: true
-                        }
-                    ],
-                    yAxes: [
-                        {
-                            display: true,
-                            ticks  : {
-                                min: 0,
-                                max: 1000,
-                                stepSize: 500,
-                                  // Include a dollar sign in the ticks
-                        callback: function(value, index, values) {
-                        return '$' + value;
-                    }
-                            }
-                        }
-                    ]
-                },
-                //   title: {
-                //     display: true,
-                //     position:'bottom',
-                //     text: 'Custom Chart Title'
+        //                     display: true
+        //                 }
+        //             ],
+        //             yAxes: [
+        //                 {
+        //                     display: true,
+        //                     ticks  : {
+        //                         min: 0,
+        //                         max: 1000,
+        //                         stepSize: 500,
+        //                           // Include a dollar sign in the ticks
+        //                 callback: function(value, index, values) {
+        //                 return '$' + value;
+        //             }
+        //                     }
+        //                 }
+        //             ]
+        //         },
+        //         //   title: {
+        //         //     display: true,
+        //         //     position:'bottom',
+        //         //     text: 'Custom Chart Title'
+        //         // },
+        //     }
+        // },
+        widget2   : {
+            title    : '',
+            mainChart: [
+                // {
+                //     'name' : 'Wireframing',
+                //     'value': 12
                 // },
-            }
+                // {
+                //     'name' : 'Design',
+                //     'value': 17
+                // },
+                // {
+                //     'name' : 'Coding',
+                //     'value': 28
+                // },
+                // {
+                //     'name' : 'Marketing',
+                //     'value': 25
+                // },
+                // {
+                //     'name' : 'Extra',
+                //     'value': 15
+                // }
+            ],
+            //  scheme       : {
+            //     domain: ['#f44336', '#9c27b0', '#03a9f4', '#e91e63', '#ffc107']
+            // },
         },
         widget3: {
             impressions: {

@@ -128,7 +128,7 @@
                                     </section>
 
                                     <!-- dummy dashboard -->
-                                    <!-- <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="isMatterClick()" (click)="setTab($event)" [routerLink]="'/dashboard'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -140,7 +140,7 @@
                                                 </div>
                                             </section>
                                         </button>
-                                    </section> -->
+                                    </section>
 
                                     <div class="light_label_txt">Details</div>
                                 </section>
@@ -481,8 +481,9 @@
                                             </section>
                                         </button>
                                     </section>
+                                    <!-- (click)="spendmoneypopup('edit')"  (click)="addNewTimeEntry('Edit')" -->
                                     <section [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="addNewTimeEntry('Edit')">
+                                        <button mat-button [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="EditTimeEntryFromWIP()" >
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_time_cost_edit_d.ico" alt=""
@@ -4477,8 +4478,13 @@
                 </div>
             </button>
             <mat-menu #userMenu1="matMenu" [overlapTrigger]="false">
-                <button mat-menu-item><span>Unbilled:$28,542</span></button>
-                <button mat-menu-item><span>Outstanding:$13,325</span></button>
+                <button mat-menu-item><span><b> Unbilled:</b> <span class="unbilledClassColor"> ${{TotalUnbilledWIP}}</span></span></button>
+                <button mat-menu-item><span><b> Outstanding:</b> <span class="OutstandingClassColor"> ${{TotalOutstanding}}</span></span></button>
+                <hr />
+                <button mat-menu-item [routerLink]="'/dashboard'">
+                    <span><strong>View Dashboard</strong></span>
+                </button>
+                <!-- <button mat-raised-button color="accent"[routerLink]="'/dashboard'">View Dashboard</button> -->
             </mat-menu>
             <div class="toolbar-separator top_seprator"></div>
             <button mat-icon-button class="chat-panel-toggle-button header_height_btn" id="sidebar_open_button" (click)="toggleSidebarOpen('quickPanel')" aria-label="Toggle chat panel">

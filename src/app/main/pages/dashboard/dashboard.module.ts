@@ -20,6 +20,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AgmCoreModule } from '@agm/core';
 import { FuseWidgetModule } from '@fuse/components/widget/widget.module';
+import {MatDividerModule} from '@angular/material/divider';
 // import { AnalyticsDashboardDb } from './dashboard-analytics';
 // import { TaskComponent } from './task.component';
 // import { TaskDialogeComponent } from './task-dialoge/task-dialoge.component';
@@ -49,6 +50,7 @@ const routes: Routes = [
   }),
     FuseWidgetModule,
     CommonModule,
+    MatDividerModule,
     MatTreeModule,
     RouterModule.forChild(routes),
     FuseSharedModule,

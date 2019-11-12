@@ -1,6 +1,6 @@
 <div class="one" [formGroup]="DairyForm" fxLayout="column">
     <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="40" class="pr-4">
+        <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.APPOINTMENTTYPE,'has-warning':errorWarningData.Warning?.APPOINTMENTTYPE}" appearance="outline" fxFlex="40" class="pr-4">
             <mat-label>Type</mat-label>
             <mat-select formControlName="type">
                 <mat-option value="Conference">Conference</mat-option>
@@ -14,7 +14,7 @@
         </mat-form-field>
         <!-- &nbsp;&nbsp;&nbsp;&nbsp; -->
         <mat-checkbox fxFlex="20" formControlName="Reminder" (ngModelChange)="CheckReminder($event)" [ngModel]="filter">Reminder</mat-checkbox>
-        <mat-form-field appearance="outline" fxFlex="40" class="pr-4">
+        <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.REMINDERMINUTESBEFORE,'has-warning':errorWarningData.Warning?.REMINDERMINUTESBEFORE}" appearance="outline" fxFlex="40" class="pr-4">
             <mat-label>Before Start</mat-label>
             <mat-select formControlName="Beforestart"  (selectionChange)="Beforstartchange($event.value)">
                 <mat-option value="15Minutes">15 Minutes</mat-option>
@@ -50,7 +50,7 @@
     </div>
     <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
 
-        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+        <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.CATEGORY,'has-warning':errorWarningData.Warning?.CATEGORY}" appearance="outline" fxFlex="50" class="pr-4">
             <mat-label>Category</mat-label>
             <mat-select formControlName="Category" (ngModelChange)="ChnageCategory($event)">
                 <mat-option value="Billable">Billable</mat-option>
@@ -59,7 +59,7 @@
                 <mat-option value="Other">Other</mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field class="example p-16" fxFlex="50" appearance="outline">
+        <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.MATTERGUID,'has-warning':errorWarningData.Warning?.MATTERGUID}" class="example p-16" fxFlex="50" appearance="outline">
             <mat-label>Matter</mat-label>
             <input formControlName="Matter" matInput>
             <!-- <button> <mat-icon matSuffix (click)='SelectMatter()'>
@@ -75,7 +75,7 @@
     </div>
 
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+        <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.COMMENT,'has-warning':errorWarningData.Warning?.COMMENT}" appearance="outline" fxFlex="100" class="pr-4">
             <mat-label>Comment</mat-label>
             <textarea formControlName="COMMENT" matInput></textarea>
         </mat-form-field>

@@ -134,6 +134,8 @@ export class DiaryService implements Resolve<any>
                             tempEvent.push({ start: dateformat(changeformat(itemsdata.APPOINTMENTDATE) + ' ' + itemsdata.APPOINTMENTTIME), title: '(' + this.tConvert(itemsdata.APPOINTMENTTIME) + ') -' + itemsdata.SUBJECT, allDay: false, DairyRowClickData: itemsdata.APPOINTMENTGUID, id: "das" });
                         });
                         this.events = tempEvent;
+                        console.log(this.events);
+                        console.log(tempEvent);
                         this.onEventsUpdated.next(this.events);
                         resolve(this.events);
                     }

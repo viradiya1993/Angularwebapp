@@ -13,6 +13,7 @@ import * as $ from 'jquery';
 })
 export class DetailsComponent implements OnInit {
   @Input() DairyForm: FormGroup;
+  @Input() errorWarningData: any;
   filter = true;
   hideicon:boolean;
   constructor(
@@ -37,6 +38,7 @@ export class DetailsComponent implements OnInit {
       if (result) {
          this.DairyForm.controls['Matter'].setValue(result.MATTER);
          this.DairyForm.controls['MATTERGUID'].setValue(result.MATTERGUID);
+         this.DairyForm.controls['SendMATTERGUID'].setValue(result.MATTERGUID);
       }
     });
   }

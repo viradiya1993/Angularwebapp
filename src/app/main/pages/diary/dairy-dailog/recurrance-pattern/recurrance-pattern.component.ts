@@ -9,6 +9,7 @@ import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 })
 export class RecurrancePatternComponent implements OnInit {
   @Input() DairyForm: FormGroup;
+  @Input() errorWarningData: any;
   RedioBtnValue: any;
   abc: any
   Everydayval: any

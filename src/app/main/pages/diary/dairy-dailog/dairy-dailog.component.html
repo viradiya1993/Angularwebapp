@@ -8,11 +8,11 @@
         <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
             <form [formGroup]="DairyForm" fxLayout="column" fxFlex="1 0 auto" name="form">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.SUBJECT,'has-warning':errorWarningData.Warning?.SUBJECT}" appearance="outline" fxFlex="50" class="pr-4">
                         <mat-label>Subject</mat-label>
                         <input formControlName="SUBJECT" matInput>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.LOCATION,'has-warning':errorWarningData.Warning?.LOCATION}" appearance="outline" fxFlex="50" class="pr-4">
                         <mat-label>Location</mat-label>
                         <input formControlName="LOCATION" matInput>
                     </mat-form-field>
@@ -20,19 +20,19 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-checkbox formControlName="ALLDAYEVENT" (ngModelChange)="CheckAllDays($event)">All Day Event</mat-checkbox>
                     &nbsp;&nbsp;
-                    <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">
+                    <mat-form-field  [ngClass]="{'has-error':errorWarningData.Error?.APPOINTMENTDATE,'has-warning':errorWarningData.Warning?.APPOINTMENTDATE}" appearance="outline" class="example" fxFlex="33" class="pr-4">
                         <mat-label>Date</mat-label>
                         <input (dateInput)="DateFrom('input', $event)" (dateChange)="DateFrom('change', $event)" matInput formControlName="APPOINTMENTDATE" [matDatepicker]="picker">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4" *ngIf="CheckClick ==='No'">
+                    <mat-form-field  [ngClass]="{'has-error':errorWarningData.Error?.APPOINTMENTTIME,'has-warning':errorWarningData.Warning?.APPOINTMENTTIME}" appearance="outline" fxFlex="33" class="pr-4" *ngIf="CheckClick ==='No'">
                         <mat-label>Start</mat-label>
                         <mat-select formControlName="APPOINTMENTTIME" (ngModelChange)="StartTime($event)">
                             <mat-option *ngFor="let data of timeStops" value="{{data}}">{{data}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4" *ngIf="CheckClick==='No'">
+                    <mat-form-field  [ngClass]="{'has-error':errorWarningData.Error?.APPOINTMENTENDTIME,'has-warning':errorWarningData.Warning?.APPOINTMENTENDTIME}" appearance="outline" fxFlex="33" class="pr-4" *ngIf="CheckClick==='No'">
                         <mat-label>Finish</mat-label>
                         <mat-select formControlName="TimeSlot2" (ngModelChange)="EndTime($event)">
                             <mat-option *ngFor="let data of timeStops" value="{{data}}">{{data}}</mat-option>
@@ -41,11 +41,11 @@
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-tab-group mat-align-tabs="start">
-                        <mat-tab label="Details">
-                            <app-details [DairyForm]="DairyForm"></app-details>
+                        <mat-tab  label="Details">
+                            <app-details [errorWarningData]="errorWarningData" [DairyForm]="DairyForm"></app-details>
                         </mat-tab>
                         <mat-tab label="Recurrance Pattern">
-                            <app-recurrance-pattern [DairyForm]="DairyForm"></app-recurrance-pattern>
+                            <app-recurrance-pattern [errorWarningData]="errorWarningData" [DairyForm]="DairyForm"></app-recurrance-pattern>
                         </mat-tab>
                     </mat-tab-group>
                 </div>

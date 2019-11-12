@@ -62,9 +62,9 @@
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <button mat-raised-button color="accent" [disabled]="isDisableCheckBtn" (click)="tabLable='Borrow';setDataRow('Borrow');">Borrow</button>
-                    <button mat-raised-button color="accent" [disabled]="isDisableCheckBtn || isBorrow" style="margin-left: 8px" (click)="tabLable='Return';setDataRow('Return');">Return</button>
-                    <button mat-raised-button color="accent" [disabled]="isDisableCheckBtn" style="margin-left: 8px" (click)="tabLable='Check Out';setDataRow('Check Out');">Check Out</button>
+                    <button mat-raised-button color="accent" [disabled]="isDisableCheckBtn || (MOVEMENTTYPEData!='Check In' && MOVEMENTTYPEData!='Return')" (click)="tabLable='Borrow';setDataRow('Borrow');">Borrow</button>
+                    <button mat-raised-button color="accent" [disabled]="isDisableCheckBtn || (MOVEMENTTYPEData!='Borrow'&& MOVEMENTTYPEData!='Check In')" style="margin-left: 8px" (click)="tabLable='Return';setDataRow('Return');">Return</button>
+                    <button mat-raised-button color="accent" [disabled]="isDisableCheckBtn || (MOVEMENTTYPEData!='Check In' && MOVEMENTTYPEData!='Return')" style="margin-left: 8px" (click)="tabLable='Check Out';setDataRow('Check Out');">Check Out</button>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-tab-group mat-align-tabs="start">

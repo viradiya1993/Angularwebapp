@@ -15,8 +15,6 @@ import { MatSort } from '@angular/material';
   styleUrls: ['./invoice-detail.component.scss'],
   encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
-
-
 })
 export class InvoiceDetailComponent implements OnInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
@@ -37,6 +35,11 @@ export class InvoiceDetailComponent implements OnInit {
   @ViewChild(MatSort) sort2: MatSort;
   isView: any;
   tabingVal: string;
+  displayedColumns: any;
+  highlightedRows: any;
+  theme_type = localStorage.getItem('theme_type');
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
+ 
   constructor(
     private _formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -192,8 +195,8 @@ export class InvoiceDetailComponent implements OnInit {
     });
 
     if (Object.keys(errorData).length != 0) {
-      this.toastr.error(errorData);
-      this.isspiner = false;
+        this.toastr.error(errorData);
+        this.isspiner = false;
     } else if (Object.keys(warningData).length != 0) {
       this.confirmDialogRef = this.MatDialog.open(FuseConfirmDialogComponent, {
         disableClose: true,
@@ -235,7 +238,7 @@ export class InvoiceDetailComponent implements OnInit {
     });
   }
   TabingClick(val){
-    console.log(val);
+    //console.log(val);
     if(val =='Time Entries'){
       this.tabingVal='Time Entries';
     }else if(val == 'Receipts'){
@@ -243,5 +246,8 @@ export class InvoiceDetailComponent implements OnInit {
     }else{
       this.tabingVal='InterChange';
     }
+  }
+  RowClick(row){
+   console.log(row);
   }
 }

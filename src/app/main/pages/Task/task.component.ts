@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild,OnDestroy } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MainAPiServiceService, BehaviorService, TableColumnsService } from 'app/_services';
@@ -17,7 +17,7 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./task.component.scss'],
   animations: fuseAnimations
 })
-export class TaskComponent implements OnInit {
+export class TaskComponent implements OnInit,OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -264,5 +264,10 @@ export class TaskComponent implements OnInit {
   }
   RowClick(row) {
     this.behaviorService.TaskData(row);
+  }
+  ngOnDestroy(): void {
+    this.filterData = JSON.parse(localStorage.getItem('task_filter'));
+    this.filterData.Search = '';
+    localStorage.setItem('task_filter', JSON.stringify(this.filterData));
   }
 }

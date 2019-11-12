@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseConfigService } from '@fuse/services/config.service';
@@ -18,6 +18,7 @@ import * as $ from 'jquery';
   encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
+
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   isspiner: boolean = false;
@@ -25,8 +26,10 @@ export class LoginComponent implements OnInit {
   currentYear: any;
   VERSION: any = environment.VERSION;
   ipAddress: any;
-  fakeArray:any=[];
+  fakeArray: any = [];
   browserData: any = browser();
+  show: any;
+  loginarray: any = [];
   constructor(
     private _fuseConfigService: FuseConfigService,
     private _formBuilder: FormBuilder,
@@ -34,8 +37,8 @@ export class LoginComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private _AppPermissionsService: AppPermissionsService,
     private router: Router,
-    public behaviorService:BehaviorService,
-    private toastr: ToastrService
+    public behaviorService: BehaviorService,
+    private toastr: ToastrService,
   ) {
     this.http.get<{ ip: string }>('https://jsonip.com').subscribe(data => {
       this.ipAddress = data.ip;
@@ -45,25 +48,25 @@ export class LoginComponent implements OnInit {
     this._fuseConfigService.config = {
       layout: { navbar: { hidden: true }, toolbar: { hidden: true }, footer: { hidden: true }, sidepanel: { hidden: true } }
     };
-  }
 
+  }
   ngOnInit() {
     this.loginForm = this._formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
     this.authenticationService.notLogin();
-    // this.SetFocus();
-    $(this).closest('div').find('.inputField').focus();
+    //this.SetFocus();
   }
-  SetFocus () {
-    var input = document.getElementById ("email");
-    input.focus ();
-    }
+  SetFocus() {
+    var input = document.getElementById("email");
+    input.focus();
+  }
   // convenience getter for easy access to form fields
   get f() {
     return this.loginForm.controls;
   }
+
   loginUser() {
     this.isspiner = true;
     this.authenticationService.login(this.f.email.value, this.f.password.value, this.ipAddress, this.browserData.name, this.browserData.os, this.browserData.os + '/' + this.browserData.version).pipe(first()).subscribe(data => {
@@ -81,14 +84,14 @@ export class LoginComponent implements OnInit {
       this.toastr.error(error);
     });
   }
-  abc(event){
-  
+  abc(event) {
+
     console.log(event);
     this.fakeArray.push([]);
     console.log(this.fakeArray.length);
-    if(this.fakeArray.length == 1){
-        this.SetFocus();
+    if (this.fakeArray.length == 1) {
+      this.SetFocus();
     }
-    
+
   }
 }

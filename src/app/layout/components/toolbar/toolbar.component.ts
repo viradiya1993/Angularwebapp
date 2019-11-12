@@ -88,7 +88,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     PathOfRouter: any;
     SafeCustodyData: any;
     ShowMatLable: any;
-    ChartHandlingData:any=[];
+    ChartHandlingData: any = [];
     [x: string]: any;
     appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
     @ViewChild(TimeEntriesComponent) TimeEntrieschild: TimeEntriesComponent;
@@ -200,6 +200,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 else { this.DisMainAuthorityToolbar = 'Autho_no'; this.mainlegalAuthWebUrl = '' }
             }
         });
+        
         this.behaviorService.LegalAuthorityData$.subscribe(result => {
             if (result != null) {
                 this.LegalAuthorityData = result;
@@ -226,10 +227,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
         //Trust Chart Account Behaviour 
         this.behaviorService.TrustChartAccountHandling$.subscribe(result => {
-           if(result != null){
-               console.log(result);
-            this.ShowMatLable=result.Lable;
-           }
+            if (result != null) {
+                console.log(result);
+                this.ShowMatLable = result.Lable;
+            }
         });
 
         //for navigation bar 
@@ -1073,7 +1074,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             let ContactGuID = localStorage.getItem('contactGuid');
             let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "knownby": "Email", "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
             this.ForEmailDialogOpen(passdata);
-        }else if(this.router.url == "/create-document/email-safe-custody-template" || this.router.url == "/create-document/packs-safe-custody-template"){
+        } else if (this.router.url == "/create-document/email-safe-custody-template" || this.router.url == "/create-document/packs-safe-custody-template") {
             let passdata = { 'Context': "Safe Custody", 'ContextGuid': this.SafeCustodyData.SAFECUSTODYGUID, "knownby": "Email", "Type": "Email", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForEmailDialogOpen(passdata);
         }
@@ -1100,7 +1101,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             let ContactGuID = localStorage.getItem('contactGuid');
             let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "knownby": "Pack", "Type": "Pack", "Folder": '', "Template": this.KitName }
             this.ForEmailDialogOpen(passdata);
-        }else if(this.router.url == "/create-document/packs-safe-custody-template"){
+        } else if (this.router.url == "/create-document/packs-safe-custody-template") {
             let passdata = { 'Context': "Safe Custody", 'ContextGuid': this.SafeCustodyData.SAFECUSTODYGUID, "knownby": "Pack", "Type": "Pack", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForEmailDialogOpen(passdata);
         }
@@ -1220,34 +1221,34 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
 
 
-/////// Trust Chart Account 
+    /////// Trust Chart Account 
 
-ChartAccount(val){
+    ChartAccount(val) {
 
-    console.log(val);
-    if(val == 'WithTrust'){
-        console.log("hello");
-         this.ChartHandlingData={
-            ClickType:val,
-            API:'',
-            PopUp:'',
-            Lable:"CHART ACCOUNT",  
+        console.log(val);
+        if (val == 'WithTrust') {
+            console.log("hello");
+            this.ChartHandlingData = {
+                ClickType: val,
+                API: '',
+                PopUp: '',
+                Lable: "CHART ACCOUNT",
+            }
+            localStorage.setItem('ChartURL', JSON.stringify({ Lable: "CHART ACCOUNT" }));
+        } else if (val == 'WithoutTrust') {
+            console.log("hello22222222");
+            this.ChartHandlingData = {
+                ClickType: val,
+                API: '',
+                PopUp: '',
+                Lable: "TRUST CHART ACCOUNT",
+            }
+            localStorage.setItem('ChartURL', JSON.stringify({ Lable: "TRUST CHART ACCOUNT" }));
         }
-localStorage.setItem('ChartURL',JSON.stringify({Lable:"CHART ACCOUNT"}));
-    }else if(val=='WithoutTrust'){   
-        console.log("hello22222222");
-        this.ChartHandlingData={
-            ClickType:val,
-            API:'',
-            PopUp:'',
-            Lable:"TRUST CHART ACCOUNT", 
-        }
-        localStorage.setItem('ChartURL',JSON.stringify({Lable:"TRUST CHART ACCOUNT"}));
+
+        console.log(this.ChartHandlingData);
+        this.behaviorService.TrustChartAccountHandling(this.ChartHandlingData);
     }
-   
-    console.log(this.ChartHandlingData);
-    this.behaviorService.TrustChartAccountHandling(this.ChartHandlingData); 
-}
 
     SelectMatter() {
         const dialogRef = this.MatDialog.open(MatterDialogComponent, {
@@ -1673,9 +1674,9 @@ localStorage.setItem('ChartURL',JSON.stringify({Lable:"CHART ACCOUNT"}));
             this.isTabShow = 27;
         } else if (x[1] == "trust-general-journal") {
             this.isTabShow = 28;
-        }else if (x[1] == "dashboard") {
+        } else if (x[1] == "dashboard") {
             this.isTabShow = 29;
-        } 
+        }
         else {
             this.isTabShow = 1;
         }
@@ -1859,7 +1860,7 @@ localStorage.setItem('ChartURL',JSON.stringify({Lable:"CHART ACCOUNT"}));
             disableClose: true,
             width: '100%',
         });
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete this invoice? There is a receipt associated with this invoice. If you do delete the invoice, the receipt will be turned into a credit within the matter.';
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
                 let INVOICEGUID = '';
@@ -2175,7 +2176,6 @@ localStorage.setItem('ChartURL',JSON.stringify({Lable:"CHART ACCOUNT"}));
             let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "knownby": "Template", "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
         } else if (this.router.url == "/create-document/receive-money-template" || this.router.url == "/create-document/packs-receive-money-template") {
-
             let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
             let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "knownby": "Template", "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
@@ -2183,7 +2183,7 @@ localStorage.setItem('ChartURL',JSON.stringify({Lable:"CHART ACCOUNT"}));
             let ContactGuID = localStorage.getItem('contactGuid');
             let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "knownby": "Template", "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
-        }else if(this.router.url == "/create-document/safe-custody-template" || this.router.url == "/create-document/packs-safe-custody-template"){
+        } else if (this.router.url == "/create-document/safe-custody-template" || this.router.url == "/create-document/packs-safe-custody-template") {
             let passdata = { 'Context': "Safe Custody", 'ContextGuid': this.SafeCustodyData.SAFECUSTODYGUID, "knownby": "Template", "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
         }
@@ -2221,7 +2221,7 @@ localStorage.setItem('ChartURL',JSON.stringify({Lable:"CHART ACCOUNT"}));
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                // localStorage.setItem('set_active_matters', JSON.stringify(result));
+                //localStorage.setItem('set_active_matters', JSON.stringify(result));   
             }
         });
     }
@@ -2229,8 +2229,7 @@ localStorage.setItem('ChartURL',JSON.stringify({Lable:"CHART ACCOUNT"}));
     ForDocDialogOpen(passdata) {
         const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, { width: '100%', disableClose: true, data: passdata });
         dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-            }
+            if (result) {}
         });
     }
     packsToolbarHide() {

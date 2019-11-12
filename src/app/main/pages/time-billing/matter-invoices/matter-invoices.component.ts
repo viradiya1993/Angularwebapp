@@ -111,6 +111,7 @@ export class MatterInvoicesComponent implements OnInit {
     });
   }
   editmatterInvoive(matterinvoice: any) {
+    localStorage.setItem('edit_invoice_id', matterinvoice.INVOICEGUID);
     this.behaviorService.matterInvoiceData(matterinvoice);
   }
   //onSearch

@@ -18,7 +18,7 @@ export class DetailsComponent implements OnInit {
   @Input() addInvoiceForm: FormGroup;
   @Output() totalDataOut: EventEmitter<any> = new EventEmitter<any>();
   invoiceData: any = [];
-  displayedColumnsTime: string[] = ['select', 'ADDITIONALTEXT', 'PRICE', 'GST', 'PRICEINCGST'];
+  displayedColumnsTime: string[] = ['select', 'ADDITIONALTEXT', 'ITEMDATE', 'PRICE', 'GST', 'PRICEINCGST'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   selection = new SelectionModel(true, []);

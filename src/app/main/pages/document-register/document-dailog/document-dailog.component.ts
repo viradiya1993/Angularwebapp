@@ -152,7 +152,6 @@ export class DocumentDailogComponent implements OnInit {
     if (this.action == "edit") {
       this.FormAction = "update";
       this.DocGUID = this.SendDataArray.DOCUMENTGUID;
-
     } else if (this.action == 'new' || this.action == 'duplicate') {
       this.FormAction = "insert";
       this.DocGUID = "";
@@ -174,9 +173,9 @@ export class DocumentDailogComponent implements OnInit {
       KEYWORDS: this.DocumentRegiData.KEYWORDS,
       MATTERGUID: MatterData.MATTERGUID,
       TEMPLATENAME: this.SendDataArray.TEMPLATENAME,
-
     }
     let finalData = { DATA: Data, FormAction: this.FormAction, VALIDATEONLY: true }
+    console.log(finalData);
     this._mainAPiServiceService.getSetData(finalData, 'SetDocument').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, finalData);
@@ -237,13 +236,11 @@ export class DocumentDailogComponent implements OnInit {
     data.VALIDATEONLY = false;
     this._mainAPiServiceService.getSetData(data, 'SetDocument').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-
         if (this.action !== 'edit') {
           this.toastr.success(' save successfully');
         } else {
           this.toastr.success(' update successfully');
         }
-
         this.isspiner = false;
         this.dialogRef.close(true);
       } else if (response.CODE == 451 && response.STATUS == 'warning') {

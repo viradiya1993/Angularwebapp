@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef,OnDestroy } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import * as $ from 'jquery';
 import { TimersService } from '../../../_services';
@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./matters.component.scss'],
   animations: fuseAnimations,
 })
-export class MattersComponent implements OnInit {
+export class MattersComponent implements OnInit,OnDestroy {
   subscription: Subscription;
   @ViewChild(MattersListComponent) child: MattersListComponent;
   matterFilterForm: FormGroup;
@@ -126,5 +126,9 @@ export class MattersComponent implements OnInit {
   matterClose(event: any) {
     this.mattersDetail = '';
   }
-
+  ngOnDestroy(): void {
+    let filterVal = JSON.parse(localStorage.getItem('matter_filter'));
+    filterVal.SearchString = '';
+    localStorage.setItem('matter_filter', JSON.stringify(filterVal));
+  }
 }

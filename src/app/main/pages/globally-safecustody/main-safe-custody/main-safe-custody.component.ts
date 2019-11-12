@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MainAPiServiceService, TableColumnsService, BehaviorService } from 'app/_services';
@@ -17,7 +17,7 @@ import { MatterDialogComponent } from '../../time-entries/matter-dialog/matter-d
   styleUrls: ['./main-safe-custody.component.scss'],
   animations: fuseAnimations
 })
-export class MainSafeCustodyComponent implements OnInit {
+export class MainSafeCustodyComponent implements OnInit ,OnDestroy {
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   highlightedRows: any;
@@ -214,12 +214,12 @@ export class MainSafeCustodyComponent implements OnInit {
       }
     });
   }
-  onSearch(searchFilter: any) {
+  onSearch(searchFilter: any) {    
     this.filterData = JSON.parse(localStorage.getItem("mainsafecustody_filter"));
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
-      this.filterData.Search = this.f.SEARCH.value;
-      localStorage.setItem('mainsafecustody_filter', JSON.stringify(this.filterData));
-      this.LoadData(this.filterData);
+        this.filterData.Search = this.f.SEARCH.value;
+        localStorage.setItem('mainsafecustody_filter', JSON.stringify(this.filterData));
+        this.LoadData(this.filterData);
     }
   }
   editsafecustody(row) {
@@ -250,5 +250,10 @@ export class MainSafeCustodyComponent implements OnInit {
   refreshmainsafecusday() {
     this.filterData = JSON.parse(localStorage.getItem("mainsafecustody_filter"));
     this.LoadData(this.filterData);
+  }
+  ngOnDestroy(): void {
+    this.filterData = JSON.parse(localStorage.getItem('mainsafecustody_filter'));
+    this.filterData.Search = '';
+    localStorage.setItem('mainsafecustody_filter', JSON.stringify(this.filterData));
   }
 }

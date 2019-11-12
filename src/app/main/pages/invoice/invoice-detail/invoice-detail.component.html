@@ -92,10 +92,13 @@
                                         </td>
                                     </ng-container>
                                     <tr mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumnsTime; sticky: true"></tr>
-                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsTime;" matRipple [@animate]="{value:'*',params:{y:'100%'}}"></tr>
+                                    <!-- <tr mat-row *matRowDef="let row; columns: displayedColumnsTime;" matRipple [@animate]="{value:'*',params:{y:'100%'}}"></tr> -->
                                     <!-- <tr mat-row [style.background]="highlightedRows == row.PERSONGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumnsTime;" [ngClass]="highlightedRows == row.PERSONGUID ? 'row-text-colore' : ''" class="contact" (click)="editContact(row.PERSONGUID);highlightedRows = row.PERSONGUID"
                                         matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                     </tr> -->
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsTime;let element;" class="row" (click)="RowClick(row);highlightedRows=row.ADDITIONALTEXT" [style.background]="highlightedRows == row.ADDITIONALTEXT ? selectedColore : ''" [ngClass]="highlightedRows == row.ADDITIONALTEXT ? 'row-text-colore' : ''"
+                                        matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                    </tr>
                                 </table>
                             </div>
                             <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" showFirstLastButtons></mat-paginator>
@@ -143,9 +146,12 @@
                                         </td>
                                     </ng-container>
                                     <tr mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumnsRecipt; sticky: true"></tr>
-                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsRecipt;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
-                                        <!-- <tr mat-row [style.background]="highlightedRows == row.PERSONGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumnsRecipt;" [ngClass]="highlightedRows == row.PERSONGUID ? 'row-text-colore' : ''" class="contact" (click)="editContact(row.PERSONGUID);highlightedRows = row.PERSONGUID"
-                                        matRipple [@animate]="{value:'*',params:{y:'100%'}}"> -->
+                                    <!-- <tr mat-row *matRowDef="let row; columns: displayedColumnsRecipt;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                        <tr mat-row [style.background]="highlightedRows == row.PERSONGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumnsRecipt;" [ngClass]="highlightedRows == row.PERSONGUID ? 'row-text-colore' : ''" class="contact" (click)="editContact(row.PERSONGUID);highlightedRows = row.PERSONGUID"
+                                        matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                    </tr> -->
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsRecipt;let element;" class="row" (click)="RowClick(row);highlightedRows=row.RECEIPTCODE" [style.background]="highlightedRows == row.RECEIPTCODE ? selectedColore : ''" [ngClass]="highlightedRows == row.RECEIPTCODE ? 'row-text-colore' : ''"
+                                         matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                     </tr>
                                 </table>
                             </div>
@@ -197,9 +203,12 @@
                                         </td>
                                     </ng-container>
                                     <tr mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumnsInterest; sticky: true"></tr>
-                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsInterest;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
-                                        <!-- <tr mat-row [style.background]="highlightedRows == row.PERSONGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumnsInterest;" [ngClass]="highlightedRows == row.PERSONGUID ? 'row-text-colore' : ''" class="contact" (click)="editContact(row.PERSONGUID);highlightedRows = row.PERSONGUID"
-                                        matRipple [@animate]="{value:'*',params:{y:'100%'}}"> -->
+                                    <!-- <tr mat-row *matRowDef="let row; columns: displayedColumnsInterest;" matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                        <tr mat-row [style.background]="highlightedRows == row.PERSONGUID ? selectedColore : ''" *matRowDef="let row; columns: displayedColumnsInterest;" [ngClass]="highlightedRows == row.PERSONGUID ? 'row-text-colore' : ''" class="contact" (click)="editContact(row.PERSONGUID);highlightedRows = row.PERSONGUID"
+                                        matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                    </tr> -->
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsInterest;let element;" class="row" (click)="RowClick(row);highlightedRows=row.INVOICECODE" [style.background]="highlightedRows == row.INVOICECODE ? selectedColore : ''" [ngClass]="highlightedRows == row.INVOICECODE ? 'row-text-colore' : ''"
+                                        matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                     </tr>
                                 </table>
                             </div>

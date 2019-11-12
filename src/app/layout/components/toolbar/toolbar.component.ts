@@ -200,6 +200,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 else { this.DisMainAuthorityToolbar = 'Autho_no'; this.mainlegalAuthWebUrl = '' }
             }
         });
+        
         this.behaviorService.LegalAuthorityData$.subscribe(result => {
             if (result != null) {
                 this.LegalAuthorityData = result;
@@ -2175,7 +2176,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "knownby": "Template", "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
         } else if (this.router.url == "/create-document/receive-money-template" || this.router.url == "/create-document/packs-receive-money-template") {
-
             let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
             let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "knownby": "Template", "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
             this.ForDocDialogOpen(passdata);
@@ -2221,7 +2221,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                // localStorage.setItem('set_active_matters', JSON.stringify(result));
+                //localStorage.setItem('set_active_matters', JSON.stringify(result));   
             }
         });
     }
@@ -2229,8 +2229,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     ForDocDialogOpen(passdata) {
         const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, { width: '100%', disableClose: true, data: passdata });
         dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-            }
+            if (result) {}
         });
     }
     packsToolbarHide() {

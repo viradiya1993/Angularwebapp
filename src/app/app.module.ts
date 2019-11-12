@@ -48,6 +48,7 @@ import { LicenceAgreementComponent } from './main/licence-agreement/licence-agre
 import { DeviceDetectorModule } from 'ngx-device-detector';
 import { ChangePasswordComponent } from './main/change-password/change-password.component';
 import { CKEditorModule } from 'ckeditor4-angular';
+//import { AutofocusDirective } from './autofocus.directive';
 
 
 //end
@@ -66,6 +67,7 @@ const appRoutes: Routes = [
         ReportsComponent,
         LicenceAgreementComponent,
         ChangePasswordComponent,
+        //AutofocusDirective,
     ],
     entryComponents: [
         SortingDialogComponent,

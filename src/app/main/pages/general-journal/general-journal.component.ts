@@ -1,7 +1,7 @@
 import { fuseAnimations } from '@fuse/animations';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild,OnDestroy } from '@angular/core';
 import { MatPaginator, MatDialogRef, MatDialog, MatDialogConfig, MatDatepickerInputEvent } from '@angular/material';
 import { MatSort } from '@angular/material';
 import { MatTableDataSource } from '@angular/material/table';
@@ -17,7 +17,7 @@ import * as $ from 'jquery';
   encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
-export class GeneralJournalComponent implements OnInit {
+export class GeneralJournalComponent implements OnInit ,OnDestroy {
   highlightedRows: any;
   ColumnsObj = [];
   theme_type = localStorage.getItem('theme_type');
@@ -58,6 +58,9 @@ export class GeneralJournalComponent implements OnInit {
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
       this.LoadData();
     }
+  }
+  ngOnDestroy(): void {
+    this.filterVals.SEARCH = '';
   }
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.filterVals.ITEMSTARTDATE = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');

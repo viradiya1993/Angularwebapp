@@ -205,7 +205,6 @@ export class GeneralDailogComponent implements OnInit {
       PostData.JOURNALGUID = this.JournalData.JOURNALGUID;
       this.successMsg = 'Update successfully';
     }
-    // return;
     this.isspiner = true;
     if (this.CREDITSTOTAL === this.DEBITSTOTAL) {
       let details = { FormAction: this.FormAction, VALIDATEONLY: true, Data: PostData };
@@ -260,7 +259,7 @@ export class GeneralDailogComponent implements OnInit {
     }
     if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0)
       this.saveActivityData(PostActivityData);
-    this.isspiner = false;
+      this.isspiner = false;
   }
   saveActivityData(PostActivityData: any) {
     PostActivityData.VALIDATEONLY = false;

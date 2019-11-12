@@ -1,5 +1,5 @@
 import { fuseAnimations } from '@fuse/animations';
-import { Component, OnInit, ViewEncapsulation, ViewChild, Injectable } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, Injectable,OnDestroy } from '@angular/core';
 import { MatPaginator, MatDialog } from '@angular/material';
 import * as $ from 'jquery';
 import { FlatTreeControl } from '@angular/cdk/tree';
@@ -36,7 +36,7 @@ interface ExampleFlatNode {
   animations: fuseAnimations,
   encapsulation: ViewEncapsulation.None,
 })
-export class ChartAccountComponent implements OnInit {
+export class ChartAccountComponent implements OnInit,OnDestroy {
   @ViewChild('tree') tree;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   theme_type = localStorage.getItem('theme_type');
@@ -80,10 +80,7 @@ export class ChartAccountComponent implements OnInit {
     this.treeControl = new FlatTreeControl<ExampleFlatNode>(node => node.level, node => node.expandable);
     this.treeFlattener = new MatTreeFlattener(this._transformer, node => node.level, node => node.expandable, node => node.SUBACCOUNTS);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-
     this.filterData = { 'Search': '', "AccountClass": "All" }
-
-
     if (!localStorage.getItem("chartAcc_filter")) {
       localStorage.setItem('chartAcc_filter', JSON.stringify(this.filterData));
     } else {
@@ -113,7 +110,7 @@ export class ChartAccountComponent implements OnInit {
         this.treeControl.expandAll();
         if (response.DATA.ACCOUNTS[0].SUBACCOUNTS)
           this.RowClick(response.DATA.ACCOUNTS[0].SUBACCOUNTS[0]);
-        this.highlightedRows = 1;
+          this.highlightedRows = 1;
       } else if (response.MESSAGE == 'Not logged in') {
         // this.dialogRef.close(false);
       }
@@ -160,5 +157,10 @@ export class ChartAccountComponent implements OnInit {
   }
   FilterSearch(val) {
     this.storeDataarray.filter = val;
+  }
+  ngOnDestroy(): void {
+    this.filterData = JSON.parse(localStorage.getItem("chartAcc_filter"))
+    this.filterData.Search = '';
+    localStorage.setItem('chartAcc_filter', JSON.stringify(this.filterData));
   }
 }

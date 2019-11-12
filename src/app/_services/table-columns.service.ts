@@ -25,7 +25,7 @@ export class TableColumnsService {
       if (itemsdata.HIDDEN == 1 || itemsdata.HIDDEN == 0) {
         if (!temshowCol.includes(itemsdata.COLUMNID)) {
           if (itemsdata.HIDDEN == 0 && !showCol.includes(itemsdata.COLUMNID)) {
-            showCol.push(itemsdata.COLUMNID);
+              showCol.push(itemsdata.COLUMNID);
           }
           tempColobj[itemsdata.COLUMNID] = itemsdata;
           tempCol.push(itemsdata);

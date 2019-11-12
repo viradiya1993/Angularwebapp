@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ChangeDetectorRef, AfterViewInit,OnDestroy } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs/Subscription';
   animations: fuseAnimations
 })
 
-export class ContactComponent implements OnInit, AfterViewInit {
+export class ContactComponent implements OnInit, AfterViewInit,OnDestroy {
   subscription: Subscription;
   highlightedRows: any;
   ColumnsObj = [];
@@ -175,8 +175,10 @@ export class ContactComponent implements OnInit, AfterViewInit {
     localStorage.setItem('contact_Filter', JSON.stringify(this.filterVals));
     this.LoadData(this.filterVals);
   }
-  ngOnDestroy() {
-    // this.subscription.unsubscribe();
+  ngOnDestroy(): void {
+    this.filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
+    this.filterVals.SEARCH = '';
+    localStorage.setItem('contact_Filter', JSON.stringify(this.filterVals));
   }
 }
 

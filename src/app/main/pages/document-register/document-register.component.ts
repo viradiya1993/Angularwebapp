@@ -86,7 +86,6 @@ export class DocumentRegisterComponent implements OnInit {
         } else {
           this.isDisplay = true;
         }
-
         //this.behaviorService.DocumentRegisterData(res.DATA.DOCUMENTS[0]);
         this.DocumentAllData = new MatTableDataSource(res.DATA.DOCUMENTS);
         this.DocumentAllData.sort = this.sort;

@@ -7,6 +7,7 @@ import { MainAPiServiceService } from 'app/_services';
 import { DashboardService } from './dashboard.service';
 import CanvasJS from 'canvasjs';
 import * as shape from 'd3-shape';
+import { Chart } from 'chart.js';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -15,9 +16,36 @@ import * as shape from 'd3-shape';
 })
 export class DashboardComponent implements OnInit {
     widgets: any;
+    chart: any;
     widget1SelectedYear = '2016';
     widget5SelectedDay = 'today';
   isLoadingResults: boolean = false;
+
+  //doughnut chart
+//   public chartType: string = 'doughnut';
+//   public chartLabels: Array<string> = ['January', 'February', 'March'];
+//   public chartData: Array<number> = [1, 1, 1];
+
+//   public chartOptions: any = {
+//     pieceLabel: {
+//       render: function (args) {
+//         const label = args.label,
+//               value = args.value;
+//         return label + ': ' + value;
+//       }
+//     },
+//     legend: {
+//         display: true,
+//         labels: {
+//             fontColor: 'rgb(255, 99, 132)',
+//             text:'jkhfgd',
+//         }
+//     }   
+//   }
+
+
+  ///
+
  /**
      * Constructor
      *
@@ -33,6 +61,12 @@ export class DashboardComponent implements OnInit {
     }
 chartPl(){}
   ngOnInit() {
+
+
+   
+
+
+
     // Get the widgets from the service
     this.widgets = this._analyticsDashboardService.widgets;
     console.log(this.widgets.widget2) 

@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from '../../../../environments/environment';
 import browser from 'browser-detect';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +25,7 @@ export class LoginComponent implements OnInit {
   currentYear: any;
   VERSION: any = environment.VERSION;
   ipAddress: any;
+  fakeArray:any=[];
   browserData: any = browser();
   constructor(
     private _fuseConfigService: FuseConfigService,
@@ -51,7 +53,13 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     });
     this.authenticationService.notLogin();
+    // this.SetFocus();
+    $(this).closest('div').find('.inputField').focus();
   }
+  SetFocus () {
+    var input = document.getElementById ("email");
+    input.focus ();
+    }
   // convenience getter for easy access to form fields
   get f() {
     return this.loginForm.controls;
@@ -72,5 +80,15 @@ export class LoginComponent implements OnInit {
       this.isspiner = false;
       this.toastr.error(error);
     });
+  }
+  abc(event){
+  
+    console.log(event);
+    this.fakeArray.push([]);
+    console.log(this.fakeArray.length);
+    if(this.fakeArray.length == 1){
+        this.SetFocus();
+    }
+    
   }
 }

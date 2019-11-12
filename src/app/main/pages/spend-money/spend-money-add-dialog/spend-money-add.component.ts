@@ -139,7 +139,10 @@ export class SpendMoneyAddComponent implements OnInit {
       DatePaidForSend: [''],
       DateIncurredForSend: [''],
       MatterGUID: [''],
-      ExpenseacGUID: ['']
+      ExpenseacGUID: [''],
+      EXPENSEACCOUNTNUMBER:[''],
+      BANKACCOUNTNUMBER:['']
+
     });
     this.isLoadingResults = true;
     if (this.action != 'new') {
@@ -179,6 +182,7 @@ export class SpendMoneyAddComponent implements OnInit {
           this.spendmoneyForm.controls['Amount'].setValue(this.SendMoney_data.AMOUNT + this.SendMoney_data.GST);
           this.spendmoneyForm.controls['GST'].setValue(this.SendMoney_data.GST);
           this.spendmoneyForm.controls['BankacGUID'].setValue(this.SendMoney_data.BANKACCOUNTGUID);
+          this.spendmoneyForm.controls['Bankac'].setValue(this.SendMoney_data.BANKACCOUNTNUMBER);
           // inner item 
           if (this.SendMoney_data.EXPENDITUREITEMS.length != 0) {
             this.editMoney(this.SendMoney_data.EXPENDITUREITEMS[0], 0);
@@ -187,6 +191,9 @@ export class SpendMoneyAddComponent implements OnInit {
             this.spendmoneyForm.controls['AmountIncGST'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT);
             this.spendmoneyForm.controls['Note'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].NOTE);
             this.spendmoneyForm.controls['Matter'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].SHORTNAME);
+                console.log(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENSEACCOUNTNUMBER);
+            this.spendmoneyForm.controls['Expenseac'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENSEACCOUNTNUMBER);
+
             this.spendmoneyForm.controls['ExpenseacGUID'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENSEACCOUNTGUID);
 
             if (round(this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT / 10) == round(this.SendMoney_data.EXPENDITUREITEMS[0].GST)) {
@@ -233,7 +240,16 @@ export class SpendMoneyAddComponent implements OnInit {
       this.forAddshowpopupData();
     }
   }
-  ngAfterViewInit() {
+  // ngAfterViewInit() {
+  //   let tempError: any = [];
+  //   let tempWarning: any = [];
+  //   tempWarning['PAYEE'] = {};
+  //   tempError['AMOUNT'] = {};
+  //   tempError['NOTE'] = {};
+  //   tempError['EXPENDITUREITEMS'] = {};
+  //   this.errorWarningData = { "Error": tempError, 'Warning': tempWarning };
+  // }
+  AfterViewInitATADD() {
     let tempError: any = [];
     let tempWarning: any = [];
     tempWarning['PAYEE'] = {};
@@ -256,6 +272,7 @@ export class SpendMoneyAddComponent implements OnInit {
     });
   }
   forAddshowpopupData() {
+    this.AfterViewInitATADD();
     this._mainAPiServiceService.getSetData({ AccountClass: 'BANK ACCOUNT' }, 'GetAccount').subscribe(response => {
       this.behaviorService.dialogClose(response);
       if (response) {
@@ -349,15 +366,18 @@ export class SpendMoneyAddComponent implements OnInit {
       this.hide = false;
       this.expac = false;
       $("#mattersnew").removeClass("menu-disabled");
+
       if (this._data.FromWhere == "FromWIP") {
         this.spendmoneyForm.controls['Matter'].setValue(this.CurrentMatter.MATTER);
         this.spendmoneyForm.controls['MatterGUID'].setValue(this.CurrentMatter.MATTERGUID);
       } else {
         this.spendmoneyForm.controls['MatterGUID'].setValue('');
       }
+
       this.forCommonEnable();
       this.GstTypeforSelect('1.1');
-    if(this.f.Matter.value ==''){
+      console.log(this.f.Matter.value);
+    if(this.action == 'new'){
       let tempError: any = this.errorWarningData.Error;
       tempError['SHORTNAME'] = {};
       this.errorWarningData.Error = tempError;
@@ -472,7 +492,6 @@ export class SpendMoneyAddComponent implements OnInit {
   }
   multilineCheckbox() {
     this.size = 20;
-
     if (this.f.MultiLineExpense.value == true) {
       this.dataTableHide = "yes";
       this.Main3btn = 'enable';
@@ -502,7 +521,7 @@ export class SpendMoneyAddComponent implements OnInit {
         this.spendmoneyForm.controls['GST1'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].GST.toString());
         this.spendmoneyForm.controls['Note'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].NOTE);
         this.spendmoneyForm.controls['AmountIncGST'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT.toString());
-        this.spendmoneyForm.controls['Expenseac'].setValue('');
+        // this.spendmoneyForm.controls['Expenseac'].setValue('');
         this.spendmoneyForm.controls['AmountExGST'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT - this.SendMoney_data.EXPENDITUREITEMS[0].GST);
         if (round(this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT / 10) == round(this.SendMoney_data.EXPENDITUREITEMS[0].GST)) {
           this.spendmoneyForm.controls['GSTType'].setValue("1.1");
@@ -549,7 +568,7 @@ export class SpendMoneyAddComponent implements OnInit {
     this.spendmoneyForm.controls['AmountExGST'].setValue(0.00);
     this.GSTValForExGst = 0.00;
     this.spendmoneyForm.controls['Class'].setValue("Expense");
-    this.spendmoneyForm.controls['Note'].setValue(" ");
+    this.spendmoneyForm.controls['Note'].setValue("");
     this.spendmoneyForm.controls['Expenseac'].setValue(" ");
     this.spendmoneyForm.controls['ExpenseacGUID'].setValue(" ");
   }

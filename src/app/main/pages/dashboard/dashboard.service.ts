@@ -11,6 +11,7 @@ export class DashboardService implements Resolve<any>
 {
     AgedDebtorsArray: any;
     UnbilledWIPArray: any;
+    AmountUnBilled: any=[];
   
     createDb(): any
     {
@@ -74,14 +75,25 @@ export class DashboardService implements Resolve<any>
                     AnalyticsDashboardDb.widgets.widget7.devices[0].name=this.AgedDebtorsArray[0].DATEDESC;
                     AnalyticsDashboardDb.widgets.widget7.devices[1].name=this.AgedDebtorsArray[1].DATEDESC;
                     AnalyticsDashboardDb.widgets.widget7.devices[2].name=this.AgedDebtorsArray[2].DATEDESC;
+
+                    AnalyticsDashboardDb.widgets.widget7.devices[0].value=this.AgedDebtorsArray[0].EXGST;
+                    AnalyticsDashboardDb.widgets.widget7.devices[1].value=this.AgedDebtorsArray[1].EXGST;
+                    AnalyticsDashboardDb.widgets.widget7.devices[2].value=this.AgedDebtorsArray[2].EXGST;
+                    //   this.widgets = AnalyticsDashboardDb.widgets;
+                    //     resolve(this.widgets);
                 }
-                // this.widgets = AnalyticsDashboardDb.widgets;
-                // resolve(this.widgets);
+              
             },reject);
             this._mainAPiServiceService.getSetData({Dashboard:'unbilled WIP'}, 'GetDashboard').subscribe(res => {
                 console.log(res);
                 if (res.CODE == 200 && res.STATUS == "success") {
-                    // this.UnbilledWIPArray=res.DATA.DASHBOARDDATA;
+                    this.UnbilledWIPArray=res.DATA.DASHBOARDDATA;
+                    res.DATA.DASHBOARDDATA.forEach(element => {
+                        this.AmountUnBilled.push(element.EXGST)
+                    });
+                    let FinalAmountUnBilled= Number(this.AmountUnBilled.reduce(function (a = 0, b = 0) { return a + b; }, 0));
+
+                    AnalyticsDashboardDb.widgets.widget2.conversion.value=((FinalAmountUnBilled).toFixed(2)).toString();
                     // AnalyticsDashboardDb.widgets.widget2.datasets.push({label:'hello', data:[1,2,3,4,5,,6,7,8,9,10,11,12,]})
                     // AnalyticsDashboardDb.widgets.widget2.datasets.forEach(element => {
                     //    element. 
@@ -93,4 +105,5 @@ export class DashboardService implements Resolve<any>
       
         });
     }
+    
 }

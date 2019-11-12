@@ -60,7 +60,7 @@
                             <div class="pr-16">
                                 <div class="h3 secondary-text">Unbilled WIP</div>
                                 <div class="font-size-54 font-weight-300 line-height-1 mt-8">
-                                    {{widgets.widget2.conversion.value}}
+                                    ${{widgets.widget2.conversion.value}}
                                 </div>
                             </div>
 
@@ -96,7 +96,7 @@
                 <!-- / Widget 2 -->
 
                 <!-- Widget 3 -->
-                <div class="widget" fxFlex="100" fxFlex.gt-sm="34">
+                <!-- <div class="widget" fxFlex="100" fxFlex.gt-sm="34">
 
                     <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
 
@@ -137,11 +137,11 @@
 
                     </div>
 
-                </div>
+                </div> -->
                 <!-- / Widget 3 -->
 
                 <!-- Widget 4 -->
-                <div class="widget" fxFlex="100" fxFlex.gt-sm="33">
+                <!-- <div class="widget" fxFlex="100" fxFlex.gt-sm="33">
 
                     <div class="fuse-card auto-width">
 
@@ -182,14 +182,14 @@
 
                     </div>
 
-                </div>
+                </div> -->
                 <!-- / Widget 4 -->
 
             </div>
 
             <!-- Example  -->
 
-            <div class="widget" fxFlex="100" fxFlex.gt-sm="33">
+            <!-- <div class="widget" fxFlex="100" fxFlex.gt-sm="33">
 
                 <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
 
@@ -230,7 +230,7 @@
 
                 </div>
 
-            </div>
+            </div> -->
 
             <!-- Example end  -->
 
@@ -325,12 +325,19 @@
                         </div>
 
                         <div class="h-200">
-                            <ngx-charts-pie-chart
+                                <ngx-charts-pie-chart
                                 *fuseIfOnDom
                                 [scheme]="widgets.widget7.scheme"
                                 [results]="widgets.widget7.devices"
                                 [doughnut]="true">
                             </ngx-charts-pie-chart>
+                            <!-- <canvas baseChart 
+                            [chartType]="widgets.widget7.chartType"
+                            [datasets]="widgets.widget7.datasets"
+                            [labels]="widgets.widget7.labels"
+                            [colors]="widgets.widget7.colors"
+                            [options]="widgets.widget7.options">
+                    </canvas> -->
                         </div>
 
                         <div class="p-16" fxLayout="row" fxLayoutAlign="center center">
@@ -339,14 +346,14 @@
                                  *ngFor="let device of widgets.widget7.devices">
 
                                 <div class="h4 secondary-text">{{device.name}}</div>
-                                <div class="h2 font-weight-300 py-8">{{device.value}}%</div>
+                                <div class="h2 font-weight-300 py-8">${{device.value}}</div>
 
-                                <div fxLayout="row" fxLayoutAlign="center center">
+                                 <!-- <div fxLayout="row" fxLayoutAlign="center center">
                                     <mat-icon class="s-18 pr-4 red-fg"
                                               *ngIf="device.change < 0">
                                         arrow_downward
                                     </mat-icon>
-
+ 
                                     <mat-icon class="s-18 pr-4 green-fg"
                                               *ngIf="device.change > 0">
                                         arrow_upward
@@ -356,14 +363,14 @@
                                          [ngClass]="{'red-fg': device.change < 0, 'green-fg': device.change > 0}">
                                         {{device.change}}%
                                     </div>
-                                </div>
+                                </div> -->
 
                             </div>
 
                         </div>
 
                         <div class="card-divider mb-0"></div>
-
+<!-- 
                         <div class="px-16" fxLayout="row" fxLayoutAlign="space-between center">
                             <mat-form-field>
                                 <mat-select class="simplified" value="7days">
@@ -376,7 +383,7 @@
                             </mat-form-field>
 
                             <button mat-button color="accent">OVERVIEW</button>
-                        </div>
+                        </div> -->
 
                     </div>
 

@@ -87,7 +87,7 @@ export class AnalyticsDashboardDb
                                 tickMarkLength: 18
                             },
                             ticks    : {
-                                fontColor: '#ffffff'
+                         
                             }
                         }
                     ],
@@ -97,7 +97,7 @@ export class AnalyticsDashboardDb
                             ticks  : {
                                 min     : 1.5,
                                 max     : 5,
-                                stepSize: 0.5
+                                stepSize: 0.5,
                             }
                         }
                     ]
@@ -114,7 +114,7 @@ export class AnalyticsDashboardDb
         },
         widget2: {
             conversion: {
-                value   :'$'+492,
+                value   :'',
                 ofTarget: 13
             },
             chartType : 'bar',
@@ -166,7 +166,11 @@ export class AnalyticsDashboardDb
                             ticks  : {
                                 min: 0,
                                 max: 1000,
-                                stepSize: 500
+                                stepSize: 500,
+                                  // Include a dollar sign in the ticks
+                        callback: function(value, index, values) {
+                        return '$' + value;
+                    }
                             }
                         }
                     ]
@@ -535,20 +539,59 @@ export class AnalyticsDashboardDb
             devices: [
                 {
                     name  : '',
-                    value : 92.8,
-                    change: -0.6
+                    value : '',
+                    change: ''
                 },
                 {
                     name  : '',
-                    value : 6.1,
-                    change: 0.7
+                    value : '',
+                    change: ''
                 },
                 {
                     name  : '',
-                    value : 1.1,
-                    change: 0.1
+                    value : '',
+                    change: ''
                 }
             ]
+        //     chartType: 'doughnut',
+        //     datasets  : [
+        //         {   label: 'Unbilled WIP',
+        //             data: [55,45],
+                        
+        //         },
+        //         {   label: 'Unbilled WIP',
+        //         data: [55,45],
+                    
+        //     },
+        //     {   label: 'Unbilled WIP',
+        //     data: [55,45],
+                
+        // },
+               
+        //     ],
+        //     labels: ['Data1','Data2','Data3'],
+        //      colors    : [
+        //         {
+        //             backgroundColor: '#4867d2'
+        //         },
+        //         {
+                  
+        //             backgroundColor: '#5c84f1'
+        //         },
+        //         {
+                  
+        //             backgroundColor: '#89a9f4'
+        //         },
+        //     ],
+        //     options: {
+        //       legend: {
+        //         display: true
+        //       },
+        //       tooltips:{
+        //         enabled:true
+        //       }
+        //     }
+           
         },
         widget8: {
             scheme : {

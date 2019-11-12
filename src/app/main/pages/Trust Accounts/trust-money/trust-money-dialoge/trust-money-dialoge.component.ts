@@ -89,7 +89,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
   ngOnInit() {
     // this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response=>{
     // this.addData=response.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP
-    // })
+    // });
 
   }
   PaymentTypeChange(val) {
@@ -114,9 +114,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
   }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.isAllSelected() ?
-    this.selection.clear() :
-    this.dataSource.data.forEach(row => this.selection.select(row));
+    this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
   /** The label for the checkbox on the passed row */

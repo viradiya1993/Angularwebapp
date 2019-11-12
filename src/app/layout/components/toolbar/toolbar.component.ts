@@ -2154,7 +2154,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-                // localStorage.setItem('set_active_matters', JSON.stringify(result));
+                //localStorage.setItem('set_active_matters', JSON.stringify(result));   
             }
         });
     }

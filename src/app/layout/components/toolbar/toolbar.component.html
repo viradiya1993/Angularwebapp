@@ -3377,6 +3377,7 @@
                                             </section>
                                         </button>
                                     </section>
+                                    
                                     <section [ngClass]="appPermissions[22]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[22]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="TrustMoneyPopup('money withdrawal')">
                                             <section class="large-button-container">
@@ -4389,6 +4390,17 @@
             </mat-tab-group>
         </div>
         <div fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="start center" class="user_dropdown">
+            <button mat-button [matMenuTriggerFor]="userMenu1" class="user-button header_height_btn">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <span class="username mr-12" fxHide fxShow.gt-sm>Summary</span>
+                    <mat-icon class="s-16" fxHide.xs>keyboard_arrow_down</mat-icon>
+                </div>
+            </button>            
+            <mat-menu #userMenu1="matMenu" [overlapTrigger]="false">
+                <button mat-menu-item><span>Unbilled:$28,542</span></button>
+                <button mat-menu-item><span>Outstanding:$13,325</span></button>
+            </mat-menu>
+            <div class="toolbar-separator top_seprator"></div>
             <button mat-icon-button class="chat-panel-toggle-button header_height_btn" id="sidebar_open_button" (click)="toggleSidebarOpen('quickPanel')" aria-label="Toggle chat panel">
                 <mat-icon class="secondary-text timer_icon_header" matBadge="{{TotalTimer}}" matBadgeColor="warn">timer
                 </mat-icon>
@@ -4438,8 +4450,9 @@
                 </button>
 
             </mat-menu>
-
         </div>
+      
+        
     </div>
     <!-- <button mat-raised-button color="primary" type="button" id="spendmoneyMenubtn" (click)="spendmoneyMenubtn();">Refresh</button> -->
     <button mat-raised-button color="primary" type="button" id="clickToolbarbtn" (click)="clickToolbarbtn();">Refresh</button>

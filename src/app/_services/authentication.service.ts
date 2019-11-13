@@ -58,18 +58,19 @@ export class AuthenticationService {
     }
     logout() {
         // remove user from local storage to log user out
-        this.http.get<any>(environment.APIEndpoint + 'Login?request=Logout').subscribe(loginResponse => {
+        this.http.post<any>(environment.APIEndpoint + 'Login', { request: 'Logout' }).subscribe(loginResponse => {
+            this.behaviorService.dialogClose(loginResponse);
+            this.removeDataFunction(loginResponse);
+        }, error => {
+            console.log(error);
+            this.toastr.error(error);
+        });
+    }
+    MaintainLicence() {
+        // remove user from local storage to log user out
+        this.http.post<any>(environment.APIEndpoint + 'Login', { request: 'maintainlicence' }).subscribe(loginResponse => {
             this.behaviorService.dialogClose(loginResponse);
             if (loginResponse.MESSAGE == 'Not logged in') {
-
-                localStorage.removeItem('currentUser');
-                localStorage.removeItem('app_permissions');
-                localStorage.removeItem('session_token');
-               
-                this.currentUserSubject.next(null);
-                this.router.navigate(['login']);
-            } else if (loginResponse.CODE != 402 && loginResponse.STATUS != 'error') {
-                this.toastr.success('success');
                 localStorage.removeItem('currentUser');
                 localStorage.removeItem('app_permissions');
                 localStorage.removeItem('session_token');
@@ -81,18 +82,21 @@ export class AuthenticationService {
             this.toastr.error(error);
         });
     }
-    MaintainLicence() {
-        // remove user from local storage to log user out
-        this.http.get<any>(environment.APIEndpoint + 'Login?request=MaintainLicence').subscribe(loginResponse => {
-            
-            this.behaviorService.dialogClose(loginResponse);
-            // if (loginResponse.MESSAGE == 'Not logged in') {
-             
-            // }
-        }, error => {
-            console.log(error);
-            this.toastr.error(error);
-        });
+    removeDataFunction(loginResponse) {
+        if (loginResponse.MESSAGE == 'Not logged in') {
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('app_permissions');
+            localStorage.removeItem('session_token');
+            this.currentUserSubject.next(null);
+            this.router.navigate(['login']);
+        } else if (loginResponse.CODE != 402 && loginResponse.STATUS != 'error') {
+            this.toastr.success('success');
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('app_permissions');
+            localStorage.removeItem('session_token');
+            this.currentUserSubject.next(null);
+            this.router.navigate(['login']);
+        }
     }
     ForcLogout() {
         localStorage.removeItem('currentUser');

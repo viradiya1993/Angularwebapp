@@ -376,7 +376,6 @@ export class SpendMoneyAddComponent implements OnInit {
 
       this.forCommonEnable();
       this.GstTypeforSelect('1.1');
-      console.log(this.f.Matter.value);
     if(this.action == 'new'){
       let tempError: any = this.errorWarningData.Error;
       tempError['SHORTNAME'] = {};
@@ -654,7 +653,7 @@ export class SpendMoneyAddComponent implements OnInit {
     this.spendmoneyForm.controls['GST1'].setValue(row.GST);
     this.spendmoneyForm.controls['Note'].setValue(row.NOTE);
     this.spendmoneyForm.controls['Matter'].setValue(row.SHORTNAME);
-    this.spendmoneyForm.controls['Expenseac'].setValue(row.EXPENSEACCOUNT);
+    this.spendmoneyForm.controls['Expenseac'].setValue(row.EXPENSEACCOUNTNUMBER);
     this.commmonDisabled();
   }
   deleteElement() {

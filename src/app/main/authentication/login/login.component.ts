@@ -58,10 +58,10 @@ export class LoginComponent implements OnInit {
     this.authenticationService.notLogin();
     //this.SetFocus();
   }
-  SetFocus() {
-    var input = document.getElementById("email");
-    input.focus();
-  }
+  // SetFocus() {
+  //   var input = document.getElementById("email");
+  //   input.focus();
+  // }
   // convenience getter for easy access to form fields
   get f() {
     return this.loginForm.controls;
@@ -84,14 +84,14 @@ export class LoginComponent implements OnInit {
       this.toastr.error(error);
     });
   }
-  abc(event) {
+  // abc(event) {
 
-    console.log(event);
-    this.fakeArray.push([]);
-    console.log(this.fakeArray.length);
-    if (this.fakeArray.length == 1) {
-      this.SetFocus();
-    }
 
-  }
+  //   this.fakeArray.push([]);
+  
+  //   if (this.fakeArray.length == 1) {
+  //     this.SetFocus();
+  //   }
+
+  // }
 }

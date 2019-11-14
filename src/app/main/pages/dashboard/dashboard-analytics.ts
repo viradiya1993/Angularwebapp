@@ -565,21 +565,21 @@ export class AnalyticsDashboardDb
                 domain: ['#4867d2', '#5c84f1', '#89a9f4']
             },
             devices: [
-                {
-                    name  : '',
-                    value : '',
-                    change: ''
-                },
-                {
-                    name  : '',
-                    value : '',
-                    change: ''
-                },
-                {
-                    name  : '',
-                    value : '',
-                    change: ''
-                }
+                // {
+                //     name  : '',
+                //     value : '',
+                //     change: ''
+                // },
+                // {
+                //     name  : '',
+                //     value : '',
+                //     change: ''
+                // },
+                // {
+                //     name  : '',
+                //     value : '',
+                //     change: ''
+                // }
             ]
         //     chartType: 'doughnut',
         //     datasets  : [

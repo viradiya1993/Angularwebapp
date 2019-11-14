@@ -24,6 +24,7 @@
             min-width: 0;
 
             .widget {
+                height: 500px;
                 flex: 1 1 auto;
                 min-width: 0;
             }
@@ -45,8 +46,7 @@
             }
 
             .fuse-card {
-                height: 500px;
-                width: 500px;
+                height: 500px !important;
                 @include media-breakpoint('lt-lg') {
                     width: 100%;
                     min-width: 0;
@@ -67,6 +67,34 @@
   .unbilToCl{
       color: red;
   }
-  .TolUnbil{
-      margin-left: 90px;
-  }
+//   .TolUnbil{
+//       margin-left: 90px;
+//   }
+
+.UnBill_cus_css {
+    float: right;
+    margin-right: 20px;
+    margin-top: -60px;
+}
+// .example-card {
+//     width: 400px;
+//     height: 600px;
+//     margin-left: 40px;
+//     margin-top: 30px;
+//   }
+  
+//   .example-header-image {
+//     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+//     background-size: cover;
+//   }
+
+//   .canvas_class{
+//       max-width: 300px;
+//       height: 300px;
+//   }
+//   .Widg7_name{
+//     flex: 1 1;
+//   }
+//   .Widg7_val{
+//     flex: 1 1;
+// }

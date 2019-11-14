@@ -128,7 +128,7 @@
                                     </section>
 
                                     <!-- dummy dashboard -->
-                                    <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                    <!-- <section [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="isMatterClick()" (click)="setTab($event)" [routerLink]="'/dashboard'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -140,7 +140,7 @@
                                                 </div>
                                             </section>
                                         </button>
-                                    </section>
+                                    </section> -->
 
                                     <div class="light_label_txt">Details</div>
                                 </section>
@@ -1837,64 +1837,182 @@
                     <section class="ribbon-container contact_tab_main">
                         <mat-card>
                             <mat-card-content>
-                                <!-- <section class="group-section-tab action_tab">
-                    <section [ngClass]="appPermissions[9]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                        <button [disabled]="spendMoneyMenu =='disabled'" mat-button [ngClass]="appPermissions[9]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="spendmoneypopup('new')">
-                            <section class="large-button-container">
-                                <mat-icon class="main-icon">
-                                    <img src="assets/icons/web_app/icon_expenses_new_d.ico" alt=""
-                                        matTooltip="Twitter" matTooltipPosition="above">
-                                </mat-icon>
-                                <div class="main-text">
-                                    <span>New<br> Spend</span>
-                                </div>
-                            </section>
-                        </button>
-                    </section>
-                    <section [ngClass]="appPermissions[9]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                        <button [disabled]="spendMoneyMenu =='disabled'" mat-button [ngClass]="appPermissions[9]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="spendmoneypopup('edit')">
-                            <section class="large-button-container">
-                                <mat-icon class="main-icon">
-                                    <img src="assets/icons/web_app/icon_expenses_edit_d.ico" alt=""
-                                        matTooltip="Twitter" matTooltipPosition="above">
-                                </mat-icon>
-                                <div class="main-text">
-                                    <span>Edit<br> Spend</span>
-                                </div>
-                            </section>
-                        </button>
-                    </section>
-                    <section [ngClass]="appPermissions[9]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                        <button [disabled]="spendMoneyMenu=='disabled'" mat-button [ngClass]="appPermissions[9]?.Delete==0 ? 'disabled-click large-button' : 'large-button'" (click)="Deletespendmoneypopup()">
-                            <section class="large-button-container">
-                                <mat-icon class="main-icon">
-                                    <img src="assets/icons/web_app/icon_expenses_delete_d.ico" alt=""
-                                        matTooltip="Twitter" matTooltipPosition="above">
-                                </mat-icon>
-                                <div class="main-text">
-                                    <span>Delete<br> Spend</span>
-                                </div>
-                            </section>
-                        </button>
-                    </section>
+                                    <section class="group-section-tab extras_tab">
+                                            <section class="ribbon-section">
+                                                <mat-nav-list>
+                                                    <a mat-list-item [ngClass]="{'disabled-click-cursor':appPermissions[2]?.Create==0,'cmn_active_tab':activeSubMenu =='monthly-graph'}" [routerLink]="'/dashboard/monthly-graph'">
+                                                        <mat-icon>
+                                                            <img src="assets/icons/web_app/icon_reports_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                        </mat-icon>
+                                                        <span>Money Graph</span>
+                                                    </a>
+                                                </mat-nav-list>
+                                                <mat-nav-list>
+                                                        <a mat-list-item [ngClass]="{'disabled-click-cursor':appPermissions[2]?.Create==0,'cmn_active_tab':activeSubMenu =='sanp-shot'}" [routerLink]="'/dashboard/sanp-shot'">
+                                                            <mat-icon>
+                                                                <img src="assets/icons/web_app/SBULLETS.ICO" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                            </mat-icon>
+                                                            <span>Snap Shot Data</span>
+                                                        </a>
+                                                    </mat-nav-list>
+                                                <mat-nav-list>
+                                                    <a mat-list-item [ngClass]="{'disabled-click-cursor':appPermissions[2]?.Create==0,'cmn_active_tab':activeSubMenu =='period-summary'}" [routerLink]="'/dashboard/period-summary'">
+                                                        <mat-icon>
 
-                    <section [ngClass]="appPermissions[9]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                        <button mat-button [ngClass]="appPermissions[9]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="spendmoneypopup('duplicate')">
+                                                            
+                                                            <img src="assets/icons/web_app/SBULLETS.ICO" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                                        </mat-icon>
+                                                        <span>Period Summary Data</span>
+                                                    </a>
+                                                </mat-nav-list>
+                                            </section>
+                                            <div class="light_label_txt">View</div>
+                                        </section>
+                                        <mat-divider vertical></mat-divider>
+
+
+
+                                        <section *ngIf="activeSubMenu=='monthly-graph'" class="group-section-tab extras_tab">
+                                            <section class="ribbon-section">
+                                                <mat-nav-list>
+                                                   <mat-checkbox class="checkbox_toolbar" >invoices</mat-checkbox>
+                                                </mat-nav-list>
+                                                <mat-nav-list>
+                                                    <mat-checkbox class="checkbox_toolbar">time</mat-checkbox>
+                                                    </mat-nav-list>
+                                                <mat-nav-list>
+                                                    <mat-checkbox class="checkbox_toolbar">wip</mat-checkbox>
+                                                </mat-nav-list>
+                                            </section>
+                                            <section class="ribbon-section">
+                                                <mat-nav-list>
+                                                   <mat-checkbox class="checkbox_toolbar">matter expenses</mat-checkbox>
+                                                </mat-nav-list>
+                                                <mat-nav-list>
+                                                    <mat-checkbox class="checkbox_toolbar">sundries</mat-checkbox>
+                                                    </mat-nav-list>
+                                                <mat-nav-list>
+                                                    <mat-checkbox class="checkbox_toolbar">searches</mat-checkbox>
+                                                </mat-nav-list>
+                                            </section>
+                                            <section class="ribbon-section">
+                                                <mat-nav-list>
+                                                   <mat-checkbox class="checkbox_toolbar">disbursements</mat-checkbox>
+                                                </mat-nav-list>
+                                                <mat-nav-list>
+                                                    <mat-checkbox class="checkbox_toolbar">expenses</mat-checkbox>
+                                                    </mat-nav-list>
+                                                <mat-nav-list>
+                                                    <mat-checkbox class="checkbox_toolbar">spend money</mat-checkbox>
+                                                </mat-nav-list>
+                                            </section>
+                                            <section class="ribbon-section">
+                                                <mat-nav-list>
+                                                   <mat-checkbox class="checkbox_toolbar">capital</mat-checkbox>
+                                                </mat-nav-list>
+                                                <mat-nav-list>
+                                                    <mat-checkbox class="checkbox_toolbar">all income</mat-checkbox>
+                                                    </mat-nav-list>
+                                                <mat-nav-list>
+                                                    <mat-checkbox class="checkbox_toolbar">general income</mat-checkbox>
+                                                </mat-nav-list>
+                                            </section>
+                                            <section class="ribbon-section">
+                                                <mat-nav-list>
+                                                   <mat-checkbox class="checkbox_toolbar">receipts</mat-checkbox>
+                                                </mat-nav-list>
+                                                <mat-nav-list>
+                                                    <mat-checkbox class="checkbox_toolbar">write offs</mat-checkbox>
+                                                    </mat-nav-list>
+                                              
+                                            </section>
+                                            <div class="light_label_txt">View</div>
+                                        </section>
+
+                                        <mat-divider vertical></mat-divider>
+    <section *ngIf="activeSubMenu =='sanp-shot'" class="group-section-tab action_tab">
+                    <section class="ribbon-section">
+                        <button  mat-button class="large-button">
                             <section class="large-button-container">
                                 <mat-icon class="main-icon">
-                                    <img src="assets/icons/web_app/icon_duplicate_d.ico" alt=""
+                                    <img src="assets/icons/web_app/icon_time_cost_d.ico" alt=""
                                         matTooltip="Twitter" matTooltipPosition="above">
                                 </mat-icon>
                                 <div class="main-text">
-                                    <span>Duplicate<br>Spend Money</span>
+                                    <span>Work<br> Details</span>
                                 </div>
                             </section>
                         </button>
                     </section>
-
+                    <section class="ribbon-section">
+                        <button  mat-button class="large-button">
+                            <section class="large-button-container">
+                                <mat-icon class="main-icon">
+                                    <img src="assets/icons/web_app/icon_invoice_d.ico" alt=""
+                                        matTooltip="Twitter" matTooltipPosition="above">
+                                </mat-icon>
+                                <div class="main-text">
+                                    <span>Invoice</span>
+                                </div>
+                            </section>
+                        </button>
+                    </section>
+                    <section class="ribbon-section">
+                        <button  mat-button class="large-button">
+                            <section class="large-button-container">
+                                <mat-icon class="main-icon">
+                                    <img src="assets/icons/web_app/icon_receipt_d.ico" alt=""
+                                        matTooltip="Twitter" matTooltipPosition="above">
+                                </mat-icon>
+                                <div class="main-text">
+                                    <span>Receipt</span>
+                                </div>
+                            </section>
+                        </button>
+                    </section>
+                
+                    <section  class="ribbon-section">
+                        <button  mat-button class="large-button">
+                            <section class="large-button-container">
+                                <mat-icon class="main-icon">
+                                    <img src="assets/icons/web_app/icon_expenses_d.ico" alt=""
+                                        matTooltip="Twitter" matTooltipPosition="above">
+                                </mat-icon>
+                                <div class="main-text">
+                                    <span>Money<br>Spent</span>
+                                </div>
+                            </section>
+                        </button>
+                    </section>
+                    <section class="ribbon-section">
+                        <button  mat-button class="large-button">
+                            <section class="large-button-container">
+                                <mat-icon class="main-icon">
+                                    <img src="assets/icons/web_app/icon_receipts_delete_d.ico" alt=""
+                                        matTooltip="Twitter" matTooltipPosition="above">
+                                </mat-icon>
+                                <div class="main-text">
+                                    <span>Write<br>offs</span>
+                                </div>
+                            </section>
+                        </button>
+                    </section>
+                    <section class="ribbon-section">
+                        <button  mat-button class="large-button">
+                            <section class="large-button-container">
+                                <mat-icon class="main-icon">
+                                    <img src="assets/icons/web_app/icon_receipt_d.ico" alt=""
+                                        matTooltip="Twitter" matTooltipPosition="above">
+                                </mat-icon>
+                                <div class="main-text">
+                                    <span>Other<br>Income</span>
+                                </div>
+                            </section>
+                        </button>
+                    </section>
                     <div class="light_label_txt">Action</div>
-                </section> -->
-                                <mat-divider vertical></mat-divider>
+                </section>
+                            <mat-divider vertical></mat-divider>
                             </mat-card-content>
                         </mat-card>
                     </section>
@@ -2532,7 +2650,7 @@
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
                                     <section [ngClass]="appPermissions[19]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[19]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="AccountPop('new')">
+                                        <button [disabled]="ClickTypeForTrustChartHD=='WithTrust' && AccountClassForTrustChartHD !='Controlled Money Account'" mat-button [ngClass]="appPermissions[19]?.Create==0 ? 'disabled-click large-button' : 'large-button'" (click)="AccountPop('new')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_add_d.ico" alt=""
@@ -2545,7 +2663,7 @@
                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[19]?.Edit==0 || isMainAccount ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[19]?.Edit==0 || isMainAccount ? 'disabled-click large-button' : 'large-button'" (click)="AccountPop('edit')">
+                                        <button  [disabled]="ClickTypeForTrustChartHD=='WithTrust' && (AccountClassForTrustChartHD != 'Controlled Money Account' && AccountClassForTrustChartHD !='Trust Account')"  mat-button [ngClass]="appPermissions[19]?.Edit==0 || isMainAccount ? 'disabled-click large-button' : 'large-button'" (click)="AccountPop('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -2557,7 +2675,7 @@
                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[19]?.Delete==0 || isMainAccount ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[19]?.Delete==0 || isMainAccount ? 'disabled-click large-button' : 'large-button'" (click)="DeleteAccount()">
+                                        <button [disabled]="ClickTypeForTrustChartHD=='WithTrust' && AccountClassForTrustChartHD !='Controlled Money Account'"  mat-button [ngClass]="appPermissions[19]?.Delete==0 || isMainAccount ? 'disabled-click large-button' : 'large-button'" (click)="DeleteAccount()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_delete_d.ico" alt=""
@@ -4115,8 +4233,8 @@
                                 <mat-divider vertical></mat-divider>
                                 <!-- Legal -->
                                 <section class="group-section-tab">
-                                    <section [ngClass]="appPermissions[16]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'disabled-click-cursor ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[16]?.Access==0 ? 'disabled-click large-button' : 'disabled-click large-button'" (click)="setTab($event)" [routerLink]="'/searching'">
+                                    <section [ngClass]="appPermissions[16]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[16]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/searching'">
                                         <section class="large-button-container">
                                             <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_search_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -4174,7 +4292,7 @@
                                 <!-- Account Section Start-->
                                 <section class="group-section-tab">
                                     <section [ngClass]="appPermissions[19]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[19]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="ChartAccount('WithTrust')" (click)="setTab($event)" [routerLink]="'/chart-account'">
+                                        <button mat-button [ngClass]="appPermissions[19]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="ChartAccount('WithoutTrust')" (click)="setTab($event)" [routerLink]="'/chart-account'">
                                         <section class="large-button-container">
                                             <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_receipt_d.ico" alt=""
@@ -4232,8 +4350,8 @@
 
                                 <!-- Trust Noney start -->
                                 <section class="group-section-tab">
-                                    <section [ngClass]="appPermissions[22]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'disabled-click-cursor ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[22]?.Access==0 ? 'disabled-click large-button' : 'disabled-click large-button'" (click)="setTab($event)" [routerLink]="'/chart-account'">
+                                    <section [ngClass]="appPermissions[22]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[22]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/chart-account'">
                                         <section class="large-button-container">
                                             <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_controlled_d.ico" alt=""
@@ -4246,7 +4364,7 @@
                                     </button>
                                     </section>
                                     <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'disabled-click-cursor ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/trust-end-month'">
+                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/trust-end-month/to-do'">
                                         <section class="large-button-container">
                                             <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_controlled_d.ico" alt=""
@@ -4259,7 +4377,7 @@
                                     </button>
                                     </section>
                                     <section [ngClass]="appPermissions[23]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'disabled-click-cursor ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[23]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" (click)="ChartAccount('WithoutTrust')" [routerLink]="'/chart-account'">
+                                        <button mat-button [ngClass]="appPermissions[23]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" (click)="ChartAccount('WithTrust')" [routerLink]="'/trust-chart-account'">
                                         <section class="large-button-container">
                                             <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_receipt_d.ico" alt=""
@@ -4481,7 +4599,7 @@
                 <button mat-menu-item><span><b> Unbilled:</b> <span class="unbilledClassColor"> ${{TotalUnbilledWIP}}</span></span></button>
                 <button mat-menu-item><span><b> Outstanding:</b> <span class="OutstandingClassColor"> ${{TotalOutstanding}}</span></span></button>
                 <hr />
-                <button mat-menu-item [routerLink]="'/dashboard'">
+                <button (click)="setTab($event)"  mat-menu-item [routerLink]="'/dashboard/monthly-graph'">
                     <span><strong>View Dashboard</strong></span>
                 </button>
                 <!-- <button mat-raised-button color="accent"[routerLink]="'/dashboard'">View Dashboard</button> -->
@@ -4519,7 +4637,7 @@
                     <span>Users</span>
                 </button>
 
-                <button [ngClass]="appPermissions[30]?.Access==0 ? 'disabled-click-cursor' : ''" [routerLink]="'/activities'" mat-menu-item>
+                <button (click)="setTab($event)" [ngClass]="appPermissions[30]?.Access==0 ? 'disabled-click-cursor' : ''" [routerLink]="'/activities'" mat-menu-item>
                     <span>Activities & Sundries</span>
                 </button>
 

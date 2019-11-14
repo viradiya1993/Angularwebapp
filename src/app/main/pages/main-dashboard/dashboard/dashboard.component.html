@@ -1,3 +1,54 @@
+<!-- <div  fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+<div  fxLayout="row" fxLayoutAlign="start" fxFlex="1 0 auto">
+        
+<div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+<mat-card class="example-card">
+    
+    
+<mat-card-header>
+      <mat-card-title>Aged Debtors (Unpaid Invoices)</mat-card-title>
+   
+    </mat-card-header>
+   
+    
+   
+    <mat-card-content class="canvas_class">
+    
+    <ngx-charts-pie-chart
+        *fuseIfOnDom
+        [scheme]="widgets.widget7.scheme"
+        [results]="widgets.widget7.devices"
+        [doughnut]="true">
+    </ngx-charts-pie-chart>
+
+    </mat-card-content>
+   
+    <mat-card-actions>
+    
+
+
+    </mat-card-actions>
+
+  </mat-card>
+
+  
+</div>
+
+</div>
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div id="dashboard-analytics" class="page-layout blank">
     <div class="content">
         <div class="left mr-lg-32">
@@ -5,11 +56,31 @@
 
             <div fxLayout="column" fxLayoutAlign="start"
             fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
-                <!-- Widget 7 -->
-                <div fxFlex="100" fxFlex.gt-sm="30" class="widget mb-48" [ngClass.lt-lg]="'mr-32'" [ngClass.xs]="'mr-0'">
+         
+
+
+            <!-- <div class="widget" fxFlex="100" fxFlex.gt-sm="50">
+
+                <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
+
+                  
+                    <div class="h-96 w-100-p">
+                         <ngx-charts-pie-chart
+                                *fuseIfOnDom
+                                [scheme]="widgets.widget7.scheme"
+                                [results]="widgets.widget7.devices"
+                                [doughnut]="true">
+                            </ngx-charts-pie-chart>
+                    </div>
+
+                </div>
+
+            </div> -->
+
+                <div fxFlex="100" fxFlex.gt-sm="33" class="widget " >
                     <div class="pb-24 font-size-18 font-weight-300">
                     </div>
-                    <div class="fuse-card">
+                    <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
                         <div class="p-16">
                             <div class="h1 font-weight-300">Aged Debtors (Unpaid Invoices)</div>
                         </div>
@@ -20,13 +91,7 @@
                                 [results]="widgets.widget7.devices"
                                 [doughnut]="true">
                             </ngx-charts-pie-chart>
-                            <!-- <canvas baseChart 
-                            [chartType]="widgets.widget7.chartType"
-                            [datasets]="widgets.widget7.datasets"
-                            [labels]="widgets.widget7.labels"
-                            [colors]="widgets.widget7.colors"
-                            [options]="widgets.widget7.options">
-                    </canvas> -->
+                    
                         </div>
                         <div class="p-16" fxLayout="row" fxLayoutAlign="center center">
                             <div class="px-16" fxLayout="column" fxLayoutAlign="start center"
@@ -35,20 +100,21 @@
                                 <div class="h4 font-weight-300 py-8">$<b>{{device.value}}</b></div>
                             </div>
                         </div>
-                        <!-- <div class="card-divider mb-0"></div> -->
+                   
                     </div>
                 </div>
-                <!-- / Widget 7 -->
-
-                <div  fxFlex="100" fxFlex.gt-sm="30" class="widget mb-48" [ngClass.lt-lg]="'mr-32'" [ngClass.xs]="'mr-0'">
+             
+                <div  fxFlex="100" fxFlex.gt-sm="50" class="widget ">
                     <div class="pb-24 font-size-18 font-weight-300">
                     </div>
-                    <div class="fuse-card">
+                    <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
                         <div class="p-16">
                             <div class="h1 font-weight-300">Unbilled WIP </div>
                         </div>
-                        <h3 class="TolUnbil" ><b>Total:</b><span class="unbilToCl"> ${{UnbilledTotal}}</span> </h3>
-                        <div class="h-300">
+                        <div class="UnBill_cus_css">
+                            <h3 class="TolUnbil" ><b>Total: </b><span class="unbilToCl"> ${{UnbilledTotal}}</span> </h3>
+                        </div>
+                        <div class="h-260">
                                 <ngx-charts-pie-chart
                                 *fuseIfOnDom
                                 [scheme]="widget2.scheme"
@@ -62,12 +128,9 @@
                             </ngx-charts-pie-chart>
                         </div>
                         <div class="p-16" fxLayout="row" fxLayoutAlign="center center">
-                            <div class="px-16" fxLayout="column" fxLayoutAlign="start center">
-                                <!-- <div class="h4 secondary-text">{{UnbilledTotal}}</div> -->
-                               
-                            </div>
+                            
                         </div>
-                        <!-- <div class="card-divider mb-0"></div> -->
+                      
                     </div>
                 </div>
             </div>

@@ -13,13 +13,21 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ACCOUNTCLASS,'has-warning':errorWarningData.Warning?.ACCOUNTCLASS}">
                         <mat-label>Account Class</mat-label>
-                        <mat-select #value formControlName="ACCOUNTCLASS">
+                        <mat-select  *ngIf="accountTypeData.ClickType=='WithoutTrust'"  #value formControlName="ACCOUNTCLASS">
                             <mat-option value="Asset">Assets</mat-option>
                             <mat-option value="Liability">Liabilities</mat-option>
                             <mat-option value="Equity">Equity</mat-option>
                             <mat-option value="Income">Income</mat-option>
                             <mat-option value="Expense">Expenses</mat-option>
                         </mat-select>
+
+                        <mat-select *ngIf="accountTypeData.ClickType=='WithTrust'" #value formControlName="ACCOUNTCLASS">
+                            <mat-option value="Trust Account">Trust Account</mat-option>
+                            <mat-option value="Matter Ledger">Matter Ledger</mat-option>
+                            <mat-option value="Controlled Money Ledger ">Unknown Controlled Money Ledger </mat-option>
+                            <mat-option value="Controlled Money Account">Controlled Money Account </mat-option>
+                        </mat-select>
+
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">

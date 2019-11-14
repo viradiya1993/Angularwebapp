@@ -37,7 +37,7 @@ const routes = [
   imports: [
     CommonModule,
     MatTreeModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forChild(routes),
     FuseSharedModule,
     FuseConfirmDialogModule,
     FuseSidebarModule,
@@ -73,8 +73,8 @@ const routes = [
 
   ],
   exports: [
-    RouterModule,
-    TrustEndOfMonthComponent
+    // RouterModule,
+    // TrustEndOfMonthComponent
   ],
   providers: [
     TrustEndOfMonthComponent,

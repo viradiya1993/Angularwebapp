@@ -60,10 +60,15 @@ export class BehaviorService {
   public MatterNum$: BehaviorSubject<any> = new BehaviorSubject(null);
   
   public totalDashboard$: BehaviorSubject<any> = new BehaviorSubject(null);
+
+  public CommonToolbarHS$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(private http: HttpClient) { }
 
   matterInvoiceData(matterClassData: any) {
     this.matterInvoice$.next(matterClassData);
+  }
+  CommonToolbarHS(CommonToolbarHS: any) {
+    this.CommonToolbarHS$.next(CommonToolbarHS);
   }
   totalDashboard(totalDashboard: any) {
     this.totalDashboard$.next(totalDashboard);

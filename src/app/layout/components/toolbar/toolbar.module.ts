@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MatButtonModule, MatIconModule, MatMenuModule, MatCardModule, MatListModule, MatToolbarModule, MatTabsModule, MatBadgeModule } from '@angular/material';
+import { MatButtonModule,MatCheckboxModule, MatIconModule, MatMenuModule, MatCardModule, MatListModule, MatToolbarModule, MatTabsModule, MatBadgeModule } from '@angular/material';
 
 import { FuseSearchBarModule, FuseShortcutsModule, FuseSidebarModule } from '@fuse/components';
 import { FuseSharedModule } from '@fuse/shared.module';
@@ -15,6 +15,7 @@ import { ToolbarComponent } from 'app/layout/components/toolbar/toolbar.componen
     ],
     imports: [
         RouterModule,
+        MatCheckboxModule,
         MatButtonModule,
         MatIconModule,
         MatMenuModule,

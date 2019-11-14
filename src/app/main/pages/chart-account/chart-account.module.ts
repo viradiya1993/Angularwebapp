@@ -35,6 +35,7 @@ import { ApplicationPipesModule } from '../application-pipes.module';
 
 const routes = [
   { path: 'chart-account', component: ChartAccountComponent, canActivate: [AuthGuard] },
+  { path: 'trust-chart-account', component: ChartAccountComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

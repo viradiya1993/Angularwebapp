@@ -24,6 +24,7 @@ export class ChartAcDailogComponent implements OnInit {
   AccountData: any = [];
   theCheckbox = true;
   sendtype: number;
+  accountTypeData: any;
   constructor(
     public MatDialog: MatDialog,
     public dialogRef: MatDialogRef<ChartAcDailogComponent>,
@@ -35,6 +36,24 @@ export class ChartAcDailogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.action = data.action;
+    this.behaviorService.ChartAccountData$.subscribe(result => {
+      if (result) {
+        this.AccountData = result;
+      }
+    });
+    this.behaviorService.TrustChartAccountHandling$.subscribe(result => {
+      if (result != null) {
+          this.accountTypeData=result;
+      }
+  });
+  this.behaviorService.dialogClose$.subscribe(result => {
+    if(result != null){
+      if(result.MESSAGE == 'Not logged in'){
+        this.dialogRef.close(false);
+      }
+    }
+   });
+  if(this.accountTypeData.ClickType =='WithoutTrust'){
     if (this.action === 'new') {
       this.dialogTitle = 'New Account';
     } else if (this.action === 'edit') {
@@ -42,18 +61,17 @@ export class ChartAcDailogComponent implements OnInit {
     } else if (this.action === 'duplicate') {
       this.dialogTitle = 'Duplicate Account';
     }
-    this.behaviorService.dialogClose$.subscribe(result => {
-      if(result != null){
-        if(result.MESSAGE == 'Not logged in'){
-          this.dialogRef.close(false);
-        }
-      }
-     });
-    this.behaviorService.ChartAccountData$.subscribe(result => {
-      if (result) {
-        this.AccountData = result;
-      }
-    });
+  }else {
+    if (this.action === 'new') {
+      this.dialogTitle = 'Trust New Account';
+    } else if (this.action === 'edit') {
+      this.dialogTitle = 'Trust Update Account';
+    } else if (this.action === 'duplicate') {
+      this.dialogTitle = 'Trust Duplicate Account';
+    }
+  }
+
+
   }
   ngOnInit() {
     this.AccountForm = this._formBuilder.group({
@@ -110,6 +128,12 @@ export class ChartAcDailogComponent implements OnInit {
         this.isLoadingResults = false;
       });
     } else {
+      if(this.accountTypeData.ClickType=="WithTrust"){
+        let trustclassData= JSON.parse(localStorage.getItem("TrustchartAcc_filter"));
+        if(trustclassData.AccountClass=='Controlled Money Account')
+        this.AccountForm.controls['BANKTERM'].setValue(trustclassData.AccountClass);
+      }
+     
       this.AccountForm.controls['ACTIVE'].setValue(true);
     }
 
@@ -150,7 +174,7 @@ export class ChartAcDailogComponent implements OnInit {
       PostData.ACCOUNTGUID = this.f.ACCOUNTGUID.value;
       this.successMsg = 'Update successfully';
     }
-    let PostAccountData: any = { FormAction: FormAction, VALIDATEONLY: true, Data: PostData };
+    let PostAccountData: any = { FormAction: FormAction,UseTrust:this.accountTypeData.UseTrust, VALIDATEONLY: true, Data: PostData };
     this._mainAPiServiceService.getSetData(PostAccountData, 'SetAccount').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         this.checkValidation(res.DATA.VALIDATIONS, PostAccountData);

@@ -58,7 +58,8 @@ export class FuseNavigationComponent implements OnInit {
       { "ID": "searching", "TITLE": "Searching", "URL": "searching", "STAR": "" },
       { "ID": "Safe-Custody", "TITLE": "Safe Custody", "URL": "Safe-Custody", "STAR": "" },
       { "ID": "trust-money", "TITLE": "Trust Money", "URL": "trust-money", "STAR": "" },
-      { "ID": "trust-banking", "TITLE": "Trust Banking", "URL": "", "STAR": "" },
+      { "ID": "task", "TITLE": "Task", "URL": "task", "STAR": "" },
+  
       { "ID": "trust-end-month", "TITLE": "Trust End Of Month", "URL": "trust-end-month", "STAR": "" },
       { "ID": "receive-money", "TITLE": "Receive money", "URL": "receive-money", "STAR": "" }]
 

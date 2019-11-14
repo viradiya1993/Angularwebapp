@@ -70,7 +70,8 @@ export class ChartAccountComponent implements OnInit,OnDestroy {
 
   highlightedRows: number;
   public ChartData = { "AccountClass": 'All' }
-  filterData: { 'Search': string; 'AccountClass': any; };
+  filterData: { 'Search': string; 'AccountClass': any; 'UseTrust':any};
+  accountTypeData: any;
 
   constructor(
     public dialog: MatDialog,
@@ -80,14 +81,38 @@ export class ChartAccountComponent implements OnInit,OnDestroy {
     this.treeControl = new FlatTreeControl<ExampleFlatNode>(node => node.level, node => node.expandable);
     this.treeFlattener = new MatTreeFlattener(this._transformer, node => node.level, node => node.expandable, node => node.SUBACCOUNTS);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-    this.filterData = { 'Search': '', "AccountClass": "All" }
+
+    this.behaviorService.TrustChartAccountHandling$.subscribe(result => {
+      if (result != null) {
+          this.accountTypeData=result;
+      }
+  });
+  if(this.accountTypeData.ClickType =='WithTrust'){
+    this.filterData = { 'Search': '', "AccountClass": "All" ,'UseTrust':'Yes' }
+    if (!localStorage.getItem("TrustchartAcc_filter")) {
+      localStorage.setItem('TrustchartAcc_filter', JSON.stringify(this.filterData));
+    } else {
+      this.filterData = JSON.parse(localStorage.getItem("TrustchartAcc_filter"))
+    }
+    this.ChartData.AccountClass = this.filterData.AccountClass;
+    //for toolbar value hideshow 
+    this.behaviorService.CommonToolbarHS({AccountClass:this.filterData.AccountClass,ClickType:this.accountTypeData.ClickType});
+    this.loadData(this.filterData);
+  
+  }else{
+    this.filterData = { 'Search': '', "AccountClass": "All",'UseTrust':'No' }
     if (!localStorage.getItem("chartAcc_filter")) {
       localStorage.setItem('chartAcc_filter', JSON.stringify(this.filterData));
     } else {
       this.filterData = JSON.parse(localStorage.getItem("chartAcc_filter"))
     }
     this.ChartData.AccountClass = this.filterData.AccountClass;
+    //for toolbar value hideshow 
+    this.behaviorService.CommonToolbarHS({AccountClass:this.filterData.AccountClass,ClickType:this.accountTypeData.ClickType});
     this.loadData(this.filterData);
+  }
+  
+
   }
   ngOnInit() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 80)) + 'px');
@@ -143,10 +168,19 @@ export class ChartAccountComponent implements OnInit,OnDestroy {
     localStorage.setItem('ChartAccountData', JSON.stringify({ "name": val.name, "class": val.class, "ACCOUNTGUID": val.ACCOUNTGUID, "ACCOUNTTYPE": val.ACCOUNTTYPE, "index": val.index, "parent": val.parent, "level": val.level }));
   }
   AccountClass(val) {
-    this.filterData = JSON.parse(localStorage.getItem("chartAcc_filter"));
-    this.filterData.AccountClass = val;
-    localStorage.setItem('chartAcc_filter', JSON.stringify(this.filterData));
-    this.loadData(this.filterData)
+    this.behaviorService.CommonToolbarHS({AccountClass:val,ClickType:this.accountTypeData.ClickType});
+    if(this.accountTypeData.ClickType =='WithTrust'){
+      this.filterData = JSON.parse(localStorage.getItem("TrustchartAcc_filter"));
+      this.filterData.AccountClass = val;
+      localStorage.setItem('TrustchartAcc_filter', JSON.stringify(this.filterData));
+      this.loadData(this.filterData)
+    }else{
+      this.filterData = JSON.parse(localStorage.getItem("chartAcc_filter"));
+      this.filterData.AccountClass = val;
+      localStorage.setItem('chartAcc_filter', JSON.stringify(this.filterData));
+      this.loadData(this.filterData)
+    }
+   
   }
   refreshChartACCTab() {
     this.loadData(this.filterData)
@@ -159,8 +193,8 @@ export class ChartAccountComponent implements OnInit,OnDestroy {
     this.storeDataarray.filter = val;
   }
   ngOnDestroy(): void {
-    this.filterData = JSON.parse(localStorage.getItem("chartAcc_filter"))
-    this.filterData.Search = '';
-    localStorage.setItem('chartAcc_filter', JSON.stringify(this.filterData));
+    // this.filterData = JSON.parse(localStorage.getItem("chartAcc_filter"))
+    // this.filterData.Search = '';
+    // localStorage.setItem('chartAcc_filter', JSON.stringify(this.filterData));
   }
 }

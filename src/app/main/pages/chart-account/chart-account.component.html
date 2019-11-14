@@ -5,7 +5,7 @@
                 <form>
                     <mat-form-field class="example" appearance="outline">
                         <mat-label>Status</mat-label>
-                        <mat-select name="AccountClass" [(ngModel)]="ChartData.AccountClass" (selectionChange)="AccountClass($event.value)">
+                        <mat-select *ngIf="accountTypeData.ClickType=='WithoutTrust'" name="AccountClass" [(ngModel)]="ChartData.AccountClass" (selectionChange)="AccountClass($event.value)">
                             <mat-option value="All">All Accounts</mat-option>
                             <mat-option value="Assets">Assets</mat-option>
                             <mat-option value="Liabilities">Liabilities</mat-option>
@@ -13,10 +13,19 @@
                             <mat-option value="Income">Income</mat-option>
                             <mat-option value="Expenses">Expenses</mat-option>
                         </mat-select>
+                        
+                        <mat-select *ngIf="accountTypeData.ClickType=='WithTrust'" name="AccountClass" [(ngModel)]="ChartData.AccountClass" (selectionChange)="AccountClass($event.value)">
+                            <mat-option value="All">All Accounts</mat-option>
+                            <mat-option value="Trust Account">Trust Account</mat-option>
+                            <mat-option value="Matter Ledger">Matter Ledger</mat-option>
+                            <mat-option value="Controlled Money Ledger ">Controlled Money Ledger </mat-option>
+                            <mat-option value="Controlled Money Account">Controlled Money Account </mat-option>
+                        </mat-select>
+
                     </mat-form-field>
                     <mat-form-field class="search" appearance="outline">
-                        <mat-label>Search</mat-label>
-                        <input matInput placeholder="search" (keydown)="FilterSearch($event.target.value)">
+                        <mat-label>Controlled Money ccount </mat-label>
+                        <input matInput placeholder="search" >
                         <mat-icon matSuffix>search</mat-icon>
                     </mat-form-field>
                 </form>

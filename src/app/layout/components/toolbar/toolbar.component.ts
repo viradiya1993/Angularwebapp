@@ -92,6 +92,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     TotalUnbilledWIP: any;
     TotalOutstanding: any;
     WorkInProgressData: any;
+    CommonToolbarHSData: any;
+    ClickTypeForTrustChartHD: any;
+    AccountClassForTrustChartHD: any;
     [x: string]: any;
     appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
     @ViewChild(TimeEntriesComponent) TimeEntrieschild: TimeEntriesComponent;
@@ -221,7 +224,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 }
             }
         });
-
         this.behaviorService.LegalAuthorityForSubAuthToolbar$.subscribe(result => {
             if (result != null) {
                 this.LegalAuthoritySubAuthata = result;
@@ -239,7 +241,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 this.ShowMatLable = result.Lable;
             }
         });
-
+      //common MainBar hideShow 
+      this.behaviorService.CommonToolbarHS$.subscribe(result => {
+        if (result) {
+        this.CommonToolbarHSData=result;
+        this.ClickTypeForTrustChartHD=result.ClickType;
+        this.AccountClassForTrustChartHD=result.AccountClass;
+        }
+    });
         //for navigation bar 
         if (this.appPermissions == null) {
             this.appPermissions = [];
@@ -1263,29 +1272,25 @@ if(this.WorkInProgressData.ITEMTYPEDESC =='Disbursement'){
     /////// Trust Chart Account 
 
     ChartAccount(val) {
-
-        console.log(val);
-        if (val == 'WithTrust') {
-            console.log("hello");
+        if (val == 'WithoutTrust') {
             this.ChartHandlingData = {
                 ClickType: val,
-                API: '',
+                UseTrust: 'No',
                 PopUp: '',
                 Lable: "CHART ACCOUNT",
             }
-            localStorage.setItem('ChartURL', JSON.stringify({ Lable: "CHART ACCOUNT" }));
-        } else if (val == 'WithoutTrust') {
-            console.log("hello22222222");
+            localStorage.setItem('ChartURL', JSON.stringify(this.ChartHandlingData));
+        } else if (val == 'WithTrust') {
+           
             this.ChartHandlingData = {
                 ClickType: val,
-                API: '',
+                UseTrust: 'Yes',
                 PopUp: '',
                 Lable: "TRUST CHART ACCOUNT",
             }
-            localStorage.setItem('ChartURL', JSON.stringify({ Lable: "TRUST CHART ACCOUNT" }));
+            localStorage.setItem('ChartURL', JSON.stringify(this.ChartHandlingData));
         }
 
-        console.log(this.ChartHandlingData);
         this.behaviorService.TrustChartAccountHandling(this.ChartHandlingData);
     }
 
@@ -1573,7 +1578,6 @@ if(this.WorkInProgressData.ITEMTYPEDESC =='Disbursement'){
     DeleteAppointment() {
         this.behaviorService.forDiaryRefersh$.subscribe(result => {
             this.DairyData = result;
-            console.log(result);
         });
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
@@ -1687,7 +1691,7 @@ if(this.WorkInProgressData.ITEMTYPEDESC =='Disbursement'){
             this.isTabShow = 13;
         } else if (x[1] == "document-register") {
             this.isTabShow = 14;
-        } else if (x[1] == "chart-account") {
+        } else if (x[1] == "chart-account" || x[1] == 'trust-chart-account') {
             this.isTabShow = 15;
         } else if (x[1] == "general-journal") {
             this.isTabShow = 16;

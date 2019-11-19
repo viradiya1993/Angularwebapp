@@ -15,31 +15,31 @@ import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
 import { MaterialTimePickerModule } from '@candidosales/material-time-picker';
 //import { SpendMoneyAddComponent } from './spend-money-add-dialog/spend-money-add.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatRadioModule } from '@angular/material/radio';
 import { EstimatesSettingComponent } from './estimates-setting/estimates-setting.component';
 import { ReginoalSettingComponent } from './regional-setting/reginoal-setting.component';
 import { TrustComponent } from './trust/trust.component';
 import { TemplatesComponent } from './templates/templates.component';
 import { GenerateTemplatesDialoagComponent } from './templates/gennerate-template-dialoag/generate-template.component';
-import {MatSortModule} from '@angular/material/sort';
+import { MatSortModule } from '@angular/material/sort';
 import { AccountComponent } from './account/account.component';
 import { AccountDialogComponent } from './account/account-edit-dialog/account-dialog.component';
 import { AccountInnerDialogComponent } from './account/account-edit-dialog/account-inner-dialoge/account-inner-dialog.component';
 // import { AccountInnerDialogComponent } from './account/account-edit-dialog/account-inner-dialog/account-inner-dialog.component';
-import {MatTreeModule} from '@angular/material/tree';
+import { MatTreeModule } from '@angular/material/tree';
 const routes = [
   { path: 'system-setting/name', component: SystemSettingComponent, canActivate: [AuthGuard] },
   // { path: 'system-setting/name', component: SystemSettingComponent },
   { path: 'system-setting/business', component: SystemSettingComponent },
   { path: 'system-setting/defaults', component: SystemSettingComponent },
   { path: 'system-setting/reginoal', component: SystemSettingComponent },
-  { path: 'system-setting/trust',  component: SystemSettingComponent },
+  { path: 'system-setting/trust', component: SystemSettingComponent },
   { path: 'system-setting/templates', component: SystemSettingComponent },
   { path: 'system-setting/estimates', component: SystemSettingComponent },
   { path: 'system-setting/account', component: SystemSettingComponent },
 ];
-@NgModule({  
+@NgModule({
   declarations: [
     SystemSettingComponent,
     GenerateTemplatesDialoagComponent,
@@ -54,14 +54,14 @@ const routes = [
     AccountComponent,
     AccountDialogComponent,
     AccountInnerDialogComponent
-   // SpendMoneyAddComponent,    
+    // SpendMoneyAddComponent,    
   ],
   entryComponents: [
     SystemSettingComponent,
     GenerateTemplatesDialoagComponent,
     AccountDialogComponent,
     AccountInnerDialogComponent
-   // SpendMoneyAddComponent,
+    // SpendMoneyAddComponent,
   ],
   imports: [
     CommonModule,
@@ -101,7 +101,7 @@ const routes = [
     MatExpansionModule,
     MatRadioModule,
     MatSortModule
-    
+
   ],
   exports: [
     SystemSettingComponent,
@@ -109,8 +109,8 @@ const routes = [
     AccountDialogComponent,
     AccountInnerDialogComponent,
     MatTreeModule
-    
-  
+
+
   ],
   bootstrap: [AccountInnerDialogComponent],
 })

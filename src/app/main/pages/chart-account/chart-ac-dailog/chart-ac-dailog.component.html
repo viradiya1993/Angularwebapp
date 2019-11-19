@@ -44,7 +44,7 @@
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ACCOUNTNUMBER,'has-warning':errorWarningData.Warning?.ACCOUNTNUMBER}">
                                         <mat-label>Account Number</mat-label>
-                                        <input formControlName='ACCOUNTNUMBER' matInput>
+                                        <input formControlName='ACCOUNTNUMBER' (keyup)="accountNumPress($event)" matInput>
                                         <!-- <span matPrefix>1-&nbsp;</span> -->
                                     </mat-form-field>
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -53,11 +53,19 @@
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field appearance="outline" fxFlex="" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ACCOUNTTYPE,'has-warning':errorWarningData.Warning?.ACCOUNTTYPE}">
                                         <mat-label>Account Type</mat-label>
-                                        <mat-select formControlName="ACCOUNTTYPE" (selectionChange)="onACCOUNTTYPE($event.value)">
+                                        <mat-select *ngIf="accountTypeData.ClickType=='WithoutTrust'" formControlName="ACCOUNTTYPE" (selectionChange)="onACCOUNTTYPE($event.value)">
                                             <mat-option value="Header">Header</mat-option>
                                             <mat-option value="Detail">Detail</mat-option>
                                             <mat-option value="Bank Account">Bank Account</mat-option>
                                             <mat-option value="Pass Through">Pass ACCOUNTNUMBER</mat-option>
+                                        </mat-select>
+
+
+                                        <mat-select  *ngIf="accountTypeData.ClickType=='WithTrust'"  formControlName="ACCOUNTTYPE" (selectionChange)="onACCOUNTTYPE($event.value)">
+                                            <mat-option value="Statutory Deposit">Statutory Deposit</mat-option>
+                                            <mat-option value="Matter Ledger">Matter Ledger</mat-option>
+                                            <mat-option value="Controlled Money Account">Controlled Money Account</mat-option>
+                                            <mat-option value="Controlled Money Ledger">Controlled Money Ledger</mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </div>

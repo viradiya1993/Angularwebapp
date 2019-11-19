@@ -86,7 +86,7 @@ export class MainSearchingComponent implements OnInit {
         if (res.DATA.COSTRECOVERIES[0]) {
           this.isDisplay = false;
           // this.behaviorService.TaskData(res.DATA.TASKS[0]);
-          this.highlightedRows = res.DATA.COSTRECOVERIES[0].TASKGUID;
+          this.highlightedRows = res.DATA.COSTRECOVERIES[0].COSTRECOVERYGUID;
         } else {
           this.isDisplay = true;
         }

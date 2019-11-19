@@ -55,7 +55,7 @@ export class BehaviorService {
   public dialogClose$: BehaviorSubject<any> = new BehaviorSubject(null);
   public UseCalanderViewType$: BehaviorSubject<any> = new BehaviorSubject(null);
   
-  public TrustChartAccountHandling$: BehaviorSubject<any> = new BehaviorSubject(JSON.parse(localStorage.getItem('ChartURL')));
+  public TrustDuplicateModuleHandling$: BehaviorSubject<any> = new BehaviorSubject(JSON.parse(localStorage.getItem('ChartURL')));
 
   public MatterNum$: BehaviorSubject<any> = new BehaviorSubject(null);
   
@@ -73,8 +73,8 @@ export class BehaviorService {
   totalDashboard(totalDashboard: any) {
     this.totalDashboard$.next(totalDashboard);
   }
-  TrustChartAccountHandling(TrustChartAccountHandling: any) {
-    this.TrustChartAccountHandling$.next(TrustChartAccountHandling);
+  TrustDuplicateModuleHandling(TrustDuplicateModuleHandling: any) {
+    this.TrustDuplicateModuleHandling$.next(TrustDuplicateModuleHandling);
   }
   MatterNum(MatterNum: any) {
     this.MatterNum$.next(MatterNum);

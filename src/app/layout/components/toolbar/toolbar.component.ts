@@ -172,7 +172,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         this.behaviorService.workInProgress$.subscribe(result => {
             if (result) {
-            this.WorkInProgressData=result
+                this.WorkInProgressData = result
             }
         });
         //for Disabled enabled
@@ -211,7 +211,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 else { this.DisMainAuthorityToolbar = 'Autho_no'; this.mainlegalAuthWebUrl = '' }
             }
         });
-        
+
         this.behaviorService.LegalAuthorityData$.subscribe(result => {
             if (result != null) {
                 this.LegalAuthorityData = result;
@@ -236,19 +236,19 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
 
         //Trust Chart Account Behaviour 
-        this.behaviorService.TrustChartAccountHandling$.subscribe(result => {
+        this.behaviorService.TrustDuplicateModuleHandling$.subscribe(result => {
             if (result != null) {
                 this.ShowMatLable = result.Lable;
             }
         });
-      //common MainBar hideShow 
-      this.behaviorService.CommonToolbarHS$.subscribe(result => {
-        if (result) {
-        this.CommonToolbarHSData=result;
-        this.ClickTypeForTrustChartHD=result.ClickType;
-        this.AccountClassForTrustChartHD=result.AccountClass;
-        }
-    });
+        //common MainBar hideShow 
+        this.behaviorService.CommonToolbarHS$.subscribe(result => {
+            if (result) {
+                this.CommonToolbarHSData = result;
+                this.ClickTypeForTrustChartHD = result.ClickType;
+                this.AccountClassForTrustChartHD = result.AccountClass;
+            }
+        });
         //for navigation bar 
         if (this.appPermissions == null) {
             this.appPermissions = [];
@@ -356,26 +356,26 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     // DashboardAPI start //
 
-    DashboardAPI(){
+    DashboardAPI() {
 
-        this._mainAPiServiceService.getSetData({Dashboard:'total unbilled wip'}, 'GetDashboard').subscribe(res => {
+        this._mainAPiServiceService.getSetData({ Dashboard: 'total unbilled wip' }, 'GetDashboard').subscribe(res => {
 
             if (res.CODE == 200 && res.STATUS == "success") {
-                this.TotalUnbilledWIP=res.DATA.DASHBOARDDATA[0].EXGST;
+                this.TotalUnbilledWIP = res.DATA.DASHBOARDDATA[0].EXGST;
             }
-          
+
         });
 
-        this._mainAPiServiceService.getSetData({Dashboard:'total outstanding'}, 'GetDashboard').subscribe(res => {
+        this._mainAPiServiceService.getSetData({ Dashboard: 'total outstanding' }, 'GetDashboard').subscribe(res => {
 
             if (res.CODE == 200 && res.STATUS == "success") {
-             this.TotalOutstanding= res.DATA.DASHBOARDDATA[0].EXGST;
+                this.TotalOutstanding = res.DATA.DASHBOARDDATA[0].EXGST;
             }
-          
+
         });
     }
 
-     // DashboardAPI end  //
+    // DashboardAPI end  //
     /* ---------------------------------------------------------------------help Licence start--------------------------------------------------------------------------  */
     openLicence(Data) {
         let w = Data == 'LI' ? '50%' : '25%';
@@ -727,14 +727,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             });
         }
     }
-    EditTimeEntryFromWIP(){
-if(this.WorkInProgressData.ITEMTYPEDESC =='Disbursement'){
-    this.spendmoneypopup('edit');
-}else{
-    this.addNewTimeEntry('Edit','','')
-}
-       
-       
+    EditTimeEntryFromWIP() {
+        if (this.WorkInProgressData.ITEMTYPEDESC == 'Disbursement') {
+            this.spendmoneypopup('edit');
+        } else {
+            this.addNewTimeEntry('Edit', '', '')
+        }
+
+
     }
     WriteOffTimeEntry() {
         const dialogRef = this._matDialog.open(WriteOffTimeEntryComponent, {
@@ -986,7 +986,7 @@ if(this.WorkInProgressData.ITEMTYPEDESC =='Disbursement'){
                 let WORKITEMGUID;
                 this.behaviorService.workInProgress$.subscribe(workInProgressData => {
                     if (workInProgressData) {
-                        this.WorkInProgressData=workInProgressData;
+                        this.WorkInProgressData = workInProgressData;
                         WORKITEMGUID = workInProgressData.WORKITEMGUID;
                     } else {
                         WORKITEMGUID = localStorage.getItem('edit_WORKITEMGUID');
@@ -1265,12 +1265,7 @@ if(this.WorkInProgressData.ITEMTYPEDESC =='Disbursement'){
         //     }
         // });
     }
-
-
-
-
     /////// Trust Chart Account 
-
     ChartAccount(val) {
         if (val == 'WithoutTrust') {
             this.ChartHandlingData = {
@@ -1281,7 +1276,7 @@ if(this.WorkInProgressData.ITEMTYPEDESC =='Disbursement'){
             }
             localStorage.setItem('ChartURL', JSON.stringify(this.ChartHandlingData));
         } else if (val == 'WithTrust') {
-           
+
             this.ChartHandlingData = {
                 ClickType: val,
                 UseTrust: 'Yes',
@@ -1291,8 +1286,33 @@ if(this.WorkInProgressData.ITEMTYPEDESC =='Disbursement'){
             localStorage.setItem('ChartURL', JSON.stringify(this.ChartHandlingData));
         }
 
-        this.behaviorService.TrustChartAccountHandling(this.ChartHandlingData);
+        this.behaviorService.TrustDuplicateModuleHandling(this.ChartHandlingData);
     }
+
+    //// GeneralJournal handling 
+    GeneralJournal(val){
+        if (val == 'WithoutTrust') {
+            this.ChartHandlingData = {
+                ClickType: val,
+                UseTrust: 'No',
+                PopUp: '',
+                Lable: "GENERAL JOURNAL",
+            }
+            localStorage.setItem('ChartURL', JSON.stringify(this.ChartHandlingData));
+            
+        } else if (val == 'WithTrust') {
+            this.ChartHandlingData = {
+                ClickType: val,
+                UseTrust: 'Yes',
+                PopUp: '',
+                Lable: "TRUST GENERAL JOURNAL",
+            }
+            localStorage.setItem('ChartURL', JSON.stringify(this.ChartHandlingData));
+        }
+        this.behaviorService.TrustDuplicateModuleHandling(this.ChartHandlingData);
+    }
+
+
 
     SelectMatter() {
         const dialogRef = this.MatDialog.open(MatterDialogComponent, {
@@ -1499,7 +1519,29 @@ if(this.WorkInProgressData.ITEMTYPEDESC =='Disbursement'){
     //     });
     // }
     //_____________________________________________________________________________________________________
-    BankingDialogOpen(type: any, forPoPUpHandel: any) {
+    BankingDialogOpen(type: any, forPoPUpHandel: any,ForTrust:any) {
+
+        // for trust handling starting 
+        if (ForTrust == 'WithoutTrust') {
+            this.ChartHandlingData = {
+                ClickType: ForTrust,
+                UseTrust: 'No',
+                PopUp: '',
+                Lable: "Select Account",
+            }
+            localStorage.setItem('ChartURL', JSON.stringify(this.ChartHandlingData));
+            
+        } else if (ForTrust == 'WithTrust') {
+            this.ChartHandlingData = {
+                ClickType: ForTrust,
+                UseTrust: 'Yes',
+                PopUp: '',
+                Lable: "Select Trust Account",
+            }
+            localStorage.setItem('ChartURL', JSON.stringify(this.ChartHandlingData));
+        }
+        this.behaviorService.TrustDuplicateModuleHandling(this.ChartHandlingData);
+        // for trust handling Ending 
         if (forPoPUpHandel) {
             this.PathOfRouter = forPoPUpHandel
         } else {
@@ -1693,7 +1735,7 @@ if(this.WorkInProgressData.ITEMTYPEDESC =='Disbursement'){
             this.isTabShow = 14;
         } else if (x[1] == "chart-account" || x[1] == 'trust-chart-account') {
             this.isTabShow = 15;
-        } else if (x[1] == "general-journal") {
+        } else if (x[1] == "general-journal" || x[1] == "trust-general-journal") {
             this.isTabShow = 16;
         } else if (x[1] == "conflict-check") {
             this.isTabShow = 17;
@@ -2272,7 +2314,7 @@ if(this.WorkInProgressData.ITEMTYPEDESC =='Disbursement'){
     ForDocDialogOpen(passdata) {
         const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, { width: '100%', disableClose: true, data: passdata });
         dialogRef.afterClosed().subscribe(result => {
-            if (result) {}
+            if (result) { }
         });
     }
     packsToolbarHide() {

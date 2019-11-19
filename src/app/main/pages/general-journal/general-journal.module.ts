@@ -31,6 +31,7 @@ import { ApplicationPipesModule } from '../application-pipes.module';
 
 const routes = [
   { path: 'general-journal', component: GeneralJournalComponent, canActivate: [AuthGuard] },
+  { path: 'trust-general-journal', component: GeneralJournalComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

@@ -14,6 +14,7 @@ export class DashboardService implements Resolve<any>
     UnbilledWIPArray: any;
     deviceValForAged:any=[];
     AmountUnBilled: any=[];
+    deviceValForUnbilled:any=[];
   
     createDb(): any
     {
@@ -97,20 +98,24 @@ export class DashboardService implements Resolve<any>
                 if (res.CODE == 200 && res.STATUS == "success") {
                     this.UnbilledWIPArray=res.DATA.DASHBOARDDATA;
                     res.DATA.DASHBOARDDATA.forEach(element => {
-                        //this.itemVal.push({name:element.DATEDESC,value:element.EXGST})
-                            this.AmountUnBilled.push(element.EXGST)
-                        });
-                       let FinalAmountUnBilled:any = Number(this.AmountUnBilled.reduce(function (a = 0, b = 0) { return a + b; }, 0));
-                        this.behaviorService.totalDashboard((FinalAmountUnBilled).toFixed(2));
-                    res.DATA.DASHBOARDDATA.forEach(element => {
-                    this.itemVal.push({name:element.DATEDESC,value:Number(((element.EXGST).toFixed(2)*100/(FinalAmountUnBilled).toFixed(2)).toFixed(2))})
-                    //this.itemVal.push({name:element.DATEDESC,value:element.EXGST})
-                    });;
-                    AnalyticsDashboardDb.widgets.widget2.mainChart=this.itemVal;
-                    if(this.itemVal){
-                        this.widgets = AnalyticsDashboardDb.widgets;
-                        resolve(this.widgets);
-                    }
+                        this.deviceValForUnbilled.push({name:element.DATEDESC,value:element.EXGST})
+                    });
+                    AnalyticsDashboardDb.widgets.widget2.devices=this.deviceValForUnbilled
+                    // res.DATA.DASHBOARDDATA.forEach(element => {
+                    //         this.AmountUnBilled.push(element.EXGST)
+                    //     });
+                    //    let FinalAmountUnBilled:any = Number(this.AmountUnBilled.reduce(function (a = 0, b = 0) { return a + b; }, 0));
+                    //     this.behaviorService.totalDashboard((FinalAmountUnBilled).toFixed(2));
+                    // res.DATA.DASHBOARDDATA.forEach(element => {
+                    // this.itemVal.push({name:element.DATEDESC,value:Number(((element.EXGST).toFixed(2)*100/(FinalAmountUnBilled).toFixed(2)).toFixed(2))})
+                  
+                    // });;
+                    this.widgets = AnalyticsDashboardDb.widgets;
+                    resolve(this.widgets);
+                    // if(this.itemVal){
+                    //     this.widgets = AnalyticsDashboardDb.widgets;
+                    //     resolve(this.widgets);
+                    // }
                    
                 }
                

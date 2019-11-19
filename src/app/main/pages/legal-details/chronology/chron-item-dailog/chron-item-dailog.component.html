@@ -32,15 +32,13 @@
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
-
-
-
+                    
                 </div>
 
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field class="example" appearance="outline" fxFlex="34" class="pr-4">
                         <mat-label>Time From</mat-label>
-                        <input matInput [(ngModel)]="ChronologyADD.TIMEFROM" formControlName="timeForm" type="number" readonly>
+                        <input matInput [(ngModel)]="ChronologyADD.TIMEFROM" formControlName="timeForm" type="time" >
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4">

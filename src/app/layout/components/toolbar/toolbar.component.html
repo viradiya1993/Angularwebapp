@@ -2743,7 +2743,7 @@
 
                 <!-- Chart Of Account tab End-->
                 <!-- General Journal tab Start-->
-                <mat-tab label="GENERAL JOURNAL" *ngIf="isTabShow===16">
+                <mat-tab label="{{ShowMatLable}}" *ngIf="isTabShow===16">
                     <section class="ribbon-container legal_details_tab_main">
                         <mat-card>
                             <mat-card-content>
@@ -4305,7 +4305,7 @@
                                     </button>
                                     </section>
                                     <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="BankingDialogOpen('Bank Account','Reconclie Practice')">
+                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="BankingDialogOpen('Bank Account','Reconclie Practice','')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_receipt_d.ico" alt=""
@@ -4318,7 +4318,7 @@
                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[20]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[20]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/general-journal'">
+                                        <button mat-button [ngClass]="appPermissions[20]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="GeneralJournal('WithoutTrust')" (click)="setTab($event)" [routerLink]="'/general-journal'">
                                         <section class="large-button-container">
                                             <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_receipt_d.ico" alt=""
@@ -4331,7 +4331,7 @@
                                     </button>
                                     </section>
                                     <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="BankingDialogOpen('BANK ACCOUNT','')">
+                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="BankingDialogOpen('BANK ACCOUNT','','WithoutTrust')">
                                         <section class="large-button-container">
                                             <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_receipt_d.ico" alt=""
@@ -4351,7 +4351,7 @@
                                 <!-- Trust Noney start -->
                                 <section class="group-section-tab">
                                     <section [ngClass]="appPermissions[22]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[22]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/chart-account'">
+                                        <button mat-button [ngClass]="appPermissions[22]?.Access==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/trust-money'">
                                         <section class="large-button-container">
                                             <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_controlled_d.ico" alt=""
@@ -4390,7 +4390,7 @@
                                     </button>
                                     </section>
                                     <section [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'disabled-click-cursor ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'disabled-click large-button'" (click)="BankingDialogOpen('BANK ACCOUNT','')">
+                                        <button mat-button [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'disabled-click large-button'" (click)="BankingDialogOpen('BANK ACCOUNT','','')">
                                         <section class="large-button-container">
                                             <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_controlled_d.ico" alt=""
@@ -4403,7 +4403,7 @@
                                     </button>
                                     </section>
                                     <section [ngClass]="appPermissions[24]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'disabled-click-cursor ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[24]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="setTab($event)" [routerLink]="'/trust-general-journal'">
+                                        <button mat-button [ngClass]="appPermissions[24]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="GeneralJournal('WithTrust')" (click)="setTab($event)" [routerLink]="'/trust-general-journal'">
                                         <section class="large-button-container">
                                             <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_controlled_d.ico" alt=""
@@ -4415,8 +4415,8 @@
                                         </section>
                                     </button>
                                     </section>
-                                    <section [ngClass]="appPermissions[19]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : ' disabled-click-cursor ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[19]?.Edit==0 ? 'disabled-click large-button' : 'disabled-click large-button'" (click)="BankingDialogOpen('BANK ACCOUNT','')">
+                                    <section [ngClass]="appPermissions[19]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="appPermissions[19]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="BankingDialogOpen('BANK ACCOUNT','','WithTrust')">
                                         <section class="large-button-container">
                                             <mat-icon class="main-icon">
                                                 <img src="assets/icons/web_app/icon_controlled_d.ico" alt=""
@@ -4591,8 +4591,11 @@
         <div fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="start center" class="user_dropdown">
             <button mat-button [matMenuTriggerFor]="userMenu1" class="user-button header_height_btn">
                 <div fxLayout="row" fxLayoutAlign="center center">
-                    <span class="username mr-12" fxHide fxShow.gt-sm>Summary</span>
-                    <mat-icon class="s-16" fxHide.xs>keyboard_arrow_down</mat-icon>
+                        <mat-icon>
+                                <img src="assets/icons/web_app/icon_reports_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                            </mat-icon>
+                    <!-- <span class="username mr-12" fxHide fxShow.gt-sm>Summary</span> -->
+                    <!-- <mat-icon class="s-16" fxHide.xs>keyboard_arrow_down</mat-icon> -->
                 </div>
             </button>
             <mat-menu #userMenu1="matMenu" [overlapTrigger]="false">

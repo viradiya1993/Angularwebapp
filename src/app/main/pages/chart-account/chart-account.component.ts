@@ -82,7 +82,7 @@ export class ChartAccountComponent implements OnInit,OnDestroy {
     this.treeFlattener = new MatTreeFlattener(this._transformer, node => node.level, node => node.expandable, node => node.SUBACCOUNTS);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-    this.behaviorService.TrustChartAccountHandling$.subscribe(result => {
+    this.behaviorService.TrustDuplicateModuleHandling$.subscribe(result => {
       if (result != null) {
           this.accountTypeData=result;
       }

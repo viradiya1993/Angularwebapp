@@ -16,7 +16,9 @@ import { MatTreeModule } from '@angular/material/tree';
 import { AuthGuard } from 'app/_guards';
 // import { DashboardComponent } from './dashboard.component';
 // import { DashboardService } from './dashboard.service';
-import { ChartsModule } from 'ng2-charts/ng2-charts';
+// import { ChartsModule } from 'ng2-charts/ng2-charts';
+
+import { ChartsModule } from 'ng2-charts';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AgmCoreModule } from '@agm/core';
 import { FuseWidgetModule } from '@fuse/components/widget/widget.module';

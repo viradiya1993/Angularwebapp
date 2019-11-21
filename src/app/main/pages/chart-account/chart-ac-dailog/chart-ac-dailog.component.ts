@@ -41,7 +41,7 @@ export class ChartAcDailogComponent implements OnInit {
         this.AccountData = result;
       }
     });
-    this.behaviorService.TrustChartAccountHandling$.subscribe(result => {
+    this.behaviorService.TrustDuplicateModuleHandling$.subscribe(result => {
       if (result != null) {
           this.accountTypeData=result;
       }
@@ -80,6 +80,7 @@ export class ChartAcDailogComponent implements OnInit {
       ACCOUNTNAME: ['', Validators.required],
       //General
       ACCOUNTNUMBER: ['1-'],
+      SendACCOUNTNUMBER: [''],
       ACCOUNTTYPE: [''],
       ACTIVE: [''],
       ACCOUNTTYPENAME: [''],
@@ -106,6 +107,7 @@ export class ChartAcDailogComponent implements OnInit {
           //General
           this.AccountForm.controls['SForSendACCNO'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTNUMBER);
           this.AccountForm.controls['ACCOUNTNUMBER'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTCLASS + ' - ' + res.DATA.ACCOUNTS[0].ACCOUNTNUMBER);
+          this.AccountForm.controls['SendACCOUNTNUMBER'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTNUMBER);
           this.accountType = res.DATA.ACCOUNTS[0].ACCOUNTTYPENAME;
           this.AccountForm.controls['ACCOUNTTYPE'].setValue(res.DATA.ACCOUNTS[0].ACCOUNTTYPENAME);          // toString()
 
@@ -133,10 +135,13 @@ export class ChartAcDailogComponent implements OnInit {
         if(trustclassData.AccountClass=='Controlled Money Account')
         this.AccountForm.controls['BANKTERM'].setValue(trustclassData.AccountClass);
       }
-     
       this.AccountForm.controls['ACTIVE'].setValue(true);
     }
-
+  }
+  accountNumPress(val){
+    let spiltVal:any= this.f.ACCOUNTNUMBER.value.split("-");
+   let finalVal= spiltVal.splice(1);
+    this.AccountForm.controls['SendACCOUNTNUMBER'].setValue(finalVal[0]);
   }
   get f() {
     return this.AccountForm.controls;
@@ -154,7 +159,7 @@ export class ChartAcDailogComponent implements OnInit {
     let PostData: any = {
       ACCOUNTCLASS: this.f.ACCOUNTCLASS.value,
       ACCOUNTNAME: this.f.ACCOUNTNAME.value,
-      ACCOUNTNUMBER: this.f.ACCOUNTNUMBER.value,
+      ACCOUNTNUMBER: this.f.SendACCOUNTNUMBER.value,
       ACCOUNTTYPE: this.sendtype,
       // ACCOUNTTYPENAME:this.f.ACCOUNTTYPENAME.value,
       ACTIVE: this.f.ACTIVE.value,

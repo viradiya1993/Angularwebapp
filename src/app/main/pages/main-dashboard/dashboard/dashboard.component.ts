@@ -9,10 +9,10 @@ import CanvasJS from 'canvasjs';
 import * as shape from 'd3-shape';
 import { Chart } from 'chart.js';
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
-  animations: fuseAnimations
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.scss'],
+    animations: fuseAnimations
 })
 export class DashboardComponent implements OnInit {
     widgets: any;
@@ -20,99 +20,101 @@ export class DashboardComponent implements OnInit {
     widget2: any = {};
     widget1SelectedYear = '2016';
     widget5SelectedDay = 'today';
-  isLoadingResults: boolean = false;
+    isLoadingResults: boolean = false;
     UnbilledTotal: any;
+    AgedDebatorTotal: any;
 
-  //doughnut chart
-//   public chartType: string = 'doughnut';
-//   public chartLabels: Array<string> = ['January', 'February', 'March'];
-//   public chartData: Array<number> = [1, 1, 1];
+    //doughnut chart
+    //   public chartType: string = 'doughnut';
+    //   public chartLabels: Array<string> = ['January', 'February', 'March'];
+    //   public chartData: Array<number> = [1, 1, 1];
 
-//   public chartOptions: any = {
-//     pieceLabel: {
-//       render: function (args) {
-//         const label = args.label,
-//               value = args.value;
-//         return label + ': ' + value;
-//       }
-//     },
-//     legend: {
-//         display: true,
-//         labels: {
-//             fontColor: 'rgb(255, 99, 132)',
-//             text:'jkhfgd',
-//         }~
-//     }   
-//   }
+    //   public chartOptions: any = {
+    //     pieceLabel: {
+    //       render: function (args) {
+    //         const label = args.label,
+    //               value = args.value;
+    //         return label + ': ' + value;
+    //       }
+    //     },
+    //     legend: {
+    //         display: true,
+    //         labels: {
+    //             fontColor: 'rgb(255, 99, 132)',
+    //             text:'jkhfgd',
+    //         }~
+    //     }   
+    //   }
 
 
-  ///
+    ///
 
- /**
-     * Constructor
-     *
-     * @param {AnalyticsDashboardService} _analyticsDashboardService
-     */
-  constructor(private _mainAPiServiceService:MainAPiServiceService,
-    private toastr: ToastrService, private _analyticsDashboardService: DashboardService,
-    private behaviorService:BehaviorService) { 
-        
+    /**
+        * Constructor
+        *
+        * @param {AnalyticsDashboardService} _analyticsDashboardService
+        */
+    constructor(private _mainAPiServiceService: MainAPiServiceService,
+        private toastr: ToastrService, private _analyticsDashboardService: DashboardService,
+        private behaviorService: BehaviorService) {
+
         //forTotal
-        this.behaviorService.totalDashboard$.subscribe(result => {
-            console.log(result);
-            this.UnbilledTotal=result
-          });
+        // this.behaviorService.totalDashboard$.subscribe(result => {
+        //     console.log(result);
+        //     this.UnbilledTotal=result
+        //   });
 
-      // Register the custom chart.js plugin
-      this.widget2 = {
-        legend       : false,
-        explodeSlices: false,
-        labels       : true,
-        doughnut     : false,
-        gradient     : false,
-        scheme       : {
-            domain: ['#f44336', '#9c27b0', '#03a9f4', '#e91e63', '#ffc107']
-        },
-        onSelect     : (ev) => {
-            console.log(ev);
-        }
-    };
-      this._registerCustomChartJSPlugin();
-      this.chartPl();
+        // Register the custom chart.js plugin
+        this.widget2 = {
+            legend: false,
+            explodeSlices: false,
+            labels: true,
+            doughnut: false,
+            gradient: false,
+            scheme: {
+                domain: ['#f44336', '#9c27b0', '#03a9f4', '#e91e63', '#ffc107']
+            },
+            onSelect: (ev) => {
+                console.log(ev);
+            }
+        };
+        this._registerCustomChartJSPlugin();
+        this.chartPl();
 
     }
-chartPl(){}
-  ngOnInit() {
+    chartPl() { }
+
+    selectStatus(val){
+        
+    }
+    ngOnInit() {
 
 
-   
 
 
 
-    // Get the widgets from the service
-    this.widgets = this._analyticsDashboardService.widgets;
-    console.log(this.widgets.widget2) 
-    // this.widgets.widget2 = {
 
-    //     };
+        // Get the widgets from the service
+        this.widgets = this._analyticsDashboardService.widgets;
+        this.AgedDebatorTotal = this._analyticsDashboardService.AgedDebatorTotal;
+        this.UnbilledTotal = this._analyticsDashboardService.UnbilledTotal;
+        // this.widgets.widget2 = {
 
-}
+        //     };
+
+    }
     /**
      * Register a custom plugin
      */
-    private _registerCustomChartJSPlugin(): void
-    {
-    
+    private _registerCustomChartJSPlugin(): void {
         (<any>window).Chart.plugins.register({
-        
             afterDatasetsDraw: function (chart, easing): any {
                 // Only activate the plugin if it's made available
                 // in the options
                 if (
                     !chart.options.plugins.xLabelsOnTop ||
                     (chart.options.plugins.xLabelsOnTop && chart.options.plugins.xLabelsOnTop.active === false)
-                )
-                {
+                ) {
                     return;
                 }
 
@@ -121,9 +123,8 @@ chartPl(){}
 
                 chart.data.datasets.forEach(function (dataset, i): any {
                     const meta = chart.getDatasetMeta(i);
-                    if ( !meta.hidden )
-                    {
-                     
+                    if (!meta.hidden) {
+
                         meta.data.forEach(function (element, index): any {
 
                             // Draw the text in black, with the specified font

@@ -132,7 +132,6 @@ export class DairyDailogComponent implements OnInit {
       this.isLoadingResults = true;
       // this.DairyData.DairyRowClickData
       this._mainAPiServiceService.getSetData({ APPOINTMENTGUID: this.DairyData.DairyRowClickData}, 'GetAppointment').subscribe(res => {
-        console.log(res);
         if (res.CODE == 200 && res.STATUS == "success") {
           let Date1 =res.DATA.APPOINTMENTS[0].APPOINTMENTDATE.split("/");
           let DDate = new Date(Date1[1] + '/' + Date1[0] + '/' + Date1[2]);
@@ -201,12 +200,9 @@ export class DairyDailogComponent implements OnInit {
   tConvert (time) {
     // Check correct time format and split into components
     time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
-    console.log(time);
     if (time.length > 1) { // If time format correct
       time = time.slice (1);  // Remove full string match value
-      console.log(time);
       time.splice(3);
-      console.log(time);
       time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
       // time[0] = +time[0] % 12 || 12; // Adjust hours
      
@@ -269,7 +265,6 @@ export class DairyDailogComponent implements OnInit {
       //   TIMEMODIFIED:""
       // }
     }
-    console.log(data);
     let finalData = { DATA: data, FormAction: this.FormAction, VALIDATEONLY: true }
     this._mainAPiServiceService.getSetData(finalData, 'SetAppointment').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
@@ -361,12 +356,10 @@ export class DairyDailogComponent implements OnInit {
   //CheckAllDays
   CheckAllDays(val) {
     if (val == true) {
-      console.log("true");
       this.CheckClick = "Yes";
       this.App_StartTime = "";
       this.App_EndTime = "";
     } else {
-      console.log("false");
       this.CheckClick = "No";
       this.App_StartTime = this.f.APPOINTMENTTIME.value;
       this.App_EndTime = this.f.TimeSlot2.value;

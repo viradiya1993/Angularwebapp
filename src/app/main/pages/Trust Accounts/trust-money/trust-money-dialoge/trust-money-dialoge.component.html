@@ -9,26 +9,31 @@
     </h2>
     <div mat-dialog-content class="mat-typography main">
         <div class="one" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
-            <form fxLayout="column" fxFlex="1 0 auto">
+            <form  name="TrustMoneyForm" name="form"  [formGroup]="TrustMoneyForm" fxLayout="column" fxFlex="1 0 auto">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
-                        <input matInput [matDatepicker]="picker" placeholder="Transaction Date">
+                        <input formControlName="TRANSACTIONDATE" matInput [matDatepicker]="picker" placeholder="Transaction Date">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
+                    <!-- <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
                         <mat-label>Picture</mat-label>
                         <input placeholder="Picture" matInput>
+                    </mat-form-field> -->
+                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
+                        <mat-label>Amount</mat-label>
+                        <input (focusout)="MainAmmountPress();" formControlName="AMOUNT" placeholder="Amount" matInput type="number">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="33" class=" pr-4">
+                    <!-- <mat-form-field appearance="outline" fxFlex="33" class=" pr-4">
                         <mat-label>Amount</mat-label>
                         <input placeholder="Amount" matInput type="number">
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="33" class="pr-4">
+                    </mat-form-field> -->
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
                         <mat-label>Payment Type</mat-label>
-                        <mat-select (selectionChange)="PaymentTypeChange($event.value)" [(ngModel)]="TrustMoneyData.PaymentType" name="PaymentType" placeholder="Payment Type">
+                        <!-- [(ngModel)]="TrustMoneyData.PaymentType" -->
+                        <mat-select formControlName="PAYMENTTYPE" #value (selectionChange)="PaymentTypeChange($event.value)" name="PAYMENTTYPE"   placeholder="Payment Type">
                             <mat-option *ngIf="action!='Transfer'" value="Cheque">Cheque</mat-option>
                             <mat-option *ngIf="action !='Transfer'" value="EFT">EFT</mat-option>
                             <mat-option *ngIf="action =='receipt'|| action =='money receipt' || action =='money withdrawal'" value="Cash">Cash</mat-option>
@@ -36,14 +41,14 @@
                             <mat-option *ngIf="action =='money receipt' || action =='money withdrawal'" value="Bank">Bank</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="34" class=" pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
                         <mat-label>Received Form</mat-label>
                         <input placeholder="Received Form" matInput>
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-checkbox *ngIf="matterType === true" [disabled]="action =='office'" name="CheckBox" [(ngModel)]="TrustMoneyData.CheckBox" (change)="CheckBoxClick($event.checked)" class="pr-4">Multiple Matters </mat-checkbox>
-                    <mat-checkbox *ngIf="matterType === false" [disabled]="action =='office'" name="CheckBox" [(ngModel)]="TrustMoneyData.CheckBox" (change)="CheckBoxClick($event.checked)" class="pr-4">Single Matters </mat-checkbox>
+                    <mat-checkbox *ngIf="matterType === true" [disabled]="action =='office'" formControlName="CheckBox" name="CheckBox"  (change)="CheckBoxClick($event.checked)" class="pr-4">Multiple Matters </mat-checkbox>
+                    <mat-checkbox *ngIf="matterType === false" [disabled]="action =='office'" formControlName="CheckBox"  name="CheckBox" (change)="CheckBoxClick($event.checked)" class="pr-4">Single Matters </mat-checkbox>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-tab-group mat-align-tabs="start">
@@ -52,7 +57,7 @@
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example" fxFlex="80" class="pr-4" appearance="outline">
                                         <mat-label>Matter</mat-label>
-                                        <input matInput>
+                                        <input formControlName="SHORTNAME"  matInput>
                                     </mat-form-field>
                                     <mat-icon class="set_icon" matSuffix (click)='SelectMatter()'>
                                         <img class="icon_set" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -61,7 +66,7 @@
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field appearance="outline" fxFlex="100" class=" pr-4">
                                         <mat-label>Reason</mat-label>
-                                        <textarea cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" matInput></textarea>
+                                        <textarea formControlName="PURPOSE" cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" matInput></textarea>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -72,7 +77,7 @@
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example" fxFlex="80" class="pr-4" appearance="outline">
                                         <mat-label>Matter</mat-label>
-                                        <input matInput>
+                                        <input formControlName="SHORTNAME"  matInput>
                                     </mat-form-field>
                                     <mat-icon class="set_icon" matSuffix (click)='SelectMatter()'>
                                         <img class="icon_set" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -81,15 +86,15 @@
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field appearance="outline" fxFlex="100" class=" pr-4">
                                         <mat-label>Reason</mat-label>
-                                        <textarea cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" matInput></textarea>
+                                        <textarea  formControlName="PURPOSE" cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" matInput></textarea>
                                     </mat-form-field>
                                 </div>
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example" fxFlex="33" class="pr-4" appearance="outline">
-                                        <mat-label>Matter</mat-label>
-                                        <input matInput>
+                                        <mat-label>Matter Ammount</mat-label>
+                                        <input formControlName="MatterAMOUNT" matInput>
                                     </mat-form-field>
-                                    <button fxFlex="33" class="pr-4" mat-button>
+                                    <button (click)="addMatterItem()" fxFlex="33" class="pr-4" mat-button>
                                         <mat-icon class="main-icon">
                                               <img src="assets/icons/web_app/icon_new_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                         </mat-icon>
@@ -97,7 +102,7 @@
                                             <span>Add</span>
                                         </div>
                                     </button>
-                                    <button fxFlex="33" class="pr-4" mat-button>
+                                    <button (click)="deleteMatterItem()" fxFlex="33" class="pr-4" mat-button>
                                         <mat-icon class="main-icon">
                                             <img src="assets/icons/web_app/icon_generic_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                         </mat-icon>
@@ -114,14 +119,11 @@
                                                     <th>Matter</th>
                                                     <th>Amount</th>
                                                 </tr>
-                                                <!-- <tr *ngFor="let item of getDataForTable; let index = index" (click)="editMoney(item ,index);highlightedRows=index" [style.background]="highlightedRows == index ? selectedColore : ''" [ngClass]="highlightedRows == index ? 'row-text-colore' : ''" matRipple
+                                                <tr *ngFor="let item of getDataForTable; let index = index" (click)="editInnerTable(item ,index);highlightedRows=index" [style.background]="highlightedRows == index ? selectedColore : ''" [ngClass]="highlightedRows == index ? 'row-text-colore' : ''" 
                                                   [@animate]="{value:'*',params:{y:'100%'}}">
-                                                  <td>{{item.AMOUNT}}</td>
-                                                  <td>{{item.EXPENDITURECLASS}}</td>
-                                                  <td>{{item.GST}}</td>
-                                                  <td>{{item.SHORTNAME}}</td>
-                                                  <td>{{item.NOTE}}</td>
-                                              </tr> -->
+                                                  <td>{{item.Matter}}</td>
+                                                  <td>{{item.Ammount}}</td>
+                                              </tr>
                                             </table>
                                         </div>
                                     </mat-card>
@@ -129,16 +131,15 @@
                                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline">
                                         <mat-label>Total</mat-label>
-                                        <input matInput>
+                                        <input formControlName="Total" matInput>
                                     </mat-form-field>
                                     <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline">
                                         <mat-label>Unallocated</mat-label>
-                                        <input matInput>
+                                        <input formControlName="Unallocated" matInput>
                                     </mat-form-field>
                                 </div>
                             </div>
                         </mat-tab>
-
                         <mat-tab *ngIf="action == 'office'" label="Trust To Office">
                             <div class="item_pad" fxLayout="column">
                                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -203,24 +204,31 @@
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
                                         <mat-label>Cheque No.</mat-label>
-                                        <input type="number" matInput>
+                                        <input   type="number" matInput>
                                     </mat-form-field>
-                                    <mat-checkbox fxFlex="50" class="pr-4">Multiple Matters </mat-checkbox>
+                                    <mat-checkbox formControlName="BankChequeChkBox" (change)="ChkDeltabx($event.checked)" fxFlex="50" class="pr-4">Bank Cheque </mat-checkbox>
+                                </div>
+
+                                <div *ngIf="this.f.BankChequeChkBox.value==true && action !='receipt'"  fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field class="example pr-4" fxFlex="100" appearance="outline">
+                                        <mat-label>Beneficiary</mat-label>
+                                        <input formControlName="ACCOUNTNAME" matInput>
+                                    </mat-form-field>
                                 </div>
                                 <div *ngIf="action =='receipt'" fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example pr-4" fxFlex="100" appearance="outline">
                                         <mat-label>Account Name</mat-label>
-                                        <input matInput>
+                                        <input formControlName="ACCOUNTNAME" matInput>
                                     </mat-form-field>
                                 </div>
                                 <div *ngIf="action =='receipt'" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
                                         <mat-label>BSB</mat-label>
-                                        <input matInput>
+                                        <input formControlName="BSB" matInput>
                                     </mat-form-field>
                                     <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
                                         <mat-label>A/C No</mat-label>
-                                        <input matInput>
+                                        <input formControlName="ACCOUNTNUMBER" matInput>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -232,21 +240,21 @@
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
                                         <mat-label>Bank Reference</mat-label>
-                                        <input matInput>
+                                        <input formControlName="EFTREFERENCE" matInput>
                                     </mat-form-field>
                                     <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
                                         <mat-label>Account Name</mat-label>
-                                        <input matInput>
+                                        <input formControlName="ACCOUNTNAME" matInput>
                                     </mat-form-field>
                                 </div>
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
                                         <mat-label>BSB</mat-label>
-                                        <input matInput>
+                                        <input formControlName="BSB" matInput>
                                     </mat-form-field>
                                     <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
                                         <mat-label>A/C No</mat-label>
-                                        <input value="0" matInput>
+                                        <input formControlName="ACCOUNTNUMBER" value="0" matInput>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -257,31 +265,31 @@
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
                                         <mat-label>Coins</mat-label>
-                                        <input type="number" matInput>
+                                        <input formControlName="COINS" type="number" matInput>
                                     </mat-form-field>
                                     <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
                                         <mat-label>Five Dollars</mat-label>
-                                        <input type="number" matInput>
+                                        <input formControlName="FIVEDOLLARS" type="number" matInput>
                                     </mat-form-field>
                                 </div>
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
                                         <mat-label>ten Dollars</mat-label>
-                                        <input type="number" matInput>
+                                        <input formControlName="TENDOLLARS" type="number" matInput>
                                     </mat-form-field>
                                     <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
                                         <mat-label>twenty Dollars</mat-label>
-                                        <input type="number" matInput>
+                                        <input formControlName="TWENTYDOLLARS" type="number" matInput>
                                     </mat-form-field>
                                 </div>
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
                                         <mat-label>Fifty Dollars</mat-label>
-                                        <input type="number" matInput>
+                                        <input formControlName="FIFTYDOLLARS" type="number" matInput>
                                     </mat-form-field>
                                     <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
                                         <mat-label>Hundred Dollars</mat-label>
-                                        <input type="number" matInput>
+                                        <input formControlName="HUNDREDDOLLARS" type="number" matInput>
                                     </mat-form-field>
                                 </div>
 
@@ -300,21 +308,21 @@
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
                                         <mat-label>Address</mat-label>
-                                        <textarea cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="3" matInput></textarea>
+                                        <textarea formControlName="ADDRESS1" cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="3" matInput></textarea>
                                     </mat-form-field>
                                 </div>
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example pr-4" fxFlex="33" appearance="outline">
                                         <mat-label>Suburb</mat-label>
-                                        <input matInput>
+                                        <input formControlName="SUBURB" matInput>
                                     </mat-form-field>
                                     <mat-form-field class="example pr-4" fxFlex="33" appearance="outline">
                                         <mat-label>State</mat-label>
-                                        <input matInput>
+                                        <input formControlName="STATE_" matInput>
                                     </mat-form-field>
                                     <mat-form-field class="example pr-4" fxFlex="33" appearance="outline">
                                         <mat-label>Postcode</mat-label>
-                                        <input matInput>
+                                        <input formControlName="POSTCODE" matInput>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -338,7 +346,7 @@
         </div>
     </div>
     <mat-dialog-actions align="end" class="popup_ftr">
-        <button mat-raised-button color="accent" [mat-dialog-close]="false" cdkFocusInitial>Save</button>
+        <button mat-raised-button color="accent" (click)="SaveTrustMoney()" [mat-dialog-close]="false" cdkFocusInitial>Save</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
     </mat-dialog-actions>
 </div>

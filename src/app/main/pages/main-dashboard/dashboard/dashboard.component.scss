@@ -76,6 +76,46 @@
     margin-right: 20px;
     margin-top: -60px;
 }
+
+.sticky_search_div {
+    // position: fixed;
+    // top: 163px;
+    // padding-left: 300px;
+    width: 100%;
+    background-color: #f5f5f5;
+    z-index: 9999;
+    left: 0;
+}
+.check_top{
+    margin-top: 12px !important;
+}
+.form_dash{
+    margin-top: 12px;
+    margin-left: 20px;
+}
+
+canvas {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+.my-chart {
+    display: block;
+    width: 533px;
+    height: 266px;
+}
+.total_Val{
+    color: red;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 39%;
+    font-size: 14px;
+}
+.h-200 {
+    position: relative;
+}
 // .example-card {
 //     width: 400px;
 //     height: 600px;

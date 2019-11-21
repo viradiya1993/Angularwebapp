@@ -183,32 +183,94 @@ export class AnalyticsDashboardDb
         //     }
         // },
         widget2   : {
-            title    : '',
-            mainChart: [
-                // {
-                //     'name' : 'Wireframing',
-                //     'value': 12
-                // },
-                // {
-                //     'name' : 'Design',
-                //     'value': 17
-                // },
-                // {
-                //     'name' : 'Coding',
-                //     'value': 28
-                // },
-                // {
-                //     'name' : 'Marketing',
-                //     'value': 25
-                // },
-                // {
-                //     'name' : 'Extra',
-                //     'value': 15
-                // }
-            ],
-            //  scheme       : {
-            //     domain: ['#f44336', '#9c27b0', '#03a9f4', '#e91e63', '#ffc107']
+                scheme : {
+                    domain: ['#9205ff', '#b14dff','#d399ff','#6b00bd',]
+                },
+                devices: [
+                    // {
+                    //     name  : '',
+                    //     value : '',
+                    //     change: ''
+                    // },
+                    // {
+                    //     name  : '',
+                    //     value : '',
+                    //     change: ''
+                    // },
+                    // {
+                    //     name  : '',
+                    //     value : '',
+                    //     change: ''
+                    // }
+                ]
+            //     chartType: 'doughnut',
+            //     datasets  : [
+            //         {   label: 'Unbilled WIP',
+            //             data: [55,45],
+                            
+            //         },
+            //         {   label: 'Unbilled WIP',
+            //         data: [55,45],
+                        
+            //     },
+            //     {   label: 'Unbilled WIP',
+            //     data: [55,45],
+                    
             // },
+                   
+            //     ],
+            //     labels: ['Data1','Data2','Data3'],
+            //      colors    : [
+            //         {
+            //             backgroundColor: '#4867d2'
+            //         },
+            //         {
+                      
+            //             backgroundColor: '#5c84f1'
+            //         },
+            //         {
+                      
+            //             backgroundColor: '#89a9f4'
+            //         },
+            //     ],
+            //     options: {
+            //       legend: {
+            //         display: true
+            //       },
+            //       tooltips:{
+            //         enabled:true
+            //       }
+            //     }
+               
+ 
+
+
+            // title    : '',
+            // mainChart: [
+            //     // {
+            //     //     'name' : 'Wireframing',
+            //     //     'value': 12
+            //     // },
+            //     // {
+            //     //     'name' : 'Design',
+            //     //     'value': 17
+            //     // },
+            //     // {
+            //     //     'name' : 'Coding',
+            //     //     'value': 28
+            //     // },
+            //     // {
+            //     //     'name' : 'Marketing',
+            //     //     'value': 25
+            //     // },
+            //     // {
+            //     //     'name' : 'Extra',
+            //     //     'value': 15
+            //     // }
+            // ],
+            // //  scheme       : {
+            // //     domain: ['#f44336', '#9c27b0', '#03a9f4', '#e91e63', '#ffc107']
+            // // },
         },
         widget3: {
             impressions: {
@@ -562,7 +624,7 @@ export class AnalyticsDashboardDb
         },
         widget7: {
             scheme : {
-                domain: ['#4867d2', '#5c84f1', '#89a9f4']
+                domain: ['#4867d2', '#5c84f1', '#89a9f4','#c0caed']
             },
             devices: [
                 // {

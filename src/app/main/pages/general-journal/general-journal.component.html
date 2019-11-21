@@ -15,11 +15,19 @@
                             <input matInput placeholder="Search" (keydown)="onSearch($event)" name="SEARCH" [(ngModel)]="filterVals.SEARCH">
                             <mat-icon matSuffix (click)="onSearch('Enter')">search</mat-icon>
                         </mat-form-field>
-                        <mat-checkbox name="SHOWRECEIPTS" [checked]="filterVals.SHOWRECEIPTS" [(ngModel)]="filterVals.SHOWRECEIPTS" (change)="changeValueOfCheckbox()">Receipts</mat-checkbox>&nbsp;&nbsp;&nbsp;
-                        <mat-checkbox name="SHOWINVOICES" [checked]="filterVals.SHOWINVOICES" [(ngModel)]="filterVals.SHOWINVOICES" (change)="changeValueOfCheckbox()">Invoice</mat-checkbox>&nbsp;&nbsp;&nbsp;
-                        <mat-checkbox name="SHOWRECEIVEMONEY" [checked]="filterVals.SHOWRECEIVEMONEY" [(ngModel)]="filterVals.SHOWRECEIVEMONEY" (change)="changeValueOfCheckbox()">Receive Money</mat-checkbox>&nbsp;&nbsp;&nbsp;
-                        <mat-checkbox name="SHOWSPENDMONEY" [checked]="filterVals.SHOWSPENDMONEY" [(ngModel)]="filterVals.SHOWSPENDMONEY" (change)="changeValueOfCheckbox()">Spend Money</mat-checkbox>&nbsp;&nbsp;&nbsp;
-                        <mat-checkbox name="SHOWGENERALJOURNAL" [checked]="filterVals.SHOWGENERALJOURNAL" [(ngModel)]="filterVals.SHOWGENERALJOURNAL" (change)="changeValueOfCheckbox()">General Journal</mat-checkbox>
+                        <mat-checkbox *ngIf="accountTypeData.ClickType =='WithoutTrust'"  name="SHOWRECEIPTS" [checked]="filterVals.SHOWRECEIPTS" [(ngModel)]="filterVals.SHOWRECEIPTS" (change)="changeValueOfCheckbox()">Receipts</mat-checkbox>&nbsp;&nbsp;&nbsp;
+                        <mat-checkbox *ngIf="accountTypeData.ClickType =='WithoutTrust'" name="SHOWINVOICES" [checked]="filterVals.SHOWINVOICES" [(ngModel)]="filterVals.SHOWINVOICES" (change)="changeValueOfCheckbox()">Invoice</mat-checkbox>&nbsp;&nbsp;&nbsp;
+                        <mat-checkbox *ngIf="accountTypeData.ClickType =='WithoutTrust'" name="SHOWRECEIVEMONEY" [checked]="filterVals.SHOWRECEIVEMONEY" [(ngModel)]="filterVals.SHOWRECEIVEMONEY" (change)="changeValueOfCheckbox()">Receive Money</mat-checkbox>&nbsp;&nbsp;&nbsp;
+                        <mat-checkbox *ngIf="accountTypeData.ClickType =='WithoutTrust'" name="SHOWSPENDMONEY" [checked]="filterVals.SHOWSPENDMONEY" [(ngModel)]="filterVals.SHOWSPENDMONEY" (change)="changeValueOfCheckbox()">Spend Money</mat-checkbox>&nbsp;&nbsp;&nbsp;
+                        <mat-checkbox *ngIf="accountTypeData.ClickType =='WithoutTrust'" name="SHOWGENERALJOURNAL" [checked]="filterVals.SHOWGENERALJOURNAL" [(ngModel)]="filterVals.SHOWGENERALJOURNAL" (change)="changeValueOfCheckbox()">General Journal</mat-checkbox>
+                    
+                    
+                    
+                        <mat-checkbox *ngIf="accountTypeData.ClickType =='WithTrust'" name="SHOWTRUSTRECEIPTS" [checked]="filterVals.SHOWTRUSTRECEIPTS" [(ngModel)]="filterVals.SHOWTRUSTRECEIPTS" (change)="changeValueOfCheckbox()">Trust Receipts</mat-checkbox>&nbsp;&nbsp;&nbsp;
+                        <mat-checkbox *ngIf="accountTypeData.ClickType =='WithTrust'" name="SHOWTRUSTWITHDRAWALS" [checked]="filterVals.SHOWTRUSTWITHDRAWALS" [(ngModel)]="filterVals.SHOWTRUSTWITHDRAWALS" (change)="changeValueOfCheckbox()">Trust Withdrawals</mat-checkbox>&nbsp;&nbsp;&nbsp;
+                        <mat-checkbox *ngIf="accountTypeData.ClickType =='WithTrust'" name="SHOWTRUSTTRANSFERS" [checked]="filterVals.SHOWTRUSTTRANSFERS" [(ngModel)]="filterVals.SHOWTRUSTTRANSFERS" (change)="changeValueOfCheckbox()">Trust Transfers</mat-checkbox>&nbsp;&nbsp;&nbsp;
+                     
+                    
                     </div>
                 </form>
             </div>

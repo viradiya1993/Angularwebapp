@@ -7,7 +7,6 @@ import { Location } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { MatDialogRef, MatDialog } from '@angular/material';
-
 @Component({
   selector: 'app-system-setting',
   templateUrl: './system-setting.component.html',
@@ -76,9 +75,6 @@ export class SystemSettingComponent implements OnInit {
       VENDORISLIABLEFORSETTLEMENTDATE: [''],
       USESINGLELINEEXPENSE: [''],
       RATEOVERRIDESEQUENCE: [''],
-
-
-
       // for defults
       DEFAULTEXPENSETYPE: [''],
       DEFAULTPAIDTYPE: [''],
@@ -92,13 +88,11 @@ export class SystemSettingComponent implements OnInit {
       SHOWCONFLICTCHECKFORNEWMATTER: [''],
       ALLOWMOBILEACCESS: [''],
       DONTALLOWTRUSTOVERDRAWS: [''],
-
       //for estimate 
       ESTIMATEWARNINGPERCENT: [''],
       ESTIMATENEXTTHRESHOLD: [''],
       ESTIMATENEXTWARNINGPERCENT: [''],
       ALLOWESTIMATERANGE: [''],
-
       //for reginoal
       COUNTRY: [''],
       TAXTYPE: [''],
@@ -129,19 +123,12 @@ export class SystemSettingComponent implements OnInit {
 
     })
     this.loadData();
-
-
-
-
   }
-
   loadData() {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
-
         this.getVal(response);
-
         this.isLoadingResults = false;
       }
 
@@ -397,7 +384,6 @@ export class SystemSettingComponent implements OnInit {
         DEFAULTTRUSTRECEIPTTYPE: this.f.DEFAULTTRUSTRECEIPTTYPE.value,
         DEFAULTTRUSTWITHDRAWALTYPE: this.f.DEFAULTTRUSTWITHDRAWALTYPE.value,
       },
-
       DOCUMENTGROUP: {
         SAVEDOCUMENTS: this.f.SAVEDOCUMENTS.value,
         DIRECTORYSAVESTRATEGY: this.f.DIRECTORYSAVESTRATEGY.value,

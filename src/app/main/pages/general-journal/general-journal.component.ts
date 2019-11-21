@@ -25,6 +25,7 @@ export class GeneralJournalComponent implements OnInit ,OnDestroy {
   contectTitle = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   displayedColumns: string[];
   tempColobj: any;
+  accountTypeData:any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   isLoadingResults: boolean = false;
@@ -33,7 +34,8 @@ export class GeneralJournalComponent implements OnInit ,OnDestroy {
   generalJournalData: any = [];
   isDisplay: boolean = false;
   // updatecurrentDate.setDate( new Date().getDate() - 30);
-  filterVals = { ITEMSTARTDATE: '', ITEMENDDATE: '', SEARCH: '', SHOWRECEIPTS: false, SHOWINVOICES: false, SHOWRECEIVEMONEY: false, SHOWSPENDMONEY: false, SHOWGENERALJOURNAL: false };
+  filterVals = { ITEMSTARTDATE: '', ITEMENDDATE: '', SEARCH: '', SHOWRECEIPTS: false, SHOWINVOICES: false, SHOWRECEIVEMONEY: false, 
+  SHOWSPENDMONEY: false, SHOWGENERALJOURNAL: false ,UseTrust:'',SHOWTRUSTRECEIPTS:false,SHOWTRUSTWITHDRAWALS:false,SHOWTRUSTTRANSFERS:false};
   constructor(
     private TableColumnsService: TableColumnsService,
     private dialog: MatDialog,
@@ -42,7 +44,14 @@ export class GeneralJournalComponent implements OnInit ,OnDestroy {
     public datepipe: DatePipe,
     private _mainAPiServiceService: MainAPiServiceService,
     public behaviorService: BehaviorService,
-  ) { }
+  ) {
+    this.behaviorService.TrustDuplicateModuleHandling$.subscribe(result => {
+      if (result != null) {
+          this.accountTypeData=result;
+      }
+  });
+
+   }
 
   ngOnInit() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
@@ -52,6 +61,11 @@ export class GeneralJournalComponent implements OnInit ,OnDestroy {
     this.filterVals.ITEMSTARTDATE = this.datepipe.transform(updatecurrentDate, 'dd/MM/yyyy');
     this.filterVals.ITEMENDDATE = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
     this.getTableFilter();
+    if(this.accountTypeData.ClickType =='WithTrust'){
+      this.filterVals.UseTrust='Yes';
+    }else{
+      this.filterVals.UseTrust='No';
+    }
     this.LoadData();
   }
   onSearch(searchFilter: any) {

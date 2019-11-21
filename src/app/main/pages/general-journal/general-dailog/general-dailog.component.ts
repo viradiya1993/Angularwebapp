@@ -55,6 +55,7 @@ export class GeneralDailogComponent implements OnInit {
   FinalCreditTotal: any;
   CREDITTOTALFINAL: any = [];
   DEBITSTOTALFINAL: any = [];
+  accountTypeData: any;
   constructor(
     public MatDialog: MatDialog,
     public dialogRef: MatDialogRef<GeneralDailogComponent>,
@@ -87,7 +88,11 @@ export class GeneralDailogComponent implements OnInit {
         }
       }
      });
-
+     this.behaviorService.TrustDuplicateModuleHandling$.subscribe(result => {
+      if (result != null) {
+          this.accountTypeData=result;
+      }
+  });
   }
 
   ngOnInit() {
@@ -207,7 +212,7 @@ export class GeneralDailogComponent implements OnInit {
     }
     this.isspiner = true;
     if (this.CREDITSTOTAL === this.DEBITSTOTAL) {
-      let details = { FormAction: this.FormAction, VALIDATEONLY: true, Data: PostData };
+      let details = { FormAction: this.FormAction,UseTrust:this.accountTypeData.UseTrust, VALIDATEONLY: true, Data: PostData };
       this._mainAPiServiceService.getSetData(details, 'SetJournal').subscribe(response => {
         if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
           this.checkValidation(response.DATA.VALIDATIONS, details);

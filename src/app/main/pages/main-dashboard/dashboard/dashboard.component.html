@@ -38,12 +38,47 @@
 </div> -->
 
 
+<div class="matter-serach-div sticky_search_div responsive_auto">
+    <form fxLayout="row" class="form_dash" fxLayoutAlign="start" fxFlex="1 0 auto">
+        <!-- <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"> -->
+        <mat-form-field fxFlex="16.6" class="pr-4" appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select (selectionChange)="selectStatus($event.value)">
+                <mat-option value="Daily ">Daily </mat-option>
+                <mat-option value="Weekly">Weekly</mat-option>
+                <mat-option value="Monthly">Monthly</mat-option>
+                <mat-option value="Quarterly">Quarterly</mat-option>
+                <mat-option value="Calendar Year">Calendar Year</mat-option>
+                <mat-option value="Financial Year">Financial Year</mat-option>
+
+            </mat-select>
+        </mat-form-field>
 
 
+        <mat-form-field fxFlex="16.6" class="pr-4" appearance="outline">
+            <mat-label>Free Earner</mat-label>
+            <mat-select (selectionChange)="selectStatus($event.value)">
+                <mat-option value="Daily ">All </mat-option>
 
 
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="pr-4" fxFlex="16.6">
+            <mat-label>Date Range</mat-label>
+            <input matInput [satDatepicker]="picker2" >
+            <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
+            <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
+        </mat-form-field>
 
 
+        <mat-checkbox class="check_top pr-4" fxFlex="16.6">GST Incl. </mat-checkbox>
+        <mat-checkbox class="check_top pr-4" fxFlex="16.6">Excl. Pro Bono/Secial </mat-checkbox>
+        <mat-checkbox class="check_top pr-4" fxFlex="16.6">Excl. Disbs (Very slowly)</mat-checkbox>
+
+        <!-- <button mat-raised-button color="primary" type="button" id="refreshConflict" (click)="refreshConflict();">Refresh</button> -->
+    </form>
+</div>
 
 
 
@@ -52,14 +87,13 @@
 <div id="dashboard-analytics" class="page-layout blank">
     <div class="content">
         <div class="left mr-lg-32">
-        <div class="left mr-lg-32">
+            <div class="left mr-lg-32">
 
-            <div fxLayout="column" fxLayoutAlign="start"
-            fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
-         
+                <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
 
 
-            <!-- <div class="widget" fxFlex="100" fxFlex.gt-sm="50">
+
+                    <!-- <div class="widget" fxFlex="100" fxFlex.gt-sm="50">
 
                 <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
 
@@ -77,34 +111,60 @@
 
             </div> -->
 
-                <div fxFlex="100" fxFlex.gt-sm="33" class="widget " >
-                    <div class="pb-24 font-size-18 font-weight-300">
-                    </div>
-                    <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
-                        <div class="p-16">
-                            <div class="h1 font-weight-300">Aged Debtors (Unpaid Invoices)</div>
+                    <div fxFlex="100" fxFlex.gt-sm="37" class="widget ">
+                        <div class="pb-24 font-size-18 font-weight-300">
                         </div>
-                        <div class="h-200">
-                                <ngx-charts-pie-chart
-                                *fuseIfOnDom
-                                [scheme]="widgets.widget7.scheme"
-                                [results]="widgets.widget7.devices"
-                                [doughnut]="true">
-                            </ngx-charts-pie-chart>
-                    
-                        </div>
-                        <div class="p-16" fxLayout="row" fxLayoutAlign="center center">
-                            <div class="px-16" fxLayout="column" fxLayoutAlign="start center"
-                                 *ngFor="let device of widgets.widget7.devices">
-                                <div class="h4 secondary-text">{{device.name}}</div>
-                                <div class="h4 font-weight-300 py-8">$<b>{{device.value}}</b></div>
+                        <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
+                            <div class="p-16">
+                                <div class="h1 font-weight-300">Aged Debtors (Unpaid Invoices)</div>
                             </div>
+                            <div class="h-200">
+                                <h3 class="total_Val">$<span><strong> {{AgedDebatorTotal}} </strong></span></h3>
+                                <ngx-charts-pie-chart *fuseIfOnDom [scheme]="widgets.widget7.scheme"
+                                    [results]="widgets.widget7.devices" [doughnut]="true">
+                                </ngx-charts-pie-chart>
+                            </div>
+                            <div class="p-16" fxLayout="row" fxLayoutAlign="center center">
+                                <div class="px-16" fxLayout="column" fxLayoutAlign="start center"
+                                    *ngFor="let device of widgets.widget7.devices">
+                                    <div class="h4 secondary-text">{{device.name}}</div>
+                                    <div class="h4 font-weight-300 py-8">$<b>{{device.value}}</b></div>
+                                </div>
+                            </div>
+
                         </div>
-                   
                     </div>
-                </div>
-             
-                <div  fxFlex="100" fxFlex.gt-sm="50" class="widget ">
+
+
+                    <div fxFlex="100" fxFlex.gt-sm="37" class="widget ">
+                        <div class="pb-24 font-size-18 font-weight-300">
+                        </div>
+                        <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
+                            <div class="p-16">
+                                <div class="h1 font-weight-300">Unbilled WIP</div>
+                            </div>
+
+
+
+                            <!-- <h3>Total:<span><strong><h3 class="total_Val"> {{UnbilledTotal}}</h3> </strong></span></h3> -->
+                            <div class="h-200">
+                                <h3 class="total_Val">$<span><strong> {{UnbilledTotal}} </strong></span></h3>
+                                <ngx-charts-pie-chart *fuseIfOnDom [scheme]="widgets.widget2.scheme"
+                                    [results]="widgets.widget2.devices" [doughnut]="true">
+                                </ngx-charts-pie-chart>
+
+                            </div>
+                            <div class="p-16" fxLayout="row" fxLayoutAlign="center center">
+                                <div class="px-16" fxLayout="column" fxLayoutAlign="start center"
+                                    *ngFor="let device of widgets.widget2.devices">
+                                    <div class="h4 secondary-text">{{device.name}}</div>
+                                    <div class="h4 font-weight-300 py-8">$<b>{{device.value}}</b></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- <div  fxFlex="100" fxFlex.gt-sm="50" class="widget ">
                     <div class="pb-24 font-size-18 font-weight-300">
                     </div>
                     <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
@@ -132,11 +192,11 @@
                         </div>
                       
                     </div>
+                </div> -->
                 </div>
+
             </div>
 
         </div>
 
     </div>
-
-</div>

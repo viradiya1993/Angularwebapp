@@ -43,7 +43,6 @@ export class ReceiveMoneyComponent implements OnInit {
   ) { 
     this.behaviorService.ReceiptData$.subscribe(result => {
       if (result) {
-        
       }
     });
   }
@@ -56,7 +55,6 @@ export class ReceiveMoneyComponent implements OnInit {
     } else {
       this.lastFilter = { "INCOMECLASS": "Receipt", 'ITEMSTARTDATE': this.datepipe.transform(new Date(), 'dd/MM/yyyy'), 'ITEMENDDATE': this.datepipe.transform(dt, 'dd/MM/yyyy') };
     }
-
     localStorage.setItem('recive_money_DateFilter', JSON.stringify(this.lastFilter));
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
     this.receiveMoneyForm = this.fb.group({
@@ -102,7 +100,6 @@ export class ReceiveMoneyComponent implements OnInit {
       this.isLoadingResults = false;
       this.toastr.error(err);
     });
-
   }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('receive money', '').subscribe(response => {
@@ -121,7 +118,6 @@ export class ReceiveMoneyComponent implements OnInit {
     let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');
     this.lastFilter.ITEMSTARTDATE = begin;
     this.lastFilter.ITEMENDDATE = end;
-
     localStorage.setItem('recive_money_DateFilter', JSON.stringify(this.lastFilter));
     this.forListing(this.lastFilter);
   }

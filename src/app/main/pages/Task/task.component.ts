@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild,OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MainAPiServiceService, BehaviorService, TableColumnsService } from 'app/_services';
@@ -17,7 +17,7 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./task.component.scss'],
   animations: fuseAnimations
 })
-export class TaskComponent implements OnInit,OnDestroy {
+export class TaskComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -32,7 +32,7 @@ export class TaskComponent implements OnInit,OnDestroy {
   MainTask: FormGroup;
   TaskAllData: any = [];
   addData: any = [];
-  filterData: { 'MATTERGUID': any, 'STATUS': any; 'Search': string; 'USERGUID': any; 'DUEDATEFROM': any; 'DUEDATETO': any, "Matter": any,"user":any };
+  filterData: { 'MATTERGUID': any, 'STATUS': any; 'Search': string; 'USERGUID': any; 'DUEDATEFROM': any; 'DUEDATETO': any, "Matter": any, "user": any };
   displayedColumns: any;
   highlightedRows: any;
   ImgDisAb: string;
@@ -42,9 +42,9 @@ export class TaskComponent implements OnInit,OnDestroy {
   constructor(private _mainAPiServiceService: MainAPiServiceService, private dialog: MatDialog,
     private _formBuilder: FormBuilder, public behaviorService: BehaviorService,
     private toastr: ToastrService, private TableColumnsService: TableColumnsService,
-    public datepipe: DatePipe, ) { 
-      this.getUserdata();
-    }
+    public datepipe: DatePipe, ) {
+    this.getUserdata();
+  }
 
   ngOnInit() {
     this.ImgDisAb = "menu-disabled";
@@ -65,7 +65,7 @@ export class TaskComponent implements OnInit,OnDestroy {
     // console.log('AEST time: '+ aestTime.toLocasleString())
 
     this.filterData = {
-      'MATTERGUID': '', 'Search': '', "USERGUID": '', 'DUEDATEFROM': '', 'DUEDATETO': '', 'STATUS': ' ', "Matter": '','user':""
+      'MATTERGUID': '', 'Search': '', "USERGUID": '', 'DUEDATEFROM': '', 'DUEDATETO': '', 'STATUS': ' ', "Matter": '', 'user': ""
     }
     //  this.filterData.DUEDATEFROM=new Date();
     //  this.filterData.DUEDATETO=new Date();
@@ -77,7 +77,7 @@ export class TaskComponent implements OnInit,OnDestroy {
     this.MainTask.controls['status'].setValue(this.filterData.STATUS);
     this.MainTask.controls['matter'].setValue(this.filterData.Matter);
     this.MainTask.controls['User'].setValue(this.filterData.user);
-   
+
     let date = this.filterData.DUEDATEFROM.split("/");
     let putDate1 = new Date(date[1] + '/' + date[0] + '/' + date[2]);
     let date2 = this.filterData.DUEDATETO.split("/");
@@ -87,10 +87,10 @@ export class TaskComponent implements OnInit,OnDestroy {
       this.MainTask.controls['matterCheck'].setValue(true);
       this.MainTask.controls['matter'].disable();
       this.CheckboxChecxed();
-    }else{
+    } else {
       this.LoadData(this.filterData);
     }
-    if(this.isGetUserEmpty =='no'){
+    if (this.isGetUserEmpty == 'no') {
       this.selectUsers(this.filterData.user);
       this.isLoadingResults = false;
     }
@@ -108,18 +108,18 @@ export class TaskComponent implements OnInit,OnDestroy {
     });
   }
   getUserdata() {
-    this.isGetUserEmpty='yes';
+    this.isGetUserEmpty = 'yes';
     this.isLoadingResults = true;
-    this._mainAPiServiceService.getSetData({ 'Active':'yes' },'GetUsers').subscribe(response => {
-      if(response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
+    this._mainAPiServiceService.getSetData({ 'Active': 'yes' }, 'GetUsers').subscribe(response => {
+      if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
         this.GetUSERS = response.DATA.USERS;
-        this.isGetUserEmpty='no';
+        this.isGetUserEmpty = 'no';
         this.behaviorService.UserDropDownData(response.DATA.USERS[0]);
       }
     });
   }
   LoadData(data) {
-  this.TaskAllData=[];
+    this.TaskAllData = [];
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(data, 'GetTask').subscribe(res => {
       this.TaskAllData = new MatTableDataSource(res.DATA.TASKS);
@@ -146,20 +146,20 @@ export class TaskComponent implements OnInit,OnDestroy {
   get f() {
     return this.MainTask.controls;
   }
-  CheckboxChecxed(){
-    if(this.f.matterCheck.value == true) {
+  CheckboxChecxed() {
+    if (this.f.matterCheck.value == true) {
       this.ImgDisAb = "menu-disabled";
       this.MainTask.controls['matter'].disable();
       this.filterData = JSON.parse(localStorage.getItem("task_filter"));
       this.filterData.MATTERGUID = "";
-      localStorage.setItem('task_filter',JSON.stringify(this.filterData));
+      localStorage.setItem('task_filter', JSON.stringify(this.filterData));
       this.LoadData(this.filterData);
     } else {
       this.ImgDisAb = "";
       this.MainTask.controls['matter'].enable();
       const dialogRef = this.dialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
       dialogRef.afterClosed().subscribe(result => {
-        if(result != false){
+        if (result != false) {
           if (result) {
             localStorage.setItem('set_active_matters', JSON.stringify(result));
             this.MainTask.controls['matter'].setValue(result.MATTER);
@@ -172,12 +172,12 @@ export class TaskComponent implements OnInit,OnDestroy {
           else if (this.f.matter.value == '') {
             this.MainTask.controls['matterCheck'].setValue(true);
           }
-        }else{
+        } else {
           this.ImgDisAb = "menu-disabled";
           this.MainTask.controls['matterCheck'].setValue(true);
           this.MainTask.controls['matter'].disable();
         }
-  
+
       });
     }
   }
@@ -223,18 +223,18 @@ export class TaskComponent implements OnInit,OnDestroy {
     });
   }
   selectUsers(value) {
-    this.filterData = JSON.parse(localStorage.getItem("task_filter"));  
+    this.filterData = JSON.parse(localStorage.getItem("task_filter"));
     let val = this.GetUSERS.find(c => c['USERNAME'] == value)
     this.filterData.USERGUID = val.USERGUID;
     this.filterData.user = value;
     this.behaviorService.UserDropDownData(val);
-    localStorage.setItem('task_filter',JSON.stringify(this.filterData));
+    localStorage.setItem('task_filter', JSON.stringify(this.filterData));
     this.LoadData(this.filterData);
   }
   selectStatus(val) {
     this.filterData = JSON.parse(localStorage.getItem("task_filter"));
     this.filterData.STATUS = val;
-    localStorage.setItem('task_filter',JSON.stringify(this.filterData));
+    localStorage.setItem('task_filter', JSON.stringify(this.filterData));
     this.LoadData(this.filterData);
   }
   DateRange1(type: string, event: MatDatepickerInputEvent<Date>) {

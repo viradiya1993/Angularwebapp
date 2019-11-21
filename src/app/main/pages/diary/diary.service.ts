@@ -12,7 +12,7 @@ import { DatePipe } from '@angular/common';
 export class DiaryService implements Resolve<any>
 {
     events: any;
-    
+
     SendParam: any = {};
     onEventsUpdated: Subject<any>;
     getCalenderDetails: any;
@@ -38,15 +38,14 @@ export class DiaryService implements Resolve<any>
         });
 
         this.behaviorService.UseCalanderViewType$.subscribe(result => {
-            if(result != null){
-            console.log(result);
-                this.CurrentDate=result
-            }else{
-                this.CurrentDate=new Date();
+            if (result != null) {
+                this.CurrentDate = result
+            } else {
+                this.CurrentDate = new Date();
             }
             // this.getEvents();
         });
-        
+
         this.behaviorService.calanderViewType$.subscribe(result => {
             if (result) {
 
@@ -87,10 +86,10 @@ export class DiaryService implements Resolve<any>
      * @returns {Promise<any>}
      */
     getEvents(): Promise<any> {
-      
+
         let userData = JSON.parse(localStorage.getItem('currentUser'));
         if (this.getCalenderDetails == 'month') {
-           
+
             var firstDay = new Date(this.CurrentDate.getFullYear(), this.CurrentDate.getMonth(), 1);
             var lastDay = new Date(this.CurrentDate.getFullYear(), this.CurrentDate.getMonth() + 1, 0);
 
@@ -100,7 +99,7 @@ export class DiaryService implements Resolve<any>
                 DATEEND: this.datepipe.transform(lastDay, 'dd/MM/yyyy')
             }
         } else if (this.getCalenderDetails == 'day') {
-          
+
 
             this.SendParam = {
                 USERGUID: userData.UserGuid,
@@ -108,12 +107,12 @@ export class DiaryService implements Resolve<any>
                 DATEEND: this.datepipe.transform(this.CurrentDate, 'dd/MM/yyyy')
             }
         } else if (this.getCalenderDetails == 'week') {
-       
+
             var first = this.CurrentDate.getDate() - this.CurrentDate.getDay(); // First day is the day of the month - the day of the week
             var last = first + 6; // last day is the first day + 6
             var firstday = new Date(this.CurrentDate.setDate(first)).toUTCString();
             var lastday = new Date(this.CurrentDate.setDate(last)).toUTCString();
-            
+
             this.SendParam = {
                 USERGUID: userData.UserGuid,
                 DATESTART: this.datepipe.transform(new Date(firstday), 'dd/MM/yyyy'),
@@ -134,8 +133,6 @@ export class DiaryService implements Resolve<any>
                             tempEvent.push({ start: dateformat(changeformat(itemsdata.APPOINTMENTDATE) + ' ' + itemsdata.APPOINTMENTTIME), title: '(' + this.tConvert(itemsdata.APPOINTMENTTIME) + ') -' + itemsdata.SUBJECT, allDay: false, DairyRowClickData: itemsdata.APPOINTMENTGUID, id: "das" });
                         });
                         this.events = tempEvent;
-                        console.log(this.events);
-                        console.log(tempEvent);
                         this.onEventsUpdated.next(this.events);
                         resolve(this.events);
                     }

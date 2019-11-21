@@ -61,14 +61,16 @@ export class BankingDialogComponent implements OnInit {
   highlightedRows: number;
   isDisabledselect: any;
   abcd: any;
+  accountTypeData: any;
+  title: string;
 
   constructor(
     public dialog: MatDialog,
     private _mainAPiServiceService: MainAPiServiceService,
     private behaviorService: BehaviorService,
     public dialogRef: MatDialogRef<BankingDialogComponent>, @Inject(MAT_DIALOG_DATA) public _data: any, private router: Router, ) {
-console.log(_data);
-   this.loadData(_data.AccountType);
+    console.log(_data);
+  
    this.behaviorService.dialogClose$.subscribe(result => {
     if(result != null){
       if(result.MESSAGE == 'Not logged in'){
@@ -76,13 +78,25 @@ console.log(_data);
       }
     }
    });
+   this.behaviorService.TrustDuplicateModuleHandling$.subscribe(result => {
+    if (result != null) {
+        this.accountTypeData=result;
+    }
+    if(this.accountTypeData.ClickType =='WithoutTrust'){
+      this.title="Select Account";
+      this.loadData({AccountClass:_data.AccountType,UseTrust:this.accountTypeData.UseTrust});
+    }else{
+      this.title="Select Trust Account";
+      this.loadData({AccountClass:_data.AccountType,UseTrust:this.accountTypeData.UseTrust});
+    }
+});
   }
   ngOnInit() {
     this.treeControl.expandAll();
   }
   loadData(type: any) {
     this.isLoadingResults = true;
-    this._mainAPiServiceService.getSetData({ AccountClass: type }, 'GetAccount').subscribe(response => {
+    this._mainAPiServiceService.getSetData(type, 'GetAccount').subscribe(response => {
      
       if (response.CODE == 200 && response.STATUS == "success") {
         this.arrayForIndex = [];
@@ -162,7 +176,8 @@ console.log(_data);
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.loadData(this._data.AccountType);
+        // this.loadData(this._data.AccountType);
+        this.loadData({AccountClass:this._data.AccountType,UseTrust:this.accountTypeData.UseTrust});
       }
     });
   }

@@ -90,7 +90,6 @@ export class SpendMoneyAddComponent implements OnInit {
     } else {
       this.dialogTitle = 'Duplicate Spend Money';
     }
-
     this.behaviorService.dialogClose$.subscribe(result => {
       if (result != null) {
         if (result.MESSAGE == 'Not logged in') {
@@ -98,7 +97,6 @@ export class SpendMoneyAddComponent implements OnInit {
         }
       }
     });
-
   }
   ngOnInit() {
     this.isLoadingResults = true;
@@ -140,8 +138,8 @@ export class SpendMoneyAddComponent implements OnInit {
       DateIncurredForSend: [''],
       MatterGUID: [''],
       ExpenseacGUID: [''],
-      EXPENSEACCOUNTNUMBER:[''],
-      BANKACCOUNTNUMBER:['']
+      EXPENSEACCOUNTNUMBER: [''],
+      BANKACCOUNTNUMBER: ['']
 
     });
     this.isLoadingResults = true;
@@ -191,11 +189,8 @@ export class SpendMoneyAddComponent implements OnInit {
             this.spendmoneyForm.controls['AmountIncGST'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT);
             this.spendmoneyForm.controls['Note'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].NOTE);
             this.spendmoneyForm.controls['Matter'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].SHORTNAME);
-                console.log(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENSEACCOUNTNUMBER);
             this.spendmoneyForm.controls['Expenseac'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENSEACCOUNTNUMBER);
-
             this.spendmoneyForm.controls['ExpenseacGUID'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENSEACCOUNTGUID);
-
             if (round(this.SendMoney_data.EXPENDITUREITEMS[0].AMOUNT / 10) == round(this.SendMoney_data.EXPENDITUREITEMS[0].GST)) {
               this.spendmoneyForm.controls['GSTType'].setValue("1.1");
               this.GstTypeDiff = "1.1";
@@ -211,7 +206,6 @@ export class SpendMoneyAddComponent implements OnInit {
             } else {
               this.amountCal();
             }
-
           } else {
             this.spendmoneyForm.controls['Class'].setValue("");
             this.spendmoneyForm.controls['GST1'].setValue(" ");
@@ -240,15 +234,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.forAddshowpopupData();
     }
   }
-  // ngAfterViewInit() {
-  //   let tempError: any = [];
-  //   let tempWarning: any = [];
-  //   tempWarning['PAYEE'] = {};
-  //   tempError['AMOUNT'] = {};
-  //   tempError['NOTE'] = {};
-  //   tempError['EXPENDITUREITEMS'] = {};
-  //   this.errorWarningData = { "Error": tempError, 'Warning': tempWarning };
-  // }
+
   AfterViewInitATADD() {
     let tempError: any = [];
     let tempWarning: any = [];
@@ -292,12 +278,9 @@ export class SpendMoneyAddComponent implements OnInit {
     this.spendmoneyForm.controls['DatePaidForSend'].setValue(this.datepipe.transform(new Date(), 'dd/MM/yyyy'));
     this.spendmoneyForm.controls['ChequeNo'].setValue("0");
     this.spendmoneyForm.controls['Type'].setValue("Cash");
-
-
     this.spendmoneyForm.controls['GST1'].setValue("0.00");
     this.spendmoneyForm.controls['AmountIncGST'].setValue("0.00");
     this.spendmoneyForm.controls['AmountExGST'].setValue("0.00");
-
     this.spendmoneyForm.controls['GSTType'].setValue("1.1");
     this.GstTypeDiff = "1.1";
     this.spendmoneyForm.controls['GST1'].disable();
@@ -356,12 +339,9 @@ export class SpendMoneyAddComponent implements OnInit {
         this.expac = false;
         $("#mattersnew").addClass("menu-disabled");
         this.spendmoneyForm.controls['Matter'].disable();
-
       }
       let tempError: any = this.errorWarningData.Error;
       if (tempError != undefined) { delete tempError['SHORTNAME']; }
-
-
     } else if (Classvalue === 'Matter Expense') {
       this.hide = false;
       this.expac = false;
@@ -373,14 +353,13 @@ export class SpendMoneyAddComponent implements OnInit {
       } else {
         this.spendmoneyForm.controls['MatterGUID'].setValue('');
       }
-
       this.forCommonEnable();
       this.GstTypeforSelect('1.1');
-    if(this.action == 'new'){
-      let tempError: any = this.errorWarningData.Error;
-      tempError['SHORTNAME'] = {};
-      this.errorWarningData.Error = tempError;
-    }
+      if (this.action == 'new') {
+        let tempError: any = this.errorWarningData.Error;
+        tempError['SHORTNAME'] = {};
+        this.errorWarningData.Error = tempError;
+      }
       // this.errorWarningData = { "Error": tempError };
     } else if (Classvalue === 'Capital') {
       this.hide = true;
@@ -609,7 +588,6 @@ export class SpendMoneyAddComponent implements OnInit {
         NOTE: this.f.Note.value
       });
       this.globallyCalculation();
-
     }
     this.highlightedRows = 0;
     this.editMoney(this.getDataForTable[0], 0);
@@ -623,7 +601,6 @@ export class SpendMoneyAddComponent implements OnInit {
     });
     this.FinalTotal = Number(this.FAmount.reduce(function (a = 0, b = 0) { return a + b; }, 0));
     this.FinalTotalGST = Number(this.FGst.reduce(function (a = 0, b = 0) { return a + b; }, 0));
-
     // if(this.FinalTotal==null || this.FinalTotal==null || this.FinalTotalGST==null || this.FinalTotalGST==null){
     //   this.spendmoneyForm.controls['Amount'].setValue(0.00);
     //   this.spendmoneyForm.controls['GST'].setValue(0.00);
@@ -685,12 +662,12 @@ export class SpendMoneyAddComponent implements OnInit {
       this.GSTValForExGst = amount;
     }
   }
-ExamountCall(){
-  let amount = this.f.AmountExGST.value;
-  let cal: any = (this.f.AmountExGST.value * 1.1).toFixed(2);
-  this.GSTValForInGst = cal;
-  this.GSTValAfterCal = (cal - amount).toFixed(2);
-}
+  ExamountCall() {
+    let amount = this.f.AmountExGST.value;
+    let cal: any = (this.f.AmountExGST.value * 1.1).toFixed(2);
+    this.GSTValForInGst = cal;
+    this.GSTValAfterCal = (cal - amount).toFixed(2);
+  }
 
   GSTCalFun() {
     this.GSTValForExGst = round(this.f.AmountIncGST.value - this.f.GST1.value).toFixed(2);
@@ -782,11 +759,9 @@ ExamountCall(){
     //ammount calculation
     // for ammount field 
     this.FinalExGSTAmount = this.setMainAmount - this.setMainGST;
-
-    
     if (this.FinalExGSTAmount == 0 || this.f.Expenseac.value == '' || this.f.Notes.value == '') {
       this.toastr.error("Amount should not be 0 || You should select a Expense a/c  || You should enter Notes");
-      this.sendItem=[];
+      this.sendItem = [];
       return;
     }
     let Data = {

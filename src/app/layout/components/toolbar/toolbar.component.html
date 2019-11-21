@@ -1839,7 +1839,7 @@
                             <mat-card-content>
                                     <section class="group-section-tab extras_tab">
                                             <section class="ribbon-section">
-                                                <mat-nav-list>
+                                                <mat-nav-list class="pad_dash">
                                                     <a mat-list-item [ngClass]="{'disabled-click-cursor':appPermissions[2]?.Create==0,'cmn_active_tab':activeSubMenu =='monthly-graph'}" [routerLink]="'/dashboard/monthly-graph'">
                                                         <mat-icon>
                                                             <img src="assets/icons/web_app/icon_reports_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1847,7 +1847,7 @@
                                                         <span>Money Graph</span>
                                                     </a>
                                                 </mat-nav-list>
-                                                <mat-nav-list>
+                                                <mat-nav-list class="pad_dash">
                                                         <a mat-list-item [ngClass]="{'disabled-click-cursor':appPermissions[2]?.Create==0,'cmn_active_tab':activeSubMenu =='sanp-shot'}" [routerLink]="'/dashboard/sanp-shot'">
                                                             <mat-icon>
                                                                 <img src="assets/icons/web_app/SBULLETS.ICO" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -1855,7 +1855,7 @@
                                                             <span>Snap Shot Data</span>
                                                         </a>
                                                     </mat-nav-list>
-                                                <mat-nav-list>
+                                                <mat-nav-list class="pad_dash">
                                                     <a mat-list-item [ngClass]="{'disabled-click-cursor':appPermissions[2]?.Create==0,'cmn_active_tab':activeSubMenu =='period-summary'}" [routerLink]="'/dashboard/period-summary'">
                                                         <mat-icon>
 
@@ -1874,54 +1874,54 @@
 
                                         <section *ngIf="activeSubMenu=='monthly-graph'" class="group-section-tab extras_tab">
                                             <section class="ribbon-section">
-                                                <mat-nav-list>
+                                                <mat-nav-list class="pad_dash">
                                                    <mat-checkbox class="checkbox_toolbar" >invoices</mat-checkbox>
                                                 </mat-nav-list>
-                                                <mat-nav-list>
+                                                <mat-nav-list class="pad_dash">
                                                     <mat-checkbox class="checkbox_toolbar">time</mat-checkbox>
                                                     </mat-nav-list>
-                                                <mat-nav-list>
+                                                <mat-nav-list class="pad_dash">
                                                     <mat-checkbox class="checkbox_toolbar">wip</mat-checkbox>
                                                 </mat-nav-list>
                                             </section>
                                             <section class="ribbon-section">
-                                                <mat-nav-list>
+                                                <mat-nav-list class="pad_dash">
                                                    <mat-checkbox class="checkbox_toolbar">matter expenses</mat-checkbox>
                                                 </mat-nav-list>
-                                                <mat-nav-list>
+                                                <mat-nav-list class="pad_dash">
                                                     <mat-checkbox class="checkbox_toolbar">sundries</mat-checkbox>
                                                     </mat-nav-list>
-                                                <mat-nav-list>
+                                                <mat-nav-list class="pad_dash">
                                                     <mat-checkbox class="checkbox_toolbar">searches</mat-checkbox>
                                                 </mat-nav-list>
                                             </section>
                                             <section class="ribbon-section">
-                                                <mat-nav-list>
+                                                <mat-nav-list class="pad_dash">
                                                    <mat-checkbox class="checkbox_toolbar">disbursements</mat-checkbox>
                                                 </mat-nav-list>
-                                                <mat-nav-list>
+                                                <mat-nav-list class="pad_dash">
                                                     <mat-checkbox class="checkbox_toolbar">expenses</mat-checkbox>
                                                     </mat-nav-list>
-                                                <mat-nav-list>
+                                                <mat-nav-list class="pad_dash">
                                                     <mat-checkbox class="checkbox_toolbar">spend money</mat-checkbox>
                                                 </mat-nav-list>
                                             </section>
                                             <section class="ribbon-section">
-                                                <mat-nav-list>
+                                                <mat-nav-list class="pad_dash">
                                                    <mat-checkbox class="checkbox_toolbar">capital</mat-checkbox>
                                                 </mat-nav-list>
-                                                <mat-nav-list>
+                                                <mat-nav-list class="pad_dash">
                                                     <mat-checkbox class="checkbox_toolbar">all income</mat-checkbox>
                                                     </mat-nav-list>
-                                                <mat-nav-list>
+                                                <mat-nav-list class="pad_dash">
                                                     <mat-checkbox class="checkbox_toolbar">general income</mat-checkbox>
                                                 </mat-nav-list>
                                             </section>
                                             <section class="ribbon-section">
-                                                <mat-nav-list>
+                                                <mat-nav-list class="pad_dash">
                                                    <mat-checkbox class="checkbox_toolbar">receipts</mat-checkbox>
                                                 </mat-nav-list>
-                                                <mat-nav-list>
+                                                <mat-nav-list class="pad_dash">
                                                     <mat-checkbox class="checkbox_toolbar">write offs</mat-checkbox>
                                                     </mat-nav-list>
                                               

@@ -83,6 +83,10 @@ export class DashboardComponent implements OnInit {
 
     }
     chartPl() { }
+
+    selectStatus(val){
+        
+    }
     ngOnInit() {
 
 

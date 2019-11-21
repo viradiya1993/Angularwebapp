@@ -184,7 +184,7 @@ export class AnalyticsDashboardDb
         // },
         widget2   : {
                 scheme : {
-                    domain: ['#6b00bd', '#9205ff', '#b14dff','#d399ff']
+                    domain: ['#9205ff', '#b14dff','#d399ff','#6b00bd',]
                 },
                 devices: [
                     // {

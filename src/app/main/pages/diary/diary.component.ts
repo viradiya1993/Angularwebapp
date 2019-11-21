@@ -64,7 +64,6 @@ export class DiaryComponent implements OnInit {
         this.viewDate = new Date();
         this.activeDayIsOpen = true;
         this.selectedDay = { date: startOfDay(new Date()) };
-        console.log(this.selectedDay);
         /**
          * Get events from service/server
          */

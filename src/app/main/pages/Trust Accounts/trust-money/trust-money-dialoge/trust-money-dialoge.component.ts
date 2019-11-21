@@ -33,7 +33,11 @@ const ELEMENT_DATA: PeriodicElement[] = [
   animations: fuseAnimations
 })
 export class TrustMoneyDialogeComponent implements OnInit {
+  theme_type = localStorage.getItem('theme_type');
+  selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
+  getDataForTable:any=[];
+  MatterAmmountArray:any=[];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   selection = new SelectionModel<PeriodicElement>(true, []);
   errorWarningData: any = { "Error": [], 'Warning': [] };
@@ -50,6 +54,8 @@ export class TrustMoneyDialogeComponent implements OnInit {
   title: string;
   ForDetailTab: string;
   TrustMoneyForm: FormGroup;
+  highlightedRows: any;
+  INDEX: any;
   constructor(private _mainAPiServiceService: MainAPiServiceService,
     private _formBuilder: FormBuilder, private toastr: ToastrService,
     public dialogRef: MatDialogRef<TrustMoneyDialogeComponent>,
@@ -83,10 +89,13 @@ export class TrustMoneyDialogeComponent implements OnInit {
       POSTCODE: [''],
       STATE_: [''],
       SUBURB: [''],
+      MatterAMOUNT:[''],
       // extra
       BankChequeChkBox: [''],
       CheckBox: [''],
-      INVOICEDVALUEEXGST:['']
+      INVOICEDVALUEEXGST:[''],
+      Unallocated:[''],
+      Total:['']
     });
     this.TrustMoneyForm.controls['PAYMENTTYPE'].setValue('Cheque');
     this.TrustMoneyForm.controls['CheckBox'].setValue(false);
@@ -166,7 +175,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
         this.TrustMoneyForm.controls['SHORTNAME'].setValue(result.MATTER);
         this.TrustMoneyForm.controls['MATTERGUID'].setValue(result.MATTERGUID);
 
-        this.TrustMoneyForm.controls['INVOICEDVALUEEXGST'].setValue(result.MATTERGUID);
+        this.TrustMoneyForm.controls['INVOICEDVALUEEXGST'].setValue(result.INVOICEDVALUEEXGST);
       }
     });
   }
@@ -286,10 +295,50 @@ export class TrustMoneyDialogeComponent implements OnInit {
     });
   }
   editInnerTable(val,Index){
-
+    this.INDEX=Index;
+    this.highlightedRows=Index;
+console.log(val);
   }
   addMatterItem(){
-
-
+    this.MatterAmmountArray=[];
+    if(this.f.AMOUNT.value ==''){
+      this.toastr.error("Please enter Ammount ");
+      return false;
+    }else if(Number(this.f.Unallocated.value) <  Number(this.f.MatterAMOUNT.value)) {
+      this.toastr.error("Ammount can not be larger then what is unallocated"); 
+      return false;
+    }
+    else{
+      if(this.f.SHORTNAME.value !='' && this.f.MatterAMOUNT.value !='' ){
+        // calculation total and unallocated 
+        this.getDataForTable.push({
+          Matter:this.f.SHORTNAME.value +' :'+ this.f.INVOICEDVALUEEXGST.value,
+          Ammount:this.f.MatterAMOUNT.value
+        })
+        this.getDataForTable.forEach(element => {
+          this.MatterAmmountArray.push(Number(element.Ammount))
+        });
+        let SumOfMatterAmmount = Number(this.MatterAmmountArray.reduce(function (a = 0, b = 0) { return a + b; }, 0));
+        this.TrustMoneyForm.controls['Unallocated'].setValue(Number(this.f.AMOUNT.value)- Number(SumOfMatterAmmount))
+        this.TrustMoneyForm.controls['Total'].setValue(Number(SumOfMatterAmmount))
+         // empty field for another push 
+          this.CommonEmptyField();
+      }else{
+        this.toastr.error("Please fill up Matter | Ammount fields");
+      }
+    }
   }
+CommonEmptyField(){
+this.TrustMoneyForm.controls['MatterAMOUNT'].setValue('');
+this.TrustMoneyForm.controls['PURPOSE'].setValue('');
+this.TrustMoneyForm.controls['SHORTNAME'].setValue('');
+this.TrustMoneyForm.controls['INVOICEDVALUEEXGST'].setValue('');
+}
+
+MainAmmountPress(){
+  this.TrustMoneyForm.controls['Unallocated'].setValue(this.f.AMOUNT.value);
+}
+deleteMatterItem(){
+  this.getDataForTable.splice(this.INDEX,1);
+}
 }

@@ -22,7 +22,7 @@
                     </mat-form-field> -->
                     <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
                         <mat-label>Amount</mat-label>
-                        <input formControlName="AMOUNT" placeholder="Amount" matInput type="number">
+                        <input (focusout)="MainAmmountPress();" formControlName="AMOUNT" placeholder="Amount" matInput type="number">
                     </mat-form-field>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
@@ -92,7 +92,7 @@
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example" fxFlex="33" class="pr-4" appearance="outline">
                                         <mat-label>Matter Ammount</mat-label>
-                                        <input formControlName="AMOUNT" matInput>
+                                        <input formControlName="MatterAMOUNT" matInput>
                                     </mat-form-field>
                                     <button (click)="addMatterItem()" fxFlex="33" class="pr-4" mat-button>
                                         <mat-icon class="main-icon">
@@ -102,7 +102,7 @@
                                             <span>Add</span>
                                         </div>
                                     </button>
-                                    <button fxFlex="33" class="pr-4" mat-button>
+                                    <button (click)="deleteMatterItem()" fxFlex="33" class="pr-4" mat-button>
                                         <mat-icon class="main-icon">
                                             <img src="assets/icons/web_app/icon_generic_delete_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                         </mat-icon>
@@ -118,15 +118,12 @@
                                                 <tr>
                                                     <th>Matter</th>
                                                     <th>Amount</th>
-                                                <!-- </tr>
-                                                <tr *ngFor="let item of getDataForTable; let index = index" (click)="editInnerTable(item ,index);highlightedRows=index" [style.background]="highlightedRows == index ? selectedColore : ''" [ngClass]="highlightedRows == index ? 'row-text-colore' : ''" matRipple
+                                                </tr>
+                                                <tr *ngFor="let item of getDataForTable; let index = index" (click)="editInnerTable(item ,index);highlightedRows=index" [style.background]="highlightedRows == index ? selectedColore : ''" [ngClass]="highlightedRows == index ? 'row-text-colore' : ''" 
                                                   [@animate]="{value:'*',params:{y:'100%'}}">
-                                                  <td>{{item.AMOUNT}}</td>
-                                                  <td>{{item.EXPENDITURECLASS}}</td>
-                                                  <td>{{item.GST}}</td>
-                                                  <td>{{item.SHORTNAME}}</td>
-                                                  <td>{{item.NOTE}}</td>
-                                              </tr> -->
+                                                  <td>{{item.Matter}}</td>
+                                                  <td>{{item.Ammount}}</td>
+                                              </tr>
                                             </table>
                                         </div>
                                     </mat-card>
@@ -134,16 +131,15 @@
                                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline">
                                         <mat-label>Total</mat-label>
-                                        <input matInput>
+                                        <input formControlName="Total" matInput>
                                     </mat-form-field>
                                     <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline">
                                         <mat-label>Unallocated</mat-label>
-                                        <input matInput>
+                                        <input formControlName="Unallocated" matInput>
                                     </mat-form-field>
                                 </div>
                             </div>
                         </mat-tab>
-
                         <mat-tab *ngIf="action == 'office'" label="Trust To Office">
                             <div class="item_pad" fxLayout="column">
                                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">

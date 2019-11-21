@@ -10,14 +10,15 @@ import { AnalyticsDashboardDb } from './dashboard-analytics';
 export class DashboardService implements Resolve<any>
 {
     AgedDebtorsArray: any;
-    itemVal:any=[];
+    itemVal: any = [];
     UnbilledWIPArray: any;
-    deviceValForAged:any=[];
-    AmountUnBilled: any=[];
-    deviceValForUnbilled:any=[];
-  
-    createDb(): any
-    {
+    deviceValForAged: any = [];
+    AmountUnBilled: any = [];
+    deviceValForUnbilled: any = [];
+    UnbilledTotal: any;
+    AgedDebatorTotal: any;
+
+    createDb(): any {
         return {
             // Dashboards
             'analytics-dashboard-widgets': AnalyticsDashboardDb.widgets,
@@ -33,10 +34,9 @@ export class DashboardService implements Resolve<any>
     constructor(
         private _httpClient: HttpClient,
         private _mainAPiServiceService: MainAPiServiceService,
-        private behaviorService:BehaviorService
-    )
-    {
-       this.createDb(); 
+        private behaviorService: BehaviorService
+    ) {
+        this.createDb();
     }
 
     /**
@@ -46,8 +46,7 @@ export class DashboardService implements Resolve<any>
      * @param {RouterStateSnapshot} state
      * @returns {Observable<any> | Promise<any> | any}
      */
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any
-    {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
         return new Promise((resolve, reject) => {
 
             Promise.all([
@@ -66,19 +65,20 @@ export class DashboardService implements Resolve<any>
      *
      * @returns {Promise<any>}
      */
-    getWidgets(): Promise<any>
-    {
-        return new Promise((resolve, reject) => {          
-             this.AgedDebtorsArray=[];
-             this.deviceValForAged=[];
-            this._mainAPiServiceService.getSetData({Dashboard:'aged debtors'}, 'GetDashboard').subscribe(res => {
+    getWidgets(): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.AgedDebtorsArray = [];
+            this.deviceValForAged = [];
+            this.deviceValForUnbilled = [];
+            this._mainAPiServiceService.getSetData({ Dashboard: 'aged debtors' }, 'GetDashboard').subscribe(res => {
                 console.log(res);
                 if (res.CODE == 200 && res.STATUS == "success") {
-                    this.AgedDebtorsArray=res.DATA.DASHBOARDDATA;
+                    this.AgedDebtorsArray = res.DATA.DASHBOARDDATA;
                     res.DATA.DASHBOARDDATA.forEach(element => {
-                        this.deviceValForAged.push({name:element.DATEDESC,value:element.EXGST})
+                        this.deviceValForAged.push({ name: element.DATEDESC, value: element.EXGST })
                     });
-                    AnalyticsDashboardDb.widgets.widget7.devices=this.deviceValForAged
+                    AnalyticsDashboardDb.widgets.widget7.devices = this.deviceValForAged
+                    this.AgedDebatorTotal = (res.DATA.DASHBOARDTOTALS.EXGST).toFixed(2);
                     // AnalyticsDashboardDb.widgets.widget7.devices[0].name=this.AgedDebtorsArray[0].DATEDESC;
                     // AnalyticsDashboardDb.widgets.widget7.devices[1].name=this.AgedDebtorsArray[1].DATEDESC;
                     // AnalyticsDashboardDb.widgets.widget7.devices[2].name=this.AgedDebtorsArray[2].DATEDESC;
@@ -89,18 +89,20 @@ export class DashboardService implements Resolve<any>
                     //   this.widgets = AnalyticsDashboardDb.widgets;
                     //     resolve(this.widgets);
                 }
-              
-            },reject);
-            this._mainAPiServiceService.getSetData({Dashboard:'unbilled WIP'}, 'GetDashboard').subscribe(res => {
+
+            }, reject);
+            this._mainAPiServiceService.getSetData({ Dashboard: 'unbilled WIP' }, 'GetDashboard').subscribe(res => {
                 console.log(res);
-                this.itemVal=[];
-                this.AmountUnBilled=[];
+                this.itemVal = [];
+                this.AmountUnBilled = [];
                 if (res.CODE == 200 && res.STATUS == "success") {
-                    this.UnbilledWIPArray=res.DATA.DASHBOARDDATA;
+                    this.UnbilledWIPArray = res.DATA.DASHBOARDDATA;
                     res.DATA.DASHBOARDDATA.forEach(element => {
-                        this.deviceValForUnbilled.push({name:element.DATEDESC,value:element.EXGST})
+                        this.deviceValForUnbilled.push({ name: element.DATEDESC, value: element.EXGST })
                     });
-                    AnalyticsDashboardDb.widgets.widget2.devices=this.deviceValForUnbilled
+                    this.UnbilledTotal = (res.DATA.DASHBOARDTOTALS.EXGST).toFixed(2);
+                    // this.behaviorService.totalDashboard({UnbilledTotal:(res.DASHBOARDTOTALS.EXGST).toFixed(2)});
+                    AnalyticsDashboardDb.widgets.widget2.devices = this.deviceValForUnbilled
                     // res.DATA.DASHBOARDDATA.forEach(element => {
                     //         this.AmountUnBilled.push(element.EXGST)
                     //     });
@@ -108,7 +110,7 @@ export class DashboardService implements Resolve<any>
                     //     this.behaviorService.totalDashboard((FinalAmountUnBilled).toFixed(2));
                     // res.DATA.DASHBOARDDATA.forEach(element => {
                     // this.itemVal.push({name:element.DATEDESC,value:Number(((element.EXGST).toFixed(2)*100/(FinalAmountUnBilled).toFixed(2)).toFixed(2))})
-                  
+
                     // });;
                     this.widgets = AnalyticsDashboardDb.widgets;
                     resolve(this.widgets);
@@ -116,12 +118,12 @@ export class DashboardService implements Resolve<any>
                     //     this.widgets = AnalyticsDashboardDb.widgets;
                     //     resolve(this.widgets);
                     // }
-                   
+
                 }
-               
-            },reject);
-      
+
+            }, reject);
+
         });
     }
-    
+
 }

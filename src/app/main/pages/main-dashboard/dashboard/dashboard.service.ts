@@ -71,7 +71,7 @@ export class DashboardService implements Resolve<any>
             this.deviceValForAged = [];
             this.deviceValForUnbilled = [];
             this._mainAPiServiceService.getSetData({ Dashboard: 'aged debtors' }, 'GetDashboard').subscribe(res => {
-                console.log(res);
+            
                 if (res.CODE == 200 && res.STATUS == "success") {
                     this.AgedDebtorsArray = res.DATA.DASHBOARDDATA;
                     res.DATA.DASHBOARDDATA.forEach(element => {
@@ -79,6 +79,7 @@ export class DashboardService implements Resolve<any>
                     });
                     AnalyticsDashboardDb.widgets.widget7.devices = this.deviceValForAged
                     this.AgedDebatorTotal = (res.DATA.DASHBOARDTOTALS.EXGST).toFixed(2);
+              
                     // AnalyticsDashboardDb.widgets.widget7.devices[0].name=this.AgedDebtorsArray[0].DATEDESC;
                     // AnalyticsDashboardDb.widgets.widget7.devices[1].name=this.AgedDebtorsArray[1].DATEDESC;
                     // AnalyticsDashboardDb.widgets.widget7.devices[2].name=this.AgedDebtorsArray[2].DATEDESC;
@@ -92,7 +93,7 @@ export class DashboardService implements Resolve<any>
 
             }, reject);
             this._mainAPiServiceService.getSetData({ Dashboard: 'unbilled WIP' }, 'GetDashboard').subscribe(res => {
-                console.log(res);
+    
                 this.itemVal = [];
                 this.AmountUnBilled = [];
                 if (res.CODE == 200 && res.STATUS == "success") {

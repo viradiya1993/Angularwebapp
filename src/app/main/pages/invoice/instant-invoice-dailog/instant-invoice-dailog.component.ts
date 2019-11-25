@@ -126,7 +126,7 @@ export class InstantInvoiceDailogComponent implements OnInit {
     return this.addInvoiceForm.controls;
   }
   calcTotalINGST() {
-    if (this.TotalExGst == undefined) {
+    if (this.TotalIncGst == undefined) {
       this.TotalExGst = 0.00;
       this.GstVal = 0.00;
     } else {

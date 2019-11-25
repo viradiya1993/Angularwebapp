@@ -99,12 +99,14 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
         this.WorkInProgressdata = new MatTableDataSource(res.DATA.WORKITEMS);
         this.WorkInProgressdata.paginator = this.paginator;
         this.WorkInProgressdata.sort = this.sort;
+        this.sortingCLM();
       }
       this.isLoadingResults = false;
     }, err => {
       this.isLoadingResults = false;
       this.toastr.error(err);
     });
+   
     this.pageSize = localStorage.getItem('lastPageSize');
   }
   refreshWorkInprogress() {
@@ -180,6 +182,22 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
     this.behaviorService.setworkInProgressData(row);
     this.behaviorService.SpendMoneyData(row);
   }
+  sortingCLM() {
+    this.WorkInProgressdata.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'ITEMDATE': {
+          let tempDate = item.ITEMDATE.split("/");
+          let Sd = new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]);
+          let newDate = new Date(Sd);
+          return newDate;
+        }
+        default: {
+          return item[property];
+        }
+      }
+    }
+  }
+
 
 }
 

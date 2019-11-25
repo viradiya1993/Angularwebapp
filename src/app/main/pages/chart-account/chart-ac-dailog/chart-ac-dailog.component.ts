@@ -35,6 +35,7 @@ export class ChartAcDailogComponent implements OnInit {
     private _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
+    console.log(data);
     this.action = data.action;
     this.behaviorService.ChartAccountData$.subscribe(result => {
       if (result) {

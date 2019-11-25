@@ -15,46 +15,25 @@ export class AnalyticsDashboardDb
     //     }
     public static widgets = {
         widget1: {
-            chartType: 'line',
-            datasets : {
-                '2016': [
-                    {
-                        label: 'Sales',
-                        data : [1.9, 3, 3.4, 2.2, 2.9, 3.9, 2.5, 3.8, 4.1, 3.8, 3.2, 2.9],
-                        fill : 'start'
-
-                    }
-                ],
-                '2017': [
-                    {
-                        label: 'Sales',
-                        data : [2.2, 2.9, 3.9, 2.5, 3.8, 3.2, 2.9, 1.9, 3, 3.4, 4.1, 3.8],
-                        fill : 'start'
-
-                    }
-                ],
-                '2018': [
-                    {
-                        label: 'Sales',
-                        data : [3.9, 2.5, 3.8, 4.1, 1.9, 3, 3.8, 3.2, 2.9, 3.4, 2.2, 2.9],
-                        fill : 'start'
-
-                    }
-                ]
-
+            conversion: {
+                value   : 492,
+                ofTarget: 13
             },
-            labels   : ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
-            colors   : [
+            chartType : 'bar',
+            datasets  : [
                 {
-                    borderColor              : '#42a5f5',
-                    backgroundColor          : '#42a5f5',
-                    pointBackgroundColor     : '#1e88e5',
-                    pointHoverBackgroundColor: '#1e88e5',
-                    pointBorderColor         : '#ffffff',
-                    pointHoverBorderColor    : '#ffffff'
+                    label: 'Conversion',
+                    data : [221, 428, 492, 471, 413, 344, 294]
                 }
             ],
-            options  : {
+            labels    : ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            colors    : [
+                {
+                    borderColor    : '#42a5f5',
+                    backgroundColor: '#42a5f5'
+                }
+            ],
+            options   : {
                 spanGaps           : false,
                 legend             : {
                     display: false
@@ -62,127 +41,31 @@ export class AnalyticsDashboardDb
                 maintainAspectRatio: false,
                 layout             : {
                     padding: {
-                        top  : 32,
-                        left : 32,
-                        right: 32
-                    }
-                },
-                elements           : {
-                    point: {
-                        radius          : 4,
-                        borderWidth     : 2,
-                        hoverRadius     : 4,
-                        hoverBorderWidth: 2
-                    },
-                    line : {
-                        tension: 0
+                        top   : 24,
+                        left  : 16,
+                        right : 16,
+                        bottom: 16
                     }
                 },
                 scales             : {
                     xAxes: [
                         {
-                            gridLines: {
-                                display       : false,
-                                drawBorder    : false,
-                                tickMarkLength: 18
-                            },
-                            ticks    : {
-                         
-                            }
+                            display: false
                         }
                     ],
                     yAxes: [
                         {
                             display: false,
                             ticks  : {
-                                min     : 1.5,
-                                max     : 5,
-                                stepSize: 0.5,
+                                min: 100,
+                                max: 500
                             }
                         }
                     ]
-                },
-                plugins            : {
-                    filler      : {
-                        propagate: false
-                    },
-                    xLabelsOnTop: {
-                        active: true
-                    }
                 }
             }
         },
-        // widget2: {
-        //     conversion: {
-        //         value   :'',
-        //         ofTarget: 13
-        //     },
-        //     chartType : 'bar',
-        //     datasets  : [
-        //         {
-        //             label: 'Unbilled WIP',
-        //             data : [221, 428, 492, 471, 413, 344, 294, 452, 532, 956, 625, 756],
-                   
-                        
-        //         },
-               
-        //     ],
-        //     labels    : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept ', 'Oct ', 'Nov', 'Dec'],
-        //     colors    : [
-        //         {
-        //             borderColor    : '#42a5f5',
-        //             backgroundColor: '#42a5f5'
-        //         }
-        //     ],
-        //     options   : {
-        //         spanGaps           : false,
-        //         legend             : {
-        //             display: false
-        //         },
-        //         maintainAspectRatio: false,
-        //         tooltips           : {
-        //             position : 'average',
-        //             mode     : 'index',
-        //             intersect: false
-        //         },
-        //         layout             : {
-        //             padding: {
-        //                 top   : 24,
-        //                 left  : 16,
-        //                 right : 16,
-        //                 bottom: 16
-        //             }
-        //         },
-        //         scales             : {
-        //             xAxes: [
-        //                 {
-
-        //                     display: true
-        //                 }
-        //             ],
-        //             yAxes: [
-        //                 {
-        //                     display: true,
-        //                     ticks  : {
-        //                         min: 0,
-        //                         max: 1000,
-        //                         stepSize: 500,
-        //                           // Include a dollar sign in the ticks
-        //                 callback: function(value, index, values) {
-        //                 return '$' + value;
-        //             }
-        //                     }
-        //                 }
-        //             ]
-        //         },
-        //         //   title: {
-        //         //     display: true,
-        //         //     position:'bottom',
-        //         //     text: 'Custom Chart Title'
-        //         // },
-        //     }
-        // },
-        widget2   : {
+         widget2   : {
                 scheme : {
                     domain: ['#9205ff', '#b14dff','#d399ff','#6b00bd',]
                 },
@@ -203,74 +86,7 @@ export class AnalyticsDashboardDb
                     //     change: ''
                     // }
                 ]
-            //     chartType: 'doughnut',
-            //     datasets  : [
-            //         {   label: 'Unbilled WIP',
-            //             data: [55,45],
-                            
-            //         },
-            //         {   label: 'Unbilled WIP',
-            //         data: [55,45],
-                        
-            //     },
-            //     {   label: 'Unbilled WIP',
-            //     data: [55,45],
-                    
-            // },
-                   
-            //     ],
-            //     labels: ['Data1','Data2','Data3'],
-            //      colors    : [
-            //         {
-            //             backgroundColor: '#4867d2'
-            //         },
-            //         {
-                      
-            //             backgroundColor: '#5c84f1'
-            //         },
-            //         {
-                      
-            //             backgroundColor: '#89a9f4'
-            //         },
-            //     ],
-            //     options: {
-            //       legend: {
-            //         display: true
-            //       },
-            //       tooltips:{
-            //         enabled:true
-            //       }
-            //     }
-               
- 
-
-
-            // title    : '',
-            // mainChart: [
-            //     // {
-            //     //     'name' : 'Wireframing',
-            //     //     'value': 12
-            //     // },
-            //     // {
-            //     //     'name' : 'Design',
-            //     //     'value': 17
-            //     // },
-            //     // {
-            //     //     'name' : 'Coding',
-            //     //     'value': 28
-            //     // },
-            //     // {
-            //     //     'name' : 'Marketing',
-            //     //     'value': 25
-            //     // },
-            //     // {
-            //     //     'name' : 'Extra',
-            //     //     'value': 15
-            //     // }
-            // ],
-            // //  scheme       : {
-            // //     domain: ['#f44336', '#9c27b0', '#03a9f4', '#e91e63', '#ffc107']
-            // // },
+       
         },
         widget3: {
             impressions: {

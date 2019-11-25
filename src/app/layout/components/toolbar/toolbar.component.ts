@@ -357,24 +357,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     // DashboardAPI start //
 
     DashboardAPI() {
-
         this._mainAPiServiceService.getSetData({ Dashboard: 'total unbilled wip' }, 'GetDashboard').subscribe(res => {
-
             if (res.CODE == 200 && res.STATUS == "success") {
-                this.TotalUnbilledWIP = res.DATA.DASHBOARDDATA[0].EXGST;
+                this.TotalUnbilledWIP = res.DATA.DASHBOARDDATA[0].INCGST;
             }
-
         });
-
         this._mainAPiServiceService.getSetData({ Dashboard: 'total outstanding' }, 'GetDashboard').subscribe(res => {
-
             if (res.CODE == 200 && res.STATUS == "success") {
-                this.TotalOutstanding = res.DATA.DASHBOARDDATA[0].EXGST;
+                this.TotalOutstanding = res.DATA.DASHBOARDDATA[0].INCGST;
             }
-
         });
     }
-
     // DashboardAPI end  //
     /* ---------------------------------------------------------------------help Licence start--------------------------------------------------------------------------  */
     openLicence(Data) {

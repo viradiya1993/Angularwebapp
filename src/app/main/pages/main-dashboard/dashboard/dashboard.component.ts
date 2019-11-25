@@ -84,24 +84,16 @@ export class DashboardComponent implements OnInit {
     }
     chartPl() { }
 
-    selectStatus(val){
-        
+    selectStatus(val) {
+
     }
     ngOnInit() {
-
-
-
-
-
-
         // Get the widgets from the service
         this.widgets = this._analyticsDashboardService.widgets;
         this.AgedDebatorTotal = this._analyticsDashboardService.AgedDebatorTotal;
         this.UnbilledTotal = this._analyticsDashboardService.UnbilledTotal;
         // this.widgets.widget2 = {
-
         //     };
-
     }
     /**
      * Register a custom plugin
@@ -118,7 +110,7 @@ export class DashboardComponent implements OnInit {
                     return;
                 }
 
-                // To only draw at the end of animation, check for easing === 1
+                   // To only draw at the end of animation, check for easing === 1
                 const ctx = chart.ctx;
 
                 chart.data.datasets.forEach(function (dataset, i): any {
@@ -135,7 +127,6 @@ export class DashboardComponent implements OnInit {
                             ctx.font = (<any>window).Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
 
                             // Just naively convert to string for now
-                            console.log(dataset);
                             const dataString = dataset.data[index].toString() + 'k';
 
                             // Make sure alignment settings are correct
@@ -145,9 +136,7 @@ export class DashboardComponent implements OnInit {
                             const startY = 24;
                             const position = element.tooltipPosition();
                             ctx.fillText(dataString, position.x, startY);
-
                             ctx.save();
-
                             ctx.beginPath();
                             ctx.setLineDash([5, 3]);
                             ctx.moveTo(position.x, startY + padding);

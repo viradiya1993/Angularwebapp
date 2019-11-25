@@ -24,7 +24,7 @@
         <div fxLayout="row" fxLayoutAlign="start center" class="matter-serach-div sticky_search_div">
             <form [formGroup]="TimeEnrtyForm">
                 <mat-form-field class="example" appearance="outline" *ngIf="isShowDrop">
-                    <mat-label>DLP</mat-label>
+                    <mat-label>Fee Earner</mat-label>
                     <mat-select (selectionChange)="dlpChange($event.value)" formControlName="dlpdrop">
                         <mat-option value="all">All</mat-option>
                         <mat-option value="">None</mat-option>

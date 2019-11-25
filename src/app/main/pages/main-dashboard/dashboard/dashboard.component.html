@@ -84,17 +84,12 @@
 <div id="dashboard-analytics" class="page-layout blank">
     <div class="content">
         <div class="left mr-lg-32">
+            
             <div class="left mr-lg-32">
 
                 <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
-
-
-
                     <!-- <div class="widget" fxFlex="100" fxFlex.gt-sm="50">
-
                 <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
-
-                  
                     <div class="h-96 w-100-p">
                          <ngx-charts-pie-chart
                                 *fuseIfOnDom
@@ -103,11 +98,8 @@
                                 [doughnut]="true">
                             </ngx-charts-pie-chart>
                     </div>
-
                 </div>
-
             </div> -->
-
                     <div fxFlex="100" fxFlex.gt-sm="37" class="widget ">
                         <div class="pb-24 font-size-18 font-weight-300">
                         </div>
@@ -128,11 +120,8 @@
                                     <div class="h4 font-weight-300 py-8">$<b>{{device.value}}</b></div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
-
                     <div fxFlex="100" fxFlex.gt-sm="37" class="widget ">
                         <div class="pb-24 font-size-18 font-weight-300">
                         </div>
@@ -140,16 +129,12 @@
                             <div class="p-16">
                                 <div class="h1 font-weight-300">Unbilled WIP</div>
                             </div>
-
-
-
                             <!-- <h3>Total:<span><strong><h3 class="total_Val"> {{UnbilledTotal}}</h3> </strong></span></h3> -->
                             <div class="h-200">
                                 <h3 class="total_Val">$<span><strong> {{UnbilledTotal}} </strong></span></h3>
                                 <ngx-charts-pie-chart *fuseIfOnDom [scheme]="widgets.widget2.scheme"
                                     [results]="widgets.widget2.devices" [doughnut]="true">
                                 </ngx-charts-pie-chart>
-
                             </div>
                             <div class="p-16" fxLayout="row" fxLayoutAlign="center center">
                                 <div class="px-16" fxLayout="column" fxLayoutAlign="start center"
@@ -184,16 +169,189 @@
                                 (select)="widget2.onSelect($event)">
                             </ngx-charts-pie-chart>
                         </div>
-                        <div class="p-16" fxLayout="row" fxLayoutAlign="center center">
-                            
+                        <div class="p-16" fxLayout="row" fxLayoutAlign="center center">  
                         </div>
-                      
                     </div>
                 </div> -->
                 </div>
 
             </div>
 
+ <!-- 3 extra chart start  -->
+ <div fxLayout="column" fxLayoutAlign="start"
+                 fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
+
+                <!-- Widget 2 -->
+                <div class="widget" fxFlex="100" fxFlex.gt-sm="33">
+
+                    <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
+
+                        <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
+
+                            <div class="pr-16">
+                                <div class="h3 secondary-text">Conversion</div>
+                                <div class="font-size-54 font-weight-300 line-height-1 mt-8">
+                                    {{widgets.widget1.conversion.value}}
+                                </div>
+                            </div>
+
+                            <div class="py-4 font-size-16" fxLayout="row" fxLayoutAlign="start center">
+                                <div fxFlex="row" fxLayoutAlign="start center" class="green-fg"
+                                     *ngIf="widgets.widget1.conversion.ofTarget > 0">
+                                    <mat-icon class="green-fg mr-4">trending_up</mat-icon>
+                                    <span>{{widgets.widget1.conversion.ofTarget}}%</span>
+                                </div>
+                                <div fxFlex="row" fxLayoutAlign="start center" class="red-fg"
+                                     *ngIf="widgets.widget1.conversion.ofTarget < 0">
+                                    <mat-icon class="red-fg mr-4">trending_down</mat-icon>
+                                    <span>{{widgets.widget1.conversion.ofTarget}}%</span>
+                                </div>
+                                <div class="ml-4 text-nowrap">of target</div>
+                            </div>
+
+                        </div>
+
+                        <div class="h-96 w-100-p">
+                            <canvas baseChart
+                                    [datasets]="widgets.widget1.datasets"
+                                    [labels]="widgets.widget1.labels"
+                                    [colors]="widgets.widget1.colors"
+                                    [options]="widgets.widget1.options"
+                                    [chartType]="widgets.widget1.chartType">
+                            </canvas>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- / Widget 2 -->
+
+                <!-- Widget 3 -->
+                <div class="widget" fxFlex="100" fxFlex.gt-sm="33">
+
+                        <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
+    
+                            <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
+    
+                                <div class="pr-16">
+                                    <div class="h3 secondary-text">Conversion</div>
+                                    <div class="font-size-54 font-weight-300 line-height-1 mt-8">
+                                        {{widgets.widget1.conversion.value}}
+                                    </div>
+                                </div>
+    
+                                <div class="py-4 font-size-16" fxLayout="row" fxLayoutAlign="start center">
+                                    <div fxFlex="row" fxLayoutAlign="start center" class="green-fg"
+                                         *ngIf="widgets.widget1.conversion.ofTarget > 0">
+                                        <mat-icon class="green-fg mr-4">trending_up</mat-icon>
+                                        <span>{{widgets.widget1.conversion.ofTarget}}%</span>
+                                    </div>
+                                    <div fxFlex="row" fxLayoutAlign="start center" class="red-fg"
+                                         *ngIf="widgets.widget1.conversion.ofTarget < 0">
+                                        <mat-icon class="red-fg mr-4">trending_down</mat-icon>
+                                        <span>{{widgets.widget1.conversion.ofTarget}}%</span>
+                                    </div>
+                                    <div class="ml-4 text-nowrap">of target</div>
+                                </div>
+    
+                            </div>
+    
+                            <div class="h-96 w-100-p">
+                                <canvas baseChart
+                                        [datasets]="widgets.widget1.datasets"
+                                        [labels]="widgets.widget1.labels"
+                                        [colors]="widgets.widget1.colors"
+                                        [options]="widgets.widget1.options"
+                                        [chartType]="widgets.widget1.chartType">
+                                </canvas>
+                            </div>
+    
+                        </div>
+    
+                    </div>
+                <!-- / Widget 3 -->
+
+                <!-- Widget 4 -->
+                <div class="widget" fxFlex="100" fxFlex.gt-sm="33">
+
+                        <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
+    
+                            <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
+    
+                                <div class="pr-16">
+                                    <div class="h3 secondary-text">Conversion</div>
+                                    <div class="font-size-54 font-weight-300 line-height-1 mt-8">
+                                        {{widgets.widget1.conversion.value}}
+                                    </div>
+                                </div>
+    
+                                <div class="py-4 font-size-16" fxLayout="row" fxLayoutAlign="start center">
+                                    <div fxFlex="row" fxLayoutAlign="start center" class="green-fg"
+                                         *ngIf="widgets.widget1.conversion.ofTarget > 0">
+                                        <mat-icon class="green-fg mr-4">trending_up</mat-icon>
+                                        <span>{{widgets.widget1.conversion.ofTarget}}%</span>
+                                    </div>
+                                    <div fxFlex="row" fxLayoutAlign="start center" class="red-fg"
+                                         *ngIf="widgets.widget1.conversion.ofTarget < 0">
+                                        <mat-icon class="red-fg mr-4">trending_down</mat-icon>
+                                        <span>{{widgets.widget1.conversion.ofTarget}}%</span>
+                                    </div>
+                                    <div class="ml-4 text-nowrap">of target</div>
+                                </div>
+    
+                            </div>
+    
+                            <div class="h-96 w-100-p">
+                                <canvas baseChart
+                                        [datasets]="widgets.widget1.datasets"
+                                        [labels]="widgets.widget1.labels"
+                                        [colors]="widgets.widget1.colors"
+                                        [options]="widgets.widget1.options"
+                                        [chartType]="widgets.widget1.chartType">
+                                </canvas>
+                            </div>
+    
+                        </div>
+    
+                    </div>
+                <!-- / Widget 4 -->
+
+            </div>
+<!-- 3 extra chart end  -->
+
+ <!-- widght5 2 mix chart start  -->
+ <div class="fuse-card auto-width">
+
+        <div class="position-relative p-24"
+             fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="column" fxLayoutAlign="start start">
+                <span class="h2">Visitors & Page views</span>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                     (click)="widget5SelectedDay = 'yesterday'"
+                     [ngClass]="{'accent': widget5SelectedDay === 'yesterday'}">
+                    Yesterday
+                </div>
+                <div class="py-8 px-12 border-radius-2 line-height-1 mr-8 cursor-pointer"
+                     (click)="widget5SelectedDay = 'today'"
+                     [ngClass]="{'accent': widget5SelectedDay === 'today'}">
+                    Today
+                </div>
+            </div>
         </div>
 
+        <div class="position-relative h-368 pb-16">
+            <canvas baseChart
+                    [datasets]="widgets.widget5.datasets[widget5SelectedDay]"
+                    [labels]="widgets.widget5.labels"
+                    [colors]="widgets.widget5.colors"
+                    [options]="widgets.widget5.options"
+                    [chartType]="widgets.widget5.chartType">
+            </canvas>
+        </div>
+
+    </div>
+ <!-- width5 2 mix chart end  -->
+        </div>
     </div>

@@ -46,8 +46,8 @@
                         <mat-label *ngIf="classtype=='Description'">Asset a/c</mat-label>
                         <input matInput formControlName="Bankac">
                         <mat-icon matSuffix>
-                            <button *ngIf="classtype !=='Description'" id="bank" class="matternews menu-disabled" [disabled]="Bankhide === true" class="matternews" (click)="BankingDialogOpen('BANK ACCOUNT')"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
-                            <button *ngIf="classtype =='Description'" id="bank" class="matternews menu-disabled" [disabled]="Bankhide === true" class="matternews" (click)="BankingDialogOpen('ASSET')"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
+                            <button *ngIf="classtype !=='Description'" id="bank" class="matternews menu-disabled" [disabled]="Bankhide === true" class="matternews" (click)="BankingDialogOpen('BANK ACCOUNT')"><img class="ipad-icon" src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
+                            <button *ngIf="classtype =='Description'" id="bank" class="matternews menu-disabled" [disabled]="Bankhide === true" class="matternews" (click)="BankingDialogOpen('ASSET')"><img class="ipad-icon" src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                         </mat-icon>
                     </mat-form-field>
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.NOTE,'has-warning':errorWarningData.Warning?.NOTE}" appearance="outline" fxFlex="60" class="pr-4">
@@ -94,7 +94,7 @@
                        
                     </mat-form-field> -->
                     <mat-icon matSuffix>
-                        <button class="matternews1" (click)='ContactMatter()'><img  class="iconset" src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                        <button class="matternews1" (click)='ContactMatter()'><img  class="iconset ipad-icon" src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                         </button>
                     </mat-icon>
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.SOURCEREFERENCE,'has-warning':errorWarningData.Warning?.SOURCEREFERENCE}" appearance="outline" fxFlex="27" class="pr-4">
@@ -182,7 +182,7 @@
                         <mat-label>Matter</mat-label>
                         <input matInput readonly formControlName="Matter">
                         <mat-icon matSuffix>
-                            <button id="mattersnew" class="matternews menu-disabled" [disabled]="hide" (click)='selectMatter()'><img  src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                            <button id="mattersnew" class="matternews menu-disabled" [disabled]="hide" (click)='selectMatter()'><img class="ipad-icon"  src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                         </button>
                         </mat-icon>
                     </mat-form-field>
@@ -221,7 +221,7 @@
                         <!-- <mat-label *ngIf="classtype=='personal'">Expense a/c </mat-label> -->
                         <input matInput formControlName="Expenseac">
                         <mat-icon matSuffix>
-                            <button id="expac" class="matternews" (click)="BankingDialogOpen('')" [disabled]="expac"><img src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
+                            <button id="expac" class="matternews" (click)="BankingDialogOpen('')" [disabled]="expac"><img class="ipad-icon" src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                         </mat-icon>
                     </mat-form-field>
 

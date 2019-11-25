@@ -114,24 +114,24 @@ addMonths(date, months) {
 
                 }
             }, reject);
-            this._mainAPiServiceService.getSetData({ Dashboard: 'invoices',StartDate:MonthStartDate,EndDate:MonthEndDate }, 'GetDashboard').subscribe(res => {
-                console.log(res);
-                if (res.CODE == 200 && res.STATUS == "success") {
+            // this._mainAPiServiceService.getSetData({ Dashboard: 'invoices',StartDate:MonthStartDate,EndDate:MonthEndDate }, 'GetDashboard').subscribe(res => {
+            //     console.log(res);
+            //     if (res.CODE == 200 && res.STATUS == "success") {
 
-                }
-            }, reject);
-            this._mainAPiServiceService.getSetData({ Dashboard: 'expenses',StartDate:MonthStartDate,EndDate: MonthEndDate }, 'GetDashboard').subscribe(res => {
-                console.log(res);
-                if (res.CODE == 200 && res.STATUS == "success") {
+            //     }
+            // }, reject);
+            // this._mainAPiServiceService.getSetData({ Dashboard: 'expenses',StartDate:MonthStartDate,EndDate: MonthEndDate }, 'GetDashboard').subscribe(res => {
+            //     console.log(res);
+            //     if (res.CODE == 200 && res.STATUS == "success") {
 
-                }
-            }, reject);
-            this._mainAPiServiceService.getSetData({ Dashboard: 'receipts',StartDate:MonthStartDate,EndDate: MonthEndDate }, 'GetDashboard').subscribe(res => {
-                console.log(res);
-                if (res.CODE == 200 && res.STATUS == "success") {
+            //     }
+            // }, reject);
+            // this._mainAPiServiceService.getSetData({ Dashboard: 'receipts',StartDate:MonthStartDate,EndDate: MonthEndDate }, 'GetDashboard').subscribe(res => {
+            //     console.log(res);
+            //     if (res.CODE == 200 && res.STATUS == "success") {
 
-                }
-            }, reject);
+            //     }
+            // }, reject);
 
 
         });

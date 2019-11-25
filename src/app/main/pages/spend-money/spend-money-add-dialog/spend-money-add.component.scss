@@ -213,3 +213,10 @@ margin-top: -13px
 input#mat-input-48 {
     // /* background: orange; */
 }
+@media screen and (max-width: 1200px) {
+    .ipad-icon {
+    position: absolute;
+    top: 3px;
+    right: 0;
+    }
+}

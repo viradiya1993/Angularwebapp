@@ -65,6 +65,108 @@ export class AnalyticsDashboardDb
                 }
             }
         },
+        widget12: {
+            conversion: {
+                value   : 492,
+                ofTarget: 13
+            },
+            chartType : 'bar',
+            datasets  : [
+                {
+                    label: 'Conversion',
+                    data : [221, 428, 492, 471, 413, 344, 294]
+                }
+            ],
+            labels    : ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            colors    : [
+                {
+                    borderColor    : '#42a5f5',
+                    backgroundColor: '#43a047'
+                }
+            ],
+            options   : {
+                spanGaps           : false,
+                legend             : {
+                    display: false
+                },
+                maintainAspectRatio: false,
+                layout             : {
+                    padding: {
+                        top   : 24,
+                        left  : 16,
+                        right : 16,
+                        bottom: 16
+                    }
+                },
+                scales             : {
+                    xAxes: [
+                        {
+                            display: false
+                        }
+                    ],
+                    yAxes: [
+                        {
+                            display: false,
+                            ticks  : {
+                                min: 100,
+                                max: 500
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        widget11: {
+            conversion: {
+                value   : 492,
+                ofTarget: 13
+            },
+            chartType : 'bar',
+            datasets  : [
+                {
+                    label: 'Conversion',
+                    data : [221, 428, 492, 471, 413, 344, 294]
+                }
+            ],
+            labels    : ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            colors    : [
+                {
+                    borderColor    : '#42a5f5',
+                    backgroundColor: '#ff0000'
+                }
+            ],
+            options   : {
+                spanGaps           : false,
+                legend             : {
+                    display: false
+                },
+                maintainAspectRatio: false,
+                layout             : {
+                    padding: {
+                        top   : 24,
+                        left  : 16,
+                        right : 16,
+                        bottom: 16
+                    }
+                },
+                scales             : {
+                    xAxes: [
+                        {
+                            display: false
+                        }
+                    ],
+                    yAxes: [
+                        {
+                            display: false,
+                            ticks  : {
+                                min: 100,
+                                max: 500
+                            }
+                        }
+                    ]
+                }
+            }
+        },
          widget2   : {
                 scheme : {
                     domain: ['#9205ff', '#b14dff','#d399ff','#6b00bd',]
@@ -206,25 +308,25 @@ export class AnalyticsDashboardDb
             datasets : {
                 'yesterday': [
                     {
-                        label: 'Visitors',
+                        label: 'Invoices',
                         data : [190, 300, 340, 220, 290, 390, 250, 380, 410, 380, 320, 290],
                         fill : 'start'
 
                     },
                     {
-                        label: 'Page views',
+                        label: 'Expenses',
                         data : [2200, 2900, 3900, 2500, 3800, 3200, 2900, 1900, 3000, 3400, 4100, 3800],
                         fill : 'start'
                     }
                 ],
                 'today'    : [
                     {
-                        label: 'Visitors',
+                        label: 'Invoices',
                         data : [410, 380, 320, 290, 190, 390, 250, 380, 300, 340, 220, 290],
                         fill : 'start'
                     },
                     {
-                        label: 'Page Views',
+                        label: 'Expenses',
                         data : [3000, 3400, 4100, 3800, 2200, 3200, 2900, 1900, 2900, 3900, 2500, 3800],
                         fill : 'start'
 

@@ -335,7 +335,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 const wph = $(window).width();
                 this.detailwidth = wph - 65 + 'px';
                 const nvh = 56;
-                $('.mat-tab-header').css({ 'width': wph - nvh - 160 + 'px' });
+                $('.mat-tab-header').css({ 'width': wph - nvh - 226 + 'px' });
             }
         });
     }
@@ -351,7 +351,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             const wph = $(window).width();
             this.detailwidth = wph - 65 + 'px';
             const nvh = 56;
-            $('.mat-tab-header').css({ 'width': wph - nvh - 160 + 'px' });
+            $('.mat-tab-header').css({ 'width': wph - nvh - 226 + 'px' });
         }
     }
     // DashboardAPI start //

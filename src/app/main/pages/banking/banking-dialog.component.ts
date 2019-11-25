@@ -78,18 +78,21 @@ export class BankingDialogComponent implements OnInit {
       }
     }
    });
-   this.behaviorService.TrustDuplicateModuleHandling$.subscribe(result => {
-    if (result != null) {
-        this.accountTypeData=result;
-    }
-    if(this.accountTypeData.ClickType =='WithoutTrust'){
-      this.title="Select Account";
-      this.loadData({AccountClass:_data.AccountType,UseTrust:this.accountTypeData.UseTrust});
-    }else{
-      this.title="Select Trust Account";
-      this.loadData({AccountClass:_data.AccountType,UseTrust:this.accountTypeData.UseTrust});
-    }
-});
+
+   this.title="Select Account";
+   this.loadData({AccountClass:_data.AccountType});
+//    this.behaviorService.TrustDuplicateModuleHandling$.subscribe(result => {
+//     if (result != null) {
+//         this.accountTypeData=result;
+//     }
+//     if(this.accountTypeData.ClickType =='WithoutTrust'){
+//       this.title="Select Account";
+//       this.loadData({AccountClass:_data.AccountType,UseTrust:this.accountTypeData.UseTrust});
+//     }else{
+//       this.title="Select Trust Account";
+//       this.loadData({AccountClass:_data.AccountType,UseTrust:this.accountTypeData.UseTrust});
+//     }
+// });
   }
   ngOnInit() {
     this.treeControl.expandAll();
@@ -177,7 +180,7 @@ export class BankingDialogComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         // this.loadData(this._data.AccountType);
-        this.loadData({AccountClass:this._data.AccountType,UseTrust:this.accountTypeData.UseTrust});
+        this.loadData({AccountClass:this._data.AccountType});
       }
     });
   }

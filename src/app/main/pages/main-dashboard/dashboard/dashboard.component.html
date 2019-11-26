@@ -92,18 +92,7 @@
             <div class="left mr-lg-32">
 
                 <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
-                    <!-- <div class="widget" fxFlex="100" fxFlex.gt-sm="50">
-                <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
-                    <div class="h-96 w-100-p">
-                         <ngx-charts-pie-chart
-                                *fuseIfOnDom
-                                [scheme]="widgets.widget7.scheme"
-                                [results]="widgets.widget7.devices"
-                                [doughnut]="true">
-                            </ngx-charts-pie-chart>
-                    </div>
-                </div>
-            </div> -->
+              
                     <div *ngIf="widget7 !='empty'" fxFlex="100" fxFlex.gt-sm="50" class="widget ">
                         <div class="pb-24 font-size-18 font-weight-300">
                         </div>
@@ -182,7 +171,7 @@
                             <div class="pr-16">
                                 <div class="h3 secondary-text">Total Invoiced</div>
                                 <div class="font-size-20 font-weight-300 line-height-1 mt-8">
-                                    {{widget11.conversion.value | number}}
+                                   $ {{widget11.conversion.value | number}}
                                 </div>
                             </div>
                         </div>
@@ -198,7 +187,7 @@
                             <div class="pr-16">
                                 <div class="h3 secondary-text">Total Expenses</div>
                                 <div class="font-size-20 font-weight-300 line-height-1 mt-8">
-                                    {{widget12.conversion.value | number}}
+                                   $ {{widget12.conversion.value | number}}
                                 </div>
                             </div>
                         </div>
@@ -214,7 +203,7 @@
                             <div class="pr-16">
                                 <div class="h3 secondary-text">Total Receipts</div>
                                 <div class="font-size-20 font-weight-300 line-height-1 mt-8">
-                                    {{widget13.conversion.value | number}}
+                                   $ {{widget13.conversion.value | number}}
                                 </div>
                             </div>
                         </div>

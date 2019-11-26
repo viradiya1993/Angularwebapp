@@ -85,6 +85,7 @@ export class DashboardComponent implements OnInit {
         return date;
     }
     ngOnInit() {
+        this.isLoadingResults = true;
         this.widget11="empty";
         this.widget12="empty";
         this.widget13="empty";
@@ -140,6 +141,7 @@ export class DashboardComponent implements OnInit {
                     },
                     devices:this.deviceValForUnbilled
                 } 
+                this.isLoadingResults = false;
             }
         });
     }

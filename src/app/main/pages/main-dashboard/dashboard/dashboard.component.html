@@ -100,7 +100,7 @@
                     </div>
                 </div>
             </div> -->
-                    <div fxFlex="100" fxFlex.gt-sm="37" class="widget ">
+                    <div *ngIf="widget7 !='empty'" fxFlex="100" fxFlex.gt-sm="37" class="widget ">
                         <div class="pb-24 font-size-18 font-weight-300">
                         </div>
                         <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
@@ -108,21 +108,21 @@
                                 <div class="h1 font-weight-300">Aged Debtors (Unpaid Invoices)</div>
                             </div>
                             <div class="h-200">
-                                <h3 class="total_Val">$<span><strong> {{AgedDebatorTotal}} </strong></span></h3>
-                                <ngx-charts-pie-chart *fuseIfOnDom [scheme]="widgets.widget7.scheme"
-                                    [results]="widgets.widget7.devices" [doughnut]="true">
+                                <h3 class="total_Val">$<span><strong>{{AgedDebatorTotal}}</strong></span></h3>
+                                <ngx-charts-pie-chart *fuseIfOnDom [scheme]="widget7.scheme"
+                                    [results]="widget7.devices" [doughnut]="true">
                                 </ngx-charts-pie-chart>
                             </div>
                             <div class="p-16" fxLayout="row" fxLayoutAlign="center center">
                                 <div class="px-16" fxLayout="column" fxLayoutAlign="start center"
-                                    *ngFor="let device of widgets.widget7.devices">
+                                    *ngFor="let device of widget7.devices">
                                     <div class="h4 secondary-text">{{device.name}}</div>
                                     <div class="h4 font-weight-300 py-8">$<b>{{device.value}}</b></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div fxFlex="100" fxFlex.gt-sm="37" class="widget ">
+                    <div *ngIf="widget2 !='empty'" fxFlex="100" fxFlex.gt-sm="37" class="widget ">
                         <div class="pb-24 font-size-18 font-weight-300">
                         </div>
                         <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
@@ -132,13 +132,13 @@
                             <!-- <h3>Total:<span><strong><h3 class="total_Val"> {{UnbilledTotal}}</h3> </strong></span></h3> -->
                             <div class="h-200">
                                 <h3 class="total_Val">$<span><strong> {{UnbilledTotal}} </strong></span></h3>
-                                <ngx-charts-pie-chart *fuseIfOnDom [scheme]="widgets.widget2.scheme"
-                                    [results]="widgets.widget2.devices" [doughnut]="true">
+                                <ngx-charts-pie-chart *fuseIfOnDom [scheme]="widget2.scheme"
+                                    [results]="widget2.devices" [doughnut]="true">
                                 </ngx-charts-pie-chart>
                             </div>
                             <div class="p-16" fxLayout="row" fxLayoutAlign="center center">
                                 <div class="px-16" fxLayout="column" fxLayoutAlign="start center"
-                                    *ngFor="let device of widgets.widget2.devices">
+                                    *ngFor="let device of widget2.devices">
                                     <div class="h4 secondary-text">{{device.name}}</div>
                                     <div class="h4 font-weight-300 py-8">$<b>{{device.value}}</b></div>
                                 </div>
@@ -177,6 +177,131 @@
 
             </div>
 
+ <!-- 3 extra chart start  -->
+ <div fxLayout="column" fxLayoutAlign="start"
+                 fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
 
+                <!-- Widget 2 -->
+                <div  *ngIf="widget11 !='empty'" class="widget" fxFlex="100" fxFlex.gt-sm="33">
+
+                    <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
+
+                        <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
+
+                            <div class="pr-16">
+                                <div class="h3 secondary-text">Total Invoiced</div>
+                                <div class="font-size-54 font-weight-300 line-height-1 mt-8">
+                                    {{widget11.conversion.value}}
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="h-96 w-100-p">
+                            <canvas baseChart
+                                    [datasets]="widget11.datasets"
+                                    [labels]="widget11.labels"
+                                    [colors]="widget11.colors"
+                                    [options]="widget11.options"
+                                    [chartType]="widget11.chartType">
+                            </canvas>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- / Widget 2 -->
+
+                <!-- Widget 3 -->
+                <div *ngIf="widget12 !='empty'" class="widget" fxFlex="100" fxFlex.gt-sm="33">
+
+                        <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
+    
+                            <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
+    
+                                <div class="pr-16">
+                                    <div class="h3 secondary-text">Total Expenses</div>
+                                    <div class="font-size-54 font-weight-300 line-height-1 mt-8">
+                                        {{widget12.conversion.value}}
+                                    </div>
+                                </div>
+    
+                               
+                            </div>
+    
+                            <div class="h-96 w-100-p">
+                                <canvas baseChart
+                                        [datasets]="widget12.datasets"
+                                        [labels]="widget12.labels"
+                                        [colors]="widget12.colors"
+                                        [options]="widget12.options"
+                                        [chartType]="widget12.chartType">
+                                </canvas>
+                            </div>
+    
+                        </div>
+    
+                    </div>
+                <!-- / Widget 3 -->
+
+                <!-- Widget 4 -->
+                <div *ngIf="widget13 !='empty'" class="widget" fxFlex="100" fxFlex.gt-sm="33">
+
+                        <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
+    
+                            <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
+    
+                                <div class="pr-16">
+                                    <div class="h3 secondary-text">Total Receipts</div>
+                                    <div class="font-size-54 font-weight-300 line-height-1 mt-8">
+                                        {{widget13.conversion.value}}
+                                    </div>
+                                </div>
+    
+    
+                            </div>
+    
+                            <div class="h-96 w-100-p">
+                                <canvas baseChart
+                                        [datasets]="widget13.datasets"
+                                        [labels]="widget13.labels"
+                                        [colors]="widget13.colors"
+                                        [options]="widget13.options"
+                                        [chartType]="widget13.chartType">
+                                </canvas>
+                            </div>
+    
+                        </div>
+    
+                    </div>
+                <!-- / Widget 4 -->
+
+            </div>
+<!-- 3 extra chart end  -->
+
+ <!-- widght5 2 mix chart start  -->
+ <div *ngIf="widget5 !='empty'" class="fuse-card auto-width">
+
+        <div class="position-relative p-24"
+             fxLayout="row" fxLayoutAlign="space-between center">
+            <div fxLayout="column" fxLayoutAlign="start start">
+                <span class="h2">Invoices Vs Expenses</span>
+            </div>
+          
+        </div>
+
+        <div class="position-relative h-368 pb-16">
+            <canvas baseChart
+                    [datasets]="widget5.datasets[widget5SelectedDay]"
+                    [labels]="widget5.labels"
+                    [colors]="widget5.colors"
+                    [options]="widget5.options"
+                    [chartType]="widget5.chartType">
+            </canvas>
+        </div>
+
+    </div>
+ <!-- width5 2 mix chart end  -->
         </div>
     </div>

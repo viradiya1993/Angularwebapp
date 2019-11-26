@@ -1,53 +1,44 @@
 @import "src/@fuse/scss/fuse";
-
 #dashboard-analytics {
-
     .main-widget {
         display: flex;
         flex-direction: column;
     }
-
     .content {
         display: flex;
         flex: 1 1 auto;
         padding: 32px;
         min-width: 0;
-
-        @include media-breakpoint('lt-lg') {
+        @include media-breakpoint("lt-lg") {
             flex-direction: column;
         }
-
         .left {
             display: flex;
             flex-direction: column;
             flex: 1 1 auto;
             min-width: 0;
-
             .widget {
                 // height: 500px;
                 flex: 1 1 auto;
                 min-width: 0;
             }
         }
-
         .right {
             display: flex;
             flex: 0 0 auto;
             width: 320px;
             min-width: 320px;
             max-width: 320px;
-
-            @include media-breakpoint('lt-lg') {
+            @include media-breakpoint("lt-lg") {
                 flex: 1 0 100%;
                 margin-top: 32px;
                 width: 100%;
                 min-width: 0;
                 max-width: none;
             }
-
             .fuse-card {
                 height: 500px !important;
-                @include media-breakpoint('lt-lg') {
+                @include media-breakpoint("lt-lg") {
                     width: 100%;
                     min-width: 0;
                     max-width: none;
@@ -55,22 +46,23 @@
             }
         }
     }
-
 }
+
 .dot {
     height: 25px;
     width: 25px;
     background-color: #bbb;
     border-radius: 50%;
     display: inline-block;
-  }
-  .unbilToCl{
-      color: red;
-  }
+}
+
+.unbilToCl {
+    color: red;
+}
+
 //   .TolUnbil{
 //       margin-left: 90px;
 //   }
-
 .UnBill_cus_css {
     float: right;
     margin-right: 20px;
@@ -86,10 +78,12 @@
     z-index: 9999;
     left: 0;
 }
-.check_top{
+
+.check_top {
     margin-top: 12px !important;
 }
-.form_dash{
+
+.form_dash {
     margin-top: 12px;
     margin-left: 20px;
 }
@@ -105,7 +99,8 @@ canvas {
     width: 533px;
     height: 266px;
 }
-.total_Val{
+
+.total_Val {
     color: red;
     position: absolute;
     left: 50%;
@@ -113,21 +108,21 @@ canvas {
     top: 39%;
     font-size: 14px;
 }
+
 .h-200 {
     position: relative;
 }
+
 // .example-card {
 //     width: 400px;
 //     height: 600px;
 //     margin-left: 40px;
 //     margin-top: 30px;
 //   }
-  
 //   .example-header-image {
 //     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
 //     background-size: cover;
 //   }
-
 //   .canvas_class{
 //       max-width: 300px;
 //       height: 300px;
@@ -138,3 +133,6 @@ canvas {
 //   .Widg7_val{
 //     flex: 1 1;
 // }
+.secondary-text {
+    font-size: 12px !important;
+}

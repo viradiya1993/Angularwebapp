@@ -193,9 +193,7 @@ TotalInvoiceData(type){
                             {
                             display:true ,
                             ticks:{
-                            max:1000,
                             min:0,
-                            stepSize: 500,
                             callback: function(value, index, values) {
                                 return '$' + value; 
                             }
@@ -261,9 +259,7 @@ TotalExpenseData(type){
                             {
                             display:true ,
                             ticks:{
-                            max:1000,
                             min:0,
-                            stepSize: 500,
                             callback: function(value, index, values) {
                                 return '$' + value; 
                             }
@@ -327,9 +323,7 @@ TotalReceiptData(type){
                             {
                             display:true ,
                             ticks:{
-                            max:1000,
                             min:0,
-                            stepSize: 500,
                             callback: function(value, index, values) {
                                 return '$' + value; 
                             }
@@ -428,9 +422,9 @@ ComparisionChart(){
                             tickMarkLength: 16
                         },
                         ticks    : {
-                            max:10000,
-                            min:0,
-                            stepSize: 500,
+                            // max:10000,
+                             min:0,
+                            // stepSize: 500,
                             callback: function(value, index, values) {
                                 return '$' + value;
                             }

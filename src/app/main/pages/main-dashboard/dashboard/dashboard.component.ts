@@ -169,7 +169,7 @@ TotalInvoiceData(type){
                 colors:[{backgroundColor: "#42a5f5",
                 borderColor: "#42a5f5"}],
                 conversion:{
-                    value:res.DATA.DASHBOARDTOTALS.INCGST
+                    value:(res.DATA.DASHBOARDTOTALS.INCGST).toFixed(2)
                 },
                 datasets:[
                     {data:this.InvoiceInGst,
@@ -187,18 +187,24 @@ TotalInvoiceData(type){
                     },
                     legend:{display:false},
                     maintainAspectRatio:false,
+                    scales:{
+                        xAxes:[{display:true}],
+                        yAxes:[
+                            {
+                            display:true ,
+                            ticks:{
+                            max:1000,
+                            min:0,
+                            stepSize: 500,
+                            callback: function(value, index, values) {
+                                return '$' + value; 
+                            }
+                        }},
+                        ]
+                    }
 
                 },
-                scales:{
-                    xAxes:[{display:true}],
-                    yAxes:[{display:true ,ticks:{
-                        max:100000000,
-                        min:0,
-                        stepSize:20000000
-                    }},
-                    ]
-                }
-            
+                
             }
           
         }
@@ -230,7 +236,7 @@ TotalExpenseData(type){
                 colors:[{backgroundColor: "#ff0000",
                 borderColor: "#42a5f5"}],
                 conversion:{
-                    value:res.DATA.DASHBOARDTOTALS.INCGST
+                    value:(res.DATA.DASHBOARDTOTALS.INCGST).toFixed(2)
                 },
                 datasets:[
                     {data:this.InvoiceInGstForExpense,
@@ -249,16 +255,24 @@ TotalExpenseData(type){
                     legend:{display:false},
                     maintainAspectRatio:false,
 
+                    scales:{
+                        xAxes:[{display:true}],
+                        yAxes:[
+                            {
+                            display:true ,
+                            ticks:{
+                            max:1000,
+                            min:0,
+                            stepSize: 500,
+                            callback: function(value, index, values) {
+                                return '$' + value; 
+                            }
+                        }},
+                        ]
+                    }
+
                 },
-                scales:{
-                    xAxes:[{display:true}],
-                    yAxes:[{display:true ,ticks:{
-                        max:100000000,
-                        min:0,
-                        stepSize:20000000
-                    }},
-                    ]
-                }
+
             
             }
            
@@ -289,7 +303,7 @@ TotalReceiptData(type){
                 colors:[{backgroundColor: "#43a047",
                 borderColor: "#42a5f5"}],
                 conversion:{
-                    value:res.DATA.DASHBOARDTOTALS.INCGST
+                    value:(res.DATA.DASHBOARDTOTALS.INCGST).toFixed(2)
                 },
                 datasets:[
                     {data:this.InvoiceInGstForReceipt,
@@ -307,17 +321,24 @@ TotalReceiptData(type){
                     },
                     legend:{display:false},
                     maintainAspectRatio:false,
+                    scales:{
+                        xAxes:[{display:true}],
+                        yAxes:[
+                            {
+                            display:true ,
+                            ticks:{
+                            max:1000,
+                            min:0,
+                            stepSize: 500,
+                            callback: function(value, index, values) {
+                                return '$' + value; 
+                            }
+                        }},
+                        ]
+                    }
 
                 },
-                scales:{
-                    xAxes:[{display:true}],
-                    yAxes:[{display:true ,ticks:{
-                        max:100000000,
-                        min:0,
-                        stepSize:20000000
-                    }},
-                    ]
-                }
+              
             
             }
            
@@ -401,14 +422,18 @@ ComparisionChart(){
                     }
                 ],
                 yAxes: [
-                    {display:true ,
+                    {
+                        display:true ,
                         gridLines: {
                             tickMarkLength: 16
                         },
                         ticks    : {
-                            max:100000000,
+                            max:10000,
                             min:0,
-                            stepSize: 20000000
+                            stepSize: 500,
+                            callback: function(value, index, values) {
+                                return '$' + value;
+                            }
                         }
                     }
                 ]

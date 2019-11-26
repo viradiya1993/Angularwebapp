@@ -51,9 +51,9 @@ const routes = [
     {
       path: '', component: MainDashboardComponent, children: [
         { path: 'monthly-graph', component: DashboardComponent,
-                resolve  : {
-          data: DashboardService
-      }
+      //           resolve  : {
+      //     data: DashboardService
+      // }
      },
      { path: 'sanp-shot', component: SnapShotComponent },
      { path: 'period-summary', component: PeriodSummaryComponent },

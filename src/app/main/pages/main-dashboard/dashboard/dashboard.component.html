@@ -108,7 +108,7 @@
                                 <div class="h1 font-weight-300">Aged Debtors (Unpaid Invoices)</div>
                             </div>
                             <div class="h-200">
-                                <h3 class="total_Val">$<span><strong> +{{AgedDebatorTotal | number}}</strong></span></h3>
+                                <h3 class="total_Val">$<span><strong> {{AgedDebatorTotal | number}}</strong></span></h3>
                                 <ngx-charts-pie-chart *fuseIfOnDom [scheme]="widget7.scheme"
                                     [results]="widget7.devices" [doughnut]="true">
                                 </ngx-charts-pie-chart>

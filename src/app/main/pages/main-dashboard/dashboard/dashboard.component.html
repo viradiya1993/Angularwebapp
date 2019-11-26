@@ -108,7 +108,7 @@
                                 <div class="h1 font-weight-300">Aged Debtors (Unpaid Invoices)</div>
                             </div>
                             <div class="h-200">
-                                <h3 class="total_Val">$<span><strong>{{AgedDebatorTotal}}</strong></span></h3>
+                                <h3 class="total_Val">$<span><strong> {{AgedDebatorTotal | number}}</strong></span></h3>
                                 <ngx-charts-pie-chart *fuseIfOnDom [scheme]="widget7.scheme"
                                     [results]="widget7.devices" [doughnut]="true">
                                 </ngx-charts-pie-chart>
@@ -131,7 +131,7 @@
                             </div>
                             <!-- <h3>Total:<span><strong><h3 class="total_Val"> {{UnbilledTotal}}</h3> </strong></span></h3> -->
                             <div class="h-200">
-                                <h3 class="total_Val">$<span><strong> {{UnbilledTotal}} </strong></span></h3>
+                                <h3 class="total_Val">$<span><strong> {{UnbilledTotal | number}} </strong></span></h3>
                                 <ngx-charts-pie-chart *fuseIfOnDom [scheme]="widget2.scheme"
                                     [results]="widget2.devices" [doughnut]="true">
                                 </ngx-charts-pie-chart>
@@ -190,8 +190,8 @@
 
                             <div class="pr-16">
                                 <div class="h3 secondary-text">Total Invoiced</div>
-                                <div class="font-size-54 font-weight-300 line-height-1 mt-8">
-                                    {{widget11.conversion.value}}
+                                <div class="font-size-20 font-weight-300 line-height-1 mt-8">
+                                    {{widget11.conversion.value | number}}
                                 </div>
                             </div>
 
@@ -222,8 +222,8 @@
     
                                 <div class="pr-16">
                                     <div class="h3 secondary-text">Total Expenses</div>
-                                    <div class="font-size-54 font-weight-300 line-height-1 mt-8">
-                                        {{widget12.conversion.value}}
+                                    <div class="font-size-20 font-weight-300 line-height-1 mt-8">
+                                        {{widget12.conversion.value | number}}
                                     </div>
                                 </div>
     
@@ -254,8 +254,8 @@
     
                                 <div class="pr-16">
                                     <div class="h3 secondary-text">Total Receipts</div>
-                                    <div class="font-size-54 font-weight-300 line-height-1 mt-8">
-                                        {{widget13.conversion.value}}
+                                    <div class="font-size-20 font-weight-300 line-height-1 mt-8">
+                                        {{widget13.conversion.value | number}}
                                     </div>
                                 </div>
     

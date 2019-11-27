@@ -85,6 +85,7 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
     });
   }
   loadData(potData) {
+    this.WorkInProgressdata=[];
     potData.MatterGuid = this.currentMatter.MATTERGUID
     this.isLoadingResults = true;
     // let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
@@ -198,7 +199,9 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
     }
   }
 
-
+  sortData(val){
+    console.log(val);
+  }
 }
 
 

@@ -4599,8 +4599,8 @@
                 </div>
             </button>
             <mat-menu #userMenu1="matMenu" [overlapTrigger]="false">
-                <button mat-menu-item><span><b> Unbilled:</b> <span class="unbilledClassColor"> ${{TotalUnbilledWIP}}</span></span></button>
-                <button mat-menu-item><span><b> Outstanding:</b> <span class="OutstandingClassColor"> ${{TotalOutstanding}}</span></span></button>
+                <button mat-menu-item><span><b> Unbilled:</b> <span class="unbilledClassColor"> ${{TotalUnbilledWIP | number}}</span></span></button>
+                <button mat-menu-item><span><b> Outstanding:</b> <span class="OutstandingClassColor"> ${{TotalOutstanding | number}}</span></span></button>
                 <hr />
                 <button (click)="setTab($event)"  mat-menu-item [routerLink]="'/dashboard/monthly-graph'">
                     <span><strong>View Dashboard</strong></span>

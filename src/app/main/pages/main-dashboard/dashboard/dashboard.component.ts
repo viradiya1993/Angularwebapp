@@ -152,7 +152,6 @@ TotalInvoiceData(type){
     let MonthStartDate= this.datepipe.transform(this.addMonths(new Date(), -6), 'dd/MM/yyyy');
     let MonthEndDate= this.datepipe.transform(new Date(), 'dd/MM/yyyy');
     this._mainAPiServiceService.getSetData({ Dashboard: type,StartDate:MonthStartDate,EndDate:MonthEndDate }, 'GetDashboard').subscribe(res => {
-        console.log(res);
         if (res.CODE == 200 && res.STATUS == "success") {
             this.TotalInvoice=res.DATA.DASHBOARDTOTALS.INCGST;
             res.DATA.DASHBOARDDATA.forEach(element => {
@@ -215,7 +214,6 @@ TotalExpenseData(type){
     let MonthStartDate= this.datepipe.transform(this.addMonths(new Date(), -6), 'dd/MM/yyyy');
     let MonthEndDate= this.datepipe.transform(new Date(), 'dd/MM/yyyy');
     this._mainAPiServiceService.getSetData({ Dashboard: type,StartDate:MonthStartDate,EndDate:MonthEndDate }, 'GetDashboard').subscribe(res => {
-        console.log(res);
         if (res.CODE == 200 && res.STATUS == "success") {
             this.TotalInvoice=res.DATA.DASHBOARDTOTALS.INCGST;
             res.DATA.DASHBOARDDATA.forEach(element => {
@@ -282,7 +280,6 @@ TotalReceiptData(type){
     let MonthStartDate= this.datepipe.transform(this.addMonths(new Date(), -6), 'dd/MM/yyyy');
     let MonthEndDate= this.datepipe.transform(new Date(), 'dd/MM/yyyy');
     this._mainAPiServiceService.getSetData({ Dashboard: type,StartDate:MonthStartDate,EndDate:MonthEndDate }, 'GetDashboard').subscribe(res => {
-        console.log(res);
         if (res.CODE == 200 && res.STATUS == "success") {
             this.TotalInvoice=res.DATA.DASHBOARDTOTALS.INCGST;
             res.DATA.DASHBOARDDATA.forEach(element => {

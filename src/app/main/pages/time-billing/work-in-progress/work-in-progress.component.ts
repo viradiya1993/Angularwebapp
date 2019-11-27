@@ -99,7 +99,7 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
         }
         this.WorkInProgressdata = new MatTableDataSource(res.DATA.WORKITEMS);
         this.WorkInProgressdata.paginator = this.paginator;
-        this.WorkInProgressdata.sort = this.sort;
+        // date shorting 
         this.sortingCLM();
       }
       this.isLoadingResults = false;
@@ -197,10 +197,11 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
         }
       }
     }
+    // proper shorting for date 
+    this.WorkInProgressdata.sort = this.sort;
   }
 
   sortData(val){
-    console.log(val);
   }
 }
 

@@ -64,9 +64,9 @@ export class InvoiceComponent implements OnInit {
         let ed = new Date(tempDate2[1] + '/' + tempDate2[0] + '/' + tempDate2[2]);
         this.matterInvoiceFilterForm.controls['dateRang'].setValue({ begin: Sd, end: ed });
       }
-      this.matterInvoiceFilterForm.controls['OUTSTANDING'].setValue(this.lastFilter.OUTSTANDING);
+      this.matterInvoiceFilterForm.controls['OUTSTANDING'].setValue('Yes');
     } else {
-      this.matterInvoiceFilterForm.controls['OUTSTANDING'].setValue('');
+      this.matterInvoiceFilterForm.controls['OUTSTANDING'].setValue('Yes');
     }
   }
   get f() {

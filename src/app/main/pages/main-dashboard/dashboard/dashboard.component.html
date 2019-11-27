@@ -89,16 +89,17 @@
     <div class="content">
         <div class="left mr-lg-32">
 
-            <div class="left mr-lg-32">
+            <div class="left">
 
                 <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
               
                     <div *ngIf="widget7 !='empty'" fxFlex="100" fxFlex.gt-sm="50" class="widget ">
-                        <div class="pb-24 font-size-18 font-weight-300">
-                        </div>
+                        <!-- <div class="pb-24 font-size-18 font-weight-300">
+                        </div> -->
                         <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
                             <div class="p-16">
-                                <div class="h1 font-weight-300">Aged Debtors (Unpaid Invoices)</div>
+                                    <!-- <button mat-button  [routerLink]="'/invoice'">Aged Debtors (Unpaid Invoices) </button> -->
+                                <div [routerLink]="'/invoice'"  class="h1 font-weight-300">Aged Debtors (Unpaid Invoices)</div>
                             </div>
                             <div class="h-200">
                                 <h3 class="total_Val">$<span><strong> {{AgedDebatorTotal | number}}</strong></span></h3>
@@ -114,9 +115,9 @@
                         </div>
                     </div>
                     <div *ngIf="widget2 !='empty'" fxFlex="100" fxFlex.gt-sm="50" class="widget ">
-                        <div class="pb-24 font-size-18 font-weight-300">
-                        </div>
-                        <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
+                        <!-- <div class="pb-24 font-size-18 font-weight-300">
+                        </div> -->
+                        <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0'">
                             <div class="p-16">
                                 <div class="h1 font-weight-300">Unbilled WIP</div>
                             </div>
@@ -198,7 +199,7 @@
                     </div>
                 </div>
                 <div *ngIf="widget13 !='empty'" class="widget" fxFlex="100" fxFlex.gt-sm="34">
-                    <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
+                    <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0'">
                         <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
                             <div class="pr-16">
                                 <div class="h3 secondary-text">Total Receipts</div>

@@ -106,11 +106,13 @@ canvas {
     left: 50%;
     transform: translateX(-50%);
     top: 39%;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .h-200 {
     position: relative;
+    display: flex;
+    justify-content: center;
 }
 
 // .example-card {
@@ -135,4 +137,7 @@ canvas {
 // }
 .secondary-text {
     font-size: 12px !important;
+}
+.h1.font-weight-300 {
+    cursor: pointer !important;
 }

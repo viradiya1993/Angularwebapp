@@ -94,17 +94,29 @@
                 <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start start">
               
                     <div *ngIf="widget7 !='empty'" fxFlex="100" fxFlex.gt-sm="50" class="widget ">
-                        <!-- <div class="pb-24 font-size-18 font-weight-300">
-                        </div> -->
+                        <div class="pb-24 font-size-18 font-weight-300">
+                        </div>
                         <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
                             <div class="p-16">
-                                    <!-- <button mat-button  [routerLink]="'/invoice'">Aged Debtors (Unpaid Invoices) </button> -->
-                                <div [routerLink]="'/invoice'"  class="h1 font-weight-300">Aged Debtors (Unpaid Invoices)</div>
+                                <a class="link_click" [routerLink]="'/invoice'"  mat-list-item >
+                                        Aged Debtors (Unpaid Invoices)   
+                                </a>
                             </div>
-                            <div class="h-200">
+                            <div class="h-300">
                                 <h3 class="total_Val">$<span><strong> {{AgedDebatorTotal | number}}</strong></span></h3>
-                                <ngx-charts-pie-chart *fuseIfOnDom [scheme]="widget7.scheme" [results]="widget7.devices" [doughnut]="true">
-                                </ngx-charts-pie-chart>
+                                <!-- <ngx-charts-pie-chart *fuseIfOnDom [scheme]="widget7.scheme" [results]="widget7.devices" [doughnut]="true">
+                                </ngx-charts-pie-chart> -->
+                                <ngx-charts-pie-chart
+                                *fuseIfOnDom
+                                [scheme]="widget7.scheme"
+                                [results]="widget7.devices"
+                                [legend]="widget7.showLegend"
+                                [explodeSlices]="widget7.explodeSlices"
+                                [labels]="widget7.labels"
+                                [doughnut]="widget7.doughnut"
+                                [gradient]="widget7.gradient"
+                                (select)="widget7.onSelect($event)">
+                            </ngx-charts-pie-chart> 
                             </div>
                             <div class="p-16" fxLayout="row" fxLayoutAlign="center center">
                                 <div class="px-16" fxLayout="column" fxLayoutAlign="start center" *ngFor="let device of widget7.devices">
@@ -115,17 +127,28 @@
                         </div>
                     </div>
                     <div *ngIf="widget2 !='empty'" fxFlex="100" fxFlex.gt-sm="50" class="widget ">
-                        <!-- <div class="pb-24 font-size-18 font-weight-300">
-                        </div> -->
+                        <div class="pb-24 font-size-18 font-weight-300">
+                        </div>
                         <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0'">
                             <div class="p-16">
                                 <div class="h1 font-weight-300">Unbilled WIP</div>
                             </div>
-                            <!-- <h3>Total:<span><strong><h3 class="total_Val"> {{UnbilledTotal}}</h3> </strong></span></h3> -->
-                            <div class="h-200">
+                          
+                            <div class="h-300">
                                 <h3 class="total_Val">$<span><strong> {{UnbilledTotal | number}} </strong></span></h3>
-                                <ngx-charts-pie-chart *fuseIfOnDom [scheme]="widget2.scheme" [results]="widget2.devices" [doughnut]="true">
-                                </ngx-charts-pie-chart>
+                                <!-- <ngx-charts-pie-chart *fuseIfOnDom [scheme]="widget2.scheme" [results]="widget2.devices" [doughnut]="true">
+                                </ngx-charts-pie-chart> -->
+                                <ngx-charts-pie-chart
+                                *fuseIfOnDom
+                                [scheme]="widget2.scheme"
+                                [results]="widget2.devices"
+                                [legend]="widget2.showLegend"
+                                [explodeSlices]="widget2.explodeSlices"
+                                [labels]="widget2.labels"
+                                [doughnut]="widget2.doughnut"
+                                [gradient]="widget2.gradient"
+                                (select)="widget2.onSelect($event)">
+                            </ngx-charts-pie-chart> 
                             </div>
                             <div class="p-16" fxLayout="row" fxLayoutAlign="center center">
                                 <div class="px-16" fxLayout="column" fxLayoutAlign="start center" *ngFor="let device of widget2.devices">
@@ -149,15 +172,15 @@
                         <div class="h-260">
                                 <ngx-charts-pie-chart
                                 *fuseIfOnDom
-                                [scheme]="widget2.scheme"
-                                [results]="widgets.widget2.mainChart"
-                                [legend]="widget2.legend"
-                                [explodeSlices]="widget2.explodeSlices"
-                                [labels]="widget2.labels"
-                                [doughnut]="widget2.doughnut"
-                                [gradient]="widget2.gradient"
-                                (select)="widget2.onSelect($event)">
-                            </ngx-charts-pie-chart>
+                                [scheme]="widget6.scheme"
+                                [results]="widget2.devices"
+                                [legend]="widget6.showLegend"
+                                [explodeSlices]="widget6.explodeSlices"
+                                [labels]="widget6.labels"
+                                [doughnut]="widget6.doughnut"
+                                [gradient]="widget6.gradient"
+                                (select)="widget6.onSelect($event)">
+                            </ngx-charts-pie-chart> 
                         </div>
                         <div class="p-16" fxLayout="row" fxLayoutAlign="center center">  
                         </div>
@@ -222,7 +245,7 @@
 
                 <div class="position-relative p-24" fxLayout="row" fxLayoutAlign="space-between center">
                     <div fxLayout="column" fxLayoutAlign="start start">
-                        <span class="h2">Invoices Vs Expenses</span>
+                        <span class="h2">Income Vs Expenses</span>
                     </div>
                 </div>
                 <div class="position-relative h-368 pb-16">

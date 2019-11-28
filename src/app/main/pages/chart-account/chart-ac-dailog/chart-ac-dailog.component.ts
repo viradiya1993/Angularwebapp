@@ -149,19 +149,19 @@ export class ChartAcDailogComponent implements OnInit {
   }
   //SaveAccount
   SaveAccount() {
-    if (this.f.ACCOUNTTYPE.value == 'Header') {
-      this.sendtype = 1;
-    } else if (this.f.ACCOUNTTYPE.value == 'Detail') {
-      this.sendtype = 2;
-    } else if (this.f.ACCOUNTTYPE.value == 'Bank Account') {
-      this.sendtype = 3;
-    }
+    // if (this.f.ACCOUNTTYPE.value == 'Header') {
+    //   this.sendtype = 1;
+    // } else if (this.f.ACCOUNTTYPE.value == 'Detail') {
+    //   this.sendtype = 2;
+    // } else if (this.f.ACCOUNTTYPE.value == 'Bank Account') {
+    //   this.sendtype = 3;
+    // }
     this.isspiner = true;
     let PostData: any = {
       ACCOUNTCLASS: this.f.ACCOUNTCLASS.value,
       ACCOUNTNAME: this.f.ACCOUNTNAME.value,
       ACCOUNTNUMBER: this.f.SendACCOUNTNUMBER.value,
-      ACCOUNTTYPE: this.sendtype,
+      ACCOUNTTYPE: this.f.ACCOUNTTYPE.value,
       // ACCOUNTTYPENAME:this.f.ACCOUNTTYPENAME.value,
       ACTIVE: this.f.ACTIVE.value,
       MYOBEXPORTACCOUNT: this.f.MYOBEXPORTACCOUNT.value,

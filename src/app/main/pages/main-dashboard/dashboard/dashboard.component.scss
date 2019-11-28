@@ -105,11 +105,11 @@ canvas {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 39%;
+    top: 43%;
     font-size: 12px;
 }
 
-.h-200 {
+.h-300 {
     position: relative;
     display: flex;
     justify-content: center;
@@ -140,4 +140,7 @@ canvas {
 }
 .h1.font-weight-300 {
     cursor: pointer !important;
+}
+.link_click{
+    font-size: 20px;  
 }

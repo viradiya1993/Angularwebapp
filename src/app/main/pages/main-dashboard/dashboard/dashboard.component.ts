@@ -10,6 +10,7 @@ import * as shape from 'd3-shape';
 import { Chart } from 'chart.js';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
+import { round } from 'lodash';
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -40,7 +41,10 @@ export class DashboardComponent implements OnInit {
     deviceValForAged:any=[];
     widget7:any;
     deviceValForUnbilled:any=[];
-   
+    widget6:any;
+    getMonthNumForGenIncome:any=[];
+    InvoiceInGstForGenIncome:any=[];
+    TotalExpenseDataArray:any=[];
     /**
         * Constructor
         *
@@ -85,6 +89,7 @@ export class DashboardComponent implements OnInit {
         return date;
     }
     ngOnInit() {
+
         this.isLoadingResults = true;
         this.widget11="empty";
         this.widget12="empty";
@@ -92,17 +97,13 @@ export class DashboardComponent implements OnInit {
         this.widget5="empty";
         this.widget2="empty";
         this.widget7="empty";
-        // Get the widgets from the service
-        // this.AgedDebatorTotal = this._analyticsDashboardService.AgedDebatorTotal;
-        // this.UnbilledTotal = this._analyticsDashboardService.UnbilledTotal;
-        
-        // this.widgets = this._analyticsDashboardService.widgets;
-        // console.log(this._analyticsDashboardService);
+        this.TotalIncome();
         this.AgedDebetorData();
         this.UnbilledWIPData();
         this.TotalInvoiceData('invoices');
         this.TotalExpenseData('expenses');
         this.TotalReceiptData('receipts');
+        
         // this.ComparisionChart();
         // this.TotalInvoiceData('expenses');
         // this.TotalInvoiceData('receipts');
@@ -113,13 +114,19 @@ export class DashboardComponent implements OnInit {
         this.deviceValForAged = [];
         this._mainAPiServiceService.getSetData({ Dashboard: 'aged debtors' }, 'GetDashboard').subscribe(res => {
             if (res.CODE == 200 && res.STATUS == "success") {
-                this.AgedDebatorTotal = (res.DATA.DASHBOARDTOTALS.INCGST).toFixed(2);
+                this.AgedDebatorTotal = round(res.DATA.DASHBOARDTOTALS.INCGST);
                 res.DATA.DASHBOARDDATA.forEach(element => {
-                    this.deviceValForAged.push({ name: element.DATEDESC, value: element.INCGST })
+                    this.deviceValForAged.push({ name: element.DATEDESC, value: round(element.INCGST) })
                 });
                 this.widget7= {
+                    legend       : false,
+                    explodeSlices: false,
+                    labels       : true,
+                    doughnut     : true,
+                    gradient     : false,
                     scheme : {
-                        domain: ['#4867d2', '#5c84f1', '#89a9f4','#c0caed']
+                        domain: ['#f44336', '#9c27b0', '#03a9f4', '#e91e63']
+                        // domain: ['#4867d2', '#5c84f1', '#89a9f4','#c0caed']
                     },
                     devices: this.deviceValForAged
                 }
@@ -131,11 +138,16 @@ export class DashboardComponent implements OnInit {
         this.deviceValForUnbilled=[];
         this._mainAPiServiceService.getSetData({ Dashboard: 'unbilled WIP' }, 'GetDashboard').subscribe(res => {
             if (res.CODE == 200 && res.STATUS == "success") {
-                this.UnbilledTotal = (res.DATA.DASHBOARDTOTALS.INCGST).toFixed(2);
+                this.UnbilledTotal = round(res.DATA.DASHBOARDTOTALS.INCGST);
                 res.DATA.DASHBOARDDATA.forEach(element => {
-                    this.deviceValForUnbilled.push({ name: element.DATEDESC, value: element.INCGST })
+                    this.deviceValForUnbilled.push({ name: element.DATEDESC, value: round(element.INCGST) })
                 });
                 this.widget2= {
+                    legend       : false,
+                    explodeSlices: false,
+                    labels       : true,
+                    doughnut     : true,
+                    gradient     : false,
                     scheme : {
                         domain: ['#9205ff', '#b14dff','#d399ff','#6b00bd',]
                     },
@@ -168,7 +180,7 @@ TotalInvoiceData(type){
                 colors:[{backgroundColor: "#42a5f5",
                 borderColor: "#42a5f5"}],
                 conversion:{
-                    value:(res.DATA.DASHBOARDTOTALS.INCGST).toFixed(2)
+                    value:round(res.DATA.DASHBOARDTOTALS.INCGST)
                 },
                 datasets:[
                     {data:this.InvoiceInGst,
@@ -215,6 +227,8 @@ TotalExpenseData(type){
     let MonthEndDate= this.datepipe.transform(new Date(), 'dd/MM/yyyy');
     this._mainAPiServiceService.getSetData({ Dashboard: type,StartDate:MonthStartDate,EndDate:MonthEndDate }, 'GetDashboard').subscribe(res => {
         if (res.CODE == 200 && res.STATUS == "success") {
+            console.log(res);
+            this.TotalExpenseDataArray=res.DATA.DASHBOARDDATA;
             this.TotalInvoice=res.DATA.DASHBOARDTOTALS.INCGST;
             res.DATA.DASHBOARDDATA.forEach(element => {
                 element.DATEDESC
@@ -232,7 +246,7 @@ TotalExpenseData(type){
                 colors:[{backgroundColor: "#ff0000",
                 borderColor: "#42a5f5"}],
                 conversion:{
-                    value:(res.DATA.DASHBOARDTOTALS.INCGST).toFixed(2)
+                    value:round(res.DATA.DASHBOARDTOTALS.INCGST)
                 },
                 datasets:[
                     {data:this.InvoiceInGstForExpense,
@@ -296,7 +310,7 @@ TotalReceiptData(type){
                 colors:[{backgroundColor: "#43a047",
                 borderColor: "#42a5f5"}],
                 conversion:{
-                    value:(res.DATA.DASHBOARDTOTALS.INCGST).toFixed(2)
+                    value:round(res.DATA.DASHBOARDTOTALS.INCGST)
                 },
                 datasets:[
                     {data:this.InvoiceInGstForReceipt,
@@ -336,45 +350,72 @@ TotalReceiptData(type){
         }
     });
 }
+TotalIncome(){
+    let MonthStartDate= this.datepipe.transform(this.addMonths(new Date(), -6), 'dd/MM/yyyy');
+    let MonthEndDate= this.datepipe.transform(new Date(), 'dd/MM/yyyy');
+     this._mainAPiServiceService.getSetData({ Dashboard: 'all income',StartDate:MonthStartDate,EndDate: MonthEndDate }, 'GetDashboard').subscribe(res => {
+                console.log(res);
+                if (res.CODE == 200 && res.STATUS == "success") {
+                    this.TotalExpenseDataArray.forEach(element => {
+                        let MonthWiseDate = element.DATEDESC.split("/");
+                        var monthNum = MonthWiseDate[1];
+                    });
+                    res.DATA.DASHBOARDDATA.forEach(element => {
+                        let MonthWiseDate = element.DATEDESC.split("/");
+                        var monthNum = MonthWiseDate[1];   // assuming Jan = 1
+                        var shortName = moment.monthsShort(monthNum - 1); 
+                        this.getMonthNumForGenIncome.push(shortName);
+                        this.InvoiceInGstForGenIncome.push(element.INCGST);
+                        
+                    });
+                }
+            }); 
+
+          
+}
 ComparisionChart(){
+    console.log(this.InvoiceInGstForGenIncome)
  this.widget5="empty";
     this.widget5= {
         chartType: 'line',
         datasets : {
             'today'    : [
-          
-                {
-                    label: 'Invoices',
-                    data : this.InvoiceInGst,
-                    fill : 'start'
-                },
                 {
                     label: 'Expenses',
+                    yAxisID:'Expenses',
                     data : this.InvoiceInGstForExpense,
                     fill : 'start'
 
                 },
+                {
+                    label: 'Income',
+                    yAxisID:'Income',
+                    data : this.InvoiceInGstForGenIncome,
+                    fill : 'start'
+                },
+                
                
             ]
         },
         labels   : this.getMonthNumForExpense,
         colors   : [
             {
-                borderColor              : '#3949ab',
-                backgroundColor          : '#3949ab',
-                pointBackgroundColor     : '#3949ab',
-                pointHoverBackgroundColor: '#3949ab',
-                pointBorderColor         : '#ffffff',
-                pointHoverBorderColor    : '#ffffff'
+                borderColor              : 'rgba(30, 136, 229, 0.87)',
+                // backgroundColor          : 'rgba(30, 136, 229, 0.87)',
+                // pointBackgroundColor     : 'rgba(30, 136, 229, 0.87)',
+                // pointHoverBackgroundColor: 'rgba(30, 136, 229, 0.87)',
+                // pointBorderColor         : '#ffffff',
+                // pointHoverBorderColor    : '#ffffff'
             },
             {
-                borderColor              : 'rgba(30, 136, 229, 0.87)',
-                backgroundColor          : 'rgba(30, 136, 229, 0.87)',
-                pointBackgroundColor     : 'rgba(30, 136, 229, 0.87)',
-                pointHoverBackgroundColor: 'rgba(30, 136, 229, 0.87)',
-                pointBorderColor         : '#ffffff',
-                pointHoverBorderColor    : '#ffffff'
-            }
+                borderColor              : '#3949ab',
+                // backgroundColor          : '#3949ab',
+                // pointBackgroundColor     : '#3949ab',
+                // pointHoverBackgroundColor: '#3949ab',
+                // pointBorderColor         : '#ffffff',
+                // pointHoverBorderColor    : '#ffffff'
+            },
+           
         ],
         options  : {
             spanGaps           : false,
@@ -413,7 +454,13 @@ ComparisionChart(){
                     }
                 ],
                 yAxes: [
+
+                
+
                     {
+                        id: 'Expenses',
+                        type: 'linear',
+                        position: 'left',
                         display:true ,
                         gridLines: {
                             tickMarkLength: 16
@@ -422,6 +469,23 @@ ComparisionChart(){
                             // max:10000,
                              min:0,
                             // stepSize: 500,
+                            callback: function(value, index, values) {
+                                return '$' + value;
+                            }
+                        }
+                    },
+                    {
+                        id: 'Income',
+                        type: 'linear',
+                        position: 'right',
+                        display:true ,
+                        gridLines: {
+                            tickMarkLength: 16
+                        },
+                        ticks    : {
+                            //  max:10000,
+                             min:0,
+                            //  stepSize: 1000,
                             callback: function(value, index, values) {
                                 return '$' + value;
                             }

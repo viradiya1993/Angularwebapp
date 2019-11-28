@@ -50,9 +50,9 @@ export class MatterTrustComponent implements OnInit {
     });
   }
   loadData() {
+    this.MatterTrustdata=[];
     this.isLoadingResults = true;
-    let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
-    
+    let potData = { 'MatterGUID': this.currentMatter.MATTERGUID,TRANSACTIONSTARTDATE:'28/05/2019',TRANSACTIONENDDATE:'28/11/2019' };
     this._mainAPiServiceService.getSetData(potData, 'GetTrustTransaction').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
         if (res.DATA.TRUSTTRANSACTIONS[0]) {
@@ -60,7 +60,7 @@ export class MatterTrustComponent implements OnInit {
         } else {
           this.isDisplay = true;
         }
-        let TRUSTTRANSACTIONS = res.DATA.TRUSTTRANSACTIONS == null ? [] : res.DATA.TRUSTTRANSACTIONS;
+        let TRUSTTRANSACTIONS = res.DATA.TRUSTTRANSACTIONS;
         this.MatterTrustdata = new MatTableDataSource(TRUSTTRANSACTIONS);
         this.MatterTrustdata.paginator = this.paginator;
         this.MatterTrustdata.sort = this.sort;

@@ -60,6 +60,7 @@ import { EstimateDilogComponent } from 'app/main/pages/time-billing/estimate/est
 import { GenerateInvoiceComponent } from 'app/main/pages/invoice/generate-invoice/generate-invoice.component';
 import { PacketsDialogComponent } from 'app/main/pages/globally-safecustody/packets/packets-dialog/packets-dialog.component';
 import { TrustChartOfAccountDailogComponent } from 'app/main/pages/trust-chart-of-account/trust-chart-of-account-dailog/trust-chart-of-account-dailog.component'
+import { round } from 'lodash';
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -359,12 +360,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     DashboardAPI() {
         this._mainAPiServiceService.getSetData({ Dashboard: 'total unbilled wip' }, 'GetDashboard').subscribe(res => {
             if (res.CODE == 200 && res.STATUS == "success") {
-                this.TotalUnbilledWIP = res.DATA.DASHBOARDDATA[0].INCGST;
+                this.TotalUnbilledWIP = round(res.DATA.DASHBOARDDATA[0].INCGST);
             }
         });
         this._mainAPiServiceService.getSetData({ Dashboard: 'total outstanding' }, 'GetDashboard').subscribe(res => {
             if (res.CODE == 200 && res.STATUS == "success") {
-                this.TotalOutstanding = res.DATA.DASHBOARDDATA[0].INCGST;
+                this.TotalOutstanding = round(res.DATA.DASHBOARDDATA[0].INCGST);
             }
         });
     }
@@ -524,7 +525,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 this.toastr.error("Please Select User");
                 return false;
             }
-            popupData = { action: actionType, USERGUID: ActiveUserData.USERGUID };
+            popupData = {action: actionType, USERGUID: ActiveUserData.USERGUID};
         }
         const dialogRef = this.dialog.open(UserDialogComponent, { disableClose: true, panelClass: 'User-dialog', data: popupData });
         dialogRef.afterClosed().subscribe(result => {

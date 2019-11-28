@@ -402,18 +402,18 @@ ComparisionChart(){
             {
                 borderColor              : 'rgba(30, 136, 229, 0.87)',
                 // backgroundColor          : 'rgba(30, 136, 229, 0.87)',
-                // pointBackgroundColor     : 'rgba(30, 136, 229, 0.87)',
-                // pointHoverBackgroundColor: 'rgba(30, 136, 229, 0.87)',
-                // pointBorderColor         : '#ffffff',
-                // pointHoverBorderColor    : '#ffffff'
+                 pointBackgroundColor     : 'rgba(30, 136, 229, 0.87)',
+                 pointHoverBackgroundColor: 'rgba(30, 136, 229, 0.87)',
+                 pointBorderColor         : '#ffffff',
+                 pointHoverBorderColor    : '#ffffff'
             },
             {
                 borderColor              : '#3949ab',
                 // backgroundColor          : '#3949ab',
-                // pointBackgroundColor     : '#3949ab',
-                // pointHoverBackgroundColor: '#3949ab',
-                // pointBorderColor         : '#ffffff',
-                // pointHoverBorderColor    : '#ffffff'
+                 pointBackgroundColor     : '#3949ab',
+                 pointHoverBackgroundColor: '#3949ab',
+                 pointBorderColor         : '#ffffff',
+                 pointHoverBorderColor    : '#ffffff'
             },
            
         ],

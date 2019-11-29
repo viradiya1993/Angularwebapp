@@ -102,6 +102,7 @@ export class MattersComponent implements OnInit,OnDestroy {
     }
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
   }
+  
   ngAfterViewInit() {
     this.cd.detectChanges();
   }
@@ -127,8 +128,8 @@ export class MattersComponent implements OnInit,OnDestroy {
     this.mattersDetail = '';
   }
   ngOnDestroy(): void {
-    let filterVal = JSON.parse(localStorage.getItem('matter_filter'));
-    filterVal.SearchString = '';
-    localStorage.setItem('matter_filter', JSON.stringify(filterVal));
+    // let filterVal = JSON.parse(localStorage.getItem('matter_filter'));
+    // filterVal.SearchString = '';
+    // localStorage.setItem('matter_filter', JSON.stringify(filterVal));
   }
 }

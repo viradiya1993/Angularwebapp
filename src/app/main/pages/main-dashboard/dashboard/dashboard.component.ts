@@ -125,7 +125,7 @@ export class DashboardComponent implements OnInit {
                     doughnut     : true,
                     gradient     : false,
                     scheme : {
-                        domain: ['#f44336', '#9c27b0', '#03a9f4', '#e91e63']
+                        domain: ['#03e4f4', '#03ccf4', '#03a9f4', '#0380f4']
                         // domain: ['#4867d2', '#5c84f1', '#89a9f4','#c0caed']
                     },
                     devices: this.deviceValForAged
@@ -227,7 +227,6 @@ TotalExpenseData(type){
     let MonthEndDate= this.datepipe.transform(new Date(), 'dd/MM/yyyy');
     this._mainAPiServiceService.getSetData({ Dashboard: type,StartDate:MonthStartDate,EndDate:MonthEndDate }, 'GetDashboard').subscribe(res => {
         if (res.CODE == 200 && res.STATUS == "success") {
-            console.log(res);
             this.TotalExpenseDataArray=res.DATA.DASHBOARDDATA;
             this.TotalInvoice=res.DATA.DASHBOARDTOTALS.INCGST;
             res.DATA.DASHBOARDDATA.forEach(element => {
@@ -354,7 +353,6 @@ TotalIncome(){
     let MonthStartDate= this.datepipe.transform(this.addMonths(new Date(), -6), 'dd/MM/yyyy');
     let MonthEndDate= this.datepipe.transform(new Date(), 'dd/MM/yyyy');
      this._mainAPiServiceService.getSetData({ Dashboard: 'all income',StartDate:MonthStartDate,EndDate: MonthEndDate }, 'GetDashboard').subscribe(res => {
-                console.log(res);
                 if (res.CODE == 200 && res.STATUS == "success") {
                     this.TotalExpenseDataArray.forEach(element => {
                         let MonthWiseDate = element.DATEDESC.split("/");
@@ -374,7 +372,6 @@ TotalIncome(){
           
 }
 ComparisionChart(){
-    console.log(this.InvoiceInGstForGenIncome)
  this.widget5="empty";
     this.widget5= {
         chartType: 'line',
@@ -420,7 +417,8 @@ ComparisionChart(){
         options  : {
             spanGaps           : false,
             legend             : {
-                display: false
+                display: true,
+                position:'right'
             },
             maintainAspectRatio: false,
             tooltips           : {

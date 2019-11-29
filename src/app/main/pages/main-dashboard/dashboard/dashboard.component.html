@@ -118,12 +118,21 @@
                                 (select)="widget7.onSelect($event)">
                             </ngx-charts-pie-chart> 
                             </div>
-                            <div class="p-16" fxLayout="row" fxLayoutAlign="center center">
+                            <div class="py-8 mh-16 border-top" fxLayout="row" fxLayoutAlign="center center">
+                                    <div  *ngFor="let device of widget7.devices" class="py-8 border-right" fxLayout="column" fxLayoutAlign="start center" fxFlex="100"
+                                         fxFlex.gt-sm="50">
+                                        <span class="mat-display-1 main_name mb-0">
+                                                {{device.name}}
+                                        </span>
+                                        <span class="h4 sub_val">$ {{device.value}}</span>
+                                    </div>
+                                </div>
+                            <!-- <div class="p-16" fxLayout="row" fxLayoutAlign="center center">
                                 <div class="px-16" fxLayout="column" fxLayoutAlign="start center" *ngFor="let device of widget7.devices">
                                     <div class="h4 secondary-text">{{device.name}}</div>
                                     <div class="h4 font-weight-300 secondary-text py-8">$<b>{{device.value}}</b></div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div *ngIf="widget2 !='empty'" fxFlex="100" fxFlex.gt-sm="50" class="widget ">
@@ -150,12 +159,22 @@
                                 (select)="widget2.onSelect($event)">
                             </ngx-charts-pie-chart> 
                             </div>
-                            <div class="p-16" fxLayout="row" fxLayoutAlign="center center">
+                            <div class="py-8 mh-16 border-top" fxLayout="row" fxLayoutAlign="center center">
+                                    <div  *ngFor="let device of widget2.devices" class="py-8 border-right" fxLayout="column" fxLayoutAlign="start center" fxFlex="100"
+                                         fxFlex.gt-sm="50">
+                                        <span class="mat-display-1 main_name mb-0">
+                                                {{device.name}}
+                                        </span>
+                                        <span class="h4 sub_val">$ {{device.value}}</span>
+                                    </div>
+                                </div>
+
+                            <!-- <div class="p-16" fxLayout="row" fxLayoutAlign="center center">
                                 <div class="px-16" fxLayout="column" fxLayoutAlign="start center" *ngFor="let device of widget2.devices">
                                     <div class="h4 secondary-text">{{device.name}}</div>
                                     <div class="h4  secondary-text font-weight-300 py-8">$<b>{{device.value}}</b></div>
                                 </div>
-                            </div>
+                            </div> -->
 
                         </div>
                     </div>

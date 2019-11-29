@@ -266,8 +266,8 @@ export class TaskComponent implements OnInit, OnDestroy {
     this.behaviorService.TaskData(row);
   }
   ngOnDestroy(): void {
-    this.filterData = JSON.parse(localStorage.getItem('task_filter'));
-    this.filterData.Search = '';
-    localStorage.setItem('task_filter', JSON.stringify(this.filterData));
+    // this.filterData = JSON.parse(localStorage.getItem('task_filter'));
+    // this.filterData.Search = '';
+    // localStorage.setItem('task_filter', JSON.stringify(this.filterData));
   }
 }

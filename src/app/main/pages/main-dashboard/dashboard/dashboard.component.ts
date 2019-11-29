@@ -367,9 +367,7 @@ TotalIncome(){
                         
                     });
                 }
-            }); 
-
-          
+        }); 
 }
 ComparisionChart(){
  this.widget5="empty";
@@ -452,7 +450,7 @@ ComparisionChart(){
                     }
                 ],
                 yAxes: [{
-
+                    stacked: true,
                     display:true ,
                     gridLines: {
                         tickMarkLength: 16

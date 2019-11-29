@@ -1762,6 +1762,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.activeSubMenu = x[2];
         this.behaviorService.SetActiveSubMenu(this.activeSubMenu);
         // this.behaviorService.navigation(this.router.url);
+        // this.selectedIndex=0;
+        this.setTab('');
     }
     setTab(event: any) {
         this.selectedIndex = 0;

@@ -63,6 +63,7 @@ export class BankingDialogComponent implements OnInit {
   abcd: any;
   accountTypeData: any;
   title: string;
+  ChartHandlingData: { ClickType: any; UseTrust: string; PopUp: string; Lable: string; };
 
   constructor(
     public dialog: MatDialog,
@@ -170,6 +171,17 @@ export class BankingDialogComponent implements OnInit {
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
   AccountDialogOpen(val) {
+
+    //by defaults have to set chart account not trust chart account 
+    this.ChartHandlingData = {
+      ClickType: 'WithoutTrust',
+      UseTrust: 'No',
+      PopUp: '',
+      Lable: "CHART ACCOUNT",
+  }
+    localStorage.setItem('ChartURL', JSON.stringify(this.ChartHandlingData));
+    this.behaviorService.TrustDuplicateModuleHandling(this.ChartHandlingData);
+
     const dialogRef = this.dialog.open(ChartAcDailogComponent, {
       disableClose: true,
       panelClass: 'ChartAc-dialog',

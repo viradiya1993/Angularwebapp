@@ -379,14 +379,14 @@ ComparisionChart(){
             'today'    : [
                 {
                     label: 'Expenses',
-                    yAxisID:'Expenses',
+                    // yAxisID:'Expenses',
                     data : this.InvoiceInGstForExpense,
                     fill : 'start'
 
                 },
                 {
                     label: 'Income',
-                    yAxisID:'Income',
+                    // yAxisID:'Income',
                     data : this.InvoiceInGstForGenIncome,
                     fill : 'start'
                 },
@@ -451,45 +451,59 @@ ComparisionChart(){
                         }
                     }
                 ],
-                yAxes: [
+                yAxes: [{
 
+                    display:true ,
+                    gridLines: {
+                        tickMarkLength: 16
+                    },
+                    ticks    : {
+                        // max:10000,
+                         min:0,
+                        // stepSize: 500,
+                        callback: function(value, index, values) {
+                            return '$' + value;
+                        }
+                 
+                     },
+                   
                 
 
-                    {
-                        id: 'Expenses',
-                        type: 'linear',
-                        position: 'left',
-                        display:true ,
-                        gridLines: {
-                            tickMarkLength: 16
-                        },
-                        ticks    : {
-                            // max:10000,
-                             min:0,
-                            // stepSize: 500,
-                            callback: function(value, index, values) {
-                                return '$' + value;
-                            }
-                        }
-                    },
-                    {
-                        id: 'Income',
-                        type: 'linear',
-                        position: 'right',
-                        display:true ,
-                        gridLines: {
-                            tickMarkLength: 16
-                        },
-                        ticks    : {
-                            //  max:10000,
-                             min:0,
-                            //  stepSize: 1000,
-                            callback: function(value, index, values) {
-                                return '$' + value;
-                            }
-                        }
-                    }
-                ]
+                    // {
+                    //     id: 'Expenses',
+                    //     type: 'linear',
+                    //     position: 'left',
+                    //     display:true ,
+                    //     gridLines: {
+                    //         tickMarkLength: 16
+                    //     },
+                    //     ticks    : {
+                    //         // max:10000,
+                    //          min:0,
+                    //         // stepSize: 500,
+                    //         callback: function(value, index, values) {
+                    //             return '$' + value;
+                    //         }
+                    //     }
+                    // },
+                    // {
+                    //     id: 'Income',
+                    //     type: 'linear',
+                    //     position: 'right',
+                    //     display:true ,
+                    //     gridLines: {
+                    //         tickMarkLength: 16
+                    //     },
+                    //     ticks    : {
+                    //         //  max:10000,
+                    //          min:0,
+                    //         //  stepSize: 1000,
+                    //         callback: function(value, index, values) {
+                    //             return '$' + value;
+                    //         }
+                    //     }
+                    // }
+                }]
             },
             plugins            : {
                 filler: {

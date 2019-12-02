@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation, Injectable, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation, Injectable, ViewChild, ElementRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import * as _ from 'lodash';
@@ -148,6 +148,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     estimateData: any;
     journalText: any = 'View';
     journalLinktype: any;
+    @ViewChild('widgetsContent', { read: ElementRef }) public widgetsContent: ElementRef<any>;
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
@@ -317,6 +318,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
      * On init
      */
     ngOnInit(): void {
+        this.widgetsContent.nativeElement.scrollTo({ left: (this.widgetsContent.nativeElement.scrollLeft + 150), behavior: 'smooth' });
         this.updateTimerCounter();
         this.displayMattterList();
         // Subscribe to the config changes
@@ -1763,7 +1765,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.behaviorService.SetActiveSubMenu(this.activeSubMenu);
         // this.behaviorService.navigation(this.router.url);
         // this.selectedIndex=0;
-        this.setTab('');
+            this.setTab('');
     }
     setTab(event: any) {
         this.selectedIndex = 0;

@@ -250,4 +250,11 @@ export class InvoiceDetailComponent implements OnInit {
   RowClick(row){
    console.log(row);
   }
+  totalchange() {
+   let ExGst =Number(this.f.INVOICETOTAL.value)/1.1;
+    let Gst = Number(this.f.INVOICETOTAL.value) - Number(ExGst);
+    let InGst =  Number(this.f.INVOICETOTAL.value) - Number(Gst);
+    this.invoiceDetailForm.controls['INVOICETOTAL'].setValue(InGst);
+    
+  }
 }

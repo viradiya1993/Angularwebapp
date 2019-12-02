@@ -199,9 +199,17 @@ TotalInvoiceData(type){
                     legend:{display:false},
                     maintainAspectRatio:false,
                     scales:{
-                        xAxes:[{display:true}],
+                        xAxes:[{
+                            gridLines: {
+                                color: "rgba(0, 0, 0, 0)",
+                            },
+                            display:true
+                        }],
                         yAxes:[
                             {
+                                gridLines: {
+                                    color: "rgba(0, 0, 0, 0)",
+                                },
                             display:true ,
                             ticks:{
                             min:0,
@@ -265,9 +273,16 @@ TotalExpenseData(type){
                     maintainAspectRatio:false,
 
                     scales:{
-                        xAxes:[{display:true}],
+                        xAxes:[{
+                            gridLines: {
+                                color: "rgba(0, 0, 0, 0)",
+                            },
+                            display:true}],
                         yAxes:[
                             {
+                                gridLines: {
+                                    color: "rgba(0, 0, 0, 0)",
+                                },
                             display:true ,
                             ticks:{
                             min:0,
@@ -328,9 +343,15 @@ TotalReceiptData(type){
                     legend:{display:false},
                     maintainAspectRatio:false,
                     scales:{
-                        xAxes:[{display:true}],
+                        xAxes:[{
+                            gridLines: {
+                                color: "rgba(0, 0, 0, 0)",
+                            },display:true}],
                         yAxes:[
                             {
+                                gridLines: {
+                                    color: "rgba(0, 0, 0, 0)",
+                                },
                             display:true ,
                             ticks:{
                             min:0,
@@ -395,7 +416,7 @@ ComparisionChart(){
         labels   : this.getMonthNumForExpense,
         colors   : [
             {
-                borderColor              : 'rgba(30, 136, 229, 0.87)',
+                borderColor              : 'rgba(255,0,0,1)',
                 // backgroundColor          : 'rgba(30, 136, 229, 0.87)',
                  pointBackgroundColor     : 'rgba(30, 136, 229, 0.87)',
                  pointHoverBackgroundColor: 'rgba(30, 136, 229, 0.87)',
@@ -442,6 +463,7 @@ ComparisionChart(){
                 xAxes: [
                     {
                         gridLines: {
+                            color: "rgba(0, 0, 0, 0)",
                             display: false
                         },
                         ticks    : {
@@ -453,6 +475,7 @@ ComparisionChart(){
                     stacked: true,
                     display:true ,
                     gridLines: {
+                        color: "rgba(0, 0, 0, 0)",
                         tickMarkLength: 16
                     },
                     ticks    : {

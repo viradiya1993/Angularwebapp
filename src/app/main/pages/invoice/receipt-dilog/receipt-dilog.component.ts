@@ -73,6 +73,7 @@ export class ReceiptDilogComponent implements OnInit {
     public _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
+    console.log(_data);
     this.matterData = this._data.matterData;
     this.isEdit = this._data.action == 'edit' || this._data.action == 'view' ? true : false;
 
@@ -157,6 +158,7 @@ export class ReceiptDilogComponent implements OnInit {
     this.isLoadingResults = true;
     let incomeGuid = { INCOMEGUID: INCOMEGUID }
     this._mainAPiServiceService.getSetData(incomeGuid, 'GetIncome').subscribe(response => {
+      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.INCOMEITEMS[0]) {
           localStorage.setItem('receiptData', JSON.stringify(response.DATA.INCOMEITEMS[0]));

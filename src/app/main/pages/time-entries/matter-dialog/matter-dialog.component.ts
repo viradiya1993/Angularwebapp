@@ -40,7 +40,7 @@ export class MatterDialogComponent implements OnInit {
     private Timersservice: TimersService
   ) {
     this.matterFilterForm = this.fb.group({ MatterFilter: [''], UserFilter: [''], searchFilter: [''], InvoiceFilter: [''], });
-    
+    this.matterFilterForm.controls['MatterFilter'].setValue('active')
   }
 
   ngOnInit() {
@@ -64,7 +64,8 @@ export class MatterDialogComponent implements OnInit {
     this.behaviorService.MatterData(this.currentMatterData);
   }
   getMatterList() {
-    this.getList({});
+    this.filterVal.Active = 'active';
+    this.getList(this.filterVal);
     this.pageSize = localStorage.getItem('lastPageSize');
   }
   get f() {

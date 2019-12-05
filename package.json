@@ -10,7 +10,7 @@
         "build": "node --max_old_space_size=6144 ./node_modules/@angular/cli/bin/ng build --dev",
         "build-stats": "node --max_old_space_size=6144 ./node_modules/@angular/cli/bin/ng build --dev --stats-json",
         "build-prod": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build  --prod --aot --vendor-chunk --common-chunk --delete-output-path --buildOptimizer",
-        "build-sandbox": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build  --configuration sandbox  --aot --vendor-chunk --common-chunk --delete-output-path --buildOptimizer",
+        "build-sandbox": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --configuration=sandbox  --aot --vendor-chunk --common-chunk --delete-output-path --buildOptimizer",
         "build-prod-stats": "node --max_old_space_size=6144 ./node_modules/@angular/cli/bin/ng build --prod --stats-json",
         "test": "ng test",
         "lint": "ng lint",

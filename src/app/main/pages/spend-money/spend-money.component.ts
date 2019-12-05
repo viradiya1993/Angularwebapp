@@ -113,7 +113,7 @@ export class SpendMoneyComponent implements OnInit,OnDestroy {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     const date4 = this.datepipe.transform(date2, 'dd/MM/yyyy');
     const date5 = this.datepipe.transform(date3, 'dd/MM/yyyy');
-    if (date4 === date5) {
+    
       if (diffDays == 0) {
         this.SepndMoneyForm.controls['DayRange'].setValue("Today");
       } else if (diffDays == 7) {
@@ -122,8 +122,8 @@ export class SpendMoneyComponent implements OnInit,OnDestroy {
         this.SepndMoneyForm.controls['DayRange'].setValue("Last 30 days");
       } else if (diffDays == 90) {
         this.SepndMoneyForm.controls['DayRange'].setValue("Last 90 days");
-      }
-    } else {
+      }else {
+      console.log("6 month")
       this.forHideShowDateRangePicker = "show";
       this.SepndMoneyForm.controls['DayRange'].setValue("Date Range");
     }
@@ -295,9 +295,9 @@ export class SpendMoneyComponent implements OnInit,OnDestroy {
     localStorage.setItem('spendmoney_filter', JSON.stringify(this.filterData));
   }
   ngOnDestroy(): void {
-    this.filterData = JSON.parse(localStorage.getItem("spendmoney_filter"));
-    this.filterData.Search = '';
-    localStorage.setItem('spendmoney_filter', JSON.stringify(this.filterData));
+    // this.filterData = JSON.parse(localStorage.getItem("spendmoney_filter"));
+    // this.filterData.Search = '';
+    // localStorage.setItem('spendmoney_filter', JSON.stringify(this.filterData));
   }
 }
 

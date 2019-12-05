@@ -212,8 +212,12 @@
                     <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
                         <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
                             <div class="pr-16">
-                                <div class="h3 secondary-text">Total Invoiced</div>
-                                <div class="font-size-20 font-weight-300 line-height-1 mt-8">
+                                <div class="h3 secondary-text">
+                                    <a (click)="InvoiceClick()" class="link_click" [routerLink]="'/invoice'"  mat-list-item >
+                                        Total Invoiced  
+                                    </a>
+                                </div>
+                                <div class="font-size-54 font-weight-300 line-height-1 mt-8">
                                    $ {{widget11.conversion.value | number}}
                                 </div>
                             </div>
@@ -228,8 +232,12 @@
                     <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
                         <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
                             <div class="pr-16">
-                                <div class="h3 secondary-text">Total Expenses</div>
-                                <div class="font-size-20 font-weight-300 line-height-1 mt-8">
+                                <div class="h3 secondary-text">
+                                    <a (click)="TotalExpense()" class="link_click" [routerLink]="'/spend-money'"  mat-list-item >
+                                        Total Expenses
+                                    </a>
+                                </div>
+                                <div class="font-size-54 font-weight-300 line-height-1 mt-8">
                                    $ {{widget12.conversion.value | number}}
                                 </div>
                             </div>
@@ -244,8 +252,12 @@
                     <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0'">
                         <div class="p-16 pb-0" fxLayout="row wrap" fxLayoutAlign="start end">
                             <div class="pr-16">
-                                <div class="h3 secondary-text">Total Receipts</div>
-                                <div class="font-size-20 font-weight-300 line-height-1 mt-8">
+                                <div class="h3 secondary-text">
+                                    <a (click)="TotalReceipt()" class="link_click" [routerLink]="'/receive-money'"  mat-list-item >
+                                        Total Receipts
+                                    </a>
+                                </div>
+                                <div class="font-size-54 font-weight-300 line-height-1 mt-8">
                                    $ {{widget13.conversion.value | number}}
                                 </div>
                             </div>

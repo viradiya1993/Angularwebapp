@@ -115,10 +115,10 @@ export class GeneralReceiptDilogComponent implements OnInit {
           this.generalReceiptForm.controls['PAYEE'].setValue(incomeData.PAYEE);
           this.generalReceiptForm.controls['AMOUNT'].setValue(incomeData.AMOUNT);
           this.generalReceiptForm.controls['GST'].setValue(incomeData.GST);
-          // this.generalReceiptForm.controls['BANKACCOUNTGUIDTEXT'].setValue(incomeData.BANKACCOUNTNUMBER);
-          // this.generalReceiptForm.controls['INCOMEACCOUNTGUIDTEXT'].setValue(incomeData.INCOMEACCOUNTNUMBER);
-          // this.generalReceiptForm.controls['INCOMEACCOUNTGUID'].setValue(incomeData.INCOMEACCOUNTGUID);
-          // this.generalReceiptForm.controls['BANKACCOUNTGUID'].setValue(incomeData.BANKACCOUNTGUID);
+          this.generalReceiptForm.controls['BANKACCOUNTGUIDTEXT'].setValue(incomeData.BANKACCOUNTNUMBER);
+          this.generalReceiptForm.controls['INCOMEACCOUNTGUIDTEXT'].setValue(incomeData.INCOMEACCOUNTNUMBER);
+          this.generalReceiptForm.controls['INCOMEACCOUNTGUID'].setValue(incomeData.INCOMEACCOUNTGUID);
+          this.generalReceiptForm.controls['BANKACCOUNTGUID'].setValue(incomeData.BANKACCOUNTGUID);
           this.generalReceiptForm.controls['NOTE'].setValue(incomeData.NOTE);
         }
       } else if (response.MESSAGE == 'Not logged in') {

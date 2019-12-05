@@ -19,7 +19,7 @@
                     </mat-form-field>
                     <mat-form-field class="example" fxFlex="{{size}}" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.STATUS,'has-warning':errorWarningData.Warning?.STATUS}">
                         <mat-label>Paid</mat-label>
-                        <mat-select #value name="selected" [(ngModel)]="paidtype" formControlName="Paid" (ngModelChange)="Paidtype($event)">
+                        <mat-select #value name="selected" [(ngModel)]="paidtype" formControlName="Paid" (selectionChange)="Paidtype($event.value)">
                             <mat-option value="Paid">Paid</mat-option>
                             <mat-option value="Unpaid">Unpaid</mat-option>
                         </mat-select>
@@ -42,12 +42,12 @@
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" fxFlex="40" class="pr-4">
-                        <mat-label *ngIf="classtype !=='Description'">Bank a/c</mat-label>
-                        <mat-label *ngIf="classtype=='Description'">Asset a/c</mat-label>
+                        <mat-label *ngIf="classtype !=='Depreciation'">Bank a/c</mat-label>
+                        <mat-label *ngIf="classtype=='Depreciation'">Asset a/c</mat-label>
                         <input matInput formControlName="Bankac">
                         <mat-icon matSuffix>
-                            <button *ngIf="classtype !=='Description'" id="bank" class="matternews menu-disabled" [disabled]="Bankhide === true" class="matternews" (click)="BankingDialogOpen('BANK ACCOUNT')"><img class="ipad-icon" src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
-                            <button *ngIf="classtype =='Description'" id="bank" class="matternews menu-disabled" [disabled]="Bankhide === true" class="matternews" (click)="BankingDialogOpen('ASSET')"><img class="ipad-icon" src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
+                            <button *ngIf="classtype !=='Depreciation'" id="bank" class="matternews menu-disabled" [disabled]="Bankhide === true" class="matternews" (click)="BankingDialogOpen('BANK ACCOUNT' , 'BankAccountClick')"><img class="ipad-icon" src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
+                            <button *ngIf="classtype =='Depreciation'" id="bank" class="matternews menu-disabled" [disabled]="Bankhide === true" class="matternews" (click)="BankingDialogOpen('ASSET','BankAccountClick')"><img class="ipad-icon" src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                         </mat-icon>
                     </mat-form-field>
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.NOTE,'has-warning':errorWarningData.Warning?.NOTE}" appearance="outline" fxFlex="60" class="pr-4">
@@ -59,7 +59,7 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.EXPENDITURETYPE,'has-warning':errorWarningData.Warning?.EXPENDITURETYPE}" class="example" fxFlex="20" class="pr-4" appearance="outline">
                         <mat-label>Type</mat-label>
-                        <mat-select (ngModelChange)="Cashtype($event)" #value name="selected" formControlName="Type">
+                        <mat-select (selectionChange)="Cashtype($event)" #value name="selected" formControlName="Type">
                             <mat-option value="Cash">Cash</mat-option>
                             <mat-option value="Cheque">Cheque</mat-option>
                             <mat-option value="Credit Card">Credit Card</mat-option>
@@ -175,7 +175,7 @@
                             <mat-option value="Pay GST">Pay GST</mat-option>
                             <mat-option value="Pay Tax">Pay Tax</mat-option>
                             <mat-option value="Personal">Personal</mat-option>
-                            <mat-option value="Description">Depreciation</mat-option>
+                            <mat-option value="Depreciation">Depreciation</mat-option>
                             <mat-option value="Other">Other</mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -214,7 +214,7 @@
                         <span class="currency_sign" matPrefix>$ &nbsp;</span>
                     </mat-form-field>
                     <mat-form-field [ngClass]="{'has-error':errorWarningData.Error?.EXPENDITUREITEMS,'has-warning':errorWarningData.Warning?.EXPENDITUREITEMS}" appearance="outline" fxFlex="25" class="pr-4">
-                        <mat-label *ngIf="classtype=='Expense' || classtype=='Matter Expense' || classtype=='Description' ||classtype=='Other'">Expense a/c </mat-label>
+                        <mat-label *ngIf="classtype=='Expense' || classtype=='Matter Expense' || classtype=='Depreciation' ||classtype=='Other'">Expense a/c </mat-label>
                         <mat-label *ngIf="classtype=='Capital'">Asset a/c </mat-label>
                         <mat-label *ngIf="classtype=='Pay GST'">GST a/c </mat-label>
                         <mat-label *ngIf="classtype=='Pay Tax'">Tax a/c</mat-label>
@@ -222,7 +222,7 @@
                         <!-- <mat-label *ngIf="classtype=='personal'">Expense a/c </mat-label> -->
                         <input matInput formControlName="Expenseac">
                         <mat-icon matSuffix>
-                            <button id="expac" class="matternews" (click)="BankingDialogOpen('')" [disabled]="expac"><img class="ipad-icon" src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
+                            <button id="expac" class="matternews" (click)="BankingDialogOpen('','ExpenseClick')" [disabled]="expac"><img class="ipad-icon" src="assets/icons/web_app/icon_accounts_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above"></button>
                         </mat-icon>
                     </mat-form-field>
 

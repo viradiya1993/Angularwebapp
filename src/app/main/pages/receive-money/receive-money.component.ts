@@ -65,9 +65,11 @@ export class ReceiveMoneyComponent implements OnInit {
       ReceiveMoneyType: [''],
     });
     if (this.lastFilter.ITEMSTARTDATE && this.lastFilter.ITEMENDDATE) {
-      // let Sd = new Date(this.lastFilter.ITEMSTARTDATE);
-      // let ed = new Date(this.lastFilter.ITEMENDDATE);
-      this.receiveMoneyForm.controls['DateRange'].setValue({ begin: new Date(), end: dt });
+      let DATE = this.lastFilter.ITEMSTARTDATE.split("/");
+      let SendDATE = new Date(DATE[1] + '/' + DATE[0] + '/' + DATE[2]);
+      let EDENDDATE = this.lastFilter.ITEMENDDATE.split("/");
+      let SendENDDATE = new Date(EDENDDATE[1] + '/' + EDENDDATE[0] + '/' + EDENDDATE[2]);
+      this.receiveMoneyForm.controls['DateRange'].setValue({ begin: SendDATE, end: SendENDDATE });
     }
     this.receiveMoneyForm.controls['ShowWhat'].setValue(this.lastFilter.INCOMECLASS);
     this.getTableFilter();

@@ -6,14 +6,17 @@ import { FuseSearchBarModule, FuseShortcutsModule, FuseSidebarModule } from '@fu
 import { FuseSharedModule } from '@fuse/shared.module';
 import { QuickPanelModule } from 'app/layout/components/quick-panel/quick-panel.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 import { ToolbarComponent } from 'app/layout/components/toolbar/toolbar.component';
+
 
 @NgModule({
     declarations: [
         ToolbarComponent
     ],
     imports: [
+        ScrollingModule,
         RouterModule,
         MatCheckboxModule,
         MatButtonModule,

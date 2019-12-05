@@ -10,6 +10,7 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
 
 import { ToolbarComponent } from 'app/layout/components/toolbar/toolbar.component';
 
+
 @NgModule({
     declarations: [
         ToolbarComponent

@@ -35,7 +35,7 @@ export class MatterInvoicesComponent implements OnInit {
     private behaviorService: BehaviorService,
     private toastr: ToastrService) { }
 
-  MatterInvoicesdata;
+  MatterInvoicesdata:any=[];
   ngOnInit() {
     this.behaviorService.matterInvoice$.subscribe(matterInvoiceData => {
       if (matterInvoiceData)
@@ -52,6 +52,7 @@ export class MatterInvoicesComponent implements OnInit {
   }
 
   loadData() {
+    this.MatterInvoicesdata=[];
     this.isLoadingResults = true;
     let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
     this._mainAPiServiceService.getSetData(potData, 'GetInvoice').subscribe(res => {

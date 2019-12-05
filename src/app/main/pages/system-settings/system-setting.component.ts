@@ -37,6 +37,7 @@ export class SystemSettingComponent implements OnInit {
     this.nameFunction();
     this.behaviorService.SysytemAccountData$.subscribe(result => {
       if (result) {
+        
         this.accountDialoge = result;
       }
     });
@@ -139,6 +140,7 @@ export class SystemSettingComponent implements OnInit {
   }
   getVal(data) {
     // for trust  
+    this.behaviorService.SysytemAccountData(data.DATA.LISTS.SYSTEMACCOUNTS);
     this.SettingForm.controls['DEFAULTTRUSTRECEIPTTYPE'].setValue(data.DATA.SYSTEM.TRUSTGROUP.DEFAULTTRUSTRECEIPTTYPE.toString());
     this.SettingForm.controls['DEFAULTTRUSTWITHDRAWALTYPE'].setValue(data.DATA.SYSTEM.TRUSTGROUP.DEFAULTTRUSTWITHDRAWALTYPE.toString());
     this.SettingForm.controls['EFTTRUSTACCOUNTNAME'].setValue(data.DATA.SYSTEM.TRUSTGROUP.EFTTRUSTACCOUNTNAME);

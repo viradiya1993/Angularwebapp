@@ -81,6 +81,8 @@ const routes = [
   ],
   exports: [
     TimeBillingComponent,
+    MatSortModule,
+    MatTableModule
   ],
   entryComponents: [
     EstimateDilogComponent

@@ -35,7 +35,7 @@ export class ReceiptsCreditsComponent implements OnInit {
     private TableColumnsService: TableColumnsService,
     private toastr: ToastrService, public behaviorService: BehaviorService, ) { }
 
-  ReceiptsCreditsdata;
+  ReceiptsCreditsdata:any=[];
   ngOnInit() {
     $('content').addClass('inner-scroll');
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
@@ -44,6 +44,7 @@ export class ReceiptsCreditsComponent implements OnInit {
   }
   LoadData() {
     //API Data fetch
+    this.ReceiptsCreditsdata  = [];
     this.isLoadingResults = true;
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
     this._mainAPiServiceService.getSetData(potData, 'GetMatterReceipts').subscribe(res => {

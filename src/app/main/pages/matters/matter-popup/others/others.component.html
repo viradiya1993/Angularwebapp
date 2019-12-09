@@ -12,13 +12,28 @@
                 <mat-option *ngFor="let Client of ClientSource" value="{{Client.LOOKUPFULLVALUE}}">{{Client.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FIELDOFLAW,'has-warning':errorWarningData.Warning?.FIELDOFLAW}">
+
+        <!-- <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4" >
+                <mat-label>Field Of Law</mat-label>
+            <input  placeholder="Field Of Law" name="FIELDOFLAW" formControlName="FIELDOFLAW" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let Filed of FiledOfLaw" value="{{Filed.LOOKUPFULLVALUE}}">
+                {{Filed.LOOKUPFULLVALUE}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+ -->
+
+          <mat-form-field appearance="outline" fxFlex="33" class="pr-4" >
             <mat-label>Field Of Law</mat-label>
-            <mat-select formControlName="FIELDOFLAW">
-                <mat-option *ngFor="let Filed of FiledOfLaw" value="{{Filed.LOOKUPFULLVALUE}}">{{Filed.LOOKUPFULLVALUE}}</mat-option>
-            </mat-select>
-            <!-- LOOKUPFULLVALUE -->
+            <input type="text" placeholder="Field Of Law" aria-label="Number" matInput name="FIELDOFLAW" formControlName="FIELDOFLAW" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let val of FiledOfLaw" value="{{val.LOOKUPFULLVALUE}}">
+                    {{val.LOOKUPFULLVALUE}}
+                </mat-option>
+            </mat-autocomplete>
         </mat-form-field>
+    
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" class="example" fxFlex="40" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.INDUSTRY,'has-warning':errorWarningData.Warning?.INDUSTRY}">

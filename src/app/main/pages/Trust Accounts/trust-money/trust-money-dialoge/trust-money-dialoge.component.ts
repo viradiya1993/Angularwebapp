@@ -2,11 +2,14 @@ import { Component, OnInit, Input, Inject } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MainAPiServiceService } from 'app/_services';
-import { MAT_DIALOG_DATA, MatTableDataSource, MatDialogRef, MatDialog } from '@angular/material';
+import { MAT_DIALOG_DATA, MatTableDataSource, MatDialogRef, MatDialog, MatDatepickerInputEvent } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ToastrService } from 'ngx-toastr';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { MatterDialogComponent } from 'app/main/pages/time-entries/matter-dialog/matter-dialog.component';
+import { DatePipe } from '@angular/common';
+import { ContactDialogComponent } from 'app/main/pages/contact/contact-dialog/contact-dialog.component';
+import { ContactSelectDialogComponent } from 'app/main/pages/contact/contact-select-dialog/contact-select-dialog.component';
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -36,8 +39,8 @@ export class TrustMoneyDialogeComponent implements OnInit {
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
-  getDataForTable:any=[];
-  MatterAmmountArray:any=[];
+  getDataForTable: any = [];
+  MatterAmmountArray: any = [];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   selection = new SelectionModel<PeriodicElement>(true, []);
   errorWarningData: any = { "Error": [], 'Warning': [] };
@@ -56,17 +59,24 @@ export class TrustMoneyDialogeComponent implements OnInit {
   TrustMoneyForm: FormGroup;
   highlightedRows: any;
   INDEX: any;
+  SendDate: string;
   constructor(private _mainAPiServiceService: MainAPiServiceService,
     private _formBuilder: FormBuilder, private toastr: ToastrService,
     public dialogRef: MatDialogRef<TrustMoneyDialogeComponent>,
     private dialog: MatDialog,
     public _matDialog: MatDialog,
+    private datepipe: DatePipe,
     @Inject(MAT_DIALOG_DATA) public _data: any, ) {
     this.TrustMoneyForm = this._formBuilder.group({
       TRANSACTIONDATE: [''],
       AMOUNT: [''],
       PAYMENTTYPE: [''],
       PaymentType: [''],
+      BANKCHEQUE: [''],
+      BENEFICIARY: [''],
+      AUTHORISEDBY: [''],
+      PREPAREDBY: [''],
+      TOMATTERGUID: [''],
       //item 
       SHORTNAME: [''],
       MATTERGUID: [''],
@@ -85,18 +95,21 @@ export class TrustMoneyDialogeComponent implements OnInit {
       TENDOLLARS: [''],
       TWENTYDOLLARS: [''],
       // address
+      PAYOR:[''],
       ADDRESS1: [''],
       POSTCODE: [''],
       STATE_: [''],
       SUBURB: [''],
-      MatterAMOUNT:[''],
+      MatterAMOUNT: [''],
       // extra
       BankChequeChkBox: [''],
       CheckBox: [''],
-      INVOICEDVALUEEXGST:[''],
-      Unallocated:[''],
-      Total:['']
+      INVOICEDVALUEEXGST: [''],
+      Unallocated: [''],
+      Total: ['']
     });
+
+    this.TrustMoneyForm.controls['PREPAREDBY'].setValue('Claudine Parkinson (pwd=test)');
     this.TrustMoneyForm.controls['PAYMENTTYPE'].setValue('Cheque');
     this.TrustMoneyForm.controls['CheckBox'].setValue(false);
     this.action = _data.action;
@@ -159,7 +172,9 @@ export class TrustMoneyDialogeComponent implements OnInit {
     }
   }
   ChkDeltabx(val) {
+console.log(this.f.BANKCHEQUE.value);
   }
+
   CheckBoxClick(val) {
     this.matterType = val
   }
@@ -190,34 +205,66 @@ export class TrustMoneyDialogeComponent implements OnInit {
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
+  choosedDateTranD(type: string, event: MatDatepickerInputEvent<Date>) {
+    let begin = this.datepipe.transform(event.value, 'dd/MM/yyyy');
+    this.SendDate=begin
+  }
   SaveTrustMoney() {
+
     let data = {
-      TRANSACTIONDATE: this.f.TRANSACTIONDATE.value,
+
+
+      TRANSACTIONDATE:  this.SendDate,
       AMOUNT: this.f.AMOUNT.value,
       PAYMENTTYPE: this.f.PAYMENTTYPE.value,
-      PaymentType: this.f.PaymentType.value,
-      //item 
-      SHORTNAME: this.f.SHORTNAME.value,
-      MATTERGUID: this.f.MATTERGUID.value,
       PURPOSE: this.f.PURPOSE.value,
-      //cheque details 
-      CHEQUENO: this.f.CHEQUENO.value,
-      ACCOUNTNAME: this.f.ACCOUNTNAME.value,
-      ACCOUNTNUMBER: this.f.ACCOUNTNUMBER.value,
-      BSB: this.f.BSB.value,
-      EFTREFERENCE: this.f.EFTREFERENCE.value,
-      // cash 
-      COINS: this.f.COINS.value,
-      FIFTYDOLLARS: this.f.FIFTYDOLLARS.value,
-      HUNDREDDOLLARS: this.f.HUNDREDDOLLARS.value,
-      FIVEDOLLARS: this.f.FIVEDOLLARS.value,
-      TENDOLLARS: this.f.TENDOLLARS.value,
-      TWENTYDOLLARS: this.f.TWENTYDOLLARS.value,
-      // address
-      ADDRESS1: this.f.ADDRESS1.value,
-      POSTCODE: this.f.POSTCODE.value,
-      STATE_: this.f.STATE_.value,
-      SUBURB: this.f.SUBURB.value,
+      TOMATTERGUID: this.f.MATTERGUID.value,
+      BANKCHEQUE: this.f.BANKCHEQUE.value,
+      BENEFICIARY: this.f.BENEFICIARY.value,
+      // new added 
+      CASHBOOK: "Withdrawal",
+      TRANSACTIONCLASS: "Trust Money",
+      TRANSACTIONTYPE: "Normal Item",
+      TRANSACTIONSUBTYPE: "Normal",
+
+
+
+
+      PAYORGROUP: {
+        PAYOR:this.f.PAYOR.value,
+        ADDRESS1: this.f.ADDRESS1.value,
+        // ADDRESS2: '',
+        SUBURB: this.f.SUBURB.value,
+        STATE: this.f.STATE_.value,
+        POSTCODE: this.f.POSTCODE.value
+      },
+      AUTHORISEDBY: this.f.AUTHORISEDBY.value,
+      PREPAREDBY: this.f.PREPAREDBY.value,
+
+      CASHGROUP: {
+        COINS: this.f.COINS.value,
+        FIFTYDOLLARS: this.f.FIFTYDOLLARS.value,
+        HUNDREDDOLLARS: this.f.HUNDREDDOLLARS.value,
+        FIVEDOLLARS: this.f.FIVEDOLLARS.value,
+        TENDOLLARS: this.f.TENDOLLARS.value,
+        TWENTYDOLLARS: this.f.TWENTYDOLLARS.value,
+      },
+      BANKDETAILS: {
+        CHEQUENO: this.f.CHEQUENO.value,
+        ACCOUNTNAME: this.f.ACCOUNTNAME.value,
+        ACCOUNTNUMBER: this.f.ACCOUNTNUMBER.value,
+        BSB: this.f.BSB.value,
+        EFTREFERENCE: this.f.EFTREFERENCE.value,
+      },
+      BANKACCOUNTGUID: '',
+
+      //for now extra
+      // PaymentType: this.f.PaymentType.value,
+      // //item 
+      // SHORTNAME: this.f.SHORTNAME.value,
+      // MATTERGUID: this.f.MATTERGUID.value,
+      // // PURPOSE: this.f.PURPOSE.value,
+
     }
     this.isspiner = true;
     let finalData = { DATA: data, FormAction: 'insert', VALIDATEONLY: true }
@@ -294,51 +341,61 @@ export class TrustMoneyDialogeComponent implements OnInit {
       this.toastr.error(error);
     });
   }
-  editInnerTable(val,Index){
-    this.INDEX=Index;
-    this.highlightedRows=Index;
-console.log(val);
+  editInnerTable(val, Index) {
+    this.INDEX = Index;
+    this.highlightedRows = Index;
+    console.log(val);
   }
-  addMatterItem(){
-    this.MatterAmmountArray=[];
-    if(this.f.AMOUNT.value ==''){
+  addMatterItem() {
+    this.MatterAmmountArray = [];
+
+    if (this.f.AMOUNT.value == '') {
       this.toastr.error("Please enter Ammount ");
       return false;
-    }else if(Number(this.f.Unallocated.value) <  Number(this.f.MatterAMOUNT.value)) {
-      this.toastr.error("Ammount can not be larger then what is unallocated"); 
+    } else if (Number(this.f.Unallocated.value) < Number(this.f.MatterAMOUNT.value)) {
+      this.toastr.error("Ammount can not be larger then what is unallocated");
       return false;
     }
-    else{
-      if(this.f.SHORTNAME.value !='' && this.f.MatterAMOUNT.value !='' ){
+    else {
+      if (this.f.SHORTNAME.value != '' && this.f.MatterAMOUNT.value != '') {
         // calculation total and unallocated 
         this.getDataForTable.push({
-          Matter:this.f.SHORTNAME.value +' :'+ this.f.INVOICEDVALUEEXGST.value,
-          Ammount:this.f.MatterAMOUNT.value
+          Matter: this.f.SHORTNAME.value + ' :' + this.f.INVOICEDVALUEEXGST.value,
+          Ammount: this.f.MatterAMOUNT.value
         })
         this.getDataForTable.forEach(element => {
           this.MatterAmmountArray.push(Number(element.Ammount))
         });
         let SumOfMatterAmmount = Number(this.MatterAmmountArray.reduce(function (a = 0, b = 0) { return a + b; }, 0));
-        this.TrustMoneyForm.controls['Unallocated'].setValue(Number(this.f.AMOUNT.value)- Number(SumOfMatterAmmount))
+        this.TrustMoneyForm.controls['Unallocated'].setValue(Number(this.f.AMOUNT.value) - Number(SumOfMatterAmmount))
         this.TrustMoneyForm.controls['Total'].setValue(Number(SumOfMatterAmmount))
-         // empty field for another push 
-          this.CommonEmptyField();
-      }else{
+        // empty field for another push 
+        this.CommonEmptyField();
+      } else {
         this.toastr.error("Please fill up Matter | Ammount fields");
       }
     }
   }
-CommonEmptyField(){
-this.TrustMoneyForm.controls['MatterAMOUNT'].setValue('');
-this.TrustMoneyForm.controls['PURPOSE'].setValue('');
-this.TrustMoneyForm.controls['SHORTNAME'].setValue('');
-this.TrustMoneyForm.controls['INVOICEDVALUEEXGST'].setValue('');
-}
+  CommonEmptyField() {
+    this.TrustMoneyForm.controls['MatterAMOUNT'].setValue('');
+    this.TrustMoneyForm.controls['PURPOSE'].setValue('');
+    this.TrustMoneyForm.controls['SHORTNAME'].setValue('');
+    this.TrustMoneyForm.controls['INVOICEDVALUEEXGST'].setValue('');
+  }
 
-MainAmmountPress(){
-  this.TrustMoneyForm.controls['Unallocated'].setValue(this.f.AMOUNT.value);
-}
-deleteMatterItem(){
-  this.getDataForTable.splice(this.INDEX,1);
-}
+  MainAmmountPress() {
+    this.TrustMoneyForm.controls['Unallocated'].setValue(this.f.AMOUNT.value);
+  }
+  deleteMatterItem() {
+    this.getDataForTable.splice(this.INDEX, 1);
+  }
+  SelectContact() {
+    const dialogRef = this.dialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true, data: '' });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      console.log(result);
+      this.TrustMoneyForm.controls['PAYOR'].setValue(result.CONTACTNAME);
+      }
+    });
+  }
 }

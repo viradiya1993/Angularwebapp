@@ -152,7 +152,7 @@
                             </ng-container> -->
 
 
-                            <!-- <ng-container matColumnDef="ALLOCATED">
+                           <ng-container *ngIf="action == 'add'" matColumnDef="ALLOCATED">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Allocated</th>
                                 <td mat-cell *matCellDef="let row">
                                     <p class="company text-truncate">
@@ -164,9 +164,21 @@
                                        </span>
                                     </p>
                                 </td>
-                            </ng-container> -->
+                            </ng-container>
 
-                            <ng-container matColumnDef="ALLOCATED">
+                            <ng-container *ngIf="action != 'add'" matColumnDef="ALLOCATED">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Allocated</th>
+                                    <td mat-cell *matCellDef="let row">
+                                        <p class="company text-truncate">
+                                            <span >
+                                            {{row.AMOUNT}}
+                                           </span>
+                                        </p>
+                                    </td>
+                                </ng-container>
+    
+
+                            <!-- <ng-container matColumnDef="ALLOCATED">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Allocated</th>
                                 <td mat-cell *matCellDef="let row">
                                     <p class="company text-truncate">
@@ -178,7 +190,7 @@
                                        </span>
                                     </p>
                                 </td>
-                            </ng-container>
+                            </ng-container> -->
 
                             <ng-container matColumnDef="MATTERGUID">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Matter</th>
@@ -197,7 +209,7 @@
                     </div>
                     <mat-paginator [pageSizeOptions]="[10, 20 ,50,100]" showFirstLastButtons></mat-paginator>
                 </div>
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="unallocated_div">
+                <div *ngIf="action != 'edit' && action !='editForTB'"  fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" class="unallocated_div">
                     <p  fxFlex="50"> Enter the amount to allocate to the selected invoice and press tab</p>
                     <mat-form-field appearance="outline" fxFlex="35" class="pr-4">
                         <input formControlName="allocatedSelected" matInput placeholder="Unallocated">

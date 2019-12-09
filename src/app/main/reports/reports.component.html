@@ -24,7 +24,7 @@
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <div class=" one  mb-24" fxLayout="column">
-                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <div *ngIf="title != 'Aged Debtors'" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                             <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
                                 <mat-label>Date Range</mat-label>
                                 <input (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" matInput placeholder="Choose a date" formControlName="DATE" name="DATE" [satDatepicker]="picker">
@@ -32,6 +32,14 @@
                                 <sat-datepicker #picker [rangeMode]="true" [closeAfterSelection]="false"></sat-datepicker>
                             </mat-form-field>
                         </div>
+                        <div *ngIf="title == 'Aged Debtors'" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field appearance="outline" class="example" fxFlex="49" class="pr-4">
+                            <mat-label>Date To</mat-label>
+                            <input (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)" matInput name="DATE" formControlName="DATE" [matDatepicker]="dateto" placeholder="Date To">
+                            <mat-datepicker-toggle matSuffix [for]="dateto"></mat-datepicker-toggle>
+                            <mat-datepicker #dateto></mat-datepicker>
+                        </mat-form-field>
+                    </div>
                     </div>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="responseData.FEEEARNERS">

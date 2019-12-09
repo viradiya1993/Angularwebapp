@@ -35,8 +35,11 @@ export class ReportsComponent implements OnInit {
         this._mainAPiServiceService.getSetForReport(this.data.REPORTID).subscribe(response => {          
           this.isLoadingResults = false;  
            if(response.CODE==200 && response.STATUS=='success'){
+             console.log(response);
              this.responseData=response.DATA; 
-             this.title=response.DATA.REPORTTITLE;          
+             this.title=response.DATA.REPORTTITLE;  
+             // get date after innitializ
+             this.dateDifferent();        
             //option1
             if(response.DATA.OPTIONTEXT1!=""){
               if(response.DATA.OPTIONVALUE1==0){
@@ -126,10 +129,17 @@ export class ReportsComponent implements OnInit {
         })   
       }     
   }  
+  dateDifferent(){
+    if(this.title =='Aged Debtors'){
+      this.ReportForm.controls['DATE'].setValue(new Date());
+    }else{
+      this.ReportForm.controls['DATE'].setValue({begin: new Date(), end: new Date()});
+    }
+  }
   ngOnInit() { 
     this.ReportForm = this._formBuilder.group({
       DATERANGE: ['', [Validators.required]],
-      DATE: [{begin: new Date(), end: new Date()}],
+      DATE: [''],
       FEEEARNERNAME: ['', [Validators.required]],
       LIST1TEXT: ['', [Validators.required]],
       LIST2TEXT: ['', [Validators.required]],
@@ -144,6 +154,7 @@ export class ReportsComponent implements OnInit {
       OPTIONTEXT9: ['', [Validators.required]],
       OPTIONTEXT10: ['', [Validators.required]],     
     });
+    
     this.ReportForm.get('DATE').disable();
     localStorage.removeItem('ReportDaterange');   
   }  
@@ -161,8 +172,16 @@ export class ReportsComponent implements OnInit {
  }
  //DateFormat Change
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {    
-    var begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
-    var end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');      
+    var begin;
+    var end;
+    if(this.title =='Aged Debtors'){
+      begin='';
+      end = this.datepipe.transform(event.value, 'dd/MM/yyyy');   
+    }else{
+      begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
+      end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');     
+    }
+    
     datesave(begin,end)
   }
   get f() {

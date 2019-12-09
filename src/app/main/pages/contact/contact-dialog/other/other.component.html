@@ -43,11 +43,7 @@
             <input (dateInput)="choosedDateOfDath('input', $event)" (dateChange)="choosedDateOfDath('change', $event)" matInput name="DATEOFDEATH" [formControlName]="'DATEOFDEATH'" [matDatepicker]="DATEOFDEATH" placeholder="Date Of Death">
             <mat-datepicker-toggle matSuffix [for]="DATEOFDEATH"></mat-datepicker-toggle>
             <mat-datepicker #DATEOFDEATH></mat-datepicker>
-        </mat-form-field>
-        
-        
-        
-        
+        </mat-form-field>        
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.CAUSEOFDEATH,'has-warning':errorWarningData.Warning?.CAUSEOFDEATH}">
             <mat-label>Cause Of Death</mat-label>
             <input name="CAUSEOFDEATH" [formControlName]="'CAUSEOFDEATH'" matInput>

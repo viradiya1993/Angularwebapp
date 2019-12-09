@@ -20,6 +20,7 @@ import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
 import { EstimateDilogComponent } from './estimate/estimate-dilog/estimate-dilog.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ApplicationPipesModule } from '../application-pipes.module';
+import { ReCalcTimeEntriesDialogeComponent } from './re-calc-timeEntrie-dialoge/re-calc-timeEntrie-dialoge.component';
 
 
 
@@ -49,7 +50,8 @@ const routes = [
     MatterInvoicesComponent,
     ReceiptsCreditsComponent,
     MatterTrustComponent,
-    EstimateDilogComponent
+    EstimateDilogComponent,
+    ReCalcTimeEntriesDialogeComponent
   ],
   imports: [
     CommonModule,
@@ -85,7 +87,8 @@ const routes = [
     MatTableModule
   ],
   entryComponents: [
-    EstimateDilogComponent
+    EstimateDilogComponent,
+    ReCalcTimeEntriesDialogeComponent
   ],
   providers: [
     { provide: DateAdapter, useClass: AppDateAdapter },

@@ -61,6 +61,7 @@ import { GenerateInvoiceComponent } from 'app/main/pages/invoice/generate-invoic
 import { PacketsDialogComponent } from 'app/main/pages/globally-safecustody/packets/packets-dialog/packets-dialog.component';
 import { TrustChartOfAccountDailogComponent } from 'app/main/pages/trust-chart-of-account/trust-chart-of-account-dailog/trust-chart-of-account-dailog.component'
 import { round } from 'lodash';
+import { ReCalcTimeEntriesDialogeComponent } from 'app/main/pages/time-billing/re-calc-timeEntrie-dialoge/re-calc-timeEntrie-dialoge.component';
 @Component({
     selector: 'toolbar',
     templateUrl: './toolbar.component.html',
@@ -2305,6 +2306,18 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
                 //localStorage.setItem('set_active_matters', JSON.stringify(result));   
+            }
+        });
+    }
+    ReCalcTimeEntriClick(){
+        const dialogRef = this._matDialog.open(ReCalcTimeEntriesDialogeComponent, {
+            width: '100%', disableClose: true,
+            data: {
+                action: ''
+            }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
             }
         });
     }

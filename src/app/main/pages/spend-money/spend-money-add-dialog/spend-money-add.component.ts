@@ -347,6 +347,7 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['Type'].disable();
       this.spendmoneyForm.controls['ChequeNo'].disable();
       this.spendmoneyForm.controls['Bankac'].setValue('0-0000');
+      this.spendmoneyForm.controls['BankacGUID'].setValue('');
       this.spendmoneyForm.controls['DatePaidForSend'].setValue('');
       this.spendmoneyForm.controls['DatePaid'].setValue('');
     }

@@ -37,6 +37,7 @@ import { InternalErrorComponent } from './main/errors/internal-error/internal-er
 
 //Datepicker
 import { SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker';
+import { MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 import { ToastrModule } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -76,6 +77,8 @@ const appRoutes: Routes = [
         ChangePasswordComponent
     ],
     imports: [
+        MatDatepickerModule,
+        MatNativeDateModule,
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,

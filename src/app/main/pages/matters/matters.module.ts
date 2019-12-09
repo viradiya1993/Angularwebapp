@@ -44,7 +44,8 @@ import { CrownAllotmentComponent } from './matter-popup/newmatter-detail/matter-
 import { CorrespondDailogComponent } from './correspond-dailog/correspond-dailog.component';
 import { UserSelectPopupComponent } from './user-select-popup/user-select-popup.component';
 import { NumericDirective } from './matter-popup/numericValidation.component';
-
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatSortModule } from '@angular/material/sort';
 import { FileNoteDialogComponent } from './file-note-dialog/file-note-dialog.component';
@@ -96,6 +97,7 @@ const routes = [
 
   ],
   imports: [
+    ReactiveFormsModule,
     CommonModule,
     RouterModule.forChild(routes),
     FuseSharedModule,
@@ -109,6 +111,7 @@ const routes = [
     MatIconModule,
     MatInputModule,
     MatMenuModule,
+    MatAutocompleteModule,
     // MatRippleModule,
     MatTableModule,
     MatToolbarModule,

@@ -669,6 +669,33 @@
                                 <!-- end tag section  -->
                                 <mat-divider vertical></mat-divider>
 
+
+                                <!-- start extra section  -->
+
+     <!-- start tag section  -->
+     <mat-divider vertical *ngIf="activeSubMenu =='work-in-progress'"></mat-divider>
+     <section class="group-section-tab details_tab">
+         <section [ngClass]="appPermissions[7]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="isInvoice != 'invoice' && activeSubMenu =='work-in-progress'">
+             <button (click)="ReCalcTimeEntriClick()" mat-button [ngClass]="appPermissions[7]?.Access==0 ? 'large-button' : 'large-button'" >
+                 <section class="large-button-container">
+                     <mat-icon class="main-icon">
+                         <img src="assets/icons/web_app/icon_invoice_d.ico" alt=""
+                             matTooltip="Twitter" matTooltipPosition="above">
+                     </mat-icon>
+                     <div class="main-text">
+                         <span>Re Calc<br>Time Entries</span>
+                     </div>
+                 </section>
+             </button>
+         </section>
+        
+         <div class="light_label_txt" *ngIf="activeSubMenu =='work-in-progress'">Extras 
+         </div>
+     </section>
+     <!-- end tag section  -->
+     <mat-divider vertical></mat-divider>
+                                <!-- end extra section  -->
+
                                 <section class="group-section-tab action_tab" *ngIf="activeSubMenu=='matter-invoices'">
                                     <section [ngClass]="appPermissions[7]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button [ngClass]="appPermissions[7]?.Access==0 ? 'large-button' : 'large-button'" (click)="InvoiceDetail('isTime');">

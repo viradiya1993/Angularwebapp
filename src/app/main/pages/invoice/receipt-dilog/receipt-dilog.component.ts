@@ -232,7 +232,7 @@ export class ReceiptDilogComponent implements OnInit {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(data, 'GetInvoice').subscribe(response => {
       if (response.CODE === 200 && (response.STATUS === "OK" || response.STATUS === "success")) {
-        this.TotalInvoice = response.DATA.TOTALINVOICES;
+        this.TotalInvoice = response.DATA.TOTALOUSTANDING;
         if (response.DATA.INVOICES[0]) {
           this.highlightedRows = 0;
           this.editContact(response.DATA.INVOICES[0], 0);
@@ -274,15 +274,20 @@ export class ReceiptDilogComponent implements OnInit {
 
   }
   revivedAmount() {
+    console.log(this.f.AMOUNT.value )
+    console.log(this.TotalInvoice )
     if (this.f.AMOUNT.value > this.TotalInvoice) {
       let val = this.f.AMOUNT.value - this.TotalInvoice;
       this.PrepareReceiptForm.controls['Unallocated'].setValue(val.toFixed(2));
       this.GloballyUnallocatedVAl = this.f.Unallocated.value;
     } else {
+    
       if (this.AllocationBtn == 'clear') {
+        console.log("worng")
         this.PrepareReceiptForm.controls['Unallocated'].setValue(this.f.AMOUNT.value);
         this.GloballyUnallocatedVAl = this.f.Unallocated.value;
       } else {
+        console.log("right")
         this.PrepareReceiptForm.controls['Unallocated'].setValue(0);
         this.GloballyUnallocatedVAl = this.f.Unallocated.value;
       }
@@ -293,6 +298,7 @@ export class ReceiptDilogComponent implements OnInit {
   }
 
   checkCal(data, checkval, ValEnterByUser) {
+    console.log(ValEnterByUser);
     let enteredval = 0;
     let i = 0;
     if (this.InvoiceTypeCheck != 3) {
@@ -301,20 +307,26 @@ export class ReceiptDilogComponent implements OnInit {
           element.ALLOCATED = 0;
         });
       } else if (checkval == 'autoAllocation') {
+        console.log("autoAllocation come ")
         data.forEach(element => {
           element.ALLOCATED = 0;
         });
-        console.log(data)
-        enteredval = ValEnterByUser;
-        for (i = 0; data.length - 1; i++) {
-          if (enteredval > 0) {
+        enteredval = Number(ValEnterByUser);
+        console.log(data);
+        for (i = 0; data.length - 1 >= 0; i++) {
+          console.log("fgdshf");
+          if (Number(enteredval) > 0) {     
+            console.log("++++")
             if (Number(data[i].AMOUNTOUTSTANDINGINCGST) <= Number(enteredval)) {
               data[i].ALLOCATED = (Number(data[i].AMOUNTOUTSTANDINGINCGST)).toFixed(2);
               enteredval = enteredval - data[i].AMOUNTOUTSTANDINGINCGST;
             } else {
+          console.log("------")
               data[i].ALLOCATED = (Number(enteredval)).toFixed(2);
               enteredval = enteredval - data[i].AMOUNTOUTSTANDINGINCGST;
+              console.log(data)
             }
+           
           } else {
             data[i].ALLOCATED = 0;
           }

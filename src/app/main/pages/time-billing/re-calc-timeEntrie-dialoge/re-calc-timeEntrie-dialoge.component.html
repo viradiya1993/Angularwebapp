@@ -1,0 +1,35 @@
+
+<div cdkDrag class="popup_main_div add_edit_contact_main" >
+    <h2 cdkDragHandle mat-dialog-title>Recalc Time Entries
+      <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </h2>
+    <div mat-dialog-content class="mat-typography recalc main">
+      <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+          <div  fxLayout="column" fxFlex="1 0 auto" name="form">
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <h3 fxFlex="50" class=" pr-4">
+                            This function uses the rates specified on the matter to calculate the As such 
+                            you need to chyange the rates before recalculating the Time.</h3>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <h3  fxFlex="50" class=" pr-4"><strong>
+                            This function uses the rates specified on the matter to calculate the As such you need to chyange the rates before recalculating the Time.  
+                                            </strong></h3>           
+             
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+            
+                <!-- <mat-form-field appearance="outline" fxFlex="100" class=" pr-4">
+                    <textarea></textarea>       
+                </mat-form-field> -->
+            
+            </div>
+      </div>
+    </div>
+    <mat-dialog-actions align="end" class="popup_ftr">
+        <button mat-raised-button color="accent" (click)="save()" [mat-dialog-close]="false" cdkFocusInitial>Save</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
+    </mat-dialog-actions>
+</div>

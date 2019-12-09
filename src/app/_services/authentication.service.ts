@@ -67,20 +67,28 @@ export class AuthenticationService {
         });
     }
     MaintainLicence() {
-        // remove user from local storage to log user out
-        this.http.post<any>(environment.APIEndpoint + 'Login', { request: 'maintainlicence' }).subscribe(loginResponse => {
-            this.behaviorService.dialogClose(loginResponse);
-            if (loginResponse.MESSAGE == 'Not logged in') {
-                localStorage.removeItem('currentUser');
-                localStorage.removeItem('app_permissions');
-                localStorage.removeItem('session_token');
-                this.currentUserSubject.next(null);
-                this.router.navigate(['login']);
-            }
-        }, error => {
-            console.log(error);
-            this.toastr.error(error);
-        });
+        let TimeVal: any = localStorage.getItem('currentTime');
+        if (new Date().getTime() > TimeVal) {
+            let currentTime: any = new Date();
+            currentTime.setMinutes(currentTime.getMinutes() + 1);
+            localStorage.setItem('currentTime', currentTime.getTime());
+            // remove user from local storage to log user out
+            this.http.post<any>(environment.APIEndpoint + 'Login', { request: 'maintainlicence' }).subscribe(loginResponse => {
+                this.behaviorService.dialogClose(loginResponse);
+                if (loginResponse.MESSAGE == 'Not logged in') {
+                    localStorage.removeItem('currentUser');
+                    localStorage.removeItem('app_permissions');
+                    localStorage.removeItem('session_token');
+                    this.currentUserSubject.next(null);
+                    this.router.navigate(['login']);
+                }
+            }, error => {
+                console.log(error);
+                this.toastr.error(error);
+            });
+        } else {
+            return true;
+        }
     }
     removeDataFunction(loginResponse) {
         if (loginResponse.MESSAGE == 'Not logged in') {

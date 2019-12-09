@@ -35,7 +35,7 @@ export class DiscountIncreaseComponent implements OnInit {
     this.onAmoPerChnage('Enter');
   }
   onAmoPerChnage(searchFilter = "") {
-    if (searchFilter['code'] == "Enter" || searchFilter == "Enter") {
+    if (searchFilter['code'] == "Enter" || searchFilter == "Enter" || searchFilter['type'] == 'keydown') {
       this.discountAmount.emit({ 'amount': this.f.amount.value, 'Percentage': this.f.Percentage.value, 'Percentage_type': this.f.Percentage_type.value, 'GST_type': this.f.GST_type.value, 'Discount_type': this.f.Discount_type.value });
     }
   }

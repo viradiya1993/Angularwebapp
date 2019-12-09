@@ -41,14 +41,14 @@ export class InvoiceAddDailogComponent implements OnInit {
     public _matDialog: MatDialog,
     private _mainAPiServiceService: MainAPiServiceService,
     private behaviorService: BehaviorService,
-  ) { 
+  ) {
     this.behaviorService.dialogClose$.subscribe(result => {
-      if(result != null){
-        if(result.MESSAGE == 'Not logged in'){
+      if (result != null) {
+        if (result.MESSAGE == 'Not logged in') {
           this.dialogRef.close(false);
         }
       }
-     });
+    });
   }
 
   ngOnInit() {
@@ -204,6 +204,7 @@ export class InvoiceAddDailogComponent implements OnInit {
       EXTOTAL += Number(value.PRICE);
       INTOTAL += Number(value.PRICEINCGST);
       TOTALGST += Number(value.GST);
+      console.log(value.ITEMTYPEDESC);
       if (value.ITEMTYPEDESC == "WIP") {
         WIPEXTOTAL += Number(value.PRICE);
         WIPINTOTAL += Number(value.PRICEINCGST);

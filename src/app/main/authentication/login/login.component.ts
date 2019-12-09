@@ -73,7 +73,10 @@ export class LoginComponent implements OnInit {
       if (data) {
         this.isspiner = false;
         this._AppPermissionsService.applictionSetting(JSON.parse(localStorage.getItem('Login_response')));
-        setInterval(() => this.authenticationService.MaintainLicence(), 60000);
+        let currentTime: any = new Date();
+        currentTime.setMinutes(currentTime.getMinutes() + 1);
+        localStorage.setItem('currentTime', currentTime.getTime());
+        setInterval(() => this.authenticationService.MaintainLicence(), 3000);
         this.router.navigate(['matters']);
         this.behaviorService.dialogClose(null);
       } else {
@@ -88,7 +91,7 @@ export class LoginComponent implements OnInit {
 
 
   //   this.fakeArray.push([]);
-  
+
   //   if (this.fakeArray.length == 1) {
   //     this.SetFocus();
   //   }

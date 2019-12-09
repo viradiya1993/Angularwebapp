@@ -204,7 +204,6 @@ export class InvoiceAddDailogComponent implements OnInit {
       EXTOTAL += Number(value.PRICE);
       INTOTAL += Number(value.PRICEINCGST);
       TOTALGST += Number(value.GST);
-      console.log(value.ITEMTYPEDESC);
       if (value.ITEMTYPEDESC == "WIP") {
         WIPEXTOTAL += Number(value.PRICE);
         WIPINTOTAL += Number(value.PRICEINCGST);

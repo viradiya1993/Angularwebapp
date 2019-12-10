@@ -204,15 +204,15 @@ export class InvoiceAddDailogComponent implements OnInit {
       EXTOTAL += Number(value.PRICE);
       INTOTAL += Number(value.PRICEINCGST);
       TOTALGST += Number(value.GST);
-      if (value.ITEMTYPEDESC == "WIP") {
-        WIPEXTOTAL += Number(value.PRICE);
-        WIPINTOTAL += Number(value.PRICEINCGST);
-      } else if (value.ITEMTYPEDESC == "Activity") {
+      if (value.ITEMTYPEDESC == "WIP" || value.ITEMTYPEDESC == "Activity") {
         ActivityEXTOTAL += Number(value.PRICE);
         ActivityINTOTAL += Number(value.PRICEINCGST);
-      } else if (value.ITEMTYPEDESC == "Sundry") {
+      } else if (value.ITEMTYPEDESC == "Sundry" || value.ITEMTYPEDESC == "Search") {
         SundryEXTOTAL += Number(value.PRICE);
         SundryINTOTAL += Number(value.PRICEINCGST);
+      } else if (value.ITEMTYPEDESC == "Matter Expense" || value.ITEMTYPEDESC == "Disbursement") {
+        WIPEXTOTAL += Number(value.PRICE);
+        WIPINTOTAL += Number(value.PRICEINCGST);
       }
     });
     this.baseGstPercentage = 100 * TOTALGST / EXTOTAL;

@@ -16,9 +16,11 @@ export class ReportsComponent implements OnInit {
   ReportForm: FormGroup;
   title:string;
   responseData:string; 
+  FEEEARNERS2Details:any=[];
   PDF_Generation:string;
   base_url:string;
   isLoadingResults: boolean = false;
+  SendFE2id: any;
   constructor(public dialog: MatDialog,public dialogRef: MatDialogRef<ReportsComponent>,
     private _formBuilder: FormBuilder,public datepipe: DatePipe,private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -31,13 +33,14 @@ export class ReportsComponent implements OnInit {
         this.base_url=environment.ReportUrl;
       }else{ 
         this.isLoadingResults = true;
-       
-        this._mainAPiServiceService.getSetForReport(this.data.REPORTID).subscribe(response => {          
+        this._mainAPiServiceService.getSetData({reportId:this.data.REPORTID}, 'ReportRequestFilter').subscribe(response => {          
           this.isLoadingResults = false;  
            if(response.CODE==200 && response.STATUS=='success'){
              console.log(response);
              this.responseData=response.DATA; 
-             this.title=response.DATA.REPORTTITLE;  
+             this.title=response.DATA.REPORTTITLE;
+             this.FEEEARNERS2Details = response.DATA.FEEEARNERS2;
+             this.SendFE2id=response.DATA.FEEEARNERS2[0].FEEEARNERID;
              // get date after innitializ
              this.dateDifferent();        
             //option1
@@ -141,6 +144,7 @@ export class ReportsComponent implements OnInit {
       DATERANGE: ['', [Validators.required]],
       DATE: [''],
       FEEEARNERNAME: ['', [Validators.required]],
+      FEEEARNERNAME2: ['', [Validators.required]],
       LIST1TEXT: ['', [Validators.required]],
       LIST2TEXT: ['', [Validators.required]],
       OPTIONTEXT1: ['', [Validators.required]], 
@@ -198,6 +202,8 @@ export class ReportsComponent implements OnInit {
           DateFrom:StartDate,
           DateTo:DateEnd,
           FEEEARNERGUID:this.f.FEEEARNERNAME.value,
+          FEEEARNERGUID2:this.f.FEEEARNERNAME2.value,
+          FEEEARNERID2:this.SendFE2id,
           List1Selection:this.f.LIST1TEXT.value,
           List2Selection:this.f.LIST2TEXT.value,     
           OptionValue1:valuechange(this.f.OPTIONTEXT1.value), 
@@ -239,6 +245,10 @@ export class ReportsComponent implements OnInit {
     this.dialogRef.close(true);
     localStorage.removeItem('ReportDaterange');  
   }
+  FE2Click(val){
+  let getFE2Array=this.FEEEARNERS2Details.find(c=>c['FEEEARNERNAME'] == val);
+  this.SendFE2id= getFE2Array.FEEEARNERID;
+}
 }
 //checkbox value 0 & 1 set
 function valuechange(check){

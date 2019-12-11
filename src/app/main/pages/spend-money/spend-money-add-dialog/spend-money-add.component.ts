@@ -178,8 +178,8 @@ export class SpendMoneyAddComponent implements OnInit {
           this.getDataForTable.sort = this.sort;
           this.spendmoneyForm.controls['GST1'].disable();
           this.paidtype = this.SendMoney_data.STATUS
+          this.Paidtype(this.SendMoney_data.STATUS)
           //globally value set 
-          console.log(this.SendMoney_data.CHEQUENO);
           this.spendmoneyForm.controls['Notes'].setValue(this.SendMoney_data.NOTE);
           this.spendmoneyForm.controls['ChequeNo'].setValue(Number(this.SendMoney_data.CHEQUENO));
           this.spendmoneyForm.controls['Type'].setValue(this.SendMoney_data.EXPENDITURETYPE);
@@ -190,6 +190,7 @@ export class SpendMoneyAddComponent implements OnInit {
           this.spendmoneyForm.controls['Bankac'].setValue(this.SendMoney_data.BANKACCOUNTNUMBER);
           this.spendmoneyForm.controls['Bankac'].setValue(this.SendMoney_data.BANKACCOUNTNUMBER + ' - ' + this.SendMoney_data.BANKACCOUNTNAME);
           this.spendmoneyForm.controls['Invoice'].setValue(this.SendMoney_data.SOURCEREFERENCE);
+          
           // inner item 
           if (this.SendMoney_data.EXPENDITUREITEMS.length != 0) {
             // this.editMoney(this.SendMoney_data.EXPENDITUREITEMS[0], 0);
@@ -203,11 +204,11 @@ export class SpendMoneyAddComponent implements OnInit {
 
             this.spendmoneyForm.controls['Note'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].NOTE);
             this.spendmoneyForm.controls['Matter'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].SHORTNAME);
-            this.spendmoneyForm.controls['MatterGUID'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].MatterGUID);
+            this.spendmoneyForm.controls['MatterGUID'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].MATTERGUID);
             // this.spendmoneyForm.controls['Expenseac'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENSEACCOUNTNUMBER);
             this.spendmoneyForm.controls['Expenseac'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENSEACCOUNTNUMBER + ' - ' + this.SendMoney_data.EXPENDITUREITEMS[0].EXPENSEACCOUNTNAME);
             this.spendmoneyForm.controls['ExpenseacGUID'].setValue(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENSEACCOUNTGUID);
-
+            this.Classtype(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
             if (round(Number(this.f.AmountExGST.value) / 10) == round(this.SendMoney_data.EXPENDITUREITEMS[0].GST)) {
               this.spendmoneyForm.controls['GSTType'].setValue("1.1");
               this.GstTypeDiff = "1.1";
@@ -242,7 +243,6 @@ export class SpendMoneyAddComponent implements OnInit {
             this.spendmoneyForm.controls['MultiLineExpense'].setValue(1);
             this.multilineCheckbox();
           }
-          this.Classtype(this.SendMoney_data.EXPENDITUREITEMS[0].EXPENDITURECLASS);
         } else if (response.MESSAGE == 'Not logged in') {
           this.dialogRef.close(false);
         }
@@ -328,9 +328,7 @@ export class SpendMoneyAddComponent implements OnInit {
   // paid Type Dropdown
   Paidtype(paidvalue) {
     this.PaidTypeName = paidvalue
-    console.log(paidvalue);
     if (paidvalue === 'Paid') {
-      console.log(paidvalue);
       this.Bankhide = false;
       $('#bank').removeClass('menu-disabled');
       this.spendmoneyForm.controls['DatePaid'].enable();
@@ -368,9 +366,11 @@ export class SpendMoneyAddComponent implements OnInit {
         $("#mattersnew").addClass("menu-disabled");
         this.spendmoneyForm.controls['Matter'].disable();
       }
+      this.forCommonEnable();
+      // this.GstTypeforSelect('1.1');
       let tempError: any = this.errorWarningData.Error;
       if (tempError != undefined) { delete tempError['SHORTNAME']; }
-      this.GstTypeforSelect('1.1');
+      
     } else if (Classvalue === 'Matter Expense') {
       this.hide = false;
       this.expac = false;
@@ -380,10 +380,10 @@ export class SpendMoneyAddComponent implements OnInit {
         this.spendmoneyForm.controls['Matter'].setValue(this.CurrentMatter.MATTER);
         this.spendmoneyForm.controls['MatterGUID'].setValue(this.CurrentMatter.MATTERGUID);
       } else {
-        this.spendmoneyForm.controls['MatterGUID'].setValue('');
+        // this.spendmoneyForm.controls['MatterGUID'].setValue('');
       }
       this.forCommonEnable();
-      this.GstTypeforSelect('1.1');
+      // this.GstTypeforSelect('1.1');
       if (this.action == 'new') {
         let tempError: any = this.errorWarningData.Error;
         tempError['SHORTNAME'] = {};
@@ -397,7 +397,8 @@ export class SpendMoneyAddComponent implements OnInit {
       this.spendmoneyForm.controls['Matter'].setValue('');
       this.spendmoneyForm.controls['MatterGUID'].setValue('');
       this.spendmoneyForm.controls['Matter'].disable();
-      this.GstTypeforSelect('1.1');
+      this.forCommonEnable();
+      // this.GstTypeforSelect('1.1');
       // this.spendmoneyForm.controls['GSTType'].disable();
       let tempError: any = this.errorWarningData.Error;
       if (tempError != undefined) { delete tempError['SHORTNAME']; }
@@ -560,7 +561,7 @@ export class SpendMoneyAddComponent implements OnInit {
         // }
       }
       this.forCommonEnable();
-      this.Classtype(this.classtype);
+      // this.Classtype(this.classtype);
     }
   }
   GstTypeforSelect(val) {
@@ -675,7 +676,8 @@ export class SpendMoneyAddComponent implements OnInit {
     this.spendmoneyForm.controls['GST1'].setValue(row.GST);
     this.spendmoneyForm.controls['Note'].setValue(row.NOTE);
     this.spendmoneyForm.controls['Matter'].setValue(row.SHORTNAME);
-    this.spendmoneyForm.controls['Expenseac'].setValue(row.EXPENSEACCOUNTNUMBER);
+    this.spendmoneyForm.controls['Expenseac'].setValue(row.EXPENSEACCOUNTNUMBER + ' - ' + row.EXPENSEACCOUNTNAME);
+    // this.spendmoneyForm.controls['Expenseac'].setValue(row.EXPENSEACCOUNTNUMBER);
     this.commmonDisabled();
   }
   deleteElement() {
@@ -748,7 +750,6 @@ export class SpendMoneyAddComponent implements OnInit {
   commonSendMultiLineData() {
     this.setMainAmount = this.FinalTotal;
     this.setMainGST = this.FinalTotalGST;
-    console.log(this.getDataForTable);
     this.getDataForTable.forEach(element => {
       // this.itemAmountExGST=Number(element.AMOUNT)-Number(element.GST);
       this.sendItem.push({

@@ -54,6 +54,20 @@
                         </div>
                     </div>
                 </div>
+
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="responseData.FEEEARNERS">
+                    <div class=" one  mb-24" fxLayout="column">
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
+                                <mat-label>{{responseData.FEEEARNERPROMPT2}}</mat-label>
+                                <mat-select (selectionChange)="FE2Click($event.value)" formControlName="FEEEARNERNAME2" name="FEEEARNERNAME2" [(value)]="responseData.FEEEARNERS2[0].FEEEARNERGUID" [(ngModel)]="responseData.FEEEARNERS2[0].FEEEARNERGUID">
+                                    <mat-option *ngFor="let SelectOwnername of responseData.FEEEARNERS2" [value]="SelectOwnername.FEEEARNERGUID">{{SelectOwnername.FEEEARNERNAME}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngIf="responseData.LIST1">
                     <div class=" one  mb-24" fxLayout="column">
                         <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">

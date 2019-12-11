@@ -449,11 +449,13 @@ tr.mat-ripple.mat-row.row-text-colore td {
     font-size: 15px;
     line-height: 35px;
     position: absolute;
-    left: 302px;
-    right: 32px;
+    left: 0px;
+    right: 210px;
     z-index: 999999;
     color: #000;
     font-size: 20px;
+    // left: 302px;
+    // right: 32px;
 }
 
 table tbody tr {

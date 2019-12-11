@@ -1,30 +1,36 @@
 <div class=" one " fxLayout="column" [formGroup]="matterdetailForm">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MATTERTYPE,'has-warning':errorWarningData.Warning?.MATTERTYPE}">
-            <mat-label>Matter Type</mat-label>
-            <mat-select name="MatterType" formControlName="MATTERTYPE">
-                <mat-option *ngFor="let matter of MatterType" value="{{matter.LOOKUPFULLVALUE}}">{{matter.LOOKUPFULLVALUE}}</mat-option>
-            </mat-select>
-        </mat-form-field>
+       
+            <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MATTERTYPE,'has-warning':errorWarningData.Warning?.MATTERTYPE}">
+                    <mat-label>Matter Type</mat-label>
+                    <input type="text" placeholder="Matter Type"  matInput name="MATTERTYPE" formControlName="MATTERTYPE" [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let val of MatterType" value="{{val.LOOKUPFULLVALUE}}">
+                            {{val.LOOKUPFULLVALUE}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+<!-- 
         <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.CLIENTSOURCE,'has-warning':errorWarningData.Warning?.CLIENTSOURCE}">
             <mat-label>Client Source</mat-label>
             <mat-select formControlName="CLIENTSOURCE">
                 <mat-option *ngFor="let Client of ClientSource" value="{{Client.LOOKUPFULLVALUE}}">{{Client.LOOKUPFULLVALUE}}</mat-option>
             </mat-select>
-        </mat-form-field>
+        </mat-form-field> -->
 
-        <!-- <mat-form-field appearance="outline" class="example" fxFlex="33" class="pr-4" >
-                <mat-label>Field Of Law</mat-label>
-            <input  placeholder="Field Of Law" name="FIELDOFLAW" formControlName="FIELDOFLAW" [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete">
-              <mat-option *ngFor="let Filed of FiledOfLaw" value="{{Filed.LOOKUPFULLVALUE}}">
-                {{Filed.LOOKUPFULLVALUE}}
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
- -->
 
-          <mat-form-field appearance="outline" fxFlex="33" class="pr-4" >
+
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.CLIENTSOURCE,'has-warning':errorWarningData.Warning?.CLIENTSOURCE}">
+                <mat-label>Client Source</mat-label>
+                <input type="text" placeholder="Client Source"  matInput name="CLIENTSOURCE" formControlName="CLIENTSOURCE" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let val of ClientSource" value="{{val.LOOKUPFULLVALUE}}">
+                        {{val.LOOKUPFULLVALUE}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+          <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FIELDOFLAW,'has-warning':errorWarningData.Warning?.FIELDOFLAW}">
             <mat-label>Field Of Law</mat-label>
             <input type="text" placeholder="Field Of Law" aria-label="Number" matInput name="FIELDOFLAW" formControlName="FIELDOFLAW" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete">
@@ -36,12 +42,18 @@
     
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <mat-form-field appearance="outline" class="example" fxFlex="40" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.INDUSTRY,'has-warning':errorWarningData.Warning?.INDUSTRY}">
-            <mat-label>Industry </mat-label>
-            <mat-select formControlName="INDUSTRY">
-                <mat-option *ngFor="let Ins of Industry" value="{{Ins.LOOKUPFULLVALUE}}">{{Ins.LOOKUPFULLVALUE}}</mat-option>
-            </mat-select>
-        </mat-form-field>
+        
+
+        <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FIELDOFLAW,'has-warning':errorWarningData.Warning?.FIELDOFLAW}">
+                <mat-label>Industry</mat-label>
+                <input type="text" placeholder="Industry" matInput name="INDUSTRY" formControlName="INDUSTRY" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let val of FiledOfLaw" value="{{val.LOOKUPFULLVALUE}}">
+                        {{val.LOOKUPFULLVALUE}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
         <mat-form-field appearance="outline" class="example" fxFlex="60" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.REFERRERGUID,'has-warning':errorWarningData.Warning?.REFERRERGUID}">
             <mat-label>Referrer</mat-label>
             <input matInput readonly formControlName="REFERRERGUIDTEXT">

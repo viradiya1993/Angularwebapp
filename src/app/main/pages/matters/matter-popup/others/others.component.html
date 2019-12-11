@@ -3,8 +3,8 @@
        
             <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.MATTERTYPE,'has-warning':errorWarningData.Warning?.MATTERTYPE}">
                     <mat-label>Matter Type</mat-label>
-                    <input type="text" placeholder="Matter Type"  matInput name="MATTERTYPE" formControlName="MATTERTYPE" [matAutocomplete]="auto">
-                    <mat-autocomplete #auto="matAutocomplete">
+                    <input type="text" placeholder="Matter Type"  matInput name="MATTERTYPE" formControlName="MATTERTYPE" [matAutocomplete]="auto1">
+                    <mat-autocomplete #auto1="matAutocomplete">
                         <mat-option *ngFor="let val of MatterType" value="{{val.LOOKUPFULLVALUE}}">
                             {{val.LOOKUPFULLVALUE}}
                         </mat-option>
@@ -22,8 +22,8 @@
 
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.CLIENTSOURCE,'has-warning':errorWarningData.Warning?.CLIENTSOURCE}">
                 <mat-label>Client Source</mat-label>
-                <input type="text" placeholder="Client Source"  matInput name="CLIENTSOURCE" formControlName="CLIENTSOURCE" [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete">
+                <input type="text" placeholder="Client Source"  matInput name="CLIENTSOURCE" formControlName="CLIENTSOURCE" [matAutocomplete]="auto2">
+                <mat-autocomplete #auto2="matAutocomplete">
                     <mat-option *ngFor="let val of ClientSource" value="{{val.LOOKUPFULLVALUE}}">
                         {{val.LOOKUPFULLVALUE}}
                     </mat-option>
@@ -32,8 +32,8 @@
 
           <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FIELDOFLAW,'has-warning':errorWarningData.Warning?.FIELDOFLAW}">
             <mat-label>Field Of Law</mat-label>
-            <input type="text" placeholder="Field Of Law" aria-label="Number" matInput name="FIELDOFLAW" formControlName="FIELDOFLAW" [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete">
+            <input type="text" placeholder="Field Of Law" aria-label="Number" matInput name="FIELDOFLAW" formControlName="FIELDOFLAW" [matAutocomplete]="auto3">
+            <mat-autocomplete #auto3="matAutocomplete">
                 <mat-option *ngFor="let val of FiledOfLaw" value="{{val.LOOKUPFULLVALUE}}">
                     {{val.LOOKUPFULLVALUE}}
                 </mat-option>
@@ -46,9 +46,9 @@
 
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FIELDOFLAW,'has-warning':errorWarningData.Warning?.FIELDOFLAW}">
                 <mat-label>Industry</mat-label>
-                <input type="text" placeholder="Industry" matInput name="INDUSTRY" formControlName="INDUSTRY" [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let val of FiledOfLaw" value="{{val.LOOKUPFULLVALUE}}">
+                <input type="text" placeholder="Industry" matInput name="INDUSTRY" formControlName="INDUSTRY" [matAutocomplete]="auto4">
+                <mat-autocomplete #auto4="matAutocomplete">
+                    <mat-option *ngFor="let val of Industry" value="{{val.LOOKUPFULLVALUE}}">
                         {{val.LOOKUPFULLVALUE}}
                     </mat-option>
                 </mat-autocomplete>

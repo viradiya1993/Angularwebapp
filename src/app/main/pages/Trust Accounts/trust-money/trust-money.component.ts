@@ -21,8 +21,8 @@ export class TrustMoneyComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   isLoadingResults: boolean = false;
-  pageSize: any;
   isDisplay: boolean = false;
+  pageSize: any;
   displayedColumns: any;
   tempColobj: any;
   ColumnsObj = [];

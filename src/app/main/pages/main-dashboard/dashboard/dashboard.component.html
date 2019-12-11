@@ -98,7 +98,7 @@
                         </div>
                         <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0 mr-32'">
                             <div class="p-16">
-                                <a class="link_click" [routerLink]="'/invoice'"  mat-list-item >
+                                <a  (click)="AgedDebatorClick()" class="link_click" [routerLink]="'/invoice'"  mat-list-item >
                                         Aged Debtors (Unpaid Invoices)   
                                 </a>
                             </div>
@@ -139,9 +139,15 @@
                         <div class="pb-24 font-size-18 font-weight-300">
                         </div>
                         <div class="fuse-card auto-width mb-32" [ngClass.gt-sm]="'mb-0'">
-                            <div class="p-16">
+
+                                <div class="p-16">
+                                        <a (click)="UnbilledWIPClick()" class="link_click" [routerLink]="'/time-entries/full-time-entries'"  mat-list-item >
+                                            Unbilled WIP
+                                        </a>
+                                    </div>
+                            <!-- <div class="p-16">
                                 <div class="h1 font-weight-300">Unbilled WIP</div>
-                            </div>
+                            </div> -->
                           
                             <div class="h-300">
                                 <h3 class="total_Val">$<span><strong> {{UnbilledTotal | number}} </strong></span></h3>
@@ -217,7 +223,7 @@
                                         Total Invoiced  
                                     </a>
                                 </div>
-                                <div class="font-size-54 font-weight-300 line-height-1 mt-8">
+                                <div class="font-size-20 font-weight-300 line-height-1 mt-8">
                                    $ {{widget11.conversion.value | number}}
                                 </div>
                             </div>
@@ -237,7 +243,7 @@
                                         Total Expenses
                                     </a>
                                 </div>
-                                <div class="font-size-54 font-weight-300 line-height-1 mt-8">
+                                <div class="font-size-20 font-weight-300 line-height-1 mt-8">
                                    $ {{widget12.conversion.value | number}}
                                 </div>
                             </div>
@@ -257,7 +263,7 @@
                                         Total Receipts
                                     </a>
                                 </div>
-                                <div class="font-size-54 font-weight-300 line-height-1 mt-8">
+                                <div class="font-size-20 font-weight-300 line-height-1 mt-8">
                                    $ {{widget13.conversion.value | number}}
                                 </div>
                             </div>
@@ -280,7 +286,7 @@
                     </div>
                 </div>
                 <div class="position-relative h-368 pb-16">
-                    <canvas baseChart [datasets]="widget5.datasets[widget5SelectedDay]" [labels]="widget5.labels" [colors]="widget5.colors" [options]="widget5.options" [chartType]="widget5.chartType">
+                    <canvas baseChart [datasets]="widget5.datasets" [labels]="widget5.labels" [colors]="widget5.colors" [options]="widget5.options" [chartType]="widget5.chartType">
             </canvas>
                 </div>
 

@@ -67,7 +67,7 @@ export class MatterInvoicesComponent implements OnInit {
         }          
         this.MatterInvoicesdata = new MatTableDataSource(res.DATA.INVOICES);
         this.MatterInvoicesdata.paginator = this.paginator;
-        this.MatterInvoicesdata.sort = this.sort;
+        this.sortingCLM();
       }
       this.isLoadingResults = false;
     }, err => {
@@ -117,5 +117,24 @@ export class MatterInvoicesComponent implements OnInit {
   }
   //onSearch
   onSearch(searchFilter: any) {
+  }
+  sortingCLM() {
+    this.MatterInvoicesdata.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'INVOICEDATE': {
+          let tempDate = item.INVOICEDATE.split("/");
+          let Sd = new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]);
+          let newDate = new Date(Sd);
+          return newDate;
+        }
+        default: {
+          return item[property];
+        }
+      }
+    }
+    // proper shorting for date 
+    this.MatterInvoicesdata.sort = this.sort;
+  }
+  sortData(val){
   }
 }

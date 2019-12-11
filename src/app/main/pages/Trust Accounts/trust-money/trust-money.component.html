@@ -61,6 +61,9 @@
                                         <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
                                     </div>
                                     <div class="example-containerdata">
+                                            <div class="grid-overlay" *ngIf="isDisplay">
+                                                    <div class="grid-overlay-msg"> There is no data to display. </div>
+                                                </div>
                                         <table  mat-table #table [dataSource]="TrustMoneyData" [@animateStagger]="{value:'50'}" matSort>
                                             <ng-container *ngFor="let item of displayedColumns;" matColumnDef="{{item}}">
                                                 <th mat-header-cell *matHeaderCellDef class="header_title" mat-sort-header> {{ tempColobj[item].DESCRIPTION }}</th>

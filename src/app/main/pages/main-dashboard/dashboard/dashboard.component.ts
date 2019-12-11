@@ -23,7 +23,7 @@ export class DashboardComponent implements OnInit {
     chart: any;
     widget2: any = {};
     widget1SelectedYear = '2016';
-    widget5SelectedDay = 'today';
+
     isLoadingResults: boolean = false;
     UnbilledTotal: any;
     AgedDebatorTotal: any;
@@ -415,8 +415,7 @@ export class DashboardComponent implements OnInit {
         this.widget5 = "empty";
         this.widget5 = {
             chartType: 'line',
-            datasets: {
-                'today': [
+            datasets: [
                     {
                         label: 'Expenses',
                         // yAxisID:'Expenses',
@@ -430,17 +429,18 @@ export class DashboardComponent implements OnInit {
                         data: this.InvoiceInGstForGenIncome,
                         fill: 'start'
                     },
+                    
 
 
-                ]
-            },
+                ],
+        
             labels: this.getMonthNumForExpense,
             colors: [
                 {
                     borderColor: 'rgba(255,0,0,1)',
                     // backgroundColor          : 'rgba(30, 136, 229, 0.87)',
-                    pointBackgroundColor: 'rgba(30, 136, 229, 0.87)',
-                    pointHoverBackgroundColor: 'rgba(30, 136, 229, 0.87)',
+                    pointBackgroundColor: 'rgba(255,0,0,1)',
+                    pointHoverBackgroundColor: 'rgba(255,0,0,1)',
                     pointBorderColor: '#ffffff',
                     pointHoverBorderColor: '#ffffff'
                 },
@@ -493,7 +493,7 @@ export class DashboardComponent implements OnInit {
                         }
                     ],
                     yAxes: [{
-                        stacked: true,
+                        // stacked: true,
                         display: true,
                         gridLines: {
                             color: "rgba(0, 0, 0, 0)",
@@ -630,14 +630,14 @@ export class DashboardComponent implements OnInit {
 
         if (filterData) {
             if (filterData.PAIDENDDATE == "" && filterData.PAIDSTARTDATE == "") {
-                filterVal = { OUTSTANDING: '', INCURREDSTARTDATE: MonthStartDate, INCURREDENDDATE: MonthEndDate, PAIDSTARTDATE: '', PAIDENDDATE: '' }
+                filterVal = { EXPENDITURECLASS: '', INCURREDSTARTDATE: MonthStartDate, INCURREDENDDATE: MonthEndDate, PAIDSTARTDATE: '', PAIDENDDATE: '' }
             } else if (filterData.INCURREDSTARTDATE == "" && filterData.INCURREDENDDATE == "") {
-                filterVal = { OUTSTANDING: '', PAIDSTARTDATE: MonthStartDate, PAIDENDDATE: MonthEndDate, INCURREDSTARTDATE: '', INCURREDENDDATE: '' }
+                filterVal = { EXPENDITURECLASS: '', PAIDSTARTDATE: MonthStartDate, PAIDENDDATE: MonthEndDate, INCURREDSTARTDATE: '', INCURREDENDDATE: '' }
             } else {
-                filterVal = { OUTSTANDING: '', PAIDSTARTDATE: MonthStartDate, PAIDENDDATE: MonthEndDate, INCURREDSTARTDATE: '', INCURREDENDDATE: '' }
+                filterVal = { EXPENDITURECLASS: '', PAIDSTARTDATE: MonthStartDate, PAIDENDDATE: MonthEndDate, INCURREDSTARTDATE: '', INCURREDENDDATE: '' }
             }
         } else {
-            filterVal = { OUTSTANDING: '', PAIDSTARTDATE: MonthStartDate, PAIDENDDATE: MonthEndDate, INCURREDSTARTDATE: '', INCURREDENDDATE: '' }
+            filterVal = { EXPENDITURECLASS: '', PAIDSTARTDATE: MonthStartDate, PAIDENDDATE: MonthEndDate, INCURREDSTARTDATE: '', INCURREDENDDATE: '' }
         }
 
         localStorage.setItem('spendmoney_filter', JSON.stringify(filterVal));
@@ -647,5 +647,17 @@ export class DashboardComponent implements OnInit {
         let MonthEndDate = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
         let filterVal = { INCOMECLASS: ' ', ITEMSTARTDATE: MonthStartDate, ITEMENDDATE: MonthEndDate }
         localStorage.setItem('recive_money_DateFilter', JSON.stringify(filterVal));
+    }
+    UnbilledWIPClick(){
+        let MonthStartDate = this.datepipe.transform(this.addMonths(new Date(), -6), 'dd/MM/yyyy');
+        let MonthEndDate = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
+        let filterVal = { FeeEarner: 'all',Invoiced:"No", ItemDateStart: MonthStartDate, ItemDateEnd: MonthEndDate }
+        localStorage.setItem('time_entries_filter', JSON.stringify(filterVal));
+    }
+    AgedDebatorClick(){
+        let MonthStartDate = this.datepipe.transform(this.addMonths(new Date(), -6), 'dd/MM/yyyy');
+        let MonthEndDate = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
+        let filterVal = { OUTSTANDING: 'Yes', STARTDATE: MonthStartDate, ENDDATE: MonthEndDate }
+        localStorage.setItem('matter_invoice_filter', JSON.stringify(filterVal));
     }
 }

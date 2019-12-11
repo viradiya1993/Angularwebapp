@@ -62,7 +62,7 @@ export class ReceiptsCreditsComponent implements OnInit {
           this.highlightedRows = res.DATA.RECEIPTS[0].INCOMEGUID;
           this.ReceiptsCreditsdata = new MatTableDataSource(res.DATA.RECEIPTS)
           this.ReceiptsCreditsdata.paginator = this.paginator;
-          this.ReceiptsCreditsdata.sort = this.sort;
+          this.sortingCLM();
         }
 
       }
@@ -119,6 +119,25 @@ export class ReceiptsCreditsComponent implements OnInit {
         }
       }
     });
+  }
+  sortingCLM() {
+    this.ReceiptsCreditsdata.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'INCOMEDATE': {
+          let tempDate = item.INCOMEDATE.split("/");
+          let Sd = new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]);
+          let newDate = new Date(Sd);
+          return newDate;
+        }
+        default: {
+          return item[property];
+        }
+      }
+    }
+    // proper shorting for date 
+    this.ReceiptsCreditsdata.sort = this.sort;
+  }
+  sortData(val){
   }
 }
 

@@ -164,7 +164,6 @@ export class ReceiptDilogComponent implements OnInit {
     this.isLoadingResults = true;
     let incomeGuid = { INCOMEGUID: INCOMEGUID }
     this._mainAPiServiceService.getSetData(incomeGuid, 'GetIncome').subscribe(response => {
-      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         if (response.DATA.INCOMEITEMS[0]) {
           localStorage.setItem('receiptData', JSON.stringify(response.DATA.INCOMEITEMS[0]));
@@ -274,8 +273,6 @@ export class ReceiptDilogComponent implements OnInit {
 
   }
   revivedAmount() {
-    console.log(this.f.AMOUNT.value )
-    console.log(this.TotalInvoice )
     if (this.f.AMOUNT.value > this.TotalInvoice) {
       let val = this.f.AMOUNT.value - this.TotalInvoice;
       this.PrepareReceiptForm.controls['Unallocated'].setValue(val.toFixed(2));
@@ -283,11 +280,9 @@ export class ReceiptDilogComponent implements OnInit {
     } else {
     
       if (this.AllocationBtn == 'clear') {
-        console.log("worng")
         this.PrepareReceiptForm.controls['Unallocated'].setValue(this.f.AMOUNT.value);
         this.GloballyUnallocatedVAl = this.f.Unallocated.value;
       } else {
-        console.log("right")
         this.PrepareReceiptForm.controls['Unallocated'].setValue(0);
         this.GloballyUnallocatedVAl = this.f.Unallocated.value;
       }
@@ -298,7 +293,6 @@ export class ReceiptDilogComponent implements OnInit {
   }
 
   checkCal(data, checkval, ValEnterByUser) {
-    console.log(ValEnterByUser);
     let enteredval = 0;
     let i = 0;
     if (this.InvoiceTypeCheck != 3) {
@@ -307,24 +301,21 @@ export class ReceiptDilogComponent implements OnInit {
           element.ALLOCATED = 0;
         });
       } else if (checkval == 'autoAllocation') {
-        console.log("autoAllocation come ")
         data.forEach(element => {
           element.ALLOCATED = 0;
         });
         enteredval = Number(ValEnterByUser);
-        console.log(data);
         for (i = 0; data.length - 1 >= 0; i++) {
-          console.log("fgdshf");
           if (Number(enteredval) > 0) {     
-            console.log("++++")
+
             if (Number(data[i].AMOUNTOUTSTANDINGINCGST) <= Number(enteredval)) {
               data[i].ALLOCATED = (Number(data[i].AMOUNTOUTSTANDINGINCGST)).toFixed(2);
               enteredval = enteredval - data[i].AMOUNTOUTSTANDINGINCGST;
             } else {
-          console.log("------")
+
               data[i].ALLOCATED = (Number(enteredval)).toFixed(2);
               enteredval = enteredval - data[i].AMOUNTOUTSTANDINGINCGST;
-              console.log(data)
+         
             }
            
           } else {
@@ -475,6 +466,7 @@ export class ReceiptDilogComponent implements OnInit {
     let warningData: any = [];
     let tempError: any = [];
     let tempWarning: any = [];
+    let warnshow :any=[];
     bodyData.forEach(function (value) {
       if (value.VALUEVALID == 'No') {
         errorData.push(value.ERRORDESCRIPTION);
@@ -488,13 +480,20 @@ export class ReceiptDilogComponent implements OnInit {
     });
     this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
     if (Object.keys(errorData).length != 0) {
+      console.log()
       this.toastr.error(errorData);
       this.isspiner = false;
     } else if (Object.keys(warningData).length != 0) {
+      if(Number(this.f.Unallocated.value) != 0){
+        warnshow.push('You have not allocated all the receipt amount to invoice by $'+ Number(this.f.Unallocated.value)+'\n',
+         'SILQ will save it as a credit which you will be able to apply against your next invoice.'+'\n',
+         'Do you want to save this credit for the matter or for the firm?'+'\n' );
+      }
+      console.log(warnshow); 
       this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
         disableClose: true,
         width: '100%',
-        data: warningData
+        data: warnshow
       });
       this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Save?';
       this.confirmDialogRef.afterClosed().subscribe(result => {

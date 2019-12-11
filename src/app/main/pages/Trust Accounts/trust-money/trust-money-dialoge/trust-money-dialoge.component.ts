@@ -172,7 +172,6 @@ export class TrustMoneyDialogeComponent implements OnInit {
     }
   }
   ChkDeltabx(val) {
-console.log(this.f.BANKCHEQUE.value);
   }
 
   CheckBoxClick(val) {
@@ -393,7 +392,6 @@ console.log(this.f.BANKCHEQUE.value);
     const dialogRef = this.dialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true, data: '' });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-      console.log(result);
       this.TrustMoneyForm.controls['PAYOR'].setValue(result.CONTACTNAME);
       }
     });

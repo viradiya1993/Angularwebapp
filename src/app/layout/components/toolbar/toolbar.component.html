@@ -206,7 +206,7 @@
                 <!-- mattter tab menu end -->
                 <!-- contacts tab menu start -->
                 <mat-tab label="CONTACT" *ngIf="isTabShow===2">
-                    <section class="ribbon-container contact_tab_main">
+                    <section class="ribbon-container contact_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
@@ -289,7 +289,7 @@
                 <!-- contacts tab menu end -->
                 <!-- Time and Billing tab menu start -->
                 <mat-tab label="TIME AND BILLING" *ngIf="isTabShow===3">
-                    <section class="ribbon-container time_billing_tab_main">
+                    <section class="ribbon-container time_billing_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab details_tab">
@@ -483,7 +483,7 @@
                                     </section>
                                     <!-- (click)="spendmoneypopup('edit')"  (click)="addNewTimeEntry('Edit')" -->
                                     <section [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button mat-button [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="EditTimeEntryFromWIP()" >
+                                        <button mat-button [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click large-button' : 'large-button'" (click)="EditTimeEntryFromWIP()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_time_cost_edit_d.ico" alt=""
@@ -672,11 +672,11 @@
 
                                 <!-- start extra section  -->
 
-     <!-- start tag section  -->
-     <mat-divider vertical *ngIf="activeSubMenu =='work-in-progress'"></mat-divider>
-     <section class="group-section-tab details_tab">
-         <section [ngClass]="appPermissions[7]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="isInvoice != 'invoice' && activeSubMenu =='work-in-progress'">
-             <button (click)="ReCalcTimeEntriClick()" mat-button [ngClass]="appPermissions[7]?.Access==0 ? 'large-button' : 'large-button'" >
+                                <!-- start tag section  -->
+                                <mat-divider vertical *ngIf="activeSubMenu =='work-in-progress'"></mat-divider>
+                                <section class="group-section-tab details_tab">
+                                    <section [ngClass]="appPermissions[7]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" *ngIf="isInvoice != 'invoice' && activeSubMenu =='work-in-progress'">
+                                        <button (click)="ReCalcTimeEntriClick()" mat-button [ngClass]="appPermissions[7]?.Access==0 ? 'large-button' : 'large-button'">
                  <section class="large-button-container">
                      <mat-icon class="main-icon">
                          <img src="assets/icons/web_app/icon_invoice_d.ico" alt=""
@@ -687,13 +687,13 @@
                      </div>
                  </section>
              </button>
-         </section>
-        
-         <div class="light_label_txt" *ngIf="activeSubMenu =='work-in-progress'">Extras 
-         </div>
-     </section>
-     <!-- end tag section  -->
-     <mat-divider vertical></mat-divider>
+                                    </section>
+
+                                    <div class="light_label_txt" *ngIf="activeSubMenu =='work-in-progress'">Extras
+                                    </div>
+                                </section>
+                                <!-- end tag section  -->
+                                <mat-divider vertical></mat-divider>
                                 <!-- end extra section  -->
 
                                 <section class="group-section-tab action_tab" *ngIf="activeSubMenu=='matter-invoices'">
@@ -836,7 +836,7 @@
                 <!-- Time and Billing tab menu end -->
                 <!-- legal tab menu start -->
                 <mat-tab label="LEGAL DETAILS" *ngIf="isTabShow===4">
-                    <section class="ribbon-container legal_details_tab_main">
+                    <section class="ribbon-container legal_details_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab details_tab">
@@ -1357,7 +1357,7 @@
                 <!-- legal tab menu end -->
                 <!-- Diary tab menu start -->
                 <mat-tab label="DIARY" *ngIf="isTabShow===5">
-                    <section class="ribbon-container diary_tab_main">
+                    <section class="ribbon-container diary_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab details_tab">
@@ -1535,7 +1535,7 @@
                 <!-- Diary tab menu end -->
                 <!-- time-entries tab menu start -->
                 <mat-tab label="TIME ENTRIES" *ngIf="isTabShow===6">
-                    <section class="ribbon-container time_entry_tab_main">
+                    <section class="ribbon-container time_entry_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab extras_tab">
@@ -1678,7 +1678,7 @@
                 <!-- time-entries tab menu end -->
                 <!-- Invoice tab menu -->
                 <mat-tab label="INVOICE" *ngIf="isTabShow===7">
-                    <section class="ribbon-container contact_tab_main">
+                    <section class="ribbon-container contact_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
@@ -1791,7 +1791,7 @@
                 <!-- End Invoice tab menu -->
                 <!-- Spend Money Tab menu -->
                 <mat-tab label="Spend Money" *ngIf="isTabShow===8">
-                    <section class="ribbon-container contact_tab_main">
+                    <section class="ribbon-container contact_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
@@ -2048,7 +2048,7 @@
                 <!-- dashboard end  -->
                 <!-- Receive Money Start tab menu start -->
                 <mat-tab label="Receive Money" *ngIf="isTabShow===9 || activeSubMenu =='time-billing/receipts-credits'">
-                    <section class="ribbon-container contact_tab_main">
+                    <section class="ribbon-container contact_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
@@ -2157,7 +2157,7 @@
                 <!-- Receive Money Start tab menu End -->
                 <!-- Start Create Document menu -->
                 <mat-tab label="CREATE DOCUMENT" *ngIf="isTabShow===10">
-                    <section class="ribbon-container contact_tab_main">
+                    <section class="ribbon-container contact_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
@@ -2369,7 +2369,7 @@
                 <!-- End  Start Create Document menu  -->
                 <!-- User tab Start-->
                 <mat-tab label="USERS" *ngIf="isTabShow===12">
-                    <section class="ribbon-container contact_tab_main">
+                    <section class="ribbon-container contact_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
@@ -2435,7 +2435,7 @@
                 <!-- User tab End-->
                 <!-- Activity tab Start-->
                 <mat-tab label="Activities" *ngIf="isTabShow===13">
-                    <section class="ribbon-container contact_tab_main">
+                    <section class="ribbon-container contact_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
@@ -2502,7 +2502,7 @@
                 <!-- Activity tab End-->
                 <!-- Document Register tab Start-->
                 <mat-tab label="MATTER REGISTER" *ngIf="isTabShow===14">
-                    <section class="ribbon-container legal_details_tab_main">
+                    <section class="ribbon-container legal_details_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab details_tab">
@@ -2672,7 +2672,7 @@
                 <!-- Chart Of Account tab Start-->
                 <mat-tab label="{{ShowMatLable}}" *ngIf="isTabShow===15">
                     <!-- <mat-tab label="TRUST CHART OF ACCOUNTS" *ngIf="isTabShow===15 && ShowMatLable =='WithTrust'"> -->
-                    <section class="ribbon-container legal_details_tab_main">
+                    <section class="ribbon-container legal_details_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
@@ -2690,7 +2690,8 @@
                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[19]?.Edit==0 || isMainAccount ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button  [disabled]="ClickTypeForTrustChartHD=='WithTrust' && (AccountClassForTrustChartHD != 'Controlled Money Account' && AccountClassForTrustChartHD !='Trust Account')"  mat-button [ngClass]="appPermissions[19]?.Edit==0 || isMainAccount ? 'disabled-click large-button' : 'large-button'" (click)="AccountPop('edit')">
+                                        <button [disabled]="ClickTypeForTrustChartHD=='WithTrust' && (AccountClassForTrustChartHD != 'Controlled Money Account' && AccountClassForTrustChartHD !='Trust Account')" mat-button [ngClass]="appPermissions[19]?.Edit==0 || isMainAccount ? 'disabled-click large-button' : 'large-button'"
+                                            (click)="AccountPop('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_edit_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -2702,7 +2703,7 @@
                                         </button>
                                     </section>
                                     <section [ngClass]="appPermissions[19]?.Delete==0 || isMainAccount ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button [disabled]="ClickTypeForTrustChartHD=='WithTrust' && AccountClassForTrustChartHD !='Controlled Money Account'"  mat-button [ngClass]="appPermissions[19]?.Delete==0 || isMainAccount ? 'disabled-click large-button' : 'large-button'" (click)="DeleteAccount()">
+                                        <button [disabled]="ClickTypeForTrustChartHD=='WithTrust' && AccountClassForTrustChartHD !='Controlled Money Account'" mat-button [ngClass]="appPermissions[19]?.Delete==0 || isMainAccount ? 'disabled-click large-button' : 'large-button'" (click)="DeleteAccount()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_delete_d.ico" alt=""
@@ -2771,7 +2772,7 @@
                 <!-- Chart Of Account tab End-->
                 <!-- General Journal tab Start-->
                 <mat-tab label="{{ShowMatLable}}" *ngIf="isTabShow===16">
-                    <section class="ribbon-container legal_details_tab_main">
+                    <section class="ribbon-container legal_details_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab details_tab">
@@ -2926,7 +2927,7 @@
                 <!-- Confict Check End-->
                 <!-- Global Authorities Start-->
                 <mat-tab label="AUTHORITIES" *ngIf="isTabShow===18">
-                    <section class="ribbon-container contact_tab_main">
+                    <section class="ribbon-container contact_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab extras_tab">
@@ -3120,7 +3121,7 @@
                 <!-- Global Authorities End-->
                 <!-- searching start  -->
                 <mat-tab label="SEARCHING" *ngIf="isTabShow===19">
-                    <section class="ribbon-container contact_tab_main">
+                    <section class="ribbon-container contact_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
@@ -3189,7 +3190,7 @@
                 <!-- searching end  -->
                 <!-- ACCOUNTS RECONCILIATION Start-->
                 <mat-tab label="ACCOUNTS RECONCILIATION" *ngIf="isTabShow===20">
-                    <section class="ribbon-container legal_details_tab_main">
+                    <section class="ribbon-container legal_details_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab extras_tab">
@@ -3338,7 +3339,7 @@
                 <!-- ACCOUNTS RECONCILIATION End-->
                 <!-- Safe Custody Start-->
                 <mat-tab label="Safe Custody" *ngIf="isTabShow===22">
-                    <section class="ribbon-container contact_tab_main">
+                    <section class="ribbon-container contact_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
@@ -3530,7 +3531,7 @@
                 <!-- Safe Custody End-->
                 <!--Trust Money Start-->
                 <mat-tab label="Trust Money" *ngIf="isTabShow===23">
-                    <section class="ribbon-container contact_tab_main">
+                    <section class="ribbon-container contact_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
@@ -3717,7 +3718,7 @@
                 <!--Trust Money End-->
                 <!-- Trust End Of Month  Start-->
                 <mat-tab label="Trust End Of Month" *ngIf="isTabShow===24">
-                    <section class="ribbon-container contact_tab_main">
+                    <section class="ribbon-container contact_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab extras_tab">
@@ -3860,7 +3861,7 @@
                 <!-- Trust End Of Month End-->
                 <!-- TASK Start -->
                 <mat-tab label="TASK" *ngIf="isTabShow===25">
-                    <section class="ribbon-container contact_tab_main">
+                    <section class="ribbon-container contact_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
@@ -3940,7 +3941,7 @@
                 <!-- TASK Start End -->
                 <!-- CREATE DIARY ENTTRIES Start -->
                 <mat-tab label="CREATE DIARY ENTTRIES" *ngIf="isTabShow===26">
-                    <section class="ribbon-container legal_details_tab_main">
+                    <section class="ribbon-container legal_details_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
@@ -3982,7 +3983,7 @@
                 <!-- CREATE DIARY ENTTRIES End -->
                 <!-- Trust Chart of Accounts Start-->
                 <mat-tab label="Trust Chart of Accounts" *ngIf="isTabShow===27">
-                    <section class="ribbon-container contact_tab_main">
+                    <section class="ribbon-container contact_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
@@ -4078,7 +4079,7 @@
                 <!-- Trust Chart of Accounts End-->
                 <!-- Trust General Journal Start -->
                 <mat-tab label="Trust General Journal" *ngIf="isTabShow===28">
-                    <section class="ribbon-container contact_tab_main">
+                    <section class="ribbon-container contact_tab_main" [style.width]="detailwidth">
                         <mat-card>
                             <mat-card-content>
                                 <section class="group-section-tab action_tab">
@@ -4629,7 +4630,7 @@
                 <button mat-menu-item><span><b> Unbilled:</b> <span class="unbilledClassColor"> ${{TotalUnbilledWIP | number}}</span></span></button>
                 <button mat-menu-item><span><b> Outstanding:</b> <span class="OutstandingClassColor"> ${{TotalOutstanding | number}}</span></span></button>
                 <hr />
-                <button (click)="setTab($event)"  mat-menu-item [routerLink]="'/dashboard/monthly-graph'">
+                <button (click)="setTab($event)" mat-menu-item [routerLink]="'/dashboard/monthly-graph'">
                     <span><strong>View Dashboard</strong></span>
                 </button>
                 <!-- <button mat-raised-button color="accent"[routerLink]="'/dashboard'">View Dashboard</button> -->

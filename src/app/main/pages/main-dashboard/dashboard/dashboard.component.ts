@@ -23,7 +23,6 @@ export class DashboardComponent implements OnInit {
     chart: any;
     widget2: any = {};
     widget1SelectedYear = '2016';
-
     isLoadingResults: boolean = false;
     UnbilledTotal: any;
     AgedDebatorTotal: any;

@@ -20,7 +20,6 @@ export class ReCalcTimeEntriesDialogeComponent implements OnInit {
   addData: any = [];
   TemplateName: any;
   getSelectedWIP: any;
-  getSelectedWIPshow: any;
   getSelectedWIPNewPrice: any = [];
   IsWipData: boolean = false;
   isLoadingResults: boolean = true;
@@ -32,7 +31,6 @@ export class ReCalcTimeEntriesDialogeComponent implements OnInit {
     this.behaviourService.workInProgress$.subscribe(result => {
       if (result) {
         this.getSelectedWIP = result;
-        this.getSelectedWIPshow = result;
       }
     });
   }
@@ -64,10 +62,10 @@ export class ReCalcTimeEntriesDialogeComponent implements OnInit {
 
   ChangePrice() {
     this.isspiner = true;
-    this.getSelectedWIPshow.PRICE = this.getSelectedWIPNewPrice.PRICE;
-    this.getSelectedWIPshow.GST = this.getSelectedWIPNewPrice.GST;
-    this.getSelectedWIPshow.PRICEINCGST = this.getSelectedWIPNewPrice.PRICEINCGST;
-    let PostData: any = this.getSelectedWIPshow;
+    this.getSelectedWIP.PRICE = this.getSelectedWIPNewPrice.PRICE;
+    this.getSelectedWIP.GST = this.getSelectedWIPNewPrice.GST;
+    this.getSelectedWIP.PRICEINCGST = this.getSelectedWIPNewPrice.PRICEINCGST;
+    let PostData: any = this.getSelectedWIP;
     this.successMsg = 'Time entry Update successfully';
     let PostTimeEntryData: any = { FormAction: 'update', VALIDATEONLY: true, Data: PostData };
     this.Timersservice.SetWorkItems(PostTimeEntryData).subscribe(res => {

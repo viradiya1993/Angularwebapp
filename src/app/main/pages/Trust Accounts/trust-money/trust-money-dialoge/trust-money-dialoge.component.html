@@ -11,10 +11,6 @@
         <div class="one" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
             <form name="TrustMoneyForm" name="form" [formGroup]="TrustMoneyForm" fxLayout="column" fxFlex="1 0 auto">
 
-
-
-
-
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
                         <input (dateInput)="choosedDateTranD('input', $event)" (dateChange)="choosedDateTranD('change', $event)" formControlName="TRANSACTIONDATE" matInput [matDatepicker]="picker"
@@ -22,10 +18,6 @@
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
-                    <!-- <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
-                        <mat-label>Picture</mat-label>
-                        <input placeholder="Picture" matInput>
-                    </mat-form-field> -->
                     <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
                         <mat-label>Amount</mat-label>
                         <input (focusout)="MainAmmountPress();" formControlName="AMOUNT" placeholder="Amount" matInput
@@ -60,6 +52,15 @@
                             <img class="seticon" src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                         </mat-icon>
                     </mat-form-field>
+
+                    <mat-form-field *ngIf="action == 'Transfer'" appearance="outline" fxFlex="50" class=" pr-4">
+                            <mat-label>From Matter</mat-label>
+                            <input formControlName="FROMMATTER" placeholder="From Matter" matInput>
+                            <mat-icon matSuffix (click)="SelectMatter('from matter')" fxFlex="5">
+                                <img class="seticon" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                            </mat-icon>
+                        </mat-form-field>
+
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-checkbox *ngIf="matterType === true" [disabled]="action =='office'" formControlName="CheckBox"
@@ -78,7 +79,7 @@
                                         <mat-label>Matter</mat-label>
                                         <input formControlName="SHORTNAME" matInput>
                                     </mat-form-field>
-                                    <mat-icon class="set_icon" matSuffix (click)='SelectMatter()'>
+                                    <mat-icon class="set_icon" matSuffix (click)="SelectMatter('singal matter')">
                                         <img class="icon_set" src="assets/icons/web_app/icon_matter_d.ico" alt=""
                                             matTooltip="Twitter" matTooltipPosition="above">
                                     </mat-icon>

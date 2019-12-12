@@ -85,7 +85,7 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
     });
   }
   loadData(potData) {
-    this.WorkInProgressdata=[];
+    this.WorkInProgressdata = [];
     potData.MatterGuid = this.currentMatter.MATTERGUID
     this.isLoadingResults = true;
     // let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
@@ -96,6 +96,7 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
           this.editworkInProgress(res.DATA.WORKITEMS[0]);
         } else {
           this.isDisplay = true;
+          this.editworkInProgress(null);
         }
         this.WorkInProgressdata = new MatTableDataSource(res.DATA.WORKITEMS);
         this.WorkInProgressdata.paginator = this.paginator;
@@ -107,7 +108,7 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
       this.isLoadingResults = false;
       this.toastr.error(err);
     });
-   
+
     this.pageSize = localStorage.getItem('lastPageSize');
   }
   refreshWorkInprogress() {
@@ -201,7 +202,7 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
     this.WorkInProgressdata.sort = this.sort;
   }
 
-  sortData(val){
+  sortData(val) {
   }
 }
 

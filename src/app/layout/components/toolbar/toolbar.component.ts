@@ -529,7 +529,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 this.toastr.error("Please Select User");
                 return false;
             }
-            popupData = {action: actionType, USERGUID: ActiveUserData.USERGUID};
+            popupData = { action: actionType, USERGUID: ActiveUserData.USERGUID };
         }
         const dialogRef = this.dialog.open(UserDialogComponent, { disableClose: true, panelClass: 'User-dialog', data: popupData });
         dialogRef.afterClosed().subscribe(result => {
@@ -1289,7 +1289,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     //// GeneralJournal handling 
-    GeneralJournal(val){
+    GeneralJournal(val) {
         if (val == 'WithoutTrust') {
             this.ChartHandlingData = {
                 ClickType: val,
@@ -1298,7 +1298,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 Lable: "GENERAL JOURNAL",
             }
             localStorage.setItem('ChartURL', JSON.stringify(this.ChartHandlingData));
-            
+
         } else if (val == 'WithTrust') {
             this.ChartHandlingData = {
                 ClickType: val,
@@ -1518,7 +1518,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     //     });
     // }
     //_____________________________________________________________________________________________________
-    BankingDialogOpen(type: any, forPoPUpHandel: any,ForTrust:any) {
+    BankingDialogOpen(type: any, forPoPUpHandel: any, ForTrust: any) {
 
         // for trust handling starting 
         if (ForTrust == 'WithoutTrust') {
@@ -1529,7 +1529,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 Lable: "Select Account",
             }
             localStorage.setItem('ChartURL', JSON.stringify(this.ChartHandlingData));
-            
+
         } else if (ForTrust == 'WithTrust') {
             this.ChartHandlingData = {
                 ClickType: ForTrust,
@@ -1768,7 +1768,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         this.behaviorService.SetActiveSubMenu(this.activeSubMenu);
         // this.behaviorService.navigation(this.router.url);
         // this.selectedIndex=0;
-            this.setTab('');
+        this.setTab('');
     }
     setTab(event: any) {
         this.selectedIndex = 0;
@@ -1951,7 +1951,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else {
             INVOICEGUID = localStorage.getItem('edit_invoice_id');
         }
-        this.GloballyDelete({API:'SetInvoice', DATA: { INVOICEGUID: INVOICEGUID }});
+        this.GloballyDelete({ API: 'SetInvoice', DATA: { INVOICEGUID: INVOICEGUID } });
         // this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
         //     disableClose: true,
         //     width: '100%',
@@ -1965,7 +1965,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         // } else {
         //     INVOICEGUID = localStorage.getItem('edit_invoice_id');
         // }
-       
+
         // let postData = { FormAction: "delete", DATA: { INVOICEGUID: INVOICEGUID } }
         // this._mainAPiServiceService.getSetData(postData, 'SetInvoice').subscribe(res => {
         //     console.log(res)
@@ -1974,20 +1974,20 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         //         this.confirmDialogRef.componentInstance.confirmMessage = res.MESSAGE;
         //         this.confirmDialogRef.afterClosed().subscribe(result => {
         //             if (result) {
-                    
+
         //             }
         //             this.confirmDialogRef = null;
         //         });
-        
+
         //     }
         //     if (res.STATUS == "success" && res.CODE == 200) {
-              
+
         //         // $('#refreshInvoiceTab').click();
         //         // this.toastr.success('Delete successfully');
         //     }
         // });
-        
-      
+
+
 
 
         // this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
@@ -2355,17 +2355,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
-            $("#trustMoneyRefersh").click();
+                $("#trustMoneyRefersh").click();
                 //localStorage.setItem('set_active_matters', JSON.stringify(result));   
             }
         });
     }
-    ReCalcTimeEntriClick(){
+    ReCalcTimeEntriClick() {
         const dialogRef = this._matDialog.open(ReCalcTimeEntriesDialogeComponent, {
             width: '100%', disableClose: true,
-            data: {
-                action: ''
-            }
+            data: { action: '' }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
@@ -2393,92 +2391,92 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
 
-// globally delete 
-GloballyDelete(getData) {
-    console.log(getData);
-    let details = { FormAction: 'delete', VALIDATEONLY: true, Data: getData.DATA };
-    this._mainAPiServiceService.getSetData(details, getData.API).subscribe(response => {
-      //array empty of save item
-      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        this.checkValidation(response.DATA.VALIDATIONS, details,getData.API);
-      } else if (response.CODE == 451 && response.STATUS == 'warning') {
-        this.checkValidation(response.DATA.VALIDATIONS, details,getData.API);
-      } else if (response.CODE == 450 && response.STATUS == 'error') {
-        this.checkValidation(response.DATA.VALIDATIONS, details,getData.API);
-      } else if (response.MESSAGE == 'Not logged in') {
-        this.dialogRef.close(false);
-      } else {
-      }
-
-    }, error => {
-      this.toastr.error(error);
-    });
-  }
-  checkValidation(bodyData: any, details: any,ApiName:any) {
-    let errorData: any = [];
-    let warningData: any = [];
-    let tempError: any = [];
-    let tempWarning: any = [];
-    bodyData.forEach(function (value) {
-      if (value.VALUEVALID == 'No' || value.VALUEVALID == 'Error') {
-        errorData.push(value.ERRORDESCRIPTION);
-        tempError[value.FIELDNAME] = value;
-      }
-      else if (value.VALUEVALID == 'Warning') {
-        tempWarning[value.FIELDNAME] = value;
-        warningData.push(value.ERRORDESCRIPTION);
-      }else{
-        
-      }
-    });
- 
-    if (Object.keys(errorData).length != 0) {
-      this.toastr.error(errorData);
-    } else if (Object.keys(warningData).length != 0) {
-      this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-        disableClose: true,
-        width: '100%',
-        data: warningData
-      });
-      this.confirmDialogRef.componentInstance.confirmMessage = warningData;
-      this.confirmDialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.DeleteGData(details,ApiName);
-        }
-        this.confirmDialogRef = null;
-      });
-    } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
-
-        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-            disableClose: true,
-            width: '100%',
-          });
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-          this.confirmDialogRef.afterClosed().subscribe(result => {
-            if (result) {
-              this.DeleteGData(details,ApiName);
+    // globally delete 
+    GloballyDelete(getData) {
+        console.log(getData);
+        let details = { FormAction: 'delete', VALIDATEONLY: true, Data: getData.DATA };
+        this._mainAPiServiceService.getSetData(details, getData.API).subscribe(response => {
+            //array empty of save item
+            if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+                this.checkValidation(response.DATA.VALIDATIONS, details, getData.API);
+            } else if (response.CODE == 451 && response.STATUS == 'warning') {
+                this.checkValidation(response.DATA.VALIDATIONS, details, getData.API);
+            } else if (response.CODE == 450 && response.STATUS == 'error') {
+                this.checkValidation(response.DATA.VALIDATIONS, details, getData.API);
+            } else if (response.MESSAGE == 'Not logged in') {
+                this.dialogRef.close(false);
+            } else {
             }
-            this.confirmDialogRef = null;
-          });
+
+        }, error => {
+            this.toastr.error(error);
+        });
     }
-  }
-  DeleteGData(data: any,ApiName) {
-    data.VALIDATEONLY = false;
-    this._mainAPiServiceService.getSetData(data, ApiName).subscribe(response => {
-      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-         this.toastr.success(' Delete successfully');
-         $('#refreshInvoiceTab').click();
-      } else if (response.CODE == 451 && response.STATUS == 'warning') {
-        this.toastr.warning(response.MESSAGE);
-      } else if (response.CODE == 450 && response.STATUS == 'error') {
-        this.toastr.error(response.MESSAGE);
-      } else if (response.MESSAGE == 'Not logged in') {
-        this.dialogRef.close(false);
-      }
-    }, error => {
-      this.toastr.error(error);
-    });
-  }
+    checkValidation(bodyData: any, details: any, ApiName: any) {
+        let errorData: any = [];
+        let warningData: any = [];
+        let tempError: any = [];
+        let tempWarning: any = [];
+        bodyData.forEach(function (value) {
+            if (value.VALUEVALID == 'No' || value.VALUEVALID == 'Error') {
+                errorData.push(value.ERRORDESCRIPTION);
+                tempError[value.FIELDNAME] = value;
+            }
+            else if (value.VALUEVALID == 'Warning') {
+                tempWarning[value.FIELDNAME] = value;
+                warningData.push(value.ERRORDESCRIPTION);
+            } else {
+
+            }
+        });
+
+        if (Object.keys(errorData).length != 0) {
+            this.toastr.error(errorData);
+        } else if (Object.keys(warningData).length != 0) {
+            this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+                disableClose: true,
+                width: '100%',
+                data: warningData
+            });
+            this.confirmDialogRef.componentInstance.confirmMessage = warningData;
+            this.confirmDialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    this.DeleteGData(details, ApiName);
+                }
+                this.confirmDialogRef = null;
+            });
+        } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
+
+            this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+                disableClose: true,
+                width: '100%',
+            });
+            this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+            this.confirmDialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    this.DeleteGData(details, ApiName);
+                }
+                this.confirmDialogRef = null;
+            });
+        }
+    }
+    DeleteGData(data: any, ApiName) {
+        data.VALIDATEONLY = false;
+        this._mainAPiServiceService.getSetData(data, ApiName).subscribe(response => {
+            if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+                this.toastr.success(' Delete successfully');
+                $('#refreshInvoiceTab').click();
+            } else if (response.CODE == 451 && response.STATUS == 'warning') {
+                this.toastr.warning(response.MESSAGE);
+            } else if (response.CODE == 450 && response.STATUS == 'error') {
+                this.toastr.error(response.MESSAGE);
+            } else if (response.MESSAGE == 'Not logged in') {
+                this.dialogRef.close(false);
+            }
+        }, error => {
+            this.toastr.error(error);
+        });
+    }
 }
 //2 pair Data Convert
 function chunks(arr, size = 3) {

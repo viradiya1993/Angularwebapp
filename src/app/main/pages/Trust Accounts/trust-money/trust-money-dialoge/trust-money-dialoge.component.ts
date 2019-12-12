@@ -10,6 +10,7 @@ import { MatterDialogComponent } from 'app/main/pages/time-entries/matter-dialog
 import { DatePipe } from '@angular/common';
 import { ContactDialogComponent } from 'app/main/pages/contact/contact-dialog/contact-dialog.component';
 import { ContactSelectDialogComponent } from 'app/main/pages/contact/contact-select-dialog/contact-select-dialog.component';
+import { environment } from 'environments/environment';
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -60,6 +61,10 @@ export class TrustMoneyDialogeComponent implements OnInit {
   highlightedRows: any;
   INDEX: any;
   SendDate: string;
+  sendToAPI: string;
+  PDFURL: any;
+  showPDFPopup: string;
+  base_url: string;
   constructor(private _mainAPiServiceService: MainAPiServiceService,
     private _formBuilder: FormBuilder, private toastr: ToastrService,
     public dialogRef: MatDialogRef<TrustMoneyDialogeComponent>,
@@ -67,6 +72,8 @@ export class TrustMoneyDialogeComponent implements OnInit {
     public _matDialog: MatDialog,
     private datepipe: DatePipe,
     @Inject(MAT_DIALOG_DATA) public _data: any, ) {
+
+    this.base_url=environment.ReportUrl;
     this.TrustMoneyForm = this._formBuilder.group({
       TRANSACTIONDATE: [''],
       AMOUNT: [''],
@@ -113,12 +120,16 @@ export class TrustMoneyDialogeComponent implements OnInit {
     this.TrustMoneyForm.controls['PAYMENTTYPE'].setValue('Cheque');
     this.TrustMoneyForm.controls['CheckBox'].setValue(false);
     this.action = _data.action;
+  console.log(_data);
     if (this.action == "receipt") {
       this.title = "Add Trust Receipt"
+      this.sendToAPI='Receipt';
     } else if (this.action == "withdrawal") {
       this.title = "Add Trust withdrawal";
+      this.sendToAPI='Withdrawal';
     } else if (this.action == "Transfer") {
       this.title = "Add Trust Transfer";
+      this.sendToAPI='Transfer';
       this.TrustMoneyForm.controls['PAYMENTTYPE'].setValue('Transfer');
       this.TrustMoneyData.PaymentType = "Transfer";
       this.PymentType = "Transfer";
@@ -221,7 +232,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
       BANKCHEQUE: this.f.BANKCHEQUE.value,
       BENEFICIARY: this.f.BENEFICIARY.value,
       // new added 
-      CASHBOOK: "Withdrawal",
+      CASHBOOK:this.sendToAPI,
       TRANSACTIONCLASS: "Trust Money",
       TRANSACTIONTYPE: "Normal Item",
       TRANSACTIONSUBTYPE: "Normal",
@@ -325,6 +336,13 @@ export class TrustMoneyDialogeComponent implements OnInit {
     data.VALIDATEONLY = false;
     this._mainAPiServiceService.getSetData(data, 'SetTrustTransaction').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        if(response.DATA.PDFFILENAME != ''){
+          this.showPDFPopup ='yes'; 
+          this.PDFURL=response.DATA.PDFFILENAME;
+          this.dialog.open(TrustMoneyDialogeComponent,{width:'100%', data: {
+            action: this.action
+        }});
+        }
         this.toastr.success('save successfully');
         this.isspiner = false;
         this.dialogRef.close(true);

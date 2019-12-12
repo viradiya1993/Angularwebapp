@@ -204,7 +204,7 @@ export class GeneralReceiptDilogComponent implements OnInit {
       // FIRMGUID: this.f.FIRMGUID.value,
       INCOMEDATE: this.f.INCOMEDATE.value,
       PAYEE: this.f.PAYEE.value,
-      AMOUNT: this.f.AMOUNT.value,
+      AMOUNT: Number(this.f.AMOUNT.value) - Number(this.f.GST.value),
       GST: this.f.GST.value,
       BANKACCOUNTGUID: this.f.BANKACCOUNTGUID.value,
       INCOMEACCOUNTGUID: this.f.INCOMEACCOUNTGUID.value,

@@ -65,7 +65,6 @@ export class TimersService {
   }
   //time entry popup data end 
   addTimeEnrtS(eTimer: any) {
-    console.log(eTimer);
     let currentUser: any = JSON.parse(localStorage.getItem('currentUser'));
     let timerId: any = 'timer_' + currentUser.UserGuid;
     let activeMatters: any;

@@ -65,6 +65,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
   PDFURL: any;
   showPDFPopup: string;
   base_url: string;
+  forPDF: any;
   constructor(private _mainAPiServiceService: MainAPiServiceService,
     private _formBuilder: FormBuilder, private toastr: ToastrService,
     public dialogRef: MatDialogRef<TrustMoneyDialogeComponent>,
@@ -120,6 +121,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
     this.TrustMoneyForm.controls['PAYMENTTYPE'].setValue('Cheque');
     this.TrustMoneyForm.controls['CheckBox'].setValue(false);
     this.action = _data.action;
+    this.forPDF=_data.forPDF;
   console.log(_data);
     if (this.action == "receipt") {
       this.title = "Add Trust Receipt"
@@ -163,6 +165,13 @@ export class TrustMoneyDialogeComponent implements OnInit {
       this.action = "receipt";
     } else if (this.action == "Release Trust") {
       this.title = "Add Release Trust";
+    }
+
+    if(this.forPDF == 'Yes'){
+      if(_data.PDFURL){
+        console.log("con1");
+        this.PDFURL=_data.PDFURL;
+      }
     }
   }
   ngOnInit() {
@@ -338,9 +347,11 @@ export class TrustMoneyDialogeComponent implements OnInit {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         if(response.DATA.PDFFILENAME != ''){
           this.showPDFPopup ='yes'; 
-          this.PDFURL=response.DATA.PDFFILENAME;
+         
           this.dialog.open(TrustMoneyDialogeComponent,{width:'100%', data: {
-            action: this.action
+            action: this.action,
+            forPDF:"Yes",
+            PDFURL:response.DATA.PDFFILENAME
         }});
         }
         this.toastr.success('save successfully');

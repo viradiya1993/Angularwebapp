@@ -1,7 +1,7 @@
 <div class="example-loading-shade" *ngIf="isLoadingResults">
     <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
 </div>
-<div cdkDrag class="popup_main_div add_edit_contact_main">
+<div *ngIf="forPDF =='No'" cdkDrag class="popup_main_div add_edit_contact_main">
     <h2 cdkDragHandle mat-dialog-title>{{title}}
         <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
             <mat-icon>close</mat-icon>
@@ -10,6 +10,11 @@
     <div mat-dialog-content class="mat-typography main">
         <div class="one" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
             <form name="TrustMoneyForm" name="form" [formGroup]="TrustMoneyForm" fxLayout="column" fxFlex="1 0 auto">
+
+
+
+
+
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
                         <input (dateInput)="choosedDateTranD('input', $event)" (dateChange)="choosedDateTranD('change', $event)" formControlName="TRANSACTIONDATE" matInput [matDatepicker]="picker"
@@ -386,25 +391,29 @@
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
     </mat-dialog-actions>
 </div>
-
-
-<!-- for pdf generation  -->
-<div *ngIf="showPDFPopup =='yes'" cdkDrag class="popup_main_div add_edit_contact_main" >
-    <h2 cdkDragHandle mat-dialog-title>{{action}}
-        <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
-            <mat-icon>close</mat-icon>
-        </button>
-    </h2>
-<div mat-dialog-content class="mat-typography" *ngIf="PDF_Generation">
-    <div class="popup_body document_generated_main_div">
-        <div fxLayout="row" class="document_generated_main_first" fxLayoutAlign="start center" fxFlex="1 0 auto">
-            <div class="middle">The {{action}} report has been produced.</div>
-        </div>
-        <div fxLayout="row" class="document_generated_main_last" fxLayoutAlign="start center" fxFlex="1 0 auto" class="button">
-            <a href="{{this.base_url}}{{PDFURL}}" target="_blank">
-                <button mat-raised-button mat-dialog-close color="accent">Click here to view it</button>
-            </a>
-        </div>
-    </div>
-</div>
-</div>
+        
+         <div *ngIf="forPDF =='Yes'"  cdkDrag class="popup_main_div add_edit_contact_main">
+                <h2 cdkDragHandle mat-dialog-title>{{sendToAPI}}
+                    <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </h2>
+                <div mat-dialog-content class="mat-typography main">
+                    <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                        <div fxLayout="column" fxFlex="1 0 auto" name="form" class="TemplatePopup" >
+                            <div class="pr-4" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                <div fxFlex="70" class="middle" fxLayoutAlign="start start"><span>The <b>{{sendToAPI}}</b> has been
+                                        produced</span>
+                                </div>
+                                <a fxFlex="30" href="{{this.base_url}}{{PDFURL}}" target="_blank">
+                                    <button mat-raised-button mat-dialog-close color="accent">Click here to view it</button>
+                                </a>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+                <mat-dialog-actions align="end" class="popup_ftr">
+                    <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
+                </mat-dialog-actions>
+            </div>

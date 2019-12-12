@@ -13,7 +13,7 @@ export class MainAPiServiceService{
   getSetData(Data: any, url: any) {
     if (Data == null) {
       Data = {};
-    }
+  }
     return this.httpClient.post<any>(environment.APIEndpoint + url, Data);
   }
   getSetForReport(ReportId){

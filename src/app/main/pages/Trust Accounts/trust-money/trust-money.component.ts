@@ -221,4 +221,8 @@ export class TrustMoneyComponent implements OnInit {
   RowClick(row) {
     console.log(row);
   }
+  trustMoneyRefersh(){
+    this.filterData = JSON.parse(localStorage.getItem("trustMoney_filter"))
+    this.LoadData(this.filterData);
+  }
 }

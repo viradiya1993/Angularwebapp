@@ -48,7 +48,7 @@
                                 Bank</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
+                    <mat-form-field *ngIf="action != 'Transfer'" appearance="outline" fxFlex="50" class=" pr-4">
                         <mat-label>Received Form</mat-label>
                         <input formControlName="PAYOR" placeholder="Received Form" matInput>
                         <mat-icon matSuffix (click)='SelectContact()' fxFlex="5">
@@ -385,4 +385,26 @@
             cdkFocusInitial>Save</button>
         <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Don't Save</button>
     </mat-dialog-actions>
+</div>
+
+
+<!-- for pdf generation  -->
+<div *ngIf="showPDFPopup =='yes'" cdkDrag class="popup_main_div add_edit_contact_main" >
+    <h2 cdkDragHandle mat-dialog-title>{{action}}
+        <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
+            <mat-icon>close</mat-icon>
+        </button>
+    </h2>
+<div mat-dialog-content class="mat-typography" *ngIf="PDF_Generation">
+    <div class="popup_body document_generated_main_div">
+        <div fxLayout="row" class="document_generated_main_first" fxLayoutAlign="start center" fxFlex="1 0 auto">
+            <div class="middle">The {{action}} report has been produced.</div>
+        </div>
+        <div fxLayout="row" class="document_generated_main_last" fxLayoutAlign="start center" fxFlex="1 0 auto" class="button">
+            <a href="{{this.base_url}}{{PDFURL}}" target="_blank">
+                <button mat-raised-button mat-dialog-close color="accent">Click here to view it</button>
+            </a>
+        </div>
+    </div>
+</div>
 </div>

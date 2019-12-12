@@ -14,7 +14,7 @@ body.theme-yellow-light .mat-dialog-container {
 mat-dialog-actions {
     mat-spinner {
         zoom: 0.2;
-        position: absolute;
+        position: absolute !important;
         right: 0;
         left: 0;
         margin: auto;
@@ -99,7 +99,7 @@ mat-icon.close_icon.mat-icon.material-icons.mat-icon-no-color {
 .add_edit_contact_main {
     background-color: #fff;
     // width: 50%;
-    width: 850px;
+    width: 480px;
     margin: 0 auto;
     // box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
     // -webkit-box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12);
@@ -141,5 +141,5 @@ mat-icon.close_icon.mat-icon.material-icons.mat-icon-no-color {
 }
 
 .mat-typography.recalc.main {
-    overflow: hidden;
+    overflow-x: hidden;
 }

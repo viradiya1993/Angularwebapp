@@ -1,3 +1,6 @@
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+</div>
 <div cdkDrag class="popup_main_div add_edit_contact_main">
     <h2 cdkDragHandle mat-dialog-title>Recalc Time Entries
         <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
@@ -8,53 +11,61 @@
         <div class="one" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row" *ngIf="IsWipData">
             <div fxLayout="column" fxFlex="1 0 auto" name="form">
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <h3 fxFlex="81" class="pr-4">
+                    <h3 fxFlex="44" class="pr-4">
                         This function uses the rates specified on the matter to calculate the As such you need to chyange the rates before recalculating the Time.
                     </h3>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <h3 fxFlex="81" class="pr-4">
+                    <h3 fxFlex="44" class="pr-4">
                         <strong>This function uses the rates specified on the matter to calculate the As such you need to chyange the rates before recalculating the Time.</strong>
                     </h3>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <div fxFlex="35" class="pr-4"></div>
-                    <div fxFlex="5" class="pr-4"> Date </div>
-                    <div fxFlex="10" class="pr-4">{{getSelectedWIP.ITEMDATE}} </div>
+                    <div fxFlex="5"></div>
+                    <div fxFlex="5" class="pr-4"> <strong>Date</strong> </div>
+                    <div fxFlex="10" class="pr-4">{{getSelectedWIP?.ITEMDATE}} </div>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <div fxFlex="35" class="pr-4"></div>
-                    <div fxFlex="5" class="pr-4"> quantity </div>
-                    <div fxFlex="10" class="pr-4">{{getSelectedWIP.QUANTITY}} </div>
-                    <div fxFlex="10" class="pr-4">{{getSelectedWIP.QUANTITYTYPE}} </div>
+                    <mat-form-field appearance="outline" fxFlex="43">
+                        <textarea matInput readonly>{{getSelectedWIP?.ADDITIONALTEXT}}</textarea>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" style="padding-bottom: 25px;">
+                    <div fxFlex="5"></div>
+                    <div fxFlex="5" class="pr-4"> <strong>Quantity</strong> </div>
+                    <div fxFlex="5"></div>
+                    <div fxFlex="5" class="pr-4">{{getSelectedWIP?.QUANTITY}} </div>
+                    <div fxFlex="7" class="pr-4">{{getSelectedWIP?.QUANTITYTYPE}} </div>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <div fxFlex="30" class="pr-4"></div>
                     <div fxFlex="5" class="pr-4"></div>
-                    <div fxFlex="15" class="pr-4"> Current Price </div>
-                    <div fxFlex="15" class="pr-4"> New Price </div>
-                    <div fxFlex="35" class="pr-4"> </div>
+                    <div fxFlex="15" class="pr-4">
+                        <strong> Current Price</strong>
+                    </div>
+                    <div fxFlex="15" class="pr-4"><strong> New Price</strong>
+                    </div>
+                    <div fxFlex="55" class="pr-4"> </div>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <div fxFlex="30" class="pr-4"></div>
-                    <div fxFlex="5" class="pr-4">Ex GST</div>
-                    <div fxFlex="15" class="pr-4">{{getSelectedWIP.PRICE}} </div>
-                    <div fxFlex="15" class="pr-4">{{getSelectedWIPNewPrice.PRICE}} </div>
-                    <div fxFlex="35" class="pr-4"> </div>
+                    <div fxFlex="5" class="pr-4"><strong>Ex GST</strong> </div>
+                    <div fxFlex="5"></div>
+                    <div fxFlex="15" class="pr-4">{{getSelectedWIP?.PRICE}} </div>
+                    <div fxFlex="15" class="pr-4">{{getSelectedWIPNewPrice?.PRICE}} </div>
+                    <div fxFlex="55" class="pr-4"> </div>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <div fxFlex="30" class="pr-4"></div>
-                    <div fxFlex="5" class="pr-4">GST</div>
-                    <div fxFlex="15" class="pr-4">{{getSelectedWIP.GST}} </div>
-                    <div fxFlex="15" class="pr-4">{{getSelectedWIPNewPrice.GST}} </div>
-                    <div fxFlex="35" class="pr-4"></div>
+                    <div fxFlex="5" class="pr-4"><strong>GST</strong> </div>
+                    <div fxFlex="5"></div>
+                    <div fxFlex="15" class="pr-4">{{getSelectedWIP?.GST}} </div>
+                    <div fxFlex="15" class="pr-4">{{getSelectedWIPNewPrice?.GST}} </div>
+                    <div fxFlex="55" class="pr-4"></div>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <div fxFlex="30" class="pr-4"></div>
-                    <div fxFlex="5" class="pr-4">Inc GST</div>
-                    <div fxFlex="15" class="pr-4"> {{getSelectedWIP.PRICEINCGST}}</div>
-                    <div fxFlex="15" class="pr-4"> {{getSelectedWIPNewPrice.PRICEINCGST}}</div>
-                    <div fxFlex="35" class="pr-4"> </div>
+                    <div fxFlex="5" class="pr-4"><strong>GST</strong> </div>
+                    <div fxFlex="5"></div>
+                    <div fxFlex="15" class="pr-4"> {{getSelectedWIP?.PRICEINCGST}}</div>
+                    <div fxFlex="15" class="pr-4"> {{getSelectedWIPNewPrice?.PRICEINCGST}}</div>
+                    <div fxFlex="55" class="pr-4"> </div>
                 </div>
             </div>
         </div>
@@ -67,9 +78,9 @@
                 </div>
             </div>
         </div>
-        <mat-dialog-actions align="end" class="popup_ftr">
-            <button mat-raised-button color="accent" (click)="save()" [mat-dialog-close]="false" cdkFocusInitial *ngIf="IsWipData" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Change entry</button>
-            <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial *ngIf="IsWipData">Don't Change</button>
-            <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial *ngIf="!IsWipData">Ok</button>
-        </mat-dialog-actions>
     </div>
+    <mat-dialog-actions align="end" class="popup_ftr">
+        <button mat-raised-button color="accent" (click)="ChangePrice()" cdkFocusInitial *ngIf="IsWipData" [disabled]="isspiner"><mat-spinner *ngIf="isspiner"></mat-spinner>Change entry</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial *ngIf="IsWipData">Don't Change</button>
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial *ngIf="!IsWipData">Ok</button>
+    </mat-dialog-actions>

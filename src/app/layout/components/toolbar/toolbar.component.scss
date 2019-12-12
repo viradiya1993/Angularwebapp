@@ -398,25 +398,29 @@ button#spendmoneyMenubtn {
 button#packsToolbarHide {
     display: none;
 }
-.unbilledClassColor{
-color:blue;
+
+.unbilledClassColor {
+    color: blue;
 }
-.OutstandingClassColor{
-color: red
+
+.OutstandingClassColor {
+    color: red;
 }
-.checkbox_toolbar{
+
+.checkbox_toolbar {
     margin-left: 10px;
     margin-right: 10px;
 }
+
 mat-nav-list.pad_dash.mat-nav-list.mat-list-base {
     padding-top: 0px;
 }
+
 // added by web 19
 // mat-icon.main-icon.mat-icon.material-icons.mat-icon-no-color {
 //     width: 32px;
 // }
-
-// toolbar .mat-tab-body section.ribbon-container {
-//     -ms-overflow-style: -ms-autohiding-scrollbar !important;
-//     -ms-overflow-style: scrollbar !important; 
-// }
+toolbar .mat-tab-body section.ribbon-container {
+    -ms-overflow-style: -ms-autohiding-scrollbar !important;
+    -ms-overflow-style: scrollbar !important;
+}

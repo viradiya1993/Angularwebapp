@@ -10,6 +10,7 @@ import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/conf
 import { MatSort } from '@angular/material';
 import { $ } from 'protractor';
 import { BankingDialogComponent } from '../../banking/banking-dialog.component';
+import { MatterDialogComponentForTemplate } from '../../template/matter-dialog/matter-dialog.component';
 
 @Component({
   selector: 'app-receipt-dilog',
@@ -23,7 +24,8 @@ export class ReceiptDilogComponent implements OnInit {
   AllocationData: any = [];
   errorWarningData: any = {};
   INDEX: number;
-  confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
+  confirmDialogRef: MatDialogRef<ReceiptDilogComponent>;
+  confirmDialogRef1: MatDialogRef<ReceiptDilogComponent>;
   isShowchecked: string;
   getPayourarray: any = [];
   data: { 'Outstanding': string; };
@@ -63,6 +65,11 @@ export class ReceiptDilogComponent implements OnInit {
   GloballyUnallocatedVAl: any;
   action: any;
   title: string;
+  Warn: string;
+  Warnpopup: string;
+  warndataGet: any;
+  whichTempGenerate: string;
+  ContextGuid: any;
 
   constructor(
     private toastr: ToastrService,
@@ -76,6 +83,17 @@ export class ReceiptDilogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
     console.log(_data);
+    if (_data.ForWahat) {
+      if (_data.ForWahat == "genDoc") {
+        this.whichTempGenerate = _data.wichDocGen;
+      } else {
+        this.Warnpopup = "show";
+        this.warndataGet = _data.WorningShow
+      }
+    } else {
+      this.Warnpopup = "hide";
+    }
+
     this.action = _data.action;
     if (this.action == 'edit' || this.action == 'editForTB') {
       this.title = 'View Receipt'
@@ -269,8 +287,6 @@ export class ReceiptDilogComponent implements OnInit {
       data = { CONTACTGUID: this.matterData.CONTACTGUID, 'Outstanding': 'Yes' };
     }
     this.GetInvoiceForReceipt(data);
-
-
   }
   revivedAmount() {
     if (this.f.AMOUNT.value > this.TotalInvoice) {
@@ -278,7 +294,7 @@ export class ReceiptDilogComponent implements OnInit {
       this.PrepareReceiptForm.controls['Unallocated'].setValue(val.toFixed(2));
       this.GloballyUnallocatedVAl = this.f.Unallocated.value;
     } else {
-    
+
       if (this.AllocationBtn == 'clear') {
         this.PrepareReceiptForm.controls['Unallocated'].setValue(this.f.AMOUNT.value);
         this.GloballyUnallocatedVAl = this.f.Unallocated.value;
@@ -306,7 +322,7 @@ export class ReceiptDilogComponent implements OnInit {
         });
         enteredval = Number(ValEnterByUser);
         for (i = 0; data.length - 1 >= 0; i++) {
-          if (Number(enteredval) > 0) {     
+          if (Number(enteredval) > 0) {
 
             if (Number(data[i].AMOUNTOUTSTANDINGINCGST) <= Number(enteredval)) {
               data[i].ALLOCATED = (Number(data[i].AMOUNTOUTSTANDINGINCGST)).toFixed(2);
@@ -315,9 +331,9 @@ export class ReceiptDilogComponent implements OnInit {
 
               data[i].ALLOCATED = (Number(enteredval)).toFixed(2);
               enteredval = enteredval - data[i].AMOUNTOUTSTANDINGINCGST;
-         
+
             }
-           
+
           } else {
             data[i].ALLOCATED = 0;
           }
@@ -466,7 +482,7 @@ export class ReceiptDilogComponent implements OnInit {
     let warningData: any = [];
     let tempError: any = [];
     let tempWarning: any = [];
-    let warnshow :any=[];
+    let warnshow: any = [];
     bodyData.forEach(function (value) {
       if (value.VALUEVALID == 'No') {
         errorData.push(value.ERRORDESCRIPTION);
@@ -480,26 +496,45 @@ export class ReceiptDilogComponent implements OnInit {
     });
     this.errorWarningData = { "Error": tempError, 'warning': tempWarning };
     if (Object.keys(errorData).length != 0) {
-      console.log()
       this.toastr.error(errorData);
       this.isspiner = false;
     } else if (Object.keys(warningData).length != 0) {
-      if(Number(this.f.Unallocated.value) != 0){
-        warnshow.push('You have not allocated all the receipt amount to invoice by $'+ Number(this.f.Unallocated.value)+'\n',
-         'SILQ will save it as a credit which you will be able to apply against your next invoice.'+'\n',
-         'Do you want to save this credit for the matter or for the firm?'+'\n' );
+      if (Number(this.f.Unallocated.value) != 0) {
+        warnshow.push('You have not allocated all the receipt amount to invoice by $' + Number(this.f.Unallocated.value) + '\n',
+          'SILQ will save it as a credit which you will be able to apply against your next invoice.' + '\n',
+          'Do you want to save this credit for the matter or for the firm?' + '\n');
       }
-      console.log(warnshow); 
-      this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+      this.confirmDialogRef1 = this._matDialog.open(ReceiptDilogComponent, {
         disableClose: true,
         width: '100%',
-        data: warnshow
+        data: {
+          WorningShow: warnshow,
+          ForWahat: 'warningShow',
+          matterData: this.matterData
+        }
       });
-      this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Save?';
-      this.confirmDialogRef.afterClosed().subscribe(result => {
+      this.confirmDialogRef1.afterClosed().subscribe(result => {
+        console.log("con 1");
+        this.isspiner = false;
         if (result) {
           this.isspiner = true;
-          this.SaveReceiptAfterVAlidation(details);
+          this.confirmDialogRef = this._matDialog.open(ReceiptDilogComponent, {
+            disableClose: true,
+            width: '100%',
+            data: {
+              ForWahat: 'genDoc',
+              wichDocGen: result,
+              matterData: this.matterData
+            }
+          });
+          this.confirmDialogRef.afterClosed().subscribe(result => {
+            this.isspiner = false;
+            if (result) {
+              this.isspiner = true;
+              this.SaveReceiptAfterVAlidation(details);
+            }
+            this.confirmDialogRef = null;
+          });
         }
         this.confirmDialogRef = null;
       });
@@ -539,5 +574,28 @@ export class ReceiptDilogComponent implements OnInit {
       }
     });
   }
-
+  GenerateDoc() {
+    if (this.whichTempGenerate == 'matter') {
+      this.ContextGuid = this.matterData.MATTERGUID 
+    } else {
+      this.ContextGuid= this.matterData.CONTACTGUID
+    }
+    let passdata = {
+      Context: 'Receipt',
+      ContextGuid: this.ContextGuid,
+      knownby: 'Template',
+      Type: 'Template',
+      Template: "<DEFRECTEMP>"
+    }
+    const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
+      width: '100%',
+      disableClose: true,
+      data: passdata
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+  closeAllDialoge(){
+    this.confirmDialogRef1.close(false);
+  }
 }

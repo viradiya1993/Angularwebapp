@@ -1942,16 +1942,18 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //delete invoice
     deleteInvoice(isType): void {
-        let INVOICEGUID = '';
-        if (isType == 'isTime') {
-            this.behaviorService.matterInvoice$.subscribe(matterInvoiceData => {
-                if (matterInvoiceData)
-                    INVOICEGUID = matterInvoiceData.INVOICEGUID;
-            });
-        } else {
-            INVOICEGUID = localStorage.getItem('edit_invoice_id');
-        }
-        this.GloballyDelete({ API: 'SetInvoice', DATA: { INVOICEGUID: INVOICEGUID } });
+        // let INVOICEGUID = '';
+        // if (isType == 'isTime') {
+        //     this.behaviorService.matterInvoice$.subscribe(matterInvoiceData => {
+        //         if (matterInvoiceData)
+        //             INVOICEGUID = matterInvoiceData.INVOICEGUID;
+        //     });
+        // } else {
+        //     INVOICEGUID = localStorage.getItem('edit_invoice_id');
+        // }
+        // this.GloballyDelete({API:'SetInvoice', DATA: { INVOICEGUID: INVOICEGUID }});
+
+
         // this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
         //     disableClose: true,
         //     width: '100%',
@@ -1990,32 +1992,33 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
 
 
-        // this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-        //     disableClose: true,
-        //     width: '100%',
-        // });
-        // this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete this invoice? There is a receipt associated with this invoice. If you do delete the invoice, the receipt will be turned into a credit within the matter.';
-        // this.confirmDialogRef.afterClosed().subscribe(result => {
-        //     if (result) {
-        //         let INVOICEGUID = '';
-        //         if (isType == 'isTime') {
-        //             this.behaviorService.matterInvoice$.subscribe(matterInvoiceData => {
-        //                 if (matterInvoiceData)
-        //                     INVOICEGUID = matterInvoiceData.INVOICEGUID;
-        //             });
-        //         } else {
-        //             INVOICEGUID = localStorage.getItem('edit_invoice_id');
-        //         }
-        //         let postData = { FormAction: "delete", DATA: { INVOICEGUID: INVOICEGUID } }
-        //         this._mainAPiServiceService.getSetData(postData, 'SetInvoice').subscribe(res => {
-        //             if (res.STATUS == "success" && res.CODE == 200) {
-        //                 $('#refreshInvoiceTab').click();
-        //                 this.toastr.success('Delete successfully');
-        //             }
-        //         });
-        //     }
-        //     this.confirmDialogRef = null;
-        // });
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Save?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                let INVOICEGUID = '';
+                if (isType == 'isTime') {
+                    this.behaviorService.matterInvoice$.subscribe(matterInvoiceData => {
+                        if (matterInvoiceData)
+                            INVOICEGUID = matterInvoiceData.INVOICEGUID;
+                    });
+                } else {
+                    INVOICEGUID = localStorage.getItem('edit_invoice_id');
+                }
+                this.GloballyDelete({API:'SetInvoice', DATA: { INVOICEGUID: INVOICEGUID }});
+                // let postData = { FormAction: "delete", DATA: { INVOICEGUID: INVOICEGUID } }
+                // this._mainAPiServiceService.getSetData(postData, 'SetInvoice').subscribe(res => {
+                //     if (res.STATUS == "success" && res.CODE == 200) {
+                //         $('#refreshInvoiceTab').click();
+                //         this.toastr.success('Delete successfully');
+                //     }
+                // });
+            }
+            this.confirmDialogRef = null;
+        });
     }
     //delete receicept
     deleteReceiceMoany(): void {
@@ -2392,92 +2395,93 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
 
-    // globally delete 
-    GloballyDelete(getData) {
-        console.log(getData);
-        let details = { FormAction: 'delete', VALIDATEONLY: true, Data: getData.DATA };
-        this._mainAPiServiceService.getSetData(details, getData.API).subscribe(response => {
-            //array empty of save item
-            if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-                this.checkValidation(response.DATA.VALIDATIONS, details, getData.API);
-            } else if (response.CODE == 451 && response.STATUS == 'warning') {
-                this.checkValidation(response.DATA.VALIDATIONS, details, getData.API);
-            } else if (response.CODE == 450 && response.STATUS == 'error') {
-                this.checkValidation(response.DATA.VALIDATIONS, details, getData.API);
-            } else if (response.MESSAGE == 'Not logged in') {
-                this.dialogRef.close(false);
-            } else {
+// globally delete 
+GloballyDelete(getData) {
+    let details = { FormAction: 'delete', VALIDATEONLY: true, Data: getData.DATA };
+    this._mainAPiServiceService.getSetData(details, getData.API).subscribe(response => {
+      //array empty of save item
+      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        this.checkValidation(response.DATA.VALIDATIONS, details,getData.API);
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
+        this.checkValidation(response.DATA.VALIDATIONS, details,getData.API);
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
+        this.checkValidation(response.DATA.VALIDATIONS, details,getData.API);
+      } else if (response.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      } else {
+      }
+
+    }, error => {
+      this.toastr.error(error);
+    });
+  }
+  checkValidation(bodyData: any, details: any,ApiName:any) {
+    let errorData: any = [];
+    let warningData: any = [];
+    let tempError: any = [];
+    let tempWarning: any = [];
+    bodyData.forEach(function (value) {
+      if (value.VALUEVALID == 'No' || value.VALUEVALID == 'Error') {
+        errorData.push(value.ERRORDESCRIPTION);
+        tempError[value.FIELDNAME] = value;
+      }
+      else if (value.VALUEVALID == 'Warning') {
+        tempWarning[value.FIELDNAME] = value;
+        warningData.push(value.ERRORDESCRIPTION);
+      }else{
+        
+      }
+    });
+ 
+    if (Object.keys(errorData).length != 0) {
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+            data: errorData
+          });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+          this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
             }
+            this.confirmDialogRef = null;
+          });
 
-        }, error => {
-            this.toastr.error(error);
-        });
-    }
-    checkValidation(bodyData: any, details: any, ApiName: any) {
-        let errorData: any = [];
-        let warningData: any = [];
-        let tempError: any = [];
-        let tempWarning: any = [];
-        bodyData.forEach(function (value) {
-            if (value.VALUEVALID == 'No' || value.VALUEVALID == 'Error') {
-                errorData.push(value.ERRORDESCRIPTION);
-                tempError[value.FIELDNAME] = value;
-            }
-            else if (value.VALUEVALID == 'Warning') {
-                tempWarning[value.FIELDNAME] = value;
-                warningData.push(value.ERRORDESCRIPTION);
-            } else {
-
-            }
-        });
-
-        if (Object.keys(errorData).length != 0) {
-            this.toastr.error(errorData);
-        } else if (Object.keys(warningData).length != 0) {
-            this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-                disableClose: true,
-                width: '100%',
-                data: warningData
-            });
-            this.confirmDialogRef.componentInstance.confirmMessage = warningData;
-            this.confirmDialogRef.afterClosed().subscribe(result => {
-                if (result) {
-                    this.DeleteGData(details, ApiName);
-                }
-                this.confirmDialogRef = null;
-            });
-        } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
-
-            this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-                disableClose: true,
-                width: '100%',
-            });
-            this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-            this.confirmDialogRef.afterClosed().subscribe(result => {
-                if (result) {
-                    this.DeleteGData(details, ApiName);
-                }
-                this.confirmDialogRef = null;
-            });
+    } else if (Object.keys(warningData).length != 0) {
+      this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+        disableClose: true,
+        width: '100%',
+        data: warningData
+      });
+      this.confirmDialogRef.componentInstance.confirmMessage = warningData;
+      this.confirmDialogRef.afterClosed().subscribe(result => {
+        console.log(result)
+        if (result) {
+            console.log(result)
+          this.DeleteGData(details,ApiName);
         }
+        this.confirmDialogRef = null;
+      });
+    } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
+        this.DeleteGData(details,ApiName);
     }
-    DeleteGData(data: any, ApiName) {
-        data.VALIDATEONLY = false;
-        this._mainAPiServiceService.getSetData(data, ApiName).subscribe(response => {
-            if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-                this.toastr.success(' Delete successfully');
-                $('#refreshInvoiceTab').click();
-            } else if (response.CODE == 451 && response.STATUS == 'warning') {
-                this.toastr.warning(response.MESSAGE);
-            } else if (response.CODE == 450 && response.STATUS == 'error') {
-                this.toastr.error(response.MESSAGE);
-            } else if (response.MESSAGE == 'Not logged in') {
-                this.dialogRef.close(false);
-            }
-        }, error => {
-            this.toastr.error(error);
-        });
-    }
+  }
+  DeleteGData(data: any,ApiName) {
+    data.VALIDATEONLY = false;
+    this._mainAPiServiceService.getSetData(data, ApiName).subscribe(response => {
+      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+         this.toastr.success(' Delete successfully');
+         $('#refreshInvoiceTab').click();
+      } else if (response.CODE == 451 && response.STATUS == 'warning') {
+        this.toastr.warning(response.MESSAGE);
+      } else if (response.CODE == 450 && response.STATUS == 'error') {
+        this.toastr.error(response.MESSAGE);
+      } else if (response.MESSAGE == 'Not logged in') {
+        this.dialogRef.close(false);
+      }
+    }, error => {
+      this.toastr.error(error);
+    });
+  }
 }
 //2 pair Data Convert
 function chunks(arr, size = 3) {

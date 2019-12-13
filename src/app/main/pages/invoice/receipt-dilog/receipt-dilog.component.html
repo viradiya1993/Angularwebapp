@@ -1,7 +1,7 @@
 <div class="example-loading-shade" *ngIf="isLoadingResults">
     <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
 </div>
-<div cdkDrag class="popup_main_div add_edit_receipt_main">
+<div *ngIf="Warnpopup =='hide'" cdkDrag class="popup_main_div add_edit_receipt_main">
     <h2 cdkDragHandle mat-dialog-title>
         {{title}}
         <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
@@ -229,3 +229,58 @@
     </mat-dialog-actions>
 </div>
 <!-- </form> -->
+
+<div *ngIf="Warnpopup =='show'"  cdkDrag class="popup_main_div add_edit_receipt_main">
+        <h2 cdkDragHandle mat-dialog-title>Prepare Receipt
+            <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </h2>
+        <div mat-dialog-content class="mat-typography main">
+            <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                <div fxLayout="row" fxFlex="1 0 auto" >
+                    <div class="pr-4" fxLayout="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <div *ngFor="let val of warndataGet" fxFlex="70"  fxLayoutAlign="start start">
+                            <p>{{val}}</p>
+                        </div>
+                        
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+        <mat-dialog-actions align="end" class="popup_ftr">
+            <button mat-raised-button color="accent"  [mat-dialog-close]="'matter'" cdkFocusInitial>Matter</button>
+            <button mat-raised-button color="accent"  [mat-dialog-close]="'frim'"  cdkFocusInitial>Firm</button>
+            <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial>Cancel</button>
+        </mat-dialog-actions>
+    </div>
+
+    <div *ngIf="whichTempGenerate =='matter' || whichTempGenerate =='frim'"  cdkDrag class="popup_main_div add_edit_receipt_main">
+        <h2 cdkDragHandle mat-dialog-title>Prepare Receipt
+            <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </h2>
+        <div mat-dialog-content class="mat-typography main">
+            <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                <div fxLayout="row" fxFlex="1 0 auto" >
+                    <div class="pr-4" fxLayout="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <div  fxFlex="70"  fxLayoutAlign="start start">
+                            <p>Do you want to generate a copy of the receipt? </p>
+                        </div>
+                        
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+        <mat-dialog-actions align="end" class="popup_ftr">
+            
+            <button mat-raised-button color="accent" (click)="GenerateDoc()" [mat-dialog-close]="true" cdkFocusInitial>Yes</button>
+            <button mat-raised-button color="primary" (click)="closeAllDialoge()" [mat-dialog-close]="false" cdkFocusInitial>No</button>
+
+        </mat-dialog-actions>
+    </div>
+
+

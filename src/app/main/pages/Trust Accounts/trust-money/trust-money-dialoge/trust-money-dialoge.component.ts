@@ -76,6 +76,8 @@ export class TrustMoneyDialogeComponent implements OnInit {
 
     this.base_url=environment.ReportUrl;
     this.TrustMoneyForm = this._formBuilder.group({
+      FROMMATTER:[''],
+      FROMMATTERGUID:[''],
       TRANSACTIONDATE: [''],
       AMOUNT: [''],
       PAYMENTTYPE: [''],
@@ -169,7 +171,6 @@ export class TrustMoneyDialogeComponent implements OnInit {
 
     if(this.forPDF == 'Yes'){
       if(_data.PDFURL){
-        console.log("con1");
         this.PDFURL=_data.PDFURL;
       }
     }
@@ -202,14 +203,18 @@ export class TrustMoneyDialogeComponent implements OnInit {
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
   }
-  SelectMatter() {
+  SelectMatter(key) {
     const dialogRef = this.dialog.open(MatterDialogComponent, { width: '100%', disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.TrustMoneyForm.controls['SHORTNAME'].setValue(result.MATTER);
-        this.TrustMoneyForm.controls['MATTERGUID'].setValue(result.MATTERGUID);
-
-        this.TrustMoneyForm.controls['INVOICEDVALUEEXGST'].setValue(result.INVOICEDVALUEEXGST);
+        if(key =='from matter'){
+          this.TrustMoneyForm.controls['FROMMATTER'].setValue(result.MATTER);
+          this.TrustMoneyForm.controls['FROMMATTERGUID'].setValue(result.MATTERGUID);
+        }else{
+          this.TrustMoneyForm.controls['SHORTNAME'].setValue(result.MATTER);
+          this.TrustMoneyForm.controls['MATTERGUID'].setValue(result.MATTERGUID);
+          this.TrustMoneyForm.controls['INVOICEDVALUEEXGST'].setValue(result.INVOICEDVALUEEXGST);
+        }
       }
     });
   }
@@ -230,6 +235,8 @@ export class TrustMoneyDialogeComponent implements OnInit {
   }
   SaveTrustMoney() {
 
+
+
     let data = {
 
 
@@ -238,6 +245,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
       PAYMENTTYPE: this.f.PAYMENTTYPE.value,
       PURPOSE: this.f.PURPOSE.value,
       TOMATTERGUID: this.f.MATTERGUID.value,
+      FROMMATTERGUID:this.f.FROMMATTERGUID.value,
       BANKCHEQUE: this.f.BANKCHEQUE.value,
       BENEFICIARY: this.f.BENEFICIARY.value,
       // new added 
@@ -284,6 +292,9 @@ export class TrustMoneyDialogeComponent implements OnInit {
       // MATTERGUID: this.f.MATTERGUID.value,
       // // PURPOSE: this.f.PURPOSE.value,
 
+    }
+    if(this.action != "Transfer"){
+      delete data.FROMMATTERGUID;
     }
     this.isspiner = true;
     let finalData = { DATA: data, FormAction: 'insert', VALIDATEONLY: true }
@@ -372,7 +383,6 @@ export class TrustMoneyDialogeComponent implements OnInit {
   editInnerTable(val, Index) {
     this.INDEX = Index;
     this.highlightedRows = Index;
-    console.log(val);
   }
   addMatterItem() {
     this.MatterAmmountArray = [];

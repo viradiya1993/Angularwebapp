@@ -1942,16 +1942,18 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //delete invoice
     deleteInvoice(isType): void {
-        let INVOICEGUID = '';
-        if (isType == 'isTime') {
-            this.behaviorService.matterInvoice$.subscribe(matterInvoiceData => {
-                if (matterInvoiceData)
-                    INVOICEGUID = matterInvoiceData.INVOICEGUID;
-            });
-        } else {
-            INVOICEGUID = localStorage.getItem('edit_invoice_id');
-        }
-        this.GloballyDelete({API:'SetInvoice', DATA: { INVOICEGUID: INVOICEGUID }});
+        // let INVOICEGUID = '';
+        // if (isType == 'isTime') {
+        //     this.behaviorService.matterInvoice$.subscribe(matterInvoiceData => {
+        //         if (matterInvoiceData)
+        //             INVOICEGUID = matterInvoiceData.INVOICEGUID;
+        //     });
+        // } else {
+        //     INVOICEGUID = localStorage.getItem('edit_invoice_id');
+        // }
+        // this.GloballyDelete({API:'SetInvoice', DATA: { INVOICEGUID: INVOICEGUID }});
+
+
         // this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
         //     disableClose: true,
         //     width: '100%',
@@ -1990,32 +1992,33 @@ export class ToolbarComponent implements OnInit, OnDestroy {
       
 
 
-        // this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-        //     disableClose: true,
-        //     width: '100%',
-        // });
-        // this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete this invoice? There is a receipt associated with this invoice. If you do delete the invoice, the receipt will be turned into a credit within the matter.';
-        // this.confirmDialogRef.afterClosed().subscribe(result => {
-        //     if (result) {
-        //         let INVOICEGUID = '';
-        //         if (isType == 'isTime') {
-        //             this.behaviorService.matterInvoice$.subscribe(matterInvoiceData => {
-        //                 if (matterInvoiceData)
-        //                     INVOICEGUID = matterInvoiceData.INVOICEGUID;
-        //             });
-        //         } else {
-        //             INVOICEGUID = localStorage.getItem('edit_invoice_id');
-        //         }
-        //         let postData = { FormAction: "delete", DATA: { INVOICEGUID: INVOICEGUID } }
-        //         this._mainAPiServiceService.getSetData(postData, 'SetInvoice').subscribe(res => {
-        //             if (res.STATUS == "success" && res.CODE == 200) {
-        //                 $('#refreshInvoiceTab').click();
-        //                 this.toastr.success('Delete successfully');
-        //             }
-        //         });
-        //     }
-        //     this.confirmDialogRef = null;
-        // });
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+        });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Save?';
+        this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                let INVOICEGUID = '';
+                if (isType == 'isTime') {
+                    this.behaviorService.matterInvoice$.subscribe(matterInvoiceData => {
+                        if (matterInvoiceData)
+                            INVOICEGUID = matterInvoiceData.INVOICEGUID;
+                    });
+                } else {
+                    INVOICEGUID = localStorage.getItem('edit_invoice_id');
+                }
+                this.GloballyDelete({API:'SetInvoice', DATA: { INVOICEGUID: INVOICEGUID }});
+                // let postData = { FormAction: "delete", DATA: { INVOICEGUID: INVOICEGUID } }
+                // this._mainAPiServiceService.getSetData(postData, 'SetInvoice').subscribe(res => {
+                //     if (res.STATUS == "success" && res.CODE == 200) {
+                //         $('#refreshInvoiceTab').click();
+                //         this.toastr.success('Delete successfully');
+                //     }
+                // });
+            }
+            this.confirmDialogRef = null;
+        });
     }
     //delete receicept
     deleteReceiceMoany(): void {
@@ -2396,7 +2399,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
 // globally delete 
 GloballyDelete(getData) {
-    console.log(getData);
     let details = { FormAction: 'delete', VALIDATEONLY: true, Data: getData.DATA };
     this._mainAPiServiceService.getSetData(details, getData.API).subscribe(response => {
       //array empty of save item
@@ -2434,7 +2436,18 @@ GloballyDelete(getData) {
     });
  
     if (Object.keys(errorData).length != 0) {
-      this.toastr.error(errorData);
+        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
+            disableClose: true,
+            width: '100%',
+            data: errorData
+          });
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+          this.confirmDialogRef.afterClosed().subscribe(result => {
+            if (result) {
+            }
+            this.confirmDialogRef = null;
+          });
+
     } else if (Object.keys(warningData).length != 0) {
       this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
         disableClose: true,
@@ -2443,24 +2456,15 @@ GloballyDelete(getData) {
       });
       this.confirmDialogRef.componentInstance.confirmMessage = warningData;
       this.confirmDialogRef.afterClosed().subscribe(result => {
+        console.log(result)
         if (result) {
+            console.log(result)
           this.DeleteGData(details,ApiName);
         }
         this.confirmDialogRef = null;
       });
     } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
-
-        this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
-            disableClose: true,
-            width: '100%',
-          });
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
-          this.confirmDialogRef.afterClosed().subscribe(result => {
-            if (result) {
-              this.DeleteGData(details,ApiName);
-            }
-            this.confirmDialogRef = null;
-          });
+        this.DeleteGData(details,ApiName);
     }
   }
   DeleteGData(data: any,ApiName) {

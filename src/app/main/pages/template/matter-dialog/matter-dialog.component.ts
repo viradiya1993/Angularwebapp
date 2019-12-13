@@ -100,13 +100,15 @@ export class MatterDialogComponentForTemplate implements OnInit {
       console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         this.IsLoading = "false";
-        this.toastr.success('success');
         if (this._data.Type == "Template") {
+          this.toastr.success('TemplateGenerate successfully');
           this.filefolderUrl = response.DATA.DOCUMENTS[0].FILENAME;
           this.filefolderUrlDes = response.DATA.DOCUMENTS[0].DESCRIPTION;
         } else if (this._data.Type == "Email") {
+          this.toastr.success('EmailGenerate successfully');
           this.PacksEmail = response.DATA.EMAILS;
         } else if (this._data.Type == "Pack") {
+          this.toastr.success('PackGenerate successfully');
           this.IsLoading = 'false';
           this.PacksEmail = response.DATA.EMAILS;
           this.PacksDocument = response.DATA.DOCUMENTS;

@@ -2396,7 +2396,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-
 // globally delete 
 GloballyDelete(getData) {
     let details = { FormAction: 'delete', VALIDATEONLY: true, Data: getData.DATA };
@@ -2441,7 +2440,7 @@ GloballyDelete(getData) {
             width: '100%',
             data: errorData
           });
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+        this.confirmDialogRef.componentInstance.confirmMessage = '';
           this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
             }
@@ -2454,11 +2453,9 @@ GloballyDelete(getData) {
         width: '100%',
         data: warningData
       });
-      this.confirmDialogRef.componentInstance.confirmMessage = warningData;
+      this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete';
       this.confirmDialogRef.afterClosed().subscribe(result => {
-        console.log(result)
         if (result) {
-            console.log(result)
           this.DeleteGData(details,ApiName);
         }
         this.confirmDialogRef = null;

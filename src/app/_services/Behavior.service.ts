@@ -62,6 +62,8 @@ export class BehaviorService {
   public totalDashboard$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   public CommonToolbarHS$: BehaviorSubject<any> = new BehaviorSubject(null);
+
+  public DelGloballypopupHS$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(private http: HttpClient) { }
 
   matterInvoiceData(matterClassData: any) {
@@ -202,6 +204,9 @@ export class BehaviorService {
   }
   Packets(Packets: any) {
     this.Packets$.next(Packets);
+  }
+  DelGloballypopupHS(DelGloballypopupHS: any) {
+    this.DelGloballypopupHS$.next(DelGloballypopupHS);
   }
 
 }

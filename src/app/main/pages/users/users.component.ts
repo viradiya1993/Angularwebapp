@@ -6,7 +6,7 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { MatSort } from '@angular/material';
 import * as $ from 'jquery';
-import { TableColumnsService, MainAPiServiceService } from 'app/_services';
+import { TableColumnsService, MainAPiServiceService, BehaviorService } from 'app/_services';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 
 @Component({
@@ -41,6 +41,7 @@ export class UsersComponent implements OnInit {
     private TableColumnsService: TableColumnsService,
     private _mainAPiServiceService: MainAPiServiceService,
     private toastr: ToastrService,
+    private behaviorService: BehaviorService
   ) {
     let filterData = JSON.parse(localStorage.getItem('users_filter'));
     if (filterData) {
@@ -52,7 +53,11 @@ export class UsersComponent implements OnInit {
     this.userfilter = this._formBuilder.group({ ACTIVE: [this.lastFilter.ACTIVE] });
   }
   ngOnInit() {
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
+    this.behaviorService.resizeTableForAllView();
+    const behaviorService = this.behaviorService;
+    $(window).resize(function () {
+      behaviorService.resizeTableForAllView();
+    });
     this.getTableFilter();
     this.loadData(this.lastFilter);
   }
@@ -90,7 +95,7 @@ export class UsersComponent implements OnInit {
           this.highlightedRows = response.DATA.USERS[0].USERGUID;
           this.currentUserData = response.DATA.USERS[0];
           localStorage.setItem('current_user_Data', JSON.stringify(response.DATA.USERS[0]));
-        }else {
+        } else {
           this.isDisplay = true;
         }
         this.Useralldata = new MatTableDataSource(response.DATA.USERS);

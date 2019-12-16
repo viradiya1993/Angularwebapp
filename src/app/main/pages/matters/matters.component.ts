@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef,OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import * as $ from 'jquery';
-import { TimersService } from '../../../_services';
+import { TimersService, BehaviorService } from '../../../_services';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MattersListComponent } from './matters-list/matters-list.component';
 import { Subscription } from 'rxjs/Subscription';
@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs/Subscription';
   styleUrls: ['./matters.component.scss'],
   animations: fuseAnimations,
 })
-export class MattersComponent implements OnInit,OnDestroy {
+export class MattersComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   @ViewChild(MattersListComponent) child: MattersListComponent;
   matterFilterForm: FormGroup;
@@ -23,7 +23,7 @@ export class MattersComponent implements OnInit,OnDestroy {
   lastFilter: any;
 
 
-  constructor(private Timersservice: TimersService, private fb: FormBuilder, private cd: ChangeDetectorRef) {
+  constructor(private Timersservice: TimersService, private fb: FormBuilder, private cd: ChangeDetectorRef, private behaviorService: BehaviorService) {
     let theme_type = localStorage.getItem('theme_type');
     if (theme_type != "theme-default") {
       $('body').addClass('theme-yellow-light').removeClass("theme-default");
@@ -100,9 +100,13 @@ export class MattersComponent implements OnInit,OnDestroy {
       localStorage.setItem('matter_filter', JSON.stringify({ 'Active': 'active', 'SearchString': '', 'FeeEarner': '', 'UninvoicedWork': 'All' }));
       this.child.getMatterList({ 'Active': 'active', 'SearchString': '', 'FeeEarner': '', 'UninvoicedWork': 'All' });
     }
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
+    this.behaviorService.resizeTableForAllView();
+    const behaviorService = this.behaviorService;
+    $(window).resize(function () {
+      behaviorService.resizeTableForAllView();
+    });
   }
-  
+
   ngAfterViewInit() {
     this.cd.detectChanges();
   }

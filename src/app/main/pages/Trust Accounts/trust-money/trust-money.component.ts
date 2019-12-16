@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { MainAPiServiceService, TableColumnsService } from 'app/_services';
+import { MainAPiServiceService, TableColumnsService, BehaviorService } from 'app/_services';
 import * as $ from 'jquery';
 import { ToastrService } from 'ngx-toastr';
 import { MatTableDataSource, MatPaginator, MatSort, MatDialogConfig, MatDialog, MatDatepickerInputEvent } from '@angular/material';
@@ -37,13 +37,18 @@ export class TrustMoneyComponent implements OnInit {
     private toastr: ToastrService, private TableColumnsService: TableColumnsService,
     public datepipe: DatePipe,
     private _formBuilder: FormBuilder,
+    private behaviorService: BehaviorService,
     private dialog: MatDialog, ) {
 
 
   }
 
   ngOnInit() {
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
+    this.behaviorService.resizeTableForAllView();
+    const behaviorService = this.behaviorService;
+    $(window).resize(function () {
+      behaviorService.resizeTableForAllView();
+    });
     this.getTableFilter();
     this.TrustMoneyForm = this._formBuilder.group({
       DateRangeSelect: [''],
@@ -221,7 +226,7 @@ export class TrustMoneyComponent implements OnInit {
   RowClick(row) {
     console.log(row);
   }
-  trustMoneyRefersh(){
+  trustMoneyRefersh() {
     this.filterData = JSON.parse(localStorage.getItem("trustMoney_filter"))
     this.LoadData(this.filterData);
   }

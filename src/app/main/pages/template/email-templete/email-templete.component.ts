@@ -25,8 +25,8 @@ export class EmailTempleteComponent implements OnInit {
   EmailAllData: FormGroup;
   tempColobj: any;
   ColumnsObj: any;
-  EmailtemplateData:any=[];
-  TemplateEmaildata:any=[];
+  EmailtemplateData: any = [];
+  TemplateEmaildata: any = [];
   isLoadingResults: boolean = false;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
@@ -44,18 +44,22 @@ export class EmailTempleteComponent implements OnInit {
     private TableColumnsService: TableColumnsService,
     public _matDialog: MatDialog,
     private router: Router,
-    private behaviorService:BehaviorService,
+    private behaviorService: BehaviorService,
   ) { }
 
   ngOnInit() {
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
+    this.behaviorService.resizeTableForAllView();
+    const behaviorService = this.behaviorService;
+    $(window).resize(function () {
+      behaviorService.resizeTableForAllView();
+    });
     this.EmailAllData = this._formBuilder.group({
       Filter: [''],
       search: ['']
     });
 
     this.LoadData({});
-    
+
   }
   // getTableFilter() {
   //   this.TableColumnsService.getTableFilter('generate email', '').subscribe(response => {
@@ -70,9 +74,9 @@ export class EmailTempleteComponent implements OnInit {
   //     this.toastr.error(error);
   //   });
   // }
-  LoadData(passdata){
+  LoadData(passdata) {
     this.isLoadingResults = true;
-     this._mainAPiServiceService.getSetData(passdata, 'GetEmail').subscribe(response => {
+    this._mainAPiServiceService.getSetData(passdata, 'GetEmail').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.TemplateEmaildata = new MatTableDataSource(response.DATA.EMAILS);
         // this.editContact(response.DATA.TEMPLATES[0]);
@@ -98,7 +102,7 @@ export class EmailTempleteComponent implements OnInit {
   // FilterSearch
   FilterSearch(searchFilter: any) {
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
-        this.LoadData({ SEARCH:this.f.search.value})
+      this.LoadData({ SEARCH: this.f.search.value })
     }
   }
   //clicktitle
@@ -114,45 +118,45 @@ export class EmailTempleteComponent implements OnInit {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
   }
-  dblclickEmail(row){
+  dblclickEmail(row) {
 
     this.behaviorService.EmailGenerateData$.subscribe(result => {
-      if(result){
-        this.EmailtemplateData=result; 
-      }          
+      if (result) {
+        this.EmailtemplateData = result;
+      }
     });
     if (this.router.url == "/create-document/email-invoice-template") {
-        let invoiceGUid = localStorage.getItem('edit_invoice_id');
-        let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid,"knownby":'Email', "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
-        this.ForEmailDialogOpen(passdata);
+      let invoiceGUid = localStorage.getItem('edit_invoice_id');
+      let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "knownby": 'Email', "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
+      this.ForEmailDialogOpen(passdata);
     } else if (this.router.url == "/create-document/email-matter-template") {
-        let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
-        let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID,"knownby":'Email', "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
-        this.ForEmailDialogOpen(passdata);
+      let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
+      let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "knownby": 'Email', "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
+      this.ForEmailDialogOpen(passdata);
     } else if (this.router.url == "/create-document/email-receive-money-template") {
-        let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
-        let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "knownby":'Email',"Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
-        this.ForEmailDialogOpen(passdata);
+      let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
+      let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "knownby": 'Email', "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
+      this.ForEmailDialogOpen(passdata);
     } else if (this.router.url == "/create-document/email-contact-template") {
-        let ContactGuID = localStorage.getItem('contactGuid');
-        let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "knownby":'Email',"Type": "Email","Folder": '', "Template": this.EmailtemplateData.NAME }
-        this.ForEmailDialogOpen(passdata);
+      let ContactGuID = localStorage.getItem('contactGuid');
+      let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "knownby": 'Email', "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
+      this.ForEmailDialogOpen(passdata);
     }
-    
+
   }
   ForEmailDialogOpen(passdata) {
     const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, {
-        width: '100%',
-        disableClose: true,
-        data: passdata
+      width: '100%',
+      disableClose: true,
+      data: passdata
     });
     dialogRef.afterClosed().subscribe(result => {
-       
+
     });
-}
-refreshEmailTab(){
-  this.LoadData({});
-}
+  }
+  refreshEmailTab() {
+    this.LoadData({});
+  }
 
 }
 

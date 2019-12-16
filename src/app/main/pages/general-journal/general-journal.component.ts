@@ -1,7 +1,7 @@
 import { fuseAnimations } from '@fuse/animations';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Component, OnInit, ViewEncapsulation, ViewChild,OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, OnDestroy } from '@angular/core';
 import { MatPaginator, MatDialogRef, MatDialog, MatDialogConfig, MatDatepickerInputEvent } from '@angular/material';
 import { MatSort } from '@angular/material';
 import { MatTableDataSource } from '@angular/material/table';
@@ -17,7 +17,7 @@ import * as $ from 'jquery';
   encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
-export class GeneralJournalComponent implements OnInit ,OnDestroy {
+export class GeneralJournalComponent implements OnInit, OnDestroy {
   highlightedRows: any;
   ColumnsObj = [];
   theme_type = localStorage.getItem('theme_type');
@@ -25,7 +25,7 @@ export class GeneralJournalComponent implements OnInit ,OnDestroy {
   contectTitle = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   displayedColumns: string[];
   tempColobj: any;
-  accountTypeData:any;
+  accountTypeData: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   isLoadingResults: boolean = false;
@@ -34,8 +34,10 @@ export class GeneralJournalComponent implements OnInit ,OnDestroy {
   generalJournalData: any = [];
   isDisplay: boolean = false;
   // updatecurrentDate.setDate( new Date().getDate() - 30);
-  filterVals = { ITEMSTARTDATE: '', ITEMENDDATE: '', SEARCH: '', SHOWRECEIPTS: false, SHOWINVOICES: false, SHOWRECEIVEMONEY: false, 
-  SHOWSPENDMONEY: false, SHOWGENERALJOURNAL: false ,UseTrust:'',SHOWTRUSTRECEIPTS:false,SHOWTRUSTWITHDRAWALS:false,SHOWTRUSTTRANSFERS:false};
+  filterVals = {
+    ITEMSTARTDATE: '', ITEMENDDATE: '', SEARCH: '', SHOWRECEIPTS: false, SHOWINVOICES: false, SHOWRECEIVEMONEY: false,
+    SHOWSPENDMONEY: false, SHOWGENERALJOURNAL: false, UseTrust: '', SHOWTRUSTRECEIPTS: false, SHOWTRUSTWITHDRAWALS: false, SHOWTRUSTTRANSFERS: false
+  };
   constructor(
     private TableColumnsService: TableColumnsService,
     private dialog: MatDialog,
@@ -47,24 +49,28 @@ export class GeneralJournalComponent implements OnInit ,OnDestroy {
   ) {
     this.behaviorService.TrustDuplicateModuleHandling$.subscribe(result => {
       if (result != null) {
-          this.accountTypeData=result;
+        this.accountTypeData = result;
       }
-  });
+    });
 
-   }
+  }
 
   ngOnInit() {
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
+    this.behaviorService.resizeTableForAllView();
+    const behaviorService = this.behaviorService;
+    $(window).resize(function () {
+      behaviorService.resizeTableForAllView();
+    });
     let updatecurrentDate = new Date();
     updatecurrentDate.setDate(updatecurrentDate.getDate() - 30);
     this.dateRange = { begin: updatecurrentDate, end: new Date() };
     this.filterVals.ITEMSTARTDATE = this.datepipe.transform(updatecurrentDate, 'dd/MM/yyyy');
     this.filterVals.ITEMENDDATE = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
     this.getTableFilter();
-    if(this.accountTypeData.ClickType =='WithTrust'){
-      this.filterVals.UseTrust='Yes';
-    }else{
-      this.filterVals.UseTrust='No';
+    if (this.accountTypeData.ClickType == 'WithTrust') {
+      this.filterVals.UseTrust = 'Yes';
+    } else {
+      this.filterVals.UseTrust = 'No';
     }
     this.LoadData();
   }
@@ -129,7 +135,7 @@ export class GeneralJournalComponent implements OnInit ,OnDestroy {
           this.isDisplay = false;
           this.editjournal(tempJData[0]);
           this.highlightedRows = tempJData[0].JOURNALGUID;
-        }else {
+        } else {
           this.isDisplay = true;
         }
         this.isLoadingResults = false;

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
-import { MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import * as $ from 'jquery';
 
 
@@ -14,19 +14,23 @@ import * as $ from 'jquery';
 export class EndOfMonthHistroyComponent implements OnInit {
   @Input() SettingForm: FormGroup;
   @Input() errorWarningData: any;
-  addData:any=[];
+  addData: any = [];
   isDisplay: boolean = false;
-  constructor(private _mainAPiServiceService:MainAPiServiceService) { }
+  constructor(private _mainAPiServiceService: MainAPiServiceService, private behaviorService: BehaviorService) { }
 
   ngOnInit() {
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
+    this.behaviorService.resizeTableForAllView();
+    const behaviorService = this.behaviorService;
+    $(window).resize(function () {
+      behaviorService.resizeTableForAllView();
+    });
     // this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response=>{
     //  // console.log(response);
     //   this.addData=response.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP
     // })
-    
+
   }
-  
- 
+
+
 
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatDialog } from '@angular/material';
 import { ToastrService } from 'ngx-toastr';
-import {  MainAPiServiceService, BehaviorService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import { fuseAnimations } from '@fuse/animations';
 import * as $ from 'jquery';
 import { Router } from '@angular/router';
@@ -25,13 +25,13 @@ export class TemplateListComponent implements OnInit {
   highlightedRows: any;
   currentMatterData: any;
   Templatedata: any = [];
-  TemplateGenerateData:any=[];
+  TemplateGenerateData: any = [];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   isLoadingResults: boolean;
   pageSize: any;
   abc: number;
-  TemplateForm:FormGroup;
+  TemplateForm: FormGroup;
   parentMessage: any;
   @Output() matterDetail: EventEmitter<any> = new EventEmitter<any>();
   constructor(
@@ -41,7 +41,7 @@ export class TemplateListComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private router: Router,
     public _matDialog: MatDialog,
-    private behaviorService:BehaviorService,
+    private behaviorService: BehaviorService,
   ) { }
 
   ngOnInit() {
@@ -50,21 +50,25 @@ export class TemplateListComponent implements OnInit {
       search: ['']
     });
 
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
+    this.behaviorService.resizeTableForAllView();
+    const behaviorService = this.behaviorService;
+    $(window).resize(function () {
+      behaviorService.resizeTableForAllView();
+    });
     this.LoadData({})
 
 
   }
   LoadData(d) {
     this.isLoadingResults = true;
-    
+
     this._mainAPiServiceService.getSetData(d, 'TemplateList').subscribe(response => {
 
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Templatedata = new MatTableDataSource(response.DATA.TEMPLATES);
-    
+
         this.editContact(response.DATA.TEMPLATES[0]);
-        
+
         this.Templatedata.paginator = this.paginator;
         this.Templatedata.sort = this.sort;
 
@@ -89,7 +93,7 @@ export class TemplateListComponent implements OnInit {
   }
   onSearch(searchFilter: any) {
     if (searchFilter['key'] === "Enter" || searchFilter == 'Enter') {
-      this.LoadData({ SEARCH:this.f.search.value})
+      this.LoadData({ SEARCH: this.f.search.value })
     }
   }
   editContact(Row: any) {
@@ -103,7 +107,7 @@ export class TemplateListComponent implements OnInit {
     this.parentMessage = Row;
     this.matterDetail.emit(Row);
     this.behaviorService.TemplateGenerateData(Row);
-   
+
     this.currentMatterData = Row;
 
   }
@@ -126,37 +130,37 @@ export class TemplateListComponent implements OnInit {
   openDilog() {
 
     this.behaviorService.TemplateGenerateData$.subscribe(result => {
-      if(result){
-        this.TemplateGenerateData=result; 
-      }          
+      if (result) {
+        this.TemplateGenerateData = result;
+      }
     });
     if (this.router.url == "/create-document/invoice-template") {
-        let invoiceGUid = localStorage.getItem('edit_invoice_id');
-        let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid,"knownby":'Template', "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
-        this.ForDocDialogOpen(passdata);
+      let invoiceGUid = localStorage.getItem('edit_invoice_id');
+      let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "knownby": 'Template', "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
+      this.ForDocDialogOpen(passdata);
     } else if (this.router.url == "/create-document/matter-template") {
-        let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
-        let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID,"knownby":'Template', "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
-        this.ForDocDialogOpen(passdata);
-      } else if (this.router.url == "/create-document/receive-money-template") {
-        let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
-        let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID,"knownby":'Template', "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
-        this.ForDocDialogOpen(passdata);
+      let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
+      let passdata = { 'Context': "Matter", 'ContextGuid': matterData.MATTERGUID, "knownby": 'Template', "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
+      this.ForDocDialogOpen(passdata);
+    } else if (this.router.url == "/create-document/receive-money-template") {
+      let ReceiptData = JSON.parse(localStorage.getItem('receiptData'));
+      let passdata = { 'Context': "Income", 'ContextGuid': ReceiptData.INCOMEGUID, "knownby": 'Template', "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
+      this.ForDocDialogOpen(passdata);
     } else if (this.router.url == "/create-document/contact-template") {
-        let ContactGuID = localStorage.getItem('contactGuid');
-        let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID,"knownby":'Template', "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
-        this.ForDocDialogOpen(passdata);
+      let ContactGuID = localStorage.getItem('contactGuid');
+      let passdata = { 'Context': "Contact", 'ContextGuid': ContactGuID, "knownby": 'Template', "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
+      this.ForDocDialogOpen(passdata);
     }
-}
-//***********************************************************END Select Matter Contact*************************************************************************
-ForDocDialogOpen(passdata) {
+  }
+  //***********************************************************END Select Matter Contact*************************************************************************
+  ForDocDialogOpen(passdata) {
     const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, { width: '100%', disableClose: true, data: passdata });
     dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-            // localStorage.setItem('set_active_matters', JSON.stringify(result));
-        }
+      if (result) {
+        // localStorage.setItem('set_active_matters', JSON.stringify(result));
+      }
     });
-}
+  }
   ContactMatter() {
     const dialogRef = this.MatDialog.open(ContactSelectDialogComponent, {
       width: '100%', disableClose: true, data: {

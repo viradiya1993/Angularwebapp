@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation,OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TableColumnsService, MainAPiServiceService, BehaviorService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
@@ -17,7 +17,7 @@ import { stringify } from '@angular/core/src/render3/util';
   encapsulation: ViewEncapsulation.None,
   animations: fuseAnimations
 })
-export class SpendMoneyComponent implements OnInit,OnDestroy {
+export class SpendMoneyComponent implements OnInit, OnDestroy {
   SepndMoneyForm: FormGroup;
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   isLoadingResults: boolean = false;
@@ -65,7 +65,11 @@ export class SpendMoneyComponent implements OnInit,OnDestroy {
       TOTALEXGST: [''],
     })
 
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
+    this.behaviorService.resizeTableForAllView();
+    const behaviorService = this.behaviorService;
+    $(window).resize(function () {
+      behaviorService.resizeTableForAllView();
+    });
     this.forFirstTimeFilter();
   }
 
@@ -113,16 +117,16 @@ export class SpendMoneyComponent implements OnInit,OnDestroy {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     const date4 = this.datepipe.transform(date2, 'dd/MM/yyyy');
     const date5 = this.datepipe.transform(date3, 'dd/MM/yyyy');
-    
-      if (diffDays == 0) {
-        this.SepndMoneyForm.controls['DayRange'].setValue("Today");
-      } else if (diffDays == 7) {
-        this.SepndMoneyForm.controls['DayRange'].setValue("Last 7 days");
-      } else if (diffDays == 30) {
-        this.SepndMoneyForm.controls['DayRange'].setValue("Last 30 days");
-      } else if (diffDays == 90) {
-        this.SepndMoneyForm.controls['DayRange'].setValue("Last 90 days");
-      }else {
+
+    if (diffDays == 0) {
+      this.SepndMoneyForm.controls['DayRange'].setValue("Today");
+    } else if (diffDays == 7) {
+      this.SepndMoneyForm.controls['DayRange'].setValue("Last 7 days");
+    } else if (diffDays == 30) {
+      this.SepndMoneyForm.controls['DayRange'].setValue("Last 30 days");
+    } else if (diffDays == 90) {
+      this.SepndMoneyForm.controls['DayRange'].setValue("Last 90 days");
+    } else {
       console.log("6 month")
       this.forHideShowDateRangePicker = "show";
       this.SepndMoneyForm.controls['DayRange'].setValue("Date Range");

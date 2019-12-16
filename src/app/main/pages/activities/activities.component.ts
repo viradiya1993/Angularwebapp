@@ -43,7 +43,11 @@ export class ActivitiesComponent implements OnInit {
     private _mainAPiServiceService: MainAPiServiceService,
     private toastr: ToastrService,public behaviorService: BehaviorService) { }
   ngOnInit() {
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
+    this.behaviorService.resizeTableForAllView();
+    const behaviorService = this.behaviorService;
+    $(window).resize(function () {
+      behaviorService.resizeTableForAllView();
+    });
     this.activitiesFilter = this._formBuilder.group({ TYPE: [" "] });
     this.getTableFilter();
     if (JSON.parse(localStorage.getItem('activity_filter'))) {

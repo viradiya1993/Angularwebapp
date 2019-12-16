@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild, ChangeDetectorRef, AfterViewInit,OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ChangeDetectorRef, AfterViewInit, OnDestroy } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-import { TableColumnsService, MainAPiServiceService } from '../../../_services';
+import { TableColumnsService, MainAPiServiceService, BehaviorService } from '../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -17,7 +17,7 @@ import { Subscription } from 'rxjs/Subscription';
   animations: fuseAnimations
 })
 
-export class ContactComponent implements OnInit, AfterViewInit,OnDestroy {
+export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
   subscription: Subscription;
   highlightedRows: any;
   ColumnsObj = [];
@@ -42,7 +42,8 @@ export class ContactComponent implements OnInit, AfterViewInit,OnDestroy {
     private toastr: ToastrService,
     private _formBuilder: FormBuilder,
     private _mainAPiServiceService: MainAPiServiceService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private behaviorService: BehaviorService,
   ) {
     this.contactFilter = this._formBuilder.group({
       ContactType: [''],
@@ -67,7 +68,11 @@ export class ContactComponent implements OnInit, AfterViewInit,OnDestroy {
     this.LoadData(this.filterVals);
   }
   ngAfterViewInit() {
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
+    this.behaviorService.resizeTableForAllView();
+    const behaviorService = this.behaviorService;
+    $(window).resize(function () {
+      behaviorService.resizeTableForAllView();
+    });
     this.cd.detectChanges();
   }
   onPaginateChange(event) {
@@ -97,7 +102,7 @@ export class ContactComponent implements OnInit, AfterViewInit,OnDestroy {
     // this._mainAPiServiceService.getSetData(postData, 'SetActivity').subscribe
     this.Contactdata = [];
     this.isLoadingResults = true;
-     this._mainAPiServiceService.getSetData(data, 'GetContact').subscribe(response => {
+    this._mainAPiServiceService.getSetData(data, 'GetContact').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Contactdata = new MatTableDataSource(response.DATA.CONTACTS);
         this.Contactdata.paginator = this.paginator;
@@ -107,7 +112,7 @@ export class ContactComponent implements OnInit, AfterViewInit,OnDestroy {
           // localStorage.setItem('contactData',  JSON.stringify(response.DATA.CONTACTS[0]));
           this.isDisplay = false;
           this.highlightedRows = response.DATA.CONTACTS[0].CONTACTGUID;
-        }else {
+        } else {
           this.isDisplay = true;
         }
         this.isLoadingResults = false;

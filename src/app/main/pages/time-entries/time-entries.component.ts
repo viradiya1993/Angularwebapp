@@ -73,7 +73,7 @@ export class TimeEntriesComponent implements OnInit {
       } else {
         // var dt = new Date();
         // dt.setMonth(dt.getMonth() + 1);
-        this.TimeEnrtyForm.controls['date'].setValue({ begin: new Date(), end: new Date()});
+        this.TimeEnrtyForm.controls['date'].setValue({ begin: new Date(), end: new Date() });
         this.lastFilter.ItemDateStart = this.datepipe.transform(new Date(), 'dd/MM/yyyy');
         this.lastFilter.ItemDateEnd = this.datepipe.transform(dt, 'dd/MM/yyyy');
       }
@@ -89,7 +89,11 @@ export class TimeEntriesComponent implements OnInit {
   }
 
   ngOnInit() {
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
+    this.behaviorService.resizeTableForAllView();
+    const behaviorService = this.behaviorService;
+    $(window).resize(function () {
+      behaviorService.resizeTableForAllView();
+    });
     this.behaviorService.ActiveSubMenu$.subscribe(result => { this.ActiveTab = result; });
     if (this.ActiveTab == 'quick-time-entries') {
       this.quickTimeEntriesForm = this.fb.group({
@@ -354,7 +358,7 @@ export class TimeEntriesComponent implements OnInit {
           this.behaviorService.MainTimeEntryData(response.DATA.WORKITEMS[0]);
           this.highlightedRows = response.DATA.WORKITEMS[0].WORKITEMGUID;
           localStorage.setItem('edit_WORKITEMGUID', this.highlightedRows);
-        }else {
+        } else {
           this.isDisplay = true;
         }
         try {

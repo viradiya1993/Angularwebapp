@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { HttpClient } from '@angular/common/http';
-
+import * as $ from 'jquery';
 @Injectable({
   providedIn: 'root'
 })
@@ -54,11 +54,11 @@ export class BehaviorService {
   public Packets$: BehaviorSubject<any> = new BehaviorSubject(null);
   public dialogClose$: BehaviorSubject<any> = new BehaviorSubject(null);
   public UseCalanderViewType$: BehaviorSubject<any> = new BehaviorSubject(null);
-  
+
   public TrustDuplicateModuleHandling$: BehaviorSubject<any> = new BehaviorSubject(JSON.parse(localStorage.getItem('ChartURL')));
 
   public MatterNum$: BehaviorSubject<any> = new BehaviorSubject(null);
-  
+
   public totalDashboard$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   public CommonToolbarHS$: BehaviorSubject<any> = new BehaviorSubject(null);
@@ -202,6 +202,9 @@ export class BehaviorService {
   }
   Packets(Packets: any) {
     this.Packets$.next(Packets);
+  }
+  resizeTableForAllView() {
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
   }
 
 }

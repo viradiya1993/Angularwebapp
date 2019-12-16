@@ -40,7 +40,7 @@ export class ReceiveMoneyComponent implements OnInit {
     private toastr: ToastrService,
     public _mainAPiServiceService: MainAPiServiceService,
     public datepipe: DatePipe,
-  ) { 
+  ) {
     this.behaviorService.ReceiptData$.subscribe(result => {
       if (result) {
       }
@@ -56,7 +56,11 @@ export class ReceiveMoneyComponent implements OnInit {
       this.lastFilter = { "INCOMECLASS": "Receipt", 'ITEMSTARTDATE': this.datepipe.transform(new Date(), 'dd/MM/yyyy'), 'ITEMENDDATE': this.datepipe.transform(dt, 'dd/MM/yyyy') };
     }
     localStorage.setItem('recive_money_DateFilter', JSON.stringify(this.lastFilter));
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
+    this.behaviorService.resizeTableForAllView();
+    const behaviorService = this.behaviorService;
+    $(window).resize(function () {
+      behaviorService.resizeTableForAllView();
+    });
     this.receiveMoneyForm = this.fb.group({
       ShowWhat: [''],
       DateRange: [],
@@ -75,8 +79,8 @@ export class ReceiveMoneyComponent implements OnInit {
     this.getTableFilter();
     this.forListing(this.lastFilter);
   }
-  refreshReceiceMoany(){
-    this.forListing( this.lastFilter);
+  refreshReceiceMoany() {
+    this.forListing(this.lastFilter);
   }
   forListing(data) {
     this.receiveMoneydata = [];
@@ -90,7 +94,7 @@ export class ReceiveMoneyComponent implements OnInit {
           localStorage.setItem('receiptData', JSON.stringify(response.DATA.INCOMEITEMS[0]));
           this.highlightedRows = response.DATA.INCOMEITEMS[0].INCOMEGUID;
           this.currentReciveMoneyData = response.DATA.INCOMEITEMS[0];
-        }else {
+        } else {
           this.isDisplay = true;
         }
         this.receiveMoneydata = new MatTableDataSource(response.DATA.INCOMEITEMS)

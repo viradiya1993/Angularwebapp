@@ -49,7 +49,11 @@ export class TaskComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.ImgDisAb = "menu-disabled";
     this.getTableFilter();
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
+    this.behaviorService.resizeTableForAllView();
+    const behaviorService = this.behaviorService;
+    $(window).resize(function () {
+      behaviorService.resizeTableForAllView();
+    });
 
     this.MainTask = this._formBuilder.group({
       matterCheck: [''],

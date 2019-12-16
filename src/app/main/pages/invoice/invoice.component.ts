@@ -74,7 +74,11 @@ export class InvoiceComponent implements OnInit {
     return this.matterInvoiceFilterForm.controls;
   }
   ngOnInit() {
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
+    this.behaviorService.resizeTableForAllView();
+    const behaviorService = this.behaviorService;
+    $(window).resize(function () {
+      behaviorService.resizeTableForAllView();
+    });
     this.getTableFilter();
     this.loadData(JSON.parse(localStorage.getItem('matter_invoice_filter')));
 

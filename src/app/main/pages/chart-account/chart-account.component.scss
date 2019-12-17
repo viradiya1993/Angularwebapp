@@ -102,7 +102,7 @@ app-packs {
 }
 
 table tr.highlight {
-    background-color: #4CAF50 !important;
+    background-color: #4caf50 !important;
     color: #ffffff;
 }
 
@@ -117,14 +117,17 @@ button#refreshContactTab {
 th.mat-sort-header-sorted {
     color: black;
 }
+
 .row-text-colore span {
     color: #fff;
 }
+
 .mat-header-row {
     background-color: rgba(128, 128, 128, 0.1);
     height: 5em;
 }
-button#refreshChartACCTab{
+
+button#refreshChartACCTab {
     display: none;
 }
 
@@ -133,24 +136,27 @@ button#refreshChartACCTab{
     text-align: left;
     width: 40%;
 }
+
 // .mat-tree-node.top_row_span span {
 //     width: auto;
 // }
-
 .chart_tbl_head th:first-child {
     width: 40%;
     text-align: left;
 }
+
 .parent_first_div {
     width: 40%;
     text-align: left;
     display: flex;
     align-items: center;
 }
+
 .chart_tbl_head th:last-child {
     width: 55%;
     text-align: left;
 }
+
 .chart_tbl_head th.mat-header-cell {
     width: 20%;
     font-size: 15px;
@@ -162,3 +168,17 @@ button#refreshChartACCTab{
 // .top_row_span.border-top .parent_first_div span {
 //     padding-left: 0;
 // }
+.opning_amount_text_0,
+.account_type_text_0 {
+    padding-left: 120px;
+}
+
+.opning_amount_text_1,
+.account_type_text_1 {
+    padding-left: 80px;
+}
+
+.opning_amount_text_2,
+.account_type_text_2 {
+    padding-left: 40px;
+}

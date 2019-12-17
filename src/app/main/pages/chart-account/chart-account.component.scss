@@ -134,14 +134,13 @@ button#refreshChartACCTab {
 .mat-tree-node span {
     /* float: left; */
     text-align: left;
-    width: 40%;
 }
 
 // .mat-tree-node.top_row_span span {
 //     width: auto;
 // }
 .chart_tbl_head th:first-child {
-    width: 40%;
+    width: 70% !important;
     text-align: left;
 }
 

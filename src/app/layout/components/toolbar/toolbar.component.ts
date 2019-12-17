@@ -2428,6 +2428,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
 
         if (Object.keys(errorData).length != 0) {
+            localStorage.setItem('confEWshow','error');
             this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
                 disableClose: true,
                 width: '100%',
@@ -2435,12 +2436,15 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             });
             this.confirmDialogRef.componentInstance.confirmMessage = '';
             this.confirmDialogRef.afterClosed().subscribe(result => {
+                localStorage.removeItem('confEWshow');
                 if (result) {
                 }
+                
                 this.confirmDialogRef = null;
             });
 
         } else if (Object.keys(warningData).length != 0) {
+            localStorage.setItem('confEWshow','warning');
             this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
                 disableClose: true,
                 width: '100%',
@@ -2449,7 +2453,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.confirmDialogRef.componentInstance.confirmMessage = warningData;
             this.confirmDialogRef.afterClosed().subscribe(result => {
                 console.log(result)
+                localStorage.removeItem('confEWshow');
                 if (result) {
+                    
                     console.log(result)
                     this.DeleteGData(details, ApiName);
                 }

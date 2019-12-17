@@ -10,6 +10,7 @@ import { BehaviorService } from 'app/_services';
 export class FuseConfirmDialogComponent {
     public confirmMessage: string = "Are you sure you want to Save?";
     public confirmData: any;
+    ShowHide: string;
     /**
      * Constructor
      *
@@ -20,11 +21,14 @@ export class FuseConfirmDialogComponent {
         private behaviorService: BehaviorService,
         @Inject(MAT_DIALOG_DATA) public _data: any
     ) {
-        this.behaviorService.DelGloballypopupHS$.subscribe(result => {
-            if (result != null) {
-                console.log(result);
-            }
-        });
+        let item = localStorage.getItem('confEWshow');
+        if (item =='error') {
+            this.ShowHide="Hide"
+            console.log(item);
+        }else{
+            this.ShowHide="Show"
+        }
+  
         this.confirmData = _data;
     }
 

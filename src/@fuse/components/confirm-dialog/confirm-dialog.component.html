@@ -9,8 +9,8 @@
         </div>
     </div>
     <div mat-dialog-actions class="popup_ftr">
-        <div class="right_btn_child">
-            <button mat-raised-button class="mat-button mat-raised-button mat-primary" type="button" (click)="dialogRef.close(true)">Confirm</button>
+        <div *ngIf="ShowHiden =='Show'" class="right_btn_child">
+            <button  mat-raised-button class="mat-button mat-raised-button mat-primary" type="button" (click)="dialogRef.close(true)">Confirm</button>
         </div>
         <div class="right_btn_child cancel_confirm">
             <button mat-button (click)="dialogRef.close(false)" class="cancel mat-button" type="button" matbadgecolor="accent">Cancel</button>

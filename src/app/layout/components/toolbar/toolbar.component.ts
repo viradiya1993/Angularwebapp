@@ -1990,7 +1990,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             disableClose: true,
             width: '100%',
         });
-        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Save?';
+        this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Delete?';
         this.confirmDialogRef.afterClosed().subscribe(result => {
             if (result) {
                 let INVOICEGUID = '';
@@ -2433,7 +2433,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 width: '100%',
                 data: errorData
             });
-            this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to delete?';
+            this.confirmDialogRef.componentInstance.confirmMessage = '';
             this.confirmDialogRef.afterClosed().subscribe(result => {
                 if (result) {
                 }

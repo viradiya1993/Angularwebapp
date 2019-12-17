@@ -107,6 +107,20 @@
     box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12) !important;
     border-bottom: 1px solid #999;
 }
+@media screen and (max-width: 1200px) {
+    #matters .sticky_search_div.responsive_auto .example {
+        width: 15%;
+    }
+}
+@media screen and (max-width: 991px) {
+    #matters .sticky_search_div.responsive_auto {
+        overflow: auto;
+        white-space: nowrap;
+    }
+    #matters .sticky_search_div.responsive_auto .example {
+        width: 20%;
+    }
+}
 
 .invoiceddrop {
     width: 165px !important;

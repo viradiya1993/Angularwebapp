@@ -165,3 +165,7 @@ table.mat-table {
 th.mat-sort-header-sorted {
     color: black;
 }
+.select_metter_main_div .mat-dialog-content {
+    max-height: calc(100vh - 150px);
+}
+

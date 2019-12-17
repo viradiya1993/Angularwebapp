@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 import { ContactDialogComponent } from 'app/main/pages/contact/contact-dialog/contact-dialog.component';
 import { ContactSelectDialogComponent } from 'app/main/pages/contact/contact-select-dialog/contact-select-dialog.component';
 import { environment } from 'environments/environment';
+import * as $ from 'jquery';
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -66,6 +67,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
   showPDFPopup: string;
   base_url: string;
   forPDF: any;
+  sendTransectionSubType: string;
   constructor(private _mainAPiServiceService: MainAPiServiceService,
     private _formBuilder: FormBuilder, private toastr: ToastrService,
     public dialogRef: MatDialogRef<TrustMoneyDialogeComponent>,
@@ -116,9 +118,10 @@ export class TrustMoneyDialogeComponent implements OnInit {
       CheckBox: [''],
       INVOICEDVALUEEXGST: [''],
       Unallocated: [''],
-      Total: ['']
+      Total: [''],
+      Ledger:['']
     });
-
+    this.sendTransectionSubType='Normal';
     this.TrustMoneyForm.controls['PREPAREDBY'].setValue('Claudine Parkinson (pwd=test)');
     this.TrustMoneyForm.controls['PAYMENTTYPE'].setValue('Cheque');
     this.TrustMoneyForm.controls['CheckBox'].setValue(false);
@@ -126,46 +129,69 @@ export class TrustMoneyDialogeComponent implements OnInit {
     this.forPDF=_data.forPDF;
   console.log(_data);
     if (this.action == "receipt") {
+      $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Trust Receipt"
       this.sendToAPI='Receipt';
     } else if (this.action == "withdrawal") {
+      $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Trust withdrawal";
       this.sendToAPI='Withdrawal';
     } else if (this.action == "Transfer") {
+      $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Trust Transfer";
       this.sendToAPI='Transfer';
       this.TrustMoneyForm.controls['PAYMENTTYPE'].setValue('Transfer');
       this.TrustMoneyData.PaymentType = "Transfer";
       this.PymentType = "Transfer";
     } else if (this.action == "office") {
+      $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Trust Office";
       this.matterType = true;
       this.TrustMoneyForm.controls['CheckBox'].setValue(true);
       this.TrustMoneyData.CheckBox = true;
       // this.PymentType="Office";
     } else if (this.action == "money receipt") {
+      $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Controlled Money Receipt";
     } else if (this.action == "money withdrawal") {
+      $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Controlled Money withdrawal";
     } else if (this.action == "Cancelled Cheque") {
+      $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Cancelled Cheque";
+      this.sendToAPI='Receipt';
+      this.sendTransectionSubType='Cancelled Cheque';
+      $("#Contcat_id").addClass("menu-disabled");
+      this.TrustMoneyForm.controls['Ledger'].setValue('Nill Values Ledger : $0.00');
+      this.TrustMoneyForm.controls['PURPOSE'].setValue('Cancelled Cheque');
+      this.TrustMoneyForm.controls['PAYMENTTYPE'].setValue('Cheque');
+      this.TrustMoneyForm.controls['AMOUNT'].setValue(0.00);
+      this.TrustMoneyForm.controls['PAYMENTTYPE'].disable();
+      this.TrustMoneyForm.controls['PAYOR'].disable();
+      this.TrustMoneyForm.controls['AMOUNT'].disable();
+      this.TrustMoneyForm.controls['TRANSACTIONDATE'].disable();
     } else if (this.action == "Unknown Deposit") {
+      $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Unknown Deposit Receipt";
     } else if (this.action == "Transfer Unknow Deposit") {
+      $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Unknown Deposit Transfer";
       this.action = "Transfer";
       this.TrustMoneyForm.controls['PAYMENTTYPE'].setValue('Transfer');
       this.TrustMoneyData.PaymentType = "Transfer";
       this.PymentType = "Transfer";
     } else if (this.action == "Statutory Deposit") {
+      $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Statutory Depositl";
       this.ForDetailTab = 'Statutory Deposit';
       this.action = "withdrawal";
     } else if (this.action == "Statutory Receipt") {
+      $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Statutory Receipt";
       this.ForDetailTab = 'Statutory Receipt';
       this.action = "receipt";
     } else if (this.action == "Release Trust") {
+      $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Release Trust";
     }
 
@@ -252,7 +278,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
       CASHBOOK:this.sendToAPI,
       TRANSACTIONCLASS: "Trust Money",
       TRANSACTIONTYPE: "Normal Item",
-      TRANSACTIONSUBTYPE: "Normal",
+      TRANSACTIONSUBTYPE: this.sendTransectionSubType,
 
 
 

@@ -154,3 +154,17 @@ mat-card.mat-card {
 .table.mat-elevation-z8{
     width: 100% !important;
 }
+.select_metter_main_div .mat-dialog-content {
+    max-height: calc(100vh - 150px);
+}
+
+.menu-disabled {
+    opacity: 0.5;
+}
+.matternews{
+    background: none;
+    border: none;
+    width:150%;
+    cursor: pointer;
+  
+}

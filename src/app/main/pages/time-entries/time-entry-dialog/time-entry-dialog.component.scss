@@ -147,3 +147,6 @@ mat-dialog-actions {
 .sideText {
     text-align: right;
 }
+.select_metter_main_div .mat-dialog-content {
+    max-height: calc(100vh - 150px);
+}

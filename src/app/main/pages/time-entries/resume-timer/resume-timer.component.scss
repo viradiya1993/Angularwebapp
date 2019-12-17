@@ -153,3 +153,6 @@ mat-dialog-actions {
     margin-bottom: 15px;
     font-size: 25px;
 }
+.select_metter_main_div .mat-dialog-content {
+    max-height: calc(100vh - 150px);
+}

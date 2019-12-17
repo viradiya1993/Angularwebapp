@@ -55,25 +55,29 @@
                                             <mat-tree-node class="border-top" *matTreeNodeDef="let node" matTreeNodePadding [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index (click)="RowClick(node);highlightedRows = node.index "
                                                 matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                                 <!-- use a disabled button to provide padding for tree leaf -->
-                                                <button mat-icon-button disabled [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index (click)="RowClick(node);highlightedRows = node.index "></button>
-                                                <span> {{node.name}}  {{node.ACTIVE}}</span>
-                                                <span fxFlex="50" class="text-center">{{node.MainList.OPENINGBALANCE | toFixedAmount:true}}</span>
-                                                <span fxFlex="50" class="text-center">{{node.MainList.ACCOUNTTYPENAME }}</span>
+                                                <div class="parent_first_div">
+                                                    <button mat-icon-button disabled [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index (click)="RowClick(node);highlightedRows = node.index "></button>
+                                                    <span> {{node.name}}  {{node.ACTIVE}}</span>
+                                                </div>
+                                                <span class="text-center">{{node.MainList.OPENINGBALANCE | toFixedAmount:true}}</span>
+                                                <span class="text-center">{{node.MainList.ACCOUNTTYPENAME }}</span>
                                                 <!-- <span fxFlex="20" *ngIf="node.MainList.OPENINGBALANCE>0" class="text-center">{{node.MainList.ACCOUNTTYPE}}</span> -->
                                             </mat-tree-node>
                                             <!-- This is the tree node template for expandable nodes -->
                                             <mat-tree-node class="border-top top_row_span" *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index
                                                 (click)="RowClick(node);highlightedRows = node.index " matRipple [@animate]="{value:'*',params:{y:'100%'}}">
-                                                <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name" [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index
-                                                    (click)="RowClick(node);highlightedRows = node.index ">
-                                                <mat-icon class="mat-icon-rtl-mirror" >
-                                                  {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                                                </mat-icon>
-                                              </button>
-                                                <span>{{node.name}}</span>
-                                                <span>{{node.child}}</span>
-                                                <!-- <span fxFlex="50" class="text-center">{{node.MainList.OPENINGBALANCE | toFixedAmount:true}}</span>
-                                                <span fxFlex="50" class="text-center">{{node.MainList.ACCOUNTTYPENAME }}</span> -->
+                                                <div class="parent_first_div">
+                                                    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name" [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index
+                                                        (click)="RowClick(node);highlightedRows = node.index ">
+                                                    <mat-icon class="mat-icon-rtl-mirror" >
+                                                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                                    </mat-icon>
+                                                </button>
+                                                    <span>{{node.name}}</span>
+                                                </div>
+                                                <!-- <span>{{node.child}}</span> -->
+                                                <span class="text-center">{{node.MainList.OPENINGBALANCE | toFixedAmount:true}}</span>
+                                                <span class="text-center">{{node.MainList.ACCOUNTTYPENAME }}</span>
                                             </mat-tree-node>
                                         </mat-tree>
                                     </div>

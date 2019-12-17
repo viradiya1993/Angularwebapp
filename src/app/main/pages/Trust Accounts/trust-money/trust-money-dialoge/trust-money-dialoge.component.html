@@ -1,7 +1,7 @@
 <div class="example-loading-shade" *ngIf="isLoadingResults">
     <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
 </div>
-<div *ngIf="forPDF =='No'" cdkDrag class="popup_main_div add_edit_contact_main">
+<div *ngIf="forPDF =='No'" cdkDrag class="popup_main_div add_edit_contact_main select_metter_main_div">
     <h2 cdkDragHandle mat-dialog-title>{{title}}
         <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
             <mat-icon>close</mat-icon>
@@ -48,7 +48,7 @@
                     <mat-form-field *ngIf="action != 'Transfer'" appearance="outline" fxFlex="50" class=" pr-4">
                         <mat-label>Received Form</mat-label>
                         <input formControlName="PAYOR" placeholder="Received Form" matInput>
-                        <mat-icon matSuffix (click)='SelectContact()' fxFlex="5">
+                        <mat-icon class="matternews menu-disabled" id="Contcat_id"   matSuffix (click)='SelectContact()' fxFlex="5">
                             <img class="seticon" src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                         </mat-icon>
                     </mat-form-field>
@@ -62,7 +62,7 @@
                         </mat-form-field>
 
                 </div>
-                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <div *ngIf="action !='Cancelled Cheque'" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-checkbox *ngIf="matterType === true" [disabled]="action =='office'" formControlName="CheckBox"
                         name="CheckBox" (change)="CheckBoxClick($event.checked)" class="pr-4">Multiple Matters
                     </mat-checkbox>
@@ -72,7 +72,7 @@
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-tab-group mat-align-tabs="start">
-                        <mat-tab *ngIf="matterType === false && action !='office'" label="Single Matter">
+                        <mat-tab *ngIf="matterType === false && action !='office' && action !='Cancelled Cheque'" label="Single Matter">
                             <div class="item_pad" fxLayout="column">
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example" fxFlex="80" class="pr-4" appearance="outline">
@@ -93,6 +93,30 @@
                                 </div>
                             </div>
                         </mat-tab>
+
+
+
+
+                        <mat-tab *ngIf="action =='Cancelled Cheque'" label="Details">
+                                <div class="item_pad" fxLayout="column">
+                                    <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                        <mat-form-field class="example" fxFlex="80" class="pr-4" appearance="outline">
+                                            <mat-label>Ledger</mat-label>
+                                            <input formControlName="Ledger" matInput>
+                                        </mat-form-field>
+                                    </div>
+                                    <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                        <mat-form-field appearance="outline" fxFlex="100" class=" pr-4">
+                                            <mat-label>Reason</mat-label>
+                                            <textarea formControlName="PURPOSE" cdkTextareaAutosize cdkAutosizeMinRows="5"
+                                                cdkAutosizeMaxRows="5" matInput></textarea>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </mat-tab>
+
+
+
 
                         <mat-tab *ngIf="matterType === true && action !='office'" label="Multiple Matter">
                             <div class="item_pad" fxLayout="column">
@@ -342,7 +366,7 @@
                         </mat-tab>
 
                         <!-- start tab 3 -->
-                        <mat-tab *ngIf="action != 'Transfer' && action != 'office'" label="Payor Address">
+                        <mat-tab *ngIf="action != 'Transfer' && action != 'office' && action != 'Cancelled Cheque'" label="Payor Address">
                             <div class="item_pad" fxLayout="column">
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field appearance="outline" fxFlex="100" class="pr-4">

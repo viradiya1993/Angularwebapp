@@ -52,7 +52,10 @@ export class TrustMoneyComponent implements OnInit {
     this.getTableFilter();
     this.TrustMoneyForm = this._formBuilder.group({
       DateRangeSelect: [''],
-      DateRange: ['']
+      DateRange: [''],
+      LASTRECONCILIATIONBALANCE:[''],
+      LASTRECONCILIATIONDATE:[''],
+      TRUSTBALANCE:['']
 
     });
     let currentDate = new Date();
@@ -198,6 +201,9 @@ export class TrustMoneyComponent implements OnInit {
     this._mainAPiServiceService.getSetData(data, 'GetTrustTransaction').subscribe(res => {
       console.log(res);
       if (res.CODE == 200 && res.STATUS == "success") {
+        this.TrustMoneyForm.controls['LASTRECONCILIATIONBALANCE'].setValue(res.DATA.LASTRECONCILIATIONBALANCE);
+        this.TrustMoneyForm.controls['LASTRECONCILIATIONDATE'].setValue(res.DATA.LASTRECONCILIATIONDATE);
+        this.TrustMoneyForm.controls['TRUSTBALANCE'].setValue(res.DATA.TRUSTBALANCE);
         if (res.DATA.TRUSTTRANSACTIONS[0]) {
           this.isDisplay = false;
           this.RowClick(res.DATA.TRUSTTRANSACTIONS[0]);

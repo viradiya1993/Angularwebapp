@@ -166,3 +166,6 @@ mat-dialog-actions {
 .label_width {
     padding: 10px 0;
 }
+.select_metter_main_div .mat-dialog-content {
+    max-height: calc(100vh - 150px);
+}

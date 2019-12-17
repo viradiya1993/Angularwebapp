@@ -140,3 +140,6 @@ mat-dialog-actions {
     //flex-direction: column;
     width: 100%;
 }
+.select_metter_main_div .mat-dialog-content {
+    max-height: calc(100vh - 150px);
+}

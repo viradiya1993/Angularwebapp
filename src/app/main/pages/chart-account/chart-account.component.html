@@ -13,7 +13,7 @@
                             <mat-option value="Income">Income</mat-option>
                             <mat-option value="Expenses">Expenses</mat-option>
                         </mat-select>
-                        
+
                         <mat-select *ngIf="accountTypeData.ClickType=='WithTrust'" name="AccountClass" [(ngModel)]="ChartData.AccountClass" (selectionChange)="AccountClass($event.value)">
                             <mat-option value="All">All Accounts</mat-option>
                             <mat-option value="Trust Account">Trust Account</mat-option>
@@ -25,7 +25,7 @@
                     </mat-form-field>
                     <mat-form-field class="search" appearance="outline">
                         <mat-label>Controlled Money ccount </mat-label>
-                        <input matInput placeholder="search" >
+                        <input matInput placeholder="search">
                         <mat-icon matSuffix>search</mat-icon>
                     </mat-form-field>
                 </form>
@@ -59,10 +59,10 @@
                                                     <button mat-icon-button disabled [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index (click)="RowClick(node);highlightedRows = node.index "></button>
                                                     <span> {{node.name}}  {{node.ACTIVE}}</span>
                                                 </div>
-                                                <div class="set_child_field2">
-                                                <span class="text-center">{{node.MainList.OPENINGBALANCE | toFixedAmount:true}}</span>
-                                                <span class="text-center">{{node.MainList.ACCOUNTTYPENAME }}</span>
-                                                </div>
+                                                <span class="text-center opning_amount_text_{{node.level}}">{{node.MainList.OPENINGBALANCE | toFixedAmount:true}}</span>
+                                                <span class="text-center account_type_text_{{node.level}}">{{node.MainList.ACCOUNTTYPENAME }}</span>
+                                                <span class="text-center account_type_text_{{node.level}}">{{node.MainList.XEROACCOUNTCODE }}</span>
+                                                <span class="text-center account_type_text_{{node.level}}">{{node.MainList.MYOBEXPORTACCOUNT }}</span>
                                                 <!-- <span fxFlex="20" *ngIf="node.MainList.OPENINGBALANCE>0" class="text-center">{{node.MainList.ACCOUNTTYPE}}</span> -->
                                             </mat-tree-node>
                                             <!-- This is the tree node template for expandable nodes -->
@@ -78,10 +78,10 @@
                                                     <span>{{node.name}}</span>
                                                 </div>
                                                 <!-- <span>{{node.child}}</span> -->
-                                                <div class="set_child_field">
-                                                <span class="text-center">{{node.MainList.OPENINGBALANCE | toFixedAmount:true}}</span>
-                                                <span class="text-center">{{node.MainList.ACCOUNTTYPENAME }}</span>
-                                            </div>
+                                                <span class="text-center opning_amount_text_{{node.level}}">{{node.MainList.OPENINGBALANCE | toFixedAmount:true}}</span>
+                                                <span class="text-center account_type_text_{{node.level}}">{{node.MainList.ACCOUNTTYPENAME }}</span>
+                                                <span class="text-center account_type_text_{{node.level}}">{{node.MainList.XEROACCOUNTCODE }}</span>
+                                                <span class="text-center account_type_text_{{node.level}}">{{node.MainList.MYOBEXPORTACCOUNT }}</span>
                                             </mat-tree-node>
                                         </mat-tree>
                                     </div>

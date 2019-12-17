@@ -2,10 +2,10 @@
     <div class="content">
         <!-- CENTER -->
         <div class="center p-24 list_tbl_main more_tbl_clmn">
-            <div class="matter-serach-div sticky_search_div">
+            <div class="matter-serach-div sticky_search_div responsive_auto">
                 <!-- select bar  -->
                 <form [formGroup]="matterFilterForm">
-                    <mat-form-field class="example" appearance="outline">
+                    <mat-form-field  class="example" appearance="outline">
                         <mat-label>Active Matters</mat-label>
                         <mat-select formControlName="MatterFilter" (selectionChange)="MatterChange($event.value)">
                             <mat-option value="active">Active Matters</mat-option>
@@ -17,7 +17,7 @@
                     </mat-form-field>
 
                     <!-- select bar  -->
-                    <mat-form-field class="example invoiceddrop" appearance="outline">
+                    <mat-form-field  class="example invoiceddrop" appearance="outline">
                         <mat-label>Has Uninvoiced Work</mat-label>
                         <mat-select formControlName="InvoiceFilter" (selectionChange)="MatterInvoiceChange($event.value)">
                             <mat-option value="All">All</mat-option>
@@ -35,7 +35,7 @@
                             <mat-option *ngFor="let MatterDrop of MatterDropData" value="{{MatterDrop.USERID}}">{{MatterDrop.USERID}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field class="search" appearance="outline">
+                    <mat-form-field  class="example" class="search" appearance="outline">
                         <mat-label>Search</mat-label>
                         <!-- <input matInput placeholder="Search" (keyup.enter)="onSearch();" [(ngModel)]="searchFilter" formControlName="searchFilter"> -->
                         <input matInput placeholder="Search" (keydown)="onSearch($event)" formControlName="searchFilter">

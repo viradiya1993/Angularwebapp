@@ -90,7 +90,7 @@ console.log(result);
   }
   onAmoPerChnage(searchFilter = "") {
     if(Number(this.WorkInProgressData.PRICE) < Number(this.f.amount.value ) ){
-      this.addInvoiceForm.controls['COMMENT'].setValue('You have discounted by more then the selected items');
+      this.addInvoiceForm.controls['ADDITIONALTEXT'].setValue('You have discounted by more then the selected items');
     }else{
     this.CommonCalFuction();
     this.discountAmount.emit({ 'amount': this.f.amount.value, 'Percentage': this.f.Percentage.value, 'Percentage_type': this.f.Percentage_type.value, 'GST_type': this.f.GST_type.value, 'Discount_type': this.f.Discount_type.value });
@@ -101,12 +101,12 @@ console.log(result);
 CommonCalFuction(){
   if(this.f.Percentage_type.value =="Percentage"){
     if(Number(this.f.Percentage.value) > 0){
-      this.addInvoiceForm.controls['COMMENT'].setValue(this.f.Discount_type.value +' ' +this.FeesCheckVal +' '+ this.SundriesCheckVal + ' ' + this.MatterExPenseCheckVal + ' '+ 'by' +' ' +this.f.Percentage.value +'%');
+      this.addInvoiceForm.controls['ADDITIONALTEXT'].setValue(this.f.Discount_type.value +' ' +this.FeesCheckVal +' '+ this.SundriesCheckVal + ' ' + this.MatterExPenseCheckVal + ' '+ 'by' +' ' +this.f.Percentage.value +'%');
     }
   }
   else{
     if(Number(this.f.amount.value) > 0){
-      this.addInvoiceForm.controls['COMMENT'].setValue(this.f.Discount_type.value + ' '+ this.GSTAmmountCange +' '+ this.FeesCheckVal +' '+ this.SundriesCheckVal + ' ' + this.MatterExPenseCheckVal + ' ' +'by' +' '+'$'+ +this.f.amount.value);
+      this.addInvoiceForm.controls['ADDITIONALTEXT'].setValue(this.f.Discount_type.value + ' '+ this.GSTAmmountCange +' '+ this.FeesCheckVal +' '+ this.SundriesCheckVal + ' ' + this.MatterExPenseCheckVal + ' ' +'by' +' '+'$'+ +this.f.amount.value);
     }
   }
   

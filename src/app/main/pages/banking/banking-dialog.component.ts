@@ -150,14 +150,17 @@ export class BankingDialogComponent implements OnInit {
     localStorage.setItem('ChartAccountData', JSON.stringify({ 'ACCOUNTTYPENAME': node.MainList.ACCOUNTTYPENAME, "name": node.name, "class": node.class, "ACCOUNTGUID": node.ACCOUNTGUID, "ACCOUNTTYPE": node.ACCOUNTTYPE, "index": node.index, "parent": node.parent, "level": node.level }));
     node.AccountType = this._data.AccountType;
     this.ACCOUNTGUIDsELECTED = node;
-    this.isDisabledselect = node.MainList.ACCOUNTTYPENAME;
-    // if(this._data.RoterPath =='Reconclie Practice'){
-    //   if(node.MainList.ACCOUNTTYPENAME !='Bank Account'){
-    //     this.isDisabledselect ='Header';
-    //   }
-    // }else{
-    //   this.isDisabledselect = node.MainList.ACCOUNTTYPENAME;
-    // }
+    // this.isDisabledselect = node.MainList.ACCOUNTTYPENAME;
+console.log(node);
+    if(this._data.RoterPath =='Reconclie Practice'){
+      if(node.MainList.ACCOUNTTYPENAME !='Bank Account'){
+        this.isDisabledselect ='Header';
+      }else{
+        this.isDisabledselect ='';
+      }
+    }else{
+      this.isDisabledselect = node.MainList.ACCOUNTTYPENAME;
+    }
     
     // if (this._data.FromWhere == 'systemSetting') {
     //   this.isDisabledselect = 'Bank Account';

@@ -64,6 +64,7 @@ export class BehaviorService {
   public CommonToolbarHS$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   public DelGloballypopupHS$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public RecouncileConstName$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(private http: HttpClient) { }
 
   matterInvoiceData(matterClassData: any) {
@@ -204,6 +205,9 @@ export class BehaviorService {
   }
   Packets(Packets: any) {
     this.Packets$.next(Packets);
+  }
+  RecouncileConstName(RecouncileConstName: any) {
+    this.RecouncileConstName$.next(RecouncileConstName);
   }
   resizeTableForAllView() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');

@@ -57,12 +57,27 @@
                                                 <!-- use a disabled button to provide padding for tree leaf -->
                                                 <div class="parent_first_div">
                                                     <button mat-icon-button disabled [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index (click)="RowClick(node);highlightedRows = node.index "></button>
-                                                    <span> {{node.name}}  {{node.ACTIVE}}</span>
+                                                    <span fxFlex="70" class="text-center"> {{node.name}}  {{node.ACTIVE}}</span>
                                                 </div>
-                                                <span class="text-center opning_amount_text_{{node.level}}">{{node.MainList.OPENINGBALANCE | toFixedAmount:true}}</span>
+
+                                                <div fxFlex="20" class="text-center account_type_text_{{node.level}}">
+                                                        {{node.MainList.OPENINGBALANCE | toFixedAmount:true}}
+                                                    </div>
+                                                    <div fxFlex="20" class="text-center account_type_text_{{node.level}}">
+                                                            {{node.MainList.ACCOUNTTYPENAME }}
+                                                        </div>
+                                                        <div fxFlex="20" class="text-center account_type_text_{{node.level}}">
+                                                                {{node.MainList.XEROACCOUNTCODE }}
+                                                            </div>
+                                                            <div fxFlex="20" class="text-center account_type_text_{{node.level}}">
+                                                                    {{node.MainList.MYOBEXPORTACCOUNT }}
+                                                                </div>
+                                                <!-- <span class="text-center opning_amount_text_{{node.level}}">{{node.MainList.OPENINGBALANCE | toFixedAmount:true}}</span>
                                                 <span class="text-center account_type_text_{{node.level}}">{{node.MainList.ACCOUNTTYPENAME }}</span>
-                                                <span class="text-center account_type_text_{{node.level}}">{{node.MainList.XEROACCOUNTCODE }}</span>
-                                                <span class="text-center account_type_text_{{node.level}}">{{node.MainList.MYOBEXPORTACCOUNT }}</span>
+                                                <span class="text-center account_type_text_{{node.level}}">{{node.MainList.XEROACCOUNTCODE }}ffdsf</span>
+                                                <span class="text-center account_type_text_{{node.level}}">{{node.MainList.MYOBEXPORTACCOUNT }}ffdsf</span> -->
+
+
                                                 <!-- <span fxFlex="20" *ngIf="node.MainList.OPENINGBALANCE>0" class="text-center">{{node.MainList.ACCOUNTTYPE}}</span> -->
                                             </mat-tree-node>
                                             <!-- This is the tree node template for expandable nodes -->
@@ -75,13 +90,25 @@
                                                     {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                                                     </mat-icon>
                                                 </button>
-                                                    <span>{{node.name}}</span>
+                                                    <span fxFlex="70" class="text-center">{{node.name}}</span>
                                                 </div>
                                                 <!-- <span>{{node.child}}</span> -->
-                                                <span class="text-center opning_amount_text_{{node.level}}">{{node.MainList.OPENINGBALANCE | toFixedAmount:true}}</span>
+                                                <div fxFlex="20" class="text-center account_type_text_{{node.level}}">
+                                                        {{node.MainList.OPENINGBALANCE | toFixedAmount:true}}
+                                                    </div>
+                                                    <div fxFlex="20" class="text-center account_type_text_{{node.level}}">
+                                                            {{node.MainList.ACCOUNTTYPENAME }}
+                                                        </div>
+                                                        <div fxFlex="20" class="text-center account_type_text_{{node.level}}">
+                                                                {{node.MainList.XEROACCOUNTCODE }}
+                                                            </div>
+                                                            <div fxFlex="20" class="text-center account_type_text_{{node.level}}">
+                                                                    {{node.MainList.MYOBEXPORTACCOUNT }}
+                                                                </div>
+                                                <!-- <span class="text-center opning_amount_text_{{node.level}}">{{node.MainList.OPENINGBALANCE | toFixedAmount:true}}</span>
                                                 <span class="text-center account_type_text_{{node.level}}">{{node.MainList.ACCOUNTTYPENAME }}</span>
-                                                <span class="text-center account_type_text_{{node.level}}">{{node.MainList.XEROACCOUNTCODE }}</span>
-                                                <span class="text-center account_type_text_{{node.level}}">{{node.MainList.MYOBEXPORTACCOUNT }}</span>
+                                                <span class="text-center account_type_text_{{node.level}}">{{node.MainList.XEROACCOUNTCODE }}ffdsf</span>
+                                                <span class="text-center account_type_text_{{node.level}}">{{node.MainList.MYOBEXPORTACCOUNT }}ffdsf</span> -->
                                             </mat-tree-node>
                                         </mat-tree>
                                     </div>

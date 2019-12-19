@@ -21,13 +21,13 @@ export class FuseConfirmDialogComponent {
         private behaviorService: BehaviorService,
         @Inject(MAT_DIALOG_DATA) public _data: any
     ) {
-        let item = localStorage.getItem('confEWshow');
-        if (item =='error') {
-            this.ShowHide="Hide"
-            console.log(item);
-        }else{
-            this.ShowHide="Show"
-        }
+        // let item = localStorage.getItem('confEWshow');
+        // if (item =='error') {
+        //     this.ShowHide="Hide"
+        //     console.log(item);
+        // }else{
+        //     this.ShowHide=""
+        // }
   
         this.confirmData = _data;
     }

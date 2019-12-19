@@ -151,6 +151,14 @@ export class BankingDialogComponent implements OnInit {
     node.AccountType = this._data.AccountType;
     this.ACCOUNTGUIDsELECTED = node;
     this.isDisabledselect = node.MainList.ACCOUNTTYPENAME;
+    // if(this._data.RoterPath =='Reconclie Practice'){
+    //   if(node.MainList.ACCOUNTTYPENAME !='Bank Account'){
+    //     this.isDisabledselect ='Header';
+    //   }
+    // }else{
+    //   this.isDisabledselect = node.MainList.ACCOUNTTYPENAME;
+    // }
+    
     // if (this._data.FromWhere == 'systemSetting') {
     //   this.isDisabledselect = 'Bank Account';
     // } else if (this._data.FromWhere == 'spendMonyExpense') {
@@ -207,8 +215,8 @@ export class BankingDialogComponent implements OnInit {
   SelectClick(val) {
     console.log(val);
     if (this._data.RoterPath == 'Reconclie Practice') {
-      console.log("fhksdkfhdjkshfdjsf");
       this.behaviorService.ChartAccountData(val);
+      this.behaviorService.RecouncileConstName(val.name);
       localStorage.setItem('ChartAccountData', JSON.stringify({ "name": val.name, "class": val.class, "ACCOUNTGUID": val.ACCOUNTGUID, "ACCOUNTTYPE": val.ACCOUNTTYPE, "index": val.index, "parent": val.parent, "level": val.level }));
       this.router.navigate(['/account-reconciliation/reconciliation-item']);
     }

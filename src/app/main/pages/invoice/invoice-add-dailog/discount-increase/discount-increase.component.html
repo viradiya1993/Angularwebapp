@@ -7,7 +7,7 @@
     </div>
     <div class="value_label_parent">
         <div fxFlex="60" class="label_width">
-            <mat-checkbox formControlName="APPLYTOFEES">Apply to fees/Activities</mat-checkbox>
+            <mat-checkbox  formControlName="Fees" name="Fees"  (change)="checkBoxSelect($event)" formControlName="APPLYTOFEES">Apply to fees/Activities</mat-checkbox>
         </div>
         <mat-form-field appearance="outline" fxFlex="15" class="value_width" class="pr-4">
             <input class="sideText" matInput readonly placeholder="Date Received" formControlName="ActivityEXTOTAL">
@@ -21,7 +21,7 @@
     </div>
     <div class="value_label_parent">
         <div fxFlex="60" class="label_width">
-            <mat-checkbox>Apply to sundries /searching</mat-checkbox>
+            <mat-checkbox name="Sundries"  formControlName="Sundries" (change)="checkBoxSelect($event)">Apply to sundries /searching</mat-checkbox>
         </div>
         <mat-form-field appearance="outline" fxFlex="15" class="value_width" class="pr-4">
             <input class="sideText" matInput readonly placeholder="Date Received" formControlName="SundryEXTOTAL">
@@ -35,7 +35,7 @@
     </div>
     <div class="value_label_parent">
         <div fxFlex="60" class="label_width">
-            <mat-checkbox>Apply to Matter Expenses</mat-checkbox>
+            <mat-checkbox  formControlName="MatterExpenses" name="Matter Expenses" (change)="checkBoxSelect($event)">Apply to Matter Expenses</mat-checkbox>
         </div>
         <mat-form-field appearance="outline" fxFlex="15" class="value_width" class="pr-4">
             <input class="sideText" matInput readonly placeholder="Date Received" formControlName="WIPEXTOTAL">
@@ -57,7 +57,7 @@
         </mat-form-field>
         <mat-form-field fxFlex="25" class="value_width" class="pr-4" appearance="outline">
             <mat-label>Gst Amount</mat-label>
-            <mat-select formControlName="GST_type">
+            <mat-select (selectionChange)="GSTTypeChange($event.value)" formControlName="GST_type">
                 <mat-option value="ExGstAmount">Ex-Gst Amount</mat-option>
                 <mat-option value="IncGstAmount">Inc-Gst Amount</mat-option>
             </mat-select>
@@ -70,8 +70,8 @@
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline" fxFlex="25" class="value_width" class="pr-4">
-            <input class="sideText" matInput type="number" min="0" max="100" placeholder="Percentage" *ngIf="isAmount" (keydown)="onAmoPerChnage($event)" formControlName="Percentage">
-            <input class="sideText" matInput placeholder="Amount" *ngIf="!isAmount" (keydown)="onAmoPerChnage($event)" formControlName="amount">
+            <input class="sideText" matInput type="number" min="0" max="100" placeholder="Percentage" *ngIf="isAmount" (focusout)="onAmoPerChnage($event)" formControlName="Percentage">
+            <input class="sideText" matInput placeholder="Amount" *ngIf="!isAmount" (focusout)="onAmoPerChnage($event)" formControlName="amount">
         </mat-form-field>
     </div>
     <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">

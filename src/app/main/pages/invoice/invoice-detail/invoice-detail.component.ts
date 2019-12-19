@@ -99,7 +99,7 @@ export class InvoiceDetailComponent implements OnInit {
             let DUEDATE1 = invoiceData.DUEDATE.split("/");
             this.invoiceDetailForm.controls['DUEDATETEXT'].setValue(new Date(DUEDATE1[1] + '/' + DUEDATE1[0] + '/' + DUEDATE1[2]));
           }
-          this.invoiceDetailForm.controls['COMMENT'].setValue(invoiceData.COMMENT);
+          // this.invoiceDetailForm.controls['COMMENT'].setValue(invoiceData.COMMENT);
           this.invoiceDetailForm.controls['GST'].setValue(invoiceData.GST);
           this.invoiceDetailForm.controls['INVOICETOTAL'].setValue(invoiceData.INVOICETOTAL);
           this.invoiceDetailForm.controls['AMOUNTOUTSTANDINGINCGST'].setValue(invoiceData.AMOUNTOUTSTANDINGINCGST);

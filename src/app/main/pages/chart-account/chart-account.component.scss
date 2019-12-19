@@ -140,7 +140,7 @@ button#refreshChartACCTab {
 //     width: auto;
 // }
 .chart_tbl_head th:first-child {
-    width: 70% !important;
+    width: 66% !important;
     text-align: left;
 }
 
@@ -151,33 +151,46 @@ button#refreshChartACCTab {
     align-items: center;
 }
 
-.chart_tbl_head th:last-child {
-    width: 55%;
-    text-align: left;
-}
+// .chart_tbl_head th:last-child {
+//     width: 55%;
+//     text-align: left;
+// }
 
 .chart_tbl_head th.mat-header-cell {
-    width: 20%;
+    width: 8.5%;
     font-size: 15px;
 }
-
+.account_type_text_1{
+    margin-left: -10px;
+}
+// .account_type_text_2{
+//     margin-left: 41px;
+// }
+.account_type_text_3{
+    margin-left: 8px;
+}
+.account_type_text_0{
+    margin-left: -18px;
+}
 // .top_row_span.border-top span:nth-child(2) {
 //     padding-left: 20px;
 // }
 // .top_row_span.border-top .parent_first_div span {
 //     padding-left: 0;
 // }
-.opning_amount_text_0,
-.account_type_text_0 {
-    padding-left: 120px;
-}
 
-.opning_amount_text_1,
-.account_type_text_1 {
-    padding-left: 80px;
-}
 
-.opning_amount_text_2,
-.account_type_text_2 {
-    padding-left: 40px;
-}
+// .opning_amount_text_0,
+// .account_type_text_0 {
+//     padding-left: 120px;
+// }
+
+// .opning_amount_text_1,
+// .account_type_text_1 {
+//     padding-left: 80px;
+// }
+
+// .opning_amount_text_2,
+// .account_type_text_2 {
+//     padding-left: 40px;
+// }

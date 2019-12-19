@@ -32,6 +32,7 @@ export class InvoiceAddDailogComponent implements OnInit {
   OVEGSTTOTAL: any = 0;
   OVEINTOTAL: any = 0;
   WORKITEMS: any;
+  showMainPopUp: string;
   constructor(
     private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<InvoiceAddDailogComponent>,
@@ -42,6 +43,18 @@ export class InvoiceAddDailogComponent implements OnInit {
     private _mainAPiServiceService: MainAPiServiceService,
     private behaviorService: BehaviorService,
   ) {
+
+    this.behaviorService.workInProgress$.subscribe(result=>{
+      
+      if(result == null){
+        this.showMainPopUp = 'No'; 
+      }else{
+        this.showMainPopUp = 'Yes'; 
+      }
+      
+    });
+   
+
     this.behaviorService.dialogClose$.subscribe(result => {
       if (result != null) {
         if (result.MESSAGE == 'Not logged in') {
@@ -50,6 +63,7 @@ export class InvoiceAddDailogComponent implements OnInit {
       }
     });
   }
+  
 
   ngOnInit() {
     this.isLoadingResults = true;
@@ -97,6 +111,9 @@ export class InvoiceAddDailogComponent implements OnInit {
       DISEXAMOUNT: [''],
       DISGSTAMOUNT: [''],
       DISUINAMOUNT: [''],
+      Fees:[''],
+      Sundries:[''],
+      MatterExpenses:[''],
     });
 
     this._mainAPiServiceService.getSetData({ MATTERGUID: matterDetail.MATTERGUID, GetAllFields: true }, 'GetMatter').subscribe(response => {

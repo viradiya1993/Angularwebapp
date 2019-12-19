@@ -38,7 +38,8 @@
                             <mat-option *ngIf="action!='Transfer'" value="Cheque">Cheque</mat-option>
                             <mat-option *ngIf="action !='Transfer'" value="EFT">EFT</mat-option>
                             <mat-option
-                                *ngIf="action =='receipt'|| action =='money receipt' || action =='money withdrawal'"
+                                *ngIf="action =='receipt'|| action =='Statutory Receipt'|| action =='money receipt' || action =='money withdrawal'
+                                || action =='Unknown Deposit'"
                                 value="Cash">Cash</mat-option>
                             <mat-option *ngIf="action =='Transfer'" value="Transfer">Transfer</mat-option>
                             <mat-option *ngIf="action =='money receipt' || action =='money withdrawal'" value="Bank">
@@ -62,7 +63,13 @@
                         </mat-form-field>
 
                 </div>
-                <div *ngIf="action !='Cancelled Cheque'" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field *ngIf="action == 'Statutory Receipt' || action =='Statutory Deposit' || action=='Unknown Deposit'" appearance="outline" fxFlex="100" class=" pr-4">
+                        <mat-label>Trust Account</mat-label>
+                        <input formControlName="TrustAccount" placeholder="Trust Account" matInput>
+                    </mat-form-field>
+                </div>
+                <div *ngIf="action !='Cancelled Cheque' && action !='Statutory Receipt' && action !='Statutory Deposit' && action !='Unknown Deposit'" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-checkbox *ngIf="matterType === true" [disabled]="action =='office'" formControlName="CheckBox"
                         name="CheckBox" (change)="CheckBoxClick($event.checked)" class="pr-4">Multiple Matters
                     </mat-checkbox>
@@ -72,7 +79,8 @@
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-tab-group mat-align-tabs="start">
-                        <mat-tab *ngIf="matterType === false && action !='office' && action !='Cancelled Cheque'" label="Single Matter">
+                        <mat-tab *ngIf="matterType === false && action !='office' && action !='Cancelled Cheque' && action != 'Statutory Receipt' 
+                        && action !='Statutory Deposit' && action !='Unknown Deposit'" label="Single Matter">
                             <div class="item_pad" fxLayout="column">
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example" fxFlex="80" class="pr-4" appearance="outline">
@@ -97,7 +105,7 @@
 
 
 
-                        <mat-tab *ngIf="action =='Cancelled Cheque'" label="Details">
+                        <mat-tab *ngIf="action =='Cancelled Cheque' || action =='Statutory Receipt' || action =='Statutory Deposit' || action =='Unknown Deposit'" label="Details">
                                 <div class="item_pad" fxLayout="column">
                                     <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                         <mat-form-field class="example" fxFlex="80" class="pr-4" appearance="outline">
@@ -270,21 +278,21 @@
                                         fxFlex="50" class="pr-4">Bank Cheque </mat-checkbox>
                                 </div>
 
-                                <div *ngIf="this.f.BANKCHEQUE.value == true && action !='receipt'"
+                                <div *ngIf="this.f.BANKCHEQUE.value == true && action !='receipt' && action !='Statutory Receipt' && action !='Unknown Deposit'"
                                     fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example pr-4" fxFlex="100" appearance="outline">
                                         <mat-label>Beneficiary</mat-label>
                                         <input formControlName="BENEFICIARY" matInput>
                                     </mat-form-field>
                                 </div>
-                                <div *ngIf="action =='receipt'" fxLayout="row wrap" fxLayoutAlign="start center"
+                                <div *ngIf="action =='receipt' || action =='Statutory Receipt' || action =='Unknown Deposit'" fxLayout="row wrap" fxLayoutAlign="start center"
                                     fxFlex="1 0 auto">
                                     <mat-form-field class="example pr-4" fxFlex="100" appearance="outline">
                                         <mat-label>Account Name</mat-label>
                                         <input formControlName="ACCOUNTNAME" matInput>
                                     </mat-form-field>
                                 </div>
-                                <div *ngIf="action =='receipt'" fxLayout="row" fxLayoutAlign="start center"
+                                <div *ngIf="action =='receipt' || action =='Statutory Receipt'" fxLayout="row" fxLayoutAlign="start center"
                                     fxFlex="1 0 auto">
                                     <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
                                         <mat-label>BSB</mat-label>

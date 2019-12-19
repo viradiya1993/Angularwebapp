@@ -1,7 +1,7 @@
 <div class="example-loading-shade" *ngIf="isLoadingResults">
     <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
 </div>
-<div cdkDrag class="popup_main_div add_invoice_div_main">
+<div *ngIf="showMainPopUp =='Yes'" cdkDrag class="popup_main_div add_invoice_div_main">
     <h2 cdkDragHandle mat-dialog-title>
         Prepare Invoice
         <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
@@ -122,3 +122,32 @@
     </mat-dialog-actions>
 </div>
 <!-- </form> -->
+
+<div *ngIf="showMainPopUp =='No'"  cdkDrag class="popup_main_div add_invoice_div_main">
+        <h2 cdkDragHandle mat-dialog-title>Prepare Invoive
+            <button class="btn" mat-icon-button [mat-dialog-close]="false" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </h2>
+        <div mat-dialog-content class="mat-typography main">
+            <div class=" one " fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                <div fxLayout="row" fxFlex="1 0 auto" >
+                    <div class="pr-4" fxLayout="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <div  fxFlex="70"  fxLayoutAlign="start start">
+                            <p>The invoice total must be larger than or equal to zero and have at least one item. Please select at least one item. </p>
+                        </div>
+                        
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+        <mat-dialog-actions align="end" class="popup_ftr">
+            
+            <button mat-raised-button color="accent" [mat-dialog-close]="false" cdkFocusInitial>Ok</button>
+            <!-- <button mat-raised-button color="primary" (click)="closeAllDialoge()" [mat-dialog-close]="false" cdkFocusInitial>No</button> -->
+
+        </mat-dialog-actions>
+    </div>
+
+

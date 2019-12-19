@@ -46,6 +46,7 @@ export class RecounciliationItemComponent implements OnInit {
   recouncileItemdata: any;
   isDisplay: boolean = false;
   SendData: { ACCOUNTGUID: any; PERIODENDDATE: any; STARTINGBALANCE: number; DEPOSITS: any; WITHDRAWALS: any; UNPRESENTEDDEPOSITS: any; UNPRESENTEDWITHDRAWALS: any; ENDINGBALANCE: any; PREPAREDBY: any; RECONCILIATIONITEMS: any[]; };
+  AccountConstName: any;
 
   constructor(private dialog: MatDialog, public datepipe: DatePipe,
     private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService, private _formBuilder: FormBuilder,
@@ -69,6 +70,11 @@ export class RecounciliationItemComponent implements OnInit {
     this.behaviorService.ChartAccountData$.subscribe(result => {
       if (result) {
         this.chartAccountDetail = result;
+      }
+    });
+    this.behaviorService.RecouncileConstName$.subscribe(result => {
+      if (result) {
+      this.AccountConstName = result;
       }
     });
     // let getdate = new Date(sendDate[1] + '/' + sendDate[0] + '/' + sendDate[2]), y = getdate.getFullYear(), m = getdate.getMonth();;;

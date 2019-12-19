@@ -79,6 +79,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
     this.base_url=environment.ReportUrl;
     this.TrustMoneyForm = this._formBuilder.group({
       FROMMATTER:[''],
+      TrustAccount:[''],
       FROMMATTERGUID:[''],
       TRANSACTIONDATE: [''],
       AMOUNT: [''],
@@ -119,7 +120,8 @@ export class TrustMoneyDialogeComponent implements OnInit {
       INVOICEDVALUEEXGST: [''],
       Unallocated: [''],
       Total: [''],
-      Ledger:['']
+      Ledger:[''],
+      BANKACCOUNTGUID:['']
     });
     this.sendTransectionSubType='Normal';
     this.TrustMoneyForm.controls['PREPAREDBY'].setValue('Claudine Parkinson (pwd=test)');
@@ -170,9 +172,16 @@ export class TrustMoneyDialogeComponent implements OnInit {
       this.TrustMoneyForm.controls['PAYOR'].disable();
       this.TrustMoneyForm.controls['AMOUNT'].disable();
       this.TrustMoneyForm.controls['TRANSACTIONDATE'].disable();
+
     } else if (this.action == "Unknown Deposit") {
       $("#Contcat_id").removeClass("menu-disabled");
+      this.defaultCallAPI();
+      this.PymentType = "EFT";
+      this.sendToAPI='Receipt';
       this.title = "Add Unknown Deposit Receipt";
+      this.sendTransectionSubType='Unknown Deposit';
+      this.TrustMoneyForm.controls['PAYMENTTYPE'].setValue('EFT');
+
     } else if (this.action == "Transfer Unknow Deposit") {
       $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Unknown Deposit Transfer";
@@ -181,15 +190,23 @@ export class TrustMoneyDialogeComponent implements OnInit {
       this.TrustMoneyData.PaymentType = "Transfer";
       this.PymentType = "Transfer";
     } else if (this.action == "Statutory Deposit") {
+      this.defaultCallAPI();
+      this.sendToAPI='Withdrawal';
+      this.TrustMoneyForm.controls['PURPOSE'].setValue('Statutory Deposit');
       $("#Contcat_id").removeClass("menu-disabled");
-      this.title = "Add Statutory Depositl";
+      this.title = "Add Statutory Deposit";
       this.ForDetailTab = 'Statutory Deposit';
-      this.action = "withdrawal";
+      this.sendTransectionSubType='Statutory Deposit';
+      // this.action = "withdrawal";
     } else if (this.action == "Statutory Receipt") {
+      this.defaultCallAPI();
+      this.sendToAPI='Receipt';
+      this.TrustMoneyForm.controls['PURPOSE'].setValue('Statutory Deposit');
+      this.sendTransectionSubType='Statutory Deposit';
       $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Statutory Receipt";
       this.ForDetailTab = 'Statutory Receipt';
-      this.action = "receipt";
+      // this.action = "receipt";
     } else if (this.action == "Release Trust") {
       $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Release Trust";
@@ -202,9 +219,23 @@ export class TrustMoneyDialogeComponent implements OnInit {
     }
   }
   ngOnInit() {
-    // this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response=>{
-    // this.addData=response.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP
-    // });
+    this.TrustMoneyForm.controls['BANKACCOUNTGUID'].setValue('');
+  }
+  defaultCallAPI(){
+    let data={
+      "TRANSACTIONCLASS" : "Trust Money",
+      "TRANSACTIONTYPE" : "Normal Item",
+      "TRANSACTIONSUBTYPE" : "Statutory Deposit",
+      "CASHBOOK" : "Receipt",
+    }
+
+this._mainAPiServiceService.getSetData({Data:data,FormAction:'default'}, 'SetTrustTransaction').subscribe(response=>{
+console.log(response);
+this.TrustMoneyForm.controls['Ledger'].setValue(response.DATA.DEFAULTVALUES.MATTER);
+ this.TrustMoneyForm.controls['MATTERGUID'].setValue(response.DATA.DEFAULTVALUES.MATTERLEDGERGUID);
+this.TrustMoneyForm.controls['BANKACCOUNTGUID'].setValue(response.DATA.DEFAULTVALUES.BANKACCOUNTGUID);
+this.TrustMoneyForm.controls['TrustAccount'].setValue(response.DATA.DEFAULTVALUES.BANKACCOUNT + '  '+ '$'+response.DATA.DEFAULTVALUES.BANKACCOUNTBALANCE );
+    });
   }
   get f() {
     return this.TrustMoneyForm.controls;
@@ -309,7 +340,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
         BSB: this.f.BSB.value,
         EFTREFERENCE: this.f.EFTREFERENCE.value,
       },
-      BANKACCOUNTGUID: '',
+      BANKACCOUNTGUID: this.f.BANKACCOUNTGUID.value,
 
       //for now extra
       // PaymentType: this.f.PaymentType.value,
@@ -319,8 +350,10 @@ export class TrustMoneyDialogeComponent implements OnInit {
       // // PURPOSE: this.f.PURPOSE.value,
 
     }
-    if(this.action != "Transfer"){
+    if(this.action == "Statutory Receipt" || this.action == "Unknown Deposit"  || this.action == "Statutory Deposit"){
+      delete data.TOMATTERGUID;
       delete data.FROMMATTERGUID;
+      
     }
     this.isspiner = true;
     let finalData = { DATA: data, FormAction: 'insert', VALIDATEONLY: true }

@@ -165,6 +165,7 @@ export class ChartAccountComponent implements OnInit,OnDestroy {
   RowClick(val) {
     this.behaviorService.ChartAccountData(val);
     this.behaviorService.setChartAccountDataEdit(val);
+    this.behaviorService.RecouncileConstName(val.name);
     localStorage.setItem('ChartAccountData', JSON.stringify({ "name": val.name, "class": val.class, "ACCOUNTGUID": val.ACCOUNTGUID, "ACCOUNTTYPE": val.ACCOUNTTYPE, "index": val.index, "parent": val.parent, "level": val.level }));
   }
   AccountClass(val) {

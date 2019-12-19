@@ -79,6 +79,7 @@ export class InvoiceAddDailogComponent implements OnInit {
       MATTER: [matterDetail.MATTER],
       INVOICECODE: [''],
       COMMENT: [''],
+      ADDITIONALTEXT:[''],
       INVOICEDVALUEEXGST: [''],
       INVOICEDVALUEINCGST: [''],
       FIXEDRATEEXGST: [''],
@@ -282,6 +283,7 @@ export class InvoiceAddDailogComponent implements OnInit {
       GST: this.f.OVEGSTTOTAL.value,
       FOREIGNCURRENCYID: '',
       COMMENT: this.f.COMMENT.value,
+      ADDITIONALTEXT:this.f.ADDITIONALTEXT.value,
       WORKITEMS: this.WORKITEMS
     };
     let PostInvoiceEntryData: any = { FormAction: 'insert', VALIDATEONLY: true, Data: PostData };

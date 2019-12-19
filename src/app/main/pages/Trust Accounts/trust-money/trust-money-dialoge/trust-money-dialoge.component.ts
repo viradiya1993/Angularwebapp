@@ -175,7 +175,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
 
     } else if (this.action == "Unknown Deposit") {
       $("#Contcat_id").removeClass("menu-disabled");
-      this.defaultCallAPI();
+      this.defaultCallAPI('Receipt');
       this.PymentType = "EFT";
       this.sendToAPI='Receipt';
       this.title = "Add Unknown Deposit Receipt";
@@ -190,7 +190,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
       this.TrustMoneyData.PaymentType = "Transfer";
       this.PymentType = "Transfer";
     } else if (this.action == "Statutory Deposit") {
-      this.defaultCallAPI();
+      this.defaultCallAPI('Withdrawal');
       this.sendToAPI='Withdrawal';
       this.TrustMoneyForm.controls['PURPOSE'].setValue('Statutory Deposit');
       $("#Contcat_id").removeClass("menu-disabled");
@@ -199,7 +199,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
       this.sendTransectionSubType='Statutory Deposit';
       // this.action = "withdrawal";
     } else if (this.action == "Statutory Receipt") {
-      this.defaultCallAPI();
+      this.defaultCallAPI('Receipt');
       this.sendToAPI='Receipt';
       this.TrustMoneyForm.controls['PURPOSE'].setValue('Statutory Deposit');
       this.sendTransectionSubType='Statutory Deposit';
@@ -221,12 +221,12 @@ export class TrustMoneyDialogeComponent implements OnInit {
   ngOnInit() {
     this.TrustMoneyForm.controls['BANKACCOUNTGUID'].setValue('');
   }
-  defaultCallAPI(){
+  defaultCallAPI(val){
     let data={
       "TRANSACTIONCLASS" : "Trust Money",
       "TRANSACTIONTYPE" : "Normal Item",
       "TRANSACTIONSUBTYPE" : "Statutory Deposit",
-      "CASHBOOK" : "Receipt",
+      "CASHBOOK" : val,
     }
 
 this._mainAPiServiceService.getSetData({Data:data,FormAction:'default'}, 'SetTrustTransaction').subscribe(response=>{
@@ -350,7 +350,7 @@ this.TrustMoneyForm.controls['TrustAccount'].setValue(response.DATA.DEFAULTVALUE
       // // PURPOSE: this.f.PURPOSE.value,
 
     }
-    if(this.action == "Statutory Receipt" || this.action == "Unknown Deposit"  || this.action == "Statutory Deposit"){
+    if(this.action == "Statutory Receipt" || this.action == "Unknown Deposit"  || this.action == "Statutory   Deposit"){
       delete data.TOMATTERGUID;
       delete data.FROMMATTERGUID;
       

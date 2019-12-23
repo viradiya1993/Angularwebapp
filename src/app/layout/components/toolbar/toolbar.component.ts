@@ -1101,7 +1101,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         if (this.router.url == "/create-document/email-invoice-template" || this.router.url == "/create-document/packs-invoice-template") {
             let invoiceGUid = localStorage.getItem('edit_invoice_id');
-            let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "knownby": "Template", "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
+            let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "knownby": "Email", "Type": "Email", "Folder": '', "Template": this.EmailtemplateData.NAME }
             this.ForEmailDialogOpen(passdata);
         } else if (this.router.url == "/create-document/email-matter-template" || this.router.url == "/create-document/packs-matter-template") {
             let matterData = JSON.parse(localStorage.getItem('set_active_matters'));
@@ -1313,9 +1313,27 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             disableClose: true,
             data: {}
         });
-        dialogRef.afterClosed().subscribe(result => { });
+        dialogRef.afterClosed().subscribe(result => {
+            localStorage.setItem('set_active_matters', JSON.stringify(result));
+        });
     }
     AccountPop(actionType) {
+        if (this.router.url == '/trust-chart-account' && actionType == 'new') {
+            const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    localStorage.setItem('set_active_matters', JSON.stringify(result));
+                    this.CommonAccountPopUp(actionType);
+                }
+            });
+
+        } else {
+            this.CommonAccountPopUp(actionType);
+        }
+
+    }
+
+    CommonAccountPopUp(actionType) {
         let AccountPopdata = {}
         if (actionType == 'new') {
             AccountPopdata = { action: actionType }
@@ -1797,6 +1815,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                     const dialogRef = this.dialog.open(ResumeTimerComponent, { width: '100%', disableClose: true, data: { 'type': 'new', 'matterData': result } });
                     dialogRef.afterClosed().subscribe(result => {
                         if (result) {
+                            localStorage.setItem('set_active_matters', JSON.stringify(result));
                             $('#refreshTimeEntryTab').click();
                             $('#refreshWorkInprogress').click();
                         }
@@ -1875,6 +1894,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {
+                localStorage.setItem('set_active_matters', JSON.stringify(result));
                 const dialogRef = this._matDialog.open(ReceiptDilogComponent, {
                     width: '100%', disableClose: true,
                     data: { action: 'add', type: " ", matterData: result }
@@ -2063,6 +2083,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, data: null });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
+                    localStorage.setItem('set_active_matters', JSON.stringify(result));
                     this.OpenTaskPopUp(val);
                 }
             });
@@ -2177,6 +2198,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
+                    localStorage.setItem('set_active_matters', JSON.stringify(result));
                     this.SafeCustodyPoup({ action: actionType, result: result });
                 }
             });
@@ -2231,6 +2253,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             const dialogRef = this._matDialog.open(MatterDialogComponent, { width: '100%', disableClose: true, });
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
+                    localStorage.setItem('set_active_matters', JSON.stringify(result));
                     this.TrustNewChartAccount(actionType, result);
                     // $("#mainsafecusday").click();
                 }
@@ -2372,7 +2395,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     ForDocDialogOpen(passdata) {
         const dialogRef = this._matDialog.open(MatterDialogComponentForTemplate, { width: '100%', disableClose: true, data: passdata });
         dialogRef.afterClosed().subscribe(result => {
-            if (result) { }
+            if (result) {
+
+            }
         });
     }
     packsToolbarHide() {
@@ -2428,23 +2453,25 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
 
         if (Object.keys(errorData).length != 0) {
-            localStorage.setItem('confEWshow','error');
+            localStorage.setItem('confEWshow', 'error');
             this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
                 disableClose: true,
                 width: '100%',
-                data: errorData
-            });
+                data: {
+                    errorData: errorData
+                }
+        });
             this.confirmDialogRef.componentInstance.confirmMessage = '';
             this.confirmDialogRef.afterClosed().subscribe(result => {
                 localStorage.removeItem('confEWshow');
                 if (result) {
                 }
-                
+
                 this.confirmDialogRef = null;
             });
 
         } else if (Object.keys(warningData).length != 0) {
-            localStorage.setItem('confEWshow','warning');
+            localStorage.setItem('confEWshow', 'warning');
             this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
                 disableClose: true,
                 width: '100%',
@@ -2455,7 +2482,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 console.log(result)
                 localStorage.removeItem('confEWshow');
                 if (result) {
-                    
                     console.log(result)
                     this.DeleteGData(details, ApiName);
                 }
@@ -2471,6 +2497,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
                 this.toastr.success(' Delete successfully');
                 $('#refreshInvoiceTab').click();
+                $('#refreshMatterInvoice').click();
             } else if (response.CODE == 451 && response.STATUS == 'warning') {
                 this.toastr.warning(response.MESSAGE);
             } else if (response.CODE == 450 && response.STATUS == 'error') {

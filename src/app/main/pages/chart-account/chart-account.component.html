@@ -5,7 +5,8 @@
                 <form>
                     <mat-form-field class="example" appearance="outline">
                         <mat-label>Status</mat-label>
-                        <mat-select *ngIf="accountTypeData.ClickType=='WithoutTrust'" name="AccountClass" [(ngModel)]="ChartData.AccountClass" (selectionChange)="AccountClass($event.value)">
+                        <mat-select *ngIf="accountTypeData.ClickType=='WithoutTrust'" name="AccountClass"
+                            [(ngModel)]="ChartData.AccountClass" (selectionChange)="AccountClass($event.value)">
                             <mat-option value="All">All Accounts</mat-option>
                             <mat-option value="Assets">Assets</mat-option>
                             <mat-option value="Liabilities">Liabilities</mat-option>
@@ -14,10 +15,12 @@
                             <mat-option value="Expenses">Expenses</mat-option>
                         </mat-select>
 
-                        <mat-select *ngIf="accountTypeData.ClickType=='WithTrust'" name="AccountClass" [(ngModel)]="ChartData.AccountClass" (selectionChange)="AccountClass($event.value)">
+                        <mat-select *ngIf="accountTypeData.ClickType=='WithTrust'" name="AccountClass"
+                            [(ngModel)]="ChartData.AccountClass" (selectionChange)="AccountClass($event.value)">
                             <mat-option value="All">All Accounts</mat-option>
                             <mat-option value="Trust Account">Trust Account</mat-option>
                             <mat-option value="Matter Ledger">Matter Ledger</mat-option>
+                            <mat-option value="Unknown Deposit">Unknown Deposit accounts</mat-option>
                             <mat-option value="Controlled Money Ledger ">Controlled Money Ledger </mat-option>
                             <mat-option value="Controlled Money Account">Controlled Money Account </mat-option>
                         </mat-select>
@@ -30,7 +33,8 @@
                     </mat-form-field>
                 </form>
             </div>
-            <button mat-raised-button color="primary" type="button" id="refreshChartACCTab" (click)="refreshChartACCTab();">Refresh</button>
+            <button mat-raised-button color="primary" type="button" id="refreshChartACCTab"
+                (click)="refreshChartACCTab();">Refresh</button>
             <div class="content">
                 <div class="page-layout simple left-sidebar inner-sidebar">
                     <div fxLayoutAlign="center" class="content">
@@ -52,26 +56,36 @@
                                         </table>
                                         <mat-tree #tree [dataSource]="dataSource" [treeControl]="treeControl">
                                             <!-- This is the tree node template for leaf nodes -->
-                                            <mat-tree-node class="border-top" *matTreeNodeDef="let node" matTreeNodePadding [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index (click)="RowClick(node);highlightedRows = node.index "
-                                                matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                            <mat-tree-node class="border-top" *matTreeNodeDef="let node"
+                                                matTreeNodePadding
+                                                [style.background]="highlightedRows ==  node.index? selectedColore : ''"
+                                                [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''"
+                                                highlightedRows=node.index
+                                                (click)="RowClick(node);highlightedRows = node.index " matRipple
+                                                [@animate]="{value:'*',params:{y:'100%'}}">
                                                 <!-- use a disabled button to provide padding for tree leaf -->
                                                 <div class="parent_first_div">
-                                                    <button mat-icon-button disabled [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index (click)="RowClick(node);highlightedRows = node.index "></button>
-                                                    <span fxFlex="70" class="text-center"> {{node.name}}  {{node.ACTIVE}}</span>
+                                                    <button mat-icon-button disabled
+                                                        [style.background]="highlightedRows ==  node.index? selectedColore : ''"
+                                                        [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''"
+                                                        highlightedRows=node.index
+                                                        (click)="RowClick(node);highlightedRows = node.index "></button>
+                                                    <span fxFlex="70" class="text-center"> {{node.name}}
+                                                        {{node.ACTIVE}}</span>
                                                 </div>
 
                                                 <div fxFlex="20" class="text-center account_type_text_{{node.level}}">
-                                                        {{node.MainList.OPENINGBALANCE | toFixedAmount:true}}
-                                                    </div>
-                                                    <div fxFlex="20" class="text-center account_type_text_{{node.level}}">
-                                                            {{node.MainList.ACCOUNTTYPENAME }}
-                                                        </div>
-                                                        <div fxFlex="20" class="text-center account_type_text_{{node.level}}">
-                                                                {{node.MainList.XEROACCOUNTCODE }}
-                                                            </div>
-                                                            <div fxFlex="20" class="text-center account_type_text_{{node.level}}">
-                                                                    {{node.MainList.MYOBEXPORTACCOUNT }}
-                                                                </div>
+                                                    {{node.MainList.OPENINGBALANCE | toFixedAmount:true}}
+                                                </div>
+                                                <div fxFlex="20" class="text-center account_type_text_{{node.level}}">
+                                                    {{node.MainList.ACCOUNTTYPENAME }}
+                                                </div>
+                                                <div fxFlex="20" class="text-center account_type_text_{{node.level}}">
+                                                    {{node.MainList.XEROACCOUNTCODE }}sdsdas
+                                                </div>
+                                                <div fxFlex="20" class="text-center account_type_text_{{node.level}}">
+                                                    {{node.MainList.MYOBEXPORTACCOUNT }}reuwyre
+                                                </div>
                                                 <!-- <span class="text-center opning_amount_text_{{node.level}}">{{node.MainList.OPENINGBALANCE | toFixedAmount:true}}</span>
                                                 <span class="text-center account_type_text_{{node.level}}">{{node.MainList.ACCOUNTTYPENAME }}</span>
                                                 <span class="text-center account_type_text_{{node.level}}">{{node.MainList.XEROACCOUNTCODE }}ffdsf</span>
@@ -81,30 +95,39 @@
                                                 <!-- <span fxFlex="20" *ngIf="node.MainList.OPENINGBALANCE>0" class="text-center">{{node.MainList.ACCOUNTTYPE}}</span> -->
                                             </mat-tree-node>
                                             <!-- This is the tree node template for expandable nodes -->
-                                            <mat-tree-node class="border-top top_row_span" *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index
-                                                (click)="RowClick(node);highlightedRows = node.index " matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                            <mat-tree-node class="border-top top_row_span"
+                                                *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding
+                                                [style.background]="highlightedRows ==  node.index? selectedColore : ''"
+                                                [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''"
+                                                highlightedRows=node.index
+                                                (click)="RowClick(node);highlightedRows = node.index " matRipple
+                                                [@animate]="{value:'*',params:{y:'100%'}}">
                                                 <div class="parent_first_div">
-                                                    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name" [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index
+                                                    <button mat-icon-button matTreeNodeToggle
+                                                        [attr.aria-label]="'toggle ' + node.name"
+                                                        [style.background]="highlightedRows ==  node.index? selectedColore : ''"
+                                                        [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''"
+                                                        highlightedRows=node.index
                                                         (click)="RowClick(node);highlightedRows = node.index ">
-                                                    <mat-icon class="mat-icon-rtl-mirror" >
-                                                    {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-                                                    </mat-icon>
-                                                </button>
+                                                        <mat-icon class="mat-icon-rtl-mirror">
+                                                            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                                        </mat-icon>
+                                                    </button>
                                                     <span fxFlex="70" class="text-center">{{node.name}}</span>
                                                 </div>
                                                 <!-- <span>{{node.child}}</span> -->
                                                 <div fxFlex="20" class="text-center account_type_text_{{node.level}}">
-                                                        {{node.MainList.OPENINGBALANCE | toFixedAmount:true}}
-                                                    </div>
-                                                    <div fxFlex="20" class="text-center account_type_text_{{node.level}}">
-                                                            {{node.MainList.ACCOUNTTYPENAME }}
-                                                        </div>
-                                                        <div fxFlex="20" class="text-center account_type_text_{{node.level}}">
-                                                                {{node.MainList.XEROACCOUNTCODE }}
-                                                            </div>
-                                                            <div fxFlex="20" class="text-center account_type_text_{{node.level}}">
-                                                                    {{node.MainList.MYOBEXPORTACCOUNT }}
-                                                                </div>
+                                                    {{node.MainList.OPENINGBALANCE | toFixedAmount:true}}
+                                                </div>
+                                                <div fxFlex="20" class="text-center account_type_text_{{node.level}}">
+                                                    {{node.MainList.ACCOUNTTYPENAME }}
+                                                </div>
+                                                <div fxFlex="20" class="text-center account_type_text_{{node.level}}">
+                                                    {{node.MainList.XEROACCOUNTCODE }}sdsadas
+                                                </div>
+                                                <div fxFlex="20" class="text-center account_type_text_{{node.level}}">
+                                                    {{node.MainList.MYOBEXPORTACCOUNT }}eqweqwe
+                                                </div>
                                                 <!-- <span class="text-center opning_amount_text_{{node.level}}">{{node.MainList.OPENINGBALANCE | toFixedAmount:true}}</span>
                                                 <span class="text-center account_type_text_{{node.level}}">{{node.MainList.ACCOUNTTYPENAME }}</span>
                                                 <span class="text-center account_type_text_{{node.level}}">{{node.MainList.XEROACCOUNTCODE }}ffdsf</span>

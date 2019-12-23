@@ -22,6 +22,7 @@ import { round } from 'lodash';
   animations: fuseAnimations
 })
 export class TimeEntriesComponent implements OnInit {
+  forHideShowDateRangePicker: string;
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   TimeEnrtyForm: FormGroup;
   successMsg: any;
@@ -62,7 +63,18 @@ export class TimeEntriesComponent implements OnInit {
     this.lastFilter = JSON.parse(localStorage.getItem('time_entries_filter'));
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.isShowDrop = currentUser.ProductType == "Barrister" ? false : true;
-    this.TimeEnrtyForm = this.fb.group({ date: [''], uninvoicedWork: [''], dlpdrop: [''], });
+    this.TimeEnrtyForm = this.fb.group({
+       date: [''],
+       uninvoicedWork: [''], 
+       dlpdrop: [''],
+        DayRange:[''],
+        ExGST:[''],
+        IncGST:[''],
+        Units:[''],
+        Days:[''],
+        Budget:[''],
+  });
+  this.forHideShowDateRangePicker = "hide";
     if (this.lastFilter) {
       if (this.lastFilter.ItemDateStart && this.lastFilter.ItemDateEnd) {
         let tempDate = this.lastFilter.ItemDateStart.split("/");
@@ -70,6 +82,28 @@ export class TimeEntriesComponent implements OnInit {
         let Sd = new Date(tempDate[1] + '/' + tempDate[0] + '/' + tempDate[2]);
         let ed = new Date(tempDate2[1] + '/' + tempDate2[0] + '/' + tempDate2[2]);
         this.TimeEnrtyForm.controls['date'].setValue({ begin: Sd, end: ed });
+
+    const date1 = Sd;
+    const date2 = ed;
+    const diffTime = Math.abs(date2.getTime() - date1.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays == 0) {
+      this.TimeEnrtyForm.controls['DayRange'].setValue("Today");
+    } else if (diffDays == 7) {
+      this.TimeEnrtyForm.controls['DayRange'].setValue("Last 7 days");
+    } else if (diffDays == 30) {
+      this.TimeEnrtyForm.controls['DayRange'].setValue("Last 30 days");
+    } else if (diffDays == 90) {
+      this.TimeEnrtyForm.controls['DayRange'].setValue("Last 90 days");
+    } else {
+      this.forHideShowDateRangePicker = "show";
+      this.TimeEnrtyForm.controls['DayRange'].setValue("Date Range");
+    }
+
+
+
+
       } else {
         // var dt = new Date();
         // dt.setMonth(dt.getMonth() + 1);
@@ -109,6 +143,7 @@ export class TimeEntriesComponent implements OnInit {
         QUANTITY: [''],
         FEEEARNER: [''],
         ITEMTIME: [''],
+      
       });
       this.calculateData.QuantityType = 'H';
       this.timeStops = this.getTimeStops('00:00', '23:30');
@@ -353,6 +388,11 @@ export class TimeEntriesComponent implements OnInit {
     this.isLoadingResults = true;
     this.Timersservice.getTimeEnrtyData(Data).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
+        this.TimeEnrtyForm.controls['ExGST'].setValue(response.DATA.EXGSTTOTAL);
+        this.TimeEnrtyForm.controls['IncGST'].setValue(response.DATA.INCGSTTOTAL);
+        this.TimeEnrtyForm.controls['Units'].setValue(response.DATA.UNITSTOTAL);
+        this.TimeEnrtyForm.controls['Days'].setValue(response.DATA.DAYSTOTAL);
+        // this.TimeEnrtyForm.controls['Budget'].setValue(response.DATA.EXGSTTOTAL);
         if (response.DATA.WORKITEMS[0]) {
           this.isDisplay = false;
           this.behaviorService.MainTimeEntryData(response.DATA.WORKITEMS[0]);
@@ -406,18 +446,51 @@ export class TimeEntriesComponent implements OnInit {
   choosedDate(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value['begin'], 'dd/MM/yyyy');
     let end = this.datepipe.transform(event.value['end'], 'dd/MM/yyyy');
-    let filterVal = { 'FeeEarner': '', 'Invoiced': '', 'ItemDateStart': begin, 'ItemDateEnd': end };
-    if (!localStorage.getItem('time_entries_filter')) {
-      localStorage.setItem('time_entries_filter', JSON.stringify(filterVal));
-    } else {
-      filterVal = JSON.parse(localStorage.getItem('time_entries_filter'));
-      filterVal.ItemDateStart = begin;
-      filterVal.ItemDateEnd = end;
-      localStorage.setItem('time_entries_filter', JSON.stringify(filterVal));
-    }
-    this.LoadData(filterVal);
-  }
+    // let filterVal = { 'FeeEarner': '', 'Invoiced': '', 'ItemDateStart': begin, 'ItemDateEnd': end };
 
+    this.CommonDatefun(end, begin);
+    let filterData = JSON.parse(localStorage.getItem("spendmoney_filter"));
+    this.LoadData(filterData);
+    // if (!localStorage.getItem('time_entries_filter')) {
+    //   localStorage.setItem('time_entries_filter', JSON.stringify(filterVal));
+    // } else {
+    //   filterVal = JSON.parse(localStorage.getItem('time_entries_filter'));
+    //   filterVal.ItemDateStart = begin;
+    //   filterVal.ItemDateEnd = end;
+    //   localStorage.setItem('time_entries_filter', JSON.stringify(filterVal));
+    // }
+  }
+  selectDayRange(val) {
+    this.lastFilter = JSON.parse(localStorage.getItem("time_entries_filter"));
+    let currentDate = new Date()
+    let updatecurrentDate = new Date();
+    let begin = this.datepipe.transform(currentDate, 'dd/MM/yyyy');
+    if (val == "Last 7 days") {
+      updatecurrentDate.setDate(updatecurrentDate.getDate() - 7);
+      this.forHideShowDateRangePicker = "hide";
+      this.TimeEnrtyForm.controls['date'].setValue({ begin: updatecurrentDate, end: currentDate });
+    }
+    else if (val == "Today") {
+      // updatecurrentDate.setDate(updatecurrentDate.getDate() - 30);
+      this.forHideShowDateRangePicker = "hide";
+      this.TimeEnrtyForm.controls['date'].setValue({ begin: currentDate, end: currentDate });
+    }
+    else if (val == "Last 30 days") {
+      updatecurrentDate.setDate(updatecurrentDate.getDate() - 30);
+      this.forHideShowDateRangePicker = "hide";
+      this.TimeEnrtyForm.controls['date'].setValue({ begin: updatecurrentDate, end: currentDate });
+    }
+    else if (val == "Last 90 days") {
+      updatecurrentDate.setDate(updatecurrentDate.getDate() - 90);
+      this.forHideShowDateRangePicker = "hide";
+      this.TimeEnrtyForm.controls['date'].setValue({ begin: updatecurrentDate, end: currentDate });
+    } else if (val == "Date Range") {
+      this.forHideShowDateRangePicker = "show";
+    }
+    let end = this.datepipe.transform(updatecurrentDate, 'dd/MM/yyyy');
+    this.CommonDatefun(begin, end);
+    this.LoadData(this.lastFilter);
+  }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
@@ -441,6 +514,11 @@ export class TimeEntriesComponent implements OnInit {
       }
     });
   }
-
+  CommonDatefun(begin, end) {
+    this.lastFilter = JSON.parse(localStorage.getItem("time_entries_filter"));
+      this.lastFilter.ItemDateStart = end;
+      this.lastFilter.ItemDateEnd = begin;
+      localStorage.setItem('time_entries_filter', JSON.stringify(this.lastFilter));
+  }
 
 }

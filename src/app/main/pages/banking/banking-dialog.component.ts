@@ -151,7 +151,6 @@ export class BankingDialogComponent implements OnInit {
     node.AccountType = this._data.AccountType;
     this.ACCOUNTGUIDsELECTED = node;
     // this.isDisabledselect = node.MainList.ACCOUNTTYPENAME;
-console.log(node);
     if(this._data.RoterPath =='Reconclie Practice'){
       if(node.MainList.ACCOUNTTYPENAME !='Bank Account'){
         this.isDisabledselect ='Header';
@@ -216,7 +215,6 @@ console.log(node);
     });
   }
   SelectClick(val) {
-    console.log(val);
     if (this._data.RoterPath == 'Reconclie Practice') {
       this.behaviorService.ChartAccountData(val);
       this.behaviorService.RecouncileConstName(val.name);

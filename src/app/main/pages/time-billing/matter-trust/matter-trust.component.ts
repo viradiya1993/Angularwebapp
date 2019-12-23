@@ -75,7 +75,9 @@ export class MatterTrustComponent implements OnInit {
     this.pageSize = event.pageSize;
     localStorage.setItem('lastPageSize', event.pageSize);
   }
-
+  refreshMatterInvoice(){
+    this.loadData();
+  }
   openDialog() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
@@ -105,4 +107,5 @@ export class MatterTrustComponent implements OnInit {
       this.displayedColumns = data;
     }
   }
+
 }

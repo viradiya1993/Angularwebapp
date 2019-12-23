@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 import { MainAPiServiceService } from 'app/_services';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-format-variable',

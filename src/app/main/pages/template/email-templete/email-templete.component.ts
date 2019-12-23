@@ -1,7 +1,8 @@
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatPaginator, MatDialog, } from '@angular/material';
-import { MatSort } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import * as $ from 'jquery';
 import { fuseAnimations } from '@fuse/animations';

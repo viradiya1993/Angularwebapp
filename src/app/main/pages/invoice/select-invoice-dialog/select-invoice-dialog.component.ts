@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation, Input } from '@angular/core';
-import { MatDialogRef, MatDialog, MatPaginator, MatTableDataSource, MatDialogConfig } from '@angular/material';
+import { MatDialogRef, MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MainAPiServiceService, BehaviorService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
@@ -8,7 +10,7 @@ import { MatterPopupComponent } from '../../matters/matter-popup/matter-popup.co
 import { InvoiceAddDailogComponent } from '../invoice-add-dailog/invoice-add-dailog.component';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 // import { TemplateComponent } from '../template.component';
-import { MatSort } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-select-invoice-dialog',

@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import * as $ from 'jquery';
 import { BehaviorService, MainAPiServiceService } from 'app/_services';
 import { FormGroup } from '@angular/forms';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { DairyDailogComponent } from './dairy-dailog/dairy-dailog.component';
 import { ToastrService } from 'ngx-toastr';

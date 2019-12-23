@@ -1,5 +1,7 @@
 import { Component, OnInit, Injectable, ViewEncapsulation, ViewChild, AfterViewInit } from '@angular/core';
-import { MatDialog, MatTreeFlattener, MatTreeFlatDataSource, MatPaginator } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';

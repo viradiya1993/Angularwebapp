@@ -3,8 +3,9 @@ import { fuseAnimations } from '@fuse/animations';
 import { MainAPiServiceService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
-import { MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 
 @Component({

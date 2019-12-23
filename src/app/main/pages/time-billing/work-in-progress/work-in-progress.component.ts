@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatDialogConfig, MatDialog, MatDatepickerInputEvent } from '@angular/material';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { ToastrService } from 'ngx-toastr';
@@ -7,7 +10,7 @@ import { TableColumnsService, MainAPiServiceService, BehaviorService } from '../
 import * as $ from 'jquery';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { MatSort } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-work-in-progress',

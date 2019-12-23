@@ -1,6 +1,7 @@
 import { fuseAnimations } from '@fuse/animations';
 import { Component, OnInit, ViewEncapsulation, ViewChild, Injectable, OnDestroy } from '@angular/core';
-import { MatPaginator, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import * as $ from 'jquery';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';

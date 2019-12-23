@@ -1,13 +1,15 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MainAPiServiceService, } from './../../../../_services';
-import { MatTableDataSource, MatPaginator, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ContactDialogComponent } from '../contact-dialog/contact-dialog.component';
 import * as $ from 'jquery';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-import { MatSort } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-contact-select-dialog',

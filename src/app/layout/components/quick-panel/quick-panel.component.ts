@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs';
 import * as $ from 'jquery';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { TimersService } from 'app/_services';
 import { MatterDialogComponent } from 'app/main/pages/time-entries/matter-dialog/matter-dialog.component';
 

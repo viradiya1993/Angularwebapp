@@ -1,7 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { MainAPiServiceService, BehaviorService, TimersService } from 'app/_services';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDatepickerInputEvent, MatDialog, MatTableDataSource } from '@angular/material';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common';

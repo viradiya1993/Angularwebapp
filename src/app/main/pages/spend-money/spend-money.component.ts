@@ -3,10 +3,13 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { TableColumnsService, MainAPiServiceService, BehaviorService } from 'app/_services';
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
-import { MatTableDataSource, MatPaginator, MatDialogConfig, MatDialog, MatDatepickerInputEvent } from '@angular/material';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import * as $ from 'jquery';
-import { MatSort } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
 import { DatePipe } from '@angular/common';
 import { stringify } from '@angular/core/src/render3/util';
 

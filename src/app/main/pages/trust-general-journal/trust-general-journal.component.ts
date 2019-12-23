@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig, MatDatepickerInputEvent, MatDialogRef } from '@angular/material';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from '../../sorting-dialog/sorting-dialog.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -7,7 +10,7 @@ import { TimersService, TableColumnsService, BehaviorService } from '../../../_s
 import { ToastrService } from 'ngx-toastr';
 import { DatePipe } from '@angular/common'
 import * as $ from 'jquery';
-import { MatSort } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
 import * as moment from 'moment';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 

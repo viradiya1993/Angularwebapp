@@ -4,7 +4,7 @@ import { FuseSidebarService } from '@fuse/components/sidebar/sidebar.service';
 import { ToastrService } from 'ngx-toastr';
 import { TimersService } from '../../../../_services'
 import { MatterPopupComponent } from '../matter-popup/matter-popup.component';
-import { MatDialogConfig, MatDialog } from '@angular/material';
+import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-matters-sort-detail',
   templateUrl: './matters-sort-detail.component.html',

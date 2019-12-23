@@ -3,7 +3,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
 import { MainAPiServiceService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { DatePipe } from '@angular/common';
 

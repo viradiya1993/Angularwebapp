@@ -3,7 +3,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
 import { MainAPiServiceService, BehaviorService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { MatterDialogComponentForTemplate } from '../../template/matter-dialog/matter-dialog.component';
 
 @Component({

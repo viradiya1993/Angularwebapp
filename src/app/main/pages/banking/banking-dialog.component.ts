@@ -1,6 +1,7 @@
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, Inject, Injectable, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MatDialog, MatDialogRef, MatTreeFlatDataSource, MatTreeFlattener, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { fuseAnimations } from '@fuse/animations';
 import { BehaviorService, MainAPiServiceService } from 'app/_services';
 import { ChartAcDailogComponent } from '../chart-account/chart-ac-dailog/chart-ac-dailog.component';

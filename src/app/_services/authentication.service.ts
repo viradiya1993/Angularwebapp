@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 import { User } from '../_models';
 import { ToastrService } from 'ngx-toastr';
 import { SpendMoneyAddComponent } from 'app/main/pages/spend-money/spend-money-add-dialog/spend-money-add.component';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { BehaviorService } from './Behavior.service';
 
 @Injectable({ providedIn: 'root' })

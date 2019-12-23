@@ -1,8 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MatDialog, MatDatepickerInputEvent } from '@angular/material';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
 import { MainAPiServiceService, BehaviorService } from '../../../../_services';

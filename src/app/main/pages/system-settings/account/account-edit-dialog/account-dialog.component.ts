@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AccountInnerDialogComponent } from './account-inner-dialoge/account-inner-dialog.component';
 import { BehaviorService, MainAPiServiceService } from 'app/_services';
 import { BankingDialogComponent } from 'app/main/pages/banking/banking-dialog.component';

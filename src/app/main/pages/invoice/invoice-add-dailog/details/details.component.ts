@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, ViewChild, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { fuseAnimations } from '@fuse/animations';
 import { MainAPiServiceService } from 'app/_services';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatSort } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
 
 
 @Component({

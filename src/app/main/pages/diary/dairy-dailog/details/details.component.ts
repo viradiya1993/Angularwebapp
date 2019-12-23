@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject,Input } from '@angular/core';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { MAT_DIALOG_DATA,MatDialogConfig } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MatterDialogComponent } from './../../../time-entries/matter-dialog/matter-dialog.component';
 import * as $ from 'jquery';

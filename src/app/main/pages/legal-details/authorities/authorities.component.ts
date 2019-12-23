@@ -1,10 +1,13 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild, Output, EventEmitter } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig, MatTreeFlattener, MatTreeFlatDataSource, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material/tree';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { TableColumnsService, MainAPiServiceService, BehaviorService } from './../../../../_services';
 import * as $ from 'jquery';
-import { MatSort } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { ToastrService } from 'ngx-toastr';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';

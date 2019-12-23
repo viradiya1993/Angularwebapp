@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
 import { MainAPiServiceService } from './../../../../_services';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { GenerateTemplatesDialoagComponent } from './gennerate-template-dialoag/generate-template.component';
 
 @Component({

@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild, ChangeDetectorRef, AfterViewInit, OnDestroy } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { TableColumnsService, MainAPiServiceService, BehaviorService } from '../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { MatSort } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({

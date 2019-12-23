@@ -6,7 +6,7 @@ import { MainAPiServiceService, BehaviorService } from './../../../_services';
 import { Location } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-system-setting',
   templateUrl: './system-setting.component.html',

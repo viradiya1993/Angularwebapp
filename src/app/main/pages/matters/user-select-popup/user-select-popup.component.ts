@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogRef, MatDatepickerInputEvent, MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import {  MainAPiServiceService } from 'app/_services';
 import { fuseAnimations } from '@fuse/animations';
 

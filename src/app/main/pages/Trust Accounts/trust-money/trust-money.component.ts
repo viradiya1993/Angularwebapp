@@ -4,7 +4,11 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { MainAPiServiceService, TableColumnsService, BehaviorService } from 'app/_services';
 import * as $ from 'jquery';
 import { ToastrService } from 'ngx-toastr';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialogConfig, MatDialog, MatDatepickerInputEvent } from '@angular/material';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { DatePipe } from '@angular/common';
 

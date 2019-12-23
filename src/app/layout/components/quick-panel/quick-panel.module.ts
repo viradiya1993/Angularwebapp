@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
-import { MatDividerModule, MatListModule, MatSlideToggleModule, MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { FuseSharedModule } from '@fuse/shared.module';
 

@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation, Inject } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { fuseAnimations } from '@fuse/animations';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {  MainAPiServiceService} from './../../../../_services';
 import { ContactDialogComponent } from '../contact-dialog/contact-dialog.component';
 import { ToastrService } from 'ngx-toastr';
-import {MatSort} from '@angular/material';
+import { MatSort } from '@angular/material/sort';
 
 
 @Component({

@@ -4,10 +4,13 @@ import { TableColumnsService, MainAPiServiceService, BehaviorService } from 'app
 import { ToastrService } from 'ngx-toastr';
 import { fuseAnimations } from '@fuse/animations';
 import * as $ from 'jquery';
-import { MatTableDataSource, MatPaginator, MatDialogConfig, MatDialog, MatDatepickerInputEvent } from '@angular/material';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
 import { DatePipe } from '@angular/common';
-import { MatSort } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
 // import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule } from 'saturn-datepicker'
 // import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter'
 

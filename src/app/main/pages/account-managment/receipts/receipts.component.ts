@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MainAPiServiceService } from 'app/_services';
-import { MatDatepickerInputEvent } from '@angular/material';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
 
 @Component({

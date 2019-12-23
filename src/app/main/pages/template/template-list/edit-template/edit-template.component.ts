@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
 import { MainAPiServiceService } from 'app/_services';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormatVariableComponent } from './insert-with-formating/format-variable.component';
 import { NewFieldComponent } from './new-field/new-field.component';
 

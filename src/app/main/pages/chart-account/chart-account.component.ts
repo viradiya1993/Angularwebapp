@@ -1,5 +1,5 @@
 import { fuseAnimations } from '@fuse/animations';
-import { Component, OnInit, ViewEncapsulation, ViewChild, Injectable,OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, Injectable, OnDestroy } from '@angular/core';
 import { MatPaginator, MatDialog } from '@angular/material';
 import * as $ from 'jquery';
 import { FlatTreeControl } from '@angular/cdk/tree';
@@ -36,7 +36,7 @@ interface ExampleFlatNode {
   animations: fuseAnimations,
   encapsulation: ViewEncapsulation.None,
 })
-export class ChartAccountComponent implements OnInit,OnDestroy {
+export class ChartAccountComponent implements OnInit, OnDestroy {
   @ViewChild('tree') tree;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   theme_type = localStorage.getItem('theme_type');
@@ -70,7 +70,7 @@ export class ChartAccountComponent implements OnInit,OnDestroy {
 
   highlightedRows: number;
   public ChartData = { "AccountClass": 'All' }
-  filterData: { 'Search': string; 'AccountClass': any; 'UseTrust':any};
+  filterData: { 'Search': string; 'AccountClass': any; 'UseTrust': any };
   accountTypeData: any;
 
   constructor(
@@ -84,34 +84,34 @@ export class ChartAccountComponent implements OnInit,OnDestroy {
 
     this.behaviorService.TrustDuplicateModuleHandling$.subscribe(result => {
       if (result != null) {
-          this.accountTypeData=result;
+        this.accountTypeData = result;
       }
-  });
-  if(this.accountTypeData.ClickType =='WithTrust'){
-    this.filterData = { 'Search': '', "AccountClass": "All" ,'UseTrust':'Yes' }
-    if (!localStorage.getItem("TrustchartAcc_filter")) {
-      localStorage.setItem('TrustchartAcc_filter', JSON.stringify(this.filterData));
+    });
+    if (this.accountTypeData.ClickType == 'WithTrust') {
+      this.filterData = { 'Search': '', "AccountClass": "All", 'UseTrust': 'Yes' }
+      if (!localStorage.getItem("TrustchartAcc_filter")) {
+        localStorage.setItem('TrustchartAcc_filter', JSON.stringify(this.filterData));
+      } else {
+        this.filterData = JSON.parse(localStorage.getItem("TrustchartAcc_filter"))
+      }
+      this.ChartData.AccountClass = this.filterData.AccountClass;
+      //for toolbar value hideshow 
+      this.behaviorService.CommonToolbarHS({ AccountClass: this.filterData.AccountClass, ClickType: this.accountTypeData.ClickType });
+      this.loadData(this.filterData);
+
     } else {
-      this.filterData = JSON.parse(localStorage.getItem("TrustchartAcc_filter"))
+      this.filterData = { 'Search': '', "AccountClass": "All", 'UseTrust': 'No' }
+      if (!localStorage.getItem("chartAcc_filter")) {
+        localStorage.setItem('chartAcc_filter', JSON.stringify(this.filterData));
+      } else {
+        this.filterData = JSON.parse(localStorage.getItem("chartAcc_filter"))
+      }
+      this.ChartData.AccountClass = this.filterData.AccountClass;
+      //for toolbar value hideshow 
+      this.behaviorService.CommonToolbarHS({ AccountClass: this.filterData.AccountClass, ClickType: this.accountTypeData.ClickType });
+      this.loadData(this.filterData);
     }
-    this.ChartData.AccountClass = this.filterData.AccountClass;
-    //for toolbar value hideshow 
-    this.behaviorService.CommonToolbarHS({AccountClass:this.filterData.AccountClass,ClickType:this.accountTypeData.ClickType});
-    this.loadData(this.filterData);
-  
-  }else{
-    this.filterData = { 'Search': '', "AccountClass": "All",'UseTrust':'No' }
-    if (!localStorage.getItem("chartAcc_filter")) {
-      localStorage.setItem('chartAcc_filter', JSON.stringify(this.filterData));
-    } else {
-      this.filterData = JSON.parse(localStorage.getItem("chartAcc_filter"))
-    }
-    this.ChartData.AccountClass = this.filterData.AccountClass;
-    //for toolbar value hideshow 
-    this.behaviorService.CommonToolbarHS({AccountClass:this.filterData.AccountClass,ClickType:this.accountTypeData.ClickType});
-    this.loadData(this.filterData);
-  }
-  
+
 
   }
   ngOnInit() {
@@ -135,7 +135,7 @@ export class ChartAccountComponent implements OnInit,OnDestroy {
         this.treeControl.expandAll();
         if (response.DATA.ACCOUNTS[0].SUBACCOUNTS)
           this.RowClick(response.DATA.ACCOUNTS[0].SUBACCOUNTS[0]);
-          this.highlightedRows = 1;
+        this.highlightedRows = 1;
       } else if (response.MESSAGE == 'Not logged in') {
         // this.dialogRef.close(false);
       }
@@ -169,19 +169,19 @@ export class ChartAccountComponent implements OnInit,OnDestroy {
     localStorage.setItem('ChartAccountData', JSON.stringify({ "name": val.name, "class": val.class, "ACCOUNTGUID": val.ACCOUNTGUID, "ACCOUNTTYPE": val.ACCOUNTTYPE, "index": val.index, "parent": val.parent, "level": val.level }));
   }
   AccountClass(val) {
-    this.behaviorService.CommonToolbarHS({AccountClass:val,ClickType:this.accountTypeData.ClickType});
-    if(this.accountTypeData.ClickType =='WithTrust'){
+    this.behaviorService.CommonToolbarHS({ AccountClass: val, ClickType: this.accountTypeData.ClickType });
+    if (this.accountTypeData.ClickType == 'WithTrust') {
       this.filterData = JSON.parse(localStorage.getItem("TrustchartAcc_filter"));
       this.filterData.AccountClass = val;
       localStorage.setItem('TrustchartAcc_filter', JSON.stringify(this.filterData));
       this.loadData(this.filterData)
-    }else{
+    } else {
       this.filterData = JSON.parse(localStorage.getItem("chartAcc_filter"));
       this.filterData.AccountClass = val;
       localStorage.setItem('chartAcc_filter', JSON.stringify(this.filterData));
       this.loadData(this.filterData)
     }
-   
+
   }
   refreshChartACCTab() {
     this.loadData(this.filterData)

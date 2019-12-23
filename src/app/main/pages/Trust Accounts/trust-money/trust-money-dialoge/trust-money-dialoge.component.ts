@@ -12,6 +12,7 @@ import { ContactDialogComponent } from 'app/main/pages/contact/contact-dialog/co
 import { ContactSelectDialogComponent } from 'app/main/pages/contact/contact-select-dialog/contact-select-dialog.component';
 import { environment } from 'environments/environment';
 import * as $ from 'jquery';
+import { BankingDialogComponent } from 'app/main/pages/banking/banking-dialog.component';
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -68,6 +69,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
   base_url: string;
   forPDF: any;
   sendTransectionSubType: string;
+  TranClassName: any;
   constructor(private _mainAPiServiceService: MainAPiServiceService,
     private _formBuilder: FormBuilder, private toastr: ToastrService,
     public dialogRef: MatDialogRef<TrustMoneyDialogeComponent>,
@@ -76,11 +78,11 @@ export class TrustMoneyDialogeComponent implements OnInit {
     private datepipe: DatePipe,
     @Inject(MAT_DIALOG_DATA) public _data: any, ) {
 
-    this.base_url=environment.ReportUrl;
+    this.base_url = environment.ReportUrl;
     this.TrustMoneyForm = this._formBuilder.group({
-      FROMMATTER:[''],
-      TrustAccount:[''],
-      FROMMATTERGUID:[''],
+      FROMMATTER: [''],
+      TrustAccount: [''],
+      FROMMATTERGUID: [''],
       TRANSACTIONDATE: [''],
       AMOUNT: [''],
       PAYMENTTYPE: [''],
@@ -108,7 +110,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
       TENDOLLARS: [''],
       TWENTYDOLLARS: [''],
       // address
-      PAYOR:[''],
+      PAYOR: [''],
       ADDRESS1: [''],
       POSTCODE: [''],
       STATE_: [''],
@@ -120,28 +122,33 @@ export class TrustMoneyDialogeComponent implements OnInit {
       INVOICEDVALUEEXGST: [''],
       Unallocated: [''],
       Total: [''],
-      Ledger:[''],
-      BANKACCOUNTGUID:['']
+      Ledger: [''],
+      BANKACCOUNTGUID: [''],
+      BANKACCOUNTGUIDTEXT: ['']
     });
-    this.sendTransectionSubType='Normal';
+    this.TranClassName = '';
+    this.sendTransectionSubType = 'Normal';
     this.TrustMoneyForm.controls['PREPAREDBY'].setValue('Claudine Parkinson (pwd=test)');
     this.TrustMoneyForm.controls['PAYMENTTYPE'].setValue('Cheque');
     this.TrustMoneyForm.controls['CheckBox'].setValue(false);
     this.action = _data.action;
-    this.forPDF=_data.forPDF;
-  console.log(_data);
+    this.forPDF = _data.forPDF;
+    console.log(_data);
     if (this.action == "receipt") {
       $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Trust Receipt"
-      this.sendToAPI='Receipt';
+      this.TranClassName = 'Trust Money'
+      this.sendToAPI = 'Receipt';
     } else if (this.action == "withdrawal") {
+      this.TranClassName = 'Trust Money'
       $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Trust withdrawal";
-      this.sendToAPI='Withdrawal';
+      this.sendToAPI = 'Withdrawal';
     } else if (this.action == "Transfer") {
+      this.TranClassName = 'Trust Money'
       $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Trust Transfer";
-      this.sendToAPI='Transfer';
+      this.sendToAPI = 'Transfer';
       this.TrustMoneyForm.controls['PAYMENTTYPE'].setValue('Transfer');
       this.TrustMoneyData.PaymentType = "Transfer";
       this.PymentType = "Transfer";
@@ -154,15 +161,24 @@ export class TrustMoneyDialogeComponent implements OnInit {
       // this.PymentType="Office";
     } else if (this.action == "money receipt") {
       $("#Contcat_id").removeClass("menu-disabled");
+      this.TranClassName = 'Controlled Money'
+      this.sendToAPI = 'Receipt';
+      this.sendTransectionSubType = 'Normal';
       this.title = "Add Controlled Money Receipt";
+      // this.defaultCallAPI();
     } else if (this.action == "money withdrawal") {
       $("#Contcat_id").removeClass("menu-disabled");
+      this.TranClassName = 'Controlled Money'
+      this.sendTransectionSubType = 'Normal';
       this.title = "Add Controlled Money withdrawal";
+      this.sendToAPI = 'Withdrawal';
+      // this.defaultCallAPI();
     } else if (this.action == "Cancelled Cheque") {
       $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Cancelled Cheque";
-      this.sendToAPI='Receipt';
-      this.sendTransectionSubType='Cancelled Cheque';
+      this.sendToAPI = 'Receipt';
+      this.TranClassName = 'Trust Money'
+      this.sendTransectionSubType = 'Cancelled Cheque';
       $("#Contcat_id").addClass("menu-disabled");
       this.TrustMoneyForm.controls['Ledger'].setValue('Nill Values Ledger : $0.00');
       this.TrustMoneyForm.controls['PURPOSE'].setValue('Cancelled Cheque');
@@ -174,35 +190,40 @@ export class TrustMoneyDialogeComponent implements OnInit {
       this.TrustMoneyForm.controls['TRANSACTIONDATE'].disable();
 
     } else if (this.action == "Unknown Deposit") {
+      this.TranClassName = 'Trust Money'
       $("#Contcat_id").removeClass("menu-disabled");
-      this.defaultCallAPI('Receipt');
       this.PymentType = "EFT";
-      this.sendToAPI='Receipt';
+      this.sendToAPI = 'Receipt';
       this.title = "Add Unknown Deposit Receipt";
-      this.sendTransectionSubType='Unknown Deposit';
+      this.sendTransectionSubType = 'Unknown Deposit';
       this.TrustMoneyForm.controls['PAYMENTTYPE'].setValue('EFT');
-
+      this.defaultCallAPI();
     } else if (this.action == "Transfer Unknow Deposit") {
       $("#Contcat_id").removeClass("menu-disabled");
+      this.TranClassName = 'Transfer'
       this.title = "Add Unknown Deposit Transfer";
-      this.action = "Transfer";
+      this.sendToAPI = 'Transfer';
+      this.sendTransectionSubType = 'Unknown Deposit';
+      this.TrustMoneyForm.controls['PAYMENTTYPE'].disable();
       this.TrustMoneyForm.controls['PAYMENTTYPE'].setValue('Transfer');
       this.TrustMoneyData.PaymentType = "Transfer";
       this.PymentType = "Transfer";
     } else if (this.action == "Statutory Deposit") {
-      this.defaultCallAPI('Withdrawal');
-      this.sendToAPI='Withdrawal';
+      this.TranClassName = 'Trust Money'
+      this.sendToAPI = 'Withdrawal';
       this.TrustMoneyForm.controls['PURPOSE'].setValue('Statutory Deposit');
       $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Statutory Deposit";
       this.ForDetailTab = 'Statutory Deposit';
-      this.sendTransectionSubType='Statutory Deposit';
+      this.sendTransectionSubType = 'Statutory Deposit';
+      this.defaultCallAPI();
       // this.action = "withdrawal";
     } else if (this.action == "Statutory Receipt") {
-      this.defaultCallAPI('Receipt');
-      this.sendToAPI='Receipt';
+      this.TranClassName = 'Trust Money'
+      this.sendToAPI = 'Receipt';
       this.TrustMoneyForm.controls['PURPOSE'].setValue('Statutory Deposit');
-      this.sendTransectionSubType='Statutory Deposit';
+      this.sendTransectionSubType = 'Statutory Deposit';
+      this.defaultCallAPI();
       $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Statutory Receipt";
       this.ForDetailTab = 'Statutory Receipt';
@@ -212,29 +233,29 @@ export class TrustMoneyDialogeComponent implements OnInit {
       this.title = "Add Release Trust";
     }
 
-    if(this.forPDF == 'Yes'){
-      if(_data.PDFURL){
-        this.PDFURL=_data.PDFURL;
+    if (this.forPDF == 'Yes') {
+      if (_data.PDFURL) {
+        this.PDFURL = _data.PDFURL;
       }
     }
   }
   ngOnInit() {
     this.TrustMoneyForm.controls['BANKACCOUNTGUID'].setValue('');
   }
-  defaultCallAPI(val){
-    let data={
-      "TRANSACTIONCLASS" : "Trust Money",
-      "TRANSACTIONTYPE" : "Normal Item",
-      "TRANSACTIONSUBTYPE" : "Statutory Deposit",
-      "CASHBOOK" : val,
+  defaultCallAPI() {
+    let data = {
+      "TRANSACTIONCLASS": this.TranClassName,
+      "TRANSACTIONTYPE": "Normal Item",
+      "TRANSACTIONSUBTYPE": this.sendTransectionSubType,
+      "CASHBOOK": this.sendToAPI,
     }
 
-this._mainAPiServiceService.getSetData({Data:data,FormAction:'default'}, 'SetTrustTransaction').subscribe(response=>{
-console.log(response);
-this.TrustMoneyForm.controls['Ledger'].setValue(response.DATA.DEFAULTVALUES.MATTER);
- this.TrustMoneyForm.controls['MATTERGUID'].setValue(response.DATA.DEFAULTVALUES.MATTERLEDGERGUID);
-this.TrustMoneyForm.controls['BANKACCOUNTGUID'].setValue(response.DATA.DEFAULTVALUES.BANKACCOUNTGUID);
-this.TrustMoneyForm.controls['TrustAccount'].setValue(response.DATA.DEFAULTVALUES.BANKACCOUNT + '  '+ '$'+response.DATA.DEFAULTVALUES.BANKACCOUNTBALANCE );
+    this._mainAPiServiceService.getSetData({ Data: data, FormAction: 'default' }, 'SetTrustTransaction').subscribe(response => {
+      console.log(response);
+      this.TrustMoneyForm.controls['Ledger'].setValue(response.DATA.DEFAULTVALUES.MATTER);
+      this.TrustMoneyForm.controls['MATTERGUID'].setValue(response.DATA.DEFAULTVALUES.MATTERLEDGERGUID);
+      this.TrustMoneyForm.controls['BANKACCOUNTGUID'].setValue(response.DATA.DEFAULTVALUES.BANKACCOUNTGUID);
+      this.TrustMoneyForm.controls['TrustAccount'].setValue(response.DATA.DEFAULTVALUES.BANKACCOUNT + '  ' + '$' + response.DATA.DEFAULTVALUES.BANKACCOUNTBALANCE);
     });
   }
   get f() {
@@ -247,6 +268,8 @@ this.TrustMoneyForm.controls['TrustAccount'].setValue(response.DATA.DEFAULTVALUE
       this.PymentType = "EFT";
     } else if (val == "Cash") {
       this.PymentType = "Cash";
+    } else if (val == "Bank") {
+      this.PymentType = "Bank";
     }
   }
   ChkDeltabx(val) {
@@ -264,10 +287,10 @@ this.TrustMoneyForm.controls['TrustAccount'].setValue(response.DATA.DEFAULTVALUE
     const dialogRef = this.dialog.open(MatterDialogComponent, { width: '100%', disableClose: true });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if(key =='from matter'){
+        if (key == 'from matter') {
           this.TrustMoneyForm.controls['FROMMATTER'].setValue(result.MATTER);
           this.TrustMoneyForm.controls['FROMMATTERGUID'].setValue(result.MATTERGUID);
-        }else{
+        } else {
           this.TrustMoneyForm.controls['SHORTNAME'].setValue(result.MATTER);
           this.TrustMoneyForm.controls['MATTERGUID'].setValue(result.MATTERGUID);
           this.TrustMoneyForm.controls['INVOICEDVALUEEXGST'].setValue(result.INVOICEDVALUEEXGST);
@@ -288,7 +311,7 @@ this.TrustMoneyForm.controls['TrustAccount'].setValue(response.DATA.DEFAULTVALUE
   }
   choosedDateTranD(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value, 'dd/MM/yyyy');
-    this.SendDate=begin
+    this.SendDate = begin
   }
   SaveTrustMoney() {
 
@@ -297,25 +320,23 @@ this.TrustMoneyForm.controls['TrustAccount'].setValue(response.DATA.DEFAULTVALUE
     let data = {
 
 
-      TRANSACTIONDATE:  this.SendDate,
+      TRANSACTIONDATE: this.SendDate,
       AMOUNT: this.f.AMOUNT.value,
       PAYMENTTYPE: this.f.PAYMENTTYPE.value,
       PURPOSE: this.f.PURPOSE.value,
       TOMATTERGUID: this.f.MATTERGUID.value,
-      FROMMATTERGUID:this.f.FROMMATTERGUID.value,
+      FROMMATTERGUID: this.f.FROMMATTERGUID.value,
       BANKCHEQUE: this.f.BANKCHEQUE.value,
       BENEFICIARY: this.f.BENEFICIARY.value,
       // new added 
-      CASHBOOK:this.sendToAPI,
-      TRANSACTIONCLASS: "Trust Money",
+      CASHBOOK: this.sendToAPI,
+      // TRANSACTIONCLASS: "Trust Money",
+      TRANSACTIONCLASS: this.TranClassName,
       TRANSACTIONTYPE: "Normal Item",
       TRANSACTIONSUBTYPE: this.sendTransectionSubType,
 
-
-
-
       PAYORGROUP: {
-        PAYOR:this.f.PAYOR.value,
+        PAYOR: this.f.PAYOR.value,
         ADDRESS1: this.f.ADDRESS1.value,
         // ADDRESS2: '',
         SUBURB: this.f.SUBURB.value,
@@ -350,10 +371,10 @@ this.TrustMoneyForm.controls['TrustAccount'].setValue(response.DATA.DEFAULTVALUE
       // // PURPOSE: this.f.PURPOSE.value,
 
     }
-    if(this.action == "Statutory Receipt" || this.action == "Unknown Deposit"  || this.action == "Statutory   Deposit"){
+    if (this.action == "Statutory Receipt" || this.action == "Unknown Deposit" || this.action == "Statutory Deposit") {
       delete data.TOMATTERGUID;
       delete data.FROMMATTERGUID;
-      
+
     }
     this.isspiner = true;
     let finalData = { DATA: data, FormAction: 'insert', VALIDATEONLY: true }
@@ -415,14 +436,16 @@ this.TrustMoneyForm.controls['TrustAccount'].setValue(response.DATA.DEFAULTVALUE
     data.VALIDATEONLY = false;
     this._mainAPiServiceService.getSetData(data, 'SetTrustTransaction').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        if(response.DATA.PDFFILENAME != ''){
-          this.showPDFPopup ='yes'; 
-         
-          this.dialog.open(TrustMoneyDialogeComponent,{width:'100%', data: {
-            action: this.action,
-            forPDF:"Yes",
-            PDFURL:response.DATA.PDFFILENAME
-        }});
+        if (response.DATA.PDFFILENAME != '') {
+          this.showPDFPopup = 'yes';
+
+          this.dialog.open(TrustMoneyDialogeComponent, {
+            width: '100%', data: {
+              action: this.action,
+              forPDF: "Yes",
+              PDFURL: response.DATA.PDFFILENAME
+            }
+          });
         }
         this.toastr.success('save successfully');
         this.isspiner = false;
@@ -490,8 +513,26 @@ this.TrustMoneyForm.controls['TrustAccount'].setValue(response.DATA.DEFAULTVALUE
     const dialogRef = this.dialog.open(ContactSelectDialogComponent, { width: '100%', disableClose: true, data: '' });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-      this.TrustMoneyForm.controls['PAYOR'].setValue(result.CONTACTNAME);
+        this.TrustMoneyForm.controls['PAYOR'].setValue(result.CONTACTNAME);
       }
     });
   }
+  BankingDialogOpen(type: any) {
+    const dialogRef = this._matDialog.open(BankingDialogComponent, {
+      disableClose: true, width: '100%', data: { AccountType: type }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+      if (result) {
+        // if (result.AccountType == "BANK ACCOUNT") {
+        this.TrustMoneyForm.controls['BANKACCOUNTGUIDTEXT'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER);
+        this.TrustMoneyForm.controls['BANKACCOUNTGUID'].setValue(result.ACCOUNTGUID);
+        // } else {
+        //   this.generalReceiptForm.controls['INCOMEACCOUNTGUIDTEXT'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER);
+        //   this.generalReceiptForm.controls['INCOMEACCOUNTGUID'].setValue(result.ACCOUNTGUID);
+        // }
+      }
+    });
+  }
+
 }

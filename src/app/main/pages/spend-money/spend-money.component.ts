@@ -112,11 +112,11 @@ export class SpendMoneyComponent implements OnInit, OnDestroy {
     // let potData = { 'ITEMSTARTDATE': new Date() };
     const date1 = sendINCURREDSTARTDATE;
     const date2 = SensINCURREDENDDATE;
-    const date3 = new Date();
+    // const date3 = new Date();
     const diffTime = Math.abs(date2.getTime() - date1.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    const date4 = this.datepipe.transform(date2, 'dd/MM/yyyy');
-    const date5 = this.datepipe.transform(date3, 'dd/MM/yyyy');
+    // const date4 = this.datepipe.transform(date2, 'dd/MM/yyyy');
+    // const date5 = this.datepipe.transform(date3, 'dd/MM/yyyy');
 
     if (diffDays == 0) {
       this.SepndMoneyForm.controls['DayRange'].setValue("Today");

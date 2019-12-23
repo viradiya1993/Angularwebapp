@@ -11,6 +11,8 @@ export class FuseConfirmDialogComponent {
     public confirmMessage: string = "Are you sure you want to Save?";
     public confirmData: any;
     ShowHide: string;
+    ConBtn: string;
+    btnName: string;
     /**
      * Constructor
      *
@@ -21,6 +23,20 @@ export class FuseConfirmDialogComponent {
         private behaviorService: BehaviorService,
         @Inject(MAT_DIALOG_DATA) public _data: any
     ) {
+        console.log(_data);
+        if(_data == null){
+            this.ConBtn='Show';
+            this.btnName='Cancel'
+            this.confirmData = _data;
+        }else if(_data.errorData){
+            this.ConBtn='Hide';
+            this.btnName='Ok'
+            this.confirmData = _data.errorData; 
+        }else{
+            this.ConBtn='Show';
+            this.btnName='Cancel'
+            this.confirmData = _data; 
+        }
         // let item = localStorage.getItem('confEWshow');
         // if (item =='error') {
         //     this.ShowHide="Hide"
@@ -29,7 +45,7 @@ export class FuseConfirmDialogComponent {
         //     this.ShowHide=""
         // }
   
-        this.confirmData = _data;
+        
     }
 
 }

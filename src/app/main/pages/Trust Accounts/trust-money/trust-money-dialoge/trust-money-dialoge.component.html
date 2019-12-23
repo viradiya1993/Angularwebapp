@@ -35,24 +35,35 @@
                         <mat-select formControlName="PAYMENTTYPE" #value
                             (selectionChange)="PaymentTypeChange($event.value)" name="PAYMENTTYPE"
                             placeholder="Payment Type">
-                            <mat-option *ngIf="action!='Transfer'" value="Cheque">Cheque</mat-option>
-                            <mat-option *ngIf="action !='Transfer'" value="EFT">EFT</mat-option>
+                            <mat-option *ngIf="action!='Transfer' && action != 'Transfer Unknow Deposit'" value="Cheque">Cheque</mat-option>
+                            <mat-option *ngIf="action !='Transfer' && action != 'Transfer Unknow Deposit'" value="EFT">EFT</mat-option>
                             <mat-option
-                                *ngIf="action =='receipt'|| action =='Statutory Receipt'|| action =='money receipt' || action =='money withdrawal'
+                                *ngIf="action =='receipt'|| action =='Statutory Receipt'|| action =='money receipt'
                                 || action =='Unknown Deposit'"
                                 value="Cash">Cash</mat-option>
-                            <mat-option *ngIf="action =='Transfer'" value="Transfer">Transfer</mat-option>
+                            <mat-option *ngIf="action =='Transfer' || action == 'Transfer Unknow Deposit'" value="Transfer">Transfer</mat-option>
                             <mat-option *ngIf="action =='money receipt' || action =='money withdrawal'" value="Bank">
                                 Bank</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field *ngIf="action != 'Transfer'" appearance="outline" fxFlex="50" class=" pr-4">
+
+                    <mat-form-field *ngIf="action != 'Transfer'  && action != 'Transfer Unknow Deposit'" appearance="outline" fxFlex="50" class=" pr-4">
                         <mat-label>Received Form</mat-label>
                         <input formControlName="PAYOR" placeholder="Received Form" matInput>
                         <mat-icon class="matternews menu-disabled" id="Contcat_id"   matSuffix (click)='SelectContact()' fxFlex="5">
                             <img class="seticon" src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                         </mat-icon>
                     </mat-form-field>
+
+                    
+                    <mat-form-field *ngIf="action == 'Transfer Unknow Deposit'" appearance="outline" fxFlex="50" class=" pr-4">
+                            <mat-label>Form Unknown</mat-label>
+                            <input formControlName="BANKACCOUNTGUIDTEXT" placeholder="Form Unknown" matInput>
+                            <mat-icon matSuffix (click)="BankingDialogOpen('Unknown Deposit')" fxFlex="5">
+                                    <img class="seticon" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                </mat-icon>
+                        </mat-form-field>
+
 
                     <mat-form-field *ngIf="action == 'Transfer'" appearance="outline" fxFlex="50" class=" pr-4">
                             <mat-label>From Matter</mat-label>
@@ -68,8 +79,25 @@
                         <mat-label>Trust Account</mat-label>
                         <input formControlName="TrustAccount" placeholder="Trust Account" matInput>
                     </mat-form-field>
+
+                    <!-- <mat-form-field *ngIf="action == 'money receipt'" appearance="outline" fxFlex="100" class=" pr-4">
+                            <mat-label>Matter</mat-label>
+                            <input formControlName="SHORTNAME" placeholder="Matter" matInput>
+                            <mat-icon matSuffix (click)="SelectMatter('singal matter')" fxFlex="5">
+                                <img class="seticon" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                            </mat-icon>
+                        </mat-form-field> -->
+
+                        <mat-form-field *ngIf="action == 'money withdrawal' || action == 'money receipt'" appearance="outline" fxFlex="100" class=" pr-4">
+                                <mat-label>Matter</mat-label>
+                                <input formControlName="BANKACCOUNTGUIDTEXT" placeholder="Form Unknown" matInput>
+                                <mat-icon matSuffix (click)="BankingDialogOpen('Controlled Money')" fxFlex="5">
+                                        <img class="seticon" src="assets/icons/web_app/icon_matter_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+                                    </mat-icon>
+                            </mat-form-field>
                 </div>
-                <div *ngIf="action !='Cancelled Cheque' && action !='Statutory Receipt' && action !='Statutory Deposit' && action !='Unknown Deposit'" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <div *ngIf="action !='Cancelled Cheque' && action !='Statutory Receipt' && action !='Statutory Deposit' 
+                && action !='Unknown Deposit' && action !='money receipt' && action !='money withdrawal'" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-checkbox *ngIf="matterType === true" [disabled]="action =='office'" formControlName="CheckBox"
                         name="CheckBox" (change)="CheckBoxClick($event.checked)" class="pr-4">Multiple Matters
                     </mat-checkbox>
@@ -80,8 +108,9 @@
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                     <mat-tab-group mat-align-tabs="start">
                         <mat-tab *ngIf="matterType === false && action !='office' && action !='Cancelled Cheque' && action != 'Statutory Receipt' 
-                        && action !='Statutory Deposit' && action !='Unknown Deposit'" label="Single Matter">
+                        && action !='Statutory Deposit' && action !='Unknown Deposit' && action !='money receipt' && action !='money withdrawal'" label="Single Matter">
                             <div class="item_pad" fxLayout="column">
+                                
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example" fxFlex="80" class="pr-4" appearance="outline">
                                         <mat-label>Matter</mat-label>
@@ -102,6 +131,18 @@
                             </div>
                         </mat-tab>
 
+
+                        <mat-tab *ngIf="action == 'money receipt' || action =='money withdrawal'" label="General">
+                            <div class="item_pad" fxLayout="column">
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                    <mat-form-field appearance="outline" fxFlex="100" class=" pr-4">
+                                        <mat-label>Reason</mat-label>
+                                        <textarea formControlName="PURPOSE" cdkTextareaAutosize cdkAutosizeMinRows="5"
+                                            cdkAutosizeMaxRows="5" matInput></textarea>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </mat-tab>
 
 
 
@@ -267,7 +308,7 @@
 
                         <!--start  tab 2 -->
 
-                        <mat-tab *ngIf="PymentType =='Cheque'" label="Cheque Details">
+                        <mat-tab *ngIf="PymentType =='Cheque' && PymentType  !='Bank'" label="Cheque Details">
                             <div class="item_pad" fxLayout="column">
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
@@ -278,21 +319,22 @@
                                         fxFlex="50" class="pr-4">Bank Cheque </mat-checkbox>
                                 </div>
 
-                                <div *ngIf="this.f.BANKCHEQUE.value == true && action !='receipt' && action !='Statutory Receipt' && action !='Unknown Deposit'"
+                                <div *ngIf="this.f.BANKCHEQUE.value == true && action !='receipt' && action !='Statutory Receipt' 
+                                && action !='Unknown Deposit'  && action !='money receipt' "
                                     fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example pr-4" fxFlex="100" appearance="outline">
                                         <mat-label>Beneficiary</mat-label>
                                         <input formControlName="BENEFICIARY" matInput>
                                     </mat-form-field>
                                 </div>
-                                <div *ngIf="action =='receipt' || action =='Statutory Receipt' || action =='Unknown Deposit'" fxLayout="row wrap" fxLayoutAlign="start center"
+                                <div *ngIf="action =='receipt' || action =='Statutory Receipt' || action =='Unknown Deposit' || action =='money receipt'" fxLayout="row wrap" fxLayoutAlign="start center"
                                     fxFlex="1 0 auto">
                                     <mat-form-field class="example pr-4" fxFlex="100" appearance="outline">
                                         <mat-label>Account Name</mat-label>
                                         <input formControlName="ACCOUNTNAME" matInput>
                                     </mat-form-field>
                                 </div>
-                                <div *ngIf="action =='receipt' || action =='Statutory Receipt'" fxLayout="row" fxLayoutAlign="start center"
+                                <div *ngIf="action =='receipt' || action =='Statutory Receipt'  || action =='money receipt'" fxLayout="row" fxLayoutAlign="start center"
                                     fxFlex="1 0 auto">
                                     <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
                                         <mat-label>BSB</mat-label>
@@ -307,7 +349,7 @@
                         </mat-tab>
 
                         <!-- end tab 2 -->
-                        <mat-tab *ngIf="PymentType =='EFT'" label="EFT Details">
+                        <mat-tab *ngIf="PymentType =='EFT' && PymentType  !='Bank'" label="EFT Details">
                             <div class="item_pad" fxLayout="column">
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
@@ -331,7 +373,7 @@
                                 </div>
                             </div>
                         </mat-tab>
-                        <mat-tab *ngIf="PymentType =='Cash'" label="Cash">
+                        <mat-tab *ngIf="PymentType =='Cash' && PymentType  !='Bank'" label="Cash">
                             <div class="item_pad" fxLayout="column">
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
@@ -374,7 +416,7 @@
                         </mat-tab>
 
                         <!-- start tab 3 -->
-                        <mat-tab *ngIf="action != 'Transfer' && action != 'office' && action != 'Cancelled Cheque'" label="Payor Address">
+                        <mat-tab *ngIf="action != 'Transfer' && action != 'Transfer Unknow Deposit' && action != 'office' && action != 'Cancelled Cheque'" label="Payor Address">
                             <div class="item_pad" fxLayout="column">
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-form-field appearance="outline" fxFlex="100" class="pr-4">

@@ -1,9 +1,12 @@
+<button mat-raised-button color="primary" id="refreshTimeEntryTab" (click)="refreshTab();">Refresh</button>
 <div id="time_entries" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
     <div class="content" fxLayoutAlign="center">
         <div class="center p-24 more_tbl_clmn list_tbl_main" fusePerfectScrollbar>
             <div class="matter-serach-div sticky_search_div">
-                <form [formGroup]="TimeEnrtyForm" *ngIf="ActiveTab=='full-time-entries'">
-                    <mat-form-field class="example" appearance="outline" *ngIf="isShowDrop">
+                <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" [formGroup]="TimeEnrtyForm" *ngIf="ActiveTab=='full-time-entries'">
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                   
+                    <mat-form-field fxFlex="25" class="example" appearance="outline" *ngIf="isShowDrop">
                         <mat-label>DLP</mat-label>
                         <mat-select (selectionChange)="dlpChange($event.value)" formControlName="dlpdrop">
                             <mat-option value="all">All</mat-option>
@@ -11,7 +14,7 @@
                             <mat-option *ngFor="let TimerDrop of TimerDropData" value="{{TimerDrop.USERID}}">{{TimerDrop.USERID}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field class="example" appearance="outline">
+                    <mat-form-field fxFlex="25"  class="example" appearance="outline">
                         <mat-label>Uninvoiced Work</mat-label>
                         <mat-select (selectionChange)="uninvoicedWorkChange($event.value)" formControlName="uninvoicedWork">
                             <mat-option value="No">Uninvoiced Work</mat-option>
@@ -19,13 +22,48 @@
                             <mat-option value="">All Work</mat-option>
                         </mat-select>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" class="">
+                    <mat-form-field fxFlex="25"  class="example" appearance="outline">
+                        <!-- <mat-label>Last 30 days</mat-label> -->
+                        <mat-select (selectionChange)="selectDayRange($event.value)" formControlName="DayRange" placeholder="Select Date Range">
+                            <mat-option value="Today">Today</mat-option>
+                            <mat-option value="Last 7 days">Last 7 days</mat-option>
+                            <mat-option value="Last 30 days">Last 30 days</mat-option>
+                            <mat-option value="Last 90 days">Last 90 days</mat-option>
+                            <mat-option value="Date Range">Date Range</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="25"  appearance="outline" class="">
                         <mat-label>Date Range</mat-label>
-                        <input matInput placeholder="Choose a date" [satDatepicker]="picker2" formControlName="date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)">
+                        <input [disabled]="forHideShowDateRangePicker == 'hide'" matInput placeholder="Choose a date" [satDatepicker]="picker2" formControlName="date" (dateInput)="choosedDate('input', $event)" (dateChange)="choosedDate('change', $event)">
                         <sat-datepicker #picker2 [rangeMode]="true"> </sat-datepicker>
                         <sat-datepicker-toggle matSuffix [for]="picker2"></sat-datepicker-toggle>
                     </mat-form-field>
-                    <button mat-raised-button color="primary" id="refreshTimeEntryTab" (click)="refreshTab();">Refresh</button>
+                </div> 
+                
+                <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+                        <mat-form-field fxFlex="20" class="example" appearance="outline">
+                                <mat-label>Ex GST</mat-label>
+                                <input formControlName="ExGST" placeholder="Ex GST" matInput>
+                        </mat-form-field>
+                        <mat-form-field fxFlex="20" class="example" appearance="outline">
+                                <mat-label>Inc GST</mat-label>
+                                <input formControlName="IncGST" placeholder="Inc GST" matInput>
+                        </mat-form-field>
+                        <mat-form-field fxFlex="20" class="example" appearance="outline">
+                                <mat-label>Units</mat-label>
+                                <input formControlName="Units" placeholder="Units" matInput>
+                        </mat-form-field>
+                        <mat-form-field fxFlex="20" class="example" appearance="outline">
+                                <mat-label>Days</mat-label>
+                                <input formControlName="Days" placeholder="Days" matInput>
+                        </mat-form-field>
+                        <mat-form-field fxFlex="20" class="example" appearance="outline">
+                                <mat-label>Budget</mat-label>
+                                <input formControlName="Budget" placeholder="Budget" matInput>
+                        </mat-form-field>
+                </div>
+                
                 </form>
                 <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="quickTimeEntriesForm" id="quickTimeEntriesForm" [formGroup]="quickTimeEntriesForm" *ngIf="ActiveTab=='quick-time-entries'">
                     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">

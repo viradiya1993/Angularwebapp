@@ -28,8 +28,8 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
   contectTitle = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   displayedColumns: string[];
   tempColobj: any;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   datanull: null;
   isLoadingResults: boolean = false;
   contactFilter: FormGroup;

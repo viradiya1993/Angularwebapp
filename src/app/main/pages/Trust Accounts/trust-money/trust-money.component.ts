@@ -22,8 +22,8 @@ import { DatePipe } from '@angular/common';
 export class TrustMoneyComponent implements OnInit {
   @Input() errorWarningData: any;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   isLoadingResults: boolean = false;
   isDisplay: boolean = false;
   pageSize: any;

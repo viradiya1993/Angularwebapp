@@ -32,8 +32,8 @@ export class PastBankingsComponent implements OnInit {
   ColumnsObj = [];
   isDisplay: boolean = false;
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
   constructor(private dialog: MatDialog, private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService, private _formBuilder: FormBuilder, public behaviorService: BehaviorService, private TableColumnsService: TableColumnsService, ) { }
 
   ngOnInit() {

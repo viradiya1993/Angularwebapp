@@ -28,8 +28,8 @@ export class TemplateListComponent implements OnInit {
   currentMatterData: any;
   Templatedata: any = [];
   TemplateGenerateData: any = [];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   isLoadingResults: boolean;
   pageSize: any;
   abc: number;

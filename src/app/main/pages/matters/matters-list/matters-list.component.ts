@@ -30,10 +30,10 @@ export class MattersListComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   displayedColumns = [];
   ColumnsObj = [];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   //start resize
-  @ViewChild(MatTable, { read: ElementRef }) private matTableRef: ElementRef;
+  @ViewChild(MatTable,{read: ElementRef ,static: false}) private matTableRef: ElementRef;
   pressed = false;
   currentResizeIndex: number;
   startX: number;

@@ -32,8 +32,8 @@ export class DocumentRegisterComponent implements OnInit {
   DocNo = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   DocumentAllData: any = [];
   isDisplay: boolean = false;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   constructor(
     private _formBuilder: FormBuilder,
     private dialog: MatDialog,

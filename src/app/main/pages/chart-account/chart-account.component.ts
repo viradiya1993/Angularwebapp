@@ -38,8 +38,8 @@ interface ExampleFlatNode {
   encapsulation: ViewEncapsulation.None,
 })
 export class ChartAccountComponent implements OnInit, OnDestroy {
-  @ViewChild('tree') tree;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('tree',{static: false}) tree;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   isLoadingResults: boolean = false;

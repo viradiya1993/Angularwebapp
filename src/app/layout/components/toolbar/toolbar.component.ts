@@ -100,7 +100,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     AccountClassForTrustChartHD: any;
     [x: string]: any;
     appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
-    @ViewChild(TimeEntriesComponent) TimeEntrieschild: TimeEntriesComponent;
+    @ViewChild(TimeEntriesComponent,{static: false}) TimeEntrieschild: TimeEntriesComponent;
     horizontalNavbar: boolean; isTabShow: number = 1; rightNavbar: boolean; hiddenNavbar: boolean; navigation: any; selectedLanguage: any; selectedIndex: number;
     currentUser: any;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
@@ -150,7 +150,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     estimateData: any;
     journalText: any = 'View';
     journalLinktype: any;
-    @ViewChild('widgetsContent', { read: ElementRef }) public widgetsContent: ElementRef<any>;
+    @ViewChild('widgetsContent', { read: ElementRef , static: false}) public widgetsContent: ElementRef<any>;
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,

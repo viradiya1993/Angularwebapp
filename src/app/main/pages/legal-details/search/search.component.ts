@@ -30,8 +30,8 @@ export class SearchComponent implements OnInit {
   filterData: any = [];
   tempColobj: any;
   isDisplay: boolean = false;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   constructor(private _formBuilder: FormBuilder,private dialog: MatDialog, private TableColumnsService: TableColumnsService, 
     private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService) { }
   safeCustody_table;

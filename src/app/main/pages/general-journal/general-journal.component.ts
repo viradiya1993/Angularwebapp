@@ -28,8 +28,8 @@ export class GeneralJournalComponent implements OnInit, OnDestroy {
   displayedColumns: string[];
   tempColobj: any;
   accountTypeData: any;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   isLoadingResults: boolean = false;
   pageSize: any;
   dateRange: any = {};

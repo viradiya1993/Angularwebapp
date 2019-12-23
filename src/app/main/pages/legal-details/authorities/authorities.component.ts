@@ -44,8 +44,8 @@ export class AuthoritiesComponent implements OnInit {
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
   authorities_table: any = [];
   tempColobj: any;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort ,{static: false}) sort: MatSort;
   isLoadingResults: boolean = false;
   storeDataarray: any = [];
   highlightedRows: any;

@@ -26,8 +26,8 @@ export class ChronologyComponent implements OnInit {
   SearchForm: FormGroup;
   //dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   isLoadingResults: boolean = false;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   chronology_table;
   pageSize: any;
   tempColobj: any;

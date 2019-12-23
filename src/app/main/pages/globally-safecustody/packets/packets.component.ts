@@ -26,8 +26,8 @@ export class PacketsComponent implements OnInit {
   tempColobj: any;
   MainPacketsData:any = [];
   isDisplay: boolean = false;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   constructor(
     private _mainAPiServiceService: MainAPiServiceService,
     private dialog: MatDialog,

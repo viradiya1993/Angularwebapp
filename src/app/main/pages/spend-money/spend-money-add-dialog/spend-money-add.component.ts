@@ -47,7 +47,7 @@ export class SpendMoneyAddComponent implements OnInit {
   tdata: boolean;
   confirmDialogRef: any;
   expac: boolean;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   dataTableHide: string;
   sendItem: any = [];
   Main3btn: string;

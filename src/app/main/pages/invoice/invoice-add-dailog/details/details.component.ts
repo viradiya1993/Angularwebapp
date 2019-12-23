@@ -20,8 +20,8 @@ export class DetailsComponent implements OnInit {
   @Output() totalDataOut: EventEmitter<any> = new EventEmitter<any>();
   invoiceData: any = [];
   displayedColumnsTime: string[] = ['select', 'ADDITIONALTEXT', 'ITEMDATE', 'PRICE', 'GST', 'PRICEINCGST'];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   selection = new SelectionModel(true, []);
   constructor(
     private _mainAPiServiceService: MainAPiServiceService) { }

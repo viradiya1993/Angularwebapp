@@ -38,8 +38,8 @@ export class PacksDailogComponent implements OnInit, OnDestroy {
   highlightedRows: any;
   // DocumentPack = new MatTableDataSource(ELEMENT_DATA);
   confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
 
   public MainKitData: any = {
     "KITGUID": "", "KITNAME": "", "CONTEXT": "",

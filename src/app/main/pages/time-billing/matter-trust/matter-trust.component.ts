@@ -24,8 +24,8 @@ export class MatterTrustComponent implements OnInit {
   pageSize: any;
   tempColobj: any;
   isDisplay: boolean = false;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
 
   constructor(private dialog: MatDialog,
     private TableColumnsService: TableColumnsService,

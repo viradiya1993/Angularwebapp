@@ -34,8 +34,8 @@ export class EmailTempleteComponent implements OnInit {
   Title = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   displayedColumns: any = ['TYPEICON', 'NAME'];
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   highlightedRows: any;
   pageSize: any;
   constructor(

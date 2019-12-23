@@ -22,8 +22,8 @@ import { DatePipe } from '@angular/common';
   animations: fuseAnimations
 })
 export class TaskComponent implements OnInit, OnDestroy {
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
 
   @Input() errorWarningData: any;
   ColumnsObj = [];

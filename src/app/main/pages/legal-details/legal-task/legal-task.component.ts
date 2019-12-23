@@ -27,8 +27,8 @@ export class legalDetailTaskComponent implements OnInit {
   isLoadingResults: boolean = false;
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   addData: any = [];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   Task_table: any = [];
   GetUSERS: any = [];
   pageSize: any;

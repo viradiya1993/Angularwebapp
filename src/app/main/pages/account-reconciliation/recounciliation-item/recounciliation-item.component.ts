@@ -35,8 +35,8 @@ export class RecounciliationItemComponent implements OnInit {
   FirstTimeWithDrawTotalArray: any = [];
   FirstTimeDipositeTotalArray: any = [];
   AccountRecouncile: FormGroup;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   ReconciliationData: any = [];
   selection = new SelectionModel<any>(true, []);
   displayedColumns: string[];

@@ -30,8 +30,8 @@ export class UserDialogComponent implements OnInit {
   currentBudgets: any;
   pageSize: any;
   displayedColumns: string[] = ['PERIODSTART', 'TOTALBUDGETHOURS', 'TOTALBUDGETDOLLARS'];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   //END budget related variable 
   public userData: any = {
     "USERGUID": "", "USERID": "", "USERNAME": "", "USERPASSWORD": "", "FULLNAME": "", "ISACTIVE": 0,

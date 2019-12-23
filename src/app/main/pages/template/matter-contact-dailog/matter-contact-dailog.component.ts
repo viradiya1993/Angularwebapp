@@ -23,8 +23,8 @@ export class MatterContactDailogComponent implements OnInit {
   highlightedRows: any;
   currentMatterContactData: any;
   pageSize: any;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   constructor(private toastr: ToastrService,  private _mainAPiServiceService: MainAPiServiceService, ) { }
 
   ngOnInit() {

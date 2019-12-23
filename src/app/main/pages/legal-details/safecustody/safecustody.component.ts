@@ -32,8 +32,8 @@ export class SafecustodyComponent implements OnInit {
   SafeCustody: FormGroup;
   isDisplay: boolean = false;
   cuurentmatter = JSON.parse(localStorage.getItem('set_active_matters'));
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
 
   constructor(private dialog: MatDialog, private TableColumnsService: TableColumnsService,
     private _mainAPiServiceService: MainAPiServiceService,

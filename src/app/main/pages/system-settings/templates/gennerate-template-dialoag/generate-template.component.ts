@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
 export class GenerateTemplatesDialoagComponent implements OnInit {
   @Input() SettingForm: FormGroup;
   displayedColumns: any = ['TEMPLATETYPE', 'TEMPLATENAME'];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   isLoadingResults: boolean;

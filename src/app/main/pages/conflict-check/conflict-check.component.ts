@@ -25,8 +25,8 @@ export class ConflictCheckComponent implements OnInit {
   isLoadingResults: boolean = false;
   displayedColumns: string[] = ['MATTER', 'SHORTNAME', 'DATE', 'COMPLETEDDATE',
     'MATDESCCONFLICT', 'CONTACTCONFLICT', 'WIPCONFLICT', 'FILENOTECONFLICT', 'CHRONOLOGYCONFLICT', 'DETAILS'];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   highlightedRows: any;
   ConflictData: any = [];
   pageSize: any;

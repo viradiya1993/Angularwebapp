@@ -22,8 +22,8 @@ import { DatePipe } from '@angular/common';
 })
 export class MainSearchingComponent implements OnInit {
   MainSearching: FormGroup;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   isLoadingResults: boolean = false;
   addData: any = [];
   highlightedRows: any;

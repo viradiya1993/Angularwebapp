@@ -30,12 +30,12 @@ export class InvoiceDetailComponent implements OnInit {
   displayedColumnsTime: string[] = ['ITEMDATE', 'FEEEARNER', 'ADDITIONALTEXT', 'PRICE', 'GST'];
   displayedColumnsRecipt: string[] = ['RECEIPTCODE', 'RECEIPTDATE', 'Type', 'AMOUNT'];
   displayedColumnsInterest: string[] = ['INVOICECODE', 'INVOICEDATE', 'INVOICETOTAL', 'AMOUNTOUTSTANDINGEXGST', 'COMMENT'];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatPaginator) paginator1: MatPaginator;
-  @ViewChild(MatPaginator) paginator2: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatSort) sort1: MatSort;
-  @ViewChild(MatSort) sort2: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatPaginator,{static: false}) paginator1: MatPaginator;
+  @ViewChild(MatPaginator,{static: false}) paginator2: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
+  @ViewChild(MatSort,{static: false}) sort1: MatSort;
+  @ViewChild(MatSort,{static: false}) sort2: MatSort;
   isView: any;
   tabingVal: string;
   displayedColumns: any;

@@ -35,8 +35,8 @@ export class MainSafeCustodyComponent implements OnInit ,OnDestroy {
   ImgDisAb: any;
   isDisplay: boolean = false;
   filterData: { 'STATUS': any, 'MATTERGUID': any, "Matter": any, "Contactguid": any, "Contact": any, 'Search': string; };
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   constructor(private _mainAPiServiceService: MainAPiServiceService, private dialog: MatDialog,
     private TableColumnsService: TableColumnsService, private toastr: ToastrService, public behaviorService: BehaviorService, private _formBuilder: FormBuilder) { }
 

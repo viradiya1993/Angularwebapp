@@ -34,7 +34,7 @@ interface ExampleFlatNode {
   animations: fuseAnimations
 })
 export class BankingDialogComponent implements OnInit {
-  @ViewChild('tree') tree;
+  @ViewChild('tree',{static: false}) tree;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   isLoadingResults: boolean = false;

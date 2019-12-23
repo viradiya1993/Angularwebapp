@@ -18,8 +18,8 @@ import { ToastrService } from 'ngx-toastr';
 
 export class AccountComponent implements OnInit {
   @Input() SettingForm: FormGroup;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   highlightedRows: any;
   isLoadingResults: boolean = false;
   accountData: any = [];

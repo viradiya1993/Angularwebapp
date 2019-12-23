@@ -14,7 +14,7 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class MattersComponent implements OnInit, OnDestroy {
   subscription: Subscription;
-  @ViewChild(MattersListComponent) child: MattersListComponent;
+  @ViewChild(MattersListComponent,{static: false}) child: MattersListComponent;
   matterFilterForm: FormGroup;
   mattersDetail: any;
   detailHeight: any;

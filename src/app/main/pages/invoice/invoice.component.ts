@@ -36,8 +36,8 @@ export class InvoiceComponent implements OnInit {
   highlightedRows: any;
   pageSize: any;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   currentInvoiceData: any;
   lastFilter: any;
   MatterInvoicesdata;

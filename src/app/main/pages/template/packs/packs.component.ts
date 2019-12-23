@@ -44,7 +44,7 @@ interface ExampleFlatNode {
 
 export class PacksComponent implements OnInit, AfterViewInit {
   packForm: FormGroup;
-  @ViewChild('tree') tree;
+  @ViewChild('tree',{static: false}) tree;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   isLoadingResults: boolean = false;
@@ -52,7 +52,7 @@ export class PacksComponent implements OnInit, AfterViewInit {
   MainKitArray: any = [];
   pageSize: any;
   sendItemDataToPopup: any = [];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
   arrayForIndex: any = [];
   private _transformer = (node: FoodNode, level: number) => {
     return {

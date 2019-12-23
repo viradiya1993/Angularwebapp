@@ -43,8 +43,8 @@ export class TimeEntriesComponent implements OnInit {
   TimerDropData: any;
   isShowDrop: boolean;
   ActivityList: any;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   lastFilter: any;
   highlightedRows: any;
   theme_type = localStorage.getItem('theme_type');

@@ -21,8 +21,8 @@ import { MatSort } from '@angular/material/sort';
 export class ReceiptsCreditsComponent implements OnInit {
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
   displayedColumns: string[];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   ColumnsObj: any = [];
   pageSize: any;
   tempColobj: any;

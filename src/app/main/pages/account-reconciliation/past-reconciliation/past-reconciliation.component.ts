@@ -29,8 +29,8 @@ export class PastReconciliationComponent implements OnInit {
   tempColobj: any;
   ColumnsObj = [];
   PastRECData: any = [];
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
   isDisplay: boolean = false;
   constructor(private dialog: MatDialog, private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService, private _formBuilder: FormBuilder, public behaviorService: BehaviorService, private TableColumnsService: TableColumnsService, ) { }
 

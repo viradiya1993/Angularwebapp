@@ -24,8 +24,8 @@ import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/conf
 export class CreateDiaryComponent implements OnInit {
   CreateTimeEnrtyForm: FormGroup;
   isLoadingResults: boolean = false;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   tempColobj: any;
   ColumnsObj = [];
   timeStops: any = [];

@@ -25,8 +25,8 @@ export class ContactSelectDialogComponent implements OnInit {
   highlightedRows: any;
   currentMatterData: any;
   Contactdata: any = [];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   isLoadingResults: boolean;
   SelectcontactForm: FormGroup;
   pageSize: any;

@@ -52,8 +52,8 @@ export class EmailDailogComponent implements OnInit {
   CC_options: string[] = ['<i:mc-email>', '<i:f-email>', '<i:mcs-email>', '<i:s-email>'];
   BCC_options: string[] = ['<i:mc-email>', '<i:f-email>', '<i:mcs-email>', '<i:s-email>'];
   SUb_options: string[] = ['<i:mc-email>', '<i:f-email>', '<i:mcs-email>', '<i:s-email>'];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   FormAction: string;
   GUID: string;
   htmlText: any;

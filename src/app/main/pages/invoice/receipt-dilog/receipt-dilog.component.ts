@@ -56,7 +56,7 @@ export class ReceiptDilogComponent implements OnInit {
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   ShowData: any = [];
   matterData: any;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   isEdit: boolean = false;
   AMOUNT: any = 0;
   AllocationBtn: string;
@@ -114,7 +114,7 @@ export class ReceiptDilogComponent implements OnInit {
       }
     });
   }
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
   ngOnInit() {
     this.AllocationBtn = 'auto';
     this.PrepareReceiptForm = this._formBuilder.group({

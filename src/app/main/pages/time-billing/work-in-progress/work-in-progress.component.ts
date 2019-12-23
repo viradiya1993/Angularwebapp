@@ -34,8 +34,8 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
   lastFilter: any
   TimerDropData: any = [];
   WorkInProgressdata: any = [];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static: false}) sort: MatSort;
   isLoadingResults: boolean = false;
   constructor(public datepipe: DatePipe, private dialog: MatDialog, private fb: FormBuilder, private behaviorService: BehaviorService, private _mainAPiServiceService: MainAPiServiceService, private TableColumnsService: TableColumnsService, private toastr: ToastrService) {
     this.lastFilter = JSON.parse(localStorage.getItem('Work_in_progress_filter'));

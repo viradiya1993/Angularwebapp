@@ -64,6 +64,7 @@ export class BankingDialogComponent implements OnInit {
   accountTypeData: any;
   title: string;
   ChartHandlingData: { ClickType: any; UseTrust: string; PopUp: string; Lable: string; };
+  sendUserTrust: any;
 
   constructor(
     public dialog: MatDialog,
@@ -81,7 +82,12 @@ export class BankingDialogComponent implements OnInit {
    });
 
    this.title="Select Account";
-   this.loadData({AccountClass:_data.AccountType});
+   if(_data.UseTrust){
+    this.sendUserTrust = true
+   }else{
+    this.sendUserTrust=false; 
+   }
+   this.loadData({AccountClass:_data.AccountType,UseTrust:this.sendUserTrust});
 //    this.behaviorService.TrustDuplicateModuleHandling$.subscribe(result => {
 //     if (result != null) {
 //         this.accountTypeData=result;

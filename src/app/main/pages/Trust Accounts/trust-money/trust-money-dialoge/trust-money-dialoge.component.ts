@@ -517,9 +517,9 @@ export class TrustMoneyDialogeComponent implements OnInit {
       }
     });
   }
-  BankingDialogOpen(type: any) {
+  BankingDialogOpen(type: any,UseTrust) {
     const dialogRef = this._matDialog.open(BankingDialogComponent, {
-      disableClose: true, width: '100%', data: { AccountType: type }
+      disableClose: true, width: '100%', data: { AccountType: type ,UseTrust: UseTrust}
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(result)

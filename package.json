@@ -24,7 +24,7 @@
     "@angular/cdk": "8.2.3",
     "@angular/common": "8.2.14",
     "@angular/compiler": "8.2.14",
-    "@angular/core": "8.0.2",
+    "@angular/core": "8.2.14",
     "@angular/flex-layout": "8.0.0-beta.27",
     "@angular/forms": "8.2.14",
     "@angular/http": "7.2.15",
@@ -42,7 +42,7 @@
     "@ngrx/store-devtools": "8.6.0",
     "@ngx-translate/core": "11.0.1",
     "@swimlane/dragula": "3.8.0",
-    "@swimlane/ngx-charts": "13.0.0",
+    "@swimlane/ngx-charts": "12.1.0",
     "@swimlane/ngx-datatable": "16.0.2",
     "@swimlane/ngx-dnd": "8.1.0",
     "@types/prismjs": "1.16.0",
@@ -99,7 +99,7 @@
     "ts-node": "8.5.4",
     "tslib": "1.10.0",
     "tslint": "5.20.1",
-    "typescript": "3.5.3",
+    "typescript": "3.4.5",
     "webpack-bundle-analyzer": "3.6.0"
   }
 }

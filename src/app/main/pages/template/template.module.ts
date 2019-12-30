@@ -4,7 +4,6 @@ import { AuthGuard } from '../../../_guards';
 import { RouterModule } from '@angular/router';
 
 import { TemplateComponent } from './template.component';
-import { MatterContactDailogComponent } from './matter-contact-dailog/matter-contact-dailog.component';
 import { MatterDialogComponentForTemplate } from './matter-dialog/matter-dialog.component';
 import { EmailTempleteComponent } from './email-templete/email-templete.component';
 import { EmailDailogComponent } from './email-templete/email-dailog/email-dailog.component';
@@ -88,12 +87,12 @@ const routes = [
   }
 ];
 @NgModule({
-  declarations: [EditTemplateComponent,SetLetterHeadComponent,TemplateComponent, MatterContactDailogComponent, MatterDialogComponentForTemplate, TemplateListComponent
+  declarations: [EditTemplateComponent,SetLetterHeadComponent,TemplateComponent, MatterDialogComponentForTemplate, TemplateListComponent
     , EmailTempleteComponent, CopyTemplateComponent,EmailDailogComponent, PacksComponent, 
     PacksDailogComponent, NewPacksDailogComponent,FormatVariableComponent,NewFieldComponent],
   
   
-    entryComponents: [MatterContactDailogComponent, MatterDialogComponentForTemplate, 
+    entryComponents: [ MatterDialogComponentForTemplate, 
     EmailDailogComponent, PacksDailogComponent,
      NewPacksDailogComponent,SetLetterHeadComponent,EditTemplateComponent,CopyTemplateComponent,FormatVariableComponent,NewFieldComponent],
   imports: [

@@ -88,20 +88,32 @@ export class ChartAccountComponent implements OnInit, OnDestroy {
         this.accountTypeData = result;
       }
     });
+    // localStorage.removeItem('TrustchartAcc_filter');
     if (this.accountTypeData.ClickType == 'WithTrust') {
-      this.filterData = { 'Search': '', "AccountClass": "All", 'UseTrust': 'Yes' }
+      this.filterData = { 'Search': '', "AccountClass": "All", 'UseTrust': true }
       if (!localStorage.getItem("TrustchartAcc_filter")) {
         localStorage.setItem('TrustchartAcc_filter', JSON.stringify(this.filterData));
       } else {
         this.filterData = JSON.parse(localStorage.getItem("TrustchartAcc_filter"))
+        // let changeVal =JSON.parse(localStorage.getItem("TrustchartAcc_filter"))
+        if( this.filterData.UseTrust =='Yes' ||  this.filterData.UseTrust =='No') {
+          if( this.filterData.UseTrust =='Yes'){
+            this.filterData.UseTrust = true;
+          }else{
+            this.filterData.UseTrust = false;
+          }
+        }
+        this.filterData = { 'Search': this.filterData.Search, "AccountClass": this.filterData.AccountClass, 'UseTrust': this.filterData.UseTrust }
+        localStorage.setItem('TrustchartAcc_filter', JSON.stringify(this.filterData));
       }
+     
       this.ChartData.AccountClass = this.filterData.AccountClass;
       //for toolbar value hideshow 
       this.behaviorService.CommonToolbarHS({ AccountClass: this.filterData.AccountClass, ClickType: this.accountTypeData.ClickType });
       this.loadData(this.filterData);
 
     } else {
-      this.filterData = { 'Search': '', "AccountClass": "All", 'UseTrust': 'No' }
+      this.filterData = { 'Search': '', "AccountClass": "All", 'UseTrust': false }
       if (!localStorage.getItem("chartAcc_filter")) {
         localStorage.setItem('chartAcc_filter', JSON.stringify(this.filterData));
       } else {
@@ -121,6 +133,7 @@ export class ChartAccountComponent implements OnInit, OnDestroy {
   }
 
   loadData(data: any) {
+    console.log(data);
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(data, 'GetAccount').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {

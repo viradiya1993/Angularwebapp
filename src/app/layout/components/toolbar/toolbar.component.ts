@@ -1423,7 +1423,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         if (val == 'WithoutTrust') {
             this.ChartHandlingData = {
                 ClickType: val,
-                UseTrust: 'No',
+                UseTrust: false,
                 PopUp: '',
                 Lable: "CHART ACCOUNT",
             }
@@ -1432,7 +1432,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
             this.ChartHandlingData = {
                 ClickType: val,
-                UseTrust: 'Yes',
+                UseTrust: true,
                 PopUp: '',
                 Lable: "TRUST CHART ACCOUNT",
             }

@@ -131,7 +131,6 @@ export class PacketsDialogComponent implements OnInit {
       LOCATION:this.f.LOCATION.value,
       ISACTIVE: this.f.ISACTIVE.value == true ? "1" : "0",
     }
-    console.log(PostData);
     //return;
     this.isspiner = true;
     let finalData = { DATA: PostData, FormAction: this.FormAction, VALIDATEONLY: true }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -11,31 +11,31 @@ export class PaymentComponent implements OnInit {
   safeSrc: any = "";
   isLoadingResults: boolean = false;
   btntext: string = "Edit";
-  constructor(private sanitizer: DomSanitizer, private _mainAPiServiceService: MainAPiServiceService) { }
+  constructor(private sanitizer: DomSanitizer, private _mainAPiServiceService: MainAPiServiceService,
+    private behaviorService:BehaviorService) { }
   ngOnInit() {
     this.ViewPamentDetails();
   }
   ViewPamentDetails() {
-    this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({}, 'HOGetPaymentDetailURL').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.btntext = 'Edit';
         this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(response.DATA.RETURNURL);
-        this.isLoadingResults = false;
+        this.behaviorService.loadingAccountMNG('receipt');
       } else {
-        this.isLoadingResults = false;
+        this.behaviorService.loadingAccountMNG('payment');
       }
     });
   }
   editPamentDetails() {
-    this.isLoadingResults = true;
+    this.behaviorService.loadingAccountMNG(null);
     this._mainAPiServiceService.getSetData({ URLOption: 'Edit' }, 'HOGetPaymentDetailURL').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.btntext = 'View';
         this.safeSrc = this.sanitizer.bypassSecurityTrustResourceUrl(response.DATA.RETURNURL);
-        this.isLoadingResults = false;
+        this.behaviorService.loadingAccountMNG('payment');
       } else {
-        this.isLoadingResults = false;
+        this.behaviorService.loadingAccountMNG('payment');
       }
     });
   }

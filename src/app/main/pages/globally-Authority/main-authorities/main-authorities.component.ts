@@ -138,7 +138,7 @@ export class MainAuthoritiesComponent implements OnInit {
          this.showData(this.storeDataarray, 0, null);
          this.dataSource.data = this.storeDataarray;
          this.treeControl.expandAll();
-         this.editContact(this.storeDataarray[0]);
+         this.clickRow(this.storeDataarray[0]);
          this.highlightedRows = 1;
       }
       this.isLoadingResults = false;
@@ -198,7 +198,7 @@ export class MainAuthoritiesComponent implements OnInit {
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
   
   
-  editContact(val) {
+  clickRow(val) {
     this.behaviorService.MainAuthorityData(val);
 
   }

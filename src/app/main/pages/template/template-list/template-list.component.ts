@@ -69,7 +69,7 @@ export class TemplateListComponent implements OnInit {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.Templatedata = new MatTableDataSource(response.DATA.TEMPLATES);
 
-        this.editContact(response.DATA.TEMPLATES[0]);
+        this.clickRow(response.DATA.TEMPLATES[0]);
 
         this.Templatedata.paginator = this.paginator;
         this.Templatedata.sort = this.sort;
@@ -98,18 +98,10 @@ export class TemplateListComponent implements OnInit {
       this.LoadData({ SEARCH: this.f.search.value })
     }
   }
-  editContact(Row: any) {
-    if (Row.TEMPLATETYPE == "Folder") {
-      $('#clickToolbarbtn').click();
-      localStorage.setItem('handelGenerateDoc', 'Folder');
-    } else {
-      $('#clickToolbarbtn2').click();
-      localStorage.setItem('handelGenerateDoc', 'Template');
-    }
-    this.parentMessage = Row;
-    this.matterDetail.emit(Row);
+  clickRow(Row: any) {
     this.behaviorService.TemplateGenerateData(Row);
-
+    this.parentMessage = Row;
+    // this.matterDetail.emit(Row);
     this.currentMatterData = Row;
 
   }

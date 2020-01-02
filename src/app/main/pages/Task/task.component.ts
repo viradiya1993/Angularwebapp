@@ -134,6 +134,7 @@ export class TaskComponent implements OnInit, OnDestroy {
       this.TaskAllData.sort = this.sort;
       this.TaskAllData.paginator = this.paginator;
       if (res.CODE == 200 && res.STATUS == "success") {
+        this.behaviorService.TaskData(null);
         if (res.DATA.TASKS[0]) {
           this.isDisplay = false;
           this.RowClick(res.DATA.TASKS[0])

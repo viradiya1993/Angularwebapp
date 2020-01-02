@@ -37,7 +37,6 @@ export class ReportsComponent implements OnInit {
         this._mainAPiServiceService.getSetData({reportId:this.data.REPORTID}, 'ReportRequestFilter').subscribe(response => {          
           this.isLoadingResults = false;  
            if(response.CODE==200 && response.STATUS=='success'){
-             console.log(response);
              this.responseData=response.DATA; 
              this.title=response.DATA.REPORTTITLE;
              this.FEEEARNERS2Details = response.DATA.FEEEARNERS2;

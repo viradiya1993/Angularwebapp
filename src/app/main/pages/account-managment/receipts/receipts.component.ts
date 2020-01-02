@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
 
@@ -11,7 +11,8 @@ import { DatePipe } from '@angular/common';
 export class ReceiptsComponent implements OnInit {
   ReceipttData: any = [];
   isLoadingResults: boolean = false;
-  constructor(private _mainAPiServiceService: MainAPiServiceService, public datepipe: DatePipe, ) { }
+  constructor(private _mainAPiServiceService: MainAPiServiceService, public datepipe: DatePipe,
+    private behaviorService:BehaviorService ) { }
 
   ngOnInit() {
     this.loadData({});
@@ -22,13 +23,12 @@ export class ReceiptsComponent implements OnInit {
     this.loadData({ ITEMDATESTART: begin, ITEMDATEEND: end });
   }
   loadData(filterData: any) {
-    this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(filterData, 'HOGetReceipts').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.ReceipttData = response.DATA.RECEIPTS;
-        this.isLoadingResults = false;
+        this.behaviorService.loadingAccountMNG('receipt');
       } else {
-        this.isLoadingResults = false;
+        this.behaviorService.loadingAccountMNG('receipt');
       }
     });
   }

@@ -40,7 +40,12 @@ export class ReceiptsCreditsComponent implements OnInit {
   ReceiptsCreditsdata:any=[];
   ngOnInit() {
     $('content').addClass('inner-scroll');
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 220)) + 'px');
+    // this.behaviorService.resizeTableForAllViewForSub();
+    // const behaviorService = this.behaviorService;
+    // $(window).resize(function () {
+    //   behaviorService.resizeTableForAllViewForSub();
+    // });
     this.getTableFilter();
     this.LoadData();
   }
@@ -51,6 +56,7 @@ export class ReceiptsCreditsComponent implements OnInit {
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
     this._mainAPiServiceService.getSetData(potData, 'GetMatterReceipts').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
+        this.behaviorService.ReceiptData(null);
         if (res.DATA.RECEIPTS[0]) {
           this.isDisplay = false;
           this.selectId(res.DATA.RECEIPTS[0]);

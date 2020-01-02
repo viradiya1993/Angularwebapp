@@ -102,10 +102,15 @@ export class PacksComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit() {
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 50)) + 'px');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 10)) + 'px');
     this.packForm = this._formBuilder.group({
       Filter: [],
       search: []
+    });
+        this.behaviorService.resizeTableForAllView();
+    const behaviorService = this.behaviorService;
+    $(window).resize(function () {
+      behaviorService.resizeTableForAllView();
     });
     // this.loadData();
   }

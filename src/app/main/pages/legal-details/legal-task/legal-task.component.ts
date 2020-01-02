@@ -45,7 +45,7 @@ export class legalDetailTaskComponent implements OnInit {
 
   ngOnInit() {
     $('content').addClass('inner-scroll');
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 30)) + 'px');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 300)) + 'px');
     this.getTableFilter();
 
     this.getUserdata();
@@ -93,6 +93,7 @@ export class legalDetailTaskComponent implements OnInit {
         this.Task_table = new MatTableDataSource(response.DATA.TASKS);
         this.Task_table.paginator = this.paginator;
         this.Task_table.sort = this.sort;
+        this.behaviorService.TaskData(null);
         if (response.DATA.TASKS[0]) {
           this.isDisplay = false;
           this.behaviorService.TaskData(response.DATA.TASKS[0]);

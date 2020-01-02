@@ -35,9 +35,9 @@ export class SystemSettingComponent implements OnInit {
     public router: Router, private route: ActivatedRoute, private _formBuilder: FormBuilder, public behaviorService: BehaviorService) {
     //this.nameFunction();
     this.nameFunction();
+    this.loading_fun();
     this.behaviorService.SysytemAccountData$.subscribe(result => {
       if (result) {
-        
         this.accountDialoge = result;
       }
     });
@@ -126,11 +126,11 @@ export class SystemSettingComponent implements OnInit {
     this.loadData();
   }
   loadData() {
-    this.isLoadingResults = true;
+    // this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.getVal(response);
-        this.isLoadingResults = false;
+        // this.isLoadingResults = false;
       }
 
     }, error => {
@@ -259,7 +259,16 @@ export class SystemSettingComponent implements OnInit {
       this.clickedBtn = "account";
     }
   }
-  nameClick() {
+  loading_fun(){
+    this.isLoadingResults = true;
+    this.behaviorService.loadingSystemSetting(null);
+    this.behaviorService.loadingSystemSetting$.subscribe(result=>{
+      if(result){
+        this.isLoadingResults = false;
+      }
+    })
+  }
+  nameClick() {    
     this.location.replaceState("/system-setting/name");
     this.clickedBtn = "name";
     this.ForDataBind = "Name";
@@ -407,7 +416,6 @@ export class SystemSettingComponent implements OnInit {
     });
     data['ACCOUNTSGROUP'] = tempArrayAccountGroup;
     // data.ACCOUNTSGROUP.push(this.SetAccountArray)
-    console.log(this.abc);
     let data1 = { FormAction: "update", VALIDATEONLY: true, Data: data }
     this._mainAPiServiceService.getSetData(data1, 'SetSystem').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {

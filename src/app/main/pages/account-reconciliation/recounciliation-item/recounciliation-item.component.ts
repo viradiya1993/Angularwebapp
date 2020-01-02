@@ -107,7 +107,6 @@ export class RecounciliationItemComponent implements OnInit {
   }
 
   commonSendData() {
-    console.log(this.selection.selected);
     this.selection.selected.forEach(element => {
           element.TAGGED=1
       });

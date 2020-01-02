@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
+import { CommonModule } from '@angular/common';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -63,7 +63,7 @@ const routes = [
   ],
   imports: [
     RouterModule.forChild(routes),
-
+    CommonModule,
     MatButtonModule,
     MatNativeDateModule,
     MatPaginatorModule,

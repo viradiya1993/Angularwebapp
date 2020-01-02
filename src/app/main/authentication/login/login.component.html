@@ -34,7 +34,7 @@
                 <mat-form-field appearance="outline">
                     <mat-label>Email</mat-label>
                     <!-- class="inputField" (focusout)="abc($event)" tabindex="1" -->
-                    <input  name="email" id="email" matInput formControlName="email">
+                    <input (focus)= "onSpecificfocus($event)"  name="email" id="test" matInput formControlName="email">
                     <mat-icon matSuffix class="secondary-text">mail</mat-icon>
                     <mat-error *ngIf="loginForm.get('email').hasError('required')">
                         Email is required

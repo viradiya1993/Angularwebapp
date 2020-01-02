@@ -130,7 +130,6 @@ export class SpendMoneyComponent implements OnInit, OnDestroy {
     } else if (diffDays == 90) {
       this.SepndMoneyForm.controls['DayRange'].setValue("Last 90 days");
     } else {
-      console.log("6 month")
       this.forHideShowDateRangePicker = "show";
       this.SepndMoneyForm.controls['DayRange'].setValue("Date Range");
     }
@@ -165,6 +164,7 @@ export class SpendMoneyComponent implements OnInit, OnDestroy {
         this.Spendmoneydata = new MatTableDataSource(response.DATA.EXPENDITURES);
         this.Spendmoneydata.paginator = this.paginator;
         this.Spendmoneydata.sort = this.sort;
+        this.behaviorService.SpendMoneyData(null);
         if (response.DATA.EXPENDITURES[0]) {
           this.isDisplay = false;
           this.behaviorService.SpendMoneyData(response.DATA.EXPENDITURES[0]);

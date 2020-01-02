@@ -35,10 +35,17 @@ export class EstimateComponent implements OnInit {
     private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService,public behaviorService: BehaviorService) { }
   Estimatedata;
   ngOnInit() {
+    $('content').addClass('inner-scroll');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 220)) + 'px');
+
     this.getTableFilter();
     this.loadData();
-    $('content').addClass('inner-scroll');
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 150)) + 'px');
+    // this.behaviorService.resizeTableForAllViewForSub();
+    // const behaviorService = this.behaviorService;
+    // $(window).resize(function () {
+    //   behaviorService.resizeTableForAllViewForSub();
+    // });
+
     this.loadData();
   }
   refreshEstimateTab() {
@@ -49,6 +56,7 @@ export class EstimateComponent implements OnInit {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(potData, 'GetMatterEstimateItem').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
+        this.behaviorService.estimatelegalData(null);
         if (res.DATA.ESTIMATEITEMS[0]) {
           this.isDisplay = false;
           this.RowClick(res.DATA.ESTIMATEITEMS[0]);

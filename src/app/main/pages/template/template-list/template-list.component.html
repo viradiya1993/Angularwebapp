@@ -29,7 +29,7 @@
                                 <td mat-cell *matCellDef="let row"> {{row.TEMPLATENAME }} </td>
                             </ng-container>
                             <tr mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                            <tr [style.background]="highlightedRows == row.TEMPLATENAME ? selectedColore : ''" [ngClass]="highlightedRows == row.TEMPLATENAME ? 'row-text-colore' : ''" highlightedRows=row.TEMPLATENAME mat-row *matRowDef="let row; columns: displayedColumns;" (click)="editContact(row);highlightedRows = row.TEMPLATENAME "
+                            <tr [style.background]="highlightedRows == row.TEMPLATENAME ? selectedColore : ''" [ngClass]="highlightedRows == row.TEMPLATENAME ? 'row-text-colore' : ''" highlightedRows=row.TEMPLATENAME mat-row *matRowDef="let row; columns: displayedColumns;" (click)="clickRow(row);highlightedRows = row.TEMPLATENAME "
                                 (dblclick)='selectMatter(row)' matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                             </tr>
                         </table>

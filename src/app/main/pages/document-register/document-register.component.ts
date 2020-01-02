@@ -81,6 +81,7 @@ export class DocumentRegisterComponent implements OnInit {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({}, 'GetDocument').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
+        this.behaviorService.DocumentRegisterData(null);
         if (res.DATA.DOCUMENTS[0]) {
           this.RowClick(res.DATA.DOCUMENTS[0]);
           this.isDisplay = false;

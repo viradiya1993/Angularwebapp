@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
-import { MainAPiServiceService } from './../../../../_services';
+import { MainAPiServiceService, BehaviorService } from './../../../../_services';
 
 
 @Component({
@@ -16,13 +16,15 @@ export class TrustComponent implements OnInit {
   @Input() SettingForm: FormGroup;
 
   getDropDownValue: any=[];
-  constructor(private _mainAPiServiceService:MainAPiServiceService) { }
+  constructor(private _mainAPiServiceService:MainAPiServiceService,
+    private behaviorService:BehaviorService) { }
 
   ngOnInit() {
    
     this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response=>{
 
       this.getDropDownValue=response.DATA.LISTS;
+      this.behaviorService.loadingSystemSetting('templete');
     
       })
        

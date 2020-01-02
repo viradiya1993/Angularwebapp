@@ -23,7 +23,6 @@ export class FuseConfirmDialogComponent {
         private behaviorService: BehaviorService,
         @Inject(MAT_DIALOG_DATA) public _data: any
     ) {
-        console.log(_data);
         if(_data == null){
             this.ConBtn='Show';
             this.btnName='Cancel'

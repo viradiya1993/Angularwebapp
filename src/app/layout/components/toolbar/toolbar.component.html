@@ -16,7 +16,7 @@
                     <img class="logo-icon" src="assets/images/logos/silq-logo.svg">
                 </div>
             </div>
-            <mat-tab-group [selectedIndex]="selectedIndex">
+            <mat-tab-group fxLayout="column" [selectedIndex]="selectedIndex">
                 <!-- matters tab start -->
                 <mat-tab label="MATTERS" *ngIf="isTabShow===1">
                     <section class="ribbon-container matter_tab_main" [style.width]="detailwidth">
@@ -37,9 +37,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[1]?.Edit==0 || isMatterData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button (click)="matterpopup('edit')"
-                                            [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
+                                            [ngClass]="(appPermissions[1]?.Edit==0 || isMatterData =='empty') ? 'disabled-click large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_matter_edit_d.ico" alt=""
@@ -52,9 +52,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[1]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[1]?.Delete==0 || isMatterData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button (click)="DeleteNewmatterpopup()"
-                                            [ngClass]="appPermissions[1]?.Delete==0 ? 'disabled-click large-button' : 'large-button'">
+                                            [ngClass]="(appPermissions[1]?.Delete==0 || isMatterData =='empty') ? 'disabled-click large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_matter_delete_d.ico" alt=""
@@ -67,9 +67,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[1]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[1]?.Create==0 || isMatterData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button (click)="matterpopup('duplicate')"
-                                            [ngClass]="appPermissions[1]?.Create==0 ? 'disabled-click large-button' : 'large-button'">
+                                            [ngClass]="(appPermissions[1]?.Create==0 || isMatterData =='empty') ? 'disabled-click large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_duplicate_d.ico" alt=""
@@ -85,8 +85,8 @@
                                 </section>
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab details_tab">
-                                    <section class="ribbon-section">
-                                        <button mat-button class="large-button" (click)="setTab($event)"
+                                    <section  [ngClass]="isMatterData =='empty' ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" class="ribbon-section">
+                                        <button [ngClass]="isMatterData =='empty' ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" mat-button class="large-button" (click)="setTab($event)"
                                             [routerLink]="'/time-billing'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -99,8 +99,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section class="ribbon-section">
-                                        <button mat-button class="large-button" (click)="setTab($event)"
+                                    <section [ngClass]="isMatterData =='empty' ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" class="ribbon-section">
+                                        <button [ngClass]="isMatterData =='empty' ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" mat-button class="large-button" (click)="setTab($event)"
                                             [routerLink]="'/legal-details'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -114,9 +114,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[6]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[6]?.Access==0 ||  isMatterData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[6]?.Access==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[6]?.Access==0 ||  isMatterData =='empty')? 'disabled-click large-button' : 'large-button'"
                                             (click)="setTab($event)" [routerLink]="'/document-register'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -130,9 +130,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[5]?.Access==0 || isMatterData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[5]?.Access==0 || isMatterData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="isMatterClick()" (click)="setTab($event)"
                                             [routerLink]="'/create-document/matter-template'">
                                             <section class="large-button-container">
@@ -170,7 +170,7 @@
                                         <mat-nav-list>
                                             <a mat-list-item *ngIf="appPermissions[2]"
                                                 (click)="addNewTimeEntryNew('TRUE')"
-                                                [ngClass]="appPermissions[2]['Create WIP']==0 ? 'disabled-click-cursor' : ''">
+                                                [ngClass]="(appPermissions[2]['Create WIP']==0  || isMatterData =='empty') ? 'disabled-click-cursor' : ''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_time_cost_d.ico" alt=""
                                                         matTooltip="Twitter" matTooltipPosition="above">
@@ -178,7 +178,7 @@
                                                 <span>New Time Entry</span>
                                             </a>
                                             <a mat-list-item *ngIf="appPermissions[2]" (click)="addTimerForMatter()"
-                                                [ngClass]="appPermissions[2]['Create WIP']==0 ? 'disabled-click-cursor' : ''">
+                                                [ngClass]="(appPermissions[2]['Create WIP']==0  || isMatterData =='empty')? 'disabled-click-cursor' : ''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_time_cost_d.ico" alt=""
                                                         matTooltip="Twitter" matTooltipPosition="above">
@@ -186,7 +186,7 @@
                                                 <span>New Timer</span>
                                             </a>
                                             <a mat-list-item (click)="FileNotePopup('new')"
-                                                [ngClass]="appPermissions[13]?.Create==0 ? 'disabled-click-cursor' : ''">
+                                                [ngClass]="(appPermissions[13]?.Create==0  || isMatterData =='empty')? 'disabled-click-cursor' : ''">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_filesnotes_new_d.ico" alt=""
                                                         matTooltip="Twitter" matTooltipPosition="above">
@@ -198,7 +198,7 @@
                                     <section class="ribbon-section">
                                         <mat-nav-list>
                                             <a mat-list-item
-                                                [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click-cursor' : ''"
+                                                [ngClass]="(appPermissions[3]?.Edit==0 || isMatterData =='empty') ? 'disabled-click-cursor' : ''"
                                                 (click)="ContactsDialog('matter_contect')">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_client_d.ico" alt=""
@@ -207,7 +207,7 @@
                                                 <span>Client Details</span>
                                             </a>
                                             <a mat-list-item
-                                                [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click-cursor' : ''"
+                                                [ngClass]="(appPermissions[3]?.Edit==0 || isMatterData =='empty') ? 'disabled-click-cursor' : ''"
                                                 (click)="openCorresDialog()">
                                                 <mat-icon>
                                                     <mat-icon>
@@ -219,7 +219,7 @@
                                             </a>
 
                                             <a mat-list-item
-                                                [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click-cursor' : ''"
+                                                [ngClass]="(appPermissions[3]?.Edit==0 || isMatterData =='empty') ? 'disabled-click-cursor' : ''"
                                                 (click)="createInstantInvoice()">
                                                 <mat-icon>
                                                     <mat-icon>
@@ -263,9 +263,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[3]?.Edit==0 || isContactData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[3]?.Edit==0 || isContactData =='empty')? 'disabled-click large-button' : 'large-button'"
                                             (click)="ContactsDialog('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -279,9 +279,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[3]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[3]?.Delete==0 || isContactData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[3]?.Delete==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[3]?.Delete==0 || isContactData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="deleteContact()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -295,9 +295,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[3]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[3]?.Create==0 || isContactData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[3]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[3]?.Create==0 || isContactData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="ContactsDialog('duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -315,9 +315,9 @@
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab">
                                     <section
-                                        [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[5]?.Access==0 || isContactData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[5]?.Access==0 || isContactData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="setTab($event)" [routerLink]="'/create-document/contact-template'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -429,7 +429,6 @@
                                     </section>
                                     <div class="light_label_txt">View</div>
                                 </section>
-                                <!-- //for 2nd  -->
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab" *ngIf="activeSubMenu=='receipts-credits'">
                                     <section
@@ -449,9 +448,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[8]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[8]?.Edit==0 || isReceiptData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[8]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[8]?.Edit==0 || isReceiptData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="ViewReceiptForTimeBilling()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -465,9 +464,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[8]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[8]?.Delete==0 || isReceiptData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[8]?.Delete==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[8]?.Delete==0 || isReceiptData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="deleteReceiceMoany()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -482,8 +481,6 @@
                                     </section>
                                     <div class="light_label_txt">Action</div>
                                 </section>
-                                <mat-divider vertical></mat-divider>
-                                <!--estimate section start-->
                                 <section class="group-section-tab details_tab" *ngIf="activeSubMenu =='estimate'">
                                     <section
                                         [ngClass]="appPermissions[4]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
@@ -502,9 +499,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[4]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[4]?.Edit==0 || isEstimateData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[4]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[4]?.Edit==0 || isEstimateData =='empty')? 'disabled-click large-button' : 'large-button'"
                                             (click)="addNewEstimate('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -518,9 +515,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[4]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[4]?.Delete==0  || isEstimateData =='empty')? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[4]?.Delete==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[4]?.Delete==0  || isEstimateData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="deleteEstimate()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -534,9 +531,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[4]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[4]?.Create==0 || isEstimateData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[4]?.Create==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[4]?.Create==0 || isEstimateData =='empty')? 'disabled-click large-button' : 'large-button'"
                                             (click)="addNewEstimate('duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -551,8 +548,6 @@
                                     </section>
                                     <div class="light_label_txt">Action</div>
                                 </section>
-                                <!--estimate section end-->
-                                <!-- time entry section -->
                                 <section class="group-section-tab details_tab"
                                     *ngIf="activeSubMenu =='work-in-progress' && isInvoice != 'invoice'">
                                     <section
@@ -573,9 +568,9 @@
                                     </section>
                                     <!-- (click)="spendmoneypopup('edit')"  (click)="addNewTimeEntry('Edit')" -->
                                     <section
-                                        [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[2]?.Edit==0 || isWIPData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[2]?.Edit==0 || isWIPData == 'empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="EditTimeEntryFromWIP()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -589,9 +584,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[2]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[2]?.Delete==0 || isWIPData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[2]?.Delete==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[2]?.Delete==0 || isWIPData == 'empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="deleteTimeEntry()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -621,9 +616,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[2]?.Edit==0 || isWIPData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[2]?.Edit==0 || isWIPData == 'empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="ResumeTimePopup('startTimer','')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -685,9 +680,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[2]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[2]?.Create==0 || isWIPData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[2]?.Create==0 ? 'large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[2]?.Create==0 || isWIPData == 'empty')? 'disabled-click large-button' : 'large-button'"
                                             (click)="addNewTimeEntry('Duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -702,8 +697,6 @@
                                     </section>
                                     <div class="light_label_txt">Action</div>
                                 </section>
-                                <!-- end time entry section  -->
-                                <!-- strt invoice add section  -->
                                 <section class="group-section-tab details_tab" *ngIf="isInvoice == 'invoice'">
                                     <section
                                         [ngClass]="appPermissions[7]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
@@ -722,9 +715,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[7]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[7]?.Edit==0 || isWIPData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[7]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[7]?.Edit==0 || isWIPData == 'empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="addNewTimeEntry('Edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -755,8 +748,6 @@
                                     </section>
                                     <div class="light_label_txt">Action</div>
                                 </section>
-                                <!-- end invoice add section  -->
-                                <!-- start tag section  -->
                                 <mat-divider vertical *ngIf="activeSubMenu =='work-in-progress'"></mat-divider>
                                 <section class="group-section-tab details_tab">
                                     <section
@@ -796,16 +787,12 @@
                                     <div class="light_label_txt" *ngIf="activeSubMenu =='work-in-progress'">Tagging
                                     </div>
                                 </section>
-                                <!-- end tag section  -->
-                                <mat-divider vertical></mat-divider>
-                                <!-- start extra section  -->
-                                <!-- start tag section  -->
                                 <mat-divider vertical *ngIf="activeSubMenu =='work-in-progress'"></mat-divider>
                                 <section class="group-section-tab details_tab">
                                     <section class="ribbon-section">
                                         <mat-nav-list>
                                             <a mat-list-item
-                                                [ngClass]="appPermissions[7]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'"
+                                                [ngClass]="(appPermissions[7]?.Access==0 || isWIPData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'"
                                                 *ngIf="isInvoice != 'invoice' && activeSubMenu =='work-in-progress'"
                                                 (click)="ReCalcTimeEntriClick()">
                                                 <mat-icon>
@@ -818,15 +805,11 @@
                                     </section>
                                     <div class="light_label_txt" *ngIf="activeSubMenu =='work-in-progress'">Extras</div>
                                 </section>
-                                <!-- end tag section  -->
-                                <mat-divider vertical></mat-divider>
-                                <!-- end extra section  -->
-
                                 <section class="group-section-tab action_tab" *ngIf="activeSubMenu=='matter-invoices'">
                                     <section
-                                        [ngClass]="appPermissions[7]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[7]?.Access==0 || isMatterInvoiceData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[7]?.Access==0 ? 'large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[7]?.Access==0 || isMatterInvoiceData == 'empty') ? 'disabled-click-cursor large-button' : 'large-button'"
                                             (click)="InvoiceDetail('isTime');">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -840,9 +823,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[7]?.Delete==0 || isMatterInvoiceData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[7]?.Delete==0 ? 'large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[7]?.Delete==0 || isMatterInvoiceData == 'empty')? 'disabled-click-cursor large-button' : 'large-button'"
                                             (click)="deleteInvoice('isTime');">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -889,13 +872,13 @@
                                     </section>
                                     <div class="light_label_txt">Action</div>
                                 </section>
-                                <mat-divider vertical></mat-divider>
+                                <mat-divider *ngIf="activeSubMenu=='matter-invoices'"  vertical></mat-divider>
                                 <section *ngIf="activeSubMenu=='matter-invoices'" class="group-section-tab action_tab">
                                     <section
-                                        [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[5]?.Access==0 || isMatterInvoiceData == 'empty')  ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button [disabled]="ShowGenerateInvoice =='no'" (click)="GenerateInvoice()"
                                             mat-button
-                                            [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
+                                            [ngClass]="(appPermissions[5]?.Access==0 || isMatterInvoiceData == 'empty')  ? 'disabled-click large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_print_d.ico" alt=""
@@ -908,9 +891,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[5]?.Access==0 || isMatterInvoiceData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[5]?.Access==0 || isMatterInvoiceData == 'empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="setTab($event)" [routerLink]="'/create-document/invoice-template'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -925,12 +908,12 @@
                                     </section>
                                     <div class="light_label_txt">Details</div>
                                 </section>
-                                <mat-divider vertical></mat-divider>
+                                <mat-divider *ngIf="activeSubMenu=='matter-invoices'" vertical></mat-divider>
                                 <section *ngIf="activeSubMenu=='matter-invoices'" class="group-section-tab action_tab">
                                     <section
-                                        [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[5]?.Access==0 || isMatterInvoiceData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button (click)="InvoiceWriteoff()" mat-button
-                                            [ngClass]="appPermissions[5]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
+                                            [ngClass]="(appPermissions[5]?.Access==0 || isMatterInvoiceData == 'empty') ? 'disabled-click large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_invoice_delete_d.ico" alt=""
@@ -944,13 +927,13 @@
                                     </section>
                                     <div class="light_label_txt">Extras</div>
                                 </section>
-                                <mat-divider vertical></mat-divider>
+                                <mat-divider *ngIf="activeSubMenu=='matter-invoices'" vertical></mat-divider>
                                 <section *ngIf="activeSubMenu=='receipts-credits'" class="group-section-tab action_tab">
                                     <section
-                                        [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[5]?.Access==0 || isReceiptData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button [disabled]="DisabledReceiptTool=='disabled'" (click)="GenerateReceipt()"
                                             mat-button
-                                            [ngClass]="appPermissions[5]?.Access==0 ?  'disabled-click large-button' : 'large-button'">
+                                            [ngClass]="(appPermissions[5]?.Access==0 || isReceiptData =='empty') ?  'disabled-click large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_print_d.ico" alt=""
@@ -963,9 +946,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[5]?.Access==0 || isReceiptData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[5]?.Access==0 || isReceiptData =='empty')  ? 'disabled-click large-button' : 'large-button'"
                                             (click)="setTab($event)" [routerLink]="'/create-document'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1137,12 +1120,12 @@
                                     </section>
                                     <div class="light_label_txt">Action</div>
                                 </section>
-                                <mat-divider vertical></mat-divider>
+                                <!-- <mat-divider vertical></mat-divider> -->
                                 <section class="group-section-tab details_tab" *ngIf="activeSubMenu ==='safe-custody'">
                                     <section
-                                        [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[1]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click large-button' : 'large-button'"
                                             (click)="OpenNewSafeCustody('newlegal')" (click)="setTab($event)">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1155,8 +1138,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section class="ribbon-section" disabled>
-                                        <button mat-button class="large-button"
+                                    <section [ngClass]="(appPermissions[14]?.Edit==0 || isSafeCustody =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button  [ngClass]="(appPermissions[14]?.Edit==0 || isSafeCustody =='empty')  ? 'disabled-click large-button' : 'large-button'"
                                             (click)="OpenNewSafeCustody('editlegal')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1168,7 +1151,9 @@
                                                 </div>
                                             </section>
                                         </button>
-                                        <button mat-button class="large-button" (click)="DeleteSafeCustody()">
+                                    </section>
+                                         <section [ngClass]="(appPermissions[14]?.Delete==0 || isSafeCustody =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="(appPermissions[14]?.Delete==0 || isSafeCustody =='empty')  ? 'disabled-click large-button' : 'large-button'"(click)="DeleteSafeCustody()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img class=""
@@ -1184,14 +1169,12 @@
 
                                     <div class="light_label_txt">Action</div>
                                 </section>
-
-                                <!--  2 start -->
-                                <mat-divider vertical></mat-divider>
+                                <!-- <mat-divider vertical></mat-divider> -->
                                 <section class="group-section-tab details_tab" *ngIf="activeSubMenu ==='file-notes'">
                                     <section
-                                        [ngClass]="appPermissions[13]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="appPermissions[13]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[13]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="appPermissions[13]?.Create==0 ? 'disabled-click large-button' : 'large-button'"
                                             (click)="FileNotePopup('new')" (click)="setTab($event)">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1205,9 +1188,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[13]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[13]?.Edit==0 || isFileNoteData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[13]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[13]?.Edit==0 || isFileNoteData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="FileNotePopup('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1222,9 +1205,9 @@
 
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[13]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[13]?.Delete==0 || isFileNoteData =='empty')? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button
-                                            [ngClass]="appPermissions[13]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[13]?.Delete==0 || isFileNoteData =='empty')? 'disabled-click large-button' : 'large-button'"
                                             (click)="DeleteFileNotes()" mat-button class="large-button">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1240,9 +1223,9 @@
                                     </section>
 
                                     <section
-                                        [ngClass]="appPermissions[13]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[13]?.Create==0 || isFileNoteData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button
-                                            [ngClass]="appPermissions[13]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[13]?.Create==0 || isFileNoteData =='empty')  ? 'disabled-click large-button' : 'large-button'"
                                             (click)="FileNotePopup('duplicate')" mat-button class="large-button">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1258,9 +1241,7 @@
 
                                     <div class="light_label_txt">Action</div>
                                 </section>
-                                <!--  2 end  -->
-                                <mat-divider vertical></mat-divider>
-
+                                <!-- <mat-divider vertical></mat-divider> -->
                                 <section class="group-section-tab details_tab"
                                     *ngIf="activeSubMenu ==='legal-detail-task'">
                                     <section
@@ -1280,9 +1261,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[18]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[18]?.Edit==0 || isTaskData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[18]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[18]?.Edit==0 || isTaskData =='empty')  ? 'disabled-click large-button' : 'large-button'"
                                             (click)="TaskDialoge('edit legal')" (click)="setTab($event)">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1296,9 +1277,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[18]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[18]?.Delete==0 || isTaskData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[18]?.Delete==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[18]?.Delete==0 || isTaskData =='empty')? 'disabled-click large-button' : 'large-button'"
                                             (click)="deleteTask()" (click)="setTab($event)">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1312,9 +1293,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[18]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[18]?.Delete==0 || isTaskData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[18]?.Create==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[18]?.Delete==0 || isTaskData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="TaskDialoge('copy legal')" (click)="setTab($event)">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1346,8 +1327,7 @@
 
                                     <div class="light_label_txt">Action</div>
                                 </section>
-                                <mat-divider vertical></mat-divider>
-
+                                <!-- <mat-divider vertical></mat-divider> -->
                                 <section class="group-section-tab details_tab" *ngIf="activeSubMenu ==='authority'">
                                     <section
                                         [ngClass]="appPermissions[12]?.Acess==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
@@ -1383,7 +1363,7 @@
                                     </section>
                                     <div class="light_label_txt">Details</div>
                                 </section>
-                                <mat-divider vertical></mat-divider>
+                                <mat-divider *ngIf="activeSubMenu ==='authority'" vertical></mat-divider>
                                 <section class="group-section-tab details_tab" *ngIf="activeSubMenu ==='authority'">
                                     <section
                                         [ngClass]="appPermissions[12]?.Acess==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
@@ -1489,10 +1469,7 @@
 
                                     <div class="light_label_txt">Details</div>
                                 </section>
-                                <mat-divider vertical></mat-divider>
-
-
-
+                                <!-- <mat-divider vertical></mat-divider> -->
                                 <section class="group-section-tab details_tab" *ngIf="activeSubMenu =='chronology'">
                                     <section
                                         [ngClass]="appPermissions[10]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
@@ -1511,9 +1488,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[10]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[10]?.Edit==0 || isChronoData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[10]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[10]?.Edit==0 || isChronoData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="ChronPopup('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1527,9 +1504,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[10]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[10]?.Delete==0 || isChronoData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[10]?.Delete==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[10]?.Delete==0 || isChronoData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="DeleteChron()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1543,9 +1520,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[10]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[10]?.Create==0 || isChronoData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[10]?.Create==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[10]?.Create==0 || isChronoData =='empty')? 'disabled-click large-button' : 'large-button'"
                                             (click)="ChronPopup('duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1560,10 +1537,10 @@
                                     </section>
                                     <div class="light_label_txt">Action</div>
                                 </section>
-                                <mat-divider vertical></mat-divider>
+                                <mat-divider *ngIf="activeSubMenu =='chronology'"  vertical></mat-divider>
                                 <section class="group-section-tab details_tab" *ngIf="activeSubMenu =='chronology'">
-                                    <section class="ribbon-section disabled-click-cursor">
-                                        <button mat-button class="large-button disabled-click">
+                                    <section  [ngClass]="isChronoData =='empty' ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="isChronoData =='empty' ? 'disabled-click large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_letters_d.ico" alt=""
@@ -1575,8 +1552,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section class="ribbon-section disabled-click-cursor">
-                                        <button mat-button class="large-button disabled-click">
+                                    <section [ngClass]="isChronoData =='empty' ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button mat-button [ngClass]="isChronoData =='empty' ? 'disabled-click large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_letters_d.ico" alt=""
@@ -1619,9 +1596,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[17]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : ' ribbon-section'">
+                                        [ngClass]="(appPermissions[17]?.Edit==0 || isDiaryData =='empty') ? 'disabled-click-cursor ribbon-section' : ' ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[17]?.Edit==0 ? 'disabled-click large-button' : ' large-button'"
+                                            [ngClass]="(appPermissions[17]?.Edit==0 || isDiaryData =='empty') ? 'disabled-click large-button' : ' large-button'"
                                             (click)="DiaryAppointment('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1635,9 +1612,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[17]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : ' ribbon-section'">
+                                        [ngClass]="(appPermissions[17]?.Delete==0 || isDiaryData =='empty') ? 'disabled-click-cursor ribbon-section' : ' ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[17]?.Delete==0 ? 'disabled-click large-button' : ' large-button'"
+                                            [ngClass]="(appPermissions[17]?.Delete==0 || isDiaryData =='empty')? 'disabled-click large-button' : ' large-button'"
                                             (click)="DeleteAppointment()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1651,9 +1628,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[17]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[17]?.Create==0 || isDiaryData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[17]?.Create==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[17]?.Create==0 || isDiaryData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="DiaryAppointment('duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1740,9 +1717,9 @@
 
                                 <section class="group-section-tab details_tab">
                                     <section
-                                        [ngClass]="appPermissions[17]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[17]?.Access==0 || isDiaryData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[17]?.Access==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[17]?.Access==0 || isDiaryData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="DiaryAppointment('new')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1756,9 +1733,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[17]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[17]?.Access==0 || isDiaryData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[17]?.Access==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[17]?.Access==0 || isDiaryData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             [routerLink]="'/diary/create-diary'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1772,9 +1749,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[17]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[17]?.Access==0 || isDiaryData =='empty')? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[17]?.Access==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[17]?.Access==0 || isDiaryData =='empty')? 'disabled-click large-button' : 'large-button'"
                                             (click)="DeleteAppointment()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1847,9 +1824,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[2]?.Edit==0 || isTimeEntryData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[2]?.Edit==0 || isTimeEntryData == 'empty')? 'disabled-click large-button' : 'large-button'"
                                             (click)="addNewTimeEntry('Edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1863,9 +1840,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[2]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[2]?.Delete==0 || isTimeEntryData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[2]?.Delete==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[2]?.Delete==0 || isTimeEntryData == 'empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="deleteTimeEntry()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1879,9 +1856,9 @@
                                         </button>
                                     </section>
                                     <section *ngIf="activeSubMenu!='quick-time-entries'"
-                                        [ngClass]="appPermissions[2]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[2]?.Create==0 || isTimeEntryData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[2]?.Create==0 ? 'large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[2]?.Create==0 || isTimeEntryData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'large-button'"
                                             (click)="addNewTimeEntry('Duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1911,9 +1888,9 @@
                                         </button>
                                     </section>
                                     <section *ngIf="activeSubMenu!='quick-time-entries'"
-                                        [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[2]?.Edit==0 || isTimeEntryData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[2]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[2]?.Edit==0 || isTimeEntryData == 'empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="ResumeTimePopup('startTimer','')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -1932,7 +1909,7 @@
                                 <section class="group-section-tab extras_tab">
                                     <section class="ribbon-section" *ngIf="DisEnTimeEntryToolbar == 'write_off'">
                                         <mat-nav-list>
-                                            <a mat-list-item [ngClass]="appPermissions[7]?.Create==0 ? '' : ''"
+                                            <a mat-list-item [ngClass]="(appPermissions[7]?.Create==0 || isTimeEntryData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'"
                                                 (click)="WriteOffTimeEntry()">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_time_cost_delete_d.ico" alt=""
@@ -1946,7 +1923,7 @@
 
                                     <section class="ribbon-section" *ngIf="DisEnTimeEntryToolbar == 'undo'">
                                         <mat-nav-list>
-                                            <a mat-list-item [ngClass]="appPermissions[7]?.Create==0 ? '' : ''"
+                                            <a mat-list-item [ngClass]="(appPermissions[7]?.Create==0 || isTimeEntryData == 'empty')  ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'"
                                                 (click)="UndoWriteOffTimeEntry()">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_time_cost_delete_d.ico" alt=""
@@ -1990,9 +1967,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[7]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[7]?.Edit==0 || isInvoiceData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[7]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[7]?.Edit==0 || isInvoiceData == 'empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="InvoiceDetail();">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -2006,9 +1983,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[7]?.Delete==0 || isInvoiceData == 'empty')  ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[7]?.Delete==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[7]?.Delete==0 || isInvoiceData == 'empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="deleteInvoice();">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -2038,10 +2015,10 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[5]?.Access==0 || isInvoiceData == 'empty')  ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button [disabled]="ShowGenerateInvoice =='no' " (click)="GenerateInvoice()"
                                             mat-button
-                                            [ngClass]="appPermissions[5]?.Edit==0 ? 'disabled-click large-button' : 'large-button'">
+                                            [ngClass]="(appPermissions[5]?.Access==0 || isInvoiceData == 'empty') ? 'disabled-click large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_print_d.ico" alt=""
@@ -2054,9 +2031,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[5]?.Access==0 || isInvoiceData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[5]?.Access==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[5]?.Access==0 || isInvoiceData == 'empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="isInvoiceClick()" (click)="setTab($event)"
                                             [routerLink]="'/create-document/invoice-template'">
                                             <section class="large-button-container">
@@ -2076,7 +2053,7 @@
                                 <section class="group-section-tab extras_tab">
                                     <section class="ribbon-section">
                                         <mat-nav-list>
-                                            <a mat-list-item [ngClass]="appPermissions[7]?.Create==0 ? '' : ''"
+                                            <a mat-list-item [ngClass]="(appPermissions[7]?.Create==0 || isInvoiceData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'"
                                                 (click)="createInstantInvoice()">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_invoice_new_d.ico" alt=""
@@ -2085,7 +2062,7 @@
                                                 <span>Instant Invoice</span>
                                             </a>
                                             <!-- disabled-click-cursor -->
-                                            <a mat-list-item [ngClass]="appPermissions[7]?.Create==0 ? '' : ''"
+                                            <a mat-list-item [ngClass]="(appPermissions[7]?.Create==0 || isInvoiceData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'"
                                                 (click)="InvoiceWriteoff()">
                                                 <mat-icon>
                                                     <img src="assets/icons/web_app/icon_invoice_delete_d.ico" alt=""
@@ -2126,9 +2103,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[9]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[9]?.Edit==0 || isSpendMoneyData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button [disabled]="spendMoneyMenu =='disabled'" mat-button
-                                            [ngClass]="appPermissions[9]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[9]?.Edit==0 || isSpendMoneyData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="spendmoneypopup('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -2142,9 +2119,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[9]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[9]?.Delete==0 || isSpendMoneyData =='empty')? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button [disabled]="spendMoneyMenu=='disabled'" mat-button
-                                            [ngClass]="appPermissions[9]?.Delete==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[9]?.Delete==0 || isSpendMoneyData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="Deletespendmoneypopup()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -2159,9 +2136,9 @@
                                     </section>
 
                                     <section
-                                        [ngClass]="appPermissions[9]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[9]?.Create==0 || isSpendMoneyData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[9]?.Create==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[9]?.Create==0 || isSpendMoneyData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="spendmoneypopup('duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -2395,9 +2372,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[8]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[8]?.Edit==0 || isReceiptData == 'empty')? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[8]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[8]?.Edit==0 || isReceiptData == 'empty')? 'disabled-click large-button' : 'large-button'"
                                             (click)="ViewReceipt('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -2411,9 +2388,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[8]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[8]?.Delete==0 || isReceiptData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[8]?.Delete==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[8]?.Delete==0 || isReceiptData == 'empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="deleteReceiceMoany()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -2443,9 +2420,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[8]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[8]?.Create==0 || isReceiptData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[8]?.Create==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[8]?.Create==0 || isReceiptData == 'empty')? 'disabled-click large-button' : 'large-button'"
                                             (click)="NewGeneralReceipt('duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -2462,8 +2439,8 @@
                                 </section>
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab">
-                                    <section class="ribbon-section">
-                                        <button mat-button class="large-button" (click)="isMatterClick()"
+                                    <section [ngClass]="isReceiptData == 'empty' ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'" >
+                                        <button [ngClass]="isReceiptData == 'empty' ? 'disabled-click-cursor large-button' : 'large-button'" mat-button class="large-button" (click)="isMatterClick()"
                                             (click)="setTab($event)"
                                             [routerLink]="'/create-document/receive-money-template'">
                                             <section class="large-button-container">
@@ -2477,8 +2454,8 @@
                                             </section>
                                         </button>
                                     </section>
-                                    <section class="ribbon-section">
-                                        <button [disabled]="DisabledReceiptTool=='disabled'" mat-button
+                                    <section [ngClass]="isReceiptData == 'empty' ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button [ngClass]="isReceiptData == 'empty' ? 'disabled-click-cursor large-button' : 'large-button'"   mat-button
                                             class="large-button" (click)="GenerateReceipt()" (click)="setTab($event)">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -2776,9 +2753,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[29]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[29]?.Edit==0 || isUserData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[29]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[29]?.Edit==0 || isUserData =='empty')? 'disabled-click large-button' : 'large-button'"
                                             (click)="userDialog('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -2792,9 +2769,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[29]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[29]?.Delete==0 || isUserData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[29]?.Delete==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[29]?.Delete==0 || isUserData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="DeleteUser()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -2808,9 +2785,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[29]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[29]?.Create==0 || isUserData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[29]?.Create==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[29]?.Create==0 || isUserData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="userDialog('duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -2854,9 +2831,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[30]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[30]?.Edit==0 || isActivityData=='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[30]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[30]?.Edit==0 || isActivityData=='empty')? 'disabled-click large-button' : 'large-button'"
                                             (click)="ActivityDialog('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -2870,9 +2847,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[30]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[30]?.Delete==0 || isActivityData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[30]?.Delete==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[30]?.Delete==0 || isActivityData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="DeleteActivityDialog()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -2886,9 +2863,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[30]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[30]?.Create==0 || isActivityData=='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[30]?.Create==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[30]?.Create==0 || isActivityData=='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="ActivityDialog('Duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -2965,9 +2942,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[6]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[6]?.Edit==0 || isDocRegData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[6]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[6]?.Edit==0 || isDocRegData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="DocumntPop('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -2981,9 +2958,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[6]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[6]?.Delete==0 || isDocRegData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[6]?.Delete==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[6]?.Delete==0 || isDocRegData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="DeleteDocument()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -2997,9 +2974,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[6]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[6]?.Create==0 || isDocRegData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[6]?.Create==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[6]?.Create==0 || isDocRegData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="DocumntPop('duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -3134,11 +3111,11 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[19]?.Edit==0 || isMainAccount ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[19]?.Edit==0 || isMainAccount || isChartaccountData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button
                                             [disabled]="ClickTypeForTrustChartHD=='WithTrust' && (AccountClassForTrustChartHD != 'Controlled Money Account' && AccountClassForTrustChartHD !='Trust Account')"
                                             mat-button
-                                            [ngClass]="appPermissions[19]?.Edit==0 || isMainAccount ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[19]?.Edit==0 || isMainAccount || isChartaccountData == 'empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="AccountPop('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -3152,11 +3129,11 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[19]?.Delete==0 || isMainAccount ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[19]?.Delete==0 || isMainAccount || isChartaccountData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button
                                             [disabled]="ClickTypeForTrustChartHD=='WithTrust' && AccountClassForTrustChartHD !='Controlled Money Account'"
                                             mat-button
-                                            [ngClass]="appPermissions[19]?.Delete==0 || isMainAccount ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[19]?.Delete==0 || isMainAccount || isChartaccountData == 'empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="DeleteAccount()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -3170,9 +3147,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[19]?.Create==0 || isMainAccount ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[19]?.Create==0 || isMainAccount || isChartaccountData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[19]?.Create==0 || isMainAccount? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[19]?.Create==0 || isMainAccount || isChartaccountData == 'empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="AccountPop('duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -3190,9 +3167,9 @@
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab">
                                     <section
-                                        [ngClass]="chartAccountDetail?.ACCOUNTTYPE!=3 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(chartAccountDetail?.ACCOUNTTYPE!=3 || isChartaccountData == 'empty')  ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="chartAccountDetail?.ACCOUNTTYPE!=3 ? 'disabled-click large-button' : 'large-button'">
+                                            [ngClass]="(chartAccountDetail?.ACCOUNTTYPE!=3 || isChartaccountData == 'empty')  ? 'disabled-click large-button' : 'large-button'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
                                                     <img src="assets/icons/web_app/icon_arrowdown_d.ico" alt=""
@@ -3205,9 +3182,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="chartAccountDetail?.ACCOUNTTYPE!=3 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(chartAccountDetail?.ACCOUNTTYPE!=3 || isChartaccountData == 'empty')  ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="chartAccountDetail?.ACCOUNTTYPE!=3 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(chartAccountDetail?.ACCOUNTTYPE!=3 || isChartaccountData == 'empty')  ? 'disabled-click large-button' : 'large-button'"
                                             (click)="setTab($event)" [routerLink]="'/account-reconciliation'">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -3255,9 +3232,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[20]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[20]?.Edit==0  || isGeneralJounralData =='empty')? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[20]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[20]?.Edit==0  || isGeneralJounralData =='empty')? 'disabled-click large-button' : 'large-button'"
                                             (click)="ViewDetails()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -3271,9 +3248,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[20]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[20]?.Delete==0 || isGeneralJounralData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[20]?.Delete==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[20]?.Delete==0 || isGeneralJounralData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="DeleteGeneral()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -3287,9 +3264,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[20]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[20]?.Create==0 || isGeneralJounralData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[20]?.Create==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[20]?.Create==0 || isGeneralJounralData =='empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="NewGeneral('duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -3307,9 +3284,9 @@
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab">
                                     <section *ngIf="appPermissions[20]"
-                                        [ngClass]="appPermissions[20]['Export Data']==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[20]['Export Data']==0 || isGeneralJounralData =='empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button *ngIf="appPermissions[20]"
-                                            [ngClass]="appPermissions[20]['Export Data']==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[20]['Export Data']==0 || isGeneralJounralData =='empty')? 'disabled-click large-button' : 'large-button'"
                                             (click)="PrintGj()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -3477,9 +3454,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[12]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button [disabled]="DisMainAuthorityToolbar=='Autho_no'" mat-button
-                                            [ngClass]="appPermissions[12]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                        [ngClass]="(appPermissions[12]?.Edit==0 ||  DisMainAuthorityToolbar == 'Autho_no' )? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button  mat-button
+                                            [ngClass]="(appPermissions[12]?.Edit==0 ||  DisMainAuthorityToolbar == 'Autho_no' ) ? 'disabled-click large-button' : 'large-button'"
                                             (click)="AuthorityDialog('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -3494,9 +3471,9 @@
                                     </section>
 
                                     <section
-                                        [ngClass]="appPermissions[12]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button [disabled]="DisMainAuthorityToolbar=='Autho_no'" mat-button
-                                            [ngClass]="appPermissions[12]?.Delete==0 ? 'disabled-click large-button' : 'large-button'"
+                                        [ngClass]="(appPermissions[12]?.Delete==0 ||  DisMainAuthorityToolbar == 'Autho_no' ) ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button  mat-button
+                                            [ngClass]="(appPermissions[12]?.Delete==0 ||  DisMainAuthorityToolbar == 'Autho_no' ) ? 'disabled-click large-button' : 'large-button'"
                                             (click)="deleteAuthority()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -3512,9 +3489,9 @@
 
 
                                     <section
-                                        [ngClass]="appPermissions[12]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button [disabled]="DisMainAuthorityToolbar=='Autho_no'" mat-button
-                                            [ngClass]="appPermissions[12]?.Create==0 ? 'disabled-click large-button' : 'large-button'"
+                                        [ngClass]="(appPermissions[12]?.Create==0 ||  DisMainAuthorityToolbar == 'Autho_no' ) ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button  mat-button
+                                            [ngClass]="(appPermissions[12]?.Create==0 ||  DisMainAuthorityToolbar == 'Autho_no' ) ? 'disabled-click large-button' : 'large-button'"
                                             (click)="AuthorityDialog('duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -3599,9 +3576,9 @@
                                 <mat-divider vertical></mat-divider>
                                 <section class="group-section-tab action_tab" *ngIf="activeSubMenu=='full-authorities'">
                                     <section *ngIf="mainlegalAuthWebUrl == ''"
-                                        [ngClass]="appPermissions[12]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
-                                        <button disabled mat-button
-                                            [ngClass]="appPermissions[12]?.Create==0 ? 'disabled-click large-button' : 'large-button'"
+                                        [ngClass]="(appPermissions[12]?.Create==0 || mainlegalAuthWebUrl =='')? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        <button  mat-button
+                                            [ngClass]="(appPermissions[12]?.Create==0 || mainlegalAuthWebUrl =='')? 'disabled-click large-button' : 'large-button'"
                                             (click)="setTab($event)">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -3935,9 +3912,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[14]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[14]?.Edit==0 || isSafeCustody == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[14]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[14]?.Edit==0 || isSafeCustody == 'empty')  ? 'disabled-click large-button' : 'large-button'"
                                             (click)="OpenNewSafeCustody('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -3952,9 +3929,9 @@
                                     </section>
 
                                     <section
-                                        [ngClass]="appPermissions[14]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[14]?.Delete==0 || isSafeCustody == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[14]?.Delete==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[14]?.Delete==0 || isSafeCustody == 'empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="DeleteSafeCustody()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -3985,9 +3962,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[14]?.Create==0 || isSafeCustody == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[14]?.Create==0 || isSafeCustody == 'empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="OpenNewSafeCustody('copy')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -4007,9 +3984,9 @@
                                 <section class="group-section-tab action_tab"
                                     *ngIf="activeSubMenu === 'full-Safe-Custody'">
                                     <section
-                                        [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[14]?.Create==0 || isSafeCustody == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[14]?.Create==0 || isSafeCustody == 'empty')  ? 'disabled-click large-button' : 'large-button'"
                                             (click)="setTab($event)">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -4023,9 +4000,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[14]?.Create==0 || isSafeCustody == 'empty')  ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[14]?.Create==0 || isSafeCustody == 'empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="setTab($event)"
                                             [routerLink]="'/create-document/safe-custody-template'">
                                             <section class="large-button-container">
@@ -4061,9 +4038,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[14]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[14]?.Edit==0 || isSafePackData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[14]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[14]?.Edit==0 || isSafePackData == 'empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="OpenPacket('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -4077,9 +4054,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[14]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[14]?.Delete==0 || isSafePackData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[14]?.Delete==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[14]?.Delete==0 || isSafePackData == 'empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="DeletePacket()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -4093,9 +4070,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[14]?.Create==0 || isSafePackData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[14]?.Create==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[14]?.Create==0 || isSafePackData == 'empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="OpenPacket('duplicate')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -4523,9 +4500,9 @@
                                         </button>
                                     </section>
                                     <section
-                                        [ngClass]="appPermissions[18]?.Edit==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[18]?.Edit==0 || isTaskData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[18]?.Edit==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[18]?.Edit==0 || isTaskData == 'empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="TaskDialoge('edit')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -4540,9 +4517,9 @@
                                     </section>
 
                                     <section
-                                        [ngClass]="appPermissions[18]?.Delete==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[18]?.Delete==0 || isTaskData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button mat-button
-                                            [ngClass]="appPermissions[18]?.Delete==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[18]?.Delete==0 || isTaskData == 'empty')? 'disabled-click large-button' : 'large-button'"
                                             (click)="deleteTask()">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -4572,9 +4549,9 @@
                                         </button>
                                     </section>
                                     <section *ngIf="appPermissions[18]"
-                                        [ngClass]="appPermissions[18]?.Create==0 ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
+                                        [ngClass]="(appPermissions[18]?.Create==0 || isTaskData == 'empty') ? 'disabled-click-cursor ribbon-section' : 'ribbon-section'">
                                         <button *ngIf="appPermissions[18]" mat-button
-                                            [ngClass]="appPermissions[18]?.Create==0 ? 'disabled-click large-button' : 'large-button'"
+                                            [ngClass]="(appPermissions[18]?.Create==0 || isTaskData == 'empty') ? 'disabled-click large-button' : 'large-button'"
                                             (click)="TaskDialoge('copy')">
                                             <section class="large-button-container">
                                                 <mat-icon class="main-icon">
@@ -5475,10 +5452,10 @@
 
     </div>
     <!-- <button mat-raised-button color="primary" type="button" id="spendmoneyMenubtn" (click)="spendmoneyMenubtn();">Refresh</button> -->
-    <button mat-raised-button color="primary" type="button" id="clickToolbarbtn"
+    <!-- <button mat-raised-button color="primary" type="button" id="clickToolbarbtn"
         (click)="clickToolbarbtn();">Refresh</button>
     <button mat-raised-button color="primary" type="button" id="clickToolbarbtn2"
-        (click)="clickToolbarbtn2();">Refresh</button>
-    <button mat-raised-button color="primary" type="button" id="packsToolbarHide"
-        (click)="packsToolbarHide();">Refresh</button>
+        (click)="clickToolbarbtn2();">Refresh</button> -->
+    <!-- <button mat-raised-button color="primary" type="button" id="packsToolbarHide"
+        (click)="packsToolbarHide();">Refresh</button> -->
 </mat-toolbar>

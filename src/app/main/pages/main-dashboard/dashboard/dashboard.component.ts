@@ -4,7 +4,6 @@ import { FormGroup } from '@angular/forms';
 
 import { ToastrService } from 'ngx-toastr';
 import { MainAPiServiceService, BehaviorService } from 'app/_services';
-import { DashboardService } from './dashboard.service';
 import CanvasJS from 'canvasjs';
 import * as shape from 'd3-shape';
 import { Chart } from 'chart.js';
@@ -50,7 +49,7 @@ export class DashboardComponent implements OnInit {
         * @param {AnalyticsDashboardService} _analyticsDashboardService
         */
     constructor(private _mainAPiServiceService: MainAPiServiceService,
-        private toastr: ToastrService, private _analyticsDashboardService: DashboardService,
+        private toastr: ToastrService,
         private behaviorService: BehaviorService,
         public datepipe: DatePipe, ) {
 
@@ -207,7 +206,7 @@ export class DashboardComponent implements OnInit {
                         maintainAspectRatio: false,
                         scales: {
                             xAxes: [{
-                                gridLines: {
+                                gridLines: {    
                                     color: "rgba(0, 0, 0, 0)",
                                 },
                                 display: true
@@ -221,7 +220,9 @@ export class DashboardComponent implements OnInit {
                                     ticks: {
                                         min: 0,
                                         callback: function (value, index, values) {
-                                            return '$' + value;
+                                            if (index === values.length - 1) return '$' + value;
+                                            else if (index === 0) return '$' + value;
+                                            else return '';
                                         }
                                     }
                                 },
@@ -298,9 +299,12 @@ export class DashboardComponent implements OnInit {
                                     },
                                     display: true,
                                     ticks: {
+
                                         min: 0,
                                         callback: function (value, index, values) {
-                                            return '$' + value;
+                                            if (index === values.length - 1) return '$' + value;
+                                            else if (index === 0) return '$' + value;
+                                            else return '';
                                         }
                                     }
                                 },
@@ -375,7 +379,9 @@ export class DashboardComponent implements OnInit {
                                     ticks: {
                                         min: 0,
                                         callback: function (value, index, values) {
-                                            return '$' + value;
+                                            if (index === values.length - 1) return '$' + value;
+                                            else if (index === 0) return '$' + value;
+                                            else return '';
                                         }
                                     }
                                 },

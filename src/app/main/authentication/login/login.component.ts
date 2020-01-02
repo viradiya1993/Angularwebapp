@@ -56,13 +56,14 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     });
     this.authenticationService.notLogin();
-    //this.SetFocus();
+
+    $(document).ready(function () {
+      var input = $("#test");
+      var len = input.val().length;
+      input[0].focus();
+      input[0].setSelectionRange(len, len);
+    });
   }
-  // SetFocus() {
-  //   var input = document.getElementById("email");
-  //   input.focus();
-  // }
-  // convenience getter for easy access to form fields
   get f() {
     return this.loginForm.controls;
   }
@@ -87,14 +88,6 @@ export class LoginComponent implements OnInit {
       this.toastr.error(error);
     });
   }
-  // abc(event) {
-
-
-  //   this.fakeArray.push([]);
-
-  //   if (this.fakeArray.length == 1) {
-  //     this.SetFocus();
-  //   }
-
-  // }
+  onSpecificfocus(val) {
+  }
 }

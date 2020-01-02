@@ -1,6 +1,4 @@
-<div class="example-loading-shade" *ngIf="isLoadingResults">
-    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
-</div>
+
 <div class="one" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field appearance="outline" fxFlex="33" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.LEGALENTITY,'has-warning':errorWarningData.Warning?.LEGALENTITY}">

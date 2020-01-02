@@ -1,3 +1,6 @@
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+    </div>
 <div id="contacts" class="con page-layout simple left-sidebar inner-sidebar inner-scroll">
     <!-- HEADER -->
     <div class="header business_head_tab accent p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
@@ -40,48 +43,48 @@
                             <div class="nav material2">
                                 <!-- (click)="nameClick()"-->
                                 <div class="nav-item name" aria-label="inbox">
-                                    <a (click)=" nameClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='name'}">
+                                    <a (click)="loading_fun()" (click)=" nameClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='name'}">
                                         <span class="title">Name</span>
                                     </a>
                                 </div>
                                 <div class="nav-item business" aria-label="frequently contacted">
                                     <!-- [routerLink]="'/system-setting/business'" <button [queryParams]="{ calander: 'business' }"></button> -->
-                                    <a (click)="businessClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='business'}">
+                                    <a (click)="loading_fun()" (click)="businessClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='business'}">
                                         <div class="title">Business</div>
                                     </a>
                                 </div>
 
 
                                 <div class="nav-item defaults" aria-label="starred">
-                                    <a (click)="defaultsClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='defaults'}">
+                                    <a (click)="loading_fun()" (click)="defaultsClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='defaults'}">
                                         <div class="title">Defaults</div>
                                     </a>
                                 </div>
                                 <div class="nav-item estimate" aria-label="starred">
-                                    <a (click)="estimateClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='estimate'}">
+                                    <a (click)="loading_fun()" (click)="estimateClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='estimate'}">
                                         <div class="title">Estimates</div>
                                     </a>
                                 </div>
                                 <div class="nav-item reginoal" aria-label="starred">
-                                    <a (click)="reginoalClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='reginoal'}">
+                                    <a (click)="loading_fun()" (click)="reginoalClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='reginoal'}">
                                         <div class="title">Regional Settings</div>
                                     </a>
                                 </div>
                                 <div class="nav-item trust" aria-label="starred">
-                                    <a (click)="trustClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='trust'}">
+                                    <a (click)="loading_fun()" (click)="trustClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='trust'}">
                                         <div class="title">Trust</div>
                                     </a>
                                 </div>
                                 
                                 <div class="nav-item business" aria-label="frequently contacted">
                                     <!-- [routerLink]="'/system-setting/business'" <button [queryParams]="{ calander: 'business' }"></button> -->
-                                    <a (click)="accountClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='account'}">
+                                    <a (click)="loading_fun()" (click)="accountClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='account'}">
                                         <div class="title">Account</div>
                                     </a>
                                 </div>
                                 
                                 <div class="nav-item template" aria-label="starred">
-                                    <a (click)="templatesClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='templates'}">
+                                    <a (click)="loading_fun()" (click)="templatesClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickedBtn ==='templates'}">
                                         <div class="title">Templates</div>
                                     </a>
                                 </div>

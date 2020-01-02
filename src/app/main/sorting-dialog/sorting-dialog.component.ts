@@ -106,12 +106,10 @@ export class SortingDialogComponent implements OnInit {
 
   //dialog content close event
   ondialogcloseClick(): void {
-    console.log(this.property);
     this.dialogRef.close(false);
   }
   //dialog content close event with save
   ondialogSaveClick(): void {
-    console.log(this.property);
     let showCol = [];
     let tempColobj = [];
     this.property.forEach(itemsdata => {

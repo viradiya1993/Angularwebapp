@@ -202,7 +202,7 @@
                             </ng-container>
                             <tr mat-header-row class="tbl_fix_header" *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                             <!-- sticky: true" -->
-                            <tr mat-row [style.background]="highlightedRows == index ? selectedColore : ''" *matRowDef="let row; let index = index  columns: displayedColumns;" [ngClass]="highlightedRows == index ? 'row-text-colore' : ''" class="contact" (click)="editContact(row,index);highlightedRows = index"
+                            <tr mat-row [style.background]="highlightedRows == index ? selectedColore : ''" *matRowDef="let row; let index = index  columns: displayedColumns;" [ngClass]="highlightedRows == index ? 'row-text-colore' : ''" class="contact" (click)="clickRow(row,index);highlightedRows = index"
                                 matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                             </tr>
                         </table>

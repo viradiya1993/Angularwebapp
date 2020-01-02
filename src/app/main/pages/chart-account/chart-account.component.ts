@@ -116,7 +116,9 @@ export class ChartAccountComponent implements OnInit, OnDestroy {
 
   }
   ngOnInit() {
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 80)) + 'px');
+    $('content').addClass('inner-scroll');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
+    // $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 60)) + 'px');
     this.acc = "";
   }
 
@@ -124,6 +126,7 @@ export class ChartAccountComponent implements OnInit, OnDestroy {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(data, 'GetAccount').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
+        this.behaviorService.setChartAccountDataEdit(null);
         this.arrayForIndex = [];
         if (response.DATA.ACCOUNTS[0].ACCOUNTGUID == "") {
           this.storeDataarray = response.DATA.ACCOUNTS[0].SUBACCOUNTS;

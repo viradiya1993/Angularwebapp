@@ -251,7 +251,6 @@ export class InvoiceDetailComponent implements OnInit {
     }
   }
   RowClick(row){
-   console.log(row);
   }
   totalchange() {
    let ExGst =Number(this.f.INVOICETOTAL.value)/1.1;

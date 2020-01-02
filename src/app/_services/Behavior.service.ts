@@ -58,17 +58,42 @@ export class BehaviorService {
   public TrustDuplicateModuleHandling$: BehaviorSubject<any> = new BehaviorSubject(JSON.parse(localStorage.getItem('ChartURL')));
 
   public MatterNum$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public contactData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public activitiesData$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   public totalDashboard$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   public CommonToolbarHS$: BehaviorSubject<any> = new BehaviorSubject(null);
 
+  public UserData$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public DiaryData$: BehaviorSubject<any> = new BehaviorSubject(null);
   public DelGloballypopupHS$: BehaviorSubject<any> = new BehaviorSubject(null);
   public RecouncileConstName$: BehaviorSubject<any> = new BehaviorSubject(null);
+
+  public loadingSystemSetting$: BehaviorSubject<any> = new BehaviorSubject(null);
+  public loadingAccountMNG$: BehaviorSubject<any> = new BehaviorSubject(null);
   constructor(private http: HttpClient) { }
 
-  matterInvoiceData(matterClassData: any) {
-    this.matterInvoice$.next(matterClassData);
+  matterInvoiceData(matterInvoice: any) {
+    this.matterInvoice$.next(matterInvoice);
+  }
+  loadingSystemSetting(loadingSystemSetting: any) {
+    this.loadingSystemSetting$.next(loadingSystemSetting);
+  }
+  loadingAccountMNG(loadingAccountMNG: any) {
+    this.loadingAccountMNG$.next(loadingAccountMNG);
+  }
+  activitiesData(activitiesData: any) {
+    this.activitiesData$.next(activitiesData);
+  }
+  DiaryData(DiaryData: any) {
+    this.DiaryData$.next(DiaryData);
+  }
+  UserData(UserData: any) {
+    this.UserData$.next(UserData);
+  }
+  contactData(contactData: any) {
+    this.contactData$.next(contactData);
   }
   CommonToolbarHS(CommonToolbarHS: any) {
     this.CommonToolbarHS$.next(CommonToolbarHS);
@@ -112,9 +137,13 @@ export class BehaviorService {
   MainTopicData(MainTopicData: any) {
     this.MainTopicData$.next(MainTopicData);
   }
-  matterClassData(matterInvoice: any) {
-    this.matterClassData$.next(matterInvoice);
+
+
+
+  matterClassData(matterClassData: any) {
+    this.matterClassData$.next(matterClassData);
   }
+  
   MainAuthorityData(MainAuthorityData: any) {
     this.MainAuthorityData$.next(MainAuthorityData);
   }
@@ -211,6 +240,9 @@ export class BehaviorService {
   }
   resizeTableForAllView() {
     $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 130)) + 'px');
+  }
+  resizeTableForAllViewForSub() {
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + $('.sticky_search_div').height() + 250)) + 'px');
   }
   DelGloballypopupHS(DelGloballypopupHS: any) {
     this.DelGloballypopupHS$.next(DelGloballypopupHS);

@@ -98,9 +98,29 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     CommonToolbarHSData: any;
     ClickTypeForTrustChartHD: any;
     AccountClassForTrustChartHD: any;
+    isMatterData: string;
+    isContactData: string;
+    isTimeEntryData: string;
+    isInvoiceData: string;
+    isSpendMoneyData: string;
+    isReceiptData: string;
+    isTaskData: string;
+    isChartaccountData: string;
+    isSafeCustody: string;
+    isSafePackData: string;
+    isGeneralJounralData: string;
+    isUserData: string;
+    isEstimateData: string;
+    isMatterInvoiceData: string;
+    isWIPData: string;
+    isChronoData: string;
+    isFileNoteData: string;
+    isDocRegData: string;
+    isDiaryData: string;
+    isActivityData: string;
     [x: string]: any;
     appPermissions: any = JSON.parse(localStorage.getItem('app_permissions'));
-    @ViewChild(TimeEntriesComponent,{static: false}) TimeEntrieschild: TimeEntriesComponent;
+    @ViewChild(TimeEntriesComponent, { static: false }) TimeEntrieschild: TimeEntriesComponent;
     horizontalNavbar: boolean; isTabShow: number = 1; rightNavbar: boolean; hiddenNavbar: boolean; navigation: any; selectedLanguage: any; selectedIndex: number;
     currentUser: any;
     confirmDialogRef: MatDialogRef<FuseConfirmDialogComponent>;
@@ -150,7 +170,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     estimateData: any;
     journalText: any = 'View';
     journalLinktype: any;
-    @ViewChild('widgetsContent', { read: ElementRef , static: false}) public widgetsContent: ElementRef<any>;
+    @ViewChild('widgetsContent', { read: ElementRef, static: true }) public widgetsContent: ElementRef<any>;
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
@@ -166,93 +186,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     ) {
         // call dashboard showing api
         this.DashboardAPI();
-        //For receipt 
-        this.behaviorService.ReceiptData$.subscribe(result => {
-            this.DisabledReceiptTool = "disabled";
-            if (result) {
-                this.receiptData = result;
-                this.DisabledReceiptTool = "enabled";
-            }
-        });
-        this.behaviorService.workInProgress$.subscribe(result => {
-            if (result) {
-                this.WorkInProgressData = result
-            }
-        });
-        //for Disabled enabled
-        this.behaviorService.ConflictDataList$.subscribe(result => {
-            if (result == null) { this.disconflictToolbar = 'yes'; } else { this.disconflictToolbar = 'no'; }
-        });
-        this.behaviorService.GeneralData$.subscribe(result => {
-            if (result) {
-                this.JournalData = result;
-                this.journalLinktype = result.LINKTYPE;
-                if (this.journalLinktype == "Receipt" || this.journalLinktype == "Invoice") {
-                    this.journalText = 'View';
-                } else if (this.journalLinktype == "Income" || this.journalLinktype == "General Journal" || this.journalLinktype == "Expenditure" || this.journalLinktype == "Payable" || this.journalLinktype == "Disbursement") {
-                    this.journalText = 'Edit';
-                }
-            }
-        });
+        this.BehaviourServiceFun();
 
-        this.behaviorService.MainTimeEntryData$.subscribe(result => {
-            this.timeEntryData = result; if (result != null) {
-                if (result.INVOICEGUID == "-1" || result.INVOICEGUID == -1) {
-                    this.DisEnTimeEntryToolbar = 'undo';
-                } else { this.DisEnTimeEntryToolbar = 'write_off'; }
-            }
-        });
 
-        this.behaviorService.MainAuthorityData$.subscribe(result => {
-            this.MainAuthorityData = result;
-            if (result != null) {
-                if (result.AUTHORITY != undefined) {
-                    if (result.AUTHORITY.WEBADDRESS != '') {
-                        this.mainlegalAuthWebUrl = result.Main.WEBADDRESS;
-                    } else { this.mainlegalAuthWebUrl = '' }
-                    this.DisMainAuthorityToolbar = 'Autho_yes';
-                }
-                else { this.DisMainAuthorityToolbar = 'Autho_no'; this.mainlegalAuthWebUrl = '' }
-            }
-        });
-
-        this.behaviorService.LegalAuthorityData$.subscribe(result => {
-            if (result != null) {
-                this.LegalAuthorityData = result;
-                if (result.AUTHORITY != undefined) {
-                    this.mainlegalAuthWebUrl = result.Main.WEBADDRESS;
-                    this.LegalAuthotool = 'addMatterHide';
-                } else {
-                    this.mainlegalAuthWebUrl = "";
-                    this.LegalAuthotool = '';
-                }
-            }
-        });
-        this.behaviorService.LegalAuthorityForSubAuthToolbar$.subscribe(result => {
-            if (result != null) {
-                this.LegalAuthoritySubAuthata = result;
-                if (result.WEBADDRESS != '') {
-                    this.LegalSubAuthotool = result.WEBADDRESS;
-                } else {
-                    this.LegalSubAuthotool = '';
-                }
-            }
-        });
-
-        //Trust Chart Account Behaviour 
-        this.behaviorService.TrustDuplicateModuleHandling$.subscribe(result => {
-            if (result != null) {
-                this.ShowMatLable = result.Lable;
-            }
-        });
-        //common MainBar hideShow 
-        this.behaviorService.CommonToolbarHS$.subscribe(result => {
-            if (result) {
-                this.CommonToolbarHSData = result;
-                this.ClickTypeForTrustChartHD = result.ClickType;
-                this.AccountClassForTrustChartHD = result.AccountClass;
-            }
-        });
         //for navigation bar 
         if (this.appPermissions == null) {
             this.appPermissions = [];
@@ -300,17 +236,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         } else {
             this.hideShowDoc = 'no';
         }
-        this.behaviorService.ChartAccountData$.subscribe(result => {
-            if (result) {
-                this.chartAccountDetail = result;
-                this.AccountGUID = result.ACCOUNTGUID;
-            }
-        });
-        this.behaviorService.ChartAccountDataEdit$.subscribe(result => {
-            if (result) {
-                this.isMainAccount = result.MainList.ACCOUNTTYPENAME == "Header"
-            }
-        });
+
         this.ResizeWindow();
     }
     // -----------------------------------------------------------------------------------------------------
@@ -368,6 +294,263 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     // DashboardAPI end  //
+    BehaviourServiceFun() {
+        this.behaviorService.activitiesData$.subscribe(result =>{
+            if(result == null){
+                this.isActivityData= 'empty';
+            }else{
+                this.isActivityData= 'Notempty';
+            }
+        })
+        this.behaviorService.DiaryData$.subscribe(result =>{
+            if(result ==null){
+                this.isDiaryData = 'empty';
+            }else{
+                this.isDiaryData = 'Notempty';
+            }
+        });
+        // for matter 
+        this.behaviorService.MatterData$.subscribe(result => {
+            if (result == null) {
+                this.isMatterData = 'empty';
+            } else {
+                this.isMatterData = 'Notempty';
+            }
+        });
+        //for contact
+        this.behaviorService.contactData$.subscribe(result => {
+            if (result == null) {
+                this.isContactData = 'empty';
+            } else {
+                this.isContactData = 'Notempty';
+            }
+        });
+        //For receipt 
+        this.behaviorService.ReceiptData$.subscribe(result => {
+            // this.DisabledReceiptTool = "disabled";
+            if (result != null) { 
+                this.isReceiptData = 'Notempty';
+                this.receiptData = result; 
+                // this.DisabledReceiptTool = "enabled";
+             }else{
+                this.isReceiptData = 'empty';
+             }
+        });
+        this.behaviorService.workInProgress$.subscribe(result => {
+            if (result) { 
+                this.isWIPData = "Notempty";
+                this.WorkInProgressData = result;
+             }else{
+                this.isWIPData = "empty";
+             }
+        });
+        //for Disabled enabled
+        this.behaviorService.ConflictDataList$.subscribe(result => {
+            if (result == null) { this.disconflictToolbar = 'yes'; } else { this.disconflictToolbar = 'no'; }
+        });
+        this.behaviorService.GeneralData$.subscribe(result => {
+            if (result) {
+                this.isGeneralJounralData = 'Notempty';
+                this.JournalData = result;
+                this.journalLinktype = result.LINKTYPE;
+                if (this.journalLinktype == "Receipt" || this.journalLinktype == "Invoice") {
+                    this.journalText = 'View';
+                } else if (this.journalLinktype == "Income" || this.journalLinktype == "General Journal" || this.journalLinktype == "Expenditure" || this.journalLinktype == "Payable" || this.journalLinktype == "Disbursement") {
+                    this.journalText = 'Edit';
+                }
+            }else{
+                this.isGeneralJounralData = 'empty';
+            }
+        });
+
+        this.behaviorService.MainTimeEntryData$.subscribe(result => {
+            this.timeEntryData = result; 
+            if (result != null) {
+                this.isTimeEntryData = 'Notempty';
+                if (result.INVOICEGUID == "-1" || result.INVOICEGUID == -1) {
+                    this.DisEnTimeEntryToolbar = 'undo';
+                } else { 
+                    this.DisEnTimeEntryToolbar = 'write_off'; }
+            }else{
+                this.isTimeEntryData = 'empty';
+            }
+        });
+
+        this.behaviorService.MainAuthorityData$.subscribe(result => {
+            this.MainAuthorityData = result;
+            if (result != null) {
+                if (result.AUTHORITY != undefined) {
+                    if (result.AUTHORITY.WEBADDRESS != '') {
+                        this.mainlegalAuthWebUrl = result.Main.WEBADDRESS;
+                    } else { this.mainlegalAuthWebUrl = '' }
+                    this.DisMainAuthorityToolbar = 'Autho_yes';
+                }
+                else { this.DisMainAuthorityToolbar = 'Autho_no'; this.mainlegalAuthWebUrl = '' }
+            }
+        });
+
+        this.behaviorService.LegalAuthorityData$.subscribe(result => {
+            if (result != null) {
+                this.LegalAuthorityData = result;
+                if (result.AUTHORITY != undefined) {
+                    this.mainlegalAuthWebUrl = result.Main.WEBADDRESS;
+                    this.LegalAuthotool = 'addMatterHide';
+                } else {
+                    this.mainlegalAuthWebUrl = "";
+                    this.LegalAuthotool = '';
+                }
+            }
+        });
+        this.behaviorService.LegalAuthorityForSubAuthToolbar$.subscribe(result => {
+            if (result != null) {
+                this.LegalAuthoritySubAuthata = result;
+                if (result.WEBADDRESS != '') {
+                    this.LegalSubAuthotool = result.WEBADDRESS;
+                } else {
+                    this.LegalSubAuthotool = '';
+                }
+            }
+        });
+        //Trust Chart Account Behaviour 
+        this.behaviorService.TrustDuplicateModuleHandling$.subscribe(result => {
+            if (result != null) {
+                this.ShowMatLable = result.Lable;
+            }
+        });
+        //common MainBar hideShow 
+        this.behaviorService.CommonToolbarHS$.subscribe(result => {
+            if (result) {
+                this.CommonToolbarHSData = result;
+                this.ClickTypeForTrustChartHD = result.ClickType;
+                this.AccountClassForTrustChartHD = result.AccountClass;
+            }
+        });
+        this.behaviorService.ChartAccountData$.subscribe(result => {
+            if (result) {
+                this.chartAccountDetail = result;
+                this.AccountGUID = result.ACCOUNTGUID;
+            }
+        });
+        this.behaviorService.ChartAccountDataEdit$.subscribe(result => {
+            if (result != null) {
+                this.isMainAccount = result.MainList.ACCOUNTTYPENAME == "Header";
+                this.isChartaccountData = 'Notempty';
+            }else{
+                this.isChartaccountData = 'empty'; 
+            }
+        });
+        this.behaviorService.packs$.subscribe(result => {
+            if (result != null) {
+                this.KitName = result.KITNAME;
+                this.KitGUid = result.KITGUID;
+                if (result.TEMPLATETYPEDESC == 'Email') {
+                    this.packsToobar = 'Email';
+                } else if (result.TEMPLATETYPEDESC == 'Template') {
+                    this.packsToobar = 'Template';
+                } else {
+                    this.packsToobar = 'Packs';
+                }
+            }
+        });
+        // invoice 
+        this.behaviorService.matterInvoice$.subscribe(result => {
+            if (result != null) {
+                this.isInvoiceData = 'Notempty';
+                this.ShowGenerateInvoice = "yes";
+            } else {
+                this.isInvoiceData = 'empty';
+                this.ShowGenerateInvoice = "no";
+            }
+        });
+        // spend money 
+        this.behaviorService.SpendMoneyData$.subscribe(result => {
+            console.log(result)
+            if (result != null) {
+                this.isSpendMoneyData = 'Notempty';
+                this.SendMoney_dataGUID = result;
+            }else{
+                this.isSpendMoneyData = 'empty';
+            }
+        });
+        // For Task 
+        this.behaviorService.TaskData$.subscribe(result => {
+            if (result != null) {
+                this.isTaskData = 'Notempty';
+                this.TaskData = result;
+            }else{
+                this.isTaskData = 'empty';
+            }
+        });
+        // safe custody
+        this.behaviorService.SafeCustody$.subscribe(result => {
+            if (result != null) {
+                this.safecustodydata = result;
+                this.isSafeCustody = 'Notempty';
+            }else{
+                this.isSafeCustody = 'empty';
+            }
+        });
+        // for pack
+        this.behaviorService.Packets$.subscribe(result => {
+            if (result != null) {
+                this.isSafePackData = 'Notempty';
+                this.PacketsData = result;
+            }else{
+                this.isSafePackData = 'Notempty';
+            }
+        });
+        this.behaviorService.UserData$.subscribe(result =>{
+            if(result != null){
+                this.isUserData = 'Notempty';
+            }else{
+                this.isUserData = 'empty';
+            }
+        });
+        this.behaviorService.estimatelegalData$.subscribe(result => {
+            if (result != null) {
+                this.isEstimateData = 'Notempty';
+                this.estimateData = result;
+            }else{
+                this.isEstimateData = 'empty';
+            }
+        });
+        this.behaviorService.matterInvoice$.subscribe(result => {
+            if (result != null){
+                this.isMatterInvoiceData = 'Notempty';
+            }else{
+                this.isMatterInvoiceData = 'empty';
+            }
+            
+        });
+        this.behaviorService.LegalChronologyData$.subscribe(result => {
+            if (result != null) {
+                this.isChronoData = 'Notempty';
+                this.ChronologyLegalData = result;
+            }else{
+                this.isChronoData = 'empty';
+            }
+        });
+        this.behaviorService.FileNotesData$.subscribe(result => {
+            if (result != null) {
+                this.isFileNoteData = 'Notempty';
+                this.FileNotesData = result;
+            }else{
+                this.isFileNoteData = 'empty';
+            }
+        });
+        this.behaviorService.DocumentRegisterData$.subscribe(result => {
+            if (result != null) {
+                this.isDocRegData ='Notempty';
+                this.DocRegData = result;
+            }else{
+                this.isDocRegData ='empty';
+            }
+        });
+    }
+    // common behaviour call start
+
+
+    // common behaviour call end
     /* ---------------------------------------------------------------------help Licence start--------------------------------------------------------------------------  */
     openLicence(Data) {
         let w = Data == 'LI' ? '50%' : '25%';
@@ -438,7 +621,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     AddAuthorityFromLegal(val) {
         this.behaviorService.LegalAuthorityToolbar(val);
-        $('#refreshLegalAuthorityADD').click();
     }
     // Delete matter Pop-up
     DeleteNewmatterpopup(): void {
@@ -744,13 +926,18 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     GenerateInvoice() {
-        this.behaviorService.matterInvoice$.subscribe(result => {
-            if (result != null) {
-                this.ShowGenerateInvoice = "yes";
-            } else {
-                this.ShowGenerateInvoice = "no";
-            }
-        });
+        // this.behaviorService.matterInvoice$.subscribe(result => {
+        //     console.log(result);
+        //     if (result != null) {
+        //         console.log("con 1");
+        //         this.isInvoiceData = 'Notempty';
+        //         this.ShowGenerateInvoice = "yes";
+        //     } else {
+        //         console.log("con 2");
+        //         this.isInvoiceData = 'empty';
+        //         this.ShowGenerateInvoice = "no";
+        //     }
+        // });
         const dialogRef = this._matDialog.open(GenerateInvoiceComponent, {
             width: '100%', disableClose: true, data: {}
         });
@@ -850,11 +1037,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     DeleteFileNotes() {
-        this.behaviorService.FileNotesData$.subscribe(result => {
-            if (result) {
-                this.FileNotesData = result;
-            }
-        });
+
         if (this.FileNotesData == null) {
             this.toastr.error("No Data Selected");
         } else {
@@ -879,11 +1062,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     Deletespendmoneypopup(): void {
-        this.behaviorService.SpendMoneyData$.subscribe(result => {
-            if (result) {
-                this.SendMoney_dataGUID = result;
-            }
-        });
         if (this.SendMoney_dataGUID == null) {
             this.toastr.error("No Data Selected");
         } else {
@@ -923,11 +1101,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //delete Estimate  item
     deleteEstimate() {
-        this.behaviorService.estimatelegalData$.subscribe(result => {
-            if (result) {
-                this.estimateData = result;
-            }
-        });
+      
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true, width: '100%',
         });
@@ -1055,11 +1229,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
 
     DeleteDocument(): void {
-        this.behaviorService.DocumentRegisterData$.subscribe(result => {
-            if (result) {
-                this.DocRegData = result;
-            }
-        });
+
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
@@ -1121,11 +1291,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         }
     }
     GenaratePacks() {
-        this.behaviorService.packs$.subscribe(result => {
-            if (result) {
-                this.KitName = result.KITNAME;
-            }
-        });
         if (this.router.url == "/create-document/packs-invoice-template") {
             let invoiceGUid = localStorage.getItem('edit_invoice_id');
             let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "knownby": "Pack", "Type": "Pack", "Folder": '', "Template": this.KitName }
@@ -1219,11 +1384,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     DeletePack(): void {
-        this.behaviorService.packs$.subscribe(result => {
-            if (result) {
-                this.KitGUid = result.KITGUID;
-            }
-        });
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
@@ -1586,11 +1746,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //DeleteChron
     DeleteChron() {
-        this.behaviorService.LegalChronologyData$.subscribe(result => {
-            if (result) {
-                this.ChronologyLegalData = result;
-            }
-        });
+
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
@@ -2111,11 +2267,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     deleteTask() {
-        this.behaviorService.TaskData$.subscribe(result => {
-            if (result) {
-                this.TaskData = result;
-            }
-        });
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true, width: '100%',
         });
@@ -2136,12 +2287,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     }
     //////// End  Task///////////////////
-    clickToolbarbtn() {
-        this.isDocumentGenerateHide = "yes";
-    }
-    clickToolbarbtn2() {
-        this.isDocumentGenerateHide = "no";
-    }
+    // clickToolbarbtn() {
+    //     this.isDocumentGenerateHide = "yes";
+    // }
+    // clickToolbarbtn2() {
+    //     this.isDocumentGenerateHide = "no";
+    // }
     /** PACKETS MODULE FUNCTION'S */
     OpenPacket(actionType) {
         let PacketPopData = {}
@@ -2162,11 +2313,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     DeletePacket(): void {
-        this.behaviorService.Packets$.subscribe(result => {
-            if (result) {
-                this.PacketsData = result;
-            }
-        });
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true,
             width: '100%',
@@ -2222,11 +2368,11 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
     }
     DeleteSafeCustody(): void {
-        this.behaviorService.SafeCustody$.subscribe(result => {
-            if (result) {
-                this.safecustodydata = result;
-            }
-        });
+        // this.behaviorService.SafeCustody$.subscribe(result => {
+        //     if (result) {
+        //         this.safecustodydata = result;
+        //     }
+        // });
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true, width: '100%',
         });
@@ -2316,11 +2462,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 this.TemplateGenerateData = result;
             }
         });
-        this.behaviorService.SafeCustody$.subscribe(result => {
-            if (result) {
-                this.SafeCustodyData = result;
-            }
-        });
         if (this.router.url == "/create-document/invoice-template" || this.router.url == "/create-document/packs-invoice-template") {
             let invoiceGUid = localStorage.getItem('edit_invoice_id');
             let passdata = { 'Context': "Invoice", 'ContextGuid': invoiceGUid, "knownby": "Template", "Type": "Template", "Folder": '', "Template": this.TemplateGenerateData.TEMPLATENAME }
@@ -2400,20 +2541,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             }
         });
     }
-    packsToolbarHide() {
-        this.behaviorService.packs$.subscribe(result => {
-            if (result != null) {
-                if (result.TEMPLATETYPEDESC == 'Email') {
-                    this.packsToobar = 'Email';
-                } else if (result.TEMPLATETYPEDESC == 'Template') {
-                    this.packsToobar = 'Template';
-                } else {
-                    this.packsToobar = 'Packs';
-                }
-            }
-        });
-    }
-
     // globally delete 
     GloballyDelete(getData) {
         let details = { FormAction: 'delete', VALIDATEONLY: true, Data: getData.DATA };
@@ -2460,7 +2587,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 data: {
                     errorData: errorData
                 }
-        });
+            });
             this.confirmDialogRef.componentInstance.confirmMessage = '';
             this.confirmDialogRef.afterClosed().subscribe(result => {
                 localStorage.removeItem('confEWshow');

@@ -63,8 +63,13 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
 
   }
   ngOnInit() {
+    // this.behaviorService.resizeTableForAllViewForSub();
+    // const behaviorService = this.behaviorService;
+    // $(window).resize(function () {
+    //   behaviorService.resizeTableForAllViewForSub();
+    // });
     $('content').addClass('inner-scroll');
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 295)) + 'px');
     this.behaviorService.workInProgress$.subscribe(result => {
       if (result)
         this.highlightedRows = result.WORKITEMGUID;
@@ -94,6 +99,7 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
     // let potData = { 'MatterGuid': this.currentMatter.MATTERGUID };
     this._mainAPiServiceService.getSetData(potData, 'GetWorkItems').subscribe(res => {
       if (res.CODE == 200 && res.STATUS == "success") {
+        this.behaviorService.setworkInProgressData(null);
         if (res.DATA.WORKITEMS[0]) {
           this.isDisplay = false;
           this.editworkInProgress(res.DATA.WORKITEMS[0]);

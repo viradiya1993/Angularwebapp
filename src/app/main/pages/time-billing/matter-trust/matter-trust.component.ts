@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { fuseAnimations } from '@fuse/animations';
 import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.component';
-import { TableColumnsService, MainAPiServiceService } from '../../../../_services';
+import { TableColumnsService, MainAPiServiceService, BehaviorService } from '../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { MatSort } from '@angular/material/sort';
@@ -30,12 +30,19 @@ export class MatterTrustComponent implements OnInit {
   constructor(private dialog: MatDialog,
     private TableColumnsService: TableColumnsService,
     private _mainAPiServiceService: MainAPiServiceService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private behaviorService:BehaviorService) { }
 
   MatterTrustdata;
   ngOnInit() {
     $('content').addClass('inner-scroll');
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 220)) + 'px');
+    // this.behaviorService.resizeTableForAllViewForSub();
+    // const behaviorService = this.behaviorService;
+    // $(window).resize(function () {
+    //   behaviorService.resizeTableForAllViewForSub();
+    // });
+
     this.getTableFilter();
     this.loadData();
   }

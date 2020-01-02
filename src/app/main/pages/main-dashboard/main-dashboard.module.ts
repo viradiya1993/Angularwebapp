@@ -31,7 +31,6 @@ import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
 import { MatTreeModule } from '@angular/material/tree';
 import { AuthGuard } from 'app/_guards';
 // import { DashboardComponent } from './dashboard.component';
-// import { DashboardService } from './dashboard.service';
 // import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 import { ChartsModule } from 'ng2-charts';
@@ -45,31 +44,12 @@ import { MainDashboardComponent } from './main-dashboard.component';
 import { SnapShotComponent } from './snap-shot/snap-shot.component';
 import { PeriodSummaryComponent } from './period-summary/period-summary.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { DashboardService } from './dashboard/dashboard.service';
-// import { AnalyticsDashboardDb } from './dashboard-analytics';
-// import { TaskComponent } from './task.component';
-// import { TaskDialogeComponent } from './task-dialoge/task-dialoge.component';
-// import { ApplicationPipesModule } from '../application-pipes.module';
-// const routes = [
 
-//   { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
-// ];
-
-// const routes: Routes = [
-//   { path     : '',   component: DashboardComponent,
-//         resolve  : {
-//           data: DashboardService
-//       }
-//   }
-// ];
 const routes = [
     { path: '', redirectTo: '/dashboard/monthly-graph', pathMatch: 'full', canActivate: [AuthGuard] },
     {
       path: '', component: MainDashboardComponent, children: [
         { path: 'monthly-graph', component: DashboardComponent,
-      //           resolve  : {
-      //     data: DashboardService
-      // }
      },
      { path: 'sanp-shot', component: SnapShotComponent },
      { path: 'period-summary', component: PeriodSummaryComponent },
@@ -128,7 +108,6 @@ const routes = [
   ],
 
   providers: [
-    DashboardService,
     // AnalyticsDashboardDb,
     { provide: DateAdapter, useClass: AppDateAdapter },
     { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }

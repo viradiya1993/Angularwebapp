@@ -1,7 +1,5 @@
+
 <div [formGroup]="SettingForm" class="one" fxLayout="column">
-        <div class="example-loading-shade" *ngIf="isLoadingResults">
-                <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
-            </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-form-field class="a" appearance="outline" fxFlex="100" class="pr-4"  [ngClass]="{'has-error':errorWarningData.Error?.BARRISTERSNAME,'has-warning':errorWarningData.Warning?.BARRISTERSNAME}"> 
             <mat-label>Name</mat-label>

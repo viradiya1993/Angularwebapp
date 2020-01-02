@@ -126,11 +126,8 @@ export class TimeEntriesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.behaviorService.resizeTableForAllView();
-    const behaviorService = this.behaviorService;
-    $(window).resize(function () {
-      behaviorService.resizeTableForAllView();
-    });
+    $('content').addClass('inner-scroll');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 265)) + 'px');
     this.behaviorService.ActiveSubMenu$.subscribe(result => { this.ActiveTab = result; });
     if (this.ActiveTab == 'quick-time-entries') {
       this.quickTimeEntriesForm = this.fb.group({
@@ -391,6 +388,7 @@ export class TimeEntriesComponent implements OnInit {
     this.isLoadingResults = true;
     this.Timersservice.getTimeEnrtyData(Data).subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
+        this.behaviorService.MainTimeEntryData(null);
         this.TimeEnrtyForm.controls['ExGST'].setValue(response.DATA.EXGSTTOTAL);
         this.TimeEnrtyForm.controls['IncGST'].setValue(response.DATA.INCGSTTOTAL);
         this.TimeEnrtyForm.controls['Units'].setValue(response.DATA.UNITSTOTAL);

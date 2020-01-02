@@ -57,7 +57,7 @@ export class SearchComponent implements OnInit {
     this.SearchForm.controls['Matter'].setValue(mattersData.MATTER);  
     this.SearchForm.controls['Client'].setValue(mattersData.CONTACTNAME);  
     $('content').addClass('inner-scroll');
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 295)) + 'px');
   }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('legal details', 'searching').subscribe(response => {

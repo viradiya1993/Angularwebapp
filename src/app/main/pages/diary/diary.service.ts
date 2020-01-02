@@ -123,12 +123,15 @@ export class DiaryService implements Resolve<any>
             let tempEvent: any[] = [];
             this._mainAPiServiceService.getSetData(this.SendParam, 'GetAppointment').subscribe(res => {
                 if (res.CODE == 200 && res.STATUS == "success") {
+                    
                     if ($.isEmptyObject(res.DATA) == true) {
                         tempEvent.push({});
+                        this.behaviorService.DiaryData(null);
                         this.events = tempEvent;
                         this.onEventsUpdated.next(this.events);
                         resolve(this.events);
                     } else {
+                        this.behaviorService.DiaryData(res.DATA.APPOINTMENTS[0]);
                         res.DATA.APPOINTMENTS.forEach(itemsdata => {
                             tempEvent.push({ start: dateformat(changeformat(itemsdata.APPOINTMENTDATE) + ' ' + itemsdata.APPOINTMENTTIME), title: '(' + this.tConvert(itemsdata.APPOINTMENTTIME) + ') -' + itemsdata.SUBJECT, allDay: false, DairyRowClickData: itemsdata.APPOINTMENTGUID, id: "das" });
                         });

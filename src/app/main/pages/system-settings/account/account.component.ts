@@ -38,7 +38,7 @@ export class AccountComponent implements OnInit {
   }
   LoadData(data) {
     // this.TaskAllData=[];
-    this.isLoadingResults = true;
+    // this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(data, 'GetSystem').subscribe(res => {
       res.DATA.LISTS.SYSTEMACCOUNTS.forEach(element => {
         this.FinalList.push(element)
@@ -52,10 +52,11 @@ export class AccountComponent implements OnInit {
           this.accountrow(res.DATA.LISTS.SYSTEMACCOUNTS[0], 0)
           this.behaviorService.SysytemAccountData(res.DATA.LISTS.SYSTEMACCOUNTS);
           this.highlightedRows = 0;
+          this.behaviorService.loadingSystemSetting('account');
         } else {
           // this.toastr.error("No Data Selected");
         }
-        this.isLoadingResults = false;
+        // this.isLoadingResults = false;
       }
     }, err => {
       this.isLoadingResults = false;

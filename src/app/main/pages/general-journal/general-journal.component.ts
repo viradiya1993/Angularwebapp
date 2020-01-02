@@ -109,6 +109,7 @@ export class GeneralJournalComponent implements OnInit, OnDestroy {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(this.filterVals, 'GetJournal').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
+        this.behaviorService.setGeneralData(null);
         let tempJData = [];
         let tempJData2 = [];
         let temJJ = response.DATA.JOURNALS;

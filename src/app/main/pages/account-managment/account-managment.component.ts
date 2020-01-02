@@ -3,6 +3,7 @@ import { fuseAnimations } from '@fuse/animations';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { BehaviorService } from 'app/_services';
 
 @Component({
   selector: 'app-account-managment',
@@ -12,9 +13,11 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class AccountManagmentComponent implements OnInit {
   clickbtn: string;
-
-  constructor(private location: Location, private router: Router, private _formBuilder: FormBuilder) {
+  isLoadingResults: boolean = false;
+  constructor(private location: Location, private router: Router, private _formBuilder: FormBuilder,
+    private behaviorService:BehaviorService) {
     this.nameFunction();
+    this.loading_fun();
   }
 
   ngOnInit() {
@@ -51,4 +54,14 @@ export class AccountManagmentComponent implements OnInit {
     }
 
   }
+
+ loading_fun(){
+  this.isLoadingResults = true;
+  this.behaviorService.loadingAccountMNG(null);
+  this.behaviorService.loadingAccountMNG$.subscribe(result=>{
+    if(result){
+      this.isLoadingResults = false;
+    }
+  })
+}
 }

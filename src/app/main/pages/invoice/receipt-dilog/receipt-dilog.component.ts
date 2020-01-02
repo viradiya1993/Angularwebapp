@@ -85,7 +85,6 @@ export class ReceiptDilogComponent implements OnInit {
     public _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public _data: any
   ) {
-    console.log(_data);
     if (_data.ForWahat) {
       if (_data.ForWahat == "genDoc") {
         this.whichTempGenerate = _data.wichDocGen;
@@ -220,7 +219,7 @@ export class ReceiptDilogComponent implements OnInit {
         if (response.DATA.RECEIPTALLOCATIONS[0]) {
           this.highlightedRows = 0;
           this.currentInvoiceData = response.DATA.RECEIPTALLOCATIONS[0];
-          this.editContact(response.DATA.RECEIPTALLOCATIONS[0], 0)
+          this.clickRow(response.DATA.RECEIPTALLOCATIONS[0], 0)
         }
         this.PrepareReceiptData = new MatTableDataSource(response.DATA.RECEIPTALLOCATIONS)
         this.PrepareReceiptData.paginator = this.paginator;
@@ -255,7 +254,7 @@ export class ReceiptDilogComponent implements OnInit {
         this.TotalInvoice = response.DATA.TOTALOUSTANDING;
         if (response.DATA.INVOICES[0]) {
           this.highlightedRows = 0;
-          this.editContact(response.DATA.INVOICES[0], 0);
+          this.clickRow(response.DATA.INVOICES[0], 0);
           this.currentInvoiceData = response.DATA.INVOICES[0];
         }
         this.PrepareReceiptData = new MatTableDataSource(response.DATA.INVOICES)
@@ -308,7 +307,7 @@ export class ReceiptDilogComponent implements OnInit {
     }
     this.AMOUNT = parseFloat(this.f.AMOUNT.value).toFixed(2);
     this.checkCal(this.PrepareReceiptData.data, 'autoAllocation', this.f.AMOUNT.value);
-    this.editContact(this.PrepareReceiptData.data[0], 0);
+    this.clickRow(this.PrepareReceiptData.data[0], 0);
   }
 
   checkCal(data, checkval, ValEnterByUser) {
@@ -343,13 +342,13 @@ export class ReceiptDilogComponent implements OnInit {
         }
       }
     }
-    this.editContact(this.PrepareReceiptData.data[0], 0)
+    this.clickRow(this.PrepareReceiptData.data[0], 0)
   }
   ApplyReceipt() {
     // this.checkCal(this.PrepareReceiptData.data,'autoAllocation',this.f.allocatedSelected.value);
     this.SingalrowAllocation();
   }
-  editContact(row: any, index) {
+  clickRow(row: any, index) {
     this.INDEX = index;
     this.currentInvoiceData = row;
     this.PrepareReceiptForm.controls['allocatedSelected'].setValue(row.ALLOCATED);
@@ -517,7 +516,6 @@ export class ReceiptDilogComponent implements OnInit {
         }
       });
       this.confirmDialogRef1.afterClosed().subscribe(result => {
-        console.log("con 1");
         this.isspiner = false;
         if (result) {
           this.isspiner = true;

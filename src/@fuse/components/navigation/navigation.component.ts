@@ -49,7 +49,7 @@ export class FuseNavigationComponent implements OnInit {
     if (guid) {
       let postdata = { 'USERGUID': guid.UserGuid };
       let Favouritelist = [{ "ID": "matters", "TITLE": "Matters", "URL": "matters", "STAR": "" },
-      { "ID": "contact", "TITLE": "Contacts", "URL": "contact", "STAR": "" },
+      // { "ID": "contact", "TITLE": "Contacts", "URL": "contact", "STAR": "" },
       { "ID": "time_entries", "TITLE": "Time entries", "URL": "time-entries", "STAR": "" },
       { "ID": "diary", "TITLE": "Diary", "URL": "diary", "STAR": "" },
       { "ID": "invoice", "TITLE": "Invoices", "URL": "invoice", "STAR": "" },
@@ -59,7 +59,6 @@ export class FuseNavigationComponent implements OnInit {
       { "ID": "Safe-Custody", "TITLE": "Safe Custody", "URL": "Safe-Custody", "STAR": "" },
       { "ID": "trust-money", "TITLE": "Trust Money", "URL": "trust-money", "STAR": "" },
       { "ID": "task", "TITLE": "Task", "URL": "task", "STAR": "" },
-  
       { "ID": "trust-end-month", "TITLE": "Trust End Of Month", "URL": "trust-end-month", "STAR": "" },
       { "ID": "receive-money", "TITLE": "Receive money", "URL": "receive-money", "STAR": "" }]
 

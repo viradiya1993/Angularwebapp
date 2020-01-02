@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import * as $ from 'jquery';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
-import { Subscription } from 'rxjs/Subscription';
+
 
 @Component({
   selector: 'app-contact',
@@ -20,7 +20,6 @@ import { Subscription } from 'rxjs/Subscription';
 })
 
 export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
-  subscription: Subscription;
   highlightedRows: any;
   ColumnsObj = [];
   theme_type = localStorage.getItem('theme_type');
@@ -28,8 +27,8 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
   contectTitle = this.theme_type == "theme-default" ? 'Solicitor' : 'Client';
   displayedColumns: string[];
   tempColobj: any;
-  @ViewChild(MatPaginator,{static: false}) paginator: MatPaginator;
-  @ViewChild(MatSort,{static: false}) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   datanull: null;
   isLoadingResults: boolean = false;
   contactFilter: FormGroup;
@@ -109,7 +108,9 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
         this.Contactdata = new MatTableDataSource(response.DATA.CONTACTS);
         this.Contactdata.paginator = this.paginator;
         this.Contactdata.sort = this.sort;
+        this.behaviorService.contactData(null);
         if (response.DATA.CONTACTS[0]) {
+          this.behaviorService.contactData(response.DATA.CONTACTS[0]);
           localStorage.setItem('contactGuid', response.DATA.CONTACTS[0].CONTACTGUID);
           // localStorage.setItem('contactData',  JSON.stringify(response.DATA.CONTACTS[0]));
           this.isDisplay = false;
@@ -132,6 +133,7 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   //for edit popup
   editContact(val, row) {
+  
     localStorage.setItem('contactGuid', val);
     // localStorage.setItem('contactData',row);
   }
@@ -183,9 +185,9 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
     this.LoadData(this.filterVals);
   }
   ngOnDestroy(): void {
-    this.filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
-    this.filterVals.SEARCH = '';
-    localStorage.setItem('contact_Filter', JSON.stringify(this.filterVals));
+    // this.filterVals = JSON.parse(localStorage.getItem('contact_Filter'));
+    // this.filterVals.SEARCH = '';
+    // localStorage.setItem('contact_Filter', JSON.stringify(this.filterVals));
   }
 }
 

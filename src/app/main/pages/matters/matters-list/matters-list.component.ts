@@ -204,6 +204,7 @@ export class MattersListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isLoadingResults = true;
     this.subscription = this._mainAPiServiceService.getSetData(data, 'GetMatter').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
+        this.behaviorService.MatterData(null);
         if (response.DATA.MATTERS[0]) {
           this.isDisplay = false;
           this.behaviorService.MatterData(response.DATA.MATTERS[0]);

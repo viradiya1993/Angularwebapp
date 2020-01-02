@@ -78,7 +78,7 @@ export class ContactCorresDetailsComponent implements OnInit {
   }
   selectButton() {
     const dialogRef = this.dialog.open(ContactDialogComponent, { data: { action: 'edit' } });
-    dialogRef.afterClosed().subscribe(result => { console.log(result); });
+    dialogRef.afterClosed().subscribe(result => {  });
   }
 
 

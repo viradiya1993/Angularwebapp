@@ -1,4 +1,3 @@
-<button mat-raised-button type="button" color="primary" id="refreshLegalAuthorityADD" (click)="refreshLegalAuthorityADD();">Refresh</button>
 
 <div id="matters_detail_div" class="page-layout carded fullwidth">
     <div class="top-bg accent work_progress_height"></div>
@@ -73,7 +72,7 @@
                                     </table>
                                     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
                                         <!-- This is the tree node template for leaf nodes -->
-                                        <mat-tree-node class="border-top" *matTreeNodeDef="let node" matTreeNodePadding [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index (click)="editContact(node);highlightedRows = node.index "
+                                        <mat-tree-node class="border-top" *matTreeNodeDef="let node" matTreeNodePadding [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index (click)="clickRow(node);highlightedRows = node.index "
                                             matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                             <!-- use a disabled button to provide padding for tree leaf -->
                                             <button mat-icon-button disabled></button>
@@ -88,9 +87,9 @@
                                         </mat-tree-node>
                                         <!-- This is the tree node template for expandable nodes -->
                                         <mat-tree-node class="border-top" *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index
-                                            (click)="editContact(node);highlightedRows = node.index " matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                            (click)="clickRow(node);highlightedRows = node.index " matRipple [@animate]="{value:'*',params:{y:'100%'}}">
                                             <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name" [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index
-                                                (click)="editContact(node);highlightedRows = node.index ">
+                                                (click)="clickRow(node);highlightedRows = node.index ">
                                                     <mat-icon class="mat-icon-rtl-mirror" >
                                                       {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                                                     </mat-icon>

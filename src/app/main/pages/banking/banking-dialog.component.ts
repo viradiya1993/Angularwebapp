@@ -34,7 +34,7 @@ interface ExampleFlatNode {
   animations: fuseAnimations
 })
 export class BankingDialogComponent implements OnInit {
-  @ViewChild('tree',{static: false}) tree;
+  @ViewChild('tree', { static: false }) tree;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
   isLoadingResults: boolean = false;
@@ -71,30 +71,29 @@ export class BankingDialogComponent implements OnInit {
     private _mainAPiServiceService: MainAPiServiceService,
     private behaviorService: BehaviorService,
     public dialogRef: MatDialogRef<BankingDialogComponent>, @Inject(MAT_DIALOG_DATA) public _data: any, private router: Router, ) {
-    console.log(_data);
-  
-   this.behaviorService.dialogClose$.subscribe(result => {
-    if(result != null){
-      if(result.MESSAGE == 'Not logged in'){
-        this.dialogRef.close(false);
-      }
-    }
-   });
 
-   this.title="Select Account";
-   this.loadData({AccountClass:_data.AccountType});
-//    this.behaviorService.TrustDuplicateModuleHandling$.subscribe(result => {
-//     if (result != null) {
-//         this.accountTypeData=result;
-//     }
-//     if(this.accountTypeData.ClickType =='WithoutTrust'){
-//       this.title="Select Account";
-//       this.loadData({AccountClass:_data.AccountType,UseTrust:this.accountTypeData.UseTrust});
-//     }else{
-//       this.title="Select Trust Account";
-//       this.loadData({AccountClass:_data.AccountType,UseTrust:this.accountTypeData.UseTrust});
-//     }
-// });
+    this.behaviorService.dialogClose$.subscribe(result => {
+      if (result != null) {
+        if (result.MESSAGE == 'Not logged in') {
+          this.dialogRef.close(false);
+        }
+      }
+    });
+
+    this.title = "Select Account";
+    this.loadData({ AccountClass: _data.AccountType });
+    //    this.behaviorService.TrustDuplicateModuleHandling$.subscribe(result => {
+    //     if (result != null) {
+    //         this.accountTypeData=result;
+    //     }
+    //     if(this.accountTypeData.ClickType =='WithoutTrust'){
+    //       this.title="Select Account";
+    //       this.loadData({AccountClass:_data.AccountType,UseTrust:this.accountTypeData.UseTrust});
+    //     }else{
+    //       this.title="Select Trust Account";
+    //       this.loadData({AccountClass:_data.AccountType,UseTrust:this.accountTypeData.UseTrust});
+    //     }
+    // });
   }
   ngOnInit() {
     this.treeControl.expandAll();
@@ -102,7 +101,7 @@ export class BankingDialogComponent implements OnInit {
   loadData(type: any) {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(type, 'GetAccount').subscribe(response => {
-     
+
       if (response.CODE == 200 && response.STATUS == "success") {
         this.arrayForIndex = [];
         if (response.DATA.ACCOUNTS[0].ACCOUNTGUID == "") {
@@ -117,7 +116,7 @@ export class BankingDialogComponent implements OnInit {
         if (this.storeDataarray[0]) {
           this.isDisplay = false;
           this.RowClick(this.storeDataarray[0]);
-        }else{
+        } else {
           this.isDisplay = true;
         }
         this.highlightedRows = 1;
@@ -152,16 +151,16 @@ export class BankingDialogComponent implements OnInit {
     node.AccountType = this._data.AccountType;
     this.ACCOUNTGUIDsELECTED = node;
     // this.isDisabledselect = node.MainList.ACCOUNTTYPENAME;
-    if(this._data.RoterPath =='Reconclie Practice'){
-      if(node.MainList.ACCOUNTTYPENAME !='Bank Account'){
-        this.isDisabledselect ='Header';
-      }else{
-        this.isDisabledselect ='';
+    if (this._data.RoterPath == 'Reconclie Practice') {
+      if (node.MainList.ACCOUNTTYPENAME != 'Bank Account') {
+        this.isDisabledselect = 'Header';
+      } else {
+        this.isDisabledselect = '';
       }
-    }else{
+    } else {
       this.isDisabledselect = node.MainList.ACCOUNTTYPENAME;
     }
-    
+
     // if (this._data.FromWhere == 'systemSetting') {
     //   this.isDisabledselect = 'Bank Account';
     // } else if (this._data.FromWhere == 'spendMonyExpense') {
@@ -189,7 +188,7 @@ export class BankingDialogComponent implements OnInit {
       UseTrust: 'No',
       PopUp: '',
       Lable: "CHART ACCOUNT",
-  }
+    }
     localStorage.setItem('ChartURL', JSON.stringify(this.ChartHandlingData));
     this.behaviorService.TrustDuplicateModuleHandling(this.ChartHandlingData);
 
@@ -203,7 +202,7 @@ export class BankingDialogComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         // this.loadData(this._data.AccountType);
-        this.loadData({AccountClass:this._data.AccountType});
+        this.loadData({ AccountClass: this._data.AccountType });
       }
     });
   }

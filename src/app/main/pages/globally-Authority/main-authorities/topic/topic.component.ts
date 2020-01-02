@@ -110,7 +110,7 @@ export class TopicComponent implements OnInit {
           this.storeDataarray = res.DATA.TOPICS;
           this.showData(this.storeDataarray, 0, null);
           this.dataSource.data = this.storeDataarray;
-          this.editContact(this.storeDataarray[0]);
+          this.clickRow(this.storeDataarray[0]);
           this.highlightedRows = 1;
        }
        this.isLoadingResults = false;
@@ -121,7 +121,7 @@ export class TopicComponent implements OnInit {
      this.pageSize = localStorage.getItem('lastPageSize');
    }
    hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
-   editContact(val) {
+   clickRow(val) {
      this.behaviorService.MainTopicData(val);
    }
    refresMainTopic(){

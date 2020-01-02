@@ -43,7 +43,7 @@ export class SafecustodyComponent implements OnInit {
   safeCustody_table;
   ngOnInit() {
     $('content').addClass('inner-scroll');
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 295)) + 'px');
     this.getTableFilter();
     this.LoadData();
     this.SafeCustody = this._formBuilder.group({
@@ -70,6 +70,7 @@ export class SafecustodyComponent implements OnInit {
     let postData = { 'MatterGUID': this.currentMatter.MATTERGUID };
     this._mainAPiServiceService.getSetData(postData, 'GetSafeCustody').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
+        this.behaviorService.SafeCustody(null);
         this.safeCustody_table = new MatTableDataSource(response.DATA.SAFECUSTODIES);
         this.safeCustody_table.paginator = this.paginator;
         this.safeCustody_table.sort = this.sort;

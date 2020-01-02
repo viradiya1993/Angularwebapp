@@ -194,3 +194,26 @@ button#refreshChartACCTab {
 // .account_type_text_2 {
 //     padding-left: 40px;
 // }
+
+.row-text-colore .text-center {
+    color: #fff;
+}
+
+.chart_tbl_head th:first-child {
+    width: 40%!important;
+    max-width: 24.5% !important;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex: none !important;    
+}
+.chart_tbl_head th.mat-header-cell {
+    flex: 1 1 100%;
+    box-sizing: border-box;
+    max-width: 20%;
+    text-align: center;
+}
+.more_tbl_clmn .mat-header-cell:last-child, .more_tbl_clmn .mat-cell:last-child {
+    padding-right: 20px;
+}

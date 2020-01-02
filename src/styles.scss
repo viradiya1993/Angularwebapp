@@ -52,3 +52,9 @@ button.disabled-click {
 mat-icon.set_icon {
     font-size: 32px !important;
 }
+
+.page-layout.carded.fullwidth>.center>.header {
+    height: 86px!important;
+    min-height: 86px!important;
+    max-height: 86px!important;
+}

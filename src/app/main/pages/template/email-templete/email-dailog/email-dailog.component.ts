@@ -103,8 +103,6 @@ export class EmailDailogComponent implements OnInit {
 
   }
   CommonEditDupData() {
-    console.log(this.EmailtemplateData);
-
     // this.GetData=ShowData;
     this.EmailTemplete.controls['name'].setValue(this.EmailtemplateData.NAME);
     this.EmailTemplete.controls['ToEmail'].setValue(this.EmailtemplateData.TOADDRESS);
@@ -137,7 +135,6 @@ export class EmailDailogComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       this.EmailTemplete.controls['attachment'].setValue(result);
 
     });

@@ -99,13 +99,14 @@ export class AuthoritiesComponent implements OnInit {
     this.behaviorService.LegalAuthorityToolbar$.subscribe(result => {
       if (result) {
         this.LegalAuthorityToolbar = result;
+        this.callAddDEL();
       }
     });
   }
 
   ngOnInit() {
     $('content').addClass('inner-scroll');
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 295)) + 'px');
     this.getTableFilter();
     this.LoadData();
   }
@@ -144,6 +145,7 @@ export class AuthoritiesComponent implements OnInit {
         this.authorities_table = new MatTableDataSource(response.DATA.MATTERAUTHORITIES);
         this.authorities_table.paginator = this.paginator;
         this.authorities_table.sort = this.sort;
+        this.isLoadingResults = false;
         if (response.DATA.MATTERAUTHORITIES[0]) {
           this.RowClick(response.DATA.MATTERAUTHORITIES[0]);
           this.highlightedRows2 = response.DATA.MATTERAUTHORITIES[0].AUTHORITYGUID;
@@ -152,7 +154,7 @@ export class AuthoritiesComponent implements OnInit {
 
         }
       }
-      this.isLoadingResults = false;
+      // this.isLoadingResults = false;
     }, err => {
       console.log(err);
     });
@@ -167,7 +169,7 @@ export class AuthoritiesComponent implements OnInit {
         this.showData(this.storeDataarray, 0, null);
         this.dataSource.data = this.storeDataarray;
         this.treeControl.expandAll();
-        this.editContact(this.storeDataarray[0]);
+        this.clickRow(this.storeDataarray[0]);
         this.highlightedRows = 1;
       }
       this.isLoadingResults = false;
@@ -209,14 +211,14 @@ export class AuthoritiesComponent implements OnInit {
   }
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
-  editContact(val) {
+  clickRow(val) {
     this.behaviorService.LegalAuthorityData(val);
   }
   RowClick(val) {
     this.secondauthodata = val;
     this.behaviorService.LegalAuthorityForSubAuthToolbar(val);
   }
-  refreshLegalAuthorityADD() {
+  callAddDEL() {
     if (this.LegalAuthorityToolbar == 'add') {
       this.LegalAuthorityData.Main.AUTHORITYGUID
       let Data = {

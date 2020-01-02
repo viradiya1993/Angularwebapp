@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { fuseAnimations } from '@fuse/animations';
 import { FormGroup } from '@angular/forms';
-import {  MainAPiServiceService } from './../../../../_services';
+import {  MainAPiServiceService, BehaviorService } from './../../../../_services';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -16,22 +16,17 @@ export class NameComponent implements OnInit {
   @Input() errorWarningData: any;
   addData:any=[];
   constructor(private _mainAPiServiceService:MainAPiServiceService,
+    private behaviorService: BehaviorService,
     private toastr: ToastrService,) { }
 
-  ngOnInit() {
-    // this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response=>{
-  
-    //   this.addData=response.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP
-    // })
-    
-    this.isLoadingResults = true;
+  ngOnInit() {  
+    // this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData({}, 'GetSystem').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") { 
-        
-        this.addData=response.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP
-
+        this.addData=response.DATA.SYSTEM.ADDRESSGROUP.POSTALADDRESSGROUP;
+        this.behaviorService.loadingSystemSetting('name');
+        // this.isLoadingResults = false;
       }
-      this.isLoadingResults = false;
     }, error => {
       this.toastr.error(error);
     });
@@ -54,13 +49,6 @@ export class NameComponent implements OnInit {
           this.SettingForm.controls['POSTALPOSTCODE'].setValue(this.addData.POSTALPOSTCODE); 
           this.SettingForm.controls['POSTALSUBURB'].setValue(this.addData.POSTALSUBURB); 
           this.SettingForm.controls['POSTALSTATE'].setValue(this.addData.POSTALSTATE); 
-          
-     
-      // this.SettingForm.controls['POSTALADDRESS1'].setValue("");
-      // this.SettingForm.controls['POSTALSUBURB'].setValue("");
-      // this.SettingForm.controls['POSTALSTATE'].setValue("");
-      // this.SettingForm.controls['POSTALPOSTCODE'].setValue("");
-
     }
   }
 

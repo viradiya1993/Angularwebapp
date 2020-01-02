@@ -144,21 +144,23 @@
                     <mat-card>
                         <div class="customer">
                             <table class="simple" [@animateStagger]="{value:'50'}">
-                                <tr>
-                                    <th>AMOUNT</th>
-                                    <th>EXPENDITURECLASS</th>
-                                    <th>GST</th>
-                                    <th>Matter Num</th>
-                                    <th>NOTE</th>
-                                </tr>
-                                <tr *ngFor="let item of getDataForTable; let index = index" (click)="editMoney(item ,index);highlightedRows=index" [style.background]="highlightedRows == index ? selectedColore : ''" [ngClass]="highlightedRows == index ? 'row-text-colore' : ''" matRipple
-                                    [@animate]="{value:'*',params:{y:'100%'}}">
-                                    <td>{{item.AMOUNT}}</td>
-                                    <td>{{item.EXPENDITURECLASS}}</td>
-                                    <td>{{item.GST}}</td>
-                                    <td>{{item.SHORTNAME}}</td>
-                                    <td>{{item.NOTE}}</td>
-                                </tr>
+                                <tbody>
+                                    <tr>
+                                        <th>AMOUNT</th>
+                                        <th>EXPENDITURECLASS</th>
+                                        <th>GST</th>
+                                        <th>Matter Num</th>
+                                        <th>NOTE</th>
+                                    </tr>
+                                    <tr *ngFor="let item of getDataForTable; let index = index" (click)="editMoney(item ,index);highlightedRows=index" [style.background]="highlightedRows == index ? selectedColore : ''" [ngClass]="highlightedRows == index ? 'row-text-colore' : ''" matRipple
+                                        [@animate]="{value:'*',params:{y:'100%'}}">
+                                        <td>{{item.AMOUNT}}</td>
+                                        <td>{{item.EXPENDITURECLASS}}</td>
+                                        <td>{{item.GST}}</td>
+                                        <td>{{item.SHORTNAME}}</td>
+                                        <td>{{item.NOTE}}</td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </div>
                     </mat-card>

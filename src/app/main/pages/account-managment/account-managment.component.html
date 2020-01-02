@@ -1,3 +1,6 @@
+<div class="example-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
+</div>
 <div id="contacts" class="con page-layout simple left-sidebar inner-sidebar inner-scroll">
     <!-- HEADER -->
     <div class="header business_head_tab accent p-16 p-sm-24" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-xs="row" fxLayoutAlign.gt-xs="space-between center">
@@ -19,25 +22,25 @@
                         <div class="content py-16" fusePerfectScrollbar>
                             <div class="nav material2">
                                 <div class="nav-item name" aria-label="inbox">
-                                    <a (click)="basicInfoClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickbtn ==='Basic Information'}">
+                                    <a (click)="loading_fun()" (click)="basicInfoClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickbtn ==='Basic Information'}">
                                         <span class="title">Basic Information</span>
                                     </a>
                                 </div>
 
                                 <div class="nav-item name" aria-label="inbox">
-                                    <a (click)="ProductClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickbtn ==='Products'}">
+                                    <a (click)="loading_fun()" (click)="ProductClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickbtn ==='Products'}">
                                         <span class="title">Products</span>
                                     </a>
                                 </div>
 
                                 <div class="nav-item name" aria-label="inbox">
-                                    <a (click)="ReceiptsClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickbtn ==='Receipts'}">
+                                    <a (click)="loading_fun()" (click)="ReceiptsClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickbtn ==='Receipts'}">
                                         <span class="title">Receipts</span>
                                     </a>
                                 </div>
 
                                 <div class="nav-item name" aria-label="inbox">
-                                    <a (click)="PaymentClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickbtn ==='Payment'}">
+                                    <a (click)="loading_fun()" (click)="PaymentClick()" class="nav-link" matRipple [ngClass]="{'active accent':clickbtn ==='Payment'}">
                                         <span class="title">Payment</span>
                                     </a>
                                 </div>

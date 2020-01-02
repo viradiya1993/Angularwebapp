@@ -85,7 +85,6 @@ export class SpendMoneyAddComponent implements OnInit {
     public behaviorService: BehaviorService,
     public _matDialog: MatDialog, public datepipe: DatePipe, public _mainAPiServiceService: MainAPiServiceService) {
     this.action = _data.action;
-    console.log(_data);
     // this.dialogTitle = this.action === 'edit' ? 'Update Spend Money' : 'Add Spend Money';
     if (this.action === 'new') {
       this.dialogTitle = 'Add Spend Money ';
@@ -151,7 +150,6 @@ export class SpendMoneyAddComponent implements OnInit {
       $('#expac').addClass('menu-disabled');
       this.expac = true;
       this._mainAPiServiceService.getSetData({ EXPENDITUREGUID: this.SendMoney_dataGUID.EXPENDITUREGUID }, 'GetExpenditure').subscribe(response => {
-        console.log(response);
         if (response.CODE == 200 && response.STATUS == "success") {
           this.SendMoney_data = response.DATA.EXPENDITURES[0];
           let DATE: any;

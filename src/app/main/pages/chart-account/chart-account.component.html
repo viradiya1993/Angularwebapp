@@ -134,6 +134,10 @@
                                                 <span class="text-center account_type_text_{{node.level}}">{{node.MainList.MYOBEXPORTACCOUNT }}ffdsf</span> -->
                                             </mat-tree-node>
                                         </mat-tree>
+                                        <mat-paginator [length]="100"
+                                                         [pageSize]="10"
+                                                    [pageSizeOptions]="[5, 10, 25, 100]">
+                                        </mat-paginator>
                                     </div>
                                 </div>
                             </div>

@@ -157,7 +157,7 @@ export class ContactDialogComponent implements OnInit {
     if (this.action === 'edit' || this.action === 'duplicate') {
       this.isLoadingResults = true;
       let contactguidforbody = { CONTACTGUID: localStorage.getItem('contactGuid') }
-      this._mainAPiServiceService.getSetData(contactguidforbody, 'GetContact').subscribe(res => {
+      this.subscription = this._mainAPiServiceService.getSetData(contactguidforbody, 'GetContact').subscribe(res => {
         if (res.MESSAGE == 'Not logged in') {
           this.dialogRef.close(false);
         } else {
@@ -403,7 +403,7 @@ export class ContactDialogComponent implements OnInit {
       NOTES: this.f.NOTES.value
     }
     let details = { FormAction: this.FormAction, VALIDATEONLY: true, Data: detailsdata };
-    this.subscription = this._mainAPiServiceService.getSetData(details, 'SetContact').subscribe(response => {
+     this._mainAPiServiceService.getSetData(details, 'SetContact').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, details);
       } else if (response.CODE == 451 && response.STATUS == 'warning') {
@@ -458,7 +458,7 @@ export class ContactDialogComponent implements OnInit {
   }
   saveContectData(data: any) {
     data.VALIDATEONLY = false;
-    this.subscription = this._mainAPiServiceService.getSetData(data, 'SetContact').subscribe(response => {
+      this._mainAPiServiceService.getSetData(data, 'SetContact').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         if (this.action !== 'edit') {
           this.toastr.success('Contact save successfully');

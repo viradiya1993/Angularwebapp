@@ -91,6 +91,7 @@ export class ReceiveMoneyComponent implements OnInit {
     this._mainAPiServiceService.getSetData(data, 'GetIncome').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
         this.totalAountData = { TOTALINCGST: response.DATA.TOTALINCGST, TOTALEXGST: response.DATA.TOTALEXGST };
+        this.behaviorService.ReceiptData(null);
         if (response.DATA.INCOMEITEMS[0]) {
           this.isDisplay = false;
           this.behaviorService.ReceiptData(response.DATA.INCOMEITEMS[0]);

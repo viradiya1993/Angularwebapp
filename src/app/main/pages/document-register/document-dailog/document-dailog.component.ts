@@ -176,7 +176,6 @@ export class DocumentDailogComponent implements OnInit {
       TEMPLATENAME: this.SendDataArray.TEMPLATENAME,
     }
     let finalData = { DATA: Data, FormAction: this.FormAction, VALIDATEONLY: true }
-    console.log(finalData);
     this._mainAPiServiceService.getSetData(finalData, 'SetDocument').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, finalData);

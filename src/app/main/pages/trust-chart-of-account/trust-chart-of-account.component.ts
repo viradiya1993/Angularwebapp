@@ -23,7 +23,6 @@ export class TrustChartOfAccountComponent implements OnInit {
   }
   //AccountType
   AccountType(value){
-    console.log(value);
   }
   //Refersh
   refreshturstcAC(){

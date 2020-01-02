@@ -39,12 +39,17 @@ export class MatterInvoicesComponent implements OnInit {
 
   MatterInvoicesdata:any=[];
   ngOnInit() {
+    // this.behaviorService.resizeTableForAllViewForSub();
+    // const behaviorService = this.behaviorService;
+    // $(window).resize(function () {
+    //   behaviorService.resizeTableForAllViewForSub();
+    // });
+    $('content').addClass('inner-scroll');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 295)) + 'px');
     this.behaviorService.matterInvoice$.subscribe(matterInvoiceData => {
       if (matterInvoiceData)
         this.highlightedRows = matterInvoiceData.INVOICEGUID;
     });
-    $('content').addClass('inner-scroll');
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
     this.getTableFilter();
     this.loadData();
   }

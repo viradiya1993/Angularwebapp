@@ -54,7 +54,6 @@ export class RecurrancePatternComponent implements OnInit {
       this.DairyForm.controls['Sendcountvalue'].setValue('');
       this.DairyForm.controls['SendDaySelect'].setValue('');
       this.DairyForm.controls['SendEveryDay'].setValue(this.f.EveryDay.value);
-      console.log(this.f.SendEveryDay.value);
       this.DairyForm.controls['EveryDay'].enable();
       this.DairyForm.controls['countvalue'].disable();
       this.DairyForm.controls['DaySelect'].disable();

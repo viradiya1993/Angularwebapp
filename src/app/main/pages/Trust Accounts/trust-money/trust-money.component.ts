@@ -163,7 +163,6 @@ export class TrustMoneyComponent implements OnInit {
   }
   getTableFilter() {
     this.TableColumnsService.getTableFilter('trust money', '').subscribe(response => {
-      console.log(response);
       if (response.CODE == 200 && response.STATUS == "success") {
         let data = this.TableColumnsService.filtertableColum(response.DATA.COLUMNS);
         this.displayedColumns = data.showcol;
@@ -175,7 +174,6 @@ export class TrustMoneyComponent implements OnInit {
     });
   }
   openDialog() {
-    console.log("click open dialoge ");
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '100%';
     dialogConfig.disableClose = true;
@@ -203,7 +201,6 @@ export class TrustMoneyComponent implements OnInit {
   LoadData(data) {
     this.isLoadingResults = true;
     this._mainAPiServiceService.getSetData(data, 'GetTrustTransaction').subscribe(res => {
-      console.log(res);
       if (res.CODE == 200 && res.STATUS == "success") {
         this.TrustMoneyForm.controls['LASTRECONCILIATIONBALANCE'].setValue(res.DATA.LASTRECONCILIATIONBALANCE);
         this.TrustMoneyForm.controls['LASTRECONCILIATIONDATE'].setValue(res.DATA.LASTRECONCILIATIONDATE);
@@ -234,7 +231,6 @@ export class TrustMoneyComponent implements OnInit {
     this.pageSize = localStorage.getItem('lastPageSize');
   }
   RowClick(row) {
-    console.log(row);
   }
   trustMoneyRefersh() {
     this.filterData = JSON.parse(localStorage.getItem("trustMoney_filter"))

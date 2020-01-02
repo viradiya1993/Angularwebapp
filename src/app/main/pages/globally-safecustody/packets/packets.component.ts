@@ -61,6 +61,7 @@ export class PacketsComponent implements OnInit {
         this.MainPacketsData = new MatTableDataSource(res.DATA.SAFECUSTODYPACKETS);
         this.MainPacketsData.sort = this.sort;
         this.MainPacketsData.paginator = this.paginator;
+        this.behaviorService.Packets(null);
         if (res.DATA.SAFECUSTODYPACKETS[0]) {
           this.isDisplay = false;
           this.EditPackets(res.DATA.SAFECUSTODYPACKETS[0]);

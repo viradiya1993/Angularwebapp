@@ -104,6 +104,7 @@ export class MainSafeCustodyComponent implements OnInit ,OnDestroy {
         this.MainSafeCustodyData = new MatTableDataSource(res.DATA.SAFECUSTODIES);
         this.MainSafeCustodyData.sort = this.sort;
         this.MainSafeCustodyData.paginator = this.paginator;
+        this.behaviorService.SafeCustody(null);
         if (res.DATA.SAFECUSTODIES[0]) {
           this.isDisplay = false;
           this.editsafecustody(res.DATA.SAFECUSTODIES[0]);

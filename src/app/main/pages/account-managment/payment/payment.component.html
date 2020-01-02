@@ -1,8 +1,5 @@
 <div class="one" fxLayout="column">
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-        <div class="example-loading-shade" *ngIf="isLoadingResults">
-            <mat-spinner [style.zoom]="0.5" *ngIf="isLoadingResults"></mat-spinner>
-        </div>
         <iframe [src]="safeSrc" width="100%" height="500px" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
     </div>
     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" style="padding-top: 20px;">

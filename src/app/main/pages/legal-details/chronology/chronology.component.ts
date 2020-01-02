@@ -51,7 +51,7 @@ export class ChronologyComponent implements OnInit {
     this.SearchForm.controls['Matter'].setValue(this.currentMatter.MATTER);
     this.SearchForm.controls['Client'].setValue(this.currentMatter.CLIENT);
     $('content').addClass('inner-scroll');
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 295)) + 'px');
     this.getTableFilter();
     this.LoadData();
   }
@@ -77,6 +77,7 @@ export class ChronologyComponent implements OnInit {
         this.chronology_table = new MatTableDataSource(response.DATA.CHRONOLOGIES);
         this.chronology_table.paginator = this.paginator;
         this.chronology_table.sort = this.sort;
+        this.behaviorService.LegalChronologyData(null);
         if (response.DATA.CHRONOLOGIES[0]) {
           this.isDisplay = false;
           this.RowClick(response.DATA.CHRONOLOGIES[0])

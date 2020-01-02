@@ -41,7 +41,7 @@ export class FileNotesComponent implements OnInit {
     this.FileNoteData.MatterName = this.currentMatter.MATTER;
     this.FileNoteData.ContactName = this.currentMatter.CONTACTNAME;
     $('content').addClass('inner-scroll');
-    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 140)) + 'px');
+    $('.example-containerdata').css('height', ($(window).height() - ($('#tool_baar_main').height() + 295)) + 'px');
     this.getTableFilter();
     this.loadData();
   }
@@ -51,6 +51,7 @@ export class FileNotesComponent implements OnInit {
     let potData = { 'MatterGUID': this.currentMatter.MATTERGUID };
     this._mainAPiServiceService.getSetData(potData, 'GetFileNote').subscribe(response => {
       if (response.CODE == 200 && response.STATUS == "success") {
+        this.behaviorService.FileNotesData(null);
         this.filenotes_table = new MatTableDataSource(response.DATA.FILENOTES);
         this.filenotes_table.paginator = this.paginator;
         this.filenotes_table.sort = this.sort;

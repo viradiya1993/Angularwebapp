@@ -24,6 +24,7 @@ import { MatSort } from '@angular/material/sort';
 
 })
 export class InvoiceComponent implements OnInit {
+  isDisplay: boolean = false;
   resultPicker: any;
   matterInvoiceFilterForm: FormGroup;
   currentMatter: any = JSON.parse(localStorage.getItem('set_active_matters'));
@@ -60,7 +61,6 @@ export class InvoiceComponent implements OnInit {
       localStorage.setItem('matter_invoice_filter', JSON.stringify(this.lastFilter));
     }
     if (this.lastFilter) {
-      console.log(this.lastFilter);
       if (this.lastFilter.STARTDATE && this.lastFilter.ENDDATE) {
         let tempDate = this.lastFilter.STARTDATE.split("/");
         let tempDate2 = this.lastFilter.ENDDATE.split("/");
@@ -136,11 +136,14 @@ export class InvoiceComponent implements OnInit {
         this.matterInvoiceFilterForm.controls['Outstanding'].setValue(response.DATA.TOTALOUSTANDING);
         this.behaviorService.matterInvoiceData(null);
         if (response.DATA.INVOICES[0]) {
+          this.isDisplay = false;
           this.behaviorService.matterInvoiceData(response.DATA.INVOICES[0])
           localStorage.setItem('edit_invoice_id', response.DATA.INVOICES[0].INVOICEGUID);
           // localStorage.setItem('set_active_Invoices', JSON.stringify(response.DATA.INVOICES[0]));
           this.highlightedRows = response.DATA.INVOICES[0].INVOICEGUID;
           this.currentInvoiceData = response.DATA.INVOICES[0];
+        }else{
+          this.isDisplay = true;
         }
         this.MatterInvoicesdata = new MatTableDataSource(response.DATA.INVOICES);
         this.MatterInvoicesdata.paginator = this.paginator;

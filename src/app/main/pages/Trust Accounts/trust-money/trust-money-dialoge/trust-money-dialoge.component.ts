@@ -135,7 +135,6 @@ export class TrustMoneyDialogeComponent implements OnInit {
     this.TrustMoneyForm.controls['CheckBox'].setValue(false);
     this.action = _data.action;
     this.forPDF = _data.forPDF;
-    console.log(_data);
     if (this.action == "receipt") {
       $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Trust Receipt"
@@ -253,7 +252,6 @@ export class TrustMoneyDialogeComponent implements OnInit {
     }
 
     this._mainAPiServiceService.getSetData({ Data: data, FormAction: 'default' }, 'SetTrustTransaction').subscribe(response => {
-      console.log(response);
       this.TrustMoneyForm.controls['Ledger'].setValue(response.DATA.DEFAULTVALUES.MATTER);
       this.TrustMoneyForm.controls['MATTERGUID'].setValue(response.DATA.DEFAULTVALUES.MATTERLEDGERGUID);
       this.TrustMoneyForm.controls['BANKACCOUNTGUID'].setValue(response.DATA.DEFAULTVALUES.BANKACCOUNTGUID);
@@ -524,7 +522,6 @@ export class TrustMoneyDialogeComponent implements OnInit {
       disableClose: true, width: '100%', data: { AccountType: type }
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result)
       if (result) {
         // if (result.AccountType == "BANK ACCOUNT") {
         this.TrustMoneyForm.controls['BANKACCOUNTGUIDTEXT'].setValue(result.MainList.ACCOUNTCLASS + ' - ' + result.MainList.ACCOUNTNUMBER);

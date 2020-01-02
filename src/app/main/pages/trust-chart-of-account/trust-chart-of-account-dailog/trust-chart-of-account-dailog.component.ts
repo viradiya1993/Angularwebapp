@@ -27,7 +27,6 @@ export class TrustChartOfAccountDailogComponent implements OnInit {
     public _matDialog: MatDialog,
     private _mainAPiServiceService: MainAPiServiceService,
     @Inject(MAT_DIALOG_DATA) public data: any) { 
-      console.log(data);
       this.action = data.action;
       if (this.action === 'new'){
         this.dialogTitle = 'New Account'

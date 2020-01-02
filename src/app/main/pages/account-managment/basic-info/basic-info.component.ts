@@ -3,7 +3,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MainAPiServiceService } from 'app/_services';
+import { MainAPiServiceService, BehaviorService } from 'app/_services';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -20,7 +20,8 @@ export class BasicInfoComponent implements OnInit {
   isLoadingResults: boolean = false;
   isspiner: boolean = false;
   errorWarningData: any = { "Error": [], 'Warning': [] };
-  constructor(public MatDialog: MatDialog, private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService) { }
+  constructor(public MatDialog: MatDialog, private _mainAPiServiceService: MainAPiServiceService, private toastr: ToastrService,
+    private behaviorService:BehaviorService) { }
 
   ngOnInit() {
     this.isLoadingResults = true;
@@ -44,9 +45,9 @@ export class BasicInfoComponent implements OnInit {
         this.BasicDetail.REGISTEREDUNTIL = response.DATA.CUSTOMERDATA.REGISTRATIONGROUP.REGISTEREDUNTIL;
         this.BasicDetail.INTROPRICEUNTIL = response.DATA.CUSTOMERDATA.INTROPRICEUNTIL;
         this.BasicDetail.NAME = response.DATA.CUSTOMERDATA.NAMEGROUP.NAME;
-        this.isLoadingResults = false;
+        this.behaviorService.loadingAccountMNG('basic-info');
       } else {
-        this.isLoadingResults = false;
+        this.behaviorService.loadingAccountMNG('basic-info');
       }
     });
   }

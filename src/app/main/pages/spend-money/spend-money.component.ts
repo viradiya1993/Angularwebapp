@@ -11,7 +11,7 @@ import { SortingDialogComponent } from 'app/main/sorting-dialog/sorting-dialog.c
 import * as $ from 'jquery';
 import { MatSort } from '@angular/material/sort';
 import { DatePipe } from '@angular/common';
-import { stringify } from '@angular/core/src/render3/util';
+// import { stringify } from '@angular/core/src/render3/util';
 
 @Component({
   selector: 'app-spend-money',

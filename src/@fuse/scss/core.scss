@@ -1,21 +1,16 @@
 // This file meant to be imported only once! Use fuse.scss to access
 // to the core Fuse and Angular Material mixins
-
 // ngx-datatable
-@import '~@swimlane/ngx-datatable/release/themes/material';
-
+@import '~@swimlane/ngx-datatable/themes/material';
+// @import '~@swimlane/ngx-datatable/release/themes/material';
 // Perfect scrollbar
 @import '~perfect-scrollbar/css/perfect-scrollbar';
-
 // Fuse
 @import "fuse";
-
 // Theme
 @import "theme";
-
 // Include core Angular Material styles
 @include mat-core();
-
 // Partials
 @import "partials/normalize";
 @import "partials/scrollbars";
@@ -32,6 +27,5 @@
 @import "partials/navigation";
 @import "partials/forms";
 @import "partials/print";
-
 // Plugins
 @import "partials/plugins/plugins";

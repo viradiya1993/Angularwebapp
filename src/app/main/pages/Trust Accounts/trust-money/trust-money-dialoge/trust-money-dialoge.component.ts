@@ -10,7 +10,6 @@ import { ToastrService } from 'ngx-toastr';
 import { FuseConfirmDialogComponent } from '@fuse/components/confirm-dialog/confirm-dialog.component';
 import { MatterDialogComponent } from 'app/main/pages/time-entries/matter-dialog/matter-dialog.component';
 import { DatePipe } from '@angular/common';
-import { ContactDialogComponent } from 'app/main/pages/contact/contact-dialog/contact-dialog.component';
 import { ContactSelectDialogComponent } from 'app/main/pages/contact/contact-select-dialog/contact-select-dialog.component';
 import { environment } from 'environments/environment';
 import * as $ from 'jquery';
@@ -314,12 +313,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
     this.SendDate = begin
   }
   SaveTrustMoney() {
-
-
-
     let data = {
-
-
       TRANSACTIONDATE: this.SendDate,
       AMOUNT: this.f.AMOUNT.value,
       PAYMENTTYPE: this.f.PAYMENTTYPE.value,
@@ -517,9 +511,9 @@ export class TrustMoneyDialogeComponent implements OnInit {
       }
     });
   }
-  BankingDialogOpen(type: any,UseTrust) {
+  BankingDialogOpen(type: any, UseTrust) {
     const dialogRef = this._matDialog.open(BankingDialogComponent, {
-      disableClose: true, width: '100%', data: { AccountType: type ,UseTrust: UseTrust}
+      disableClose: true, width: '100%', data: { AccountType: type, UseTrust: UseTrust }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

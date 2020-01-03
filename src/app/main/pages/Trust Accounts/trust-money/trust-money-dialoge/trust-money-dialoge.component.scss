@@ -106,18 +106,22 @@ mat-dialog-actions {
     box-shadow: none;
     border-radius: 4px;
 }
+
 .mat-dialog-title {
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
 }
+
 .right_popup_btn .right_btn_child:last-child {
     margin-right: 0;
 }
+
 .popup_ftr {
     border-top: 1px solid #ccc;
     margin-top: 15px !important;
     padding: 12px 24px !important;
 }
+
 @media screen and (max-width: 900px) {
     .add_edit_contact_main {
         width: 95%;
@@ -125,35 +129,41 @@ mat-dialog-actions {
 }
 
 .mat-tab-group {
-  
     width: 100%;
 }
+
 .mat-row.row-text-colore td {
     color: #fff;
 }
-.auto_drop_ghandel{
+
+.auto_drop_ghandel {
     position: relative !important;
 }
+
 .row-text-colore td {
     color: #fff;
 }
 
-.item_pad{
+.item_pad {
     margin-top: 20px;
 }
+
 .icon_set {
-    margin-top: -10px;
+    // margin-top: -10px;
     margin-left: 20px;
     /* margin-bottom: 13px; */
 }
+
 mat-card.mat-card {
     width: 100% !important;
     height: 170px !important;
     overflow: auto !important;
 }
-.table.mat-elevation-z8{
+
+.table.mat-elevation-z8 {
     width: 100% !important;
 }
+
 .select_metter_main_div .mat-dialog-content {
     max-height: calc(100vh - 150px);
 }
@@ -161,10 +171,14 @@ mat-card.mat-card {
 .menu-disabled {
     opacity: 0.5;
 }
-.matternews{
+
+.matternews {
     background: none;
     border: none;
-    width:150%;
+    width: 150%;
     cursor: pointer;
-  
+}
+
+.data-table-trust tr td {
+    padding: 10px 0px 10px 0px;
 }

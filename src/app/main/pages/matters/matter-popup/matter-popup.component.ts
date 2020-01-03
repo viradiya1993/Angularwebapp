@@ -47,7 +47,6 @@ export class MatterPopupComponent implements OnInit {
       this.dialogTitle = 'New Matter'
       this.isLoadingResults = true;
       this._mainAPiServiceService.getSetData({ FormAction: 'default', VALIDATEONLY: true, DATA: {} }, 'SetMatter').subscribe(res => {
-        console.log(res);
         if (res.CODE == 200 && res.STATUS == "success") {
           if (res.DATA.DEFAULTVALUES['SHORTNAME'] == "") {
             this.isDefultMatter = false;
@@ -65,14 +64,14 @@ export class MatterPopupComponent implements OnInit {
     }
     this.isEditMatter = this._data.matterGuid;
     this.classtype;
-   
+
     this.behaviorService.dialogClose$.subscribe(result => {
-      if(result != null){
-        if(result.MESSAGE == 'Not logged in'){
+      if (result != null) {
+        if (result.MESSAGE == 'Not logged in') {
           this.dialogRef.close(false);
         }
       }
-     });
+    });
   }
   matterdetailForm: FormGroup;
   ngOnDestroy() {

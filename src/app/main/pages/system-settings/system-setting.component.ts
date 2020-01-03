@@ -259,16 +259,16 @@ export class SystemSettingComponent implements OnInit {
       this.clickedBtn = "account";
     }
   }
-  loading_fun(){
+  loading_fun() {
     this.isLoadingResults = true;
     this.behaviorService.loadingSystemSetting(null);
-    this.behaviorService.loadingSystemSetting$.subscribe(result=>{
-      if(result){
+    this.behaviorService.loadingSystemSetting$.subscribe(result => {
+      if (result) {
         this.isLoadingResults = false;
       }
     })
   }
-  nameClick() {    
+  nameClick() {
     this.location.replaceState("/system-setting/name");
     this.clickedBtn = "name";
     this.ForDataBind = "Name";
@@ -313,6 +313,7 @@ export class SystemSettingComponent implements OnInit {
     return this.SettingForm.controls;
   }
   save() {
+    this.isspiner = true;
     let tempArrayAccountGroup: any = {};
     this.SetAccountArray = [];
     let data = {

@@ -8,10 +8,10 @@
                     {{val.DESCRIPTION}}
                 </mat-option>
             </mat-autocomplete>
+            <mat-icon matSuffix (click)="SelectDocument();">
+                <img src="assets/icons/web_app/icon_letters_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+            </mat-icon>
         </mat-form-field>
-        <mat-icon matSuffix (click)='SelectDocument()'>
-            <img src="assets/icons/web_app/icon_letters_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-        </mat-icon>
         <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.RECEIPTTEMPLATE,'has-warning':errorWarningData.Warning?.RECEIPTTEMPLATE}">
             <mat-label>Receipt Template</mat-label>
             <input type="text" placeholder="Receipt Template" aria-label="Number" matInput name="RECEIPTTEMPLATE" formControlName="RECEIPTTEMPLATE" [matAutocomplete]="auto1">
@@ -20,10 +20,10 @@
                     {{val.DESCRIPTION}}
                 </mat-option>
             </mat-autocomplete>
+            <mat-icon matSuffix (click)="SelectReceiptDocument();">
+                <img src="assets/icons/web_app/icon_letters_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
+            </mat-icon>
         </mat-form-field>
-        <mat-icon matSuffix (click)='SelectReceiptDocument()'>
-            <img src="assets/icons/web_app/icon_letters_small_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
-        </mat-icon>
     </div>
     <div fxLayout="row" class="check" fxLayoutAlign="start center" fxFlex="1 0 auto">
         <mat-checkbox name="DONTGENERATERECEIPT" formControlName="DONTGENERATERECEIPT">Don't generate receipt

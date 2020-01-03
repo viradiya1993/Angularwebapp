@@ -4,7 +4,7 @@
             <div class="matter-serach-div sticky_search_div responsive_auto">
                 <form [formGroup]="Accountlist">
                     <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                          
+
                         <!-- <mat-form-field class="example p-16" fxFlex="33" appearance="outline" >
                                     <mat-label>Matter</mat-label>
                                     <input  readonly formControlName="Matter"  matInput>
@@ -22,13 +22,13 @@
                                 <mat-icon class="set_icon" matSuffix (click)='SelectContact()'  >
                                     <img class="seticon" src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
                                 </mat-icon> -->
-                
-                                <mat-form-field class="example p-16" fxFlex="50" appearance="outline" >
-                                    <mat-label>Search</mat-label>
-                                    <input readonly  matInput>
-                                    <mat-icon matSuffix >search</mat-icon>
-                                </mat-form-field>
-                    </div>  
+
+                        <mat-form-field class="example p-16" fxFlex="50" appearance="outline">
+                            <mat-label>Search</mat-label>
+                            <input readonly matInput>
+                            <mat-icon matSuffix>search</mat-icon>
+                        </mat-form-field>
+                    </div>
                     <button mat-raised-button type="button" color="primary" id="refresMainAuthority" (click)="refresMainAuthority();">Refresh</button>
                 </form>
             </div>
@@ -57,35 +57,35 @@
                                         </table>
                                         <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
                                             <!-- This is the tree node template for leaf nodes -->
-                                            <mat-tree-node class="border-top" *matTreeNodeDef="let node" matTreeNodePadding [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index  (click)="clickRow(node);highlightedRows = node.index "
-                                            matRipple [@animate]="{value:'*',params:{y:'100%'}}">
-                                              <!-- use a disabled button to provide padding for tree leaf -->
-                                              <button mat-icon-button disabled></button>
-                                              <span >{{node.name}}</span>
-                                              <!-- <div fxFlex="20" class="text-center">
+                                            <mat-tree-node class="border-top" *matTreeNodeDef="let node" matTreeNodePadding [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index (click)="clickRow(node);highlightedRows = node.index "
+                                                matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                                <!-- use a disabled button to provide padding for tree leaf -->
+                                                <button mat-icon-button disabled></button>
+                                                <span>{{node.name}}</span>
+                                                <!-- <div fxFlex="20" class="text-center">
                                                 <span class="pale">{{node.item}}</span>
                                             </div> -->
-                                              <span fxFlex="20" class="text-center1" >{{node.AUTHORITY}}</span>
-                                              <!-- <span fxFlex="20"  class="text-center1" >{{node.index}}</span>
+                                                <span fxFlex="20" class="text-center1">{{node.AUTHORITY}}</span>
+                                                <!-- <span fxFlex="20"  class="text-center1" >{{node.index}}</span>
                                               <span fxFlex="20" class="text-center1">{{node.parent}}</span> -->
-                                              <!-- <span fxFlex="20" class="text-center" >{{node.index}}</span> -->
+                                                <!-- <span fxFlex="20" class="text-center" >{{node.index}}</span> -->
                                             </mat-tree-node>
                                             <!-- This is the tree node template for expandable nodes -->
-                                            <mat-tree-node class="border-top" *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding  [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index  (click)="clickRow(node);highlightedRows = node.index "
-                                            matRipple [@animate]="{value:'*',params:{y:'100%'}}">
-                                              <button mat-icon-button matTreeNodeToggle
-                                                      [attr.aria-label]="'toggle ' + node.name" [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index  (click)="clickRow(node);highlightedRows = node.index ">
+                                            <mat-tree-node class="border-top" *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index
+                                                (click)="clickRow(node);highlightedRows = node.index " matRipple [@animate]="{value:'*',params:{y:'100%'}}">
+                                                <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name" [style.background]="highlightedRows ==  node.index? selectedColore : ''" [ngClass]="highlightedRows == node.index ? 'row-text-colore' : ''" highlightedRows=node.index
+                                                    (click)="clickRow(node);highlightedRows = node.index ">
                                                 <mat-icon class="mat-icon-rtl-mirror" >
                                                   {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                                                 </mat-icon>
                                               </button>
-                                              <span>{{node.name}}</span>
-                                              <span fxFlex="50" class="text-center" >{{node.AUTHORITY}}</span>
-                                              <!-- <span fxFlex="50" class="text-center">{{node.index}}</span>
+                                                <span>{{node.name}}</span>
+                                                <span fxFlex="50" class="text-center">{{node.AUTHORITY}}</span>
+                                                <!-- <span fxFlex="50" class="text-center">{{node.index}}</span>
                                               <span fxFlex="50" class="text-center">{{node.parent}}</span> -->
-                                              <!-- <span fxFlex="20" class="text-center">{{node.index}}</span> -->
+                                                <!-- <span fxFlex="20" class="text-center">{{node.index}}</span> -->
                                             </mat-tree-node>
-                                          </mat-tree>
+                                        </mat-tree>
                                     </div>
                                 </div>
                             </div>

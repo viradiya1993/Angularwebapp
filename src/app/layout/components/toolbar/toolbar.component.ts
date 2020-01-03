@@ -295,17 +295,17 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     // DashboardAPI end  //
     BehaviourServiceFun() {
-        this.behaviorService.activitiesData$.subscribe(result =>{
-            if(result == null){
-                this.isActivityData= 'empty';
-            }else{
-                this.isActivityData= 'Notempty';
+        this.behaviorService.activitiesData$.subscribe(result => {
+            if (result == null) {
+                this.isActivityData = 'empty';
+            } else {
+                this.isActivityData = 'Notempty';
             }
         })
-        this.behaviorService.DiaryData$.subscribe(result =>{
-            if(result ==null){
+        this.behaviorService.DiaryData$.subscribe(result => {
+            if (result == null) {
                 this.isDiaryData = 'empty';
-            }else{
+            } else {
                 this.isDiaryData = 'Notempty';
             }
         });
@@ -328,21 +328,21 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         //For receipt 
         this.behaviorService.ReceiptData$.subscribe(result => {
             // this.DisabledReceiptTool = "disabled";
-            if (result != null) { 
+            if (result != null) {
                 this.isReceiptData = 'Notempty';
-                this.receiptData = result; 
+                this.receiptData = result;
                 // this.DisabledReceiptTool = "enabled";
-             }else{
+            } else {
                 this.isReceiptData = 'empty';
-             }
+            }
         });
         this.behaviorService.workInProgress$.subscribe(result => {
-            if (result) { 
+            if (result) {
                 this.isWIPData = "Notempty";
                 this.WorkInProgressData = result;
-             }else{
+            } else {
                 this.isWIPData = "empty";
-             }
+            }
         });
         //for Disabled enabled
         this.behaviorService.ConflictDataList$.subscribe(result => {
@@ -358,20 +358,21 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 } else if (this.journalLinktype == "Income" || this.journalLinktype == "General Journal" || this.journalLinktype == "Expenditure" || this.journalLinktype == "Payable" || this.journalLinktype == "Disbursement") {
                     this.journalText = 'Edit';
                 }
-            }else{
+            } else {
                 this.isGeneralJounralData = 'empty';
             }
         });
 
         this.behaviorService.MainTimeEntryData$.subscribe(result => {
-            this.timeEntryData = result; 
+            this.timeEntryData = result;
             if (result != null) {
                 this.isTimeEntryData = 'Notempty';
                 if (result.INVOICEGUID == "-1" || result.INVOICEGUID == -1) {
                     this.DisEnTimeEntryToolbar = 'undo';
-                } else { 
-                    this.DisEnTimeEntryToolbar = 'write_off'; }
-            }else{
+                } else {
+                    this.DisEnTimeEntryToolbar = 'write_off';
+                }
+            } else {
                 this.isTimeEntryData = 'empty';
             }
         });
@@ -435,8 +436,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             if (result != null) {
                 this.isMainAccount = result.MainList.ACCOUNTTYPENAME == "Header";
                 this.isChartaccountData = 'Notempty';
-            }else{
-                this.isChartaccountData = 'empty'; 
+            } else {
+                this.isChartaccountData = 'empty';
             }
         });
         this.behaviorService.packs$.subscribe(result => {
@@ -464,11 +465,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
         });
         // spend money 
         this.behaviorService.SpendMoneyData$.subscribe(result => {
-            console.log(result)
             if (result != null) {
                 this.isSpendMoneyData = 'Notempty';
                 this.SendMoney_dataGUID = result;
-            }else{
+            } else {
                 this.isSpendMoneyData = 'empty';
             }
         });
@@ -477,7 +477,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             if (result != null) {
                 this.isTaskData = 'Notempty';
                 this.TaskData = result;
-            }else{
+            } else {
                 this.isTaskData = 'empty';
             }
         });
@@ -486,7 +486,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             if (result != null) {
                 this.safecustodydata = result;
                 this.isSafeCustody = 'Notempty';
-            }else{
+            } else {
                 this.isSafeCustody = 'empty';
             }
         });
@@ -495,14 +495,14 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             if (result != null) {
                 this.isSafePackData = 'Notempty';
                 this.PacketsData = result;
-            }else{
+            } else {
                 this.isSafePackData = 'Notempty';
             }
         });
-        this.behaviorService.UserData$.subscribe(result =>{
-            if(result != null){
+        this.behaviorService.UserData$.subscribe(result => {
+            if (result != null) {
                 this.isUserData = 'Notempty';
-            }else{
+            } else {
                 this.isUserData = 'empty';
             }
         });
@@ -510,23 +510,23 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             if (result != null) {
                 this.isEstimateData = 'Notempty';
                 this.estimateData = result;
-            }else{
+            } else {
                 this.isEstimateData = 'empty';
             }
         });
         this.behaviorService.matterInvoice$.subscribe(result => {
-            if (result != null){
+            if (result != null) {
                 this.isMatterInvoiceData = 'Notempty';
-            }else{
+            } else {
                 this.isMatterInvoiceData = 'empty';
             }
-            
+
         });
         this.behaviorService.LegalChronologyData$.subscribe(result => {
             if (result != null) {
                 this.isChronoData = 'Notempty';
                 this.ChronologyLegalData = result;
-            }else{
+            } else {
                 this.isChronoData = 'empty';
             }
         });
@@ -534,16 +534,16 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             if (result != null) {
                 this.isFileNoteData = 'Notempty';
                 this.FileNotesData = result;
-            }else{
+            } else {
                 this.isFileNoteData = 'empty';
             }
         });
         this.behaviorService.DocumentRegisterData$.subscribe(result => {
             if (result != null) {
-                this.isDocRegData ='Notempty';
+                this.isDocRegData = 'Notempty';
                 this.DocRegData = result;
-            }else{
-                this.isDocRegData ='empty';
+            } else {
+                this.isDocRegData = 'empty';
             }
         });
     }
@@ -927,13 +927,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
     GenerateInvoice() {
         // this.behaviorService.matterInvoice$.subscribe(result => {
-        //     console.log(result);
         //     if (result != null) {
-        //         console.log("con 1");
         //         this.isInvoiceData = 'Notempty';
         //         this.ShowGenerateInvoice = "yes";
         //     } else {
-        //         console.log("con 2");
         //         this.isInvoiceData = 'empty';
         //         this.ShowGenerateInvoice = "no";
         //     }
@@ -1101,7 +1098,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     }
     //delete Estimate  item
     deleteEstimate() {
-      
+
         this.confirmDialogRef = this._matDialog.open(FuseConfirmDialogComponent, {
             disableClose: true, width: '100%',
         });
@@ -2606,10 +2603,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             });
             this.confirmDialogRef.componentInstance.confirmMessage = warningData;
             this.confirmDialogRef.afterClosed().subscribe(result => {
-                console.log(result)
                 localStorage.removeItem('confEWshow');
                 if (result) {
-                    console.log(result)
                     this.DeleteGData(details, ApiName);
                 }
                 this.confirmDialogRef = null;

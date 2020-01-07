@@ -2507,10 +2507,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     TrustMoneyPopup(val) {
         const dialogRef = this._matDialog.open(TrustMoneyDialogeComponent, {
             width: '100%', disableClose: true,
-            data: {
-                action: val,
-                forPDF: "No",
-            }
+            data: { action: val, forPDF: "No" }
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {

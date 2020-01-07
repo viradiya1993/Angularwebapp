@@ -40,7 +40,6 @@ import { MatSortModule } from '@angular/material/sort';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker'
 import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
 import { WriteOffInvoiceComponent } from './newWriteOffInvoice/newWriteOffInvoice.component';
-import { InvoiceNumberPipe } from './invoicenumber.pipe'
 import { GenerateInvoiceComponent } from './generate-invoice/generate-invoice.component';
 import { ApplicationPipesModule } from '../application-pipes.module';
 
@@ -60,7 +59,6 @@ const routes = [
     DetailsComponent,
     DiscountIncreaseComponent,
     WriteOffInvoiceComponent,
-    InvoiceNumberPipe,
     GenerateInvoiceComponent
   ],
   entryComponents: [
@@ -108,7 +106,7 @@ const routes = [
     MatCheckboxModule,
     DragDropModule,
     MatSortModule,
-    ApplicationPipesModule
+    ApplicationPipesModule,
   ],
   providers: [
     { provide: DateAdapter, useClass: AppDateAdapter },

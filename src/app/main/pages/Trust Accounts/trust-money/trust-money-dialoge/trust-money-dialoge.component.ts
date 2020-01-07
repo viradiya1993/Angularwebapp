@@ -14,25 +14,6 @@ import { ContactSelectDialogComponent } from 'app/main/pages/contact/contact-sel
 import { environment } from 'environments/environment';
 import * as $ from 'jquery';
 import { BankingDialogComponent } from 'app/main/pages/banking/banking-dialog.component';
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-];
-
 @Component({
   selector: 'app-trust-money.dialoge',
   templateUrl: './trust-money-dialoge.component.html',
@@ -42,16 +23,15 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class TrustMoneyDialogeComponent implements OnInit {
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
-  displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
+
+  displayedColumns: string[] = ['select', 'Invoice', 'Date', 'Unpaid', 'MatterNum', 'TrustBal', 'Applied'];
   getDataForTable: any = [];
   MatterAmmountArray: any = [];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-  selection = new SelectionModel<PeriodicElement>(true, []);
+  dataSource = new MatTableDataSource([]);
+  selection = new SelectionModel<any>(true, []);
   errorWarningData: any = { "Error": [], 'Warning': [] };
   isLoadingResults: boolean = false;
-  TrustMoneyData = {
-    "PaymentType": "Cheque", "CheckBox": false
-  }
+  TrustMoneyData = { "PaymentType": "Cheque", "CheckBox": false };
   addData: any = [];
   isspiner: boolean = false;
   PymentType: string = "Cheque";
@@ -156,9 +136,13 @@ export class TrustMoneyDialogeComponent implements OnInit {
       $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Trust Office";
       this.matterType = true;
+      this.TranClassName = 'Trust Money'
+      this.sendTransectionSubType = 'Trust to office';
+      this.sendToAPI = 'Withdrawal';
       this.TrustMoneyForm.controls['CheckBox'].setValue(true);
       this.TrustMoneyData.CheckBox = true;
       // this.PymentType="Office";
+      this.defaultCallAPI();
     } else if (this.action == "money receipt") {
       $("#Contcat_id").removeClass("menu-disabled");
       this.TranClassName = 'Controlled Money'
@@ -251,10 +235,19 @@ export class TrustMoneyDialogeComponent implements OnInit {
     }
 
     this._mainAPiServiceService.getSetData({ Data: data, FormAction: 'default' }, 'SetTrustTransaction').subscribe(response => {
-      this.TrustMoneyForm.controls['Ledger'].setValue(response.DATA.DEFAULTVALUES.MATTER);
-      this.TrustMoneyForm.controls['MATTERGUID'].setValue(response.DATA.DEFAULTVALUES.MATTERLEDGERGUID);
-      this.TrustMoneyForm.controls['BANKACCOUNTGUID'].setValue(response.DATA.DEFAULTVALUES.BANKACCOUNTGUID);
-      this.TrustMoneyForm.controls['TrustAccount'].setValue(response.DATA.DEFAULTVALUES.BANKACCOUNT + '  ' + '$' + response.DATA.DEFAULTVALUES.BANKACCOUNTBALANCE);
+      if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
+        let defaultValue = response.DATA.DEFAULTVALUES;
+        this.TrustMoneyForm.controls['Ledger'].setValue(defaultValue.MATTER);
+        this.TrustMoneyForm.controls['MATTERGUID'].setValue(defaultValue.MATTERLEDGERGUID);
+        this.TrustMoneyForm.controls['BANKACCOUNTGUID'].setValue(defaultValue.BANKACCOUNTGUID);
+        this.TrustMoneyForm.controls['TrustAccount'].setValue(defaultValue.BANKACCOUNT + '  ' + '$' + defaultValue.BANKACCOUNTBALANCE);
+        if (defaultValue.INVOICES)
+          this.dataSource = new MatTableDataSource(defaultValue.INVOICES);
+      } else {
+        this.toastr.error(response.MESSAGE);
+      }
+    }, error => {
+      this.toastr.error(error);
     });
   }
   get f() {
@@ -302,7 +295,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
     this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach(row => this.selection.select(row));
   }
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: PeriodicElement): string {
+  checkboxLabel(row?: any): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }

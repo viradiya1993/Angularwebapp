@@ -76,7 +76,7 @@ const appRoutes: Routes = [
         InternalErrorComponent,
         ReportsComponent,
         LicenceAgreementComponent,
-        ChangePasswordComponent,
+        ChangePasswordComponent
         //AutofocusDirective,
     ],
     entryComponents: [

@@ -31,7 +31,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, SatNativeDateModule } from 'saturn-datepicker'
 import { AppDateAdapter, APP_DATE_FORMATS } from 'app/date.adapter';
 
-import {MatTreeModule} from '@angular/material/tree';
+import { MatTreeModule } from '@angular/material/tree';
 // import { TrustMoneyComponent } from './trust-money/trust-money.component';
 // import { TrustMoneyDialogeComponent } from './trust-money/trust-money-dialoge/trust-money-dialoge.component';
 // import { TrustEndOfMonthComponent } from './trust-end-of-month/trust-end-of-month.component';
@@ -40,13 +40,14 @@ import {MatTreeModule} from '@angular/material/tree';
 import { AuthGuard } from 'app/_guards';
 import { TrustMoneyComponent } from './trust-money.component';
 import { TrustMoneyDialogeComponent } from './trust-money-dialoge/trust-money-dialoge.component';
+import { ApplicationPipesModule } from '../../application-pipes.module';
 
 
 
 const routes = [
-{ path: 'trust-money', component: TrustMoneyComponent, canActivate: [AuthGuard] }];
+  { path: 'trust-money', component: TrustMoneyComponent, canActivate: [AuthGuard] }];
 @NgModule({
-  declarations: [TrustMoneyComponent,TrustMoneyDialogeComponent],
+  declarations: [TrustMoneyComponent, TrustMoneyDialogeComponent],
   entryComponents: [TrustMoneyDialogeComponent],
   imports: [
     CommonModule,
@@ -83,16 +84,16 @@ const routes = [
     MaterialTimePickerModule,
     MatCheckboxModule,
     DragDropModule,
-    MatSortModule
-
+    MatSortModule,
+    ApplicationPipesModule
   ],
   exports: [
     TrustMoneyComponent
   ],
   providers: [
     TrustMoneyComponent,
-    {provide: DateAdapter, useClass: AppDateAdapter},
-    {provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS}
+    { provide: DateAdapter, useClass: AppDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
   ],
 })
 export class TrustMoneyModule { }

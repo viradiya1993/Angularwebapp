@@ -182,3 +182,15 @@ mat-card.mat-card {
 .data-table-trust tr td {
     padding: 10px 0px 10px 0px;
 }
+
+.btn_style {
+    margin-bottom: 20px;
+}
+
+.main-icon-class {
+    margin-right: 15px;
+}
+
+body.theme-default .mat-card:not([class*="mat-elevation-z"]) {
+    margin: 2px;
+}

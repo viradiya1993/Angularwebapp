@@ -1716,7 +1716,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
             this.PathOfRouter = '';
         }
         const dialogRef = this.dialog.open(BankingDialogComponent, {
-            disableClose: true, width: '100%', data: { AccountType: type, RoterPath: this.PathOfRouter }
+            disableClose: true, width: '100%', data: { AccountType: type, RoterPath: this.PathOfRouter, UseTrust: this.ChartHandlingData.UseTrust }
         });
         dialogRef.afterClosed().subscribe(result => {
         });

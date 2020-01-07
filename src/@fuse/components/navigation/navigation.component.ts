@@ -61,7 +61,6 @@ export class FuseNavigationComponent implements OnInit {
       { "ID": "task", "TITLE": "Task", "URL": "task", "STAR": "" },
       { "ID": "trust-end-month", "TITLE": "Trust End Of Month", "URL": "trust-end-month", "STAR": "" },
       { "ID": "receive-money", "TITLE": "Receive money", "URL": "receive-money", "STAR": "" }]
-
       this.getFavouriteService.GetFavourite(postdata).subscribe(response => {
         if (response.CODE == 200 && response.STATUS == "success") {
           if (response.DATA.FAVOURITES == '') {

@@ -4,7 +4,7 @@ export const environment = {
     APIEndpoint: 'https://apitest.silq.com.au/',
     ReportUrl: 'https://apitest.silq.com.au/',
     APIKEY: 'SNGMTUEEB2AJBFC9',
-    VERSION: '1.8.3',
+    VERSION: '1.8.4',
     WORDLIMIT: 40,
 };
 

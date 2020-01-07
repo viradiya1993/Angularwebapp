@@ -65,7 +65,7 @@ export class BankingDialogComponent implements OnInit {
   accountTypeData: any;
   title: string;
   ChartHandlingData: { ClickType: any; UseTrust: string; PopUp: string; Lable: string; };
-  sendUserTrust: any;
+
 
   constructor(
     public dialog: MatDialog,
@@ -95,25 +95,20 @@ export class BankingDialogComponent implements OnInit {
     //       this.loadData({AccountClass:_data.AccountType,UseTrust:this.accountTypeData.UseTrust});
     //     }
     // });
-   this.title="Select Account";
-   if(_data.UseTrust){
-    this.sendUserTrust = true
-   }else{
-    this.sendUserTrust=false; 
-   }
-   this.loadData({AccountClass:_data.AccountType,UseTrust:this.sendUserTrust});
-//    this.behaviorService.TrustDuplicateModuleHandling$.subscribe(result => {
-//     if (result != null) {
-//         this.accountTypeData=result;
-//     }
-//     if(this.accountTypeData.ClickType =='WithoutTrust'){
-//       this.title="Select Account";
-//       this.loadData({AccountClass:_data.AccountType,UseTrust:this.accountTypeData.UseTrust});
-//     }else{
-//       this.title="Select Trust Account";
-//       this.loadData({AccountClass:_data.AccountType,UseTrust:this.accountTypeData.UseTrust});
-//     }
-// });
+    this.title = "Select Account";
+    this.loadData({ AccountClass: _data.AccountType, UseTrust: _data.UseTrust == "Yes" ? true : false });
+    //    this.behaviorService.TrustDuplicateModuleHandling$.subscribe(result => {
+    //     if (result != null) {
+    //         this.accountTypeData=result;
+    //     }
+    //     if(this.accountTypeData.ClickType =='WithoutTrust'){
+    //       this.title="Select Account";
+    //       this.loadData({AccountClass:_data.AccountType,UseTrust:this.accountTypeData.UseTrust});
+    //     }else{
+    //       this.title="Select Trust Account";
+    //       this.loadData({AccountClass:_data.AccountType,UseTrust:this.accountTypeData.UseTrust});
+    //     }
+    // });
   }
   ngOnInit() {
     this.treeControl.expandAll();
@@ -124,7 +119,7 @@ export class BankingDialogComponent implements OnInit {
 
       if (response.CODE == 200 && response.STATUS == "success") {
         this.arrayForIndex = [];
-        if (response.DATA.ACCOUNTS[0].ACCOUNTGUID == "") {
+        if (response.DATA.ACCOUNTS[0]) {
           this.storeDataarray = response.DATA.ACCOUNTS[0].SUBACCOUNTS;
           this.ACCOUNTGUIDsELECTED = response.DATA.ACCOUNTS[0].SUBACCOUNTS;
         } else {

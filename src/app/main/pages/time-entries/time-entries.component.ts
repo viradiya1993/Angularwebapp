@@ -393,7 +393,7 @@ export class TimeEntriesComponent implements OnInit {
         this.TimeEnrtyForm.controls['IncGST'].setValue(response.DATA.INCGSTTOTAL);
         this.TimeEnrtyForm.controls['Units'].setValue(response.DATA.UNITSTOTAL);
         this.TimeEnrtyForm.controls['Days'].setValue(response.DATA.DAYSTOTAL);
-        // this.TimeEnrtyForm.controls['Budget'].setValue(response.DATA.EXGSTTOTAL);
+        this.TimeEnrtyForm.controls['Budget'].setValue(response.DATA.BUDGETTOTAL);
         if (response.DATA.WORKITEMS[0]) {
           this.isDisplay = false;
           this.behaviorService.MainTimeEntryData(response.DATA.WORKITEMS[0]);

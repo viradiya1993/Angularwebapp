@@ -175,24 +175,18 @@
                                         <mat-label>Matter Ammount</mat-label>
                                         <input formControlName="MatterAMOUNT" matInput>
                                     </mat-form-field>
-                                    <button (click)="addMatterItem()" fxFlex="33" class="pr-4" mat-button>
-                                        <mat-icon class="main-icon">
+                                    <button (click)="addMatterItem()" fxFlex="33" class="pr-4 btn_style" mat-button>
+                                        <mat-icon class="main-icon main-icon-class">
                                             <img src="assets/icons/web_app/icon_new_d.ico" alt="" matTooltip="Twitter"
                                                 matTooltipPosition="above">
-                                        </mat-icon>
-                                        <div class="main-text">
-                                            <span>Add</span>
-                                        </div>
+                                        </mat-icon>Add
                                     </button>
-                                    <button (click)="deleteMatterItem()" fxFlex="33" class="pr-4" mat-button>
-                                        <mat-icon class="main-icon">
+                                    <button (click)="deleteMatterItem()" fxFlex="33" class="pr-4 btn_style" mat-button>
+                                        <mat-icon class="main-icon main-icon-class">
                                             <img src="assets/icons/web_app/icon_generic_delete_d.ico" alt=""
                                                 matTooltip="Twitter" matTooltipPosition="above">
-                                        </mat-icon>
-                                        <div class="main-text">
-                                            <span>Remove</span>
-                                        </div>
-                                    </button>
+                                        </mat-icon>Remove
+                                       </button>
                                 </div>
                                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
                                     <mat-card>

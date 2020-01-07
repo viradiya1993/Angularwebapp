@@ -93,7 +93,6 @@ export class WorkInProgressComponent implements OnInit, OnDestroy {
     });
   }
   loadData(potData) {
-    console.log(potData);
     this.WorkInProgressdata = [];
     potData.MatterGuid = this.currentMatter.MATTERGUID
     this.isLoadingResults = true;

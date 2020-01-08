@@ -51,6 +51,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
   forPDF: any;
   sendTransectionSubType: string;
   TranClassName: any;
+  titletext: any;
   constructor(private _mainAPiServiceService: MainAPiServiceService,
     private _formBuilder: FormBuilder, private toastr: ToastrService,
     public dialogRef: MatDialogRef<TrustMoneyDialogeComponent>,
@@ -119,11 +120,13 @@ export class TrustMoneyDialogeComponent implements OnInit {
       this.title = "Add Trust Receipt"
       this.TranClassName = 'Trust Money'
       this.sendToAPI = 'Receipt';
+      this.titletext = "Received Form";
     } else if (this.action == "withdrawal") {
       this.TranClassName = 'Trust Money'
       $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Trust withdrawal";
       this.sendToAPI = 'Withdrawal';
+      this.titletext = "Paid To";
     } else if (this.action == "Transfer") {
       this.TranClassName = 'Trust Money'
       $("#Contcat_id").removeClass("menu-disabled");
@@ -133,6 +136,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
       this.TrustMoneyData.PaymentType = "Transfer";
       this.PymentType = "Transfer";
     } else if (this.action == "office") {
+      this.isLoadingResults = true;
       $("#Contcat_id").removeClass("menu-disabled");
       this.title = "Add Trust Office";
       this.matterType = true;
@@ -141,7 +145,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
       this.sendToAPI = 'Withdrawal';
       this.TrustMoneyForm.controls['CheckBox'].setValue(true);
       this.TrustMoneyData.CheckBox = true;
-      // this.PymentType="Office";
+      this.titletext = "Paid To";
       this.defaultCallAPI();
     } else if (this.action == "money receipt") {
       $("#Contcat_id").removeClass("menu-disabled");
@@ -172,8 +176,10 @@ export class TrustMoneyDialogeComponent implements OnInit {
       this.TrustMoneyForm.controls['PAYOR'].disable();
       this.TrustMoneyForm.controls['AMOUNT'].disable();
       this.TrustMoneyForm.controls['TRANSACTIONDATE'].disable();
-
+      this.titletext = "Paid To";
     } else if (this.action == "Unknown Deposit") {
+      this.titletext = "Received Form";
+      this.isLoadingResults = true;
       this.TranClassName = 'Trust Money'
       $("#Contcat_id").removeClass("menu-disabled");
       this.PymentType = "EFT";
@@ -193,6 +199,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
       this.TrustMoneyData.PaymentType = "Transfer";
       this.PymentType = "Transfer";
     } else if (this.action == "Statutory Deposit") {
+      this.isLoadingResults = true;
       this.TranClassName = 'Trust Money'
       this.sendToAPI = 'Withdrawal';
       this.TrustMoneyForm.controls['PURPOSE'].setValue('Statutory Deposit');
@@ -200,9 +207,12 @@ export class TrustMoneyDialogeComponent implements OnInit {
       this.title = "Add Statutory Deposit";
       this.ForDetailTab = 'Statutory Deposit';
       this.sendTransectionSubType = 'Statutory Deposit';
+      this.titletext = "Paid To";
       this.defaultCallAPI();
       // this.action = "withdrawal";
     } else if (this.action == "Statutory Receipt") {
+      this.titletext = "Received Form";
+      this.isLoadingResults = true;
       this.TranClassName = 'Trust Money'
       this.sendToAPI = 'Receipt';
       this.TrustMoneyForm.controls['PURPOSE'].setValue('Statutory Deposit');
@@ -243,11 +253,14 @@ export class TrustMoneyDialogeComponent implements OnInit {
         this.TrustMoneyForm.controls['TrustAccount'].setValue(defaultValue.BANKACCOUNT + '  ' + '$' + defaultValue.BANKACCOUNTBALANCE);
         if (defaultValue.INVOICES)
           this.dataSource = new MatTableDataSource(defaultValue.INVOICES);
+        this.isLoadingResults = false;
       } else {
         this.toastr.error(response.MESSAGE);
+        this.isLoadingResults = false;
       }
     }, error => {
       this.toastr.error(error);
+      this.isLoadingResults = false;
     });
   }
   get f() {

@@ -42,7 +42,7 @@
                     </mat-form-field>
 
                     <mat-form-field *ngIf="action != 'Transfer'  && action != 'Transfer Unknow Deposit'" appearance="outline" fxFlex="50" class=" pr-4">
-                        <mat-label>Received Form</mat-label>
+                        <mat-label>{{titletext}}</mat-label>
                         <input formControlName="PAYOR" placeholder="Received Form" matInput>
                         <mat-icon class="matternews " id="Contcat_id" matSuffix (click)='SelectContact()' fxFlex="5">
                             <img class="seticon" src="assets/icons/web_app/icon_contact_d.ico" alt="" matTooltip="Twitter" matTooltipPosition="above">
@@ -265,7 +265,7 @@
                                 </div>
 
                                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                    <mat-form-field class="example pr-4 pt-5" fxFlex="50" appearance="outline">
                                         <mat-label>Enter override amount</mat-label>
                                         <input matInput>
                                     </mat-form-field>

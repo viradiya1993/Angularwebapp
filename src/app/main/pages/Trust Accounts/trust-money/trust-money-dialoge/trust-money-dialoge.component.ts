@@ -14,6 +14,7 @@ import { ContactSelectDialogComponent } from 'app/main/pages/contact/contact-sel
 import { environment } from 'environments/environment';
 import * as $ from 'jquery';
 import { BankingDialogComponent } from 'app/main/pages/banking/banking-dialog.component';
+import { round } from 'lodash';
 @Component({
   selector: 'app-trust-money.dialoge',
   templateUrl: './trust-money-dialoge.component.html',
@@ -21,17 +22,17 @@ import { BankingDialogComponent } from 'app/main/pages/banking/banking-dialog.co
   animations: fuseAnimations
 })
 export class TrustMoneyDialogeComponent implements OnInit {
+  highlightedRows: any;
   theme_type = localStorage.getItem('theme_type');
   selectedColore: string = this.theme_type == "theme-default" ? 'rebeccapurple' : '#43a047';
-
-  displayedColumns: string[] = ['select', 'Invoice', 'Date', 'Unpaid', 'MatterNum', 'TrustBal', 'Applied'];
+  displayedColumns: string[] = ['checked', 'Invoice', 'Date', 'Unpaid', 'MatterNum', 'TrustBal', 'Applied'];
   getDataForTable: any = [];
   MatterAmmountArray: any = [];
   dataSource = new MatTableDataSource([]);
   selection = new SelectionModel<any>(true, []);
   errorWarningData: any = { "Error": [], 'Warning': [] };
   isLoadingResults: boolean = false;
-  TrustMoneyData = { "PaymentType": "Cheque", "CheckBox": false };
+  TrustMoneyData = { 'PaymentType': 'Cheque', 'CheckBox': false };
   addData: any = [];
   isspiner: boolean = false;
   PymentType: string = "Cheque";
@@ -41,7 +42,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
   title: string;
   ForDetailTab: string;
   TrustMoneyForm: FormGroup;
-  highlightedRows: any;
+  
   INDEX: any;
   SendDate: string;
   sendToAPI: string;
@@ -52,6 +53,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
   sendTransectionSubType: string;
   TranClassName: any;
   titletext: any;
+  Paidamount = 0;
   constructor(private _mainAPiServiceService: MainAPiServiceService,
     private _formBuilder: FormBuilder, private toastr: ToastrService,
     public dialogRef: MatDialogRef<TrustMoneyDialogeComponent>,
@@ -253,7 +255,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
         this.TrustMoneyForm.controls['TrustAccount'].setValue(defaultValue.BANKACCOUNT + '  ' + '$' + defaultValue.BANKACCOUNTBALANCE);
         if (defaultValue.INVOICES)
           this.dataSource = new MatTableDataSource(defaultValue.INVOICES);
-        this.isLoadingResults = false;
+          this.isLoadingResults = false;
       } else {
         this.toastr.error(response.MESSAGE);
         this.isLoadingResults = false;
@@ -281,12 +283,12 @@ export class TrustMoneyDialogeComponent implements OnInit {
   }
 
   CheckBoxClick(val) {
-    this.matterType = val
+    this.matterType = val;
   }
   isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
+    // const numSelected = this.selection.selected.length;
+    // const numRows = this.dataSource.data.length;
+    // return numSelected === numRows;
   }
   SelectMatter(key) {
     const dialogRef = this.dialog.open(MatterDialogComponent, { width: '100%', disableClose: true });
@@ -305,15 +307,37 @@ export class TrustMoneyDialogeComponent implements OnInit {
   }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
-    this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach(row => this.selection.select(row));
+    // this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach((row, index) =>
+    // {
+    //    this.selection.select(row);
+    //    console.log(index);
+    //    console.log(row.AMOUNTOUTSTANDINGINCGST);
+    // }
+    // );
+  }
+  changeValueOfCheckbox(value, row) {
+    if(value.checked === true) {
+        row.AMOUNTAPPLIED = row.AMOUNTOUTSTANDINGINCGST;
+        this.Paidamount +=  Number(row.AMOUNTOUTSTANDINGINCGST);
+        this.TrustMoneyForm.controls['AMOUNT'].setValue(round(this.Paidamount), 2);
+        console.log(this.Paidamount);
+        //row.TRUSTBALANCE = '';
+    } else {
+       this.Paidamount -=  Number(row.AMOUNTOUTSTANDINGINCGST);
+       this.TrustMoneyForm.controls['AMOUNT'].setValue(round(this.Paidamount), 2);
+       row.AMOUNTAPPLIED = '0';
+    }
+  }
+  Rowclick(value) {
+
   }
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: any): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
-  }
+  // checkboxLabel(row?: any): string {
+  //   if (!row) {
+  //     return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+  //   }
+  //   return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+  // }
   choosedDateTranD(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value, 'dd/MM/yyyy');
     this.SendDate = begin
@@ -370,14 +394,16 @@ export class TrustMoneyDialogeComponent implements OnInit {
       // MATTERGUID: this.f.MATTERGUID.value,
       // // PURPOSE: this.f.PURPOSE.value,
 
-    }
+    };
     if (this.action == "Statutory Receipt" || this.action == "Unknown Deposit" || this.action == "Statutory Deposit") {
       delete data.TOMATTERGUID;
       delete data.FROMMATTERGUID;
 
     }
     this.isspiner = true;
-    let finalData = { DATA: data, FormAction: 'insert', VALIDATEONLY: true }
+    let finalData = { DATA: data, FormAction: 'insert', VALIDATEONLY: true };
+    console.log(finalData);
+    //return;
     this._mainAPiServiceService.getSetData(finalData, 'SetTrustTransaction').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
         this.checkValidation(response.DATA.VALIDATIONS, finalData);

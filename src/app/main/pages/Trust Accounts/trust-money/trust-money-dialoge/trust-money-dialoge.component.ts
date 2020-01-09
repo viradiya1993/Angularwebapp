@@ -108,7 +108,9 @@ export class TrustMoneyDialogeComponent implements OnInit {
       Total: [''],
       Ledger: [''],
       BANKACCOUNTGUID: [''],
-      BANKACCOUNTGUIDTEXT: ['']
+      BANKACCOUNTGUIDTEXT: [''],
+      //OVER Amount
+      OVERAMOUNT: ['']
     });
     this.TranClassName = '';
     this.sendTransectionSubType = 'Normal';
@@ -319,11 +321,13 @@ export class TrustMoneyDialogeComponent implements OnInit {
     if(value.checked === true) {
         row.AMOUNTAPPLIED = row.AMOUNTOUTSTANDINGINCGST;
         this.Paidamount +=  Number(row.AMOUNTOUTSTANDINGINCGST);
+        this.TrustMoneyForm.controls['OVERAMOUNT'].setValue(round(row.AMOUNTOUTSTANDINGINCGST), 2);
         this.TrustMoneyForm.controls['AMOUNT'].setValue(round(this.Paidamount), 2);
         console.log(this.Paidamount);
         //row.TRUSTBALANCE = '';
     } else {
        this.Paidamount -=  Number(row.AMOUNTOUTSTANDINGINCGST);
+       this.TrustMoneyForm.controls['OVERAMOUNT'].setValue('0.00');
        this.TrustMoneyForm.controls['AMOUNT'].setValue(round(this.Paidamount), 2);
        row.AMOUNTAPPLIED = '0';
     }

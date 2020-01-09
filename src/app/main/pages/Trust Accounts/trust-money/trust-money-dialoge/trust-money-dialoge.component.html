@@ -10,14 +10,13 @@
     <div mat-dialog-content class="mat-typography main">
         <div class="one" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
             <form name="TrustMoneyForm" name="form" [formGroup]="TrustMoneyForm" fxLayout="column" fxFlex="1 0 auto">
-
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4">
+                    <mat-form-field appearance="outline" class="example" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.TRANSACTIONDATE,'has-warning':errorWarningData.Warning?.TRANSACTIONDATE}">
                         <input (dateInput)="choosedDateTranD('input', $event)" (dateChange)="choosedDateTranD('change', $event)" formControlName="TRANSACTIONDATE" matInput [matDatepicker]="picker" placeholder="Transaction Date">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.AMOUNT,'has-warning':errorWarningData.Warning?.AMOUNT}">
                         <mat-label>Amount</mat-label>
                         <input (focusout)="MainAmmountPress();" formControlName="AMOUNT" placeholder="Amount" matInput type="number">
                     </mat-form-field>
@@ -27,7 +26,7 @@
                         <mat-label>Amount</mat-label>
                         <input placeholder="Amount" matInput type="number">
                     </mat-form-field> -->
-                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PAYMENTTYPE,'has-warning':errorWarningData.Warning?.PAYMENTTYPE}">
                         <mat-label>Payment Type</mat-label>
                         <!-- [(ngModel)]="TrustMoneyData.PaymentType" -->
                         <mat-select formControlName="PAYMENTTYPE" #value (selectionChange)="PaymentTypeChange($event.value)" name="PAYMENTTYPE" placeholder="Payment Type">
@@ -41,7 +40,7 @@
                         </mat-select>
                     </mat-form-field>
 
-                    <mat-form-field *ngIf="action != 'Transfer'  && action != 'Transfer Unknow Deposit'" appearance="outline" fxFlex="50" class=" pr-4">
+                    <mat-form-field *ngIf="action != 'Transfer'  && action != 'Transfer Unknow Deposit'" appearance="outline" fxFlex="50" class=" pr-4"  [ngClass]="{'has-error':errorWarningData.Error?.PAYOR,'has-warning':errorWarningData.Warning?.PAYOR}">
                         <mat-label>{{titletext}}</mat-label>
                         <input formControlName="PAYOR" placeholder="Received Form" matInput>
                         <mat-icon class="matternews " id="Contcat_id" matSuffix (click)='SelectContact()' fxFlex="5">
@@ -50,7 +49,7 @@
                     </mat-form-field>
 
 
-                    <mat-form-field *ngIf="action == 'Transfer Unknow Deposit'" appearance="outline" fxFlex="50" class=" pr-4">
+                    <mat-form-field *ngIf="action == 'Transfer Unknow Deposit'" appearance="outline" fxFlex="50" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.BANKACCOUNTGUIDTEXT,'has-warning':errorWarningData.Warning?.BANKACCOUNTGUIDTEXT}">
                         <mat-label>Form Unknown</mat-label>
                         <input formControlName="BANKACCOUNTGUIDTEXT" placeholder="Form Unknown" matInput>
                         <mat-icon matSuffix (click)="BankingDialogOpen('Unknown Deposit','Yes')" fxFlex="5">
@@ -59,7 +58,7 @@
                     </mat-form-field>
 
 
-                    <mat-form-field *ngIf="action == 'Transfer'" appearance="outline" fxFlex="50" class=" pr-4">
+                    <mat-form-field *ngIf="action == 'Transfer'" appearance="outline" fxFlex="50" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.FROMMATTER,'has-warning':errorWarningData.Warning?.FROMMATTER}">
                         <mat-label>From Matter</mat-label>
                         <input formControlName="FROMMATTER" placeholder="From Matter" matInput>
                         <mat-icon matSuffix (click)="SelectMatter('from matter')" fxFlex="5">
@@ -69,7 +68,7 @@
 
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field *ngIf="action == 'Statutory Receipt' || action =='Statutory Deposit' || action=='Unknown Deposit'" appearance="outline" fxFlex="100" class=" pr-4">
+                    <mat-form-field *ngIf="action == 'Statutory Receipt' || action =='Statutory Deposit' || action=='Unknown Deposit'" appearance="outline" fxFlex="100" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.TrustAccount,'has-warning':errorWarningData.Warning?.TrustAccount}">
                         <mat-label>Trust Account</mat-label>
                         <input formControlName="TrustAccount" placeholder="Trust Account" matInput>
                     </mat-form-field>
@@ -82,7 +81,7 @@
                             </mat-icon>
                         </mat-form-field> -->
 
-                    <mat-form-field *ngIf="action == 'money withdrawal' || action == 'money receipt'" appearance="outline" fxFlex="100" class=" pr-4">
+                    <mat-form-field *ngIf="action == 'money withdrawal' || action == 'money receipt'" appearance="outline" fxFlex="100" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.BANKACCOUNTGUIDTEXT,'has-warning':errorWarningData.Warning?.BANKACCOUNTGUIDTEXT}">
                         <mat-label>Matter</mat-label>
                         <input formControlName="BANKACCOUNTGUIDTEXT" placeholder="Form Unknown" matInput>
                         <mat-icon matSuffix (click)="BankingDialogOpen('Controlled Money')" fxFlex="5">
@@ -104,7 +103,7 @@
                             <div class="item_pad" fxLayout="column">
 
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline">
+                                    <mat-form-field class="example" fxFlex="100" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.SHORTNAME,'has-warning':errorWarningData.Warning?.SHORTNAME}">
                                         <mat-label>Matter</mat-label>
                                         <input formControlName="SHORTNAME" matInput>
                                         <mat-icon class="matternews" matSuffix (click)="SelectMatter('singal matter')" fxFlex="5">
@@ -114,7 +113,7 @@
 
                                 </div>
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field appearance="outline" fxFlex="100" class=" pr-4">
+                                    <mat-form-field appearance="outline" fxFlex="100" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PURPOSE,'has-warning':errorWarningData.Warning?.PURPOSE}">
                                         <mat-label>Reason</mat-label>
                                         <textarea formControlName="PURPOSE" cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" matInput></textarea>
                                     </mat-form-field>
@@ -126,7 +125,7 @@
                         <mat-tab *ngIf="action == 'money receipt' || action =='money withdrawal'" label="General">
                             <div class="item_pad" fxLayout="column">
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field appearance="outline" fxFlex="100" class=" pr-4">
+                                    <mat-form-field appearance="outline" fxFlex="100" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PURPOSE,'has-warning':errorWarningData.Warning?.PURPOSE}">
                                         <mat-label>Reason</mat-label>
                                         <textarea formControlName="PURPOSE" cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" matInput></textarea>
                                     </mat-form-field>
@@ -139,13 +138,13 @@
                         <mat-tab *ngIf="action =='Cancelled Cheque' || action =='Statutory Receipt' || action =='Statutory Deposit' || action =='Unknown Deposit'" label="Details">
                             <div class="item_pad" fxLayout="column">
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example" fxFlex="80" class="pr-4" appearance="outline">
+                                    <mat-form-field class="example" fxFlex="80" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.Ledger,'has-warning':errorWarningData.Warning?.Ledger}">
                                         <mat-label>Ledger</mat-label>
                                         <input formControlName="Ledger" matInput>
                                     </mat-form-field>
                                 </div>
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field appearance="outline" fxFlex="100" class=" pr-4">
+                                    <mat-form-field appearance="outline" fxFlex="100" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PURPOSE,'has-warning':errorWarningData.Warning?.PURPOSE}"> 
                                         <mat-label>Reason</mat-label>
                                         <textarea formControlName="PURPOSE" cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" matInput></textarea>
                                     </mat-form-field>
@@ -155,7 +154,7 @@
                         <mat-tab *ngIf="matterType === true && action !='office'" label="Multiple Matter">
                             <div class="item_pad" fxLayout="column">
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example" fxFlex="100" appearance="outline">
+                                    <mat-form-field class="example" fxFlex="100" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.SHORTNAME,'has-warning':errorWarningData.Warning?.SHORTNAME}">
                                         <mat-label>Matter</mat-label>
                                         <input formControlName="SHORTNAME" matInput>
                                         <mat-icon class="matternews" matSuffix (click)='SelectMatter()' fxFlex="5">
@@ -165,13 +164,13 @@
 
                                 </div>
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field appearance="outline" fxFlex="100" class=" pr-4">
+                                    <mat-form-field appearance="outline" fxFlex="100" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PURPOSE,'has-warning':errorWarningData.Warning?.PURPOSE}">
                                         <mat-label>Reason</mat-label>
                                         <textarea formControlName="PURPOSE" cdkTextareaAutosize cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" matInput></textarea>
                                     </mat-form-field>
                                 </div>
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example" fxFlex="33" class="pr-4" appearance="outline">
+                                    <mat-form-field class="example" fxFlex="33" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.MatterAMOUNT,'has-warning':errorWarningData.Warning?.MatterAMOUNT}">
                                         <mat-label>Matter Ammount</mat-label>
                                         <input formControlName="MatterAMOUNT" matInput>
                                     </mat-form-field>
@@ -205,11 +204,11 @@
                                     </mat-card>
                                 </div>
                                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline">
+                                    <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.Total,'has-warning':errorWarningData.Warning?.Total}">
                                         <mat-label>Total</mat-label>
                                         <input formControlName="Total" matInput>
                                     </mat-form-field>
-                                    <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline">
+                                    <mat-form-field class="example" fxFlex="50" class="pr-4" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.Unallocated,'has-warning':errorWarningData.Warning?.Unallocated}">
                                         <mat-label>Unallocated</mat-label>
                                         <input formControlName="Unallocated" matInput>
                                     </mat-form-field>
@@ -219,49 +218,6 @@
                         <mat-tab *ngIf="action == 'office'" label="Trust To Office">
                             <div class="item_pad" fxLayout="column">
                                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <!-- <mat-card>
-                                        <table mat-table [dataSource]="dataSource" class="table mat-elevation-z8">
-                                             <ng-container matColumnDef="select">
-                                                <th mat-header-cell *matHeaderCellDef>
-                                                    <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
-                                                    </mat-checkbox>
-                                                </th>
-                                                <td mat-cell *matCellDef="let row">
-                                                    <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
-                                                    </mat-checkbox>
-                                                </td>
-                                               
-                                            </ng-container>
-                                            <ng-container matColumnDef="Invoice">
-                                                <th mat-header-cell *matHeaderCellDef> Invoice </th>
-                                                <td mat-cell *matCellDef="let element"> {{element.INVOICECODE | invoiceNumber}} </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="Date">
-                                                <th mat-header-cell *matHeaderCellDef> Date </th>
-                                                <td mat-cell *matCellDef="let element"> {{element.INVOICEDATE}} </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="Unpaid">
-                                                <th mat-header-cell *matHeaderCellDef> Unpaid </th>
-                                                <td mat-cell *matCellDef="let element"> {{element.AMOUNTOUTSTANDINGINCGST}} </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="MatterNum">
-                                                <th mat-header-cell *matHeaderCellDef> Matter Num </th>
-                                                <td mat-cell *matCellDef="let element"> {{element.SHORTNAME}} </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="TrustBal">
-                                                <th mat-header-cell *matHeaderCellDef> Trust Bal </th>
-                                                <td mat-cell *matCellDef="let element"> {{element.TRUSTBALANCE}} </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="Applied">
-                                                <th mat-header-cell *matHeaderCellDef> Applied </th>
-                                                <td mat-cell *matCellDef="let element"> {{element.AMOUNTAPPLIED}} </td>
-                                            </ng-container>
-
-                                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
-                                            </tr> 
-                                        </table>
-                                    </mat-card> -->
                                     <mat-card>
                                         <table mat-table [dataSource]="dataSource" class="table mat-elevation-z8">
                                             <ng-container matColumnDef="checked">
@@ -310,7 +266,7 @@
                                 </div>
 
                                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example pr-4 pt-5" fxFlex="50" appearance="outline">
+                                    <mat-form-field class="example pr-4 pt-5" fxFlex="50" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.OVERAMOUNT,'has-warning':errorWarningData.Warning?.OVERAMOUNT}">
                                         <mat-label>Enter override amount</mat-label>
                                         <input matInput formControlName="OVERAMOUNT" type="number">
                                     </mat-form-field>
@@ -323,7 +279,7 @@
                         <mat-tab *ngIf="PymentType =='Cheque' && PymentType  !='Bank'" label="Cheque Details">
                             <div class="item_pad" fxLayout="column">
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline"  [ngClass]="{'has-error':errorWarningData.Error?.CHEQUENO,'has-warning':errorWarningData.Warning?.CHEQUENO}">
                                         <mat-label>Cheque No.</mat-label>
                                         <input formControlName="CHEQUENO" type="number" matInput>
                                     </mat-form-field>
@@ -332,23 +288,23 @@
 
                                 <div *ngIf="this.f.BANKCHEQUE.value == true && action !='receipt' && action !='Statutory Receipt' 
                                 && action !='Unknown Deposit'  && action !='money receipt' " fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example pr-4" fxFlex="100" appearance="outline">
+                                    <mat-form-field class="example pr-4" fxFlex="100" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.BENEFICIARY,'has-warning':errorWarningData.Warning?.BENEFICIARY}">
                                         <mat-label>Beneficiary</mat-label>
                                         <input formControlName="BENEFICIARY" matInput>
                                     </mat-form-field>
                                 </div>
                                 <div *ngIf="action =='receipt' || action =='Statutory Receipt' || action =='Unknown Deposit' || action =='money receipt'" fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example pr-4" fxFlex="100" appearance="outline">
+                                    <mat-form-field class="example pr-4" fxFlex="100" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.ACCOUNTNAME,'has-warning':errorWarningData.Warning?.ACCOUNTNAME}">
                                         <mat-label>Account Name</mat-label>
                                         <input formControlName="ACCOUNTNAME" matInput>
                                     </mat-form-field>
                                 </div>
                                 <div *ngIf="action =='receipt' || action =='Statutory Receipt'  || action =='money receipt'" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.BSB,'has-warning':errorWarningData.Warning?.BSB}">
                                         <mat-label>BSB</mat-label>
                                         <input formControlName="BSB" matInput>
                                     </mat-form-field>
-                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.ACCOUNTNUMBER,'has-warning':errorWarningData.Warning?.ACCOUNTNUMBER}">
                                         <mat-label>A/C No</mat-label>
                                         <input formControlName="ACCOUNTNUMBER" matInput>
                                     </mat-form-field>
@@ -360,21 +316,21 @@
                         <mat-tab *ngIf="PymentType =='EFT' && PymentType  !='Bank'" label="EFT Details">
                             <div class="item_pad" fxLayout="column">
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.EFTREFERENCE,'has-warning':errorWarningData.Warning?.EFTREFERENCE}">
                                         <mat-label>Bank Reference</mat-label>
                                         <input formControlName="EFTREFERENCE" matInput>
                                     </mat-form-field>
-                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.ACCOUNTNAME,'has-warning':errorWarningData.Warning?.ACCOUNTNAME}">
                                         <mat-label>Account Name</mat-label>
                                         <input formControlName="ACCOUNTNAME" matInput>
                                     </mat-form-field>
                                 </div>
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.BSB,'has-warning':errorWarningData.Warning?.BSB}">
                                         <mat-label>BSB</mat-label>
                                         <input formControlName="BSB" matInput>
                                     </mat-form-field>
-                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.ACCOUNTNUMBER,'has-warning':errorWarningData.Warning?.ACCOUNTNUMBER}">
                                         <mat-label>A/C No</mat-label>
                                         <input formControlName="ACCOUNTNUMBER" value="0" matInput>
                                     </mat-form-field>
@@ -384,37 +340,37 @@
                         <mat-tab *ngIf="PymentType =='Cash' && PymentType  !='Bank'" label="Cash">
                             <div class="item_pad" fxLayout="column">
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.COINS,'has-warning':errorWarningData.Warning?.COINS}">
                                         <mat-label>Coins</mat-label>
                                         <input formControlName="COINS" type="number" matInput>
                                     </mat-form-field>
-                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.FIVEDOLLARS,'has-warning':errorWarningData.Warning?.FIVEDOLLARS}">
                                         <mat-label>Five Dollars</mat-label>
                                         <input formControlName="FIVEDOLLARS" type="number" matInput>
                                     </mat-form-field>
                                 </div>
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.TENDOLLARS,'has-warning':errorWarningData.Warning?.TENDOLLARS}">
                                         <mat-label>ten Dollars</mat-label>
                                         <input formControlName="TENDOLLARS" type="number" matInput>
                                     </mat-form-field>
-                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.TWENTYDOLLARS,'has-warning':errorWarningData.Warning?.TWENTYDOLLARS}">
                                         <mat-label>twenty Dollars</mat-label>
                                         <input formControlName="TWENTYDOLLARS" type="number" matInput>
                                     </mat-form-field>
                                 </div>
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.FIFTYDOLLARS,'has-warning':errorWarningData.Warning?.FIFTYDOLLARS}">
                                         <mat-label>Fifty Dollars</mat-label>
                                         <input formControlName="FIFTYDOLLARS" type="number" matInput>
                                     </mat-form-field>
-                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline">
+                                    <mat-form-field class="example pr-4" fxFlex="50" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.HUNDREDDOLLARS,'has-warning':errorWarningData.Warning?.HUNDREDDOLLARS}">
                                         <mat-label>Hundred Dollars</mat-label>
                                         <input formControlName="HUNDREDDOLLARS" type="number" matInput>
                                     </mat-form-field>
                                 </div>
 
-                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto" [ngClass]="{'has-error':errorWarningData.Error?.HUNDREDDOLLARS,'has-warning':errorWarningData.Warning?.HUNDREDDOLLARS}">
                                     <mat-form-field class="example pr-4" fxFlex="100" appearance="outline">
                                         <mat-label>Cash Total</mat-label>
                                         <input type="number" matInput>
@@ -427,21 +383,21 @@
                         <mat-tab *ngIf="action != 'Transfer' && action != 'Transfer Unknow Deposit' && action != 'office' && action != 'Cancelled Cheque'" label="Payor Address">
                             <div class="item_pad" fxLayout="column">
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                                    <mat-form-field appearance="outline" fxFlex="100" class="pr-4" [ngClass]="{'has-error':errorWarningData.Error?.ADDRESS1,'has-warning':errorWarningData.Warning?.ADDRESS1}">
                                         <mat-label>Address</mat-label>
                                         <textarea formControlName="ADDRESS1" cdkTextareaAutosize cdkAutosizeMinRows="3" cdkAutosizeMaxRows="3" matInput></textarea>
                                     </mat-form-field>
                                 </div>
                                 <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                                    <mat-form-field class="example pr-4" fxFlex="33" appearance="outline">
+                                    <mat-form-field class="example pr-4" fxFlex="33" appearance="outline"  [ngClass]="{'has-error':errorWarningData.Error?.SUBURB,'has-warning':errorWarningData.Warning?.SUBURB}">
                                         <mat-label>Suburb</mat-label>
                                         <input formControlName="SUBURB" matInput>
                                     </mat-form-field>
-                                    <mat-form-field class="example pr-4" fxFlex="33" appearance="outline">
+                                    <mat-form-field class="example pr-4" fxFlex="33" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.STATE_,'has-warning':errorWarningData.Warning?.STATE_}">
                                         <mat-label>State</mat-label>
                                         <input formControlName="STATE_" matInput>
                                     </mat-form-field>
-                                    <mat-form-field class="example pr-4" fxFlex="33" appearance="outline">
+                                    <mat-form-field class="example pr-4" fxFlex="33" appearance="outline" [ngClass]="{'has-error':errorWarningData.Error?.POSTCODE,'has-warning':errorWarningData.Warning?.POSTCODE}">
                                         <mat-label>Postcode</mat-label>
                                         <input formControlName="POSTCODE" matInput>
                                     </mat-form-field>
@@ -453,12 +409,12 @@
                 </div>
                 <!-- <mat-divider horizontal></mat-divider> -->
                 <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
-                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.AUTHORISEDBY,'has-warning':errorWarningData.Warning?.AUTHORISEDBY}">
                         <mat-label>Authorised By</mat-label>
                         <input formControlName="AUTHORISEDBY" placeholder="Authorised By" matInput>
                     </mat-form-field>
 
-                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4">
+                    <mat-form-field appearance="outline" fxFlex="50" class=" pr-4" [ngClass]="{'has-error':errorWarningData.Error?.PREPAREDBY,'has-warning':errorWarningData.Warning?.PREPAREDBY}">
                         <mat-label>Prepared By</mat-label>
                         <input formControlName="PREPAREDBY" placeholder="Prepared By" matInput>
                     </mat-form-field>

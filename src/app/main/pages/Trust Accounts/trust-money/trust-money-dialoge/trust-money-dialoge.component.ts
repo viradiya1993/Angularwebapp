@@ -54,6 +54,7 @@ export class TrustMoneyDialogeComponent implements OnInit {
   titletext: any;
   Paidamount = 0;
   Invoicedata: any = [];
+  Amountdata: any = [];
   constructor(private _mainAPiServiceService: MainAPiServiceService,
     private _formBuilder: FormBuilder, private toastr: ToastrService,
     public dialogRef: MatDialogRef<TrustMoneyDialogeComponent>,
@@ -305,25 +306,32 @@ export class TrustMoneyDialogeComponent implements OnInit {
     });
   }
   changeValueOfCheckbox(value, row) {
+    this.Amountdata = row;
     if(value.checked === true) {
        // console.log(row);
         row.AMOUNTAPPLIED = row.AMOUNTOUTSTANDINGINCGST;
         this.Paidamount +=  Number(row.AMOUNTOUTSTANDINGINCGST);
-        this.TrustMoneyForm.controls['OVERAMOUNT'].setValue(round(row.AMOUNTOUTSTANDINGINCGST), 2);
-        this.TrustMoneyForm.controls['AMOUNT'].setValue(round(this.Paidamount), 2);   
+        this.TrustMoneyForm.controls['OVERAMOUNT'].setValue(row.AMOUNTOUTSTANDINGINCGST);
+        this.TrustMoneyForm.controls['AMOUNT'].setValue(this.Paidamount);   
         this.Invoicedata.push({
           INVOICEGUID: row.INVOICEGUID,
           AMOUNTAPPLIED: row.AMOUNTAPPLIED
         });    
-        //console.log(this.Invoicedata);
+        console.log(row.AMOUNTAPPLIED);
     } else {
        this.Paidamount -=  Number(row.AMOUNTOUTSTANDINGINCGST);
        this.TrustMoneyForm.controls['OVERAMOUNT'].setValue('0.00');
-       this.TrustMoneyForm.controls['AMOUNT'].setValue(round(this.Paidamount), 2);
+       this.TrustMoneyForm.controls['AMOUNT'].setValue(this.Paidamount);
        row.AMOUNTAPPLIED = '0';
        this.Invoicedata.pop();
-       //console.log(this.Invoicedata);
+       console.log(this.Paidamount);
     }
+  }
+  amooutadd() {
+    console.log(this.dataSource);
+
+   let priceTemp = this.f.OVERAMOUNT.value;
+   console.log(priceTemp);
   }
   Rowclick(value) {}
  
@@ -438,12 +446,12 @@ export class TrustMoneyDialogeComponent implements OnInit {
       this.confirmDialogRef.componentInstance.confirmMessage = 'Are you sure you want to Save?';
       this.confirmDialogRef.afterClosed().subscribe(result => {
         if (result) {
-          this.isspiner = true;
-          this.trustMoneyData(details);
+            this.isspiner = true;
+            this.trustMoneyData(details);
         }
         this.confirmDialogRef = null;
       });
-    } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length == 0) {
+    } else if (Object.keys(warningData).length == 0 && Object.keys(errorData).length === 0) {
       this.trustMoneyData(details);
       this.isspiner = false;
     }

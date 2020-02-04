@@ -41,8 +41,8 @@ import { AuthGuard } from 'app/_guards';
 import { TrustMoneyComponent } from './trust-money.component';
 import { TrustMoneyDialogeComponent } from './trust-money-dialoge/trust-money-dialoge.component';
 import { ApplicationPipesModule } from '../../application-pipes.module';
-
-
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes = [
   { path: 'trust-money', component: TrustMoneyComponent, canActivate: [AuthGuard] }];
@@ -85,7 +85,9 @@ const routes = [
     MatCheckboxModule,
     DragDropModule,
     MatSortModule,
-    ApplicationPipesModule
+    ApplicationPipesModule,
+    // FormsModule,
+    // ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'})
   ],
   exports: [
     TrustMoneyComponent

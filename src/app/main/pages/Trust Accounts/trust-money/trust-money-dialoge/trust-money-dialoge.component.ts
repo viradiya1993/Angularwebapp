@@ -54,7 +54,10 @@ export class TrustMoneyDialogeComponent implements OnInit {
   titletext: any;
   Paidamount = 0;
   Invoicedata: any = [];
-  Amountdata: any = [];
+  priceTemp: any;
+  data: any;
+  filterVals = {SHOWGENERALJOURNAL : false};
+  public saveUsername: boolean;
   constructor(private _mainAPiServiceService: MainAPiServiceService,
     private _formBuilder: FormBuilder, private toastr: ToastrService,
     public dialogRef: MatDialogRef<TrustMoneyDialogeComponent>,
@@ -62,7 +65,6 @@ export class TrustMoneyDialogeComponent implements OnInit {
     public _matDialog: MatDialog,
     private datepipe: DatePipe,
     @Inject(MAT_DIALOG_DATA) public _data: any, ) {
-
     this.base_url = environment.ReportUrl;
     this.TrustMoneyForm = this._formBuilder.group({
       FROMMATTER: [''],
@@ -111,13 +113,15 @@ export class TrustMoneyDialogeComponent implements OnInit {
       BANKACCOUNTGUID: [''],
       BANKACCOUNTGUIDTEXT: [''],
       //OVER Amount
-      OVERAMOUNT: ['']
+      OVERAMOUNT: [''],
+      ROWCHECK: ['']
     });
     this.TranClassName = '';
     this.sendTransectionSubType = 'Normal';
     this.TrustMoneyForm.controls['PREPAREDBY'].setValue('Claudine Parkinson (pwd=test)');
     this.TrustMoneyForm.controls['PAYMENTTYPE'].setValue('Cheque');
     this.TrustMoneyForm.controls['CheckBox'].setValue(false);
+    this.TrustMoneyForm.controls['ROWCHECK'].setValue(false);
     this.action = _data.action;
     this.forPDF = _data.forPDF;
     if (this.action == "receipt") {
@@ -248,11 +252,10 @@ export class TrustMoneyDialogeComponent implements OnInit {
       "TRANSACTIONTYPE": "Normal Item",
       "TRANSACTIONSUBTYPE": this.sendTransectionSubType,
       "CASHBOOK": this.sendToAPI,
-    }
-
+    };
     this._mainAPiServiceService.getSetData({ Data: data, FormAction: 'default' }, 'SetTrustTransaction').subscribe(response => {
       if (response.CODE == 200 && (response.STATUS == "OK" || response.STATUS == "success")) {
-        let defaultValue = response.DATA.DEFAULTVALUES;
+        const defaultValue = response.DATA.DEFAULTVALUES;
         this.TrustMoneyForm.controls['Ledger'].setValue(defaultValue.MATTER);
         this.TrustMoneyForm.controls['MATTERGUID'].setValue(defaultValue.MATTERLEDGERGUID);
         this.TrustMoneyForm.controls['BANKACCOUNTGUID'].setValue(defaultValue.BANKACCOUNTGUID);
@@ -306,38 +309,47 @@ export class TrustMoneyDialogeComponent implements OnInit {
     });
   }
   changeValueOfCheckbox(value, row) {
-    this.Amountdata = row;
-    if(value.checked === true) {
-       // console.log(row);
-        row.AMOUNTAPPLIED = row.AMOUNTOUTSTANDINGINCGST;
-        this.Paidamount +=  Number(row.AMOUNTOUTSTANDINGINCGST);
-        this.TrustMoneyForm.controls['OVERAMOUNT'].setValue(row.AMOUNTOUTSTANDINGINCGST);
-        this.TrustMoneyForm.controls['AMOUNT'].setValue(this.Paidamount);   
-        this.Invoicedata.push({
-          INVOICEGUID: row.INVOICEGUID,
-          AMOUNTAPPLIED: row.AMOUNTAPPLIED
-        });    
-        console.log(row.AMOUNTAPPLIED);
+    row['checkbox'] = value.checked;
+    this.CommonTrust(row);
+  }
+  
+  onSearchChange(searchValue: any) {
+     this.data.AMOUNTAPPLIED = searchValue;
+  }
+  Rowclick(row) {
+    if (row.checkbox === true) {
+      this.TrustMoneyForm.controls['OVERAMOUNT'].setValue(row.AMOUNTAPPLIED);
+      console.log(1);
     } else {
-       this.Paidamount -=  Number(row.AMOUNTOUTSTANDINGINCGST);
-       this.TrustMoneyForm.controls['OVERAMOUNT'].setValue('0.00');
-       this.TrustMoneyForm.controls['AMOUNT'].setValue(this.Paidamount);
-       row.AMOUNTAPPLIED = '0';
-       this.Invoicedata.pop();
-       console.log(this.Paidamount);
+      console.log(2);
+      this.TrustMoneyForm.controls['OVERAMOUNT'].setValue('0.00');
     }
   }
-  amooutadd() {
-    console.log(this.dataSource);
-
-   let priceTemp = this.f.OVERAMOUNT.value;
-   console.log(priceTemp);
-  }
-  Rowclick(value) {}
- 
+ CommonTrust (row){
+    if (row.checkbox === true) {
+      console.log(row);
+      this.data = row;
+      row.AMOUNTAPPLIED = row.AMOUNTOUTSTANDINGINCGST;
+      this.Paidamount +=  Number(row.AMOUNTOUTSTANDINGINCGST);
+      this.TrustMoneyForm.controls['AMOUNT'].setValue(this.Paidamount); 
+      this.priceTemp =  row.AMOUNTAPPLIED; 
+      this.TrustMoneyForm.controls['OVERAMOUNT'].setValue(this.priceTemp);
+      this.Invoicedata.push({
+        INVOICEGUID: row.INVOICEGUID,
+        AMOUNTAPPLIED: row.AMOUNTAPPLIED
+      });
+    } else {
+      console.log(row.checkbox);
+      row.AMOUNTAPPLIED = 0;
+      this.Paidamount -=  Number(row.AMOUNTOUTSTANDINGINCGST);
+      this.TrustMoneyForm.controls['AMOUNT'].setValue(this.Paidamount);
+      this.TrustMoneyForm.controls['OVERAMOUNT'].setValue('0.00');
+      this.Invoicedata.pop();
+    }
+ }
   choosedDateTranD(type: string, event: MatDatepickerInputEvent<Date>) {
     let begin = this.datepipe.transform(event.value, 'dd/MM/yyyy');
-    this.SendDate = begin
+    this.SendDate = begin;
   }
   SaveTrustMoney() {
     let data = {
@@ -391,12 +403,10 @@ export class TrustMoneyDialogeComponent implements OnInit {
       // SHORTNAME: this.f.SHORTNAME.value,
       // MATTERGUID: this.f.MATTERGUID.value,
       // // PURPOSE: this.f.PURPOSE.value,
-
     };
     if (this.action == "Statutory Receipt" || this.action == "Unknown Deposit" || this.action == "Statutory Deposit") {
-      delete data.TOMATTERGUID;
-      delete data.FROMMATTERGUID;
-
+        delete data.TOMATTERGUID;
+        delete data.FROMMATTERGUID;
     }
     this.isspiner = true;
     let finalData = { DATA: data, FormAction: 'insert', VALIDATEONLY: true };
@@ -519,7 +529,6 @@ export class TrustMoneyDialogeComponent implements OnInit {
       }
     }
   }
-
   CommonEmptyField() {
     this.TrustMoneyForm.controls['MatterAMOUNT'].setValue('');
     this.TrustMoneyForm.controls['PURPOSE'].setValue('');

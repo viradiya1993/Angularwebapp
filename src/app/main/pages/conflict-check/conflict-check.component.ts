@@ -95,7 +95,6 @@ export class ConflictCheckComponent implements OnInit {
   }
   CheckWPI() {
     this.StartbtnSendData.CheckWIP = this.ConflictNGData.CheckWIP;
-
     this.behaviorService.ConflictMainData(this.StartbtnSendData);
   }
   CheckFileNote() {
@@ -113,6 +112,5 @@ export class ConflictCheckComponent implements OnInit {
   }
   onSearch(searchFilter: any) {
     this.LoadData({ Search: this.ConflictNGData.Search });
-
   }
 }
